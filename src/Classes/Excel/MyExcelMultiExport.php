@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Excel/MyExcelMultiExport.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/09/2020 08:52
+// @lastUpdate 14/10/2020 22:33
 
 /**
  * Created by PhpStorm.
@@ -158,13 +158,23 @@ class MyExcelMultiExport
                 foreach ($value as $col) {
                     if (is_array($col)) {
                         foreach ($col as $col2) {
-
-                            $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(
-                                $i,
-                                $ligne,
-                                $col2
-                            );
-                            $i++;
+                            if (is_array($col2)) {
+                                foreach ($col2 as $col3) {
+                                    $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(
+                                        $i,
+                                        $ligne,
+                                        $col3
+                                    );
+                                    $i++;
+                                }
+                            } else {
+                                $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(
+                                    $i,
+                                    $ligne,
+                                    $col2
+                                );
+                                $i++;
+                            }
                         }
                     } else {
                         $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(
@@ -187,7 +197,7 @@ class MyExcelMultiExport
                 if ((!is_array($value) && array_key_exists($value, $row)) || (is_array($value) && array_key_exists($key,
                             $row))) {
                     if (is_array($value)) {
-                        foreach ($value as $col) {
+                        foreach ($value as $k => $col) {
                             if (is_array($row[$key])) {
                                 $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow($i, $ligne,
                                     $row[$key][$col]);

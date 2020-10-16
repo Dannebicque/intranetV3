@@ -3,16 +3,16 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/PersonnelController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 27/07/2020 18:21
+// @lastUpdate 16/10/2020 13:01
 
 namespace App\Controller\administration;
 
+use App\Classes\MyExport;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Personnel;
 use App\Entity\PersonnelDepartement;
 use App\Form\PersonnelType;
-use App\Classes\MyExport;
 use App\Repository\PersonnelDepartementRepository;
 use App\Repository\PersonnelRepository;
 use PhpOffice\PhpSpreadsheet\Exception;
@@ -26,7 +26,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class PersonnelController extends BaseController
 {
     /**
-     * @Route("/", name="administration_personnel_index", methods="GET", requirements={"type": "permanent|vacataire"})
+     * @Route("/", name="administration_personnel_index", methods="GET")
      * @param PersonnelDepartementRepository $personnelRepository
      *
      * @return Response
@@ -35,7 +35,29 @@ class PersonnelController extends BaseController
     {
         return $this->render(
             'administration/personnel/index.html.twig',
-            ['personnels' => $personnelRepository->findByType('permanent', $this->dataUserSession->getDepartementId())]
+            [
+                'personnels' => $personnelRepository->findByType('permanent',
+                    $this->dataUserSession->getDepartementId()),
+                'type'       => 'permanent'
+            ]
+        );
+    }
+
+    /**
+     * @Route("/ajax/load-liste/{type}", name="administration_personnel_load_liste", options={"expose"=true},
+     *                                   requirements={"type": "permanent|vacataire"})
+     * @param PersonnelDepartementRepository $personnelRepository
+     *
+     * @return Response
+     */
+    public function loadListe(PersonnelDepartementRepository $personnelRepository, $type): Response
+    {
+        return $this->render(
+            'administration/personnel/_listePersonnel.html.twig',
+            [
+                'personnels' => $personnelRepository->findByType($type, $this->dataUserSession->getDepartementId()),
+                'type'       => $type
+            ]
         );
     }
 

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/PersonnelDepartement.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 16/10/2020 11:52
 
 namespace App\Entity;
 
@@ -23,7 +23,7 @@ class PersonnelDepartement
 
     /**
      * @var Personnel
-     * @ORM\ManyToOne(targetEntity="App\Entity\Personnel", inversedBy="personnelDepartements")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Personnel", inversedBy="personnelDepartements", fetch="EAGER")
      * @ORM\OrderBy({"nom" = "asc", "prenom" = "asc"})
      */
     private $personnel;

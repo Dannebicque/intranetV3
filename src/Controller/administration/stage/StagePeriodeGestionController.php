@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StagePeriodeGestionController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/09/2020 13:01
+// @lastUpdate 16/10/2020 13:01
 
 namespace App\Controller\administration\stage;
 
@@ -35,7 +35,6 @@ class StagePeriodeGestionController extends BaseController
      * @param                        $_format
      *
      * @return Response
-     * @throws Exception
      */
     public function export(MyExport $myExport, StagePeriode $stagePeriode, $_format): Response
     {
@@ -49,8 +48,9 @@ class StagePeriodeGestionController extends BaseController
             [
                 'etudiant'            => ['nom', 'prenom'],
                 'entreprise'          => ['raisonSociale'],
+                //'adresse' => ['adresse1','adresse2', 'cp', 'ville', 'pays']
                 'tuteur'              => ['nom', 'prenom', 'fonction', 'telephone', 'email'],
-                'tuteurUniversitaire' => ['nom', 'prenom'],
+                'tuteurUniversitaire' => ['nom', 'prenom', 'mailUniv'],
                 'dateDebutStage',
                 'dateFinStage'
             ]

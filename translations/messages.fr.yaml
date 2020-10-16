@@ -176,7 +176,7 @@ adm:
       formation.menu: Formation
       semestre.heading: 'Options par semestre'
       semestre.menu: Semestre(s)
-  creneau_cour:
+  creneau_cours:
     duplicate.annee.heading: 'Dupliquer un créneau de cours'
     menu: 'Créneaux de cours'
     index.heading: 'Gestion des créneaux de cours'
@@ -271,14 +271,15 @@ adm:
   parametres:
     departement: 'Paramètres du département'
     formation: 'Paramètres de la formation'
-  permanents.et.vacataires: 'Permanents & vacataires de la formation'
+  permanents.et.vacataires: 'Permanents & vacataires du département'
+  personnels: 'Personnels'
   personnel:
     add.titre: 'Ajout d''un personnel dans la formation'
-    index.heading: 'Liste des personnels'
+    index.heading: 'Liste des personnels dans le département'
     modification.heading: 'Modification d''un personnel'
     new.heading: 'Création d''un personnel'
     show.heading: 'Détails d''un personnel'
-  personnels: Personnels
+  permanents.index.heading: 'Liste des enseignants permanents'
   ppn:
     menu: PPN
     copie.heading: 'Copie d''un PPN'
@@ -401,6 +402,7 @@ adm:
   type.groupes: 'Types de Groupes'
   type.groupes.index.titre: 'Liste des types de groupe'
   typegroupe.semestre.index.heading: 'Type de groupe du semestre'
+  vacataires.index.heading: 'Liste des intervenants vacataies'
   ufr:
     index.heading: 'Liste des Composantes/UFR'
     modification.heading: 'Modification d''une UFR'
@@ -1339,7 +1341,9 @@ permanents: Permanents
 permanents.heading: Permanents
 
 personnel: Personnel
+personnel.delete.success.flash: 'Personnel retiré du département avec succès'
 personnel.delete.error.flash: 'Erreur lors de la suppression d''un personnel'
+personnel.edit.succes.flash: 'Personnel modifié avec succès'
 personnel.droit.access: 'Droit d''accès'
 
 Place: Place

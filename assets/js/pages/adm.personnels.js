@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.personnels.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/08/2020 12:07
+// @lastUpdate 16/10/2020 11:35
 
 import '../../vendor/datatables'
 import {dataTableLangueFr} from '../lang/fr'
@@ -52,57 +52,25 @@ $(document).on('click', '.addpersonnel', function () {
 $(document).on('click', '.personnel_index_change', function () {
   $('.personnel_index_change').removeClass('active show')
   $(this).addClass('active show')
-  const table = $('#tableau').DataTable()
-  table.clear() //effacer le datatable
-  table.destroy() //supprimer le datatable
   let $type = $(this).data('type')
-  $.ajax({
-    url: Routing.generate('api_enseignants_type', {type: $type}),
-    dataType: 'json',
-    success: function (data) {
-      jQuery.each(data, function (index, pers) {
-        //ajouter les lignes
-        const html = '<tr>\n' +
-          '                        <td>' + pers.nom + '</td>\n' +
-          '                        <td>' + pers.prenom + '</td>\n' +
-          '                        <td>' + pers.posteInterne + '</td>\n' +
-          '                        <td>' + pers.telBureau + '</td>\n' +
-          '                        <td>' + pers.bureau1 + '</td>\n' +
-          '                        <td>' + pers.numeroHarpege + '</td>\n' +
-          '                        <td>' + pers.mailUniv + '</td>\n' +
-          '                        <td>\n' +
-          '<a href="' + Routing.generate('administration_personnel_show', {id: pers.id}) + '" class="btn btn-info btn-outline btn-square" data-provide="tooltip"\n' +
-          '   data-placement="bottom" title="Détails"><i class="fa fa-info"></i></a>\n' +
-          '<a href="' + Routing.generate('administration_personnel_edit', {id: pers.id}) + '"\n' +
-          '   class="btn btn-warning btn-outline btn-square"><i class="fa fa-edit"\n' +
-          '                                                     data-provide="tooltip"\n' +
-          '                                                     data-placement="bottom"\n' +
-          '                                                     title="Modifier"></i></a>\n' +
-          '<a href="' + Routing.generate('administration_personnel_delete', {id: pers.id}) + '" class="btn btn-danger btn-outline btn-square supprimer" data-id="id"><i\n' +
-          '            class="fa fa-trash" data-provide="tooltip" data-placement="bottom"\n' +
-          '            title="Supprimer"></i></a>' +
-          '                        </td>\n' +
-          '                    </tr>'
-        $('#datatableau').append(html)
-      })
+  $('#listePersonnel').load(Routing.generate('administration_personnel_load_liste', {type: $type}), function () {
 
-      $('#export_csv').attr('href', Routing.generate('administration_personnel_export', {
-        type: $type,
-        '_format': 'csv'
-      }))
-      $('#export_xlsx').attr('href', Routing.generate('administration_personnel_export', {
-        type: $type,
-        '_format': 'xlsx'
-      }))
-      $('#export_pdf').attr('href', Routing.generate('administration_personnel_export', {
-        type: $type,
-        '_format': 'pdf'
-      }))
+    $('#tableau').DataTable({
+      language: dataTableLangueFr
+    })
 
-      $('#tableau').DataTable({
-        'langue': dataTableLangueFr
-      }) //regenerer le datatable avec les nouvelles data
-    }
+    $('#export_csv').attr('href', Routing.generate('administration_personnel_export', {
+      type: $type,
+      '_format': 'csv'
+    }))
+    $('#export_xlsx').attr('href', Routing.generate('administration_personnel_export', {
+      type: $type,
+      '_format': 'xlsx'
+    }))
+    $('#export_pdf').attr('href', Routing.generate('administration_personnel_export', {
+      type: $type,
+      '_format': 'pdf'
+    }))
   })
 })
 

@@ -3,11 +3,10 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StageEtudiantController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/10/2020 07:39
+// @lastUpdate 16/10/2020 12:22
 
 namespace App\Controller\administration\stage;
 
-use App\Classes\DatabaseTwigLoader;
 use App\Classes\MyStageEtudiant;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
@@ -26,11 +25,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Twig\Environment;
 use Twig\Error\LoaderError;
-use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
 /**
@@ -230,19 +227,17 @@ class StageEtudiantController extends BaseController
     }
 
     /**
-     * @param DatabaseTwigLoader          $databaseTwigLoader
+     * @param Environment                 $twig
      * @param StageMailTemplateRepository $stageMailTemplateRepository
      * @param StageEtudiant               $stageEtudiant
      *
      * @return Response
-     * @throws NonUniqueResultException
      * @throws LoaderError
-     * @throws RuntimeError
+     * @throws NonUniqueResultException
      * @throws SyntaxError
      */
     public function genereContentCourrier(
-        KernelInterface $kernel,
-        DatabaseTwigLoader $databaseTwigLoader,
+        Environment $twig,
         StageMailTemplateRepository $stageMailTemplateRepository,
         StageEtudiant $stageEtudiant
     ): Response {
@@ -252,9 +247,9 @@ class StageEtudiantController extends BaseController
         );
 
         if ($mailTemplate !== null && $mailTemplate->getTwigTemplate() !== null) {
-            $twig = new Environment($databaseTwigLoader, ['cache' => $kernel->getCacheDir() . '/databaseTemplate/']);
-            $twig->load($mailTemplate->getTwigTemplate()->getName());
-            $html = $twig->render($mailTemplate->getTwigTemplate()->getName(), ['stageEtudiant' => $stageEtudiant]);
+
+            $template = $twig->createTemplate($mailTemplate->getTwigTemplate()->getSource());
+            $html = $template->render(['stageEtudiant' => $stageEtudiant]);
 
             return new Response($html);
         }
