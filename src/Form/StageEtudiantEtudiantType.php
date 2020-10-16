@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Form/StageEtudiantEtudiantType.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/09/2020 12:58
+// @lastUpdate 16/10/2020 13:23
 
 namespace App\Form;
 
@@ -41,7 +41,10 @@ class StageEtudiantEtudiantType extends AbstractType
             ->add(
                 'serviceStageEntreprise',
                 TextType::class,
-                ['label' => 'label.serviceStageEntreprise', 'help' => 'help.serviceStageEntreprise']
+                ['label'    => 'label.serviceStageEntreprise',
+                 'help'     => 'help.serviceStageEntreprise',
+                 'required' => false
+                ]
             )
             ->add('sujetStage', TextareaType::class, ['label' => 'label.sujetStage', 'help' => 'help.sujetStage'])
             ->add('activites', TextareaType::class, ['label' => 'label.activites', 'help' => 'help.activites'])
