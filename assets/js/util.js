@@ -2,10 +2,12 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/util.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/10/2020 11:50
+// @lastUpdate 16/10/2020 14:54
 
 import $ from 'jquery'
 import Swal from 'sweetalert2'
+
+let $stopCatchEnter = false
 
 function readUrlMenu ($url) {
   const $elt = $url.split('/')
@@ -155,6 +157,8 @@ $(document).on('click', '.myedit', function (e) {
 
   if ($(this).data('type') === 'select') {
     //todo: A finaliser
+  } else if ($(this).data('type') === 'textarea') {
+    html = genereTextArea($(this))
   } else {
     html = genereInput($(this))
   }
@@ -163,7 +167,7 @@ $(document).on('click', '.myedit', function (e) {
 })
 
 $(document).on('keyup', '#myedit-input', function (e) {
-  if (e.keyCode === 13) {
+  if (e.keyCode === 13 && $stopCatchEnter === false) {
     updateData()
   } else if (e.keyCode === 27) {
     $('#myEdit-zone').replaceWith(myEditInitialContent)
@@ -171,17 +175,18 @@ $(document).on('keyup', '#myedit-input', function (e) {
 })
 
 $(document).on('click', '#myedit-valide', function (e) {
+  $stopCatchEnter = false
   e.preventDefault()
   updateData()
 })
 
 $(document).on('keypress', function (e) {
-  if (EditOnLine === true && e.which === 13) {
+  if (EditOnLine === true && $stopCatchEnter === false && e.which === 13) {
     e.preventDefault()
     updateData()
   }
 
-  if (EditOnLine === true && e.which === 27) {
+  if (EditOnLine === true && $stopCatchEnter === false && e.which === 27) {
     e.preventDefault()
     $('#myEdit-zone').replaceWith(myEditInitialContent)
   }
@@ -210,11 +215,26 @@ function updateData () {
   })
 }
 
+function genereTextArea ($obj) {
+  $stopCatchEnter = true
+  return '<div id="myEdit-zone">\n' +
+    '                      <textarea rows="5" class="form-control" id="myedit-input">' + $obj.html().trim() + '</textarea>\n' +
+    '                      <span class="input-group-append">\n' +
+    ' <button class="btn btn-success-outline" id="myedit-valide"><i class="fas fa-check"></i></button>\n' +
+    '                        <button class="btn btn-danger-outline" id="myedit-annule"><i class="fas fa-times"></i></button>\n' +
+    '                      </span>\n' +
+    '                    </div>'
+}
+
 function genereInput ($obj) {
-  let $html = '<div id="myEdit-zone"><input type="text" value="' + $obj.html().trim() + '" id="myedit-input" />'
-  $html = $html + '<button class="btn btn-square btn-sm btn-success btn-outline" id="myedit-valide"><i class="fas fa-check"></i></button>'
-  $html = $html + '<button class="btn btn-square btn-sm btn-danger btn-outline" id="myedit-annule"><i class="fas fa-times"></i></button></div>'
-  return $html
+
+  return '<div id="myEdit-zone" class="input-group">\n' +
+    '                      <input type="text" class="form-control" id="myedit-input" value="' + $obj.html().trim() + '" >\n' +
+    '                      <span class="input-group-append">\n' +
+    ' <button class="btn btn-success-outline" id="myedit-valide"><i class="fas fa-check"></i></button>\n' +
+    '                        <button class="btn btn-danger-outline" id="myedit-annule"><i class="fas fa-times"></i></button>\n' +
+    '                      </span>\n' +
+    '                    </div>'
 }
 
 jQuery.fn.dataAttr = function (name, def) {
