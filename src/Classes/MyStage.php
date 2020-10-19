@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyStage.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 28/09/2020 09:18
+// @lastUpdate 19/10/2020 18:03
 
 /**
  * Created by PhpStorm.
@@ -90,7 +90,7 @@ class MyStage
                     case StageEtudiant::ETAT_STAGE_VALIDE:
                         $this->conventionAImprimer[$stageEtudiant->getEtudiant()->getId()] = $stageEtudiant;
                         break;
-                    case StageEtudiant::ETAT_STAGE_CONVENTION_IMPRIME:
+                    case StageEtudiant::ETAT_STAGE_CONVENTION_IMPRIMEE:
                         $this->conventionAEnvoyer[$stageEtudiant->getEtudiant()->getId()] = $stageEtudiant;
                         break;
                     case StageEtudiant::ETAT_STAGE_CONVENTION_ENVOYEE:
