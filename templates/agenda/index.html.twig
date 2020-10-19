@@ -44,8 +44,8 @@
     {% block sizeQv %}{% if is_granted('ROLE_PERMANENT') %}quickview-xl{% endif %}{% endblock %}
 
     {% block javascripts %}
+        {{ parent() }}
         {% if is_granted('ROLE_PERMANENT') %}
-            {{ parent() }}
             {{ encore_entry_script_tags('agenda') }}
         {% endif %}
     {% endblock %}
