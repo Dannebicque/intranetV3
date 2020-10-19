@@ -103,7 +103,8 @@
                                                              imprimée
                                                              prochainement.
                             </div>
-                        {% elseif ((stageEtudiants[stagePeriode.id] is  defined) and (stageEtudiants[stagePeriode.id].etatStage is constant('ETAT_STAGE_CONVENTION_IMPRIME', stageEtudiants[stagePeriode.id]) )) %}
+                        {% elseif ((stageEtudiants[stagePeriode.id] is  defined) and (stageEtudiants[stagePeriode.id]
+                            .etatStage is constant('ETAT_STAGE_CONVENTION_IMPRIMEE', stageEtudiants[stagePeriode.id]) )) %}
                             <div class="alert alert-success">La convention est imprimée. Vous devez venir signer votre
                                                              convention de stage
                             </div>

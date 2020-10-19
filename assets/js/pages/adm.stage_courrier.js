@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.stage_courrier.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 28/09/2020 11:43
+// @lastUpdate 19/10/2020 18:03
 
 import Quill from '../quill'
 import {addCallout} from '../util'
@@ -11,7 +11,7 @@ import Swal from 'sweetalert2'
 
 let ed_courrier, ed_ETAT_STAGE_AUTORISE, ed_ETAT_STAGE_DEPOSE, ed_ETAT_STAGE_VALIDE, ed_ETAT_STAGE_REFUS,
   ed_ETAT_STAGE_INCOMPLET,
-  ed_ETAT_STAGE_CONVENTION_IMPRIME, ed_ETAT_STAGE_CONVENTION_ENVOYEE, ed_ETAT_STAGE_CONVENTION_RECUE
+  ed_ETAT_STAGE_CONVENTION_IMPRIMEE, ed_ETAT_STAGE_CONVENTION_ENVOYEE, ed_ETAT_STAGE_CONVENTION_RECUE
 
 let tabEd = {}
 
@@ -43,7 +43,7 @@ $(document).ready(function () {
   ed_ETAT_STAGE_VALIDE = loadQuill('ETAT_STAGE_VALIDE')
   ed_ETAT_STAGE_REFUS = loadQuill('ETAT_STAGE_REFUS')
   ed_ETAT_STAGE_INCOMPLET = loadQuill('ETAT_STAGE_INCOMPLET')
-  ed_ETAT_STAGE_CONVENTION_IMPRIME = loadQuill('ETAT_STAGE_CONVENTION_IMPRIME')
+  ed_ETAT_STAGE_CONVENTION_IMPRIMEE = loadQuill('ETAT_STAGE_CONVENTION_IMPRIMEE')
   ed_ETAT_STAGE_CONVENTION_ENVOYEE = loadQuill('ETAT_STAGE_CONVENTION_ENVOYEE')
   ed_ETAT_STAGE_CONVENTION_RECUE = loadQuill('ETAT_STAGE_CONVENTION_RECUE')
   ed_courrier = loadQuill('courrier')
@@ -54,7 +54,7 @@ $(document).ready(function () {
     'ed_ETAT_STAGE_VALIDE': ed_ETAT_STAGE_VALIDE,
     'ed_ETAT_STAGE_REFUS': ed_ETAT_STAGE_REFUS,
     'ed_ETAT_STAGE_INCOMPLET': ed_ETAT_STAGE_INCOMPLET,
-    'ed_ETAT_STAGE_CONVENTION_IMPRIME': ed_ETAT_STAGE_CONVENTION_IMPRIME,
+    'ed_ETAT_STAGE_CONVENTION_IMPRIMEE': ed_ETAT_STAGE_CONVENTION_IMPRIMEE,
     'ed_ETAT_STAGE_CONVENTION_ENVOYEE': ed_ETAT_STAGE_CONVENTION_ENVOYEE,
     'ed_ETAT_STAGE_CONVENTION_RECUE': ed_ETAT_STAGE_CONVENTION_RECUE,
     'ed_courrier': ed_courrier

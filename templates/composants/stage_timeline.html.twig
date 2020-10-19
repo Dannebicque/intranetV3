@@ -22,7 +22,7 @@
     <li class="nav-item
                              {% if ((stageEtudiant is  defined) and (
         (stageEtudiant.etatStage is constant('ETAT_STAGE_VALIDE', stageEtudiant) )
-        or (stageEtudiant.etatStage is constant('ETAT_STAGE_CONVENTION_IMPRIME', stageEtudiant) )
+        or (stageEtudiant.etatStage is constant('ETAT_STAGE_CONVENTION_IMPRIMEE', stageEtudiant) )
         or (stageEtudiant.etatStage is constant('ETAT_STAGE_CONVENTION_ENVOYEE', stageEtudiant))
         or (stageEtudiant.etatStage is constant('ETAT_STAGE_CONVENTION_RECUE', stageEtudiant))
         )) %}
@@ -36,7 +36,7 @@
         <a class="nav-link" href="#"></a>
         {% if ((stageEtudiant is  defined) and (
             (stageEtudiant.etatStage is constant('ETAT_STAGE_VALIDE', stageEtudiant) )
-            or (stageEtudiant.etatStage is constant('ETAT_STAGE_CONVENTION_IMPRIME', stageEtudiant) )
+            or (stageEtudiant.etatStage is constant('ETAT_STAGE_CONVENTION_IMPRIMEE', stageEtudiant) )
             or (stageEtudiant.etatStage is constant('ETAT_STAGE_CONVENTION_ENVOYEE', stageEtudiant))
             or (stageEtudiant.etatStage is constant('ETAT_STAGE_CONVENTION_RECUE', stageEtudiant))
             )) %}
@@ -45,7 +45,7 @@
     </li>
     <li class="nav-item
                         {% if ((stageEtudiant is  defined) and ((stageEtudiant.etatStage is constant
-        ('ETAT_STAGE_CONVENTION_IMPRIME', stageEtudiant) )
+        ('ETAT_STAGE_CONVENTION_IMPRIMEE', stageEtudiant) )
         or (stageEtudiant.etatStage is constant('ETAT_STAGE_CONVENTION_ENVOYEE', stageEtudiant))
         or (stageEtudiant.etatStage is constant('ETAT_STAGE_CONVENTION_RECUE', stageEtudiant))
         )) %}
@@ -57,7 +57,7 @@
         <span class="nav-title">Formulaire Validé</span>
         <a class="nav-link" href="#"></a>
         {% if ((stageEtudiant is  defined) and (
-            (stageEtudiant.etatStage is constant('ETAT_STAGE_CONVENTION_IMPRIME', stageEtudiant) )
+            (stageEtudiant.etatStage is constant('ETAT_STAGE_CONVENTION_IMPRIMEE', stageEtudiant) )
             or (stageEtudiant.etatStage is constant('ETAT_STAGE_CONVENTION_ENVOYEE', stageEtudiant))
             or (stageEtudiant.etatStage is constant('ETAT_STAGE_CONVENTION_RECUE', stageEtudiant))
             )) %}
@@ -71,7 +71,7 @@
         )) %}
                             complete
                             {% elseif ((stageEtudiant is  defined) and (stageEtudiant.etatStage is constant
-        ('ETAT_STAGE_CONVENTION_IMPRIME', stageEtudiant) )) %}
+        ('ETAT_STAGE_CONVENTION_IMPRIMEE', stageEtudiant) )) %}
                             processing
                             {% endif %}">
         <span class="nav-title">Signature convention</span>

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyStageEtudiant.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/10/2020 12:59
+// @lastUpdate 19/10/2020 18:03
 
 /**
  * Created by PhpStorm.
@@ -94,10 +94,10 @@ class MyStageEtudiant
                 $this->stageEtudiant->setDateValidation(new Carbon('now'));
                 $eventNotif = StageEvent::CHGT_ETAT_STAGE_VALIDE;
                 break;
-            case StageEtudiant::ETAT_STAGE_CONVENTION_IMPRIME:
-                $this->stageEtudiant->setEtatStage(StageEtudiant::ETAT_STAGE_CONVENTION_IMPRIME);
+            case StageEtudiant::ETAT_STAGE_CONVENTION_IMPRIMEE:
+                $this->stageEtudiant->setEtatStage(StageEtudiant::ETAT_STAGE_CONVENTION_IMPRIMEE);
                 $this->stageEtudiant->setDateImprime(new Carbon('now'));
-                $eventNotif = StageEvent::CHGT_ETAT_STAGE_CONVENTION_IMPRIME;
+                $eventNotif = StageEvent::CHGT_ETAT_STAGE_CONVENTION_IMPRIMEE;
                 break;
             case StageEtudiant::ETAT_STAGE_CONVENTION_ENVOYEE:
                 $this->stageEtudiant->setEtatStage(StageEtudiant::ETAT_STAGE_CONVENTION_ENVOYEE);

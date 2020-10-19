@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/StageSubscriber.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/10/2020 12:06
+// @lastUpdate 19/10/2020 18:04
 
 namespace App\EventSubscriber;
 
@@ -56,14 +56,14 @@ class StageSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            StageEvent::CHGT_ETAT_STAGE_AUTORISE           => 'onChgtEtatStageAutorise',
-            StageEvent::CHGT_ETAT_STAGE_DEPOSE             => 'onChgtEtatStageDepose',
-            StageEvent::CHGT_ETAT_STAGE_VALIDE             => 'onChgtEtatStageValide',
-            StageEvent::CHGT_ETAT_STAGE_REFUS              => 'onChgtEtatStageRefus',
-            StageEvent::CHGT_ETAT_STAGE_INCOMPLET          => 'onChgtEtatStageIncomplet',
-            StageEvent::CHGT_ETAT_STAGE_CONVENTION_IMPRIME => 'onChgtEtatStageImprime',
-            StageEvent::CHGT_ETAT_STAGE_CONVENTION_ENVOYEE => 'onChgtEtatStageConventionEnvoyee',
-            StageEvent::CHGT_ETAT_CONVENTION_RECUE         => 'onChgtEtatStageConventionRecue',
+            StageEvent::CHGT_ETAT_STAGE_AUTORISE            => 'onChgtEtatStageAutorise',
+            StageEvent::CHGT_ETAT_STAGE_DEPOSE              => 'onChgtEtatStageDepose',
+            StageEvent::CHGT_ETAT_STAGE_VALIDE              => 'onChgtEtatStageValide',
+            StageEvent::CHGT_ETAT_STAGE_REFUS               => 'onChgtEtatStageRefus',
+            StageEvent::CHGT_ETAT_STAGE_INCOMPLET           => 'onChgtEtatStageIncomplet',
+            StageEvent::CHGT_ETAT_STAGE_CONVENTION_IMPRIMEE => 'onChgtEtatStageImprime',
+            StageEvent::CHGT_ETAT_STAGE_CONVENTION_ENVOYEE  => 'onChgtEtatStageConventionEnvoyee',
+            StageEvent::CHGT_ETAT_CONVENTION_RECUE          => 'onChgtEtatStageConventionRecue',
         ];
     }
 
@@ -216,8 +216,8 @@ class StageSubscriber implements EventSubscriberInterface
      */
     public function onChgtEtatStageImprime(StageEvent $event): void
     {
-        $this->addNotification($event, StageEvent::CHGT_ETAT_STAGE_CONVENTION_IMPRIME);
-        $this->sendMail($event, StageEvent::CHGT_ETAT_STAGE_CONVENTION_IMPRIME);
+        $this->addNotification($event, StageEvent::CHGT_ETAT_STAGE_CONVENTION_IMPRIMEE);
+        $this->sendMail($event, StageEvent::CHGT_ETAT_STAGE_CONVENTION_IMPRIMEE);
 
     }
 
