@@ -969,7 +969,7 @@ etudiants.du.semestre: 'Etudiants du semestre'
 eval.de: 'Evaluation de'
 eval.du: 'Evaluation du'
 evaluation: Evaluation
-evaluation.edit.success.flash: 'Evaluation modifié avec sccès'
+evaluation.edit.success.flash: 'Evaluation modifiée avec sccès'
 evaluation.initialisee.success: 'Evaluation initialisée avec succès'
 excel: 'Excel (xlsx)'
 Excellente: Excellente
