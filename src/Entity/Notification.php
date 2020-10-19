@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Notification.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/10/2020 06:34
+// @lastUpdate 19/10/2020 14:36
 
 namespace App\Entity;
 
@@ -28,6 +28,8 @@ class Notification extends BaseEntity
         'decision.rattrapage.refusee'        => 'ti-na',
         'chgt.etat_stage_autorise'           => 'ti-info',
         'chgt.etat_stage_depose'             => 'ti-info',
+        'chgt.etat_stage_refuse'             => 'ti-danger',
+        'chgt.etat_stage_incomplet'          => 'ti-danger',
         'chgt.etat_stage_valide'             => 'ti-info',
         'chgt.etat_stage_convention_envoyee' => 'ti-info',
         'chgt.etat_stage_convention_recue'   => 'ti-info',
@@ -48,6 +50,8 @@ class Notification extends BaseEntity
         'chgt.etat_stage_valide'             => 'info',
         'chgt.etat_stage_convention_envoyee' => 'info',
         'chgt.etat_stage_convention_recue'   => 'info',
+        'chgt.etat_stage_refuse'             => 'danger',
+        'chgt.etat_stage_incomplet'          => 'danger',
         'chgt.emprunt.demande'               => 'info',
         'chgt.emprunt.accepte'               => 'success',
         'chgt.emprunt.refus'                 => 'danger',
