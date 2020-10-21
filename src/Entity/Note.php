@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Note.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/10/2020 06:34
+// @lastUpdate 20/10/2020 18:40
 
 namespace App\Entity;
 
@@ -37,7 +37,7 @@ class Note extends BaseEntity
     private $note;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $commentaire;
 
@@ -140,7 +140,7 @@ class Note extends BaseEntity
      *
      * @return Note
      */
-    public function setCommentaire(string $commentaire): self
+    public function setCommentaire(?string $commentaire): self
     {
         $this->commentaire = $commentaire;
 
