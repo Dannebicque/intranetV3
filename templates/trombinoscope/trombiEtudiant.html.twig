@@ -78,14 +78,16 @@
                                                         </a>
                                                     </div>
                                                     <div>
-                                                        <a href="{{ etudiant.siteUniv }}"
-                                                           {% if etudiant.siteUniv == '' or etudiant.siteUniv == null %}disabled{% endif %}
-                                                           class="text-white"
-                                                           target="_blank" title="Site Universitaire" data-provide="tooltip"
-                                                           data-placement="bottom">
-                                                            <i class="fa fa-fw fa-globe w-20px"></i>
-                                                            <span class="sr-only">Site Universitaire</span>
-                                                        </a>
+                                                        {% if etudiant.siteUniv == '' or etudiant.siteUniv == null %}
+                                                            <a href="{{ etudiant.siteUniv }}"
+                                                               disabled
+                                                               class="text-white"
+                                                               target="_blank" title="Site Universitaire" data-provide="tooltip"
+                                                               data-placement="bottom">
+                                                                <i class="fa fa-fw fa-globe w-20px"></i>
+                                                                <span class="sr-only">Site Universitaire</span>
+                                                            </a>
+                                                        {% endif %}
                                                         {% if etudiant.sitePerso != '' or etudiant.sitePerso != null %}
 
                                                             <a href="{{ etudiant.sitePerso }}"
