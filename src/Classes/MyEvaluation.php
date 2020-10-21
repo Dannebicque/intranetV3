@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEvaluation.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 14/10/2020 18:36
+// @lastUpdate 21/10/2020 06:25
 
 /**
  * Created by PhpStorm.
@@ -357,12 +357,12 @@ class MyEvaluation
                     $nnnote->setEvaluation($evaluation);
                     $nnnote->setEtudiant($etudiants[$note['num_etudiant']]);
                     $nnnote->setCommentaire($note['commentaire']);
-                    $nnnote->setNote($note['note']);
+                    $nnnote->setNote(Tools::convertToFloat($note['note']));
                     $this->entityManager->persist($nnnote);
                     $newnote = [];
                     $newnote['idetudiant'] = $etudiants[$note['num_etudiant']]->getId();
                     $newnote['numetudiant'] = $note['num_etudiant'];
-                    $newnote['note'] = $note['note'];
+                    $newnote['note'] = Tools::convertToFloat($note['note']);
                     $newnote['commentaire'] = $note['commentaire'];
                     $newnote['absenceJustifie'] = false;
                     $newnote['dejapresente'] = false; //on indique qu'on remplace  car pas de notes
