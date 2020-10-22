@@ -3,13 +3,14 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/SecurityController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/09/2020 08:47
+// @lastUpdate 22/10/2020 15:56
 
 namespace App\Controller;
 
 use App\Classes\Mail\MailerFromTwig;
 use App\Entity\Constantes;
 use App\Entity\Departement;
+use App\Entity\Personnel;
 use App\Repository\EtudiantRepository;
 use App\Repository\PersonnelDepartementRepository;
 use App\Repository\PersonnelRepository;
@@ -17,12 +18,12 @@ use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -110,6 +111,47 @@ class SecurityController extends AbstractController
         }
 
         return $this->render('security/passwordLost.html.twig');
+    }
+
+    /**
+     * @Route("/connexion/init-password/{uuid}", name="security_password_init", options={"expose"=true})
+     * @ParamConverter("personnel", options={"mapping": {"uuid": "uuid"}})
+     *
+     * @param Personnel                    $personnel
+     * @param UserPasswordEncoderInterface $passwordEncoder
+     *
+     * @param EntityManagerInterface       $entityManager
+     *
+     * @param MailerFromTwig               $mailerFromTwig
+     *
+     * @return JsonResponse
+     */
+    public function initPassword(
+        Personnel $personnel,
+        UserPasswordEncoderInterface $passwordEncoder,
+        EntityManagerInterface $entityManager,
+        MailerFromTwig $mailerFromTwig
+    ): JsonResponse {
+        $password = substr(md5(mt_rand()), 0, 10);
+        $passwordEncode = $passwordEncoder->encodePassword($password);
+
+        $personnel->setPassword($passwordEncode);
+        $entityManager->flush();
+
+        $mailerFromTwig->initEmail();
+        $mailerFromTwig->setTemplate('mails/security/initPassword.txt.html', [
+            'personnel' => $personnel,
+            'password'  => $password
+        ]);
+
+        $mailerFromTwig->initEmail();
+        $mailerFromTwig->setTemplate('mails/security/initLogin.txt.html', [
+            'personnel' => $personnel,
+        ]);
+
+        $mailerFromTwig->sendMessage($personnel->getMails(), 'Initialisation de votre compte');
+
+        return $this->json(true);
     }
 
     /**

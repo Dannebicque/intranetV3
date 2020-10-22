@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.personnels.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/10/2020 11:35
+// @lastUpdate 22/10/2020 15:56
 
 import '../../vendor/datatables'
 import {dataTableLangueFr} from '../lang/fr'
@@ -20,10 +20,10 @@ $(document).on('keyup', '#login_urca', function () {
       url: Routing.generate('api_personnel_recherche', {needle: $val}),
       dataType: 'json',
       success: function (data) {
-
+        let html = ''
         $('#result').empty()
         jQuery.each(data, function (index, pers) {
-          const html = '<tr>' +
+          html = html + '<tr>' +
             '<td>' + pers.nom + '</td>' +
             '<td>' + pers.prenom + '</td>' +
             '<td>' + pers.numeroHarpege + '</td>' +
@@ -31,8 +31,13 @@ $(document).on('keyup', '#login_urca', function () {
             '<td>' + pers.mail_univ + '</td>' +
             '<td><a href="#" class="btn btn-success btn-outline btn-square addpersonnel" data-provide="tooltip" data-placement="bottom" title="Ajouter au departement" data-slug="' + pers.slug + '"><i class="fas fa-plus"></i></a></td>' +
             '</tr>'
-          $('#result').append(html)
+
         })
+
+        html = html + '<tr>' +
+          '<td colspan="6"><a href="' + Routing.generate('administration_personnel_create') + '" class="btn btn-success btn-block" data-provide="tooltip" data-placement="bottom" title="Ajouter un intervenant"><i class="fas fa-plus"></i> Si l\'internvenant n\'est pas présent dans l\'intranet vous pouvez l\'ajouter</a></td>' +
+          '</tr>'
+        $('#result').append(html)
       }
     })
   }

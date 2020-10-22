@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EvaluationController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/10/2020 16:15
+// @lastUpdate 22/10/2020 15:56
 
 namespace App\Controller\administration;
 
@@ -64,11 +64,13 @@ class EvaluationController extends BaseController
             EvaluationType::class,
             $evaluation,
             [
-                'departement'     => $this->dataUserSession->getDepartement(),
-                'semestre'        => $matiere->getSemestre(),
-                'matiereDisabled' => true,
-                'locale'          => $request->getLocale(),
-                'attr'            => [
+                'departement'       => $this->dataUserSession->getDepartement(),
+                'semestre'          => $matiere->getSemestre(),
+                'matiereDisabled'   => true,
+                'personnelDisabled' => false,
+                'autorise'          => true,
+                'locale'            => $request->getLocale(),
+                'attr'              => [
                     'data-provide' => 'validation'
                 ]
             ]
