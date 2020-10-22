@@ -11,7 +11,7 @@ titre: Titre
 'Fichier import': 'Fichier import'
 'Laissez 0 si scolarité en cours': 'Laissez 0 si scolarité en cours'
 'Nb absences': 'Nb absences'
-
+Mme: Mme
 'Select a City...': 'Select a City...'
 'Select a Semestre first ...': 'Select a Semestre first ...'
 'Séparer les places par des ";"': 'Séparer les places par des ";"'
@@ -27,6 +27,7 @@ apprentissage: 'En Apprentissage'
 bac: 'Bac obtenu'
 boursier: Boursier
 choice:
+  ater: ATER
   autre: Autre
   c2i: C2I
   contractuel: 'Contractuel (CDD/CDI)'
@@ -70,6 +71,8 @@ Etat: Etat
 fichier_import: 'Fichier à importer'
 h: Heure
 help:
+  personnel:
+    entreprise: 'Nom de l''entreprise pour les intervenants professionnels. Information visible des étudiants'
   activites: 'Décrivez les missions qui vous seront confiées'
   amenagementStage: 'Aménagement du temps de travail par exemple'
   avantages: 'Autres avantages (frais de transports, ...)'
@@ -108,6 +111,7 @@ help:
   texteLibre: 'Commentaire libre sur la période de stage. Sera visible de l''étudiant'
   titre.enquete: 'Titre de l''enquête affiché pour l''étudiant'
   tuteur_universitaire: 'Tuteur universitaire en charge du suivi de l''alternance de l''étudiant'
+  personnelAuteur: 'Intervenant à l''origine de l''évaluation'
 
 Heure: Heure
 Hour: Hour
@@ -371,6 +375,7 @@ label:
   ville: Ville
   visible: Visible
   volume_horaire: 'Volume horaire du diplôme'
+  personnelAuteur: 'Evaluation créée par'
 
 labele.libelle: Libellé
 labele.nbHeuresTd: 'Nb heures TD'
