@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Form/EvaluationType.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/10/2020 17:17
+// @lastUpdate 22/10/2020 15:56
 
 namespace App\Form;
 
@@ -45,8 +45,21 @@ class EvaluationType extends AbstractType
         $this->semestre = $options['semestre'];
         $import = $options['import'];
         $matiereDisabled = $options['matiereDisabled'];
+        $personnelDisabled = $options['personnelDisabled'] !== null ? $options['personnelDisabled'] : true;
 
         $builder
+            ->add('personnelAuteur', EntityType::class,
+                [
+                    'label'         => 'label.personnelAuteur',
+                    'help'          => 'help.personnelAuteur',
+                    'required'      => true,
+                    'disabled'      => $personnelDisabled,
+                    'class'         => Personnel::class,
+                    'choice_label'  => 'displayPr',
+                    'query_builder' => function(PersonnelRepository $personnelRepository) {
+                        return $personnelRepository->findByDepartementBuilder($this->semestre->getAnnee()->getDiplome()->getDepartement());
+                    },
+                ])
             ->add('libelle', TextType::class,
                 ['label'    => 'label.libelle_evaluation',
                  'help'     => 'help.libelle_evaluation',
@@ -121,6 +134,7 @@ class EvaluationType extends AbstractType
             'semestre'           => null,
             'import'             => null,
             'matiereDisabled'    => null,
+            'personnelDisabled'  => null,
             'autorise'           => null,
             'translation_domain' => 'form',
             'locale'             => 'fr'

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/RhController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/09/2020 08:34
+// @lastUpdate 22/10/2020 15:33
 
 namespace App\Controller\superAdministration;
 
@@ -142,7 +142,6 @@ class RhController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $personnel->setRoles(['ROLE_PERMANENT']);
-            $personnel->setTypeUser('permanent');
             $this->entityManager->persist($personnel);
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'rh.add.success.flash');
