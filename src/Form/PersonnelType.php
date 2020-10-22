@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Form/PersonnelType.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 02/09/2020 12:27
+// @lastUpdate 22/10/2020 15:56
 
 namespace App\Form;
 
@@ -69,7 +69,8 @@ class PersonnelType extends AbstractType
             ->add('domaines', TextareaType::class, ['label' => 'label.domaines', 'required' => false])
             ->add('remarque', TextareaType::class, ['label' => 'label.remarque', 'required' => false])
             ->add('signature', TextareaType::class, ['label' => 'label.signature', 'required' => false])
-            ->add('entreprise', TextType::class, ['label' => 'label.entreprise', 'required' => false])
+            ->add('entreprise', TextType::class,
+                ['label' => 'label.entreprise', 'required' => false, 'help' => 'help.personnel.entreprise'])
             ->add('bureau1', TextType::class, ['label' => 'label.bureau1', 'required' => false])
             ->add('bureau2', TextType::class, ['label' => 'label.bureau2', 'required' => false])
             ->add('adresse', AdresseType::class, ['label' => 'label.adresse', 'required' => false])

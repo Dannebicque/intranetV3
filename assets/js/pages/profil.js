@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/profil.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/10/2020 12:23
+// @lastUpdate 22/10/2020 13:41
 import {addCallout} from '../util'
 
 require('chart.js')
@@ -167,6 +167,20 @@ $(document).on('click', '.checkAbsence', function (e) {
     }
   })
 
+})
+
+$(document).on('change', '#btnInit', function () {
+  $.ajax({
+    url: Routing.generate('security_password_init', {user: $(this).data('personnel')}),
+    method: 'POST',
+    success: function (e) {
+      addCallout('Mot de passe initialisé !', 'success')
+    },
+    error: function (e) {
+      addCallout('Erreur lors l\'initialisation du mot de passe !', 'danger')
+    }
+
+  })
 })
 
 $(document).on('change', '#chgt_etudiant_semestre', function () {
