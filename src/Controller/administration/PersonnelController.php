@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/PersonnelController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/10/2020 13:01
+// @lastUpdate 21/10/2020 09:13
 
 namespace App\Controller\administration;
 
@@ -94,7 +94,7 @@ class PersonnelController extends BaseController
     }
 
     /**
-     * @Route("/create", name="administration_personnel_create", methods="GET|POST")
+     * @Route("/create", name="administration_personnel_create", methods="GET|POST", options={"expose"=true})
      * @param Request $request
      *
      * @return Response
