@@ -1,0 +1,15 @@
+Bonjour {{ personnel.displayPr  }},
+
+Votre compte sur l'intranet de l'{{ settings('NOM_IUT') }} vient d'être initilisé ou réinitilisé par l'administrateur (suite à votre demande ou parce que vous êtes nouveau dans la formation).
+
+Voici votre login : {{ personnel.username }}
+Votre mot de passe vous sera communiqué dans un autre mail.
+
+Ces identifiants vous permettrons d'accéder à l'Intranet pour l'ensemble des formations de l'{{ settings('NOM_IUT') }} dans lesquels vous intervenez.
+
+Pour accéder à l'intranet : {{ settings('SITE_INTRANET_IUT') }}
+
+Bien cordialement
+Intranet {{ settings('NOM_IUT') }}
+
+Ce message est envoyé automatiquement et ne peut recevoir de réponse.

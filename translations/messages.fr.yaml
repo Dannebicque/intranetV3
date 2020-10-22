@@ -882,6 +882,7 @@ details:
 
 diplome:
   add.success.flash: 'Diplôme ajouté avec succès'
+  edit.success.flash: 'Diplôme modifié avec succès'
   create.success.flash: 'Diplôme créé avec succès'
   delete.error.non-vide.flash: 'Impossible de supprimer un diplôme non vide.'
   delete.success.flash: 'Diplôme supprimé avec succès'
@@ -1943,6 +1944,8 @@ toute.la.journee: 'Toute la journée'
 tp: TP
 
 trombinoscope.heading: Trombinoscope
+
+
 
 type_diplome: 'Type de diplôme'
 type_diplome.add.success.flash: 'Type de diplôme créé avec succès'
