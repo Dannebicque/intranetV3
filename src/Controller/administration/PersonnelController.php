@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/PersonnelController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 21/10/2020 09:13
+// @lastUpdate 23/10/2020 06:29
 
 namespace App\Controller\administration;
 
@@ -111,7 +111,12 @@ class PersonnelController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($personnel);
+
+            $personnelDepartement = new PersonnelDepartement($personnel, $this->dataUserSession->getDepartement());
+            $this->entityManager->persist($personnelDepartement);
             $this->entityManager->flush();
+
+
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'personnel.add.success.flash');
 
             return $this->redirectToRoute('administration_personnel_index');
