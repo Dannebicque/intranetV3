@@ -2,11 +2,10 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/trombinoscope.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 01/01/2020 18:15
+// @lastUpdate 23/10/2020 09:42
 
 $(document).on('click', '.semestretrombi', function(e) {
   e.preventDefault();
-
 
   $('.semestretrombi').removeClass('active show');
   $('.enseignanttrombi').removeClass('active show');
@@ -17,7 +16,7 @@ $(document).on('click', '.semestretrombi', function(e) {
 $(document).on('click', '.changeTypeGroupe', function (e) {
   e.preventDefault();
 
-  $('#trombi').slideUp().empty().load(Routing.generate('trombinoscope_etudiant_semestre', {
+  $('#trombi').slideUp().empty().load(Routing.generate('trombinoscope_etudiant_semestre_type_groupe', {
     semestre: $(this).data('semestre'),
     typegroupe: $(this).data('typegroupe')
   })).slideDown();
