@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/TrombinoscopeController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/10/2020 12:12
+// @lastUpdate 23/10/2020 10:45
 
 namespace App\Controller;
 
@@ -17,6 +17,8 @@ use App\Classes\MyExportListing;
 use App\Repository\GroupeRepository;
 use App\Repository\PersonnelRepository;
 use PhpOffice\PhpSpreadsheet\Exception;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -32,7 +34,7 @@ use Twig\Error\SyntaxError;
 class TrombinoscopeController extends BaseController
 {
     /**
-     * @Route("", name="trombinoscope_index")
+     * @Route("/", name="trombinoscope_index")
      */
     public function index(): Response
     {
@@ -41,7 +43,7 @@ class TrombinoscopeController extends BaseController
     }
 
     /**
-     * @Route("/etudiant/export/{typeGroupe}.{_format}", name="trombinoscope_etudiant_export", methods="GET",
+     * @Route("/etudiant/export/{typeGroupe<\d+>}.{_format}", name="trombinoscope_etudiant_export", methods="GET",
      *                                                   requirements={"_format"="csv|xlsx|pdf"})
      * @param MyExportListing  $myExportListing
      * @param TypeGroupe       $typeGroupe
@@ -67,7 +69,7 @@ class TrombinoscopeController extends BaseController
     }
 
     /**
-     * @Route("/etudiant/export-groupe/{groupe}.{_format}", name="trombinoscope_etudiant_export_groupe", methods="GET",
+     * @Route("/etudiant/export-groupe/{groupe<\d+>}.{_format}", name="trombinoscope_etudiant_export_groupe", methods="GET",
      *                                                   requirements={"_format"="csv|xlsx|pdf"})
      * @param MyExportListing  $myExportListing
      * @param Groupe           $groupe
@@ -94,8 +96,7 @@ class TrombinoscopeController extends BaseController
 
 
     /**
-     * @Route("/etudiant/export-image/{typeGroupe}.pdf", name="trombinoscope_etudiant_image", methods="GET",
-     *                                                   )
+     * @Route("/etudiant/export-image/{typeGroupe<\d+>}.pdf", name="trombinoscope_etudiant_image", methods="GET")
      * @param MyPDF      $myPDF
      * @param TypeGroupe $typeGroupe
      *
@@ -123,27 +124,37 @@ class TrombinoscopeController extends BaseController
     }
 
     /**
-     * @Route("/etudiant/{semestre}/{typegroupe}", name="trombinoscope_etudiant_semestre", options={"expose":true})
+     * @Route("/etudiant/{semestre<\d+>}", name="trombinoscope_etudiant_semestre", options={"expose":true})
+     * @Route("/etudiant/{semestre<\d+>}/{typegroupe<\d+>}", name="trombinoscope_etudiant_semestre_type_groupe",
+     *                                                       options={"expose":true})
      * @param GroupeRepository $groupeRepository
      * @param Semestre         $semestre
      *
      * @param TypeGroupe|null  $typegroupe
+     * @ParamConverter("typegroupe", options={"id" = "typegroupe"})
      *
      * @return Response
      */
     public function trombiEtudiantSemestre(
         GroupeRepository $groupeRepository,
         Semestre $semestre,
-        TypeGroupe $typegroupe = null
+        ?TypeGroupe $typegroupe = null
     ): Response {
-
-        $groupes = $groupeRepository->findByTypeGroupe($typegroupe);
+        if ($typegroupe !== null) {
+            $groupes = $groupeRepository->findByTypeGroupe($typegroupe);
+        } else {
+            foreach ($semestre->getTypeGroupes() as $typeGroupe) {
+                if ($typeGroupe->getDefaut() === true) {
+                    $typegroupe = $typeGroupe;
+                    $groupes = $typeGroupe->getGroupes();
+                }
+            }
+        }
 
         return $this->render('trombinoscope/trombiEtudiant.html.twig', [
-            'semestre' => $semestre,
+            'semestre'           => $semestre,
             'selectedTypeGroupe' => $typegroupe,
-            'groupes' => $groupes
-
+            'groupes'            => $groupes
         ]);
     }
 
@@ -176,7 +187,6 @@ class TrombinoscopeController extends BaseController
      * @param                     $_format
      *
      * @return Response
-     * @throws Exception
      */
     public function trombiPersonnelExport(
         MyExport $myExport,

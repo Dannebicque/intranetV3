@@ -438,13 +438,6 @@
           "variable",
           "\/",
           "[^\/]++",
-          "typegroupe",
-          true
-        ],
-        [
-          "variable",
-          "\/",
-          "[^\/]++",
           "semestre",
           true
         ],
