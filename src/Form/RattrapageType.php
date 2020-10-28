@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Form/RattrapageType.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/08/2020 10:14
+// @lastUpdate 28/10/2020 07:53
 
 namespace App\Form;
 
@@ -40,7 +40,7 @@ class RattrapageType extends AbstractType
         $builder
             ->add('dateEval', DateType::class, [
                 'label'    => 'label.date_evaluation',
-                'required' => false,
+                'required' => true,
                 'format'   => 'dd/MM/yyyy',
                 'widget'   => 'single_text',
                 'html5'    => false,
@@ -48,19 +48,19 @@ class RattrapageType extends AbstractType
             ])
             ->add('heureEval', TimeType::class, ['label' => 'label.heure_evaluation', 'required' => false])
             ->add('duree', TextType::class, ['label' => 'label.duree_evaluation', 'required' => false])
-            ->add('matiere', EntityType::class, array(
+            ->add('matiere', EntityType::class, [
                 'class'         => Matiere::class,
                 'label'         => 'label.matiere',
                 'choice_label'  => 'display',
                 'query_builder' => function(MatiereRepository $matiereRepository) {
                     return $matiereRepository->findBySemestreBuilder($this->semestre);
                 },
-                'required'      => false,
+                'required'      => true,
                 'expanded'      => false,
                 'multiple'      => false,
-                'attr' => ['class' => 'form-control selectpicker']
+                'attr'          => ['class' => 'form-control selectpicker']
 
-            ))
+            ])
             ->add('personnel', EntityType::class, array(
                 'class'         => Personnel::class,
                 'label'         => 'label.personnel',
@@ -68,10 +68,10 @@ class RattrapageType extends AbstractType
                 'query_builder' => function(PersonnelRepository $personnelRepository) {
                     return $personnelRepository->findBySemestreBuilder($this->semestre);
                 },
-                'required'      => false,
+                'required'      => true,
                 'expanded'      => false,
                 'multiple'      => false,
-                'attr' => ['class' => 'form-control selectpicker']
+                'attr'          => ['class' => 'form-control selectpicker']
 
             ));
     }
