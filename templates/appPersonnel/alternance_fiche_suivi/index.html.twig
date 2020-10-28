@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block header %}
-    {{ 'app.personnel.alternance_fiche_suivi.index.heading'|trans({'%etudiant%':alternance.etudiant
+    {{ 'app.personnel.alternance.fiche_suivi.index.heading'|trans({'%etudiant%':alternance.etudiant
         .displayPr }) }}
 {% endblock %}
 
@@ -32,8 +32,9 @@
 
 {% block content %}
     <div class="card">
-        <h4 class="card-title">    {{ 'app.personnel.alternance_fiche_suivi.index.heading'|trans({'%etudiant%':alternance.etudiant
-                .displayPr }) }}
+        <h4 class="card-title">    {{ 'app.personnel.alternance.fiche_suivi.index.heading'|trans
+                ({'%etudiant%':alternance.etudiant
+                    .displayPr }) }}
         </h4>
         <div class="card-body">
             <div class="alert alert-info">Alternance de <strong>{{ alternance.etudiant.displayPr }}</strong>, dans

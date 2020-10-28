@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/AlternanceFicheSuiviController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/08/2020 10:27
+// @lastUpdate 28/10/2020 07:50
 
 namespace App\Controller\appPersonnel;
 
@@ -90,8 +90,10 @@ class AlternanceFicheSuiviController extends AbstractController
     public function print(
         MyAlternanceFicheSuivi $myAlternanceFicheSuivi,
         AlternanceFicheSuivi $alternanceFicheSuivi
-    ): Response {
-        return $myAlternanceFicheSuivi->print($alternanceFicheSuivi);
+    ): ?Response {
+        $myAlternanceFicheSuivi->print($alternanceFicheSuivi);
+
+        return null;
     }
 
     /**
