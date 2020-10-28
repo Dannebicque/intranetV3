@@ -564,8 +564,6 @@ app:
       import.titre: 'Importer des notes'
       index.titre: 'Evaluations / Notes'
       saisie.titre: 'Saisir des notes'
-
-application:
   disponibilite.heading: 'Vos disponibilités'
   progression.heading: 'Progression pédagogique'
   quizz.heading: Quizz
