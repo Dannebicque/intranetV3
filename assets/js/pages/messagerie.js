@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/messagerie.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/10/2020 15:26
+// @lastUpdate 02/11/2020 09:05
 
 $(document).on('click', '.messagerie-filtre', function (e) {
   e.preventDefault()
@@ -111,7 +111,7 @@ $(document).on('change', '.pjFile', function () {
   })
   tailleTotale = tailleTotale / 1024
   tailleTotale = tailleTotale / 1024
-  $('#poidPj').show().html('Le poid des pièces jointes est de ' + tailleTotale.toFixed(3) + ' Mo')
+  $('#poidPj').show().html('Le poids des pièces jointes est de ' + tailleTotale.toFixed(3) + ' Mo')
 })
 
 $(document).on('click', '#messageSent', function (e) {
