@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Constantes.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/10/2020 15:17
+// @lastUpdate 02/11/2020 15:38
 
 /**
  * Created by PhpStorm.
@@ -46,6 +46,7 @@ class Constantes
     public const TYPEDOCUMENT_LISTE = 'liste';
 
     public const CHAMPS_NOM_PRENOM = 'nom';
+    public const CHAMPS_GROUPE = 'groupe';
     public const CHAMPS_NUM_ETUDIANT = 'num';
     public const CHAMPS_BAC = 'bac';
     public const CHAMPS_MAIL_ETUDIANT = 'mail';
