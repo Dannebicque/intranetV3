@@ -14,9 +14,8 @@
             </tr>
             </thead>
             <tbody>
-            {% for note in notes|filter(note => note.evaluation.parent == null) %}
+            {% for note in notes|filter(note => (note.evaluation.visible == true and note.evaluation.parent == null) %}
                 <tr>
-
                     <td>{{ note.evaluation.libelle is defined ? note.evaluation.libelle : note.evaluation.id }}</td>
                     <td>{{ note.evaluation.matiere.codeMatiere }}</td>
                     <td class="hide">{{ note.evaluation.dateEvaluation ? note.evaluation.dateEvaluation|format_datetime('long',
@@ -37,7 +36,7 @@
                     </td>
                 </tr>
                 {# notes enfants #}
-                {% for nnote in note.evaluation.enfants %}
+                {% for nnote in note.evaluation.enfants|filter(nnote => (nnote.evaluation.visible == true) %}
                     <tr>
                         <td>&nbsp;</td>
                         <td>--> {{ nnote.evaluation.matiere.codeMatiere }}</td>
