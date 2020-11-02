@@ -26,26 +26,33 @@
         </div>
     </div>
 
-    <div class="col-md-3">
-        <h4>{{ 'colonne.document'|trans }}</h4>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" name="exportChamps[]"
-                   id="exportChamps_1" value="{{ constant('App\\Entity\\Constantes::CHAMPS_NOM_PRENOM') }}" checked
-                   disabled>
-            <label class="form-check-label" for="exportChamps_1">
-                {{ 'nom.prenom'|trans }}
-            </label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" name="exportChamps[]" checked
-                   id="exportChamps_2" value="{{ constant('App\\Entity\\Constantes::CHAMPS_NUM_ETUDIANT') }}">
-            <label class="form-check-label" for="exportChamps_2">
-                {{ 'numero.etudiant'|trans }}
-            </label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" name="exportChamps[]"
-                   id="exportChamps_3" value="{{ constant('App\\Entity\\Constantes::CHAMPS_BAC') }}">
+        <div class="col-md-3">
+            <h4>{{ 'colonne.document'|trans }}</h4>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="exportChamps[]"
+                       id="exportChamps_1" value="{{ constant('App\\Entity\\Constantes::CHAMPS_NOM_PRENOM') }}" checked
+                       disabled>
+                <label class="form-check-label" for="exportChamps_1">
+                    {{ 'nom.prenom'|trans }}
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="exportChamps[]"
+                       id="exportChamps_1" value="{{ constant('App\\Entity\\Constantes::CHAMPS_GROUPE') }}">
+                <label class="form-check-label" for="exportChamps_1">
+                    {{ 'groupe'|trans }}
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="exportChamps[]" checked
+                       id="exportChamps_2" value="{{ constant('App\\Entity\\Constantes::CHAMPS_NUM_ETUDIANT') }}">
+                <label class="form-check-label" for="exportChamps_2">
+                    {{ 'numero.etudiant'|trans }}
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="exportChamps[]"
+                       id="exportChamps_3" value="{{ constant('App\\Entity\\Constantes::CHAMPS_BAC') }}">
             <label class="form-check-label" for="exportChamps_3">
                 {{ 'bac'|trans }}
             </label>

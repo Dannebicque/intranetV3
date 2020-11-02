@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyExportListing.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/09/2020 08:13
+// @lastUpdate 02/11/2020 15:52
 
 /**
  * Created by PhpStorm.
@@ -157,7 +157,6 @@ class MyExportListing
 
     private function prepareColonnes(): void
     {
-        $this->colonnesEnTete[] = '#';
         $this->colonnesEnTete[] = 'Nom';
         $this->colonnesEnTete[] = 'Prénom';
 
@@ -189,27 +188,27 @@ class MyExportListing
     private function exportCsv($separateur): StreamedResponse
     {
         $this->myExcelWriter->createSheet('export');
-        $this->myExcelWriter->writeCellXY($this->colonne, $this->ligne, 'Nom');
-        $this->newColonne();
-        $this->myExcelWriter->writeCellXY($this->colonne, $this->ligne, 'Num Etudiant');
-        $this->newColonne();
-        $this->myExcelWriter->writeCellXY($this->colonne, $this->ligne, 'Prénom');
-        $this->newColonne();
-        $this->myExcelWriter->writeCellXY($this->colonne, $this->ligne, 'Groupe');
+        if (count($this->colonnesEnTete) > 1) {
+            foreach ($this->colonnesEnTete as $col) {
+                $this->myExcelWriter->writeCellXY($this->colonne, $this->ligne, $col);
+                $this->newColonne();
+            }
+        } else {
+            $this->myExcelWriter->writeCellXY($this->colonne, $this->ligne, 'Nom');
+            $this->newColonne();
+            $this->myExcelWriter->writeCellXY($this->colonne, $this->ligne, 'Num Etudiant');
+            $this->newColonne();
+            $this->myExcelWriter->writeCellXY($this->colonne, $this->ligne, 'Prénom');
+            $this->newColonne();
+            $this->myExcelWriter->writeCellXY($this->colonne, $this->ligne, 'Groupe');
+        }
         $this->newLine();
 
         /** @var Groupe $groupe */
         foreach ($this->groupes as $groupe) {
             /** @var Etudiant $etudiant */
             foreach ($groupe->getEtudiants() as $etudiant) {
-                $this->myExcelWriter->writeCellXY($this->colonne, $this->ligne, $etudiant->getNumEtudiant());
-                $this->newColonne();
-                $this->myExcelWriter->writeCellXY($this->colonne, $this->ligne, strtoupper($etudiant->getNom()));
-                $this->newColonne();
-                $this->myExcelWriter->writeCellXY($this->colonne, $this->ligne, strtoupper($etudiant->getPrenom()));
-                $this->newColonne();
-                $this->myExcelWriter->writeCellXY($this->colonne, $this->ligne, $groupe->getLibelle());
-                $this->newLine();
+                $this->writeLine($etudiant, $groupe);
             }
         }
 
@@ -245,15 +244,7 @@ class MyExportListing
             $id = 0;
             /** @var Etudiant $etudiant */
             foreach ($groupe->getEtudiants() as $etudiant) {
-                $id++;
-                $this->myExcelWriter->writeCellXY($this->colonne, $this->ligne, $id);
-                $this->newColonne();
-                $this->myExcelWriter->writeCellXY($this->colonne, $this->ligne, $etudiant->getNumEtudiant());
-                $this->newColonne();
-                $this->myExcelWriter->writeCellXY($this->colonne, $this->ligne, strtoupper($etudiant->getNom()));
-                $this->newColonne();
-                $this->myExcelWriter->writeCellXY($this->colonne, $this->ligne, strtoupper($etudiant->getPrenom()));
-                $this->newLine();
+                $this->writeLine($etudiant, $groupe);
             }
 
             $this->myExcelWriter->writeCellName('A17', $id);
@@ -453,5 +444,50 @@ class MyExportListing
             ],
             $this->name,
             $this->dataUserSession->getDepartement()->getLibelle());
+    }
+
+    /**
+     * @param Etudiant $etudiant
+     * @param Groupe   $groupe
+     */
+    private function writeLine(Etudiant $etudiant, Groupe $groupe): void
+    {
+        if (count($this->colonnesEnTete) > 1) {
+            $this->myExcelWriter->writeCellXY($this->colonne, $this->ligne, strtoupper($etudiant->getNom()));
+            $this->newColonne();
+            $this->myExcelWriter->writeCellXY($this->colonne, $this->ligne, mb_strtoupper($etudiant->getPrenom()));
+            $this->newColonne();
+            foreach ($this->colonnesEnTete as $col) {
+                switch ($col) {
+                    case Constantes::CHAMPS_NUM_ETUDIANT:
+                        $this->myExcelWriter->writeCellXY($this->colonne, $this->ligne,
+                            mb_strtoupper($etudiant->getNumEtudiant()));
+                        $this->newColonne();
+                        break;
+                    case Constantes::CHAMPS_BAC:
+                        $this->myExcelWriter->writeCellXY($this->colonne, $this->ligne,
+                            mb_strtoupper($etudiant->getBac() !== null ? $etudiant->getBac()->getLibelle() : 'Non défini'));
+                        $this->newColonne();
+                        break;
+                    case Constantes::CHAMPS_GROUPE:
+                        $this->myExcelWriter->writeCellXY($this->colonne, $this->ligne, $groupe->getLibelle());
+                        $this->newColonne();
+                        break;
+                    case Constantes::CHAMPS_MAIL_ETUDIANT:
+                        $this->myExcelWriter->writeCellXY($this->colonne, $this->ligne, $etudiant->getMailUniv());
+                        $this->newColonne();
+                        break;
+                }
+            }
+        } else {
+            $this->myExcelWriter->writeCellXY($this->colonne, $this->ligne, $etudiant->getNumEtudiant());
+            $this->newColonne();
+            $this->myExcelWriter->writeCellXY($this->colonne, $this->ligne, mb_strtoupper($etudiant->getNom()));
+            $this->newColonne();
+            $this->myExcelWriter->writeCellXY($this->colonne, $this->ligne, mb_strtoupper($etudiant->getPrenom()));
+            $this->newColonne();
+            $this->myExcelWriter->writeCellXY($this->colonne, $this->ligne, $groupe->getLibelle());
+        }
+        $this->newLine();
     }
 }
