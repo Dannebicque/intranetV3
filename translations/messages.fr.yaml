@@ -571,6 +571,9 @@ app:
   vos.stages.heading: 'Les stagiaires que vous suivez'
   votre.previsionnel.chronologique.heading: 'Votre service réalisé chronologique'
 
+application:
+  vos.stages.et.alternances.heading: 'Liste de vos suivis de stage et d''alternace'
+
 applications:
   etudiant:
     carnet.heading: 'Cahier de texte'
@@ -770,6 +773,7 @@ chgt:
   etat_stage_convention_recue: 'Votre convention de stage est revenue signée par l''entreprise'
   etat_stage_depose: 'Formulaire complété'
   etat_stage_valide: 'Votre stage est validé'
+  etat_stage_refuse: 'Proposition de stage refusée'
 
 choice:
   non: Non
