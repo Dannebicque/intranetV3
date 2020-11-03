@@ -146,6 +146,7 @@
                         du {{ inter.dateDebut|date('d/m/Y') }} au {{ inter.dateFin|date('d/m/Y') }}{% if not loop
                             .last %},{% endif %}
                     {% endfor %}
+                    {% endif %}
                 </p><br>
             </td>
         </tr>
