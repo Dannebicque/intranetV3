@@ -37,6 +37,7 @@
     p {
     margin: 0;
     padding:0;
+    padding-bottom:5px;
     }
 
     ul {
@@ -57,19 +58,18 @@
             <td style="width:40%">&nbsp;</td>
             <td style="font-size:16px; text-align: center; border: 1px solid black;
             padding:10px; font-weight: bold; width:60%">Année universitaire : 2020/2021<br><br>Convention de stage
-                                                        (après le 11
-                                                        mai
-                                                        2020)
+                                                        étudiant/e
             </td>
         </tr>
     </table>
-    <br><br>
+    <br><i>Nota : pour faciliter la lecture du document, les mots "stagiaire", "enseignant référent", "tuteur de stage",
+           "représentant légal", "étudiant" sont utilisés au masculin </i><br>
     <table style="width:100%; border-spacing: 0;">
         <tr>
-            <td style="width: 50%; border: 1px solid black;padding:5px; line-height: 1.3em">
-                <div class="center"><strong>L’ÉTABLISSEMENT D’ENSEIGNEMENT OU DE
-                                            FORMATION</strong></div>
-                <br><br>
+            <td style="width: 50%; border: 1px solid black;padding:5px;">
+                <div class="center"><strong><u>L’ÉTABLISSEMENT D’ENSEIGNEMENT OU DE
+                                               FORMATION</u></strong></div>
+                <br>
                 <p>Nom : UNIVERSITÉ DE REIMS CHAMPAGNE-ARDENNE</p>
                 <p>Adresse : Villa Douce – 9 boulevard de la paix – CS 60005 – 51724 REIMS Cedex</p>
                 <p>Tél. : 03.26.91.34.68</p>
@@ -82,16 +82,16 @@
                 <p>Adresse (si différente de celle de l’établissement)
                    : {% if user_data.departement.ufr.sitePrincipal.adresse != null %}{{ user_data.departement.ufr.sitePrincipal.adresse.display|striptags }}{% endif %}
             </td>
-            <td style="width: 50%; border: 1px solid black;padding:5px; line-height: 1.3em">
-                <div class="center"><strong>L’ORGANISME D’ACCUEIL</strong></div>
-                <br><br>
+            <td style="width: 50%; border: 1px solid black;padding:5px;">
+                <div class="center"><strong><u>L’ORGANISME D’ACCUEIL</u></strong></div>
+                <br>
                 <p>Nom : {{ proposition.entreprise.raisonSociale }}</p>
                 <p>Adresse
                    : {% if proposition.entreprise.adresse != null %}{{ proposition.entreprise.adresse.display|striptags }}{% endif %}</p>
                 <p>Représenté par (nom du signataire de la convention) :<br>
                     {{ proposition.entreprise.responsable.display }}</p>
-                <p>Qualité du représentant : {{ proposition.entreprise.responsable.fonction }}</p>
-                <p>Service dans lequel le stage sera effectué : {{ proposition.serviceStageEntreprise }}</p>
+                <p>Qualité du représentant : <br>{{ proposition.entreprise.responsable.fonction }}</p>
+                <p>Service dans lequel le stage sera effectué : <br>{{ proposition.serviceStageEntreprise }}</p>
                 <p>Tél. : {{ proposition.entreprise.responsable.telephone }}</p>
                 <p>Email : {{ proposition.entreprise.responsable.email }}</p>
                 <p>Lieu du stage (si différent de l’adresse de l’organisme) :</p>
@@ -104,9 +104,9 @@
     <br>
     <table style="width:100%; border-spacing: 0;">
         <tr>
-            <td style="width: 100%; border: 1px solid black;padding:5px; line-height: 1.3em">
-                <div class="center"><strong>LE STAGIAIRE</strong></div>
-                <br><br>
+            <td style="width: 100%; border: 1px solid black;padding:5px;">
+                <div class="center"><strong><u>LE STAGIAIRE</u></strong></div>
+                <br>
                 <p>Nom: {{ proposition.etudiant.nom }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Prénom
                    : {{ proposition.etudiant.prenom|title }}
                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sexe
@@ -114,26 +114,29 @@
                    le : {{ proposition.etudiant.datenaissance|date('d/m/Y') }}</p>
                 <p>Adresse
                    : {% if proposition.etudiant.adresse != null %}{{ proposition.etudiant.adresse.display|striptags }}{% endif %}</p>
-                <p> Tél. : {{ proposition.etudiant.tel1|tel_format }} / {{ proposition.etudiant.tel2|tel_format }}.
+                <p> Tél. : {{ proposition.etudiant.tel1|tel_format }} / {{ proposition.etudiant.tel2|tel_format }}
                     Email : {{ proposition.etudiant.mailUniv }}</p>
-                <p>TITRE DES ENSEIGNEMENTS ET VOLUME HORAIRE
-                   : {{ proposition.etudiant.semestre.annee.diplome.typediplome.libelle }} {{ proposition
+                <p>INTITULE DE LA FORMATION OU DU CURSUS SUIVI DANS L’ETABLISSEMENT D’ENSEIGNEMENT SUPERIEUR ET
+                   VOLUME HORAIRE (ANNUEL OU SEMESTRIEL) :<br>
+                    {{ proposition.etudiant.semestre.annee.diplome.typediplome.libelle }} {{ proposition
                     .etudiant.semestre.annee.diplome.libelle }} ({{ proposition.etudiant.semestre.annee.diplome
-                    .volumehoraire }} heures)</p>
+                    .volumehoraire }} heures pour le diplôme)</p>
             </td>
         </tr>
     </table>
     <br>
     <table style="width:100%; border-spacing: 0;">
         <tr>
-            <td style="width: 100%; border: 1px solid black;padding:5px; line-height: 1.3em">
-                <p>Sujet du stage: <br>{{ proposition.sujetStage }}</p><br>
+            <td style="width: 100%; border: 1px solid black;padding:5px;">
+                <p><strong><u>Sujet du stage</u></strong> : {{ proposition.sujetStage }}</p>
                 <p>Dates du stage : Du {{ proposition.dateDebutStage|date('d/m/Y') }}
                    Au {{ proposition.dateFinStage|date('d/m/Y') }}</p>
-                <p>Durée du stage: {{ proposition.stagePeriode.nbSemaines }} <s>heures</s> / semaines/ <s>mois</s>
+                <p>Représentant une <strong>durée totale</strong> de : {{ proposition.stagePeriode.nbSemaines }}
+                   semaines/
+                    <s>mois</s>
                    (rayer la
                    mention inutile)</p>
-                <p>Correspondant à {{ proposition.stagePeriode.nbJours }}. Jours de présence dans l’organisme
+                <p>Et correspondant à {{ proposition.stagePeriode.nbJours }} Jours de présence dans l’organisme
                    d’accueil.</p>
                 <p>Répartition en cas de stage discontinu : ………….. nombre d’heures par semaine ou par jour rayer la
                    mention inutile) :<br>
@@ -144,9 +147,9 @@
     <br>
     <table style="width:100%; border-spacing: 0;">
         <tr>
-            <td style="width: 50%; border: 1px solid black;padding:5px; line-height: 1.3em">
-                <div class="center"><strong>TUTEUR DE L’ETABLISSEMENT D’ENSEIGNEMENT SUPERIEUR</strong></div>
-                <br><br>
+            <td style="width: 50%; border: 1px solid black;padding:5px;">
+                <div class="center"><strong><u>TUTEUR DE L’ETABLISSEMENT D’ENSEIGNEMENT SUPERIEUR</u></strong></div>
+                <br>
                 {% if proposition.tuteurUniversitaire != null %}
                     <p>Nom et prénom du tuteur universitaire : {{ proposition.tuteurUniversitaire.display }}</p>
                     {% if proposition.tuteurUniversitaire.domaines != "" or proposition.tuteurUniversitaire.responsabilites != "" %}
@@ -166,9 +169,9 @@
                     <p>Email :</p>
                 {% endif %}
             </td>
-            <td style="width: 50%; border: 1px solid black">
-                <div class="center"><strong>TUTEUR DE L’ORGANISME D’ACCUEIL</strong></div>
-                <br><br>
+            <td style="width: 50%; border: 1px solid black;padding:5px;">
+                <div class="center"><strong><u>TUTEUR DE L’ORGANISME D’ACCUEIL</u></strong></div>
+                <br>
                 {% if proposition.tuteur != null %}
                     <p>Nom et prénom :
                         {{ proposition.tuteur.display }}</p>
@@ -189,10 +192,10 @@
     <table style="width:100%; border-spacing: 0;">
         <tr>
             <td style="width: 100%; border: 1px solid black">
-                Caisse primaire d’assurance maladie à contacter en cas d’accident (lieu du domicile français de
-                l’étudiant-e) : <br>
+                Caisse primaire d’assurance maladie à contacter en cas d’accident (lieu de domicile du stagiaire sauf
+                exception) : <br>
                 {{ proposition.etudiant.intituleSecuriteSociale }}.<br>
-                {{ proposition.etudiant.adresseSecuriteSociale }}.<br><br>
+                {{ proposition.etudiant.adresseSecuriteSociale }}.
             </td>
         </tr>
     </table>
@@ -200,108 +203,162 @@
     <div style="page-break-after: always"></div>
 
     <div class="blocconvention_preambule">
-        Sur la base du Code de la santé publique, notamment les articles L. 3131-1 et suivants;<br>
-        Sur la base du Code de l'éducation, notamment les articles L. 124-1 à L. 124-20, L. 612-11 et D. 124-1 à D.
-        124-9;<br>
-        Sur la base du Code français des assurances sociales, notamment les articles L. 242-4-1, L. 412-8 et D. 242-2-1;<br>
-        Sur la base du Code du travail, notamment les articles L. 1221-13 et D. 1221-23 et les articles suivants;<br>
-        Vu la loi d'urgence n ° 2020-290 du 23 mars 2020 pour faire face à l'épidémie de Covid-19<br>
-        Vu l'arrêté du 23 mars 2020 fixant les règles nécessaires à la lutte contre la propagation du virus Covid-19<br>
-        Vu l'arrêté du 14 mars 2020 portant diverses mesures relatives à la lutte contre la propagation du virus
-        covid-19 (modifié)<br>
-        Vu le procotole national de libération du lock-out publié le 3 mai 2020<br>
-        Vu la consultation de la commission de la formation et de la vie universitaire et l'avis du conseil
-        d'administration de l'institution;<br>
+        <p>Vu le code de la santé publique notamment ses articles L. 3131-1 et suivants ;<br>
+           Vu le code de l’éducation, notamment ses articles L. 124-1 à L. 124-20, L. 612-11 et D. 124-1 à D. 124-9
+           ;D714-21 et suivants<br>
+           Vu le code de la sécurité sociale et notamment les articles L. 242-4-1, L. 412-8 et D. 242-2-1 ;<br>
+           Vu le code du travail et notamment ses articles L. 1221-13 et D. 1221-23 et suivants ;<br>
+           Vu la loi n° 2020-856 du 9 juillet 2020 organisant la sortie de l’état d’urgence sanitaire<br>
+           Vu le protocole national pour assurer la santé et la sécurité des salariés en entreprise face à l’épidémie de
+           Covid19 du 31 août 2020<br>
+           Vu la consultation de la Commission de la Formation et de la Vie Universitaire et l’avis du Conseil
+           d’administration de l’établissement ;<br></p>
+        <p>Préalable :</p>
     </div><br>
     <div class="blocconvention_preambule_encadre">
-        Prérequis :<br>
-        Compte tenu des circonstances exceptionnelles dues à la pandémie de Covid 19, tout stage débuté à partir du 11
-        mai 2020, s'effectue de préférence à distance: au domicile de l'étudiant ou au lieu désigné en en-tête.<br>
-        Il est entendu entre les parties qu'elles auront préalablement vérifié que les missions et tâches confiées au
-        stagiaire sont adaptées au télétravail et qu'il dispose du matériel approprié.<br>
-        Le tuteur vérifie la possibilité pour les parties d'utiliser des outils de communication appropriés.<br><br>
+        <p><u>Stages en France</u> : Compte-tenu des circonstances exceptionnelles dues à la pandémie de Covid 19, il
+                                   est
+                                   entendu entre les parties qu’elles auront vérifié au préalable que les missions
+                                   confiées au stagiaire se
+                                   prêtent à un travail en présentiel et/ou à distance et qu’il dispose du matériel
+                                   adéquat.</p>
 
-        Par exception, le stage peut se faire en face à face dans le strict respect du protocole national de libération
-        du lock-out et, le cas échéant, des descriptions de postes publiées sur le site du ministère du Travail et de
-        toute disposition d'hygiène, de santé et de sécurité applicable à l'organisation hôte.<br><br>
+        <p>Les tuteurs vérifient la possibilité d’utilisation par les parties d’outils de communication adéquats.</p>
 
-        Selon l'article 11: Le présent contrat est régi exclusivement par le droit français. Tout litige non résolu à
-        l'amiable sera soumis à la juridiction française compétente<br><br>
+        <p>Le stage ne pourra être réalisé en présentiel que dans le strict respect du
+            <a href="https://travail-emploi.gouv.fr/IMG/pdf/protocole-national-sante-securite-en-entreprise__31_aout_2020.pdf">protocole
+                                                                                                                               national
+                                                                                                                               du
+                                                                                                                               31
+                                                                                                                               août
+                                                                                                                               2020</a>
+           et de toute disposition hygiène, sécurité et santé applicable à l’organisme d’accueil.</p>
 
-        La législation française protégera directement le stagiaire en cas d'accident du travail dont la rémunération
-        est
-        inférieure ou égale à 3,90 euros pour une heure. Si la rémunération est au-dessus de cela, l'organisation
-        d'accueil est entièrement responsable.<br>
+        <p>Il est entendu entre les parties qu’en cas de confinement, le stage basculera automatiquement en stage à
+           distance ou fera l’objet d’une suspension par avenant en cas d’impossibilité de stage à distance.</p>
+
+        <p>Les stages des étudiants des
+            <a href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwiIvs-LlvfqAhVIxYUKHcMxByIQFjAGegQIChAB&url=https%3A%2F%2Fsolidarites-sante.gouv.fr%2FIMG%2Fpdf%2Fcovid-19_faq_etudiants_medicaux.pdf&usg=AOvVaw0dAVrLlTeuEJlbrBkArKBz">filières
+                                                                                                                                                                                                                                                                                     médicales</a>
+           et
+            <a href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwiXtaTSlvfqAhWsxoUKHUUOCfIQFjAAegQIBRAB&url=https%3A%2F%2Fsolidarites-sante.gouv.fr%2FIMG%2Fpdf%2Fcovid-19_faq_etudiants_paramedicaux.pdf&usg=AOvVaw1Sd45U9ho0NZhedjNndh7r">paramédicales</a>
+           font l’objet de
+           dispositions spécifiques.</p>
+
+        <p>Une visite médicale sera automatiquement organisée pour tous les étudiants exposés à un risque pendant leur
+           stage.
+           Contact de la médecine préventive :_________________________________________________</p>
+    </div>
+    <br>
+    <div class="blocconvention_preambule_encadre">
+        <p>Stages à l’étranger : Compte-tenu des circonstances exceptionnelles dues à la pandémie de Covid 19, il est
+           entendu entre les parties qu’elles auront vérifié au préalable que :</p>
+        <p>- Si le stage a lieu en présentiel, une assurance spécifique rapatriement est contractée par le stagiaire
+           pour le retour, en cas de confinement ou d’autres circonstances rendant impossible la poursuite du stage.<br>
+           - Les missions confiées au stagiaire se prêtent à un travail en présentiel et/ou à distance et qu’il dispose
+           du matériel adéquat.</p>
+
+        <p>Les tuteurs vérifient la possibilité d’utilisation par les parties d’outils de communication adéquats.</p>
+
+        <p>Le stage ne pourra être réalisé en présentiel que dans le strict respect de toute disposition hygiène,
+           sécurité et santé applicable à l’organisme d’accueil.</p>
+
+        <p>Il est entendu entre les parties qu’en cas de confinement, le stage basculera automatiquement en stage à
+           distance ou fera l’objet d’une suspension par avenant en cas d’impossibilité de stage à distance, en
+           complément des modalités de rapatriement.</p>
+
+        <p>Le stagiaire s’engage sur l’honneur par la présente à se signaler avant son départ sur ARIANE :
+            <a href="https://pastel.diplomatie.gouv.fr/fildariane/dyn/public/login.html">https://pastel.diplomatie
+                                                                                         .gouv
+                                                                                         .fr/fildariane/dyn/public/login.html</a>
+        </p>
+
+        <p>Le stagiaire atteint du Covid19 pendant son stage devra respecter les conditions prescrites dans le pays
+           d’accueil, notamment en termes de quarantaine. L’établissement d’enseignement ne pourra pas être tenu de
+           rapatrier le stagiaire.</p>
+
+        <p>Une visite médicale sera automatiquement organisée pour tous les étudiants exposés à un risque pendant leur
+           stage.<br>
+           Contact de la médecine préventive :____________________________________________</p>
+
+        <p>Contact en cas d’urgence : (autre que le stagiaire) :_____________________________________________</p>
+
     </div>
     <div style="page-break-after: always"></div>
     <table class="blocconvention_colonne">
         <tr>
             <td style="width: 50%; padding-right: 5px">
-                Article 1: Objet du contrat<br>
-                Le présent contrat régit les relations entre l'organisation d'accueil (entreprise, organisme public,
-                association…), l'établissement d'enseignement supérieur et le stagiaire, compte tenu des circonstances
-                exceptionnelles dues à COVID 19.<br>
-                <br>
-                Article 2: Objectif du stage<br>
-                L'objectif du stage est de permettre à l'étudiant de mettre en œuvre les outils théoriques et
-                méthodologiques acquis au cours des études, d'identifier les compétences et de consolider les objectifs
-                de carrière.<br>
-                Le stage vise à préparer l'étudiant à entrer dans la vie active avec une meilleure compréhension de
-                l'organisation d'accueil. Le stage fait partie de la formation et du développement personnels et
-                professionnels de l’étudiant et fait partie du programme de cours.<br>
-                Le programme de stage est déterminé par l'établissement d'enseignement supérieur et l'organisme
-                d'accueil selon le programme général de formation proposé.<br>
-                Tâches à effectuer: {{ proposition.activites }}<br>
-                Compétences à acquérir ou à développer:<br>
-                {{ proposition.stagePeriode.competencesVisees }}.<br>
-                <br>
-                Article 3: Conditions pratiques de stage<br>
-                La durée hebdomadaire maximale pendant laquelle le stagiaire sera présent à l'endroit désigné dans
-                l'en-tête est de 35 heures.<br>
-                Le stage est à temps plein / <s>temps partiel</s> (biffez l'option qui ne s'applique pas) (veuillez
-                préciser le pourcentage ……………………)<br>
-                Il est interdit de confier à un stagiaire des tâches dangereuses pour sa santé ou sa sécurité.<br>
-                Si le stagiaire doit être présent dans l'organisation d'accueil la nuit, un dimanche ou un jour férié,
-                l'organisation doit indiquer ces cas particuliers
-                ici: {% if proposition.amenagementStage != '' %}{{ proposition
-                .amenagementStage }}{% else %}............................................{% endif %}<br>
-                <br>
-                Article 4: Statut de stagiaire - Accueil et suivi<br>
-                L'étudiant est suivi par le tuteur académique désigné dans le présent contrat de stage et par le service
-                de l'institution en charge des stages.<br>
-                L'organisation d'accueil désignera un tuteur d'organisation hôte qui sera responsable du mentorat de
-                l'étudiant et de l'optimisation des conditions de réalisation du stage.<br>
-                Pendant toute la durée du stage, l'étudiant est autorisé à retourner dans son établissement
-                d'enseignement pour suivre des cours explicitement demandés par le programme, ou pour assister à des
-                réunions uniquement après l'arrêt des mesures de verrouillage: les dates sont portées à la connaissance
-                de l'organisation d'accueil par l'institution.<br>
-                L'organisation d'accueil peut autoriser le stagiaire à voyager après l'arrêt des mesures de
-                verrouillage.<br>
-                Toute difficulté rencontrée dans la mise en œuvre et le déroulement de la formation, qu'elle soit
-                identifiée par le stagiaire ou par le maître d'oeuvre, doit être portée à la connaissance du tuteur
-                académique et de l'établissement d'enseignement supérieur afin d'être résolue dans les meilleurs délais.<br>
-                Conditions de suivi: (visites, appels téléphoniques, etc.)<br>
-                {{ proposition.stagePeriode.modaliteEncadrement }}.<br>
-                <br>
-                Article 5: Rémunération - Avantages en nature - Remboursement des frais<br>
-                En France, où la durée du stage est supérieure ou non à deux mois consécutifs, ce dernier doit faire
-                l'objet d'une gratification, sauf dans le cas de règles particulières applicables dans certaines
-                communautés françaises d'outre-mer et pour les cours visés à l'article L4381- 1 du Code de la santé
-                publique. La rémunération est fixée à 15% du plafond horaire de sécurité sociale défini conformément à
-                l'article L.241-3 du Code des assurances sociales. Une convention collective de branche ou une
-                convention professionnelle peut définir un montant supérieur à ce taux.<br>
-                La rémunération due par un organisme de droit public ne peut être cumulée avec la rémunération versée
-                par cet organisme pendant la période concernée.<br>
-                La rémunération est due sans préjudice du remboursement des frais encourus par le stagiaire pour
-                effectuer son stage et des avantages, le cas échéant, offerts pour la nourriture, l'hébergement et le
-                transport.
+                <strong>Article 1 – Objet de la convention</strong><br>
+                La présente convention règle les rapports de l’organisme d’accueil avec l’établissement
+                d’enseignement et le stagiaire.<br><br>
+
+                <strong>Article 2 – Objectif du stage</strong><br>
+                Le stage correspond à une période temporaire de mise en situation en milieu professionnel au cours de
+                laquelle le stagiaire acquiert des compétences professionnelles et met en œuvre les acquis de sa
+                formation en vue de l’obtention d’un diplôme ou d’une certification et de favoriser son insertion
+                professionnelle. Le stagiaire se voit confier une ou des missions conformes au projet pédagogique
+                défini par son établissement d’enseignement et approuvées par l’organisme d’accueil ;<br>
+                Le programme est établi par l’établissement d’enseignement et l’organisme d’accueil en fonction du
+                programme général de la formation dispensée.<br>
+                <u>ACTIVITES CONFIEES</u> : <br>{{ proposition.activites }}<br>
+                <u>COMPETENCES A ACQUERIR OU A DEVELOPPER</u> :<br>
+                {{ proposition.stagePeriode.competencesVisees }}<br><br>
+
+                <strong>Article 3 – Modalités du stage</strong><br>
+                La durée hebdomadaire de présence du stagiaire dans le(s) lieu(x) désigné(s) dans l’entête sera de
+                {{ proposition.dureeHebdomadaire }} heures sur la base d’un temps complet / <s>temps partiel</s> (rayer
+                la mention inutile),<br>
+                Il est interdit de confier au stagiaire des tâches dangereuses pour sa santé ou sa sécurité.<br>
+                Si le stagiaire doit être présent dans l’organisme d’accueil et/ou dans le lieu désigné dans l’entête
+                la nuit, le dimanche ou un jour férié / préciser les cas particuliers : {{ proposition
+                .amenagementStage }}.<br><br>
+
+                <strong>Article 4 – Accueil et encadrement du stagiaire</strong><br>
+                Le stagiaire est suivi par l’enseignant référent désigné dans la présente convention ainsi que par le
+                service de l’établissement en charge des stages.<br>
+                Le tuteur de stage désigné par l’organisme d’accueil dans la présente convention est chargé d’assurer
+                le suivi du stagiaire et d’optimiser les conditions de réalisation du stage conformément aux
+                stipulations pédagogiques définies.<br>
+                <u>MODALITES D’ENCADREMENT</u> (visites, rendez-vous téléphoniques, etc)<br>
+                {{ proposition.stagePeriode.modaliteEncadrement }}<br>
+                Si les conditions sanitaires le permettent : d’une part, le stagiaire est autorisé à revenir dans son
+                établissement d’enseignement pendant la durée du stage pour y suivre des cours demandés explicitement
+                par le programme, ou pour participer à des réunions (les dates sont portées à la connaissance de
+                l’organisme d’accueil par l’établissement), d’autre part, l’organisme d’accueil peut autoriser le
+                stagiaire à se déplacer, sauf pour les stages à l’étranger.<br>
+                Toute difficulté survenue dans la réalisation et le déroulement du stage, qu’elle soit constatée par
+                le stagiaire ou par le tuteur de stage, doit être portée à la connaissance de l’enseignant-référent
+                et de l’établissement d’enseignement afin d’être résolue au plus vite.<br><br>
+
+                <strong>Article 5 – Gratification - Avantages</strong><br>
+                <strong><u>En France</u></strong>, lorsque la durée du stage est supérieure à 308 heures consécutives ou
+                non,
+                celui-ci fait
+                obligatoirement l’objet d’une gratification, sauf en cas de règles particulières applicables dans
+                certaines collectivités d’outre-mer françaises et pour les stages relevant de l’article L4381-1 du
+                code de la santé publique.<br>
+                Le montant horaire de la gratification est fixé à 15 % du plafond horaire de la sécurité sociale
+                défini en application de l’article L.241-3 du code de la sécurité sociale. Une convention de branche
+                ou un accord professionnel peut définir un montant supérieur à ce taux.<br>
+                La gratification due par un organisme de droit public ne peut être cumulée avec une rémunération
+                versée par ce même organisme au cours de la période concernée.<br>
+                La gratification est due sans préjudice du remboursement des frais engagés par le stagiaire pour
+                effectuer son stage et des avantages offerts, le cas échéant, pour la restauration, l’hébergement et
+                le transport.<br>
             </td>
             <td style="width: 50%; padding-left: 5px">
-                Article 5 (suite)<br>
+                <strong>(article 5 suite)</strong><br>
+                L’organisme peut décider de verser une gratification pour les stages dont la durée est inférieure ou
+                égale à deux mois.<br>
+                En cas de suspension ou de résiliation de la présente convention, le montant de la gratification due
+                au stagiaire est proratisé en fonction de la durée du stage effectué.<br>
+                La durée donnant droit à gratification s’apprécie compte tenu de la présente convention et de ses
+                avenants éventuels, ainsi que du nombre de jours de présence effective du/de la stagiaire dans le(s)
+                lieu(x) indiqué(s).<br><br>
 
-                <br>
-                Montant de la rémunération fixé à {% if proposition.gratification == true %}{{ proposition
-                .gratificationMontant }}{% else %}-{% endif %}. € par {% if proposition
+                <u>LE MONTANT DE LA GRATIFICATION</u> est fixé
+                à {% if proposition.gratification == true %}{{ proposition
+                .gratificationMontant }}{% else %}-{% endif %} € par {% if proposition
                     .gratificationPeriode == 'M' %}mois / <s>jour</s> / <s>heure</s>
                 {% elseif proposition.gratificationPeriode == 'H' %}
                     <s>mois</s> / <s>jour</s> / heure
@@ -309,54 +366,55 @@
                     <s>mois</s> / jour / <s>heure</s>
                 {% else %}
                     mois / jour / heure
-                {% endif %} (biffer l'option qui ne s'applique
-                pas).<br>
-                <br>
-                Article 5 bis - Accès aux droits des salariés - Avantages sociaux (Organisme de droit privé en France
-                sauf dans le cas de règles particulières applicables dans certaines collectivités françaises
-                d'outre-mer)
-                : L'étudiant stagiaire bénéficie des protections et droits mentionnés aux articles L.1121-1, L.1152-1 et
-                L.1153-1 du Code du travail, dans les mêmes conditions que les salariés. L'étudiant stagiaire a accès au
-                restaurant d'entreprise ou aux chèques restaurant prévus à l'article L.3262-1 du code du travail, dans
-                les mêmes conditions que les salariés de l'organisation d'accueil. Il bénéficie également des frais de
-                transport prévus à l'article L.3261-2 du même code. L'étudiant stagiaire a accès aux activités sociales
-                et culturelles visées à l'article L.2323-83 du code du travail dans les mêmes conditions que les
-                salariés
-                . L'organisation d'accueil s'engage à respecter le protocole national de libération du verrouillage et,
-                le cas échéant, les descriptions de poste publiées. AUTRES AVANTAGES
-                ACCORDÉS: {{ proposition.avantages }}.<br><br>
-                <br><br>
-                Article 5 ter - Accès aux droits des salariés - Avantages sociaux (Organisme de droit public en France,
-                sauf dans le cas de règles particulières applicables dans certaines collectivités françaises
-                d'outre-mer): Les trajets effectués par l'étudiant stagiaire d'un organisme de droit public entre son
-                domicile et son lieu de stage sont pris en charge dans les conditions fixées par le décret français no.
-                2010-676 du 21 juin 2010 instaurant une facturation partielle du prix des billets d'abonnement
-                correspondant aux déplacements effectués par les fonctionnaires entre leur résidence habituelle et leur
-                lieu de travail. Le stagiaire admis dans un organisme de droit public et effectuant une mission dans ce
-                cadre est remboursé de ses frais de voyage temporaire conformément à la réglementation en vigueur. Le
-                lieu de résidence administrative est le lieu du stage, spécifié dans le présent contrat de stage. AUTRES
-                AVANTAGES ACCORDÉS: {{ proposition.avantages }}.
-                <br><br>
-                Article 6 - Assurances sociales<br>
-                L'étudiant reste affilié à son ancien système de sécurité sociale pendant toute la durée du stage et
-                conservera le statut d'étudiant.<br>
-                Dans le cas de stages à l'étranger, la sécurité sociale doit être informée et une vérification doit en
-                être reçue avant le départ de l'étudiant.<br>
-                Les clauses suivantes sont applicables sous réserve du respect de la législation du pays hôte et de la
-                législation régissant le type d'organisation hôte:...................<br>
-                <br>
-                6-1 Rémunération jusqu'à 15% du plafond horaire de sécurité sociale<br>
-                La rémunération n'est pas soumise aux cotisations sociales.<br>
-                L'étudiant stagiaire bénéficie de la législation sur les accidents du travail dans le cadre du régime
-                étudiant de l'article L.412-8 2 ° du Code des assurances sociales.<br>
-                En cas d'accident ou de maladie professionnelle survenant à l'étudiant stagiaire soit lors d'activités
-                dans l'organisation, soit pendant le voyage, soit sur les lieux rendus utiles aux fins du stage et pour
-                les étudiants en médecine, en chirurgie dentaire ou en pharmacie qui le font ne pas avoir de statut
-                hospitalier pendant le cours dispensé dans les conditions prévues au b du 2ème article L.412-8 du Code
-                des assurances sociales, l'organisme d'accueil transmet la déclaration à la Caisse Primaire d'Assurance
-                Maladie ou la caisse maladie compétente (voir adresse page 1) mentionnant l'établissement d'enseignement
-                en tant qu'employeur, avec copie à l'établissement d'enseignement supérieur.
+                {% endif %} (rayer les
+                mentions inutiles) .<br><br>
 
+                <strong>Article 5 bis –STAGES EN FRANCE Accès aux droits des salariés – Avantages</strong><br>
+                (Organisme de droit privé en France sauf en cas de règles particulières applicables dans certaines
+                collectivités d’outre-mer françaises) :<br>
+                Le stagiaire bénéficie des protections et droits mentionnés aux articles L.1121-1, L.1152-1 et L
+                .1153-1 du code du travail, dans les mêmes conditions que les salariés.<br>
+                Le stagiaire a accès au restaurant d’entreprise ou aux titres-restaurants prévus à l’article L.3262-1
+                du code du travail, dans les mêmes conditions que les salariés de l’organisme d’accueil. Il bénéficie
+                également de la prise en charge des frais de transport prévue à l’article L.3261-2 du même code.<br>
+                Le stagiaire accède aux activités sociales et culturelles mentionnées à l’article L.2323-83 du code
+                du travail dans les mêmes conditions que les salariés.<br>
+                L’organisme d’accueil s’engage à respecter toute directive sanitaire nationale ou sectorielle.<br>
+                <u>AUTRES AVANTAGES ACCORDES</u> : {{ proposition.avantages }}.<br><br>
+
+                <strong>Article 5ter – STAGES EN FRANCE Accès aux droits des agents - Avantages</strong><br>
+                (Organisme de droit public en France sauf en cas de règles particulières applicables dans certaines
+                collectivités d’outre-mer françaises) :<br>
+                Les trajets effectués par le stagiaire d’un organisme de droit public entre leur domicile et leur lieu
+                de stage sont pris en charge dans les conditions fixées par le décret n°2010-676 du 21 juin 2010
+                instituant une prise en charge partielle du prix des titres d’abonnement correspondant aux déplacements
+                effectués par les agents publics entre leur résidence habituelle et leur lieu de travail.<br>
+                Le stagiaire accueilli dans un organisme de droit public et qui effectue une mission dans ce cadre
+                bénéficie de la prise en charge de ses frais de déplacement temporaire selon la réglementation en
+                vigueur.<br>
+                Est considéré comme sa résidence administrative le(s) lieu(x) du stage indiqué(s) dans la présente
+                convention.<br>
+                <u>AUTRES AVANTAGES ACCORDES</u> : {{ proposition.avantages }}.<br><br>
+
+                <strong>Article 6 – Régime de protection sociale (maladie et accidents)</strong><br>
+                Pendant la durée du stage, le stagiaire reste affilié à son régime de Sécurité sociale antérieur. Il
+                doit impérativement vérifier ses conditions de couverture maladie et fournir une attestation de
+                couverture à son établissement d’enseignement au moment de la signature de la convention de stage et
+                dans tous les cas avant le départ.<br><br>
+
+                <strong>6-1 Gratification d’un montant maximum de 15 % du plafond horaire de la sécurité sociale –
+                        protection par la France (voir conditions article 6.4)</strong><br>
+                La gratification n’est pas soumise à cotisation sociale.<br>
+                Le stagiaire bénéficie de la législation sur les accidents de travail au titre de l’article L.412-8 2°
+                du code de la sécurité sociale<br>
+                En cas d’accident ou de maladie professionnelle survenant au stagiaire soit au cours d’activités dans
+                l’organisme, soit au cours du trajet, soit sur les lieux rendus utiles pour les besoins du stage et
+                pour les étudiants en médecine, en chirurgie dentaire ou en pharmacie qui n’ont pas un statut
+                hospitalier pendant le stage effectué dans les conditions prévues au b du 2e de l’article L.412-8 du
+                code de la sécurité sociale, <u>l’organisme d’accueil envoie la déclaration à la Caisse Primaire
+                                                d’Assurance Maladie</u> ou la caisse compétente (voir adresse en page 1)
+                en mentionnant
+                l’établissement d’enseignement comme employeur, avec <u>copie à l’établissement d’enseignement</u>.
             </td>
         </tr>
     </table>
@@ -364,184 +422,243 @@
     <table class="blocconvention_colonne">
         <tr>
             <td style="width: 50%;padding-right: 5px">
-                6.2 - Rémunération supérieure à 15% du plafond horaire de sécurité sociale: Les cotisations sociales
-                sont calculées sur la différence entre le montant de la rémunération et 15% du plafond horaire de la
-                sécurité sociale. L'étudiant stagiaire bénéficie d'une couverture légale conformément aux dispositions
-                des articles L.411-1 et suivants du Code des assurances sociales. En cas d'accident survenu à l'étudiant
-                stagiaire soit lors d'activités dans l'organisation, soit pendant le voyage, soit dans des lieux rendus
-                utiles aux fins de son stage, l'organisme d'accueil devra faire toutes les démarches nécessaires auprès
-                de la Caisse Primaire d’Assurance Maladie et informer au plus tôt l'établissement d'enseignement
-                supérieur.
-                <br><br>
-                6.3 - Assurance maladie pour les stagiaires travaillant à l'étranger<br>
-                1) Couverture issue du dispositif de couverture des étudiants français<br>
-                - pour les stages dans l'Espace économique européen (EEE) effectués par des ressortissants d'un État de
-                l'Union européenne ou de Norvège, d'Islande, du Liechtenstein ou de la Suisse, ou de tout autre État
-                (dans ce dernier cas, cette disposition ne s'applique pas aux stages au Danemark , Norvège, Islande,
-                Liechtenstein ou Suisse), les étudiants doivent demander une carte européenne d'assurance maladie
-                (CEAM).<br>
-                - pour les stages effectués au Québec par des étudiants de nationalité française, les étudiants doivent
-                demander le formulaire SE401Q (104 pour les stages en entreprise et 106 pour les stages universitaires);<br>
-                - Dans tous les autres cas, les étudiants qui encourent des frais médicaux peuvent être remboursés par
-                la mutuelle agissant en tant qu'agence de sécurité sociale étudiante, à leur retour et sur présentation
-                de justificatifs: le remboursement sera alors effectué sur la base des tarifs français. Des différences
-                importantes peuvent exister entre les frais encourus et les tarifs français servant de base au
-                remboursement. Il est fortement conseillé aux étudiants de souscrire une assurance maladie
-                complémentaire spécifique valable pour le pays concerné et pour la durée de leur stage, le cours, auprès
-                de la compagnie d'assurance de leur choix (mutuelle des étudiants, mutuelle des parents, ad société
-                privée ad hoc, etc.), ou, éventuellement, après vérification de l'étendue des garanties proposées,
-                auprès de l'organisation d'accueil si celle-ci assure la couverture sanitaire des stagiaires en vertu de
-                la législation locale (voir point 2 ci-dessous).<br>
-                2) Protection sociale de l'organisation d'accueil<br>
-                En cochant la case appropriée ci-dessous, l'organisation d'accueil indique si elle fournit une
-                couverture d'assurance maladie au stagiaire en vertu de la législation locale:<br>
-                [ ] OUI: Cette couverture s'ajoute au maintien à l'étranger des droits accordés par la loi
-                française<br>
-                [ ] NON: la couverture est donc exclusivement assurée par le maintien à l'étranger des droits
-                accordés
-                dans le cadre de la couverture étudiante française.<br>
-                Si aucune case n'est cochée, l'article 6.3-1 s'applique.<br>
-                <br>
-                6.4 Couverture des accidents du travail pour les stagiaires à l'étranger<br>
-                1) Afin de bénéficier de la législation française couvrant les accidents du travail, ce stage doit:<br>
-                - avoir une durée n'excédant pas six mois, y compris toute prolongation;<br>
-                - ne pas inclure de rémunération susceptible de donner droit à une protection contre les accidents du
-                travail dans le pays d'accueil; les compensations ou allocations sont acceptables, dans la limite de 15%
-                du plafond horaire de la sécurité sociale (voir point 5) et sous réserve de l'approbation par
-                l'Agence d'assurance maladie primaire d'une demande
-                de maintien de ces droits;<br>
-                - avoir lieu exclusivement au sein de l'organisation signataire de cet accord;<br>
-                - avoir lieu exclusivement dans le pays hôte étranger susmentionné.<br>
-                Lorsque ces conditions ne sont pas remplies, l'organisation d'accueil s'engage à contribuer à la
-                protection sociale du stagiaire et à faire les déclarations nécessaires en cas d'accident du
-                travail.<br>
-                2) La déclaration d'accident du travail est de la responsabilité de l'établissement d'enseignement, qui
-                doit être informé de tels événements par écrit dans les 48 heures par l'organisation d'accueil.<br>
-                3) La couverture concerne les accidents survenus:<br>
-                [ ] sur le lieu du stage et pendant les heures de travail du stage,<br>
-                [ ] sur le trajet normal aller-retour entre la résidence du stagiaire dans le pays étranger et le lieu
-                du stage,<br>
-                [ ] dans le cadre d'une mission fournie par l'organisation d'accueil du stagiaire lors d'un mandat de
-                mission formel, pendant le premier voyage de son domicile à son lieu de résidence au cours du stage
-                (voyage à la date de début du stage), pendant le dernier voyage de retour de sa résidence pendant le
-                stage à son domicile personnel.
+                <strong>6.2 – Gratification supérieure à 15 %</strong> du plafond horaire de la sécurité sociale: LE
+                                                                       STAGIAIRE N’EST PAS COUVERT PAR LA FRANCE POUR
+                                                                       LES STAGES A L’ETRANGER AVEC GRATIFICATION
+                                                                       SUPERIEURE AU PLAFOND LEGAL<br><br>
 
+                                                                       Les cotisations sociales sont calculées sur le
+                                                                       différentiel entre le montant de la gratification
+                                                                       et 15 % du plafond horaire de la Sécurité
+                                                                       Sociale.<br>
+                                                                       L’étudiant bénéficie de la couverture légale en
+                                                                       application des dispositions des articles L.411-1
+                                                                       et suivants du code de la Sécurité Sociale. En
+                                                                       cas d’accident survenant au stagiaire soit au
+                                                                       cours des activités dans l’organisme, soit au
+                                                                       cours du trajet, soit sur des lieux rendus utiles
+                                                                       pour les besoins de son stage, l’organisme
+                                                                       d’accueil effectue toutes les démarches
+                                                                       nécessaires auprès de la Caisse Primaire
+                                                                       d’Assurance Maladie et informe l’établissement
+                                                                       dans les meilleurs délais.<br><br>
+
+                <strong>6.3 Protection Maladie du stagiaire à l’étranger :</strong><br>
+                                                                       1) Protection issue du régime français :<br><br>
+                                                                       - Pour les stages au sein de l’Espace Economique
+                                                                       Européen (EEE) effectués par les étudiant(e)s de
+                                                                       nationalité d’un pays membre de l’Union
+                                                                       Européenne, l’étudiant doit demander la Carte
+                                                                       Européenne
+                                                                       d’Assurance Maladie (CEAM).<br><br>
+
+                                                                       -Pour les stages effectués au Québec par les
+                                                                       étudiant(e)s de nationalité française, l’étudiant
+                                                                       doit
+                                                                       demander le formulaire SE401Q (104 pour les
+                                                                       stages en entreprise, 106 pour les stages en
+                                                                       université).<br><br>
+
+                                                                       -<u>Dans tous les autres cas de figure :</u><br>
+                                                                       Les stagiaires qui engagent des frais de santé à
+                                                                       l’étranger peuvent être remboursé(e)s auprès de
+                                                                       la mutuelle qui leur tient lieu de Caisse de
+                                                                       Sécurité Sociale étudiante, au retour, et sur
+                                                                       présentation des justificatifs : le remboursement
+                                                                       s’effectue alors sur la base des tarifs de soins
+                                                                       français, des écarts importants peuvent
+                                                                       exister.<br><br>
+
+                                                                       * Il est donc fortement recommandé au stagiaire
+                                                                       de souscrire une assurance Maladie complémentaire
+                                                                       spécifique, valable pour le pays et la durée du
+                                                                       stage, auprès de l’organisme d’accueil de son
+                                                                       choix (mutuelle étudiante, mutuelle des parents,
+                                                                       compagnie privée ad hoc…).<br><br>
+
+                                                                       * <u>Exception</u> : si l’organisme d’accueil
+                                                                       fournit au stagiaire une couverture Maladie en
+                                                                       vertu des dispositions du droit local (voir 2
+                                                                       ci-dessous), alors le stagiaire peut choisir de
+                                                                       bénéficier de cette protection Maladie locale.
+                                                                       Avant d’effectuer un tel choix, il vérifiera
+                                                                       l’étendue des garanties proposées.<br><br>
+
+                                                                       2) Protection issue de l’organisme d’accueil
+                                                                       :<br><br>
+
+                                                                       En cochant la case appropriée, l’organisme
+                                                                       d’accueil indique ci-après s’il fournit une
+                                                                       protection Maladie au stagiaire, en vertu du
+                                                                       droit local :<br>
+                                                                       [ ] OUI (celle-ci s’ajoute au maintien, à
+                                                                       l’étranger, des droits issus du régime
+                                                                       français)<br>
+                                                                       [ ] NON (la protection découle alors
+                                                                       exclusivement du maintien, à l’étranger, des
+                                                                       droits issus du régime français)<br>
+                                                                       Si aucune case n’est cochée, le 6.3 1/
+                                                                       s’applique.<br><br>
+
+                <strong>6.4 Protection Accident du Travail du stagiaire à l’étranger :</strong><br>
+                                                                       1) Pour pouvoir bénéficier de la législation
+                                                                       française sur la couverture accident de travail,
+                                                                       le présent stage doit :<br>
+                                                                       2) Etre d’une durée au plus égale à 12 mois.<br>
+                                                                       3) Ne donner lieu à aucune rémunération
+                                                                       susceptible d’ouvrir des droits à une protection
+                                                                       accident de travail dans le pays étranger<br>
+                                                                       4) Se dérouler exclusivement dans l’organisme
+                                                                       d’accueil partie à la présente convention.<br>
+                                                                       5) Se dérouler exclusivement dans le pays
+                                                                       étranger cité.<br><br>
+
+                                                                       Lorsque les conditions ne sont pas remplies,
+                                                                       l’organisme d’accueil s’engage à cotiser pour la
+                                                                       protection du stagiaire et à faire les
+                                                                       déclarations nécessaires en cas d’accident de
+                                                                       travail.<br><br>
+
+                                                                       6) La déclaration des accidents de travail
+                                                                       incombe à l’établissement qui doit être informé
+                                                                       par l’organisme d’accueil par écrit dans un délai
+                                                                       de 48 heures.
             </td>
             <td style="width: 50%;padding-left: 5px">
-                4) Dans le cas où l'une des conditions énoncées à la section 6.4-1 / n'est pas remplie, l'organisation
-                d'accueil s'engage à couvrir le stagiaire contre les risques
-                d'accidents du travail, d'accidents de voyage et de maladies professionnelles, et à fournir toutes les
-                déclarations nécessaires de couverture. <br>
-                5) Dans tous les cas: <br>
-                - si l'étudiant est victime d'un accident du travail pendant son stage, l'organisation d'accueil
-                doit informer immédiatement l'établissement d'enseignement de l'accident; <br>
-                - si l'étudiant effectue des missions limitées en dehors de l'organisation d'accueil ou en dehors du
-                pays du stage, l'organisation d'accueil doit prendre toutes les mesures nécessaires pour lui fournir
-                l'assurance appropriée.
+                7) La couverture concerne les accidents survenus :<br><br>
+                <ul>
+                    <li>Dans l’enceinte du lieu du stage et aux heures de stage.</li>
+                    <li>Sur le trajet aller-retour habituel entre la résidence du stagiaire sur le territoire
+                        étranger et le lieu du stage.
+                    </li>
+                    <li>Sur le trajet aller-retour (début et fin de stage) du domicile du stagiaire situé sur le
+                        territoire français et le lieu de résidence à l’étranger.
+                    </li>
+                    <li>Dans le cadre d’une mission confiée par l’organisme d’accueil et obligatoirement sur ordre de
+                        mission.
+                    </li>
+                    <li>Pour le cas où l’une seule des conditions prévues au point 6.4 1/ n’est pas remplie,
+                        l’organisme d’accueil s’engage par la présente convention à couvrir le stagiaire contre le
+                        risque d’accident de travail, de trajet et les maladies professionnelles et à en assurer toutes
+                        les déclarations nécessaires.
+                    </li>
+                    <li>dans tous les cas,</li>
+                    <li>Si l’étudiant(e) est victime d’un accident du travail durant le stage, l’organisme d’accueil
+                        doit impérativement signaler immédiatement cet accident à l’établissement.
+                    </li>
+                    <li>Si l’étudiant(e) remplit des missions limitées en-dehors de l’organisme d’accueil ou en
+                        en-dehors du pays du stage, l’organisme d’accueil doit prendre toutes les dispositions
+                        nécessaires pour lui fournir les assurances appropriées.
+                    </li>
+                </ul>
                 <br><br>
-                Article 7: Responsabilité civile et assurance <br>
-                L'organisation d'accueil et l'étudiant déclarent être couverts par la responsabilité civile. Quelle que
-                soit la nature du stage et le pays de destination, le stagiaire s'engage à se couvrir par une assurance
-                générale (rapatriement médical, assistance juridique, etc.) et une assurance individuelle accident. Si
-                l'organisation hôte met à disposition du stagiaire un véhicule, il lui appartient de confirmer au
-                préalable que la police d'assurance véhicule couvre l'utilisation du véhicule par un étudiant. Lorsque
-                l'étudiant utilise son propre véhicule ou un véhicule prêté par un tiers dans le cadre du stage,
-                l'étudiant s'engage expressément à déclarer cette utilisation à l'assureur dudit véhicule et, le cas
-                échéant, à payer la prime correspondante.<br><br>
 
-                Article 8: Conduite<br>
-                Tout au long du stage, l'étudiant est soumis à la conduite et au règlement intérieur de l'organisation,
-                portés à sa connaissance avant le début du stage, notamment en matière d'heures de travail, et aux
-                règles d'hygiène et de sécurité en vigueur au sein de l'organisation d'accueil.<br>
-                L'étudiant stagiaire s'engage à signaler tout dysfonctionnement en matière de santé et de sécurité à son
-                organisation d'accueil ET à son établissement d'enseignement supérieur.<br>
-                Les procédures disciplinaires ne peuvent être déterminées que par l'établissement d'enseignement
-                supérieur. En cas de manquement à la discipline, l'organisation d'accueil doit informer le tuteur
-                académique et l'établissement d'enseignement supérieur du ou des manquements et fournir les éléments
-                constitutifs.<br>
-                En cas de manquement à la discipline particulièrement grave, l'organisation d'accueil se réserve le
-                droit de mettre fin au stage dans le respect des clauses fixées à l'article 9 du présent contrat.<br>
+                <strong>Article 7 – Responsabilité et assurance</strong><br>
+                L’organisme d’accueil et le stagiaire déclarent être garantis au titre de la responsabilité civile<br>
+                Lorsque l’organisme d’accueil met un véhicule à la disposition du stagiaire, il lui incombe de vérifier
+                préalablement que la police d’assurance du véhicule couvre son utilisation par un étudiant<br>
+                Lorsque dans le cadre de son stage, l’étudiant utilise son propre véhicule ou un véhicule prêté par un
+                tiers il déclare expressément à l’assureur dudit véhicule et, le cas échéant, s’acquitte de la prime y
+                afférente.<br>
+                Dans le cadre d’un stage à son domicile, l’étudiant qui utilise son propre matériel le déclare à son
+                assureur et, le cas échéant, s’acquitte de la prime afférente.<br><br>
 
-                <br>
-                Article 9 - Congé - Interruption de stage<br>
-                En France (sauf dans le cas de règles particulières applicables dans certaines collectivités françaises
-                d'outre-mer ou dans les organismes de droit public), en cas de grossesse, de paternité ou d'adoption,
-                l'étudiant stagiaire se verra accorder des autorisations de congé et d'absence d'une durée équivalente à
-                celle prévue pour les salariés dans les articles L.1225-16 à L.1225-28, L.1225-35, L.1225-37, L.1225-46
-                du Code du travail<br>
-                Pour les stages d'une durée supérieure à deux mois et d'une durée maximale de 6 mois, des congés ou des
-                congés sont possibles.<br>
-                NOMBRE DE JOURS DE CONGÉ AUTORISÉS ou conditions de congé et d'absences pendant la période probatoire:
-                …………………………………….<br>
-                Pour toute autre interruption temporaire du stage (maladie, absence injustifiée, etc.), l'organisation
-                d'accueil informe par courrier l'institution d'enseignement supérieur.<br>
-                Toute interruption du stage doit être signalée aux autres parties au contrat et au tuteur académique.
-                Une procédure de validation est mise en place par l'établissement d'enseignement supérieur, si
-                nécessaire. En cas d'accord des parties au contrat de stage, un report de la fin du stage est possible
-                afin de permettre l'achèvement de la durée totale du stage initialement prévu. Ce report fera l'objet
-                d'un avenant à la convention de stage.<br>
-                Un avenant au contrat de stage peut être établi en cas de prolongation de la période de stage à la
-                demande conjointe de l'organisme d'accueil et de l'étudiant stagiaire, sous réserve de la durée maximale
-                du stage fixée par la loi (6 mois).
+                <strong>Article 8 – Discipline</strong><br>
+                Le stagiaire est soumis à la discipline et aux clauses du règlement intérieur qui lui sont applicables
+                et qui sont portées à sa connaissance avant le début du stage, notamment en ce qui concerne les horaires
+                et les règles d’hygiène et de sécurité en vigueur dans l’organisme d’accueil<br>
+                Le stagiaire s’engage à signaler tout dysfonctionnement en termes d’hygiène et de sécurité à son
+                organisme d’accueil ET à son établissement d’enseignement supérieur.<br>
+                Toute sanction disciplinaire ne peut être décidée que par l’établissement d’enseignement. Dans ce cas,
+                l’organisme d’accueil informe l’enseignant référent et l’établissement des manquements et fournit
+                éventuellement les éléments constitutifs.<br>
+                En cas de manquement particulièrement grave à la discipline, l’organisme d’accueil se réserve le droit
+                de mettre fin au stage tout en respectant les dispositions fixées à l’article 9 de la présente
+                convention.<br><br>
+
+                <strong>Article 9 – Congés – Interruption du stage</strong><br>
+                En France (sauf en cas de règles particulières applicables dans certaines collectivités d’outre-mer
+                françaises ou dans les organismes de droit public), en cas de grossesse, de paternité ou d’adoption, le
+                stagiaire bénéficie de congés et d’autorisations d’absence d’une durée équivalente à celle prévues pour
+                les salariés aux articles L.1225-16 à L.1225-28, L.1225-35, L.1225-37, L.1225-46 du code du travail<br>
+                Pour les stages dont la durée est supérieure à deux mois et dans la limite de la durée maximale de 6
+                mois, des congés ou autorisations d’absence sont possibles.<br>
+                <u>NOMBRE DE JOURS DE CONGES AUTORISES</u> / ou modalités des congés et autorisations d’absence durant
+                le
+                stage : zéro sauf autorisation exceptionnelle accordée par l'organisme d'accueil.<br><br>
+
+                Pour toute autre interruption temporaire du stage (maladie, absence injustifiée…) l’organisme d’accueil
+                avertit l’établissement d’enseignement par courriel.
+            </td>
+        </tr>
+    </table>
+    <table class="blocconvention_colonne">
+        <tr>
+            <td style="width: 50%;padding-right: 5px">
+                Toute interruption du stage, est signalée aux autres parties à la convention<br>
+                et à l’enseignant référent. Une modalité de validation est mise en place le cas échéant par
+                l’établissement. En cas d’accord des parties à la convention, un report de la fin du stage est possible
+                afin de permettre la réalisation de la durée totale du stage prévue initialement. Ce report fera l’objet
+                d’un avenant à la convention de stage.<br>
+                Un avenant à la convention pourra être établi en cas de prolongation du stage sur demande conjointe de
+                l’organisme d’accueil et du stagiaire, dans le respect de la durée maximale du stage fixée par la loi
+                (924 heures).<br><br>
+
+
+                <strong>Article 10 – Devoir de réserve et confidentialité</strong><br>
+                Les devoirs de réserve et de confidentialité sont de rigueur absolue et sont appréciés par l'organisme
+                d'accueil compte tenu de ses spécificités.<br><br>
+
+                <strong>Article 11 – Propriété intellectuelle</strong><br>
+                <strong>En France</strong>, conformément au code de la propriété intellectuelle, dans le cas où les
+                activités du
+                stagiaire donnent lieu à la création d’une œuvre protégée par le droit d’auteur ou la propriété
+                industrielle (y compris un logiciel), si l’organisme d’accueil souhaite l’utiliser et que le stagiaire
+                en est d’accord, un contrat devra être signé entre le stagiaire (auteur) et l’organisme d’accueil.<br>
+                Le contrat devra alors notamment préciser l’étendue des droits cédés, l’éventuelle exclusivité, la
+                destination, les supports utilisés et la durée de la cession, ainsi que, le cas échéant, le montant de
+                la rémunération due au stagiaire au titre de la cession. Cette clause s’applique quel que soit le statut
+                de l’organisme d’accueil<br><br>
+
+
+                <strong>Article 12 – Fin de stage – Rapport - Evaluation</strong><br>
+                1) <u>Attestation de stage</u> : à l’issue du stage, l’organisme d’accueil délivre une attestation dont
+                le
+                modèle figure en annexe , mentionnant au minimum la durée effective du stage et, le cas échéant, le
+                montant de la gratification perçue. Le stagiaire devra produire cette attestation à l’appui de sa
+                demande
+                éventuelle d’ouverture de droits au régime général d’assurance vieillesse prévue à l’art. L.351-17 du
+                code de la sécurité sociale<br><br>
+                2) <u>Qualité du stage</u> : à l’issue du stage, les parties à la présente convention sont invitées à
+                formuler une appréciation sur la qualité du stage.<br>
+                Le stagiaire transmet au service compétent de l’établissement d’enseignement un document dans lequel il
+                évalue la qualité de l’accueil dont il a bénéficié au sein de l’organisme d’accueil. Ce document n’est
+                pas pris en compte dans son évaluation ou dans l’obtention du diplôme ou de la certification.<br>
+                3) <u>Evaluation de l’activité du stagiaire</u> : à l’issue du stage, l’organisme d’accueil renseigne
+                une fiche d’évaluation de l’activité du stagiaire qu’il retourne à l’enseignant référent(ou préciser si
+                fiche annexe ou modalités d’évaluation préalablement définis en accord avec l’enseignant
+                référent) {{ proposition.tuteurUniversitaire.displayPr }}<br>
+                4) <u>Modalités d’évaluation pédagogiques</u> : le stagiaire devra rendre <br>
+                {{ proposition.stagePeriode.documentRendre }}.<br>
+                <u>NOMBRE D’ECTS (le cas échéant)</u>: {{ proposition.stagePeriode.nbEcts }}.<br>
+                5) Le tuteur de l’organisme d’accueil ou tout membre de l’organisme d’accueil appelé à se rendre dans
+                l’établissement d’enseignement dans le cadre de la préparation, du déroulement et de la validation du
+                stage ne peut prétendre à une quelconque prise en charge ou indemnisation de la part de l’établissement
+                d’enseignement.<br><br>
+                <strong>Article 13 – Droit applicable– Tribunaux compétents</strong><br>
+                La présente convention est régie exclusivement par le droit français.<br>
+                Tout litige non résolu par voie amiable sera soumis à la compétence de la juridiction française
+                compétente.
+            </td>
+            <td style="width: 50%;padding-right: 5px">
+                &nbsp;
             </td>
         </tr>
     </table>
     <div style="page-break-after: always"></div>
 
-
-    <div class="blocconvention" style="font-size:10px">
-        Article 10: Obligation de circonspection et de non-divulgation<br>
-        Le devoir de circonspection est absolu. À cet égard, les étudiants stagiaires conviennent qu'en aucun cas ils
-        n'utiliseront les informations qu'ils ont collectées ou obtenues, y compris le rapport de stage, à des fins de
-        publication ou de communication avec des tiers, sans l'accord préalable de l'organisation d'accueil. En plus de
-        la durée du stage, cela continue de s'appliquer après la fin du stage. L'étudiant s'engage à ne pas conserver,
-        prendre ou faire de copie de tout document ou logiciel appartenant à l'organisation d'accueil, quelle que soit
-        sa nature, sans le consentement de l'organisation d'accueil.<br>
-        Remarque: Dans le cadre de la non-divulgation d'informations contenues dans le rapport, l'organisation d'accueil
-        peut demander une restriction sur la diffusion du rapport et même le retrait de certains éléments d'informations
-        hautement confidentielles.<br>
-        Ceux qui ont connaissance des informations contenues dans le rapport sont limités par le secret professionnel à
-        ne pas utiliser ou divulguer les informations qu'il contient.<br><br>
-
-        Article 11: Propriété intellectuelle<br>
-        Conformément au Code de la propriété intellectuelle, si le travail entrepris par le stagiaire aboutit à la
-        création d'une œuvre protégée par le droit d'auteur ou la propriété industrielle (y compris les logiciels), et
-        si l'organisation d'accueil souhaite utiliser l'œuvre et que l'étudiant y consent, un contrat doit
-        être établi et signé par le stagiaire (auteur) et l'organisation d'accueil.<br>
-        Le contrat doit notamment inclure l'étendue des droits transférés, les conditions d'exclusivité, la destination
-        du travail, les ressources utilisées et la durée du transfert des droits ainsi que la rémunération totale due à
-        l'étudiant en relation avec le transfert des droits , le cas échéant.<br>
-        Cette clause s'applique également dans le cas de stages effectués dans des établissements publics.<br>
-        <br>
-        Article 12 - Fin du stage - Rapport - Evaluation<br>
-        1) Certificat de stage: A l'issue du stage, l'organisation d'accueil remettra au stagiaire un certificat de
-        stage (voir annexe), précisant au minimum la durée effective du stage et, le cas échéant, le montant de la
-        gratification reçue. Le stagiaire doit produire ce certificat à l'appui de sa demande éventuelle de droit au
-        régime général d'assurance vieillesse prévu à l'art. L.351-17 du Code des assurances sociales.<br>
-        2) Evaluation de la qualité du stage: A l'issue du stage, les parties à ce contrat de stage sont invitées à
-        évaluer la qualité du stage.<br>
-        L'étudiant stagiaire transmet au service compétent de l'établissement d'enseignement supérieur un document dans
-        lequel il évalue la qualité de l'accueil qu'il a reçu au sein de l'organisation d'accueil. Ce document n'est pas
-        pris en compte dans son évaluation ni dans l'obtention du diplôme ou de la certification.<br>
-        3) Evaluation de l'activité de l'étudiant: A l'issue du stage, l'organisme d'accueil remplira un formulaire
-        d'évaluation en fonction des performances du stagiaire (voir annexe) qui devra être retourné au tuteur
-        académique de l'établissement d'enseignement supérieur.<br>
-        4) Méthodes d'évaluation pédagogique: (préciser la nature du travail à fournir par une pièce
-        jointe en annexe, si nécessaire) {{ proposition.stagePeriode.documentRendre }}.<br>
-        Indiquez les conditions de validation du stage, le cas
-        échéant: {{ proposition.stagePeriode.modaliteEvaluationPedagogique }}.<br>
-        Nombre d'ECTS: {{ proposition.stagePeriode.nbEcts }}.<br>
-        5) Le tuteur de l'organisation d'accueil ou tout autre membre de l'organisation d'accueil tenu de visiter
-        l'établissement d'enseignement supérieur dans le cadre de la préparation, de la mise en œuvre ou de la
-        validation du stage ne peut prétendre à un remboursement ou à une compensation de la part de l'établissement
-        d'enseignement supérieur.<br>
-        <br>
-        Article 13 - Droit applicable - Tribunaux compétents<br>
-        Le présent contrat est régi exclusivement par le droit français. Tout litige non résolu à l'amiable sera soumis
-        à la juridiction française compétente.<br>
-    </div>
     <br><br><br>
-    <strong>A</strong> Troyes <strong>le</strong> {{ 'now'|date('d/m/Y') }}
+    <strong>Fait A</strong> Troyes <strong>Le</strong> {{ 'now'|date('d/m/Y') }}
     <br>
     <br>
     <br>
@@ -612,13 +729,13 @@
     <table style="width: 100%;">
         <tr>
             <td style="width: 100%; border: 1px solid black;padding:5px; line-height: 1.3em">
-                <div class="center"><strong>L’ORGANISME D’ACCUEIL</strong></div>
-                <br><br>
-                Nom : {{ proposition.entreprise.raisonSociale }}<br/>
-                Adresse
-                : {% if proposition.entreprise.adresse != null %}{{ proposition.entreprise.adresse.display|striptags }}{% endif %}
-                <br/>
-                Tél. : {{ proposition.entreprise.responsable.telephone|tel_format }}
+                <div class="center"><strong><u>L’ORGANISME D’ACCUEIL</u></strong></div>
+                <br>
+                <p>Nom : {{ proposition.entreprise.raisonSociale }}</p>
+                <p>Adresse
+                   : {% if proposition.entreprise.adresse != null %}{{ proposition.entreprise.adresse.display|striptags }}{% endif %}
+                </p>
+                <p>Tél. : {{ proposition.entreprise.responsable.telephone|tel_format }}</p>
             </td>
         </tr>
     </table>
@@ -630,49 +747,71 @@
         <tr>
             <td style="width: 100%; border: 1px solid black;padding:5px; line-height: 1.3em">
                 <div class="center"><strong>LE STAGIAIRE</strong></div>
-                <br><br>
-                Nom: {{ proposition.etudiant.nom }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Prénom
-                : {{ proposition.etudiant.prenom|title }}
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sexe
-                : {% if proposition.etudiant.civilite == "Mme" %}Femme{% else %}Homme{% endif %} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                Né(e) le : {{ proposition.etudiant.datenaissance|date('d/m/Y') }}<br>
-                Adresse
-                : {% if proposition.etudiant.adresse != null %}{{ proposition.etudiant.adresse.display|striptags }}{% endif %}
-                <br/>
-                Tél. : {{ proposition.etudiant.tel1 }} / {{ proposition.etudiant.tel2|tel_format }}. Email
-                : {{ proposition.etudiant.mailUniv }} | {{ proposition.etudiant.mailPerso }}<br><br>
-                <strong style="font-size: 14px">Etudiant A</strong>(cursus)<br><br>
-                {{ proposition.etudiant.semestre.annee.diplome.typediplome.libelle }} {{ proposition
-                .etudiant.semestre.annee.diplome.libelle }}<br><br>
-                <strong style="font-size: 14px">A </strong>(nom de l'établissement d'enseignement supérieur)<br><br>
-                UNIVERSITÉ DE REIMS CHAMPAGNE-ARDENNE / IUT de Troyes
+                <br>
+                <p>Nom: {{ proposition.etudiant.nom }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Prénom
+                   : {{ proposition.etudiant.prenom|title }}
+                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Sexe
+                   : {% if proposition.etudiant.civilite == "Mme" %}Femme{% else %}Homme{% endif %} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                   Né(e) le : {{ proposition.etudiant.datenaissance|date('d/m/Y') }}</p>
+                <p>Adresse
+                   : {% if proposition.etudiant.adresse != null %}{{ proposition.etudiant.adresse.display|striptags }}{% endif %}</p>
+
+                <p>Tél. : {{ proposition.etudiant.tel1 }} / {{ proposition.etudiant.tel2|tel_format }}. Email
+                   : {{ proposition.etudiant.mailUniv }} | {{ proposition.etudiant.mailPerso }}</p>
+                <p><strong style="font-size: 14px">ETUDIANT EN</strong> (intitulé de la formation ou du cursus de
+                                                                        l’enseignement supérieur suivi par le ou la
+                                                                        stagiaire)</p>
+                <p>{{ proposition.etudiant.semestre.annee.diplome.typediplome.libelle }} {{ proposition
+                    .etudiant.semestre.annee.diplome.libelle }}</p>
+                <p><strong style="font-size: 14px">AU SEIN DE </strong>(nom de l'établissement d'enseignement supérieur)
+                </p>
+                <p>UNIVERSITÉ DE REIMS CHAMPAGNE-ARDENNE / IUT de Troyes</p>
             </td>
         </tr>
     </table>
     <br>
-    <strong style="font-size:16px">A terminé le stage prévu </strong>
+    <strong style="font-size:16px">a effectué un stage prévu dans le cadre de ses études </strong>
     <br>
     <br>
     <table style="width:100%; border-spacing: 0;">
         <tr>
             <td style="width: 100%; border: 1px solid black;padding:5px; line-height: 1.3em">
                 <strong style="font-size: 14px">DUREE DU STAGE :</strong><br>
-                Dates de début et de fin : Du (JJ/MM/AAAA)……………….……….…..… au (JJ/MM/AAAA)……………….……..……………<br>
-                Pour une durée totale de :………………......…….. (Nombre de mois/jours) (rayer la mention inutile)<br>
+                <p>Dates de début et de fin : Du (JJ/MM/AAAA)……………….……….…..… au (JJ/MM/AAAA)……………….……..……………</p>
+                <p>Pour une durée totale de :………………......…….. (Nombre de mois/jours) (rayer la mention inutile)</p>
+                <p>La durée totale du stage est appréciée en tenant compte de la présence effective du stagiaire dans
+                   l’organisme, sous réserve des droits à congés et autorisations d’absence prévus à l’article L.124-13
+                   du code de l’éducation (art. L.124-18 du code de l’éducation). Chaque période au moins égale à 7
+                   heures de présence consécutives ou non est considérée comme équivalente à un jour de stage et chaque
+                   période au moins égale à 22 jours de présence consécutifs ou non est considérée comme équivalente à
+                   un mois.</p>
             </td>
         </tr>
         <tr>
             <td style="width: 100%; border: 1px solid black;padding:5px; line-height: 1.3em">
-                <strong>GRATIFICATION - REMUNERATION :</strong><br>
-                Le stagiaire a reçu ……………………….. €
+                <strong>MONTANT DE LA GRATIFICATION VERSEE AU STAGIAIRE :</strong><br>
+                <p>Le stagiaire a perçu une gratification de stage pour un <strong>montant total</strong> de ………………………€
+                </p>
             </td>
         </tr>
     </table><br>
-    <br><br>
     <br>
     <table style="width: 100%">
         <tr>
-            <td style="width:40%"></td>
+            <td style="width:50%; text-align: justify; padding:5px">
+                L’<strong>attestation de stage</strong> est indispensable pour pouvoir, sous réserve du versement
+                d’une cotisation, faire prendre en compte le stage dans les droits à retraite. La législation sur les
+                retraites (loi n°2014-40 du 20 janvier 2014) ouvre aux étudiants <strong>dont le stage a été
+                                                                                         gratifié</strong> la
+                possibilité de faire valider celui-ci dans la <strong>limite de deux trimestres</strong>, sous
+                réserve du <strong>versement d’une cotisation</strong>. La <strong>demande est à faire par l’étudiant
+                                                                                   dans les deux années</strong>
+                suivant la fin du stage et sur <strong>présentation obligatoire de l’attestation de stage</strong>
+                mentionnant la durée totale du stage et le montant total de la gratification perçue. Les informations
+                précises sur la cotisation à verser et sur la procédure à suivre sont à demander auprès de la sécurité
+                sociale (code de la sécurité sociale art. L.351-17 – code de l’éducation art..D.124-9).
+            </td>
+            <td style="width:5%"></td>
             <td>
                 A ………………………….. DATE,………………………<br>
                 Nom, titre et signature du représentant de l’organisme d’accueil
