@@ -141,8 +141,8 @@
                 <p>Répartition en cas de stage discontinu : ………….. nombre d’heures par semaine ou par jour rayer la
                    mention inutile) :<br>
                 <p>Commentaire : {{ proposition.commentaireDureeHebdomadaire }}.
-                    {% if proposition.periodesInterruptions|length > 0 %}Période(s) d'interruption(s) : {% for inter in
-                        proposition.periodesInterruptions %}
+                    {% if proposition.stagePeriode.stagePeriodeInterruptions|length > 0 %}Période(s) d'interruption(s) : {% for inter in
+                        proposition.stagePeriode.stagePeriodeInterruptions %}
                         du {{ inter.dateDebut|date('d/m/Y') }} au {{ inter.dateFin|date('d/m/Y') }}{% if not loop
                             .last %},{% endif %}
                     {% endfor %}
