@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Entreprise.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/09/2020 16:25
+// @lastUpdate 03/11/2020 14:50
 
 namespace App\Entity;
 
@@ -18,7 +18,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 class Entreprise extends BaseEntity
 {
     /**
-     * @ORM\Column(type="string", length=30)
+     * @ORM\Column(type="string", length=30, nullable=true)
      */
     private ?string $siret;
 
@@ -61,7 +61,7 @@ class Entreprise extends BaseEntity
         return $this->siret;
     }
 
-    public function setSiret(string $siret): self
+    public function setSiret(?string $siret): self
     {
         $this->siret = $siret;
 
