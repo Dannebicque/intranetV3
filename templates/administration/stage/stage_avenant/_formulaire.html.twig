@@ -1,0 +1,72 @@
+<div class="bloccas bg-pale-brown">
+    <div class="form-check">
+        <input type="radio" id="stage_avenant_cas_1" name="stage_avenant_cas" required="required"
+               class="form-check-input" value="1" {% if stage_avenant.cas ==1 %}checked{% endif %}>
+        <label class="form-check-label required" for="stage_avenant_cas_1">
+            CAS 1 : Article 2 : Modification des dates du stage (autorisation d’absence pendant le confinement
+            compte-tenu de l’impossibilité de réaliser le stage à distance
+        </label>
+    </div>
+    <div>
+        Le stage prévu du <strong>{{ stageEtudiant.dateDebutStage|format_date('short') }}</strong> au
+        <strong>{{ stageEtudiant.dateFinStage|format_date('short') }}</strong> est prolongé
+        jusqu’au {{ form_widget(form.nouvelleDateFin) }}, soit une
+        durée totale de stage de {{ form_widget(form.nouvelleDureeJour) }} jours (durée
+        initiale {{ stageEtudiant.dureeJoursStage }} jours).<br>
+        Compte-tenu de l’impossibilité de réaliser le stage à distance et de l’obligation de confinement,
+        il est entendu entre les parties que le stagiaire bénéficie d’une autorisation d’absence
+        du {{ form_widget(form.dateDebutAbsence) }} au {{ form_widget(form.dateFinAbsence) }}, date de
+        fin du confinement. Cette autorisation d’absence pourra être prolongée en cas de prolongation du confinement.
+    </div>
+</div>
+
+<div class="bloccas bg-pale-cyan">
+    <div class="form-check">
+        <input type="radio" id="stage_avenant_cas_2" name="stage_avenant_cas" required="required"
+               class="form-check-input" value="2" {% if stage_avenant.cas ==2 %}checked{% endif %}>
+        <label class="form-check-label required" for="stage_avenant_cas_2">
+            CAS 2 Article 2 : Stage à distance
+        </label>
+    </div>
+    <div>
+        A compter de la signature du présent avenant par le stagiaire, le stage aura lieu à l’adresse
+        suivante :<br>
+        {{ form_row(form.nouvelleAdresse) }}<br>
+        Il est entendu entre les parties qu’en cas de mesures de déconfinement , le stagiaire reviendra sur les lieux
+        initialement prévus dans la convention de stage dans les meilleurs délais, compte-tenu éventuellement des délais
+        d’acheminement sur le lieu de stage.
+    </div>
+</div>
+
+<div class="bloccas bg-pale-pink">
+    <div class="form-check">
+        <input type="radio" id="stage_avenant_cas_3" name="stage_avenant_cas" required="required"
+               class="form-check-input" value="3" {% if stage_avenant.cas ==3 %}checked{% endif %}>
+        <label class="form-check-label required" for="stage_avenant_cas_3">
+            CAS 3 : Article 2 : Suspension du stage (en cas de confinement et d’impossibilité de stage à distance)
+        </label>
+    </div>
+    <div>
+        Le stage prévu du <strong>{{ stageEtudiant.dateDebutStage|format_date('short') }}</strong> au
+        <strong>{{ stageEtudiant.dateFinStage|format_date('short') }}</strong> est suspendu à compter du
+        {{ form_widget(form.dateDebutSuspension) }} jusqu’au {{ form_widget(form.dateFinSuspension) }}
+        compte-tenu de l’obligation de confinement et de l’impossibilité de réaliser le stage à distance.
+        Il reprendra le {{ form_widget(form.dateRepriseStage) }} sauf prolongation du confinement.
+    </div>
+</div>
+
+<div class="bloccas bg-pale-yellow">
+    <div class="form-check">
+        <input type="radio" id="stage_avenant_cas_4" name="stage_avenant_cas" required="required"
+               class="form-check-input" value="4" {% if stage_avenant.cas ==4 %}checked{% endif %}>
+        <label class="form-check-label required" for="stage_avenant_cas_4">
+            CAS 4 : Article 2 : Arrêt définitif du stage
+        </label>
+    </div>
+    <div>
+        Le stage prévu du <strong>{{ stageEtudiant.dateDebutStage|format_date('short') }}</strong> au
+        <strong>{{ stageEtudiant.dateFinStage|format_date('short') }}</strong> est interrompu à compter
+        du {{ form_widget(form.dateInterruption) }}. Les parties conviennent d’étudier ensemble la possibilité de mise
+        en œuvre de l’article L124-15 du code de l’éducation.
+    </div>
+</div>

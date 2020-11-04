@@ -338,6 +338,8 @@ adm:
     modification.heading: 'Période de stage modifiée avec succès'
     new.heading: 'Création d''une période de stage'
     show.heading: 'Détails d''une période de stage'
+    edit:
+      heading: 'messages'
   stages: Stages
   statistiques:
     menu: Statistiques
@@ -446,7 +448,14 @@ adm:
       heading: 'Détails d''un niveau de compétence'
   projet_etudiant:
     modification:
-      heading: 'messages'
+      heading: 'Modification d''un projet étudiant'
+  stage_avenant:
+    index:
+      heading: 'Liste des avenants pour le stage de %etudiant%'
+    new:
+      heading: 'Création d''un nouvel avenant pour le stage de %etudiant%'
+    edit:
+      heading: 'Modification d''un avenant pour le stage de %etudiant%'
 
 administratif_homepage.heading: 'Tableau de bord administratif'
 administratif.qualite.questionnaire.show.heading: 'Détails d''un questionnaire qualité'
@@ -1572,6 +1581,13 @@ situation.par.rapport.promo: 'Votre situation par rapport à la promo'
 situation.par.semestre.notes: 'Situation par semestre'
 
 soit: soit
+
+stage_avenant:
+  edit.success.flash: 'L''avenant de stage a été modifié avec succès'
+  new.success.flash: 'L''avenant de stage a été créé avec succès'
+  delete.success.flash: 'L''avenant de stage a été supprimé avec succès'
+  delete.error.flash: 'Erreur lors de la suppression de L''avenant de stage'
+
 
 stage_etudiant:
   change_etat.success.flash: 'L''état du stage a été modifié avec succès'

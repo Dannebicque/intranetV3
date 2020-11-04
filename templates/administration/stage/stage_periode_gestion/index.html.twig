@@ -270,19 +270,19 @@
                                         <a href="{{ path
                                             ('administration_stage_etudiant_convention_pdf', {id:stageEtudiant.id}) }}"
                                            class="btn btn-primary" data-provide="tooltip" data-placement="top"
-                                           title="Imprimer la convention"><i class="fa fa-print"></i></a>
+                                           title="Imprimer la convention"><i class="fas fa-print"></i></a>
                                         <a href="{{ path
                                             ('administration_stage_etudiant_courrier_pdf', {id:stageEtudiant
                                                 .id}) }}" class="btn btn-primary" data-provide="tooltip" data-placement="top"
                                            title="Editer le courrier" target="_blank"><i
-                                                    class=" fa fa-envelope"></i></a>
+                                                    class=" fas fa-envelope"></i></a>
                                         <a href="{{ path('administration_stage_etudiant_change_etat',
                                             {stagePeriode: stagePeriode.uuidString, etudiant:stageEtudiant
                                                 .etudiant.id, etat: constant
                                                 ('App\\Entity\\StageEtudiant::ETAT_STAGE_CONVENTION_ENVOYEE')}) }}"
                                            class="btn
                                                     btn-success" data-provide="tooltip" data-placement="top"
-                                           title="Convention envoyée"><i class="fa fa-check"></i></a>
+                                           title="Convention envoyée"><i class="fas fa-check"></i></a>
                                     </td>
                                 </tr>
                             {% else %}
@@ -314,14 +314,14 @@
                                         <a href="{{ path
                                             ('administration_stage_etudiant_convention_pdf', {id:stageEtudiant.id}) }}"
                                            class="btn btn-primary" data-provide="tooltip" data-placement="top"
-                                           title="Imprimer la convention"><i class="fa fa-print"></i></a>
+                                           title="Imprimer la convention"><i class="fas fa-print"></i></a>
                                         <a href="{{ path('administration_stage_etudiant_change_etat',
                                             {stagePeriode: stagePeriode.uuidString, etudiant:stageEtudiant
                                                 .etudiant.id, etat: constant
                                                 ('App\\Entity\\StageEtudiant::ETAT_STAGE_CONVENTION_RECUE')}) }}"
                                            class="btn
                                                     btn-success" data-provide="tooltip" data-placement="top"
-                                           title="Convention complète"><i class="fa fa-check"></i></a>
+                                           title="Convention complète"><i class="fas fa-check"></i></a>
                                     </td>
                                 </tr>
                             {% else %}
@@ -351,9 +351,13 @@
                                            class="btn btn-info" data-provide="tooltip" data-placement="top"
                                            title="Voir le stage"><i class="{{ iconShow }}"></i></a>
                                         <a href="{{ path
+                                            ('administration_stage_avenant_index', {stageEtudiant:stageEtudiant.id}) }}"
+                                           class="btn btn-primary" data-provide="tooltip" data-placement="top"
+                                           title="Gérer les avenants"><i class="file-signature"></i></a>
+                                        <a href="{{ path
                                             ('administration_stage_etudiant_convention_pdf', {id:stageEtudiant.id}) }}"
                                            class="btn btn-primary" data-provide="tooltip" data-placement="top"
-                                           title="Imprimer la convention"><i class="fa fa-print"></i></a>
+                                           title="Imprimer la convention"><i class="fas fa-print"></i></a>
                                     </td>
                                 </tr>
                             {% else %}
@@ -567,8 +571,11 @@
                                                 {% endif %}
                                                 <a class="dropdown-item" href="{{ path
                                                     ('administration_stage_etudiant_convention_pdf', {id:stageEtudiant.stage.id}) }}">{{ 'telecharger.la.convention'|trans }}</a>
-                                                <a class="dropdown-item"
-                                                   href="#">{{ 'mettre.a.jour.la.convetion'|trans }}</a>
+                                                <a class="dropdown-item" href="{{ path
+                                                    ('administration_stage_avenant_index', {stageEtudiant:stageEtudiant.stage
+                                                        .id}) }}">{{ 'gerer.les.avenants'|trans }}</a>
+                                                {# <a class="dropdown-item" #}
+                                                {# href="#">{{ 'mettre.a.jour.la.convetion'|trans }}</a> #}
                                                 <a class="dropdown-item"
                                                    href="{{ path('administration_stage_etudiant_courrier_pdf', {id:stageEtudiant.stage.id}) }}">{{ 'editer.le.courrier'|trans }}</a>
                                                 <a class="dropdown-item" href="{{ path

@@ -3,12 +3,14 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/StageEtudiant.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/10/2020 18:03
+// @lastUpdate 03/11/2020 11:06
 
 namespace App\Entity;
 
 use App\Entity\Traits\UuidTrait;
 use DateTimeInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -190,6 +192,11 @@ class StageEtudiant extends BaseEntity
     private $commentaireDureeHebdomadaire;
 
     /**
+     * @ORM\OneToMany(targetEntity=StageAvenant::class, mappedBy="stageEtudiant")
+     */
+    private $stageAvenants;
+
+    /**
      * StageEtudiant constructor.
      *
      * @param $gratificationMontant
@@ -199,6 +206,7 @@ class StageEtudiant extends BaseEntity
         $this->setUuid(Uuid::uuid4());
 
         $this->setGratificationMontant($gratificationMontant);
+        $this->stageAvenants = new ArrayCollection();
     }
 
     public function __clone()
@@ -548,5 +556,36 @@ class StageEtudiant extends BaseEntity
     public function dateFinStageFr(): string
     {
         return $this->getDateFinStage() !== null ? $this->getDateFinStage()->format('d/m/Y') : '-';
+    }
+
+    /**
+     * @return Collection|StageAvenant[]
+     */
+    public function getStageAvenants(): Collection
+    {
+        return $this->stageAvenants;
+    }
+
+    public function addStageAvenant(StageAvenant $stageAvenant): self
+    {
+        if (!$this->stageAvenants->contains($stageAvenant)) {
+            $this->stageAvenants[] = $stageAvenant;
+            $stageAvenant->setStageEtudiant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStageAvenant(StageAvenant $stageAvenant): self
+    {
+        if ($this->stageAvenants->contains($stageAvenant)) {
+            $this->stageAvenants->removeElement($stageAvenant);
+            // set the owning side to null (unless already changed)
+            if ($stageAvenant->getStageEtudiant() === $this) {
+                $stageAvenant->setStageEtudiant(null);
+            }
+        }
+
+        return $this;
     }
 }

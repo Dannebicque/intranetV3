@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.stage_avenant.edit.heading'|trans({'%etudiant%':stageEtudiant.etudiant.displayPr}) }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+
+            <a href="{{ path('administration_stage_avenant_index', {'stageEtudiant':stageEtudiant.id}) }}"
+               class="btn btn-primary btn-float"
+               title="{{ 'atitle.retour_liste'|trans }}"
+               data-provide="tooltip"
+               data-placement="bottom">
+                <i class="fas fa-arrow-left"></i>
+                <span class="sr-only">{{ 'atitle.retour_liste'|trans }}</span>
+            </a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.stage_avenant.edit.heading'|trans({'%etudiant%':stageEtudiant.etudiant.displayPr}) }}</h4>
+        <div class="card-body">
+            {% form_theme form 'form/my-form.html.twig' %}
+            {{ form_start(form) }}
+            {{ include('administration/stage/stage_avenant/_formulaire.html.twig') }}
+            <button class="btn btn-success">{{ button_label|default('label.update'|trans) }}</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .bloccas {
+            margin-top: 10px;
+            padding: 5px;
+        }
+    </style>
+{% endblock %}
+
