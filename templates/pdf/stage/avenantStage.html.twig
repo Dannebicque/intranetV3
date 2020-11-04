@@ -1,0 +1,366 @@
+{% extends "pdf/basepdf.html.twig" %}
+
+{% block style %}
+    {% include('pdf/cssPDF.css.twig') %}
+    body
+    {
+    font-size: 12px;
+    line-height: normal;
+    }
+
+    .blocconvention {
+    margin: 0;
+    padding:0;
+    font-size:10px;
+    text-align:justify;
+    }
+
+    .blocconvention_colonne {
+    margin: 0;
+    padding:5px;
+    font-size:10px;
+    text-align:justify;
+    }
+
+    .blocconvention_preambule {
+    font-size: 14px;
+
+    }
+
+    .blocconvention_preambule_encadre {
+    font-size: 14px;
+    width: 100%;
+    padding:10px;
+    border: 1px solid black;
+    }
+
+    p {
+    margin: 0;
+    padding:0;
+    padding-bottom:5px;
+    }
+
+    ul {
+    margin: 0;
+    margin-left: 30px;
+    padding:0;
+    }
+
+    ul li {
+    margin: 0;
+    padding:0;
+    }
+{% endblock %}
+
+{% block content %}
+    <table style="width:100%; border-spacing: 0;">
+        <tr>
+            <td style="width:40%">&nbsp;</td>
+            <td style="font-size:16px; text-align: center; border: 1px solid black;
+            padding:10px; font-weight: bold; width:60%">Année universitaire : 2020/2021<br><br>
+                                                        Avenant à la Convention de stage pour la période
+                                                        du {{ proposition.dateDebutStage|format_date('short') }}
+                                                        au {{ proposition.dateFinStage|format_date('short') }} entre
+            </td>
+        </tr>
+    </table>
+    <br><i>Nota : pour faciliter la lecture du document, les mots "stagiaire", "enseignant référent", "tuteur de stage",
+           "représentant légal", "étudiant" sont utilisés au masculin </i><br>
+    <table style="width:100%; border-spacing: 0;">
+        <tr>
+            <td style="width: 50%; border: 1px solid black;padding:5px;">
+                <div class="center"><strong><u>L’ÉTABLISSEMENT D’ENSEIGNEMENT OU DE
+                                               FORMATION</u></strong></div>
+                <br>
+                <p>Nom : UNIVERSITÉ DE REIMS CHAMPAGNE-ARDENNE</p>
+                <p>Adresse : Villa Douce – 9 boulevard de la paix – CS 60005 – 51724 REIMS Cedex</p>
+                <p>Tél. : 03.26.91.34.68</p>
+                <p>Représentée par (signataire de la convention) : Martial Martin</p>
+                <p>Qualité du représentant : DIRECTEUR</p>
+                <p>Département/Composante : {{ proposition.etudiant.semestre.annee.diplome.typediplome
+                    .sigle }} {{ proposition.etudiant.semestre.annee.diplome.sigle }} / IUT de Troyes</p>
+                <p>Tél. : {{ user_data.departement.telcontact|tel_format }}</p>
+                <p>Email : {{ proposition.etudiant.semestre.annee.diplome.assistantDiplome.mailUniv }}</p>
+                <p>Adresse (si différente de celle de l’établissement)
+                   : {% if user_data.departement.ufr.sitePrincipal.adresse != null %}{{ user_data.departement.ufr.sitePrincipal.adresse.display|striptags }}{% endif %}
+            </td>
+            <td style="width: 50%; border: 1px solid black;padding:5px;">
+                <div class="center"><strong><u>L’ORGANISME D’ACCUEIL</u></strong></div>
+                <br>
+                <p>Nom : {{ proposition.entreprise.raisonSociale }}</p>
+                <p>Adresse
+                   : {% if proposition.entreprise.adresse != null %}{{ proposition.entreprise.adresse.display|striptags }}{% endif %}</p>
+                <p>Représenté par (nom du signataire de la convention) :<br>
+                    {{ proposition.entreprise.responsable.display }}</p>
+                <p>Qualité du représentant : <br>{{ proposition.entreprise.responsable.fonction }}</p>
+                <p>Service dans lequel le stage sera effectué : <br>{{ proposition.serviceStageEntreprise }}</p>
+                <p>Tél. : {{ proposition.entreprise.responsable.telephone }}</p>
+                <p>Email : {{ proposition.entreprise.responsable.email }}</p>
+                <p>Lieu du stage (si différent de l’adresse de l’organisme) :</p>
+                {% if proposition.adresseStage != null %}
+                    {{ proposition.adresseStage.display|striptags }}
+                {% endif %}
+            </td>
+        </tr>
+    </table>
+    <br>
+    <table style="width:100%; border-spacing: 0;">
+        <tr>
+            <td style="width: 100%; border: 1px solid black;padding:5px;">
+                <div class="center"><strong><u>LE STAGIAIRE</u></strong></div>
+                <br>
+                <p>Nom: {{ proposition.etudiant.nom }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Prénom
+                   : {{ proposition.etudiant.prenom|title }}
+                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sexe
+                   : {% if proposition.etudiant.civilite == "Mme" %}Femme{% else %}Homme{% endif %} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Né(e)
+                   le : {{ proposition.etudiant.datenaissance|date('d/m/Y') }}</p>
+                <p>Adresse
+                   : {% if proposition.etudiant.adresse != null %}{{ proposition.etudiant.adresse.display|striptags }}{% endif %}</p>
+                <p> Tél. : {{ proposition.etudiant.tel1|tel_format }} / {{ proposition.etudiant.tel2|tel_format }}
+                    Email : {{ proposition.etudiant.mailUniv }}</p>
+                <p>INTITULE DE LA FORMATION OU DU CURSUS SUIVI DANS L’ETABLISSEMENT D’ENSEIGNEMENT SUPERIEUR ET
+                   VOLUME HORAIRE (ANNUEL OU SEMESTRIEL) :<br>
+                    {{ proposition.etudiant.semestre.annee.diplome.typediplome.libelle }} {{ proposition
+                    .etudiant.semestre.annee.diplome.libelle }} ({{ proposition.etudiant.semestre.annee.diplome
+                    .volumehoraire }} heures pour le diplôme)</p>
+            </td>
+        </tr>
+    </table>
+    <br>
+    <table style="width:100%; border-spacing: 0;">
+        <tr>
+            <td style="width: 100%; border: 1px solid black;padding:5px;">
+                <p><strong><u>Sujet du stage</u></strong> : {{ proposition.sujetStage }}</p>
+                <p>Dates du stage : Du {{ proposition.dateDebutStage|date('d/m/Y') }}
+                   Au {{ proposition.dateFinStage|date('d/m/Y') }}</p>
+                <p>Représentant une <strong>durée totale</strong> de : {{ (proposition.dureeJoursStage/5)
+                    |number_format(0) }}
+                   semaines/
+                    <s>mois</s>
+                   (rayer la
+                   mention inutile)</p>
+                <p>Et correspondant à {{ proposition.dureeJoursStage }} Jours de présence dans l’organisme
+                   d’accueil.</p>
+                <p>Répartition en cas de stage discontinu : ………….. nombre d’heures par semaine ou par jour rayer la
+                   mention inutile) :<br>
+                <p>Commentaire : {{ proposition.commentaireDureeHebdomadaire }}.
+                    {% if proposition.stagePeriode.stagePeriodeInterruptions|length > 0 %}Période(s) d'interruption(s) : {% for inter in
+                        proposition.stagePeriode.stagePeriodeInterruptions %}
+                        du {{ inter.dateDebut|date('d/m/Y') }} au {{ inter.dateFin|date('d/m/Y') }}{% if not loop
+                            .last %},{% endif %}
+                    {% endfor %}
+                    {% endif %}
+                </p><br>
+            </td>
+        </tr>
+    </table>
+    <br>
+    <table style="width:100%; border-spacing: 0;">
+        <tr>
+            <td style="width: 50%; border: 1px solid black;padding:5px;">
+                <div class="center"><strong><u>TUTEUR DE L’ETABLISSEMENT D’ENSEIGNEMENT SUPERIEUR</u></strong></div>
+                <br>
+                {% if proposition.tuteurUniversitaire != null %}
+                    <p>Nom et prénom du tuteur universitaire : {{ proposition.tuteurUniversitaire.display }}</p>
+                    {% if proposition.tuteurUniversitaire.domaines != "" or proposition.tuteurUniversitaire.responsabilites != "" %}
+                        <p>Fonction
+                           : {% if proposition.tuteurUniversitaire.domaines == "" or proposition.tuteurUniversitaire
+                                .domaines == null %}{{ proposition.tuteurUniversitaire.domaines }}{% else %}{{ proposition.tuteurUniversitaire
+                            .responsabilites }}{% endif %}</p>
+                    {% else %}
+                        <p>Fonction :</p>
+                    {% endif %}
+                    <p>Tél. : {{ proposition.tuteurUniversitaire.telbureau|tel_format }} </p>
+                    <p>Email : {{ proposition.tuteurUniversitaire.mailUniv }}</p>
+                {% else %}
+                    <p>Nom et prénom de l’enseignant référent : </p>
+                    <p>Fonction (ou discipline) : </p>
+                    <p>Tél. : </p>
+                    <p>Email :</p>
+                {% endif %}
+            </td>
+            <td style="width: 50%; border: 1px solid black;padding:5px;">
+                <div class="center"><strong><u>TUTEUR DE L’ORGANISME D’ACCUEIL</u></strong></div>
+                <br>
+                {% if proposition.tuteur != null %}
+                    <p>Nom et prénom :
+                        {{ proposition.tuteur.display }}</p>
+                    <p>Fonction : {{ proposition.tuteur.fonction }}</p>
+                    <p>Tél. : {{ proposition.tuteur.telephone|tel_format }} </p>
+                    <p>Email : {{ proposition.tuteur.email }}</p>
+                {% else %}
+                    <p>Nom et prénom :
+                        {{ proposition.entreprise.responsable.display }} </p>
+                    <p>Fonction : {{ proposition.entreprise.responsable.fonction }}</p>
+                    <p>Tél. : {{ proposition.entreprise.responsable.telephone|tel_format }} </p>
+                    <p>Email : {{ proposition.entreprise.responsable.email }}</p>
+                {% endif %}
+            </td>
+        </tr>
+    </table>
+
+
+    <div style="page-break-after: always"></div>
+
+    <p>Vu le code de l’éducation, notamment ses articles L124-1 et suivants,<br>
+       Vu la LOI n° 2020-290 du 23 mars 2020 d'urgence pour faire face à l'épidémie de covid-19 modifiée<br>
+       Vu les textes relatifs à la pandémie publiés sur le site :
+       https://www.vie-publique.fr/covid-19-les-textes-publies-au-journal-officiel</p>
+    <br>
+    <strong>Article 1 : objet</strong><br><br>
+    <p>Compte-tenu des circonstances exceptionnelles ayant lieu durant ce stage, le présent avenant a pour objet
+       de modifier la convention de stage signée entre l’établissement d’enseignement, l’organisme
+       d’accueil et le stagiaire tels que désignés en entête.</p><br>
+    {% if stage_avenant.cas == 1 %}
+        <strong>Article 2 : Modification des dates du stage (autorisation d’absence pendant le confinement
+                compte-tenu de l’impossibilité de réaliser le stage à distance)</strong><br><br>
+
+        Le stage prévu du <strong>{{ proposition.dateDebutStage|format_date('short') }}</strong>    au
+        <strong>{{ proposition.dateFinStage|format_date('short') }}</strong>
+        est prolongé jusqu’au
+        <strong>{{ stage_avenant.nouvelleDateFin != null ? stage_avenant.nouvelleDateFin|format_date('short') :'__________' }}</strong>,
+        soit une durée totale de stage de <strong>{{ stage_avenant.nouvelleDureeJour }}</strong> jours.</p>
+        <p>Compte-tenu de l’impossibilité de réaliser le stage à distance et de l’obligation de confinement,
+           il est entendu entre les parties que le stagiaire bénéficie d’une autorisation d’absence du <strong>
+                {{ stage_avenant.dateDebutAbsence != null ? stage_avenant.dateDebutAbsence|format_date('short'): '__________' }}</strong>
+           au <strong>
+                {{ stage_avenant.dateFinAbsence != null ? stage_avenant.dateFinAbsence|format_date('short') :'__________' }}
+            </strong>, date de
+           fin du confinement. Cette autorisation d’absence pourra être prolongée en cas de prolongation du
+           confinement.</p>
+
+    {% elseif stage_avenant.cas == 2 %}
+        <strong>Article 2 : Stage à distance</strong><br><br>
+
+        <p>
+            A compter de la signature du présent avenant par le stagiaire, le stage aura lieu à l’adresse
+            suivante :</p>
+        <p><strong>{{ (stage_avenant.nouvelleAdresse != null and stage_avenant.nouvelleAdresse
+                .adresse1 != null) ?
+                stage_avenant.nouvelleAdresse.display|striptags :
+                '___' }}</strong></p>
+        <p>Il est entendu entre les parties qu’en cas de mesures de déconfinement , le stagiaire reviendra sur
+           les lieux initialement prévus dans la convention de stage dans les meilleurs délais, compte-tenu
+           éventuellement des délais d’acheminement sur le lieu de stage.
+        </p>
+
+    {% elseif stage_avenant.cas == 3 %}
+        <strong>Article 2 : Suspension du stage (en cas de confinement et d’impossibilité de stage à distance)
+        </strong><br><br>
+
+        <p>
+            Le stage prévu du <strong>{{ proposition.dateDebutStage|format_date('short') }}</strong> au
+            <strong>{{ proposition.dateFinStage|format_date('short') }}</strong> est suspendu à compter du
+            <strong>{{ stage_avenant.dateDebutSuspension != null ? stage_avenant.dateDebutSuspension
+                |format_date('short'): '__________' }}</strong> jusqu’au <strong>{{ stage_avenant.dateFinSuspension
+                !=
+                null ?  stage_avenant
+                .dateFinSuspension|format_date('short') : '__________' }}</strong>
+            compte-tenu de l’obligation de confinement et de l’impossibilité de réaliser le stage à distance.
+            Il reprendra le <strong>{{ stage_avenant.dateRepriseStage != null ? stage_avenant.dateRepriseStage
+                |format_date('short') : '__________' }}</strong> sauf prolongation
+            du confinement.
+        </p>
+
+    {% elseif stage_avenant.cas == 4 %}
+        <strong>Article 2 : Arrêt définitif du stage</strong><br><br>
+
+        Le stage prévu du <strong>{{ proposition.dateDebutStage|format_date('short') }}</strong>    au
+        <strong>{{ proposition.dateFinStage|format_date('short') }}</strong> est interrompu à compter
+        du <strong>{{ stage_avenant.dateInterruption != null ? stage_avenant.dateInterruption|format_date
+            ('short') : '__________' }}</strong>. Les parties conviennent
+        d’étudier ensemble la possibilité de mise en œuvre de l’article L124-15 du code de l’éducation (1).
+    {% endif %}
+    <br>
+    <strong>Article 3 : Prise d’effet</strong><br><br>
+
+    <p>Le présent avenant prend effet de plein droit à sa date de signature par le stagiaire.<br>
+       Il est entendu entre les parties que le présent avenant pourra être envoyé par courriel avec signatures
+       scannées, sous réserve de vérification de l’identité des signataires, conformément aux articles 1366 et
+       1367 du code civil (2).</p>
+    <br>
+    <strong>Article 4 : Autres dispositions</strong><br><br>
+
+    <p>L’ensemble des autres dispositions de la convention de stage initiale restent applicables.</p>
+    <br>
+    <strong>Fait A</strong> Troyes <strong>Le</strong> {{ 'now'|date('d/m/Y') }}
+    <br>
+    <br>
+    <table style="width:100%">
+        <tr>
+            <td style="width:50%"><strong>POUR L’UNIVERSITÉ DE REIMS CHAMPAGNE-ARDENNE</strong></td>
+            <td style="width:50%"><strong>ORGANISME D’ACCUEIL</strong></td>
+        </tr>
+        <tr>
+            <td><strong>Représentant de l’établissement</strong><br/>Nom et signature
+                                                                     :<br/>{{ user_data.departement.ufr.responsable
+                .display }}</td>
+            <td><strong>Représentant de l’organisme d’accueil</strong><br/>
+                Nom, signature et cachet de la société :<br/>
+                {{ proposition.entreprise.responsable.prenom|capitalize }} {{ proposition
+                .entreprise.responsable.nom|upper }}
+            </td>
+        </tr>
+        <tr style="height: 120px;">
+            <td>&nbsp;<br><br><br><br><br></td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td><strong>Stagiaire (ou son représentant légal échéant)</strong><br/>
+                Nom et signature:<br/>{{ proposition.etudiant.displayPr }}</td>
+            <td></td>
+        </tr>
+        <tr style="height: 120px;">
+            <td>&nbsp;<br><br><br><br><br></td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td><strong>Tuteur Universitaire</strong><br/>Nom et signature
+                                                          :<br/>{% if proposition.tuteurUniversitaire != null %}{{ proposition.tuteurUniversitaire.displayPr }}{% endif %}
+                {% if proposition.tuteurUniversitaire.signatureElectronique != null %}
+                    <br/>
+                    <img src="{{ settings('BASE_PATH') }}signature/{{ proposition.tuteurUniversitaire
+                    .signatureElectronique }}" width="100px" alt="Signature électronique"/>
+                {% endif %}
+            </td>
+            <td><strong>Le tuteur de l’organisme d’accueil</strong><br/>
+                Nom et signature :<br/>{% if proposition.tuteur != null %}
+                    {{ proposition.tuteur.prenom|capitalize }}  {{ proposition.tuteur.nom|upper }}{% else %}{{ proposition.entreprise.responsable.prenom|capitalize }} {{ proposition.entreprise.responsable.nom|upper }}{% endif %}
+            </td>
+        </tr>
+        {% if proposition.tuteurUniversitaire.signatureElectronique == null %}
+            <tr style="height: 80px;">
+                <td>&nbsp;<br><br><br><br><br></td>
+                <td><br><br><br><br><br></td>
+            </tr>
+        {% endif %}
+    </table>
+    <hr>
+    <p style="font-size: 8px; font-style: italic">(1). Lorsque le stagiaire interrompt sa période de formation en milieu
+                                                  professionnel ou son
+                                                  stage
+                                                  pour un
+                                                  motif lié à la maladie, à un accident, à la grossesse, à la paternité,
+                                                  à l'adoption ou, en accord avec
+                                                  l'établissement, en cas de non-respect des stipulations pédagogiques
+                                                  de la convention ou en cas de
+                                                  rupture de la convention à l'initiative de l'organisme d'accueil,
+                                                  l'autorité académique ou l'établissement d'enseignement supérieur
+                                                  valide la période de formation en milieu professionnel ou le stage,
+                                                  même s'il n'a pas atteint la durée prévue dans le cursus, ou propose
+                                                  au stagiaire une modalité alternative de validation de sa formation.
+                                                  En cas d'accord des parties à la convention, un report de la fin de la
+                                                  période de formation en milieu professionnel ou du stage, en tout ou
+                                                  partie, est également possible.</p>
+    <p style="font-size: 8px; font-style: italic">(2). Article 1366 : L'écrit électronique a la même force probante
+                                                  que l'écrit sur support papier, sous
+                                                  réserve
+                                                  que puisse être dûment identifiée la personne dont il émane et qu'il
+                                                  soit établi et conservé dans des
+                                                  conditions de nature à en garantir l'intégrité. / Article 1367 : La
+                                                  signature nécessaire à la
+                                                  perfection d'un acte juridique identifie son auteur. Elle manifeste
+                                                  son consentement aux obligations qui découlent de cet acte. Quand elle
+                                                  est apposée par un officier public, elle confère l'authenticité à
+                                                  l'acte.</p>
+{% endblock %}

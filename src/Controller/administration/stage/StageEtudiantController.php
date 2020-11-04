@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StageEtudiantController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/10/2020 12:22
+// @lastUpdate 03/11/2020 11:22
 
 namespace App\Controller\administration\stage;
 
@@ -14,6 +14,7 @@ use App\Entity\Etudiant;
 use App\Entity\Personnel;
 use App\Entity\StageEtudiant;
 use App\Entity\StagePeriode;
+use App\Form\StageAvenantType;
 use App\Form\StageEtudiantType;
 use App\Repository\PersonnelRepository;
 use App\Repository\StageMailTemplateRepository;
