@@ -3,13 +3,14 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Twig/AppExtension.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/09/2020 16:15
+// @lastUpdate 05/11/2020 11:56
 
 namespace App\Twig;
 
 use App\Entity\Constantes;
 use App\Classes\Configuration;
 use App\Classes\Tools;
+use App\Entity\Etudiant;
 use App\Entity\Personnel;
 use Carbon\CarbonInterface;
 use Twig\Extension\AbstractExtension;
@@ -32,7 +33,7 @@ class AppExtension extends AbstractExtension
      */
     public function getFilters(): array
     {
-        return array(
+        return [
             new TwigFilter('tel_format', [$this, 'telFormat']),
             new TwigFilter('age', [$this, 'age']),
             new TwigFilter('time_ago', [$this, 'timeAgo']),
@@ -41,12 +42,13 @@ class AppExtension extends AbstractExtension
             new TwigFilter('chr', [$this, 'mychr']),
             new TwigFilter('upper', [$this, 'upper']),
             new TwigFilter('mailto', [$this, 'mailto'], ['is_safe' => ['html']]),
+            new TwigFilter('displayGroupes', [$this, 'displayGroupes'], ['is_safe' => ['html']]),
             new TwigFilter('link', [$this, 'link'], ['is_safe' => ['html']]),
             new TwigFilter('border', [$this, 'border']),
             new TwigFilter('format_note', [$this, 'formatNote'], ['is_safe' => ['html']]),
             new TwigFilter('formatHeure', [$this, 'formatHeure'])
 
-        );
+        ];
     }
 
     public function formatHeure($heure)
@@ -89,6 +91,22 @@ class AppExtension extends AbstractExtension
     public function age($dateNaissance): string
     {
         return Carbon::instance($dateNaissance)->age;
+    }
+
+    public function displayGroupes(Etudiant $etudiant): string
+    {
+        $html = '';
+        $nbGroupes = count($etudiant->getGroupes());
+        $loop = 0;
+        foreach ($etudiant->getGroupes() as $groupe) {
+            $html = $groupe->getLibelle();
+            if ($loop < $nbGroupes - 1) {
+                $html .= ', ';
+            }
+            $loop++;
+        }
+
+        return $html;
     }
 
     public function mailto($email): string
