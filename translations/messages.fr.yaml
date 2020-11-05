@@ -1024,6 +1024,7 @@ fullscreen: 'Mode plein écran'
 generer.fichier: 'Générer le fichier'
 gerer_autorise_evaluation.heading: 'Personnels autorisées à modifier l''évaluation'
 gerer.fin.semestre: 'Gérer <strong>la fin</strong> de semestre'
+gerer.les.avenants: 'Gérer les avenants'
 
 gestion:
   categorie.materiel: 'Gestion des catégories de matériel'
