@@ -39,6 +39,7 @@
                 <thead>
                 <tr>
                     <th>{{ 'table.etudiant'|trans }}</th>
+                    <th>{{ 'table.groupes'|trans }}</th>
                     <th>{{ 'table.matiere'|trans }}</th>
                     <th>{{ 'table.personnel'|trans }}</th>
                     <th>{{ 'table.date_evaluation'|trans }}</th>
@@ -51,6 +52,7 @@
                 {% for rattrapage in rattrapages %}
                     <tr>
                         <td>{{ rattrapage.etudiant.display }}</td>
+                        <td>{{ rattrapage.etudiant|displayGroupes }}</td>
                         <td>{{ rattrapage.matiere ? rattrapage.matiere.codeMatiere : 'non.defini'|trans }}</td>
                         <td>{{ rattrapage.personnel ? rattrapage.personnel.display : 'non.defini'|trans }}</td>
                         <td>{{ rattrapage.dateEval ? rattrapage.dateEval|format_date('long') : 'non.defini'|trans }}</td>
@@ -126,10 +128,13 @@
 
 {% block stylesheets %}
     {{ parent() }}
+    {{ encore_entry_link_tags('datatable') }}
     {{ encore_entry_link_tags('adm.rattrapages') }}
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
+
+    {{ encore_entry_script_tags('datatable') }}
     {{ encore_entry_script_tags('adm.rattrapages') }}
 {% endblock %}
