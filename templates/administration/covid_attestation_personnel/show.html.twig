@@ -71,7 +71,12 @@
                 </tr>
                 <tr>
                     <th>Duree de Validitée</th>
-                    <td>{{ covid_attestation_personnel.dureeValiditee }}</td>
+                    <td>
+                        <ul>{% for creneau in covid_attestation_personnel.covidCreneauPresences %}
+                                <li>{{ creneau.display }}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
                 </tr>
                 <tr>
                     <th>Motif</th>
