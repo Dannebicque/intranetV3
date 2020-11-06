@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/CovidSubscriber.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/11/2020 15:33
+// @lastUpdate 06/11/2020 18:01
 
 namespace App\EventSubscriber;
 
@@ -93,7 +93,7 @@ class CovidSubscriber implements EventSubscriberInterface
         $this->entityManager->persist($autorisation);
         $this->entityManager->flush();
 
-        $this->sendToDirection($autorisation, CovidEvent::COVID_AUTORISATION_EDITEE);
+        //$this->sendToDirection($autorisation, CovidEvent::COVID_AUTORISATION_EDITEE);
 
     }
 
@@ -134,7 +134,7 @@ class CovidSubscriber implements EventSubscriberInterface
                     'covidAttestationPersonnel' => $covidAttestationPersonnel
                 ]);
                 $this->myMailer->sendMessage(
-                    [$covidAttestationPersonnel->getPersonnel()->getMails()],
+                    $covidAttestationPersonnel->getPersonnel()->getMails(),
                     'Demande d\'autorisation de déplacement refusée',
                     [
                         'replyTo' => $covidAttestationPersonnel->getDiplome()->getResponsableDiplome()->getMailUniv(),

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/CovidAttestationPersonnelController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/11/2020 17:53
+// @lastUpdate 06/11/2020 17:57
 
 namespace App\Controller\administration;
 
@@ -56,7 +56,7 @@ class CovidAttestationPersonnelController extends BaseController
 
         $event = new CovidEvent($covidAttestationPersonnel);
         if ($covidAttestationPersonnel->getValidationDepartement() === true) {
-            // $eventDispatcher->dispatch($event, CovidEvent::COVID_AUTORISATION_VALIDEE_DEPARTEMENT);
+            $eventDispatcher->dispatch($event, CovidEvent::COVID_AUTORISATION_VALIDEE_DEPARTEMENT);
         } else {
             $eventDispatcher->dispatch($event, CovidEvent::COVID_AUTORISATION_REFUSEE_DEPARTEMENT);
         }
