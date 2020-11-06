@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/AbsenceJustificatifController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/07/2020 18:05
+// @lastUpdate 05/11/2020 20:31
 
 namespace App\Controller\administration;
 
@@ -58,7 +58,6 @@ class AbsenceJustificatifController extends BaseController
      * @param                               $_format
      *
      * @return Response
-     * @throws Exception
      */
     public function exportJustificatif(
         MyExport $myExport,
