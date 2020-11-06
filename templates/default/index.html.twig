@@ -5,6 +5,23 @@
 {% endblock %}
 
 {% block content %}
+    {% if not is_granted('ROLE_ETUDIANT') %}
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card card-warning">
+                    <header class="card-header">
+                        <h4 class="card-title">{{ 'covid.autorisation.heading'|trans }}</h4>
+                    </header>
+                    <div class="card-body">
+                        Ici peut être un petit texte explication !
+                        <a href="{{ path('application_personnel_covid_attestation_personnel_index') }}" class="btn
+                    btn-success btn-block">
+                            Faire une nouvelle demande de déplacement</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
     <div class="row">
         <div class="col-sm-12 col-md-8">
             <div class="card">

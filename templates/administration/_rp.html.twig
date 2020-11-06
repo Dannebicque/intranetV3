@@ -1,5 +1,20 @@
 <div class="row">
     <div class="col-md-12 col-lg-12  col-sm-12">
+        <div class="card card-warning">
+            <header class="card-header">
+                <h2 class="card-title">{{ 'adm.attestation_deplacement'|trans }}</h2>
+            </header>
+            <div class="card-body">
+                <a href="{{ path('administration_covid_attestation_personnel_index') }}" class="btn btn-block
+                btn-info">Voir les
+                          demandes</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 col-lg-12  col-sm-12">
         <div class="card">
             <header class="card-header">
                 <h2 class="card-title">{{ 'adm.etudiants'|trans }}</h2>
@@ -14,21 +29,21 @@
                 <div class="row gap-y">
                     {% for semestre in user_data.semestres|filter(semestre => semestre.actif == true) %}
                         {% if semestre.diplome.responsableDiplome.id == user_data.user.id %}
-                        <div class="col-md-2"><a
-                                    href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}"
-                                    class="btn btn-block btn-primary">
-                                {{ semestre.diplome.sigle }} | {{ semestre.libelle }}
-                            </a></div>
+                            <div class="col-md-2"><a
+                                        href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}"
+                                        class="btn btn-block btn-primary">
+                                    {{ semestre.diplome.sigle }} | {{ semestre.libelle }}
+                                </a></div>
                         {% endif %}
                     {% endfor %}
 
                     {% for semestre in user_data.semestres|filter(semestre => semestre.actif == false) %}
                         {% if semestre.diplome.responsableDiplome.id == user_data.user.id %}
-                        <div class="col-md-2"><a
-                                    href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}"
-                                    class="btn btn-block btn-default">
-                                {{ semestre.diplome.sigle }} | {{ semestre.libelle }}
-                            </a></div>
+                            <div class="col-md-2"><a
+                                        href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}"
+                                        class="btn btn-block btn-default">
+                                    {{ semestre.diplome.sigle }} | {{ semestre.libelle }}
+                                </a></div>
                         {% endif %}
                     {% endfor %}
 
@@ -115,7 +130,7 @@
                                 class="btn btn-block btn-primary"> {{ 'adm.gerer.dates'|trans }}</a></div>
                     </div>
 
-{#                    <div class="col-md-6 col-sm-12">#}
+                    {#                    <div class="col-md-6 col-sm-12">#}
 {#                        <div><a href="{{ path('administration_creneau_bloque_index') }}"#}
 {#                                class="btn btn-block btn-primary"> {{ 'adm.gerer.creneaux'|trans }}</a></div>#}
 {#                    </div>#}
@@ -138,12 +153,12 @@
                     <div class="row gap-y">
                         {% for periode in periodes %}
                             {% if periode.semestre.diplome.responsableDiplome == user_data.user.id %}
-                            <div class="col-md-6">
-                                <div>
-                                    <a href="{{ path('administration_stage_periode_gestion', {uuid:periode.uuidString}) }}"
-                                       class="btn btn-block btn-primary"> Période {{ periode.libelle }}</a>
+                                <div class="col-md-6">
+                                    <div>
+                                        <a href="{{ path('administration_stage_periode_gestion', {uuid:periode.uuidString}) }}"
+                                           class="btn btn-block btn-primary"> Période {{ periode.libelle }}</a>
+                                    </div>
                                 </div>
-                            </div>
                             {% endif %}
                         {% else %}
                             <div class="col-sm-12">
@@ -166,7 +181,7 @@
                             {% if annee.diplome.responsableDiplome == user_data.user.id %}
                                 {% set alternance = true %}
                                 <a href="{{ path('administration_alternance_index',{annee:annee.id}) }}"
-                                class="btn btn-block btn-primary"> Alternances pour l'année {{ annee.libelle }}</a>
+                                   class="btn btn-block btn-primary"> Alternances pour l'année {{ annee.libelle }}</a>
                             {% endif %}
                         {% endfor %}
                         {% if alternance == false %}

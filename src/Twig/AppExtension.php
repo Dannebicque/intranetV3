@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Twig/AppExtension.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/11/2020 11:56
+// @lastUpdate 06/11/2020 15:33
 
 namespace App\Twig;
 
@@ -36,6 +36,7 @@ class AppExtension extends AbstractExtension
         return [
             new TwigFilter('tel_format', [$this, 'telFormat']),
             new TwigFilter('age', [$this, 'age']),
+            new TwigFilter('bg', [$this, 'bg']),
             new TwigFilter('time_ago', [$this, 'timeAgo']),
             new TwigFilter('badge', [$this, 'badge']),
             new TwigFilter('escapetitle', [$this, 'escapetitle']),
@@ -91,6 +92,15 @@ class AppExtension extends AbstractExtension
     public function age($dateNaissance): string
     {
         return Carbon::instance($dateNaissance)->age;
+    }
+
+    public function bg($value): string
+    {
+        if ($value === null) {
+            return 'bg-pale-warning';
+        }
+
+        return $value === true ? 'bg-pale-success' : 'bg-pale-error';
     }
 
     public function displayGroupes(Etudiant $etudiant): string

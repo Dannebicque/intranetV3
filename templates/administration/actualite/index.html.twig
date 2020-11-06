@@ -82,3 +82,13 @@
         }
     ]}) }}
 {% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('datatable') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('datatable') }}
+{% endblock %}

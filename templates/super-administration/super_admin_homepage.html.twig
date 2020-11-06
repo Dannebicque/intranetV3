@@ -5,6 +5,20 @@
 {% endblock %}
 
 {% block content %}
+    <div class="row">
+        <div class="col-md-12 col-lg-12  col-sm-12">
+            <div class="card card-warning">
+                <header class="card-header">
+                    <h2 class="card-title">{{ 'adm.attestation_deplacement'|trans }}</h2>
+                </header>
+                <div class="card-body">
+                    <a href="{{ path('sa_covid_attestation_personnel_index') }}" class="btn btn-block
+                btn-info">Voir les
+                          demandes</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="card">
         <header class="card-header">

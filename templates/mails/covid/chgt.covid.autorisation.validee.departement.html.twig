@@ -1,0 +1,20 @@
+Bonjour,
+
+La demande d'autorisation de déplacement professionnel décrite ci-après vient d'être validée par le département {(.
+covidAttestationPersonnel.diplome.libelle }}
+
+Auteur de la demande : {{ covidAttestationPersonnel.personnel.displayPr }}
+Cette demande concerne la période :
+
+{% for creneau in covidAttestationPersonnel.covidCreneauPresences %}
+    - {{ creneau.display }}<br>
+{% endfor %}
+
+Pour le motif: {{ covidAttestationPersonnel.motif|trans }}
+Moyen de déplacement: {{ covidAttestationPersonnel.moyenDeplacement }}
+
+Vous pouvez voir la demande ici : {{ }}
+
+Cordialement,
+
+Ce message est un message automatique envoyé depuis l'intranet de l'{{ settings('NOM_IUT') }}.

@@ -3,11 +3,12 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Utilisateur.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 28/09/2020 08:41
+// @lastUpdate 05/11/2020 13:28
 
 namespace App\Entity;
 
 use DateTime;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use JsonException;
 use Serializable;
@@ -92,7 +93,7 @@ abstract class Utilisateur implements UserInterface, Serializable
     protected string $civilite = 'M.'; //M. ou Mme
 
     /**
-     * @ORM\Column(type="date",nullable=true)
+     * @ORM\Column(type="date", nullable=true)
      *
      */
     protected $dateNaissance;
@@ -157,6 +158,11 @@ abstract class Utilisateur implements UserInterface, Serializable
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private ?string $resetToken;
+
+    /**
+     * @ORM\Column(type="string", length=150, nullable=true)
+     */
+    private $lieuNaissance;
 
     public function __construct()
     {
@@ -352,7 +358,7 @@ abstract class Utilisateur implements UserInterface, Serializable
     /**
      * @param mixed $dateNaissance
      */
-    public function setDateNaissance($dateNaissance): void
+    public function setDateNaissance(?DateTimeInterface $dateNaissance): void
     {
         $this->dateNaissance = $dateNaissance;
     }
@@ -626,5 +632,17 @@ abstract class Utilisateur implements UserInterface, Serializable
     public function unserialize($serialized)
     {
         $this->uuid = unserialize($serialized);
+    }
+
+    public function getLieuNaissance(): ?string
+    {
+        return $this->lieuNaissance;
+    }
+
+    public function setLieuNaissance(?string $lieuNaissance): self
+    {
+        $this->lieuNaissance = $lieuNaissance;
+
+        return $this;
     }
 }

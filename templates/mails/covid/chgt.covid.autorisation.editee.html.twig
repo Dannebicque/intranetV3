@@ -1,0 +1,20 @@
+Bonjour,
+
+La demande d'autorisation de déplacement professionnel de {{ covidAttestationPersonnel.personnel.display }} initialement déposée le {{ covidAttestationPersonnel
+.created|format_date('short') }} a été modifiée et doit être validée.
+
+Cette demande concerne la période :
+
+<br>
+{% for creneau in covidAttestationPersonnel.covidCreneauPresences %}
+    - {{ creneau.display }}<br>
+{% endfor %}
+
+Pour le motif: {{ covidAttestationPersonnel.motif|trans }}
+
+Vous pouvez voir la demande ici : <a href="{{ path('administration_covid_attestation_personnel_show',
+    {id:covidAttestationPersonnel.id}) }}">Voir la demande de {{ covidAttestationPersonnel.personnel.display }}</a>
+
+Cordialement,
+
+Ce message est un message automatique envoyé depuis l'intranet de l'{{ settings('NOM_IUT') }}.

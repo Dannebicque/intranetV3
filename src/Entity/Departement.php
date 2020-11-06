@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Departement.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/10/2020 06:34
+// @lastUpdate 06/11/2020 15:33
 
 namespace App\Entity;
 
@@ -206,6 +206,7 @@ class Departement extends BaseEntity
      * @ORM\OneToMany(targetEntity="App\Entity\Etudiant", mappedBy="departement")
      */
     private $etudiants;
+
 
     /**
      * Departement constructor.

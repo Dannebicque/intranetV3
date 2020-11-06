@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/StagePeriode.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/10/2020 06:34
+// @lastUpdate 06/11/2020 10:44
 
 namespace App\Entity;
 
@@ -121,15 +121,18 @@ class StagePeriode extends BaseEntity implements Serializable
      * @ORM\Column(type="boolean")
      */
     private $copieAssistant = true;
+
     /**
      * @ORM\OneToMany(targetEntity="StagePeriodeInterruption", mappedBy="stagePeriode", cascade={"persist", "remove"})
      */
     private $stagePeriodeInterruptions;
+
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\StagePeriodeSoutenance", mappedBy="stagePeriode", cascade={"persist",
      *                                                                  "remove"})
      */
     private $stagePeriodeSoutenances;
+
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Personnel", inversedBy="stagePeriodes")
      * @Groups({"stage_periode_administration"})

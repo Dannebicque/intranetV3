@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Diplome.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/10/2020 09:53
+// @lastUpdate 05/11/2020 21:00
 
 namespace App\Entity;
 
@@ -165,6 +165,11 @@ class Diplome extends BaseEntity
      */
     private $apcComptences;
 
+    /**
+     * @ORM\OneToMany(targetEntity=CovidAttestationPersonnel::class, mappedBy="diplome")
+     */
+    private $covidAttestationPersonnels;
+
     public function __construct(Departement $departement)
     {
         $this->departement = $departement;
@@ -172,6 +177,7 @@ class Diplome extends BaseEntity
         $this->ppns = new ArrayCollection();
         $this->annees = new ArrayCollection();
         $this->apcComptences = new ArrayCollection();
+        $this->covidAttestationPersonnels = new ArrayCollection();
     }
 
     /**
@@ -720,6 +726,37 @@ class Diplome extends BaseEntity
             // set the owning side to null (unless already changed)
             if ($apcComptence->getDiplome() === $this) {
                 $apcComptence->setDiplome(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|CovidAttestationPersonnel[]
+     */
+    public function getCovidAttestationPersonnels(): Collection
+    {
+        return $this->covidAttestationPersonnels;
+    }
+
+    public function addCovidAttestationPersonnel(CovidAttestationPersonnel $covidAttestationPersonnel): self
+    {
+        if (!$this->covidAttestationPersonnels->contains($covidAttestationPersonnel)) {
+            $this->covidAttestationPersonnels[] = $covidAttestationPersonnel;
+            $covidAttestationPersonnel->setDiplome($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCovidAttestationPersonnel(CovidAttestationPersonnel $covidAttestationPersonnel): self
+    {
+        if ($this->covidAttestationPersonnels->contains($covidAttestationPersonnel)) {
+            $this->covidAttestationPersonnels->removeElement($covidAttestationPersonnel);
+            // set the owning side to null (unless already changed)
+            if ($covidAttestationPersonnel->getDiplome() === $this) {
+                $covidAttestationPersonnel->setDiplome(null);
             }
         }
 

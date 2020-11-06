@@ -110,6 +110,7 @@ actualite:
   liste.heading: 'Liste des actualités'
 
 adm:
+  attestation_deplacement: 'Gestion des attestations de déplacement'
   actualite:
     index.heading: 'Liste des actualités'
     modification.heading: 'Modification d''une actualité'
@@ -338,8 +339,7 @@ adm:
     modification.heading: 'Période de stage modifiée avec succès'
     new.heading: 'Création d''une période de stage'
     show.heading: 'Détails d''une période de stage'
-    edit:
-      heading: 'messages'
+    edit.heading: 'Modification d''une période de stage'
   stages: Stages
   statistiques:
     menu: Statistiques
@@ -573,7 +573,13 @@ app:
       import.titre: 'Importer des notes'
       index.titre: 'Evaluations / Notes'
       saisie.titre: 'Saisir des notes'
-  disponibilite.heading: 'Vos disponibilités'
+    covid:
+      attestation:
+        index.heading: 'Liste des demandes d''attestation de déplacement'
+        new.heading: 'Création d''une demande d''attestation de déplacement'
+        show.heading: 'Détails d''une demande d''attestation de déplacement'
+        edit.heading: 'Modification d''une demande d''attestation de déplacement'
+    disponibilite.heading: 'Vos disponibilités'
   progression.heading: 'Progression pédagogique'
   quizz.heading: Quizz
   vos.stages.et.alternances.heading: 'Vos stages et alternances'
@@ -604,6 +610,8 @@ article:
 assistant.creation.departement: 'Assistant pour la création d''un nouveau département'
 
 atitle:
+  refuser: 'Refuser'
+  valider: 'Valider'
   accepter.la.demande: 'Accepter la demande'
   accepter.le.justificatif: 'Accepter le justificatif et justifier les absences'
   active: Activer
@@ -815,6 +823,7 @@ compare:
   plusinfos:
     details: 'Plus d''informations'
 
+
 competence:
   add.success.flash: 'Compétence ajoutée avec succès'
   duplicate.success.flash: 'Compétence dupliquée avec succès'
@@ -838,6 +847,14 @@ convention:
   imprimee: 'Convention imprimée'
 
 conventions.completes: 'Conventions complétes'
+
+covid_attestation_personnel:
+  edit.success.flash: 'Demande d''attestation de déplacement modifiée avec succès'
+  new.success.flash: 'Demande d''attestation de déplacement ajoutée avec succès'
+  duplicate.success.flash: 'Demande d''attestation de déplacement dupliquée avec succès'
+  delete.success.flash: 'Demande d''attestation de déplacement supprimée avec succès'
+  delete.error.flash: 'Erreur lors de la demande d''attestation de déplacement'
+
 copie.des.mails.generes: 'des mails générés par l''intranet'
 created: 'Créé le'
 creation.departement.manuellement: 'Création d''un département'
@@ -1604,7 +1621,10 @@ stage_periode:
   delete.success.flash: 'Période de stage supprimée avec succès'
   edit.success.flash: 'Période de stage modifiée avec succès'
 
-stage.valide: 'Stage Validé'
+
+  duplicate:
+    success:
+      flash:stage.valide: 'Stage Validé'
 
 structure.de.la.departement.heading: 'Structure du département'
 success: Succès
@@ -2056,4 +2076,15 @@ vous: vous
 vous.netes.pas: 'Vous n''êtes pas'
 Year: Année
 yesno: yesno
+covid:
+  autorisation.heading: 'Demande de justificatif de déplacement professionnel'
 
+
+administration:
+  covid:
+    attestation.index.heading: 'Liste des demandes d''attestations de déplacement'
+    attestation.show.heading: 'Détails d''une demande d''attestations de déplacement'
+
+motif1: 'Assurer TP / devoirs sur tables'
+motif2: 'Assurer sur site les enseignants car ne dispose pas des conditions satisfaisantes pour le faire en distanciel'
+motif3: 'Demandes ponctuelles (récupérer dossiers, BU)'
