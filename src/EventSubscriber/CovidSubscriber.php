@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/CovidSubscriber.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/11/2020 18:20
+// @lastUpdate 06/11/2020 18:22
 
 namespace App\EventSubscriber;
 
@@ -191,8 +191,8 @@ class CovidSubscriber implements EventSubscriberInterface
     public function onCovidAutorisationRefuseeDirection(CovidEvent $event): void
     {
         $autorisation = $event->getCovidAttestationPersonnel();
-        $autorisation->setValidationDepartement(false);
-        $autorisation->setDateValidationDepartement(new DateTime());
+        $autorisation->setValidationDirection(false);
+        $autorisation->setDateValidationDirection(new DateTime());
         $this->entityManager->persist($autorisation);
         $this->entityManager->flush();
 
