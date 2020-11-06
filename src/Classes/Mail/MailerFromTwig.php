@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Mail/MailerFromTwig.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 02/10/2020 11:01
+// @lastUpdate 06/11/2020 17:44
 
 namespace App\Classes\Mail;
 
@@ -49,8 +49,14 @@ class MailerFromTwig extends BaseMailer
      */
     public function setTemplate($template, $data): void
     {
-        $this->mail->textTemplate($template)
-            ->context($data);
+        if (strpos($template, 'html') === false) {
+            $this->mail->textTemplate($template)
+                ->context($data);
+        } else {
+            $this->mail->htmlTemplate($template)
+                ->context($data);
+        }
+
     }
 
     public function sendMessage(array $to, $subject, array $options = []): void

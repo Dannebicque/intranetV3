@@ -13,7 +13,7 @@ Cette demande concerne la période :
 Pour le motif: {{ covidAttestationPersonnel.motif|trans }}
 Moyen de déplacement: {{ covidAttestationPersonnel.moyenDeplacement }}
 
-Vous pouvez voir la demande ici : {{ }}
+Vous pouvez voir la demande ici : {{ url('sa_covid_attestation_personnel_show', {id:covidAttestationPersonnel.id}) }}
 
 Cordialement,
 
