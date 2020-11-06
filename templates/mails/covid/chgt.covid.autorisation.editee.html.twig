@@ -12,7 +12,7 @@ Cette demande concerne la période :
 
 Pour le motif: {{ covidAttestationPersonnel.motif|trans }}
 
-Vous pouvez voir la demande ici : <a href="{{ path('administration_covid_attestation_personnel_show',
+Vous pouvez voir la demande ici : <a href="{{ url('administration_covid_attestation_personnel_show',
     {id:covidAttestationPersonnel.id}) }}">Voir la demande de {{ covidAttestationPersonnel.personnel.display }}</a>
 
 Cordialement,

@@ -854,6 +854,7 @@ covid_attestation_personnel:
   duplicate.success.flash: 'Demande d''attestation de déplacement dupliquée avec succès'
   delete.success.flash: 'Demande d''attestation de déplacement supprimée avec succès'
   delete.error.flash: 'Erreur lors de la demande d''attestation de déplacement'
+  add.success.flash: 'Demande d''attestation de déplacement ajoutée avec succès'
 
 copie.des.mails.generes: 'des mails générés par l''intranet'
 created: 'Créé le'
