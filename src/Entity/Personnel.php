@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Personnel.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/10/2020 15:41
+// @lastUpdate 05/11/2020 14:53
 
 namespace App\Entity;
 
@@ -272,6 +272,11 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
      */
     private $signatureElectronique;
 
+    /**
+     * @ORM\OneToMany(targetEntity=CovidAttestationPersonnel::class, mappedBy="personnel")
+     */
+    private $covidAttestationPersonnels;
+
     public function __construct()
     {
         parent::__construct();
@@ -302,6 +307,7 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
         $this->projetPeriodes = new ArrayCollection();
         $this->materielCommuns = new ArrayCollection();
         $this->materielCommunPrets = new ArrayCollection();
+        $this->covidAttestationPersonnels = new ArrayCollection();
     }
 
     /**
@@ -1514,5 +1520,34 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
         return $this;
     }
 
+    /**
+     * @return Collection|CovidAttestationPersonnel[]
+     */
+    public function getCovidAttestationPersonnels(): Collection
+    {
+        return $this->covidAttestationPersonnels;
+    }
 
+    public function addCovidAttestationPersonnel(CovidAttestationPersonnel $covidAttestationPersonnel): self
+    {
+        if (!$this->covidAttestationPersonnels->contains($covidAttestationPersonnel)) {
+            $this->covidAttestationPersonnels[] = $covidAttestationPersonnel;
+            $covidAttestationPersonnel->setPersonnel($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCovidAttestationPersonnel(CovidAttestationPersonnel $covidAttestationPersonnel): self
+    {
+        if ($this->covidAttestationPersonnels->contains($covidAttestationPersonnel)) {
+            $this->covidAttestationPersonnels->removeElement($covidAttestationPersonnel);
+            // set the owning side to null (unless already changed)
+            if ($covidAttestationPersonnel->getPersonnel() === $this) {
+                $covidAttestationPersonnel->setPersonnel(null);
+            }
+        }
+
+        return $this;
+    }
 }

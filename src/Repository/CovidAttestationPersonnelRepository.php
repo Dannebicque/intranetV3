@@ -1,0 +1,54 @@
+<?php
+// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/CovidAttestationPersonnelRepository.php
+// @author davidannebicque
+// @project intranetV3
+// @lastUpdate 06/11/2020 15:33
+
+namespace App\Repository;
+
+use App\Entity\CovidAttestationPersonnel;
+use App\Entity\Departement;
+use App\Entity\Diplome;
+use App\Entity\Personnel;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
+
+/**
+ * @method CovidAttestationPersonnel|null find($id, $lockMode = null, $lockVersion = null)
+ * @method CovidAttestationPersonnel|null findOneBy(array $criteria, array $orderBy = null)
+ * @method CovidAttestationPersonnel[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ */
+class CovidAttestationPersonnelRepository extends ServiceEntityRepository
+{
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, CovidAttestationPersonnel::class);
+    }
+
+    public function findByPersonnel(Personnel $personnel)
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.personnel = :personnel')
+            ->setParameter('personnel', $personnel->getId())
+            ->orderBy('p.created', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByDepartement(Departement $departement)
+    {
+        return $this->createQueryBuilder('p')
+            ->innerJoin(Diplome::class, 'd', 'WITH', 'p.diplome=d.id')
+            ->where('d.departement = :departement')
+            ->setParameter('departement', $departement->getId())
+            ->orderBy('p.created', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findAll()
+    {
+        return $this->findBy([], ['created' => 'DESC']);
+    }
+}

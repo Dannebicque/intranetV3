@@ -121,6 +121,10 @@ initiales: Initiales
 j: Jour
 Jour: Jour
 label:
+  lieu_naissance: 'Lieu de naissance'
+  moyenDeplacement: 'Moyen de déplacement utilisé'
+  dureeValiditee: 'Dates et durée de validité de l''attestation'
+  motifDeplacement: 'Motif de votre déplacement'
   actif: Actif
   activites: 'Activités à réaliser'
   activitesConfiees: 'Activités confiées'

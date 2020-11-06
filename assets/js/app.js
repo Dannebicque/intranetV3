@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/app.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 22/10/2020 15:56
+// @lastUpdate 06/11/2020 15:33
 
 // any CSS you import will output into a single css file (app.css in this case)
 import '@fortawesome/fontawesome-free/scss/fontawesome.scss'
@@ -131,7 +131,8 @@ function updateInterface () {
     var options = {
       multidateSeparator: ', ',
       language: 'fr',
-      daysOfWeekHighlighted: '06'
+      daysOfWeekHighlighted: '06',
+      format: 'dd/mm/yyyy'
     }
 
     if ($(this).prop('tagName') != 'INPUT') {

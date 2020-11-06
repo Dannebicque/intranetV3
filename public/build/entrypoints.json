@@ -5,10 +5,18 @@
         "/build/runtime.d94b3b43.js",
         "/build/0.cf60d32b.js",
         "/build/1.f340a267.js",
-        "/build/app.7180281e.js"
+        "/build/app.4af5aa60.js"
       ],
       "css": [
         "/build/app.0a47d927.css"
+      ]
+    },
+    "covid": {
+      "js": [
+        "/build/runtime.d94b3b43.js",
+        "/build/0.cf60d32b.js",
+        "/build/1.f340a267.js",
+        "/build/covid.969b4ab1.js"
       ]
     },
     "agenda": {
@@ -16,7 +24,7 @@
         "/build/runtime.d94b3b43.js",
         "/build/0.cf60d32b.js",
         "/build/1.f340a267.js",
-        "/build/agenda.549e1636.js"
+        "/build/agenda.003a7b98.js"
       ],
       "css": [
         "/build/agenda.8c10d4af.css"
@@ -68,7 +76,7 @@
         "/build/runtime.d94b3b43.js",
         "/build/0.cf60d32b.js",
         "/build/1.f340a267.js",
-        "/build/applications.1e481bc6.js"
+        "/build/applications.2d126022.js"
       ]
     },
     "documents": {
