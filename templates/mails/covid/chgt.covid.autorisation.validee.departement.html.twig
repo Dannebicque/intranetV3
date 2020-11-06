@@ -1,20 +1,24 @@
-Bonjour,
+Bonjour,<br><br>
 
-La demande d'autorisation de déplacement professionnel décrite ci-après vient d'être validée par le département {(.
-covidAttestationPersonnel.diplome.libelle }}
+<p>La demande d'autorisation de déplacement professionnel décrite ci-après vient d'être validée par le département {(.
+   covidAttestationPersonnel.diplome.libelle }}</p>
 
-Auteur de la demande : {{ covidAttestationPersonnel.personnel.displayPr }}
-Cette demande concerne la période :
+<p>Auteur de la demande : {{ covidAttestationPersonnel.personnel.displayPr }}</p>
+<p>Cette demande concerne la période :</p>
 
-{% for creneau in covidAttestationPersonnel.covidCreneauPresences %}
-    - {{ creneau.display }}<br>
-{% endfor %}
+<ul>{% for creneau in covidAttestationPersonnel.covidCreneauPresences %}
+        <li> {{ creneau.display }}</li>>
+    {% endfor %}
+</ul>
 
-Pour le motif: {{ covidAttestationPersonnel.motif|trans }}
-Moyen de déplacement: {{ covidAttestationPersonnel.moyenDeplacement }}
+<p>Pour le motif: {{ covidAttestationPersonnel.motif|trans }}</p>
+<p>Moyen de déplacement: {{ covidAttestationPersonnel.moyenDeplacement }}</p>
 
-Vous pouvez voir la demande ici : {{ url('sa_covid_attestation_personnel_show', {id:covidAttestationPersonnel.id}) }}
+<p>Vous pouvez voir la demande ici :
+    <a href="{{ url('sa_covid_attestation_personnel_show', {id:covidAttestationPersonnel
+        .id}) }}">Voir la demande</a></p>
 
-Cordialement,
+<p>Cordialement,</p>
 
-Ce message est un message automatique envoyé depuis l'intranet de l'{{ settings('NOM_IUT') }}.
+<br><br>
+<i>Ce message est un message automatique envoyé depuis l'intranet de l'{{ settings('NOM_IUT') }}.</i>

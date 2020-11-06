@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/CovidAttestationPersonnelController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/11/2020 15:33
+// @lastUpdate 06/11/2020 17:53
 
 namespace App\Controller\superAdministration;
 
@@ -84,9 +84,9 @@ class CovidAttestationPersonnelController extends BaseController
 
         $event = new CovidEvent($covidAttestationPersonnel);
         if ($covidAttestationPersonnel->getValidationDepartement() === true) {
-            $eventDispatcher->dispatch($event, CovidEvent::COVID_AUTORISATION_VALIDEE_DEPARTEMENT);
+            $eventDispatcher->dispatch($event, CovidEvent::COVID_AUTORISATION_VALIDEE_DIRECTION);
         } else {
-            $eventDispatcher->dispatch($event, CovidEvent::COVID_AUTORISATION_REFUSEE_DEPARTEMENT);
+            $eventDispatcher->dispatch($event, CovidEvent::COVID_AUTORISATION_REFUSEE_DIRECTION);
         }
 
         return $this->redirectToRoute('sa_covid_attestation_personnel_index');
@@ -100,13 +100,9 @@ class CovidAttestationPersonnelController extends BaseController
      */
     public function show(CovidAttestationPersonnel $covidAttestationPersonnel): Response
     {
-        if ($covidAttestationPersonnel->getPersonnel()->getId() === $this->getConnectedUser()->getId()) {
             return $this->render('super-administration/covid_attestation_personnel/show.html.twig', [
                 'covid_attestation_personnel' => $covidAttestationPersonnel,
             ]);
-        }
-
-        return $this->redirectToRoute('erreur_666');
     }
 
     /**

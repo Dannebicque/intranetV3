@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/CovidAttestationPersonnelController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/11/2020 15:33
+// @lastUpdate 06/11/2020 17:53
 
 namespace App\Controller\administration;
 
@@ -72,13 +72,9 @@ class CovidAttestationPersonnelController extends BaseController
      */
     public function show(CovidAttestationPersonnel $covidAttestationPersonnel): Response
     {
-        if ($covidAttestationPersonnel->getPersonnel()->getId() === $this->getConnectedUser()->getId()) {
             return $this->render('administration/covid_attestation_personnel/show.html.twig', [
                 'covid_attestation_personnel' => $covidAttestationPersonnel,
             ]);
-        }
-
-        return $this->redirectToRoute('erreur_666');
     }
 
     /**
