@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/CovidSubscriber.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/11/2020 18:01
+// @lastUpdate 06/11/2020 18:20
 
 namespace App\EventSubscriber;
 
@@ -196,6 +196,6 @@ class CovidSubscriber implements EventSubscriberInterface
         $this->entityManager->persist($autorisation);
         $this->entityManager->flush();
 
-        $this->sendToPersonnel($event, CovidEvent::COVID_AUTORISATION_REFUSEE_DIRECTION);
+        $this->sendToPersonnel($autorisation, CovidEvent::COVID_AUTORISATION_REFUSEE_DIRECTION);
     }
 }
