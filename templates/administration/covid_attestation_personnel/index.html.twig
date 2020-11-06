@@ -63,7 +63,7 @@
                             {% if covid_attestation_personnel.validationDirection == null or covid_attestation_personnel
                                 .validationDirection == false %}
                                 <a href="{{ path('administration_covid_attestation_personnel_change_etat', {id:
-                                    covid_attestation_personnel.id, etat:true}) }}"
+                                    covid_attestation_personnel.id, etat:'true'}) }}"
                                    class="btn btn-success btn-outline btn-square"
                                    title="{{ 'atitle.valider'|trans }}"
                                    data-provide="tooltip"
@@ -72,7 +72,7 @@
                                     <span class="sr-only">{{ 'atitle.valider'|trans }}</span>
                                 </a>
                                 <a href="{{ path('administration_covid_attestation_personnel_change_etat', {id:
-                                    covid_attestation_personnel.id, etat:false}) }}"
+                                    covid_attestation_personnel.id, etat:'false'}) }}"
                                    class="btn btn-warning btn-outline btn-square"
                                    title="{{ 'atitle.refuser'|trans }}"
                                    data-provide="tooltip"
