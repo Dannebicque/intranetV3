@@ -50,7 +50,7 @@
                         <td class="{{ covid_attestation_personnel.validationDirection|bg }}">{{ covid_attestation_personnel
                             .validationDirectionDisplay|trans }}</td>
                         <td>
-                            <a href="{{ path('administration_covid_attestation_personnel_show', {'id':
+                            <a href="{{ path('sa_covid_attestation_personnel_show', {'id':
                                 covid_attestation_personnel.id}) }}"
                                class="btn btn-info btn-outline btn-square"
                                data-provide="tooltip"
@@ -62,7 +62,7 @@
 
                             {% if covid_attestation_personnel.validationDirection == null or covid_attestation_personnel
                                 .validationDirection == false %}
-                                <a href="{{ path('administration_covid_attestation_personnel_change_etat', {id:
+                                <a href="{{ path('sa_covid_attestation_personnel_change_etat', {id:
                                     covid_attestation_personnel.id, etat:'true'}) }}"
                                    class="btn btn-success btn-outline btn-square"
                                    title="{{ 'atitle.valider'|trans }}"
@@ -71,7 +71,7 @@
                                     <i class="material-icons">check</i>
                                     <span class="sr-only">{{ 'atitle.valider'|trans }}</span>
                                 </a>
-                                <a href="{{ path('administration_covid_attestation_personnel_change_etat', {id:
+                                <a href="{{ path('sa_covid_attestation_personnel_change_etat', {id:
                                     covid_attestation_personnel.id, etat:'false'}) }}"
                                    class="btn btn-warning btn-outline btn-square"
                                    title="{{ 'atitle.refuser'|trans }}"
@@ -80,7 +80,7 @@
                                     <i class="material-icons">not_interested</i>
                                     <span class="sr-only">{{ 'atitle.refuser'|trans }}</span>
                                 </a>
-                                <a href="{{ path('administration_covid_attestation_personnel_delete', {id:
+                                <a href="{{ path('sa_covid_attestation_personnel_delete', {id:
                                     covid_attestation_personnel.id}) }}"
                                    data-csrf="{{ csrf_token('delete' ~ covid_attestation_personnel.id) }}"
                                    class="btn btn-danger btn-outline btn-square supprimer"

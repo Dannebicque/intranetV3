@@ -10,8 +10,8 @@
             {% if covid_attestation_personnel.validationDirection == null or covid_attestation_personnel
                 .validationDirection == false %}
 
-                <a href="{{ path('administration_covid_attestation_personnel_change_etat', {id:
-                    covid_attestation_personnel.id, etat:true}) }}"
+                <a href="{{ path('sa_covid_attestation_personnel_change_etat', {id:
+                    covid_attestation_personnel.id, etat:'true'}) }}"
                    class="btn btn-success btn-sm btn-float"
                    title="{{ 'atitle.valider'|trans }}"
                    data-provide="tooltip"
@@ -19,8 +19,8 @@
                     <i class="material-icons">check</i>
                     <span class="sr-only">{{ 'atitle.valider'|trans }}</span>
                 </a>
-                <a href="{{ path('administration_covid_attestation_personnel_change_etat', {id:
-                    covid_attestation_personnel.id, etat:false}) }}"
+                <a href="{{ path('sa_covid_attestation_personnel_change_etat', {id:
+                    covid_attestation_personnel.id, etat:'false'}) }}"
                    class="btn btn-warning btn-sm btn-float"
                    title="{{ 'atitle.refuser'|trans }}"
                    data-provide="tooltip"
@@ -28,7 +28,7 @@
                     <i class="material-icons">not_interested</i>
                     <span class="sr-only">{{ 'atitle.refuser'|trans }}</span>
                 </a>
-                <a href="{{ path('administration_covid_attestation_personnel_delete', {id:
+                <a href="{{ path('sa_covid_attestation_personnel_delete', {id:
                     covid_attestation_personnel.id}) }}"
                    data-csrf="{{ csrf_token('delete' ~ covid_attestation_personnel.id) }}"
                    class="btn btn-danger btn-sm btn-float supprimer"
@@ -40,7 +40,7 @@
                 </a>
             {% endif %}
 
-            <a href="{{ path('administration_covid_attestation_personnel_index') }}"
+            <a href="{{ path('sa_covid_attestation_personnel_index') }}"
                class="btn btn-primary btn-float"
                title="{{ 'atitle.retour_liste'|trans }}"
                data-provide="tooltip"
