@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/CovidAttestationPersonnelController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/11/2020 10:31
+// @lastUpdate 07/11/2020 10:45
 
 namespace App\Controller\appPersonnel;
 
@@ -105,8 +105,7 @@ class CovidAttestationPersonnelController extends BaseController
     ): ?Response {
         if ($covidAttestationPersonnel->getPersonnel()->getId() === $this->getConnectedUser()->getId()) {
             $myExportPresence->genereAttestationPdf($covidAttestationPersonnel, 'force');
-
-            return null;
+            return new Response();
         }
 
         return $this->redirectToRoute('erreur_666');
