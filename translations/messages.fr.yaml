@@ -548,6 +548,9 @@ app:
         show.heading: 'Détails d''un justificatif d''absence'
     emprunt.show.heading: app.etudiant.emprunt.show.heading
     justificatif.explication.index: "Les justificatifs sont validés manuellement. Il peut y avoir un délai de\n          traitement.\n        "
+    stage_etudiant:
+      show:
+        heading: 'Détail des informations de votre stage'
   personnel:
     absence:
       date: 'Date de l''absence'
