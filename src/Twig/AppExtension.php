@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Twig/AppExtension.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/11/2020 15:33
+// @lastUpdate 06/11/2020 18:24
 
 namespace App\Twig;
 
@@ -100,7 +100,7 @@ class AppExtension extends AbstractExtension
             return 'bg-pale-warning';
         }
 
-        return $value === true ? 'bg-pale-success' : 'bg-pale-error';
+        return $value === true ? 'bg-pale-success' : 'bg-pale-danger';
     }
 
     public function displayGroupes(Etudiant $etudiant): string

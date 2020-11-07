@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Excel/MyExcelWriter.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 29/09/2020 11:50
+// @lastUpdate 07/11/2020 08:42
 
 /**
  * Created by PhpStorm.
@@ -342,23 +342,11 @@ class MyExcelWriter
      * @param integer  $colonne
      * @param integer  $ligne
      */
-    /*public function ecritLigne($tEnTete, $colonne, $ligne)
+    public function ecritLigne($tEnTete, $colonne, $ligne): void
     {
         foreach ($tEnTete as $t) {
-            $this->ecritCelluleCaR($colonne, $ligne, $t);
+            $this->writeCellXY($colonne, $ligne, $t);
             $colonne++;
         }
-    }*/
-
-    /**
-     * @param integer $colonne
-     * @param integer $ligne
-     * @param         $texte
-     * @param string  $style
-     */
-    /* public function ecritCelluleCaR($colonne, $ligne, $texte, $style = '')
-     {
-         $cell = PHPExcel_Cell::stringFromColumnIndex($colonne) . $ligne;
-         $this->ecritCellule($cell, $texte, $style);
-     }*/
+    }
 }
