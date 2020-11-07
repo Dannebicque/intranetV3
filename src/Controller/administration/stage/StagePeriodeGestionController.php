@@ -3,11 +3,12 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StagePeriodeGestionController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/10/2020 13:01
+// @lastUpdate 07/11/2020 09:01
 
 namespace App\Controller\administration\stage;
 
 use App\Classes\MyExport;
+use App\Classes\Stage\MyExportStage;
 use App\Controller\BaseController;
 use App\Entity\StagePeriode;
 use App\Classes\MyStage;
@@ -27,7 +28,7 @@ class StagePeriodeGestionController extends BaseController
 {
     /**
      * @Route("/{uuid}/export.{_format}", name="administration_stage_periode_gestion_export", methods="GET",
-     *                             requirements={"_format"="csv|xlsx|pdf"})
+     *                             requirements={"_format"="csv|pdf"})
      * @ParamConverter("stagePeriode", options={"mapping": {"uuid": "uuid"}})
      * @param MyExport               $myExport
      * @param StagePeriode           $stagePeriode
@@ -55,6 +56,19 @@ class StagePeriodeGestionController extends BaseController
                 'dateFinStage'
             ]
         );
+    }
+
+    /**
+     * @Route("/{uuid}/export.xlsx", name="administration_stage_periode_gestion_export_xlsx", methods="GET")
+     * @ParamConverter("stagePeriode", options={"mapping": {"uuid": "uuid"}})
+     * @param StagePeriode $stagePeriode
+     *
+     *
+     * @return Response
+     */
+    public function exportXlsx(MyExportStage $myExport, StagePeriode $stagePeriode): Response
+    {
+        return $myExport->genereFichier($stagePeriode);
     }
 
     /**
