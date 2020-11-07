@@ -74,8 +74,10 @@
                 <p>Le : {{ covidAttestationPersonnel.dateValidationDirection|format_date('medium') }}</p>
             </td>
             <td style="width: 40%">
-                <img src="{{ settings('BASE_PATH') }}covid/cachet.png" style="float:left" width="100px">
-                <img src="{{ settings('BASE_PATH') }}covid/signature.jpg" style="float:left" width="100px">
+                <img src="{{ settings('BASE_PATH') }}covid/cachet.png" width="100px" style="float:left" alt="Cachet
+                IUT">
+                <img src="{{ settings('BASE_PATH') }}covid/signature.png" width="100px" style="float:left;
+                margin-top:40px" alt="Signature">
                 <p style="clear: both">
                     Martial MARTIN<br>
                     Directeur
