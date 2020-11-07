@@ -3,10 +3,11 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/CovidAttestationPersonnelController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/11/2020 17:53
+// @lastUpdate 07/11/2020 09:41
 
 namespace App\Controller\superAdministration;
 
+use App\Classes\Covid\MyExportPresence;
 use App\Classes\MyExport;
 use App\Classes\Tools;
 use App\Controller\BaseController;
@@ -40,29 +41,21 @@ class CovidAttestationPersonnelController extends BaseController
     }
 
     /**
-     * @Route("/export.{_format}", name="covid_attestation_personnel_export", methods="GET",
-     *                             requirements={"_format"="csv|xlsx|pdf"})
-     * @param MyExport                            $myExport
+     * @Route("/export.xlsx", name="covid_attestation_personnel_export", methods="GET")
      *
+     * @param MyExportPresence                    $myExport
      * @param CovidAttestationPersonnelRepository $covidAttestationPersonnelRepository
-     * @param                                     $_format
      *
      * @return Response
      */
     public function export(
-        MyExport $myExport,
-        CovidAttestationPersonnelRepository $covidAttestationPersonnelRepository,
-        $_format
+        MyExportPresence $myExport,
+        CovidAttestationPersonnelRepository $covidAttestationPersonnelRepository
     ): Response {
-        $actualites = $covidAttestationPersonnelRepository->findAll();
+        $presences = $covidAttestationPersonnelRepository->findAll();
 
-        return $myExport->genereFichierGenerique(
-            $_format,
-            $actualites,
-            'actualites',
-            ['actualite_administration', 'utilisateur'],
-            ['titre', 'texte', 'departement' => ['libelle']]
-        );
+        return $myExport->genereFichier($presences);
+
     }
 
     /**
@@ -100,9 +93,9 @@ class CovidAttestationPersonnelController extends BaseController
      */
     public function show(CovidAttestationPersonnel $covidAttestationPersonnel): Response
     {
-            return $this->render('super-administration/covid_attestation_personnel/show.html.twig', [
-                'covid_attestation_personnel' => $covidAttestationPersonnel,
-            ]);
+        return $this->render('super-administration/covid_attestation_personnel/show.html.twig', [
+            'covid_attestation_personnel' => $covidAttestationPersonnel,
+        ]);
     }
 
     /**
