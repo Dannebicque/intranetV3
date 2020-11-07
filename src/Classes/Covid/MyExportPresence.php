@@ -3,30 +3,45 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Covid/MyExportPresence.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/11/2020 09:39
+// @lastUpdate 07/11/2020 10:31
 
 namespace App\Classes\Covid;
 
 use App\Classes\Excel\MyExcelWriter;
+use App\Classes\Pdf\MyPDF;
 use App\Entity\CovidAttestationPersonnel;
+use App\Entity\Departement;
 use DateTime;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 class MyExportPresence
 {
     private MyExcelWriter $myExcelWriter;
 
+    private MyPDF $myPdf;
+    private string $dir;
+
     /**
      * MyExport constructor.
      *
-     * @param MyExcelWriter $myExcelWriter
+     * @param MyExcelWriter   $myExcelWriter
+     * @param MyPDF           $myPdf
+     * @param KernelInterface $kernel
      */
     public function __construct(
-        MyExcelWriter $myExcelWriter
+        MyExcelWriter $myExcelWriter,
+        MyPdf $myPdf,
+        KernelInterface $kernel
     ) {
 
         $this->myExcelWriter = $myExcelWriter;
+        $this->myPdf = $myPdf;
+        $this->dir = $kernel->getProjectDir() . '/public/upload/';
     }
 
     /**
@@ -101,5 +116,31 @@ class MyExportPresence
                 'Content-Disposition' => 'attachment;filename="presence' . $date->format('d-m-Y') . '.xlsx"'
             ]
         );
+    }
+
+    public function genereAttestationPdf(CovidAttestationPersonnel $covidAttestationPersonnel, $sortie)
+    {
+        if ($sortie === 'force') {
+            $this->myPdf::generePdf(
+                'pdf/covid/autorisationPersonnel.html.twig',
+                [
+                    'covidAttestationPersonnel' => $covidAttestationPersonnel
+                ],
+                'attestation-' . $covidAttestationPersonnel->getPersonnel()->getNom()
+            );
+        } else {
+            $this->myPdf::genereAndSavePdf(
+                'pdf/covid/autorisationPersonnel.html.twig',
+                [
+                    'covidAttestationPersonnel' => $covidAttestationPersonnel
+                ],
+                'attestation-' . $covidAttestationPersonnel->getCreated()->format('dmYHis'),
+                $this->dir . 'covid/attestation/'
+            );
+
+            return $this->dir . 'covid/attestation/' . 'attestation-' . $covidAttestationPersonnel->getCreated()->format('dmYHis') . '.pdf';
+        }
+
+        return true;
     }
 }
