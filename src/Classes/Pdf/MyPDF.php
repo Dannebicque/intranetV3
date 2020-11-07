@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Pdf/MyPDF.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 04/10/2020 14:41
+// @lastUpdate 07/11/2020 10:10
 
 /**
  * Created by PhpStorm.
@@ -71,7 +71,7 @@ class MyPDF
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public static function generePdf($template, $data, $name, $departement): void
+    public static function generePdf($template, $data, $name, $departement = null): void
     {
         self::genereOutputPdf($template, $data, $departement);
 
@@ -94,7 +94,7 @@ class MyPDF
         array $data,
         string $name,
         string $dir,
-        string $departement
+        string $departement = null
     ): void {
         self::genereOutputPdf($template, $data, $departement);
 
@@ -113,17 +113,19 @@ class MyPDF
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    private static function genereOutputPdf($template, $data, $departement): void
+    private static function genereOutputPdf($template, $data, $departement = null): void
     {
         $html = self::$templating->render($template, $data);
         self::$domPdf = new Dompdf(self::$options);
         self::$domPdf->loadHtml($html);
         self::$domPdf->render();
 
-        $date = new DateTime('now');
-        $canvas = self::$domPdf->getCanvas();
-        $canvas->page_text(500, 800, 'Page {PAGE_NUM} sur {PAGE_COUNT}', 'Arial', 10, [0, 0, 0]);
-        $canvas->page_text(43, 800, $departement . ' | ' . $date->format('d/m/Y') . '. Généré depuis l\'intranet',
-            'Arial', 10, [0, 0, 0]);
+        if ($departement === null) {
+            $date = new DateTime('now');
+            $canvas = self::$domPdf->getCanvas();
+            $canvas->page_text(500, 800, 'Page {PAGE_NUM} sur {PAGE_COUNT}', 'Arial', 10, [0, 0, 0]);
+            $canvas->page_text(43, 800, $departement . ' | ' . $date->format('d/m/Y') . '. Généré depuis l\'intranet',
+                'Arial', 10, [0, 0, 0]);
+        }
     }
 }

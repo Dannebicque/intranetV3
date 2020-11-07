@@ -3,11 +3,13 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/CovidSubscriber.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/11/2020 18:22
+// @lastUpdate 07/11/2020 10:10
 
 namespace App\EventSubscriber;
 
+use App\Classes\Covid\MyExportPresence;
 use App\Classes\Mail\MailerFromTwig;
+use App\Classes\Pdf\MyPDF;
 use App\Entity\CovidAttestationPersonnel;
 use App\Event\CovidEvent;
 use DateTime;
@@ -23,7 +25,8 @@ class CovidSubscriber implements EventSubscriberInterface
 
     private EntityManagerInterface $entityManager;
 
-    private RouterInterface $router;
+    private MyExportPresence $myExportPresence;
+
 
     /**
      * StageSubscriber constructor.
@@ -35,11 +38,12 @@ class CovidSubscriber implements EventSubscriberInterface
     public function __construct(
         EntityManagerInterface $entityManager,
         RouterInterface $router,
-        MailerFromTwig $myMailer
+        MailerFromTwig $myMailer,
+        MyExportPresence $myExportPresence
     ) {
         $this->entityManager = $entityManager;
-        $this->router = $router;
         $this->myMailer = $myMailer;
+        $this->myExportPresence = $myExportPresence;
     }
 
     public static function getSubscribedEvents(): array
@@ -158,11 +162,16 @@ class CovidSubscriber implements EventSubscriberInterface
                 );
                 break;
             case CovidEvent::COVID_AUTORISATION_VALIDEE_DIRECTION:
+                $file = $this->myExportPresence->genereAttestationPdf(
+                    $covidAttestationPersonnel,
+                    'sauvegarde'
+                );
                 //générer le PDF et joindre au mail
                 $this->myMailer->setTemplate('mails/covid/' . $codeEvent . '.html.twig', [
                     'covidAttestationPersonnel' => $covidAttestationPersonnel
                 ]);
                 //joindre le PDF
+                $this->myMailer->attachFile($file);
                 $this->myMailer->sendMessage(
                     $covidAttestationPersonnel->getPersonnel()->getMails(),
                     'Demande d\'autorisation de déplacement acceptée',

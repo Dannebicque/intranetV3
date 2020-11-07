@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Mail/BaseMailer.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/10/2020 15:46
+// @lastUpdate 07/11/2020 10:16
 
 namespace App\Classes\Mail;
 
@@ -98,13 +98,18 @@ class BaseMailer
         }
     }
 
-    private function checkCc(&$mail, array $options)
+    private function checkCc(&$mail, array $options): void
     {
         if (array_key_exists('cc', $options) && count($options['cc']) > 0) {
             foreach ($options['cc'] as $cc) {
                 $mail->addCc(new Address($cc));
             }
         }
+    }
+
+    public function baseAttachFile(&$mail, string $file): void
+    {
+        $mail->attachFromPath($file);
     }
 
 }

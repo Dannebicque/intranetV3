@@ -3,10 +3,11 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/CovidAttestationPersonnelController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/11/2020 15:33
+// @lastUpdate 07/11/2020 10:31
 
 namespace App\Controller\appPersonnel;
 
+use App\Classes\Covid\MyExportPresence;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\CovidAttestationPersonnel;
@@ -93,27 +94,19 @@ class CovidAttestationPersonnelController extends BaseController
 
     /**
      * @Route("/{id}/pdf", name="covid_attestation_personnel_pdf", methods={"GET"})
+     * @param MyExportPresence $myExportPresence
      * @param CovidAttestationPersonnel $covidAttestationPersonnel
      *
      * @return Response
      */
-    public function pdf(CovidAttestationPersonnel $covidAttestationPersonnel): Response
-    {
+    public function pdf(
+        MyExportPresence $myExportPresence,
+        CovidAttestationPersonnel $covidAttestationPersonnel
+    ): ?Response {
         if ($covidAttestationPersonnel->getPersonnel()->getId() === $this->getConnectedUser()->getId()) {
-            $html = $this->renderView('pdf/covid/autorisationPersonnel.html.twig', [
-                'covidAttestationPersonnel' => $covidAttestationPersonnel
-            ]);
+            $myExportPresence->genereAttestationPdf($covidAttestationPersonnel, 'force');
 
-            $options = new Options();
-            $options->set('isRemoteEnabled', true);
-            $options->set('isPhpEnabled', true);
-
-            $dompdf = new Dompdf($options);
-            $dompdf->loadHtml($html);
-            $dompdf->render();
-
-            return new Response($dompdf->stream('attestation-' . $covidAttestationPersonnel->getPersonnel()->getNom(),
-                ['Attachment' => 1]));
+            return null;
         }
 
         return $this->redirectToRoute('erreur_666');

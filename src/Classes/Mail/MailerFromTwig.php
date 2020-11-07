@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Mail/MailerFromTwig.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/11/2020 17:44
+// @lastUpdate 07/11/2020 10:16
 
 namespace App\Classes\Mail;
 
@@ -61,6 +61,11 @@ class MailerFromTwig extends BaseMailer
 
     public function sendMessage(array $to, $subject, array $options = []): void
     {
-        parent::baseSendMessage($this->mail, $to, $subject, $options);
+        $this->baseSendMessage($this->mail, $to, $subject, $options);
+    }
+
+    public function attachFile(string $file): void
+    {
+        $this->baseAttachFile($this->mail, $file);
     }
 }
