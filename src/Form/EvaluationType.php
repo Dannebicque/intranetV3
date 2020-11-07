@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Form/EvaluationType.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 22/10/2020 15:56
+// @lastUpdate 07/11/2020 16:41
 
 namespace App\Form;
 
@@ -13,6 +13,7 @@ use App\Entity\Matiere;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
+use App\Form\Type\YesNoType;
 use App\Repository\MatiereRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\TypeGroupeRepository;
@@ -78,6 +79,8 @@ class EvaluationType extends AbstractType
                 ['label' => 'label.coefficient', 'help' => 'help.coefficient', 'disabled' => $autorise])
             ->add('commentaire', TextType::class,
                 ['label' => 'label.commentaire', 'help' => 'help.commentaire_evaluation', 'disabled' => $autorise])
+            ->add('visible', YesNoType::class,
+                ['label' => 'label.evaluation.visible', 'help' => 'help.evaluation.visible'])
             ->add('matiere', EntityType::class, [
                 'class'         => Matiere::class,
                 'label'         => 'label.evaluation_matiere',
