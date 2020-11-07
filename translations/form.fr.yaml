@@ -90,6 +90,7 @@ help:
   documentRendre: 'Documents à rendre par l''étudiant à l''issue du stage'
   dureeHebdomadaire: 'Durée hebdomadaire de travail pendant la période de stage'
   dureeJoursStage: 'En jour ouvré (hors week end et jours fériés)'
+  evaluation.visible: 'Définir sur l''évaluation sera visible des édutiants dès l''enregistrement. pRé-rempli avec la configuration du département.'
   gratification: 'Le stage sera-t-il rémunéré'
   gratificationMontant: 'En fonction de la période sélectionnée'
   gratificationPeriode: 'Choisissez la période de calcul de la gratification'
@@ -216,6 +217,7 @@ label:
   evaluation_matiere: Matière
   evaluation_personnelAutorise: 'Personne(s) autorisée(s) pour modifier ou compléter l''évaluation'
   evaluation_type_groupe: 'Type de groupe pour la saisie'
+  evaluation.visible: 'Evaluation visible des étudiants'
   fax: Fax
   fichier: Fichier
   fonction: 'Fonction dans l''entreprise'
