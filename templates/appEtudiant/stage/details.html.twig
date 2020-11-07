@@ -1,10 +1,250 @@
 {% extends 'base.html.twig' %}
 
-{% block content %}
-
+{% block header %}
+    {{ 'app.etudiant.stage_etudiant.show.heading'|trans }}
 {% endblock %}
 
 {% block headeractions %}
-
+    <div class="header-action">
+        <div class="buttons">
+            <div class="header-action">
+                <div class="buttons">
+                    <a href="{{ path('application_index', {onglet:'stage'}) }}" class="btn btn-primary btn-float"
+                       data-provide="tooltip"
+                       data-placement="bottom" title="{{ 'atitle.retour_applications'|trans }}"><i
+                                class="material-icons">arrow_back</i></a>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'app.etudiant.stage_etudiant.show.heading'|trans }}</h4>
+        <div class="card-body">
+            {{ include('composants/stage_timeline.html.twig',{stageEtudiant: stageEtudiant}) }}
+
+            <table class="table table-striped table-bordered">
+                <tbody>
+
+                <tr>
+                    <th colspan="2" class="th_titre">{{ 'table.etudiant'|trans }}</th>
+                </tr>
+                <tr>
+                    <th>{{ 'table.prenom_nom'|trans }}</th>
+                    <td>{{ stageEtudiant.etudiant.civilite }} {{ stageEtudiant.etudiant.display }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.groupe_promo'|trans }}</th>
+                    <td>{% for groupe in stageEtudiant.etudiant.groupes %}
+                            {{ groupe.libelle }}{% if not loop.last %},
+                            {% endif %}
+                        {% endfor %}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.securite_sociale'|trans }}</th>
+                    <td>
+
+                        {{ stageEtudiant.etudiant.intituleSecuriteSociale }}
+
+                    </td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.adresse_securite_sociale'|trans }}</th>
+                    <td>
+
+                        {{ stageEtudiant.etudiant.adresseSecuriteSociale }}
+
+                    </td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.email'|trans }}</th>
+                    <td>
+                        {{ stageEtudiant.etudiant.mailuniv|mailto }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.mail_perso'|trans }}</th>
+                    <td>
+
+                        {{ stageEtudiant.etudiant.mailPerso }}
+
+                    </td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.telephone'|trans }}</th>
+                    <td>
+                        {{ stageEtudiant.etudiant.tel1|tel_format }}
+
+                        ou
+                        {{ stageEtudiant.etudiant.tel2|tel_format }}
+
+                    </td>
+                </tr>
+                {{ include('composants/adresse_array.html.twig', {adresse:stageEtudiant.etudiant.adresse
+                }) }}
+
+                <tr>
+                    <th colspan="2" class="th_titre">{{ 'table.entreprise'|trans }}</th>
+                </tr>
+                {{ include('composants/entreprise_array.html.twig', {entreprise:stageEtudiant.entreprise}) }}
+                <tr>
+                    <th colspan="2" class="th_titre">{{ 'table.tuteur_entreprise'|trans }}</th>
+                </tr>
+                {{ include('composants/contact_array.html.twig', {contact: stageEtudiant.tuteur}) }}
+                <tr>
+                    <th colspan="2" class="th_titre">{{ 'table.stage'|trans }}</th>
+                </tr>
+                <tr>
+                    <th>{{ 'table.serviceStageEntreprise'|trans }}</th>
+                    <td>
+
+                        {{ stageEtudiant.serviceStageEntreprise }}
+
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>{{ 'table.dateDebutStage'|trans }}</th>
+                    <td>
+
+                        {{ stageEtudiant.dateDebutStage ? stageEtudiant.dateDebutStage|format_date('short') : '' }}
+
+                    </td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.dateFinStage'|trans }}</th>
+                    <td>
+
+                        {{ stageEtudiant.dateFinStage ? stageEtudiant.dateFinStage|format_date('short') : '' }}
+
+                    </td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.dureeHebdomadaire'|trans }}</th>
+                    <td>
+                        {{ stageEtudiant.dureeHebdomadaire }}
+
+                    </td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.dureeJoursStage'|trans }}</th>
+                    <td>
+                        {{ stageEtudiant.dureeJoursStage }}
+
+                    </td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.sujetStage'|trans }}</th>
+                    <td>
+                        {{ stageEtudiant.sujetStage|raw }}
+
+                    </td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.activites'|trans }}</th>
+                    <td>
+                        {{ stageEtudiant.activites }}
+
+                    </td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.amenagementStage'|trans }}</th>
+                    <td>
+
+                        {{ stageEtudiant.amenagementStage }}
+
+                    </td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.gratification'|trans }}</th>
+                    <td>
+
+                        {{ stageEtudiant.gratification ? 'Yes'|trans : 'No'|trans }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.gratificationMontant'|trans }}</th>
+                    <td>
+
+                        {{ stageEtudiant.gratificationMontant|number_format(2) }}
+                        € par
+                        {{ stageEtudiant.gratificationPeriode|trans }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.avantages'|trans }}</th>
+                    <td>
+
+                        {{ stageEtudiant.avantages }}
+                    </td>
+                </tr>
+                <tr>
+                    <th colspan="2" class="th_titre">{{ 'table.tuteur_universitaire'|trans }}</th>
+                </tr>
+                <tr>
+                    <th>{{ 'table.tuteur_universitaire'|trans }}</th>
+                    <td>
+                        <label for="tuteurUniversitaire" class="sr-only">Tuteur universitaire</label>
+                        {% if stageEtudiant.tuteurUniversitaire != null %}
+
+                            {{ personnel.displayPr }}
+
+                        {% endif %}
+
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block fabactions %}
+    {{ include('composants/fab-buttons.html.twig', {boutons:[
+        {type: 'info',
+            href: path('administration_stage_etudiant_convention_pdf', {id:stageEtudiant.id}),
+            title: 'Editer la convention',
+            icone : "fa fa-print"
+        },
+        {
+            type:'info',
+            href:path('administration_stage_etudiant_fiche_enseignant', {id:stageEtudiant.id}),
+            title: 'fiche.enseignant'|trans,
+            icone: 'fa fa-table'
+        },
+        {
+            type:'warning',
+            href:path('administration_stage_etudiant_change_etat', {stagePeriode: stageEtudiant.stagePeriode
+            .uuidString, etudiant:stageEtudiant
+            .etudiant.id, etat: 'ETAT_STAGE_INCOMPLET'}),
+            title: 'Proposition incomplète',
+            icone: 'fa fa-ban'
+        },
+        {
+            type:'danger',
+            href:path('administration_stage_etudiant_change_etat', {stagePeriode: stageEtudiant.stagePeriode
+            .uuidString, etudiant:stageEtudiant
+            .etudiant.id, etat: 'ETAT_STAGE_REFUS'}),
+            title: 'Refuser le stage',
+            icone: 'fa fa-times'
+        },
+        {
+            type:'success',
+            href:path('administration_stage_etudiant_change_etat', {stagePeriode: stageEtudiant.stagePeriode.uuidString, etudiant:stageEtudiant.etudiant.id, etat: 'ETAT_STAGE_VALIDE'}),
+            title: 'Valider le stage',
+            icone: 'fa fa-check'
+        }
+    ]}) }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('adm.stage') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('adm.stage') }}
+{% endblock %}
