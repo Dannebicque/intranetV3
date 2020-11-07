@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/CovidAttestationPersonnel.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/11/2020 15:33
+// @lastUpdate 07/11/2020 09:26
 
 namespace App\Entity;
 
@@ -225,5 +225,16 @@ class CovidAttestationPersonnel extends BaseEntity
         }
 
         return $this;
+    }
+
+    public function getMotifLong()
+    {
+        $tab = [
+            'motif1' => 'Assurer TP / devoirs sur tables',
+            'motif2' => 'Assurer sur site les enseignants car ne dispose pas des conditions satisfaisantes pour le faire en distanciel',
+            'motif3' => 'Demandes ponctuelles (récupérer dossiers, BU)'
+        ];
+
+        return $tab[$this->motif];
     }
 }
