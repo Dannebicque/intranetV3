@@ -4,6 +4,14 @@ Bonjour,<br><br>
    l'IUT.</p>
 <p>L'attestation completée et signée de Martial Martin est en pièce jointe et disponible sur l'intranet également
    .</p>
+
+<p>Demande concernant la période :</p>
+<ul>{% for creneau in covidAttestationPersonnel.covidCreneauPresences %}
+      <li> {{ creneau.display }}</li>>
+   {% endfor %}
+</ul>
+<p>Pour le motif: {{ covidAttestationPersonnel.motif|trans }}</p>
+<p>Moyen de déplacement: {{ covidAttestationPersonnel.moyenDeplacement }}</p>
 <br>
 Cordialement,<br><br>
 
