@@ -1,18 +1,21 @@
 Bonjour,<br><br>
 
-Une nouvelle demande d'autorisation de déplacement professionnel vient d'être déposée par {{ covidAttestationPersonnel.personnel.display }}.
+<p>Une nouvelle demande d'autorisation de déplacement professionnel vient d'être déposée
+   par {{ covidAttestationPersonnel.personnel.display }}.</p>
 
-Cette demande concerne la période :
+<p>Cette demande concerne la période :</p>
 
-<br>
-{% for creneau in covidAttestationPersonnel.covidCreneauPresences %}
-    - {{ creneau.display }}<br>
-{% endfor %}
+<ul>
+        {% for creneau in covidAttestationPersonnel.covidCreneauPresences %}
+                <li> {{ creneau.display }}</li>
+        {% endfor %}
+</ul>
 
-Pour le motif: {{ covidAttestationPersonnel.motif|trans }}
+<p>Pour le motif: {{ covidAttestationPersonnel.motif|trans }}</p>
 
 <p>Vous pouvez voir la demande ici : <a href="{{ url('administration_covid_attestation_personnel_show',
-        {id:covidAttestationPersonnel.id}) }}">Voir la demande de {{ covidAttestationPersonnel.personnel.display }}</a>
+                {id:covidAttestationPersonnel.id}) }}">Voir la demande
+                                                       de {{ covidAttestationPersonnel.personnel.display }}</a>
 </p>
 
 

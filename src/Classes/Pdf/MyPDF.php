@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Pdf/MyPDF.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/11/2020 10:10
+// @lastUpdate 10/11/2020 16:48
 
 /**
  * Created by PhpStorm.
@@ -101,7 +101,6 @@ class MyPDF
         $output = self::$domPdf->output();
 
         file_put_contents($dir . $name . '.pdf', $output);
-
     }
 
     /**
@@ -120,7 +119,7 @@ class MyPDF
         self::$domPdf->loadHtml($html);
         self::$domPdf->render();
 
-        if ($departement === null) {
+        if ($departement !== null) {
             $date = new DateTime('now');
             $canvas = self::$domPdf->getCanvas();
             $canvas->page_text(500, 800, 'Page {PAGE_NUM} sur {PAGE_COUNT}', 'Arial', 10, [0, 0, 0]);

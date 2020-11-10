@@ -5,9 +5,17 @@
                 <h2 class="card-title">{{ 'adm.attestation_deplacement'|trans }}</h2>
             </header>
             <div class="card-body">
-                <a href="{{ path('administration_covid_attestation_personnel_index') }}" class="btn btn-block
-                btn-info">Voir les
-                          demandes</a>
+                <div class="row">
+                    <div class="col-md-6">
+                        <a href="{{ path('administration_covid_attestation_personnel_index') }}" class="btn btn-block
+                btn-info">Voir les demandes des personnels</a>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="{{ path('administration_covid_attestation_etudiant_index') }}" class="btn btn-block
+                btn-info">Gérer les autorisations pour les étudiants</a>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>

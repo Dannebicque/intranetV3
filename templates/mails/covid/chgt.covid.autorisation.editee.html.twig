@@ -8,7 +8,7 @@ Bonjour,<br><br>
 
 <ul>
     {% for creneau in covidAttestationPersonnel.covidCreneauPresences %}
-        <li> {{ creneau.display }}</li>>
+        <li> {{ creneau.display }}</li>
     {% endfor %}
 </ul>
 <p>Pour le motif: {{ covidAttestationPersonnel.motif|trans }}</p>
