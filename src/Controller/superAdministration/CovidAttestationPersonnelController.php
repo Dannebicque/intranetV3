@@ -3,18 +3,16 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/CovidAttestationPersonnelController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/11/2020 09:41
+// @lastUpdate 10/11/2020 10:07
 
 namespace App\Controller\superAdministration;
 
 use App\Classes\Covid\MyExportPresence;
-use App\Classes\MyExport;
 use App\Classes\Tools;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\CovidAttestationPersonnel;
 use App\Event\CovidEvent;
-use App\Repository\ActualiteRepository;
 use App\Repository\CovidAttestationPersonnelRepository;
 use DateTime;
 use Symfony\Component\HttpFoundation\Request;
