@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Diplome.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 10/11/2020 10:09
+// @lastUpdate 10/11/2020 18:32
 
 namespace App\Entity;
 
@@ -18,7 +18,7 @@ use function ord;
  * @ORM\Entity(repositoryClass="App\Repository\DiplomeRepository")
  * @ORM\HasLifecycleCallbacks()
  */
-class Diplome extends BaseEntity
+class Diplome extends BaseEntity implements \Serializable
 {
     use ApogeeTrait;
 
@@ -798,5 +798,19 @@ class Diplome extends BaseEntity
         }
 
         return $this;
+    }
+
+    public function serialize(): string
+    {
+        // Ajouté pour le problème de connexion avec le usernametoken
+        return serialize([
+            $this->getId(),
+            $this->getLibelle()
+        ]);
+    }
+
+    public function unserialize($serialized)
+    {
+        // TODO: Implement unserialize() method.
     }
 }

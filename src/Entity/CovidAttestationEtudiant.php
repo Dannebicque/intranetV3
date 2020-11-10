@@ -3,15 +3,17 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/CovidAttestationEtudiant.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 10/11/2020 15:16
+// @lastUpdate 10/11/2020 18:32
 
 namespace App\Entity;
 
 use App\Repository\CovidAttestationEtudiantRepository;
 use DateTime;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * @ORM\Entity(repositoryClass=CovidAttestationEtudiantRepository::class)
@@ -161,12 +163,12 @@ class CovidAttestationEtudiant extends BaseEntity
         return $this;
     }
 
-    public function getDatePresence(): ?\DateTimeInterface
+    public function getDatePresence(): ?DateTimeInterface
     {
         return $this->datePresence;
     }
 
-    public function setDatePresence(\DateTimeInterface $datePresence): self
+    public function setDatePresence(DateTimeInterface $datePresence): self
     {
         $this->datePresence = $datePresence;
 
@@ -211,12 +213,12 @@ class CovidAttestationEtudiant extends BaseEntity
         return $this;
     }
 
-    public function getDateEnvoi(): ?\DateTimeInterface
+    public function getDateEnvoi(): ?DateTimeInterface
     {
         return $this->dateEnvoi;
     }
 
-    public function setDateEnvoi(?\DateTimeInterface $dateEnvoi): self
+    public function setDateEnvoi(?DateTimeInterface $dateEnvoi): self
     {
         $this->dateEnvoi = $dateEnvoi;
 
@@ -228,5 +230,13 @@ class CovidAttestationEtudiant extends BaseEntity
         $this->convocationEnvoyee = false;
         $this->dateEnvoi = null;
         $this->setCreated(new DateTime());
+    }
+
+    public function serialize(): string
+    {
+        // Ajouté pour le problème de connexion avec le usernametoken
+        return serialize([
+            $this->getId()
+        ]);
     }
 }

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/CovidAttestationEtudiantController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 10/11/2020 16:33
+// @lastUpdate 10/11/2020 18:32
 
 namespace App\Controller\administration;
 
@@ -111,7 +111,8 @@ class CovidAttestationEtudiantController extends BaseController
     ): ?Response {
         $myExportPresence->sendOneConvocation($covidAttestationEtudiant, $etudiant);
 
-        return new Response();
+        return $this->redirectToRoute('administration_covid_attestation_etudiant_show',
+            ['id' => $covidAttestationEtudiant->getId()]);
 
     }
 
