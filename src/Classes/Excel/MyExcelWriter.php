@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Excel/MyExcelWriter.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/11/2020 08:42
+// @lastUpdate 10/11/2020 16:58
 
 /**
  * Created by PhpStorm.
@@ -347,6 +347,13 @@ class MyExcelWriter
         foreach ($tEnTete as $t) {
             $this->writeCellXY($colonne, $ligne, $t);
             $colonne++;
+        }
+    }
+
+    public function getColumnsAutoSize(string $depart, string $fin)
+    {
+        foreach (range($depart, $fin) as $columnID) {
+            $this->sheet->getColumnDimension($columnID)->setAutoSize(true);
         }
     }
 }

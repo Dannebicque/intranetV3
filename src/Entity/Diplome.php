@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Diplome.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/11/2020 21:00
+// @lastUpdate 10/11/2020 10:09
 
 namespace App\Entity;
 
@@ -170,6 +170,11 @@ class Diplome extends BaseEntity
      */
     private $covidAttestationPersonnels;
 
+    /**
+     * @ORM\OneToMany(targetEntity=CovidAttestationEtudiant::class, mappedBy="diplome")
+     */
+    private $covidAttestationEtudiants;
+
     public function __construct(Departement $departement)
     {
         $this->departement = $departement;
@@ -178,6 +183,7 @@ class Diplome extends BaseEntity
         $this->annees = new ArrayCollection();
         $this->apcComptences = new ArrayCollection();
         $this->covidAttestationPersonnels = new ArrayCollection();
+        $this->covidAttestationEtudiants = new ArrayCollection();
     }
 
     /**
@@ -757,6 +763,37 @@ class Diplome extends BaseEntity
             // set the owning side to null (unless already changed)
             if ($covidAttestationPersonnel->getDiplome() === $this) {
                 $covidAttestationPersonnel->setDiplome(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|CovidAttestationEtudiant[]
+     */
+    public function getCovidAttestationEtudiants(): Collection
+    {
+        return $this->covidAttestationEtudiants;
+    }
+
+    public function addCovidAttestationEtudiant(CovidAttestationEtudiant $covidAttestationEtudiant): self
+    {
+        if (!$this->covidAttestationEtudiants->contains($covidAttestationEtudiant)) {
+            $this->covidAttestationEtudiants[] = $covidAttestationEtudiant;
+            $covidAttestationEtudiant->setDiplome($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCovidAttestationEtudiant(CovidAttestationEtudiant $covidAttestationEtudiant): self
+    {
+        if ($this->covidAttestationEtudiants->contains($covidAttestationEtudiant)) {
+            $this->covidAttestationEtudiants->removeElement($covidAttestationEtudiant);
+            // set the owning side to null (unless already changed)
+            if ($covidAttestationEtudiant->getDiplome() === $this) {
+                $covidAttestationEtudiant->setDiplome(null);
             }
         }
 

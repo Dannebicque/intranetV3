@@ -3,14 +3,17 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Covid/MyExportPresence.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/11/2020 10:31
+// @lastUpdate 10/11/2020 16:58
 
 namespace App\Classes\Covid;
 
 use App\Classes\Excel\MyExcelWriter;
+use App\Classes\Mail\MailerFromTwig;
 use App\Classes\Pdf\MyPDF;
+use App\Entity\CovidAttestationEtudiant;
 use App\Entity\CovidAttestationPersonnel;
 use App\Entity\Departement;
+use App\Entity\Etudiant;
 use DateTime;
 use Dompdf\Dompdf;
 use Dompdf\Options;
@@ -26,19 +29,24 @@ class MyExportPresence
     private MyPDF $myPdf;
     private string $dir;
 
+    private MailerFromTwig $myMailer;
+
     /**
      * MyExport constructor.
      *
      * @param MyExcelWriter   $myExcelWriter
      * @param MyPDF           $myPdf
      * @param KernelInterface $kernel
+     * @param MailerFromTwig  $myMailer
      */
     public function __construct(
         MyExcelWriter $myExcelWriter,
+        MailerFromTwig $myMailer,
         MyPdf $myPdf,
         KernelInterface $kernel
     ) {
 
+        $this->myMailer = $myMailer;
         $this->myExcelWriter = $myExcelWriter;
         $this->myPdf = $myPdf;
         $this->dir = $kernel->getProjectDir() . '/public/upload/';
@@ -84,7 +92,7 @@ class MyExportPresence
                     $presence->getCreated() !== null ? $presence->getCreated()->format('d/m/Y H:i') : '-',
                     $presence->getPersonnel() !== null ? $presence->getPersonnel()->getCivilite() : '',
                     $presence->getPersonnel() !== null ? $presence->getPersonnel()->getNom() : '',
-                    $presence->getPersonnel() !== null ? $presence->getPersonnel()->getNom() : '',
+                    $presence->getPersonnel() !== null ? $presence->getPersonnel()->getPrenom() : '',
                     $presence->getPersonnel() !== null ? $presence->getPersonnel()->getMailUniv() : '',
                     $presence->getMotifLong(),
                     $presence->getDiplome()->getLibelle(),
@@ -102,7 +110,7 @@ class MyExportPresence
                 $ligne++;
             }
         }
-
+        $this->myExcelWriter->getColumnsAutoSize('A', 'Z');
         $writer = new Xlsx($this->myExcelWriter->getSpreadsheet());
         $date = new DateTime('now');
 
@@ -142,5 +150,52 @@ class MyExportPresence
         }
 
         return true;
+    }
+
+    public function genereConvocationPdf(
+        CovidAttestationEtudiant $covidAttestationEtudiant,
+        Etudiant $etudiant
+    ) {
+        $this->myPdf::generePdf(
+            'pdf/covid/autorisationEtudiant.html.twig',
+            [
+                'covidAttestationEtudiant' => $covidAttestationEtudiant,
+                'etudiant'                 => $etudiant
+            ],
+            'convocation-covid-' . $covidAttestationEtudiant->getDatePresence()->format('d-m-Y') . '-' . $etudiant->getNumEtudiant()
+        );
+    }
+
+    public function sendOneConvocation(CovidAttestationEtudiant $covidAttestationEtudiant, Etudiant $etudiant)
+    {
+        $this->myMailer->initEmail();
+        $name = 'convocation-covid-' . $covidAttestationEtudiant->getDatePresence()->format('d-m-Y') . '-' . $etudiant->getNumEtudiant();
+        $this->myPdf::genereAndSavePdf(
+            'pdf/covid/autorisationEtudiant.html.twig',
+            [
+                'covidAttestationEtudiant' => $covidAttestationEtudiant,
+                'etudiant'                 => $etudiant
+            ],
+            $name,
+            $this->dir . 'covid/convocations/'
+        );
+
+        $this->myMailer->setTemplate('mails/covid/convocationEtudiant.html.twig', [
+            'covidAttestationEtudiant' => $covidAttestationEtudiant,
+            'etudiant'                 => $etudiant
+        ]);
+
+        //joindre le PDF
+        $this->myMailer->attachFile($this->dir . 'covid/convocations/' . $name);
+        //$this->myMailer->attachFile($this->dir . 'covid/Organisation Accès  IUT  Troyes - Note personnels 09.11.2020.pdf');
+        $this->myMailer->sendMessage(
+            $etudiant->getMails(),
+            'Convocation pour le ' . $covidAttestationEtudiant->getDatePresence()->format('d-m-Y') . ' dans le cadre du protocole sanitaire COVID',
+            [
+                'replyTo' => [$covidAttestationEtudiant->getDiplome()->getAssistantDiplome()->getMailUniv()],
+                'from'    => [$covidAttestationEtudiant->getDiplome()->getAssistantDiplome()->getMailUniv()]
+            ]
+        );
+
     }
 }

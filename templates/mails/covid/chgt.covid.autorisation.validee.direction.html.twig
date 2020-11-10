@@ -7,8 +7,8 @@ Bonjour,<br><br>
 
 <p>Demande concernant la période :</p>
 <ul>{% for creneau in covidAttestationPersonnel.covidCreneauPresences %}
-      <li> {{ creneau.display }}</li>>
-   {% endfor %}
+        <li> {{ creneau.display }}</li>
+    {% endfor %}
 </ul>
 <p>Pour le motif: {{ covidAttestationPersonnel.motif|trans }}</p>
 <p>Moyen de déplacement: {{ covidAttestationPersonnel.moyenDeplacement }}</p>

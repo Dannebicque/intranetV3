@@ -1,0 +1,19 @@
+<p>Bonjour {{ etudiant.displayPr }},</p>
+
+<p>Vous trouverez en pièce jointe la convocation pour venir assister à des TP ou des évaluations à l'IUT de Troyes
+   dans le cadre du protocole sanitaire lié au COVID 19.</p>
+
+<p>Vous êtes convoqués le {{ covidAttestationEtudiant.datePresence|format_date('long') }}
+   , {{ covidAttestationEtudiant.heureLong }} (vous reportez à l'emploi du temps pour le détail).</p>
+
+<p>Vous devrez vous munir de cette convocation et de votre carte d'identité pour accéde à l'IUT. Il n'est pas
+   nécessaire de compléter une attestation de votre déplacement de votre coté.</p>
+
+<p>Si vous avez cours toute la journée, nous vous rappelons qu'il est interdit de prendre le repas sur le site de
+   l'IUT. Le port du masque est obligatoire dans tous l'IUT (intérieur et extérieur).</p>
+
+<p>
+    Bien cordialement,<br>
+    {{ covidAttestationEtudiant.diplome.responsableDiplome.displayPr }}<br>
+    {{ covidAttestationEtudiant.diplome.display }}
+</p>

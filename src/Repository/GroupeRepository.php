@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/GroupeRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 01/09/2020 12:16
+// @lastUpdate 10/11/2020 14:48
 
 
 namespace App\Repository;
@@ -36,7 +36,7 @@ class GroupeRepository extends ServiceEntityRepository
         parent::__construct($registry, Groupe::class);
     }
 
-    public function findByDepartement(Departement $departement)
+    public function findByDepartementBuilder(Departement $departement)
     {
         return $this->createQueryBuilder('g')
             ->innerJoin(TypeGroupe::class, 't', 'WITH', 'g.typeGroupe = t.id')
@@ -44,18 +44,20 @@ class GroupeRepository extends ServiceEntityRepository
             ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
             ->innerJoin(Diplome::class, 'd', 'WITH', 'd.id = a.diplome')
             ->where('d.departement = :departement')
-            ->setParameter('departement', $departement->getId())
+            ->setParameter('departement', $departement->getId());
+    }
+
+    public function findByDepartement(Departement $departement)
+    {
+        return $this->findByDepartementBuilder($departement)
             ->getQuery()
             ->getResult();
     }
 
+
     public function findBySemestre(Semestre $semestre)
     {
-        return $this->createQueryBuilder('g')
-            ->innerJoin(TypeGroupe::class, 't', 'WITH', 'g.typeGroupe = t.id')
-            ->where('t.semestre = :semestre')
-            ->setParameter('semestre', $semestre->getId())
-            ->orderBy('g.ordre', 'ASC')
+        return $this->findBySemestreBuilder($semestre)
             ->getQuery()
             ->getResult();
     }

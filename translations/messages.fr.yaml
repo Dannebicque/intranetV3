@@ -456,6 +456,17 @@ adm:
       heading: 'Création d''un nouvel avenant pour le stage de %etudiant%'
     edit:
       heading: 'Modification d''un avenant pour le stage de %etudiant%'
+  covid_attestation_etudiant:
+    index:
+      heading: 'Gestion des attestions de déplacement/convocation COVID pour les étudiants'
+    modification:
+      heading: 'Modification d''une convocation COVID pour les étudiants'
+    show:
+      heading: 'Détails d''une convocation COVID pour les étudiants'
+    new:
+      heading: 'Création d''une convocation COVID pour les étudiants'
+    concerne:
+      heading: 'Liste des étudiants concernés par la convocation "COVID"'
 
 administratif_homepage.heading: 'Tableau de bord administratif'
 administratif.qualite.questionnaire.show.heading: 'Détails d''un questionnaire qualité'
@@ -856,8 +867,16 @@ covid_attestation_personnel:
   new.success.flash: 'Demande d''attestation de déplacement ajoutée avec succès'
   duplicate.success.flash: 'Demande d''attestation de déplacement dupliquée avec succès'
   delete.success.flash: 'Demande d''attestation de déplacement supprimée avec succès'
-  delete.error.flash: 'Erreur lors de la demande d''attestation de déplacement'
+  delete.error.flash: 'Erreur lors de la suppression de demande d''attestation de déplacement'
   add.success.flash: 'Demande d''attestation de déplacement ajoutée avec succès'
+
+covid_attestation_etudiant:
+  edit.success.flash: 'Convocation "COVID" étudiante modifiée avec succès'
+  new.success.flash: 'Convocation "COVID" étudiante ajoutée avec succès'
+  duplicate.success.flash: 'Convocation "COVID" étudiante dupliquée avec succès'
+  delete.success.flash: 'Convocation "COVID" étudiante supprimée avec succès'
+  delete.error.flash: 'Erreur lors de la suppression de la convocation "COVID" étudiante'
+  add.success.flash: 'Convocation "COVID" étudiante ajoutée avec succès'
 
 copie.des.mails.generes: 'des mails générés par l''intranet'
 created: 'Créé le'

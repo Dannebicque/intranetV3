@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Groupe.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/08/2020 08:18
+// @lastUpdate 10/11/2020 16:58
 
 namespace App\Entity;
 
@@ -64,10 +64,16 @@ class Groupe extends BaseEntity
      */
     private ?Parcour $parcours;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=CovidAttestationEtudiant::class, mappedBy="groupes")
+     */
+    private $covidAttestationEtudiants;
+
     public function __construct()
     {
         $this->etudiants = new ArrayCollection();
         $this->enfants = new ArrayCollection();
+        $this->covidAttestationEtudiants = new ArrayCollection();
     }
 
     /**
@@ -274,5 +280,42 @@ class Groupe extends BaseEntity
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection|CovidAttestationEtudiant[]
+     */
+    public function getCovidAttestationEtudiants(): Collection
+    {
+        return $this->covidAttestationEtudiants;
+    }
+
+    public function addCovidAttestationEtudiant(CovidAttestationEtudiant $covidAttestationEtudiant): self
+    {
+        if (!$this->covidAttestationEtudiants->contains($covidAttestationEtudiant)) {
+            $this->covidAttestationEtudiants[] = $covidAttestationEtudiant;
+            $covidAttestationEtudiant->addGroupe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCovidAttestationEtudiant(CovidAttestationEtudiant $covidAttestationEtudiant): self
+    {
+        if ($this->covidAttestationEtudiants->contains($covidAttestationEtudiant)) {
+            $this->covidAttestationEtudiants->removeElement($covidAttestationEtudiant);
+            $covidAttestationEtudiant->removeGroupe($this);
+        }
+
+        return $this;
+    }
+
+    public function getDisplaySemestre()
+    {
+        if ($this->getTypeGroupe() !== null && $this->getTypeGroupe()->getSemestre() !== null) {
+            return $this->getTypeGroupe()->getSemestre()->display() . ' | ' . $this->getLibelle();
+        }
+
+        return '-Err Semestre-';
     }
 }

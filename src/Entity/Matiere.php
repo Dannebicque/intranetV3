@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Matiere.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 09/08/2020 15:06
+// @lastUpdate 10/11/2020 10:10
 
 namespace App\Entity;
 
@@ -236,6 +236,11 @@ class Matiere extends BaseEntity
      */
     private $codeElement;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=CovidAttestationEtudiant::class, mappedBy="matieres")
+     */
+    private $covidAttestationEtudiants;
+
     public function __construct()
     {
         $this->previsionnels = new ArrayCollection();
@@ -245,6 +250,7 @@ class Matiere extends BaseEntity
         $this->scolariteMoyenneMatieres = new ArrayCollection();
         $this->scolaritePromoMatieres = new ArrayCollection();
         $this->progressionPedagogiques = new ArrayCollection();
+        $this->covidAttestationEtudiants = new ArrayCollection();
     }
 
     /**
@@ -1006,6 +1012,34 @@ class Matiere extends BaseEntity
             if ($matiereEnfant->getMatiereParent() === $this) {
                 $matiereEnfant->setMatiereParent(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|CovidAttestationEtudiant[]
+     */
+    public function getCovidAttestationEtudiants(): Collection
+    {
+        return $this->covidAttestationEtudiants;
+    }
+
+    public function addCovidAttestationEtudiant(CovidAttestationEtudiant $covidAttestationEtudiant): self
+    {
+        if (!$this->covidAttestationEtudiants->contains($covidAttestationEtudiant)) {
+            $this->covidAttestationEtudiants[] = $covidAttestationEtudiant;
+            $covidAttestationEtudiant->addMatiere($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCovidAttestationEtudiant(CovidAttestationEtudiant $covidAttestationEtudiant): self
+    {
+        if ($this->covidAttestationEtudiants->contains($covidAttestationEtudiant)) {
+            $this->covidAttestationEtudiants->removeElement($covidAttestationEtudiant);
+            $covidAttestationEtudiant->removeMatiere($this);
         }
 
         return $this;
