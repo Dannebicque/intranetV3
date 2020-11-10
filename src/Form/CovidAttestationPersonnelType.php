@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Form/CovidAttestationPersonnelType.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/11/2020 15:33
+// @lastUpdate 10/11/2020 12:09
 
 namespace App\Form;
 
@@ -67,6 +67,7 @@ class CovidAttestationPersonnelType extends AbstractType
                     'Assurer TP / devoirs sur tables'                                                                               => 'motif1',
                     'Assurer sur site les enseignants car ne dispose pas des conditions satisfaisantes pour le faire en distanciel' => 'motif2',
                     'Demandes ponctuelles (récupérer dossiers, BU)'                                                                 => 'motif3',
+                    'Encadrement doctorant sur site'                                                                                => 'motif4',
                 ],
                 'label'   => 'label.motifDeplacement'
             ]);
