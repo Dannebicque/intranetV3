@@ -1997,7 +1997,12 @@ type_diplome.delete.error.flash: 'Erreur lors de la suppression du type de dipl�
 type_diplome.delete.success.flash: 'Type de diplôme supprimé avec succès'
 type_diplome.duplicate.success.flash: 'Type de diplôme dupliqué avec succès'
 type_diplome.edit.success.flash: 'Type de diplôme modifié avec succès'
-type_document.add.success.flash: 'Type de document ajouté avec succès'
+
+type_document.add.success.flash: 'Type de document créé avec succès'
+type_document.delete.error.flash: 'Erreur lors de la suppression du type de document'
+type_document.delete.success.flash: 'Type de document supprimé avec succès'
+type_document.duplicate.success.flash: 'Type de document dupliqué avec succès'
+type_document.edit.success.flash: 'Type de document modifié avec succès'
 
 type_fichier: 'Type de fichier'
 

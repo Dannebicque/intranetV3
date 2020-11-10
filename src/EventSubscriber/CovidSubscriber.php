@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/CovidSubscriber.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/11/2020 10:10
+// @lastUpdate 10/11/2020 10:07
 
 namespace App\EventSubscriber;
 
@@ -15,6 +15,7 @@ use App\Event\CovidEvent;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\RouterInterface;
 
 
@@ -26,24 +27,27 @@ class CovidSubscriber implements EventSubscriberInterface
     private EntityManagerInterface $entityManager;
 
     private MyExportPresence $myExportPresence;
+    private string $dir;
 
 
     /**
      * StageSubscriber constructor.
      *
      * @param EntityManagerInterface $entityManager
-     * @param RouterInterface        $router
      * @param MailerFromTwig         $myMailer
+     * @param MyExportPresence       $myExportPresence
+     * @param KernelInterface        $kernel
      */
     public function __construct(
         EntityManagerInterface $entityManager,
-        RouterInterface $router,
         MailerFromTwig $myMailer,
-        MyExportPresence $myExportPresence
+        MyExportPresence $myExportPresence,
+        KernelInterface $kernel
     ) {
         $this->entityManager = $entityManager;
         $this->myMailer = $myMailer;
         $this->myExportPresence = $myExportPresence;
+        $this->dir = $kernel->getProjectDir() . '/public/upload/';
     }
 
     public static function getSubscribedEvents(): array
@@ -172,6 +176,7 @@ class CovidSubscriber implements EventSubscriberInterface
                 ]);
                 //joindre le PDF
                 $this->myMailer->attachFile($file);
+                $this->myMailer->attachFile($this->dir . 'covid/Organisation Accès  IUT  Troyes - Note personnels 09.11.2020.pdf');
                 $this->myMailer->sendMessage(
                     $covidAttestationPersonnel->getPersonnel()->getMails(),
                     'Demande d\'autorisation de déplacement acceptée',

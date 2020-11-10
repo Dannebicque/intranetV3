@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/CovidAttestationPersonnel.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/11/2020 09:26
+// @lastUpdate 10/11/2020 08:38
 
 namespace App\Entity;
 
@@ -63,6 +63,11 @@ class CovidAttestationPersonnel extends BaseEntity
      * @ORM\OneToMany(targetEntity=CovidCreneauPresence::class, mappedBy="attestation", cascade={"persist","remove"})
      */
     private $covidCreneauPresences;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $motifRefus;
 
     public function __construct(Personnel $personnel)
     {
@@ -236,5 +241,17 @@ class CovidAttestationPersonnel extends BaseEntity
         ];
 
         return $tab[$this->motif];
+    }
+
+    public function getMotifRefus(): ?string
+    {
+        return $this->motifRefus;
+    }
+
+    public function setMotifRefus(?string $motifRefus): self
+    {
+        $this->motifRefus = $motifRefus;
+
+        return $this;
     }
 }
