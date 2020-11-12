@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Covid/MyExportPresence.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 10/11/2020 18:32
+// @lastUpdate 12/11/2020 09:46
 
 namespace App\Classes\Covid;
 
@@ -21,6 +21,9 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 class MyExportPresence
 {
@@ -152,10 +155,18 @@ class MyExportPresence
         return true;
     }
 
+    /**
+     * @param CovidAttestationEtudiant $covidAttestationEtudiant
+     * @param Etudiant                 $etudiant
+     *
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     */
     public function genereConvocationPdf(
         CovidAttestationEtudiant $covidAttestationEtudiant,
         Etudiant $etudiant
-    ) {
+    ): void {
         $this->myPdf::generePdf(
             'pdf/covid/autorisationEtudiant.html.twig',
             [
@@ -166,7 +177,15 @@ class MyExportPresence
         );
     }
 
-    public function sendOneConvocation(CovidAttestationEtudiant $covidAttestationEtudiant, Etudiant $etudiant)
+    /**
+     * @param CovidAttestationEtudiant $covidAttestationEtudiant
+     * @param Etudiant                 $etudiant
+     *
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     */
+    public function sendOneConvocation(CovidAttestationEtudiant $covidAttestationEtudiant, Etudiant $etudiant): void
     {
 
         $name = 'convocation-covid-' . $covidAttestationEtudiant->getDatePresence()->format('d-m-Y') . '-' . $etudiant->getNumEtudiant();
@@ -188,7 +207,7 @@ class MyExportPresence
 
         //joindre le PDF
         $this->myMailer->attachFile($this->dir . 'covid/convocations/' . $name . '.pdf');
-        //$this->myMailer->attachFile($this->dir . 'covid/Organisation Accès  IUT  Troyes - Note personnels 09.11.2020.pdf');
+        $this->myMailer->attachFile($this->dir . 'covid/Conditions accès  IUT  Troyes - Note aux etudiants.pdf');
         $this->myMailer->sendMessage(
             $etudiant->getMails(),
             'Convocation pour le ' . $covidAttestationEtudiant->getDatePresence()->format('d/m/Y') . ' dans le cadre du protocole sanitaire COVID',
@@ -197,6 +216,69 @@ class MyExportPresence
                 'from'    => [$covidAttestationEtudiant->getDiplome()->getAssistantDiplome()->getMailUniv()]
             ]
         );
+    }
 
+    public function sendAllConvocation(CovidAttestationEtudiant $covidAttestationEtudiant): void
+    {
+        foreach ($covidAttestationEtudiant->getGroupes() as $groupe) {
+            foreach ($groupe->getEtudiants() as $etudiant) {
+                $this->sendOneConvocation($covidAttestationEtudiant, $etudiant);
+            }
+        }
+    }
+
+    public function genereFichierEtudiant(array $presences)
+    {
+        $this->myExcelWriter->createSheet('stage');
+        $tEnTete = [
+            'date présence',
+            'Heure',
+            'Civ.',
+            'Nom',
+            'Prénom',
+            'Mail',
+            'Motif',
+            'diplôme',
+            'Salles'
+        ];
+        $this->myExcelWriter->ecritLigne($tEnTete, 1, 1);
+
+        $ligne = 2;
+
+        /** @var CovidAttestationEtudiant $presence */
+        foreach ($presences as $presence) {
+            foreach ($presence->getGroupes() as $groupe) {
+                foreach ($groupe->getEtudiants() as $etudiant) {
+                    $t = [
+                        $presence->getDatePresence() !== null ? $presence->getDatePresence()->format('d/m/Y H:i') : '-',
+                        $presence->heureLong(),
+                        $etudiant->getCiviliteLong(),
+                        $etudiant->getNom(),
+                        $etudiant->getPrenom(),
+                        $etudiant->getMailUniv(),
+                        $presence->getMotif(),
+                        $etudiant->getSemestre()->display(),
+                        $presence->getSalles()
+                    ];
+
+                    $this->myExcelWriter->ecritLigne($t, 1, $ligne);
+                    $ligne++;
+                }
+            }
+        }
+        $this->myExcelWriter->getColumnsAutoSize('A', 'J');
+        $writer = new Xlsx($this->myExcelWriter->getSpreadsheet());
+        $date = new DateTime('now');
+
+        return new StreamedResponse(
+            static function() use ($writer) {
+                $writer->save('php://output');
+            },
+            200,
+            [
+                'Content-Type'        => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                'Content-Disposition' => 'attachment;filename="presence-etudiant-' . $date->format('d-m-Y') . '.xlsx"'
+            ]
+        );
     }
 }

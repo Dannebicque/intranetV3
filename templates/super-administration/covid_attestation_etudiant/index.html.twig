@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'base-super_admin.html.twig' %}
 
 {% block header %}
     {{ 'adm.covid_attestation_etudiant.index.heading'|trans }}
@@ -6,7 +6,14 @@
 
 {% block headeractions %}
     <div class="header-action">
-        {{ include('composants/adm-buttons-index.html.twig', {elt:'covid_attestation_etudiant'}) }}
+        <div class="buttons">
+            <a href="{{ path('administration_index') }}"
+               class="btn btn-primary btn-float"
+               data-provide="tooltip"
+               data-placement="bottom"
+               title="{{ 'atitle.retour_administration'|trans }}">
+                <span class="material-icons">build</span></a>
+        </div>
     </div>
 {% endblock %}
 
@@ -48,18 +55,8 @@
                             {% endif %}
                         </td>
                         <td>
-                            <a href="{{ path('administration_covid_attestation_etudiant_duplicate', {'id':
-                                covid_attestation_etudiant.id}) }}"
-                               class="btn btn-success btn-outline btn-square"
-                               data-provide="tooltip"
-                               data-placement="bottom"
-                               title="{{ 'atitle.dupliquer'|trans }}">
-                                <i class="{{ iconDuplicate }}"></i>
-                                <span class="sr-only">{{ 'atitle.dupliquer'|trans }}</span>
-                            </a>
 
-
-                            <a href="{{ path('administration_covid_attestation_etudiant_show', {'id':
+                            <a href="{{ path('sa_covid_attestation_etudiant_show', {'id':
                                 covid_attestation_etudiant.id}) }}"
                                class="btn btn-info btn-outline btn-square"
                                data-provide="tooltip"
@@ -68,27 +65,6 @@
                                 <i class="{{ iconShow }}"></i>
                                 <span class="sr-only">{{ 'atitle.details'|trans }}</span>
                             </a>
-                            {% if covid_attestation_etudiant.convocationEnvoyee == false %}
-                                <a href="{{ path('administration_covid_attestation_etudiant_edit', {'id':
-                                    covid_attestation_etudiant.id}) }}"
-                                   class="btn btn-warning btn-outline btn-square"
-                                   data-provide="tooltip"
-                                   data-placement="bottom"
-                                   title="{{ 'atitle.modifier'|trans }}">
-                                    <i class="{{ iconEdit }}"></i>
-                                    <span class="sr-only">{{ 'atitle.modifier'|trans }}</span>
-                                </a>
-                                <a href="{{ path('administration_covid_attestation_etudiant_delete', {id:
-                                    covid_attestation_etudiant.id}) }}"
-                                   data-csrf="{{ csrf_token('delete' ~ covid_attestation_etudiant.id) }}"
-                                   class="btn btn-danger btn-outline btn-square supprimer"
-                                   data-provide="tooltip"
-                                   data-placement="bottom"
-                                   title="{{ 'atitle.supprimer'|trans }}">
-                                    <i class="{{ iconDelete }}"></i>
-                                    <span class="sr-only">{{ 'atitle.supprimer'|trans }}</span>
-                                </a>
-                            {% endif %}
                         </td>
                     </tr>
                 {% else %}
@@ -102,6 +78,18 @@
     </div>
 {% endblock %}
 
+
+
+{% block fabactions %}
+    {{ include('composants/fab-buttons.html.twig', {boutons:[
+        {
+            type:'info',
+            href:path('sa_covid_attestation_etudiant_export'),
+            title: 'exporter.xls'|trans,
+            icone: 'fa fa-file-excel'
+        }
+    ]}) }}
+{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
