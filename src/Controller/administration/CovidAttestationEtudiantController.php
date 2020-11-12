@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/CovidAttestationEtudiantController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 10/11/2020 18:32
+// @lastUpdate 12/11/2020 09:46
 
 namespace App\Controller\administration;
 
@@ -14,6 +14,7 @@ use App\Entity\CovidAttestationEtudiant;
 use App\Entity\Etudiant;
 use App\Form\CovidAttestationEtudiantType;
 use App\Repository\CovidAttestationEtudiantRepository;
+use DateTime;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -38,6 +39,9 @@ class CovidAttestationEtudiantController extends BaseController
 
     /**
      * @Route("/new", name="covid_attestation_etudiant_new", methods={"GET","POST"})
+     * @param Request $request
+     *
+     * @return Response
      */
     public function new(Request $request): Response
     {
@@ -113,7 +117,6 @@ class CovidAttestationEtudiantController extends BaseController
 
         return $this->redirectToRoute('administration_covid_attestation_etudiant_show',
             ['id' => $covidAttestationEtudiant->getId()]);
-
     }
 
     /**
@@ -126,10 +129,15 @@ class CovidAttestationEtudiantController extends BaseController
     public function sendAll(
         MyExportPresence $myExportPresence,
         CovidAttestationEtudiant $covidAttestationEtudiant
-    ): ?Response {
+    ): ?Response
+    {
         $myExportPresence->sendAllConvocation($covidAttestationEtudiant);
+        $covidAttestationEtudiant->setConvocationEnvoyee(true);
+        $covidAttestationEtudiant->setDateEnvoi(new DateTime());
+        $this->entityManager->flush();
 
-        return new Response();
+        return $this->redirectToRoute('administration_covid_attestation_etudiant_show',
+            ['id' => $covidAttestationEtudiant->getId()]);
 
     }
 
@@ -145,8 +153,12 @@ class CovidAttestationEtudiantController extends BaseController
     function edit(
         Request $request,
         CovidAttestationEtudiant $covidAttestationEtudiant
-    ): Response {
-        $form = $this->createForm(CovidAttestationEtudiantType::class, $covidAttestationEtudiant);
+    ): Response
+    {
+        $form = $this->createForm(CovidAttestationEtudiantType::class, $covidAttestationEtudiant,
+            [
+                'departement' => $this->getDepartement()
+            ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -212,6 +224,8 @@ class CovidAttestationEtudiantController extends BaseController
         $this->entityManager->persist($newcovidAttestationEtudiant);
         $this->entityManager->flush();
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'covid_attestation_etudiant.duplicate.success.flash');
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS,
+            'covid_attestation_etudiant.attestations_envoyees.success.flash');
 
         return $this->redirectToRoute('administration_covid_attestation_etudiant_edit',
             ['id' => $newcovidAttestationEtudiant->getId()]);
