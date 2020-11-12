@@ -35,7 +35,7 @@
                 </thead>
                 <tbody>
                 {% for covid_attestation_personnel in covid_attestation_personnels %}
-                    <tr>
+                    <tr id="ligne_{{ covid_attestation_personnel.id }}">
                         <td>{{ covid_attestation_personnel.personnel.displayPr }}</td>
                         <td>{{ covid_attestation_personnel.created ? covid_attestation_personnel.created|format_datetime
                                 ('short', 'short') : '' }}</td>
