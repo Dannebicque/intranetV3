@@ -3,15 +3,19 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/CovidAttestationEtudiantRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 10/11/2020 15:19
+// @lastUpdate 12/11/2020 14:34
 
 namespace App\Repository;
 
 use App\Entity\CovidAttestationEtudiant;
 use App\Entity\Departement;
 use App\Entity\Diplome;
+use App\Entity\Etudiant;
+use App\Entity\Groupe;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Svg\Tag\Group;
 
 /**
  * @method CovidAttestationEtudiant|null find($id, $lockMode = null, $lockVersion = null)
@@ -39,5 +43,21 @@ class CovidAttestationEtudiantRepository extends ServiceEntityRepository
     public function findAll()
     {
         return $this->findBy([], ['created' => 'DESC']);
+    }
+
+    public function findNext(Etudiant $etudiant)
+    {
+        return $this->createQueryBuilder('a')
+            ->innerJoin('a.groupes', 'c')//récupération de la jointure dans la table dédiée
+            ->innerJoin(Groupe::class, 'g', 'WITH', 'c.id = g.id')
+            ->innerJoin('g.etudiants', 'f')
+            ->innerJoin(Etudiant::class, 'e', 'WITH', 'e.id = f.id')
+            ->where('e.id = :etudiant')
+            ->andWhere('a.datePresence >= :date')
+            ->setParameter('etudiant', $etudiant->getId())
+            ->setParameter('date', new DateTime('now'))
+            ->getQuery()
+            ->getResult();
+
     }
 }

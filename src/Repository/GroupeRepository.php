@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/GroupeRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 10/11/2020 14:48
+// @lastUpdate 12/11/2020 14:01
 
 
 namespace App\Repository;
@@ -101,7 +101,6 @@ class GroupeRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('g')
             ->innerJoin(TypeGroupe::class, 't', 'WITH', 'g.typeGroupe = t.id')
-            //->where('t.defaut = :defaut')
             ->where('t.type = :type')
             ->andWhere('t.semestre = :semestre')
             ->setParameters(array('type' => 'TP', 'semestre' => $semestre))
