@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/CovidAttestationPersonnel.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 10/11/2020 15:39
+// @lastUpdate 12/11/2020 14:55
 
 namespace App\Entity;
 
@@ -74,7 +74,6 @@ class CovidAttestationPersonnel extends BaseEntity
         $this->personnel = $personnel;
         $this->creneaux = new ArrayCollection();
         $this->covidCreneauPresences = new ArrayCollection();
-        $this->covidCreneauPresences->add(new CovidCreneauPresence());
     }
 
 
