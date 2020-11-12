@@ -19,6 +19,17 @@
         "/build/covid.1e9cfd0b.js"
       ]
     },
+    "sadmCovid": {
+      "js": [
+        "/build/runtime.d94b3b43.js",
+        "/build/0.cf60d32b.js",
+        "/build/1.f340a267.js",
+        "/build/sadmCovid.f4983419.js"
+      ],
+      "css": [
+        "/build/sadmCovid.b275741b.css"
+      ]
+    },
     "agenda": {
       "js": [
         "/build/runtime.d94b3b43.js",
