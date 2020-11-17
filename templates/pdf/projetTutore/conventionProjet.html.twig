@@ -70,14 +70,15 @@
     <p>La durée du projet est fixée du {{ projetEtudiant.projetPeriode.dateDebut|date('d/m/Y') }}
        au {{ projetEtudiant.projetPeriode.dateFin|date('d/m/Y') }}.</p>
 
-    <p>{% if projetEtudiant.tempComplet %}[ X ]{% else %}[&nbsp;]{% endif %} à temps complet {{ projetEtudiant
-        .duree }}
-        {% if projetEtudiant.tempComplet %} {% if projetEtudiant.uniteDuree==constant
+    <p>{% if projetEtudiant.tempComplet %}[ X ]{% else %}[&nbsp;]{% endif %} à temps
+                                                                             complet {% if projetEtudiant.tempComplet %}
+        {{ projetEtudiant.duree }}
+        {% if projetEtudiant.uniteDuree==constant
             ('App\\Entity\\ProjetEtudiant::DUREE_HEURE') %} heures par semaine
         {% elseif projetEtudiant.uniteDuree==constant('App\\Entity\\ProjetEtudiant::DUREE_JOUR') %} jours par
             semaine{% endif %}{% endif %}<br>
         {% if projetEtudiant.tempComplet == false %}[ X ]{% else %}[&nbsp;]{% endif %} {% if
-            projetEtudiant.tempComplet == false %}{{ projetEtudiant.duree }}.{% endif %} à temps
+            projetEtudiant.tempComplet == false %}{{ projetEtudiant.duree }} heures.{% endif %} à temps
                                                                              partiel (hors heures enseignement)</p>
 
 
