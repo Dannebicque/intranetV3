@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Covid/MyExportPresence.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/11/2020 09:46
+// @lastUpdate 17/11/2020 11:58
 
 namespace App\Classes\Covid;
 
@@ -220,11 +220,13 @@ class MyExportPresence
 
     public function sendAllConvocation(CovidAttestationEtudiant $covidAttestationEtudiant): void
     {
+        set_time_limit(300);
         foreach ($covidAttestationEtudiant->getGroupes() as $groupe) {
             foreach ($groupe->getEtudiants() as $etudiant) {
                 $this->sendOneConvocation($covidAttestationEtudiant, $etudiant);
             }
         }
+        set_time_limit(30);
     }
 
     public function genereFichierEtudiant(array $presences)
