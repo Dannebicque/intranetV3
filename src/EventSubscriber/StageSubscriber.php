@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/StageSubscriber.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/10/2020 18:04
+// @lastUpdate 18/11/2020 13:52
 
 namespace App\EventSubscriber;
 
@@ -91,8 +91,8 @@ class StageSubscriber implements EventSubscriberInterface
             $notif->setTypeUser(Notification::ETUDIANT);
             $notif->setType($codeEvent);
             $notif->setUrl($this->router->generate(
-                'application_etudiant_stage_detail',
-                ['id' => $stageEtudiant->getId()]
+                'application_index',
+                ['onglet' => 'stage', 'param' => $stageEtudiant->getId()]
             ));
             $this->entityManager->persist($notif);
             $this->entityManager->flush();
