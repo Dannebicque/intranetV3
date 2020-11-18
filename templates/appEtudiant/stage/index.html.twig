@@ -96,7 +96,13 @@
                                                              validation
                                                              par les responsables de stage. Vous recevrez un mail dés
                                                              que vous pourrez signer la
-                                                             convention.
+                                                             convention. <a href="{{ path
+                                    ('application_etudiant_stage_detail', {id:stageEtudiants[stagePeriode.id].id }) }}">Voir
+                                                                                                                        les
+                                                                                                                        informations
+                                                                                                                        de
+                                                                                                                        votre
+                                                                                                                        stage</a>
                             </div>
                         {% elseif ((stageEtudiants[stagePeriode.id] is  defined) and (stageEtudiants[stagePeriode.id].etatStage is constant('ETAT_STAGE_VALIDE', stageEtudiants[stagePeriode.id]) )) %}
                             <div class="alert alert-success">Votre formulaire a été validé. La convention va être
