@@ -187,9 +187,7 @@
                     <td>
                         <label for="tuteurUniversitaire" class="sr-only">Tuteur universitaire</label>
                         {% if stageEtudiant.tuteurUniversitaire != null %}
-
                             {{ personnel.displayPr }}
-
                         {% endif %}
 
                     </td>
@@ -200,51 +198,3 @@
     </div>
 {% endblock %}
 
-
-{% block fabactions %}
-    {{ include('composants/fab-buttons.html.twig', {boutons:[
-        {type: 'info',
-            href: path('administration_stage_etudiant_convention_pdf', {id:stageEtudiant.id}),
-            title: 'Editer la convention',
-            icone : "fa fa-print"
-        },
-        {
-            type:'info',
-            href:path('administration_stage_etudiant_fiche_enseignant', {id:stageEtudiant.id}),
-            title: 'fiche.enseignant'|trans,
-            icone: 'fa fa-table'
-        },
-        {
-            type:'warning',
-            href:path('administration_stage_etudiant_change_etat', {stagePeriode: stageEtudiant.stagePeriode
-            .uuidString, etudiant:stageEtudiant
-            .etudiant.id, etat: 'ETAT_STAGE_INCOMPLET'}),
-            title: 'Proposition incomplète',
-            icone: 'fa fa-ban'
-        },
-        {
-            type:'danger',
-            href:path('administration_stage_etudiant_change_etat', {stagePeriode: stageEtudiant.stagePeriode
-            .uuidString, etudiant:stageEtudiant
-            .etudiant.id, etat: 'ETAT_STAGE_REFUS'}),
-            title: 'Refuser le stage',
-            icone: 'fa fa-times'
-        },
-        {
-            type:'success',
-            href:path('administration_stage_etudiant_change_etat', {stagePeriode: stageEtudiant.stagePeriode.uuidString, etudiant:stageEtudiant.etudiant.id, etat: 'ETAT_STAGE_VALIDE'}),
-            title: 'Valider le stage',
-            icone: 'fa fa-check'
-        }
-    ]}) }}
-{% endblock %}
-
-{% block stylesheets %}
-    {{ parent() }}
-    {{ encore_entry_link_tags('adm.stage') }}
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    {{ encore_entry_script_tags('adm.stage') }}
-{% endblock %}
