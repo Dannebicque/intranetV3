@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StageAvenantController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 04/11/2020 12:20
+// @lastUpdate 20/11/2020 14:14
 
 namespace App\Controller\administration\stage;
 
@@ -153,5 +153,21 @@ class StageAvenantController extends BaseController
 
         return $this->redirectToRoute('administration_stage_avenant_index', ['stageEtudiant' => $id]);
 
+    }
+
+    /**
+     * @Route("/{id}/duplicate", name="administration_stage_avenant_duplicate", methods="GET")
+     * @param StageAvenant $stagePeriode
+     *
+     * @return Response
+     */
+    public function duplicate(StageAvenant $stageAvenant): Response
+    {
+        $newstageAvenant = clone $stageAvenant;
+        $this->entityManager->persist($newstageAvenant);
+        $this->entityManager->flush();
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'stage_periode.duplicate.success.flash');
+
+        return $this->redirectToRoute('administration_stage_avenant_edit', ['id' => $newstageAvenant->getId()]);
     }
 }
