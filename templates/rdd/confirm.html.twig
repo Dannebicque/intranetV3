@@ -1,0 +1,57 @@
+{% extends 'base-speciale.html.twig' %}
+
+{% block header %}Remise des diplômes{% endblock %}
+
+{% block content %}
+    <div class="main-content" id="mainContent">
+        <div class="row">
+            <div class="col-sm-3 text-center">
+                <img src="{{ asset('upload/logo/'~settings('LOGO_IUT')) }}" alt="logo" width="100px"/>
+            </div>
+            <div class="col-sm-6 text-center">
+                <h1></h1>
+                <h2>Remise des diplômes 2020</h2>
+            </div>
+            <div class="col-sm-3 text-center">
+                <img src="{{ asset('upload/logo/'~settings('LOGO_UNIVERSITE')) }}" alt="logo" width="100px"/>
+            </div>
+        </div>
+        <br>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <p>Nous vous confirmons l'enregistrement de vos informations.</p>
+                        <p> Votre diplôme vous sera envoyé à l'adresse suivante :</p>
+                        <p>
+                            {{ etudiant.civiliteLong }} {{ etudiant.displayPr }}<br>
+                            {{ etudiant.adresse.display|raw }}
+                        </p>
+                        <br>
+                        {% if rdd.enqueteAFaire == true %}
+
+                            <p style="font-size: 15px; font-weight: bold">En 2020, vous avez obtenu votre Diplôme
+                                                                          Universitaire de Technologie. Nous aimerions,
+                                                                          au travers d'une enquête savoir : </p>
+                            <ul>
+                                <li>Ce que vous vous choisi de faire après ?</li>
+                                <li>Quelle est votre situation actuelle ?</li>
+                                <li>Comment se sont effectués vos choix ?</li>
+                            </ul>
+                            <p style="font-size: 15px; font-weight: bold"><a href="{{ path('rdd_enquete_diplome',
+                                    {numetudiant:numetudiant, diplome:diplome}) }}">
+                                    Merci de prendre quelques minutes pour compléter l'enquête se trouvant
+                                    ici (durée estimée à moins de 2 minutes)</a></p>
+                        {% endif %}
+                        <div class="alert alert-danger">
+                            En cas de difficulté, vous pouvez contacter Sarah Mocquery :
+                            <a href="mailto:sarah.mocquery@univ-reims.fr" target="_blank">Par email</a> ou 03 25 42 46
+                            29.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

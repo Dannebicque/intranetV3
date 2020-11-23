@@ -20,6 +20,18 @@
 {% endblock %}
 
 {% block content %}
+    <div class="row">
+        <div class="col-md-6 col-lg-6 col-sm-12">
+            <div class="card">
+                <h4 class="card-title">{{ 'scolarite.rdd.heading'|trans }}</h4>
+                <div class="card-body">
+                    <a href="{{ path('sa_rdd_index') }}" class="btn btn-block btn-primary">Suivi des inscriptions
+                                                                                           RDD</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="card">
         <h4 class="card-title">{{ 'scolarite.index.heading'|trans }}</h4>
         <div class="card-body">

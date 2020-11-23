@@ -1,0 +1,75 @@
+{% extends 'base-super_admin.html.twig' %}
+
+{% block header %}
+    {{ 'scolarite.index.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('super_admin_homepage') }}"
+               class="btn btn-primary btn-float"
+               title="{{ 'atitle.retour_administration'|trans }}"
+               data-provide="tooltip"
+               data-placement="bottom">
+                <i class="fas fa-arrow-left"></i>
+                <span class="sr-only">{{ 'atitle.retour_administration'|trans }}</span>
+            </a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'scolarite.rdd.index.heading'|trans }}</h4>
+        <div class="card-body">
+            <table class="table table-bordered" data-provide="datatables">
+                <thead>
+                <tr>
+                    <th>Nom Prénom</th>
+                    <th>Date Naissance</th>
+                    <th>Login</th>
+                    <th>Email</th>
+                    <th>Diplôme</th>
+                    <th>Réponse</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for diplome in diplomes %}
+                    <tr>
+                        <td>{{ diplome.numEtudiant }}</td>
+                        {% if etudiants[diplome.numEtudiant] is defined %}
+                            <td>{{ etudiants[diplome.numEtudiant].display }}</td>
+                            <td>{{ etudiants[diplome.numEtudiant].dateNaissance|format_date('short') }}</td>
+                            <td>{{ etudiants[diplome.numEtudiant].username }}</td>
+                            <td>{{ etudiants[diplome.numEtudiant].mailPerso|mailto }}</td>
+                        {% else %}
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                        {% endif %}
+                        <td>Dip.</td>
+                        <td>
+                            {{ diplome.confirme == true ? 'Oui' : 'Non' }}
+                        </td>
+                        <td></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('datatable') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('datatable') }}
+{% endblock %}

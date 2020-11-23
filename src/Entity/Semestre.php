@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Semestre.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/09/2020 08:52
+// @lastUpdate 21/11/2020 07:35
 
 namespace App\Entity;
 
@@ -264,7 +264,7 @@ class Semestre extends BaseEntity
     private $optEvaluationPreInitialisee = false;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\QualiteQuestionnaire", mappedBy="semestre")
+     * @ORM\OneToMany(targetEntity="QuestionnaireQualite", mappedBy="semestre")
      */
     private $qualiteQuestionnaires;
 
@@ -1294,14 +1294,14 @@ class Semestre extends BaseEntity
     }
 
     /**
-     * @return Collection|QualiteQuestionnaire[]
+     * @return Collection|QuestionnaireQualite[]
      */
     public function getQualiteQuestionnaires(): ?Collection
     {
         return $this->qualiteQuestionnaires;
     }
 
-    public function addQualiteQuestionnaire(QualiteQuestionnaire $qualiteQuestionnaire): self
+    public function addQualiteQuestionnaire(QuestionnaireQualite $qualiteQuestionnaire): self
     {
         if (!$this->qualiteQuestionnaires->contains($qualiteQuestionnaire)) {
             $this->qualiteQuestionnaires[] = $qualiteQuestionnaire;
@@ -1311,7 +1311,7 @@ class Semestre extends BaseEntity
         return $this;
     }
 
-    public function removeQualiteQuestionnaire(QualiteQuestionnaire $qualiteQuestionnaire): self
+    public function removeQualiteQuestionnaire(QuestionnaireQualite $qualiteQuestionnaire): self
     {
         if ($this->qualiteQuestionnaires->contains($qualiteQuestionnaire)) {
             $this->qualiteQuestionnaires->removeElement($qualiteQuestionnaire);

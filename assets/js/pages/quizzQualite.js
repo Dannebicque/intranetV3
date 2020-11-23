@@ -2,7 +2,9 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/quizzQualite.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 27/06/2020 11:05
+// @lastUpdate 23/11/2020 13:05
+
+import '../wizard'
 
 $(document).on('change', '.questionQualite', function () {
   $.ajax({

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ProfilEtudiantController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/08/2020 15:45
+// @lastUpdate 23/11/2020 17:55
 
 namespace App\Controller;
 
@@ -128,25 +128,25 @@ class ProfilEtudiantController extends BaseController
         EtudiantNotes $etudiantNotes,
         Etudiant $etudiant
     ): Response {
-        $semestres = $scolariteRepository->findByEtudiantDepartement($etudiant,
-            $etudiant->getDepartement());
+//        $semestres = $scolariteRepository->findByEtudiantDepartement($etudiant,
+//            $etudiant->getDepartement());
         $etudiantNotes->setEtudiant($etudiant);
         $notes = $etudiantNotes->getNotesParSemestresEtAnneeUniversitaire($etudiant->getSemestre(),
             $etudiant->getAnneeUniversitaire());
-        $dataSets = [];
-        foreach ($semestres as $semestre) {
-            $dataset['label'] = $semestre->getSemestre()->getLibelle();
-            $dataset['backgroundColor'] = "rgba(51,202,185,0.7)";
-            $dataset['borderColor'] = "rgba(0,0,0,0)";
-            $dataset['pointBackgroundColor'] = "rgba(51,202,185,0.7)";
-            $dataset['pointBorderColor'] = "#fff";
-            $dataset['pointHoverBackgroundColor'] = "#fff";
-            $dataset['pointHoverBorderColor'] = "rgba(51,202,185,0.7)";
-            $dataset['data'] = [12, 13, 14, 15, 16, 10, 8];
-            $dataSets[] = $dataset;
-        }
-
-        return $this->json($dataSets);
+//        $dataSets = [];
+//        foreach ($semestres as $semestre) {
+        $dataset['label'] = $etudiant->getSemestre()->getLibelle();
+        $dataset['backgroundColor'] = "rgba(51,202,185,0.7)";
+        $dataset['borderColor'] = "rgba(0,0,0,0)";
+        $dataset['pointBackgroundColor'] = "rgba(51,202,185,0.7)";
+        $dataset['pointBorderColor'] = "#fff";
+        $dataset['pointHoverBackgroundColor'] = "#fff";
+        $dataset['pointHoverBorderColor'] = "rgba(51,202,185,0.7)";
+        $dataset['data'] = [12, 13, 14, 15, 16, 10, 8];
+        //$dataSets[] = $dataset;
+        //}
+        //dump($dataSets);
+        return $this->json($dataset);
     }
 
     /**

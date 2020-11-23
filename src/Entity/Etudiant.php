@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Etudiant.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/10/2020 06:34
+// @lastUpdate 21/11/2020 07:31
 
 namespace App\Entity;
 
@@ -203,7 +203,7 @@ class Etudiant extends Utilisateur
     private $departement;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\QuizzEtudiant", mappedBy="etudiant")
+     * @ORM\OneToMany(targetEntity="QuestionnaireEtudiant", mappedBy="etudiant")
      */
     private $quizzEtudiants;
 
@@ -1181,14 +1181,14 @@ class Etudiant extends Utilisateur
     }
 
     /**
-     * @return Collection|QuizzEtudiant[]
+     * @return Collection|QuestionnaireEtudiant[]
      */
     public function getQuizzEtudiants(): Collection
     {
         return $this->quizzEtudiants;
     }
 
-    public function addQuizzEtudiant(QuizzEtudiant $quizzEtudiant): self
+    public function addQuizzEtudiant(QuestionnaireEtudiant $quizzEtudiant): self
     {
         if (!$this->quizzEtudiants->contains($quizzEtudiant)) {
             $this->quizzEtudiants[] = $quizzEtudiant;
@@ -1198,7 +1198,7 @@ class Etudiant extends Utilisateur
         return $this;
     }
 
-    public function removeQuizzEtudiant(QuizzEtudiant $quizzEtudiant): self
+    public function removeQuizzEtudiant(QuestionnaireEtudiant $quizzEtudiant): self
     {
         if ($this->quizzEtudiants->contains($quizzEtudiant)) {
             $this->quizzEtudiants->removeElement($quizzEtudiant);

@@ -3,11 +3,11 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Form/QuizzReponseType.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 21/11/2020 07:22
 
 namespace App\Form;
 
-use App\Entity\QuizzReponse;
+use App\Entity\QuestionnaireReponse;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -25,7 +25,7 @@ class QuizzReponseType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => QuizzReponse::class,
+            'data_class' => QuestionnaireReponse::class,
         ]);
     }
 }

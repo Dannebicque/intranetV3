@@ -1,0 +1,78 @@
+{% extends 'base-speciale.html.twig' %}
+
+{% block header %}Remise des diplômes{% endblock %}
+
+{% block content %}
+    <div class="main-content" id="mainContent">
+
+        <div class="row">
+            <div class="col-sm-3 text-center">
+                <img src="{{ asset('upload/logo/'~settings('LOGO_IUT')) }}" alt="logo" width="100px"/>
+            </div>
+            <div class="col-sm-6 text-center">
+                <h1></h1>
+                <h2>Remise des diplômes 2020</h2>
+            </div>
+            <div class="col-sm-3 text-center">
+                <img src="{{ asset('upload/logo/'~settings('LOGO_UNIVERSITE')) }}" alt="logo" width="100px"/>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Confirmation de vos coordonnées postales</h2>
+                    </div>
+                    <div class="card-body">
+
+                        <br/>
+                        {% form_theme form 'form/my-form.html.twig' %}
+
+                        {{ form_start(form) }}
+                        {{ form_errors(form) }}
+
+                        <h3 class="titre_rub">Votre identité</h3>
+                        {# {{ form_row(form.libelleDiplome) }} #}
+                        <div class="alert alert-info">
+                            Si vous constatez une erreur dans les informations ci-dessous, merci de contacter : ...
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
+                                {{ form_row(form.civilite) }}
+                                {{ form_row(form.prenom) }}
+                                {{ form_row(form.nom) }}
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                {{ form_row(form.tel1) }}
+                                {{ form_row(form.mailPerso) }}
+                            </div>
+                        </div>
+                        <h3 class="titre_rub">Mise à jour de vos informations</h3>
+                        <div class="alert alert-info">
+                            L'adresse doit être celle où vous pourrez recevoir le diplôme, qui devrait être expédié
+                            début
+                            décembre.
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-12">
+                                {{ form_row(form.adresse.adresse1) }}
+                                {{ form_row(form.adresse.adresse2) }}
+                                {{ form_row(form.adresse.adresse3) }}
+                            </div>
+                            <div class="col-md-6 col-sm-12">
+                                {{ form_row(form.adresse.code_postal) }}
+                                {{ form_row(form.adresse.ville) }}
+                                {{ form_row(form.adresse.pays) }}
+                            </div>
+                        </div>
+
+                        <input type="submit" value="Valider" class="btn btn-block btn-success"/>
+                        {{ form_rest(form) }}
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

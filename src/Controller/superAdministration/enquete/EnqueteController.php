@@ -3,18 +3,18 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/enquete/EnqueteController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/07/2020 13:57
+// @lastUpdate 23/11/2020 17:55
 
 namespace App\Controller\superAdministration\enquete;
 
-use App\Entity\QualiteQuestionnaire;
-use App\Entity\QualiteQuestionnaireSection;
+use App\Entity\QuestionnaireQualite;
+use App\Entity\QuestionnaireQuestionnaireSection;
 use App\Entity\Semestre;
 use App\Classes\Enquetes\MyEnquete;
 use App\Repository\DiplomeRepository;
 use App\Repository\EtudiantRepository;
 use App\Repository\PrevisionnelRepository;
-use App\Repository\QuizzEtudiantRepository;
+use App\Repository\QuestionnaireEtudiantRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use PhpOffice\PhpSpreadsheet\Exception;
@@ -48,14 +48,14 @@ class EnqueteController extends AbstractController
     /**
      * @Route("/questionnaire/semestre/{semestre}", name="administratif_enquete_semestre")
      *
-     * @param QuizzEtudiantRepository $quizzEtudiantRepository
-     * @param Semestre                $semestre
+     * @param QuestionnaireEtudiantRepository $quizzEtudiantRepository
+     * @param Semestre                        $semestre
      *
      * @return Response
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
-    public function semestre(QuizzEtudiantRepository $quizzEtudiantRepository, Semestre $semestre): Response
+    public function semestre(QuestionnaireEtudiantRepository $quizzEtudiantRepository, Semestre $semestre): Response
     {
         $stats = [];
         $quizzEtudiants = $quizzEtudiantRepository->findBySemestreArray($semestre);
@@ -77,28 +77,28 @@ class EnqueteController extends AbstractController
      *
      * @param int                       $step
      *
-     * @param QualiteQuestionnaire|null $questionnaire
+     * @param QuestionnaireQualite|null $questionnaire
      *
      * @return Response
      */
-    public function create(Semestre $semestre, $step = 1, QualiteQuestionnaire $questionnaire = null): Response
+    public function create(Semestre $semestre, $step = 1, QuestionnaireQualite $questionnaire = null): Response
     {
         return $this->render('super-administration/enquete/create.html.twig', [
             'questionnaire' => $questionnaire,
-            'semestre' => $semestre,
-            'step' => $step
+            'semestre'      => $semestre,
+            'step'          => $step
         ]);
     }
 
     /**
      * @Route("/questionnaire/edit/{questionnaire}/{step}", name="administratif_enquete_edit")
      *
-     * @param QualiteQuestionnaire $questionnaire
+     * @param QuestionnaireQualite $questionnaire
      * @param int                  $step
      *
      * @return Response
      */
-    public function edit(QualiteQuestionnaire $questionnaire, $step = 1): Response
+    public function edit(QuestionnaireQualite $questionnaire, $step = 1): Response
     {
         return $this->render('super-administration/enquete/edit.html.twig', [
             'questionnaire' => $questionnaire,
@@ -110,11 +110,11 @@ class EnqueteController extends AbstractController
     /**
      * @Route("/questionnaire/duplicate/{questionnaire}", name="administratif_enquete_duplicate")
      *
-     * @param QualiteQuestionnaire $questionnaire
+     * @param QuestionnaireQualite $questionnaire
      *
      * @return Response
      */
-    public function duplicate(QualiteQuestionnaire $questionnaire): Response
+    public function duplicate(QuestionnaireQualite $questionnaire): Response
     {
         return $this->render('super-administration/enquete/edit.html.twig', [
             'questionnaire' => $questionnaire,
@@ -123,16 +123,16 @@ class EnqueteController extends AbstractController
     }
 
     /**
-     * @param PrevisionnelRepository         $previsionnelRepository
-     * @param QualiteQuestionnaireSection    $qualiteQuestionnaireSection
+     * @param PrevisionnelRepository            $previsionnelRepository
+     * @param QuestionnaireQuestionnaireSection $qualiteQuestionnaireSection
      *
-     * @param Semestre                       $semestre
+     * @param Semestre                          $semestre
      *
      * @return Response
      */
     public function section(
         PrevisionnelRepository $previsionnelRepository,
-        QualiteQuestionnaireSection $qualiteQuestionnaireSection,
+        QuestionnaireQuestionnaireSection $qualiteQuestionnaireSection,
         Semestre $semestre
     ): Response {
 
@@ -148,11 +148,11 @@ class EnqueteController extends AbstractController
     /**
      * @Route("/questionnaire/apercu/{questionnaire}", name="administratif_enquete_show")
      *
-     * @param QualiteQuestionnaire $questionnaire
+     * @param QuestionnaireQualite $questionnaire
      *
      * @return Response
      */
-    public function show(QualiteQuestionnaire $questionnaire): Response
+    public function show(QuestionnaireQualite $questionnaire): Response
     {
         return $this->render('super-administration/enquete/show.html.twig', [
             'questionnaire' => $questionnaire,
@@ -164,11 +164,11 @@ class EnqueteController extends AbstractController
      * @Route("/questionnaire/reponses/{questionnaire}", name="administratif_enquete_reponses")
      *
      * @param MyEnquete            $myEnquete
-     * @param QualiteQuestionnaire $questionnaire
+     * @param QuestionnaireQualite $questionnaire
      *
      * @return Response
      */
-    public function reponses(MyEnquete $myEnquete, QualiteQuestionnaire $questionnaire): Response
+    public function reponses(MyEnquete $myEnquete, QuestionnaireQualite $questionnaire): Response
     {
         $reponses = $myEnquete->getReponseFromQuestionnaire($questionnaire);
 
@@ -183,7 +183,7 @@ class EnqueteController extends AbstractController
      *
      * @param MyEnquete              $myEnquete
      * @param PrevisionnelRepository $previsionnelRepository
-     * @param QualiteQuestionnaire   $questionnaire
+     * @param QuestionnaireQualite   $questionnaire
      *
      * @return Response
      * @throws Exception
@@ -191,7 +191,7 @@ class EnqueteController extends AbstractController
     public function export(
         MyEnquete $myEnquete,
         PrevisionnelRepository $previsionnelRepository,
-        QualiteQuestionnaire $questionnaire
+        QuestionnaireQualite $questionnaire
     ): Response {
         $previsionnel = $previsionnelRepository->findByDiplomeArray($questionnaire->getSemestre()->getDiplome(),
             $questionnaire->getSemestre()->getDiplome()->getAnneeUniversitaire());
@@ -203,11 +203,11 @@ class EnqueteController extends AbstractController
      * @Route("/questionnaire/{questionnaire}", name="administratif_enquete_delete", methods={"DELETE"})
      *
      * @param Request              $request
-     * @param QualiteQuestionnaire $questionnaire
+     * @param QuestionnaireQualite $questionnaire
      *
      * @return Response
      */
-    public function delete(Request $request, QualiteQuestionnaire $questionnaire): Response
+    public function delete(Request $request, QuestionnaireQualite $questionnaire): Response
     {
 
     }

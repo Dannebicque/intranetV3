@@ -23,7 +23,8 @@
                                    {% if reponses['quizz_question_reponses_'~name] is defined and
                                        reponses['quizz_question_reponses_'~name].valeur == reponse.valeur %}checked{% endif %}
                                     {% if question.obligatoire %}required{% endif %}
-                                   class="form-check-input {% if is_granted('ROLE_ETUDIANT') %}questionQualite{% endif %}"
+                                   class="form-check-input {% if not(is_granted('ROLE_QUALITE') or is_granted
+                                       ('ROLE_SUPER_ADMIN')) %}questionQualite{% endif %}"
                                    value="{{ reponse.valeur }}">
                             <label class="form-check-label required" for="quizz_question_qcu_{{ name }}_{{ reponse.id }}">{{ reponse.libelle }}</label>
                         </div>

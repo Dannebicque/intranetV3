@@ -61,9 +61,8 @@
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="{{ asset('ms-icon-144x144.png') }}">
     <meta name="theme-color" content="{{ settings('COLOR_IUT') }}">
-    <style>
 
-    </style>
+    {% if app.environment == 'prod' %}
     <!-- Matomo -->
     <script type="text/javascript">
       var _paq = window._paq = window._paq || []
@@ -82,10 +81,10 @@
       })()
     </script>
     <!-- End Matomo Code -->
+    {% endif %}
 </head>
 
 <body>
-
 <!-- Preloader -->
 <div class="preloader">
     <div class="spinner-dots">

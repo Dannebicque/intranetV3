@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Personnel.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/11/2020 14:53
+// @lastUpdate 21/11/2020 07:26
 
 namespace App\Entity;
 
@@ -238,7 +238,7 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
     private $departements;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\QuizzQuestion", mappedBy="auteur")
+     * @ORM\OneToMany(targetEntity="QuestionnaireQuestion", mappedBy="auteur")
      */
     private $quizzQuestions;
 
@@ -1295,14 +1295,14 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
     }
 
     /**
-     * @return Collection|QuizzQuestion[]
+     * @return Collection|QuestionnaireQuestion[]
      */
     public function getQuizzQuestions(): Collection
     {
         return $this->quizzQuestions;
     }
 
-    public function addQuizzQuestion(QuizzQuestion $quizzQuestion): self
+    public function addQuizzQuestion(QuestionnaireQuestion $quizzQuestion): self
     {
         if (!$this->quizzQuestions->contains($quizzQuestion)) {
             $this->quizzQuestions[] = $quizzQuestion;
@@ -1312,7 +1312,7 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
         return $this;
     }
 
-    public function removeQuizzQuestion(QuizzQuestion $quizzQuestion): self
+    public function removeQuizzQuestion(QuestionnaireQuestion $quizzQuestion): self
     {
         if ($this->quizzQuestions->contains($quizzQuestion)) {
             $this->quizzQuestions->removeElement($quizzQuestion);

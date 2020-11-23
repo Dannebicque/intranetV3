@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/EtudiantRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 28/09/2020 17:58
+// @lastUpdate 16/11/2020 18:01
 
 namespace App\Repository;
 
@@ -364,5 +364,20 @@ class EtudiantRepository extends ServiceEntityRepository
 
         return $t;
 
+    }
+
+    public function identificationRdd($login, $date)
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p.numEtudiant')
+            ->where('p.mailUniv = :login')
+            ->orWhere('p.username = :login')
+            ->orWhere('p.numEtudiant = :login')
+            ->orWhere('p.numIne = :login')
+            ->andWhere('p.dateNaissance = :date')
+            ->setParameter('date', $date->format('Y-m-d'))
+            ->setParameter('login', $login)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 }
