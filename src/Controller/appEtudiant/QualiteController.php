@@ -3,29 +3,28 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appEtudiant/QualiteController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/09/2020 08:47
+// @lastUpdate 23/11/2020 17:55
 
 namespace App\Controller\appEtudiant;
 
 use App\Controller\BaseController;
-use App\Entity\QualiteQuestionnaire;
-use App\Entity\QualiteQuestionnaireSection;
-use App\Entity\QuizzEtudiant;
-use App\Entity\QuizzEtudiantReponse;
-use App\Entity\QuizzQuestion;
+use App\Entity\QuestionnaireQualite;
+use App\Entity\QuestionnaireQuestionnaireSection;
+use App\Entity\QuestionnaireEtudiant;
+use App\Entity\QuestionnaireEtudiantReponse;
+use App\Entity\QuestionnaireQuestion;
 use App\Classes\Mail\MailerFromTwig;
 use App\Repository\PrevisionnelRepository;
-use App\Repository\QualiteQuestionnaireRepository;
-use App\Repository\QuizzEtudiantReponseRepository;
-use App\Repository\QuizzEtudiantRepository;
-use App\Repository\QuizzQuestionRepository;
-use App\Repository\QuizzReponseRepository;
+use App\Repository\QuestionnaireQualiteRepository;
+use App\Repository\QuestionnaireEtudiantReponseRepository;
+use App\Repository\QuestionnaireEtudiantRepository;
+use App\Repository\QuestionnaireQuestionRepository;
+use App\Repository\QuestionnaireReponseRepository;
 use DateTime;
 use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -37,11 +36,11 @@ class QualiteController extends BaseController
 {
     /**
      * @Route("/", name="application_etudiant_qualite_index")
-     * @param QualiteQuestionnaireRepository $qualiteQuestionnaireRepository
+     * @param QuestionnaireQualiteRepository $qualiteQuestionnaireRepository
      *
      * @return Response
      */
-    public function index(QualiteQuestionnaireRepository $qualiteQuestionnaireRepository): Response
+    public function index(QuestionnaireQualiteRepository $qualiteQuestionnaireRepository): Response
     {
         if ($this->dataUserSession->getUser() !== null) {
             $questionnaires = $qualiteQuestionnaireRepository->findByDiplome($this->dataUserSession->getUser()->getDiplome());
@@ -56,16 +55,16 @@ class QualiteController extends BaseController
 
     /**
      * @Route("/complet/{uuid}", name="app_etudiant_qualite_questionnaire_complete")
-     * @param QuizzEtudiantRepository $quizzEtudiantRepository
-     * @param MailerFromTwig          $myMailer
-     * @param QualiteQuestionnaire    $qualiteQuestionnaire
+     * @param QuestionnaireEtudiantRepository $quizzEtudiantRepository
+     * @param MailerFromTwig                  $myMailer
+     * @param QuestionnaireQualite            $qualiteQuestionnaire
      *
      * @return Response
      */
     public function complet(
-        QuizzEtudiantRepository $quizzEtudiantRepository,
+        QuestionnaireEtudiantRepository $quizzEtudiantRepository,
         MailerFromTwig $myMailer,
-        QualiteQuestionnaire $qualiteQuestionnaire
+        QuestionnaireQualite $qualiteQuestionnaire
     ): Response {
         $quizzEtudiant = $quizzEtudiantRepository->findOneBy([
             'questionnaire' => $qualiteQuestionnaire->getId(),
@@ -94,78 +93,40 @@ class QualiteController extends BaseController
     }
 
     /**
-     * @Route("/section/{qualiteQuestionnaireSection}", name="app_etudiant_qualite_section")
-     * @param QuizzEtudiantRepository        $quizzEtudiantRepository
-     * @param QuizzEtudiantReponseRepository $quizzEtudiantReponseRepository
-     * @param PrevisionnelRepository         $previsionnelRepository
-     * @param QualiteQuestionnaireSection    $qualiteQuestionnaireSection
-     *
-     * @return Response
-     */
-    public function section(
-        QuizzEtudiantRepository $quizzEtudiantRepository,
-        QuizzEtudiantReponseRepository $quizzEtudiantReponseRepository,
-        PrevisionnelRepository $previsionnelRepository,
-        QualiteQuestionnaireSection $qualiteQuestionnaireSection
-    ): Response {
-
-
-        $quizzEtudiant = $quizzEtudiantRepository->findOneBy([
-            'questionnaire' => $qualiteQuestionnaireSection->getQuestionnaire()->getId(),
-            'etudiant'      => $this->getConnectedUser()->getId()
-        ]);
-        if ($quizzEtudiant !== null) {
-            $reponses = $quizzEtudiantReponseRepository->findByQuizzEtudiant($quizzEtudiant);
-        } else {
-            $reponses = [];
-        }
-
-
-        return $this->render('appEtudiant/qualite/section.html.twig', [
-            'ordre'         => $qualiteQuestionnaireSection->getOrdre(),
-            'section'       => $qualiteQuestionnaireSection->getSection(),
-            'tPrevisionnel' => $previsionnelRepository->findByDiplomeArray($this->getConnectedUser()->getDiplome(),
-                $this->dataUserSession->getAnneeUniversitaire()),
-            'reponses'      => $reponses
-        ]);
-    }
-
-    /**
      * @Route("/ajax/reponse/{questionnaire}", name="app_etudiant_qualite_ajax_reponse", options={"expose"=true})
-     * @param QuizzQuestionRepository        $quizzQuestionRepository
-     * @param QuizzReponseRepository         $quizzReponseRepository
-     * @param QuizzEtudiantRepository        $quizzEtudiantRepository
-     * @param QuizzEtudiantReponseRepository $quizzEtudiantReponseRepository
-     * @param Request                        $request
-     * @param QualiteQuestionnaire           $questionnaire
+     * @param QuestionnaireQuestionRepository        $quizzQuestionRepository
+     * @param QuestionnaireReponseRepository         $quizzReponseRepository
+     * @param QuestionnaireEtudiantRepository        $quizzEtudiantRepository
+     * @param QuestionnaireEtudiantReponseRepository $quizzEtudiantReponseRepository
+     * @param Request                                $request
+     * @param QuestionnaireQualite                   $questionnaire
      *
      * @return JsonResponse
      * @throws NonUniqueResultException
      */
     public function sauvegardeReponse(
-        QuizzQuestionRepository $quizzQuestionRepository,
-        QuizzReponseRepository $quizzReponseRepository,
-        QuizzEtudiantRepository $quizzEtudiantRepository,
-        QuizzEtudiantReponseRepository $quizzEtudiantReponseRepository,
+        QuestionnaireQuestionRepository $quizzQuestionRepository,
+        QuestionnaireReponseRepository $quizzReponseRepository,
+        QuestionnaireEtudiantRepository $quizzEtudiantRepository,
+        QuestionnaireEtudiantReponseRepository $quizzEtudiantReponseRepository,
         Request $request,
-        QualiteQuestionnaire $questionnaire
-    ): JsonResponse
-    {
+        QuestionnaireQualite $questionnaire
+    ): JsonResponse {
         $cleReponse = $request->request->get('cleReponse');
         $cleQuestion = $request->request->get('cleQuestion');
 
 
         $quizzEtudiant = $quizzEtudiantRepository->findOneBy([
-                'questionnaire' => $questionnaire->getId(),
+            'questionnaire'     => $questionnaire->getId(),
                 'etudiant'      => $this->getConnectedUser()->getId()
             ]);
             if ($quizzEtudiant === null) {
-                $quizzEtudiant = new QuizzEtudiant($this->getConnectedUser(), $questionnaire);
+                $quizzEtudiant = new QuestionnaireEtudiant($this->getConnectedUser(), $questionnaire);
                 $this->entityManager->persist($quizzEtudiant);
             }
 
 
-        /** @var QuizzEtudiantReponse $exist */
+        /** @var QuestionnaireEtudiantReponse $exist */
         $exist = $quizzEtudiantReponseRepository->findExistQuestion($cleQuestion, $quizzEtudiant->getId());
 
         $t = explode('_', $cleReponse);
@@ -178,10 +139,10 @@ class QualiteController extends BaseController
 
         if ($question !== null && $reponse !== null) {
             if ($exist === null) {
-                $qr = new QuizzEtudiantReponse($quizzEtudiant);
+                $qr = new QuestionnaireEtudiantReponse($quizzEtudiant);
                 $qr->setCleQuestion($cleQuestion);
 
-                if ($question->getType() === QuizzQuestion::QUESTION_TYPE_QCM) {
+                if ($question->getType() === QuestionnaireQuestion::QUESTION_TYPE_QCM) {
                     $qr->setCleReponse(json_encode([$cleReponse]));
                     $qr->setValeur(json_encode([$reponse->getValeur()]));
                 } else {
@@ -190,10 +151,10 @@ class QualiteController extends BaseController
                 }
 
                 $this->entityManager->persist($qr);
-            } else if ($question->getType() === QuizzQuestion::QUESTION_TYPE_QCU || $question->getType() === QuizzQuestion::QUESTION_TYPE_ECHELLE || $question->getType() === QuizzQuestion::QUESTION_TYPE_YESNO) {
+            } else if ($question->getType() === QuestionnaireQuestion::QUESTION_TYPE_QCU || $question->getType() === QuestionnaireQuestion::QUESTION_TYPE_ECHELLE || $question->getType() === QuestionnaireQuestion::QUESTION_TYPE_YESNO) {
                 $exist->setCleReponse($cleReponse);
                 $exist->setValeur($reponse->getValeur());
-            } elseif ($question->getType() === QuizzQuestion::QUESTION_TYPE_QCM) {
+            } elseif ($question->getType() === QuestionnaireQuestion::QUESTION_TYPE_QCM) {
                 //si c'est un QCM, on fait un tableau de réponse.
                 $cleReponses = json_decode($exist->getCleReponse(), false);
                 $valeurs = json_decode($exist->getValeur(), false);
@@ -223,37 +184,40 @@ class QualiteController extends BaseController
     /**
      * @Route("/ajax/reponse-txt/{questionnaire}", name="app_etudiant_qualite_ajax_reponse_txt",
      *                                             options={"expose"=true})
-     * @param QuizzQuestionRepository        $quizzQuestionRepository
-     * @param QuizzEtudiantReponseRepository $quizzEtudiantReponseRepository
-     * @param QuizzEtudiantRepository        $quizzEtudiantRepository
-     * @param Request                        $request
-     * @param QualiteQuestionnaire           $questionnaire
+     * @param QuestionnaireQuestionRepository        $quizzQuestionRepository
+     * @param QuestionnaireEtudiantReponseRepository $quizzEtudiantReponseRepository
+     * @param QuestionnaireEtudiantRepository        $quizzEtudiantRepository
+     * @param Request                                $request
+     * @param QuestionnaireQualite                   $questionnaire
      *
      * @return JsonResponse
      * @throws NonUniqueResultException
      */
     public function sauvegardeReponseTxt(
-        QuizzQuestionRepository $quizzQuestionRepository,
-        QuizzEtudiantReponseRepository $quizzEtudiantReponseRepository,
-        QuizzEtudiantRepository $quizzEtudiantRepository,
+        QuestionnaireQuestionRepository $quizzQuestionRepository,
+        QuestionnaireEtudiantReponseRepository $quizzEtudiantReponseRepository,
+        QuestionnaireEtudiantRepository $quizzEtudiantRepository,
         Request $request,
-        QualiteQuestionnaire $questionnaire
+        QuestionnaireQualite $questionnaire
     ): JsonResponse {
         $cleQuestion = $request->request->get('cleQuestion');
 
-        $quizzEtudiant = $quizzEtudiantRepository->findOneBy(['questionnaire' => $questionnaire->getId(), 'etudiant' => $this->getConnectedUser()->getId()]);
+        $quizzEtudiant = $quizzEtudiantRepository->findOneBy([
+            'questionnaire' => $questionnaire->getId(),
+            'etudiant'      => $this->getConnectedUser()->getId()
+        ]);
         if ($quizzEtudiant === null) {
-            $quizzEtudiant = new QuizzEtudiant($this->getConnectedUser(), $questionnaire);
+            $quizzEtudiant = new QuestionnaireEtudiant($this->getConnectedUser(), $questionnaire);
             $this->entityManager->persist($quizzEtudiant);
         }
-        /** @var QuizzEtudiantReponse $exist */
+        /** @var QuestionnaireEtudiantReponse $exist */
         $exist = $quizzEtudiantReponseRepository->findExistQuestion($cleQuestion, $quizzEtudiant);
 
         $t = explode('_', $cleQuestion);
         $question = $quizzQuestionRepository->find(substr($t[3], 1, strlen($t[0])));
         if ($question !== null) {
             if ($exist === null) {
-                $qr = new QuizzEtudiantReponse($quizzEtudiant);
+                $qr = new QuestionnaireEtudiantReponse($quizzEtudiant);
                 $qr->setCleQuestion($cleQuestion);
                 $qr->setCleReponse(null);
                 $qr->setValeur($request->request->get('value'));
@@ -272,17 +236,20 @@ class QualiteController extends BaseController
     /**
      * @Route("/{questionnaire}", name="app_etudiant_qualite_questionnaire")
      * @param PrevisionnelRepository $previsionnelRepository
-     * @param QualiteQuestionnaire   $questionnaire
+     * @param QuestionnaireQualite   $questionnaire
      *
      * @return Response
      */
     public function questionnaire(
         PrevisionnelRepository $previsionnelRepository,
-        QualiteQuestionnaire $questionnaire
+        QuestionnaireQualite $questionnaire
     ): Response {
+
         return $this->render('appEtudiant/qualite/questionnaire.html.twig', [
-            'questionnaire' => $questionnaire,
-            'tPrevisionnel' => $previsionnelRepository->findByDiplomeArray($this->dataUserSession->getUser()->getDiplome(),
+            'questionnaireSections' => $questionnaire->getSections(),
+            'questionnaire'         => $questionnaire,
+            'typeQuestionnaire'     => 'qualite',
+            'tPrevisionnel'         => $previsionnelRepository->findByDiplomeArray($this->dataUserSession->getUser()->getDiplome(),
                 $this->dataUserSession->getAnneeUniversitaire())
         ]);
     }

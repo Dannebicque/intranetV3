@@ -220,6 +220,8 @@ adm:
     edit.heading: 'Modification des données de l''étudiant %etudiant%'
     import.photo.heading: 'Importer une photo'
     semestre.parcours.heading: 'Parcours d''un étudiant'
+    edit.success.flash: 'Données de l''étudiant modifiées avec succès'
+
   etudiants: Etudiants
   examens: Examens
   gerer:
@@ -1023,6 +1025,7 @@ eval.du: 'Evaluation du'
 evaluation: Evaluation
 evaluation.edit.success.flash: 'Evaluation modifiée avec sccès'
 evaluation.initialisee.success: 'Evaluation initialisée avec succès'
+evaluation.add.success.flash: 'Evaluation créée avec sccès'
 excel: 'Excel (xlsx)'
 Excellente: Excellente
 explication.volume.horaire: 'Le volume horaire saisie correspond au nombre d''heure pour un groupe CM ou TD ou TP.'
@@ -1354,7 +1357,7 @@ note.saisie.manuelle: 'Saisir manuellement'
 notification.heading: Notifications
 nouveau.message: 'Nouveau message'
 novembre: Novembre
-num_etudiant: num_etudiant
+num_etudiant: Numéro étudiant
 num: num
 numero:
   etudiant: 'Numéro étudiant'
@@ -1488,6 +1491,7 @@ ROLE_RDA: 'Responsable des absences'
 ROLE_RDS: 'Responsable des stages'
 ROLE_RP: 'Responsable de formation'
 ROLE_STA: 'Responsable des stages'
+ROLE_PRJ: 'Responsable des projets'
 
 s.heading: s.heading
 

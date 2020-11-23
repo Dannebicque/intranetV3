@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Excel/MyExcelMultiExport.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 14/10/2020 22:33
+// @lastUpdate 13/11/2020 04:44
 
 /**
  * Created by PhpStorm.
@@ -286,13 +286,16 @@ class MyExcelMultiExport
         $colonne = 1;
         /** @var Etudiant $etudiant */
         foreach ($semestre->getEtudiants() as $etudiant) {
-            $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getNumEtudiant());
-            $colonne++;
-            $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getNom());
-            $colonne++;
-            $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getPrenom());
-            $ligne++;
-            $colonne = 1;
+            if (count($etudiant->getGroupes()) > 0) {
+                //uniquement si l'étudiant est dans un groupe.
+                $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getNumEtudiant());
+                $colonne++;
+                $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getNom());
+                $colonne++;
+                $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getPrenom());
+                $ligne++;
+                $colonne = 1;
+            }
         }
     }
 

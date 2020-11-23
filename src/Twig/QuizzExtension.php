@@ -3,11 +3,11 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Twig/QuizzExtension.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 21/11/2020 07:26
 
 namespace App\Twig;
 
-use App\Entity\QuizzQuestion;
+use App\Entity\QuestionnaireQuestion;
 use App\Classes\Tools;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
@@ -48,11 +48,11 @@ class QuizzExtension extends AbstractExtension
     public function typeQuestion($type): ?string
     {
         switch ($type) {
-            case QuizzQuestion::QUESTION_TYPE_YESNO:
-            case QuizzQuestion::QUESTION_TYPE_QCU:
-            case QuizzQuestion::QUESTION_TYPE_ECHELLE:
+            case QuestionnaireQuestion::QUESTION_TYPE_YESNO:
+            case QuestionnaireQuestion::QUESTION_TYPE_QCU:
+            case QuestionnaireQuestion::QUESTION_TYPE_ECHELLE:
                 return 'radio';
-            case QuizzQuestion::QUESTION_TYPE_QCM:
+            case QuestionnaireQuestion::QUESTION_TYPE_QCM:
                 return 'checkbox';
         }
     }

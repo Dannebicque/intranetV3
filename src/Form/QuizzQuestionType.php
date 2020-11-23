@@ -3,11 +3,11 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Form/QuizzQuestionType.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 21/11/2020 07:26
 
 namespace App\Form;
 
-use App\Entity\QuizzQuestion;
+use App\Entity\QuestionnaireQuestion;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -25,7 +25,7 @@ class QuizzQuestionType extends AbstractType
                 [
                     'expanded' => true,
                     'multiple' => false,
-                    'choices'  => QuizzQuestion::LISTE_TYPE_QUESTION,
+                    'choices'  => QuestionnaireQuestion::LISTE_TYPE_QUESTION,
                     'help'     => 'texte d\'aide'
                 ]);
     }
@@ -34,7 +34,7 @@ class QuizzQuestionType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => QuizzQuestion::class,
+            'data_class' => QuestionnaireQuestion::class,
         ]);
     }
 }

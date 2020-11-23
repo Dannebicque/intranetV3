@@ -5,7 +5,7 @@
             <span class="nav-title">Introduction</span>
             <a class="nav-link" data-toggle="tab" href="#wizard-intro"></a>
         </li>
-        {% for qualiteQuestionnaireSection in questionnaire.qualiteQuestionnaireSections %}
+        {% for qualiteQuestionnaireSection in questionnaireSections %}
             <li class="nav-item">
                 <span class="nav-title">Section {{ qualiteQuestionnaireSection.ordre }}</span>
                 <a class="nav-link" data-toggle="tab" href="#wizard-section-{{ qualiteQuestionnaireSection.id }}"></a>
@@ -32,18 +32,19 @@
         </div>
 
 
-        {% for qualiteQuestionnaireSection in questionnaire.qualiteQuestionnaireSections %}
+        {% for qualiteQuestionnaireSection in questionnaireSections %}
             <div class="tab-pane fade"
                  id="wizard-section-{{ qualiteQuestionnaireSection.id }}">
-                {% if is_granted('ROLE_ETUDIANT') %}
-                    {{ render(controller(
-                        'App\\Controller\\appEtudiant\\QualiteController::section',
-                        {qualiteQuestionnaireSection:qualiteQuestionnaireSection.id}
-                    )) }}
-                {% elseif is_granted('ROLE_QUALITE') or is_granted('ROLE_SUPER_ADMIN') %}
+                {% if is_granted('ROLE_QUALITE') or is_granted('ROLE_SUPER_ADMIN') %}
                     {{ render(controller(
                         'App\\Controller\\superAdministration\\enquete\\EnqueteController::section',
-                        {qualiteQuestionnaireSection:qualiteQuestionnaireSection.id, semestre:semestre.id}
+                        {qualiteQuestionnaireSection:qualiteQuestionnaireSection.id, semestre:semestre.id, type:typeQuestionnaire}
+                    )) }}
+                {% else %}
+                    {{ render(controller(
+                        'App\\Controller\\questionnaire\\QuestionnaireController::section',
+                        {questionnaireSection:qualiteQuestionnaireSection.id, type:typeQuestionnaire,
+                            etudiant:etudiant}
                     )) }}
                 {% endif %}
                 <br>

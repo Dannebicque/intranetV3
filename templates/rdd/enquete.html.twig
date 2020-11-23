@@ -1,0 +1,42 @@
+{% extends 'base-speciale.html.twig' %}
+
+{% block header %}Remise des diplômes{% endblock %}
+
+{% block content %}
+    <div class="main-content" id="mainContent">
+        <div class="row">
+            <div class="col-sm-3 text-center">
+                <img src="{{ asset('upload/logo/'~settings('LOGO_IUT')) }}" alt="logo" width="100px"/>
+            </div>
+            <div class="col-sm-6 text-center">
+                <h1></h1>
+                <h2>Enquête à 6 mois diplômé 2020</h2>
+            </div>
+            <div class="col-sm-3 text-center">
+                <img src="{{ asset('upload/logo/'~settings('LOGO_UNIVERSITE')) }}" alt="logo" width="100px"/>
+            </div>
+        </div>
+        <br>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        {{ render(path('embed_enquete', {questionnaireQuizz: 1, etudiant:etudiant.id})) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('quizzQualite') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('quizzQualite') }}
+{% endblock %}
+

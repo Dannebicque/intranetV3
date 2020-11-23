@@ -3,11 +3,11 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Form/QualiteQuestionnaireType.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 23/11/2020 17:55
 
 namespace App\Form;
 
-use App\Entity\QualiteQuestionnaire;
+use App\Entity\QuestionnaireQualite;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -30,7 +30,7 @@ class QualiteQuestionnaireType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => QualiteQuestionnaire::class,
+            'data_class'         => QuestionnaireQualite::class,
             'translation_domain' => 'form'
         ]);
     }

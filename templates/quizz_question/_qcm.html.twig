@@ -15,13 +15,15 @@
                                 checked
                             {% endif %}
                             {% if question.obligatoire %}required{% endif %}
-                           class="form-check-input {% if is_granted('ROLE_ETUDIANT') %}questionQualite{% endif %}"
+                           class="form-check-input {% if not(is_granted('ROLE_QUALITE') or is_granted
+                               ('ROLE_SUPER_ADMIN')) %}questionQualite{% endif %}"
                            value="{{ reponse.valeur }}">
                     <label class="form-check-label required" for="quizz_question_qcm_{{ name }}_{{ reponse.id }}">{{ reponse.libelle }}</label>
                     {% if reponse.valeur == "CHX:OTHER" %}
                         <input type="text" id="quizz_question_qcm_autre_{{ name }}_{{ reponse.id }}"
                                name="quizz_question_reponses_{{ name }}_autre"
-                               class="form-control {% if is_granted('ROLE_ETUDIANT') %}questionQualiteTextArea{% endif %}"
+                               class="form-control {% if not(is_granted('ROLE_QUALITE') or is_granted
+                                   ('ROLE_SUPER_ADMIN')) %}questionQualiteTextArea{% endif %}"
                                 {% if reponses['quizz_question_reponses_'~name~'_autre'] is defined %}
                                     value="{{ reponses['quizz_question_reponses_'~name~'_autre'].valeur }}"
                                 {% endif %}

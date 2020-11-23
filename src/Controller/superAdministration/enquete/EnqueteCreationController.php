@@ -3,16 +3,16 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/enquete/EnqueteCreationController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 23/11/2020 17:55
 
 namespace App\Controller\superAdministration\enquete;
 
 use App\Controller\BaseController;
 use App\Entity\Constantes;
-use App\Entity\QualiteQuestionnaire;
+use App\Entity\QuestionnaireQualite;
 use App\Entity\Semestre;
 use App\Form\QualiteQuestionnaireType;
-use App\Repository\QuizzQuestionRepository;
+use App\Repository\QuestionnaireQuestionRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -28,21 +28,26 @@ class EnqueteCreationController extends BaseController
      * @param Semestre                  $semestre
      *
      * @param string                    $action
-     * @param QualiteQuestionnaire|null $qualiteQuestionnaire
+     * @param QuestionnaireQualite|null $qualiteQuestionnaire
      *
      * @return Response
      */
-    public function wizard1(Request $request, Semestre $semestre, $action = 'create', QualiteQuestionnaire $qualiteQuestionnaire = null): Response
-    {
+    public function wizard1(
+        Request $request,
+        Semestre $semestre,
+        $action = 'create',
+        QuestionnaireQualite $qualiteQuestionnaire = null
+    ): Response {
         if ($qualiteQuestionnaire === null) {
-            $qualiteQuestionnaire = new QualiteQuestionnaire($semestre);
+            $qualiteQuestionnaire = new QuestionnaireQualite($semestre);
         }
 
         $form = $this->createForm(QualiteQuestionnaireType::class, $qualiteQuestionnaire, [
-            'attr' => [
+            'attr'   => [
                 'data-provide' => 'validation'
             ],
-            'action' => $this->generateUrl('administratif_enquete_wizard_1', ['semestre' => $semestre-> getId(), 'action' => $action])
+            'action' => $this->generateUrl('administratif_enquete_wizard_1',
+                ['semestre' => $semestre->getId(), 'action' => $action])
         ]);
 
         $form->handleRequest($request);
@@ -66,19 +71,22 @@ class EnqueteCreationController extends BaseController
     /**
      * @Route("/wizard-2/{action}/{semestre}/{qualiteQuestionnaire}", name="administratif_enquete_wizard_2")
      *
-     * @param QuizzQuestionRepository   $quizzQuestionRepository
-     * @param string                    $action
-     * @param QualiteQuestionnaire|null $qualiteQuestionnaire
+     * @param QuestionnaireQuestionRepository $quizzQuestionRepository
+     * @param string                          $action
+     * @param QuestionnaireQualite|null       $qualiteQuestionnaire
      *
      * @return Response
      */
-    public function wizard2(QuizzQuestionRepository $quizzQuestionRepository, $action = 'create', QualiteQuestionnaire $qualiteQuestionnaire = null): Response
-    {
+    public function wizard2(
+        QuestionnaireQuestionRepository $quizzQuestionRepository,
+        $action = 'create',
+        QuestionnaireQualite $qualiteQuestionnaire = null
+    ): Response {
         $questions = $quizzQuestionRepository->findByUser($this->getConnectedUser());
 
         return $this->render('super-administration/enqueteCreation/wizard2.html.twig', [
             'questionnaire' => $qualiteQuestionnaire,
-            'questions' => $questions
+            'questions'     => $questions
         ]);
     }
 }
