@@ -162,11 +162,10 @@
                     <p>Nom et prénom du tuteur universitaire : {{ proposition.tuteurUniversitaire.display }}</p>
                     {% if proposition.tuteurUniversitaire.domaines != "" or proposition.tuteurUniversitaire.responsabilites != "" %}
                         <p>Fonction
-                           : {% if proposition.tuteurUniversitaire.domaines == "" or proposition.tuteurUniversitaire
-                                .domaines == null %}{{ proposition.tuteurUniversitaire.domaines }}{% else %}{{ proposition.tuteurUniversitaire
-                            .responsabilites }}{% endif %}</p>
+                           : {% if proposition.tuteurUniversitaire.domaines != "" and proposition.tuteurUniversitaire
+                                .domaines != null %}{{ proposition.tuteurUniversitaire.domaines }}{% else %}{{ proposition.tuteurUniversitaire.responsabilites }}{% endif %}</p>
                     {% else %}
-                        <p>Fonction :</p>
+                        <p>Fonction : </p>
                     {% endif %}
                     <p>Tél. : {{ proposition.tuteurUniversitaire.telbureau|tel_format }} </p>
                     <p>Email : {{ proposition.tuteurUniversitaire.mailUniv }}</p>
