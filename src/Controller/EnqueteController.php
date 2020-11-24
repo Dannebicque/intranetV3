@@ -3,12 +3,15 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/EnqueteController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 24/11/2020 10:10
+// @lastUpdate 24/11/2020 16:36
 
 namespace App\Controller;
 
 use App\Entity\Etudiant;
 use App\Entity\QuestionnaireQuizz;
+use App\Repository\QuestionnaireEtudiantRepository;
+use DateTime;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -32,5 +35,34 @@ class EnqueteController extends AbstractController
             'typeQuestionnaire'     => 'quizz',
             'etudiant'              => $etudiant
         ]);
+    }
+
+    /**
+     * @Route("/enquete/complet/{uuid}/{etudiant}", name="enquete_questionnaire_complete")
+     * @param QuestionnaireEtudiantRepository $quizzEtudiantRepository
+     * @param QuestionnaireQuizz              $qualiteQuestionnaire
+     * @ParamConverter("qualiteQuestionnaire", options={"mapping": {"uuid": "uuid"}})
+     * @param Etudiant                        $etudiant
+     *
+     * @return Response
+     */
+    public function complet(
+        QuestionnaireEtudiantRepository $quizzEtudiantRepository,
+        QuestionnaireQuizz $qualiteQuestionnaire,
+        Etudiant $etudiant
+    ): Response {
+        $quizzEtudiant = $quizzEtudiantRepository->findOneBy([
+            'questionnaire' => $qualiteQuestionnaire->getId(),
+            'etudiant'      => $$etudiant->getId()
+        ]);
+        if ($quizzEtudiant !== null) {
+            $quizzEtudiant->setDateTermine(new DateTime('now'));
+            $quizzEtudiant->setTermine(true);
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->render('rdd/fin.html.twig');
+        }
+
+        return $this->redirectToRoute('erreur_666');
     }
 }

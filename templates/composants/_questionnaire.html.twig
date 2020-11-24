@@ -23,11 +23,11 @@
         <div class="tab-pane fade active show" id="wizard-intro">
             <p class="text-center fs-35 text-muted"><strong class="text-primary">Bienvenue</strong>
                 sur le questionnaire {{ questionnaire.libelle }}</p>
-            <p class="text-center text-gray">{{ questionnaire.texteDebut }}</p>
+            <p class="text-center text-gray">{{ questionnaire.texteDebut|raw }}</p>
             <hr class="w-100px">
             <div class="alert alert-info">Questionnaire à compléter entre le {{ questionnaire
                 .dateOuverture|format_date
-                    ('short') }}au {{ questionnaire.dateFermeture|format_date('short') }}.
+                    ('short') }} et le {{ questionnaire.dateFermeture|format_date('short') }}.
             </div>
         </div>
 
@@ -57,7 +57,7 @@
 
         <div class="tab-pane fade" id="wizard-fin">
             <p class="text-center fs-35 text-muted"><strong class="text-primary">Merci</strong></p>
-            <p class="text-center text-gray">{{ questionnaire.textFin }}</p>
+            <p class="text-center text-gray">{{ questionnaire.textFin|raw }}</p>
             <hr class="w-100px">
             <div class="alert alert-warning">Pour compléter votre questionnaire, n'oubliez pas de cliquer
                                              sur "terminer" pour recevoir l'accusé de réception.
@@ -70,9 +70,16 @@
     <div class="flexbox">
         <button class="btn btn-secondary" data-wizard="prev" type="button">Précédent</button>
         <button class="btn btn-secondary" data-wizard="next" type="button">Suivant</button>
-        <a href="{{ path('app_etudiant_qualite_questionnaire_complete', {uuid: questionnaire.uuidString}) }}"
-           class="btn btn-primary d-none"
-           data-wizard="finish"
-           type="submit">Terminer</a>
+        {% if typeQuestionnaire == 'quizz' %}
+            <a href="{{ path('enquete_questionnaire_complete', {uuid: questionnaire.uuidString, etudiant:etudiant }) }}"
+               class="btn btn-primary d-none"
+               data-wizard="finish"
+               type="submit">Terminer</a>
+        {% else %}
+            <a href="{{ path('app_etudiant_qualite_questionnaire_complete', {uuid: questionnaire.uuidString }) }}"
+               class="btn btn-primary d-none"
+               data-wizard="finish"
+               type="submit">Terminer</a>
+        {% endif %}
     </div>
 </form>
