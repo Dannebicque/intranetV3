@@ -1,0 +1,37 @@
+{% extends 'base-speciale.html.twig' %}
+
+{% block header %}Remise des diplômes{% endblock %}
+
+{% block content %}
+    <div class="main-content" id="mainContent">
+        <div class="row">
+            <div class="col-sm-3 text-center">
+                <img src="{{ asset('upload/logo/'~settings('LOGO_IUT')) }}" alt="logo" width="100px"/>
+            </div>
+            <div class="col-sm-6 text-center">
+                <h1></h1>
+                <h2>Remise des diplômes 2020</h2>
+            </div>
+            <div class="col-sm-3 text-center">
+                <img src="{{ asset('upload/logo/'~settings('LOGO_UNIVERSITE')) }}" alt="logo" width="100px"/>
+            </div>
+        </div>
+        <br>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <p>Nous vous remercions d'avoir participé à l'enquête.</p>
+
+                        <div class="alert alert-danger">
+                            En cas de difficulté, vous pouvez contacter Sarah Mocquery :
+                            <a href="mailto:sarah.mocquery@univ-reims.fr" target="_blank">Par email</a> ou 03 25 42 46
+                            29.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
