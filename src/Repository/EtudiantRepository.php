@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/EtudiantRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/11/2020 18:01
+// @lastUpdate 24/11/2020 12:54
 
 namespace App\Repository;
 
@@ -221,7 +221,7 @@ class EtudiantRepository extends ServiceEntityRepository
             $tt['avatarInitiales'] = $etudiant->getAvatarInitiales();
             $gr = '';
             foreach ($etudiant->getGroupes() as $groupe) {
-                $gr .= $groupe->getLibelle().', ';
+                $gr .= $groupe->getLibelle() . ', ';
             }
             $tt['groupes'] = substr($gr, 0, -2);
             $t[] = $tt;
@@ -230,21 +230,21 @@ class EtudiantRepository extends ServiceEntityRepository
         return $t;
     }
 
-    /**
-     * @param $uuid
-     *
-     * @return mixed
-     * @throws NonUniqueResultException
-     */
-    public function findOneByUuid($uuid)
-    {
-        $query = $this->createQueryBuilder('e')
-            ->where('e.uuid = :uuid')
-            ->setParameter('uuid', $uuid);
-
-        return $query->getQuery()
-            ->getOneOrNullResult();
-    }
+//    /**
+//     * @param $uuid
+//     *
+//     * @return mixed
+//     * @throws NonUniqueResultException
+//     */
+//    public function findOneByUuid($uuid)
+//    {
+//        $query = $this->createQueryBuilder('e')
+//            ->where('e.uuid = UUID_TO_BIN(:uuid)')
+//            ->setParameter('uuid', $uuid);
+//
+//        return $query->getQuery()
+//            ->getOneOrNullResult();
+//    }
 
     /**
      * @param Annee $annee

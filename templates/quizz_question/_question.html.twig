@@ -8,16 +8,17 @@
 {% if question.questionParent == null %}
     {% if question.questionsEnfants|length == 0 %}
         {% if question.type == 'qcu' or question.type == 'yesno' %}
-            {{ include('quizz_question/_qcu.html.twig', {question:question, numeror:numero, name: name, config:config}) }}
+            {{ include('quizz_question/_qcu.html.twig', {question:question, numeror:numero, name: name,
+                config:config, typeQuestionnaire:typeQuestionnaire}) }}
         {% elseif question.type == 'qcm' %}
-            {{ include('quizz_question/_qcm.html.twig', {question:question, numeror:numero, name: name,config:config}) }}
+            {{ include('quizz_question/_qcm.html.twig', {question:question, numeror:numero, name: name,config:config, typeQuestionnaire:typeQuestionnaire}) }}
         {% elseif question.type == 'libre' %}
-            {{ include('quizz_question/_libre.html.twig', {question:question, numeror:numero, name: name,config:config}) }}
+            {{ include('quizz_question/_libre.html.twig', {question:question, numeror:numero, name: name,config:config, typeQuestionnaire:typeQuestionnaire}) }}
         {% elseif question.type == 'echelle' %}
-            {{ include('quizz_question/_qcu.html.twig', {question:question, numeror:numero, name: name,config:config}) }}
+            {{ include('quizz_question/_qcu.html.twig', {question:question, numeror:numero, name: name,config:config, typeQuestionnaire:typeQuestionnaire}) }}
         {% endif %}
     {% else %}
         {{ include('quizz_question/_question_chainee.html.twig', {question:question, numeror:numero, name: name,
-            config:config}) }}
+            config:config, typeQuestionnaire:typeQuestionnaire}) }}
     {% endif %}
 {% endif %}
