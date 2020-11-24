@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/QuestionnaireEtudiantReponseRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 23/11/2020 17:55
+// @lastUpdate 24/11/2020 12:54
 
 namespace App\Repository;
 
@@ -41,9 +41,9 @@ class QuestionnaireEtudiantReponseRepository extends ServiceEntityRepository
     ) {
         return $this->createQueryBuilder('q')
             ->where('q.cleQuestion = :cle')
-            ->andWhere('q.quizzEtudiant = :quizzEtudiant')
+            ->andWhere('q.questionnaireEtudiant = :questionnaireEtudiant')
             ->setParameter('cle', $cle)
-            ->setParameter('quizzEtudiant', $quizzEtudiant)
+            ->setParameter('questionnaireEtudiant', $quizzEtudiant)
             ->getQuery()
             ->getOneOrNullResult();
     }
@@ -51,8 +51,8 @@ class QuestionnaireEtudiantReponseRepository extends ServiceEntityRepository
     public function findByQuizzEtudiant(QuestionnaireEtudiant $quizzEtudiant): array
     {
         $reponses = $this->createQueryBuilder('q')
-            ->where('q.quizzEtudiant = :quizzEtudiant')
-            ->setParameter('quizzEtudiant', $quizzEtudiant->getId())
+            ->where('q.questionnaireEtudiant = :questionnaireEtudiant')
+            ->setParameter('questionnaireEtudiant', $quizzEtudiant->getId())
             ->getQuery()
             ->getResult();
 
@@ -67,10 +67,11 @@ class QuestionnaireEtudiantReponseRepository extends ServiceEntityRepository
 
     public function findByQuestionnaire(QuestionnaireQualite $questionnaire): array
     {
+        //todo: a adapter selon le type...
         return $this->createQueryBuilder('q')
             ->innerJoin(QuestionnaireEtudiant::class, 'e', 'WITH', 'q.quizzEtudiant=e.id')
-            ->where('e.questionnaire = :questionnaire')
-            ->setParameter('questionnaire', $questionnaire->getId())
+            ->where('e.questionnaireQualite = :questionnaire')
+            ->setParameter('questionnaireQualite', $questionnaire->getId())
             ->orderBy('q.cleQuestion', 'ASC')
             ->getQuery()
             ->getResult();

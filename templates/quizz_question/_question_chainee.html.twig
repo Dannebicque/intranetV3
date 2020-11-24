@@ -20,8 +20,12 @@
                         <div class="form-check">
                             <input type="radio" id="quizz_question_qcu_{{ name }}_{{ reponse.id }}"
                                    name="quizz_question_reponses_{{ name }}"
-                                   {% if reponses['quizz_question_reponses_'~name] is defined and
-                                       reponses['quizz_question_reponses_'~name].valeur == reponse.valeur %}checked{% endif %}
+                                   data-typeQuestionnaire="{{ typeQuestionnaire }}"
+                                    {% if not(is_granted('ROLE_QUALITE') or is_granted('ROLE_SUPER_ADMIN')) %}
+                                        data-etudiant="{{ etudiant.id }}"
+                                    {% endif %}
+                                    {% if reponses['quizz_question_reponses_'~name] is defined and
+                                        reponses['quizz_question_reponses_'~name].valeur == reponse.valeur %}checked{% endif %}
                                     {% if question.obligatoire %}required{% endif %}
                                    class="form-check-input {% if not(is_granted('ROLE_QUALITE') or is_granted
                                        ('ROLE_SUPER_ADMIN')) %}questionQualite{% endif %}"

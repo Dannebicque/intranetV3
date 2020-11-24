@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/QuestionnaireEtudiant.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 23/11/2020 12:11
+// @lastUpdate 24/11/2020 11:42
 
 namespace App\Entity;
 
@@ -11,6 +11,7 @@ use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\PersistentCollection;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\QuestionnaireEtudiantRepository")
@@ -26,7 +27,12 @@ class QuestionnaireEtudiant extends BaseEntity
     /**
      * @ORM\ManyToOne(targetEntity="QuestionnaireQualite")
      */
-    private ?QuestionnaireQualite $questionnaire;
+    private ?QuestionnaireQualite $questionnaireQualite;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\QuestionnaireQuizz")
+     */
+    private ?QuestionnaireQuizz $questionnaireQuizz;
 
     /**
      * @ORM\Column(type="boolean")
@@ -36,17 +42,25 @@ class QuestionnaireEtudiant extends BaseEntity
     /**
      * @ORM\OneToMany(targetEntity="QuestionnaireEtudiantReponse", mappedBy="questionnaireEtudiant")
      */
-    private ArrayCollection $questionnaireEtudiantReponses;
+    private $questionnaireEtudiantReponses;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
     private ?DateTimeInterface $dateTermine;
 
-    public function __construct(Etudiant $etudiant, QuestionnaireQualite $questionnaire)
+    public function __construct(Etudiant $etudiant, $questionnaire, $typeQuestionnaire)
     {
         $this->setEtudiant($etudiant);
-        $this->setQuestionnaire($questionnaire);
+        switch ($typeQuestionnaire) {
+            case 'quizz':
+                $this->setQuestionnaireQuizz($questionnaire);
+                break;
+            case 'qualite':
+                $this->setQuestionnaireQualite($questionnaire);
+                break;
+        }
+
         $this->questionnaireEtudiantReponses = new ArrayCollection();
     }
 
@@ -58,18 +72,6 @@ class QuestionnaireEtudiant extends BaseEntity
     public function setEtudiant(?Etudiant $etudiant): self
     {
         $this->etudiant = $etudiant;
-
-        return $this;
-    }
-
-    public function getQuestionnaire(): ?QuestionnaireQualite
-    {
-        return $this->questionnaire;
-    }
-
-    public function setQuestionnaire(?QuestionnaireQualite $questionnaire): self
-    {
-        $this->questionnaire = $questionnaire;
 
         return $this;
     }
@@ -125,6 +127,30 @@ class QuestionnaireEtudiant extends BaseEntity
     public function setDateTermine(DateTimeInterface $dateTermine): self
     {
         $this->dateTermine = $dateTermine;
+
+        return $this;
+    }
+
+    public function getQuestionnaireQualite(): ?QuestionnaireQualite
+    {
+        return $this->questionnaireQualite;
+    }
+
+    public function setQuestionnaireQualite(?QuestionnaireQualite $questionnaireQualite): self
+    {
+        $this->questionnaireQualite = $questionnaireQualite;
+
+        return $this;
+    }
+
+    public function getQuestionnaireQuizz(): ?QuestionnaireQuizz
+    {
+        return $this->questionnaireQuizz;
+    }
+
+    public function setQuestionnaireQuizz(?QuestionnaireQuizz $questionnaireQuizz): self
+    {
+        $this->questionnaireQuizz = $questionnaireQuizz;
 
         return $this;
     }

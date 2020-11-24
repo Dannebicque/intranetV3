@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/EnqueteController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 23/11/2020 17:55
+// @lastUpdate 24/11/2020 10:10
 
 namespace App\Controller;
 
@@ -18,6 +18,8 @@ class EnqueteController extends AbstractController
 
     /**
      * @param QuestionnaireQuizz $questionnaireQuizz
+     *
+     * @param Etudiant           $etudiant
      *
      * @return Response
      * @Route("embed_enquete/{questionnaireQuizz}/{etudiant}", name="embed_enquete")

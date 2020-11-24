@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Enquetes/MyEnquete.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 23/11/2020 17:55
+// @lastUpdate 24/11/2020 11:40
 
 namespace App\Classes\Enquetes;
 
@@ -175,6 +175,7 @@ class MyEnquete
     public function getReponseFromQuestionnaire(QuestionnaireQualite $questionnaire): void
     {
         $quizzEtudiants = $this->quizzEtudiantRepository->findBy(['questionnaire' => $questionnaire->getId()]);
+        //todo: a modifier, dépend du type de questionnaire
         $reponsesEtudiants = $this->quizzEtudiantReponseRepository->findByQuestionnaire($questionnaire);
 
         /** @var QuestionnaireEtudiantReponse $reponse */
