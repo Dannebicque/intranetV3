@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/PersonnelController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 23/10/2020 06:29
+// @lastUpdate 24/11/2020 21:36
 
 namespace App\Controller\administration;
 
@@ -117,7 +117,7 @@ class PersonnelController extends BaseController
             $this->entityManager->flush();
 
 
-            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'personnel.add.success.flash');
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'personnelf.add.success.flash');
 
             return $this->redirectToRoute('administration_personnel_index');
         }
@@ -157,7 +157,7 @@ class PersonnelController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
-            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'personnel.edit.success.flash');
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'personnelf.edit.success.flash');
             if ($request->request->get('btn_update') !== null) {
                 return $this->redirectToRoute('administration_personnel_index');
             }
@@ -183,7 +183,7 @@ class PersonnelController extends BaseController
 
         $this->entityManager->persist($newPersonnel);
         $this->entityManager->flush();
-        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'personnel.duplicate.success.flash');
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'personnelf.duplicate.success.flash');
 
         return $this->redirectToRoute('administration_personnel_edit', ['id' => $newPersonnel->getId()]);
     }
@@ -212,13 +212,13 @@ class PersonnelController extends BaseController
             $this->entityManager->flush();
             $this->addFlashBag(
                 Constantes::FLASHBAG_SUCCESS,
-                'personnel.delete.success.flash'
+                'personnelf.delete.success.flash'
             );
 
             return $this->json($id, Response::HTTP_OK);
         }
 
-        $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'personnel.delete.error.flash');
+        $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'personnelf.delete.error.flash');
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }

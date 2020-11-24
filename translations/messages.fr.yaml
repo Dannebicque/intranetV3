@@ -1397,11 +1397,11 @@ permanents: Permanents
 permanents.heading: Permanents
 
 personnel: Personnel
-personnel.add.success.flash: 'Personnel créé avec succès'
-personnel.delete.success.flash: 'Personnel retiré du département avec succès'
-personnel.delete.error.flash: 'Erreur lors de la suppression d''un personnel'
-personnel.edit.succes.flash: 'Personnel modifié avec succès'
-personnel.droit.access: 'Droit d''accès'
+personnelf.add.success.flash: 'Personnel créé avec succès'
+personnelf.delete.success.flash: 'Personnel retiré du département avec succès'
+personnelf.delete.error.flash: 'Erreur lors de la suppression d''un personnel'
+personnelf.edit.succes.flash: 'Personnel modifié avec succès'
+personnelf.droit.access: 'Droit d''accès'
 
 Place: Place
 planning.annee.annee: planning.annee.annee
