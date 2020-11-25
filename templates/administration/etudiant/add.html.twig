@@ -21,15 +21,7 @@
     <div class="header-action">
         <ul class="nav nav-tabs" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active show" data-toggle="tab"
-                   href="#importListe">{{ 'importer.une.liste'|trans }}</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="tab"
-                   href="#ajoutManuel">{{ 'ajout.manuel.etudiant'|trans }}</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="tab"
+                <a class="nav-link active" data-toggle="tab"
                    href="#importApogee">{{ 'recuperation.apogee.etudiant'|trans }}</a>
             </li>
             <li class="nav-item">
@@ -52,47 +44,7 @@
 {% endblock %}
 {% block content %}
     <div class="tab-content card">
-        <div class="tab-pane fade active show" id="importListe">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="card">
-                        <h4 class="card-title">Importer une liste pour le semestre {{ semestre.libelle }}</h4>
-                        <div class="card-body">
-                            <div class="alert alert-danger">
-                                {{ 'message.danger.etudiant.import'|trans }}
-                            </div>
-
-                            {% form_theme formImport 'form/my-form.html.twig' %}
-                            {{ form_start(formImport) }}
-                            {{ form_widget(formImport) }}
-                            <button class="btn btn-success">{{ button_label|default('label.save'|trans) }}</button>
-                            {{ form_end(formImport) }}
-                            <br>
-                            <div class="alert alert-warning">
-                                {{ 'help.import.etudiant'|trans }}
-                            </div>{# todo: mettre un fichier de démonstration #}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="tab-pane" id="ajoutManuel">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="card">
-                        <h4 class="card-title">Ajouter un étudiant manuellement pour le semestre {{ semestre.libelle }}</h4>
-                        <div class="card-body">
-                            {% form_theme formEtudiant 'form/my-form.html.twig' %}
-                            {{ form_start(formEtudiant) }}
-                            {{ form_widget(formEtudiant) }}
-                            <button class="btn btn-success">{{ button_label|default('label.save'|trans) }}</button>
-                            {{ form_end(formEtudiant) }}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="tab-pane" id="importApogee">
+        <div class="tab-pane active" id="importApogee">
             <div class="row">
                 <div class="col-sm-12">
                     <div class="card">
