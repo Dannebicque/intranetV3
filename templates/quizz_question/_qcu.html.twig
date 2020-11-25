@@ -44,7 +44,7 @@
 {% if question.parametre.type is defined and question.parametre.type=='condition' %}
     <script>
       function changeHandler{{ question.id }} (event) {
-        if (event.target.name == 'quizz_question_reponses_q{{ question.parametre.declenchement }}') {
+        if (event.target.name === 'quizz_question_reponses_q{{ question.parametre.declenchement }}') {
           var valeurs = [{% for critere in question.parametre.criteres %}"{{ critere }}"{% if not loop.last %}, {% endif %}{% endfor %}]
           document.getElementById('field_{{ question.id }}').style.display = 'none'
           for (var i = 0; i < valeurs.length; i++) {
@@ -58,3 +58,25 @@
       document.addEventListener('change', changeHandler{{ question.id }}, false)
     </script>
 {% endif %}
+{% if question.parametre is defined %}
+    {% for param in question.parametre %}
+        {% if param.type is defined and param.type == 'masquage' %}
+            <script>
+              function changeHandlerMasquage{{ question.id }}_{{ loop.index }} (event) {
+                var criteres = [{% for critere in param.criteres %}"{{ critere }}"{% if not loop.last %}, {% endif %}{% endfor %}]
+                console.log(criteres)
+                if (event.target.name === 'quizz_question_reponses_q{{ question.id }}' && criteres.includes(event.target.value)) {
+                  var questions = [{% for question in param.questions %}"{{ question }}"{% if not loop.last %}, {% endif %}{% endfor %}]
+                  console.log(questions)
+                  for (var i = 0; i < questions.length; i++) {
+                    document.getElementById('field_' + questions[i]).style.display = 'none'
+                  }
+                }
+              }
+
+              document.addEventListener('change', changeHandlerMasquage{{ question.id }}_{{ loop.index }}, false)
+            </script>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
