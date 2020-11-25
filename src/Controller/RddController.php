@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/RddController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 23/11/2020 17:55
+// @lastUpdate 25/11/2020 08:42
 
 namespace App\Controller;
 
@@ -94,6 +94,7 @@ class RddController extends AbstractController
                     $form->handleRequest($request);
 
                     if ($form->isSubmitted() && $form->isValid()) {
+                        $dip->setConfirme(true);
                         $em = $this->getDoctrine()->getManager();
                         $em->flush();
 

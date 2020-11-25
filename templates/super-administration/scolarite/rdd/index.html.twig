@@ -1,7 +1,7 @@
 {% extends 'base-super_admin.html.twig' %}
 
 {% block header %}
-    {{ 'scolarite.index.heading'|trans }}
+    {{ 'scolarite.rdd.index.heading'|trans }}
 {% endblock %}
 
 {% block headeractions %}
@@ -26,6 +26,7 @@
             <table class="table table-bordered" data-provide="datatables">
                 <thead>
                 <tr>
+                    <th>Numéro étudiant</th>
                     <th>Nom Prénom</th>
                     <th>Date Naissance</th>
                     <th>Login</th>
@@ -50,7 +51,7 @@
                             <td>-</td>
                             <td>-</td>
                         {% endif %}
-                        <td>Dip.</td>
+                        <td>{{ diplome.libelleDiplome }}</td>
                         <td>
                             {{ diplome.confirme == true ? 'Oui' : 'Non' }}
                         </td>

@@ -71,7 +71,7 @@
         <button class="btn btn-secondary" data-wizard="prev" type="button">Précédent</button>
         <button class="btn btn-secondary" data-wizard="next" type="button">Suivant</button>
         {% if typeQuestionnaire == 'quizz' %}
-            <a href="{{ path('enquete_questionnaire_complete', {uuid: questionnaire.uuidString, etudiant:etudiant }) }}"
+            <a href="{{ path('enquete_questionnaire_complete', {uuid: questionnaire.uuidString, etudiant:etudiant.id }) }}"
                class="btn btn-primary d-none"
                data-wizard="finish"
                type="submit">Terminer</a>

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/EnqueteController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 24/11/2020 16:36
+// @lastUpdate 25/11/2020 09:11
 
 namespace App\Controller;
 
@@ -52,8 +52,8 @@ class EnqueteController extends AbstractController
         Etudiant $etudiant
     ): Response {
         $quizzEtudiant = $quizzEtudiantRepository->findOneBy([
-            'questionnaire' => $qualiteQuestionnaire->getId(),
-            'etudiant'      => $$etudiant->getId()
+            'questionnaireQuizz' => $qualiteQuestionnaire->getId(),
+            'etudiant'           => $etudiant->getId()
         ]);
         if ($quizzEtudiant !== null) {
             $quizzEtudiant->setDateTermine(new DateTime('now'));

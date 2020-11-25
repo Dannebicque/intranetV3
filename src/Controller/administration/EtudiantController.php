@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EtudiantController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/09/2020 08:52
+// @lastUpdate 24/11/2020 21:48
 
 namespace App\Controller\administration;
 
@@ -14,7 +14,6 @@ use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Form\EtudiantType;
-use App\Form\ImportEtudiantType;
 use App\Repository\EtudiantRepository;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -40,37 +39,6 @@ class EtudiantController extends BaseController
     {
         return $this->render('administration/etudiant/index.html.twig', [
         ]);
-    }
-
-    /**
-     * @Route("/import", name="administration_etudiant_import", methods="POST")
-     * @param Request $request
-     *
-     * @return Response
-     */
-    public function import(Request $request): Response
-    {
-        $form = $this->createForm(
-            ImportEtudiantType::class,
-            null,
-            [
-                'departement' => $this->dataUserSession->getDepartement(),
-                'attr'        => [
-                    'data-provide' => 'validation'
-                ]
-            ]
-        );
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-
-            //todo: gérer l'import. En commun avec SuperAdministration/EtudiantController
-            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'etudiant.import.success.flash');
-        }
-
-        return $this->redirectToRoute('administration_etudiant_semestre_add');
     }
 
     /**

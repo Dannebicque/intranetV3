@@ -1565,9 +1565,10 @@ sauvegarder: Sauvegarder
 scolarite:
   detail.heading: 'Détail de la scolarité de %etudiant% pour le semestre %semestre%'
   diplome.heading: diplome.heading
-  index.heading: index.heading
+  index.heading: 'GEstion de la Scolarité'
   recherche.heading: Rechercher
   semestre.heading: scolarite.semestre.heading
+  rdd.index.heading: 'Suivi des inscrits pour la RDD'
 
 security:
   lock.heading: 'Accès vérouillé'

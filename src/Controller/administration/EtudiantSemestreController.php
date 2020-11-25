@@ -3,16 +3,13 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EtudiantSemestreController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 29/08/2020 12:38
+// @lastUpdate 25/11/2020 09:11
 
 namespace App\Controller\administration;
 
 use App\Controller\BaseController;
 use App\Entity\Constantes;
-use App\Entity\Etudiant;
 use App\Entity\Semestre;
-use App\Form\EtudiantType;
-use App\Form\ImportEtudiantType;
 use App\Classes\MyExport;
 use App\Classes\MyUpload;
 use App\Repository\BacRepository;
@@ -60,37 +57,8 @@ class EtudiantSemestreController extends BaseController
             $semestre = $this->dataUserSession->getSemestres()[0];
         }
 
-        $formImport = $this->createForm(
-            ImportEtudiantType::class,
-            null,
-            [
-                'departement' => $this->dataUserSession->getDepartement(),
-                'semestre'    => $semestre,
-                'attr'        => [
-                    'data-provide' => 'validation'
-                ],
-                'action'      => $this->generateUrl('administration_etudiant_import')
-            ]
-        );
-
-        $etudiant = new Etudiant();
-        $etudiant->setSemestre($semestre);
-        $formEtudiant = $this->createForm(
-            EtudiantType::class,
-            $etudiant,
-            [
-                'attr'        => [
-                    'data-provide' => 'validation'
-                ],
-                'departement' => $this->dataUserSession->getDepartement(),
-                'action'      => $this->generateUrl('administration_etudiant_add')
-            ]
-        );
-
         return $this->render('administration/etudiant/add.html.twig', [
-            'semestre'     => $semestre,
-            'formImport'   => $formImport->createView(),
-            'formEtudiant' => $formEtudiant->createView()
+            'semestre' => $semestre
         ]);
     }
 
