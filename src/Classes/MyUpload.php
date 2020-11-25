@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyUpload.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 29/08/2020 12:26
+// @lastUpdate 24/11/2020 21:50
 
 /**
  * Created by PhpStorm.
@@ -91,7 +91,7 @@ class MyUpload
         $newdir = $this->dir . $dossierDest;
         //2)Tant que le dossier est aps vide
         while ($fichier = readdir($dossier)) {
-
+            //todo: supprimer si existe ou ca remplace ? Purger le cache de vich ?
             if ($fichier !== '.' && $fichier !== '..') {
                 $t = explode('.', $fichier);
                 $vidage = $folder . $fichier;
