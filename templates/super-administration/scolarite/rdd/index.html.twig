@@ -23,6 +23,12 @@
     <div class="card">
         <h4 class="card-title">{{ 'scolarite.rdd.index.heading'|trans }}</h4>
         <div class="card-body">
+            <div class="alert alert-info">
+                {% set pourcent = nbComplet/nbDiplomes %}
+                Nombre de diplômé : <strong>{{ nbDiplomes }}</strong>. Nombre de réponses validées :
+                <strong>{{ nbComplet }}</strong> (soit {{ pourcent|number_format(2) }}%)
+            </div>
+            <br>
             <table class="table table-bordered" data-provide="datatables">
                 <thead>
                 <tr>
@@ -62,6 +68,17 @@
             </table>
         </div>
     </div>
+{% endblock %}
+
+{% block fabactions %}
+    {{ include('composants/fab-buttons.html.twig', {boutons:[
+        {
+            type:'info',
+            href:path('sa_rdd_export', {_format:'xlsx'}),
+            title: 'exporter.xls'|trans,
+            icone: 'fa fa-file-excel'
+        }
+    ]}) }}
 {% endblock %}
 
 

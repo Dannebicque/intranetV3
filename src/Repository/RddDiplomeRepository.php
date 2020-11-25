@@ -3,13 +3,15 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/RddDiplomeRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 23/11/2020 11:25
+// @lastUpdate 25/11/2020 16:23
 
 namespace App\Repository;
 
 use App\Entity\Etudiant;
 use App\Entity\RddDiplome;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -23,6 +25,21 @@ class RddDiplomeRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, RddDiplome::class);
+    }
+
+    /**
+     * @return int|mixed|string
+     * @throws NoResultException
+     * @throws NonUniqueResultException
+     */
+    public function countComplet()
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.confirme = true')
+            ->select('COUNT(p)')
+            ->getQuery()
+            ->getSingleScalarResult();
+
     }
 
 }

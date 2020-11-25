@@ -3,10 +3,11 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/RddController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 23/11/2020 17:55
+// @lastUpdate 25/11/2020 16:52
 
 namespace App\Controller\superAdministration;
 
+use App\Classes\Rdd\MyExportRdd;
 use App\Controller\BaseController;
 use App\Entity\Annee;
 use App\Entity\Constantes;
@@ -14,6 +15,8 @@ use App\Entity\Diplome;
 use App\Form\AnneeType;
 use App\Repository\EtudiantRepository;
 use App\Repository\RddDiplomeRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,7 +33,12 @@ class RddController extends BaseController
     /**
      * @Route("/", name="sa_rdd_index", methods="GET")
      *
+     * @param RddDiplomeRepository $rddDiplomeRepository
+     * @param EtudiantRepository   $etudiantRepository
+     *
      * @return Response
+     * @throws NoResultException
+     * @throws NonUniqueResultException
      */
     public function index(RddDiplomeRepository $rddDiplomeRepository, EtudiantRepository $etudiantRepository): Response
     {
@@ -41,12 +49,38 @@ class RddController extends BaseController
             $tEtudiant[$etudiant->getNumEtudiant()] = $etudiant;
         }
 
+        $nbComplet = $rddDiplomeRepository->countComplet();
+
         return $this->render('super-administration/scolarite/rdd/index.html.twig',
             [
-                'diplomes'  => $diplomes,
-                'etudiants' => $tEtudiant
+                'diplomes'   => $diplomes,
+                'etudiants'  => $tEtudiant,
+                'nbComplet'  => $nbComplet,
+                'nbDiplomes' => count($diplomes)
             ]);
     }
 
+    /**
+     * @Route("/export.{_format}", name="sa_rdd_export", methods="GET")
+     *
+     * @param RddDiplomeRepository $rddDiplomeRepository
+     * @param EtudiantRepository   $etudiantRepository
+     *
+     * @return Response
+     */
+    public function export(
+        MyExportRdd $myExportRdd,
+        RddDiplomeRepository $rddDiplomeRepository,
+        EtudiantRepository $etudiantRepository
+    ): Response {
+        $diplomes = $rddDiplomeRepository->findAll();
+        $etudiants = $etudiantRepository->findAll();
+        $tEtudiant = [];
+        foreach ($etudiants as $etudiant) {
+            $tEtudiant[$etudiant->getNumEtudiant()] = $etudiant;
+        }
 
+        return $myExportRdd->genereFichier($diplomes, $tEtudiant);
+
+    }
 }
