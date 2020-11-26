@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/StageEtudiantRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/10/2020 15:38
+// @lastUpdate 26/11/2020 17:43
 
 namespace App\Repository;
 
@@ -54,7 +54,7 @@ class StageEtudiantRepository extends ServiceEntityRepository
             ->innerJoin(StagePeriode::class, 'p', 'WITH', 's.stagePeriode = p.id')
             ->where('p.anneeUniversitaire = :annee')
             ->andWhere('s.tuteurUniversitaire = :personnel')
-            ->setParameter('annee', $anneeUniversitaire->getAnnee())
+            ->setParameter('annee', $anneeUniversitaire->getId())
             ->setParameter('personnel', $personnel->getId())
             ->getQuery()
             ->getResult();
@@ -66,7 +66,7 @@ class StageEtudiantRepository extends ServiceEntityRepository
             ->innerJoin(StagePeriode::class, 'p', 'WITH', 's.stagePeriode = p.id')
             ->where('p.anneeUniversitaire < :annee')
             ->andWhere('s.tuteurUniversitaire = :personnel')
-            ->setParameter('annee', $anneeUniversitaire->getAnnee())
+            ->setParameter('annee', $anneeUniversitaire->getId())
             ->setParameter('personnel', $personnel->getId())
             ->getQuery()
             ->getResult();
@@ -78,7 +78,7 @@ class StageEtudiantRepository extends ServiceEntityRepository
             ->innerJoin(StagePeriode::class, 'p', 'WITH', 's.stagePeriode = p.id')
             ->where('p.anneeUniversitaire = :annee')
             ->andWhere('s.etudiant = :etudiant')
-            ->setParameter('annee', $anneeUniversitaire->getAnnee())
+            ->setParameter('annee', $anneeUniversitaire->getId())
             ->setParameter('etudiant', $etudiant->getId())
             ->getQuery()
             ->getResult();
