@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Form/StageEtudiantEtudiantType.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/10/2020 14:54
+// @lastUpdate 26/11/2020 15:20
 
 namespace App\Form;
 
@@ -79,7 +79,15 @@ class StageEtudiantEtudiantType extends AbstractType
             ->add(
                 'gratificationPeriode',
                 ChoiceType::class,
-                ['label' => 'label.gratificationPeriode', 'help' => 'help.gratificationPeriode', 'choices' => ['Heure' => 'H', 'Jour' => 'J', 'Semaine' => 'S', 'Mois' => 'M']]
+                [
+                    'label' => 'label.gratificationPeriode',
+                    'help' => 'help.gratificationPeriode',
+                    'choices' => [
+                        'Heure' => StageEtudiant::PERIODE_GRATIFICATION_HEURE,
+                        'Jour'  => StageEtudiant::PERIODE_GRATIFICATION_JOUR,
+                        'Mois'  => StageEtudiant::PERIODE_GRATIFICATION_MOIS
+                    ]
+                ]
             )
             ->add('avantages', TextareaType::class, ['label' => 'label.avantages', 'help' => 'help.avantages', 'required' => false]);
 
