@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Form/StageEtudiantType.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/09/2020 16:15
+// @lastUpdate 26/11/2020 15:20
 
 namespace App\Form;
 
@@ -57,7 +57,11 @@ class StageEtudiantType extends AbstractType
             ->add('gratificationPeriode', ChoiceType::class, [
                 'label'   => 'label.gratificationPeriode',
                 'help'    => 'help.gratificationPeriode',
-                'choices' => ['Heure' => 'H', 'Jour' => 'J', 'Semaine' => 'S', 'Mois' => 'M']
+                'choices' => [
+                    'Heure' => StageEtudiant::PERIODE_GRATIFICATION_HEURE,
+                    'Jour'  => StageEtudiant::PERIODE_GRATIFICATION_JOUR,
+                    'Mois'  => StageEtudiant::PERIODE_GRATIFICATION_MOIS
+                ]
             ])
             ->add('avantages', TextareaType::class, ['label' => 'label.avantages', 'required' => false])
             ->addEventListener(FormEvents::POST_SUBMIT, static function(FormEvent $event) {
@@ -80,16 +84,6 @@ class StageEtudiantType extends AbstractType
             })
             ->add('dateRange', DateRangeType::class,
                 ['label' => 'dateRange.periode.stage.etudiant', 'mapped' => false, 'required' => true])
-            /*->add(
-                'dateDebutStage',
-                DateType::class,
-                ['label' => 'label.dateDebutStage', 'help' => 'help.dateDebutStage', 'widget' => 'single_text']
-            )
-            ->add(
-                'dateFinStage',
-                DateType::class,
-                ['label' => 'label.dateFinStage', 'help' => 'help.dateFinStage', 'widget' => 'single_text']
-            )*/
 
             ->add(
                 'dureeJoursStage',

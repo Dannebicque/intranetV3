@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/EnqueteController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/11/2020 09:11
+// @lastUpdate 26/11/2020 15:20
 
 namespace App\Controller;
 
@@ -38,21 +38,21 @@ class EnqueteController extends AbstractController
     }
 
     /**
-     * @Route("/enquete/complet/{uuid}/{etudiant}", name="enquete_questionnaire_complete")
+     * @Route("/rdd/enquete/complet/{uuid}/{etudiant}", name="enquete_questionnaire_complete")
      * @param QuestionnaireEtudiantRepository $quizzEtudiantRepository
-     * @param QuestionnaireQuizz              $qualiteQuestionnaire
-     * @ParamConverter("qualiteQuestionnaire", options={"mapping": {"uuid": "uuid"}})
+     * @param QuestionnaireQuizz              $questionnaireQuizz
+     * @ParamConverter("questionnaireQuizz", options={"mapping": {"uuid": "uuid"}})
      * @param Etudiant                        $etudiant
      *
      * @return Response
      */
     public function complet(
         QuestionnaireEtudiantRepository $quizzEtudiantRepository,
-        QuestionnaireQuizz $qualiteQuestionnaire,
+        QuestionnaireQuizz $questionnaireQuizz,
         Etudiant $etudiant
     ): Response {
         $quizzEtudiant = $quizzEtudiantRepository->findOneBy([
-            'questionnaireQuizz' => $qualiteQuestionnaire->getId(),
+            'questionnaireQuizz' => $questionnaireQuizz->getId(),
             'etudiant'           => $etudiant->getId()
         ]);
         if ($quizzEtudiant !== null) {
