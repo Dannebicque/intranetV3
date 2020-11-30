@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Excel/MyExcelWriter.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 10/11/2020 16:58
+// @lastUpdate 27/11/2020 15:06
 
 /**
  * Created by PhpStorm.
@@ -85,15 +85,18 @@ class MyExcelWriter
     }
 
     /**
-     * @param     $array
-     * @param int $col
-     * @param int $row
+     * @param      $array
+     * @param int  $col
+     * @param int  $row
+     * @param bool $translate
      */
-    public function writeHeader($array, $col = 1, $row = 1): void
+    public function writeHeader($array, $col = 1, $row = 1, $translate = true): void
     {
         foreach ($array as $value) {
             if (!empty($value) && $value !== null && $value !== '#') {
-                $value = $this->translator->trans($value);
+                if ($translate === true) {
+                    $value = $this->translator->trans($value);
+                }
             }
 
             $this->writeCellXY($col, $row, $value);

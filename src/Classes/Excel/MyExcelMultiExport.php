@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Excel/MyExcelMultiExport.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/11/2020 04:44
+// @lastUpdate 27/11/2020 15:06
 
 /**
  * Created by PhpStorm.
@@ -281,7 +281,7 @@ class MyExcelMultiExport
     {
         $this->myExcelWriter->createSheet('import');
 
-        $this->myExcelWriter->writeHeader(['num_etudiant', 'nom', 'prenom', 'note', 'commentaire']);
+        $this->myExcelWriter->writeHeader(['num_etudiant', 'nom', 'prenom', 'note', 'commentaire'], 1, 1, false);
         $ligne = 2;
         $colonne = 1;
         /** @var Etudiant $etudiant */

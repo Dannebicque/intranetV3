@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Rdd/MyExportRdd.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/11/2020 16:52
+// @lastUpdate 30/11/2020 08:19
 
 namespace App\Classes\Rdd;
 
@@ -50,6 +50,7 @@ class MyExportRdd
             'Nom',
             'Prénom',
             'Diplôme',
+            //'Code Etape',
             'Numéro INE',
             'Telephone',
             'Adresse1',
@@ -75,6 +76,7 @@ class MyExportRdd
                     ucfirst($etudiants[$diplome->getNumEtudiant()]->getNom()),
                     mb_strtoupper($etudiants[$diplome->getNumEtudiant()]->getPrenom()),
                     $diplome->getDiplome(),
+                    //$diplome->getCodeEtape(),
                     $etudiants[$diplome->getNumEtudiant()]->getNumIne(),
                     $etudiants[$diplome->getNumEtudiant()]->getTel1(),
                     $etudiants[$diplome->getNumEtudiant()]->getAdresse() !== null ? $etudiants[$diplome->getNumEtudiant()]->getAdresse()->getAdresse1() : '-',
