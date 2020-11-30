@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/StageEtudiantRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/11/2020 17:43
+// @lastUpdate 26/11/2020 17:46
 
 namespace App\Repository;
 
@@ -64,7 +64,7 @@ class StageEtudiantRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('s')
             ->innerJoin(StagePeriode::class, 'p', 'WITH', 's.stagePeriode = p.id')
-            ->where('p.anneeUniversitaire < :annee')
+            ->where('p.anneeUniversitaire < :annee')//todo: a modifier avec un inner join sur  année universitaire pour faire la comparaison
             ->andWhere('s.tuteurUniversitaire = :personnel')
             ->setParameter('annee', $anneeUniversitaire->getId())
             ->setParameter('personnel', $personnel->getId())
