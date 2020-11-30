@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/MoyenneMatiere.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/09/2020 08:39
+// @lastUpdate 30/11/2020 15:35
 
 namespace App\DTO;
 
@@ -63,7 +63,7 @@ class MoyenneMatiere
     {
         $this->notes[] = $note->getNote();
         $this->coefficients[] = $note->getEvaluation()->getCoefficient();
-        $this->totalNotes += $note->getNote();
+        $this->totalNotes += $note->getNote() * $note->getEvaluation()->getCoefficient();
         $this->totalCoefficient += $note->getEvaluation()->getCoefficient();
     }
 
