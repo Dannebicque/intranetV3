@@ -5,7 +5,7 @@
         "/build/runtime.d94b3b43.js",
         "/build/0.cf60d32b.js",
         "/build/1.f340a267.js",
-        "/build/app.56177231.js"
+        "/build/app.28c6ffaa.js"
       ],
       "css": [
         "/build/app.0a47d927.css"
@@ -35,7 +35,7 @@
         "/build/runtime.d94b3b43.js",
         "/build/0.cf60d32b.js",
         "/build/1.f340a267.js",
-        "/build/agenda.39cc9b54.js"
+        "/build/agenda.25083465.js"
       ],
       "css": [
         "/build/agenda.8c10d4af.css"
@@ -76,7 +76,7 @@
         "/build/runtime.d94b3b43.js",
         "/build/0.cf60d32b.js",
         "/build/1.f340a267.js",
-        "/build/absences.7716ba67.js"
+        "/build/absences.89b720f0.js"
       ],
       "css": [
         "/build/absences.b275741b.css"
@@ -87,7 +87,7 @@
         "/build/runtime.d94b3b43.js",
         "/build/0.cf60d32b.js",
         "/build/1.f340a267.js",
-        "/build/applications.2d126022.js"
+        "/build/applications.7e51c8ba.js"
       ]
     },
     "documents": {
@@ -102,7 +102,7 @@
         "/build/runtime.d94b3b43.js",
         "/build/0.cf60d32b.js",
         "/build/1.f340a267.js",
-        "/build/profil.5b563b68.js"
+        "/build/profil.81652d97.js"
       ]
     },
     "planning": {
@@ -118,7 +118,7 @@
         "/build/runtime.d94b3b43.js",
         "/build/0.cf60d32b.js",
         "/build/3.f48faeb3.js",
-        "/build/quizzQualite.e681b14d.js"
+        "/build/quizzQualite.c61b0260.js"
       ]
     },
     "adm.configuration": {
@@ -126,7 +126,7 @@
         "/build/runtime.d94b3b43.js",
         "/build/0.cf60d32b.js",
         "/build/1.f340a267.js",
-        "/build/adm.configuration.7b43e2e1.js"
+        "/build/adm.configuration.cd5296b8.js"
       ]
     },
     "adm.articles": {
@@ -148,7 +148,7 @@
         "/build/runtime.d94b3b43.js",
         "/build/0.cf60d32b.js",
         "/build/1.f340a267.js",
-        "/build/adm.groupe.1de06451.js"
+        "/build/adm.groupe.bd25a95d.js"
       ]
     },
     "adm.edt": {
@@ -197,7 +197,7 @@
         "/build/runtime.d94b3b43.js",
         "/build/0.cf60d32b.js",
         "/build/1.f340a267.js",
-        "/build/adm.rattrapages.fa2f98e7.js"
+        "/build/adm.rattrapages.9d2eb63f.js"
       ]
     },
     "adm.previsionnel": {
@@ -205,7 +205,7 @@
         "/build/runtime.d94b3b43.js",
         "/build/0.cf60d32b.js",
         "/build/1.f340a267.js",
-        "/build/adm.previsionnel.2fea897c.js"
+        "/build/adm.previsionnel.664d6b64.js"
       ]
     },
     "adm.notes": {
@@ -213,7 +213,7 @@
         "/build/runtime.d94b3b43.js",
         "/build/0.cf60d32b.js",
         "/build/1.f340a267.js",
-        "/build/adm.notes.f0e2f703.js"
+        "/build/adm.notes.5fc7a068.js"
       ]
     },
     "adm.bornes": {
@@ -221,7 +221,7 @@
         "/build/runtime.d94b3b43.js",
         "/build/0.cf60d32b.js",
         "/build/1.f340a267.js",
-        "/build/adm.bornes.7cf071af.js"
+        "/build/adm.bornes.e39675d5.js"
       ]
     },
     "adm.alternances": {
@@ -229,7 +229,7 @@
         "/build/runtime.d94b3b43.js",
         "/build/0.cf60d32b.js",
         "/build/1.f340a267.js",
-        "/build/adm.alternances.16eb48b2.js"
+        "/build/adm.alternances.485d722f.js"
       ]
     },
     "adm.stage_courrier": {
@@ -237,7 +237,7 @@
         "/build/runtime.d94b3b43.js",
         "/build/0.cf60d32b.js",
         "/build/1.f340a267.js",
-        "/build/adm.stage_courrier.dc6f00e6.js"
+        "/build/adm.stage_courrier.3e2798df.js"
       ],
       "css": [
         "/build/adm.stage_courrier.b62e9f66.css"
@@ -255,7 +255,7 @@
         "/build/runtime.d94b3b43.js",
         "/build/0.cf60d32b.js",
         "/build/1.f340a267.js",
-        "/build/adm.justificatifs.06cc7515.js"
+        "/build/adm.justificatifs.cfb7ef47.js"
       ]
     },
     "adm.absences": {
@@ -263,7 +263,7 @@
         "/build/runtime.d94b3b43.js",
         "/build/0.cf60d32b.js",
         "/build/1.f340a267.js",
-        "/build/adm.absences.ea93effe.js"
+        "/build/adm.absences.29aee057.js"
       ],
       "css": [
         "/build/adm.absences.b275741b.css"
@@ -277,12 +277,20 @@
         "/build/adm.matieres.d0af7490.js"
       ]
     },
+    "adm.scolarite": {
+      "js": [
+        "/build/runtime.d94b3b43.js",
+        "/build/0.cf60d32b.js",
+        "/build/1.f340a267.js",
+        "/build/adm.scolarite.f7eb312c.js"
+      ]
+    },
     "adm.stage": {
       "js": [
         "/build/runtime.d94b3b43.js",
         "/build/0.cf60d32b.js",
         "/build/1.f340a267.js",
-        "/build/adm.stage.a8c8499e.js"
+        "/build/adm.stage.5e49e61f.js"
       ]
     },
     "creneaux": {
@@ -290,7 +298,7 @@
         "/build/runtime.d94b3b43.js",
         "/build/0.cf60d32b.js",
         "/build/1.f340a267.js",
-        "/build/creneaux.fa0f7425.js"
+        "/build/creneaux.93862327.js"
       ]
     },
     "progression": {
@@ -305,7 +313,7 @@
         "/build/runtime.d94b3b43.js",
         "/build/0.cf60d32b.js",
         "/build/1.f340a267.js",
-        "/build/settings.eb2d40b6.js"
+        "/build/settings.23757955.js"
       ]
     },
     "notes": {
@@ -313,7 +321,7 @@
         "/build/runtime.d94b3b43.js",
         "/build/0.cf60d32b.js",
         "/build/1.f340a267.js",
-        "/build/notes.3cb7a0ea.js"
+        "/build/notes.5020c99a.js"
       ]
     },
     "informations": {
@@ -329,7 +337,7 @@
         "/build/runtime.d94b3b43.js",
         "/build/0.cf60d32b.js",
         "/build/1.f340a267.js",
-        "/build/scolarite.45345df3.js"
+        "/build/scolarite.a7a803b3.js"
       ]
     },
     "sadm.scolarite": {
@@ -337,7 +345,7 @@
         "/build/runtime.d94b3b43.js",
         "/build/0.cf60d32b.js",
         "/build/1.f340a267.js",
-        "/build/sadm.scolarite.a1825840.js"
+        "/build/sadm.scolarite.3cd5de71.js"
       ]
     },
     "sadm.anneeuniversitaire": {
@@ -345,7 +353,7 @@
         "/build/runtime.d94b3b43.js",
         "/build/0.cf60d32b.js",
         "/build/1.f340a267.js",
-        "/build/sadm.anneeuniversitaire.3466c3c2.js"
+        "/build/sadm.anneeuniversitaire.83b42016.js"
       ]
     },
     "adm.reservation.materiel_commun": {
@@ -353,7 +361,7 @@
         "/build/runtime.d94b3b43.js",
         "/build/0.cf60d32b.js",
         "/build/1.f340a267.js",
-        "/build/adm.reservation.materiel_commun.a21c1695.js"
+        "/build/adm.reservation.materiel_commun.73edd850.js"
       ]
     }
   }

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/EtudiantRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 24/11/2020 12:54
+// @lastUpdate 01/12/2020 22:04
 
 namespace App\Repository;
 
@@ -230,22 +230,6 @@ class EtudiantRepository extends ServiceEntityRepository
         return $t;
     }
 
-//    /**
-//     * @param $uuid
-//     *
-//     * @return mixed
-//     * @throws NonUniqueResultException
-//     */
-//    public function findOneByUuid($uuid)
-//    {
-//        $query = $this->createQueryBuilder('e')
-//            ->where('e.uuid = UUID_TO_BIN(:uuid)')
-//            ->setParameter('uuid', $uuid);
-//
-//        return $query->getQuery()
-//            ->getOneOrNullResult();
-//    }
-
     /**
      * @param Annee $annee
      *
@@ -324,6 +308,22 @@ class EtudiantRepository extends ServiceEntityRepository
         /** @var Etudiant $etudiant */
         foreach ($etudiants as $etudiant) {
             $t[$etudiant->getNumEtudiant()] = $etudiant;
+        }
+
+        return $t;
+    }
+
+    public function findByDepartementArray(Departement $departement): array
+    {
+        $t = [];
+        foreach ($departement->getDiplomes() as $diplome) {
+            foreach ($diplome->getSemestres() as $semestre) {
+                $etudiants = $this->findBySemestre($semestre);
+                /** @var Etudiant $etudiant */
+                foreach ($etudiants as $etudiant) {
+                    $t[$etudiant->getNumEtudiant()] = $etudiant;
+                }
+            }
         }
 
         return $t;

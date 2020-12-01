@@ -317,6 +317,7 @@ adm:
   scolarite:
     add.flashbag: 'Parcours de scolarité ajouté avec succès'
     edit.heading: 'Modifier le parcours de scolarité de %etudiant%'
+    saisie.promo.heading: 'Saisie de parcours de scolarité manquant'
   site:
     index.heading: 'Liste des sites géographiques'
     modification.heading: 'Modification d''un site géographique'
@@ -1370,7 +1371,8 @@ offre_stage.heading: 'Offres de stage/Alternance'
 or: ou
 
 parametres: Paramètres
-
+parcours.scolarite.import.success.flash: 'Tous les parcours de scolarité ont été improtés avec succès'
+parcours.scolarite.init.semestre.success.flash: 'Initialisation des parcours de scolarité réalisé avec succès'
 parcour.duplicate.success.flash: 'Parcours ou option dupliquée avec succès'
 parcours.scolaire: 'Parcours Scolaire'
 
@@ -2124,3 +2126,6 @@ motif3: 'Demandes ponctuelles (récupérer dossiers, BU)'
 motif4: 'Encadrement doctorant sur site'
 motifTp: 'TP en présentiel'
 motifEval: 'Evaluation'
+
+
+

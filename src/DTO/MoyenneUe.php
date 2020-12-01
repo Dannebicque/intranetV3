@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/MoyenneUe.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/11/2020 15:35
+// @lastUpdate 01/12/2020 22:01
 
 namespace App\DTO;
 
@@ -35,7 +35,7 @@ class MoyenneUe
     {
         $this->totalMatiere += $moyenneMatiere->getMoyenne() * $moyenneMatiere->matiere->getCoefficient();
         $this->totalMatierePenalisee += $moyenneMatiere->getMoyennePenalisee() * $moyenneMatiere->matiere->getCoefficient();
-        $this->totalCoefficient = $moyenneMatiere->matiere->getCoefficient();
+        $this->totalCoefficient += $moyenneMatiere->matiere->getCoefficient();
     }
 
     public function getStyleMoyenne(): string

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/EtudiantSousCommission.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/09/2020 08:39
+// @lastUpdate 01/12/2020 22:02
 
 namespace App\DTO;
 
@@ -52,15 +52,16 @@ class EtudiantSousCommission
         $totalMatieresPenalise = 0;
 
         foreach ($this->moyenneMatieres as $moyenneMatiere) {
+
             if ($moyenneMatiere->optionFaite === true && $moyenneMatiere->matiere->isPac() === false) {
                 $totalMatieres += $moyenneMatiere->getMoyenne() * $moyenneMatiere->matiere->getCoefficient();
                 $totalMatieresPenalise += $moyenneMatiere->getMoyennePenalisee() * $moyenneMatiere->matiere->getCoefficient();
                 $totcoeff += $moyenneMatiere->matiere->getCoefficient();
+
             } elseif ($moyenneMatiere->matiere->isPac() === true) {
                 $this->bonif += $moyenneMatiere->getBonification();
             }
         }
-
         $totcoeff !== 0 ? $this->moyenneSemestre = $totalMatieres / $totcoeff + $this->bonif : $this->moyenneSemestre = 0;
         $totcoeff !== 0 ? $this->moyenneSemestrePenalisee = $totalMatieresPenalise / $totcoeff + $this->bonif : $this->moyenneSemestrePenalisee = 0;
     }
