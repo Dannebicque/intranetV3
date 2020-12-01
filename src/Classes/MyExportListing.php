@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyExportListing.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 02/11/2020 15:52
+// @lastUpdate 01/12/2020 16:48
 
 /**
  * Created by PhpStorm.
@@ -245,13 +245,14 @@ class MyExportListing
             /** @var Etudiant $etudiant */
             foreach ($groupe->getEtudiants() as $etudiant) {
                 $this->writeLine($etudiant, $groupe);
+                $id++;
             }
 
-            $this->myExcelWriter->writeCellName('A17', $id);
+            $this->myExcelWriter->writeCellName('A16', $id);
 
-            $this->myExcelWriter->borderCells('A14:J' . $this->ligne);
+            $this->myExcelWriter->borderCells('A17:J' . $this->ligne);
 
-            $this->myExcelWriter->getColumnDimension('A', 3);
+            $this->myExcelWriter->getColumnAutoSize('A');
             $this->myExcelWriter->getColumnAutoSize('B');
             $this->myExcelWriter->getColumnAutoSize('C');
             $this->myExcelWriter->getColumnAutoSize('D');
@@ -403,6 +404,7 @@ class MyExportListing
                 $this->myExcelWriter->mergeCells('B14:C14');
                 $this->myExcelWriter->writeCellName('B14', 'Groupe ' . $groupe->getLibelle(),
                     ['style' => ['HORIZONTAL_RIGHT']]);
+                $this->ligne = 17;
                 break;
         }
     }
