@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appEtudiant/AlternanceController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 01/12/2020 08:17
 
 namespace App\Controller\appEtudiant;
 
@@ -37,7 +37,7 @@ class AlternanceController extends BaseController
     {
         /** @var Alternance $alternance */
         $alternance = $alternanceRepository->getOneByEtudiantAndAnneeUniversitaire($this->getConnectedUser(),
-            $this->dataUserSession->getAnneeUniversitaire());
+            $this->getEtudiantAnneeUniversitaire());
         $form = null;
         if ($alternance !== null) {
             $form = $this->createForm(
