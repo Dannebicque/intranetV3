@@ -1,0 +1,17 @@
+<div class="card">
+    <div class="card-header">
+        <h4>Liste des étudiants pour la saisie de la scolarité du semestre {{ semestre.display }} pour
+            l'année {{ anneeUniversitaire.displayAnneeUniversitaire }}</h4>
+    </div>
+    <div class="card-body">
+        <form action="" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="semestre" value="{{ semestre.id }}">
+            <input type="hidden" name="anneeUniversitaire" value="{{ anneeUniversitaire.id }}">
+            <div class="form-group">
+                <label for="fichier"></label>
+                <input type="file" name="fichier" id="fichier" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-success btn-block">Enregistrer</button>
+        </form>
+    </div>
+</div>

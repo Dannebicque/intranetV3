@@ -204,6 +204,27 @@
                 <div class="card">
                     <header class="card-header">
                         <h4 class="card-title">{{ 'gerer.fin.semestre'|trans|raw }}</h4>
+                        <div class="card-header-actions">
+                            <ul class="card-controls">
+                                <li class="dropdown">
+                                    <a data-toggle="dropdown" href="#"><i
+                                                class="fas fa-ellipsis-h rotate-90"></i></a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a href="{{ path('administration_scolarite_saisie_promo', {semestre:semestre
+                                            .id}) }}"
+                                           class="dropdown-item"><i
+                                                    class="fa fa-file-pdf"></i>Saisie des parcours de scolarité
+                                                                               pour un
+                                                                               semestre</a>
+                                        <a href="{{ path('administration_scolarite_init_semestre',
+                                            {semestre:semestre.id}) }}"
+                                           class="dropdown-item"><i
+                                                    class="fa fa-file-pdf"></i>Initialiser les scolarités pour le
+                                                                               semestre</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
                     </header>
                     <div class="card-body">
                         <a href="{{ path('administration_sous_commission_live',{semestre:semestre.id}) }}"

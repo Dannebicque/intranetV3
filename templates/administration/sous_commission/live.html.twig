@@ -142,15 +142,16 @@
                                     {# decision semestre #}
 
                                     {% for u in sousCommission.ues %}
-                                        <td><span class="{{ myEtudiant.moyenneUes[u.numeroue].styleMoyenne }}"><a
+                                        <td><span class="{{ myEtudiant.moyenneUes[u.id].styleMoyenne }}"><a
                                                         href="#" rel="tooltip"
-                                                        title="{{ etudiant.display }}">{{ myEtudiant.moyenneUes[u.numeroue].moyenne|number_format(3) }}</a></span>
+                                                        title="{{ etudiant.display }}">{{ myEtudiant.moyenneUes[u.id]
+                                                    .moyenne|number_format(3) }}</a></span>
                                         </td>
 
                                         {# Penalite #}
                                         {% if semestre.optPenaliteAbsence == true %}
                                             <td style="background-color: #00B7FC;">
-                                                {{ myEtudiant.moyenneUes[u.numeroue].moyennePenalisee|number_format(3) }}
+                                                {{ myEtudiant.moyenneUes[u.id].moyennePenalisee|number_format(3) }}
                                             </td>
                                         {% endif %}
                                         {# fin penalite #}
@@ -164,8 +165,8 @@
 
                                     {# penalite #}
                                     {% if semestre.optPenaliteAbsence == true %}
-                                        <td style="background-color: #00B7FC;" class="{{ myEtudiant.moyenneSemestre
-                                        .styleMoyennePenalisee }}">
+                                        <td style="background-color: #00B7FC;" class="{{ myEtudiant
+                                        .styleMoyenneSemestrePenalisee }}">
                                             {{ myEtudiant.moyenneSemestrePenalisee|number_format(3) }}
                                         </td>
                                     {% endif %}

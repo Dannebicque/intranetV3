@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.scolarite.saisie.promo.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}" class="btn btn-primary
+            btn-float"
+               data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="material-icons">build</i></a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">
+            {{ 'adm.scolarite.saisie.promo.heading'|trans }}
+        </h4>
+        <div class="card-body">
+            <form>
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <label for="semestre">Semestre</label>
+                            <select name="semestre" id="semestre" class="form-control">
+                                <option value="">Choisir</option>
+                                {% for semestre in semestres %}
+                                    <option value="{{ semestre.id }}">{{ semestre.display }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <label for="anneeUniversitaire">Année Universitaire</label>
+                        <select name="anneeUniversitaire" id="anneeUniversitaire" class="form-control">
+                            <option value="">Choisir</option>
+                            {% for anneeUniversitaire in anneesUniversitaires %}
+                                <option value="{{ anneeUniversitaire.id }}">{{ anneeUniversitaire.displayAnneeUniversitaire }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <button class="btn btn-block btn-success" id="afficheEtudiants">Afficher les
+                                                                                        étudiants
+                                                                                        pour la
+                                                                                        saisie
+                        </button>
+                    </div>
+                    <div class="col-md-6">
+                        <button class="btn btn-block btn-success" id="importEtudiants">Importer</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div id="zone"></div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('adm.scolarite') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('adm.scolarite') }}
+{% endblock %}
+

@@ -3,21 +3,26 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/ScolariteController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/08/2020 15:05
+// @lastUpdate 01/12/2020 22:04
 
 namespace App\Controller\administration;
 
+use App\Classes\MyScolarite;
 use App\Controller\BaseController;
+use App\Entity\AnneeUniversitaire;
+use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Entity\Scolarite;
 use App\Entity\ScolariteMoyenneUe;
 use App\Entity\Semestre;
 use App\Entity\Ue;
 use App\Form\ScolariteType;
+use App\Repository\AnneeUniversitaireRepository;
 use App\Repository\ScolariteMoyenneUeRepository;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -96,5 +101,82 @@ class ScolariteController extends BaseController
         }
 
         return $this->json($t, Response::HTTP_OK);
+    }
+
+    /**
+     * @Route("/import-intranet", name="administration_scolarite_import_intranetv2")
+     * @param MyScolarite $myScolarite
+     * @param Request     $request
+     *
+     * @return RedirectResponse
+     * @throws Exception
+     */
+    public function importScolarite(MyScolarite $myScolarite, Request $request): RedirectResponse
+    {
+        $myScolarite->importCsv($request->files->get('fichierImport'), $this->getDepartement());
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'parcours.scolarite.import.success.flash');
+
+        return $this->redirectToRoute('administration_cohorte_index');
+    }
+
+    /**
+     * @Route("/init-scolarite/{semestre}", name="administration_scolarite_init_semestre")
+     * @param MyScolarite $myScolarite
+     *
+     * @return RedirectResponse
+     * @throws Exception
+     */
+    public function initParcoursScolarite(MyScolarite $myScolarite, Semestre $semestre)
+    {
+        $myScolarite->initSemestre($semestre, $this->dataUserSession->getAnneeUniversitaire());
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'parcours.scolarite.init.semestre.success.flash');
+
+        return $this->redirectToRoute('administration_semestre_index', ['semestre' => $semestre->getId()]);
+    }
+
+    /**
+     * @Route("/saisie/promo/{semestre}", name="administration_scolarite_saisie_promo")
+     * @param AnneeUniversitaireRepository $anneeUniversitaireRepository
+     * @param Semestre                     $semestre
+     *
+     * @return Response
+     */
+    public function saisiePromotion(AnneeUniversitaireRepository $anneeUniversitaireRepository, Semestre $semestre)
+    {
+        return $this->render('administration/scolarite/saisiePromotion.html.twig', [
+            'semestre'             => $semestre,
+            'semestres'            => $this->dataUserSession->getSemestres(),
+            'anneesUniversitaires' => $anneeUniversitaireRepository->findAll()
+        ]);
+    }
+
+    /**
+     * @Route("/ajax-saisie/promo/{semestre}/{anneeUniversitaire}", name="administration_scolarite_saisie_promo_ajax",
+     *                                                              options={"expose"=true})
+     * @param Semestre $semestre
+     *
+     * @return Response
+     */
+    public function saisiePromotionAjax(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire)
+    {
+        return $this->render('administration/scolarite/_saisiePromotion.html.twig', [
+            'semestre'           => $semestre,
+            'anneeUniversitaire' => $anneeUniversitaire,
+        ]);
+    }
+
+    /**
+     * @Route("/ajax-import/promo/{semestre}/{anneeUniversitaire}", name="administration_scolarite_saisie_promo_import_ajax",
+     *                                                              options={"expose"=true})
+     * @param Semestre $semestre
+     *
+     * @return Response
+     */
+    public function importPromotionAjax(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire)
+    {
+        return $this->render('administration/scolarite/_importPromotion.html.twig', [
+            'semestre'           => $semestre,
+            'anneeUniversitaire' => $anneeUniversitaire,
+        ]);
     }
 }

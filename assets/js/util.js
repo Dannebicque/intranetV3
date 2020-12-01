@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/util.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/10/2020 14:54
+// @lastUpdate 01/12/2020 22:04
 
 import $ from 'jquery'
 import Swal from 'sweetalert2'
@@ -286,4 +286,16 @@ export function getDataOptions (el, castList) {
   })
 
   return options
+}
+
+export function invalidChamps ($obj) {
+  $obj.removeClass('is-valid').addClass('is-invalid')
+}
+
+export function validChamps ($obj) {
+  $obj.removeClass('is-invalid').addClass('is-valid')
+}
+
+export function completeChamps ($obj) {
+  $obj.removeClass('is-invalid').removeClass('is-valid')
 }

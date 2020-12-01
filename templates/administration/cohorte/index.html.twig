@@ -14,27 +14,42 @@
 {% endblock %}
 
 {% block content %}
-<div class="card">
-    <h4 class="card-title">
-        {{ 'gestion.cohorte.choix.annee.heading'|trans()|raw }}
-    </h4>
-    <div class="card-body">
-        <div class="form-group">
-            <label class="control-label" for="annee">Choisissez une année</label>
-
-            <select name="annee" id="annee" class="form-control">
-                {% for i in 2015..'now'|date('Y') %}
-                <option value="{{ i }}" {% if i == annee %}selected{% endif %}>{{ i }}</option>
-                {% endfor %}
-            </select>
-
-        </div>
-        <div>
-            <button type="submit" class="btn btn-block btn-warning">Afficher le suivi de cohorte
-            </button>
-            <br>
+    <div class="card">
+        <h4 class="card-title">
+            Importer des parcour de scolarité depuis Intranet V2
+        </h4>
+        <div class="card-body">
+            <form action="{{ path('administration_scolarite_import_intranetv2') }}" method="POST"
+                  enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="fichierImport">Fichier csv</label>
+                    <input type="file" name="fichierImport" class="form-control" id="fichierImport">
+                </div>
+                <button type="submit" class="btn btn-success">Importer</button>
+            </form>
         </div>
     </div>
+    <div class="card">
+        <h4 class="card-title">
+            {{ 'gestion.cohorte.choix.annee.heading'|trans()|raw }}
+        </h4>
+        <div class="card-body">
+            <div class="form-group">
+                <label class="control-label" for="annee">Choisissez une année</label>
+
+                <select name="annee" id="annee" class="form-control">
+                    {% for i in 2015..'now'|date('Y') %}
+                        <option value="{{ i }}" {% if i == annee %}selected{% endif %}>{{ i }}</option>
+                    {% endfor %}
+                </select>
+
+            </div>
+            <div>
+                <button type="submit" class="btn btn-block btn-warning">Afficher le suivi de cohorte
+                </button>
+                <br>
+            </div>
+        </div>
 </div>
     <div class="card">
         <h4 class="card-title">

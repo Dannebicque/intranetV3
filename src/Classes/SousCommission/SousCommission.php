@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/SousCommission/SousCommission.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/08/2020 14:22
+// @lastUpdate 01/12/2020 22:02
 
 namespace App\Classes\SousCommission;
 
@@ -109,7 +109,6 @@ class SousCommission
             if ($semestre->getDiplome() !== null) {
                 if ($semestre->getDiplome()->getOptMethodeCalcul() === Constantes::MOYENNE_MODULES) {
                     $etudiantSousCommission->calculMoyenneSemestreMatiere();
-
                 } elseif ($semestre->getDiplome()->getOptMethodeCalcul() === Constantes::MOYENNE_UES) {
                     $etudiantSousCommission->calculMoyenneSemestreUes();
                 }
@@ -150,7 +149,6 @@ class SousCommission
                 $tabUes[$idUe]->addMatiere($matiere);
             }
         }
-
         return $tabUes;
     }
 
@@ -196,30 +194,30 @@ class SousCommission
         return $this->sousCommissionEtudiant[$idEtudiant];
     }
 
-    private function calculMoyenneSemestreMatiere(array $moyenneMatieres): MoyenneSemestre
-    {
-        $moyenneSemestre = new MoyenneSemestre();
-
-        //calculer la moyenne avec les matières, sans se soucier de l'UE
-        /** @var MoyenneMatiere $matiere */
-        foreach ($moyenneMatieres as $matiere) {
-            $moyenneSemestre->addMatiere($matiere);
-        }
-
-        return $moyenneSemestre;
-    }
-
-    private function calculMoyenneSemestreUes(array $moyenneUes): MoyenneSemestre
-    {
-        $moyenneSemestre = new MoyenneSemestre();
-
-        //calculer la moyenne avec les ues
-        foreach ($moyenneUes as $ue) {
-            $moyenneSemestre->addUe($ue);
-        }
-
-        return $moyenneSemestre;
-    }
+//    private function calculMoyenneSemestreMatiere(array $moyenneMatieres): MoyenneSemestre
+//    {
+//        $moyenneSemestre = new MoyenneSemestre($this->semestre);
+//
+//        //calculer la moyenne avec les matières, sans se soucier de l'UE
+//        /** @var MoyenneMatiere $matiere */
+//        foreach ($moyenneMatieres as $matiere) {
+//            $moyenneSemestre->addMatiere($matiere);
+//        }
+//
+//        return $moyenneSemestre;
+//    }
+//
+//    private function calculMoyenneSemestreUes(array $moyenneUes): MoyenneSemestre
+//    {
+//        $moyenneSemestre = new MoyenneSemestre($this->semestre);
+//
+//        //calculer la moyenne avec les ues
+//        foreach ($moyenneUes as $ue) {
+//            $moyenneSemestre->addUe($ue);
+//        }
+//
+//        return $moyenneSemestre;
+//    }
 
 
 }
