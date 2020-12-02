@@ -26,8 +26,8 @@
         <tbody>
         {% for personnel in personnels %}
             <tr id="ligne_{{ personnel.id }}">
-                <td>{{ personnel.personnel.nom }}</td>
-                <td>{{ personnel.personnel.prenom }}</td>
+                <td>{{ personnel.personnel.nom|upper }}</td>
+                <td>{{ personnel.personnel.prenom|capitalize }}</td>
                 {% if type == 'permanent' %}
                     <td>{{ personnel.personnel.posteInterne }}</td>
                     <td>{{ personnel.personnel.telBureau|tel_format }}</td>
