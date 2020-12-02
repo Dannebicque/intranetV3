@@ -20,7 +20,8 @@
                     {% for i in evaluations.evaluations|length..matiere.nbNotes-1 %}
                         <li class="nav-item">
                             <a href="#evalvide{{ i }}" data-toggle="tab"
-                               class="nav-link {% if evaluations.evaluations|length == 0 and loop.first %} active {% endif %}">{{ 'evaluation'|trans }} N° {{ i+1 }} ({{ 'a.saisir'|trans }})
+                               class="nav-link {% if evaluations.evaluations|length == 0 and loop.first %} active {% endif %}">{{ 'evaluation'|trans }}
+                                N° {{ i+1 }} ({{ 'a.saisir'|trans }})
                             </a>
                         </li>
                     {% endfor %}
@@ -40,20 +41,21 @@
     {% if matiere.nbNotes > 0 %}
         <div class="tab-content">
             {% for eval in evaluations.evaluations %}
-              <div class="tab-pane {% if (indexEval == 0 and loop.first) or (indexEval == eval.id) %} active show{% endif %}"
-                   id="eval{{ eval.id }}" role="tabpanel">
-                <div class="card">
-                  <h4 class="card-title">Evaluation N° {{ loop.index }} ({{ eval.dateEvaluation|format_date('long') }},
-                                         #{{ eval.id }}
-                                         ) {% if eval.libelle != '' %} - {{ eval.libelle }}{% endif %}</h4>
-                  <div class="card-body">
-                      {% if eval.visible == false %}
-                        <div class="alert alert-warning">
-                          Cette évaluation n'est pas visible des étudiants.
-                        </div>
-                      {% endif %}
-                    <table class="table table-striped table-bordered">
-                      <tr>
+                <div class="tab-pane {% if (indexEval == 0 and loop.first) or (indexEval == eval.id) %} active show{% endif %}"
+                     id="eval{{ eval.id }}" role="tabpanel">
+                    <div class="card">
+                        <h4 class="card-title">Evaluation N° {{ loop.index }}
+                                               ({{ eval.dateEvaluation|format_date('long') }},
+                                               #{{ eval.id }}
+                                               ) {% if eval.libelle != '' %} - {{ eval.libelle }}{% endif %}</h4>
+                        <div class="card-body">
+                            {% if eval.visible == false %}
+                                <div class="alert alert-warning">
+                                    Cette évaluation n'est pas visible des étudiants.
+                                </div>
+                            {% endif %}
+                            <table class="table table-striped table-bordered">
+                                <tr>
                                     <th>{{ 'table.groupe'|trans }}</th>
                                     {% for groupe in eval.typeGroupe.groupes %}
                                         <th>{{ groupe.libelle }}</th>
@@ -130,9 +132,11 @@
                                     </td>
                                 </tr>
                             </table>
+                            <canvas id="graphEval_{{ eval.id }}"></canvas>
                         </div>
                     </div>
                 </div>
+
             {% endfor %}
 
             {% if evaluations.evaluations|length < matiere.nbNotes %}
@@ -144,13 +148,14 @@
                             <div class="card-body">
                                 <a href="{{ path('application_personnel_note_saisie', {matiere:matiere.id}) }}"
                                    class="btn btn-block btn-large btn-primary">{{ 'note.saisie'|trans }}</a>
-                                {#                                <a href="{{ path('application_personnel_note_import', {matiere:matiere.id}) }}"#}
-                                {#                                   class="btn btn-block btn-large btn-primary">{{ 'note.import'|trans }}</a>#}
+                                {# <a href="{{ path('application_personnel_note_import', {matiere:matiere.id}) }}" #}
+                                {# class="btn btn-block btn-large btn-primary">{{ 'note.import'|trans }}</a> #}
                             </div>
                         </div>
                     </div>
                 {% endfor %}
             {% endif %}
+
         </div>
     {% else %}
         <div class="card">
@@ -161,6 +166,49 @@
         </div>
     {% endif %}
 
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+    {{ encore_entry_script_tags('chartjs') }}
+    <script>
+
+        {% for eval in evaluations.evaluations %}
+
+        var graphEval_{{ eval.id }} = document.getElementById('graphEval_{{ eval.id }}').getContext('2d')
+        var myChart = new Chart(graphEval_{{ eval.id }}, {
+          type: 'bar',
+
+          // Data
+          //
+          data: {
+            labels: [{% for i in 0..20 %}{{ i }}{% if not loop.last %},{% endif %}{% endfor %}],
+            datasets: [
+              {
+                label: 'Répartition des Notes',
+                backgroundColor: 'rgba(51,202,185,0.5)',
+                borderColor: 'rgba(0,0,0,0)',
+                hoverBackgroundColor: 'rgba(51,202,185,0.7)',
+                hoverBorderColor: 'rgba(0,0,0,0)',
+                data: [{% for i in 0..20 %}{{ evaluations.statistiques[eval.id].repartition[i] }}{% if not loop.last %},{% endif %}{% endfor %}]
+              }
+            ]
+          },
+
+          // Options
+          //
+          options: {
+            scales: {
+              yAxes: [{
+                ticks: {
+                  beginAtZero: true
+                }
+              }]
+            }
+          }
+        })
+        {% endfor %}
+    </script>
 {% endblock %}
 
 {% block fabactions %}

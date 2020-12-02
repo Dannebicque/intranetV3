@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEvaluation.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 21/10/2020 06:25
+// @lastUpdate 02/12/2020 17:35
 
 /**
  * Created by PhpStorm.
@@ -91,6 +91,11 @@ class MyEvaluation
     public function calculStatistiquesGlobales(): MyEvaluation
     {
         $this->notes = $this->evaluation->getNotes();
+        $repartition = [];
+        for ($i = 0; $i <= 20; $i++) {
+            $repartition[$i] = 0;
+        }
+
         $tgroupes = [];
 
         $t = [];
@@ -98,6 +103,9 @@ class MyEvaluation
         /** @var Note $note */
         foreach ($this->notes as $note) {
             if ($note->getEtudiant() !== null) {
+                if ($note->getNote() >= 0) {
+                    $repartition[floor($note->getNote())]++;
+                }
                 $t[$note->getEtudiant()->getId()] = $note->getNote();
                 $this->classement[$note->getEtudiant()->getId()] = $note->getNote();
             }
@@ -130,7 +138,7 @@ class MyEvaluation
         $this->statistiques['promo']['moyenne'] = count($t) > 0 ? array_sum($t) / count($t) : -0.01;
         $this->statistiques['promo']['ecart_type'] = count($t) > 0 ? $this->ecartType($t) : -0.01;
         $this->statistiques['promo']['rang'] = $this->classement; //todo: intéret ? On sauvegarde juste des notes ?
-
+        $this->statistiques['repartition'] = $repartition;
         return $this;
     }
 
