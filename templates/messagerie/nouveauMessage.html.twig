@@ -106,7 +106,7 @@
             <label for="messageCopy" class="sr-only">Copie(s)</label>
 
             <select class="form-control selectpicker" data-size="10"
-                    title="{{ 'message.copy'|trans }}" id="messageCopy" name="messageCopy" multiple>
+                    title="{{ 'message.copy'|trans }}" id="messageCopy" name="messageCopy[]" multiple>
                 {% for personnel in user_data.personnels %}
                     <option value="{{ personnel.id }}">{{ personnel.display }}</option>
                 {% endfor %}
