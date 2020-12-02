@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyMessagerie.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/10/2020 15:54
+// @lastUpdate 02/12/2020 18:15
 
 namespace App\Classes;
 
@@ -102,26 +102,33 @@ class MyMessagerie
 
         foreach ($destinataires as $destinataire) {
             if ($destinataire === Personnel::PERMANENT) {
-                $listeDestinataires[] = $this->personnelRepository->findByType(Personnel::PERMANENT, $departement);
+                $temp = $this->personnelRepository->findByType(Personnel::PERMANENT, $departement);
+                foreach ($temp as $dest) {
+                    $listeDestinataires[] = $dest;
+                }
                 $this->typeDestinataires .= Personnel::PERMANENT . ', ';
             } elseif ($destinataire === Personnel::VACATAIRE) {
-                $listeDestinataires[] = $this->personnelRepository->findByType(Personnel::VACATAIRE, $departement);
+                $temp = $this->personnelRepository->findByType(Personnel::VACATAIRE, $departement);
+                foreach ($temp as $dest) {
+                    $listeDestinataires[] = $dest;
+                }
                 $this->typeDestinataires .= Personnel::VACATAIRE . ', ';
+            } else {
+                $listeDestinataires[] = $this->personnelRepository->find($destinataire);
             }
         }
+        foreach ($listeDestinataires as $destinataire) {
+            //foreach ($tdestinataire as $destinataire) {
+            if ($destinataire !== null) {
 
-        foreach ($listeDestinataires as $tdestinataire) {
-            foreach ($tdestinataire as $destinataire) {
-                if ($destinataire !== null) {
+                $message = (new TemplatedEmail())
+                    ->subject($this->sujet)
+                    ->from($this->expediteur->getMailuniv())
+                    ->textTemplate('mails/message.txt.twig')
+                    ->context(['message' => $this->message, 'expediteur' => $this->expediteur]);
 
-                    $message = (new TemplatedEmail())
-                        ->subject($this->sujet)
-                        ->from($this->expediteur->getMailuniv())
-                        ->textTemplate('mails/message.txt.twig')
-                        ->context(['message' => $this->message, 'expediteur' => $this->expediteur]);
-
-                    //récupération des fichiers uploadés
-                    foreach ($this->pjs as $file) {
+                //récupération des fichiers uploadés
+                foreach ($this->pjs as $file) {
                         $message->attachFromPath($file);
                     }
 
@@ -134,7 +141,7 @@ class MyMessagerie
                     $this->myMailer->send($message);
                     $this->nbMessagesEnvoyes++;
                 }
-            }
+            //}
         }
         $mess->setTypeDestinataires($this->typeDestinataires);
         $this->entityManager->flush();

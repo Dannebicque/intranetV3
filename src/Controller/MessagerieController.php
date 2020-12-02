@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/MessagerieController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/10/2020 16:01
+// @lastUpdate 02/12/2020 18:15
 
 namespace App\Controller;
 
@@ -192,7 +192,7 @@ class MessagerieController extends BaseController
         $destinataires = $this->getDestinataires($typeDestinataire, $request);
 
         $sujet = $request->request->get('messageSubject');
-        $copie = $request->request->get('copie');
+        $copie = $request->request->get('messageCopy');
         $message = $request->request->get('message');
 
         foreach ($request->files as $file) {
@@ -207,7 +207,7 @@ class MessagerieController extends BaseController
         $messagerie->sendToDestinataires($this->checkArray($destinataires), $typeDestinataire, $this->getDepartement());
 
 
-        if ($copie !== null) {
+        if (count($copie) > 0) {
             $messagerie->setCopie($copie, $this->getDepartement());
         }
 
