@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/EtudiantSousCommission.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 01/12/2020 22:02
+// @lastUpdate 02/12/2020 11:56
 
 namespace App\DTO;
 
@@ -220,4 +220,14 @@ class EtudiantSousCommission
     {
         return count($this->scolarite); //todo à améliorer...
     }
+
+    /**
+     * @return array
+     */
+    public function getScolarite(): array
+    {
+        return $this->scolarite;
+    }
+
+
 }

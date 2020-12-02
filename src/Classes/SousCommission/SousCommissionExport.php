@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/SousCommission/SousCommissionExport.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/08/2020 14:24
+// @lastUpdate 02/12/2020 11:57
 
 namespace App\Classes\SousCommission;
 
@@ -156,51 +156,58 @@ class SousCommissionExport
             $colonne++;
 
             foreach ($matieres as $matiere) {
-                $moyenneMatiere = $sousCommissionEtudiant->moyenneMatieres[$matiere->getId()];
-                if ($matiere->getNbnotes() > 0) {
-                    if ($matiere->isPac() === true) {
-                        if ($moyenneMatiere->getMoyenne() !== '-0.01'
-                            && $moyenneMatiere->getMoyenne() > 0
-                        ) {
-                            if ($semestre->isOptPenaliteAbsence() === true) {
-                                $this->myExcelWriter->writeCellXY($colonne, $ligne,
-                                    $moyenneMatiere->getMoyennePenalisee(),
-                                    'numerique');
-                                $this->myExcelWriter->colorCellRange($colonne, $ligne,
-                                    $tCouleur[$moyenneMatiere->getStylePenalisee()]);
+
+                if ($matiere->getNbnotes() > 0 && $matiere->isSuspendu() === false) {
+                    if (array_key_exists($matiere->getId(), $sousCommissionEtudiant->moyenneMatieres)) {
+                        $moyenneMatiere = $sousCommissionEtudiant->moyenneMatieres[$matiere->getId()];
+                        if ($matiere->isPac() === true) {
+                            if ($moyenneMatiere->getMoyenne() !== '-0.01'
+                                && $moyenneMatiere->getMoyenne() > 0
+                            ) {
+                                if ($semestre->isOptPenaliteAbsence() === true) {
+                                    $this->myExcelWriter->writeCellXY($colonne, $ligne,
+                                        $moyenneMatiere->getMoyennePenalisee(),
+                                        'numerique');
+                                    $this->myExcelWriter->colorCellRange($colonne, $ligne,
+                                        $tCouleur[$moyenneMatiere->getStylePenalisee()]);
+                                } else {
+                                    $this->myExcelWriter->writeCellXY($colonne, $ligne,
+                                        $moyenneMatiere->getMoyenne(),
+                                        'numerique');
+                                    $this->myExcelWriter->colorCellRange($colonne, $ligne,
+                                        $tCouleur[$moyenneMatiere->getStyle()]);
+                                }
+
                             } else {
-                                $this->myExcelWriter->writeCellXY($colonne, $ligne,
-                                    $moyenneMatiere->getMoyenne(),
-                                    'numerique');
-                                $this->myExcelWriter->colorCellRange($colonne, $ligne,
-                                    $tCouleur[$moyenneMatiere->getStyle()]);
+                                $this->myExcelWriter->writeCellXY($colonne, $ligne, 'No PAC');
+                                $this->myExcelWriter->colorCellRange($colonne, $ligne, $tCouleur['pasoption']);
                             }
 
-                        } else {
-                            $this->myExcelWriter->writeCellXY($colonne, $ligne, 'No PAC');
+                        } elseif ($moyenneMatiere->optionFaite === false) {
+                            $this->myExcelWriter->writeCellXY($colonne, $ligne, 'N.C.');
                             $this->myExcelWriter->colorCellRange($colonne, $ligne, $tCouleur['pasoption']);
+
+                        } elseif ($semestre->isOptPenaliteAbsence() === true) {
+                            $this->myExcelWriter->writeCellXY($colonne, $ligne,
+                                $moyenneMatiere->getMoyennePenalisee(),
+                                'numerique');
+                            $this->myExcelWriter->colorCellRange($colonne, $ligne,
+                                $tCouleur[$moyenneMatiere->getStylePenalisee()]);
+                        } else {
+                            $this->myExcelWriter->writeCellXY($colonne, $ligne,
+                                $moyenneMatiere->getMoyenne(),
+                                'numerique');
                         }
-
-                    } elseif ($moyenneMatiere->optionFaite === false) {
-                        $this->myExcelWriter->writeCellXY($colonne, $ligne, 'N.C.');
-                        $this->myExcelWriter->colorCellRange($colonne, $ligne, $tCouleur['pasoption']);
-
-                    } else if ($semestre->isOptPenaliteAbsence() === true) {
-                        $this->myExcelWriter->writeCellXY($colonne, $ligne,
-                            $moyenneMatiere->getMoyennePenalisee(),
-                            'numerique');
-                        $this->myExcelWriter->colorCellRange($colonne, $ligne,
-                            $tCouleur[$moyenneMatiere->getStylePenalisee()]);
-                    } else {
-                        $this->myExcelWriter->writeCellXY($colonne, $ligne,
-                            $moyenneMatiere->getMoyenne(),
-                            'numerique');
                         $this->myExcelWriter->colorCellRange($colonne, $ligne,
                             $tCouleur[$moyenneMatiere->getStyle()]);
                     }
                     $colonne++;
+                } else {
+                    //note pas présente
                 }
+
             }
+
 
             foreach ($ues as $ue) {
                 if ($semestre->isOptPenaliteAbsence() === true) {
@@ -252,9 +259,9 @@ class SousCommissionExport
             /* semestres précédent */
             foreach ($this->sousCommission->getSemestresScolarite() as $s) {
                 foreach ($s->getUes() as $ue) {
-                    if (isset($sousCommissionEtudiant->getParcours()[$s->getOrdreLmd()])) {
+                    if (isset($sousCommissionEtudiant->getScolarite()[$s->getOrdreLmd()])) {
                         $this->myExcelWriter->writeCellXY($colonne, $ligne,
-                            $sousCommissionEtudiant->getParcours()[$s->getOrdreLmd()]->getParcoursUe()[$ue->getId()]['moyenne'],
+                            $sousCommissionEtudiant->getScolarite()[$s->getOrdreLmd()]->getParcoursUe()[$ue->getId()]['moyenne'],
                             'numerique3');
                     } else {
                         $this->myExcelWriter->writeCellXY($colonne, $ligne, ' - ');
@@ -263,13 +270,13 @@ class SousCommissionExport
 
                     $colonne++;
                 }
-                if (isset($sousCommissionEtudiant->getParcours()[$s->getOrdreLmd()])) {
+                if (isset($sousCommissionEtudiant->getScolarite()[$s->getOrdreLmd()])) {
                     $this->myExcelWriter->writeCellXY($colonne, $ligne,
-                        $sousCommissionEtudiant->getParcours()[$s->getOrdreLmd()]->getMoyenne(),
+                        $sousCommissionEtudiant->getScolarite()[$s->getOrdreLmd()]->getMoyenne(),
                         'numerique3');
                     $colonne++;
                     $this->myExcelWriter->writeCellXY($colonne, $ligne,
-                        $sousCommissionEtudiant->getParcours()[$s->getOrdreLmd()]->getDecision());
+                        $sousCommissionEtudiant->getScolarite()[$s->getOrdreLmd()]->getDecision());
                     $colonne++;
                 } else {
                     $this->myExcelWriter->writeCellXY($colonne, $ligne, ' - ');

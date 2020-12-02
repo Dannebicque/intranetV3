@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/SousCommission/SousCommission.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 01/12/2020 22:02
+// @lastUpdate 02/12/2020 09:33
 
 namespace App\Classes\SousCommission;
 
@@ -12,7 +12,6 @@ use App\Classes\Etudiant\EtudiantAbsences;
 use App\Classes\Etudiant\EtudiantNotes;
 use App\DTO\EtudiantSousCommission;
 use App\DTO\MoyenneMatiere;
-use App\DTO\MoyenneSemestre;
 use App\DTO\MoyenneUe;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Constantes;
@@ -96,7 +95,7 @@ class SousCommission
             $this->etudiantNotes->setEtudiant($etudiant);
             $etudiantSousCommission->moyenneMatieres = $this->etudiantNotes->getMoyenneParMatiereParSemestresEtAnneeUniversitaire($semestre,
                 $anneeUniversitaire);
-
+            //dump($etudiantSousCommission->moyenneMatieres);
             //récupérer les pénalités d'absence par matière
             $this->etudiantAbsences->setEtudiant($etudiant);
             $this->etudiantAbsences->getPenalitesAbsencesParMatiere($semestre, $anneeUniversitaire,
@@ -193,31 +192,4 @@ class SousCommission
     {
         return $this->sousCommissionEtudiant[$idEtudiant];
     }
-
-//    private function calculMoyenneSemestreMatiere(array $moyenneMatieres): MoyenneSemestre
-//    {
-//        $moyenneSemestre = new MoyenneSemestre($this->semestre);
-//
-//        //calculer la moyenne avec les matières, sans se soucier de l'UE
-//        /** @var MoyenneMatiere $matiere */
-//        foreach ($moyenneMatieres as $matiere) {
-//            $moyenneSemestre->addMatiere($matiere);
-//        }
-//
-//        return $moyenneSemestre;
-//    }
-//
-//    private function calculMoyenneSemestreUes(array $moyenneUes): MoyenneSemestre
-//    {
-//        $moyenneSemestre = new MoyenneSemestre($this->semestre);
-//
-//        //calculer la moyenne avec les ues
-//        foreach ($moyenneUes as $ue) {
-//            $moyenneSemestre->addUe($ue);
-//        }
-//
-//        return $moyenneSemestre;
-//    }
-
-
 }

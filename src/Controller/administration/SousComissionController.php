@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/SousComissionController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/08/2020 14:22
+// @lastUpdate 02/12/2020 11:26
 
 namespace App\Controller\administration;
 
@@ -22,8 +22,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class SousComissionController extends BaseController
 {
-
-
     /**
      * @Route("/live/{semestre}", name="administration_sous_commission_live")
      * @param SousCommission $sousCommission
@@ -107,7 +105,7 @@ class SousComissionController extends BaseController
      */
     public function exporter(SousCommissionExport $sousCommission, Semestre $semestre): Response
     {
-        return $sousCommission->export($semestre, $semestre->getAnneeUniversitaire());
+        return $sousCommission->export($semestre, $this->dataUserSession->getAnneeUniversitaire());
     }
 
     /**
