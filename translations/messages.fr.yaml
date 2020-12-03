@@ -515,6 +515,7 @@ annee_universitaire:
 
 annee:
   add.success.flash: 'Année ajoutée avec succès'
+  duplicate.success.flash: 'Année dupliquée avec succès'
   create.success.flash: 'Année créée avec succès'
   en.apprentissage: 'Année en apprentissage'
   promotion: Promotion
@@ -1153,6 +1154,7 @@ hrs:
 illimite: illimité
 import_note_a_verifier: 'Vérifier l''import des notes'
 import:
+  etudiant.apogee.ok: 'Import des étudiants depuis Apogée avec succès'
   d_un.ppn.heading: 'Import d''un PPN'
   etudiant.heading: 'Importer des étudiants'
   etudiants.groupes.heading: 'Importer les étudiants dans les groupes du semestre %semestre%'
