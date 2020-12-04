@@ -18,6 +18,9 @@
     {% if user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ASS') %}
         {{ include('administration/_cdd_dde_ass.html.twig') }}
     {% else %}
+        {% if user_data.isGoodDepartement('ROLE_QUALITE') %}
+            {{ include('administration/_qualite.html.twig') }}
+        {% endif %}
         {% if user_data.isGoodDepartement('ROLE_ABS') %}
             {{ include('administration/_abs.html.twig') }}
         {% endif %}
