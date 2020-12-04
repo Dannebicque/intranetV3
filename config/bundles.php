@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/config/bundles.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 14/10/2020 13:14
+// @lastUpdate 04/12/2020 13:43
 
 return [
     Symfony\Bundle\FrameworkBundle\FrameworkBundle::class                => ['all' => true],
@@ -23,4 +23,5 @@ return [
     Twig\Extra\TwigExtraBundle\TwigExtraBundle::class                    => ['all' => true],
     Symfony\WebpackEncoreBundle\WebpackEncoreBundle::class               => ['all' => true],
     Bugsnag\BugsnagBundle\BugsnagBundle::class                           => ['all' => true],
+    Symfony\UX\Chartjs\ChartjsBundle::class                              => ['all' => true],
 ];

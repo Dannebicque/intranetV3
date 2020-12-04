@@ -132,6 +132,12 @@
                                     </td>
                                 </tr>
                             </table>
+                            {{ render_esi(controller(
+                                'App\\Controller\\GraphiqueController::evaluation', {
+                                    repartition: evaluations.statistiques[eval.id],
+                                    evaluation: eval.id
+                                }
+                            )) }}
                             <canvas id="graphEval_{{ eval.id }}"></canvas>
                         </div>
                     </div>
@@ -166,49 +172,6 @@
         </div>
     {% endif %}
 
-{% endblock %}
-
-{% block javascripts %}
-    {{ encore_entry_script_tags('app') }}
-    {{ encore_entry_script_tags('chartjs') }}
-    <script>
-
-        {% for eval in evaluations.evaluations %}
-
-        var graphEval_{{ eval.id }} = document.getElementById('graphEval_{{ eval.id }}').getContext('2d')
-        var myChart = new Chart(graphEval_{{ eval.id }}, {
-          type: 'bar',
-
-          // Data
-          //
-          data: {
-            labels: [{% for i in 0..20 %}{{ i }}{% if not loop.last %},{% endif %}{% endfor %}],
-            datasets: [
-              {
-                label: 'Répartition des Notes',
-                backgroundColor: 'rgba(51,202,185,0.5)',
-                borderColor: 'rgba(0,0,0,0)',
-                hoverBackgroundColor: 'rgba(51,202,185,0.7)',
-                hoverBorderColor: 'rgba(0,0,0,0)',
-                data: [{% for i in 0..20 %}{{ evaluations.statistiques[eval.id].repartition[i] }}{% if not loop.last %},{% endif %}{% endfor %}]
-              }
-            ]
-          },
-
-          // Options
-          //
-          options: {
-            scales: {
-              yAxes: [{
-                ticks: {
-                  beginAtZero: true
-                }
-              }]
-            }
-          }
-        })
-        {% endfor %}
-    </script>
 {% endblock %}
 
 {% block fabactions %}

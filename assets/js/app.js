@@ -2,16 +2,21 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/app.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/11/2020 15:33
+// @lastUpdate 04/12/2020 13:43
 
 // any CSS you import will output into a single css file (app.css in this case)
+import {startStimulusApp} from '@symfony/stimulus-bridge'
+
+export const app2 = startStimulusApp(
+  require.context('../controllers', true, /\.(j|t)sx?$/)
+)
+
 import '@fortawesome/fontawesome-free/scss/fontawesome.scss'
 import '@fortawesome/fontawesome-free/scss/solid.scss'
 import 'bootstrap-select/dist/css/bootstrap-select.min.css'
 import '../vendor/bootstrap-datepicker/css/bootstrap-datepicker3.min.css'
 import '../vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js'
 import '../vendor/bootstrap-datepicker/locales/bootstrap-datepicker.fr.min'
-
 import '../css/app.scss'
 
 import $ from 'jquery'
