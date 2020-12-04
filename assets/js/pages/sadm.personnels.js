@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/sadm.personnels.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/09/2020 13:13
+// @lastUpdate 04/12/2020 17:34
 import '../../vendor/datatables'
 import {dataTableLangueFr} from '../lang/fr'
 
@@ -94,7 +94,7 @@ $(document).on('change', '.change_droit_pf', function () {
 $(document).on('click', '#searchLdap', function (e) {
   e.preventDefault()
   $.ajax({
-    url: Routing.generate('sa_rh_ldap_search'),
+    url: Routing.generate('ldap_search'),
     method: 'POST',
     data: {
       'numero': $('#personnel_numero_harpege').val()

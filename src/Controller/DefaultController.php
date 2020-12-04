@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/DefaultController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 22/09/2020 06:42
+// @lastUpdate 04/12/2020 09:29
 
 namespace App\Controller;
 
@@ -13,6 +13,8 @@ use App\Repository\DepartementRepository;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
+use Symfony\UX\Chartjs\Model\Chart;
 
 /**
  * Class DefaultController
@@ -36,6 +38,7 @@ class DefaultController extends BaseController
         if ($this->getDepartement() === null) {
             return $this->redirectToRoute('security_choix_departement');
         }
+
 
         return $this->render('default/index.html.twig', [
             'actualites' => $actualiteRepository->getByDepartement($this->getDepartement()),

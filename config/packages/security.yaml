@@ -50,6 +50,7 @@ security:
     - { path: '^/[a-z]{2}/login', roles: IS_AUTHENTICATED_ANONYMOUSLY }
     - { path: '^/[a-z]{2}/api', roles: IS_AUTHENTICATED_ANONYMOUSLY }
     - { path: '^/[a-z]{2}/administration', roles: [ROLE_PERMANENT, ROLE_SUPER_ADMIN] }
+    - { path: '^/[a-z]{2}/ldap', roles: [ ROLE_PERMANENT, ROLE_SUPER_ADMIN, ROLE_RH ] }
     - { path: '^/[a-z]{2}/administratif', roles: [ROLE_SUPER_ADMIN, ROLE_ADMINISTRATIF, ROLE_QUALITE, ROLE_SCOLARITE, ROLE_RH] }
     - { path: '^/[a-z]{2}/', roles: IS_AUTHENTICATED_FULLY }
 
