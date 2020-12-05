@@ -3,15 +3,21 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/SousComissionController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 02/12/2020 11:26
+// @lastUpdate 06/12/2020 09:35
 
 namespace App\Controller\administration;
 
 use App\Classes\SousCommission\SousCommission;
 use App\Classes\SousCommission\SousCommissionExport;
+use App\Classes\SousCommission\SousCommissionSauvegarde;
 use App\Controller\BaseController;
+use App\Entity\Constantes;
+use App\Entity\Scolarite;
+use App\Entity\ScolaritePromo;
 use App\Entity\Semestre;
 use PhpOffice\PhpSpreadsheet\Exception;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -42,18 +48,22 @@ class SousComissionController extends BaseController
     /**
      * @Route("/travail/{semestre}", name="administration_sous_commission_travail")
      * @param SousCommission $sousCommission
-     * @param Semestre       $semestre
+     * @param SousCommissionSauvegarde $sousCommissionSauvegarde
+     * @param Semestre $semestre
      *
      * @return Response
      */
-    public function travail(SousCommission $sousCommission, Semestre $semestre): Response
-    {
-        $sousCommission->calcul($semestre, $semestre->getAnneeUniversitaire());
-        $sousCommission->SauvegardeTravail();
+    public function travail(
+        SousCommission $sousCommission,
+        SousCommissionSauvegarde $sousCommissionSauvegarde,
+        Semestre $semestre
+    ): Response {
+        $sousCommission->calcul($semestre, $this->dataUserSession->getAnneeUniversitaire());
+        $sousCommissionTravail = $sousCommissionSauvegarde->SauvegardeTravail($sousCommission);
 
         return $this->render('administration/sous_commission/travail.html.twig', [
             'semestre' => $semestre,
-            //'sousCommission' => $mySousCommission
+            'sc'       => $sousCommissionTravail
         ]);
     }
 
@@ -71,32 +81,40 @@ class SousComissionController extends BaseController
     }
 
     /**
-     * @Route("/recalculer/{semestre}", name="administration_sous_commission_recalculer")
-     * @param SousCommission $sousCommission
-     * @param Semestre       $semestre
+     * @Route("/recalculer/{ssComm}", name="administration_sous_commission_recalculer")
+     * @param SousCommissionSauvegarde $sousCommissionSauvegarde
+     * @param ScolaritePromo           $ssComm
      *
      * @return Response
      */
-    public function recalculer(SousCommission $sousCommission, Semestre $semestre): Response
+    public function recalculer(SousCommissionSauvegarde $sousCommissionSauvegarde, ScolaritePromo $ssComm): Response
     {
-        return $this->redirectToRoute('administration_sous_comission_travail', ['semestre' => $semestre->getId()]);
+        $semestre = $ssComm->getSemestre();
+        $sousCommissionSauvegarde->efface($ssComm);
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'scolarite.efface.et.recalculee.success.flash');
+
+        return $this->redirectToRoute('administration_sous_commission_travail', ['semestre' => $semestre->getId()]);
     }
 
     /**
-     * @Route("/publier/{semestre}", name="administration_sous_commission_publier")
-     * @param SousCommission $sousCommission
-     * @param Semestre       $semestre
+     * @Route("/publier/{ssComm}", name="administration_sous_commission_publier")
+     * @param SousCommissionSauvegarde $sousCommissionSauvegarde
+     * @param ScolaritePromo           $ssComm
      *
      * @return Response
      */
-    public function publier(SousCommission $sousCommission, Semestre $semestre): Response
+    public function publier(SousCommissionSauvegarde $sousCommissionSauvegarde, ScolaritePromo $ssComm): Response
     {
-        //mettre une notif + mail
-        return $this->redirectToRoute('administration_sous_comission_travail', ['semestre' => $semestre->getId()]);
+        $semestre = $ssComm->getSemestre();
+        $sousCommissionSauvegarde->efface($ssComm);
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'scolarite.publiee.success.flash');
+
+        //todo: event notif
+        return $this->redirectToRoute('administration_sous_commission_travail', ['semestre' => $semestre->getId()]);
     }
 
     /**
-     * @Route("/exporter/{semestre}", name="administration_sous_commission_exporter")
+     * @Route("/exporter/{ssComm}", name="administration_sous_commission_exporter")
      * @param SousCommissionExport $sousCommission
      * @param Semestre             $semestre
      *
@@ -109,7 +127,7 @@ class SousComissionController extends BaseController
     }
 
     /**
-     * @Route("/grand-jury/{semestre}", name="administration_sous_commission_exporter_grand_jury")
+     * @Route("/grand-jury/{ssComm}", name="administration_sous_commission_exporter_grand_jury")
      * @param SousCommission $sousCommission
      * @param Semestre       $semestre
      *
@@ -118,5 +136,28 @@ class SousComissionController extends BaseController
     public function grandJury(SousCommission $sousCommission, Semestre $semestre): Response
     {
 
+    }
+
+    /**
+     * @Route("/ajax/semestre/{id}/{type}", name="administration_ss_comm_ajax_edit", options={"expose"=true})
+     * @param SousCommission $sousCommission
+     * @param Request        $request
+     * @param Scolarite      $scolarite
+     * @param                $type
+     *
+     * @return JsonResponse
+     */
+    public function ajaxEditSsComm(
+        SousCommission $sousCommission,
+        Request $request,
+        Scolarite $scolarite,
+        $type
+    ): JsonResponse {
+        $sousCommission->updateScolarite($scolarite,
+            $type,
+            $request->request->get('field'),
+            $request->request->get('value'));
+
+        return $this->json(true);
     }
 }

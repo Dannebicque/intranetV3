@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ProfilEtudiantController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 23/11/2020 17:55
+// @lastUpdate 05/12/2020 17:37
 
 namespace App\Controller;
 
@@ -16,7 +16,6 @@ use App\Classes\Calendrier;
 use App\Repository\AlternanceRepository;
 use App\Repository\DepartementRepository;
 use App\Repository\MatiereRepository;
-use App\Repository\ScolariteMoyenneUeRepository;
 use App\Repository\ScolariteRepository;
 use App\Repository\StageEtudiantRepository;
 use Exception;
@@ -70,7 +69,6 @@ class ProfilEtudiantController extends BaseController
 
     /**
      * @Route("/profil/{slug}/scolarite", name="profil_etudiant_scolarite")
-     * @param ScolariteMoyenneUeRepository $scolariteMoyenneUeRepository
      * @param ScolariteRepository          $scolariteRepository
      * @param Etudiant                     $etudiant
      *
@@ -78,17 +76,14 @@ class ProfilEtudiantController extends BaseController
      * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
      */
     public function scolarite(
-        ScolariteMoyenneUeRepository $scolariteMoyenneUeRepository,
         ScolariteRepository $scolariteRepository,
         Etudiant $etudiant
     ): Response {
         $scolarite = $scolariteRepository->findByEtudiant($etudiant);
-        $scolariteUes = $scolariteMoyenneUeRepository->findByEtudiantArray($etudiant);
 
         return $this->render('user/composants/scolarite.html.twig', [
             'etudiant'     => $etudiant,
-            'scolarite'    => $scolarite,
-            'scolariteUes' => $scolariteUes
+            'scolarite' => $scolarite
         ]);
     }
 

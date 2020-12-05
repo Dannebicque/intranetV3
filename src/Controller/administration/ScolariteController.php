@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/ScolariteController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 01/12/2020 22:04
+// @lastUpdate 05/12/2020 16:16
 
 namespace App\Controller\administration;
 
@@ -13,12 +13,10 @@ use App\Entity\AnneeUniversitaire;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Entity\Scolarite;
-use App\Entity\ScolariteMoyenneUe;
 use App\Entity\Semestre;
 use App\Entity\Ue;
 use App\Form\ScolariteType;
 use App\Repository\AnneeUniversitaireRepository;
-use App\Repository\ScolariteMoyenneUeRepository;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -37,7 +35,6 @@ class ScolariteController extends BaseController
     /**
      * @Route("/edit/{slug}", name="administration_scolarite_etudiant_edit")
      *
-     * @param ScolariteMoyenneUeRepository $scolariteMoyenneUeRepository
      * @param Request                      $request
      * @param Etudiant                     $etudiant
      *
@@ -46,7 +43,6 @@ class ScolariteController extends BaseController
      * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
      */
     public function editScolariteEtudiant(
-        ScolariteMoyenneUeRepository $scolariteMoyenneUeRepository,
         Request $request,
         Etudiant $etudiant
     ): Response {
@@ -59,26 +55,22 @@ class ScolariteController extends BaseController
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
             $this->entityManager->persist($scolarite);
-
+            $tUes = [];
             /** @var UE $ue */
             foreach ($scolarite->getSemestre()->getUes() as $ue) {
-                $pue = new ScolariteMoyenneUe();
-                $pue->setScolarite($scolarite);
-                $pue->setMoyenne($request->request->get('ue_' . $ue->getId()));
-                $pue->setUe($ue);
-                $this->entityManager->persist($pue);
+                $tUes[$ue->getId()]['moyenne'] = $request->request->get('ue_' . $ue->getId());
+                $tUes[$ue->getId()]['rang'] = -1;
             }
+            $scolarite->setMoyennesUes($tUes);
             $this->entityManager->flush();
             $this->addFlashBag('success', 'adm.scolarite.add.flashbag');
             $form = $this->createForm(ScolariteType::class, $scolarite,
                 ['departement' => $this->dataUserSession->getDepartement()]);
         }
-        $scolariteUes = $scolariteMoyenneUeRepository->findByEtudiantArray($etudiant);
 
         return $this->render('administration/scolarite/edit.html.twig', [
             'etudiant'     => $etudiant,
             'scolarite'    => $etudiant->getScolarites(),
-            'scolariteUes' => $scolariteUes,
             'form'         => $form->createView()
         ]);
     }

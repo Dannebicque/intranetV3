@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyScolarite.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 01/12/2020 22:04
+// @lastUpdate 05/12/2020 12:13
 
 namespace App\Classes;
 
@@ -12,10 +12,7 @@ use App\Entity\AnneeUniversitaire;
 use App\Entity\Constantes;
 use App\Entity\Departement;
 use App\Entity\Etudiant;
-use App\Entity\Matiere;
-use App\Entity\Parcour;
 use App\Entity\Scolarite;
-use App\Entity\ScolariteMoyenneUe;
 use App\Entity\Semestre;
 use App\Entity\Ue;
 use App\Repository\ScolariteRepository;
@@ -33,8 +30,9 @@ class MyScolarite
     /**
      * MyPpn constructor.
      *
-     * @param MyUpload $myUpload
+     * @param MyUpload               $myUpload
      * @param EntityManagerInterface $entityManager
+     * @param ScolariteRepository    $scolariteRepository
      */
     public function __construct(
         MyUpload $myUpload,
@@ -85,16 +83,15 @@ class MyScolarite
                     $scol->setProposition($ligne[7]);
                     $this->entityManager->persist($scol);
                     $tues = explode('!', $ligne[8]);
+                    $tUe = [];
                     foreach ($tues as $tue) {
                         $ue = explode(':', $tue);
                         if (array_key_exists($ue[0], $ues)) {
-                            $scolUe = new ScolariteMoyenneUe();
-                            $scolUe->setScolarite($scol);
-                            $scolUe->setMoyenne(Tools::convertToFloat($ue[1]));
-                            $scolUe->setUe($ues[$ue[0]]);
-                            $this->entityManager->persist($scolUe);
+                            $tUe[$ues[$ue[0]]]['moyenne'] = Tools::convertToFloat($ue[1]);
+                            $tUe[$ues[$ue[0]]]['rang'] = -1;
                         }
                     }
+                    $scol->setMoyennesUes($tUe);
                 }
             }
             $this->entityManager->flush();

@@ -22,8 +22,10 @@
 
                     <td>
                         {% if parcour.decision != 'EC' %}
-                            {% for ue in scolariteUes[parcour.id] %}
-                                <strong>UE {{ ue.ue.numeroUe }} :</strong> {{ ue.moyenne|format_note(3, 8) }}
+                            {% for ue in parcour.semestre.ues %}
+                                <strong>UE {{ ue.numeroUe }} :</strong> {{ parcour.moyenneUes[ue.id]
+                            .moyenne|format_note(3,
+                                8) }}
                             {% endfor %}
                         {% else %}
                             EC

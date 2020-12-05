@@ -3,10 +3,11 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ScolaritePromo.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 05/12/2020 16:45
 
 namespace App\Entity;
 
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -36,37 +37,51 @@ class ScolaritePromo
     /**
      * @ORM\Column(type="float")
      */
-    private $min;
+    private $min = -0.01;
 
     /**
      * @ORM\Column(type="float")
      */
-    private $max;
+    private $max = -0.01;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $nbEtudiants;
+    private $nbEtudiants = 0;
 
     /**
      * @ORM\Column(type="float")
      */
-    private $moyenne;
+    private $moyenne = -0.01;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ScolaritePromoUe", mappedBy="scolaritePromo")
+     * @ORM\OneToMany(targetEntity=Scolarite::class, mappedBy="ScolaritePromo")
      */
-    private $scolaritePromoUes;
+    private $scolarites;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ScolaritePromoMatiere", mappedBy="scolaritePromo")
+     * @ORM\Column(type="datetime", nullable=true)
      */
-    private $scolaritePromoMatieres;
+    private $datePublication;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $publie = false;
+
+    /**
+     * @ORM\Column(type="array")
+     */
+    private $moyenneUes = [];
+
+    /**
+     * @ORM\Column(type="array")
+     */
+    private $moyenneMatieres = [];
 
     public function __construct()
     {
-        $this->scolaritePromoUes = new ArrayCollection();
-        $this->scolaritePromoMatieres = new ArrayCollection();
+        $this->scolarites = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -147,63 +162,80 @@ class ScolaritePromo
     }
 
     /**
-     * @return Collection|ScolaritePromoUe[]
+     * @return Collection|Scolarite[]
      */
-    public function getScolaritePromoUes(): Collection
+    public function getScolarites(): Collection
     {
-        return $this->scolaritePromoUes;
+        return $this->scolarites;
     }
 
-    public function addScolaritePromoUe(ScolaritePromoUe $scolaritePromoUe): self
+    public function addScolarite(Scolarite $scolarite): self
     {
-        if (!$this->scolaritePromoUes->contains($scolaritePromoUe)) {
-            $this->scolaritePromoUes[] = $scolaritePromoUe;
-            $scolaritePromoUe->setScolaritePromo($this);
+        if (!$this->scolarites->contains($scolarite)) {
+            $this->scolarites[] = $scolarite;
+            $scolarite->setScolaritePromo($this);
         }
 
         return $this;
     }
 
-    public function removeScolaritePromoUe(ScolaritePromoUe $scolaritePromoUe): self
+    public function removeScolarite(Scolarite $scolarite): self
     {
-        if ($this->scolaritePromoUes->contains($scolaritePromoUe)) {
-            $this->scolaritePromoUes->removeElement($scolaritePromoUe);
+        if ($this->scolarites->contains($scolarite)) {
+            $this->scolarites->removeElement($scolarite);
             // set the owning side to null (unless already changed)
-            if ($scolaritePromoUe->getScolaritePromo() === $this) {
-                $scolaritePromoUe->setScolaritePromo(null);
+            if ($scolarite->getScolaritePromo() === $this) {
+                $scolarite->setScolaritePromo(null);
             }
         }
 
         return $this;
     }
 
-    /**
-     * @return Collection|ScolaritePromoMatiere[]
-     */
-    public function getScolaritePromoMatieres(): Collection
+    public function getDatePublication(): ?DateTimeInterface
     {
-        return $this->scolaritePromoMatieres;
+        return $this->datePublication;
     }
 
-    public function addScolaritePromoMatiere(ScolaritePromoMatiere $scolaritePromoMatiere): self
+    public function setDatePublication(DateTimeInterface $datePublication): self
     {
-        if (!$this->scolaritePromoMatieres->contains($scolaritePromoMatiere)) {
-            $this->scolaritePromoMatieres[] = $scolaritePromoMatiere;
-            $scolaritePromoMatiere->setScolaritePromo($this);
-        }
+        $this->datePublication = $datePublication;
 
         return $this;
     }
 
-    public function removeScolaritePromoMatiere(ScolaritePromoMatiere $scolaritePromoMatiere): self
+    public function getPublie(): ?bool
     {
-        if ($this->scolaritePromoMatieres->contains($scolaritePromoMatiere)) {
-            $this->scolaritePromoMatieres->removeElement($scolaritePromoMatiere);
-            // set the owning side to null (unless already changed)
-            if ($scolaritePromoMatiere->getScolaritePromo() === $this) {
-                $scolaritePromoMatiere->setScolaritePromo(null);
-            }
-        }
+        return $this->publie;
+    }
+
+    public function setPublie(bool $publie): self
+    {
+        $this->publie = $publie;
+
+        return $this;
+    }
+
+    public function getMoyenneUes(): ?array
+    {
+        return $this->moyenneUes;
+    }
+
+    public function setMoyenneUes(array $moyenneUes): self
+    {
+        $this->moyenneUes = $moyenneUes;
+
+        return $this;
+    }
+
+    public function getMoyenneMatieres(): ?array
+    {
+        return $this->moyenneMatieres;
+    }
+
+    public function setMoyenneMatieres(array $moyenneMatieres): self
+    {
+        $this->moyenneMatieres = $moyenneMatieres;
 
         return $this;
     }

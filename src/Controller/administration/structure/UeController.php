@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/structure/UeController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 15/10/2020 12:27
+// @lastUpdate 05/12/2020 15:06
 
 namespace App\Controller\administration\structure;
 
@@ -134,9 +134,7 @@ class UeController extends BaseController
     {
         $id = $ue->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token')) &&
-            count($ue->getMatieres()) === 0 &&
-            count($ue->getScolariteMoyenneUes()) === 0 &&
-            count($ue->getScolaritePromoUes()) === 0) {
+            count($ue->getMatieres()) === 0) {
             $this->entityManager->remove($ue);
             $this->entityManager->flush();
             $this->addFlashBag(
