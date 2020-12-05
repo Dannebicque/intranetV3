@@ -3,13 +3,14 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/SousCommission/SousCommission.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 02/12/2020 09:33
+// @lastUpdate 05/12/2020 17:37
 
 namespace App\Classes\SousCommission;
 
 
 use App\Classes\Etudiant\EtudiantAbsences;
 use App\Classes\Etudiant\EtudiantNotes;
+use App\Classes\Tools;
 use App\DTO\EtudiantSousCommission;
 use App\DTO\MoyenneMatiere;
 use App\DTO\MoyenneUe;
@@ -17,11 +18,13 @@ use App\Entity\AnneeUniversitaire;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Entity\Matiere;
+use App\Entity\Scolarite;
 use App\Entity\Semestre;
 use App\Entity\Ue;
 use App\Repository\EtudiantRepository;
 use App\Repository\MatiereRepository;
 use App\Repository\UeRepository;
+use Doctrine\ORM\EntityManagerInterface;
 
 class SousCommission
 {
@@ -57,22 +60,27 @@ class SousCommission
     private array $etudiants;
     private array $sousCommissionEtudiant;
 
+    private EntityManagerInterface $entityManager;
+
     /**
      * SousCommission constructor.
      *
-     * @param EtudiantRepository $etudiantRepository
-     * @param UeRepository       $ueRepository
-     * @param MatiereRepository  $matiereRepository
-     * @param EtudiantNotes      $etudiantNotes
-     * @param EtudiantAbsences   $etudiantAbsences
+     * @param EntityManagerInterface $entityManager
+     * @param EtudiantRepository     $etudiantRepository
+     * @param UeRepository           $ueRepository
+     * @param MatiereRepository      $matiereRepository
+     * @param EtudiantNotes          $etudiantNotes
+     * @param EtudiantAbsences       $etudiantAbsences
      */
     public function __construct(
+        EntityManagerInterface $entityManager,
         EtudiantRepository $etudiantRepository,
         UeRepository $ueRepository,
         MatiereRepository $matiereRepository,
         EtudiantNotes $etudiantNotes,
         EtudiantAbsences $etudiantAbsences
     ) {
+        $this->entityManager = $entityManager;
         $this->etudiantRepository = $etudiantRepository;
         $this->matiereRepository = $matiereRepository;
         $this->ueRepository = $ueRepository;
@@ -191,5 +199,72 @@ class SousCommission
     public function getSousCommissionEtudiant($idEtudiant): EtudiantSousCommission
     {
         return $this->sousCommissionEtudiant[$idEtudiant];
+    }
+
+    /**
+     * @return Semestre
+     */
+    public function getSemestre(): Semestre
+    {
+        return $this->semestre;
+    }
+
+    /**
+     * @return AnneeUniversitaire
+     */
+    public function getAnneeUniversitaire(): AnneeUniversitaire
+    {
+        return $this->anneeUniversitaire;
+    }
+
+    public function updateScolarite(Scolarite $scolarite, $type, $field, $value)
+    {
+        switch ($type) {
+            case 'semestre':
+                $this->updateScolariteSemestre($scolarite, $field, $value);
+                break;
+            case 'ue':
+                $this->updateScolariteUe($scolarite, $field, $value);
+                break;
+            case 'matiere':
+                $this->updateScolariteMatiere($scolarite, $field, $value);
+                break;
+        }
+        $this->entityManager->flush();
+    }
+
+    private function updateScolariteSemestre(Scolarite $scolarite, $field, $value)
+    {
+        switch ($field) {
+            case 'decision':
+                $scolarite->setDecision($value);
+                break;
+            case 'proposition':
+                $scolarite->setProposition($value);
+                break;
+            case 'moyenne':
+                $scolarite->setMoyenne(Tools::convertToFloat($value));
+                break;
+        }
+    }
+
+    private function updateScolariteUe(Scolarite $scolarite, $field, $value)
+    {
+        [$code, $idUe] = explode('_', $field);
+        switch ($code) {
+            case 'moyenne':
+                $scolarite->getMoyennesUes()[$idUe]['moyenne'] = Tools::convertToFloat($value);
+                break;
+        }
+    }
+
+    private function updateScolariteMatiere(Scolarite $scolarite, $field, $value)
+    {
+        [$code, $idMatiere] = explode('_', $field);
+        switch ($code) {
+            case 'moyenne':
+                $scolarite->getMoyennesMatieres()[$idMatiere]['moyenne'] = Tools::convertToFloat($value);
+                break;
+        }
     }
 }

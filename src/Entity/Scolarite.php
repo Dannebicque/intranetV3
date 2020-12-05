@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Scolarite.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/10/2020 06:34
+// @lastUpdate 05/12/2020 09:19
 
 namespace App\Entity;
 
@@ -11,7 +11,6 @@ use App\Entity\Traits\UuidTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Exception;
 use Ramsey\Uuid\Uuid;
 
 /**
@@ -24,47 +23,42 @@ class Scolarite extends BaseEntity
     /**
      * @ORM\Column(type="integer")
      */
-    private $ordre;
+    private ?int $ordre;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Semestre")
      */
-    private $semestre;
+    private ?Semestre $semestre;
 
     /**
      * @ORM\Column(type="string", length=10)
      */
-    private $decision = 'E.C';
+    private string $decision = 'E.C';
 
     /**
      * @ORM\Column(type="string", length=10, nullable=true)
      */
-    private $proposition;
+    private ?string $proposition;
 
     /**
      * @ORM\Column(type="float")
      */
-    private $moyenne = 0;
+    private float $moyenne = 0;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Etudiant", inversedBy="scolarites")
      */
-    private $etudiant;
+    private ?Etudiant $etudiant;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $nbAbsences = 0;
+    private int $nbAbsences = 0;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $commentaire;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ScolariteMoyenneUe", mappedBy="scolarite")
-     */
-    private $scolariteMoyenneUes;
+    private ?string $commentaire;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\AnneeUniversitaire", inversedBy="scolarites")
@@ -72,19 +66,40 @@ class Scolarite extends BaseEntity
     private $anneeUniversitaire;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ScolariteMoyenneMatiere", mappedBy="scolarite")
+     * @ORM\Column(type="boolean")
      */
-    private $scolariteMoyenneMatieres;
+    private bool $diffuse = false;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=ScolaritePromo::class, inversedBy="scolarites")
+     */
+    private ?ScolaritePromo $ScolaritePromo;
+
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $moyennesMatieres = []; //sauvegarder moyenne et rang
+    // idMatiere => ['moyenne' => ..., 'rang' => ...],
+
+    /**
+     * @ORM\Column(type="array", nullable=true)
+     */
+    private $moyennesUes = [];
+    // idUe => ['moyenne' => ..., 'rang' => ...],
 
     /**
      * Scolarite constructor.
-     * @throws Exception
+     *
+     * @param Etudiant                $etudiant
+     * @param Semestre                $semestre
+     * @param AnneeUniversitaire|null $anneeUniversitaire
      */
-    public function __construct()
+    public function __construct(Etudiant $etudiant, Semestre $semestre, AnneeUniversitaire $anneeUniversitaire = null)
     {
         $this->setUuid(Uuid::uuid4());
-        $this->scolariteMoyenneUes = new ArrayCollection();
-        $this->scolariteMoyenneMatieres = new ArrayCollection();
+        $this->setEtudiant($etudiant);
+        $this->setSemestre($semestre);
+        $this->setAnneeUniversitaire($anneeUniversitaire);
     }
 
 
@@ -253,36 +268,7 @@ class Scolarite extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return Collection|ScolariteMoyenneUe[]
-     */
-    public function getScolariteMoyenneUes(): Collection
-    {
-        return $this->scolariteMoyenneUes;
-    }
 
-    public function addScolariteMoyenneUe(ScolariteMoyenneUe $scolariteMoyenneUe): self
-    {
-        if (!$this->scolariteMoyenneUes->contains($scolariteMoyenneUe)) {
-            $this->scolariteMoyenneUes[] = $scolariteMoyenneUe;
-            $scolariteMoyenneUe->setScolarite($this);
-        }
-
-        return $this;
-    }
-
-    public function removeScolariteMoyenneUe(ScolariteMoyenneUe $scolariteMoyenneUe): self
-    {
-        if ($this->scolariteMoyenneUes->contains($scolariteMoyenneUe)) {
-            $this->scolariteMoyenneUes->removeElement($scolariteMoyenneUe);
-            // set the owning side to null (unless already changed)
-            if ($scolariteMoyenneUe->getScolarite() === $this) {
-                $scolariteMoyenneUe->setScolarite(null);
-            }
-        }
-
-        return $this;
-    }
 
     public function getAnneeUniversitaire(): ?AnneeUniversitaire
     {
@@ -296,40 +282,57 @@ class Scolarite extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return Collection|ScolariteMoyenneMatiere[]
-     */
-    public function getScolariteMoyenneMatieres(): Collection
-    {
-        return $this->scolariteMoyenneMatieres;
-    }
-
-    public function addScolariteMoyenneMatiere(ScolariteMoyenneMatiere $scolariteMoyenneMatiere): self
-    {
-        if (!$this->scolariteMoyenneMatieres->contains($scolariteMoyenneMatiere)) {
-            $this->scolariteMoyenneMatieres[] = $scolariteMoyenneMatiere;
-            $scolariteMoyenneMatiere->setScolarite($this);
-        }
-
-        return $this;
-    }
-
-    public function removeScolariteMoyenneMatiere(ScolariteMoyenneMatiere $scolariteMoyenneMatiere): self
-    {
-        if ($this->scolariteMoyenneMatieres->contains($scolariteMoyenneMatiere)) {
-            $this->scolariteMoyenneMatieres->removeElement($scolariteMoyenneMatiere);
-            // set the owning side to null (unless already changed)
-            if ($scolariteMoyenneMatiere->getScolarite() === $this) {
-                $scolariteMoyenneMatiere->setScolarite(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function setUuid($uuid): self
     {
         $this->uuid = $uuid;
+
+        return $this;
+    }
+
+    public function getDiffuse(): ?bool
+    {
+        return $this->diffuse;
+    }
+
+    public function setDiffuse(bool $diffuse): self
+    {
+        $this->diffuse = $diffuse;
+
+        return $this;
+    }
+
+    public function getScolaritePromo(): ?ScolaritePromo
+    {
+        return $this->ScolaritePromo;
+    }
+
+    public function setScolaritePromo(?ScolaritePromo $ScolaritePromo): self
+    {
+        $this->ScolaritePromo = $ScolaritePromo;
+
+        return $this;
+    }
+
+    public function getMoyennesMatieres(): ?array
+    {
+        return $this->moyennesMatieres;
+    }
+
+    public function setMoyennesMatieres(?array $moyennesMatieres): self
+    {
+        $this->moyennesMatieres = $moyennesMatieres;
+
+        return $this;
+    }
+
+    public function getMoyennesUes(): ?array
+    {
+        return $this->moyennesUes;
+    }
+
+    public function setMoyennesUes(?array $moyennesUes): self
+    {
+        $this->moyennesUes = $moyennesUes;
 
         return $this;
     }

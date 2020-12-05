@@ -81,8 +81,8 @@
                                 {% endfor %}
                                 <th {% if semestre.optPenaliteAbsence == true %}colspan="2"{% endif %}>Moy.</th>
                                 <th>Bonif</th>
-                                <th>Prop.</th>
                                 <th>Décis.</th>
+                                <th>Prop.</th>
                                 <th></th>
                                 <th>Abs.</th>
                                 {% for sem in sousCommission.semestresScolarite|filter(sem => sem.id != semestre.id) %}
@@ -133,7 +133,9 @@
                                         {# Penalite #}
                                         {% if semestre.optPenaliteAbsence == true %}
                                             <td style="background-color: #00B7FC;" class="matiere">
+                                                <span class="{{ myEtudiant.moyenneMatieres[matiere.id].stylePenalisee }}">
                                                 {{ myEtudiant.moyenneMatieres[matiere.id].moyennePenalisee|number_format(2) }}
+                                                </span>
                                             </td>
                                         {% endif %}
                                         {# fin penalite #}
@@ -142,16 +144,16 @@
                                     {# decision semestre #}
 
                                     {% for u in sousCommission.ues %}
-                                        <td><span class="{{ myEtudiant.moyenneUes[u.id].styleMoyenne }}"><a
-                                                        href="#" rel="tooltip"
-                                                        title="{{ etudiant.display }}">{{ myEtudiant.moyenneUes[u.id]
-                                                    .moyenne|number_format(3) }}</a></span>
+                                        <td><span class="{{ myEtudiant.moyenneUes[u.id].styleMoyenne }}">{{ myEtudiant.moyenneUes[u.id]
+                                                .moyenne|number_format(3) }}</span>
                                         </td>
 
                                         {# Penalite #}
                                         {% if semestre.optPenaliteAbsence == true %}
                                             <td style="background-color: #00B7FC;">
+                                                <span class="{{ myEtudiant.moyenneUes[u.id].styleMoyennePenalisee }}">
                                                 {{ myEtudiant.moyenneUes[u.id].moyennePenalisee|number_format(3) }}
+                                                </span>
                                             </td>
                                         {% endif %}
                                         {# fin penalite #}
@@ -165,9 +167,10 @@
 
                                     {# penalite #}
                                     {% if semestre.optPenaliteAbsence == true %}
-                                        <td style="background-color: #00B7FC;" class="{{ myEtudiant
-                                        .styleMoyenneSemestrePenalisee }}">
+                                        <td style="background-color: #00B7FC;">
+                                            <span class="{{ myEtudiant.styleMoyenneSemestrePenalisee }}">
                                             {{ myEtudiant.moyenneSemestrePenalisee|number_format(3) }}
+                                                </span>
                                         </td>
                                     {% endif %}
                                     {# fin penalite #}

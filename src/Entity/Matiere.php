@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Matiere.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 10/11/2020 10:10
+// @lastUpdate 05/12/2020 15:06
 
 namespace App\Entity;
 
@@ -216,15 +216,7 @@ class Matiere extends BaseEntity
      */
     private $matiereEnfants;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ScolariteMoyenneMatiere", mappedBy="matiere")
-     */
-    private $scolariteMoyenneMatieres;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ScolaritePromoMatiere", mappedBy="matiere")
-     */
-    private $scolaritePromoMatieres;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\ProgressionPedagogique", mappedBy="matiere")
@@ -247,8 +239,6 @@ class Matiere extends BaseEntity
         $this->absences = new ArrayCollection();
         $this->evaluations = new ArrayCollection();
         $this->matiereEnfants = new ArrayCollection();
-        $this->scolariteMoyenneMatieres = new ArrayCollection();
-        $this->scolaritePromoMatieres = new ArrayCollection();
         $this->progressionPedagogiques = new ArrayCollection();
         $this->covidAttestationEtudiants = new ArrayCollection();
     }
@@ -861,67 +851,7 @@ class Matiere extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return Collection|ScolariteMoyenneMatiere[]
-     */
-    public function getScolariteMoyenneMatieres(): Collection
-    {
-        return $this->scolariteMoyenneMatieres;
-    }
 
-    public function addScolariteMoyenneMatiere(ScolariteMoyenneMatiere $scolariteMoyenneMatiere): self
-    {
-        if (!$this->scolariteMoyenneMatieres->contains($scolariteMoyenneMatiere)) {
-            $this->scolariteMoyenneMatieres[] = $scolariteMoyenneMatiere;
-            $scolariteMoyenneMatiere->setMatiere($this);
-        }
-
-        return $this;
-    }
-
-    public function removeScolariteMoyenneMatiere(ScolariteMoyenneMatiere $scolariteMoyenneMatiere): self
-    {
-        if ($this->scolariteMoyenneMatieres->contains($scolariteMoyenneMatiere)) {
-            $this->scolariteMoyenneMatieres->removeElement($scolariteMoyenneMatiere);
-            // set the owning side to null (unless already changed)
-            if ($scolariteMoyenneMatiere->getMatiere() === $this) {
-                $scolariteMoyenneMatiere->setMatiere(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|ScolaritePromoMatiere[]
-     */
-    public function getScolaritePromoMatieres(): Collection
-    {
-        return $this->scolaritePromoMatieres;
-    }
-
-    public function addScolaritePromoMatiere(ScolaritePromoMatiere $scolaritePromoMatiere): self
-    {
-        if (!$this->scolaritePromoMatieres->contains($scolaritePromoMatiere)) {
-            $this->scolaritePromoMatieres[] = $scolaritePromoMatiere;
-            $scolaritePromoMatiere->setMatiere($this);
-        }
-
-        return $this;
-    }
-
-    public function removeScolaritePromoMatiere(ScolaritePromoMatiere $scolaritePromoMatiere): self
-    {
-        if ($this->scolaritePromoMatieres->contains($scolaritePromoMatiere)) {
-            $this->scolaritePromoMatieres->removeElement($scolaritePromoMatiere);
-            // set the owning side to null (unless already changed)
-            if ($scolaritePromoMatiere->getMatiere() === $this) {
-                $scolaritePromoMatiere->setMatiere(null);
-            }
-        }
-
-        return $this;
-    }
 
     /**
      * @return Collection|ProgressionPedagogique[]

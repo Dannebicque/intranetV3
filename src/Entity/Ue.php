@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Ue.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 05/12/2020 15:06
 
 namespace App\Entity;
 
@@ -54,15 +54,6 @@ class Ue extends BaseEntity
      */
     private $semestre;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ScolariteMoyenneUe", mappedBy="ue")
-     */
-    private $scolariteMoyenneUes;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ScolaritePromoUe", mappedBy="ue")
-     */
-    private $scolaritePromoUes;
 
     /**
      * @ORM\Column(type="boolean")
@@ -88,8 +79,6 @@ class Ue extends BaseEntity
     {
         $this->matieres = new ArrayCollection();
         $this->semestre = $semestre;
-        $this->scolariteMoyenneUes = new ArrayCollection();
-        $this->scolaritePromoUes = new ArrayCollection();
     }
 
     /**
@@ -225,68 +214,6 @@ class Ue extends BaseEntity
     public function setSemestre(?Semestre $semestre): self
     {
         $this->semestre = $semestre;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|ScolariteMoyenneUe[]
-     */
-    public function getScolariteMoyenneUes(): Collection
-    {
-        return $this->scolariteMoyenneUes;
-    }
-
-    public function addScolariteMoyenneUe(ScolariteMoyenneUe $scolariteMoyenneUe): self
-    {
-        if (!$this->scolariteMoyenneUes->contains($scolariteMoyenneUe)) {
-            $this->scolariteMoyenneUes[] = $scolariteMoyenneUe;
-            $scolariteMoyenneUe->setUe($this);
-        }
-
-        return $this;
-    }
-
-    public function removeScolariteMoyenneUe(ScolariteMoyenneUe $scolariteMoyenneUe): self
-    {
-        if ($this->scolariteMoyenneUes->contains($scolariteMoyenneUe)) {
-            $this->scolariteMoyenneUes->removeElement($scolariteMoyenneUe);
-            // set the owning side to null (unless already changed)
-            if ($scolariteMoyenneUe->getUe() === $this) {
-                $scolariteMoyenneUe->setUe(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|ScolaritePromoUe[]
-     */
-    public function getScolaritePromoUes(): Collection
-    {
-        return $this->scolaritePromoUes;
-    }
-
-    public function addScolaritePromoUe(ScolaritePromoUe $scolaritePromoUe): self
-    {
-        if (!$this->scolaritePromoUes->contains($scolaritePromoUe)) {
-            $this->scolaritePromoUes[] = $scolaritePromoUe;
-            $scolaritePromoUe->setUe($this);
-        }
-
-        return $this;
-    }
-
-    public function removeScolaritePromoUe(ScolaritePromoUe $scolaritePromoUe): self
-    {
-        if ($this->scolaritePromoUes->contains($scolaritePromoUe)) {
-            $this->scolaritePromoUes->removeElement($scolaritePromoUe);
-            // set the owning side to null (unless already changed)
-            if ($scolaritePromoUe->getUe() === $this) {
-                $scolaritePromoUe->setUe(null);
-            }
-        }
 
         return $this;
     }
