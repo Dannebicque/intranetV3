@@ -16,7 +16,7 @@
 {% block content %}
     <div class="card">
         <h4 class="card-title">
-            Importer des parcour de scolarité depuis Intranet V2
+            Importer des parcours de scolarité depuis Intranet V2
         </h4>
         <div class="card-body">
             <form action="{{ path('administration_scolarite_import_intranetv2') }}" method="POST"
@@ -78,7 +78,7 @@
                     <tr>
                         <td>#{{ loop.index }}</td>
                         <td>{{ etudiant.display }}</td>
-                        <td>{{ etudiant.bac }}</td>
+                        <td>{{ etudiant.bac != null ? etudiant.bac.libelle : 'non.defini'|trans }}</td>
                         {% set i=0 %}
                         {% set nbs=0 %}
                         {% set last = '' %}

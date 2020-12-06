@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/SousCommission/SousCommissionExport.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 02/12/2020 11:57
+// @lastUpdate 06/12/2020 14:12
 
 namespace App\Classes\SousCommission;
 
@@ -11,6 +11,7 @@ namespace App\Classes\SousCommission;
 use App\Classes\Excel\MyExcelWriter;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Constantes;
+use App\Entity\ScolaritePromo;
 use App\Entity\Semestre;
 use App\Entity\Ue;
 use PhpOffice\PhpSpreadsheet\Exception;
@@ -306,5 +307,10 @@ class SousCommissionExport
                 'Content-Disposition' => 'attachment;filename="Sous Commission ' . $semestre->getLibelle() . '.xlsx"'
             ]
         );
+    }
+
+    public function exportGrandJury(ScolaritePromo $scolaritePromo)
+    {
+
     }
 }

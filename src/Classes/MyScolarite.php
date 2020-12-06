@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyScolarite.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/12/2020 12:13
+// @lastUpdate 06/12/2020 16:36
 
 namespace App\Classes;
 
@@ -72,23 +72,22 @@ class MyScolarite
 
                 if (array_key_exists($ligne[1], $semestres) && array_key_exists($ligne[0], $etudiants)) {
                     //numetudiant	codesemestre	semestre	ordre	moyenne	nbabsences	decision	suite ues
-                    $scol = new Scolarite();
+                    $scol = new Scolarite($etudiants[$ligne[0]], $semestres[$ligne[1]]);
                     $scol->setAnneeUniversitaire(null);
-                    $scol->setSemestre($semestres[$ligne[1]]);
-                    $scol->setEtudiant($etudiants[$ligne[0]]);
                     $scol->setDecision($ligne[6]);
                     $scol->setMoyenne(Tools::convertToFloat($ligne[4]));
                     $scol->setOrdre($ligne[3]);
                     $scol->setNbAbsences($ligne[5]);
                     $scol->setProposition($ligne[7]);
+                    $scol->setDiffuse(true);
                     $this->entityManager->persist($scol);
                     $tues = explode('!', $ligne[8]);
                     $tUe = [];
                     foreach ($tues as $tue) {
                         $ue = explode(':', $tue);
                         if (array_key_exists($ue[0], $ues)) {
-                            $tUe[$ues[$ue[0]]]['moyenne'] = Tools::convertToFloat($ue[1]);
-                            $tUe[$ues[$ue[0]]]['rang'] = -1;
+                            $tUe[$ues[$ue[0]]->getId()]['moyenne'] = Tools::convertToFloat($ue[1]);
+                            $tUe[$ues[$ue[0]]->getId()]['rang'] = -1;
                         }
                     }
                     $scol->setMoyennesUes($tUe);
