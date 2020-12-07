@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyScolarite.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/12/2020 16:36
+// @lastUpdate 07/12/2020 21:06
 
 namespace App\Classes;
 
@@ -115,10 +115,7 @@ class MyScolarite
             ]);
             if (count($parcour) === 0) {
                 $maxOrdre = $this->scolariteRepository->findOrdreMax($etudiant);
-                $scolarite = new Scolarite();
-                $scolarite->setSemestre($semestre);
-                $scolarite->setAnneeUniversitaire($anneeUniversitaire);
-                $scolarite->setEtudiant($etudiant);
+                $scolarite = new Scolarite($etudiant, $semestre, $anneeUniversitaire);
                 $scolarite->setOrdre($maxOrdre + 1);
                 $scolarite->setDecision(Constantes::SEMESTRE_EN_COURS);
                 $this->entityManager->persist($scolarite);

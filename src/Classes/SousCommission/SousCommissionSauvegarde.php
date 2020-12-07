@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/SousCommission/SousCommissionSauvegarde.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/12/2020 09:35
+// @lastUpdate 07/12/2020 21:12
 
 namespace App\Classes\SousCommission;
 
@@ -44,7 +44,7 @@ class SousCommissionSauvegarde
         $this->entityManager = $entityManager;
     }
 
-    public function SauvegardeTravail(SousCommission $sousCommission)
+    public function sauvegardeTravail(SousCommission $sousCommission)
     {
         $semestre = $sousCommission->getSemestre();
         $anneeUniversitaire = $sousCommission->getAnneeUniversitaire();
@@ -68,7 +68,7 @@ class SousCommissionSauvegarde
             //sauvegarde des données
             foreach ($etudiants as $etudiant) {
                 $scEtudiant = $sousCommission->getSousCommissionEtudiant($etudiant->getId());
-                $scSemestre = $this->GetOrCreateScolariteEtudiant($etudiant, $semestre, $anneeUniversitaire);
+                $scSemestre = $this->getOrCreateScolariteEtudiant($etudiant, $semestre, $anneeUniversitaire);
                 $scSemestre->setScolaritePromo($ssComm);
                 if ($semestre->isOptPenaliteAbsence() === true) {
                     $scSemestre->setMoyenne($scEtudiant->moyenneSemestrePenalisee);
@@ -113,13 +113,13 @@ class SousCommissionSauvegarde
             $ues->getValues(), $matieres, $etudiants->getValues(), $ssComm);
     }
 
-    private function GetOrCreateScolariteEtudiant(
+    private function getOrCreateScolariteEtudiant(
         $etudiant,
         Semestre $semestre,
         AnneeUniversitaire $anneeUniversitaire
     ) {
         $ssEtudiant = $this->scolariteRepository->findOneBy([
-            'semestre' => $semestre->getId(),
+            'semestre'           => $semestre->getId(),
             'anneeUniversitaire' => $anneeUniversitaire->getId()
         ]);
         if ($ssEtudiant === null) {

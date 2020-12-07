@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Celcat/MyCelcat.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/08/2020 09:51
+// @lastUpdate 07/12/2020 21:02
 
 /**
  * Created by PhpStorm.
@@ -22,6 +22,7 @@ use App\Entity\Semestre;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
+use http\Exception\InvalidArgumentException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -104,55 +105,54 @@ class MyCelcat
         ?AnneeUniversitaire $anneeUniversitaire
     ): void
     {
-        if ($anneeUniversitaire === null) {
-            throw new InvalidArgumentException('L\'année universitaire n\'est pas définie');
+        if ($anneeUniversitaire !== null) {
+
+
+            $this->connect();
+            $query = 'SELECT CT_EVENT.event_id, CT_EVENT.day_of_week, CT_EVENT.start_time, CT_EVENT.end_time, CT_EVENT.weeks, CT_EVENT_CAT.name, CT_VIEW_EVENT_MODULE001.resourcecode, CT_VIEW_EVENT_MODULE001.resourcename, CT_VIEW_EVENT_STAFF001.resourcecode, CT_VIEW_EVENT_STAFF001.resourcename, CT_VIEW_EVENT_ROOM001.resourcecode, CT_VIEW_EVENT_ROOM001.resourcename, CT_VIEW_EVENT_GROUP001.resourcecode, CT_VIEW_EVENT_GROUP001.resourcename, CT_EVENT.date_change FROM CT_EVENT INNER JOIN CT_EVENT_CAT ON CT_EVENT_CAT.event_cat_id = CT_EVENT.event_cat_id INNER JOIN CT_VIEW_EVENT_STAFF001 ON CT_VIEW_EVENT_STAFF001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_GROUP001 ON CT_VIEW_EVENT_GROUP001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_MODULE001 ON CT_VIEW_EVENT_MODULE001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_ROOM001 ON CT_VIEW_EVENT_ROOM001.eid=CT_EVENT.event_id WHERE dept_id=? ORDER BY CT_EVENT.date_change DESC, CT_EVENT.event_id DESC';
+
+            $stmt = odbc_prepare($this->conn, $query);
+            $result = odbc_execute($stmt, [$codeCelcatDepartement]);
+
+            while (odbc_fetch_row($result)) {
+                $eventId = odbc_result($result, 1);
+
+                //Et on ecrit la nouvelle version ou la nouvelle ligne
+                $debut = explode(' ', odbc_result($result, 3));
+                $fin = explode(' ', odbc_result($result, 4));
+                $type = substr(odbc_result($result, 6), 1, -1);
+                $semaines = odbc_result($result, 5);
+                $lg = strlen($semaines);
+
+                for ($i = 0; $i < $lg; $i++) {
+                    if ($semaines[$i] === 'Y' || $semaines[$i] === 'y') {
+                        $semaine = $i;
+                        $event = new CelcatEvent();
+                        $event->setAnneeUniversitaire($anneeUniversitaire);
+                        $event->setEventId($eventId);
+                        $event->setJour(odbc_result($result, 2));
+                        $event->setDebut(new DateTime($debut[1]));
+                        $event->setFin(new DateTime($fin[1]));
+                        $event->setSemaineFormation($semaine);
+                        $event->setType($type);
+                        $event->setCodeModule(odbc_result($result, 7));
+                        $event->setLibModule(utf8_encode(odbc_result($result, 8)));
+                        $event->setCodePersonnel(odbc_result($result, 9));
+                        $event->setLibPersonnel(utf8_encode(odbc_result($result, 10)));
+                        $event->setDepartementId($codeCelcatDepartement);
+                        $event->setCodeGroupe(odbc_result($result, 13));
+                        $event->setLibGroupe(utf8_encode(odbc_result($result, 14)));
+                        $event->setCodeSalle(odbc_result($result, 11));
+                        $event->setLibSalle(utf8_encode(odbc_result($result, 12)));
+                        $event->setUpdateEvent(new DateTime(odbc_result($result, 15)));
+
+                        $this->entityManger->persist($event);
+                    } //endif
+                } //endfor
+            }
+
+            $this->entityManger->flush();
         }
-
-        $this->connect();
-        $query = 'SELECT CT_EVENT.event_id, CT_EVENT.day_of_week, CT_EVENT.start_time, CT_EVENT.end_time, CT_EVENT.weeks, CT_EVENT_CAT.name, CT_VIEW_EVENT_MODULE001.resourcecode, CT_VIEW_EVENT_MODULE001.resourcename, CT_VIEW_EVENT_STAFF001.resourcecode, CT_VIEW_EVENT_STAFF001.resourcename, CT_VIEW_EVENT_ROOM001.resourcecode, CT_VIEW_EVENT_ROOM001.resourcename, CT_VIEW_EVENT_GROUP001.resourcecode, CT_VIEW_EVENT_GROUP001.resourcename, CT_EVENT.date_change FROM CT_EVENT INNER JOIN CT_EVENT_CAT ON CT_EVENT_CAT.event_cat_id = CT_EVENT.event_cat_id INNER JOIN CT_VIEW_EVENT_STAFF001 ON CT_VIEW_EVENT_STAFF001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_GROUP001 ON CT_VIEW_EVENT_GROUP001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_MODULE001 ON CT_VIEW_EVENT_MODULE001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_ROOM001 ON CT_VIEW_EVENT_ROOM001.eid=CT_EVENT.event_id WHERE dept_id=? ORDER BY CT_EVENT.date_change DESC, CT_EVENT.event_id DESC';
-
-        $stmt = odbc_prepare($this->conn, $query);
-        $result = odbc_execute($stmt, [$codeCelcatDepartement]);
-
-        while (odbc_fetch_row($result)) {
-            $eventId = odbc_result($result, 1);
-
-            //Et on ecrit la nouvelle version ou la nouvelle ligne
-            $debut = explode(' ', odbc_result($result, 3));
-            $fin = explode(' ', odbc_result($result, 4));
-            $type = substr(odbc_result($result, 6), 1, -1);
-            $semaines = odbc_result($result, 5);
-            $lg = strlen($semaines);
-
-            for ($i = 0; $i < $lg; $i++) {
-                if ($semaines[$i] === 'Y' || $semaines[$i] === 'y') {
-                    $semaine = $i;
-                    $event = new CelcatEvent();
-                    $event->setAnneeUniversitaire($anneeUniversitaire);
-                    $event->setEventId($eventId);
-                    $event->setJour(odbc_result($result, 2));
-                    $event->setDebut(new DateTime($debut[1]));
-                    $event->setFin(new DateTime($fin[1]));
-                    $event->setSemaineFormation($semaine);
-                    $event->setType($type);
-                    $event->setCodeModule(odbc_result($result, 7));
-                    $event->setLibModule(utf8_encode(odbc_result($result, 8)));
-                    $event->setCodePersonnel(odbc_result($result, 9));
-                    $event->setLibPersonnel(utf8_encode(odbc_result($result, 10)));
-                    $event->setDepartementId($codeCelcatDepartement);
-                    $event->setCodeGroupe(odbc_result($result, 13));
-                    $event->setLibGroupe(utf8_encode(odbc_result($result, 14)));
-                    $event->setCodeSalle(odbc_result($result, 11));
-                    $event->setLibSalle(utf8_encode(odbc_result($result, 12)));
-                    $event->setUpdateEvent(new DateTime(odbc_result($result, 15)));
-
-                    $this->entityManger->persist($event);
-                } //endif
-            } //endfor
-        }
-
-        $this->entityManger->flush();
-
     }
 
     public function updateGroupeBySemestre(

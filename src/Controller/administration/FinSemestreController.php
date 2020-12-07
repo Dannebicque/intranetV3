@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/FinSemestreController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/07/2020 14:02
+// @lastUpdate 07/12/2020 21:04
 
 namespace App\Controller\administration;
 
@@ -113,9 +113,7 @@ class FinSemestreController extends BaseController
                             $e->setSemestre($se);
                         }
 
-                        $p = new Scolarite();
-                        $p->setSemestre($se);
-                        $p->setEtudiant($e);
+                        $p = new Scolarite($e, $se);
                         $p->setDecision('E.C.');
                         $p->setOrdre($se->getOrdreLmd());//todo: vérifier si pas déjà un semestre ?
                         $this->entityManager->persist($p);

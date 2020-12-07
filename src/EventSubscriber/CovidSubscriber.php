@@ -3,20 +3,18 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/CovidSubscriber.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 10/11/2020 10:07
+// @lastUpdate 07/12/2020 21:11
 
 namespace App\EventSubscriber;
 
 use App\Classes\Covid\MyExportPresence;
 use App\Classes\Mail\MailerFromTwig;
-use App\Classes\Pdf\MyPDF;
 use App\Entity\CovidAttestationPersonnel;
 use App\Event\CovidEvent;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Symfony\Component\Routing\RouterInterface;
 
 
 class CovidSubscriber implements EventSubscriberInterface
@@ -100,25 +98,6 @@ class CovidSubscriber implements EventSubscriberInterface
         $autorisation->setDateValidationDepartement(new DateTime());
         $this->entityManager->persist($autorisation);
         $this->entityManager->flush();
-
-        //$this->sendToDirection($autorisation, CovidEvent::COVID_AUTORISATION_EDITEE);
-
-    }
-
-    private function sendToDirection(CovidAttestationPersonnel $covidAttestationPersonnel, string $codeEvent)
-    {
-        $this->myMailer->initEmail();
-        $this->myMailer->setTemplate('mails/covid/' . $codeEvent . '.html.twig', [
-            'covidAttestationPersonnel' => $covidAttestationPersonnel
-        ]);
-        $this->myMailer->sendMessage(
-            ['direction.iut-troyes@univ-reims.fr'],
-            'Demande d\'autorisation de déplacement validée par le département',
-            [
-                'replyTo' => $covidAttestationPersonnel->getDiplome()->getResponsableDiplome()->getMailUniv(),
-                'from'    => [$covidAttestationPersonnel->getDiplome()->getResponsableDiplome()->getMailUniv()]
-            ]
-        );
 
     }
 
