@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/PersonnelController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 24/11/2020 21:36
+// @lastUpdate 07/12/2020 21:00
 
 namespace App\Controller\administration;
 
@@ -70,7 +70,6 @@ class PersonnelController extends BaseController
      * @param                     $_format
      *
      * @return Response
-     * @throws Exception
      */
     public function export(MyExport $myExport, PersonnelRepository $personnelRepository, $type, $_format): Response
     {
@@ -282,10 +281,9 @@ class PersonnelController extends BaseController
 
         if (count($pf) === 0 && in_array($droit, Constantes::ROLE_LISTE, true)) {
             //etrangement pas dans un département, on ajoute.
-            $pf = new PersonnelDepartement();
-            $pf->setDepartement($this->dataUserSession->getDepartement());
+            $pf = new PersonnelDepartement($personnel, $this->dataUserSession->getDepartement());
+            $pf->setDepartement();
             $pf->setAnnee(date('Y'));
-            $pf->setPersonnel($personnel);
             $pf->addRole($droit);
         }
 

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/ScolariteController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/12/2020 16:16
+// @lastUpdate 07/12/2020 21:12
 
 namespace App\Controller\administration;
 
@@ -46,8 +46,8 @@ class ScolariteController extends BaseController
         Request $request,
         Etudiant $etudiant
     ): Response {
-        $scolarite = new Scolarite();
-        $scolarite->setEtudiant($etudiant);
+        $scolarite = new Scolarite($etudiant, $etudiant->getSemestre(),
+            $this->dataUserSession->getAnneeUniversitaire());
 
         $form = $this->createForm(ScolariteType::class, $scolarite,
             ['departement' => $this->dataUserSession->getDepartement()]);

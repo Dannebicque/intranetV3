@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/SousComissionController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/12/2020 09:35
+// @lastUpdate 07/12/2020 21:10
 
 namespace App\Controller\administration;
 
@@ -59,7 +59,7 @@ class SousComissionController extends BaseController
         Semestre $semestre
     ): Response {
         $sousCommission->calcul($semestre, $this->dataUserSession->getAnneeUniversitaire());
-        $sousCommissionTravail = $sousCommissionSauvegarde->SauvegardeTravail($sousCommission);
+        $sousCommissionTravail = $sousCommissionSauvegarde->sauvegardeTravail($sousCommission);
 
         return $this->render('administration/sous_commission/travail.html.twig', [
             'semestre' => $semestre,

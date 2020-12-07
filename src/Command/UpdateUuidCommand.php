@@ -3,12 +3,13 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Command/UpdateUuidCommand.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 09/07/2020 11:24
+// @lastUpdate 07/12/2020 21:03
 
 namespace App\Command;
 
 use App\Repository\DepartementRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Ramsey\Uuid\Uuid;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -50,7 +51,7 @@ class UpdateUuidCommand extends Command
 
         $datas = $this->repository->findAll();
         foreach ($datas as $data) {
-            $data->setUuid(new UuidV4());
+            $data->setUuid(Uuid::uuid4());
 
         }
         $this->entityManager->flush();

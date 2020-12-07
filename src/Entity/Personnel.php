@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Personnel.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 21/11/2020 07:26
+// @lastUpdate 07/12/2020 21:01
 
 namespace App\Entity;
 
@@ -280,6 +280,7 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
     public function __construct()
     {
         parent::__construct();
+        $this->setRoles(['ROLE_PERMANENT']);
         $this->hrs = new ArrayCollection();
         $this->previsionnels = new ArrayCollection();
         $this->evaluationsAuteur = new ArrayCollection();
