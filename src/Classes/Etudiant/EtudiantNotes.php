@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantNotes.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/08/2020 14:22
+// @lastUpdate 07/12/2020 20:31
 
 namespace App\Classes\Etudiant;
 
@@ -34,6 +34,7 @@ class EtudiantNotes
      * @var Note[]|int|mixed|string
      */
     private $notes;
+    private $tabGraphique;
 
 
     /**
@@ -154,5 +155,40 @@ class EtudiantNotes
         }
 
         return $tabMatiere;
+    }
+
+    public function calculGraphique()
+    {
+        $matieres = $this->matiereRepository->findBySemestre($this->etudiant->getSemestre());
+
+        foreach ($matieres as $matiere) {
+            $this->tabGraphique[$matiere->getCodeMatiere()] = ['notes' => 0, 'coefficient' => 0];
+        }
+
+        foreach ($this->notes as $note) {
+            if ($note->getEvaluation() !== null && $note->getEvaluation()->getMatiere() !== null) {
+                $this->tabGraphique[$note->getEvaluation()->getMatiere()->getCodeMatiere()]['notes'] += $note->getNote() * $note->getEvaluation()->getCoefficient();
+                $this->tabGraphique[$note->getEvaluation()->getMatiere()->getCodeMatiere()]['coefficient'] += $note->getEvaluation()->getCoefficient();
+            }
+        }
+    }
+
+    public function getLabelsGraphique()
+    {
+        return array_keys($this->tabGraphique);
+    }
+
+    public function getDataGraphique()
+    {
+        $t = [];
+        foreach ($this->tabGraphique as $key => $matiere) {
+            if ($matiere['coefficient'] === 0) {
+                $t[] = 0;
+            } else {
+                $t[] = $matiere['notes'] / $matiere['coefficient'];
+            }
+        }
+
+        return $t;
     }
 }

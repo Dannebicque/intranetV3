@@ -3,16 +3,16 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ProfilEtudiantController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/12/2020 17:37
+// @lastUpdate 07/12/2020 20:46
 
 namespace App\Controller;
 
+use App\Classes\Calendrier;
 use App\Classes\Etudiant\EtudiantAbsences;
 use App\Classes\Etudiant\EtudiantNotes;
 use App\Classes\StatsAbsences;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
-use App\Classes\Calendrier;
 use App\Repository\AlternanceRepository;
 use App\Repository\DepartementRepository;
 use App\Repository\MatiereRepository;
@@ -22,6 +22,8 @@ use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
+use Symfony\UX\Chartjs\Model\Chart;
 
 /**
  * Class UserController
@@ -69,8 +71,8 @@ class ProfilEtudiantController extends BaseController
 
     /**
      * @Route("/profil/{slug}/scolarite", name="profil_etudiant_scolarite")
-     * @param ScolariteRepository          $scolariteRepository
-     * @param Etudiant                     $etudiant
+     * @param ScolariteRepository $scolariteRepository
+     * @param Etudiant            $etudiant
      *
      * @return Response
      * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
@@ -82,66 +84,64 @@ class ProfilEtudiantController extends BaseController
         $scolarite = $scolariteRepository->findByEtudiant($etudiant);
 
         return $this->render('user/composants/scolarite.html.twig', [
-            'etudiant'     => $etudiant,
+            'etudiant'  => $etudiant,
             'scolarite' => $scolarite
         ]);
     }
 
     /**
      * @Route("/profil/{slug}/notes", name="profil_etudiant_notes")
-     * @param EtudiantNotes       $etudiantNotes
-     * @param Etudiant            $etudiant
+     * @param EtudiantNotes $etudiantNotes
+     * @param Etudiant      $etudiant
      *
      * @return Response
      * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
      */
     public function notes(
+        ChartBuilderInterface $chartBuilder,
         EtudiantNotes $etudiantNotes,
         Etudiant $etudiant
     ): Response {
 
-        $etudiantNotes->setEtudiant($etudiant);
-
-        return $this->render('user/composants/notes.html.twig', [
-            'notes'    => $etudiantNotes->getNotesParSemestresEtAnneeUniversitaire($etudiant->getSemestre(),
-                $etudiant->getAnneeUniversitaire()),
-            'etudiant' => $etudiant
-        ]);
-    }
-
-    /**
-     * @Route("/profil-ajax/{slug}/notes", name="profil_etudiant_ajax_notes_graph", options={"expose":true})
-     * @param EtudiantNotes       $etudiantNotes
-     * @param ScolariteRepository $scolariteRepository
-     * @param Etudiant            $etudiant
-     *
-     * @return Response
-     * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
-     */
-    public function ajaxGraphiquesNotes(
-        ScolariteRepository $scolariteRepository,
-        EtudiantNotes $etudiantNotes,
-        Etudiant $etudiant
-    ): Response {
-//        $semestres = $scolariteRepository->findByEtudiantDepartement($etudiant,
-//            $etudiant->getDepartement());
         $etudiantNotes->setEtudiant($etudiant);
         $notes = $etudiantNotes->getNotesParSemestresEtAnneeUniversitaire($etudiant->getSemestre(),
             $etudiant->getAnneeUniversitaire());
-//        $dataSets = [];
-//        foreach ($semestres as $semestre) {
-        $dataset['label'] = $etudiant->getSemestre()->getLibelle();
-        $dataset['backgroundColor'] = "rgba(51,202,185,0.7)";
-        $dataset['borderColor'] = "rgba(0,0,0,0)";
-        $dataset['pointBackgroundColor'] = "rgba(51,202,185,0.7)";
-        $dataset['pointBorderColor'] = "#fff";
-        $dataset['pointHoverBackgroundColor'] = "#fff";
-        $dataset['pointHoverBorderColor'] = "rgba(51,202,185,0.7)";
-        $dataset['data'] = [12, 13, 14, 15, 16, 10, 8];
-        //$dataSets[] = $dataset;
-        //}
-        //dump($dataSets);
-        return $this->json($dataset);
+        $etudiantNotes->calculGraphique();
+
+        $chart = $chartBuilder->createChart(Chart::TYPE_RADAR);
+        $chart->setData([
+            'labels'   => $etudiantNotes->getLabelsGraphique(),
+            'datasets' => [
+                [//todo: intégrer l'historique des semestres
+                 'label'           => $etudiant->getSemestre()->getLibelle(),
+                 'data'            => $etudiantNotes->getDataGraphique(),
+                 'backgroundColor' => 'rgb(255, 99, 132)',
+                 'borderColor'     => 'rgb(255, 99, 132)'
+                ]
+            ]
+        ]);
+
+        $chart->setOptions(
+            [
+                'legend' => ['position' => 'top'],
+                'title'  => [
+                    'display' => true,
+                    'text'    => 'Chart.js Radar Chart'
+                ],
+                'scale'  => [
+                    'ticks' => [
+                        'beginAtZero'  => true,
+                        'suggestedMax' => 20
+                    ]
+                ]
+            ]
+        );
+
+        return $this->render('user/composants/notes.html.twig', [
+            'notes'    => $notes,
+            'etudiant' => $etudiant,
+            'chart'    => $chart
+        ]);
     }
 
     /**
