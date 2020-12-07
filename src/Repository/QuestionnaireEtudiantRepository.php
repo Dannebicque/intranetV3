@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/QuestionnaireEtudiantRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 21/11/2020 07:35
+// @lastUpdate 06/12/2020 16:43
 
 namespace App\Repository;
 
@@ -42,7 +42,7 @@ class QuestionnaireEtudiantRepository extends ServiceEntityRepository
 
         return $this->createQueryBuilder('q')
             ->select($qb->expr()->countDistinct('q.etudiant'))
-            ->innerJoin(QuestionnaireQualite::class, 'qq', 'WITH', 'q.questionnaire = qq.id')
+            ->innerJoin(QuestionnaireQualite::class, 'qq', 'WITH', 'q.questionnaireQualite = qq.id')
             ->where('qq.id = :questionnaire')
             ->setParameter('questionnaire', $qualiteQuestionnaire->getId())
             ->getQuery()
@@ -67,11 +67,11 @@ class QuestionnaireEtudiantRepository extends ServiceEntityRepository
 
         /** @var QuestionnaireEtudiant $r */
         foreach ($q as $r) {
-            if ($r->getQuestionnaire() !== null && $r->getEtudiant() !== null) {
-                if (!array_key_exists($r->getQuestionnaire()->getId(), $t)) {
-                    $t[$r->getQuestionnaire()->getId()] = [];
+            if ($r->getQuestionnaireQualite() !== null && $r->getEtudiant() !== null) {
+                if (!array_key_exists($r->getQuestionnaireQualite()->getId(), $t)) {
+                    $t[$r->getQuestionnaireQualite()->getId()] = [];
                 }
-                $t[$r->getQuestionnaire()->getId()][$r->getEtudiant()->getId()] = $r;
+                $t[$r->getQuestionnaireQualite()->getId()][$r->getEtudiant()->getId()] = $r;
             }
         }
 

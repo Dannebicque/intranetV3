@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/QuestionnaireSection.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 23/11/2020 17:55
+// @lastUpdate 06/12/2020 18:57
 
 namespace App\Entity;
 
@@ -144,11 +144,24 @@ class QuestionnaireSection extends BaseEntity
         return $this;
     }
 
-    public function previs()
+    public function previs($onglet = 0)
     {
         $t = explode('-', $this->getConfig());
         if (count($t) === 2) {
-            return explode(',', $t[1]);
+            if ($onglet === 0) {
+                return explode(',', $t[1]);
+            }
+            $pre = explode(',', $t[1]);
+            $tPre = [];
+            for ($i = 0; $i < 3; $i++) {
+                $key = (int)$onglet * 3 - (3 - $i);
+                if (array_key_exists($key, $pre)) {
+                    $tPre[] = $pre[$key];
+                }
+            }
+
+            return $tPre;
+
         }
 
         return [];
