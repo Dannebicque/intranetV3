@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/enquete/EnqueteController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 23/11/2020 17:55
+// @lastUpdate 07/12/2020 18:32
 
 namespace App\Controller\superAdministration\enquete;
 
@@ -127,21 +127,25 @@ class EnqueteController extends AbstractController
      * @param QuestionnaireQuestionnaireSection $qualiteQuestionnaireSection
      *
      * @param Semestre                          $semestre
+     * @param int                               $onglet
      *
      * @return Response
      */
     public function section(
         PrevisionnelRepository $previsionnelRepository,
         QuestionnaireQuestionnaireSection $qualiteQuestionnaireSection,
-        Semestre $semestre
+        Semestre $semestre,
+        $onglet = 1
     ): Response {
 
         return $this->render('appEtudiant/qualite/section.html.twig', [
-            'ordre'         => $qualiteQuestionnaireSection->getOrdre(),
-            'section'       => $qualiteQuestionnaireSection->getSection(),
-            'tPrevisionnel' => $previsionnelRepository->findByDiplomeArray($semestre->getDiplome(),
+            'ordre'             => $qualiteQuestionnaireSection->getOrdre(),
+            'section'           => $qualiteQuestionnaireSection->getSection(),
+            'tPrevisionnel'     => $previsionnelRepository->findByDiplomeArray($semestre->getDiplome(),
                 $semestre->getAnneeUniversitaire()),
-            'reponses' => []
+            'reponses'          => [],
+            'onglet'            => $onglet,
+            'typeQuestionnaire' => 'qualite',
         ]);
     }
 
@@ -155,8 +159,10 @@ class EnqueteController extends AbstractController
     public function show(QuestionnaireQualite $questionnaire): Response
     {
         return $this->render('super-administration/enquete/show.html.twig', [
-            'questionnaire' => $questionnaire,
-            'semestre'      => $questionnaire->getSemestre()
+            'questionnaireSections' => $questionnaire->getSections(),
+            'questionnaire'         => $questionnaire,
+            'typeQuestionnaire'     => 'qualite',
+            'semestre'              => $questionnaire->getSemestre()
         ]);
     }
 

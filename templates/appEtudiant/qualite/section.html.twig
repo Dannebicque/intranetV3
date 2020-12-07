@@ -6,27 +6,7 @@
         {{ include('quizz_question/_question.html.twig', {question:question.question, numero: numero}) }}
     {% endfor %}
 {% else %}
-    {% set nbOnglet = (section.previs|length / 3)|round(0, 'ceil') %}
-    <div class="alert alert-warning">
-        Merci de compléter tous les onglets.
-    </div>
-
-    <ul class="nav nav-tabs">
-        {% for onglet in 1..nbOnglet %}
-            <li class="nav-item">
-                <a class="nav-link {% if loop.first %} active{% endif %}" data-toggle="tab"
-                   href="#onglet{{ onglet }}">Partie {{ loop.index }}</a>
-            </li>
-        {% endfor %}
-    </ul>
-    {% set compteur = 0 %}
-    {% set onglet = 0 %}
-    <div class="tab-content">
-        {% for previ in section.previs %}
-            {% if compteur == 0 and  onglet < nbOnglet %}
-                <div class="tab-pane {% if loop.first %}fade active show{% endif %}"
-                id="onglet{{ onglet+1 }}">
-            {% endif %}
+        {% for previ in section.previs(onglet) %}
             {% set num_titre2 = num_titre~'.'~loop.index %}
             {% for question in section.qualiteSectionQuestions %}
                 {% set numero = num_titre2~"."~ loop.index %}
@@ -34,17 +14,5 @@
                     config: {id: previ, matiere:tPrevisionnel[previ].matiere,
                         personnel:tPrevisionnel[previ].personnel}}) }}
             {% endfor %}
-            {% set compteur = compteur +1 %}
-            <hr>
-            {% if compteur == 3 or loop.last %}
-                <div class="alert alert-warning">
-                    Merci de compléter tous les onglets avant de cliquer sur "suivant".
-                </div>
-                </div>
-                {% set compteur = 0 %}
-                {% set onglet = onglet +1 %}
-            {% endif %}
         {% endfor %}
-
-    </div>
 {% endif %}

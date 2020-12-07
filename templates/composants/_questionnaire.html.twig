@@ -10,6 +10,15 @@
                 <span class="nav-title">Section {{ qualiteQuestionnaireSection.ordre }}</span>
                 <a class="nav-link" data-toggle="tab" href="#wizard-section-{{ qualiteQuestionnaireSection.id }}"></a>
             </li>
+            {% if qualiteQuestionnaireSection.section.previs|length > 0 %}
+                {% set nbOnglet = (qualiteQuestionnaireSection.section.previs|length / 3)|round(0, 'ceil') %}
+                {% for onglet in 2..nbOnglet %}
+                    <li class="nav-item">
+                        <span class="nav-title">Section {{ qualiteQuestionnaireSection.ordre }}-{{ onglet }}</span>
+                        <a class="nav-link" data-toggle="tab" href="#wizard-section-{{ qualiteQuestionnaireSection.ordre }}-{{ onglet }}"></a>
+                    </li>
+                {% endfor %}
+            {% endif %}
         {% endfor %}
 
         <li class="nav-item">
@@ -52,6 +61,31 @@
                     Les questions qui affichent un <span class="required-etoile">*</span> sont obligatoires.
                 </div>
             </div>
+            {% if qualiteQuestionnaireSection.section.previs|length > 0 %}
+                {% set nbOnglet = (qualiteQuestionnaireSection.section.previs|length / 3)|round(0, 'ceil') %}
+                {% for onglet in 2..nbOnglet %}
+                    <div class="tab-pane fade"
+                         id="wizard-section-{{ qualiteQuestionnaireSection.ordre }}-{{ onglet }}">
+                        {% if is_granted('ROLE_QUALITE') or is_granted('ROLE_SUPER_ADMIN') %}
+                            {{ render(controller(
+                                'App\\Controller\\superAdministration\\enquete\\EnqueteController::section',
+                                {qualiteQuestionnaireSection:qualiteQuestionnaireSection.id, semestre:semestre.id,
+                                    type:typeQuestionnaire, onglet:onglet}
+                            )) }}
+                        {% else %}
+                            {{ render(controller(
+                                'App\\Controller\\questionnaire\\QuestionnaireController::section',
+                                {questionnaireSection:qualiteQuestionnaireSection.id, type:typeQuestionnaire,
+                                    etudiant:etudiant, onglet:onglet}
+                            )) }}
+                        {% endif %}
+                        <br>
+                        <div class="alert alert-info">
+                            Les questions qui affichent un <span class="required-etoile">*</span> sont obligatoires.
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
         {% endfor %}
 
 
