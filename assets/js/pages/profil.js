@@ -2,10 +2,8 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/profil.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 22/10/2020 13:41
+// @lastUpdate 07/12/2020 19:19
 import {addCallout} from '../util'
-
-require('chart.js')
 
 $(document).on('change', '#chgt_etudiant_departement', function () {
   $.ajax({
@@ -44,31 +42,31 @@ $(document).on('click', '.changeprofil', function (e) {
   $(this).addClass('active show')
   $('#profilContent').empty().load($(this).attr('href'), function () {
     if ($onglet.attr('id') === 'profil-notes') {
-      console.log('graph')
-      const graph = $('#chart-radar')
-      $.get(Routing.generate('profil_etudiant_ajax_notes_graph', {slug: $(graph).data('etudiant')}), function (datasets) {
-        console.log(datasets)
-        let labels = []
-        new Chart(graph, {
-          type: 'radar',
-
-          // Data
-          //
-          data: {
-            labels: ['Mx101', 'Mx102', 'Mx201', 'Mx203', 'Mx202', 'Mx204', 'Moyenne'],
-            datasets: datasets
-          },
-
-          // Options
-          //
-          options: {
-            responsive: false,
-            legend: {
-              display: true
-            }
-          }
-        })
-      })
+      // console.log('graph')
+      // const graph = $('#chart-radar')
+      // $.get(Routing.generate('profil_etudiant_ajax_notes_graph', {slug: $(graph).data('etudiant')}), function (datasets) {
+      //   console.log(datasets)
+      //   let labels = []
+      //   new Chart(graph, {
+      //     type: 'radar',
+      //
+      //     // Data
+      //     //
+      //     data: {
+      //       labels: ['Mx101', 'Mx102', 'Mx201', 'Mx203', 'Mx202', 'Mx204', 'Moyenne'],
+      //       datasets: datasets
+      //     },
+      //
+      //     // Options
+      //     //
+      //     options: {
+      //       responsive: false,
+      //       legend: {
+      //         display: true
+      //       }
+      //     }
+      //   })
+      // })
 
     }
   })

@@ -3,7 +3,7 @@
 <div class="card">
     <h4 class="card-title">{{ 'situation.par.semestre.notes'|trans }}</h4>
     <div class="card-body">
-        <canvas class="mx-auto" id="chart-radar" width="360" height="360" data-etudiant="{{ etudiant.slug }}"></canvas>
+        {{ render_chart(chart) }}
     </div>
 </div>
 
