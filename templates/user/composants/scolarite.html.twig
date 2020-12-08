@@ -6,7 +6,6 @@
             <tr>
                 <th>{{ 'table.ordre'|trans }}</th>
                 <th>{{ 'table.semestre'|trans }}</th>
-
                 <th>{{ 'table.moyenneues'|trans }}</th>
                 <th>{{ 'table.moyenne'|trans }}</th>
                 <th>{{ 'table.decision'|trans }}</th>
@@ -36,14 +35,25 @@
                            class="btn btn-info btn-outline btn-square btn-xs" data-provide="tooltip"
                            data-placement="bottom" title="{{ 'atitle.details'|trans }}"><i class="{{ iconShow }}"></i></a>
                         {% if  user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ADMIN') %}
+                            {# <a href="{{ path('administration_scolarite_semestre_edit',{slug:etudiant.slug, scolarite: #}
+                            {# parcour.id}) #}
+                            {# }}" #}
+                            {# class="btn btn-warning" rel="tooltip" data-placement="bottom" title="Editer ce #}
+                            {# parcours de scolarité"><i #}
+                            {# class="{{ icon-edit }}"></i></a> #}
+
                             {% if parcour.decision == constant('App\\Entity\\Constantes::SEMESTRE_EN_COURS') %}
-                        <a href="{{ path('administration_semestre_export_releve_provisoire',{slug:etudiant.slug, semestre: parcour.semestre.id}) }}"
-                           class="btn btn-warning" rel="tooltip" data-placement="bottom" title="Editer un relevé de notes provisoire"><i
-                                    class="fa fa-print"></i> Editer un relevé de notes provisoire</a>
-                                {% else %}
+                                <a href="{{ path('administration_semestre_export_releve_provisoire',{slug:etudiant.slug, semestre: parcour.semestre.id}) }}"
+                                   class="btn btn-warning" rel="tooltip" data-placement="bottom" title="Editer un relevé de notes provisoire"><i
+                                            class="fa fa-print"></i> Editer un relevé de notes provisoire</a>
+                            {% else %}
+                                {% if parcour.scolaritePromo != null %}
                                     <a href="{{ path('administration_semestre_export_releve_definitif',{slug:etudiant.slug, semestre: parcour.semestre.id}) }}"
                                        class="btn btn-warning" rel="tooltip" data-placement="bottom" title="Editer un relevé de notes provisoire"><i
                                                 class="fa fa-print"></i> Editer le relevé de notes définitif</a>
+                                {% else %}
+                                    Le relevé n'est disponible qu'à partir de Sept. 2020
+                                {% endif %}
                             {% endif %}
                         {% endif %}
                     </td>
