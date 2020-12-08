@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/MatiereRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/09/2020 16:49
+// @lastUpdate 08/12/2020 08:27
 
 namespace App\Repository;
 
@@ -124,7 +124,7 @@ class MatiereRepository extends ServiceEntityRepository
             ->andWhere('s.ppn_actif = m.ppn')
             ->setParameter('diplome', $diplome->getId())
             ->orderBy('m.codeMatiere', 'ASC')
-            ->orderBy('m.libelle', 'ASC')
+            ->addOrderBy('m.libelle', 'ASC')
             ->getQuery()
             ->getResult();
     }

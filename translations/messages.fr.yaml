@@ -1718,7 +1718,7 @@ table:
   code_celcat_departement: 'Code Celcat du diplôme'
   code_celcat: 'Voir les codes dans Celcat'
   code_departement: 'Code département'
-  code_element: code_element
+  code_element: 'Code élément'
   code_matiere: 'Code matière'
   code_version: 'Code Version'
   code: Code
