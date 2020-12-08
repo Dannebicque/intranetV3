@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/CovidCreneauPresence.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/11/2020 15:33
+// @lastUpdate 08/12/2020 09:22
 
 namespace App\Entity;
 
@@ -106,6 +106,6 @@ class CovidCreneauPresence
 
     public function display()
     {
-        return $this->date->format('d/m/Y') . ' de ' . $this->heureArrivee->format('h:i') . ' à ' . $this->heureDepart->format('h:i');
+        return $this->date->format('d/m/Y') . ' de ' . $this->heureArrivee->format('H:i') . ' à ' . $this->heureDepart->format('H:i');
     }
 }
