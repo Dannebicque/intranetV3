@@ -25,6 +25,7 @@
                 <thead>
                 <tr>
 
+                    <th>#</th>
                     <th>Date de la demande</th>
                     <th>Personnel</th>
                     <th>Durée validité</th>
@@ -37,7 +38,7 @@
                 <tbody>
                 {% for covid_attestation_personnel in covid_attestation_personnels %}
                     <tr id="ligne_{{ covid_attestation_personnel.id }}">
-
+                        <td>{{ covid_attestation_personnel.created ? covid_attestation_personnel.created|date('Y-m-d') :'' }}</td>
                         <td>{{ covid_attestation_personnel.created ? covid_attestation_personnel.created|format_datetime
                                 ('short', 'short') : '' }}</td>
                         <td>{{ covid_attestation_personnel.personnel.displayPr }}</td>
