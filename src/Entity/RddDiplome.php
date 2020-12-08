@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/RddDiplome.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 17/11/2020 09:08
+// @lastUpdate 08/12/2020 06:46
 
 namespace App\Entity;
 
@@ -61,6 +61,11 @@ class RddDiplome
      * @ORM\Column(type="boolean")
      */
     private $enqueteAFaire = false;
+
+    /**
+     * @ORM\Column(type="string", length=30, nullable=true)
+     */
+    private $codeEtape;
 
     public function getId(): ?int
     {
@@ -159,6 +164,18 @@ class RddDiplome
     public function setEnqueteAFaire(bool $enqueteAFaire): self
     {
         $this->enqueteAFaire = $enqueteAFaire;
+
+        return $this;
+    }
+
+    public function getCodeEtape(): ?string
+    {
+        return $this->codeEtape;
+    }
+
+    public function setCodeEtape(?string $codeEtape): self
+    {
+        $this->codeEtape = $codeEtape;
 
         return $this;
     }
