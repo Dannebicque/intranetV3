@@ -5,7 +5,8 @@
 {% block qvBody %}
     <div class="row">
         <div class="col-sm-12">
-            <select class="form-control" data-provide="select-picker" data-live-search="true" id="chronologiqueMatiere">
+            <select class="form-control selectpicker"
+                    id="chronologiqueMatiere">
                 <option value="">Choisir une matière</option>
                 {% for previsionnel in previsionnels %}
                     <option value="{{ previsionnel.id }}">{{ previsionnel.matiere.display }}</option>

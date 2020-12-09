@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/QuestionnaireQualite.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 23/11/2020 12:43
+// @lastUpdate 09/12/2020 15:53
 
 namespace App\Entity;
 
@@ -13,6 +13,7 @@ use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Ramsey\Uuid\Rfc4122\UuidV4;
 use Ramsey\Uuid\Uuid;
 
 /**
@@ -80,4 +81,6 @@ class QuestionnaireQualite extends Questionnaire
 
         return $this;
     }
+
+
 }
