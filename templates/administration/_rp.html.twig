@@ -183,14 +183,14 @@
         <div class="card"><h2 class="card-title">{{ 'adm.alternances'|trans }}</h2>
             <div class="card-body">
                 <div class="row gap-y">
-                    <div class="col-md-12">}
+                    <div class="col-md-12">
                         {% set alternance = false %}
                         {% for annee in user_data.annees|filter(annee => annee.optAlternance == true) %}
-                            {% if annee.diplome.responsableDiplome == user_data.user.id %}
+                            {# {% if annee.diplome.responsableDiplome.id == user_data.user.id %} #}
                                 {% set alternance = true %}
                                 <a href="{{ path('administration_alternance_index',{annee:annee.id}) }}"
                                    class="btn btn-block btn-primary"> Alternances pour l'année {{ annee.libelle }}</a>
-                            {% endif %}
+                            {# {% endif %} #}
                         {% endfor %}
                         {% if alternance == false %}
                             <div class="alert alert-info">Aucune année n'est proposée en alternance</div>
