@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appEtudiant/QualiteController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 24/11/2020 16:29
+// @lastUpdate 09/12/2020 10:40
 
 namespace App\Controller\appEtudiant;
 
@@ -22,6 +22,7 @@ use App\Repository\QuestionnaireQuestionRepository;
 use App\Repository\QuestionnaireReponseRepository;
 use DateTime;
 use Doctrine\ORM\NonUniqueResultException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,13 +41,18 @@ class QualiteController extends BaseController
      *
      * @return Response
      */
-    public function index(QuestionnaireQualiteRepository $qualiteQuestionnaireRepository): Response
-    {
+    public function index(
+        QuestionnaireEtudiantRepository $questionnaireEtudiantRepository,
+        QuestionnaireQualiteRepository $qualiteQuestionnaireRepository
+    ): Response {
         if ($this->dataUserSession->getUser() !== null) {
             $questionnaires = $qualiteQuestionnaireRepository->findByDiplome($this->dataUserSession->getUser()->getDiplome());
 
+            $reponsesEtudiant = $questionnaireEtudiantRepository->findByEtudiantArray($this->getConnectedUser());
+
             return $this->render('appEtudiant/qualite/index.html.twig', [
-                'questionnaires' => $questionnaires
+                'questionnaires' => $questionnaires,
+                'reponsesEtudiant' => $reponsesEtudiant
             ]);
         }
 
@@ -58,6 +64,7 @@ class QualiteController extends BaseController
      * @param QuestionnaireEtudiantRepository $quizzEtudiantRepository
      * @param MailerFromTwig                  $myMailer
      * @param QuestionnaireQualite            $qualiteQuestionnaire
+     * @ParamConverter("qualiteQuestionnaire", options={"mapping": {"uuid": "uuid"}})
      *
      * @return Response
      */
@@ -67,8 +74,8 @@ class QualiteController extends BaseController
         QuestionnaireQualite $qualiteQuestionnaire
     ): Response {
         $quizzEtudiant = $quizzEtudiantRepository->findOneBy([
-            'questionnaire' => $qualiteQuestionnaire->getId(),
-            'etudiant'      => $this->getConnectedUser()->getId()
+            'questionnaireQualite' => $qualiteQuestionnaire->getId(),
+            'etudiant'             => $this->getConnectedUser()->getId()
         ]);
         if ($quizzEtudiant !== null) {
             $quizzEtudiant->setDateTermine(new DateTime('now'));
@@ -76,6 +83,7 @@ class QualiteController extends BaseController
             $this->entityManager->flush();
 
             if ($this->getConnectedUser() !== null && $this->getConnectedUser()->getDiplome() !== null && $this->getConnectedUser()->getDiplome()->getOptResponsableQualite() !== null) {
+                $myMailer->initEmail();
                 $myMailer->setTemplate('mails/qualite-complete-etudiant.html.twig',
                     ['questionnaire' => $qualiteQuestionnaire, 'etudiant' => $this->getConnectedUser()]);
                 $myMailer->sendMessage($this->getConnectedUser()->getMails(),
@@ -109,6 +117,7 @@ class QualiteController extends BaseController
         return $this->render('appEtudiant/qualite/questionnaire.html.twig', [
             'questionnaireSections' => $questionnaire->getSections(),
             'questionnaire'         => $questionnaire,
+            'etudiant'              => $this->getConnectedUser(),
             'typeQuestionnaire'     => 'qualite',
             'tPrevisionnel'         => $previsionnelRepository->findByDiplomeArray($this->dataUserSession->getUser()->getDiplome(),
                 $this->dataUserSession->getAnneeUniversitaire())

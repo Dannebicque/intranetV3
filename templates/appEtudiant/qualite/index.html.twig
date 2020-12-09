@@ -19,9 +19,15 @@
                         .dateFermeture|format_date('short') }}</td>
                     <td>
                         {% if questionnaire.isOuvert %}
-                            <a href="{{ path('app_etudiant_qualite_questionnaire', {questionnaire:questionnaire.id}) }}">
-                                Compléter le questionnaire
-                            </a>
+                            {% if reponsesEtudiant[questionnaire.id] is defined and reponsesEtudiant[questionnaire.id].termine == true %}
+                                <button class="btn btn-success btn-block">Vous avez complété le questionnaire
+                                                                          le {{ reponsesEtudiant[questionnaire
+                                    .id].dateTermine|format_datetime('short', 'short') }}</button>
+                            {% else %}
+                                <a href="{{ path('app_etudiant_qualite_questionnaire', {questionnaire:questionnaire.id}) }}">
+                                    Compléter le questionnaire
+                                </a>
+                            {% endif %}
                         {% else %}
                             Complété ou hors délai
                         {% endif %}

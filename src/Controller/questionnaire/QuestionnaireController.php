@@ -3,11 +3,12 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/questionnaire/QuestionnaireController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 24/11/2020 12:54
+// @lastUpdate 09/12/2020 10:40
 
 namespace App\Controller\questionnaire;
 
 use App\Entity\Etudiant;
+use App\Entity\Previsionnel;
 use App\Entity\QuestionnaireEtudiant;
 use App\Entity\QuestionnaireEtudiantReponse;
 use App\Entity\QuestionnaireQuestion;
@@ -33,20 +34,21 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class QuestionnaireController extends AbstractController
 {
-    private EntityManagerInterface $entityManager;
 
     private QuestionnaireQualiteRepository $questionnaireQualiteRepository;
 
     private QuestionnaireQuizzRepository $questionnaireQuizzRepository;
 
+    private EntityManagerInterface $entityManager;
+
     public function __construct(
-        EntityManagerInterface $entityManager,
         QuestionnaireQualiteRepository $questionnaireQualiteRepository,
-        QuestionnaireQuizzRepository $questionnaireQuizzRepository
+        QuestionnaireQuizzRepository $questionnaireQuizzRepository,
+        EntityManagerInterface $entityManager
     ) {
-        $this->entityManager = $entityManager;
         $this->questionnaireQualiteRepository = $questionnaireQualiteRepository;
         $this->questionnaireQuizzRepository = $questionnaireQuizzRepository;
+        $this->entityManager = $entityManager;
     }
 
     /**
@@ -64,7 +66,8 @@ class QuestionnaireController extends AbstractController
         QuestionnaireEtudiantReponseRepository $quizzEtudiantReponseRepository,
         QuestionnaireQuestionnaireSection $questionnaireSection,
         $type,
-        Etudiant $etudiant
+        Etudiant $etudiant,
+        $onglet = 1
     ): Response {
 
         switch ($type) {
@@ -80,6 +83,7 @@ class QuestionnaireController extends AbstractController
                 $quizzEtudiant = $quizzEtudiantRepository->findOneBy([
                     'questionnaireQualite' => $questionnaire,
                     'etudiant'             => $etudiant->getId()
+
                 ]);
                 break;
         }
@@ -94,11 +98,12 @@ class QuestionnaireController extends AbstractController
         return $this->render('appEtudiant/qualite/section.html.twig', [
             'ordre'             => $questionnaireSection->getOrdre(),
             'section'           => $questionnaireSection->getSection(),
-            // 'tPrevisionnel' => $previsionnelRepository->findByDiplomeArray($this->getConnectedUser()->getDiplome(),
-            //     $this->dataUserSession->getAnneeUniversitaire()),
+            'tPrevisionnel'     => $this->entityManager->getRepository(Previsionnel::class)->findByDiplomeArray($etudiant->getDiplome(),
+                $etudiant->getAnneeUniversitaire()),
             'reponses'          => $reponses,
             'etudiant'          => $etudiant,
-            'typeQuestionnaire' => $type
+            'typeQuestionnaire' => $type,
+            'onglet'            => $onglet
         ]);
     }
 

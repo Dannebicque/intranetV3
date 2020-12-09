@@ -3,10 +3,11 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/enquete/EnqueteController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/12/2020 18:32
+// @lastUpdate 09/12/2020 15:53
 
 namespace App\Controller\superAdministration\enquete;
 
+use App\Entity\Constantes;
 use App\Entity\QuestionnaireQualite;
 use App\Entity\QuestionnaireQuestionnaireSection;
 use App\Entity\Semestre;
@@ -15,6 +16,7 @@ use App\Repository\DiplomeRepository;
 use App\Repository\EtudiantRepository;
 use App\Repository\PrevisionnelRepository;
 use App\Repository\QuestionnaireEtudiantRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use PhpOffice\PhpSpreadsheet\Exception;
@@ -28,6 +30,17 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class EnqueteController extends AbstractController
 {
+    private EntityManagerInterface $entityManager;
+
+    /**
+     * EnqueteController constructor.
+     */
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
+
+
     /**
      * @Route("/", name="administratif_enquete_index")
      * @param EtudiantRepository $etudiantRepository
@@ -116,10 +129,19 @@ class EnqueteController extends AbstractController
      */
     public function duplicate(QuestionnaireQualite $questionnaire): Response
     {
-        return $this->render('super-administration/enquete/edit.html.twig', [
-            'questionnaire' => $questionnaire,
-            'semestre'      => $questionnaire->getSemestre()
-        ]);
+        $newQuestionnaireQualite = clone $questionnaire;
+        $this->entityManager->persist($newQuestionnaireQualite);
+        foreach ($questionnaire->getSections() as $section) {
+            $nSection = clone $section;
+            $newQuestionnaireQualite->addSection($nSection);
+            $nSection->setQuestionnaireQualite($newQuestionnaireQualite);
+            $this->entityManager->persist($nSection);
+        }
+        $this->entityManager->flush();
+        $this->addFlash(Constantes::FLASHBAG_SUCCESS, 'questionnaire.duplicate.success.flashbag');
+
+        return $this->redirectToRoute('administratif_enquete_edit',
+            ['questionnaire' => $newQuestionnaireQualite->getId()]);
     }
 
     /**

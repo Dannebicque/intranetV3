@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/QuestionnaireEtudiantRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/12/2020 16:43
+// @lastUpdate 09/12/2020 10:40
 
 namespace App\Repository;
 
@@ -73,6 +73,23 @@ class QuestionnaireEtudiantRepository extends ServiceEntityRepository
                 }
                 $t[$r->getQuestionnaireQualite()->getId()][$r->getEtudiant()->getId()] = $r;
             }
+        }
+
+        return $t;
+    }
+
+    public function findByEtudiantArray(Etudiant $etudiant)
+    {
+        $r = $this->createQueryBuilder('q')
+            ->where('q.etudiant = :etudiant')
+            ->setParameter('etudiant', $etudiant->getId())
+            ->getQuery()
+            ->getResult();
+
+        $t = [];
+        /** @var QuestionnaireEtudiant $q */
+        foreach ($r as $q) {
+            $t[$q->getQuestionnaireQualite()->getId()] = $q;
         }
 
         return $t;

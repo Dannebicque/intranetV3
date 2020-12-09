@@ -3,11 +3,13 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Form/QualiteQuestionnaireType.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 23/11/2020 17:55
+// @lastUpdate 09/12/2020 15:53
 
 namespace App\Form;
 
 use App\Entity\QuestionnaireQualite;
+use App\Entity\Semestre;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -17,9 +19,16 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class QualiteQuestionnaireType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options) : void
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('semestre', EntityType::class, [
+                'label'        => 'label.semestre',
+                'help'         => 'help.semestre.enquete',
+                'class'        => Semestre::class,
+                'choice_label' => 'display',
+                'attr'         => ['class' => 'selectpicker']
+            ])
             ->add('libelle', TextType::class, ['label' => 'label.libelle', 'help' => 'help.libelle.enquete'])
             ->add('titre', TextType::class, ['label' => 'label.titre', 'help' => 'help.titre.enquete'])
             ->add('texteExplication', TextareaType::class, ['label' => 'label.texteExplication', 'help' => 'help.texteExplication.enquete'])
