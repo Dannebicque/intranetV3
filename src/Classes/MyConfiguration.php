@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyConfiguration.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 04/10/2020 08:41
+// @lastUpdate 10/12/2020 08:44
 
 /**
  * Created by PhpStorm.
@@ -112,7 +112,6 @@ class MyConfiguration
             $departement->update($name, $this->transformeValue($value));
             $this->entityManager->persist($departement);
             $this->entityManager->flush();
-            echo 'update';
 
             return true;
         }

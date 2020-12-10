@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Security/AbstractAuthenticator.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 10/12/2020 08:44
 
 namespace App\Security;
 
@@ -45,7 +45,6 @@ class AbstractAuthenticator
                     $departement = $departements[0];
                     $session->set('departement', $departement->getUuid()); //on sauvegarde
                 } else {
-                    echo 'pas de departement par defaut';
                     //pas de departement par défaut, ou pas de departement du tout.
                     $departements = $departementRepository->findDepartementPersonnel($user);
                     if (count($departements) === 0) {

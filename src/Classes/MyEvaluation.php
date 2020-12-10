@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEvaluation.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 02/12/2020 17:35
+// @lastUpdate 10/12/2020 08:44
 
 /**
  * Created by PhpStorm.
@@ -310,7 +310,6 @@ class MyEvaluation
 
         switch ($extension) {
             case 'xlsx':
-                echo 'xlsx';
                 $data = $this->importXlsx($fichier);
                 $notes = $this->insertNotes($evaluation, $data);
                 break;
