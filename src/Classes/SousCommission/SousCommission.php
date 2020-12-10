@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/SousCommission/SousCommission.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/12/2020 17:37
+// @lastUpdate 10/12/2020 08:44
 
 namespace App\Classes\SousCommission;
 
@@ -103,7 +103,6 @@ class SousCommission
             $this->etudiantNotes->setEtudiant($etudiant);
             $etudiantSousCommission->moyenneMatieres = $this->etudiantNotes->getMoyenneParMatiereParSemestresEtAnneeUniversitaire($semestre,
                 $anneeUniversitaire);
-            //dump($etudiantSousCommission->moyenneMatieres);
             //récupérer les pénalités d'absence par matière
             $this->etudiantAbsences->setEtudiant($etudiant);
             $this->etudiantAbsences->getPenalitesAbsencesParMatiere($semestre, $anneeUniversitaire,
