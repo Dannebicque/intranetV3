@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/QuestionnaireQuestion.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 21/11/2020 07:52
+// @lastUpdate 09/12/2020 20:53
 
 namespace App\Entity;
 
@@ -158,34 +158,6 @@ class QuestionnaireQuestion extends BaseEntity
             if ($quizzReponse->getQuestion() === $this) {
                 $quizzReponse->setQuestion(null);
             }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|QuestionnaireQuizz[]
-     */
-    public function getQuizzQuestionnaires(): Collection
-    {
-        return $this->quizzQuestionnaires;
-    }
-
-    public function addQuizzQuestionnaire(QuestionnaireQuizz $quizzQuestionnaire): self
-    {
-        if (!$this->quizzQuestionnaires->contains($quizzQuestionnaire)) {
-            $this->quizzQuestionnaires[] = $quizzQuestionnaire;
-            $quizzQuestionnaire->addQuestion($this);
-        }
-
-        return $this;
-    }
-
-    public function removeQuizzQuestionnaire(QuestionnaireQuizz $quizzQuestionnaire): self
-    {
-        if ($this->quizzQuestionnaires->contains($quizzQuestionnaire)) {
-            $this->quizzQuestionnaires->removeElement($quizzQuestionnaire);
-            $quizzQuestionnaire->removeQuestion($this);
         }
 
         return $this;
