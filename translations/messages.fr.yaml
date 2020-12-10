@@ -1000,7 +1000,7 @@ erreur: Erreur
 erreur.type.user: ''
 erreur404.heading: 'Erreur 404'
 erreur500.heading: 'Erreur 500'
-erreur666.heading: 'Erreur 666'
+erreur666.heading: 'Accès refusé'
 espace.travail: 'Espace Travail'
 est.en.copie: 'Est en copie'
 
@@ -1310,7 +1310,7 @@ menu:
 mes_cours.heading: 'Mes cours'
 message.404: 'Hum. Il semblerait que vous recherchiez quelque chose qui n''existe pas.'
 message.500: "On dirait qu'on a un petit problème interne. Merci de réessayer dans quelques minutes ou de\n signaler\n ce problème.\n"
-message.666: 'Il semblerait que tu essaies d''accéder à des endroits non autorisés.'
+message.666: 'Il semblerait que vous essayez d''accéder à des endroits non autorisés.'
 
 message:
   ajouter.piece.jointe: 'Ajouter une pièce jointe'
@@ -2001,7 +2001,7 @@ Texte: Texte
 Titre: Titre
 titre.404: 'Page non trouvée !'
 titre.500: 'Erreur interne !'
-titre.666: 'Hey Hey, Petit Malin ...'
+titre.666: 'Accès refusé ...'
 to_date: 'Jusqu''au'
 
 total:
