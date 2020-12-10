@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ErreurController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 10/12/2020 08:24
 
 namespace App\Controller;
 
@@ -36,7 +36,7 @@ class ErreurController extends AbstractController
     }
 
     /**
-     * @Route("/666", name="erreur_666")
+     * @Route("/acces-refuse", name="erreur_666")
      */
     public function erreur666(): Response
     {
