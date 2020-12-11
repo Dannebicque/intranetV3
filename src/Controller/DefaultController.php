@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/DefaultController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 04/12/2020 09:29
+// @lastUpdate 11/12/2020 15:24
 
 namespace App\Controller;
 
@@ -61,15 +61,5 @@ class DefaultController extends BaseController
         ]);
     }
 
-    /**
-     *
-     * @Route("/aide/{sujet}", name="help_article")
-     * @param $sujet
-     *
-     * @return RedirectResponse
-     */
-    public function help($sujet): RedirectResponse
-    {
-        return $this->redirect('https://cours.davidannebicque.fr/intranet/' . $sujet);
-    }
+
 }

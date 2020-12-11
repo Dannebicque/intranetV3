@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'help' %}
+
+{% block header %}
+    {{ 'help.heading'|trans }} {% if dossier is defined and dossier != '/' %}| {{ dossier|trans }}{% endif %}
+{% endblock %}
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('default_homepage') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_dashboard'|trans }}"><i
+                        class="material-icons">dashboard</i></a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="row gap-y">
+        {% for categorie in categories.categories %}
+            <div class="col-lg-6 col-sm-12">
+                <a class="media bg-white align-items-center hover-shadow-2 transition-5s"
+                        {% if dossier is defined %}
+                    href="{{ path('help_categorie',{categorie:dossier, subcategorie: categorie.nom}) }}"
+                {% else %}
+                    href="{{ path('help_categorie',{categorie: categorie.nom}) }}"
+                        {% endif %}>
+                    <div class="media-left">
+                        <i class="fa fa-file-text-o fs-35 text-secondary"></i>
+                    </div>
+
+                    <div class="media-body">
+                        <p class="lead fw-400">{{ categorie.nom }}</p>
+                        <p><small>{{ categorie.nbArticles }} article(s)</small></p>
+                    </div>
+
+                    <div class="media-right"><i class="fas fa-chevron-right fa-3x text-primary"></i></div>
+                </a>
+            </div>
+        {% endfor %}
+
+        {% for article in categories.articles %}
+            <div class="col-lg-6 col-sm-12">
+                <a class="media bg-white align-items-center hover-shadow-2 transition-5s" href="{{ path('help_article',
+                    {sujet:article.lien}) }}">
+                    <div class="media-left">
+                        <i class="fa fa-file-text-o fs-35 text-secondary"></i>
+                    </div>
+
+                    <div class="media-body">
+                        <p class="lead fw-400">{{ article.nom }}</p>
+                        <p><small>Lire l'article</small></p>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
+
