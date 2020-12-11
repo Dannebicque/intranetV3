@@ -19,7 +19,7 @@
     <div class="card">
         <h4 class="card-title">{{ 'applications.etudiant.qualite.questionnaire.heading'|trans }}</h4>
         <div class="card-body">
-            {{ include('composants/_questionnaire.html.twig') }}
+            {{ include('composants/_questionnaire.html.twig', {apercu:false}) }}
         </div>
     </div>
 {% endblock %}

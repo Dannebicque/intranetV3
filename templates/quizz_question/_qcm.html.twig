@@ -10,7 +10,7 @@
                     <input type="checkbox" id="quizz_question_qcm_{{ name }}_{{ reponse.id }}"
                            name="quizz_question_reponses_{{ name }}"
                            data-typeQuestionnaire="{{ typeQuestionnaire }}"
-                            {% if not(is_granted('ROLE_QUALITE') or is_granted('ROLE_SUPER_ADMIN')) %}
+                            {% if apercu is not defined or apercu == false %}
                                 data-etudiant="{{ etudiant.id }}"
                             {% endif %}
                             {% if question.obligatoire %}required{% endif %}
@@ -19,19 +19,17 @@
                                 checked
                             {% endif %}
                             {% if question.obligatoire %}required{% endif %}
-                           class="form-check-input {% if not(is_granted('ROLE_QUALITE') or is_granted
-                               ('ROLE_SUPER_ADMIN')) %}questionQualite{% endif %}"
+                           class="form-check-input {% if apercu is not defined or apercu == false %}questionQualite{% endif %}"
                            value="{{ reponse.valeur }}">
                     <label class="form-check-label required" for="quizz_question_qcm_{{ name }}_{{ reponse.id }}">{{ reponse.libelle }}</label>
                     {% if reponse.valeur == "CHX:OTHER" %}
                         <input type="text" id="quizz_question_qcm_autre_{{ name }}_{{ reponse.id }}"
                                name="quizz_question_reponses_{{ name }}_autre"
                                data-typeQuestionnaire="{{ typeQuestionnaire }}"
-                                {% if not(is_granted('ROLE_QUALITE') or is_granted('ROLE_SUPER_ADMIN')) %}
+                                {% if apercu is not defined or apercu == false %}
                                     data-etudiant="{{ etudiant.id }}"
                                 {% endif %}
-                               class="form-control {% if not(is_granted('ROLE_QUALITE') or is_granted
-                                   ('ROLE_SUPER_ADMIN')) %}questionQualiteTextArea{% endif %}"
+                               class="form-control {% if apercu is not defined or apercu == false %}questionQualiteTextArea{% endif %}"
                                 {% if reponses['quizz_question_reponses_'~name~'_autre'] is defined %}
                                     value="{{ reponses['quizz_question_reponses_'~name~'_autre'].valeur }}"
                                 {% endif %}

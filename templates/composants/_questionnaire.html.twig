@@ -44,16 +44,17 @@
         {% for qualiteQuestionnaireSection in questionnaireSections %}
             <div class="tab-pane fade"
                  id="wizard-section-{{ qualiteQuestionnaireSection.id }}">
-                {% if is_granted('ROLE_QUALITE') or is_granted('ROLE_SUPER_ADMIN') %}
-                    {{ render(controller(
+                {% if apercu==true %}
+                    {{ render_esi(controller(
                         'App\\Controller\\superAdministration\\enquete\\EnqueteController::section',
-                        {qualiteQuestionnaireSection:qualiteQuestionnaireSection.id, semestre:semestre.id, type:typeQuestionnaire}
+                        {qualiteQuestionnaireSection:qualiteQuestionnaireSection.id, semestre:semestre.id, apercu:true,
+                            type:typeQuestionnaire}
                     )) }}
                 {% else %}
-                    {{ render(controller(
+                    {{ render_esi(controller(
                         'App\\Controller\\questionnaire\\QuestionnaireController::section',
                         {questionnaireSection:qualiteQuestionnaireSection.id, type:typeQuestionnaire,
-                            etudiant:etudiant}
+                            etudiant:etudiant.id, apercu:false}
                     )) }}
                 {% endif %}
                 <br>
@@ -66,17 +67,17 @@
                 {% for onglet in 2..nbOnglet %}
                     <div class="tab-pane fade"
                          id="wizard-section-{{ qualiteQuestionnaireSection.ordre }}-{{ onglet }}">
-                        {% if is_granted('ROLE_QUALITE') or is_granted('ROLE_SUPER_ADMIN') %}
-                            {{ render(controller(
+                        {% if apercu==true %}
+                            {{ render_esi(controller(
                                 'App\\Controller\\superAdministration\\enquete\\EnqueteController::section',
                                 {qualiteQuestionnaireSection:qualiteQuestionnaireSection.id, semestre:semestre.id,
-                                    type:typeQuestionnaire, onglet:onglet}
+                                    type:typeQuestionnaire, onglet:onglet, apercu:true}
                             )) }}
                         {% else %}
-                            {{ render(controller(
+                            {{ render_esi(controller(
                                 'App\\Controller\\questionnaire\\QuestionnaireController::section',
                                 {questionnaireSection:qualiteQuestionnaireSection.id, type:typeQuestionnaire,
-                                    etudiant:etudiant, onglet:onglet}
+                                    etudiant:etudiant.id, onglet:onglet, apercu:false}
                             )) }}
                         {% endif %}
                         <br>

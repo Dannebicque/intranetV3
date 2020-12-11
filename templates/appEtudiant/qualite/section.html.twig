@@ -7,6 +7,7 @@
     {% endfor %}
 {% else %}
         {% for previ in section.previs(onglet) %}
+            {{ previ }}{{ tPrevisionnel[previ].matiere }}{{ tPrevisionnel[previ].personnel }}
             {% set num_titre2 = num_titre~'.'~loop.index %}
             {% for question in section.qualiteSectionQuestions %}
                 {% set numero = num_titre2~"."~ loop.index %}

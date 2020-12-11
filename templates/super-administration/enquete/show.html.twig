@@ -23,7 +23,7 @@
   <div class="card">
     <h4 class="card-title">{{ 'administratif.qualite.questionnaire.show.heading'|trans }}</h4>
     <div class="card-body">
-      {{ include('composants/_questionnaire.html.twig') }}
+      {{ include('composants/_questionnaire.html.twig', {apercu:true}) }}
     </div>
   </div>
 {% endblock %}
