@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/SousComissionController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/12/2020 21:10
+// @lastUpdate 11/12/2020 14:52
 
 namespace App\Controller\administration;
 
@@ -15,11 +15,13 @@ use App\Entity\Constantes;
 use App\Entity\Scolarite;
 use App\Entity\ScolaritePromo;
 use App\Entity\Semestre;
+use App\Event\SousCommissionEvent;
 use PhpOffice\PhpSpreadsheet\Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class SousComissionController
@@ -98,18 +100,24 @@ class SousComissionController extends BaseController
 
     /**
      * @Route("/publier/{ssComm}", name="administration_sous_commission_publier")
+     * @param EventDispatcherInterface $eventDispatcher
      * @param SousCommissionSauvegarde $sousCommissionSauvegarde
      * @param ScolaritePromo           $ssComm
      *
      * @return Response
      */
-    public function publier(SousCommissionSauvegarde $sousCommissionSauvegarde, ScolaritePromo $ssComm): Response
-    {
+    public function publier(
+        EventDispatcherInterface $eventDispatcher,
+        SousCommissionSauvegarde $sousCommissionSauvegarde,
+        ScolaritePromo $ssComm
+    ): Response {
         $semestre = $ssComm->getSemestre();
         $sousCommissionSauvegarde->efface($ssComm);
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'scolarite.publiee.success.flash');
 
-        //todo: event notif
+        $publication = new SousCommissionEvent($ssComm);
+        $eventDispatcher->dispatch($publication);
+
         return $this->redirectToRoute('administration_sous_commission_travail', ['semestre' => $semestre->getId()]);
     }
 
