@@ -3,27 +3,20 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appEtudiant/EmpruntController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 11/12/2020 11:47
 
 namespace App\Controller\appEtudiant;
 
+use App\Classes\MyEmprunts;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Emprunt;
-use App\Entity\EmpruntEtudiant;
-use App\Entity\EmpruntMateriel;
-use App\Entity\Materiel;
-use App\Event\EmpruntEvent;
-use App\Classes\MyEmprunts;
-use App\Classes\Tools;
 use App\Repository\MaterielRepository;
-use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
@@ -36,6 +29,7 @@ use Twig\Error\SyntaxError;
  */
 class EmpruntController extends BaseController
 {
+
     /**
      * @Route("/", name="application_etudiant_emprunt_index")
      * @param MyEmprunts         $myEmprunts
@@ -55,76 +49,18 @@ class EmpruntController extends BaseController
     }
 
     /**
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param MaterielRepository       $materielRepository
-     * @param Request                  $request
+     * @param MyEmprunts $emprunt
+     * @param Request    $request
      *
      * @return Response
-     * @throws Exception
      * @Route("/valide-demande", name="application_etudiant_emprunt_valide", methods={"POST"})
      */
     public function empruntDemandeAction(
-        EventDispatcherInterface $eventDispatcher,
-        MaterielRepository $materielRepository,
+        MyEmprunts $emprunt,
         Request $request
     ) {
 
-        $pret = new EmpruntEtudiant($this->getConnectedUser());
-
-        $pret->setMotif($request->request->get('listemotif'));
-        $pret->setDescription($request->request->get('motif'));
-        $pret->setTelephone($request->request->get('telportable'));
-        $pret->setDepartement($this->dataUserSession->getDepartement());
-
-        $materieljour = $request->request->get('materiels');
-
-        $materiels = $materielRepository->findByDepartement($this->dataUserSession->getDepartement());
-        $tmat = [];
-        /** @var Materiel $materiel */
-        foreach ($materiels as $materiel) {
-            $tmat[$materiel->getId()] = $materiel;
-        }
-        $matde = [];
-
-        $d1 = null;
-        $d2 = null;
-
-        foreach ($materieljour as $m) {
-            $t = explode('_', $m); //jour, AM/PM, matériel
-            if (array_key_exists($t[1], $tmat)) {
-                //matériel existant, on ajoute
-                if (!array_key_exists($t[1], $matde)) {
-                    $matde[$t[1]] = $tmat[$t[1]];
-                }
-
-                if ($d1 === null) {
-                    $d1 = $t[0];
-                    $d2 = $t[0];
-                } else {
-                    $d1 = min($d1, $t[0]);
-                    $d2 = max($d2, $t[0]);
-                }
-            }
-        }
-
-        $pret->setDateDebut(Tools::convertDateToObject($d1));
-        $pret->setDateFin(Tools::convertDateToObject($d2));
-
-        $this->entityManager->persist($pret);
-        $this->entityManager->flush();
-
-        foreach ($matde as $m) {
-            $pm = new EmpruntMateriel();
-            $pm->setEmprunt($pret);
-            $pm->setMateriel($m);
-            $pm->setEtat(EmpruntMateriel::ETAT_MATERIEL_RESERVE);
-
-            $this->entityManager->persist($pm);
-        }
-        $this->entityManager->flush();
-
-        $event = new EmpruntEvent($pret);
-        $eventDispatcher->dispatch($event, EmpruntEvent::CHGT_ETAT_EMPRUNT_DEMANDE);
+        $emprunt->empruntDemande($request, $this->getConnectedUser());
 
         return $this->redirectToRoute('application_index', ['onglet' => 'emprunt']);
     }

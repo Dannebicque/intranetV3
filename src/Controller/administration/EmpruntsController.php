@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EmpruntsController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 11/12/2020 11:47
 
 namespace App\Controller\administration;
 
@@ -117,7 +117,6 @@ class EmpruntsController extends BaseController
      * @param                     $_format
      *
      * @return Response
-     * @throws Exception
      */
     public function export(MyExport $myExport, MyEmprunts $myEmprunts, $_format): Response
     {

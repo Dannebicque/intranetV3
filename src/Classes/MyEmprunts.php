@@ -3,19 +3,25 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEmprunts.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/08/2020 10:20
+// @lastUpdate 11/12/2020 11:47
 
 namespace App\Classes;
 
 
+use App\Classes\Pdf\MyPDF;
 use App\Entity\Constantes;
 use App\Entity\Departement;
 use App\Entity\Emprunt;
+use App\Entity\EmpruntEtudiant;
+use App\Entity\EmpruntMateriel;
+use App\Entity\Etudiant;
+use App\Entity\Materiel;
 use App\Event\EmpruntEvent;
-use App\Classes\Pdf\MyPDF;
 use App\Repository\EmpruntRepository;
+use App\Repository\MaterielRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -42,16 +48,20 @@ class MyEmprunts
      * MyEmprunts constructor.
      *
      * @param EmpruntRepository        $empruntRepository
+     * @param MaterielRepository       $materielRepository
      * @param EntityManagerInterface   $entityManager
      * @param EventDispatcherInterface $eventDispatcher
      * @param MyPDF                    $myPDF
      */
     public function __construct(
         EmpruntRepository $empruntRepository,
+        MaterielRepository $materielRepository,
         EntityManagerInterface $entityManager,
         EventDispatcherInterface $eventDispatcher,
         MyPDF $myPDF
     ) {
+
+        $this->materielRepository = $materielRepository;
         $this->empruntRepository = $empruntRepository;
         $this->myPDF = $myPDF;
         $this->entityManager = $entityManager;
@@ -204,6 +214,72 @@ class MyEmprunts
         ],
             'pret-' . $nom,
             $emprunt->getDepartement() !== null ? $emprunt->getDepartement()->getLibelle() : 'departement');
+    }
+
+
+    public function empruntDemande(
+        Request $request,
+        Etudiant $etudiant
+    ) {
+
+        $pret = new EmpruntEtudiant($etudiant);
+
+        $pret->setMotif($request->request->get('listemotif'));
+        $pret->setDescription($request->request->get('motif'));
+        $pret->setTelephone($request->request->get('telportable'));
+        $pret->setDepartement($etudiant->getDepartement());
+
+        $materieljour = $request->request->get('materiels');
+
+        $materiels = $this->materielRepository->findByDepartement($etudiant->getDepartement());
+        $tmat = [];
+        /** @var Materiel $materiel */
+        foreach ($materiels as $materiel) {
+            $tmat[$materiel->getId()] = $materiel;
+        }
+        $matde = [];
+
+        $d1 = null;
+        $d2 = null;
+
+        foreach ($materieljour as $m) {
+            $t = explode('_', $m); //jour, AM/PM, matériel
+            if (array_key_exists($t[1], $tmat)) {
+                //matériel existant, on ajoute
+                if (!array_key_exists($t[1], $matde)) {
+                    $matde[$t[1]] = $tmat[$t[1]];
+                }
+
+                if ($d1 === null) {
+                    $d1 = $t[0];
+                    $d2 = $t[0];
+                } else {
+                    $d1 = min($d1, $t[0]);
+                    $d2 = max($d2, $t[0]);
+                }
+            }
+        }
+
+        $pret->setDateDebut(Tools::convertDateToObject($d1));
+        $pret->setDateFin(Tools::convertDateToObject($d2));
+
+        $this->entityManager->persist($pret);
+        $this->entityManager->flush();
+
+        foreach ($matde as $m) {
+            $pm = new EmpruntMateriel();
+            $pm->setEmprunt($pret);
+            $pm->setMateriel($m);
+            $pm->setEtat(EmpruntMateriel::ETAT_MATERIEL_RESERVE);
+
+            $this->entityManager->persist($pm);
+        }
+        $this->entityManager->flush();
+
+        $event = new EmpruntEvent($pret);
+        $this->eventDispatcher->dispatch($event, EmpruntEvent::CHGT_ETAT_EMPRUNT_DEMANDE);
+
+        return $pret;
     }
 
     /**
