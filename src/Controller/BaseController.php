@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/BaseController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/08/2020 15:24
+// @lastUpdate 11/12/2020 11:43
 
 namespace App\Controller;
 
@@ -93,6 +93,22 @@ class BaseController extends AbstractController
     public function getDepartement()
     {
         return $this->dataUserSession->getDepartement();
+    }
+
+    /**
+     * @return DataUserSession
+     */
+    public function getDataUserSession(): DataUserSession
+    {
+        return $this->dataUserSession;
+    }
+
+    /**
+     * @return EntityManagerInterface
+     */
+    public function getEntityManager(): EntityManagerInterface
+    {
+        return $this->entityManager;
     }
 }
 
