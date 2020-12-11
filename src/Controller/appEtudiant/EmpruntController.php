@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appEtudiant/EmpruntController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/12/2020 11:47
+// @lastUpdate 11/12/2020 13:23
 
 namespace App\Controller\appEtudiant;
 
@@ -39,13 +39,17 @@ class EmpruntController extends BaseController
      */
     public function index(MyEmprunts $myEmprunts, MaterielRepository $materielRepository): Response
     {
-        $myEmprunts->calculGrille();
+        if ($this->dataUserSession->getUser() !== null) {
+            $myEmprunts->calculGrille();
 
-        return $this->render('appEtudiant/emprunt/index.html.twig', [
-            'emprunts'  => $this->dataUserSession->getUser()->getEmprunts(),
-            'myEmprunt' => $myEmprunts,
-            'materiels' => $materielRepository->findByDepartement($this->dataUserSession->getDepartement())
-        ]);
+            return $this->render('appEtudiant/emprunt/index.html.twig', [
+                'emprunts'  => $this->dataUserSession->getUser()->getEmprunts(),
+                'myEmprunt' => $myEmprunts,
+                'materiels' => $materielRepository->findByDepartement($this->dataUserSession->getDepartement())
+            ]);
+        }
+
+        return $this->redirectToRoute('erreur_666');
     }
 
     /**
@@ -97,22 +101,25 @@ class EmpruntController extends BaseController
 
     /**
      * @Route("/delete", name="app_etudiant_emprunt_delete", methods={"DELETE"})
-     * @param Request $request
-     * @param Emprunt $emprunt
-     * @ParamConverter("emprunt", options={"mapping": {"emprunt": "uuid"}})
+     * @param MyEmprunts $myEmprunts
+     * @param Request    $request
+     * @param Emprunt    $emprunt
      *
      * @return Response
+     * @ParamConverter("emprunt", options={"mapping": {"emprunt": "uuid"}})
+     *
      */
-    public function delete(Request $request, Emprunt $emprunt): Response
+    public function delete(MyEmprunts $myEmprunts, Request $request, Emprunt $emprunt): Response
     {
-        //todo: a faire
         $id = $emprunt->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+            $myEmprunts->deleteReservation($emprunt);
+            $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'emprunt.delete.error.flash');
 
             return $this->json($id, Response::HTTP_OK);
         }
 
-        $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'actualite.delete.error.flash');
+        $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'emprunt.delete.error.flash');
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
