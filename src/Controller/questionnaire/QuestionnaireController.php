@@ -3,17 +3,17 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/questionnaire/QuestionnaireController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 09/12/2020 10:40
+// @lastUpdate 11/12/2020 10:17
 
 namespace App\Controller\questionnaire;
 
 use App\Entity\Etudiant;
-use App\Entity\Previsionnel;
 use App\Entity\QuestionnaireEtudiant;
 use App\Entity\QuestionnaireEtudiantReponse;
 use App\Entity\QuestionnaireQuestion;
 use App\Entity\QuestionnaireQuestionnaireSection;
 use App\Repository\EtudiantRepository;
+use App\Repository\PrevisionnelRepository;
 use App\Repository\QuestionnaireEtudiantReponseRepository;
 use App\Repository\QuestionnaireEtudiantRepository;
 use App\Repository\QuestionnaireQualiteRepository;
@@ -52,23 +52,28 @@ class QuestionnaireController extends AbstractController
     }
 
     /**
+     * @param PrevisionnelRepository                 $previsionnelRepository
      * @param QuestionnaireEtudiantRepository        $quizzEtudiantRepository
      * @param QuestionnaireEtudiantReponseRepository $quizzEtudiantReponseRepository
      * @param QuestionnaireQuestionnaireSection      $questionnaireSection
      *
      * @param                                        $type
      * @param Etudiant                               $etudiant
+     * @param int                                    $onglet
+     * @param bool                                   $apercu
      *
      * @return Response
      */
     public function section(
+        PrevisionnelRepository $previsionnelRepository,
         QuestionnaireEtudiantRepository $quizzEtudiantRepository,
         QuestionnaireEtudiantReponseRepository $quizzEtudiantReponseRepository,
         QuestionnaireQuestionnaireSection $questionnaireSection,
         $type,
         Etudiant $etudiant,
-        $onglet = 1
-    ): Response {
+        $onglet = 1,
+        $apercu = false
+    ) {
 
         switch ($type) {
             case 'quizz':
@@ -83,7 +88,6 @@ class QuestionnaireController extends AbstractController
                 $quizzEtudiant = $quizzEtudiantRepository->findOneBy([
                     'questionnaireQualite' => $questionnaire,
                     'etudiant'             => $etudiant->getId()
-
                 ]);
                 break;
         }
@@ -94,16 +98,18 @@ class QuestionnaireController extends AbstractController
             $reponses = [];
         }
 
+        //return $this->render('appEtudiant/qualite/toto.html.twig');
 
         return $this->render('appEtudiant/qualite/section.html.twig', [
             'ordre'             => $questionnaireSection->getOrdre(),
             'section'           => $questionnaireSection->getSection(),
-            'tPrevisionnel'     => $this->entityManager->getRepository(Previsionnel::class)->findByDiplomeArray($etudiant->getDiplome(),
+            'tPrevisionnel'     => $previsionnelRepository->findByDiplomeArray($etudiant->getDiplome(),
                 $etudiant->getAnneeUniversitaire()),
             'reponses'          => $reponses,
             'etudiant'          => $etudiant,
             'typeQuestionnaire' => $type,
-            'onglet'            => $onglet
+            'onglet'            => $onglet,
+            'apercu'            => $apercu
         ]);
     }
 

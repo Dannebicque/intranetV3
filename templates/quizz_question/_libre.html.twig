@@ -10,12 +10,11 @@
         <textarea id="quizz_question_text_{{ name }}"
                   name="quizz_question_text_{{ name }}"
                   data-typeQuestionnaire="{{ typeQuestionnaire }}"
-                  {% if not(is_granted('ROLE_QUALITE') or is_granted('ROLE_SUPER_ADMIN')) %}
+                  {% if apercu is not defined or apercu == false %}
                       data-etudiant="{{ etudiant.id }}"
                   {% endif %}
                 {% if question.obligatoire %}required{% endif %}
-        class="form-control {% if not(is_granted('ROLE_QUALITE') or is_granted
-            ('ROLE_SUPER_ADMIN')) %}questionQualiteTextArea{% endif %}">{% if
+        class="form-control {% if apercu is not defined or apercu == false %}questionQualiteTextArea{% endif %}">{% if
                 reponses['quizz_question_text_'~name] is defined %}{{ reponses['quizz_question_text_'~name].valeur }}{% endif %}</textarea>
         <div class="form-control-feedback"></div>
     </div>

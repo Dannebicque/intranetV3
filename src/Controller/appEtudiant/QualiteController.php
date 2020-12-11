@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appEtudiant/QualiteController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 09/12/2020 10:40
+// @lastUpdate 10/12/2020 08:46
 
 namespace App\Controller\appEtudiant;
 
@@ -37,7 +37,8 @@ class QualiteController extends BaseController
 {
     /**
      * @Route("/", name="application_etudiant_qualite_index")
-     * @param QuestionnaireQualiteRepository $qualiteQuestionnaireRepository
+     * @param QuestionnaireEtudiantRepository $questionnaireEtudiantRepository
+     * @param QuestionnaireQualiteRepository  $qualiteQuestionnaireRepository
      *
      * @return Response
      */
