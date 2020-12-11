@@ -126,6 +126,9 @@
     "endroid/qr-code-bundle": {
         "version": "3.4.3"
     },
+    "erusev/parsedown": {
+        "version": "1.7.4"
+    },
     "friendsofsymfony/jsrouting-bundle": {
         "version": "2.3",
         "recipe": {

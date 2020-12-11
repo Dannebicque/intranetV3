@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'help' %}
+
+{% block header %}
+    {{ article != null ? article.titre|trans : 'help.notfound.heading'|trans }}
+{% endblock %}
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('help_index') }}" class="btn btn-primary btn-float"
+               title="{{ 'atitle.retour_aide'|trans }}"
+               data-provide="tooltip"
+               data-placement="bottom">
+                <i class="fas fa-arrow-left"></i></a>
+            <a href="{{ path('default_homepage') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_dashboard'|trans }}"><i
+                        class="material-icons">dashboard</i></a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h3 class="card-title">{{ article != null ? article.titre|trans : 'help.notfound.heading'|trans }}</h3>
+        <div class="card-body">
+            {% if article != null %}
+                {{ article.content|raw }}
+            {% else %}
+                <div class="alert alert-warning">
+                    {{ 'help.notfound.message'|trans }}
+                </div>
+            {% endif %}
+        </div>
+        {% if article != null %}
+            <div class="card-footer">
+                Dernière modification le {{ article.lastUpdate|format_datetime('medium', 'short') }}
+            </div>
+        {% endif %}
+    </div>
+    {% if article != null and categories.articles|length > 2 %}
+        <div class="divider fs-13">Dans la même catégorie</div>
+        <br>
+        <div class="row gap-y">
+            {% for art in categories.articles %}
+                {% if art.nom != article.titre %}
+                    <div class="col-lg-6 col-sm-12">
+                        <a class="media bg-white align-items-center hover-shadow-2 transition-5s" href="{{ path('help_article',
+                            {sujet:art.lien}) }}">
+                            <div class="media-left">
+                                <i class="fa fa-file-text-o fs-35 text-secondary"></i>
+                            </div>
+
+                            <div class="media-body">
+                                <p class="lead fw-400">{{ art.nom }}</p>
+                                <p><small>Lire l'article</small></p>
+                            </div>
+                        </a>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div><br><br>
+    {% endif %}
+{% endblock %}
+
+{% block fabactions %}
+    {% if article != null %}
+        {# {{ include('composants/fab-buttons.html.twig', {boutons:[ #}
+        {# {type: 'info', #}
+        {# href: path('help_print', {article: article.slug}), #}
+        {# title: 'imprimer'|trans, #}
+        {# icone : "fa fa-file-pdf"} #}
+        {# ]}) }} #}
+    {% endif %}
+{% endblock %}
