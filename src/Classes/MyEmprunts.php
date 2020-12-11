@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEmprunts.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/12/2020 11:47
+// @lastUpdate 11/12/2020 13:23
 
 namespace App\Classes;
 
@@ -280,6 +280,19 @@ class MyEmprunts
         $this->eventDispatcher->dispatch($event, EmpruntEvent::CHGT_ETAT_EMPRUNT_DEMANDE);
 
         return $pret;
+    }
+
+    public function deleteReservation(Emprunt $emprunt): bool
+    {
+        //Supprimer l'emprunt
+        //Supprimer les réservations des métériels associés'
+        foreach ($emprunt->getEmpruntMateriels() as $materiel) {
+            $this->entityManager->remove($materiel);
+        }
+        $this->entityManager->remove($emprunt);
+        $this->entityManager->flush();
+
+        return true;
     }
 
     /**
