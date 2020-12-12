@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantExportReleve.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 15/08/2020 09:06
+// @lastUpdate 12/12/2020 19:05
 
 namespace App\Classes\Etudiant;
 
@@ -12,6 +12,7 @@ use App\Classes\MyEvaluations;
 use App\Classes\Pdf\MyPDF;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Etudiant;
+use App\Entity\Scolarite;
 use App\Entity\Semestre;
 use App\Repository\NoteRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -95,8 +96,11 @@ class EtudiantExportReleve
         return $this->etudiantNotes->getNotesParSemestresEtAnneeUniversitaire($semestre, $anneeUniversitaire);
     }
 
-    public function exportReleveDefinitif(?Semestre $param, ?AnneeUniversitaire $getAnneeUniversitaire)
+    public function exportReleveDefinitif(Scolarite $scolarite)
     {
-        //todo: a faire
+        return $this->myPdf::generePdf('pdf/releveDefinitif.html.twig', [
+            'scolarite' => $scolarite
+        ], 'releveNotedefinitif-' . $scolarite->getEtudiant()->getNom() . '.pdf',
+            $scolarite->getEtudiant()->getDepartement()->getLibelle());
     }
 }

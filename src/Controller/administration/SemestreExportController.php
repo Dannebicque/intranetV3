@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/SemestreExportController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/09/2020 08:34
+// @lastUpdate 12/12/2020 18:05
 
 namespace App\Controller\administration;
 
@@ -11,6 +11,7 @@ use App\Classes\Etudiant\EtudiantExportReleve;
 use App\Classes\MyEvaluations;
 use App\Controller\BaseController;
 use App\Entity\Etudiant;
+use App\Entity\Scolarite;
 use App\Entity\Semestre;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Routing\Annotation\Route;
@@ -58,21 +59,19 @@ class SemestreExportController extends BaseController
     }
 
     /**
-     * @Route("/definitif/{slug}/{semestre}", name="administration_semestre_export_releve_definitif")
+     * @Route("/definitif/{slug}/{scolarite}", name="administration_semestre_export_releve_definitif")
      * @param EtudiantExportReleve $etudiantExportReleve
      * @param Etudiant             $etudiant
-     * @param Semestre|null        $semestre
-     *
+     * @param Scolarite            $scolarite
      * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
      */
     public function exportReleveDefinitif(
         EtudiantExportReleve $etudiantExportReleve,
         Etudiant $etudiant,
-        Semestre $semestre = null
-    ): void {
+        Scolarite $scolarite
+    ) {
         $etudiantExportReleve->setEtudiant($etudiant);
-        $etudiantExportReleve->exportReleveDefinitif($semestre ?: $etudiant->getSemestre(),
-            $etudiant->getAnneeUniversitaire());
+        $etudiantExportReleve->exportReleveDefinitif($scolarite);
     }
 
 
