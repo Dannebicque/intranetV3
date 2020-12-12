@@ -3,11 +3,12 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/ScolariteController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/12/2020 14:46
+// @lastUpdate 12/12/2020 17:02
 
 namespace App\Controller\administration;
 
 use App\Classes\MyScolarite;
+use App\Classes\Tools;
 use App\Controller\BaseController;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Constantes;
@@ -33,21 +34,24 @@ use Symfony\Component\Routing\Annotation\Route;
 class ScolariteController extends BaseController
 {
     /**
-     * @Route("/edit/{slug}", name="administration_scolarite_etudiant_edit")
+     * @Route("/edit/{slug}/{scolarite}", name="administration_scolarite_etudiant_edit")
      *
-     * @param Request                      $request
-     * @param Etudiant                     $etudiant
+     * @param Request        $request
+     * @param Etudiant       $etudiant
+     * @param Scolarite|null $scolarite
      *
      * @return Response
-     * @throws Exception
      * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
      */
     public function editScolariteEtudiant(
         Request $request,
-        Etudiant $etudiant
+        Etudiant $etudiant,
+        ?Scolarite $scolarite = null
     ): Response {
-        $scolarite = new Scolarite($etudiant, $etudiant->getSemestre(),
-            $this->dataUserSession->getAnneeUniversitaire());
+        if ($scolarite === null) {
+            $scolarite = new Scolarite($etudiant, $etudiant->getSemestre(),
+                $this->dataUserSession->getAnneeUniversitaire());
+        }
 
         $form = $this->createForm(ScolariteType::class, $scolarite,
             ['departement' => $this->dataUserSession->getDepartement()]);
@@ -58,7 +62,7 @@ class ScolariteController extends BaseController
             $tUes = [];
             /** @var UE $ue */
             foreach ($scolarite->getSemestre()->getUes() as $ue) {
-                $tUes[$ue->getId()]['moyenne'] = $request->request->get('ue_' . $ue->getId());
+                $tUes[$ue->getId()]['moyenne'] = Tools::convertToFloat($request->request->get('ue_' . $ue->getId()));
                 $tUes[$ue->getId()]['rang'] = -1;
             }
             $scolarite->setMoyennesUes($tUes);
@@ -69,9 +73,10 @@ class ScolariteController extends BaseController
         }
 
         return $this->render('administration/scolarite/edit.html.twig', [
-            'etudiant'     => $etudiant,
-            'scolarite'    => $etudiant->getScolarites(),
-            'form'         => $form->createView()
+            'etudiant'   => $etudiant,
+            'scolarites' => $etudiant->getScolarites(),
+            'form'       => $form->createView(),
+            'scolarite'  => $scolarite
         ]);
     }
 
@@ -163,8 +168,9 @@ class ScolariteController extends BaseController
      *                                                              options={"expose"=true})
      * @param Semestre           $semestre
      * @param AnneeUniversitaire $anneeUniversitaire
+     *
      * @return Response
-*/
+     */
     public function importPromotionAjax(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire)
     {
         return $this->render('administration/scolarite/_importPromotion.html.twig', [

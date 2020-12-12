@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Scolarite.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/12/2020 09:19
+// @lastUpdate 12/12/2020 16:50
 
 namespace App\Entity;
 
@@ -335,5 +335,10 @@ class Scolarite extends BaseEntity
         $this->moyennesUes = $moyennesUes;
 
         return $this;
+    }
+
+    public function getMoyennesUesById($ue): ?array
+    {
+        $this->moyennesUes[$ue];
     }
 }

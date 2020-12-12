@@ -1917,6 +1917,7 @@ table:
   proposition: Proposition
   qrcode: 'QR Code'
   refmatiere: 'Réf. Matière'
+  releve: 'Relevé'
   remarques: Remarques
   responsabilite: Responsabilités
   responsable_diplome: 'Responsable du diplôme'
