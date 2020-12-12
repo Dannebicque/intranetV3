@@ -1576,6 +1576,7 @@ scolarite:
   rdd.index.heading: 'Suivi des inscrits pour la RDD'
   efface.et.recalculee.success.flash: 'Sous commission recalculée avec succès'
   publiee.success.flash: 'Sous commission publiée aux étudiants avec succès'
+  depubliee.success.flash: 'Sous commission dépubliée aux étudiants avec succès'
 
 security:
   lock.heading: 'Accès vérouillé'

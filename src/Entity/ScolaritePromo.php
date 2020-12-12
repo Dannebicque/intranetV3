@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ScolaritePromo.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/12/2020 16:45
+// @lastUpdate 12/12/2020 16:02
 
 namespace App\Entity;
 
@@ -197,7 +197,7 @@ class ScolaritePromo
         return $this->datePublication;
     }
 
-    public function setDatePublication(DateTimeInterface $datePublication): self
+    public function setDatePublication(?DateTimeInterface $datePublication): self
     {
         $this->datePublication = $datePublication;
 

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/SousCommission/SousCommissionSauvegarde.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/12/2020 21:12
+// @lastUpdate 12/12/2020 15:57
 
 namespace App\Classes\SousCommission;
 
@@ -142,13 +142,17 @@ class SousCommissionSauvegarde
         $this->entityManager->flush();
     }
 
-    public function publier(ScolaritePromo $ssComm)
+    public function visibilite(ScolaritePromo $ssComm, $visibilite = true)
     {
         foreach ($ssComm->getScolarites() as $scolarite) {
-            $scolarite->setDiffuse(true);
+            $scolarite->setDiffuse($visibilite);
         }
-        $ssComm->setPublie(true);
-        $ssComm->setDatePublication(new DateTime('now'));
+        $ssComm->setPublie($visibilite);
+        if ($visibilite === false) {
+            $ssComm->setDatePublication(null);
+        } else {
+            $ssComm->setDatePublication(new DateTime('now'));
+        }
 
         $this->entityManager->flush();
     }

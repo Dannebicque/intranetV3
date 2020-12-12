@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/SousComissionController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/12/2020 14:52
+// @lastUpdate 12/12/2020 15:57
 
 namespace App\Controller\administration;
 
@@ -112,11 +112,30 @@ class SousComissionController extends BaseController
         ScolaritePromo $ssComm
     ): Response {
         $semestre = $ssComm->getSemestre();
-        $sousCommissionSauvegarde->efface($ssComm);
+        $sousCommissionSauvegarde->visibilite($ssComm, true);
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'scolarite.publiee.success.flash');
 
         $publication = new SousCommissionEvent($ssComm);
         $eventDispatcher->dispatch($publication);
+
+        return $this->redirectToRoute('administration_sous_commission_travail', ['semestre' => $semestre->getId()]);
+    }
+
+    /**
+     * @Route("/depublier/{ssComm}", name="administration_sous_commission_depublier")
+     * @param SousCommissionSauvegarde $sousCommissionSauvegarde
+     * @param ScolaritePromo           $ssComm
+     *
+     * @return Response
+     */
+    public function depublier(
+        SousCommissionSauvegarde $sousCommissionSauvegarde,
+        ScolaritePromo $ssComm
+    ): Response {
+        $semestre = $ssComm->getSemestre();
+        $sousCommissionSauvegarde->visibilite($ssComm, false);
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'scolarite.depubliee.success.flash');
+
 
         return $this->redirectToRoute('administration_sous_commission_travail', ['semestre' => $semestre->getId()]);
     }
