@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ProfilEtudiantController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/12/2020 14:31
+// @lastUpdate 12/12/2020 17:21
 
 namespace App\Controller;
 
@@ -85,7 +85,7 @@ class ProfilEtudiantController extends BaseController
 
         return $this->render('user/composants/scolarite.html.twig', [
             'etudiant'  => $etudiant,
-            'scolarite' => $scolarite
+            'scolarites' => $scolarite
         ]);
     }
 
