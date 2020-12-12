@@ -11,10 +11,11 @@
                 <th>{{ 'table.decision'|trans }}</th>
                 <th>{{ 'table.proposition'|trans }}</th>
                 <th>{{ 'table.infos'|trans }}</th>
+                <th>{{ 'table.releve'|trans }}</th>
             </tr>
             </thead>
             <tbody>
-            {% for parcour in scolarite %}
+            {% for parcour in scolarite|filter(parcour => (parcour.diffuse == true)) %}
                 <tr>
                     <td>{{ parcour.ordre }}</td>
                     <td>{{ parcour.semestre ? parcour.semestre.display : 'non.defini'|trans }}</td>
@@ -23,7 +24,7 @@
                         {% if parcour.decision != 'EC' %}
                             {% for ue in parcour.semestre.ues %}
                                 <strong>UE {{ ue.numeroUe }}
-                                        :</strong> {{ parcour.moyennesUes[ue.id].moyenne|format_note(3,8) }}
+                                        :</strong> {{ parcour.moyennesUes[ue.id].moyenne|format_note(3,8) }}<br>
                             {% endfor %}
                         {% else %}
                             EC
@@ -34,6 +35,8 @@
                     <td><a href="{{ path('app_etudiant_scolarite_detail', {'id': parcour.id}) }}"
                            class="btn btn-info btn-outline btn-square btn-xs" data-provide="tooltip"
                            data-placement="bottom" title="{{ 'atitle.details'|trans }}"><i class="{{ iconShow }}"></i></a>
+                    </td>
+                    <td>
                         {% if  user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ADMIN') %}
                             {# <a href="{{ path('administration_scolarite_semestre_edit',{slug:etudiant.slug, scolarite: #}
                             {# parcour.id}) #}

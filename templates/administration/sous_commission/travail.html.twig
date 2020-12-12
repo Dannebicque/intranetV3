@@ -35,8 +35,7 @@
 {% block content %}
     <div class="card">
         <div class="card-header">
-            <h4><strong>Synthèse</strong> | {{ semestre.display }}</h4>
-            Export / grand jury / diffusion / edition
+            <h4 class="card-title"><strong>Sous commission</strong> | {{ semestre.display }}</h4>
         </div>
         <div class="card-body">
             <div class="alert alert-info">
@@ -62,142 +61,154 @@
                         <th>Etudiant</th>
                         <th>Moyenne Semestre</th>
                         {% for ue in sc.ues %}
-                        <th>UE {{ ue.numeroue }}</th>
-                    {% endfor %}
-                    <th>Decision</th>
-                    <th>Proposition</th>
-                    <th>NbAbs</th>
-                    {% for matiere in sc.matieres %}
-                        {% if matiere.nbNotes > 0 and matiere.suspendu == false %}
-                            <td>{{ matiere.codeMatiere }}</td>
-                        {% endif %}
-                    {% endfor %}
-                </tr>
-                </thead>
-                {% for etudiant in sc.etudiants %}
-                    <tr>
-                        {% if sc.ssComm.publie == false %}
-                            <td>{{ etudiant.nom|upper }} {{ etudiant.prenom|capitalize }}</td>
-                            {% if sc.etudiant(etudiant.id) != null %}
-                                <td>
-                                    <a class="myedit"
-                                       data-field="moyenne"
-                                       href="{{ path('administration_ss_comm_ajax_edit', {id:sc.etudiant(etudiant.id).id,
-                                           type:'semestre'}) }}"
-                                       data-title="Modifier la moyenne du semestre">
-                                        {{ sc.etudiant(etudiant.id).moyenne|number_format(3) }}</a>
-                                </td>
-                                {% for ue in sc.ues %}
+                            <th>UE {{ ue.numeroue }}</th>
+                        {% endfor %}
+                        <th>Decision</th>
+                        <th>Proposition</th>
+                        <th>NbAbs</th>
+                        {% for matiere in sc.matieres %}
+                            {% if matiere.nbNotes > 0 and matiere.suspendu == false %}
+                                <td>{{ matiere.codeMatiere }}</td>
+                            {% endif %}
+                        {% endfor %}
+                    </tr>
+                    </thead>
+                    {% for etudiant in sc.etudiants %}
+                        <tr>
+                            {% if sc.ssComm.publie == false %}
+                                <td>{{ etudiant.nom|upper }} {{ etudiant.prenom|capitalize }}</td>
+                                {% if sc.etudiant(etudiant.id) != null %}
                                     <td>
-                                        {% if sc.ue(etudiant.id, ue.id) != null %}
-                                            <a class="myedit"
-                                               data-field="moyenne_{{ ue.id }}"
-                                               href="{{ path('administration_ss_comm_ajax_edit', {id:sc.etudiant(etudiant.id).id, type:'ue'}) }}"
-                                               data-title="Modifier la moyenne de l'UE">
-                                                {{ sc.ue(etudiant.id, ue.id).moyenne|number_format(3) }}</a>
-
-                                        {% else %}
-                                            0
-                                        {% endif %}
+                                        <a class="myedit"
+                                           data-field="moyenne"
+                                           href="{{ path('administration_ss_comm_ajax_edit', {id:sc.etudiant(etudiant.id).id,
+                                               type:'semestre'}) }}"
+                                           data-title="Modifier la moyenne du semestre">
+                                            {{ sc.etudiant(etudiant.id).moyenne|number_format(3) }}</a>
                                     </td>
-                                {% endfor %}
-                                <td>
-                                    <a class="myedit"
-                                       data-field="decision"
-                                       href="{{ path('administration_ss_comm_ajax_edit', {id:sc.etudiant(etudiant.id).id, type:'semestre'}) }}"
-                                       data-title="Modifier la décision">
-                                        {{ sc.etudiant(etudiant.id).decision }}</a>
-                                </td>
-                                <td>
-                                    <a class="myedit"
-                                       data-field="proposition"
-                                       href="{{ path('administration_ss_comm_ajax_edit', {id:sc.etudiant(etudiant.id).id, type:'semestre'}) }}"
-                                       data-title="Modifier la proposition">
-                                        {{ sc.etudiant(etudiant.id).proposition }}</a>
-                                </td>
-                                <td>
-                                    <a class="myedit"
-                                       data-field="nbAbsences"
-                                       href="{{ path('administration_ss_comm_ajax_edit', {id:sc.etudiant(etudiant.id).id, type:'semestre'}) }}"
-                                       data-title="Modifier le nombre d'absence">
-                                        {{ sc.etudiant(etudiant.id).nbAbsences }}</a>
-                                </td>
-                                {% for matiere in sc.matieres %}
-                                    {% if matiere.nbNotes > 0 and matiere.suspendu == false %}
+                                    {% for ue in sc.ues %}
                                         <td>
-                                            {% if sc.matiere(etudiant.id, matiere.id) != null %}
+                                            {% if sc.ue(etudiant.id, ue.id) != null %}
                                                 <a class="myedit"
-                                                   data-field="moyenne_{{ matiere.id }}"
-                                                   href="{{ path('administration_ss_comm_ajax_edit', {id:sc.etudiant(etudiant.id).id, type:'matiere'}) }}"
-                                                   data-title="Modifier la moyenne du module">
-                                                    {{ sc.matiere(etudiant.id, matiere.id).moyenne|number_format(2) }}
-                                                </a>
+                                                   data-field="moyenne_{{ ue.id }}"
+                                                   href="{{ path('administration_ss_comm_ajax_edit', {id:sc.etudiant(etudiant.id).id, type:'ue'}) }}"
+                                                   data-title="Modifier la moyenne de l'UE">
+                                                    {{ sc.ue(etudiant.id, ue.id).moyenne|number_format(3) }}</a>
+
                                             {% else %}
                                                 0
                                             {% endif %}
                                         </td>
+                                    {% endfor %}
+                                    <td>
+                                        <a class="myedit"
+                                           data-field="decision"
+                                           href="{{ path('administration_ss_comm_ajax_edit', {id:sc.etudiant(etudiant.id).id, type:'semestre'}) }}"
+                                           data-title="Modifier la décision">
+                                            {{ sc.etudiant(etudiant.id).decision }}</a>
+                                    </td>
+                                    <td>
+                                        <a class="myedit"
+                                           data-field="proposition"
+                                           href="{{ path('administration_ss_comm_ajax_edit', {id:sc.etudiant(etudiant.id).id, type:'semestre'}) }}"
+                                           data-title="Modifier la proposition">
+                                            {{ sc.etudiant(etudiant.id).proposition }}</a>
+                                    </td>
+                                    <td>
+                                        <a class="myedit"
+                                           data-field="nbAbsences"
+                                           href="{{ path('administration_ss_comm_ajax_edit', {id:sc.etudiant(etudiant.id).id, type:'semestre'}) }}"
+                                           data-title="Modifier le nombre d'absence">
+                                            {{ sc.etudiant(etudiant.id).nbAbsences }}</a>
+                                    </td>
+                                    {% for matiere in sc.matieres %}
+                                        {% if matiere.nbNotes > 0 and matiere.suspendu == false %}
+                                            <td>
+                                                {% if sc.matiere(etudiant.id, matiere.id) != null %}
+                                                    <a class="myedit"
+                                                       data-field="moyenne_{{ matiere.id }}"
+                                                       href="{{ path('administration_ss_comm_ajax_edit', {id:sc.etudiant(etudiant.id).id, type:'matiere'}) }}"
+                                                       data-title="Modifier la moyenne du module">
+                                                        {{ sc.matiere(etudiant.id, matiere.id).moyenne|number_format(2) }}
+                                                    </a>
+                                                {% else %}
+                                                    0
+                                                {% endif %}
+                                            </td>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% else %}
+                                    <td>...</td>
+                                {% endif %}
+                                {# todo: mettre parcours précédents #}
+                            {% else %}
+                                <td>{{ etudiant.nom|upper }} {{ etudiant.prenom|capitalize }}</td>
+                                <td>{{ sc.etudiant(etudiant.id).moyenne|number_format(3) }}</td>
+                                {% for ue in sc.ues %}
+                                    <td>{{ sc.ue(etudiant.id, ue.id).moyenne|number_format(3) }}</td>
+                                {% endfor %}
+                                <td>{{ sc.etudiant(etudiant.id).decision }}</td>
+                                <td>{{ sc.etudiant(etudiant.id).proposition }}</td>
+                                <td>{{ sc.etudiant(etudiant.id).nbAbsences }}</td>
+                                {% for matiere in sc.matieres %}
+                                    {% if matiere.nbNotes > 0 and matiere.suspendu == false %}
+                                        <td>{{ sc.matiere(etudiant.id, matiere.id).moyenne|number_format(2) }}</td>
                                     {% endif %}
                                 {% endfor %}
-                            {% else %}
-                                <td>...</td>
                             {% endif %}
-                            {# todo: mettre parcours précédents #}
-                        {% else %}
-                            <td>{{ etudiant.nom|upper }} {{ etudiant.prenom|capitalize }}</td>
-                            <td>{{ t[etudiant.id].moyenne|number_format(3) }}</td>
-                            {% for ue in ues %}
-                                <td>{{ sc[etudiant.id]['ues'][ue.id].moyenne|number_format(3) }}</td>
-                            {% endfor %}
-                            <td>{{ sc[etudiant.id].decision }}</td>
-                            <td>{{ sc[etudiant.id].proposition }}</td>
-                            <td>{{ sc[etudiant.id].nbAbsences }}</td>
-                            {% for matiere in matieres %}
-                                <td>{{ sc[etudiant.id]['modules'][matiere.id].moyenne|number_format(2) }}</td>
-                            {% endfor %}
-                        {% endif %}
-                    </tr>
-                {% endfor %}
+                        </tr>
+                    {% endfor %}
                 </table>
             </div>
+            <br>
             <div class="row gap-y">
                 <div class="col-sm-12 col-md-6">
                     <a href="{{ path('administration_sous_commission_recalculer', {ssComm:sc.getSsComm.id}) }}"
                        class="btn btn-block btn-warning">Recalculer la sous-commission (effectue un nouveau calcul
                                                          des moyennes (semestre et UE). Modifie les décisions en
                                                          fonction des résultats.</a>
-                    <a href="{{ path('administration_sous_commission_publier', {ssComm:sc.getSsComm.id}) }}"
-                       class="btn btn-block btn-success">Publier les résultats aux étudiants (une fois publiée, vous
-                                                         pourrez modifier le parcours sur chaque profil étudiant, la
-                                                         sous-commission ne sera plus active)</a>
                 </div>
                 <div class="col-sm-12 col-md-6">
-                    {# todo: fusionner avec la fonctionnalité de la scolarité. #}
-                    <form action="{{ path('administration_sous_commission_exporter', {ssComm:sc.getSsComm.id}) }}"
-                          method="post" enctype="multipart/form-data">
-                        <div class="form-group">
-                            <label>
-                                Fichier type
-                            </label>
-                            <input type="file" name="fichier" class="form-control"/>
-                        </div>
-                        <button type="submit" class="btn btn-block btn-success">Export Apogée (va générer le fichier txt
-                                                                                pour la scolarité)
-                        </button>
-                    </form>
-                    <br>
-                    <a href="{{ path('administration_sous_commission_exporter_grand_jury', {ssComm:sc.getSsComm.id}) }}"
-                       class="btn btn-block btn-success">Sauvegarde Excel / Fichier de Grand Jury</a>
+                    {% if sc.getSsComm.publie == true %}
+                        <a href="{{ path('administration_sous_commission_depublier', {ssComm:sc.getSsComm.id}) }}"
+                           class="btn btn-block btn-info">Résultats publiés le {{ sc.getSsComm
+                            .datePublication|format_datetime('short', 'short') }}. Dépublier pour modifier.</a>
+                    {% else %}
+                        <a href="{{ path('administration_sous_commission_publier', {ssComm:sc.getSsComm.id}) }}"
+                           class="btn btn-block btn-success">Publier les résultats aux étudiants</a>
+                    {% endif %}
                 </div>
-
-
                 <div class="col-sm-12 col-md-6">
                     <a href="{{ path('administration_sous_commission_purger', {semestre:semestre.id}) }}"
                        class="btn btn-block btn-danger">Nettoyer les notes (remplace les -0.01 par des 0)
                         <strong>Attention, opération irréversible !</strong></a>
                 </div>
+                <div class="col-sm-12 col-md-6">
+                    <a href="{{ path('administration_sous_commission_exporter_grand_jury', {ssComm:sc.getSsComm.id}) }}"
+                       class="btn btn-block btn-success">Sauvegarde Excel / Fichier de Grand Jury</a>
+                </div>
             </div>
-            {# {% endif %} #}
+        </div>
+    </div>
 
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title"><strong>Export Apogée</strong> | {{ semestre.display }}</h4>
+        </div>
+        <div class="card-body">
+            {# todo: fusionner avec la fonctionnalité de la scolarité. #}
+            <form action="{{ path('administration_sous_commission_exporter', {ssComm:sc.getSsComm.id}) }}"
+                  method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label>
+                        Fichier type
+                    </label>
+                    <input type="file" name="fichier" class="form-control"/>
+                </div>
+                <button type="submit" class="btn btn-block btn-success">Export Apogée (va générer le fichier txt
+                                                                        pour la scolarité)
+                </button>
+            </form>
         </div>
     </div>
 {% endblock %}
