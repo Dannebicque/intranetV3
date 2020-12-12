@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/css/app.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/10/2020 09:03
+// @lastUpdate 12/12/2020 13:54
 
 @import "core.min.css";
 @import "./material-icons.css";
@@ -613,4 +613,15 @@ td.td-edt.col-new-day {
 .trombinoscope_nom {
   word-break: initial;
 }
+
+.resume {
+  color: #383d41;
+  border-radius: 3px;
+  padding: 10px;
+  margin-bottom: 10px;
+  font-style: italic;
+  font-size: 14px;
+  background-color: #e4e7ea;
+}
+
 //correctifs accessibilité

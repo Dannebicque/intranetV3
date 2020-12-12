@@ -23,19 +23,21 @@
     <div class="card">
         <h3 class="card-title">{{ article != null ? article.titre|trans : 'help.notfound.heading'|trans }}</h3>
         <div class="card-body">
-            {% if article != null %}
-                {{ article.content|raw }}
-            {% else %}
-                <div class="alert alert-warning">
-                    {{ 'help.notfound.message'|trans }}
-                </div>
-            {% endif %}
-        </div>
+            <div class="container-article">
+                {% if article != null %}
+                    {{ article.content|raw }}
+                {% else %}
+                    <div class="alert alert-warning">
+                        {{ 'help.notfound.message'|trans }}
+                    </div>
+                {% endif %}
+            </div>
         {% if article != null %}
             <div class="card-footer">
                 Dernière modification le {{ article.lastUpdate|format_datetime('medium', 'short') }}
             </div>
         {% endif %}
+        </div>
     </div>
     {% if article != null and categories.articles|length > 2 %}
         <div class="divider fs-13">Dans la même catégorie</div>

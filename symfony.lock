@@ -129,6 +129,9 @@
     "erusev/parsedown": {
         "version": "1.7.4"
     },
+    "erusev/parsedown-extra": {
+        "version": "0.8.1"
+    },
     "friendsofsymfony/jsrouting-bundle": {
         "version": "2.3",
         "recipe": {
