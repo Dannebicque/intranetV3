@@ -88,42 +88,6 @@
             restera dans la formation pour un éventuel suivi ou statistiques.
         </div>
 
-        <h3>Editions</h3>
-        <table class="table table-border">
-            <thead>
-            <tr>
-                <th>{{ 'table.ordre'|trans }}</th>
-                <th>{{ 'table.semestre'|trans }}</th>
-                <th>{{ 'table.infos'|trans }}</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for parcour in scolarite %}
-                <tr>
-                    <td>{{ parcour.ordre }}</td>
-                    <td>{{ parcour.semestre ? parcour.semestre.display : 'non.defini'|trans }}</td>
-
-                    <td>
-                        <a href="{{ path('app_etudiant_scolarite_detail', {'id': parcour.id}) }}"
-                           class="btn btn-info btn-outline btn-square btn-xs" data-provide="tooltip"
-                           data-placement="bottom" title="{{ 'atitle.details'|trans }}"><i class="{{ iconShow }}"></i></a>
-                        {% if parcour.decision == constant('App\\Entity\\Constantes::SEMESTRE_EN_COURS') %}
-                            <a href="{{ path('administration_semestre_export_releve_provisoire',{slug:etudiant.slug, semestre: parcour.semestre.id}) }}"
-                               class="btn btn-warning" rel="tooltip" data-placement="bottom" title="Editer un relevé de notes provisoire"><i
-                                        class="fa fa-print"></i> Editer un relevé de notes provisoire</a>
-                        {% else %}
-                            <a href="{{ path('administration_semestre_export_releve_definitif',{slug:etudiant.slug,
-                                semestre: parcour.semestre.id}) }}"
-                               class="btn btn-warning" rel="tooltip" data-placement="bottom" title="Editer le relevé de notes définitif"><i
-                                        class="fa fa-print"></i> Editer le relevé de notes définitif</a>
-                        {% endif %}
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-
         Changement de groupe / suppression
-        Export de releve de note des différents semestres
     </div>
 </div>

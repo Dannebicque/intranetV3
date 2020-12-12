@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ProfilEtudiantController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/12/2020 17:21
+// @lastUpdate 12/12/2020 17:55
 
 namespace App\Controller;
 
@@ -57,14 +57,11 @@ class ProfilEtudiantController extends BaseController
      */
     public function actions(
         DepartementRepository $departementRepository,
-        ScolariteRepository $scolariteRepository,
         Etudiant $etudiant
     ): Response {
-        $scolarite = $scolariteRepository->findBy(['etudiant' => $etudiant]);
 
         return $this->render('user/composants/actions_etudiant.html.twig', [
             'etudiant'     => $etudiant,
-            'scolarite'    => $scolarite,
             'departements' => $departementRepository->findActifs()
         ]);
     }

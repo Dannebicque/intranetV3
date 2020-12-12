@@ -1,0 +1,92 @@
+{% set etudiant = scolarite.etudiant %}
+{% set scolaritePromo = scolarite.scolaritePromo %}
+{% set semestre = etudiant.semestre %}
+{% set anneeUniversitaire = scolarite.anneeUniversitaire %}
+
+<table style="width:100%">
+    <tr>
+        <td style="text-align: center; width:20%"><img
+                    src="{{ settings('BASE_PATH') }}{{ 'logo/'~etudiant.departement.logoName }}" alt="logo"
+                    width="75"/></td>
+        <td style="text-align: center; width:60%"><h1>{{ semestre.diplome.departement.libelle }}</h1>
+            <stong>Année Universitaire {{ anneeUniversitaire.displayAnneeUniversitaire }}</stong>
+            <br/>
+            UNIVERSITE de REIMS CHAMPAGNE-ARDENNE<br/>
+            {{ settings('NOM_IUT') }}<br/>
+            <strong>{{ semestre.diplome.typediplome.libelle }}</strong><br/>
+            <strong>{{ semestre.diplome.libelle }}</strong><br/>
+        </td>
+        <td style="text-align: center; width:20%">
+            <img src="{{ settings('BASE_PATH') }}{{ 'logo/' }}{{ settings('LOGO_IUT') }}" alt="logo"
+                 width="75"/></td>
+    </tr>
+</table>
+<h1>Liste des notes du Semestre {{ semestre.display }}<br/>Relevé provisoire</h1><br/>
+<h2>{{ etudiant.display }}</h2> Né(e) le {{ etudiant.dateNaissance|format_date('short') }}
+<p>N° étudiant (URCA) : {{ etudiant.numEtudiant }}
+    <br/>N° étudiant INE : {{ etudiant.numIne }}</p>
+<div class="row">
+    {% for ue in semestre.ues %}
+        <div class="col-md-6">
+            <table class="table table-bordered" style="width:100%">
+                <thead>
+                <tr>
+                    <th rowspan="2">Module</th>
+                    <th rowspan="2">Coeff.</th>
+                    <th rowspan="2">Moy. Etudiant</th>
+                    <th rowspan="2">Rang</th>
+                    <th colspan="3">Promo</th>
+                </tr>
+                <tr>
+                    <th>Moy.</th>
+                    <th>Min.</th>
+                    <th>Max.</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for matiere in ue.matieres|filter(matiere => (matiere.suspendu == false and matiere.nbNotes>0)) %}
+                    <tr>
+                        <td>{{ matiere.display }}</td>
+                        <td>{{ matiere.coefficient }}</td>
+                        <td>{{ scolarite.moyennesMatieres[matiere.id] is defined ? scolarite.moyennesMatieres[matiere
+                            .id].moyenne : '-' }}</td>
+                        <td>{{ scolarite.moyennesMatieres[matiere.id] is defined ?scolarite.moyennesMatieres[matiere.id].rang: '-' }}</td>
+                        <td>{{ scolaritePromo.moyenneMatieres[matiere.id] is defined ?scolaritePromo.moyenneMatieres[matiere.id].moyenne: '-' }}</td>
+                        <td>{{ scolaritePromo.moyenneMatieres[matiere.id] is defined ?scolaritePromo.moyenneMatieres[matiere.id].min: '-' }}</td>
+                        <td>{{ scolaritePromo.moyenneMatieres[matiere.id] is defined ?scolaritePromo.moyenneMatieres[matiere.id].max: '-' }}</td>
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <td>Moyenne UE {{ ue.numeroue }}</td>
+                    <td>{{ ue.coefficient }}</td>
+                    <td>{{ scolarite.moyennesUes[ue.id] is defined ? scolarite.moyennesUes[ue.id]
+                        .moyenne: '-' }}</td>
+                    <td>{{ scolarite.moyennesUes[ue.id] is defined ? scolarite.moyennesUes[ue.id].rang:
+                        '-' }}</td>
+                    <td>{{ scolaritePromo.moyenneUes[ue.id] is defined ? scolaritePromo.moyenneUes[ue.id]
+                        .moyenne: '-' }}</td>
+                    <td>{{ scolaritePromo.moyenneUes[ue.id] is defined ? scolaritePromo.moyenneUes[ue.id]
+                        .min: '-' }}</td>
+                    <td>{{ scolaritePromo.moyenneUes[ue.id] is defined ? scolaritePromo.moyenneUes[ue.id]
+                        .max: '-' }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    {% endfor %}
+</div>
+<table style="width:100%">
+    <tr>
+        <td style="width:50%">{{ semestre.diplome.departement.ufr.sitePrincipal.adresse.ville }},
+                                                                                                le {{ 'now'|format_date('short') }}</td>
+        <td style="width:50%">Le responsable du diplôme<br/>
+            {{ semestre.diplome.responsableDiplome.displayPr }}</td>
+    </tr>
+    <tr>
+        <td colspan="2">&nbsp;</td>
+    </tr>
+    <tr>
+        <td>Observations</td>
+        <td>Signature</td>
+    </tr>
+</table>

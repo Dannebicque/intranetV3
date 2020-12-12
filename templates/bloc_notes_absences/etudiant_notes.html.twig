@@ -67,5 +67,12 @@
             {% endfor %}
             </tbody>
         </table>
+        <br>
+        {% if  user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ADMIN') %}
+            <a href="{{ path('administration_semestre_export_releve_provisoire',{slug:etudiant.slug}) }}"
+               class="btn btn-info btn-block" rel="tooltip" data-placement="bottom" title="Editer un relevé de notes
+           provisoire"><i
+                        class="fa fa-print"></i> Editer un relevé de notes provisoire</a>
+        {% endif %}
     </div>
 </div>

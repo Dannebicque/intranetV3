@@ -35,7 +35,7 @@
     </thead>
     <tbody>
     {% for n in notes %}
-        {% if semestre.diplome.colCommentaires == true %}
+        {% if semestre.diplome.optCommentairesReleve == true %}
             {% if matprec is defined and matprec != n.evaluation.matiere.id %}
                 <tr style="height: 50px">
                     <td colspan="2">Commentaires :</td>
@@ -44,11 +44,11 @@
             {% endif %}
             <tr>
                 <td>&nbsp;{{ n.evaluation.id }}&nbsp;</td>
-                <td style="text-align: center">{{ n.evaluation.dateeval|format_date('short') }}</td>
+                <td style="text-align: center">{{ n.evaluation.dateEvaluation|format_date('short') }}</td>
                 <td>&nbsp;&nbsp;{{ n.evaluation.matiere.display }}</td>
                 <td style="text-align: center">{{ n.evaluation.coefficient|number_format(2,'.') }}</td>
                 <td style="text-align: center">{{ n.note|number_format(2,'.') }}</td>
-                <td style="text-align: center">{{ syntheses[n.evaluation.id]['promo'].moy|number_format(2,'.') }}</td>
+                <td style="text-align: center">{{ syntheses[n.evaluation.id]['promo'].moyenne|number_format(2,'.') }}</td>
                 <td style="text-align: center">{{ syntheses[n.evaluation.id]['promo'].min|number_format(2,'.') }}</td>
                 <td style="text-align: center">{{ syntheses[n.evaluation.id]['promo'].max|number_format(2,'.') }}</td>
             </tr>
@@ -57,11 +57,11 @@
         {% else %}
             <tr>
                 <td>&nbsp;{{ n.evaluation.id }}&nbsp;</td>
-                <td style="text-align: center">{{ n.evaluation.dateeval|format_date('short') }}</td>
+                <td style="text-align: center">{{ n.evaluation.dateEvaluation|format_date('short') }}</td>
                 <td>&nbsp;&nbsp;{{ n.evaluation.matiere.display }}</td>
                 <td style="text-align: center">{{ n.evaluation.coefficient|number_format(2,'.') }}</td>
                 <td style="text-align: center">{{ n.note|number_format(2,'.') }}</td>
-                <td style="text-align: center">{{ syntheses[n.evaluation.id]['promo'].moy|number_format(2,'.') }}</td>
+                <td style="text-align: center">{{ syntheses[n.evaluation.id]['promo'].moyenne|number_format(2,'.') }}</td>
                 <td style="text-align: center">{{ syntheses[n.evaluation.id]['promo'].min|number_format(2,'.') }}</td>
                 <td style="text-align: center">{{ syntheses[n.evaluation.id]['promo'].max|number_format(2,'.') }}</td>
             </tr>
