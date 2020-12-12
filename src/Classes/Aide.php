@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Aide.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/12/2020 21:40
+// @lastUpdate 12/12/2020 08:14
 
 namespace App\Classes;
 
@@ -12,6 +12,7 @@ use App\DTO\ArticleAide;
 use Carbon\Carbon;
 use DateTime;
 use Parsedown;
+use ParsedownExtra;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 class Aide
@@ -21,7 +22,7 @@ class Aide
 
     public function __construct(KernelInterface $kernel)
     {
-        $this->parseDown = new Parsedown();
+        $this->parseDown = new ParsedownExtra();
         $this->dir = $kernel->getProjectDir() . '/aide';
     }
 
