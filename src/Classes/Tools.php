@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Tools.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 04/10/2020 08:27
+// @lastUpdate 12/12/2020 14:31
 
 /**
  * Created by PhpStorm.
@@ -17,6 +17,7 @@ namespace App\Classes;
 use Carbon\Carbon;
 use DateTime;
 use Exception;
+use RuntimeException;
 
 abstract class Tools
 {
@@ -129,7 +130,7 @@ abstract class Tools
         }
         $heure = Carbon::createFromTimeString($heureString);
 
-        return Carbon::create($date->year, $date->month, $date->day, $heure->hour, $heure->minute, 0);
+        return Carbon::create($date->year, $date->month, $date->day, $heure->hour, $heure->minute);
     }
 
     public static function updateFields($name, $value, $obj): void
@@ -148,7 +149,7 @@ abstract class Tools
     {
 
         if (!is_dir($dir) && !mkdir($dir)) {
-            throw new \RuntimeException(sprintf('Directory "%s" was not created', $dir));
+            throw new RuntimeException(sprintf('Directory "%s" was not created', $dir));
         }
 
         return true;

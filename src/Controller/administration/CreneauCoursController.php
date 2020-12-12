@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/CreneauCoursController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/08/2020 16:26
+// @lastUpdate 12/12/2020 14:31
 
 namespace App\Controller\administration;
 
@@ -70,7 +70,6 @@ class CreneauCoursController extends BaseController
      * @param                        $_format
      *
      * @return Response
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
     public function export(MyExport $myExport, CreneauCoursRepository $creneauCoursRepository, $_format): Response
     {

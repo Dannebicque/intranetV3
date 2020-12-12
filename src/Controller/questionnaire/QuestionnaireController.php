@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/questionnaire/QuestionnaireController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/12/2020 10:17
+// @lastUpdate 12/12/2020 14:46
 
 namespace App\Controller\questionnaire;
 
@@ -116,12 +116,14 @@ class QuestionnaireController extends AbstractController
     /**
      * @Route("/api/ajax/reponse/{questionnaire}/{typeQuestionnaire}", name="app_etudiant_qualite_ajax_reponse",
      *                                                                 options={"expose"=true})
+     * @param EtudiantRepository                     $etudiantRepository
      * @param QuestionnaireQuestionRepository        $quizzQuestionRepository
      * @param QuestionnaireReponseRepository         $quizzReponseRepository
      * @param QuestionnaireEtudiantRepository        $quizzEtudiantRepository
      * @param QuestionnaireEtudiantReponseRepository $quizzEtudiantReponseRepository
      * @param Request                                $request
      * @param                                        $questionnaire
+     * @param                                        $typeQuestionnaire
      *
      * @return JsonResponse
      * @throws NonUniqueResultException
@@ -225,11 +227,13 @@ class QuestionnaireController extends AbstractController
     /**
      * @Route("/api/ajax/reponse-txt/{questionnaire}/{typeQuestionnaire}", name="app_etudiant_qualite_ajax_reponse_txt",
      *                                             options={"expose"=true})
+     * @param EtudiantRepository                     $etudiantRepository
      * @param QuestionnaireQuestionRepository        $quizzQuestionRepository
      * @param QuestionnaireEtudiantReponseRepository $quizzEtudiantReponseRepository
      * @param QuestionnaireEtudiantRepository        $quizzEtudiantRepository
      * @param Request                                $request
      * @param                                        $questionnaire
+     * @param                                        $typeQuestionnaire
      *
      * @return JsonResponse
      * @throws NonUniqueResultException

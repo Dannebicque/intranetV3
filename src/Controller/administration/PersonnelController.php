@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/PersonnelController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/12/2020 21:00
+// @lastUpdate 12/12/2020 14:31
 
 namespace App\Controller\administration;
 
@@ -47,6 +47,7 @@ class PersonnelController extends BaseController
      * @Route("/ajax/load-liste/{type}", name="administration_personnel_load_liste", options={"expose"=true},
      *                                   requirements={"type": "permanent|vacataire"})
      * @param PersonnelDepartementRepository $personnelRepository
+     * @param                                $type
      *
      * @return Response
      */

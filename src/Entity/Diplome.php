@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Diplome.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 10/11/2020 18:32
+// @lastUpdate 12/12/2020 14:31
 
 namespace App\Entity;
 
@@ -11,6 +11,7 @@ use App\Entity\Traits\ApogeeTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Serializable;
 use function chr;
 use function ord;
 
@@ -18,7 +19,7 @@ use function ord;
  * @ORM\Entity(repositoryClass="App\Repository\DiplomeRepository")
  * @ORM\HasLifecycleCallbacks()
  */
-class Diplome extends BaseEntity implements \Serializable
+class Diplome extends BaseEntity implements Serializable
 {
     use ApogeeTrait;
 

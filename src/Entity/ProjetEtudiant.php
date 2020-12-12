@@ -3,12 +3,13 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ProjetEtudiant.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/10/2020 06:34
+// @lastUpdate 12/12/2020 14:31
 
 namespace App\Entity;
 
 use App\Entity\Traits\UuidTrait;
 use App\Repository\ProjetEtudiantRepository;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -228,48 +229,48 @@ class ProjetEtudiant extends BaseEntity
         return $this;
     }
 
-    public function getDateAutorise(): ?\DateTimeInterface
+    public function getDateAutorise(): ?DateTimeInterface
     {
         return $this->dateAutorise;
     }
 
-    public function setDateAutorise(?\DateTimeInterface $dateAutorise): self
+    public function setDateAutorise(?DateTimeInterface $dateAutorise): self
     {
         $this->dateAutorise = $dateAutorise;
 
         return $this;
     }
 
-    public function getDateDepose(): ?\DateTimeInterface
+    public function getDateDepose(): ?DateTimeInterface
     {
         return $this->dateDepose;
     }
 
-    public function setDateDepose(?\DateTimeInterface $dateDepose): self
+    public function setDateDepose(?DateTimeInterface $dateDepose): self
     {
         $this->dateDepose = $dateDepose;
 
         return $this;
     }
 
-    public function getDateValidation(): ?\DateTimeInterface
+    public function getDateValidation(): ?DateTimeInterface
     {
         return $this->dateValidation;
     }
 
-    public function setDateValidation(?\DateTimeInterface $dateValidation): self
+    public function setDateValidation(?DateTimeInterface $dateValidation): self
     {
         $this->dateValidation = $dateValidation;
 
         return $this;
     }
 
-    public function getDateImprime(): ?\DateTimeInterface
+    public function getDateImprime(): ?DateTimeInterface
     {
         return $this->dateImprime;
     }
 
-    public function setDateImprime(?\DateTimeInterface $dateImprime): self
+    public function setDateImprime(?DateTimeInterface $dateImprime): self
     {
         $this->dateImprime = $dateImprime;
 

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/RddController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/11/2020 16:52
+// @lastUpdate 12/12/2020 14:31
 
 namespace App\Controller\superAdministration;
 
@@ -63,6 +63,7 @@ class RddController extends BaseController
     /**
      * @Route("/export.{_format}", name="sa_rdd_export", methods="GET")
      *
+     * @param MyExportRdd          $myExportRdd
      * @param RddDiplomeRepository $rddDiplomeRepository
      * @param EtudiantRepository   $etudiantRepository
      *

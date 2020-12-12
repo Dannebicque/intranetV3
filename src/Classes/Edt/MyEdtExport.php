@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtExport.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 04/10/2020 17:11
+// @lastUpdate 12/12/2020 14:31
 
 namespace App\Classes\Edt;
 
@@ -19,6 +19,9 @@ use App\Repository\CalendrierRepository;
 use App\Repository\CelcatEventsRepository;
 use App\Repository\EdtPlanningRepository;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 class MyEdtExport
 {
@@ -44,6 +47,8 @@ class MyEdtExport
      * @param EdtPlanningRepository  $edtPlanningRepository
      * @param CelcatEventsRepository $celcatEventsRepository
      * @param CalendrierRepository   $calendrierRepository
+     * @param MyEdtIntranet          $myEdtIntranet
+     * @param MyEdtCelcat            $myEdtCelcat
      * @param MyIcal                 $myIcal
      * @param MyPDF                  $myPDF
      * @param KernelInterface        $kernel
@@ -112,8 +117,9 @@ class MyEdtExport
         switch ($_format) {
             case 'ics':
                 return $this->genereIcal($edt);
-                break;
         }
+
+        return false;
     }
 
     private function genereIcal($edt)
@@ -180,6 +186,15 @@ class MyEdtExport
         }
     }
 
+    /**
+     * @param Personnel   $personnel
+     * @param             $source
+     * @param Departement $departement
+     *
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     */
     public function generePdf(Personnel $personnel, $source, Departement $departement): void
     {
         $dir = $this->dir . 'pdfedt/' . $departement->getId() . '/';
@@ -193,10 +208,18 @@ class MyEdtExport
         }
     }
 
-    public function exportSemestre($semaine, Semestre $semestre)
+    /**
+     * @param          $semaine
+     * @param Semestre $semestre
+     *
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     */
+    public function exportSemestre($semaine, Semestre $semestre): void
     {
         $departement = $semestre->getDiplome()->getDepartement();
-        if ($departement->getOptUpdateCelcat() === true) {
+        if ($departement !== null && $departement->getOptUpdateCelcat() === true) {
             $edt = $this->celcatEventsRepository->findEdtSemestre($semestre, $semaine);
         } else {
             $edt = $this->myEdtIntranet->initSemestre($semaine, $semestre, $semestre->getAnneeUniversitaire());

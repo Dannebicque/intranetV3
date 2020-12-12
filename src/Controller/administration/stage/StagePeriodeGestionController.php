@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StagePeriodeGestionController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/11/2020 09:01
+// @lastUpdate 12/12/2020 14:31
 
 namespace App\Controller\administration\stage;
 
@@ -61,7 +61,8 @@ class StagePeriodeGestionController extends BaseController
     /**
      * @Route("/{uuid}/export.xlsx", name="administration_stage_periode_gestion_export_xlsx", methods="GET")
      * @ParamConverter("stagePeriode", options={"mapping": {"uuid": "uuid"}})
-     * @param StagePeriode $stagePeriode
+     * @param MyExportStage $myExport
+     * @param StagePeriode  $stagePeriode
      *
      *
      * @return Response

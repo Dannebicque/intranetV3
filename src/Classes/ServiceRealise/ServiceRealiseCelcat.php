@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/ServiceRealise/ServiceRealiseCelcat.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/10/2020 21:16
+// @lastUpdate 12/12/2020 14:31
 
 namespace App\Classes\ServiceRealise;
 
@@ -65,6 +65,12 @@ class ServiceRealiseCelcat implements ServiceRealiseInterface
         return $ev;
     }
 
+    /**
+     * @param Personnel $getConnectedUser
+     * @param Matiere   $getMatiere
+     *
+     * @return array
+     */
     public function getServiceRealiseParPersonnelMatiere(Personnel $getConnectedUser, Matiere $getMatiere): array
     {
     }

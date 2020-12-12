@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyGroupes.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/09/2020 08:39
+// @lastUpdate 12/12/2020 14:31
 
 namespace App\Classes;
 
@@ -212,11 +212,11 @@ class MyGroupes
         /*Si on a réussi à ouvrir le fichier*/
         if ($handle) {
             /* supprime la première ligne */
-            fgetcsv($handle, 1024, ',');
+            fgetcsv($handle, 1024);
             /*Tant que l'on est pas à la fin du fichier*/
             while (!feof($handle)) {
                 /*On lit la ligne courante*/
-                $ligne = fgetcsv($handle, 1024, ',');
+                $ligne = fgetcsv($handle, 1024);
                 //nomgroupe,"ordre","codeapogee","option_apogee","semestre","tg_nom","tg_type"
                 if (is_array($ligne) && count($ligne) > 5 && array_key_exists($ligne[4], $semestres)) {
                     if (!array_key_exists($ligne[4], $typeGroupes) || !array_key_exists($ligne[5],
@@ -281,11 +281,11 @@ class MyGroupes
         /*Si on a réussi à ouvrir le fichier*/
         if ($handle) {
             /* supprime la première ligne */
-            fgetcsv($handle, 1024, ',');
+            fgetcsv($handle, 1024);
             /*Tant que l'on est pas à la fin du fichier*/
             while (!feof($handle)) {
                 /*On lit la ligne courante*/
-                $ligne = fgetcsv($handle, 1024, ',');
+                $ligne = fgetcsv($handle, 1024);
                 if (is_array($ligne) && count($ligne) === 2 && array_key_exists($ligne[0],
                         $groupes) && array_key_exists($ligne[1], $etudiants)) {
                             $etudiants[$ligne[1]]->addGroupe($groupes[$ligne[0]]);
@@ -303,7 +303,7 @@ class MyGroupes
         return false;
     }
 
-    public function update(Groupe $groupe, string $name, $value)
+    public function update(Groupe $groupe, string $name, $value): bool
     {
         $method = 'set' . $name;
         if (method_exists($groupe, $method)) {
@@ -312,5 +312,7 @@ class MyGroupes
 
             return true;
         }
+
+        return false;
     }
 }

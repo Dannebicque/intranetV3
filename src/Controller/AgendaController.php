@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/AgendaController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 14/10/2020 10:25
+// @lastUpdate 12/12/2020 14:31
 
 namespace App\Controller;
 
@@ -24,6 +24,8 @@ class AgendaController extends BaseController
 
     /**
      * @Route("/qv", name="agenda_qv", options={"expose"=true})
+     *
+     * @param PrevisionnelRepository $previsionnelRepository
      *
      * @return Response
      */

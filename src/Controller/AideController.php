@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/AideController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/12/2020 21:40
+// @lastUpdate 12/12/2020 14:31
 
 namespace App\Controller;
 
@@ -34,7 +34,9 @@ class AideController extends BaseController
     /**
      *
      * @Route("/aide/categorie/{categorie}/{subcategorie}", name="help_categorie")
-     * @param Aide $aide
+     * @param Aide   $aide
+     * @param string $categorie
+     * @param string $subcategorie
      *
      * @return Response
      */

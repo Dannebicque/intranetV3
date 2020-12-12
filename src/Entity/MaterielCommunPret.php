@@ -3,11 +3,12 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/MaterielCommunPret.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/09/2020 08:06
+// @lastUpdate 12/12/2020 14:31
 
 namespace App\Entity;
 
 use App\Repository\MaterielCommunPretRepository;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -36,12 +37,12 @@ class MaterielCommunPret extends BaseEntity
     private $creneau;
 
 
-    public function getDateEmprunt(): ?\DateTimeInterface
+    public function getDateEmprunt(): ?DateTimeInterface
     {
         return $this->dateEmprunt;
     }
 
-    public function setDateEmprunt(\DateTimeInterface $dateEmprunt): self
+    public function setDateEmprunt(DateTimeInterface $dateEmprunt): self
     {
         $this->dateEmprunt = $dateEmprunt;
 

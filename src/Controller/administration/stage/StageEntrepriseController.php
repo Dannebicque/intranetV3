@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StageEntrepriseController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 14/10/2020 18:40
+// @lastUpdate 12/12/2020 14:31
 
 namespace App\Controller\administration\stage;
 
@@ -81,7 +81,6 @@ class StageEntrepriseController extends BaseController
      * @param                         $_format
      *
      * @return Response
-     * @throws Exception
      */
     public function export(
         StageEtudiantRepository $stageEtudiantRepository,

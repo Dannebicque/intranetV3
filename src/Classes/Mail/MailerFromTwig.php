@@ -3,12 +3,13 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Mail/MailerFromTwig.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/11/2020 10:16
+// @lastUpdate 12/12/2020 14:31
 
 namespace App\Classes\Mail;
 
 use App\Classes\Configuration;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -59,6 +60,13 @@ class MailerFromTwig extends BaseMailer
 
     }
 
+    /**
+     * @param array $to
+     * @param       $subject
+     * @param array $options
+     *
+     * @throws TransportExceptionInterface
+     */
     public function sendMessage(array $to, $subject, array $options = []): void
     {
         $this->baseSendMessage($this->mail, $to, $subject, $options);

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/DataFixtures/UserFixtures.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/10/2020 12:36
+// @lastUpdate 12/12/2020 14:31
 
 namespace App\DataFixtures;
 
@@ -11,6 +11,7 @@ use App\Entity\Personnel;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use JsonException;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserFixtures extends Fixture
@@ -24,6 +25,11 @@ class UserFixtures extends Fixture
         $this->encoder = $encoder;
     }
 
+    /**
+     * @param ObjectManager $manager
+     *
+     * @throws JsonException
+     */
     public function load(ObjectManager $manager): void
     {
         $user3 = new Personnel();

@@ -3,13 +3,14 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Personnel.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/12/2020 21:01
+// @lastUpdate 12/12/2020 14:31
 
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JsonException;
 use Serializable;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -277,6 +278,10 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
      */
     private $covidAttestationPersonnels;
 
+    /**
+     * Personnel constructor.
+     * @throws JsonException
+     */
     public function __construct()
     {
         parent::__construct();
@@ -288,18 +293,15 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
         $this->modificationNotes = new ArrayCollection();
         $this->cahierTextes = new ArrayCollection();
         $this->notifications = new ArrayCollection();
-        $this->trelloTaches = new ArrayCollection();
         $this->personnelDepartements = new ArrayCollection();
         $this->messages = new ArrayCollection();
         $this->messageDestinatairePersonnels = new ArrayCollection();
         $this->stagePeriodes = new ArrayCollection();
         $this->stageEtudiants = new ArrayCollection();
         $this->alternances = new ArrayCollection();
-        $this->materielPrets = new ArrayCollection();
         $this->indisponibilitePersonnels = new ArrayCollection();
         $this->disponibilites = new ArrayCollection();
         $this->progressionPedagogiques = new ArrayCollection();
-        $this->empruntPersonnels = new ArrayCollection();
         $this->departements = new ArrayCollection();
         $this->quizzQuestions = new ArrayCollection();
         $this->emprunts = new ArrayCollection();

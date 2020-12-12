@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Apogee/MyApogee.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/09/2020 20:47
+// @lastUpdate 12/12/2020 14:31
 
 namespace App\Classes\Apogee;
 
@@ -91,6 +91,13 @@ class MyApogee
         return $stid;
     }
 
+    /**
+     * @param $data
+     * @param $tBac
+     *
+     * @return array[]
+     * @throws \Exception
+     */
     public function transformeApogeeToArray($data, $tBac): array
     {
         // COD_ETU, COD_NNE_IND, DATE_NAI_IND, DAA_ENT_ETB, LIB_NOM_PAT_IND, LIB_PR1_IND, COD_SEX_ETU

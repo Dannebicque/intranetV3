@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyAbsences.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/08/2020 10:27
+// @lastUpdate 12/12/2020 14:31
 
 /**
  * Created by PhpStorm.
@@ -129,24 +129,22 @@ class MyAbsences
                 $this->myExcelMultiExport->genereReleveAbsencesMatiereExcel(
                     $absences
                 );
-
                 return $this->myExcelMultiExport->savePdf($name);
-                break;
             case Constantes::FORMAT_EXCEL:
                 $this->myExcelMultiExport->genereReleveAbsencesMatiereExcel(
                     $absences
                 );
 
                 return $this->myExcelMultiExport->saveXlsx($name);
-                break;
             case Constantes::FORMAT_CSV_POINT_VIRGULE:
                 $this->myExcelMultiExport->genereReleveAbsencesMatiereExcel(
                     $absences
                 );
 
                 return $this->myExcelMultiExport->saveCsv($name);
-                break;
         }
+
+        return false;
     }
 
 }

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/projet/ProjetPeriodeGestionController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/09/2020 08:52
+// @lastUpdate 12/12/2020 14:31
 
 namespace App\Controller\administration\projet;
 
@@ -34,7 +34,6 @@ class ProjetPeriodeGestionController extends BaseController
      * @param                        $_format
      *
      * @return Response
-     * @throws Exception
      */
     public function export(MyExport $myExport, ProjetPeriode $projetPeriode, $_format): Response
     {

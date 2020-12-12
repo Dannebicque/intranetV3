@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Security/CasAuthenticator.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/09/2020 14:37
+// @lastUpdate 12/12/2020 14:31
 
 namespace App\Security;
 
@@ -109,7 +109,7 @@ class CasAuthenticator extends AbstractGuardAuthenticator
             $this->session,
             $token->getRoleNames(),
             $this->departementRepository,
-            $this->user, '');
+            $this->user);
     }
 
     public function supportsRememberMe(): bool

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/BacController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 18/09/2020 17:04
+// @lastUpdate 12/12/2020 14:31
 
 namespace App\Controller\superAdministration;
 
@@ -42,7 +42,6 @@ class BacController extends BaseController
      * @param                     $_format
      *
      * @return Response
-     * @throws Exception
      */
     public function export(MyExport $myExport, BacRepository $bacRepository, $_format): Response
     {

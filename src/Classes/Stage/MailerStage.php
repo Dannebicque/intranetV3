@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Stage/MailerStage.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/10/2020 12:10
+// @lastUpdate 12/12/2020 14:31
 
 namespace App\Classes\Stage;
 
@@ -48,14 +48,14 @@ class MailerStage
     }
 
     /**
-     * @param string     $template
-     * @param array      $donnees
-     * @param array|null $destinataires
-     * @param string     $sujet
+     * @param TwigTemplate $template
+     * @param array        $donnees
+     * @param array|null   $destinataires
+     * @param string       $sujet
      *
      * @throws LoaderError
-     * @throws RuntimeError
      * @throws SyntaxError
+     * @throws TransportExceptionInterface
      */
     public function setTemplateFromDatabase(
         TwigTemplate $template,

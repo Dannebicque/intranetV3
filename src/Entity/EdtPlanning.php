@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/EdtPlanning.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 09/09/2020 14:41
+// @lastUpdate 12/12/2020 14:43
 
 namespace App\Entity;
 
@@ -339,7 +339,7 @@ class EdtPlanning
         //todo: gérer la semaine qui n'est pas la semaine annuel
         $date->setISODate(date('Y'), $this->getSemaine() + 35);
 
-        return $date->startOfWeek()->addDays($this->jour - 1);
+        return $date::startOfWeek()->addDays($this->jour - 1);
     }
 
     /**

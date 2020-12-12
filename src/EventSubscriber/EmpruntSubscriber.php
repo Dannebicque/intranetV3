@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/EmpruntSubscriber.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/09/2020 08:45
+// @lastUpdate 12/12/2020 14:31
 
 namespace App\EventSubscriber;
 
@@ -84,7 +84,6 @@ class EmpruntSubscriber implements EventSubscriberInterface
     /**
      * @param EmpruntEvent $event
      *
-     * @throws TransportExceptionInterface
      */
     public function onChgtEmpruntDemande(EmpruntEvent $event): void
     {
@@ -125,7 +124,6 @@ class EmpruntSubscriber implements EventSubscriberInterface
     /**
      * @param EmpruntEvent $event
      *
-     * @throws TransportExceptionInterface
      */
     public function onChgtEmpruntAccepte(EmpruntEvent $event): void
     {
@@ -136,7 +134,6 @@ class EmpruntSubscriber implements EventSubscriberInterface
     /**
      * @param EmpruntEvent $event
      *
-     * @throws TransportExceptionInterface
      */
     public function onChgtEmpruntRefus(EmpruntEvent $event): void
     {

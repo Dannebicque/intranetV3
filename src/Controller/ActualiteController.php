@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ActualiteController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 04/09/2020 13:04
+// @lastUpdate 12/12/2020 14:31
 
 namespace App\Controller;
 
@@ -27,7 +27,7 @@ class ActualiteController extends BaseController
     public function liste(ActualiteRepository $actualiteRepository): Response
     {
         return $this->render('actualite/liste.html.twig', [
-            'actualites' => $actualiteRepository->getByDepartement($this->getDepartement(), 0)
+            'actualites' => $actualiteRepository->getByDepartement($this->getDepartement())
         ]);
     }
 }

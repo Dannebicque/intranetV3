@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Etudiant.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 21/11/2020 07:31
+// @lastUpdate 12/12/2020 14:46
 
 namespace App\Entity;
 
@@ -12,6 +12,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
+use JsonException;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -1053,7 +1054,12 @@ class Etudiant extends Utilisateur
         return $this;
     }
 
-    public function updateFromApogee($dataApogee)
+    /**
+     * @param $dataApogee
+     *
+     * @throws JsonException
+     */
+    public function updateFromApogee($dataApogee): void
     {
         $this->setRoles(['ROLE_ETUDIANT']);
         foreach ($dataApogee as $key => $value) {
@@ -1063,7 +1069,8 @@ class Etudiant extends Utilisateur
         }
     }
 
-    public function updateFromLdap($ldap) {
+    public function updateFromLdap($ldap)
+    {
         $this->setMailUniv($ldap['mail']);
         $this->setUsername($ldap['login']);
     }

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/ArticleController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 22/07/2020 14:50
+// @lastUpdate 12/12/2020 14:31
 
 namespace App\Controller\administration;
 
@@ -46,7 +46,6 @@ class ArticleController extends BaseController
      * @param                   $_format
      *
      * @return Response
-     * @throws Exception
      */
     public function export(MyExport $myExport, ArticleRepository $articleRepository, $_format): Response
     {

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StagePeriodeCourrierController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/10/2020 12:23
+// @lastUpdate 12/12/2020 14:31
 
 namespace App\Controller\administration\stage;
 
@@ -198,7 +198,8 @@ class StagePeriodeCourrierController extends BaseController
     /**
      * @Route("/{uuid}", name="administration_stage_periode_courrier_index")
      * @ParamConverter("stagePeriode", options={"mapping": {"uuid": "uuid"}})
-     * @param StagePeriode $stagePeriode
+     * @param StageMailTemplateRepository $stageMailTemplateRepository
+     * @param StagePeriode                $stagePeriode
      *
      * @return Response
      */

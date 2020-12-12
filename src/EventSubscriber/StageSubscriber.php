@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/StageSubscriber.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 18/11/2020 13:52
+// @lastUpdate 12/12/2020 14:31
 
 namespace App\EventSubscriber;
 
@@ -74,7 +74,6 @@ class StageSubscriber implements EventSubscriberInterface
      * @throws NonUniqueResultException
      * @throws RuntimeError
      * @throws SyntaxError
-     * @throws TransportExceptionInterface
      */
     public function onChgtEtatStageAutorise(StageEvent $event): void
     {
@@ -106,7 +105,6 @@ class StageSubscriber implements EventSubscriberInterface
      * @throws NonUniqueResultException
      * @throws RuntimeError
      * @throws SyntaxError
-     * @throws TransportExceptionInterface
      */
     public function onChgtEtatStageConventionEnvoyee(StageEvent $event): void
     {
@@ -121,7 +119,6 @@ class StageSubscriber implements EventSubscriberInterface
      * @throws NonUniqueResultException
      * @throws RuntimeError
      * @throws SyntaxError
-     * @throws TransportExceptionInterface
      */
     public function onChgtEtatStageConventionRecue(StageEvent $event): void
     {
@@ -137,7 +134,6 @@ class StageSubscriber implements EventSubscriberInterface
      * @throws NonUniqueResultException
      * @throws RuntimeError
      * @throws SyntaxError
-     * @throws TransportExceptionInterface
      */
     public function onChgtEtatStageDepose(StageEvent $event): void
     {
@@ -167,7 +163,6 @@ class StageSubscriber implements EventSubscriberInterface
      * @throws NonUniqueResultException
      * @throws RuntimeError
      * @throws SyntaxError
-     * @throws TransportExceptionInterface
      */
     public function onChgtEtatStageValide(StageEvent $event): void
     {
@@ -182,7 +177,6 @@ class StageSubscriber implements EventSubscriberInterface
      * @throws NonUniqueResultException
      * @throws RuntimeError
      * @throws SyntaxError
-     * @throws TransportExceptionInterface
      */
     public function onChgtEtatStageRefus(StageEvent $event): void
     {
@@ -197,7 +191,6 @@ class StageSubscriber implements EventSubscriberInterface
      * @throws NonUniqueResultException
      * @throws RuntimeError
      * @throws SyntaxError
-     * @throws TransportExceptionInterface
      */
     public function onChgtEtatStageIncomplet(StageEvent $event): void
     {
@@ -212,7 +205,6 @@ class StageSubscriber implements EventSubscriberInterface
      * @throws NonUniqueResultException
      * @throws RuntimeError
      * @throws SyntaxError
-     * @throws TransportExceptionInterface
      */
     public function onChgtEtatStageImprime(StageEvent $event): void
     {

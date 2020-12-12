@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/NoteController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 22/10/2020 15:56
+// @lastUpdate 12/12/2020 14:31
 
 namespace App\Controller\appPersonnel;
 
@@ -206,7 +206,6 @@ class NoteController extends BaseController
      * @param Evaluation $evaluation
      *
      * @return Response|null
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
     public function modeleImport(MyExport $myExport, Evaluation $evaluation): ?Response
     {

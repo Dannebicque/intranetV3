@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/CelcatCalendrierController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 17/08/2020 13:26
+// @lastUpdate 12/12/2020 14:31
 
 namespace App\Controller\superAdministration;
 
@@ -45,7 +45,6 @@ class CelcatCalendrierController extends BaseController
      * @param                      $_format
      *
      * @return Response
-     * @throws Exception
      */
     public function export(MyExport $myExport, CalendrierRepository $celcatCalendrierRepository, $_format): Response
     {

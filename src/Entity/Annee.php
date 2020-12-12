@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Annee.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/10/2020 18:22
+// @lastUpdate 12/12/2020 14:31
 
 namespace App\Entity;
 
@@ -36,7 +36,7 @@ class Annee extends BaseEntity
     private int $ordre = 1;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=150, nullable=true)
      * @Groups({"annee"})

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/CovidAttestationEtudiantController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/11/2020 09:46
+// @lastUpdate 12/12/2020 14:31
 
 namespace App\Controller\administration;
 
@@ -18,6 +18,9 @@ use DateTime;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 /**
  * @Route("/administration/covid/attestation/etudiant", name="administration_")
@@ -88,6 +91,9 @@ class CovidAttestationEtudiantController extends BaseController
      * @param Etudiant                 $etudiant
      *
      * @return Response
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function pdf(
         MyExportPresence $myExportPresence,
@@ -107,6 +113,9 @@ class CovidAttestationEtudiantController extends BaseController
      * @param Etudiant                 $etudiant
      *
      * @return Response
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function sendOne(
         MyExportPresence $myExportPresence,
