@@ -3,11 +3,12 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/RddDiplome.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/12/2020 06:46
+// @lastUpdate 12/12/2020 14:31
 
 namespace App\Entity;
 
 use App\Repository\RddDiplomeRepository;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -132,12 +133,12 @@ class RddDiplome
         return $this;
     }
 
-    public function getDateNaissance(): ?\DateTimeInterface
+    public function getDateNaissance(): ?DateTimeInterface
     {
         return $this->dateNaissance;
     }
 
-    public function setDateNaissance(\DateTimeInterface $dateNaissance): self
+    public function setDateNaissance(DateTimeInterface $dateNaissance): self
     {
         $this->dateNaissance = $dateNaissance;
 

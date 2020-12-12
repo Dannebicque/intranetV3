@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Note.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/10/2020 18:40
+// @lastUpdate 12/12/2020 14:31
 
 namespace App\Entity;
 
@@ -136,7 +136,7 @@ class Note extends BaseEntity
     }
 
     /**
-     * @param string $commentaire
+     * @param string|null $commentaire
      *
      * @return Note
      */

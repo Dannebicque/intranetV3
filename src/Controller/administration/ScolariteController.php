@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/ScolariteController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/12/2020 21:12
+// @lastUpdate 12/12/2020 14:46
 
 namespace App\Controller\administration;
 
@@ -114,9 +114,9 @@ class ScolariteController extends BaseController
     /**
      * @Route("/init-scolarite/{semestre}", name="administration_scolarite_init_semestre")
      * @param MyScolarite $myScolarite
+     * @param Semestre    $semestre
      *
      * @return RedirectResponse
-     * @throws Exception
      */
     public function initParcoursScolarite(MyScolarite $myScolarite, Semestre $semestre)
     {
@@ -145,7 +145,8 @@ class ScolariteController extends BaseController
     /**
      * @Route("/ajax-saisie/promo/{semestre}/{anneeUniversitaire}", name="administration_scolarite_saisie_promo_ajax",
      *                                                              options={"expose"=true})
-     * @param Semestre $semestre
+     * @param Semestre           $semestre
+     * @param AnneeUniversitaire $anneeUniversitaire
      *
      * @return Response
      */
@@ -160,10 +161,10 @@ class ScolariteController extends BaseController
     /**
      * @Route("/ajax-import/promo/{semestre}/{anneeUniversitaire}", name="administration_scolarite_saisie_promo_import_ajax",
      *                                                              options={"expose"=true})
-     * @param Semestre $semestre
-     *
+     * @param Semestre           $semestre
+     * @param AnneeUniversitaire $anneeUniversitaire
      * @return Response
-     */
+*/
     public function importPromotionAjax(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire)
     {
         return $this->render('administration/scolarite/_importPromotion.html.twig', [

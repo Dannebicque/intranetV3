@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEvaluation.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 10/12/2020 08:44
+// @lastUpdate 12/12/2020 14:31
 
 /**
  * Created by PhpStorm.
@@ -258,6 +258,7 @@ class MyEvaluation
      * @param             $groupes
      * @param Departement $departement
      *
+     * @return StreamedResponse|null
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError

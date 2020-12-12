@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/ScolariteRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 01/12/2020 14:47
+// @lastUpdate 12/12/2020 14:31
 
 namespace App\Repository;
 
@@ -14,6 +14,8 @@ use App\Entity\Etudiant;
 use App\Entity\Scolarite;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -80,6 +82,13 @@ class ScolariteRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * @param Etudiant $etudiant
+     *
+     * @return int|mixed|string
+     * @throws NoResultException
+     * @throws NonUniqueResultException
+     */
     public function findOrdreMax(Etudiant $etudiant)
     {
         return $this->createQueryBuilder('p')

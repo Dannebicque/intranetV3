@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Covid/MyExportPresence.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 17/11/2020 11:58
+// @lastUpdate 12/12/2020 14:31
 
 namespace App\Classes\Covid;
 
@@ -129,6 +129,15 @@ class MyExportPresence
         );
     }
 
+    /**
+     * @param CovidAttestationPersonnel $covidAttestationPersonnel
+     * @param                           $sortie
+     *
+     * @return bool|string
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     */
     public function genereAttestationPdf(CovidAttestationPersonnel $covidAttestationPersonnel, $sortie)
     {
         if ($sortie === 'force') {
@@ -218,6 +227,13 @@ class MyExportPresence
         );
     }
 
+    /**
+     * @param CovidAttestationEtudiant $covidAttestationEtudiant
+     *
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     */
     public function sendAllConvocation(CovidAttestationEtudiant $covidAttestationEtudiant): void
     {
         set_time_limit(300);

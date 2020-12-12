@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/CarnetController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 12/12/2020 14:31
 
 namespace App\Controller\appPersonnel;
 
@@ -52,7 +52,6 @@ class CarnetController extends BaseController
      * @param                       $_format
      *
      * @return Response
-     * @throws Exception
      */
     public function export(MyExport $myExport, CahierTexteRepository $cahierTexteRepository, $_format): Response
     {

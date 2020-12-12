@@ -3,12 +3,15 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyAlternanceFicheSuivi.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/08/2020 16:45
+// @lastUpdate 12/12/2020 14:31
 
 namespace App\Classes;
 
 use App\Classes\Pdf\MyPDF;
 use App\Entity\AlternanceFicheSuivi;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 class MyAlternanceFicheSuivi
 {
@@ -25,6 +28,13 @@ class MyAlternanceFicheSuivi
     }
 
 
+    /**
+     * @param AlternanceFicheSuivi $alternanceFicheSuivi
+     *
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     */
     public function print(AlternanceFicheSuivi $alternanceFicheSuivi): void
     {
         $this->myPdf::generePdf('pdf/ficheSuiviAlternant.html.twig',

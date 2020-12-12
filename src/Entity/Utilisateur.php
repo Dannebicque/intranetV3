@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Utilisateur.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/11/2020 13:28
+// @lastUpdate 12/12/2020 14:31
 
 namespace App\Entity;
 
@@ -519,6 +519,8 @@ abstract class Utilisateur implements UserInterface, Serializable
 
     /**
      * Retourne les rôles de l'user
+     *
+     * @throws JsonException
      */
     public function getRoles(): array
     {

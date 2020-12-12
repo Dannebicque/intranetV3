@@ -3,13 +3,14 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/StatisquesAbsences.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/07/2020 08:41
+// @lastUpdate 12/12/2020 14:31
 
 namespace App\DTO;
 
 
 use DateInterval;
 use DateTime;
+use Exception;
 
 class StatisquesAbsences
 {
@@ -28,7 +29,12 @@ class StatisquesAbsences
         $this->totalDuree = new DateTime('00:00');
     }
 
-    public function addDuree(DateTime $duree)
+    /**
+     * @param DateTime $duree
+     *
+     * @throws Exception
+     */
+    public function addDuree(DateTime $duree): void
     {
         $this->totalDuree->add(new DateInterval('PT' . $duree->format('G') . 'H' . $duree->format('i') . 'M'));
     }

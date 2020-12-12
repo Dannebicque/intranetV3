@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/BaseEdt.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 02/11/2020 09:04
+// @lastUpdate 12/12/2020 14:31
 
 namespace App\Classes\Edt;
 
@@ -171,7 +171,7 @@ Abstract class BaseEdt
     private function getJours(): void
     {
         $this->tabJour['lundi'] = $this->semaineFormationLundi;
-        $this->tabJour['mardi'] = $this->semaineFormationLundi->copy()->addDays(1);
+        $this->tabJour['mardi'] = $this->semaineFormationLundi->copy()->addDays();
         $this->tabJour['mercredi'] = $this->semaineFormationLundi->copy()->addDays(2);
         $this->tabJour['jeudi'] = $this->semaineFormationLundi->copy()->addDays(3);
         $this->tabJour['vendredi'] = $this->semaineFormationLundi->copy()->addDays(4);

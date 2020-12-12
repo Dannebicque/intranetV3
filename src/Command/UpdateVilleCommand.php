@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Command/UpdateVilleCommand.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/09/2020 08:52
+// @lastUpdate 12/12/2020 14:46
 
 namespace App\Command;
 
@@ -65,12 +65,10 @@ class UpdateVilleCommand extends Command
             $adresse = $data->getAdresse();
 
             if ($adresse !== null && $adresse->getVille() !== null && preg_match("(\d{5})",
-                    $adresse->getVille()) === 1) {
-                if (array_key_exists(trim($adresse->getVille()), $codeVille)) {
-                    $adresse->setVille($codeVille[trim($adresse->getVille())]);
-                    $this->entityManager->persist($adresse);
-                    $i++;
-                }
+                    $adresse->getVille()) === 1 && array_key_exists(trim($adresse->getVille()), $codeVille)) {
+                $adresse->setVille($codeVille[trim($adresse->getVille())]);
+                $this->entityManager->persist($adresse);
+                $i++;
             }
         }
         $this->entityManager->flush();

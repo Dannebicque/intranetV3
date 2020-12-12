@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyMessagerie.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 02/12/2020 18:15
+// @lastUpdate 12/12/2020 14:31
 
 namespace App\Classes;
 
@@ -65,6 +65,7 @@ class MyMessagerie
      * @param EtudiantRepository     $etudiantRepository
      * @param PersonnelRepository    $personnelRepository
      * @param Configuration          $configuration
+     * @param ParameterBagInterface  $parameterBag
      */
     public function __construct(
         MailerInterface $mailer,
@@ -346,7 +347,7 @@ class MyMessagerie
         $this->expediteur = $expediteur;
         $this->type = $typeDestinataire;
 
-        $this->saveMessageDatabase('D');
+        $this->saveMessageDatabase();
     }
 
     /**

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyMaterielCommunReservation.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/09/2020 08:52
+// @lastUpdate 12/12/2020 14:31
 
 namespace App\Classes;
 
@@ -14,6 +14,7 @@ use App\Event\MaterielCommunReservationEvent;
 use App\Repository\MaterielCommunPretRepository;
 use App\Repository\MaterielCommunRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class MyMaterielCommunReservation
@@ -21,6 +22,8 @@ class MyMaterielCommunReservation
 
     private MaterielCommunRepository $materielCommunRepository;
     private MaterielCommunPretRepository $materielCommunPretRepository;
+    private EntityManagerInterface $entityManager;
+    private EventDispatcherInterface $eventDispatcher;
 
     /**
      * MyMaterielCommun constructor.
@@ -42,7 +45,15 @@ class MyMaterielCommunReservation
         $this->eventDispatcher = $eventDispatcher;
     }
 
-
+    /**
+     * @param           $materiel
+     * @param           $dateEmprunt
+     * @param           $creneau
+     * @param Personnel $personnel
+     *
+     * @return bool
+     * @throws Exception
+     */
     public function addReservation($materiel, $dateEmprunt, $creneau, Personnel $personnel)
     {
         $mat = $this->materielCommunRepository->find(trim($materiel));

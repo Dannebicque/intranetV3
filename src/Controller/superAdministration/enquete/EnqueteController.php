@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/enquete/EnqueteController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 09/12/2020 15:53
+// @lastUpdate 12/12/2020 14:31
 
 namespace App\Controller\superAdministration\enquete;
 
@@ -34,6 +34,8 @@ class EnqueteController extends AbstractController
 
     /**
      * EnqueteController constructor.
+     *
+     * @param EntityManagerInterface $entityManager
      */
     public function __construct(EntityManagerInterface $entityManager)
     {
@@ -237,6 +239,7 @@ class EnqueteController extends AbstractController
      */
     public function delete(Request $request, QuestionnaireQualite $questionnaire): Response
     {
-
+        //suppression de l'enquete
+        //suppression des liens enquetes sections
     }
 }

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/RddController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/11/2020 08:42
+// @lastUpdate 12/12/2020 14:42
 
 namespace App\Controller;
 
@@ -142,14 +142,12 @@ class RddController extends AbstractController
         $diplome
     ) {
         $dip = $rddDiplomeRepository->find($diplome);
-        if ($dip !== null) {
-            if (md5('clerdd' . $dip->getNumetudiant()) === $numetudiant) {
-                $etudiant = $etudiantRepository->findOneBy(['numEtudiant' => $dip->getNumetudiant()]);
+        if (($dip !== null) && md5('clerdd' . $dip->getNumetudiant()) === $numetudiant) {
+            $etudiant = $etudiantRepository->findOneBy(['numEtudiant' => $dip->getNumetudiant()]);
 
-                return $this->render('rdd/enquete.html.twig', [
-                    'etudiant' => $etudiant
-                ]);
-            }
+            return $this->render('rdd/enquete.html.twig', [
+                'etudiant' => $etudiant
+            ]);
         }
     }
 }

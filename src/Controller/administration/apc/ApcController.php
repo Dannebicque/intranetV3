@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/10/2020 14:06
+// @lastUpdate 12/12/2020 14:31
 
 namespace App\Controller\administration\apc;
 
@@ -25,6 +25,8 @@ class ApcController extends BaseController
 {
     /**
      * @Route("referentiel/{diplome}", name="administration_apc_referentiel_index", methods={"GET"})
+     *
+     * @param Diplome $diplome
      *
      * @return Response
      */

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EtudiantController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 24/11/2020 21:48
+// @lastUpdate 12/12/2020 14:31
 
 namespace App\Controller\administration;
 
@@ -186,7 +186,6 @@ class EtudiantController extends BaseController
      * @param                    $_format
      *
      * @return Response
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
     public function export(MyExport $myExport, EtudiantRepository $etudiantRepository, $_format): Response
     {

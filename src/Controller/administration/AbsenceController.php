@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/AbsenceController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/10/2020 15:10
+// @lastUpdate 12/12/2020 14:31
 
 namespace App\Controller\administration;
 
@@ -118,7 +118,6 @@ class AbsenceController extends BaseController
      * @param                               $_format
      *
      * @return Response
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
     public function exportJustificatif(
         MyExport $myExport,
@@ -141,7 +140,6 @@ class AbsenceController extends BaseController
      * @param            $_format
      *
      * @return Response
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
      * @throws Exception
      */
     public function export(MyExport $myExport, MyAbsences $myAbsences, Semestre $semestre, $_format): Response
@@ -161,7 +159,6 @@ class AbsenceController extends BaseController
      * @param                   $_format
      *
      * @return Response
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
     public function exportAllAbsences(
         MyExport $myExport,

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/DataUserSession.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 27/09/2020 07:38
+// @lastUpdate 12/12/2020 14:31
 
 /**
  * Created by PhpStorm.
@@ -35,6 +35,7 @@ use App\Repository\NotificationRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
 use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -321,6 +322,11 @@ class DataUserSession
         return false;
     }
 
+    /**
+     * @return MessageDestinataireEtudiant[]|MessageDestinatairePersonnel[]|int|mixed|string
+     * @throws NonUniqueResultException
+     * @throws NoResultException
+     */
     public function getMessages()
     {
         if ($this->messages === null) {

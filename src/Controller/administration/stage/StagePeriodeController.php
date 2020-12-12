@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StagePeriodeController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/09/2020 16:08
+// @lastUpdate 12/12/2020 14:31
 
 namespace App\Controller\administration\stage;
 
@@ -46,7 +46,6 @@ class StagePeriodeController extends BaseController
      * @param                        $_format
      *
      * @return Response
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
     public function export(MyExport $myExport, StagePeriodeRepository $stagePeriodeRepository, $_format): Response
     {

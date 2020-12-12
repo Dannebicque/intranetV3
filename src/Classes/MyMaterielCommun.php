@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyMaterielCommun.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/09/2020 08:47
+// @lastUpdate 12/12/2020 14:31
 
 namespace App\Classes;
 
@@ -18,7 +18,7 @@ class MyMaterielCommun
 
     private MaterielCommunRepository $materielCommunRepository;
     private MaterielCommunPretRepository $materielCommunPretRepository;
-    private array $jours;
+    private int $nbjouremprunt;
 
     /**
      * MyMaterielCommun constructor.
@@ -40,7 +40,7 @@ class MyMaterielCommun
      */
     public function getJours()
     {
-        $this->jours = [];
+        $jours = [];
         $this->nbjouremprunt = 28;
         $j = -2;
 
@@ -49,16 +49,16 @@ class MyMaterielCommun
             $d = mktime(0, 0, 0, date('m'), date('d') + $j, date('Y'));
             $jour = date('N', $d);
             if ($jour != 6 && $jour != 7) {
-                $this->jours[$i]['jour'] = Constantes::TAB_JOURS[date('N', $d)];
-                $this->jours[$i]['texte'] = date('d/m/Y', $d);
-                $this->jours[$i]['date'] = date('Y-m-d', $d);
-                $this->jours[$i]['objDate'] = $d;
-                $this->jours[$i]['i'] = $i;
+                $jours[$i]['jour'] = Constantes::TAB_JOURS[date('N', $d)];
+                $jours[$i]['texte'] = date('d/m/Y', $d);
+                $jours[$i]['date'] = date('Y-m-d', $d);
+                $jours[$i]['objDate'] = $d;
+                $jours[$i]['i'] = $i;
             }
             $j++;
         }
 
-        return $this->jours;
+        return $jours;
     }
 
     /**

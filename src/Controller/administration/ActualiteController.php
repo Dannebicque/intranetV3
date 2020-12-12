@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/ActualiteController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/10/2020 08:56
+// @lastUpdate 12/12/2020 14:31
 
 namespace App\Controller\administration;
 
@@ -48,7 +48,7 @@ class ActualiteController extends BaseController
      */
     public function export(MyExport $myExport, ActualiteRepository $actualiteRepository, $_format): Response
     {
-        $actualites = $actualiteRepository->getByDepartement($this->getDepartement(), 0);
+        $actualites = $actualiteRepository->getByDepartement($this->getDepartement());
         return $myExport->genereFichierGenerique(
             $_format,
             $actualites,

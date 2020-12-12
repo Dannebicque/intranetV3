@@ -3,12 +3,13 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Mail/MailerFromDatabase.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/10/2020 12:19
+// @lastUpdate 12/12/2020 14:31
 
 namespace App\Classes\Mail;
 
 use App\Classes\Configuration;
 use App\Entity\TwigTemplate;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -58,8 +59,15 @@ class MailerFromDatabase extends BaseMailer
         $this->mail->html($template->render($array));
     }
 
+    /**
+     * @param array $to
+     * @param       $subject
+     * @param array $options
+     *
+     * @throws TransportExceptionInterface
+     */
     public function sendMessage(array $to, $subject, array $options = []): void
     {
-        parent::baseSendMessage($this->mail, $to, $subject, $options);
+        $this->baseSendMessage($this->mail, $to, $subject, $options);
     }
 }

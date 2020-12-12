@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Enquetes/MyEnquete.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 24/11/2020 11:40
+// @lastUpdate 12/12/2020 14:42
 
 namespace App\Classes\Enquetes;
 
@@ -27,7 +27,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 class MyEnquete
 {
 
-    const SEUIL = 65;
+    public const SEUIL = 65;
     private QuestionnaireEtudiantReponseRepository $quizzEtudiantReponseRepository;
 
     private QuestionnaireEtudiantRepository $quizzEtudiantRepository;
@@ -58,6 +58,7 @@ class MyEnquete
      * @param QuestionnaireEtudiantReponseRepository $quizzEtudiantReponseRepository
      * @param QuestionnaireEtudiantRepository        $quizzEtudiantRepository
      * @param MyExcelWriter                          $myExcelWriter
+     * @param Configuration                          $configuration
      */
     public function __construct(
         QuestionnaireEtudiantReponseRepository $quizzEtudiantReponseRepository,

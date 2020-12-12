@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/DocumentController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 31/08/2020 18:19
+// @lastUpdate 12/12/2020 14:31
 
 namespace App\Controller\administration;
 
@@ -44,7 +44,6 @@ class DocumentController extends BaseController
      * @param                    $_format
      *
      * @return Response
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
     public function export(MyExport $myExport, DocumentRepository $documentRepository, $_format): Response
     {

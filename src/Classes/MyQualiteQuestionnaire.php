@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyQualiteQuestionnaire.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+// @lastUpdate 12/12/2020 14:31
 
 namespace App\Classes;
 
@@ -20,10 +20,8 @@ class MyQualiteQuestionnaire
         switch ($code) {
             case '#': //titre
                 return '<h2>' . trim(substr($ligne, 1, strlen($ligne))) . '</h2>';
-                break;
             case 'H': //question
                 return '<p class="qualite-help">' . trim(substr($ligne, 2, strlen($ligne))) . '</p>';
-                break;
             case 'Q': //question
                 $t = explode('.', $ligne);
                 $this->typeQuestion = $t[1];
@@ -51,7 +49,7 @@ class MyQualiteQuestionnaire
                 return '<br>';
         }
 
-
+        return 'erreur';
     }
 
     private function isObligatoire(): ?string
@@ -59,5 +57,7 @@ class MyQualiteQuestionnaire
         if ($this->obligatoire === 'OBLIGATOIRE') {
             return 'required';
         }
+
+        return '';
     }
 }

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ProfilEtudiantController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/12/2020 20:46
+// @lastUpdate 12/12/2020 14:31
 
 namespace App\Controller;
 
@@ -91,8 +91,9 @@ class ProfilEtudiantController extends BaseController
 
     /**
      * @Route("/profil/{slug}/notes", name="profil_etudiant_notes")
-     * @param EtudiantNotes $etudiantNotes
-     * @param Etudiant      $etudiant
+     * @param ChartBuilderInterface $chartBuilder
+     * @param EtudiantNotes         $etudiantNotes
+     * @param Etudiant              $etudiant
      *
      * @return Response
      * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})

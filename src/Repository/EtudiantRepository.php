@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/EtudiantRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 01/12/2020 22:04
+// @lastUpdate 12/12/2020 14:31
 
 namespace App\Repository;
 
@@ -366,6 +366,13 @@ class EtudiantRepository extends ServiceEntityRepository
 
     }
 
+    /**
+     * @param $login
+     * @param $date
+     *
+     * @return int|mixed|string|null
+     * @throws NonUniqueResultException
+     */
     public function identificationRdd($login, $date)
     {
         return $this->createQueryBuilder('p')

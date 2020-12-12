@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/MatiereController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/09/2020 08:39
+// @lastUpdate 12/12/2020 14:31
 
 namespace App\Controller\administration;
 
@@ -61,7 +61,6 @@ class MatiereController extends BaseController
      * @param                   $_format
      *
      * @return Response
-     * @throws Exception
      */
     public function export(
         MyExport $myExport,
@@ -153,8 +152,9 @@ class MatiereController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_matiere_edit", methods="GET|POST")
-     * @param Request $request
-     * @param Matiere $matiere
+     * @param Configuration $configuration
+     * @param Request       $request
+     * @param Matiere       $matiere
      *
      * @return Response
      */

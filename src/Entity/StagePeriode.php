@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/StagePeriode.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/11/2020 10:44
+// @lastUpdate 12/12/2020 14:31
 
 namespace App\Entity;
 
@@ -630,6 +630,6 @@ class StagePeriode extends BaseEntity implements Serializable
 
     public function unserialize($serialized)
     {
-        $this->uuid = unserialize($serialized,);
+        $this->uuid = unserialize($serialized);
     }
 }

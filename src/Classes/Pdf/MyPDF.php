@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Pdf/MyPDF.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 10/11/2020 16:48
+// @lastUpdate 12/12/2020 14:31
 
 /**
  * Created by PhpStorm.
@@ -79,11 +79,11 @@ class MyPDF
     }
 
     /**
-     * @param string $template
-     * @param array  $data
-     * @param string $name
-     * @param string $dir
-     * @param string $departement
+     * @param string      $template
+     * @param array       $data
+     * @param string      $name
+     * @param string      $dir
+     * @param string|null $departement
      *
      * @throws LoaderError
      * @throws RuntimeError

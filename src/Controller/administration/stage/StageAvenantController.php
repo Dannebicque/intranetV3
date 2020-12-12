@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StageAvenantController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/11/2020 14:14
+// @lastUpdate 12/12/2020 14:31
 
 namespace App\Controller\administration\stage;
 
@@ -157,7 +157,7 @@ class StageAvenantController extends BaseController
 
     /**
      * @Route("/{id}/duplicate", name="administration_stage_avenant_duplicate", methods="GET")
-     * @param StageAvenant $stagePeriode
+     * @param StageAvenant $stageAvenant
      *
      * @return Response
      */
