@@ -6,7 +6,17 @@
 
 {% block headeractions %}
     <div class="header-action">
-        {{ include('composants/adm-buttons-new.html.twig', {elt: 'apc_competence'}) }}
+        <div class="buttons">
+            <a href="{{ path('administration_apc_competence_index', {diplome: diplome.id}) }}"
+               class="btn btn-primary btn-float"
+               title="{{ 'atitle.retour_liste'|trans }}"
+               data-provide="tooltip"
+               data-placement="bottom">
+                <i class="fas fa-arrow-left"></i>
+                <span class="sr-only">{{ 'atitle.retour_liste'|trans }}</span>
+            </a>
+        </div>
+
     </div>
 {% endblock %}
 

@@ -470,6 +470,10 @@ adm:
       heading: 'Création d''une convocation COVID pour les étudiants'
     concerne:
       heading: 'Liste des étudiants concernés par la convocation "COVID"'
+  apc_parcours:
+    edit.heading: 'Modification d''un parcours'
+  referentiel.de.competence.heading: 'Référentiel de compétence pour le diplôme %diplome%'
+  apc.parcours.heading: 'Parcours pour le diplôme %diplome%'
 
 administratif_homepage.heading: 'Tableau de bord administratif'
 administratif.qualite.questionnaire.show.heading: 'Détails d''un questionnaire qualité'

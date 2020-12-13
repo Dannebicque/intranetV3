@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ApcApprentissageCritiqueType.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/10/2020 09:00
+// @lastUpdate 12/12/2020 22:17
 
 namespace App\Form;
 
@@ -17,8 +17,8 @@ class ApcApprentissageCritiqueType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('libelle')
-            ->add('niveau');
+            ->add('code')
+            ->add('libelle');
     }
 
     public function configureOptions(OptionsResolver $resolver)

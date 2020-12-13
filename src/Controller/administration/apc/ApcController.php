@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/12/2020 14:31
+// @lastUpdate 13/12/2020 20:18
 
 namespace App\Controller\administration\apc;
 
@@ -33,7 +33,9 @@ class ApcController extends BaseController
     public function referentiel(Diplome $diplome): Response
     {
         return $this->render('administration/apc/referentiel.html.twig', [
-            'diplome' => $diplome
+            'diplome'     => $diplome,
+            'competences' => $diplome->getApcComptences(),
+            'parcours'    => $diplome->getApcParcours()
         ]);
     }
 }

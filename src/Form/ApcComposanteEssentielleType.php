@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ApcComposanteEssentielleType.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/10/2020 09:00
+// @lastUpdate 12/12/2020 22:10
 
 namespace App\Form;
 
@@ -17,8 +17,7 @@ class ApcComposanteEssentielleType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('libelle')
-            ->add('competence');
+            ->add('libelle');
     }
 
     public function configureOptions(OptionsResolver $resolver)

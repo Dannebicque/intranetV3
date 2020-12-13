@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcNiveau.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/10/2020 09:52
+// @lastUpdate 13/12/2020 08:57
 
 namespace App\Entity;
 
@@ -49,9 +49,16 @@ class ApcNiveau
      */
     private $apcApprentissageCritiques;
 
-    public function __construct()
+    /**
+     * @ORM\OneToMany(targetEntity=ApcParcoursNiveau::class, mappedBy="niveau")
+     */
+    private $apcParcoursNiveaux;
+
+    public function __construct(ApcCompetence $competence)
     {
+        $this->setCompetence($competence);
         $this->apcApprentissageCritiques = new ArrayCollection();
+        $this->apcParcoursNiveaux = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -132,6 +139,36 @@ class ApcNiveau
             // set the owning side to null (unless already changed)
             if ($apcApprentissageCritique->getNiveau() === $this) {
                 $apcApprentissageCritique->setNiveau(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ApcParcoursNiveau[]
+     */
+    public function getApcParcoursNiveaux(): Collection
+    {
+        return $this->apcParcoursNiveaux;
+    }
+
+    public function addApcParcoursNiveau(ApcParcoursNiveau $apcParcoursNiveaux): self
+    {
+        if (!$this->apcParcoursNiveaux->contains($apcParcoursNiveaux)) {
+            $this->apcParcoursNiveaux[] = $apcParcoursNiveaux;
+            $apcParcoursNiveaux->setNiveau($this);
+        }
+
+        return $this;
+    }
+
+    public function removeApcParcoursNiveau(ApcParcoursNiveau $apcParcoursNiveaux): self
+    {
+        if ($this->apcParcoursNiveaux->removeElement($apcParcoursNiveaux)) {
+            // set the owning side to null (unless already changed)
+            if ($apcParcoursNiveaux->getNiveau() === $this) {
+                $apcParcoursNiveaux->setNiveau(null);
             }
         }
 
