@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcApprentissageCritique.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/10/2020 18:23
+// @lastUpdate 12/12/2020 22:17
 
 namespace App\Entity;
 
@@ -32,6 +32,22 @@ class ApcApprentissageCritique
      */
     private $niveau;
 
+    /**
+     * @ORM\Column(type="string", length=20)
+     */
+    private $code;
+
+    /**
+     * ApcApprentissageCritique constructor.
+     *
+     * @param $niveau
+     */
+    public function __construct($niveau)
+    {
+        $this->niveau = $niveau;
+    }
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -57,6 +73,18 @@ class ApcApprentissageCritique
     public function setNiveau(?ApcNiveau $niveau): self
     {
         $this->niveau = $niveau;
+
+        return $this;
+    }
+
+    public function getCode(): ?string
+    {
+        return $this->code;
+    }
+
+    public function setCode(string $code): self
+    {
+        $this->code = $code;
 
         return $this;
     }

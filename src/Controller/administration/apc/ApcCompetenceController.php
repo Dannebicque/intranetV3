@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcCompetenceController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/10/2020 09:08
+// @lastUpdate 13/12/2020 20:18
 
 namespace App\Controller\administration\apc;
 
@@ -25,15 +25,16 @@ use Symfony\Component\Routing\Annotation\Route;
 class ApcCompetenceController extends BaseController
 {
     /**
-     * @Route("/", name="administration_apc_competence_index", methods={"GET"})
-     * @param ApcComptenceRepository $apcComptenceRepository
+     * @Route("/{diplome}", name="administration_apc_competence_index", methods={"GET"})
+     * @param Diplome $diplome
      *
      * @return Response
      */
-    public function index(ApcComptenceRepository $apcComptenceRepository): Response
+    public function index(Diplome $diplome): Response
     {
         return $this->render('administration/apc/apc_competence/index.html.twig', [
-            'apc_competences' => $apcComptenceRepository->findAll(),
+            'apc_competences' => $diplome->getApcComptences(),
+            'diplome'         => $diplome
         ]);
     }
 
@@ -65,14 +66,15 @@ class ApcCompetenceController extends BaseController
     }
 
     /**
-     * @Route("/new", name="administration_apc_competence_new", methods={"GET","POST"})
+     * @Route("/{diplome}/new", name="administration_apc_competence_new", methods={"GET","POST"})
      * @param Request $request
+     * @param Diplome $diplome
      *
      * @return Response
      */
-    public function new(Request $request): Response
+    public function new(Request $request, Diplome $diplome): Response
     {
-        $apcComptence = new ApcCompetence();
+        $apcComptence = new ApcCompetence($diplome);
         $form = $this->createForm(ApcCompetenceType::class, $apcComptence);
         $form->handleRequest($request);
 
@@ -81,17 +83,18 @@ class ApcCompetenceController extends BaseController
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'apc.competence.create.success.flash');
 
-            return $this->redirectToRoute('administration_apc_competence_index');
+            return $this->redirectToRoute('administration_apc_competence_index', ['diplome' => $diplome->getId()]);
         }
 
         return $this->render('administration/apc/apc_competence/new.html.twig', [
             'apc_competence' => $apcComptence,
             'form'           => $form->createView(),
+            'diplome'        => $diplome
         ]);
     }
 
     /**
-     * @Route("/{id}", name="administration_apc_competence_show", methods={"GET"})
+     * @Route("/{id}/detail", name="administration_apc_competence_show", methods={"GET"})
      * @param ApcCompetence $apcCompetence
      *
      * @return Response
@@ -99,7 +102,7 @@ class ApcCompetenceController extends BaseController
     public function show(ApcCompetence $apcCompetence): Response
     {
         return $this->render('administration/apc/apc_competence/show.html.twig', [
-            'apc_competence' => $apcCompetence,
+            'competence' => $apcCompetence,
         ]);
     }
 
@@ -119,7 +122,8 @@ class ApcCompetenceController extends BaseController
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'apc.competence.edit.success.flash');
 
-            return $this->redirectToRoute('administration_apc_competence_index');
+            return $this->redirectToRoute('administration_apc_competence_index',
+                ['diplome' => $apcCompetence->getDiplome()->getId()]);
         }
 
         return $this->render('administration/apc/apc_competence/edit.html.twig', [

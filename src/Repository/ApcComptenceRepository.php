@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/ApcComptenceRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/10/2020 08:33
+// @lastUpdate 12/12/2020 20:52
 
 namespace App\Repository;
 
@@ -23,33 +23,4 @@ class ApcComptenceRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, ApcCompetence::class);
     }
-
-    // /**
-    //  * @return ApcComptence[] Returns an array of ApcComptence objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?ApcComptence
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

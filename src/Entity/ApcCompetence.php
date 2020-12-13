@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcCompetence.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/10/2020 08:33
+// @lastUpdate 12/12/2020 21:14
 
 namespace App\Entity;
 
@@ -54,10 +54,11 @@ class ApcCompetence
      */
     private $apcNiveaux;
 
-    public function __construct()
+    public function __construct(Diplome $diplome)
     {
         $this->apcComposanteEssentielles = new ArrayCollection();
         $this->apcNiveaux = new ArrayCollection();
+        $this->setDiplome($diplome);
     }
 
     public function getId(): ?int

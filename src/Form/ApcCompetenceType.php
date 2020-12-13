@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ApcCompetenceType.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/10/2020 09:00
+// @lastUpdate 12/12/2020 21:08
 
 namespace App\Form;
 
@@ -19,8 +19,7 @@ class ApcCompetenceType extends AbstractType
         $builder
             ->add('libelle')
             ->add('nom_court')
-            ->add('couleur')
-            ->add('diplome');
+            ->add('couleur');
     }
 
     public function configureOptions(OptionsResolver $resolver)

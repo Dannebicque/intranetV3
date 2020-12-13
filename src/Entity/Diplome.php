@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Diplome.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/12/2020 14:31
+// @lastUpdate 13/12/2020 09:01
 
 namespace App\Entity;
 
@@ -176,6 +176,11 @@ class Diplome extends BaseEntity implements Serializable
      */
     private $covidAttestationEtudiants;
 
+    /**
+     * @ORM\OneToMany(targetEntity=ApcParcours::class, mappedBy="diplome")
+     */
+    private $apcParcours;
+
     public function __construct(Departement $departement)
     {
         $this->departement = $departement;
@@ -185,6 +190,7 @@ class Diplome extends BaseEntity implements Serializable
         $this->apcComptences = new ArrayCollection();
         $this->covidAttestationPersonnels = new ArrayCollection();
         $this->covidAttestationEtudiants = new ArrayCollection();
+        $this->apcParcours = new ArrayCollection();
     }
 
     /**
@@ -813,5 +819,35 @@ class Diplome extends BaseEntity implements Serializable
     public function unserialize($serialized)
     {
         // TODO: Implement unserialize() method.
+    }
+
+    /**
+     * @return Collection|ApcParcours[]
+     */
+    public function getApcParcours(): Collection
+    {
+        return $this->apcParcours;
+    }
+
+    public function addApcParcour(ApcParcours $apcParcour): self
+    {
+        if (!$this->apcParcours->contains($apcParcour)) {
+            $this->apcParcours[] = $apcParcour;
+            $apcParcour->setDiplome($this);
+        }
+
+        return $this;
+    }
+
+    public function removeApcParcour(ApcParcours $apcParcour): self
+    {
+        if ($this->apcParcours->removeElement($apcParcour)) {
+            // set the owning side to null (unless already changed)
+            if ($apcParcour->getDiplome() === $this) {
+                $apcParcour->setDiplome(null);
+            }
+        }
+
+        return $this;
     }
 }

@@ -6,7 +6,24 @@
 
 {% block headeractions %}
     <div class="header-action">
-        {{ include('composants/adm-buttons-index.html.twig', {elt:'apc_competence'}) }}
+        <div class="buttons">
+            <a href="{{ path('administration_apc_competence_new', {diplome:diplome.id}) }}"
+               class="btn btn-info btn-sm btn-float"
+               title="{{ 'atitle.creer_nouveau'|trans }}"
+               data-provide="tooltip"
+               data-placement="bottom">
+                <i class="fas fa-plus"></i>
+                <span class="sr-only">{{ 'atitle.creer_nouveau'|trans }}</span>
+            </a>
+            <a href="{{ path('administration_apc_referentiel_index', {diplome:diplome.id}) }}"
+               class="btn btn-primary btn-float"
+               data-provide="tooltip"
+               data-placement="bottom"
+               title="Retour aux compétences">
+                <i class="fas fa-home"></i>
+                <span class="sr-only">Retour aux compétences</span>
+            </a>
+        </div>
     </div>
 {% endblock %}
 
@@ -19,27 +36,26 @@
                 <tr>
                     <th>Id</th>
                     <th>Libelle</th>
-                    <th>Nom_court</th>
+                    <th>Nom court</th>
                     <th>Couleur</th>
                     <th>actions</th>
                 </tr>
                 </thead>
                 <tbody>
-                {% for apc_comptence in apc_comptences %}
+                {% for apc_competence in apc_competences %}
                     <tr>
-                        <td>{{ apc_comptence.id }}</td>
-                        <td>{{ apc_comptence.libelle }}</td>
-                        <td>{{ apc_comptence.nomCourt }}</td>
-                        <td>{{ apc_comptence.couleur }}</td>
+                        <td>{{ apc_competence.id }}</td>
+                        <td>{{ apc_competence.libelle }}</td>
+                        <td>{{ apc_competence.nomCourt }}</td>
+                        <td>{{ apc_competence.couleur }}</td>
                         <td>
                             {{ include('composants/adm-buttons-table-index.html.twig', {elt: 'apc_competence', id:
-                                apc_competence
-                                .id}) }}
+                                apc_competence.id}) }}
                         </td>
                     </tr>
                 {% else %}
                     <tr>
-                        <td colspan="4">{{ 'no.record.found'|trans }}</td>
+                        <td colspan="5">{{ 'no.record.found'|trans }}</td>
                     </tr>
                 {% endfor %}
                 </tbody>
@@ -50,35 +66,35 @@
 
 
 {% block fabactions %}
-    {{ include('composants/fab-buttons.html.twig', {boutons:[
-        {type: 'info',
-            href: path('administration_apc_competence_export', {_format:'pdf'}),
-            title: 'exporter.pdf'|trans,
-            icone : "fa fa-file-pdf"
-        },
-        {
-            type:'info',
-            href:path('administration_apc_competence_export', {_format:'csv'}),
-            title: 'exporter.csv'|trans,
-            icone: 'fa fa-file-csv'
-        },
-        {
-            type:'info',
-            href:path('administration_apc_competence_export', {_format:'xlsx'}),
-            title: 'exporter.xls'|trans,
-            icone: 'fa fa-file-excel'
-        },
-        {
-            type:'info',
-            href:path('administration_apc_competence_new'),
-            title: 'ajouter'|trans,
-            icone: 'fas fa-plus'
-        },
-        {
-            type:'info',
-            href:path('help_article', {sujet: 'administration_apc_competence'}),
-            title: 'aide'|trans,
-            icone: 'fa fa-question'
-        }
-    ]}) }}
+    {# {{ include('composants/fab-buttons.html.twig', {boutons:[ #}
+    {# {type: 'info', #}
+    {# href: path('administration_apc_competence_export', {_format:'pdf'}), #}
+    {# title: 'exporter.pdf'|trans, #}
+    {# icone : "fa fa-file-pdf" #}
+    {# }, #}
+    {# { #}
+    {# type:'info', #}
+    {# href:path('administration_apc_competence_export', {_format:'csv'}), #}
+    {# title: 'exporter.csv'|trans, #}
+    {# icone: 'fa fa-file-csv' #}
+    {# }, #}
+    {# { #}
+    {# type:'info', #}
+    {# href:path('administration_apc_competence_export', {_format:'xlsx'}), #}
+    {# title: 'exporter.xls'|trans, #}
+    {# icone: 'fa fa-file-excel' #}
+    {# }, #}
+    {# { #}
+    {# type:'info', #}
+    {# href:path('administration_apc_competence_new'), #}
+    {# title: 'ajouter'|trans, #}
+    {# icone: 'fas fa-plus' #}
+    {# }, #}
+    {# { #}
+    {# type:'info', #}
+    {# href:path('help_article', {sujet: 'administration_apc_competence'}), #}
+    {# title: 'aide'|trans, #}
+    {# icone: 'fa fa-question' #}
+    {# } #}
+    {# ]}) }} #}
 {% endblock %}

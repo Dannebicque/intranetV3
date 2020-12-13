@@ -1,0 +1,35 @@
+<div class="row">
+    <div class="col-2" style="border: 1px solid red; background-color: lightcoral; padding:10px;
+                vertical-align: middle; text-align: center; font-size: 16px; color: white;margin:4px">{{ competence.nomCourt }}</div>
+    <div class="col-4" style="border: 1px solid red; background-color: lightcoral; padding:10px;
+                vertical-align: middle; text-align: center; font-size: 16px; color: white;margin:4px">{{ competence.libelle }}</div>
+    <div class="col-5" style="border: 1px solid red; background-color: lightcoral; padding:10px;
+               color: white;margin:4px">
+        <ul>
+            {% for composante in competence.apcComposanteEssentielles %}
+                <li>{{ composante.libelle }}</li>
+            {% endfor %}
+        </ul>
+        <a href="{{ path('administration_apc_composante_essentielle_new', {competence:competence.id}) }}"><i class="fas fa-plus-circle"></i>
+            Ajouter une composante essentielle</a>
+    </div>
+</div>
+
+{% for niveau in competence.apcNiveaux %}
+    <div class="row">
+        <div class="col-sm-2" style="border: 1px solid red; background-color: lightcoral; padding:10px;
+                vertical-align: middle; text-align: center; font-size: 16px; color: white;margin:4px">{{ niveau.libelle }}</div>
+        <div class="col-sm-9" style="border: 1px solid red; background-color: lightcoral; padding:10px;
+                color: white;margin:4px">
+            <ul>
+                {% for ac in niveau.apcApprentissageCritiques %}
+                    <li>{{ ac.libelle }}</li>
+                {% endfor %}
+            </ul>
+            <a href="{{ path('administration_apc_apprentissage_critique_new', {niveau:niveau.id}) }}"><i class="fas fa-plus-circle"></i>
+                Ajouter une composante essentielle</a>
+        </div>
+    </div>
+{% endfor %}
+<a href="{{ path('administration_apc_niveau_new', {competence:competence.id}) }}"><i class="fas fa-plus-circle"></i>
+    Ajouter un niveau</a>

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcComposanteEssentielle.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/10/2020 09:52
+// @lastUpdate 12/12/2020 22:10
 
 namespace App\Entity;
 
@@ -31,6 +31,16 @@ class ApcComposanteEssentielle
      * @ORM\ManyToOne(targetEntity=ApcCompetence::class, inversedBy="apcComposanteEssentielles")
      */
     private $competence;
+
+    /**
+     * ApcComposanteEssentielle constructor.
+     *
+     * @param $competence
+     */
+    public function __construct($competence)
+    {
+        $this->competence = $competence;
+    }
 
     public function getId(): ?int
     {

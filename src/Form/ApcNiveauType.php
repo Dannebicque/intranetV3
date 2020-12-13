@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ApcNiveauType.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/10/2020 09:00
+// @lastUpdate 13/12/2020 20:18
 
 namespace App\Form;
 
@@ -18,9 +18,8 @@ class ApcNiveauType extends AbstractType
     {
         $builder
             ->add('libelle')
-            ->add('ordre')
-            ->add('competence')
-            ->add('annee');
+            ->add('ordre');
+        //->add('annee');
     }
 
     public function configureOptions(OptionsResolver $resolver)

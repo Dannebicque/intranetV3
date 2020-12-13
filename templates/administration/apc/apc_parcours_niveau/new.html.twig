@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New ApcParcoursNiveau{% endblock %}
+
+{% block body %}
+    <h1>Create new ApcParcoursNiveau</h1>
+
+    {{ include('apc_parcours_niveau/_form.html.twig') }}
+
+    <a href="{{ path('apc_parcours_niveau_index') }}">back to list</a>
+{% endblock %}

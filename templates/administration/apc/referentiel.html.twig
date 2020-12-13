@@ -7,7 +7,7 @@
 {% endif %}
 
 {% block header %}
-    {{ 'referentiel.de.competence.heading'|trans({ '%diplome%': diplome.libelle}) }}
+    {{ 'adm.referentiel.de.competence.heading'|trans({ '%diplome%': diplome.libelle}) }}
 {% endblock %}
 
 {% block headeractions %}
@@ -27,8 +27,73 @@
 
 {% block content %}
     <div class="card">
-        <h4 class="card-title">{{ 'referentiel.de.competence.heading'|trans({ '%diplome%': diplome.libelle}) }}</h4>
+        <header class="card-header">
+            <h4 class="card-title">{{ 'adm.referentiel.de.competence.heading'|trans({ '%diplome%': diplome.libelle}) }}</h4>
+            <div class="card-header-actions" style="">
+                <span>
+                    <a href="{{ path('administration_apc_competence_new', {diplome:diplome.id}) }}" class="btn
+                    btn-sm btn btn-info"
+                       data-provide="tooltip"
+                       data-placement="bottom" title="Ajouter une compétences"><i
+                                class="fas fa-plus"></i></a>
+                </span>
+            </div>
+        </header>
         <div class="card-body">
+            <div class="tabs">
+                <ul class="nav nav-tabs">
+                    {% for competence in competences %}
+                        <li class="nav-item">
+                            <a class="nav-link {% if loop.first %}active{% endif %}" data-toggle="tab"
+                               href="#comptence_{{ competence.id }}">{{ competence.nomCourt }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="tab-content">
+                {% for competence in competences %}
+                    <div class="tab-pane {% if loop.first %}fade active show{% endif %}" id="comptence_{{ competence.id }}">
+                        {{ include('administration/apc/_competence.html.twig') }}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <header class="card-header">
+            <h4 class="card-title">{{ 'adm.apc.parcours.heading'|trans({ '%diplome%': diplome.libelle}) }}</h4>
+            <div class="card-header-actions" style="">
+                <span>
+                    <a href="{{ path('administration_apc_parcours_new', {diplome:diplome.id}) }}" class="btn
+                    btn-sm btn btn-info"
+                       data-provide="tooltip"
+                       data-placement="bottom" title="Ajouter un compétences"><i
+                                class="fas fa-plus"></i></a>
+                </span>
+            </div>
+        </header>
+
+        <div class="card-body">
+            <div class="tabs">
+                <ul class="nav nav-tabs">
+                    {% for parcour in parcours %}
+                        <li class="nav-item">
+                            <a class="nav-link {% if loop.first %}active{% endif %}" data-toggle="tab"
+                               href="#parcour_{{ parcour.id }}">{{ parcour.libelle }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="tab-content">
+                {% for parcour in parcours %}
+                    <div class="tab-pane {% if loop.first %}fade active show{% endif %}" id="parcour_{{ parcour.id }}">
+                        {{ include('administration/apc/_parcour.html.twig') }}
+                    </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
 {% endblock %}

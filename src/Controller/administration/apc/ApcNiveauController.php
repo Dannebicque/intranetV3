@@ -3,17 +3,15 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcNiveauController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/10/2020 09:08
+// @lastUpdate 13/12/2020 20:18
 
 namespace App\Controller\administration\apc;
 
-use App\Classes\MyExport;
 use App\Controller\BaseController;
+use App\Entity\ApcCompetence;
 use App\Entity\ApcNiveau;
 use App\Entity\Constantes;
-use App\Entity\Diplome;
 use App\Form\ApcNiveauType;
-use App\Repository\ApcNiveauRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,55 +21,16 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ApcNiveauController extends BaseController
 {
-    /**
-     * @Route("/", name="administration_apc_niveau_index", methods={"GET"})
-     * @param ApcNiveauRepository $apcNiveauRepository
-     *
-     * @return Response
-     */
-    public function index(ApcNiveauRepository $apcNiveauRepository): Response
-    {
-        return $this->render('administration/apc/apc_niveau/index.html.twig', [
-            'apc_niveaus' => $apcNiveauRepository->findAll(),
-        ]);
-    }
 
     /**
-     * @Route("/{diplome}/export.{_format}", name="administration_apc_niveau_export", methods="GET",
-     *                             requirements={"_format"="csv|xlsx|pdf"})
-     * @param MyExport            $myExport
-     * @param ApcNiveauRepository $apcNiveauRepository
-     * @param Diplome             $diplome
-     * @param                     $_format
-     *
-     * @return Response
-     */
-    public function export(
-        MyExport $myExport,
-        ApcNiveauRepository $apcNiveauRepository,
-        Diplome $diplome,
-        $_format
-    ): Response {
-        $niveaux = $apcNiveauRepository->getByDiplome($diplome);
-
-        return $myExport->genereFichierGenerique(
-            $_format,
-            $niveaux,
-            'apc_niveau',
-            ['actualite_administration', 'utilisateur'],
-            ['titre', 'texte', 'departement' => ['libelle']]
-        );
-    }
-
-    /**
-     * @Route("/new", name="administration_apc_niveau_new", methods={"GET","POST"})
+     * @Route("/{competence}/new", name="administration_apc_niveau_new", methods={"GET","POST"})
      * @param Request $request
      *
      * @return Response
      */
-    public function new(Request $request): Response
+    public function new(Request $request, ApcCompetence $competence): Response
     {
-        $apcNiveau = new ApcNiveau();
+        $apcNiveau = new ApcNiveau($competence);
         $form = $this->createForm(ApcNiveauType::class, $apcNiveau);
         $form->handleRequest($request);
 
@@ -80,25 +39,13 @@ class ApcNiveauController extends BaseController
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'apcNiveau.create.success.flash');
 
-            return $this->redirectToRoute('administration_apc_niveau_index');
+            return $this->redirectToRoute('administration_apc_competence_show', ['id' => $competence->getId()]);
         }
 
         return $this->render('administration/apc/apc_niveau/new.html.twig', [
             'apc_niveau' => $apcNiveau,
             'form'       => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/{id}", name="administration_apc_niveau_show", methods={"GET"})
-     * @param ApcNiveau $apcNiveau
-     *
-     * @return Response
-     */
-    public function show(ApcNiveau $apcNiveau): Response
-    {
-        return $this->render('administration/apc/apc_niveau/show.html.twig', [
-            'apc_niveau' => $apcNiveau,
+            'competence' => $competence
         ]);
     }
 
@@ -144,22 +91,5 @@ class ApcNiveauController extends BaseController
         $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'apcNiveau.delete.error.flash');
 
         return $this->redirectToRoute('administration_apc_niveau_index');
-    }
-
-    /**
-     * @Route("/{id}/duplicate", name="administration_apc_niveau_duplicate", methods="GET|POST")
-     * @param ApcNiveau $apcNiveau
-     *
-     * @return Response
-     */
-    public function duplicate(ApcNiveau $apcNiveau): Response
-    {
-        $newApcNiveau = clone $apcNiveau;
-
-        $this->entityManager->persist($newApcNiveau);
-        $this->entityManager->flush();
-        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'apcNiveau.duplicate.success.flash');
-
-        return $this->redirectToRoute('administration_apc_niveau_edit', ['id' => $newApcNiveau->getId()]);
     }
 }
