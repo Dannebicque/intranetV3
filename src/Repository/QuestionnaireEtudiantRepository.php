@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/QuestionnaireEtudiantRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 09/12/2020 10:40
+// @lastUpdate 14/12/2020 07:45
 
 namespace App\Repository;
 
@@ -89,7 +89,9 @@ class QuestionnaireEtudiantRepository extends ServiceEntityRepository
         $t = [];
         /** @var QuestionnaireEtudiant $q */
         foreach ($r as $q) {
-            $t[$q->getQuestionnaireQualite()->getId()] = $q;
+            if ($q->getQuestionnaireQualite() !== null) {
+                $t[$q->getQuestionnaireQualite()->getId()] = $q;
+            }
         }
 
         return $t;
