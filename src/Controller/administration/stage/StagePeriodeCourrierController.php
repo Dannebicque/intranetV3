@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StagePeriodeCourrierController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/12/2020 14:31
+// @lastUpdate 17/12/2020 13:43
 
 namespace App\Controller\administration\stage;
 
@@ -59,9 +59,10 @@ class StagePeriodeCourrierController extends BaseController
         'entreprise'          => [
             'raisonSociale' => 'Fictive Compagnie',
             'responsable'   => [
-                'civilite' => 'M.',
-                'prenom'   => 'Jacques',
-                'nom'      => 'Paul',
+                'civilite'     => 'M.',
+                'civiliteLong' => 'Monsieur',
+                'prenom'       => 'Jacques',
+                'nom'          => 'Paul',
             ]
         ],
         'tuteur'              => [
