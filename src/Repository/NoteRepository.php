@@ -4,7 +4,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/NoteRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 17/12/2020 14:02
 
 namespace App\Repository;
 
@@ -86,8 +86,8 @@ class NoteRepository extends ServiceEntityRepository
             /** @var Note $note */
             foreach ($notes as $note) {
                 if ($note->getEtudiant() !== null && $note->getEvaluation() !== null && $note->getEvaluation()->getMatiere() !== null && $note->getEtudiant()->getId() === $etu->getId()) {
-                    $t[$etu->getId()][$note->getEvaluation()->getMatiere()->getId()][$note->getEvaluation()->getId()]['eval'] = $note->getEvaluation();
-                    $t[$etu->getId()][$note->getEvaluation()->getMatiere()->getId()][$note->getEvaluation()->getId()]['note'] = $note->getNote();
+                    $t[$etu->getId()][$note->getEvaluation()->getId()]['eval'] = $note->getEvaluation();
+                    $t[$etu->getId()][$note->getEvaluation()->getId()]['note'] = $note->getNote();
                 }
             }
         }
