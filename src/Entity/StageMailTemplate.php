@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/StageMailTemplate.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/12/2020 16:57
+// @lastUpdate 17/12/2020 07:53
 
 namespace App\Entity;
 
@@ -21,9 +21,9 @@ class StageMailTemplate
         '{{nom_etudiant}}'               => '{{stageEtudiant.etudiant.nom}}',
         '{{entreprise}}'                 => '{{stageEtudiant.entreprise.raisonSociale}}',
         '{{civilite_court_responsable}}' => '{{stageEtudiant.entreprise.responsable.civilite}}',
-        '{{civilite_responsable}}'       => '{{stageEtudiant.entreprise.responsable..civiliteLong}}',
-        '{{prenom_reponsable}}'          => '{{stageEtudiant.entreprise.responsable..prenom}}',
-        '{{nom_responsable}}'            => '{{stageEtudiant.entreprise.responsable..nom}}',
+        '{{civilite_responsable}}'       => '{{stageEtudiant.entreprise.responsable.civiliteLong}}',
+        '{{prenom_reponsable}}'          => '{{stageEtudiant.entreprise.responsable.prenom}}',
+        '{{nom_responsable}}'            => '{{stageEtudiant.entreprise.responsable.nom}}',
         '{{civilite_court_tuteur}}'      => '{{stageEtudiant.tuteur.civilite}}',
         '{{civilite_tuteur}}'            => '{{stageEtudiant.tuteur.civiliteLong}}',
         '{{prenom_tuteur}}'              => '{{stageEtudiant.tuteur.prenom}}',
