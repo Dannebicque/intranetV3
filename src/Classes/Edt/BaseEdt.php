@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/BaseEdt.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/12/2020 14:31
+// @lastUpdate 18/12/2020 16:41
 
 namespace App\Classes\Edt;
 
@@ -95,7 +95,7 @@ Abstract class BaseEdt
         return $this->tabJour;
     }
 
-    protected function init($filtre = '', $valeur = '', $semaine = 0, AnneeUniversitaire $anneeUniversitaire): BaseEdt
+    protected function init(AnneeUniversitaire $anneeUniversitaire, $filtre = '', $valeur = '', $semaine = 0): BaseEdt
     {
         $dateDuJour = Carbon::now();
         $this->anneeUniversitaire = $anneeUniversitaire;
