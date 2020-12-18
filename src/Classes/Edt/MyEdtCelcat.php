@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtCelcat.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/08/2020 21:32
+// @lastUpdate 18/12/2020 16:44
 
 /**
  * Created by PhpStorm.
@@ -65,7 +65,7 @@ class MyEdtCelcat extends BaseEdt implements EdtInterface
         $semaine = 0
     ): MyEdtCelcat {
         $this->user = $personnel;
-        $this->init('prof', $personnel->getId(), $semaine, $anneeUniversitaire);
+        $this->init($anneeUniversitaire, 'prof', $personnel->getId(), $semaine);
         $this->semaines = $this->calculSemaines();
         $this->calculEdt();
 
@@ -83,7 +83,7 @@ class MyEdtCelcat extends BaseEdt implements EdtInterface
     {
 
         $this->user = $etudiant;
-        $this->init('etudiant', $etudiant->getId(), $semaine, $anneeUniversitaire);
+        $this->init($anneeUniversitaire, 'etudiant', $etudiant->getId(), $semaine);
         $this->calculEdt();
 
         return $this;
@@ -370,7 +370,7 @@ class MyEdtCelcat extends BaseEdt implements EdtInterface
     public function initSemestre(int $semaine, Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): MyEdtCelcat
     {
         $this->semestre = $semestre;
-        $this->init('promo', $semestre->getId(), $semaine, $anneeUniversitaire);
+        $this->init($anneeUniversitaire, 'promo', $semestre->getId(), $semaine);
         $this->semaines = $this->calculSemaines();
         $this->calculEdt();
 

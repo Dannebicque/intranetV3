@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtIntranet.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/10/2020 15:17
+// @lastUpdate 18/12/2020 16:44
 
 /**
  * Created by PhpStorm.
@@ -91,7 +91,7 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
         $semaine = 0
     ): MyEdtIntranet {
         $this->user = $personnel;
-        $this->init('prof', $personnel->getId(), $semaine, $anneeUniversitaire);
+        $this->init($anneeUniversitaire, 'prof', $personnel->getId(), $semaine);
         $this->semaines = $this->calculSemaines();
         $this->calculEdt();//todo: pour des datas en BDD sans scelcat. Ajouter test.
 
@@ -114,7 +114,7 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
     ): MyEdtIntranet {
 
         $this->user = $etudiant;
-        $this->init('etudiant', $etudiant->getId(), $semaine, $anneeUniversitaire);
+        $this->init($anneeUniversitaire, 'etudiant', $etudiant->getId(), $semaine);
         $this->calculEdt();
 
         return $this;
@@ -188,7 +188,7 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
             }
         }
 
-        $this->init($filtre, $valeur, $semaine, $anneeUniversitaire);
+        $this->init($anneeUniversitaire, $filtre, $valeur, $semaine);
         $this->semaines = $this->calculSemaines();
         $this->calculEdt();
 
@@ -648,7 +648,7 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
         AnneeUniversitaire $anneeUniversitaire
     ): MyEdtIntranet {
         $this->semestre = $semestre;
-        $this->init('promo', $semestre->getId(), $semaine, $anneeUniversitaire);
+        $this->init($anneeUniversitaire, 'promo', $semestre->getId(), $semaine);
         $this->semaines = $this->calculSemaines();
         $this->calculEdt();//todo: pour des datas en BDD sasn scelcat. Ajouter test.
 
