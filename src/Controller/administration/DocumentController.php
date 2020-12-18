@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/DocumentController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/12/2020 14:31
+// @lastUpdate 18/12/2020 11:24
 
 namespace App\Controller\administration;
 
@@ -12,6 +12,8 @@ use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Document;
 use App\Form\DocumentType;
+use App\Repository\DocumentFavoriEtudiantRepository;
+use App\Repository\DocumentFavoriPersonnelRepository;
 use App\Repository\DocumentRepository;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -148,16 +150,35 @@ class DocumentController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_document_delete", methods="DELETE")
-     * @param Request  $request
+     * @param DocumentFavoriEtudiantRepository $documentFavoriEtudiantRepository
+     * @param DocumentFavoriPersonnelRepository $documentFavoriPersonnelRepository
+     * @param Request $request
      * @param Document $document
-     * @ParamConverter("document", options={"mapping": {"id": "uuid"}})
      *
      * @return Response
+     * @ParamConverter("document", options={"mapping": {"id": "uuid"}})
+     *
      */
-    public function delete(Request $request, Document $document): Response
-    {
+    public function delete(
+        DocumentFavoriEtudiantRepository $documentFavoriEtudiantRepository,
+        DocumentFavoriPersonnelRepository $documentFavoriPersonnelRepository,
+        Request $request,
+        Document $document
+    ): Response {
         $id = $document->getUuidString();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+
+            //suppression des favoris
+            $docs = $documentFavoriEtudiantRepository->findBy(['document' => $document->getId()]);
+            foreach ($docs as $doc) {
+                $this->entityManager->remove($doc);
+            }
+
+            $docs = $documentFavoriPersonnelRepository->findBy(['document' => $document->getId()]);
+            foreach ($docs as $doc) {
+                $this->entityManager->remove($doc);
+            }
+
             $this->entityManager->remove($document);
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'document.delete.success.flash');
