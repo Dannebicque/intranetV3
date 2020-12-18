@@ -5,24 +5,7 @@
 
     <style>
         /*https://www.smashingmagazine.com/2015/01/designing-for-print-with-css/*/
-        /*footer .pagenum:before {*/
-        /*    content: "Page " counter(page) " sur " counter(pages);*/
-        /*}*/
 
-        /*.footer-right{*/
-        /*    position:fixed;*/
-        /*    bottom:0;*/
-        /*    right:0;*/
-        /*    width: 40%;*/
-        /*    text-align: right;*/
-        /*}*/
-
-        /*.footer-left{*/
-        /*    position:fixed;*/
-        /*    bottom:0;*/
-        /*    left:0;*/
-        /*    width: 40%;*/
-        /*}*/
         body {
             font-family: "DejaVu Sans", serif;
             font-size: 12px;
@@ -56,6 +39,7 @@
         .table th {
             font-weight: bold;
             border: 1px solid black;
+            background-color: darkgray;
         }
 
         .tableentete {
@@ -100,6 +84,11 @@
             height: 80px;
             padding: 5px
         }
+
+        .noborder {
+            border: none;
+        }
+
         {% block style %}
         {% endblock %}
     </style>
@@ -109,10 +98,7 @@
 </head>
 
 <body>
-{# <footer>
-    <div class="footer-left"> {% if is_granted('ROLE_SUPER_ADMIN') %}SUPER ADMINISTRATION{% else %}{{ user_data.departement.libelle }}{% endif %} | le {{ "now"|date('d/m/Y') }}</div>
-    <div class="footer-right">Page <span class="pagenum"></span></div>
-</footer> #}
+
 <!--Conteneur principal -->
 <div class="container-fluid" id="content">
     {% block content %}

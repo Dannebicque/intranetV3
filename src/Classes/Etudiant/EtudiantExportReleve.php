@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantExportReleve.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/12/2020 19:05
+// @lastUpdate 17/12/2020 15:15
 
 namespace App\Classes\Etudiant;
 
@@ -77,7 +77,6 @@ class EtudiantExportReleve
     {
         $this->myEvaluations->getEvaluationsSemestre($semestre, $anneeUniversitaire);
 
-
         return $this->myPdf::generePdf('pdf/releveProvisoire.html.twig', [
             'etudiant'           => $this->etudiant,
             'notes'              => $this->getNotesEtudiantSemestre($semestre, $anneeUniversitaire),
@@ -89,7 +88,7 @@ class EtudiantExportReleve
 
     }
 
-    private function getNotesEtudiantSemestre(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire)
+    public function getNotesEtudiantSemestre(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire)
     {
         $this->etudiantNotes->setEtudiant($this->etudiant);
 

@@ -21,60 +21,87 @@
                  width="75"/></td>
     </tr>
 </table>
-<h1>Liste des notes du Semestre {{ semestre.display }}<br/>Relevé provisoire</h1><br/>
+<h1>Résultats du semestre {{ semestre.display }}</h1><br/>
 <h2>{{ etudiant.display }}</h2> Né(e) le {{ etudiant.dateNaissance|format_date('short') }}
-<p>N° étudiant (URCA) : {{ etudiant.numEtudiant }}
+<p>N° étudiant : {{ etudiant.numEtudiant }}
     <br/>N° étudiant INE : {{ etudiant.numIne }}</p>
-<div class="row">
+<p>Titulaire du Bac {{ etudiant.bac != null ? etudiant.bac.libelle : 'non.defini'|trans }}</p><br>
+<table class="table" style="width:100%">
+    <tr>
+        <th rowspan="2">Module</th>
+        <th rowspan="2">Ects</th>
+        <th rowspan="2" class="noborder">&nbsp;</th>
+        <th rowspan="2">Moy. Etudiant</th>
+        <th rowspan="2">Rang</th>
+        <th colspan="3">Promo</th>
+    </tr>
+    <tr>
+        <th>Min.</th>
+        <th>Moy.</th>
+        <th>Max.</th>
+    </tr>
     {% for ue in semestre.ues %}
-        <div class="col-md-6">
-            <table class="table table-bordered" style="width:100%">
-                <thead>
-                <tr>
-                    <th rowspan="2">Module</th>
-                    <th rowspan="2">Coeff.</th>
-                    <th rowspan="2">Moy. Etudiant</th>
-                    <th rowspan="2">Rang</th>
-                    <th colspan="3">Promo</th>
-                </tr>
-                <tr>
-                    <th>Moy.</th>
-                    <th>Min.</th>
-                    <th>Max.</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for matiere in ue.matieres|filter(matiere => (matiere.suspendu == false and matiere.nbNotes>0)) %}
-                    <tr>
-                        <td>{{ matiere.display }}</td>
-                        <td>{{ matiere.coefficient }}</td>
-                        <td>{{ scolarite.moyennesMatieres[matiere.id] is defined ? scolarite.moyennesMatieres[matiere
-                            .id].moyenne : '-' }}</td>
-                        <td>{{ scolarite.moyennesMatieres[matiere.id] is defined ?scolarite.moyennesMatieres[matiere.id].rang: '-' }}</td>
-                        <td>{{ scolaritePromo.moyenneMatieres[matiere.id] is defined ?scolaritePromo.moyenneMatieres[matiere.id].moyenne: '-' }}</td>
-                        <td>{{ scolaritePromo.moyenneMatieres[matiere.id] is defined ?scolaritePromo.moyenneMatieres[matiere.id].min: '-' }}</td>
-                        <td>{{ scolaritePromo.moyenneMatieres[matiere.id] is defined ?scolaritePromo.moyenneMatieres[matiere.id].max: '-' }}</td>
-                    </tr>
-                {% endfor %}
-                <tr>
-                    <td>Moyenne UE {{ ue.numeroue }}</td>
-                    <td>{{ ue.coefficient }}</td>
-                    <td>{{ scolarite.moyennesUes[ue.id] is defined ? scolarite.moyennesUes[ue.id]
-                        .moyenne: '-' }}</td>
-                    <td>{{ scolarite.moyennesUes[ue.id] is defined ? scolarite.moyennesUes[ue.id].rang:
-                        '-' }}</td>
-                    <td>{{ scolaritePromo.moyenneUes[ue.id] is defined ? scolaritePromo.moyenneUes[ue.id]
-                        .moyenne: '-' }}</td>
-                    <td>{{ scolaritePromo.moyenneUes[ue.id] is defined ? scolaritePromo.moyenneUes[ue.id]
-                        .min: '-' }}</td>
-                    <td>{{ scolaritePromo.moyenneUes[ue.id] is defined ? scolaritePromo.moyenneUes[ue.id]
-                        .max: '-' }}</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
+        <tr>
+            <th>UE {{ ue.numeroue }} : {{ ue.libelle }}</th>
+            <th style="text-align: center">{{ ue.nbEcts }}</th>
+            <td class="noborder">&nbsp;</td>
+            <th style="text-align: center">{{ scolarite.moyennesUes[ue.id] is defined ? scolarite.moyennesUes[ue.id]
+                .moyenne: '-' }}</th>
+            <th style="text-align: center">{{ scolarite.moyennesUes[ue.id] is defined ? scolarite.moyennesUes[ue.id].rang:
+                '-' }}</th>
+            <th style="text-align: center">{{ scolaritePromo.moyenneUes[ue.id] is defined ? scolaritePromo.moyenneUes[ue.id]
+                .min: '-' }}</th>
+            <th style="text-align: center">{{ scolaritePromo.moyenneUes[ue.id] is defined ? scolaritePromo.moyenneUes[ue.id]
+                .moyenne: '-' }}</th>
+
+            <th style="text-align: center">{{ scolaritePromo.moyenneUes[ue.id] is defined ? scolaritePromo.moyenneUes[ue.id]
+                .max: '-' }}</th>
+        </tr>
+
+        {% for matiere in ue.matieres|filter(matiere => (matiere.suspendu == false and matiere.nbNotes>0)) %}
+            <tr>
+                <td>{{ matiere.display }}</td>
+                <td style="text-align: center">{{ matiere.coefficient }}</td>
+                <td class="noborder">&nbsp;</td>
+                <td style="text-align: center">{{ scolarite.moyennesMatieres[matiere.id] is defined ? scolarite.moyennesMatieres[matiere
+                    .id].moyenne : '-' }}</td>
+                <td style="text-align: center">{{ scolarite.moyennesMatieres[matiere.id] is defined ?scolarite.moyennesMatieres[matiere.id].rang: '-' }}</td>
+
+                <td style="text-align: center">{{ scolaritePromo.moyenneMatieres[matiere.id] is defined ?scolaritePromo.moyenneMatieres[matiere.id].min: '-' }}</td>
+                <td style="text-align: center">{{ scolaritePromo.moyenneMatieres[matiere.id] is defined ?scolaritePromo.moyenneMatieres[matiere.id].moyenne: '-' }}</td>
+                <td style="text-align: center">{{ scolaritePromo.moyenneMatieres[matiere.id] is defined ?scolaritePromo.moyenneMatieres[matiere.id].max: '-' }}</td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <td colspan="8" class="noborder">&nbsp;</td>
+        </tr>
     {% endfor %}
-</div>
+    <tr>
+        <th colspan="2">MOYENNE GENERALE</th>
+        <td class="noborder">&nbsp;</td>
+        <th style="text-align: center">{{ scolarite.moyenne }}</th>
+        <th style="text-align: center">{{ scolarite.rang }}</th>
+        <th style="text-align: center">{{ scolaritePromo.min }}</th>
+        <th style="text-align: center">{{ scolaritePromo.moyenne }}</th>
+        <th style="text-align: center">{{ scolaritePromo.max }}</th>
+    </tr>
+    <tr>
+        <td colspan="2" class="noborder">Nombre d'absences non justifiées : <strong>{{ scolarite
+                .nbAbsences }}</strong></td>
+        <td colspan="6" class="noborder">&nbsp;</td>
+    </tr>
+    <tr>
+        <th colspan="2">Décision du Grand Jury</th>
+        <td class="noborder">&nbsp;</td>
+        <td colspan="5">Semestre {{ semestre.ordreLmd }} {{ scolarite.decision|trans }}</td>
+    </tr>
+    <tr>
+        <th colspan="2">Décision pour l'orientation</th>
+        <td class="noborder">&nbsp;</td>
+        <td colspan="5">{{ scolarite.proposition|trans }}</td>
+    </tr>
+</table>
+<br>
 <table style="width:100%">
     <tr>
         <td style="width:50%">{{ semestre.diplome.departement.ufr.sitePrincipal.adresse.ville }},
