@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/ArticleController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/12/2020 14:31
+// @lastUpdate 19/12/2020 14:57
 
 namespace App\Controller\administration;
 
@@ -15,7 +15,6 @@ use App\Form\ArticleType;
 use App\Classes\MyExport;
 use App\Repository\ArticleCategorieRepository;
 use App\Repository\ArticleRepository;
-use PhpOffice\PhpSpreadsheet\Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

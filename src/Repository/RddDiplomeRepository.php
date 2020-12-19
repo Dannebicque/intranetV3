@@ -3,11 +3,10 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/RddDiplomeRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/11/2020 16:23
+// @lastUpdate 19/12/2020 14:57
 
 namespace App\Repository;
 
-use App\Entity\Etudiant;
 use App\Entity\RddDiplome;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;

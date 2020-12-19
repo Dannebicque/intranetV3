@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StageEntrepriseController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/12/2020 14:31
+// @lastUpdate 19/12/2020 14:57
 
 namespace App\Controller\administration\stage;
 
@@ -13,7 +13,6 @@ use App\Entity\StageEtudiant;
 use App\Entity\StagePeriode;
 use App\Classes\MyExport;
 use App\Repository\StageEtudiantRepository;
-use PhpOffice\PhpSpreadsheet\Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantImport.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 01/09/2020 16:27
+// @lastUpdate 19/12/2020 14:57
 
 namespace App\Classes\Etudiant;
 
@@ -38,6 +38,7 @@ class EtudiantImport
      * @param array         $dataApogee
      *
      * @return Etudiant
+     * @throws \JsonException
      */
     public function createEtudiant(?Semestre $semestre, array $dataApogee): ?Etudiant
     {

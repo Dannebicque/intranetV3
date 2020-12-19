@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyPrevisionnel.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/12/2020 14:31
+// @lastUpdate 19/12/2020 15:00
 
 namespace App\Classes;
 
@@ -721,11 +721,7 @@ class MyPrevisionnel
                     $ligne = fgetcsv($handle, 1024, ';');
 
                     if (array_key_exists($ligne[2], $matieres)) {
-                        if (!array_key_exists($ligne[4], $personnels)) {
-                            $personnel = null;
-                        } else {
-                            $personnel = $personnels[$ligne[4]];
-                        }
+                        $personnel = $personnels[$ligne[4]] ?? null;
 
                         $pr = new Previsionnel($matieres[$ligne[2]], $annee, $personnel);
                         $pr->setNbHCm(Tools::convertToFloat($ligne[6]));

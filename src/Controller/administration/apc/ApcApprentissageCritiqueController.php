@@ -3,18 +3,15 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcApprentissageCritiqueController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/12/2020 20:18
+// @lastUpdate 19/12/2020 14:57
 
 namespace App\Controller\administration\apc;
 
-use App\Classes\MyExport;
 use App\Controller\BaseController;
 use App\Entity\ApcApprentissageCritique;
 use App\Entity\ApcNiveau;
 use App\Entity\Constantes;
-use App\Entity\Diplome;
 use App\Form\ApcApprentissageCritiqueType;
-use App\Repository\ApcApprentissageCritiqueRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;

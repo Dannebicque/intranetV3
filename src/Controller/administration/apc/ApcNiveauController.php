@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcNiveauController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/12/2020 20:18
+// @lastUpdate 19/12/2020 14:57
 
 namespace App\Controller\administration\apc;
 
@@ -24,7 +24,8 @@ class ApcNiveauController extends BaseController
 
     /**
      * @Route("/{competence}/new", name="administration_apc_niveau_new", methods={"GET","POST"})
-     * @param Request $request
+     * @param Request       $request
+     * @param ApcCompetence $competence
      *
      * @return Response
      */

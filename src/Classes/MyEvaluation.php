@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEvaluation.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/12/2020 14:31
+// @lastUpdate 19/12/2020 14:57
 
 /**
  * Created by PhpStorm.
@@ -22,7 +22,6 @@ use App\Entity\Note;
 use App\Classes\Excel\MyExcelMultiExport;
 use App\Classes\Pdf\MyPDF;
 use Doctrine\ORM\EntityManagerInterface;
-use PhpOffice\PhpSpreadsheet\Exception;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Twig\Error\LoaderError;

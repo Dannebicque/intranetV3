@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Stage/MailerStage.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/12/2020 14:31
+// @lastUpdate 19/12/2020 14:57
 
 namespace App\Classes\Stage;
 
@@ -13,7 +13,6 @@ use App\Classes\Mail\MailerFromTwig;
 use App\Entity\TwigTemplate;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Twig\Error\LoaderError;
-use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
 class MailerStage
@@ -39,6 +38,7 @@ class MailerStage
      * @param array|null $destinataires
      * @param string     $sujet
      *
+     * @throws TransportExceptionInterface
      */
     public function setTemplate(string $template, array $donnees, ?array $destinataires, string $sujet)
     {

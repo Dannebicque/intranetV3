@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/QuestionnaireEtudiant.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 24/11/2020 11:42
+// @lastUpdate 19/12/2020 14:57
 
 namespace App\Entity;
 
@@ -11,7 +11,6 @@ use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\PersistentCollection;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\QuestionnaireEtudiantRepository")

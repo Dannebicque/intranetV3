@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/CovidAttestationEtudiantRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/11/2020 14:34
+// @lastUpdate 19/12/2020 14:57
 
 namespace App\Repository;
 
@@ -15,7 +15,6 @@ use App\Entity\Groupe;
 use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Svg\Tag\Group;
 
 /**
  * @method CovidAttestationEtudiant|null find($id, $lockMode = null, $lockVersion = null)

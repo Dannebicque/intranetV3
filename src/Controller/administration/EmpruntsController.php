@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EmpruntsController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/12/2020 11:47
+// @lastUpdate 19/12/2020 14:57
 
 namespace App\Controller\administration;
 
@@ -12,7 +12,6 @@ use App\Entity\Constantes;
 use App\Entity\Emprunt;
 use App\Classes\MyEmprunts;
 use App\Classes\MyExport;
-use PhpOffice\PhpSpreadsheet\Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;

@@ -3,14 +3,13 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Aide.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/12/2020 08:14
+// @lastUpdate 19/12/2020 14:57
 
 namespace App\Classes;
 
 
 use App\DTO\ArticleAide;
 use Carbon\Carbon;
-use DateTime;
 use Parsedown;
 use ParsedownExtra;
 use Symfony\Component\HttpKernel\KernelInterface;

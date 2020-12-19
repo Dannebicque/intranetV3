@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/GroupeController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/12/2020 14:31
+// @lastUpdate 19/12/2020 14:57
 
 namespace App\Controller\administration;
 
@@ -14,7 +14,6 @@ use App\Entity\Groupe;
 use App\Entity\Semestre;
 use App\Form\GroupeType;
 use App\Repository\GroupeRepository;
-use PhpOffice\PhpSpreadsheet\Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

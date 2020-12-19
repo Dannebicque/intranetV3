@@ -3,15 +3,13 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/structure/DepartementController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 15/10/2020 12:29
+// @lastUpdate 19/12/2020 14:57
 
 namespace App\Controller\administration\structure;
 
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Departement;
-use App\Entity\Diplome;
-use App\Form\DepartementType;
 use Symfony\Component\Form\Exception\LogicException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/AlternanceFicheSuiviController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/08/2020 16:26
+// @lastUpdate 19/12/2020 14:57
 
 namespace App\Controller\administration;
 
@@ -57,6 +57,9 @@ class AlternanceFicheSuiviController extends BaseController
      * @param MyAlternanceFicheSuivi $myAlternanceFicheSuivi
      * @param AlternanceFicheSuivi   $alternanceFicheSuivi
      *
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
      */
     public function print(
         MyAlternanceFicheSuivi $myAlternanceFicheSuivi,

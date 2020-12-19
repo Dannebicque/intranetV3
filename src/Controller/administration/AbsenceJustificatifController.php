@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/AbsenceJustificatifController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/11/2020 20:31
+// @lastUpdate 19/12/2020 14:57
 
 namespace App\Controller\administration;
 
@@ -14,7 +14,6 @@ use App\Entity\Semestre;
 use App\Event\JustificatifEvent;
 use App\Classes\MyExport;
 use App\Repository\AbsenceJustificatifRepository;
-use PhpOffice\PhpSpreadsheet\Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

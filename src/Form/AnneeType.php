@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Form/AnneeType.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/10/2020 15:17
+// @lastUpdate 19/12/2020 14:57
 
 namespace App\Form;
 
@@ -15,7 +15,6 @@ use App\Repository\DiplomeRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\ColorType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\Exception\AccessException;

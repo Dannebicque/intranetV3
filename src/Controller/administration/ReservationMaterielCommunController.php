@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/ReservationMaterielCommunController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/09/2020 09:29
+// @lastUpdate 19/12/2020 14:57
 
 namespace App\Controller\administration;
 
@@ -57,6 +57,7 @@ class ReservationMaterielCommunController extends BaseController
      * @param Request                     $request
      *
      * @return Response
+     * @throws \Exception
      * @Route("/ajax/add", name="administration_reservation_materiel_commun_add", methods={"POST"},
      *                     options={"expose"=true})
      */

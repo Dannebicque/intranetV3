@@ -3,28 +3,18 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appEtudiant/QualiteController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 10/12/2020 08:46
+// @lastUpdate 19/12/2020 14:57
 
 namespace App\Controller\appEtudiant;
 
 use App\Controller\BaseController;
 use App\Entity\QuestionnaireQualite;
-use App\Entity\QuestionnaireQuestionnaireSection;
-use App\Entity\QuestionnaireEtudiant;
-use App\Entity\QuestionnaireEtudiantReponse;
-use App\Entity\QuestionnaireQuestion;
 use App\Classes\Mail\MailerFromTwig;
 use App\Repository\PrevisionnelRepository;
 use App\Repository\QuestionnaireQualiteRepository;
-use App\Repository\QuestionnaireEtudiantReponseRepository;
 use App\Repository\QuestionnaireEtudiantRepository;
-use App\Repository\QuestionnaireQuestionRepository;
-use App\Repository\QuestionnaireReponseRepository;
 use DateTime;
-use Doctrine\ORM\NonUniqueResultException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -65,9 +55,11 @@ class QualiteController extends BaseController
      * @param QuestionnaireEtudiantRepository $quizzEtudiantRepository
      * @param MailerFromTwig                  $myMailer
      * @param QuestionnaireQualite            $qualiteQuestionnaire
-     * @ParamConverter("qualiteQuestionnaire", options={"mapping": {"uuid": "uuid"}})
      *
      * @return Response
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     * @ParamConverter("qualiteQuestionnaire", options={"mapping": {"uuid": "uuid"}})
+     *
      */
     public function complet(
         QuestionnaireEtudiantRepository $quizzEtudiantRepository,

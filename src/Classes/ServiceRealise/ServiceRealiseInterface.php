@@ -3,13 +3,12 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/ServiceRealise/ServiceRealiseInterface.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 14/10/2020 10:25
+// @lastUpdate 19/12/2020 14:57
 
 namespace App\Classes\ServiceRealise;
 
 
 use App\DTO\EvenementEdt;
-use App\Entity\AnneeUniversitaire;
 use App\Entity\Matiere;
 use App\Entity\Personnel;
 

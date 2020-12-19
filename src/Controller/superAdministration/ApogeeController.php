@@ -4,13 +4,12 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/ApogeeController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/09/2020 08:52
+// @lastUpdate 19/12/2020 14:57
 
 namespace App\Controller\superAdministration;
 
 use App\Classes\Apogee\MyApogee;
 use App\Classes\Etudiant\EtudiantImport;
-use App\Classes\LDAP\MyLdap;
 use App\Classes\Tools;
 use App\Controller\BaseController;
 use App\Repository\AnneeUniversitaireRepository;
@@ -131,6 +130,7 @@ class ApogeeController extends BaseController
      * @param BacRepository      $bacRepository
      *
      * @return Response
+     * @throws Exception
      */
     public function importEtudiant(
         EtudiantImport $etudiantImport,

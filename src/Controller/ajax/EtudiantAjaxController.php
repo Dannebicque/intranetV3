@@ -3,16 +3,13 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ajax/EtudiantAjaxController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 01/10/2020 15:38
+// @lastUpdate 19/12/2020 14:57
 
 namespace App\Controller\ajax;
 
 use App\Classes\Etudiant\EtudiantUpdate;
-use App\Classes\MyContact;
 use App\Controller\BaseController;
-use App\Entity\Adresse;
 use App\Entity\Etudiant;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

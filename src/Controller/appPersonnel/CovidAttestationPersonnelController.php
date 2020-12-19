@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/CovidAttestationPersonnelController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/11/2020 10:45
+// @lastUpdate 19/12/2020 14:57
 
 namespace App\Controller\appPersonnel;
 
@@ -14,8 +14,6 @@ use App\Entity\CovidAttestationPersonnel;
 use App\Event\CovidEvent;
 use App\Form\CovidAttestationPersonnelType;
 use App\Repository\CovidAttestationPersonnelRepository;
-use Dompdf\Dompdf;
-use Dompdf\Options;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -94,10 +92,13 @@ class CovidAttestationPersonnelController extends BaseController
 
     /**
      * @Route("/{id}/pdf", name="covid_attestation_personnel_pdf", methods={"GET"})
-     * @param MyExportPresence $myExportPresence
+     * @param MyExportPresence          $myExportPresence
      * @param CovidAttestationPersonnel $covidAttestationPersonnel
      *
      * @return Response
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
      */
     public function pdf(
         MyExportPresence $myExportPresence,
