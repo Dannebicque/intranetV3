@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/AbsenceController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 14/09/2020 21:02
+// @lastUpdate 19/12/2020 15:06
 
 namespace App\Controller\appPersonnel;
 
@@ -78,7 +78,6 @@ class AbsenceController extends BaseController
      *                        methods={"GET"})
      *
      * @param MatiereRepository      $matiereRepository
-     * @param CalendrierRepository   $calendrierRepository
      * @param EdtPlanningRepository  $edtPlanningRepository
      * @param CelcatEventsRepository $celcatEventsRepository
      * @param MyGroupes              $myGroupes
@@ -88,7 +87,6 @@ class AbsenceController extends BaseController
      */
     public function saisieFromEdt(
         MatiereRepository $matiereRepository,
-        CalendrierRepository $calendrierRepository,
         EdtPlanningRepository $edtPlanningRepository,
         CelcatEventsRepository $celcatEventsRepository,
         MyGroupes $myGroupes,
@@ -104,8 +102,6 @@ class AbsenceController extends BaseController
         }
 
         if ($planning !== null) {
-//            $semaine = $calendrierRepository->findOneBy(['semaineFormation' => $planning->getSemaine()]);
-
             return $this->render('appPersonnel/absence/index.html.twig', [
                 'semestre' => $matiere !== null ? $matiere->getSemestre() : null,
                 'matiere'  => $matiere,

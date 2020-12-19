@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/questionnaire/QuestionnaireController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/12/2020 14:46
+// @lastUpdate 19/12/2020 15:11
 
 namespace App\Controller\questionnaire;
 
@@ -97,8 +97,6 @@ class QuestionnaireController extends AbstractController
         } else {
             $reponses = [];
         }
-
-        //return $this->render('appEtudiant/qualite/toto.html.twig');
 
         return $this->render('appEtudiant/qualite/section.html.twig', [
             'ordre'             => $questionnaireSection->getOrdre(),

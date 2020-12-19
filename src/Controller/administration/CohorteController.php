@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/CohorteController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/08/2020 16:26
+// @lastUpdate 19/12/2020 15:07
 
 namespace App\Controller\administration;
 
@@ -30,7 +30,6 @@ class CohorteController extends BaseController
      * @return Response
      */
     public function index(
-        EtudiantRepository $etudiantRepository,
         ScolariteRepository $scolariteRepository,
         $annee = 0
     ): Response {
@@ -38,7 +37,6 @@ class CohorteController extends BaseController
             $annee = date('Y') - 1;
         }
         //on ne récupère la cohorte que de la departement.
-        //$etudiants = $etudiantRepository->findEtudiantCohorte($annee, $this->dataUserSession->getDepartement());
         $parcours = $scolariteRepository->findEtudiantsDepartement($annee, $this->dataUserSession->getDepartement());
         $etudiants = [];
 

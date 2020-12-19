@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/08/2020 14:08
+// @lastUpdate 19/12/2020 15:11
 
 namespace App\Controller\administration;
 
@@ -101,8 +101,6 @@ class EdtController extends BaseController
                     'matieres'   => $matiereRepository->findByDepartement($this->dataUserSession->getDepartement()),
                     'edt'        => $edt,
                 ]);
-//            case 'jour':
-//                return $this->render('DAKernelBundle:AdministrationEdt:edtJour.html.twig', $array);
             case 'salle':
                 return $this->render('administration/edt/_edt-salle.html.twig', [
                     'salle'      => $valeur,

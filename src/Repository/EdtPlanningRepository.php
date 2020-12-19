@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/EdtPlanningRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/09/2020 16:43
+// @lastUpdate 19/12/2020 15:18
 
 namespace App\Repository;
 
@@ -324,33 +324,6 @@ class EdtPlanningRepository extends ServiceEntityRepository
         return $planning;
     }
 
-//    /**
-//     * @return array
-//     */
-//    public function findAllStudio()
-//    {
-//        $query = $this->createQueryBuilder('p')
-//            ->where('p.salle = :salle')
-//            ->setParameter('salle', 'Stud')
-//            ->orderBy('p.semaine, p.jour, p.debut')
-//            ->getQuery()
-//            ->getResult();
-//
-//        $t = array();
-//        /** @var Planning $q */
-//        foreach ($query as $q) {
-//            if ($q->getDebut() < 11) {
-//                $debut = '08'; //matin
-//            } elseif ($q->getDebut() >= 11) {
-//                $debut = '14'; //après-midi.
-//            } else {
-//                $debut = 'OO'; //toute la journée ?
-//            }
-//            $t[$q->getSemaine()][$q->getJour()][$debut] = $debut;
-//        }
-//
-//        return $t;
-//    }
     public function getByPersonnelArray(Personnel $user): array
     {
         $query = $this->createQueryBuilder('p')
