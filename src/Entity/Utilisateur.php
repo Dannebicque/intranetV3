@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Utilisateur.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/12/2020 14:31
+// @lastUpdate 19/12/2020 15:13
 
 namespace App\Entity;
 
@@ -484,7 +484,6 @@ abstract class Utilisateur implements UserInterface, Serializable
     {
         // Nous n'avons pas besoin de cette methode car nous n'utilions pas de plainPassword
         // Mais elle est obligatoire car comprise dans l'interface UserInterface
-        // $this->plainPassword = null;
     }
 
     /**

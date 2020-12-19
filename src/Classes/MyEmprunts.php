@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEmprunts.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/12/2020 13:23
+// @lastUpdate 19/12/2020 15:09
 
 namespace App\Classes;
 
@@ -294,45 +294,4 @@ class MyEmprunts
 
         return true;
     }
-
-    /**
-     * @return array
-     */
-//    public function getStudio()
-//    {
-//        $studios = $this->em->getRepository('DAKernelBundle:Planning')->findAllStudio();
-//        $calendrier = $this->em->getRepository('DAKernelBundle:Calendrier')->findCalendrierInv();
-//
-//        for ($i = 0; $i < $this->nbjouremprunt; $i++) {
-//            $semaine = (int)date('W', $this->jours[$i]['objDate']);
-//            $jour = date('N', $this->jours[$i]['objDate']);
-//
-//            $semaineIUT = $calendrier[$semaine]['semaineIUT'];
-//
-//
-//            if (array_key_exists($semaineIUT, $studios)) {
-//                if (array_key_exists($jour, $studios[$semaineIUT])) {
-//                    $this->studio[$this->jours[$i]['i']] = array();
-//                    if (count($studios[$semaineIUT][$jour]) === 2) {
-//                        $this->studio[$this->jours[$i]['i']]['08'] = 'STUD';
-//                        $this->studio[$this->jours[$i]['i']]['14'] = 'STUD';
-//                    } elseif ((count($studios[$semaineIUT][$jour]) === 1) && array_key_exists('08',
-//                            $studios[$semaineIUT][$jour])) {
-//                        $this->studio[$this->jours[$i]['i']]['08'] = 'STUD';
-//                    } elseif ((count($studios[$semaineIUT][$jour]) === 1) && array_key_exists('14',
-//                            $studios[$semaineIUT][$jour])) {
-//                        $this->studio[$this->jours[$i]['i']]['14'] = 'STUD';
-//                    }
-//                } else {
-//                    //pas de studio ce jour
-//                }
-//            } else {
-//                //pas de studio cette semaine
-//            }
-//        }
-//
-//        return $this->studio;
-//    }
-
-
 }

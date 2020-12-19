@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/DisponibiliteRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 19/12/2020 15:18
 
 namespace App\Repository;
 
@@ -62,10 +62,6 @@ class DisponibiliteRepository extends ServiceEntityRepository
             if (!array_key_exists($jour, $t)) {
                 $t[$jour] = [];
             }
-
-           /* if (!array_key_exists($heure, $t[$jour])) {
-                $t[$jour][$heure] = '';
-            }*/
 
             $t[$jour][$heure] = $dispo->getEtat();
         }

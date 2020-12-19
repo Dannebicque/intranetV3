@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtCelcat.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 18/12/2020 16:44
+// @lastUpdate 19/12/2020 15:09
 
 /**
  * Created by PhpStorm.
@@ -119,27 +119,6 @@ class MyEdtCelcat extends BaseEdt implements EdtInterface
                         return false;
                     }
                     break;
-//                case 'module':
-//                    $this->module = $this->matiereRepository->find($this->valeur);
-//                    $this->semestre = $this->module->getSemestre();
-//                    $this->groupes = $this->groupeRepository->findAllGroupes($this->semestre);
-//
-//                    $pl = $this->edtPlanningRepository->findEdtModule($this->valeur, $this->semaineFormationIUT);
-//                    $this->planning = $this->transformeModule($pl);
-//                    break;
-//                case 'salle':
-//                    $pl = $this->edtPlanningRepository->findEdtSalle($this->valeur, $this->semaineFormationIUT);
-//                    $this->salle = $this->valeur;
-//                    $this->planning = $this->transformeSalle($pl);
-//                    break;
-//
-//                case 'jour':
-//                    $pl = $this->edtPlanningRepository->findEdtJour($this->valeur,
-//                        $this->semaineFormationIUT);
-//
-//                    $this->jour = $this->valeur;
-//                    $this->planning = $this->transformeJour($pl);
-//                    break;
             }
         }
 
@@ -224,7 +203,7 @@ class MyEdtCelcat extends BaseEdt implements EdtInterface
 
             $tab[$p->getJour()][$dbtEdt]['couleur'] = $this->getCouleurFromModule($p);
             $tab[$p->getJour()][$dbtEdt]['pl'] = $p->getId();
-            $tab[$p->getJour()][$dbtEdt]['couleurTexte'] = '#ffffff'; //$this->getCouleurTexte($p);
+            $tab[$p->getJour()][$dbtEdt]['couleurTexte'] = '#ffffff';
             $this->calculTotal($p);
 
         }
