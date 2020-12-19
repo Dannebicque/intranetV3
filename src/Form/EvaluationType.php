@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Form/EvaluationType.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/11/2020 16:41
+// @lastUpdate 19/12/2020 15:00
 
 namespace App\Form;
 
@@ -46,7 +46,7 @@ class EvaluationType extends AbstractType
         $this->semestre = $options['semestre'];
         $import = $options['import'];
         $matiereDisabled = $options['matiereDisabled'];
-        $personnelDisabled = $options['personnelDisabled'] !== null ? $options['personnelDisabled'] : true;
+        $personnelDisabled = $options['personnelDisabled'] ?? true;
 
         $builder
             ->add('personnelAuteur', EntityType::class,

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/SousCommissionSubscriber.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/12/2020 14:52
+// @lastUpdate 19/12/2020 14:57
 
 namespace App\EventSubscriber;
 
@@ -11,7 +11,6 @@ use App\Classes\Mail\MailerFromTwig;
 use App\Entity\Notification;
 use App\Entity\Scolarite;
 use App\Event\SousCommissionEvent;
-use App\Repository\StageMailTemplateRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Routing\RouterInterface;
@@ -85,6 +84,7 @@ class SousCommissionSubscriber implements EventSubscriberInterface
      * @param Scolarite    $scolarite
      * @param              $codeEvent
      *
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
      */
     public function sendMail(Scolarite $scolarite, $codeEvent): void
     {

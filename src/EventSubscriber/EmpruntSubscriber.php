@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/EmpruntSubscriber.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/12/2020 14:31
+// @lastUpdate 19/12/2020 14:57
 
 namespace App\EventSubscriber;
 
@@ -12,7 +12,6 @@ use App\Event\EmpruntEvent;
 use App\Classes\Mail\MailerFromTwig;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Routing\RouterInterface;
 
 
@@ -60,6 +59,7 @@ class EmpruntSubscriber implements EventSubscriberInterface
      * @param EmpruntEvent $event
      * @param              $codeEvent
      *
+     * @throws TransportExceptionInterface
      */
     public function sendMail(EmpruntEvent $event, $codeEvent): void
     {

@@ -3,14 +3,13 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/structure/SemestreController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 15/10/2020 12:26
+// @lastUpdate 19/12/2020 14:57
 
 namespace App\Controller\administration\structure;
 
 use App\Controller\BaseController;
 use App\Entity\Annee;
 use App\Entity\Constantes;
-use App\Entity\Parcour;
 use App\Entity\Semestre;
 use App\Form\SemestreType;
 use Symfony\Component\Form\Exception\LogicException;

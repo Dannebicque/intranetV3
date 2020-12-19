@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyProjetEtudiant.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/09/2020 08:52
+// @lastUpdate 19/12/2020 15:00
 
 /**
  * Created by PhpStorm.
@@ -17,13 +17,11 @@ namespace App\Classes;
 use App\Entity\Etudiant;
 use App\Entity\ProjetEtudiant;
 use App\Entity\ProjetPeriode;
-use App\Entity\StagePeriode;
 use App\Event\ProjetEvent;
 use App\Repository\ProjetEtudiantRepository;
 use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
-use Exception;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class MyProjetEtudiant
@@ -110,11 +108,7 @@ class MyProjetEtudiant
     {
         $result = $this->projetEtudiantRepository->findExist($projetPeriode, $etudiant);
 
-        if ($result === null) {
-            return $this->createProjetEtudiant($projetPeriode, $etudiant);
-        }
-
-        return $result;
+        return $result ?? $this->createProjetEtudiant($projetPeriode, $etudiant);
     }
 
     /**

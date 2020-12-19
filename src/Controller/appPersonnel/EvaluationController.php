@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/EvaluationController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 14/10/2020 18:22
+// @lastUpdate 19/12/2020 14:57
 
 namespace App\Controller\appPersonnel;
 
@@ -11,7 +11,6 @@ use App\Classes\MyEvaluation;
 use App\Controller\BaseController;
 use App\Entity\Evaluation;
 use App\Repository\GroupeRepository;
-use PhpOffice\PhpSpreadsheet\Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;

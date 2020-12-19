@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyProjet.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/09/2020 08:39
+// @lastUpdate 19/12/2020 14:57
 
 /**
  * Created by PhpStorm.
@@ -19,7 +19,6 @@ use App\Entity\ProjetEtudiant;
 use App\Entity\ProjetPeriode;
 use App\Repository\EtudiantRepository;
 use App\Repository\ProjetEtudiantRepository;
-use App\Repository\StageEtudiantRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 class MyProjet

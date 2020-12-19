@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtExportController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 02/09/2020 12:11
+// @lastUpdate 19/12/2020 14:57
 
 namespace App\Controller\administration;
 
@@ -82,6 +82,9 @@ class EdtExportController extends BaseController
      * @param                     $source
      *
      * @return Response
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
      */
     public function exportProfs(
         Request $request,

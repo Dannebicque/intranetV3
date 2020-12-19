@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcCompetenceController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/12/2020 20:18
+// @lastUpdate 19/12/2020 14:57
 
 namespace App\Controller\administration\apc;
 
@@ -13,7 +13,6 @@ use App\Entity\ApcCompetence;
 use App\Entity\Constantes;
 use App\Entity\Diplome;
 use App\Form\ApcCompetenceType;
-use App\Repository\ActualiteRepository;
 use App\Repository\ApcComptenceRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/SecurityController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 22/10/2020 15:56
+// @lastUpdate 19/12/2020 14:57
 
 namespace App\Controller;
 
@@ -64,6 +64,7 @@ class SecurityController extends AbstractController
      * @param EtudiantRepository      $etudiantRepository
      *
      * @return Response
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
      */
     public function passwordLost(
         Request $request,
@@ -125,6 +126,7 @@ class SecurityController extends AbstractController
      * @param MailerFromTwig               $mailerFromTwig
      *
      * @return JsonResponse
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
      */
     public function initPassword(
         Personnel $personnel,

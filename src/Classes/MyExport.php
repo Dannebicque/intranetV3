@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyExport.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/09/2020 09:02
+// @lastUpdate 19/12/2020 14:57
 
 /**
  * Created by PhpStorm.
@@ -16,7 +16,6 @@ namespace App\Classes;
 
 use App\Entity\Evaluation;
 use App\Classes\Excel\MyExcelMultiExport;
-use PhpOffice\PhpSpreadsheet\Exception;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 

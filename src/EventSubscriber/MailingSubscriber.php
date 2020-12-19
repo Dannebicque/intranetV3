@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/MailingSubscriber.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/09/2020 08:45
+// @lastUpdate 19/12/2020 15:05
 
 // App\EventSubscriber\MailingSubscriber.php
 namespace App\EventSubscriber;
@@ -15,7 +15,6 @@ use App\Event\JustificatifEvent;
 use App\Event\NoteEvent;
 use App\Event\RattrapageEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 
 /**
  * Envoi un mail de bienvenue à chaque creation d'un utilisateur
@@ -57,6 +56,7 @@ class MailingSubscriber implements EventSubscriberInterface
     /**
      * @param AbsenceEvent $event
      *
+     * @throws TransportExceptionInterface
      */
     public function onMailAbsenceJustified(AbsenceEvent $event): void
     {
@@ -71,6 +71,7 @@ class MailingSubscriber implements EventSubscriberInterface
     /**
      * @param AbsenceEvent $event
      *
+     * @throws TransportExceptionInterface
      */
     public function onMailAbsenceAdded(AbsenceEvent $event): void
     {
@@ -97,7 +98,7 @@ class MailingSubscriber implements EventSubscriberInterface
 
     /**
      * @param RattrapageEvent $event
-     *
+     * @throws TransportExceptionInterface
      */
     public function onMailDecisionRattrapage(RattrapageEvent $event): void
     {
@@ -117,7 +118,7 @@ class MailingSubscriber implements EventSubscriberInterface
 
     /**
      * @param JustificatifEvent $event
-     *
+     * @throws TransportExceptionInterface
      */
     public function onMailDecisionJustificatif(JustificatifEvent $event): void
     {
@@ -141,7 +142,7 @@ class MailingSubscriber implements EventSubscriberInterface
 
     /**
      * @param JustificatifEvent $event
-     *
+     * @throws TransportExceptionInterface
      */
     public function onMailDeleteJustificatif(JustificatifEvent $event): void
     {
@@ -157,7 +158,7 @@ class MailingSubscriber implements EventSubscriberInterface
 
     /**
      * @param AbsenceEvent $event
-     *
+     * @throws TransportExceptionInterface
      */
     public function onMailAbsenceRemoved(AbsenceEvent $event): void
     {
@@ -182,7 +183,7 @@ class MailingSubscriber implements EventSubscriberInterface
 
     /**
      * @param NoteEvent $event
-     *
+     * @throws TransportExceptionInterface
      */
     public function onMailNoteModificationResponsable(NoteEvent $event): void
     {
@@ -202,7 +203,7 @@ class MailingSubscriber implements EventSubscriberInterface
 
     /**
      * @param EvaluationEvent $event
-     *
+     * @throws TransportExceptionInterface
      */
     public function onMailNewTranscriptResponsable(EvaluationEvent $event): void
     {

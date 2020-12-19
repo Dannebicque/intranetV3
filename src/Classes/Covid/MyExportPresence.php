@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Covid/MyExportPresence.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/12/2020 14:31
+// @lastUpdate 19/12/2020 14:57
 
 namespace App\Classes\Covid;
 
@@ -12,13 +12,9 @@ use App\Classes\Mail\MailerFromTwig;
 use App\Classes\Pdf\MyPDF;
 use App\Entity\CovidAttestationEtudiant;
 use App\Entity\CovidAttestationPersonnel;
-use App\Entity\Departement;
 use App\Entity\Etudiant;
 use DateTime;
-use Dompdf\Dompdf;
-use Dompdf\Options;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Twig\Error\LoaderError;
@@ -193,6 +189,7 @@ class MyExportPresence
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
      */
     public function sendOneConvocation(CovidAttestationEtudiant $covidAttestationEtudiant, Etudiant $etudiant): void
     {

@@ -3,18 +3,15 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcComposanteEssentielleController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/12/2020 20:18
+// @lastUpdate 19/12/2020 14:57
 
 namespace App\Controller\administration\apc;
 
-use App\Classes\MyExport;
 use App\Controller\BaseController;
 use App\Entity\ApcCompetence;
 use App\Entity\ApcComposanteEssentielle;
 use App\Entity\Constantes;
-use App\Entity\Diplome;
 use App\Form\ApcComposanteEssentielleType;
-use App\Repository\ApcComposanteEssentielleRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -26,7 +23,8 @@ class ApcComposanteEssentielleController extends BaseController
 {
     /**
      * @Route("/{competence}/new", name="administration_apc_composante_essentielle_new", methods={"GET","POST"})
-     * @param Request $request
+     * @param Request       $request
+     * @param ApcCompetence $competence
      *
      * @return Response
      */

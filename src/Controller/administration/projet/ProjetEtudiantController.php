@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/projet/ProjetEtudiantController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/10/2020 20:16
+// @lastUpdate 19/12/2020 14:57
 
 namespace App\Controller\administration\projet;
 
@@ -14,7 +14,6 @@ use App\Entity\ProjetEtudiant;
 use App\Entity\ProjetPeriode;
 use App\Form\ProjetEtudiantType;
 use App\Classes\MyProjetEtudiant;
-use App\Repository\PersonnelRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Dompdf\Dompdf;
 use Dompdf\Options;

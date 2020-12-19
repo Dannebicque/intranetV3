@@ -3,12 +3,11 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/LdapController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 04/12/2020 17:34
+// @lastUpdate 19/12/2020 14:57
 
 namespace App\Controller;
 
 use App\Classes\LDAP\MyLdap;
-use App\Repository\ActualiteRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Semestre/NotesExport.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 17/12/2020 14:17
+// @lastUpdate 19/12/2020 14:57
 
 namespace App\Classes\Semestre;
 
@@ -13,7 +13,6 @@ use App\Entity\AnneeUniversitaire;
 use App\Entity\Semestre;
 use App\Repository\EvaluationRepository;
 use App\Repository\NoteRepository;
-use DateTime;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
@@ -45,6 +44,9 @@ class NotesExport
     /**
      * @param Semestre           $semestre
      * @param AnneeUniversitaire $anneeUniversitaire
+     *
+     * @return StreamedResponse
+     * @return StreamedResponse
      */
     public function exportXlsToutesLesNotes(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire)
     {

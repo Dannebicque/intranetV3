@@ -3,13 +3,12 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyMaterielCommun.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/12/2020 14:31
+// @lastUpdate 19/12/2020 14:57
 
 namespace App\Classes;
 
 
 use App\Entity\Constantes;
-use App\Entity\MaterielCommunPret;
 use App\Repository\MaterielCommunPretRepository;
 use App\Repository\MaterielCommunRepository;
 

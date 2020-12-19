@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcParcoursController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/12/2020 20:18
+// @lastUpdate 19/12/2020 14:57
 
 namespace App\Controller\administration\apc;
 
@@ -24,6 +24,7 @@ class ApcParcoursController extends BaseController
     /**
      * @Route("/{diplome}/new", name="apc_parcours_new", methods={"GET","POST"})
      * @param Request $request
+     * @param Diplome $diplome
      *
      * @return Response
      */

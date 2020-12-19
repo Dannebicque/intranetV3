@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/StageSubscriber.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/12/2020 14:31
+// @lastUpdate 19/12/2020 14:57
 
 namespace App\EventSubscriber;
 
@@ -15,7 +15,6 @@ use App\Repository\StageMailTemplateRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -220,8 +219,8 @@ class StageSubscriber implements EventSubscriberInterface
      *
      * @throws LoaderError
      * @throws NonUniqueResultException
-     * @throws RuntimeError
      * @throws SyntaxError
+     * @throws TransportExceptionInterface
      */
     public function sendMail(StageEvent $event, $codeEvent): void
     {

@@ -3,13 +3,12 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/RechercheController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/09/2020 08:41
+// @lastUpdate 19/12/2020 14:57
 
 namespace App\Controller;
 
 use App\Repository\EtudiantRepository;
 use App\Repository\PersonnelDepartementRepository;
-use App\Repository\PersonnelRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 

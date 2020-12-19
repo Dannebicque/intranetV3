@@ -3,12 +3,11 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/QuickViewController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/10/2020 17:16
+// @lastUpdate 19/12/2020 14:57
 
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class QuickViewController extends AbstractController

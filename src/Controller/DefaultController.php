@@ -3,18 +3,15 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/DefaultController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/12/2020 15:24
+// @lastUpdate 19/12/2020 14:57
 
 namespace App\Controller;
 
 use App\Repository\ActualiteRepository;
 use App\Repository\DateRepository;
 use App\Repository\DepartementRepository;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
-use Symfony\UX\Chartjs\Model\Chart;
 
 /**
  * Class DefaultController

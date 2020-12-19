@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Celcat/MyCelcat.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/12/2020 21:02
+// @lastUpdate 19/12/2020 14:57
 
 /**
  * Created by PhpStorm.
@@ -22,7 +22,6 @@ use App\Entity\Semestre;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
-use http\Exception\InvalidArgumentException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 

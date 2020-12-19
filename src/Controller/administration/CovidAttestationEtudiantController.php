@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/CovidAttestationEtudiantController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/12/2020 14:31
+// @lastUpdate 19/12/2020 14:57
 
 namespace App\Controller\administration;
 
@@ -134,6 +134,9 @@ class CovidAttestationEtudiantController extends BaseController
      * @param CovidAttestationEtudiant $covidAttestationEtudiant
      *
      * @return Response|null
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function sendAll(
         MyExportPresence $myExportPresence,
