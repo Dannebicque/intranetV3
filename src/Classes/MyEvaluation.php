@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEvaluation.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+// @lastUpdate 20/12/2020 17:15
 
 /**
  * Created by PhpStorm.
@@ -35,25 +35,20 @@ use function count;
  */
 class MyEvaluation
 {
-    /** @var Evaluation */
-    protected $evaluation;
+    protected Evaluation $evaluation;
 
-    protected $statistiques = [];
+    protected array $statistiques = [];
 
     /** @var Note[] */
-    protected $notes = [];
+    protected array $notes = [];
 
-    /** @var array */
-    protected $classement = [];
+    protected array $classement = [];
 
-    /** @var EntityManagerInterface */
-    protected $entityManager;
+    protected EntityManagerInterface $entityManager;
 
-    /** @var MyPDF */
-    private $myPdf;
+    private MyPDF $myPdf;
 
-    /** @var MyExcelMultiExport */
-    private $myExcelMultiExport;
+    private MyExcelMultiExport $myExcelMultiExport;
 
     /**
      * MyEvaluation constructor.
@@ -136,7 +131,7 @@ class MyEvaluation
         $this->statistiques['promo']['max'] = count($t) > 0 ? max($t) : -0.01;
         $this->statistiques['promo']['moyenne'] = count($t) > 0 ? array_sum($t) / count($t) : -0.01;
         $this->statistiques['promo']['ecart_type'] = count($t) > 0 ? $this->ecartType($t) : -0.01;
-        $this->statistiques['promo']['rang'] = $this->classement; //todo: intéret ? On sauvegarde juste des notes ?
+        $this->statistiques['promo']['rang'] = $this->classement;
         $this->statistiques['repartition'] = $repartition;
         return $this;
     }
@@ -196,12 +191,18 @@ class MyEvaluation
     public function classement(Etudiant $etudiant): ?int
     {
         $rangreel = 0;
+        $notePrec = 21;
+        $rangEtudiant = 0;
         foreach ($this->classement as $key => $value) {
-            //todo:améliorer pour gérer le cas des ex-aequo
-            $rangreel++; //index de la note en cours de lecture
-
+            if ($value !== $notePrec) {
+                $rangreel++; //index de la note en cours de lecture
+                $rangEtudiant = $rangreel;
+                $notePrec = $value;
+            } else {
+                $rangreel++; //index de la note en cours de lecture
+            }
             if ($key === $etudiant->getId()) {
-                return $rangreel; //si c'est l'étudiant, on retourne le rang
+                return $rangEtudiant; //si c'est l'étudiant, on retourne le rang
             }
         }
 
@@ -419,8 +420,8 @@ class MyEvaluation
             //on récupère l'en-tête
             $phrase = fgetcsv($handle, 1024, ';');
 
-            if (in_array('num_etudiant', $phrase) && in_array('commentaire',
-                    $phrase) && in_array('note', $phrase)) {
+            if (in_array('num_etudiant', $phrase, true) && in_array('commentaire',
+                    $phrase, true) && in_array('note', $phrase, true)) {
                 //on vérifie que les clés existent.
 
                 foreach ($phrase as $key) {
