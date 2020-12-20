@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Diplome.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/12/2020 09:01
+// @lastUpdate 20/12/2020 16:39
 
 namespace App\Entity;
 
@@ -818,7 +818,7 @@ class Diplome extends BaseEntity implements Serializable
 
     public function unserialize($serialized)
     {
-        // TODO: Implement unserialize() method.
+        return null;
     }
 
     /**
