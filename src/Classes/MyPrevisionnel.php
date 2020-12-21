@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyPrevisionnel.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/12/2020 15:00
+// @lastUpdate 21/12/2020 12:51
 
 namespace App\Classes;
 
@@ -741,10 +741,8 @@ class MyPrevisionnel
 
                 return true;
             }
-
             return false;
         }
-
         return false;
     }
 
@@ -758,11 +756,6 @@ class MyPrevisionnel
 
         $this->entityManager->flush();
     }
-
-
-
-
-
 
     public function export(?Departement $getDepartement, $annee, $type, $data, $_format): void
     {

@@ -32,12 +32,8 @@
 
         <h2 class="card-title"><strong>Décision</strong> de fin de semestre | {{ semestre.display }}</h2>
         <div class="card-body">
-            <div class="alert alert-info">La proposition est faîtes en fonction du calcul de la moyenne. Vous pouvez la
-                                          modifier. Toutes les modifications sont sauvegardées dans une table tempraire.
-            </div>
-            <br/>
-            <div class="alert alert-danger">Il est vivement recommandé de commencer les changements de semestre par le
-                                            semestre le plus elevé !
+            <div class="alert alert-info">La proposition est faite en fonction de la sous-commission de travail. Les
+                                          propositions correspondent aux propositions lorsque complétées.
             </div>
             <br/>
             <form action="{{ path('administration_fin_semestre_confirme',{semestre:semestre.id}) }}" method="post">
@@ -84,8 +80,8 @@
                                            name="etu_{{ etu.id }}"
                                            id="etu_{{ etu.id }}_{{ semestre.precedent.id }}"
                                            value="{{ semestre.precedent.id }}"
-                                            {% if tab[etu.id] != null and tab[etu.id].proposition == semestre
-                                                .precedent.libelle %} checked {% endif %}>
+                                            {% if scolarites[etu.id] != null and scolarites[etu.id].proposition == semestre
+                                            .precedent.libelle %} checked {% endif %}>
                                 </td>
                             {% endif %}
                             {% if semestre.decale != null %}
@@ -97,7 +93,8 @@
                                            id="etu_{{ etu.id }}_{{ semestre.decale.id }}"
                                            name="etu_{{ etu.id }}"
                                            value="{{ semestre.decale.id }}"
-                                            {% if tab[etu.id] != null and tab[etu.id].proposition == semestre.decale.libelle %} checked {% endif %}>
+                                            {% if scolarites[etu.id] != null and scolarites[etu.id].proposition ==
+                                                semestre.decale.libelle %} checked {% endif %}>
                                 </td>
                             {% endif %}
                             {% if semestre.suivant != null %}
@@ -109,7 +106,7 @@
                                            id="etu_{{ etu.id }}_{{ semestre.suivant.id }}"
                                            name="etu_{{ etu.id }}"
                                            value="{{ semestre.suivant.id }}"
-                                            {% if tab[etu.id] != null and tab[etu.id].proposition == semestre.suivant.libelle %} checked {% endif %}>
+                                            {% if scolarites[etu.id] != null and scolarites[etu.id].proposition == semestre.suivant.libelle %} checked {% endif %}>
                                 </td>
                             {% endif %}
                             <td>
@@ -119,7 +116,7 @@
                                 <input type="radio"
                                        id="etu_{{ etu.id }}_REO"
                                        name="etu_{{ etu.id }}" value="REO"
-                                        {% if tab[etu.id] != null and tab[etu.id].proposition == 'REO' %} checked {% endif %}>
+                                        {% if scolarites[etu.id] != null and scolarites[etu.id].proposition == 'REO' %} checked {% endif %}>
                             </td>
                             <td>
                                 <label class="sr-only" for="etu_{{ etu.id }}_DEM">
@@ -129,7 +126,7 @@
                                        id="etu_{{ etu.id }}_DEM"
                                        name="etu_{{ etu.id }}"
                                        value="DEM"
-                                        {% if tab[etu.id] != null and tab[etu.id].proposition == 'DEM' %} checked {% endif %}>
+                                        {% if scolarites[etu.id] != null and scolarites[etu.id].proposition == 'DEM' %} checked {% endif %}>
                             </td>
                             <td>
                                 <label class="sr-only" for="etu_{{ etu.id }}_DIPLOME">
@@ -139,7 +136,7 @@
                                        id="etu_{{ etu.id }}_DIPLOME"
                                        name="etu_{{ etu.id }}"
                                        value="DIPLOME"
-                                        {% if tab[etu.id] != null and tab[etu.id].proposition == 'DUT' %} checked {% endif %} >
+                                        {% if scolarites[etu.id] != null and scolarites[etu.id].proposition == 'DUT' %} checked {% endif %} >
                             </td>
                             <td><label class="sr-only" for="etu_{{ etu.id }}_TRANSFERT">
                                     {{ etu.display }} {{ semestre.precedent.libelle }}
@@ -164,8 +161,8 @@
                     </tbody>
                 </table>
                 <br/>
-                <button type="submit" class="btn btn-block btn-danger">Confirmer changement de semestre (opéraiton
-                                                                       irreversible !)
+                <button type="submit" class="btn btn-block btn-danger">
+                    Confirmer changement de semestre
                 </button>
             </form>
         </div>
