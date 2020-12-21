@@ -3,11 +3,12 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/ScolariteRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/12/2020 14:31
+// @lastUpdate 21/12/2020 13:25
 
 namespace App\Repository;
 
 use App\Entity\Annee;
+use App\Entity\AnneeUniversitaire;
 use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Etudiant;
@@ -97,5 +98,24 @@ class ScolariteRepository extends ServiceEntityRepository
             ->setParameter('etudiant', $etudiant->getId())
             ->getQuery()
             ->getSingleScalarResult();
+    }
+
+    public function findBySemestreArray(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire)
+    {
+        $result = $this->createQueryBuilder('s')
+            ->where('s.semestre = :semestre')
+            ->andWhere('s.anneeUniversitaire = :anneeUniversitaire')
+            ->setParameter('semestre', $semestre->getId())
+            ->setParameter('anneeUniversitaire', $anneeUniversitaire->getId())
+            ->getQuery()
+            ->getResult();
+
+        $t = [];
+        foreach ($result as $r) {
+            $t[$r->getEtudiant()->getId()] = $r;
+        }
+
+        return $t;
+
     }
 }

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/FinSemestreController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/12/2020 21:04
+// @lastUpdate 21/12/2020 13:05
 
 namespace App\Controller\administration;
 
@@ -14,6 +14,7 @@ use App\Entity\Scolarite;
 use App\Entity\Semestre;
 use App\Repository\DepartementRepository;
 use App\Repository\EtudiantRepository;
+use App\Repository\ScolariteRepository;
 use App\Repository\SemestreRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,6 +31,7 @@ class FinSemestreController extends BaseController
      * @Route("/{semestre}", name="administration_fin_semestre_index", requirements={"semestre":"\d+"})
      * @param DepartementRepository $departementRepository
      * @param EtudiantRepository    $etudiantRepository
+     * @param ScolariteRepository   $scolariteRepository
      * @param Semestre              $semestre
      *
      * @return Response
@@ -37,22 +39,17 @@ class FinSemestreController extends BaseController
     public function index(
         DepartementRepository $departementRepository,
         EtudiantRepository $etudiantRepository,
+        ScolariteRepository $scolariteRepository,
         Semestre $semestre
     ): Response {
         $etudiants = $etudiantRepository->findBySemestre($semestre);
-
-        $tab = [];
-
-        /** @var Etudiant $e */
-        foreach ($etudiants as $e) {
-            $tab[$e->getId()] = null;
-        }
-        //todo: a tester
+        $scolarites = $scolariteRepository->findBySemestreArray($semestre,
+            $this->dataUserSession->getAnneeUniversitaire());
 
         return $this->render('administration/fin_semestre/index.html.twig', [
             'semestre'     => $semestre,
             'etudiants'    => $etudiants,
-            'tab'          => $tab,
+            'scolarites'   => $scolarites,
             'departements' => $departementRepository->findAll()
         ]);
     }
