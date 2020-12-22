@@ -3,12 +3,14 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/FinSemestreController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 21/12/2020 13:05
+// @lastUpdate 21/12/2020 14:06
 
 namespace App\Controller\administration;
 
 use App\Classes\Etudiant\EtudiantGroupes;
+use App\Classes\Etudiant\EtudiantScolarite;
 use App\Controller\BaseController;
+use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Entity\Scolarite;
 use App\Entity\Semestre;
@@ -65,10 +67,10 @@ class FinSemestreController extends BaseController
      * @return Response
      */
     public function confirme(
+        EtudiantScolarite $etudiantScolarite,
         EtudiantRepository $etudiantRepository,
         Request $request,
         SemestreRepository $semestreRepository,
-        EtudiantGroupes $etudiantGroupes,
         Semestre $semestre
     ): Response {
 
@@ -77,27 +79,15 @@ class FinSemestreController extends BaseController
         /** @var Etudiant $e */
         foreach ($etudiants as $e) {
             $valeur = $request->request->get('etu_' . $e->getId());
-            $etudiantGroupes->setEtudiant($e);
-            $etudiantGroupes->suppressionGroupes();
-            if ($valeur !== '') {
+            $etudiantScolarite->setEtudiant($e);
+            $etudiantScolarite->setSemestre($semestre);
+            $etudiantScolarite->setAnneeUniversitaire($this->dataUserSession->getAnneeUniversitaire());
+            if ($valeur !== '' && $valeur !== 'ATT') {
                 switch ($valeur) {
-                    case 'REO':
-                        $e->setAnneeSortie(date('Y'));
-                        $e->setSemestre(null);
-                        //todo: mettre à jour la scolarité si résultats non publiés?
-                        break;
-                    case 'DEM':
-                        $e->setAnneeSortie(date('Y'));
-                        $e->setSemestre(null);
-                        //todo: mettre à jour la scolarité si résultats non publiés?
-                        break;
-                    case 'DUT':
-                        $e->setAnneeSortie(date('Y'));
-                        $e->setSemestre(null);
-                        //todo: mettre à jour la scolarité si résultats non publiés?
-                        break;
-                    case 'ATT':
-                        null;
+                    case Constantes::SEMESTRE_REORIENTE:
+                    case Constantes::SEMESTRE_DEMISSIONNAIRE:
+                    case Constantes::SCOLARITE_DIPLOME:
+                        $etudiantScolarite->changeEtat($valeur);
                         break;
                     case 'TRANSFERT':
                         //si transfert dans un autre département, faire un mail au département
