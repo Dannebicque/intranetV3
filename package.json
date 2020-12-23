@@ -2,6 +2,7 @@
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^5.13.1",
     "@symfony/stimulus-bridge": "^1.0.0",
+    "@symfony/ux-chartjs": "file:vendor/symfony/ux-chartjs/Resources/assets",
     "@symfony/webpack-encore": "^0.32.0",
     "bootstrap": "^4.5.0",
     "bootstrap-select": "^1.13.18",
@@ -17,8 +18,7 @@
     "sweetalert2": "^9.17.0",
     "ts-loader": "^8.0.3",
     "typescript": "^4.0.2",
-    "webpack-notifier": "^1.6.0",
-    "@symfony/ux-chartjs": "file:vendor/symfony/ux-chartjs/Resources/assets"
+    "webpack-notifier": "^1.6.0"
   },
   "license": "UNLICENSED",
   "private": true,
@@ -26,7 +26,8 @@
     "dev-server": "encore dev-server",
     "dev": "encore dev",
     "watch": "encore dev --watch",
-    "build": "encore production --progress"
+    "build": "encore production --progress",
+    "version": "auto-changelog -p && git add CHANGELOG.md"
   },
   "dependencies": {
     "babel-core": "^6.26.3",
@@ -34,5 +35,6 @@
     "babel-preset-es2015": "^6.24.1",
     "html-loader": "^1.3.0",
     "popper.js": "^1.16.1"
-  }
+  },
+  "version": "1.0.3"
 }
