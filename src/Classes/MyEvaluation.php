@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEvaluation.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/12/2020 17:15
+// @lastUpdate 23/12/2020 12:04
 
 /**
  * Created by PhpStorm.
@@ -40,7 +40,7 @@ class MyEvaluation
     protected array $statistiques = [];
 
     /** @var Note[] */
-    protected array $notes = [];
+    protected $notes = [];
 
     protected array $classement = [];
 
