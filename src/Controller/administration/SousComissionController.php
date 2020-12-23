@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/SousComissionController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/12/2020 15:57
+// @lastUpdate 23/12/2020 07:53
 
 namespace App\Controller\administration;
 
@@ -141,7 +141,7 @@ class SousComissionController extends BaseController
     }
 
     /**
-     * @Route("/exporter/{ssComm}", name="administration_sous_commission_exporter")
+     * @Route("/exporter/{semestre}", name="administration_sous_commission_exporter")
      * @param SousCommissionExport $sousCommission
      * @param Semestre             $semestre
      *
@@ -161,6 +161,18 @@ class SousComissionController extends BaseController
      * @return Response
      */
     public function grandJury(SousCommission $sousCommission, Semestre $semestre): Response
+    {
+
+    }
+
+    /**
+     * @Route("/apogee/{ssComm}", name="administration_sous_commission_exporter_apogee")
+     * @param SousCommission $sousCommission
+     * @param Semestre       $semestre
+     *
+     * @return Response
+     */
+    public function apogee(SousCommission $sousCommission, Semestre $semestre): Response
     {
 
     }
