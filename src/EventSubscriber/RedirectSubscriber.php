@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/RedirectSubscriber.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:13
+// @lastUpdate 29/12/2020 18:05
 
 namespace App\EventSubscriber;
 
@@ -14,8 +14,7 @@ use Symfony\Component\Routing\RouterInterface;
 
 class RedirectSubscriber implements EventSubscriberInterface
 {
-    /** @var RouterInterface */
-    private $router;
+    private RouterInterface $router;
 
     /**
      *

@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Contact.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 28/09/2020 08:41
+// @lastUpdate 30/12/2020 10:43
 
 namespace App\Entity;
 
@@ -34,7 +34,7 @@ class Contact extends BaseEntity
     private $fonction;
 
     /**
-     * @ORM\Column(type="string", length=20, nullable=true)
+     * @ORM\Column(type="string", length=25, nullable=true)
      * @Groups({"alternance_administration", "stage_entreprise_administration"})
      */
     private $telephone;
@@ -46,7 +46,7 @@ class Contact extends BaseEntity
     private $email;
 
     /**
-     * @ORM\Column(type="string", length=20, nullable=true)
+     * @ORM\Column(type="string", length=25, nullable=true)
      * @Groups({"alternance_administration"})
      */
     private $portable;
@@ -58,7 +58,7 @@ class Contact extends BaseEntity
     private $civilite;
 
     /**
-     * @ORM\Column(type="string", length=20, nullable=true)
+     * @ORM\Column(type="string", length=25, nullable=true)
      */
     private $fax;
 
