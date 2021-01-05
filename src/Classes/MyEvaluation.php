@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEvaluation.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 23/12/2020 12:04
+// @lastUpdate 29/12/2020 18:10
 
 /**
  * Created by PhpStorm.
@@ -423,7 +423,7 @@ class MyEvaluation
             if (in_array('num_etudiant', $phrase, true) && in_array('commentaire',
                     $phrase, true) && in_array('note', $phrase, true)) {
                 //on vérifie que les clés existent.
-
+                //todo: commentaire ne devrais pas être obligatoire ? Supprimer l'option avec , dans le texte
                 foreach ($phrase as $key) {
                     $ordre[] = $key;
                 }
