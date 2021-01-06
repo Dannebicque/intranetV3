@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/MoyenneMatiere.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/11/2020 15:35
+// @lastUpdate 06/01/2021 15:55
 
 namespace App\DTO;
 
@@ -46,7 +46,7 @@ class MoyenneMatiere
             return $this->optionFaite;
         }
 
-        foreach ($groupes() as $groupe) {
+        foreach ($groupes as $groupe) {
             if (($groupe->getOptions() !== null) && $groupe->getOptions()->getId() === $this->matiere->getParcours()->getId()) {
                 $this->optionFaite = true;
 
