@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantNotes.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/12/2020 20:31
+// @lastUpdate 06/01/2021 15:53
 
 namespace App\Classes\Etudiant;
 
@@ -60,11 +60,18 @@ class EtudiantNotes
         $this->etudiant = $etudiant;
     }
 
-    public function getNotesParSemestresEtAnneeUniversitaire(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire)
-    {
-        $this->notes = $this->noteRepository->findByEtudiantSemestre($this->etudiant, $semestre, $anneeUniversitaire);
+    public function getNotesParSemestresEtAnneeUniversitaire(
+        ?Semestre $semestre,
+        ?AnneeUniversitaire $anneeUniversitaire
+    ) {
+        if ($semestre !== null && $anneeUniversitaire !== null) {
+            $this->notes = $this->noteRepository->findByEtudiantSemestre($this->etudiant, $semestre,
+                $anneeUniversitaire);
 
-        return $this->notes;
+            return $this->notes;
+        }
+
+        return [];
     }
 
     /**
