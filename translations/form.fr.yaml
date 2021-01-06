@@ -358,6 +358,7 @@ label:
   texte: Texte
   texteExplication: 'Texte d''explication'
   texteLibre: 'Commentaire libre'
+  titre: 'Titre'
   titre_date: 'Titre de l''événement'
   tp_formation: 'Nb. Heures TP (80%)'
   tp_ppn: 'Nb. Heures TP (PPN)'
