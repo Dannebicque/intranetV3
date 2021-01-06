@@ -1,33 +1,85 @@
-<div class="row">
-    <div class="col-2" style="border: 1px solid red; background-color: lightcoral; padding:10px;
-                vertical-align: middle; text-align: center; font-size: 16px; color: white;margin:4px">{{ competence.nomCourt }}</div>
-    <div class="col-4" style="border: 1px solid red; background-color: lightcoral; padding:10px;
-                vertical-align: middle; text-align: center; font-size: 16px; color: white;margin:4px">{{ competence.libelle }}</div>
-    <div class="col-5" style="border: 1px solid red; background-color: lightcoral; padding:10px;
-               color: white;margin:4px">
+<div class="d-flex align-items-stretch mt-3">
+    <div class="col-3 competence ">
+        <div class="p-3 comp competence{{ competence.couleur }}">
+            {{ competence.nomCourt }}
+        </div>
+    </div>
+    <div class="col-3 competencelongue  ms-3">
+        <div class="p-3 competencelongue{{ competence.couleur }}">
+            {{ competence.libelle }}
+        </div>
+    </div>
+    <div class="col-6 composantesessentielles{{ competence.couleur }}">
         <ul>
             {% for composante in competence.apcComposanteEssentielles %}
                 <li>{{ composante.libelle }}</li>
             {% endfor %}
+            <li>
+                <a href="{{ path('administration_apc_composante_essentielle_new', {competence:competence.id}) }}"><i class="fas fa-plus-circle"></i>
+                    Ajouter une composante essentielle</a></li>
         </ul>
-        <a href="{{ path('administration_apc_composante_essentielle_new', {competence:competence.id}) }}"><i class="fas fa-plus-circle"></i>
-            Ajouter une composante essentielle</a>
+
+    </div>
+</div>
+
+{# Situtations professionnelles #}
+<div class="d-flex align-items-stretch mt-3">
+    <div class="col-3">
+        <div class="p-3 situationpro situation{{ competence.couleur }}">Situations professionnelles</div>
+    </div>
+    <div class="col-9 ms-3 situationliste">
+        <div class="p-3 situationliste{{ competence.couleur }}">Prestataire : Livrables sous forme de recommandation
+                                                                stratégique, dans une approche de communication ou de
+                                                                conception de produit / service.<br>
+                                                                Organisation traditionnelle : Direction marketing,
+                                                                communication, DPO, CRM… dans une entreprise, une
+                                                                administration ou une association.<br>
+                                                                Start-up : Les livrables sont utilisés de façon
+                                                                itérative pour améliorer le produit créé par
+                                                                l’organisation, amélioration pilotée par un product
+                                                                owner.
+        </div>
+    </div>
+</div>
+
+{# Niveaux #}
+<div class="d-flex align-items-stretch mt-3">
+    <div class="col-3">
+        <div class="p-3 titreniveau">Niveaux</div>
+    </div>
+    <div class="col-9 ms-3">
+        <div class="p-3 titreac">Apprentissages critiques
+        </div>
     </div>
 </div>
 
 {% for niveau in competence.apcNiveaux %}
-    <div class="row">
-        <div class="col-sm-2" style="border: 1px solid red; background-color: lightcoral; padding:10px;
-                vertical-align: middle; text-align: center; font-size: 16px; color: white;margin:4px">{{ niveau.libelle }}</div>
-        <div class="col-sm-9" style="border: 1px solid red; background-color: lightcoral; padding:10px;
-                color: white;margin:4px">
-            <ul>
-                {% for ac in niveau.apcApprentissageCritiques %}
-                    <li>{{ ac.libelle }}</li>
-                {% endfor %}
-            </ul>
-            <a href="{{ path('administration_apc_apprentissage_critique_new', {niveau:niveau.id}) }}"><i class="fas fa-plus-circle"></i>
-                Ajouter une composante essentielle</a>
+    <div class="d-flex align-items-stretch mt-3">
+        <div class="col-flex-3 niveau  niveau{{ niveau.ordre }}{{ competence.couleur }}">
+            <div class="p-3 niveaucourt ">
+                {% if niveau.ordre == 1 %}
+                Novice
+            {% elseif niveau.ordre == 2 %}
+                Intermédiaire
+            {% elseif niveau.ordre == 3 %}
+                Compétent
+                {% endif %}<br>
+                B.U.T. {{ niveau.ordre }}</div>
+            <div class="p-3 niveaulong">{{ niveau.libelle }}</div>
+        </div>
+        <div class="col-flex-9 ms-3" style="padding-right:15px;">
+            <div class="p-3 niveauliste niveau{{ niveau.ordre }}{{ competence.couleur }}">
+                <ul>
+                    {% for ac in niveau.apcApprentissageCritiques %}
+                        <li>{{ ac.libelle }}</li>
+                    {% endfor %}
+                    <li>
+                        <a href="{{ path('administration_apc_apprentissage_critique_new', {niveau:niveau.id}) }}"><i class="fas fa-plus-circle"></i>
+                            Ajouter une composante essentielle</a>
+                    </li>
+                </ul>
+
+            </div>
         </div>
     </div>
 {% endfor %}
