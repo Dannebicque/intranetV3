@@ -1,15 +1,16 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/QuestionnaireEtudiantRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 14/12/2020 07:45
+// @lastUpdate 07/01/2021 16:27
 
 namespace App\Repository;
 
 use App\Entity\Etudiant;
 use App\Entity\QuestionnaireQualite;
 use App\Entity\QuestionnaireEtudiant;
+use App\Entity\QuestionnaireQuizz;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -95,5 +96,14 @@ class QuestionnaireEtudiantRepository extends ServiceEntityRepository
         }
 
         return $t;
+    }
+
+    public function findByQuestionnaire(QuestionnaireQuizz $questionnaire)
+    {
+        return $this->createQueryBuilder('q')
+            ->where('q.questionnaireQuizz = :questionnaire')
+            ->setParameter('questionnaire', $questionnaire->getId())
+            ->getQuery()
+            ->getResult();
     }
 }

@@ -1,0 +1,30 @@
+{% extends 'base-super_admin.html.twig' %}
+
+{% block header %}
+    Enquête des diplômés
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('super_admin_homepage') }}"
+               class="btn btn-primary btn-float"
+               title="{{ 'atitle.retour_administration'|trans }}"
+               data-provide="tooltip"
+               data-placement="bottom">
+                <i class="fas fa-arrow-left"></i>
+                <span class="sr-only">{{ 'atitle.retour_administration'|trans }}</span>
+            </a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">Enquête des diplômés</h4>
+        <div class="card-body">
+            Il y a {{ reponses|length }} réponses sur {{ nbAttendus|length }} soit {{ pourcentageRetour|number_format
+                (2) }}%.
+        </div>
+    </div>
+{% endblock %}
