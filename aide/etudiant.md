@@ -36,20 +36,20 @@ Vous arrivez ensuite sur une page avec formulaire de connexion :
 Muni de votre identifiant et de votre mot de passe \(fournis par votre IUT\), inscrivez votre identifiant dans le champ
 nommé "Login" et votre mot de passe dans le champ nommé "Mot de passe".
 
-{% hint style="info" %}
+<div class="alert alert-info">
 _Si vous ne vous rappelez plus votre mot de passe, vous pouvez à tout moment cliquer sur "Mot de passe oublié" en bas du
 formulaire._
-{% endhint %}
+</div>
 
-{% hint style="info" %}
+<div class="alert alert-info">
 _Si vous êtes **étudiant** et que vous ne vous êtes jamais connecté, cliquez sur "Première connexion des étudiants de
 l'université" en bas du formulaire._
-{% endhint %}
+</div>
 
-{% hint style="info" %}
+<div class="alert alert-info">
 _Si vous êtes du **personnel de l'université** et que vous ne vous êtes jamais connecté, cliquez sur "Première connexion
 des personnels de l'université" en bas du formulaire._
-{% endhint %}
+</div>
 
 Entrez vos informations de connexion :
 
@@ -63,17 +63,15 @@ Une page similaire doit apparaître sous vos yeux, vous pouvez maintenant navigu
 
 ![Page d&apos;accueil \(dashboard\) de l&apos;Intranet](../.gitbook/assets/image%20%287%29.png)
 
-{% hint style="success" %}
-_**Vous êtes maintenant connecté.**_
-{% endhint %}
+<div class="alert alert-success">
+Vous êtes maintenant connecté.
+</div>
 
 ### Comment visualiser une absence ?
 
-{% hint style="warning" %}
-_Attention ! Pour effectuer cette tâche vous devez au préalable vous connectez à votre **compte étudiant** \(voir la
+**Attention** ! Pour effectuer cette tâche vous devez au préalable vous connectez à votre **compte étudiant** \(voir la
 rubrique "Comment se connecter à l'intranet" ou bien cliquer_ [_
-ici_](https://app.gitbook.com/@dannebicque/s/intranet/#comment-se-connecter-a-lintranet)_\)._
-{% endhint %}
+ici_](https://app.gitbook.com/@dannebicque/s/intranet/#comment-se-connecter-a-lintranet)\).
 
 {% embed url="https://youtu.be/z1T-df22gUI" %}
 
@@ -101,17 +99,15 @@ Une fois sur votre profil, cliquez sur la rubrique **absences** :
 ![La rubrique &quot;absences&quot; de votre profil](../.gitbook/assets/image%20%2818%29.png)
 {% endtab %} {% endtabs %}
 
-{% hint style="success" %}
-_**Vous pouvez consulter la liste de vos absences depuis cette page.**_
-{% endhint %}
+<div class="alert alert-success">
+**Vous pouvez consulter la liste de vos absences depuis cette page.**
+</div>
 
 ### Comment visualiser ses notes ?
 
-{% hint style="warning" %}
-_Attention ! Pour effectuer cette tâche vous devez au préalable vous connectez à votre **compte étudiant** \(voir la
+**Attention** ! Pour effectuer cette tâche vous devez au préalable vous connectez à votre **compte étudiant** \(voir la
 rubrique "Comment se connecter à l'intranet" ou bien cliquez_ [_
-ici_](https://app.gitbook.com/@dannebicque/s/intranet/#comment-se-connecter-a-lintranet)_\)._
-{% endhint %}
+ici_](https://app.gitbook.com/@dannebicque/s/intranet/#comment-se-connecter-a-lintranet)\).
 
 {% embed url="https://youtu.be/Lp5hCTO0bQY" %}
 
@@ -138,7 +134,7 @@ Une fois sur votre profil, cliquez sur la rubrique **notes** :
 ![Rubrique &quot;notes&quot; sur votre profil](../.gitbook/assets/profil_note.jpg)
 {% endtab %} {% endtabs %}
 
-{% hint style="success" %}
-_**Vous pouvez consulter la liste de vos absences depuis cette page.**_
-{% endhint %}
+<div class="alert alert-success">
+Vous pouvez consulter la liste de vos absences depuis cette page.
+</div>
 
