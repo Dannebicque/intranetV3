@@ -1,17 +1,17 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/enquete/EnqueteController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/12/2020 14:31
+// @lastUpdate 07/01/2021 15:59
 
 namespace App\Controller\superAdministration\enquete;
 
+use App\Classes\Enquetes\MyEnquete;
 use App\Entity\Constantes;
 use App\Entity\QuestionnaireQualite;
 use App\Entity\QuestionnaireQuestionnaireSection;
 use App\Entity\Semestre;
-use App\Classes\Enquetes\MyEnquete;
 use App\Repository\DiplomeRepository;
 use App\Repository\EtudiantRepository;
 use App\Repository\PrevisionnelRepository;
@@ -108,17 +108,30 @@ class EnqueteController extends AbstractController
     /**
      * @Route("/questionnaire/edit/{questionnaire}/{step}", name="administratif_enquete_edit")
      *
-     * @param QuestionnaireQualite $questionnaire
-     * @param int                  $step
+     * @param PrevisionnelRepository $previsionnelRepository
+     * @param QuestionnaireQualite   $questionnaire
+     * @param int                    $step
      *
      * @return Response
      */
-    public function edit(QuestionnaireQualite $questionnaire, $step = 1): Response
-    {
+    public function edit(
+        PrevisionnelRepository $previsionnelRepository,
+        QuestionnaireQualite $questionnaire,
+        $step = 1
+    ): Response {
+        if ($step == 2) {
+            //etape 2 on récupère le prévisionnel
+            $previsionnels = $previsionnelRepository->findPrevisionnelSemestre($questionnaire->getSemestre(),
+                $questionnaire->getSemestre()->getAnneeUniversitaire()->getAnnee());
+        } else {
+            $previsionnels = null;
+        }
+
         return $this->render('super-administration/enquete/edit.html.twig', [
             'questionnaire' => $questionnaire,
             'semestre'      => $questionnaire->getSemestre(),
-            'step'          => $step
+            'step'          => $step,
+            'previsionnels' => $previsionnels
         ]);
     }
 
@@ -136,6 +149,10 @@ class EnqueteController extends AbstractController
         foreach ($questionnaire->getSections() as $section) {
             $nSection = clone $section;
             $newQuestionnaireQualite->addSection($nSection);
+            if ($nSection->getConfig() !== null) {
+                $t = explode('-', $nSection->getConfig());
+                $nSection->setConfig($t[0] . '-');
+            }
             $nSection->setQuestionnaireQualite($newQuestionnaireQualite);
             $this->entityManager->persist($nSection);
         }
@@ -164,12 +181,14 @@ class EnqueteController extends AbstractController
 
         return $this->render('appEtudiant/qualite/section.html.twig', [
             'ordre'             => $qualiteQuestionnaireSection->getOrdre(),
+            'config'            => $qualiteQuestionnaireSection,
             'section'           => $qualiteQuestionnaireSection->getSection(),
             'tPrevisionnel'     => $previsionnelRepository->findByDiplomeArray($semestre->getDiplome(),
                 $semestre->getAnneeUniversitaire()),
             'reponses'          => [],
             'onglet'            => $onglet,
             'typeQuestionnaire' => 'qualite',
+            'apercu'            => true
         ]);
     }
 
@@ -186,7 +205,8 @@ class EnqueteController extends AbstractController
             'questionnaireSections' => $questionnaire->getSections(),
             'questionnaire'         => $questionnaire,
             'typeQuestionnaire'     => 'qualite',
-            'semestre'              => $questionnaire->getSemestre()
+            'semestre'              => $questionnaire->getSemestre(),
+            'apercu'                => true
         ]);
     }
 
@@ -241,5 +261,26 @@ class EnqueteController extends AbstractController
     {
         //suppression de l'enquete
         //suppression des liens enquetes sections
+    }
+
+    /**
+     * @Route("/questionnaire/ajax/{section}", name="administratif_enquete_config_ajax_save", options={"expose":true})
+     *
+     *
+     * @param Request                           $request
+     * @param QuestionnaireQuestionnaireSection $section
+     *
+     * @return Response
+     */
+    public function saveConfig(
+        Request $request,
+        QuestionnaireQuestionnaireSection $section
+    ): Response {
+        $previs = $request->request->get('previs');
+        $str = implode(',', $previs);
+        $section->setConfig('BCL:MATIERE-' . $str);
+        $this->entityManager->flush();
+
+        return $this->json(true);
     }
 }

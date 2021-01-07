@@ -1,8 +1,8 @@
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/webpack.config.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 03/12/2020 21:48
+// @lastUpdate 07/01/2021 14:50
 
 var Encore = require('@symfony/webpack-encore')
 var path = require('path')
@@ -70,6 +70,7 @@ Encore
   .addEntry('informations', './assets/js/pages/informations.js')
   .addEntry('scolarite', './assets/js/pages/scolarite.js')
   .addEntry('sadm.scolarite', './assets/js/pages/sadm.scolarite.js')
+  .addEntry('sadm.enquete', './assets/js/pages/sadm.enquete.js')
   .addEntry('sadm.anneeuniversitaire', './assets/js/pages/sadm.anneeuniversitaire.js')
   .addEntry('adm.reservation.materiel_commun', './assets/js/pages/adm.reservation.materiel_commun.js')
 

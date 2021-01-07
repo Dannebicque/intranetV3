@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/questionnaire/QuestionnaireController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/12/2020 15:11
+// @lastUpdate 07/01/2021 13:51
 
 namespace App\Controller\questionnaire;
 
@@ -100,6 +100,7 @@ class QuestionnaireController extends AbstractController
 
         return $this->render('appEtudiant/qualite/section.html.twig', [
             'ordre'             => $questionnaireSection->getOrdre(),
+            'config'            => $questionnaireSection,
             'section'           => $questionnaireSection->getSection(),
             'tPrevisionnel'     => $previsionnelRepository->findByDiplomeArray($etudiant->getDiplome(),
                 $etudiant->getAnneeUniversitaire()),

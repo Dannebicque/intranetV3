@@ -10,8 +10,8 @@
                 <span class="nav-title">Section {{ qualiteQuestionnaireSection.ordre }}</span>
                 <a class="nav-link" data-toggle="tab" href="#wizard-section-{{ qualiteQuestionnaireSection.id }}"></a>
             </li>
-            {% if qualiteQuestionnaireSection.section.previs|length > 0 %}
-                {% set nbOnglet = (qualiteQuestionnaireSection.section.previs|length / 3)|round(0, 'ceil') %}
+            {% if qualiteQuestionnaireSection.previs|length > 0 %}
+                {% set nbOnglet = (qualiteQuestionnaireSection.previs|length / 3)|round(0, 'ceil') %}
                 {% for onglet in 2..nbOnglet %}
                     <li class="nav-item">
                         <span class="nav-title">Section {{ qualiteQuestionnaireSection.ordre }}-{{ onglet }}</span>
@@ -62,8 +62,8 @@
                     Les questions qui affichent un <span class="required-etoile">*</span> sont obligatoires.
                 </div>
             </div>
-            {% if qualiteQuestionnaireSection.section.previs|length > 0 %}
-                {% set nbOnglet = (qualiteQuestionnaireSection.section.previs|length / 3)|round(0, 'ceil') %}
+            {% if qualiteQuestionnaireSection.previs|length > 0 %}
+                {% set nbOnglet = (qualiteQuestionnaireSection.previs|length / 3)|round(0, 'ceil') %}
                 {% for onglet in 2..nbOnglet %}
                     <div class="tab-pane fade"
                          id="wizard-section-{{ qualiteQuestionnaireSection.ordre }}-{{ onglet }}">
