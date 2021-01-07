@@ -1576,14 +1576,16 @@ sauvegarder: Sauvegarder
 
 scolarite:
   detail.heading: 'Détail de la scolarité de %etudiant% pour le semestre %semestre%'
-  diplome.heading: diplome.heading
-  index.heading: 'GEstion de la Scolarité'
+  diplome.heading: 'Gestion des diplômes'
+  index.heading: 'Gestion de la Scolarité'
   recherche.heading: Rechercher
-  semestre.heading: scolarite.semestre.heading
+  semestre.heading: 'Gestion des semestres'
   rdd.index.heading: 'Suivi des inscrits pour la RDD'
   efface.et.recalculee.success.flash: 'Sous commission recalculée avec succès'
   publiee.success.flash: 'Sous commission publiée aux étudiants avec succès'
   depubliee.success.flash: 'Sous commission dépubliée aux étudiants avec succès'
+  rdd.heading: 'Gestion des inscrits à la RDD'
+  enquete.heading: 'Gestion de l''enquête'
 
 security:
   lock.heading: 'Accès vérouillé'
@@ -2142,3 +2144,5 @@ motifTp: 'TP en présentiel'
 motifEval: 'Evaluation'
 
 questionnaire.duplicate.success.flashbag: 'Questionnaire dupliqué avec succès'
+administratif:
+  enquetes.heading: 'Gestion des enquêtes'

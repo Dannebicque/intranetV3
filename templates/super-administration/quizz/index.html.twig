@@ -1,0 +1,56 @@
+{% extends 'base-super_admin.html.twig' %}
+
+{% block header %}
+    {{ 'administratif.enquetes.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('super_admin_homepage') }}"
+               class="btn btn-primary btn-float"
+               title="{{ 'atitle.retour_administration'|trans }}"
+               data-provide="tooltip"
+               data-placement="bottom">
+                <i class="fas fa-arrow-left"></i>
+                <span class="sr-only">{{ 'atitle.retour_administration'|trans }}</span>
+            </a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'administratif.enquetes.heading'|trans }}</h4>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Titre</th>
+                    <th>Dates</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for questionnaire in questionnaires %}
+                    <tr>
+                        <td>{{ questionnaire.libelle }}</td>
+                        <td>{{ questionnaire.dateOuverture|format_date('short') }} au {{ questionnaire
+                            .dateFermeture|format_date('short') }}</td>
+                        <td>
+                            <a href="{{ path('administratif_quizz_show', {'questionnaire': questionnaire.id}) }}"
+                               class="btn btn-info btn-outline btn-square"
+                               data-provide="tooltip"
+                               data-placement="bottom"
+                               title="{{ 'atitle.details'|trans }}">
+                                <i class="{{ iconShow }}"></i>
+                                <span class="sr-only">{{ 'atitle.details'|trans }}</span>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
