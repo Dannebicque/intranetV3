@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/enquete/EnqueteCreationController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 23/11/2020 17:55
+// @lastUpdate 07/01/2021 15:59
 
 namespace App\Controller\superAdministration\enquete;
 
@@ -47,7 +47,10 @@ class EnqueteCreationController extends BaseController
                 'data-provide' => 'validation'
             ],
             'action' => $this->generateUrl('administratif_enquete_wizard_1',
-                ['semestre' => $semestre->getId(), 'action' => $action])
+                ['semestre'             => $semestre->getId(),
+                 'action'               => $action,
+                 'qualiteQuestionnaire' => $qualiteQuestionnaire->getId()
+                ])
         ]);
 
         $form->handleRequest($request);

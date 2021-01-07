@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/QuestionnaireQuestionnaireSection.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 23/11/2020 17:55
+// @lastUpdate 07/01/2021 13:40
 
 namespace App\Entity;
 
@@ -34,6 +34,11 @@ class QuestionnaireQuestionnaireSection extends BaseEntity
      * @ORM\Column(type="integer")
      */
     private $ordre;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $config;
 
 
     public function getSection(): ?QuestionnaireSection
@@ -82,5 +87,40 @@ class QuestionnaireQuestionnaireSection extends BaseEntity
         $this->questionnaireQuizz = $questionnaireQuizz;
 
         return $this;
+    }
+
+    public function getConfig(): ?string
+    {
+        return $this->config;
+    }
+
+    public function setConfig(?string $config): self
+    {
+        $this->config = $config;
+
+        return $this;
+    }
+
+    public function previs($onglet = 0)
+    {
+        $t = explode('-', $this->getConfig());
+        if (count($t) === 2) {
+            if ($onglet === 0) {
+                return explode(',', $t[1]);
+            }
+            $pre = explode(',', $t[1]);
+            $tPre = [];
+            for ($i = 0; $i < 3; $i++) {
+                $key = (int)$onglet * 3 - (3 - $i);
+                if (array_key_exists($key, $pre)) {
+                    $tPre[] = $pre[$key];
+                }
+            }
+
+            return $tPre;
+
+        }
+
+        return [];
     }
 }

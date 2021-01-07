@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcParcours.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/12/2020 20:18
+// @lastUpdate 07/01/2021 10:48
 
 namespace App\Entity;
 
@@ -43,6 +43,11 @@ class ApcParcours
      * @ORM\ManyToOne(targetEntity=Diplome::class, inversedBy="apcParcours")
      */
     private $diplome;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $actif = true;
 
     public function __construct(Diplome $diplome)
     {
@@ -117,6 +122,18 @@ class ApcParcours
     public function setDiplome(?Diplome $diplome): self
     {
         $this->diplome = $diplome;
+
+        return $this;
+    }
+
+    public function getActif(): ?bool
+    {
+        return $this->actif;
+    }
+
+    public function setActif(bool $actif): self
+    {
+        $this->actif = $actif;
 
         return $this;
     }

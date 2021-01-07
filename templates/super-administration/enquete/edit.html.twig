@@ -32,32 +32,56 @@
                         questionnaire.id})) }}
                 </div>
 
-                <div class="tab-pane fade {% if step is defined and step == 2 %}active show{% endif %}"
-                     id="wizard-2" data-provide="validation">
-                    <p class="text-center fs-35 text-muted">Questionnaire Qualité : <strong
-                                class="text-primary">questions</strong></p>
-                    <hr class="w-100px">
-                    //liste de toutes les questions disponibles. Possibilité d'organiser l'odre, de faire des
-                    coupures pages et d'ajouter
-                    des titres (1 niveau) et du texte.
-                    //Possibilité de placer la partie "matières" dans ces questions.
-                    {{ render(path('administratif_enquete_wizard_2', {action: 'edit', semestre: semestre.id,
-                        qualiteQuestionnaire: questionnaire.id})) }}
-                </div>
+                {# <div class="tab-pane fade {% if step is defined and step == 2 %}active show{% endif %}" #}
+                {# id="wizard-2" data-provide="validation"> #}
+                {# <p class="text-center fs-35 text-muted">Questionnaire Qualité : <strong #}
+                {# class="text-primary">questions</strong></p> #}
+                {# <hr class="w-100px"> #}
+                {# //liste de toutes les questions disponibles. Possibilité d'organiser l'odre, de faire des #}
+                {# coupures pages et d'ajouter #}
+                {# des titres (1 niveau) et du texte. #}
+                {# //Possibilité de placer la partie "matières" dans ces questions. #}
+                {# {{ render(path('administratif_enquete_wizard_2', {action: 'edit', semestre: semestre.id, #}
+                {# qualiteQuestionnaire: questionnaire.id})) }} #}
+                {# </div> #}
 
-                <div class="tab-pane fade {% if step is defined and step == 3 %}active show{% endif %}"
+                <div class="tab-pane fade {% if step is defined and step == 2 %}active show{% endif %}"
                      id="wizard-3" data-provide="validation">
                     <p class="text-center fs-35 text-muted">Questionnaire Qualité : <strong
-                                class="text-primary">matières</strong></p>
+                                class="text-primary">Matières</strong></p>
 
                     <hr class="w-100px">
-                    //Liste des matières par semestre.
-                    //Questionnaire type puis choix des matières à afficher
-
+                    {% for section in questionnaire.sections %}
+                        <h2>{{ section.section.titre }}</h2>
+                        {% if section.config != null %}
+                            <div class="row">
+                                {% for previsionnel in previsionnels %}
+                                    {% if previsionnel.matiere != null and previsionnel.personnel != null %}
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <input type="checkbox" value="{{ previsionnel.id }}" name="config_{{ section.id }}[]" id="config_{{ section.id }}_{{ previsionnel.id }}" {% if
+                                                    previsionnel.id in section.previs %} checked {% endif %}>
+                                                <label for="config_{{ section.id }}_{{ previsionnel.id }}">
+                                                    {{ previsionnel.matiere.display }} par {{ previsionnel
+                                                    .personnel.displayPr }}</label>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                            <button class="btn btn-success validConfiguration" data-section="{{ section.id }}">
+                                Enregistrer
+                            </button>
+                        {% else %}
+                            <div class="alert alert-info">
+                                Pas de configuration pour cette section.
+                            </div>
+                        {% endif %}
+                    {% endfor %}
                 </div>
 
 
-                <div class="tab-pane fade {% if step is defined and step == 4 %}active show{% endif %}"
+                <div class="tab-pane fade {% if step is defined and step == 3 %}active show{% endif %}"
                      id="wizard-4">
                     <br><br>
                     <p class="text-center fs-35 text-muted">Ready to <strong class="text-primary">go?</strong></p>
@@ -86,4 +110,9 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('sadm.enquete') }}
 {% endblock %}

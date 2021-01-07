@@ -107,7 +107,7 @@
                     <div class="tab-content">
                         {% for parcour in parcours %}
                             <div class="tab-pane {% if loop.first %}fade active show{% endif %}" id="parcour_{{ parcour.id }}">
-                                {{ include('administration/apc/_parcour.html.twig') }}
+                                {{ include('administration/apc/_parcour.html.twig', {parcour: parcour}) }}
                             </div>
                         {% endfor %}
                     </div>
