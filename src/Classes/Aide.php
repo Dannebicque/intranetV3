@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Aide.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+// @lastUpdate 06/01/2021 18:24
 
 namespace App\Classes;
 
@@ -130,12 +130,16 @@ class Aide
         $t = explode('-', $sujet);
 
         if (count($t) === 0) {
-            $dossier = '/';
-        } else {
-            $dossier = '/';
-            for ($i = 0; $i < count($t) - 1; $i++) {
-                $dossier .= $t[$i] . '/';
-            }
+            return '/';
+        }
+
+        $dossier = '/';
+        for ($i = 0; $i < count($t) - 1; $i++) {
+            $dossier .= $t[$i] . '/';
+        }
+
+        if ($dossier === '/') {
+            return '/';
         }
 
         return substr($dossier, 0, -1);
