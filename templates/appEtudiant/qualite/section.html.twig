@@ -1,6 +1,6 @@
 {% set num_titre = ordre %}
 <h5><strong>{{ ordre }}.</strong> {{ section.titre }}</h5>
-{% if config == null %}
+{% if config.config == null %}
     {% for question in section.qualiteSectionQuestions %}
         {% set numero = num_titre~"."~ loop.index %}
         {{ include('quizz_question/_question.html.twig', {question:question.question, numero: numero}) }}
