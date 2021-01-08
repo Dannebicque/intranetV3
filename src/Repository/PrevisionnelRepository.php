@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/PrevisionnelRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/09/2020 17:43
+// @lastUpdate 08/01/2021 10:08
 
 namespace App\Repository;
 
@@ -203,5 +203,27 @@ class PrevisionnelRepository extends ServiceEntityRepository
         }
 
         return $tPrevisionnel;
+    }
+
+    public function findPrevisionnelAnnee(Semestre $semestre, ?int $anneeUniversitaire)
+    {
+        $query = $this->createQueryBuilder('p')
+            ->leftJoin(Personnel::class, 'e', 'WITH', 'p.personnel = e.id')
+            ->innerJoin(Matiere::class, 'm', 'WITH', 'p.matiere = m.id')
+            ->innerJoin(Ue::class, 'u', 'WITH', 'm.ue = u.id')
+            ->where('p.annee = :annee')
+            ->setParameter('annee', $anneeUniversitaire);
+
+        $annee = $semestre->getAnnee();
+        $ors = [];
+        foreach ($annee->getSemestres() as $sem) {
+            $ors[] = $query->expr()->orx('u.semestre = ' . $query->expr()->literal($sem->getId()));
+        }
+
+        return $query->andWhere(implode(' OR ', $ors))
+            ->orderBy('u.semestre', 'ASC')
+            ->addOrderBy('m.codeMatiere', 'ASC')
+            ->getQuery()
+            ->getResult();
     }
 }

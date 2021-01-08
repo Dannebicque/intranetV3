@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/enquete/EnqueteController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/01/2021 15:59
+// @lastUpdate 08/01/2021 10:05
 
 namespace App\Controller\superAdministration\enquete;
 
@@ -121,7 +121,7 @@ class EnqueteController extends AbstractController
     ): Response {
         if ($step == 2) {
             //etape 2 on récupère le prévisionnel
-            $previsionnels = $previsionnelRepository->findPrevisionnelSemestre($questionnaire->getSemestre(),
+            $previsionnels = $previsionnelRepository->findPrevisionnelAnnee($questionnaire->getSemestre(),
                 $questionnaire->getSemestre()->getAnneeUniversitaire()->getAnnee());
         } else {
             $previsionnels = null;
