@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Tools.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/01/2021 10:53
+// @lastUpdate 08/01/2021 10:54
 
 /**
  * Created by PhpStorm.
@@ -68,6 +68,10 @@ abstract class Tools
 
         if (strpos($number, '33') === 0) {
             $number = '0' . substr($number, 2, strlen($number));
+        }
+
+        if (strpos($number, '+33') === 0) {
+            $number = '0' . substr($number, 3, strlen($number));
         }
 
         if (strlen($number) === 9) {
