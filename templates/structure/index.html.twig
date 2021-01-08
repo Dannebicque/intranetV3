@@ -32,7 +32,16 @@
 
 {% block content %}
     <div class="card">
-        <h4 class="card-title">{{ 'structure.de.la.departement.heading'|trans({ '%departement%': departement.libelle}) }}</h4>
+        <header class="card-header">
+            <h4 class="card-title">
+                {{ 'structure.de.la.departement.heading'|trans({ '%departement%': departement.libelle}) }}
+            </h4>
+            <div class="card-header-actions" style="">
+                {% for diplome in departement.diplomes %}
+                    <a href="#diplome_{{ diplome.id }}" class="btn btn-sm btn">{{ diplome.typeDiplome.sigle }} {{ diplome.sigle }}</a>
+                {% endfor %}
+            </div>
+        </header>
         <div class="card-body">
 
             <div class="row gap-y ">
@@ -68,7 +77,7 @@
             {% for diplome in departement.diplomes %}
                 <div class="row gap-y lignehover">
                     <div class="col-md-1">&nbsp;</div>
-                    <div class="col-md-9">{{ diplome.typediplome.sigle }}
+                    <div class="col-md-9" id="diplome_{{ diplome.id }}">{{ diplome.typediplome.sigle }}
                         | {{ diplome.libelle }} | {{ diplome.codeDiplome }} | {{ diplome.codeEtape }}</div>
                     <div class="col-md-2">
 
@@ -106,14 +115,16 @@
                         {% endif %}
                     </div>
                 </div>
-                <div class="row gap-y lignehover">
-                    <div class="col-md-1">&nbsp;</div>
-                    <div class="col-md-11">
-                        <a href="{{ path('administration_apc_referentiel_index', {diplome:diplome.id}) }}"
-                           class="btn btn-info btn-block" title="Accéder au référentiel de compétences"><i
-                                    class="fa fa-warehouse"></i> Accéder au référentiel de compétences</a>
+                {% if diplome.typeDiplome.apc == true %}
+                    <div class="row gap-y lignehover">
+                        <div class="col-md-1">&nbsp;</div>
+                        <div class="col-md-11">
+                            <a href="{{ path('administration_apc_referentiel_index', {diplome:diplome.id}) }}"
+                               class="btn btn-info btn-block" title="Accéder au référentiel de compétences"><i
+                                        class="fa fa-warehouse"></i> Accéder au référentiel de compétences</a>
+                        </div>
                     </div>
-                </div>
+                {% endif %}
 
                 {% for annee in diplome.annees %}
                     <div class="row gap-y dip_{{ diplome.id }} lignehover">
@@ -190,7 +201,7 @@
                        fa-eye"></i></a>
                                     {% endif %}
                                     {% if semestre.ues|length == 0 and semestre
-                                        .parcours|length == 0 and semestre.etudiants|length == 0 %}
+                                    .parcours|length == 0 and semestre.etudiants|length == 0 %}
                                         <a href="{{ path(baseurl ~ 'semestre_delete', {id: semestre.id}) }}"
                                            data-csrf="{{ csrf_token('delete' ~ semestre.id) }}"
                                            class="btn btn-danger btn-outline btn-square btn-xs supprimer" data-id="id"><i
@@ -204,9 +215,9 @@
                         {% for ue in semestre.ues %}
                             <div class="row gap-y ue_{{ semestre.id }} lignehover">
                                 <div class="col-md-4"></div>
-                                <div class="col-md-6">UE {{ ue.numeroUe }} | {{ ue.codeElement }} | {{ ue.libelle }} {%
-                                        if ue
-                                        .bonification==true %}(Bonification){% endif %}</div>
+                                <div class="col-md-6">UE {{ ue.numeroUe }} | {{ ue.codeElement }}
+                                                      | {{ ue.libelle }} {% if ue
+                                    .bonification==true %}(Bonification){% endif %}</div>
                                 <div class="col-md-2">
                                     <a href="{{ path(baseurl ~ 'ue_duplicate', {'id': ue.id}) }}"
                                        class="btn btn-success btn-outline btn-square btn-xs" data-provide="tooltip"
@@ -267,13 +278,13 @@
                                         {% if is_granted('ROLE_SUPER_ADMIN') %}
                                             {% if semestre.actif == true %}
                                                 <a href="{{ path(baseurl ~ 'matiere_activate', {'matiere': matiere
-                                                    .id, etat:1}) }}"
+                                                .id, etat:1}) }}"
                                                    class="btn btn-secondary btn-outline btn-square btn-xs" data-provide="tooltip"
                                                    data-placement="bottom" title="{{ 'atitle.desactiver'|trans }}"><i class="fa
                        fa-eye-slash"></i></a>
                                             {% else %}
                                                 <a href="{{ path(baseurl ~ 'matiere_activate', {'matiere': matiere
-                                                    .id, etat:0}) }}"
+                                                .id, etat:0}) }}"
                                                    class="btn btn-secondary btn-outline btn-square btn-xs" data-provide="tooltip"
                                                    data-placement="bottom" title="{{ 'atitle.active'|trans }}"><i class="fa
                        fa-eye"></i></a>
@@ -365,70 +376,70 @@
 
 
 
-                        {##}
-                        {#{% for opt in t.options if opt.semestre==semestre %}#}
+                        {# #}
+                        {# {% for opt in t.options if opt.semestre==semestre %} #}
 
-                        {#<tr class="UE_{{ semestre.id }} deroulant">#}
-                        {#<td>&nbsp;</td>#}
-                        {#<td>&nbsp;</td>#}
-                        {#<td>&nbsp;</td>#}
-                        {#<td>&nbsp;</td>#}
-                        {#<td colspan="2">{{ opt.nomoption }}</td>#}
-                        {#<td>#}
-                        {#<a href="{{ path('da_kernel_administration_modif_option',{id:opt.id}) }}"#}
-                        {#class="btn btn-warning" rel="tooltip"#}
-                        {#data-placement="left" title=" Modifier "><i#}
-                        {#class="{{ iconEdit }}"></i></a>#}
+                        {# <tr class="UE_{{ semestre.id }} deroulant"> #}
+                        {# <td>&nbsp;</td> #}
+                        {# <td>&nbsp;</td> #}
+                        {# <td>&nbsp;</td> #}
+                        {# <td>&nbsp;</td> #}
+                        {# <td colspan="2">{{ opt.nomoption }}</td> #}
+                        {# <td> #}
+                        {# <a href="{{ path('da_kernel_administration_modif_option',{id:opt.id}) }}" #}
+                        {# class="btn btn-warning" rel="tooltip" #}
+                        {# data-placement="left" title=" Modifier "><i #}
+                        {# class="{{ iconEdit }}"></i></a> #}
 
-                        {#<a href="#modalConfirm" data-toggle="modal" id="OPT-{{ opt.id }}"#}
-                        {#class="btn  btn-danger supprimer" rel="tooltip"#}
-                        {#data-placement="right" title="Supprimer l'option"><i#}
-                        {#class="fa fa-times"></i></a>#}
-                        {#</td>#}
-                        {#</tr>#}
-                        {#{% for u in t.ue if u.option==opt %}#}
+                        {# <a href="#modalConfirm" data-toggle="modal" id="OPT-{{ opt.id }}" #}
+                        {# class="btn  btn-danger supprimer" rel="tooltip" #}
+                        {# data-placement="right" title="Supprimer l'option"><i #}
+                        {# class="fa fa-times"></i></a> #}
+                        {# </td> #}
+                        {# </tr> #}
+                        {# {% for u in t.ue if u.option==opt %} #}
 
-                        {#<tr class="UE_{{ semestre.id }} deroulant">#}
-                        {#<td>&nbsp;</td>#}
-                        {#<td>&nbsp;</td>#}
-                        {#<td>&nbsp;</td>#}
-                        {#<td>&nbsp;</td>#}
-                        {#<td colspan="2">{{ u.numeroue }} | {{ u.nomue }}#}
-                        {#| {{ u.codeetape }}</td>#}
-                        {#<td>#}
-                        {#<a href="{{ path('da_kernel_administration_modif_ue',{id:u.id}) }}"#}
-                        {#class="btn btn-warning" rel="tooltip" data-placement="left"#}
-                        {#title=" Modifier "><i class="{{ iconEdit }}"></i></a>#}
+                        {# <tr class="UE_{{ semestre.id }} deroulant"> #}
+                        {# <td>&nbsp;</td> #}
+                        {# <td>&nbsp;</td> #}
+                        {# <td>&nbsp;</td> #}
+                        {# <td>&nbsp;</td> #}
+                        {# <td colspan="2">{{ u.numeroue }} | {{ u.nomue }} #}
+                        {# | {{ u.codeetape }}</td> #}
+                        {# <td> #}
+                        {# <a href="{{ path('da_kernel_administration_modif_ue',{id:u.id}) }}" #}
+                        {# class="btn btn-warning" rel="tooltip" data-placement="left" #}
+                        {# title=" Modifier "><i class="{{ iconEdit }}"></i></a> #}
 
-                        {#<a href="#modalConfirm" data-toggle="modal" id="UE-{{ u.id }}"#}
-                        {#class="btn btn-danger supprimer" rel="tooltip"#}
-                        {#data-placement="right" title="Supprimer l'UE"><i#}
-                        {#class="fa fa-times"></i></a>#}
-                        {#</td>#}
-                        {#</tr>#}
-                        {#{% endfor %}#}
-                        {#{% endfor %}#}
+                        {# <a href="#modalConfirm" data-toggle="modal" id="UE-{{ u.id }}" #}
+                        {# class="btn btn-danger supprimer" rel="tooltip" #}
+                        {# data-placement="right" title="Supprimer l'UE"><i #}
+                        {# class="fa fa-times"></i></a> #}
+                        {# </td> #}
+                        {# </tr> #}
+                        {# {% endfor %} #}
+                        {# {% endfor %} #}
 
-                        {#<tr class="deroulant" id="option_new_{{ semestre.id }}">#}
-                        {#<td colspan="4" class="ligneajouter">Ajouter un parcours</td>#}
-                        {#<td>#}
-                        {#<input type="text" class="form-control" placeholder="Code Apogée"#}
-                        {#id="codeApogeeOption-{{ semestre.id }}"/>#}
-                        {##}
-                        {#<a href="{{ path('da_kernel_administration_add_option',{semestre:semestre.id}) }}" class="btn btn-block btn-large btn-primary">Ajouter un parcours au semestre</a>#}
-                        {# </td>#}
-                        {#<td>#}
-                        {#<input type="text" class="form-control"#}
-                        {#placeholder="Libellé du parcours"#}
-                        {#id="libelleOption-{{ semestre.id }}"/>#}
-                        {#</td>#}
-                        {#<td>#}
-                        {#<button class="btn btn-success addParcours" title="Ajouter un parcours"#}
-                        {#data-semestre="{{ semestre.id }}"><i#}
-                        {#class="fa fa-plus-circle"></i></button>#}
-                        {#</td>#}
+                        {# <tr class="deroulant" id="option_new_{{ semestre.id }}"> #}
+                        {# <td colspan="4" class="ligneajouter">Ajouter un parcours</td> #}
+                        {# <td> #}
+                        {# <input type="text" class="form-control" placeholder="Code Apogée" #}
+                        {# id="codeApogeeOption-{{ semestre.id }}"/> #}
+                        {# #}
+                        {# <a href="{{ path('da_kernel_administration_add_option',{semestre:semestre.id}) }}" class="btn btn-block btn-large btn-primary">Ajouter un parcours au semestre</a> #}
+                        {# </td> #}
+                        {# <td> #}
+                        {# <input type="text" class="form-control" #}
+                        {# placeholder="Libellé du parcours" #}
+                        {# id="libelleOption-{{ semestre.id }}"/> #}
+                        {# </td> #}
+                        {# <td> #}
+                        {# <button class="btn btn-success addParcours" title="Ajouter un parcours" #}
+                        {# data-semestre="{{ semestre.id }}"><i #}
+                        {# class="fa fa-plus-circle"></i></button> #}
+                        {# </td> #}
 
-                        {#</tr>#}
+                        {# </tr> #}
                     {% endfor %}
 
                     <div class="row gap-y lignehover" id="semestre_new_{{ annee.id }}">
