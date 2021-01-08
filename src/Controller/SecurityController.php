@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/SecurityController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+// @lastUpdate 08/01/2021 14:55
 
 namespace App\Controller;
 
@@ -24,6 +24,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -64,7 +65,7 @@ class SecurityController extends AbstractController
      * @param EtudiantRepository      $etudiantRepository
      *
      * @return Response
-     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     * @throws TransportExceptionInterface
      */
     public function passwordLost(
         Request $request,
@@ -126,7 +127,7 @@ class SecurityController extends AbstractController
      * @param MailerFromTwig               $mailerFromTwig
      *
      * @return JsonResponse
-     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     * @throws TransportExceptionInterface
      */
     public function initPassword(
         Personnel $personnel,
@@ -135,7 +136,7 @@ class SecurityController extends AbstractController
         MailerFromTwig $mailerFromTwig
     ): JsonResponse {
         $password = substr(md5(mt_rand()), 0, 10);
-        $passwordEncode = $passwordEncoder->encodePassword($password);
+        $passwordEncode = $passwordEncoder->encodePassword($personnel, $password);
 
         $personnel->setPassword($passwordEncode);
         $entityManager->flush();
