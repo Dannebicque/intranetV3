@@ -3,7 +3,7 @@
 {% if config.config == null %}
     {% for question in section.qualiteSectionQuestions %}
         {% set numero = num_titre~"."~ loop.index %}
-        {{ include('quizz_question/_question.html.twig', {question:question.question, numero: numero}) }}
+        {{ include('quizz_question/_question.html.twig', {question:question.question, numero: numero, config: null}) }}
     {% endfor %}
 {% else %}
     {% for previ in config.previs(onglet) %}
