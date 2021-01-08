@@ -3,12 +3,13 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/EnqueteDiplomeController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/01/2021 17:35
+// @lastUpdate 08/01/2021 10:55
 
 namespace App\Controller\superAdministration;
 
 use App\Classes\Configuration;
 use App\Classes\Enquetes\MyEnqueteDiplome;
+use App\Repository\EtudiantRepository;
 use App\Repository\QuestionnaireEtudiantRepository;
 use App\Repository\QuestionnaireQuizzRepository;
 use App\Repository\RddDiplomeRepository;
@@ -46,6 +47,7 @@ class EnqueteDiplomeController extends AbstractController
      */
     public function index(
         QuestionnaireEtudiantRepository $questionnaireEtudiantRepository,
+        EtudiantRepository $etudiantRepository,
         RddDiplomeRepository $rddDiplomeRepository,
         Configuration $configuration,
         QuestionnaireQuizzRepository $questionnaireQuizzRepository
@@ -55,11 +57,26 @@ class EnqueteDiplomeController extends AbstractController
         $reponses = $questionnaireEtudiantRepository->findByQuestionnaire($questionnaire);
         $pourcentage = count($reponses) / count($nbAttendus);
 
+        $etudiants = $etudiantRepository->findAll();
+        $tEtudiant = [];
+        foreach ($etudiants as $etudiant) {
+            $tEtudiant[$etudiant->getNumEtudiant()]['etudiant'] = $etudiant;
+            $tEtudiant[$etudiant->getNumEtudiant()]['reponse'] = null;
+        }
+
+        foreach ($reponses as $reponse) {
+            if (array_key_exists($reponse->getEtudiant()->getNumEtudiant(), $tEtudiant)) {
+                $tEtudiant[$etudiant->getNumEtudiant()]['reponse'] = $reponse;
+            }
+        }
+
+
         return $this->render('super-administration/enquete-diplome/index.html.twig', [
             'questionnaire'     => $questionnaire,
             'reponses'          => $reponses,
             'nbAttendus'        => $nbAttendus,
-            'pourcentageRetour' => $pourcentage
+            'pourcentageRetour' => $pourcentage,
+            'etudiants'         => $tEtudiant
         ]);
     }
 

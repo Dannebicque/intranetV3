@@ -25,6 +25,53 @@
         <div class="card-body">
             Il y a {{ reponses|length }} réponses sur {{ nbAttendus|length }} soit {{ pourcentageRetour|number_format
                 (2) }}%.
+            <br>
+            <table class="table table-striped" data-provide="datatables">
+                <thead>
+                <tr>
+                    <th>Etudiant</th>
+                    <th>Diplome</th>
+                    <th>Téléphone</th>
+                    <th>Téléphone</th>
+                    <th>Mail</th>
+                    <th>Enquête ?</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for etu in nbAttendus %}
+                    {% if etudiants[etu.numEtudiant] is defined %}
+                        <tr>
+                            <td>{{ etudiants[etu.numEtudiant].etudiant.display }}</td>
+                            <td>{{ etu.libelleDiplome }}</td>
+                            <td>{{ etudiants[etu.numEtudiant].etudiant.tel1|tel_format }}</td>
+                            <td>{{ etudiants[etu.numEtudiant].etudiant.tel2|tel_format }}</td>
+                            <td>{{ etudiants[etu.numEtudiant].etudiant.mailPerso|mailto }}</td>
+                            <td>
+                                {% if etudiants[etu.numEtudiant].reponse != null %}
+                                    {% if etudiants[etu.numEtudiant].reponse.termine == true %}
+                                        Terminé le ...
+                                    {% else %}
+                                        En cours
+                                    {% endif %}
+                                {% else %}
+                                    Non répondu
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('datatable') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('datatable') }}
 {% endblock %}
