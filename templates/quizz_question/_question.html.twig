@@ -1,5 +1,5 @@
-{% if config is not defined %}
-    {% set config= null %}
+{% if config == null or config is not defined %}
+    {% set config = null %}
     {% set name = 'q'~question.id %}
 {% else %}
     {% set name = 'q'~question.id~'_c'~config.id %}
