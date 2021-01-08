@@ -11,6 +11,7 @@
                 <a class="nav-link" data-toggle="tab" href="#wizard-section-{{ qualiteQuestionnaireSection.id }}"></a>
             </li>
             {% if qualiteQuestionnaireSection.previs|length > 0 %}
+                {# todo: onglet doit être supérieur ou égale à 2... sinon plantage #}
                 {% set nbOnglet = (qualiteQuestionnaireSection.previs|length / 3)|round(0, 'ceil') %}
                 {% for onglet in 2..nbOnglet %}
                     <li class="nav-item">
