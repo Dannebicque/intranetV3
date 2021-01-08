@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Tools.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/12/2020 14:31
+// @lastUpdate 08/01/2021 10:53
 
 /**
  * Created by PhpStorm.
@@ -64,8 +64,12 @@ abstract class Tools
 
     public static function telFormat($number)
     {
-
         str_replace(['.', '-', ' '], '', $number);
+
+        if (strpos($number, '33') === 0) {
+            $number = '0' . substr($number, 2, strlen($number));
+        }
+
         if (strlen($number) === 9) {
             $number = '0' . $number;
         }
