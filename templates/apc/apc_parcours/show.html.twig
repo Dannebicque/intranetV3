@@ -1,14 +1,14 @@
-{% extends 'base.html.twig' %}
+{% extends is_granted('ROLE_SUPER_ADMIN') ? 'base-super_admin.html.twig' : 'base.html.twig' %}
 
 {% block header %}
-    {{ 'adm.apc_competence.show.heading'|trans }}
+    {{ 'adm.apc_parcours.show.heading'|trans }}
 {% endblock %}
 
 {% block headeractions %}
     <div class="header-action">
         <div class="buttons">
-            <a href="{{ path('administration_apc_competence_delete', {id: competence.id}) }}"
-               data-csrf="{{ csrf_token('delete' ~ competence.id) }}"
+            <a href="{{ path('administration_apc_parcours_delete', {id: parcour.id}) }}"
+               data-csrf="{{ csrf_token('delete' ~ parcour.id) }}"
                class="btn btn-danger btn-sm btn-float supprimer"
                title="{{ 'atitle.supprimer'|trans }}"
                data-provide="tooltip"
@@ -16,7 +16,7 @@
                 <i class="{{ iconDelete }}"></i>
                 <span class="sr-only">{{ 'atitle.supprimer'|trans }}</span>
             </a>
-            <a href="{{ path('administration_apc_competence_edit', {id: competence.id}) }}"
+            <a href="{{ path('administration_apc_parcours_edit', {id: parcour.id}) }}"
                class="btn btn-warning btn-sm btn-float"
                title="{{ 'atitle.modifier'|trans }}"
                data-provide="tooltip"
@@ -26,7 +26,7 @@
             </a>
 
 
-            <a href="{{ path('administration_apc_competence_index',{'diplome' : competence.diplome.id}) }}"
+            <a href="{{ path('administration_apc_referentiel_index',{'diplome' : parcour.diplome.id}) }}"
                class="btn btn-primary btn-float"
                title="{{ 'atitle.retour_liste'|trans }}"
                data-provide="tooltip"
@@ -41,9 +41,9 @@
 
 {% block content %}
     <div class="card">
-        <h4 class="card-title">{{ 'adm.apc_competence.show.heading'|trans }}</h4>
+        <h4 class="card-title">{{ 'adm.apc_parcours.show.heading'|trans }}</h4>
         <div class="card-body">
-            {{ include('administration/apc/_competence.html.twig') }}
+            {{ include('apc/_parcour.html.twig') }}
         </div>
     </div>
 {% endblock %}

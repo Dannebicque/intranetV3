@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcApprentissageCritiqueController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+// @lastUpdate 08/01/2021 14:10
 
 namespace App\Controller\administration\apc;
 
@@ -44,7 +44,7 @@ class ApcApprentissageCritiqueController extends BaseController
                 ['id' => $niveau->getCompetence()->getId()]);
         }
 
-        return $this->render('administration/apc/apc_apprentissage_critique/new.html.twig', [
+        return $this->render('apc/apc_apprentissage_critique/new.html.twig', [
             'apc_apprentissage_critique' => $apcApprentissageCritique,
             'form'                       => $form->createView(),
             'competence'                 => $niveau->getCompetence()
@@ -70,7 +70,7 @@ class ApcApprentissageCritiqueController extends BaseController
             return $this->redirectToRoute('administration_apc_apprentissage_critique_index');
         }
 
-        return $this->render('administration/apc/apc_apprentissage_critique/edit.html.twig', [
+        return $this->render('apc/apc_apprentissage_critique/edit.html.twig', [
             'apc_apprentissage_critique' => $apcApprentissageCritique,
             'form'                       => $form->createView(),
         ]);

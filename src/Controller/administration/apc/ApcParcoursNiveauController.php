@@ -1,13 +1,14 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcParcoursNiveauController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/12/2020 20:18
+// @lastUpdate 08/01/2021 15:56
 
 namespace App\Controller\administration\apc;
 
 use App\Controller\BaseController;
+use App\Entity\ApcParcours;
 use App\Entity\ApcParcoursNiveau;
 use App\Entity\Constantes;
 use App\Form\ApcParcoursNiveauType;
@@ -21,27 +22,28 @@ use Symfony\Component\Routing\Annotation\Route;
 class ApcParcoursNiveauController extends BaseController
 {
     /**
-     * @Route("/new", name="apc_parcours_niveau_new", methods={"GET","POST"})
-     * @param Request $request
+     * @Route("/new/{parcours}", name="apc_parcours_niveau_new", methods={"GET","POST"})
+     * @param Request     $request
+     * @param ApcParcours $parcours
      *
      * @return Response
      */
-    public function new(Request $request): Response
+    public function new(Request $request, ApcParcours $parcours): Response
     {
-        $apcParcoursNiveau = new ApcParcoursNiveau();
+        $apcParcoursNiveau = new ApcParcoursNiveau($parcours);
         $form = $this->createForm(ApcParcoursNiveauType::class, $apcParcoursNiveau);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($apcParcoursNiveau);
             $this->entityManager->flush();
-            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'apcParcoursNiveau.create.success.flash');
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'apc.parcoursNiveau.create.success.flash');
 
             return $this->redirectToRoute('administration_apc_parcours_show',
                 ['id' => $apcParcoursNiveau->getParcours()->getId()]);
         }
 
-        return $this->render('administration/apc/apc_parcours_niveau/new.html.twig', [
+        return $this->render('apc/apc_parcours_niveau/new.html.twig', [
             'apc_parcours_niveau' => $apcParcoursNiveau,
             'form'                => $form->createView(),
         ]);
@@ -61,13 +63,13 @@ class ApcParcoursNiveauController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
-            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'apcParcoursNiveau.edit.success.flash');
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'apc.parcoursNiveau.edit.success.flash');
 
             return $this->redirectToRoute('administration_apc_parcours_show',
                 ['id' => $apcParcoursNiveau->getParcours()->getId()]);
         }
 
-        return $this->render('administration/apc/apc_parcours_niveau/edit.html.twig', [
+        return $this->render('apc/apc_parcours_niveau/edit.html.twig', [
             'apc_parcours_niveau' => $apcParcoursNiveau,
             'form'                => $form->createView(),
         ]);
@@ -86,9 +88,9 @@ class ApcParcoursNiveauController extends BaseController
         if ($this->isCsrfTokenValid('delete' . $apcParcoursNiveau->getId(), $request->request->get('_token'))) {
             $this->entityManager->remove($apcParcoursNiveau);
             $this->entityManager->flush();
-            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'apcParcoursNiveau.delete.success.flash');
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'apc.parcoursNiveau.delete.success.flash');
         }
-        $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'apcParcoursNiveau.delete.error.flash');
+        $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'apc.parcoursNiveau.delete.error.flash');
 
         return $this->redirectToRoute('administration_apc_parcours_show', ['id' => $parcour->getId()]);
     }

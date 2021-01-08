@@ -12,7 +12,11 @@
     <div class="col-6 composantesessentielles{{ competence.couleur }}">
         <ul>
             {% for composante in competence.apcComposanteEssentielles %}
-                <li>{{ composante.libelle }}</li>
+                <li>{{ composante.libelle }}
+                    <a href="{{ path('administration_apc_composante_essentielle_edit',
+                        {id:composante.id}) }}">
+                        <i class="fas fa-edit"></i>
+                    </a></li>
             {% endfor %}
             <li>
                 <a href="{{ path('administration_apc_composante_essentielle_new', {competence:competence.id}) }}"><i class="fas fa-plus-circle"></i>
@@ -65,13 +69,19 @@
                 Compétent
                 {% endif %}<br>
                 B.U.T. {{ niveau.ordre }}</div>
-            <div class="p-3 niveaulong">{{ niveau.libelle }}</div>
+            <div class="p-3 niveaulong">{{ niveau.libelle }} <a href="{{ path('administration_apc_niveau_edit',
+                    {id:niveau.id}) }}">
+                    <i class="fas fa-edit"></i></a>
+            </div>
         </div>
         <div class="col-flex-9 ms-3" style="padding-right:15px;">
             <div class="p-3 niveauliste niveau{{ niveau.ordre }}{{ competence.couleur }}">
                 <ul>
                     {% for ac in niveau.apcApprentissageCritiques %}
-                        <li>{{ ac.libelle }}</li>
+                        <li>{{ ac.libelle }} <a href="{{ path('administration_apc_apprentissage_critique_edit',
+                                {id:ac.id}) }}">
+                                <i class="fas fa-edit"></i>
+                            </a></li>
                     {% endfor %}
                     <li>
                         <a href="{{ path('administration_apc_apprentissage_critique_new', {niveau:niveau.id}) }}"><i class="fas fa-plus-circle"></i>

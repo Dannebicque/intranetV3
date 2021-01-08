@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcComposanteEssentielle.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/12/2020 22:10
+// @lastUpdate 08/01/2021 15:45
 
 namespace App\Entity;
 
@@ -13,14 +13,9 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=ApcComposanteEssentielleRepository::class)
  */
-class ApcComposanteEssentielle
+class ApcComposanteEssentielle extends BaseEntity
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -40,11 +35,6 @@ class ApcComposanteEssentielle
     public function __construct($competence)
     {
         $this->competence = $competence;
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     public function getLibelle(): ?string

@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcComposanteEssentielleController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+// @lastUpdate 08/01/2021 15:26
 
 namespace App\Controller\administration\apc;
 
@@ -42,7 +42,7 @@ class ApcComposanteEssentielleController extends BaseController
             return $this->redirectToRoute('administration_apc_competence_show', ['id' => $competence->getId()]);
         }
 
-        return $this->render('administration/apc/apc_composante_essentielle/new.html.twig', [
+        return $this->render('apc/apc_composante_essentielle/new.html.twig', [
             'apc_composante_essentielle' => $apcComposanteEssentielle,
             'form'                       => $form->createView(),
             'competence'                 => $competence
@@ -68,7 +68,7 @@ class ApcComposanteEssentielleController extends BaseController
             return $this->redirectToRoute('administration_apc_composante_essentielle_index');
         }
 
-        return $this->render('administration/apc/apc_composante_essentielle/edit.html.twig', [
+        return $this->render('apc/apc_composante_essentielle/edit.html.twig', [
             'apc_composante_essentielle' => $apcComposanteEssentielle,
             'form'                       => $form->createView(),
         ]);

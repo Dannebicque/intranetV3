@@ -417,19 +417,13 @@ adm:
     new.heading: 'Création d''une UFR'
     show.heading: 'Détails d''une UFR'
   apc_apprentissage_critique:
-    index:
-      heading: 'Liste des apprentissages critiques'
     modification:
       heading: 'Modificaition d''un apprentissage critique'
     new:
       heading: 'Création d''un apprentissage critique'
-    show:
-      heading: 'Détails d''un apprentissage critique'
   apc_competence:
     modification:
       heading: 'Modification d''une compétence'
-    index:
-      heading: 'Liste des compétences'
     new:
       heading: 'Création d''une compétence'
     show:
@@ -437,21 +431,13 @@ adm:
   apc_composante_essentielle:
     modification:
       heading: 'Modification d''une composante essentielle'
-    index:
-      heading: 'Liste des composantes essentielles'
     new:
       heading: 'Création d''une composante essentielle'
-    show:
-      heading: 'Détails d''une composante essentielle'
   apc_niveau:
     modification:
       heading: 'Modification d''un niveau de compétence'
-    index:
-      heading: 'Liste des niveaux de compétence'
     new:
       heading: 'Création d''un niveau de compétence'
-    show:
-      heading: 'Détails d''un niveau de compétence'
   projet_etudiant:
     modification:
       heading: 'Modification d''un projet étudiant'
@@ -475,6 +461,7 @@ adm:
       heading: 'Liste des étudiants concernés par la convocation "COVID"'
   apc_parcours:
     edit.heading: 'Modification d''un parcours'
+    show.heading: 'Détails d''un parcours'
   referentiel.de.competence.heading: 'Référentiel de compétence pour le diplôme %diplome%'
   apc.parcours.heading: 'Parcours pour le diplôme %diplome%'
 
@@ -533,30 +520,35 @@ aout: Août
 
 apc:
   apprentissageCritique:
-    create.success.flash: 'Apprentissage critique modifié avec succès'
+    create.success.flash: 'Apprentissage critique créé avec succès'
     delete.success.flash: 'Apprentissage critique supprimé avec succès'
     delete.error.flash: 'Erreur lors de la suppression d''un apprentissage critique'
     duplicate.success.flash: 'Apprentissage critique dupliqué avec succès'
     edit.success.flash: 'Apprentissage critique modifié avec succès'
   composanteEssentielle:
-    create.success.flash: 'Composante essentielle modifié avec succès'
-    delete.success.flash: 'Composante essentielle supprimé avec succès'
+    create.success.flash: 'Composante essentielle créée avec succès'
+    delete.success.flash: 'Composante essentielle supprimée avec succès'
     delete.error.flash: 'Erreur lors de la suppression d''une composante essentielle'
-    duplicate.success.flash: 'Composante essentielle dupliqué avec succès'
-    edit.success.flash: 'Composante essentielle modifié avec succès'
+    duplicate.success.flash: 'Composante essentielle dupliquée avec succès'
+    edit.success.flash: 'Composante essentielle modifiée avec succès'
   competence:
-    create.success.flash: 'Compétence critique modifié avec succès'
-    delete.success.flash: 'Compétence critique supprimé avec succès'
+    create.success.flash: 'Compétence créée avec succès'
+    delete.success.flash: 'Compétence supprimée avec succès'
     delete.error.flash: 'Erreur lors de la suppression d''une compétence'
-    duplicate.success.flash: 'Compétence critique dupliqué avec succès'
-    edit.success.flash: 'Compétence critique modifié avec succès'
+    duplicate.success.flash: 'Compétence dupliquée avec succès'
+    edit.success.flash: 'Compétence modifiée avec succès'
   niveau:
-    create.success.flash: 'Niveau de compétence modifié avec succès'
+    create.success.flash: 'Niveau de compétence créé avec succès'
     delete.success.flash: 'Niveau de compétence supprimé avec succès'
     delete.error.flash: 'Erreur lors de la suppression d''un niveau de compétence'
     duplicate.success.flash: 'Niveau de compétence dupliqué avec succès'
     edit.success.flash: 'Niveau de compétence modifié avec succès'
-
+  parcoursNiveau:
+    create.success.flash: 'Association Parcours / Niveau de compétence créé avec succès'
+    delete.success.flash: 'Association Parcours / Niveau de compétence supprimé avec succès'
+    delete.error.flash: 'Erreur lors de la suppression d''un niveau de compétence'
+    duplicate.success.flash: 'Association Parcours / Niveau de compétence dupliqué avec succès'
+    edit.success.flash: 'Association Parcours / Niveau de compétence modifié avec succès'
 app:
   alternance_fiche_suivi:
     new.heading: 'Création d''une fiche de suivi d''alternance'

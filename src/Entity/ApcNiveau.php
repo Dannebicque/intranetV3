@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcNiveau.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/12/2020 08:57
+// @lastUpdate 08/01/2021 16:12
 
 namespace App\Entity;
 
@@ -15,14 +15,9 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=ApcNiveauRepository::class)
  */
-class ApcNiveau
+class ApcNiveau extends BaseEntity
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -61,10 +56,7 @@ class ApcNiveau
         $this->apcParcoursNiveaux = new ArrayCollection();
     }
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+
 
     public function getLibelle(): ?string
     {
@@ -173,5 +165,23 @@ class ApcNiveau
         }
 
         return $this;
+    }
+
+
+    public function display()
+    {
+        switch ($this->ordre) {
+            case 1:
+                $niv = 'Novice';
+                break;
+            case 2:
+                $niv = 'Intermédiaire';
+                break;
+            case 3:
+                $niv = 'Compétent';
+                break;
+        }
+
+        return $this->getCompetence()->getNomCourt() . ' - Niveau ' . $niv . '(' . $this->ordre . ')';
     }
 }

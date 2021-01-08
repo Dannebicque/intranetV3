@@ -1,12 +1,13 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcParcoursController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+// @lastUpdate 08/01/2021 16:12
 
 namespace App\Controller\administration\apc;
 
+use App\Classes\Apc\ApcStructure;
 use App\Controller\BaseController;
 use App\Entity\ApcParcours;
 use App\Entity\Constantes;
@@ -42,7 +43,7 @@ class ApcParcoursController extends BaseController
             return $this->redirectToRoute('administration_apc_parcours_show', ['id' => $apcParcour->getId()]);
         }
 
-        return $this->render('administration/apc/apc_parcours/new.html.twig', [
+        return $this->render('apc/apc_parcours/new.html.twig', [
             'apc_parcour' => $apcParcour,
             'form'        => $form->createView(),
             'diplome'     => $diplome
@@ -55,10 +56,11 @@ class ApcParcoursController extends BaseController
      *
      * @return Response
      */
-    public function show(ApcParcours $apcParcour): Response
+    public function show(ApcStructure $apcStructure, ApcParcours $apcParcour): Response
     {
-        return $this->render('administration/apc/apc_parcours/show.html.twig', [
-            'parcours' => $apcParcour,
+        return $this->render('apc/apc_parcours/show.html.twig', [
+            'parcour'         => $apcParcour,
+            'parcoursNiveaux' => $apcStructure->parcoursNiveaux($apcParcour->getDiplome())
         ]);
     }
 
@@ -81,7 +83,7 @@ class ApcParcoursController extends BaseController
             return $this->redirectToRoute('administration_apc_parcours_show', ['id' => $apcParcour->getId()]);
         }
 
-        return $this->render('administration/apc/apc_parcours/edit.html.twig', [
+        return $this->render('apc/apc_parcours/edit.html.twig', [
             'apc_parcour' => $apcParcour,
             'form'        => $form->createView(),
         ]);
