@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/TypeDiplome.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 08/01/2021 12:11
 
 namespace App\Entity;
 
@@ -60,6 +60,11 @@ class TypeDiplome extends BaseEntity
      * @Groups({"type_diplome_administration"})
      */
     private $niveauSortie = 2;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $apc = false;
 
     public function __construct()
     {
@@ -173,6 +178,18 @@ class TypeDiplome extends BaseEntity
                 $diplome->setTypeDiplome(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getApc(): ?bool
+    {
+        return $this->apc;
+    }
+
+    public function setApc(bool $apc): self
+    {
+        $this->apc = $apc;
 
         return $this;
     }
