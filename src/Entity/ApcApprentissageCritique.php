@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcApprentissageCritique.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/12/2020 22:17
+// @lastUpdate 08/01/2021 15:45
 
 namespace App\Entity;
 
@@ -13,14 +13,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=ApcApprentissageCritiqueRepository::class)
  */
-class ApcApprentissageCritique
+class ApcApprentissageCritique extends BaseEntity
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -45,12 +39,6 @@ class ApcApprentissageCritique
     public function __construct($niveau)
     {
         $this->niveau = $niveau;
-    }
-
-
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     public function getLibelle(): ?string

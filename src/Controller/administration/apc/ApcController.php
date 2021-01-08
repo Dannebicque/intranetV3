@@ -3,10 +3,11 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/01/2021 15:59
+// @lastUpdate 08/01/2021 15:38
 
 namespace App\Controller\administration\apc;
 
+use App\Classes\Apc\ApcStructure;
 use App\Controller\BaseController;
 use App\Entity\Diplome;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,25 +25,11 @@ class ApcController extends BaseController
      *
      * @return Response
      */
-    public function referentiel(Diplome $diplome): Response
+    public function referentiel(ApcStructure $apcStructure, Diplome $diplome): Response
     {
-        $tParcours = [];
-        foreach ($diplome->getApcParcours() as $parcours) {
-            $tParcours[$parcours->getId()] = [];
-            foreach ($parcours->getApcParcoursNiveaux() as $niveau) {
+        $tParcours = $apcStructure->parcoursNiveaux($diplome);
 
-                if ($niveau !== null && $niveau->getNiveau() !== null) {
-                    $niv = $niveau->getNiveau();
-                    if (!array_key_exists($niv->getCompetence()->getId(), $tParcours[$parcours->getId()])) {
-                        $tParcours[$parcours->getId()][$niv->getCompetence()->getId()] = [];
-                    }
-                    $tParcours[$parcours->getId()][$niv->getCompetence()->getId()][$niv->getOrdre()] = $niv;
-                }
-            }
-        }
-        dump($tParcours);
-
-        return $this->render('administration/apc/referentiel.html.twig', [
+        return $this->render('apc/referentiel.html.twig', [
             'diplome'         => $diplome,
             'competences'     => $diplome->getApcComptences(),
             'parcours'        => $diplome->getApcParcours(),

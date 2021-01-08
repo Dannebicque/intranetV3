@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcCompetenceController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+// @lastUpdate 08/01/2021 16:12
 
 namespace App\Controller\administration\apc;
 
@@ -23,20 +23,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ApcCompetenceController extends BaseController
 {
-    /**
-     * @Route("/{diplome}", name="administration_apc_competence_index", methods={"GET"})
-     * @param Diplome $diplome
-     *
-     * @return Response
-     */
-    public function index(Diplome $diplome): Response
-    {
-        return $this->render('administration/apc/apc_competence/index.html.twig', [
-            'apc_competences' => $diplome->getApcComptences(),
-            'diplome'         => $diplome
-        ]);
-    }
-
     /**
      * @Route("/{diplome}/export.{_format}", name="administration_apc_competence_export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"})
@@ -82,10 +68,10 @@ class ApcCompetenceController extends BaseController
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'apc.competence.create.success.flash');
 
-            return $this->redirectToRoute('administration_apc_competence_index', ['diplome' => $diplome->getId()]);
+            return $this->redirectToRoute('administration_apc_referentiel_index', ['diplome' => $diplome->getId()]);
         }
 
-        return $this->render('administration/apc/apc_competence/new.html.twig', [
+        return $this->render('apc/apc_competence/new.html.twig', [
             'apc_competence' => $apcComptence,
             'form'           => $form->createView(),
             'diplome'        => $diplome
@@ -100,7 +86,7 @@ class ApcCompetenceController extends BaseController
      */
     public function show(ApcCompetence $apcCompetence): Response
     {
-        return $this->render('administration/apc/apc_competence/show.html.twig', [
+        return $this->render('apc/apc_competence/show.html.twig', [
             'competence' => $apcCompetence,
         ]);
     }
@@ -125,7 +111,7 @@ class ApcCompetenceController extends BaseController
                 ['diplome' => $apcCompetence->getDiplome()->getId()]);
         }
 
-        return $this->render('administration/apc/apc_competence/edit.html.twig', [
+        return $this->render('apc/apc_competence/edit.html.twig', [
             'apc_competence' => $apcCompetence,
             'form'           => $form->createView(),
         ]);
@@ -140,6 +126,8 @@ class ApcCompetenceController extends BaseController
      */
     public function delete(Request $request, ApcCompetence $apcCompetence): Response
     {
+        $diplome = $apcCompetence->getDiplome();
+
         if ($this->isCsrfTokenValid('delete' . $apcCompetence->getId(), $request->request->get('_token'))) {
             $this->entityManager->remove($apcCompetence);
             $this->entityManager->flush();
@@ -148,7 +136,10 @@ class ApcCompetenceController extends BaseController
 
         $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'apc.competence.delete.error.flash');
 
-        return $this->redirectToRoute('administration_apc_competence_index');
+        return $this->redirectToRoute('administration_apc_referentiel_index',
+            [
+                'diplome' => $diplome->getId()
+            ]);
     }
 
     /**

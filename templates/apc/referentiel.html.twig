@@ -69,7 +69,7 @@
                     <div class="tab-content">
                         {% for competence in competences %}
                             <div class="tab-pane {% if loop.first %}fade active show{% endif %}" id="comptence_{{ competence.id }}">
-                                {{ include('administration/apc/_competence.html.twig') }}
+                                {{ include('apc/_competence.html.twig') }}
                             </div>
                         {% endfor %}
                     </div>
@@ -107,7 +107,7 @@
                     <div class="tab-content">
                         {% for parcour in parcours %}
                             <div class="tab-pane {% if loop.first %}fade active show{% endif %}" id="parcour_{{ parcour.id }}">
-                                {{ include('administration/apc/_parcour.html.twig', {parcour: parcour}) }}
+                                {{ include('apc/_parcour.html.twig', {parcour: parcour}) }}
                             </div>
                         {% endfor %}
                     </div>
@@ -145,7 +145,7 @@
                     <div class="tab-content">
                         {% for annee in 1..3 %}
                             <div class="tab-pane {% if loop.first %}fade active show{% endif %}" id="annee_{{ annee }}">
-                                {{ include('administration/apc/_annee.html.twig', {annee:annee}) }}
+                                {{ include('apc/_annee.html.twig', {annee:annee}) }}
                             </div>
                         {% endfor %}
                     </div>

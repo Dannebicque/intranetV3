@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcParcoursNiveau.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/12/2020 09:22
+// @lastUpdate 08/01/2021 15:52
 
 namespace App\Entity;
 
@@ -13,14 +13,9 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=ApcParcoursNiveauRepository::class)
  */
-class ApcParcoursNiveau
+class ApcParcoursNiveau extends BaseEntity
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+
 
     /**
      * @ORM\ManyToOne(targetEntity=ApcNiveau::class, inversedBy="apcParcoursNiveaux")
@@ -32,10 +27,16 @@ class ApcParcoursNiveau
      */
     private $parcours;
 
-    public function getId(): ?int
+    /**
+     * ApcParcoursNiveau constructor.
+     *
+     * @param $parcours
+     */
+    public function __construct($parcours)
     {
-        return $this->id;
+        $this->parcours = $parcours;
     }
+
 
     public function getNiveau(): ?ApcNiveau
     {
@@ -60,4 +61,5 @@ class ApcParcoursNiveau
 
         return $this;
     }
+
 }

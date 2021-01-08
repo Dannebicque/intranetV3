@@ -1,13 +1,15 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ApcParcoursNiveauType.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/12/2020 20:18
+// @lastUpdate 08/01/2021 16:12
 
 namespace App\Form;
 
+use App\Entity\ApcNiveau;
 use App\Entity\ApcParcoursNiveau;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -17,8 +19,11 @@ class ApcParcoursNiveauType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('niveau')
-            ->add('parcours');
+            ->add('niveau', EntityType::class, [
+                'class'        => ApcNiveau::class,
+                'choice_label' => 'display'
+
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

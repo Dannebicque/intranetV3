@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcParcours.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/01/2021 10:48
+// @lastUpdate 08/01/2021 15:45
 
 namespace App\Entity;
 
@@ -15,15 +15,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=ApcParcoursRepository::class)
  */
-class ApcParcours
+class ApcParcours extends BaseEntity
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
-
     /**
      * @ORM\Column(type="string", length=255)
      */
@@ -55,10 +48,6 @@ class ApcParcours
         $this->apcParcoursNiveaux = new ArrayCollection();
     }
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getLibelle(): ?string
     {

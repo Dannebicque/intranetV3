@@ -1,5 +1,3 @@
-Annee
-
 {% for competence in competences %}
     {% for niveau in competence.apcNiveaux|filter(niveau => (niveau.ordre == annee)) %}
         <div class="d-flex align-items-stretch mt-3">

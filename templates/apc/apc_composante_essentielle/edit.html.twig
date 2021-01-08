@@ -1,14 +1,14 @@
-{% extends 'base.html.twig' %}
+{% extends is_granted('ROLE_SUPER_ADMIN') ? 'base-super_admin.html.twig' : 'base.html.twig' %}
 
 {% block header %}
-    {{ 'adm.apc_parcours.edit.heading'|trans }}
+    {{ 'adm.apc_composante_essentielle.modification.heading'|trans }}
 {% endblock %}
 
 {% block headeractions %}
     <div class="header-action">
         <div class="buttons">
-            <a href="{{ path('administration_apc_parcours_delete', {id: apc_parcour.id}) }}"
-               data-csrf="{{ csrf_token('delete' ~ apc_parcour.id) }}"
+            <a href="{{ path('administration_apc_composante_essentielle_delete', {id: apc_composante_essentielle.id}) }}"
+               data-csrf="{{ csrf_token('delete' ~ apc_composante_essentielle.id) }}"
                class="btn btn-danger btn-sm btn-float supprimer"
                title="{{ 'atitle.supprimer'|trans }}"
                data-provide="tooltip"
@@ -16,10 +16,9 @@
                 <i class="fas fa-trash"></i>
                 <span class="sr-only">{{ 'atitle.supprimer'|trans }}</span>
             </a>
-            {# todo: dépend d'ou on vient... #}
-            <a href="{{ path('administration_apc_parcours_show', {id: apc_parcour.id}) }}"
+            <a href="{{ path('administration_apc_competence_show', {id:apc_composante_essentielle.competence.id}) }}"
                class="btn btn-primary btn-float"
-               title="{{ 'atitle.retour_liste'|trans }}"
+               title="{{ 'atitle.retour_competence'|trans }}"
                data-provide="tooltip"
                data-placement="bottom">
                 <i class="fas fa-arrow-left"></i>
@@ -31,9 +30,9 @@
 
 {% block content %}
     <div class="card">
-        <h4 class="card-title">{{ 'adm.apc_parcours.edit.heading'|trans }}</h4>
+        <h4 class="card-title">{{ 'adm.apc_composante_essentielle.modification.heading'|trans }}</h4>
         <div class="card-body">
-            {{ include('composants/adm-form.html.twig') }}
+            {{ include('composants/adm-form.html.twig', {'button_label': 'update'|trans}) }}
         </div>
     </div>
 {% endblock %}

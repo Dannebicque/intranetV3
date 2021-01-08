@@ -1,19 +1,19 @@
-{% extends 'base.html.twig' %}
+{% extends is_granted('ROLE_SUPER_ADMIN') ? 'base-super_admin.html.twig' : 'base.html.twig' %}
 
 {% block header %}
-    {{ 'adm.apc_niveau.new.heading'|trans }}
+    {{ 'adm.apc_parcours.new.heading'|trans }}
 {% endblock %}
 
 {% block headeractions %}
     <div class="header-action">
         <div class="buttons">
-            <a href="{{ path('administration_apc_competence_show', {id: competence.id}) }}"
+            <a href="{{ path('administration_apc_referentiel_index', {diplome: diplome.id}) }}"
                class="btn btn-primary btn-float"
                title="{{ 'atitle.retour_liste'|trans }}"
                data-provide="tooltip"
                data-placement="bottom">
                 <i class="fas fa-arrow-left"></i>
-                <span class="sr-only">{{ 'atitle.competence'|trans }}</span>
+                <span class="sr-only">{{ 'atitle.referentiel'|trans }}</span>
             </a>
         </div>
     </div>
@@ -21,7 +21,7 @@
 
 {% block content %}
     <div class="card">
-        <h4 class="card-title">{{ 'adm.apc_niveau.new.heading'|trans }}</h4>
+        <h4 class="card-title">{{ 'adm.apc_parcours.new.heading'|trans }}</h4>
         <div class="card-body">
             {{ include('composants/adm-form.html.twig') }}
         </div>

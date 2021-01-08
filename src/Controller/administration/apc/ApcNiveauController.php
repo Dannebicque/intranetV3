@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcNiveauController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+// @lastUpdate 08/01/2021 16:12
 
 namespace App\Controller\administration\apc;
 
@@ -38,12 +38,12 @@ class ApcNiveauController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($apcNiveau);
             $this->entityManager->flush();
-            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'apcNiveau.create.success.flash');
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'apc.niveau.create.success.flash');
 
             return $this->redirectToRoute('administration_apc_competence_show', ['id' => $competence->getId()]);
         }
 
-        return $this->render('administration/apc/apc_niveau/new.html.twig', [
+        return $this->render('apc/apc_niveau/new.html.twig', [
             'apc_niveau' => $apcNiveau,
             'form'       => $form->createView(),
             'competence' => $competence
@@ -64,12 +64,13 @@ class ApcNiveauController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
-            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'apcNiveau.edit.success.flash');
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'apc.niveau.edit.success.flash');
 
-            return $this->redirectToRoute('administration_apc_niveau_index');
+            return $this->redirectToRoute('administration_apc_competence_show',
+                ['id' => $apcNiveau->getCompetence()->getId()]);
         }
 
-        return $this->render('administration/apc/apc_niveau/edit.html.twig', [
+        return $this->render('apc/apc_niveau/edit.html.twig', [
             'apc_niveau' => $apcNiveau,
             'form'       => $form->createView(),
         ]);
@@ -84,13 +85,15 @@ class ApcNiveauController extends BaseController
      */
     public function delete(Request $request, ApcNiveau $apcNiveau): Response
     {
+        $competence = $apcNiveau->getCompetence();
+
         if ($this->isCsrfTokenValid('delete' . $apcNiveau->getId(), $request->request->get('_token'))) {
             $this->entityManager->remove($apcNiveau);
             $this->entityManager->flush();
-            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'apcNiveau.delete.success.flash');
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'apc.niveau.delete.success.flash');
         }
-        $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'apcNiveau.delete.error.flash');
+        $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'apc.niveau.delete.error.flash');
 
-        return $this->redirectToRoute('administration_apc_niveau_index');
+        return $this->redirectToRoute('administration_apc_competence_show', ['id' => $competence->getId()]);
     }
 }
