@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyScolarite.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/12/2020 21:06
+// @lastUpdate 09/01/2021 15:33
 
 namespace App\Classes;
 
@@ -51,7 +51,7 @@ class MyScolarite
      * @return bool
      * @throws Exception
      */
-    public function importCsv($data, Departement $departement): bool
+    public function importCsv($data, Departement $departement, AnneeUniversitaire $anneeUniversitaire): bool
     {
         $file = $this->myUpload->upload($data, 'temp');
 
@@ -73,7 +73,7 @@ class MyScolarite
                 if (array_key_exists($ligne[1], $semestres) && array_key_exists($ligne[0], $etudiants)) {
                     //numetudiant	codesemestre	semestre	ordre	moyenne	nbabsences	decision	suite ues
                     $scol = new Scolarite($etudiants[$ligne[0]], $semestres[$ligne[1]]);
-                    $scol->setAnneeUniversitaire(null);
+                    $scol->setAnneeUniversitaire($anneeUniversitaire);
                     $scol->setDecision($ligne[6]);
                     $scol->setMoyenne(Tools::convertToFloat($ligne[4]));
                     $scol->setOrdre($ligne[3]);
@@ -104,24 +104,24 @@ class MyScolarite
 
         return false;
     }
-
-    public function initSemestre(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire)
-    {
-        foreach ($semestre->getEtudiants() as $etudiant) {
-            $parcour = $this->scolariteRepository->findBy([
-                'semestre' => $semestre->getId(),
-                'etudiant' => $etudiant->getId(),
-                'decision' => Constantes::SEMESTRE_EN_COURS
-            ]);
-            if (count($parcour) === 0) {
-                $maxOrdre = $this->scolariteRepository->findOrdreMax($etudiant);
-                $scolarite = new Scolarite($etudiant, $semestre, $anneeUniversitaire);
-                $scolarite->setOrdre($maxOrdre + 1);
-                $scolarite->setDecision(Constantes::SEMESTRE_EN_COURS);
-                $this->entityManager->persist($scolarite);
-            }
-        }
-        $this->entityManager->flush();
-    }
+//
+//    public function initSemestre(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire)
+//    {
+//        foreach ($semestre->getEtudiants() as $etudiant) {
+//            $parcour = $this->scolariteRepository->findBy([
+//                'semestre' => $semestre->getId(),
+//                'etudiant' => $etudiant->getId(),
+//                'decision' => Constantes::SEMESTRE_EN_COURS
+//            ]);
+//            if (count($parcour) === 0) {
+//                $maxOrdre = $this->scolariteRepository->findOrdreMax($etudiant);
+//                $scolarite = new Scolarite($etudiant, $semestre, $anneeUniversitaire);
+//                $scolarite->setOrdre($maxOrdre + 1);
+//                $scolarite->setDecision(Constantes::SEMESTRE_EN_COURS);
+//                $this->entityManager->persist($scolarite);
+//            }
+//        }
+//        $this->entityManager->flush();
+//    }
 
 }

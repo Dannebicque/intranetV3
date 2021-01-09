@@ -1,14 +1,15 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/CohorteController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/12/2020 15:07
+// @lastUpdate 09/01/2021 15:08
 
 namespace App\Controller\administration;
 
 use App\Controller\BaseController;
 use App\Entity\Scolarite;
+use App\Repository\AnneeUniversitaireRepository;
 use App\Repository\EtudiantRepository;
 use App\Repository\ScolariteRepository;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,6 +31,7 @@ class CohorteController extends BaseController
      * @return Response
      */
     public function index(
+        AnneeUniversitaireRepository $anneeUniversitaireRepository,
         ScolariteRepository $scolariteRepository,
         $annee = 0
     ): Response {
@@ -48,9 +50,10 @@ class CohorteController extends BaseController
         }
 
         return $this->render('administration/cohorte/index.html.twig', [
-            'parcours'  => $parcours,
-            'etudiants' => $etudiants,
-            'annee'     => $annee
+            'parcours'             => $parcours,
+            'etudiants'            => $etudiants,
+            'annee'                => $annee,
+            'anneesUniversitaires' => $anneeUniversitaireRepository->findAll()
         ]);
     }
 
