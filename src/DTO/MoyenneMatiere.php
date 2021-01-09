@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/MoyenneMatiere.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/01/2021 15:55
+// @lastUpdate 09/01/2021 15:32
 
 namespace App\DTO;
 
@@ -47,7 +47,7 @@ class MoyenneMatiere
         }
 
         foreach ($groupes as $groupe) {
-            if (($groupe->getOptions() !== null) && $groupe->getOptions()->getId() === $this->matiere->getParcours()->getId()) {
+            if (($groupe->getParcours() !== null) && $groupe->getParcours()->getId() === $this->matiere->getParcours()->getId()) {
                 $this->optionFaite = true;
 
                 return $this->optionFaite;
