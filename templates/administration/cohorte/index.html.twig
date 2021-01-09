@@ -21,10 +21,26 @@
         <div class="card-body">
             <form action="{{ path('administration_scolarite_import_intranetv2') }}" method="POST"
                   enctype="multipart/form-data">
-                <div class="form-group">
-                    <label for="fichierImport">Fichier csv</label>
-                    <input type="file" name="fichierImport" class="form-control" id="fichierImport">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="annee">Annee Universitaire</label>
+                            <select name="annee" class="form-control" id="annee">
+                                {% for annee in anneesUniversitaires %}
+                                    <option value="{{ annee.id }}">{{ annee.displayAnneeUniversitaire }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label for="fichierImport">Fichier csv</label>
+                            <input type="file" name="fichierImport" class="form-control" id="fichierImport">
+                        </div>
+                    </div>
                 </div>
+
+
                 <button type="submit" class="btn btn-success">Importer</button>
             </form>
         </div>

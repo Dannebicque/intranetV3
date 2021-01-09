@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/ScolariteController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/12/2020 17:02
+// @lastUpdate 09/01/2021 15:33
 
 namespace App\Controller\administration;
 
@@ -108,28 +108,32 @@ class ScolariteController extends BaseController
      * @return RedirectResponse
      * @throws Exception
      */
-    public function importScolarite(MyScolarite $myScolarite, Request $request): RedirectResponse
-    {
-        $myScolarite->importCsv($request->files->get('fichierImport'), $this->getDepartement());
+    public function importScolarite(
+        AnneeUniversitaireRepository $anneeUniversitaireRepository,
+        MyScolarite $myScolarite,
+        Request $request
+    ): RedirectResponse {
+        $anneeUniversitaire = $anneeUniversitaireRepository->find($request->request->get('annee'));
+        $myScolarite->importCsv($request->files->get('fichierImport'), $this->getDepartement(), $anneeUniversitaire);
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'parcours.scolarite.import.success.flash');
 
         return $this->redirectToRoute('administration_cohorte_index');
     }
 
-    /**
-     * @Route("/init-scolarite/{semestre}", name="administration_scolarite_init_semestre")
-     * @param MyScolarite $myScolarite
-     * @param Semestre    $semestre
-     *
-     * @return RedirectResponse
-     */
-    public function initParcoursScolarite(MyScolarite $myScolarite, Semestre $semestre)
-    {
-        $myScolarite->initSemestre($semestre, $this->dataUserSession->getAnneeUniversitaire());
-        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'parcours.scolarite.init.semestre.success.flash');
-
-        return $this->redirectToRoute('administration_semestre_index', ['semestre' => $semestre->getId()]);
-    }
+//    /**
+//     * @Route("/init-scolarite/{semestre}", name="administration_scolarite_init_semestre")
+//     * @param MyScolarite $myScolarite
+//     * @param Semestre    $semestre
+//     *
+//     * @return RedirectResponse
+//     */
+//    public function initParcoursScolarite(MyScolarite $myScolarite, Semestre $semestre)
+//    {
+//        $myScolarite->initSemestre($semestre, $this->dataUserSession->getAnneeUniversitaire());
+//        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'parcours.scolarite.init.semestre.success.flash');
+//
+//        return $this->redirectToRoute('administration_semestre_index', ['semestre' => $semestre->getId()]);
+//    }
 
     /**
      * @Route("/saisie/promo/{semestre}", name="administration_scolarite_saisie_promo")
