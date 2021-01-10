@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyScolarite.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 09/01/2021 15:33
+// @lastUpdate 10/01/2021 17:07
 
 namespace App\Classes;
 
@@ -69,17 +69,17 @@ class MyScolarite
             while (!feof($handle)) {
                 /*On lit la ligne courante*/
                 $ligne = fgetcsv($handle, 1024, ';');
-
-                if (array_key_exists($ligne[1], $semestres) && array_key_exists($ligne[0], $etudiants)) {
-                    //numetudiant	codesemestre	semestre	ordre	moyenne	nbabsences	decision	suite ues
-                    $scol = new Scolarite($etudiants[$ligne[0]], $semestres[$ligne[1]]);
-                    $scol->setAnneeUniversitaire($anneeUniversitaire);
-                    $scol->setDecision($ligne[6]);
-                    $scol->setMoyenne(Tools::convertToFloat($ligne[4]));
-                    $scol->setOrdre($ligne[3]);
-                    $scol->setNbAbsences($ligne[5]);
-                    $scol->setProposition($ligne[7]);
-                    $scol->setDiffuse(true);
+                if ($ligne !== false && count($ligne) > 1) {
+                    if (array_key_exists($ligne[1], $semestres) && array_key_exists($ligne[0], $etudiants)) {
+                        //numetudiant	codesemestre	semestre	ordre	moyenne	nbabsences	decision	suite ues
+                        $scol = new Scolarite($etudiants[$ligne[0]], $semestres[$ligne[1]]);
+                        $scol->setAnneeUniversitaire($anneeUniversitaire);
+                        $scol->setDecision($ligne[6]);
+                        $scol->setMoyenne(Tools::convertToFloat($ligne[4]));
+                        $scol->setOrdre($ligne[3]);
+                        $scol->setNbAbsences($ligne[5]);
+                        $scol->setProposition($ligne[7]);
+                        $scol->setDiffuse(true);
                     $this->entityManager->persist($scol);
                     $tues = explode('!', $ligne[8]);
                     $tUe = [];
@@ -91,6 +91,7 @@ class MyScolarite
                         }
                     }
                     $scol->setMoyennesUes($tUe);
+                }
                 }
             }
             $this->entityManager->flush();

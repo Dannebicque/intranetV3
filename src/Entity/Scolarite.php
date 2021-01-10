@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Scolarite.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+// @lastUpdate 10/01/2021 16:46
 
 namespace App\Entity;
 
@@ -87,7 +87,7 @@ class Scolarite extends BaseEntity
     /**
      * @ORM\Column(type="integer")
      */
-    private $rang;
+    private $rang = -1;
     // idUe => ['moyenne' => ..., 'rang' => ...],
 
     /**
