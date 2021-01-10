@@ -1,8 +1,8 @@
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/profil.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/12/2020 19:19
+// @lastUpdate 10/01/2021 17:19
 import {addCallout} from '../util'
 
 $(document).on('change', '#chgt_etudiant_departement', function () {
@@ -167,7 +167,8 @@ $(document).on('click', '.checkAbsence', function (e) {
 
 })
 
-$(document).on('change', '#btnInit', function () {
+$(document).on('click', '#btnInit', function () {
+  console.log('init')
   $.ajax({
     url: Routing.generate('security_password_init', {user: $(this).data('personnel')}),
     method: 'POST',

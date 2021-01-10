@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/SecurityController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/01/2021 14:55
+// @lastUpdate 10/01/2021 17:30
 
 namespace App\Controller;
 
@@ -116,10 +116,9 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/connexion/init-password/{uuid}", name="security_password_init", options={"expose"=true})
-     * @ParamConverter("personnel", options={"mapping": {"uuid": "uuid"}})
+     * @Route("/connexion/init-password/{user}", name="security_password_init", options={"expose"=true})
      *
-     * @param Personnel                    $personnel
+     * @param Personnel                    $user
      * @param UserPasswordEncoderInterface $passwordEncoder
      *
      * @param EntityManagerInterface       $entityManager
@@ -130,29 +129,31 @@ class SecurityController extends AbstractController
      * @throws TransportExceptionInterface
      */
     public function initPassword(
-        Personnel $personnel,
+
         UserPasswordEncoderInterface $passwordEncoder,
         EntityManagerInterface $entityManager,
-        MailerFromTwig $mailerFromTwig
+        MailerFromTwig $mailerFromTwig,
+        Personnel $user
     ): JsonResponse {
         $password = substr(md5(mt_rand()), 0, 10);
-        $passwordEncode = $passwordEncoder->encodePassword($personnel, $password);
+        $passwordEncode = $passwordEncoder->encodePassword($user, $password);
 
-        $personnel->setPassword($passwordEncode);
+        $user->setPassword($passwordEncode);
         $entityManager->flush();
 
         $mailerFromTwig->initEmail();
-        $mailerFromTwig->setTemplate('mails/security/initPassword.txt.html', [
-            'personnel' => $personnel,
+        $mailerFromTwig->setTemplate('mails/security/initPassword.txt.twig', [
+            'personnel' => $user,
             'password'  => $password
         ]);
+        $mailerFromTwig->sendMessage($user->getMails(), 'Initialisation de votre compte');
 
         $mailerFromTwig->initEmail();
-        $mailerFromTwig->setTemplate('mails/security/initLogin.txt.html', [
-            'personnel' => $personnel,
+        $mailerFromTwig->setTemplate('mails/security/initLogin.txt.twig', [
+            'personnel' => $user,
         ]);
 
-        $mailerFromTwig->sendMessage($personnel->getMails(), 'Initialisation de votre compte');
+        $mailerFromTwig->sendMessage($user->getMails(), 'Confirmation de votre Login');
 
         return $this->json(true);
     }
