@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/EnqueteDiplomeController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/01/2021 10:55
+// @lastUpdate 10/01/2021 18:03
 
 namespace App\Controller\superAdministration;
 
@@ -66,7 +66,7 @@ class EnqueteDiplomeController extends AbstractController
 
         foreach ($reponses as $reponse) {
             if (array_key_exists($reponse->getEtudiant()->getNumEtudiant(), $tEtudiant)) {
-                $tEtudiant[$etudiant->getNumEtudiant()]['reponse'] = $reponse;
+                $tEtudiant[$reponse->getEtudiant()->getNumEtudiant()]['reponse'] = $reponse;
             }
         }
 

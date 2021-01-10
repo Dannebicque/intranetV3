@@ -49,7 +49,8 @@
                             <td>
                                 {% if etudiants[etu.numEtudiant].reponse != null %}
                                     {% if etudiants[etu.numEtudiant].reponse.termine == true %}
-                                        Terminé le ...
+                                        Terminé le {{ etudiants[etu.numEtudiant].reponse.dateTermine|format_date
+                                        ('short') }}
                                     {% else %}
                                         En cours
                                     {% endif %}
