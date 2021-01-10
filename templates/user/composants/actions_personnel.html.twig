@@ -3,9 +3,13 @@
     <div class="card-body">
 
         <h5>Re/initialiation du compte</h5>
-        <a href="#" class="btn btn-warning btnInit" data-personnel="{{ personnel.uuidString }}" rel="tooltip"
+        <div class="alert alert-info">
+            Cette fonctionnalité ne devrait être eutilisée que pour les utilisateurs ne disposant pas d'accès URCA.
+        </div>
+        <br>
+        <a href="#" class="btn btn-warning" id="btnInit" data-personnel="{{ personnel.id }}" rel="tooltip"
            data-placement="bottom"
-           title="Ré/initiliser le mot de passe"><i class="fa fa-magic"></i></a>
-        listings d'interventions, ... différents exports.
+           title="Ré/initiliser le mot de passe"><i class="fa fa-magic"></i> Initialiser le mot de passe.</a>
+        {# listings d'interventions, ... différents exports. #}
     </div>
 </div>

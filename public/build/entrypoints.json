@@ -8,7 +8,7 @@
         "/build/app.871b87e5.js"
       ],
       "css": [
-        "/build/app.e1b9f469.css"
+        "/build/app.5f5ddf83.css"
       ]
     },
     "covid": {
@@ -38,7 +38,7 @@
         "/build/agenda.501bb4f0.js"
       ],
       "css": [
-        "/build/agenda.82eb6e36.css"
+        "/build/agenda.0abacb8e.css"
       ]
     },
     "datatable": {
@@ -102,7 +102,7 @@
         "/build/runtime.d94b3b43.js",
         "/build/0.cf60d32b.js",
         "/build/1.f340a267.js",
-        "/build/profil.02762fe8.js"
+        "/build/profil.39694acc.js"
       ]
     },
     "planning": {
@@ -352,7 +352,7 @@
       "js": [
         "/build/runtime.d94b3b43.js",
         "/build/0.cf60d32b.js",
-        "/build/sadm.enquete.f2ae4561.js"
+        "/build/sadm.enquete.c65d1b86.js"
       ]
     },
     "sadm.anneeuniversitaire": {
