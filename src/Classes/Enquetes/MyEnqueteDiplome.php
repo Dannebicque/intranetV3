@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Enquetes/MyEnqueteDiplome.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/01/2021 13:23
+// @lastUpdate 11/01/2021 15:34
 
 namespace App\Classes\Enquetes;
 
@@ -38,6 +38,7 @@ class MyEnqueteDiplome
      * MyEnqueteDiplome constructor.
      *
      * @param Configuration                          $configuration
+     * @param QuestionnaireReponseRepository         $questionnaireReponseRepository
      * @param QuestionnaireQuizzRepository           $questionnaireQuizzRepository
      * @param QuestionnaireEtudiantRepository        $questionnaireEtudiantRepository
      * @param QuestionnaireEtudiantReponseRepository $questionnaireEtudiantReponse
@@ -69,7 +70,7 @@ class MyEnqueteDiplome
         $tReponses = $this->questionnaireReponseRepository->findByQuizzArray($this->questionnaire);
 
         $this->myExcelWriter->createSheet('enquete');
-        $tEnTete = [];
+        $tEnTete = ['nom', 'prenom'];
         $tEnTeteId = [];
 
         foreach ($this->questionnaire->getSections() as $section) {
@@ -85,7 +86,10 @@ class MyEnqueteDiplome
 
         foreach ($this->reponses as $reponse) {
             $reponses = $this->questionnaireEtudiantReponse->findByQuizzEtudiant($reponse);
-            $t = [];
+            $t = [
+                $reponse->getEtudiant()->getNom(),
+                $reponse->getEtudiant()->getPrenom()
+            ];
             foreach ($tEnTeteId as $question) {
                 if ($question->getType() === QuestionnaireQuestion::QUESTION_TYPE_LIBRE) {
                     $cle = 'quizz_question_text_q' . $question->getId();
@@ -136,7 +140,8 @@ class MyEnqueteDiplome
             'Téléphone',
             'Diplome',
             'Reponse',
-            'Date'
+            'Date',
+            'Dernière mise à jour'
         ];
         $this->myExcelWriter->ecritLigne($tEnTete, 1, 1);
 
@@ -156,9 +161,11 @@ class MyEnqueteDiplome
                         $etat = 'En cours';
                         $etat2 = '';
                     }
+                    $update = $rep['reponse']->getUpdated()->format('d/m/Y');
                 } else {
                     $etat = 'Non répondu';
                     $etat2 = '';
+                    $update = '';
                 }
 
 
@@ -170,7 +177,8 @@ class MyEnqueteDiplome
                     Tools::telFormat($rep['etudiant']->getTel2()),
                     $attendu->getLibelleDiplome(),
                     $etat,
-                    $etat2
+                    $etat2,
+                    $update
                 ];
                 $this->myExcelWriter->ecritLigne($t, 1, $ligne);
                 $ligne++;
