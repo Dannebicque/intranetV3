@@ -1,13 +1,18 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/QuestionnaireReponseRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 21/11/2020 07:22
+// @lastUpdate 11/01/2021 12:12
 
 namespace App\Repository;
 
+use App\Entity\QuestionnaireQuestion;
+use App\Entity\QuestionnaireQuestionnaireSection;
+use App\Entity\QuestionnaireQuizz;
 use App\Entity\QuestionnaireReponse;
+use App\Entity\QuestionnaireSection;
+use App\Entity\QuestionnaireSectionQuestion;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -22,5 +27,38 @@ class QuestionnaireReponseRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, QuestionnaireReponse::class);
+    }
+
+    public function findByQuizzArray(QuestionnaireQuizz $questionnaire)
+    {
+        /*
+         * SELECT * FROM questionnaire_reponse
+INNER JOIN questionnaire_question ON questionnaire_reponse.question_id = questionnaire_question.id
+INNER JOIN questionnaire_section_question ON questionnaire_question.id = questionnaire_section_question.question_id
+INNER JOIN questionnaire_section ON questionnaire_section.id = questionnaire_section_question.section_id
+INNER JOIN questionnaire_questionnaire_section ON questionnaire_section.id = questionnaire_questionnaire_section.section_id
+WHERE questionnaire_questionnaire_section.questionnaire_quizz_id = 1
+         */
+        $query = $this->createQueryBuilder('r')
+            ->innerJoin(QuestionnaireQuestion::class, 'q', 'WITH', 'r.question = q.id')
+            ->innerJoin(QuestionnaireSectionQuestion::class, 'qs', 'WITH', 'q.id = qs.question')
+            ->innerJoin(QuestionnaireSection::class, 's', 'WITH', 'qs.section = s.id')
+            ->innerJoin(QuestionnaireQuestionnaireSection::class, 't', 'WITH', 's.id = t.section')
+            ->where('t.questionnaireQuizz = :questionnaire')
+            ->setParameter('questionnaire', $questionnaire->getId())
+            ->getQuery()
+            ->getResult();
+
+        return $this->arrayReponse($query);
+    }
+
+    private function arrayReponse($reponses)
+    {
+        $t = [];
+        foreach ($reponses as $reponse) {
+            $t[$reponse->getId()] = $reponse;
+        }
+
+        return $t;
     }
 }
