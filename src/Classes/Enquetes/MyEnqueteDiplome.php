@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Enquetes/MyEnqueteDiplome.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/01/2021 12:12
+// @lastUpdate 11/01/2021 12:44
 
 namespace App\Classes\Enquetes;
 
@@ -11,6 +11,7 @@ namespace App\Classes\Enquetes;
 use App\Classes\Configuration;
 use App\Classes\Excel\MyExcelWriter;
 use App\Classes\Tools;
+use App\Entity\QuestionnaireQuestion;
 use App\Entity\QuestionnaireQuizz;
 use App\Repository\EtudiantRepository;
 use App\Repository\QuestionnaireEtudiantReponseRepository;
@@ -74,7 +75,7 @@ class MyEnqueteDiplome
         foreach ($this->questionnaire->getSections() as $section) {
             foreach ($section->getSection()->getQualiteSectionQuestions() as $question) {
                 $tEnTete[] = $question->getQuestion()->getLibelle();
-                $tEnTeteId[] = $question->getQuestion()->getId();
+                $tEnTeteId[] = $question->getQuestion();
             }
         }
 
@@ -85,11 +86,15 @@ class MyEnqueteDiplome
         foreach ($this->reponses as $reponse) {
             $reponses = $this->questionnaireEtudiantReponse->findByQuizzEtudiant($reponse);
             $t = [];
-            foreach ($tEnTeteId as $idQuestion) {
-                $cle = 'quizz_question_reponses_q' . $idQuestion;
+            foreach ($tEnTeteId as $question) {
+                $cle = 'quizz_question_reponses_q' . $question->getId();
                 if (array_key_exists($cle, $reponses)) {
                     if (array_key_exists($reponses[$cle]->getIdReponse(), $tReponses)) {
-                        $t[] = $tReponses[$reponses[$cle]->getIdReponse()]->getLibelle();
+                        if ($question->getType() === QuestionnaireQuestion::QUESTION_TYPE_LIBRE) {
+                            $t[] = $reponses[$cle]->getValeur();
+                        } else {
+                            $t[] = $tReponses[$reponses[$cle]->getIdReponse()]->getLibelle();
+                        }
                     } else {
                         $t[] = 'erreur';
                     }
