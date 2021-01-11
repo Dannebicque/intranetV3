@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/EnqueteDiplomeController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/01/2021 12:12
+// @lastUpdate 11/01/2021 15:43
 
 namespace App\Controller\superAdministration;
 
@@ -37,7 +37,7 @@ class EnqueteDiplomeController extends AbstractController
     ): Response {
         $enquete = $myEnqueteDiplome->getSyntheseReponse();
         $nbAttendus = $rddDiplomeRepository->findBy(['enqueteAFaire' => 1]);
-        $pourcentage = count($enquete->getReponses()) / count($nbAttendus);
+        $pourcentage = count($enquete->getReponses()) / count($nbAttendus) * 100;
 
 
         return $this->render('super-administration/enquete-diplome/index.html.twig', [
