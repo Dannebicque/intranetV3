@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Enquetes/MyEnqueteDiplome.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/01/2021 12:59
+// @lastUpdate 11/01/2021 13:22
 
 namespace App\Classes\Enquetes;
 
@@ -89,7 +89,11 @@ class MyEnqueteDiplome
             foreach ($tEnTeteId as $question) {
                 if ($question->getType() === QuestionnaireQuestion::QUESTION_TYPE_LIBRE) {
                     $cle = 'quizz_question_text_q' . $question->getId();
-                    $t[] = $reponses[$cle]->getValeur();
+                    if (array_key_exists($cle, $reponses)) {
+                        $t[] = $reponses[$cle]->getValeur();
+                    } else {
+                        $t[] = 'erreur';
+                    }
                 } else {
                     $cle = 'quizz_question_reponses_q' . $question->getId();
                     if (array_key_exists($cle, $reponses)) {
