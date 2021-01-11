@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Enquetes/MyEnqueteDiplome.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/01/2021 15:34
+// @lastUpdate 11/01/2021 15:53
 
 namespace App\Classes\Enquetes;
 
@@ -70,7 +70,7 @@ class MyEnqueteDiplome
         $tReponses = $this->questionnaireReponseRepository->findByQuizzArray($this->questionnaire);
 
         $this->myExcelWriter->createSheet('enquete');
-        $tEnTete = ['nom', 'prenom'];
+        $tEnTete = ['nom', 'prenom', 'Dernière mise à jour'];
         $tEnTeteId = [];
 
         foreach ($this->questionnaire->getSections() as $section) {
@@ -88,7 +88,8 @@ class MyEnqueteDiplome
             $reponses = $this->questionnaireEtudiantReponse->findByQuizzEtudiant($reponse);
             $t = [
                 $reponse->getEtudiant()->getNom(),
-                $reponse->getEtudiant()->getPrenom()
+                $reponse->getEtudiant()->getPrenom(),
+                $reponse->getUpdated()->format('d/m/Y H:i')
             ];
             foreach ($tEnTeteId as $question) {
                 if ($question->getType() === QuestionnaireQuestion::QUESTION_TYPE_LIBRE) {
@@ -105,7 +106,7 @@ class MyEnqueteDiplome
                             $t[] = $tReponses[$reponses[$cle]->getIdReponse()]->getLibelle();
                         }
                     } else {
-                        $t[] = 'erreur';
+                        $t[] = '';
                     }
                 }
 

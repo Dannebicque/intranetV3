@@ -54,6 +54,7 @@
                     <th>Téléphone</th>
                     <th>Mail</th>
                     <th>Enquête ?</th>
+                    <th>Dernière mise à jour</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -75,6 +76,11 @@
                                     {% endif %}
                                 {% else %}
                                     Non répondu
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if etudiants[etu.numEtudiant].reponse != null %}
+                                    {{ etudiants[etu.numEtudiant].reponse.updated|format_datetime('short', 'short') }}
                                 {% endif %}
                             </td>
                         </tr>
