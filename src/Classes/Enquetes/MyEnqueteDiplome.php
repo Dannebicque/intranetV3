@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Enquetes/MyEnqueteDiplome.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/01/2021 13:22
+// @lastUpdate 11/01/2021 13:23
 
 namespace App\Classes\Enquetes;
 
@@ -92,7 +92,7 @@ class MyEnqueteDiplome
                     if (array_key_exists($cle, $reponses)) {
                         $t[] = $reponses[$cle]->getValeur();
                     } else {
-                        $t[] = 'erreur';
+                        $t[] = '';
                     }
                 } else {
                     $cle = 'quizz_question_reponses_q' . $question->getId();
