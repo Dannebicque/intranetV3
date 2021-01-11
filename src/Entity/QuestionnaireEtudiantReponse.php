@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/QuestionnaireEtudiantReponse.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 23/11/2020 12:11
+// @lastUpdate 11/01/2021 12:12
 
 namespace App\Entity;
 
@@ -86,6 +86,13 @@ class QuestionnaireEtudiantReponse extends BaseEntity
         $this->questionnaireEtudiant = $questionnaireEtudiant;
 
         return $this;
+    }
+
+    public function getIdReponse()
+    {
+        $t = explode('_', $this->cleReponse);
+
+        return $t[count($t) - 1];
     }
 
 }

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/EnqueteDiplomeController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 10/01/2021 18:03
+// @lastUpdate 11/01/2021 12:12
 
 namespace App\Controller\superAdministration;
 
@@ -23,83 +23,59 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class EnqueteDiplomeController extends AbstractController
 {
-    private EntityManagerInterface $entityManager;
-
-    /**
-     * EnqueteController constructor.
-     *
-     * @param EntityManagerInterface $entityManager
-     */
-    public function __construct(EntityManagerInterface $entityManager)
-    {
-        $this->entityManager = $entityManager;
-    }
-
 
     /**
      * @Route("/", name="administratif_enquete_diplome_index")
-     * @param QuestionnaireEtudiantRepository $questionnaireEtudiantRepository
-     * @param RddDiplomeRepository            $rddDiplomeRepository
-     * @param Configuration                   $configuration
-     * @param QuestionnaireQuizzRepository    $questionnaireQuizzRepository
+     * @param MyEnqueteDiplome     $myEnqueteDiplome
+     * @param RddDiplomeRepository $rddDiplomeRepository
      *
      * @return Response
      */
     public function index(
-        QuestionnaireEtudiantRepository $questionnaireEtudiantRepository,
-        EtudiantRepository $etudiantRepository,
-        RddDiplomeRepository $rddDiplomeRepository,
-        Configuration $configuration,
-        QuestionnaireQuizzRepository $questionnaireQuizzRepository
+        myEnqueteDiplome $myEnqueteDiplome,
+        RddDiplomeRepository $rddDiplomeRepository
     ): Response {
+        $enquete = $myEnqueteDiplome->getSyntheseReponse();
         $nbAttendus = $rddDiplomeRepository->findBy(['enqueteAFaire' => 1]);
-        $questionnaire = $questionnaireQuizzRepository->find($configuration->get('ENQUETE_DIPLOME'));
-        $reponses = $questionnaireEtudiantRepository->findByQuestionnaire($questionnaire);
-        $pourcentage = count($reponses) / count($nbAttendus);
-
-        $etudiants = $etudiantRepository->findAll();
-        $tEtudiant = [];
-        foreach ($etudiants as $etudiant) {
-            $tEtudiant[$etudiant->getNumEtudiant()]['etudiant'] = $etudiant;
-            $tEtudiant[$etudiant->getNumEtudiant()]['reponse'] = null;
-        }
-
-        foreach ($reponses as $reponse) {
-            if (array_key_exists($reponse->getEtudiant()->getNumEtudiant(), $tEtudiant)) {
-                $tEtudiant[$reponse->getEtudiant()->getNumEtudiant()]['reponse'] = $reponse;
-            }
-        }
+        $pourcentage = count($enquete->getReponses()) / count($nbAttendus);
 
 
         return $this->render('super-administration/enquete-diplome/index.html.twig', [
-            'questionnaire'     => $questionnaire,
-            'reponses'          => $reponses,
+            'questionnaire'     => $enquete->getQuestionnaire(),
+            'reponses'          => $enquete->getReponses(),
             'nbAttendus'        => $nbAttendus,
             'pourcentageRetour' => $pourcentage,
-            'etudiants'         => $tEtudiant
+            'etudiants'         => $enquete->getEtudiantsReponses()
         ]);
     }
 
     /**
      * @Route("/export", name="administratif_enquete_diplome_export")
-     * @param QuestionnaireEtudiantRepository $questionnaireEtudiantRepository
-     * @param RddDiplomeRepository            $rddDiplomeRepository
-     * @param Configuration                   $configuration
-     * @param QuestionnaireQuizzRepository    $questionnaireQuizzRepository
+     * @param MyEnqueteDiplome $myEnqueteDiplome
      *
      * @return Response
      */
     public function export(
+        MyEnqueteDiplome $myEnqueteDiplome
+    ): Response {
+        return $myEnqueteDiplome->export();
+    }
+
+    /**
+     * @Route("/export-manquant", name="administratif_enquete_diplome_export_manquant")
+     * @param MyEnqueteDiplome     $myEnqueteDiplome
+     * @param RddDiplomeRepository $rddDiplomeRepository
+     *
+     * @return Response
+     */
+    public function manquant(
         MyEnqueteDiplome $myEnqueteDiplome,
-        QuestionnaireEtudiantRepository $questionnaireEtudiantRepository,
-        RddDiplomeRepository $rddDiplomeRepository,
-        Configuration $configuration,
-        QuestionnaireQuizzRepository $questionnaireQuizzRepository
+        RddDiplomeRepository $rddDiplomeRepository
     ): Response {
         $attendus = $rddDiplomeRepository->findBy(['enqueteAFaire' => 1]);
-        $questionnaire = $questionnaireQuizzRepository->find($configuration->get('ENQUETE_DIPLOME'));
-        $reponses = $questionnaireEtudiantRepository->findByQuestionnaire($questionnaire);
 
-        $myEnqueteDiplome->export($questionnaire, $attendus, $reponses);
+        return $myEnqueteDiplome->exportManquant($attendus);
+
+
     }
 }
