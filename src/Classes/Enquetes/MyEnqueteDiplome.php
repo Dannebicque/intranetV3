@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Enquetes/MyEnqueteDiplome.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/01/2021 12:44
+// @lastUpdate 11/01/2021 12:59
 
 namespace App\Classes\Enquetes;
 
@@ -87,20 +87,20 @@ class MyEnqueteDiplome
             $reponses = $this->questionnaireEtudiantReponse->findByQuizzEtudiant($reponse);
             $t = [];
             foreach ($tEnTeteId as $question) {
-                $cle = 'quizz_question_reponses_q' . $question->getId();
-                if (array_key_exists($cle, $reponses)) {
-                    if (array_key_exists($reponses[$cle]->getIdReponse(), $tReponses)) {
-                        if ($question->getType() === QuestionnaireQuestion::QUESTION_TYPE_LIBRE) {
-                            $t[] = $reponses[$cle]->getValeur();
-                        } else {
+                if ($question->getType() === QuestionnaireQuestion::QUESTION_TYPE_LIBRE) {
+                    $cle = 'quizz_question_text_q' . $question->getId();
+                    $t[] = $reponses[$cle]->getValeur();
+                } else {
+                    $cle = 'quizz_question_reponses_q' . $question->getId();
+                    if (array_key_exists($cle, $reponses)) {
+                        if (array_key_exists($reponses[$cle]->getIdReponse(), $tReponses)) {
                             $t[] = $tReponses[$reponses[$cle]->getIdReponse()]->getLibelle();
                         }
                     } else {
                         $t[] = 'erreur';
                     }
-                } else {
-                    $t[] = '';
                 }
+
             }
             $this->myExcelWriter->ecritLigne($t, 1, $ligne);
             $ligne++;
