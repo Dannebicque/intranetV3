@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EvaluationController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 22/10/2020 15:56
+// @lastUpdate 12/01/2021 14:57
 
 namespace App\Controller\administration;
 
@@ -15,6 +15,7 @@ use App\Entity\Semestre;
 use App\Form\EvaluationType;
 use App\Classes\MyEvaluation;
 use App\Repository\EvaluationRepository;
+use App\Repository\GroupeRepository;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -22,6 +23,9 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 /**
  * Class EvaluationController
@@ -49,10 +53,33 @@ class EvaluationController extends BaseController
     }
 
     /**
-     * @Route("/ajouter/{matiere}", name="administration_evaluation_create", methods="GET|POST")
-     * @param Request      $request
+     * @Route("/export/{uuid}.{_format}", name="administration_evaluation_export", methods="GET")
+     * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
+     * @param MyEvaluation $myEvaluation
+     * @param Evaluation   $evaluation
+     * @param              $_format
      *
-     * @param Matiere      $matiere
+     * @return RedirectResponse|Response
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     */
+    public function exportEvaluation(
+        MyEvaluation $myEvaluation,
+        Evaluation $evaluation,
+        $_format
+    ) {
+        $data = $evaluation->getTypeGroupe()->getGroupes();
+
+        return $myEvaluation->setEvaluation($evaluation)->exportReleve($_format, $data,
+            $this->dataUserSession->getDepartement());
+    }
+
+    /**
+     * @Route("/ajouter/{matiere}", name="administration_evaluation_create", methods="GET|POST")
+     * @param Request $request
+     *
+     * @param Matiere $matiere
      *
      * @return RedirectResponse|Response
      * @throws Exception
