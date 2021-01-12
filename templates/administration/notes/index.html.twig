@@ -85,7 +85,6 @@
                                 {% if evaluations[matiere.id] is defined %}
                                     {% for evaluation in evaluations[matiere.id] %}
                                         <div class="btn-group mt-2 mr-2">
-
                                             <a class="btn btn-success"
                                                href="{{ path('administration_evaluation_show', {uuid:evaluation.uuidString}) }}"
                                                data-provide="tooltip"
