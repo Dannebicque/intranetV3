@@ -134,8 +134,8 @@
                             </table>
                             {{ render_esi(controller(
                                 'App\\Controller\\GraphiqueController::evaluation', {
-                                    repartition: evaluations.statistiques[eval.id],
-                                    evaluation: eval.id
+                                    evaluation: eval.id,
+                                    repartition: evaluations.statistiques[eval.id]
                                 }
                             )) }}
                             <canvas id="graphEval_{{ eval.id }}"></canvas>

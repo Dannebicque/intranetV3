@@ -59,46 +59,59 @@
             {{ include('composants/_saisie_notes.html.twig') }}
         </div>
     </div>
+
+    <div class="card">
+        <h4 class="card-title"><strong>Répartition</strong> des notes | Evaluation : {{ evaluation.libelle }}
+        </h4>
+        <div class="card-body">
+            {{ render_esi(controller(
+                'App\\Controller\\GraphiqueController::evaluation', {
+                    evaluation: evaluation.id
+                }
+            )) }}
+            <canvas id="graphEval_{{ evaluation.id }}"></canvas>
+        </div>
+    </div>
 {% endblock %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    {{ encore_entry_link_tags('notes') }}
-{% endblock %}
+    {% block stylesheets %}
+        {{ parent() }}
+        {{ encore_entry_link_tags('notes') }}
+    {% endblock %}
 
-{% block javascripts %}
-    {{ parent() }}
-    {{ encore_entry_script_tags('notes') }}
-{% endblock %}
+    {% block javascripts %}
+        {{ parent() }}
+        {{ encore_entry_script_tags('notes') }}
+    {% endblock %}
 
-{% block fabactions %}
-    {{ include('composants/fab-buttons.html.twig', {boutons:[
-        {type: 'info',
-            href: path('administration_evaluation_export', {_format:'pdf', uuid: evaluation.uuidString}),
-            title: 'exporter.pdf'|trans,
-            id: 'export_pdf',
-            icone : "fa fa-file-pdf"
-        },
-        {
-            type:'info',
-            href:path('administration_evaluation_export', {_format:'csv', uuid: evaluation.uuidString}),
-            title: 'exporter.csv'|trans,
-            id: 'export_csv',
-            icone: 'fa fa-file-csv'
-        },
-        {
-            type:'info',
-            href:path('administration_evaluation_export', {_format:'xlsx', uuid: evaluation.uuidString}),
-            title: 'exporter.xls'|trans,
-            id: 'export_xlsx',
-            icone: 'fa fa-file-excel'
-        },
-        {
-            type:'info',
-            href:path('help_article', {sujet: 'administration_evaluation'}),
-            title: 'aide'|trans,
-            icone: 'fas fa-question',
-            target: '_blank'
-        }
-    ]}) }}
-{% endblock %}
+    {% block fabactions %}
+        {{ include('composants/fab-buttons.html.twig', {boutons:[
+            {type: 'info',
+                href: path('administration_evaluation_export', {_format:'pdf', uuid: evaluation.uuidString}),
+                title: 'exporter.pdf'|trans,
+                id: 'export_pdf',
+                icone : "fa fa-file-pdf"
+            },
+            {
+                type:'info',
+                href:path('administration_evaluation_export', {_format:'csv', uuid: evaluation.uuidString}),
+                title: 'exporter.csv'|trans,
+                id: 'export_csv',
+                icone: 'fa fa-file-csv'
+            },
+            {
+                type:'info',
+                href:path('administration_evaluation_export', {_format:'xlsx', uuid: evaluation.uuidString}),
+                title: 'exporter.xls'|trans,
+                id: 'export_xlsx',
+                icone: 'fa fa-file-excel'
+            },
+            {
+                type:'info',
+                href:path('help_article', {sujet: 'administration_evaluation'}),
+                title: 'aide'|trans,
+                icone: 'fas fa-question',
+                target: '_blank'
+            }
+        ]}) }}
+    {% endblock %}

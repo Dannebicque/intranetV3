@@ -1,13 +1,14 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/GraphiqueController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 04/12/2020 13:43
+// @lastUpdate 12/01/2021 15:05
 
 namespace App\Controller;
 
 
+use App\Classes\MyEvaluations;
 use App\Entity\Evaluation;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
@@ -20,8 +21,18 @@ use Symfony\UX\Chartjs\Model\Chart;
  */
 class GraphiqueController extends BaseController
 {
-    public function evaluation(ChartBuilderInterface $chartBuilder, $repartition, Evaluation $evaluation)
-    {
+    public function evaluation(
+        MyEvaluations $myEvaluations,
+        ChartBuilderInterface $chartBuilder,
+        Evaluation $evaluation,
+        $repartition = null
+    ) {
+        if ($repartition === null) {
+            $myEvaluations->setMatiere($evaluation->getMatiere());
+            $myEvaluations->getEvaluationsMatiere($this->dataUserSession->getAnneeUniversitaire());
+            $repartition = $myEvaluations->getStatistiques()[$evaluation->getId()];
+        }
+
         $labels = [];
         for ($i = 0; $i <= 20; $i++) {
             $labels[] = $i;
