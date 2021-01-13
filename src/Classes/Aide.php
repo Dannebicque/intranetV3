@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Aide.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/01/2021 18:24
+// @lastUpdate 13/01/2021 06:43
 
 namespace App\Classes;
 
@@ -16,13 +16,14 @@ use Symfony\Component\HttpKernel\KernelInterface;
 
 class Aide
 {
+    private const EXCLUDES_DIR = ['.', '..', 'assets', 'intranetGitBook-master'];
     private Parsedown $parseDown;
     private string $dir;
 
     public function __construct(KernelInterface $kernel)
     {
         $this->parseDown = new ParsedownExtra();
-        $this->dir = $kernel->getProjectDir() . '/aide';
+        $this->dir = $kernel->getProjectDir() . '/aide/';
     }
 
     public function getAide($sujet)
@@ -73,10 +74,6 @@ class Aide
      */
     private function extractContentDir(string $dossier): array
     {
-        if ($dossier[0] !== '/') {
-            $dossier = '/' . $dossier;
-        }
-
         if (substr($dossier, -1) !== '/') {
             $dossier .= '/';
         }
@@ -86,9 +83,10 @@ class Aide
         $handle = opendir($this->dir . $dossier);
 
         while (false !== ($entry = readdir($handle))) {
-            if ($entry !== '.' && $entry !== '..') {
+            if (!in_array($entry, self::EXCLUDES_DIR, true)) {
                 if (is_dir($this->dir . $dossier . $entry)) {
                     $t['nom'] = $entry;
+                    $t['code_traduction'] = 'aide.' . str_replace('/', '-', $dossier . $entry);
                     $t['nbArticles'] = count(scandir($this->dir . $dossier . $entry)) - 2;
                     $categories['categories'][] = $t;
                 } else {
@@ -105,6 +103,7 @@ class Aide
 
                     $t['nom'] = $nom;
                     $t['lien'] = $lien;
+                    $t['code_traduction'] = 'aide.' . $lien;
                     $categories['articles'][] = $t;
                 }
             }

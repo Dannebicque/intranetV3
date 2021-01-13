@@ -1,4 +1,5 @@
 {% extends 'base.html.twig' %}
+
 {% trans_default_domain 'help' %}
 
 {% block header %}
@@ -29,7 +30,7 @@
                     </div>
 
                     <div class="media-body">
-                        <p class="lead fw-400">{{ categorie.nom }}</p>
+                        <p class="lead fw-400">{{ categorie.code_traduction|trans }}</p>
                         <p><small>{{ categorie.nbArticles }} article(s)</small></p>
                     </div>
 
@@ -47,12 +48,12 @@
                     </div>
 
                     <div class="media-body">
-                        <p class="lead fw-400">{{ article.nom }}</p>
+                        <p class="lead fw-400">{{ article.code_traduction|trans }}</p>
                         <p><small>Lire l'article</small></p>
                     </div>
                 </a>
             </div>
         {% endfor %}
-    </div>
+    </div><br><br>
 {% endblock %}
 
