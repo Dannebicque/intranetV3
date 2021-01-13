@@ -25,7 +25,8 @@
         <div class="card-body">
             <div class="container-article">
                 {% if article != null %}
-                    {{ article.content|raw }}
+                    {{ article.content|replace({'http://newintranet:8888':
+                        settings('SITE_INTRANET_IUT')})|raw }}
                 {% else %}
                     <div class="alert alert-warning">
                         {{ 'help.notfound.message'|trans }}
