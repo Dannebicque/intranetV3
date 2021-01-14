@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/MoyenneMatiere.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 14/01/2021 18:08
+// @lastUpdate 14/01/2021 18:16
 
 namespace App\DTO;
 
@@ -91,7 +91,9 @@ class MoyenneMatiere
 
     public function getMoyenne(): float
     {
-        return $this->totalCoefficient > 0 ? $this->totalNotes / $this->totalCoefficient : 0;
+        $moy = $this->totalCoefficient > 0 ? $this->totalNotes / $this->totalCoefficient : 0;
+
+        return $moy < 0 ? 0 : $moy;
     }
 
     /**
@@ -106,7 +108,9 @@ class MoyenneMatiere
 
     public function getMoyennePenalisee()
     {
-        return $this->getMoyenne() - ($this->absences * $this->penalite);
+        $moy = $this->getMoyenne() - ($this->absences * $this->penalite);
+
+        return $moy < 0 ? 0 : $moy;
     }
 
     public function getBonification()
