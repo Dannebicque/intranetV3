@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/MoyenneUe.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 01/12/2020 22:01
+// @lastUpdate 14/01/2021 17:55
 
 namespace App\DTO;
 
@@ -33,9 +33,11 @@ class MoyenneUe
 
     public function addMatiere(MoyenneMatiere $moyenneMatiere)
     {
-        $this->totalMatiere += $moyenneMatiere->getMoyenne() * $moyenneMatiere->matiere->getCoefficient();
-        $this->totalMatierePenalisee += $moyenneMatiere->getMoyennePenalisee() * $moyenneMatiere->matiere->getCoefficient();
-        $this->totalCoefficient += $moyenneMatiere->matiere->getCoefficient();
+        if ($moyenneMatiere->matiere->isPac() === false) {
+            $this->totalMatiere += $moyenneMatiere->getMoyenne() * $moyenneMatiere->matiere->getCoefficient();
+            $this->totalMatierePenalisee += $moyenneMatiere->getMoyennePenalisee() * $moyenneMatiere->matiere->getCoefficient();
+            $this->totalCoefficient += $moyenneMatiere->matiere->getCoefficient();
+        }
     }
 
     public function getStyleMoyenne(): string
