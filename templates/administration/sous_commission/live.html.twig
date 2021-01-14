@@ -52,8 +52,8 @@
                                 <th colspan="4" style="text-align: right">Matière</th>
                                 {% for matiere in sousCommission.matieres|filter(matiere => matiere.nbnotes!=0) %}
                                     <th {% if semestre.optPenaliteAbsence == true %}colspan="2"{% endif %} class="matiere">
-                                        <abbr title="{{ matiere.libelle }}">{{ matiere
-                                            .codeMatiere }}</abbr></th>
+                                        <abbr title="{{ matiere.libelle }}">
+                                            {{ matiere.codeMatiere }}</abbr></th>
                                 {% endfor %}
                                 <th colspan="{{ (sousCommission.ues|length *2 ) + 7 }}" style="text-align: center">
                                     Semestre {{ semestre.libelle }}</th>
@@ -191,13 +191,12 @@
                                     <td style="background: {{ myEtudiant.absencesStyle }}">{{ myEtudiant.nbAbsences }}</td>
                                     {# decisions passées #}
                                     {% for sem in sousCommission.semestresScolarite|filter(sem => sem.id != semestre.id) %}
-
                                         {% for ue in sem.ues %}
-                                            {% if myEtudiant.parcours[sem.ordreLmd ] is defined %}
+                                            {% if myEtudiant.scolarite[sem.ordreLmd ] is defined %}
                                                 <td>
-                                            <span class="{{ myEtudiant.parcours[sem.ordreLmd].parcoursUe[ue.numeroue]
+                                            <span class="{{ myEtudiant.scolarite[sem.ordreLmd].parcoursUe[ue.id]
                                             .style }}">
-                                            {{ myEtudiant.parcours[sem.ordreLmd].parcoursUe[ue.numeroue]
+                                            {{ myEtudiant.scolarite[sem.ordreLmd].parcoursUe[ue.id]
                                             .moyenne|number_format(3) }}
                                             </span>
                                                 </td>
@@ -205,16 +204,16 @@
                                                 <td> -</td>
                                             {% endif %}
                                         {% endfor %}
-                                        {% if myEtudiant.parcours[sem.ordreLmd] is defined %}
+                                        {% if myEtudiant.scolarite[sem.ordreLmd] is defined %}
                                             <td>
-                                    <span class="{{ myEtudiant.parcours[sem.ordreLmd].style }}">
-                                    {{ myEtudiant.parcours[sem.ordreLmd].moyenne|number_format(3) }}
+                                    <span class="{{ myEtudiant.scolarite[sem.ordreLmd].styleMoyenne }}">
+                                    {{ myEtudiant.scolarite[sem.ordreLmd].moyenne|number_format(3) }}
                                     </span>
                                             </td>
                                             <td>
-                                    <span class="{{ myEtudiant.parcours[sem.ordreLmd].styleDecision }}">{{ myEtudiant
-                                        .parcours[sem.ordreLmd].decision
-                                        }}</span></td>
+                                    <span class="{{ myEtudiant.scolarite[sem.ordreLmd].styleDecision }}">{{ myEtudiant
+                                        .scolarite[sem.ordreLmd].decision }}</span>
+                                            </td>
                                         {% else %}
                                             <td> -</td>
                                             <td> -</td>
