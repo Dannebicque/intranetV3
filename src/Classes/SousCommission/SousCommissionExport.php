@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/SousCommission/SousCommissionExport.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/12/2020 14:12
+// @lastUpdate 14/01/2021 18:46
 
 namespace App\Classes\SousCommission;
 
@@ -262,7 +262,7 @@ class SousCommissionExport
                 foreach ($s->getUes() as $ue) {
                     if (isset($sousCommissionEtudiant->getScolarite()[$s->getOrdreLmd()])) {
                         $this->myExcelWriter->writeCellXY($colonne, $ligne,
-                            $sousCommissionEtudiant->getScolarite()[$s->getOrdreLmd()]->getParcoursUe()[$ue->getId()]['moyenne'],
+                            $sousCommissionEtudiant->getScolarite()[$s->getOrdreLmd()]->parcoursUe[$ue->getId()]['moyenne'],
                             'numerique3');
                     } else {
                         $this->myExcelWriter->writeCellXY($colonne, $ligne, ' - ');
@@ -273,11 +273,11 @@ class SousCommissionExport
                 }
                 if (isset($sousCommissionEtudiant->getScolarite()[$s->getOrdreLmd()])) {
                     $this->myExcelWriter->writeCellXY($colonne, $ligne,
-                        $sousCommissionEtudiant->getScolarite()[$s->getOrdreLmd()]->getMoyenne(),
+                        $sousCommissionEtudiant->getScolarite()[$s->getOrdreLmd()]->moyenne,
                         'numerique3');
                     $colonne++;
                     $this->myExcelWriter->writeCellXY($colonne, $ligne,
-                        $sousCommissionEtudiant->getScolarite()[$s->getOrdreLmd()]->getDecision());
+                        $sousCommissionEtudiant->getScolarite()[$s->getOrdreLmd()]->decision);
                     $colonne++;
                 } else {
                     $this->myExcelWriter->writeCellXY($colonne, $ligne, ' - ');
