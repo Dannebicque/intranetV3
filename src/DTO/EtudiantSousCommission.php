@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/EtudiantSousCommission.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 02/12/2020 11:56
+// @lastUpdate 14/01/2021 15:09
 
 namespace App\DTO;
 
@@ -104,12 +104,12 @@ class EtudiantSousCommission
         } else if (array_key_exists($this->semestre->getOrdreLmd() - 1, $this->scolarite)) {
             //c'est pas le premier, on regarde le passé.
             $prec = $this->scolarite[$this->semestre->getOrdreLmd() - 1];
-            if (in_array($prec->getDecision(), [Constantes::SEMESTRE_VALIDE, Constantes::SEMESTRE_NON_VALIDE], true)) {
+            if (in_array($prec->decision, [Constantes::SEMESTRE_VALIDE, Constantes::SEMESTRE_NON_VALIDE], true)) {
                 //donc pas utilisé pour VCA ou VCJ
                 if ($this->semestre->isOptPenaliteAbsence() === true) {
-                    $moyenneS = ($this->moyenneSemestrePenalisee + $prec->getMoyenne()) / 2;
+                    $moyenneS = ($this->moyenneSemestrePenalisee + $prec->moyenne) / 2;
                 } else {
-                    $moyenneS = ($this->moyenneSemestre + $prec->getMoyenne()) / 2;
+                    $moyenneS = ($this->moyenneSemestre + $prec->moyenne) / 2;
                 }
 
                 if ($moyenneS >= 10) {
@@ -227,6 +227,15 @@ class EtudiantSousCommission
     public function getScolarite(): array
     {
         return $this->scolarite;
+    }
+
+    public function recupereScolarite(array $semestresScolarite)
+    {
+        $this->scolarite = $semestresScolarite;
+
+        foreach ($this->etudiant->getScolarites() as $scolarite) {
+            $this->scolarite[$scolarite->getSemestre()->getOrdreLmd()] = new Scolarite($scolarite);
+        }
     }
 
 

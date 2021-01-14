@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/SousCommission/SousCommission.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 10/12/2020 08:44
+// @lastUpdate 14/01/2021 14:40
 
 namespace App\Classes\SousCommission;
 
@@ -119,6 +119,8 @@ class SousCommission
                     $etudiantSousCommission->calculMoyenneSemestreUes();
                 }
             }
+
+            $etudiantSousCommission->recupereScolarite($this->semestresScolarite);
 
             //calcul de la décision du semestre
             $etudiantSousCommission->calculDecision();
