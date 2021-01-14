@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/EtudiantSousCommission.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 14/01/2021 15:09
+// @lastUpdate 14/01/2021 16:48
 
 namespace App\DTO;
 
@@ -60,6 +60,7 @@ class EtudiantSousCommission
 
             } elseif ($moyenneMatiere->matiere->isPac() === true) {
                 $this->bonif += $moyenneMatiere->getBonification();
+                //problème bonif et problème nombre de coefficient intégrant l'option
             }
         }
         $totcoeff !== 0 ? $this->moyenneSemestre = $totalMatieres / $totcoeff + $this->bonif : $this->moyenneSemestre = 0;
