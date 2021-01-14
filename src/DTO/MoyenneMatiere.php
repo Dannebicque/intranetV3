@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/MoyenneMatiere.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 14/01/2021 16:43
+// @lastUpdate 14/01/2021 18:08
 
 namespace App\DTO;
 
@@ -111,8 +111,12 @@ class MoyenneMatiere
 
     public function getBonification()
     {
-        $this->bonification += ($this->getMoyenne() - 10) / 20;
+        if ($this->getMoyenne() > 10) {
+            $this->bonification += ($this->getMoyenne() - 10) / 20;
 
-        return $this->bonification;
+            return $this->bonification;
+        }
+
+        return 0;
     }
 }
