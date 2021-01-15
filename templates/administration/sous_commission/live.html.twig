@@ -87,7 +87,7 @@
                                 <th>Abs.</th>
                                 {% for sem in sousCommission.semestresScolarite|filter(sem => sem.id != semestre.id) %}
                                     {% for ue in sem.ues %}
-                                        <th>UE {{ ue.numeroue }}</th>
+                                        <th>UE {{ ue.numeroue }} ({{ ue.coefficient }})</th>
                                     {% endfor %}
                                     <th>Moy.</th>
                                     <th>Décis.</th>
