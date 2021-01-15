@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/CovidSubscriber.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 18/12/2020 09:29
+// @lastUpdate 15/01/2021 10:56
 
 namespace App\EventSubscriber;
 
@@ -155,7 +155,7 @@ class CovidSubscriber implements EventSubscriberInterface
                 ]);
                 //joindre le PDF
                 $this->myMailer->attachFile($file);
-                $this->myMailer->attachFile($this->dir . 'covid/Organisation Accès  IUT  Troyes - Note personnels 17.12.2020.pdf');
+                $this->myMailer->attachFile($this->dir . 'covid/Organisation Accès  IUT  Troyes - Note personnels 15.01.2020.pdf');
                 $this->myMailer->sendMessage(
                     $covidAttestationPersonnel->getPersonnel()->getMails(),
                     'Demande d\'autorisation de déplacement acceptée',
