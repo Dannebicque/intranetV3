@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Enquetes/MyEnqueteDiplome.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/01/2021 15:53
+// @lastUpdate 15/01/2021 15:13
 
 namespace App\Classes\Enquetes;
 
@@ -137,6 +137,8 @@ class MyEnqueteDiplome
             'Nom',
             'Prénom',
             'Mail',
+            'Num Etudiant',
+            'Date de Naissance',
             'Téléphone',
             'Téléphone',
             'Diplome',
@@ -173,7 +175,9 @@ class MyEnqueteDiplome
                 $t = [
                     $rep['etudiant']->getNom(),
                     $rep['etudiant']->getPrenom(),
-                    $rep['etudiant']->getMailPerso(),
+                    $attendu->getMailperso(),
+                    $attendu->getNumEtudiant(),
+                    $attendu->getDateNaissance()->format('d/m/Y'),
                     Tools::telFormat($rep['etudiant']->getTel1()),
                     Tools::telFormat($rep['etudiant']->getTel2()),
                     $attendu->getLibelleDiplome(),
