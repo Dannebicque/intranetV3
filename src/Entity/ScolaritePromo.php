@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ScolaritePromo.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/12/2020 16:02
+// @lastUpdate 16/01/2021 11:38
 
 namespace App\Entity;
 
@@ -55,7 +55,7 @@ class ScolaritePromo
     private $moyenne = -0.01;
 
     /**
-     * @ORM\OneToMany(targetEntity=Scolarite::class, mappedBy="ScolaritePromo")
+     * @ORM\OneToMany(targetEntity=Scolarite::class, mappedBy="scolaritePromo")
      */
     private $scolarites;
 

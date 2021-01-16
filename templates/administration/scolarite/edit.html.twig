@@ -23,7 +23,11 @@
     {{ include('user/composants/scolarite.html.twig', {scolarites:scolarites}) }}
 
     <div class="card">
-        <h4 class="card-title">{{ 'adm.scolarite.edit.heading'|trans({'%etudiant%': etudiant.displayPr}) }}</h4>
+        {% if edit == true %}
+            <h4 class="card-title">{{ 'adm.scolarite.edit.heading'|trans({'%etudiant%': etudiant.displayPr}) }}</h4>
+        {% else %}
+            <h4 class="card-title">{{ 'adm.scolarite.new.heading'|trans({'%etudiant%': etudiant.displayPr}) }}</h4>
+        {% endif %}
         <div class="card-body">
             {% form_theme form 'form/my-form.html.twig' %}
             {{ form_start(form) }}
@@ -45,7 +49,8 @@
                                 <div class="form-group">
                                     <label for="ue_{{ ue.id }}" class="required">UE {{ ue.numeroue }}</label>
                                     <input type="text" id="ue_{{ ue.id }}" name="ue_{{ ue.id }}" required="required"
-                                           class="form-control" value="{{ scolarite.moyennesUes[ue.id].moyenne }}">
+                                           class="form-control" value="{{ scolarite.moyennesUes[ue.id] is defined ?
+                                    scolarite.moyennesUes[ue.id].moyenne : '' }}">
                                 </div>
                             </div>
                         {% endfor %}

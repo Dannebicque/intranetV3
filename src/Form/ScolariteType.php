@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ScolariteType.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/09/2020 08:52
+// @lastUpdate 16/01/2021 11:45
 
 namespace App\Form;
 
@@ -73,8 +73,9 @@ class ScolariteType extends AbstractType
                 'label'         => 'label.decision',
             ])
             ->add('proposition', TextType::class, [
-                'label'         => 'label.proposition',
-                'help' => 'Sn+1, DUT, ...'
+                'label'    => 'label.proposition',
+                'required' => false,
+                'help'     => 'Sn+1, DUT, ...'
             ])
             ->add('moyenne', TextType::class, [
                 'label'         => 'label.moyenne',

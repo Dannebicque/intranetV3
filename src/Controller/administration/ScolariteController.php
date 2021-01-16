@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/ScolariteController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 09/01/2021 15:33
+// @lastUpdate 16/01/2021 11:43
 
 namespace App\Controller\administration;
 
@@ -34,7 +34,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ScolariteController extends BaseController
 {
     /**
-     * @Route("/edit/{slug}/{scolarite}", name="administration_scolarite_etudiant_edit")
+     * @Route("/edit/{slug}/{scolarite?<\d+>}", name="administration_scolarite_etudiant_edit")
      *
      * @param Request        $request
      * @param Etudiant       $etudiant
@@ -48,9 +48,11 @@ class ScolariteController extends BaseController
         Etudiant $etudiant,
         ?Scolarite $scolarite = null
     ): Response {
+        $edit = true;
         if ($scolarite === null) {
             $scolarite = new Scolarite($etudiant, $etudiant->getSemestre(),
                 $this->dataUserSession->getAnneeUniversitaire());
+            $edit = false;
         }
 
         $form = $this->createForm(ScolariteType::class, $scolarite,
@@ -68,15 +70,17 @@ class ScolariteController extends BaseController
             $scolarite->setMoyennesUes($tUes);
             $this->entityManager->flush();
             $this->addFlashBag('success', 'adm.scolarite.add.flashbag');
-            $form = $this->createForm(ScolariteType::class, $scolarite,
-                ['departement' => $this->dataUserSession->getDepartement()]);
+
+            return $this->redirectToRoute('administration_scolarite_etudiant_edit', ['slug' => $etudiant->getSlug()]);
+
         }
 
         return $this->render('administration/scolarite/edit.html.twig', [
             'etudiant'   => $etudiant,
             'scolarites' => $etudiant->getScolarites(),
             'form'       => $form->createView(),
-            'scolarite'  => $scolarite
+            'scolarite'  => $scolarite,
+            'edit'       => $edit
         ]);
     }
 
