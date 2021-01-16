@@ -35,99 +35,106 @@
         </div>
     </header>
     <div class="card-body">
-        {% if selectedTypeGroupe != null and groupes|length >0 %}
-            <div class="tabs">
-                <ul class="nav nav-tabs">
-                    {% for groupe in groupes %}
-                        <li class="nav-item">
-                            <a class="nav-link {% if loop.first %}active{% endif %}" data-toggle="tab"
-                               href="#groupe_{{ groupe.id }}">{{ groupe.libelle }} ({{ groupe.etudiants|length }})</a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
+        {% if groupes != null %}
+            {% if selectedTypeGroupe != null and groupes|length >0 %}
+                <div class="tabs">
+                    <ul class="nav nav-tabs">
+                        {% for groupe in groupes %}
+                            <li class="nav-item">
+                                <a class="nav-link {% if loop.first %}active{% endif %}" data-toggle="tab"
+                                   href="#groupe_{{ groupe.id }}">{{ groupe.libelle }} ({{ groupe.etudiants|length }}
+                                                                                       )</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
 
-            <div class="tab-content">
-                {% for groupe in groupes %}
-                    <div class="tab-pane {% if loop.first %}fade active show{% endif %}" id="groupe_{{ groupe.id }}">
-                        <div class="row">
-                            {% if groupe.etudiants|length >0 %}
-                                {% for etudiant in groupe.etudiants %}
-                                    <div class="col-sm-6 col-md-4 col-lg-3 mb-30">
-                                        <div class="text-white card-body bg-cyan py-20"
-                                             style="min-height: 230px">
-                                            <div class="flexbox">
-                                                <a href="{{ path('user_profil', {type:'etudiant', slug: etudiant.slug}) }}" target="_blank">
-                                                    {% if etudiant.photoName != null and etudiant.photoName !=
-                                                        'noimage.png' %}
-                                                        <img class="avatar avatar-xxxl avatar-bordered rounded" src="{{ asset('upload/etudiants/'~etudiant.photoName)|imagine_filter('thumb') }}" alt="photo de {{ etudiant.displayPr }}">
-                                                    {% else %}
-                                                        {{ include('composants/_avatar.html.twig', {user:etudiant}) }}
-                                                    {% endif %}
-                                                </a>
-                                                <div class="flex-grow pl-20">
-                                                    <div><i class="fa fa-fw fa-map-marker w-20px"></i>
-                                                        {% for grEtu in etudiant.groupes %}{{ grEtu.libelle }} {% endfor %}
-                                                    </div>
-                                                    <div>
-                                                        <i class="fa fa-fw fa-envelope w-20px"></i>
-                                                        <a href="mailto:{{ etudiant.mailUniv }}" target="_blank"
-                                                           class="text-white"
-                                                           title="Contacter" data-provide="tooltip"
-                                                           data-placement="bottom">Contacter
-                                                        </a>
-                                                    </div>
-                                                    <div>
-                                                        {% if etudiant.siteUniv != '' and etudiant.siteUniv != null %}
-                                                            <a href="{{ etudiant.siteUniv }}"
-                                                               class="text-white"
-                                                               target="_blank" title="Site Universitaire" data-provide="tooltip"
-                                                               data-placement="bottom">
-                                                                <i class="fa fa-fw fa-globe w-20px"></i>
-                                                                <span class="sr-only">Site Universitaire</span>
-                                                            </a>
+                <div class="tab-content">
+                    {% for groupe in groupes %}
+                        <div class="tab-pane {% if loop.first %}fade active show{% endif %}" id="groupe_{{ groupe.id }}">
+                            <div class="row">
+                                {% if groupe.etudiants|length >0 %}
+                                    {% for etudiant in groupe.etudiants %}
+                                        <div class="col-sm-6 col-md-4 col-lg-3 mb-30">
+                                            <div class="text-white card-body bg-cyan py-20"
+                                                 style="min-height: 230px">
+                                                <div class="flexbox">
+                                                    <a href="{{ path('user_profil', {type:'etudiant', slug: etudiant.slug}) }}" target="_blank">
+                                                        {% if etudiant.photoName != null and etudiant.photoName !=
+                                                            'noimage.png' %}
+                                                            <img class="avatar avatar-xxxl avatar-bordered rounded" src="{{ asset('upload/etudiants/'~etudiant.photoName)|imagine_filter('thumb') }}" alt="photo de {{ etudiant.displayPr }}">
+                                                        {% else %}
+                                                            {{ include('composants/_avatar.html.twig', {user:etudiant}) }}
                                                         {% endif %}
-                                                        {% if etudiant.sitePerso != '' and etudiant.sitePerso != null %}
-                                                            <a href="{{ etudiant.sitePerso }}"
+                                                    </a>
+                                                    <div class="flex-grow pl-20">
+                                                        <div><i class="fa fa-fw fa-map-marker w-20px"></i>
+                                                            {% for grEtu in etudiant.groupes %}{{ grEtu.libelle }} {% endfor %}
+                                                        </div>
+                                                        <div>
+                                                            <i class="fa fa-fw fa-envelope w-20px"></i>
+                                                            <a href="mailto:{{ etudiant.mailUniv }}" target="_blank"
                                                                class="text-white"
-                                                               target="_blank" title="Site personnel" data-provide="tooltip"
-                                                               data-placement="bottom">
-                                                                <i class="fa fa-fw fa-link"></i>
-                                                                <span class="sr-only">Site personnel</span>
+                                                               title="Contacter" data-provide="tooltip"
+                                                               data-placement="bottom">Contacter
                                                             </a>
+                                                        </div>
+                                                        <div>
+                                                            {% if etudiant.siteUniv != '' and etudiant.siteUniv != null %}
+                                                                <a href="{{ etudiant.siteUniv }}"
+                                                                   class="text-white"
+                                                                   target="_blank" title="Site Universitaire" data-provide="tooltip"
+                                                                   data-placement="bottom">
+                                                                    <i class="fa fa-fw fa-globe w-20px"></i>
+                                                                    <span class="sr-only">Site Universitaire</span>
+                                                                </a>
+                                                            {% endif %}
+                                                            {% if etudiant.sitePerso != '' and etudiant.sitePerso != null %}
+                                                                <a href="{{ etudiant.sitePerso }}"
+                                                                   class="text-white"
+                                                                   target="_blank" title="Site personnel" data-provide="tooltip"
+                                                                   data-placement="bottom">
+                                                                    <i class="fa fa-fw fa-link"></i>
+                                                                    <span class="sr-only">Site personnel</span>
+                                                                </a>
+                                                            {% endif %}
+                                                        </div>
+                                                        {% if is_granted('ROLE_ETUDIANT') %}
+                                                            <label class="toggler toggler-danger fs-16">
+                                                                <input type="checkbox" checked class="addfavori"
+                                                                       value="{{ etudiant.slug }}">
+                                                                <i class="fa fa-heart"></i>
+                                                            </label>
                                                         {% endif %}
                                                     </div>
-                                                    {% if is_granted('ROLE_ETUDIANT') %}
-                                                        <label class="toggler toggler-danger fs-16">
-                                                            <input type="checkbox" checked class="addfavori"
-                                                                   value="{{ etudiant.slug }}">
-                                                            <i class="fa fa-heart"></i>
-                                                        </label>
-                                                    {% endif %}
                                                 </div>
+                                                <h4><a class="text-white trombinoscope_nom" data-provide="tooltip"
+                                                       target="_blank"
+                                                       data-placement="bottom" title="Profil" href="{{ path('user_profil', {type:'etudiant', slug: etudiant.slug}) }}">
+                                                        {{ etudiant.displayPr }}
+                                                    </a></h4>
                                             </div>
-                                            <h4><a class="text-white trombinoscope_nom" data-provide="tooltip"
-                                                   target="_blank"
-                                                   data-placement="bottom" title="Profil" href="{{ path('user_profil', {type:'etudiant', slug: etudiant.slug}) }}">
-                                                    {{ etudiant.displayPr }}
-                                                </a></h4>
+                                        </div>
+                                    {% endfor %}
+                                {% else %}
+                                    <div class="col-sm-12">
+                                        <div class="alert alert-warning">
+                                            {{ 'aucun.etudiant.groupe'|trans }}
                                         </div>
                                     </div>
-                                {% endfor %}
-                            {% else %}
-                                <div class="col-sm-12">
-                                    <div class="alert alert-warning">
-                                        {{ 'aucun.etudiant.groupe'|trans }}
-                                    </div>
-                                </div>
-                            {% endif %}
+                                {% endif %}
+                            </div>
                         </div>
-                    </div>
-                {% endfor %}
-            </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="alert alert-warning">
+                    {{ 'aucun.groupe.dans.typegroupe'|trans }}
+                </div>
+            {% endif %}
         {% else %}
             <div class="alert alert-warning">
-                {{ 'aucun.groupe.dans.typegroupe'|trans }}
+                {{ 'aucun.groupe.par.defaut'|trans }}
             </div>
         {% endif %}
     </div>
