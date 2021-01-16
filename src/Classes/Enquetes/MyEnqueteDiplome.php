@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Enquetes/MyEnqueteDiplome.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 15/01/2021 15:13
+// @lastUpdate 15/01/2021 16:08
 
 namespace App\Classes\Enquetes;
 
@@ -164,7 +164,7 @@ class MyEnqueteDiplome
                         $etat = 'En cours';
                         $etat2 = '';
                     }
-                    $update = $rep['reponse']->getUpdated()->format('d/m/Y');
+                    $update = $rep['reponse']->getUpdated()->format('d/m/Y H:i');
                 } else {
                     $etat = 'Non répondu';
                     $etat2 = '';
