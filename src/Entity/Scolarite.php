@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Scolarite.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 14/01/2021 15:05
+// @lastUpdate 16/01/2021 11:42
 
 namespace App\Entity;
 
@@ -71,23 +71,23 @@ class Scolarite extends BaseEntity
     /**
      * @ORM\ManyToOne(targetEntity=ScolaritePromo::class, inversedBy="scolarites")
      */
-    private ?ScolaritePromo $ScolaritePromo;
+    private $scolaritePromo;
 
     /**
      * @ORM\Column(type="array", nullable=true)
      */
-    private $moyennesMatieres = []; //sauvegarder moyenne et rang
+    private array $moyennesMatieres = []; //sauvegarder moyenne et rang
     // idMatiere => ['moyenne' => ..., 'rang' => ...],
 
     /**
      * @ORM\Column(type="array", nullable=true)
      */
-    private $moyennesUes = [];
+    private array $moyennesUes = [];
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $rang = -1;
+    private int $rang = -1;
     // idUe => ['moyenne' => ..., 'rang' => ...],
 
     /**
@@ -305,12 +305,12 @@ class Scolarite extends BaseEntity
 
     public function getScolaritePromo(): ?ScolaritePromo
     {
-        return $this->ScolaritePromo;
+        return $this->scolaritePromo;
     }
 
-    public function setScolaritePromo(?ScolaritePromo $ScolaritePromo): self
+    public function setScolaritePromo(?ScolaritePromo $scolaritePromo): self
     {
-        $this->ScolaritePromo = $ScolaritePromo;
+        $this->scolaritePromo = $scolaritePromo;
 
         return $this;
     }

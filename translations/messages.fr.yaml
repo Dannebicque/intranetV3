@@ -320,6 +320,7 @@ adm:
   scolarite:
     add.flashbag: 'Parcours de scolarité ajouté avec succès'
     edit.heading: 'Modifier le parcours de scolarité de %etudiant%'
+    new.heading: 'Ajout d''un parcours de scolarité de %etudiant%'
     saisie.promo.heading: 'Saisie de parcours de scolarité manquant'
   site:
     index.heading: 'Liste des sites géographiques'
