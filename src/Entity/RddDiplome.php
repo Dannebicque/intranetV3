@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/RddDiplome.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/12/2020 14:31
+// @lastUpdate 15/01/2021 16:07
 
 namespace App\Entity;
 
@@ -14,14 +14,8 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=RddDiplomeRepository::class)
  */
-class RddDiplome
+class RddDiplome extends BaseEntity
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
 
     /**
      * @ORM\Column(type="string", length=10)
@@ -67,11 +61,6 @@ class RddDiplome
      * @ORM\Column(type="string", length=30, nullable=true)
      */
     private $codeEtape;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getNumEtudiant(): ?string
     {

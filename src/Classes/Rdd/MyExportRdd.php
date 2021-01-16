@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Rdd/MyExportRdd.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/12/2020 06:46
+// @lastUpdate 15/01/2021 16:08
 
 namespace App\Classes\Rdd;
 
@@ -63,7 +63,8 @@ class MyExportRdd
             'Adresse complète',
             'confirme',
             'mail URCA',
-            'mail Perso'
+            'mail Perso',
+            'update'
         ];
         $this->myExcelWriter->ecritLigne($tEnTete, 1, 1);
 
@@ -92,6 +93,7 @@ class MyExportRdd
                     $diplome->getConfirme() === true ? 'Oui' : 'Non',
                     $etudiants[$diplome->getNumEtudiant()]->getMailUniv(),
                     $etudiants[$diplome->getNumEtudiant()]->getMailUniv(),
+                    $diplome->getUpdated()->format('d/m/Y H:i')
 
                 ];
             } else {
