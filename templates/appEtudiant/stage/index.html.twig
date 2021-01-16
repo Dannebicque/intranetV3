@@ -6,7 +6,8 @@
                 {% for stagePeriode in stagePeriodes %}
                     <li class="nav-item">
                         <a class="nav-link {% if loop.first %} active{% endif %}" data-toggle="tab"
-                           href="#stagePeriode{{ stagePeriode.uuidString }}">{{ stagePeriode.libelle }}</a>
+                           href="#stagePeriode{{ stagePeriode.uuidString }}">{{ stagePeriode.libelle }}
+                            ({{ stagePeriode.semestre.libelle }})</a>
                     </li>
                 {% endfor %}
             </ul>
