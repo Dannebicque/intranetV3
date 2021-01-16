@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/TrombinoscopeController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+// @lastUpdate 16/01/2021 11:10
 
 namespace App\Controller;
 
@@ -139,6 +139,7 @@ class TrombinoscopeController extends BaseController
         Semestre $semestre,
         ?TypeGroupe $typegroupe = null
     ): Response {
+        $groupes = null;
         if ($typegroupe !== null) {
             $groupes = $groupeRepository->findByTypeGroupe($typegroupe);
         } else {

@@ -741,6 +741,7 @@ au: au
 aucun: aucun
 aucun.etudiant.groupe: 'Aucun étudiant dans ce groupe.'
 aucun.groupe.dans.typegroupe: 'Aucun groupe dans ce type de groupe.'
+aucun.groupe.par.defaut: 'Pas de groupe par défaut dans ce semestre. Veuillez en spécifier un dans "Administration > Groupes" ou contacter le responsable du diplôme.'
 aucune: Aucune
 aucune.adresse.fournie: 'Aucune adresse fournie'
 aucune.convention.a.envoyer: 'Aucune convention à envoyer'
