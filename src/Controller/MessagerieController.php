@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/MessagerieController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 02/12/2020 18:15
+// @lastUpdate 17/01/2021 09:24
 
 namespace App\Controller;
 
@@ -207,7 +207,7 @@ class MessagerieController extends BaseController
         $messagerie->sendToDestinataires($this->checkArray($destinataires), $typeDestinataire, $this->getDepartement());
 
 
-        if (count($copie) > 0) {
+        if (is_countable($copie) && count($copie) > 0) {
             $messagerie->setCopie($copie, $this->getDepartement());
         }
 
