@@ -55,8 +55,8 @@
     <br>
 
     <p>Je soussigné, Martial MARTIN, Directeur de l’IUT de TROYES, atteste que dans le cadre des activités en présentiel
-       autorisées par décret du Ministère de l’Enseignement Supérieur et la Recherche et arrêtés de la Rectrice ESR
-       Grand-Est :</p>
+       autorisées par le décret 2020-1310 et précisées par la circulaire du Ministère de l’Enseignement Supérieur et la
+       Recherche du 30 octobre et l’arrêté de la Rectrice ESR Grand-Est N° 2020/URCA/01 :</p>
     <br>
     <br>
     <p>Nom : <strong>{{ etudiant.nom }}</strong></p>
@@ -77,7 +77,7 @@
     </p>
     <br><br>
 
-    <p>un devoir surveillé / un TP / un TD, </p>
+    <p>un devoir surveillé et/ou un TP, </p>
 
     <p>dans le cadre de la matière (code et intitulé) :
         <strong>{% for matiere in covidAttestationEtudiant.matieres %}{{ matiere.display }}{% if not loop.last %}, {% endif %}{% endfor %}</strong>
@@ -95,7 +95,7 @@
     <table style="width: 100%">
         <tr>
             <td style="width: 40%">
-                <p>Fait à TROYES, le {{ 'now'|format_date('medium') }}</p>
+                <p>Fait à : TROYES, le {{ 'now'|format_date('medium') }}</p>
             </td>
             <td style="width: 40%">
                 <img src="{{ settings('BASE_PATH') }}covid/cachet.png" width="100px" style="float:left" alt="Cachet
