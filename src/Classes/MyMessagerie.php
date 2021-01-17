@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyMessagerie.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/12/2020 14:31
+// @lastUpdate 17/01/2021 09:48
 
 namespace App\Classes;
 
@@ -125,7 +125,7 @@ class MyMessagerie
                 $message = (new TemplatedEmail())
                     ->subject($this->sujet)
                     ->from($this->expediteur->getMailuniv())
-                    ->textTemplate('mails/message.txt.twig')
+                    ->htmlTemplate('mails/message.html.twig')
                     ->context(['message' => $this->message, 'expediteur' => $this->expediteur]);
 
                 //récupération des fichiers uploadés
