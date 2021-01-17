@@ -39,7 +39,7 @@
                     <th>Email</th>
                     <th>Diplôme</th>
                     <th>Réponse</th>
-                    <th></th>
+                    <th>Date</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -61,7 +61,7 @@
                         <td>
                             {{ diplome.confirme == true ? 'Oui' : 'Non' }}
                         </td>
-                        <td></td>
+                        <td>{{ diplome.updated|format_datetime('short', 'short') }}</td>
                     </tr>
                 {% endfor %}
                 </tbody>
