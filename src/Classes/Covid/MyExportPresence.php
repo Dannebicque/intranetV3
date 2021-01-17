@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Covid/MyExportPresence.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+// @lastUpdate 17/01/2021 08:53
 
 namespace App\Classes\Covid;
 
@@ -17,6 +17,7 @@ use DateTime;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
@@ -189,7 +190,7 @@ class MyExportPresence
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
-     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     * @throws TransportExceptionInterface
      */
     public function sendOneConvocation(CovidAttestationEtudiant $covidAttestationEtudiant, Etudiant $etudiant): void
     {
@@ -213,7 +214,7 @@ class MyExportPresence
 
         //joindre le PDF
         $this->myMailer->attachFile($this->dir . 'covid/convocations/' . $name . '.pdf');
-        $this->myMailer->attachFile($this->dir . 'covid/Conditions accès  IUT  Troyes - Note aux etudiants.pdf');
+        $this->myMailer->attachFile($this->dir . 'covid/Conditions accès  IUT  Troyes - Note aux étudiants 18.01.2021.pdf');
         $this->myMailer->sendMessage(
             $etudiant->getMails(),
             'Convocation pour le ' . $covidAttestationEtudiant->getDatePresence()->format('d/m/Y') . ' dans le cadre du protocole sanitaire COVID',
@@ -229,7 +230,7 @@ class MyExportPresence
      *
      * @throws LoaderError
      * @throws RuntimeError
-     * @throws SyntaxError
+     * @throws SyntaxError|TransportExceptionInterface
      */
     public function sendAllConvocation(CovidAttestationEtudiant $covidAttestationEtudiant): void
     {
