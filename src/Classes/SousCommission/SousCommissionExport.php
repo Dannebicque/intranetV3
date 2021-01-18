@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/SousCommission/SousCommissionExport.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 18/01/2021 20:58
+// @lastUpdate 18/01/2021 22:24
 
 namespace App\Classes\SousCommission;
 
@@ -442,9 +442,13 @@ class SousCommissionExport
 
                     foreach ($matieres as $m) {
                         if ($ssCommTravail->matiere($etu->getId(), $m->getId()) !== null) {
-                            $this->myExcelWriter->writeCellXY($colonne, $ligne,
-                                number_format($ssCommTravail->matiere($etu->getId(), $m->getId())['moyenne'], 2),
-                                'numerique');
+                            if (array_key_exists('pasoption', $ssCommTravail->matiere($etu->getId(), $m->getId()))) {
+                                $this->myExcelWriter->writeCellXY($colonne, $ligne, 'N.C.');
+                            } else {
+                                $this->myExcelWriter->writeCellXY($colonne, $ligne,
+                                    number_format($ssCommTravail->matiere($etu->getId(), $m->getId())['moyenne'], 2),
+                                    'numerique');
+                            }
                         }
                         $colonne++;
                     }
