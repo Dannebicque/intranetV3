@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Constantes.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 02/11/2020 15:38
+// @lastUpdate 18/01/2021 16:43
 
 /**
  * Created by PhpStorm.
@@ -231,5 +231,6 @@ class Constantes
         'Turquoise'     => 'teal',
         'Cyan'          => 'cyan'
     ];
+    public const PAS_DE_SOUS_COMM = 'PAS_DE_SOUS_COMM';
 
 }

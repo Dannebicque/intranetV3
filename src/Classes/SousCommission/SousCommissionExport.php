@@ -3,36 +3,63 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/SousCommission/SousCommissionExport.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 15/01/2021 15:59
+// @lastUpdate 18/01/2021 16:45
 
 namespace App\Classes\SousCommission;
 
 
+use App\Classes\Apogee\MyApogee;
+use App\Classes\Excel\MyExcelRead;
 use App\Classes\Excel\MyExcelWriter;
+use App\Classes\MyUpload;
+use App\DTO\SousCommissionTravail;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Constantes;
 use App\Entity\ScolaritePromo;
 use App\Entity\Semestre;
 use App\Entity\Ue;
+use App\Repository\MatiereRepository;
 use PhpOffice\PhpSpreadsheet\Exception;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 class SousCommissionExport
 {
     private SousCommission $sousCommission;
     private MyExcelWriter $myExcelWriter;
+    private MyExcelRead $myExcelRead;
+    private MyUpload $myUpload;
+    private MyApogee $myApogee;
+    private string $dir;
+    private MatiereRepository $matiereRepository;
 
     /**
      * SousCommissionExport constructor.
      *
-     * @param SousCommission $sousCommission
-     * @param MyExcelWriter  $myExcelWriter
+     * @param SousCommission  $sousCommission
+     * @param KernelInterface $kernel
+     * @param MyApogee        $myApogee
+     * @param MyExcelWriter   $myExcelWriter
+     * @param MyExcelRead     $myExcelRead
+     * @param MyUpload        $myUpload
      */
-    public function __construct(SousCommission $sousCommission, MyExcelWriter $myExcelWriter)
-    {
+    public function __construct(
+        SousCommission $sousCommission,
+        KernelInterface $kernel,
+        MyApogee $myApogee,
+        MyExcelWriter $myExcelWriter,
+        MyExcelRead $myExcelRead,
+        MatiereRepository $matiereRepository,
+        MyUpload $myUpload
+    ) {
         $this->sousCommission = $sousCommission;
         $this->myExcelWriter = $myExcelWriter;
+        $this->myExcelRead = $myExcelRead;
+        $this->myUpload = $myUpload;
+        $this->myApogee = $myApogee;
+        $this->matiereRepository = $matiereRepository;
+        $this->dir = $kernel->getProjectDir() . '/public/upload/temp/';
     }
 
 
@@ -312,6 +339,69 @@ class SousCommissionExport
 
     public function exportGrandJury(ScolaritePromo $scolaritePromo)
     {
+
+    }
+
+    public function exportApogee(Semestre $semestre, $file, AnneeUniversitaire $anneeUniversitaire)
+    {
+        $fichier = $this->myUpload->upload($file, 'temp');
+        $this->myExcelRead->readFile($fichier);
+
+        $ligne = 18;
+
+        /* récupère les étudiants */
+        $tEtudiant = [];
+        while ($this->myExcelRead->getCellColLigne(1, $ligne) != '') {
+            $tEtudiant[$ligne] = trim($this->myExcelRead->getCellColLigne(0, $ligne));
+            $ligne++;
+        }
+
+        /* récupère les modules */
+        $tModule = [];
+        $colonne = 4;
+        while ($this->myExcelRead->getCellColLigne($colonne, 14) != '') {
+            $val = explode('-', $this->myExcelRead->getCellColLigne($colonne, 14));
+            $tModule[$colonne] = trim($val[0]);
+            $colonne += 2; //3 si colonne résultat
+        }
+
+        $etudiants = $semestre->getEtudiants();
+        $ues = $semestre->getUes();
+        $matieres = $this->matiereRepository->findBySemestre($semestre);
+        $ssComm = $this->sousCommission->getBySemestreAnneeUniversitaire($semestre, $anneeUniversitaire);
+        if ($ssComm !== null) {
+            $ssCommTravail = new SousCommissionTravail($semestre, $anneeUniversitaire,
+                $ues->getValues(), $matieres, $etudiants->getValues(), $ssComm);
+            $tEtu = [];
+
+            foreach ($ssCommTravail as $sc) {
+                $tEtu[$sc->getEtudiant()->getNumetudiant()][$sc->getMatiere()->getCodeapogee()] = $sc->getMoyenne();
+            }
+
+            foreach ($tEtudiant as $keyTe => $valueTe) {
+                foreach ($tModule as $keyTm => $valueTm) {
+                    if (array_key_exists($valueTe, $tEtu) && array_key_exists($valueTm, $tEtu[$valueTe])) {
+                        $this->myExcelRead->writeCellColLigne($keyTm, $keyTe,
+                            number_format($tEtu[$valueTe][$valueTm], 2));
+                        $this->myExcelRead->writeCellColLigne($keyTm + 1, $keyTe, 20);
+                    }
+                }
+
+            }
+
+            //EXPORT
+            unlink($fichier);
+            $this->myExcelRead->sauvegarde($this->dir . 'temp.xls');
+
+            $nom = explode('.', basename($fichier));
+            $this->myApogee->transformeApogeeTexte($this->dir . 'temp.xls', $nom[0]);
+
+            unlink($this->dir . 'temp.xls');
+
+            return true;
+        }
+
+        return Constantes::PAS_DE_SOUS_COMM;
 
     }
 }

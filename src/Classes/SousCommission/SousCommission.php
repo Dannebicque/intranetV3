@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/SousCommission/SousCommission.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 14/01/2021 14:40
+// @lastUpdate 18/01/2021 16:45
 
 namespace App\Classes\SousCommission;
 
@@ -19,6 +19,7 @@ use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Entity\Matiere;
 use App\Entity\Scolarite;
+use App\Entity\ScolaritePromo;
 use App\Entity\Semestre;
 use App\Entity\Ue;
 use App\Repository\EtudiantRepository;
@@ -267,5 +268,12 @@ class SousCommission
                 $scolarite->getMoyennesMatieres()[$idMatiere]['moyenne'] = Tools::convertToFloat($value);
                 break;
         }
+    }
+
+    public function getBySemestreAnneeUniversitaire(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire)
+    {
+        return $this->entityManager->getRepository(ScolaritePromo::class)->findOneBy(['semestre'           => $semestre->getId(),
+                                                                                      'anneeUniversitaire' => $anneeUniversitaire->getId()
+        ]);
     }
 }
