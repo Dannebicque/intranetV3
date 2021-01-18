@@ -50,7 +50,8 @@
                     <thead>
                     <tr>
                         <th colspan="4" style="text-align: right">Matière</th>
-                        {% for matiere in sousCommission.matieres|filter(matiere => matiere.nbnotes!=0) %}
+                        {% for matiere in sousCommission.matieres|filter(matiere => matiere.nbnotes!=0 and matiere
+                        .suspendu == false) %}
                             <th {% if semestre.optPenaliteAbsence == true %}colspan="2"{% endif %} class="matiere">
                                 <abbr title="{{ matiere.libelle }}">
                                     {{ matiere.codeMatiere }}</abbr></th>
@@ -70,7 +71,7 @@
                         <th>Bac</th>
                         <th>Coeff.</th>
                         {% for matiere in sousCommission.matieres|filter(matiere => matiere.semestre.id ==
-                            semestre.id and matiere.nbnotes!=0) %}
+                            semestre.id and matiere.nbnotes!=0 and matiere.suspendu == false) %}
                             <th style="text-align: center" {% if semestre.optPenaliteAbsence == true %}colspan="2"{% endif %} class="matiere">{{ matiere.coefficient }}</th>
                         {% endfor %}
                         {# #}{# decision semestre #}
@@ -107,7 +108,8 @@
                             <td>{{ etudiant.numetudiant }}</td>
 
                             {# matieres #}
-                            {% for matiere in sousCommission.matieres|filter(matiere => matiere.nbnotes!=0) %}
+                            {% for matiere in sousCommission.matieres|filter(matiere => matiere.nbnotes!=0 and matiere
+                            .suspendu == false) %}
                                 <td class="matiere">
                                     {% if myEtudiant.moyenneMatieres[matiere.id].optionFaite == false %}
                                         <span class="badge badge-gray">N.C.</span>
