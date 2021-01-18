@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/EtudiantSousCommission.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 14/01/2021 18:07
+// @lastUpdate 18/01/2021 22:01
 
 namespace App\DTO;
 
@@ -57,7 +57,6 @@ class EtudiantSousCommission
                 $totalMatieres += $moyenneMatiere->getMoyenne() * $moyenneMatiere->matiere->getCoefficient();
                 $totalMatieresPenalise += $moyenneMatiere->getMoyennePenalisee() * $moyenneMatiere->matiere->getCoefficient();
                 $totcoeff += $moyenneMatiere->matiere->getCoefficient();
-
             }
         }
         $totcoeff !== 0 ? $this->moyenneSemestre = $totalMatieres / $totcoeff + $this->bonif : $this->moyenneSemestre = 0;

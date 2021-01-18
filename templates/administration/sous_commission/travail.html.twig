@@ -125,12 +125,16 @@
                                         {% if matiere.nbNotes > 0 and matiere.suspendu == false %}
                                             <td>
                                                 {% if sc.matiere(etudiant.id, matiere.id) != null %}
-                                                    <a class="myedit"
-                                                       data-field="moyenne_{{ matiere.id }}"
-                                                       href="{{ path('administration_ss_comm_ajax_edit', {id:sc.etudiant(etudiant.id).id, type:'matiere'}) }}"
-                                                       data-title="Modifier la moyenne du module">
-                                                        {{ sc.matiere(etudiant.id, matiere.id).moyenne|number_format(2) }}
-                                                    </a>
+                                                    {% if sc.matiere(etudiant.id, matiere.id).pasoption is defined %}
+                                                        N.C.
+                                                    {% else %}
+                                                        <a class="myedit"
+                                                           data-field="moyenne_{{ matiere.id }}"
+                                                           href="{{ path('administration_ss_comm_ajax_edit', {id:sc.etudiant(etudiant.id).id, type:'matiere'}) }}"
+                                                           data-title="Modifier la moyenne du module">
+                                                            {{ sc.matiere(etudiant.id, matiere.id).moyenne|number_format(2) }}
+                                                        </a>
+                                                    {% endif %}
                                                 {% else %}
                                                     0
                                                 {% endif %}

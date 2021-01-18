@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/SousCommission/SousCommissionSauvegarde.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/12/2020 15:57
+// @lastUpdate 18/01/2021 22:24
 
 namespace App\Classes\SousCommission;
 
@@ -94,12 +94,17 @@ class SousCommissionSauvegarde
                 $tMatiere = [];
                 foreach ($matieres as $matiere) {
                     if (array_key_exists($matiere->getId(), $scEtudiant->moyenneMatieres)) {
-                        if ($semestre->isOptPenaliteAbsence() === true) {
-                            $tMatiere[$matiere->getId()]['moyenne'] = $scEtudiant->moyenneMatieres[$matiere->getId()]->getMoyennePenalisee();
-                            $tMatiere[$matiere->getId()]['rang'] = -1;
+                        if ($scEtudiant->moyenneMatieres[$matiere->getId()]->optionFaite === true) {
+                            if ($semestre->isOptPenaliteAbsence() === true) {
+                                $tMatiere[$matiere->getId()]['moyenne'] = $scEtudiant->moyenneMatieres[$matiere->getId()]->getMoyennePenalisee();
+                                $tMatiere[$matiere->getId()]['rang'] = -1;
 
+                            } else {
+                                $tMatiere[$matiere->getId()]['moyenne'] = $scEtudiant->moyenneMatieres[$matiere->getId()]->getMoyenne();
+                                $tMatiere[$matiere->getId()]['rang'] = -1;
+                            }
                         } else {
-                            $tMatiere[$matiere->getId()]['moyenne'] = $scEtudiant->moyenneMatieres[$matiere->getId()]->getMoyenne();
+                            $tMatiere[$matiere->getId()]['pasoption'] = true;
                             $tMatiere[$matiere->getId()]['rang'] = -1;
                         }
                     }
