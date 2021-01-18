@@ -54,7 +54,7 @@
                         </thead>
                         <tbody>
                         {% for matiere in matieres|filter(matiere => matiere.semestre.id == semestre.id) %}
-                            <tr>
+                            <tr {% if matiere.suspendu == true %}class="bg-pale-warning"{% endif %}>
                                 <td>{{ matiere.codeElement }}</td>
                                 <td>{{ matiere.codeMatiere }}</td>
                                 <td>{{ matiere.libelle }}</td>
