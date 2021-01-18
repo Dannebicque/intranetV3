@@ -184,31 +184,10 @@
                         <strong>Attention, opération irréversible !</strong></a>
                 </div>
                 <div class="col-sm-12 col-md-6">
-                    <a href="{{ path('administration_sous_commission_exporter_grand_jury', {ssComm:sc.getSsComm.id}) }}"
+                    <a href="{{ path('administration_sous_commission_exporter_grand_jury', {scolaritePromo:sc.getSsComm.id}) }}"
                        class="btn btn-block btn-success">Sauvegarde Excel / Fichier de Grand Jury</a>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <div class="card">
-        <div class="card-header">
-            <h4 class="card-title"><strong>Export Apogée</strong> | {{ semestre.display }}</h4>
-        </div>
-        <div class="card-body">
-            {# todo: fusionner avec la fonctionnalité de la scolarité. #}
-            <form action="{{ path('administration_sous_commission_exporter_apogee', {ssComm:sc.getSsComm.id}) }}"
-                  method="post" enctype="multipart/form-data">
-                <div class="form-group">
-                    <label>
-                        Fichier type
-                    </label>
-                    <input type="file" name="fichier" class="form-control"/>
-                </div>
-                <button type="submit" class="btn btn-block btn-success">Export Apogée (va générer le fichier txt
-                                                                        pour la scolarité)
-                </button>
-            </form>
         </div>
     </div>
 {% endblock %}

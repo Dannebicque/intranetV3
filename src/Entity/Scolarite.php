@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Scolarite.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/01/2021 11:42
+// @lastUpdate 18/01/2021 17:32
 
 namespace App\Entity;
 
@@ -341,7 +341,7 @@ class Scolarite extends BaseEntity
 
     public function getMoyennesUesById($ue): ?array
     {
-        return $this->moyennesUes[$ue];
+        return array_key_exists($ue, $this->moyennesUes) ? $this->moyennesUes[$ue] : [];
     }
 
     public function getRang(): ?int
@@ -374,10 +374,18 @@ class Scolarite extends BaseEntity
     public function getMoyennesUeSousComm($idUe)
     {
         $ue = $this->getMoyennesUesById($idUe);
+        if ($ue !== []) {
+
+
+            return [
+                'style'   => $this->getStyle($ue['moyenne']),
+                'moyenne' => $ue['moyenne']
+            ];
+        }
 
         return [
-            'style'   => $this->getStyle($ue['moyenne']),
-            'moyenne' => $ue['moyenne']
+            'style'   => 'notenormale',
+            'moyenne' => -0.01
         ];
     }
 }

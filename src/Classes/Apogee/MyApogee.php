@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Apogee/MyApogee.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/12/2020 14:31
+// @lastUpdate 18/01/2021 20:58
 
 namespace App\Classes\Apogee;
 
@@ -13,6 +13,7 @@ use App\Classes\Tools;
 use PDO;
 use PDOException;
 use PhpOffice\PhpSpreadsheet\Cell\Cell;
+use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use PhpOffice\PhpSpreadsheet\Exception;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -153,7 +154,7 @@ class MyApogee
 
         $i = 0;
         foreach ($objPHPExcel->getNamedRanges() as $name => $namedRange) {
-            if (strpos($name, 'apoL_') === 0) {
+            if (strpos($name, 'APOL_') === 0) {
                 $G_tab_apoL[$i] = $name;
                 $G_tab_apoL_Coord[$i] = $namedRange->getRange();
                 $i++;
@@ -162,7 +163,7 @@ class MyApogee
 
         $i = 0;
         foreach ($objPHPExcel->getNamedRanges() as $name => $namedRange) {
-            if (strpos($name, 'apoC_') === 0) {
+            if (strpos($name, 'APOC_') === 0) {
                 $G_tab_apoC[$i] = $name;
                 $G_tab_apoC_Coord[$i] = $namedRange->getRange();
                 $i++;
@@ -244,7 +245,7 @@ class MyApogee
                 }
                 //-- fin conversion_adm_temoin --
 
-                if ($G_tab_apoL[$key] === 'apoL_a04_naissance') {
+                if ($G_tab_apoL[$key] === 'APOL_A04_NAISSANCE') {
                     $notesSheet->setCellValueByColumnAndRow(0, $j + 1, 'APO_COL_VAL_DEB');
                     $j++;
                 }
@@ -305,8 +306,9 @@ class MyApogee
                         $notesSheet->setCellValueByColumnAndRow($i, $j, $cellValue[0]);
                     }
 
-                    if ($G_tab_apoL[$key] !== 'apoL_a01_code' && $G_tab_apoL[$key] !== 'apoL_a02_nom' && $G_tab_apoL[$key] !== 'apoL_a03_prenom' && $G_tab_apoL[$key] !== 'apoL_a04_naissance') {
-                        $cell = Cell::stringFromColumnIndex($i) . $j;
+                    if ($G_tab_apoL[$key] !== 'APOL_A01_CODE' && $G_tab_apoL[$key] !== 'APOL_A02_NOM' && $G_tab_apoL[$key] !== 'APOL_A03_PRENOM' && $G_tab_apoL[$key] !== 'APOL_A04_NAISSANCE') {
+
+                        $cell = Coordinate::stringFromColumnIndex($i) . $j;
                         $notesSheet->getStyle($cell)->getNumberFormat()->setFormatCode('#,##0.00');
                     }
                     $j++;
@@ -326,7 +328,7 @@ class MyApogee
         }
 
         // enregistrement du fichier
-        $objWriter = IOFactory::createWriter($objPEENotes, 'CSV');
+        $objWriter = IOFactory::createWriter($objPEENotes, 'Csv');
         $objWriter->setEnclosure('');
         $objWriter->setDelimiter("\t");
         $objWriter->setLineEnding("\r\n"); // cr lf (Windows)
