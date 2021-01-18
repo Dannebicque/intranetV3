@@ -1,10 +1,10 @@
 <?php
 
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/NoteRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 17/12/2020 14:02
+// @lastUpdate 18/01/2021 21:44
 
 namespace App\Repository;
 
@@ -94,5 +94,20 @@ class NoteRepository extends ServiceEntityRepository
 
         return $t;
 
+    }
+
+    public function findAllNotesSemestre(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire)
+    {
+        return $this->createQueryBuilder('p')
+            ->innerJoin(Evaluation::class, 'e', 'WITH', 'p.evaluation=e.id')
+            ->innerJoin(Matiere::class, 'm', 'WITH', 'e.matiere=m.id')
+            ->innerJoin(Ue::class, 'u', 'WITH', 'm.ue = u.id')
+            ->where('u.semestre= :semestre')
+            ->andWhere('e.anneeUniversitaire = :anneeUniversitaire')
+            ->setParameter('semestre', $semestre->getId())
+            ->setParameter('anneeUniversitaire', $anneeUniversitaire->getId())
+            ->orderBy('e.id')
+            ->getQuery()
+            ->getResult();
     }
 }

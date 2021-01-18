@@ -179,7 +179,7 @@
                     {% endif %}
                 </div>
                 <div class="col-sm-12 col-md-6">
-                    <a href="{{ path('administration_sous_commission_purger', {semestre:semestre.id}) }}"
+                    <a href="{{ path('administration_sous_commission_purger', {scolaritePromo:sc.getSsComm.id}) }}"
                        class="btn btn-block btn-danger">Nettoyer les notes (remplace les -0.01 par des 0)
                         <strong>Attention, opération irréversible !</strong></a>
                 </div>

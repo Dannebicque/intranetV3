@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/SousComissionController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 18/01/2021 20:48
+// @lastUpdate 18/01/2021 21:32
 
 namespace App\Controller\administration;
 
@@ -16,6 +16,7 @@ use App\Entity\Scolarite;
 use App\Entity\ScolaritePromo;
 use App\Entity\Semestre;
 use App\Event\SousCommissionEvent;
+use App\Repository\NoteRepository;
 use PhpOffice\PhpSpreadsheet\Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -70,14 +71,32 @@ class SousComissionController extends BaseController
     }
 
     /**
-     * @Route("/purger/{semestre}", name="administration_sous_commission_purger")
-     * @param SousCommission $sousCommission
-     * @param Semestre       $semestre
+     * @Route("/purger/{scolaritePromo}", name="administration_sous_commission_purger")
+     * @param NoteRepository $noteRepository
+     * @param ScolaritePromo $scolaritePromo
      *
      * @return Response
      */
-    public function purger(SousCommission $sousCommission, Semestre $semestre): Response
+    public function purger(NoteRepository $noteRepository, ScolaritePromo $scolaritePromo): Response
     {
+        $semestre = $scolaritePromo->getSemestre();
+        if ($semestre !== null) {
+            $notes = $noteRepository->findAllNotesSemestre($semestre, $scolaritePromo->getAnneeUniversitaire());
+
+            $em = $this->getDoctrine()->getManager();
+
+            foreach ($notes as $n) {
+                if ($n->getNote() === -0.01) {
+                    $n->setNote(0);
+                    $em->persist($n);
+                }
+            }
+
+            $em->flush();
+            $this->addFlash(Constantes::FLASHBAG_SUCCESS, 'Notes -0.01 remplacées par 0');
+        } else {
+            $this->addFlash(Constantes::FLASHBAG_ERROR, 'Erreur lors du rempalcement des -0.01 par 0');
+        }
 
         return $this->redirectToRoute('administration_sous_commission_travail', ['semestre' => $semestre->getId()]);
     }
