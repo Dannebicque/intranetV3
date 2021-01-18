@@ -192,13 +192,16 @@
                                     {# decisions passées #}
                                     {% for sem in sousCommission.semestresScolarite|filter(sem => sem.id != semestre.id) %}
                                         {% for ue in sem.ues %}
-                                            {% if myEtudiant.scolarite[sem.ordreLmd ] is defined %}
+                                            {% if myEtudiant.scolarite[sem.ordreLmd] is defined %}
                                                 <td>
-                                            <span class="{{ myEtudiant.scolarite[sem.ordreLmd].parcoursUe[ue.id]
-                                            .style }}">
-                                            {{ myEtudiant.scolarite[sem.ordreLmd].parcoursUe[ue.id]
-                                            .moyenne|number_format(3) }}
-                                            </span>
+                                                    {% if yEtudiant.scolarite[sem.ordreLmd].parcoursUe[ue.id] is defined %}
+                                                        <span class="{{ myEtudiant.scolarite[sem.ordreLmd].parcoursUe[ue.id].style }}">
+                                                    {{ myEtudiant.scolarite[sem.ordreLmd].parcoursUe[ue.id]
+                                                    .moyenne|number_format(3) }}
+                                                    </span>
+                                                    {% else %}
+                                                        -
+                                                    {% endif %}
                                                 </td>
                                             {% else %}
                                                 <td> -</td>

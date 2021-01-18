@@ -1,13 +1,14 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Excel/MyExcelRead.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 09:14
+// @lastUpdate 18/01/2021 18:24
 
 namespace App\Classes\Excel;
 
 use PhpOffice\PhpSpreadsheet\Cell\Cell;
+use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Reader\Exception;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
@@ -113,7 +114,7 @@ class MyExcelRead
      */
     public function writeCellColLigne($col, $lig, $valeur): void
     {
-        $cell = Cell::stringFromColumnIndex($col) . $lig;
+        $cell = Coordinate::stringFromColumnIndex($col) . $lig;
         $this->sheet->setCellValue($cell, $valeur);
     }
 
@@ -124,7 +125,7 @@ class MyExcelRead
      */
     public function sauvegarde($filename): void
     {
-        $objWriter = IOFactory::createWriter($this->phpExcelObject, 'Excel5');
+        $objWriter = IOFactory::createWriter($this->phpExcelObject, 'Xls');
         $objWriter->save($filename);
     }
 

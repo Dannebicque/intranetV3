@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/SousComissionController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 23/12/2020 07:53
+// @lastUpdate 18/01/2021 20:48
 
 namespace App\Controller\administration;
 
@@ -154,27 +154,15 @@ class SousComissionController extends BaseController
     }
 
     /**
-     * @Route("/grand-jury/{ssComm}", name="administration_sous_commission_exporter_grand_jury")
-     * @param SousCommission $sousCommission
-     * @param Semestre       $semestre
+     * @Route("/grand-jury/{scolaritePromo}", name="administration_sous_commission_exporter_grand_jury")
+     * @param SousCommissionExport $sousCommissionExport
+     * @param ScolaritePromo       $scolaritePromo
      *
      * @return Response
      */
-    public function grandJury(SousCommission $sousCommission, Semestre $semestre): Response
+    public function grandJury(SousCommissionExport $sousCommissionExport, ScolaritePromo $scolaritePromo): Response
     {
-
-    }
-
-    /**
-     * @Route("/apogee/{ssComm}", name="administration_sous_commission_exporter_apogee")
-     * @param SousCommission $sousCommission
-     * @param Semestre       $semestre
-     *
-     * @return Response
-     */
-    public function apogee(SousCommission $sousCommission, Semestre $semestre): Response
-    {
-
+        return $sousCommissionExport->exportGrandJury($scolaritePromo, $this->dataUserSession->getAnneeUniversitaire());
     }
 
     /**
