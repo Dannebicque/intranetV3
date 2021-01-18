@@ -1,19 +1,33 @@
-{% extends 'base-administratif.html.twig' %}
+{% extends 'base-super_admin.html.twig' %}
 
 {% block header %}
-    {{ 'scolarite.diplome.heading'|trans }}
+    Export vers Apogée | {{ semestre.display }}
+{% endblock %}
+
+
+{% block headerright %}
+    <div class="right gap-items-2">
+        {% for sem in semestre.diplome.semestres %}
+            <a href="{{ path('sa_scolarite_semestre_export_apogee', {semestre:sem.id}) }}"
+               class="btn btn-round {% if sem.id == semestre.id %}btn-primary{% endif %}"
+               title="{{ 'atitle.changer.semestre'|trans }}"
+               data-provide="tooltip"
+               data-placement="bottom"
+            >{{ sem.libelle }}</a>
+        {% endfor %}
+    </div>
 {% endblock %}
 
 {% block headeractions %}
     <div class="header-action">
         <div class="buttons">
-            <a href="{{ path('administratif_scolarite') }}"
+            <a href="{{ path('sa_scolarite_diplome', {diplome:semestre.diplome.id}) }}"
                class="btn btn-primary btn-float"
                title="{{ 'atitle.retour_scolarite'|trans }}"
                data-provide="tooltip"
                data-placement="bottom">
                 <i class="fas fa-arrow-left"></i>
-                <span class="sr-only">{{ 'atitle.retour_scolarite'|trans }}</span>
+                <span class="sr-only">{{ 'atitle.retour_liste_diplome'|trans }}</span>
             </a>
         </div>
     </div>
@@ -24,7 +38,7 @@
         <h4 class="card-title">Export vers Apogée | {{ semestre.display }}</h4>
         <div class="card-body">
 
-            <form action="{{ path('administratif_scolarite_semestre_genere_apogee', {semestre:semestre.id}) }}" method="post" enctype="multipart/form-data">
+            <form action="{{ path('sa_scolarite_semestre_genere_apogee', {semestre:semestre.id}) }}" method="post" enctype="multipart/form-data">
                 <div class="form-group">
                     <label class="col-sm-2">
                         Fichier type
