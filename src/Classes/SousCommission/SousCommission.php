@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/SousCommission/SousCommission.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 18/01/2021 16:45
+// @lastUpdate 19/01/2021 12:19
 
 namespace App\Classes\SousCommission;
 
@@ -121,7 +121,7 @@ class SousCommission
                 }
             }
 
-            $etudiantSousCommission->recupereScolarite($this->semestresScolarite);
+            $etudiantSousCommission->recupereScolarite();
 
             //calcul de la décision du semestre
             $etudiantSousCommission->calculDecision();

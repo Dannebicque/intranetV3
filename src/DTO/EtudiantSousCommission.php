@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/EtudiantSousCommission.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 18/01/2021 22:01
+// @lastUpdate 19/01/2021 12:21
 
 namespace App\DTO;
 
@@ -225,7 +225,7 @@ class EtudiantSousCommission
 
     public function getNbSemestres()
     {
-        return count($this->scolarite); //todo à améliorer...
+        return count($this->scolarite);
     }
 
     /**
@@ -236,12 +236,13 @@ class EtudiantSousCommission
         return $this->scolarite;
     }
 
-    public function recupereScolarite(array $semestresScolarite)
+    public function recupereScolarite(): void
     {
-        $this->scolarite = $semestresScolarite;
-
+        //on ne récupère la scolarité que par rapport au diplôme en cours
         foreach ($this->etudiant->getScolarites() as $scolarite) {
-            $this->scolarite[$scolarite->getSemestre()->getOrdreLmd()] = new Scolarite($scolarite);
+            if ($scolarite->getSemestre()->getDiplome() === $this->etudiant->getDiplome()) {
+                $this->scolarite[$scolarite->getSemestre()->getOrdreLmd()] = new Scolarite($scolarite);
+            }
         }
     }
 
