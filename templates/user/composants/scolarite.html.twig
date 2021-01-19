@@ -19,7 +19,7 @@
                 {% if  (user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or
                     user_data.isGoodDepartement('ROLE_ADMIN')) or parcour.diffuse ==true %}
                     <tr class="{% if parcour.diffuse == false %}bg-secondary{% endif %}">
-                        <td>{{ parcour.ordre }}</td>
+                        <td>{{ parcour.ordre }} {% if parcour.diffuse == false %}(Non diffusé){% endif %}</td>
                         <td>{{ parcour.semestre ? parcour.semestre.display : 'non.defini'|trans }}</td>
 
                         <td>
@@ -29,7 +29,7 @@
                                     {{ parcour.moyennesUes[ue.id].moyenne|format_note(3,8) }}<br>
                                 {% endfor %}
                             {% else %}
-                            EC
+                                EC
                         {% endif %}</td>
                     <td>{{ parcour.moyenne|format_note(3, 10) }}</td>
                     <td>{{ parcour.decision }}</td>
