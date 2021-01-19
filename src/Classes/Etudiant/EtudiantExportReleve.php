@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantExportReleve.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/01/2021 20:11
+// @lastUpdate 19/01/2021 20:14
 
 namespace App\Classes\Etudiant;
 
@@ -114,6 +114,12 @@ class EtudiantExportReleve
         foreach ($etudiants as $etudiant) {
             if ($etudiant->getAnneeSortie() === 0) {
                 $tabNotes[$etudiant->getId()] = [];
+            }
+        }
+
+        foreach ($notes as $note) {
+            if (array_key_exists($note->getEtudiant()->getId(), $tabNotes)) {
+                $tabNotes[$note->getEtudiant()->getId()][] = $note;
             }
         }
 
