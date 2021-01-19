@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantExportReleve.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 17/12/2020 15:15
+// @lastUpdate 19/01/2021 20:11
 
 namespace App\Classes\Etudiant;
 
@@ -26,14 +26,14 @@ class EtudiantExportReleve
     public NoteRepository $noteRepository;
 
     private Etudiant $etudiant;
-    /**
-     * @var EntityManagerInterface
-     */
+
     private EntityManagerInterface $entityManager;
-    /**
-     * @var MyPDF
-     */
+
     private MyPDF $myPdf;
+
+    private MyEvaluations $myEvaluations;
+
+    private EtudiantAbsences $etudiantAbsences;
 
 
     /**
@@ -48,6 +48,7 @@ class EtudiantExportReleve
     public function __construct(
         EtudiantNotes $etudiantNotes,
         EtudiantAbsences $etudiantAbsences,
+        NoteRepository $noteRepository,
         MyPDF $myPdf,
         MyEvaluations $myEvaluations,
         EntityManagerInterface $entityManager
@@ -55,6 +56,7 @@ class EtudiantExportReleve
         $this->entityManager = $entityManager;
         $this->etudiantNotes = $etudiantNotes;
         $this->etudiantAbsences = $etudiantAbsences;
+        $this->noteRepository = $noteRepository;
         $this->myEvaluations = $myEvaluations;
         $this->myPdf = $myPdf;
     }
@@ -101,5 +103,30 @@ class EtudiantExportReleve
             'scolarite' => $scolarite
         ], 'releveNotedefinitif-' . $scolarite->getEtudiant()->getNom() . '.pdf',
             $scolarite->getEtudiant()->getDepartement()->getLibelle());
+    }
+
+    public function exportAllReleveProvisoire(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire)
+    {
+        $this->myEvaluations->getEvaluationsSemestre($semestre, $anneeUniversitaire);
+        $tabNotes = [];
+        $etudiants = $semestre->getEtudiants();
+        $notes = $this->noteRepository->findBySemestre($semestre, $anneeUniversitaire);
+        foreach ($etudiants as $etudiant) {
+            if ($etudiant->getAnneeSortie() === 0) {
+                $tabNotes[$etudiant->getId()] = [];
+            }
+        }
+
+
+        $this->myPdf::generePdf('pdf/allReleveProvisoire.html.twig', [
+            'etudiants'          => $etudiants,
+            'tabNotes'           => $tabNotes,
+            'syntheses'          => $this->myEvaluations->getStatistiques(),
+            'anneeUniversitaire' => $anneeUniversitaire,
+            'semestre'           => $semestre
+        ], 'releveNoteProvisoire-' . $semestre->getLibelle() . '.pdf',
+            $semestre->getDiplome()->getDepartement()->getLibelle());
+
+
     }
 }
