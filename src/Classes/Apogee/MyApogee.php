@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Apogee/MyApogee.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/01/2021 11:20
+// @lastUpdate 19/01/2021 11:59
 
 namespace App\Classes\Apogee;
 
@@ -154,8 +154,8 @@ class MyApogee
 
         $i = 0;
         foreach ($objPHPExcel->getNamedRanges() as $name => $namedRange) {
-            if (strpos(strtolower($name), 'apol_') === 0) {
-                $G_tab_apoL[$i] = $name;
+            if (strpos($name, 'APOL_') === 0) {
+                $G_tab_apoL[$i] = $namedRange->getName();
                 $G_tab_apoL_Coord[$i] = $namedRange->getRange();
                 $i++;
             }
@@ -163,13 +163,12 @@ class MyApogee
 
         $i = 0;
         foreach ($objPHPExcel->getNamedRanges() as $name => $namedRange) {
-            if (strpos(strtolower($name), 'apoc_') === 0) {
-                $G_tab_apoC[$i] = $name;
+            if (strpos($name, 'APOC_') === 0) {
+                $G_tab_apoC[$i] = $namedRange->getName();
                 $G_tab_apoC_Coord[$i] = $namedRange->getRange();
                 $i++;
             }
         }
-
 
         $v_cell_apo_col_val_fin = 0;
         // nombre de lignes

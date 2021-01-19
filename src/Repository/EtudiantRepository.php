@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/EtudiantRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/12/2020 14:31
+// @lastUpdate 19/01/2021 11:32
 
 namespace App\Repository;
 
@@ -160,6 +160,7 @@ class EtudiantRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('e')
             ->where('e.semestre = :semestre')
+            ->andWhere('e.anneeSortie = 0')
             ->setParameter('semestre', $semestre)
             ->orderBy('e.nom', 'ASC')
             ->addOrderBy('e.prenom', 'ASC');

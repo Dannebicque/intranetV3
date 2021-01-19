@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/SousCommission/SousCommissionExport.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/01/2021 11:20
+// @lastUpdate 19/01/2021 12:00
 
 namespace App\Classes\SousCommission;
 
@@ -15,7 +15,6 @@ use App\Classes\MyUpload;
 use App\DTO\SousCommissionTravail;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Constantes;
-use App\Entity\Etudiant;
 use App\Entity\ScolaritePromo;
 use App\Entity\Semestre;
 use App\Entity\Ue;
@@ -192,9 +191,7 @@ class SousCommissionExport
                     if (array_key_exists($matiere->getId(), $sousCommissionEtudiant->moyenneMatieres)) {
                         $moyenneMatiere = $sousCommissionEtudiant->moyenneMatieres[$matiere->getId()];
                         if ($matiere->isPac() === true) {
-                            if ($moyenneMatiere->getMoyenne() !== '-0.01'
-                                && $moyenneMatiere->getMoyenne() > 0
-                            ) {
+                            if ($moyenneMatiere->getMoyenne() > 0) {
                                 if ($semestre->isOptPenaliteAbsence() === true) {
                                     $this->myExcelWriter->writeCellXY($colonne, $ligne,
                                         $moyenneMatiere->getMoyennePenalisee(),
@@ -290,7 +287,10 @@ class SousCommissionExport
             /* semestres précédent */
             foreach ($this->sousCommission->getSemestresScolarite() as $s) {
                 foreach ($s->getUes() as $ue) {
-                    if (isset($sousCommissionEtudiant->getScolarite()[$s->getOrdreLmd()])) {
+                    if (isset($sousCommissionEtudiant->getScolarite()[$s->getOrdreLmd()]) &&
+                        array_key_exists($ue->getId(),
+                            $sousCommissionEtudiant->getScolarite()[$s->getOrdreLmd()]->parcoursUe)
+                    ) {
                         $this->myExcelWriter->writeCellXY($colonne, $ligne,
                             $sousCommissionEtudiant->getScolarite()[$s->getOrdreLmd()]->parcoursUe[$ue->getId()]['moyenne'],
                             'numerique3');
@@ -321,6 +321,7 @@ class SousCommissionExport
             $colonne = 2;
             $ligne++;
         }
+
 
         $this->myExcelWriter->borderCellsRange(1, 6, $maxcolonne, $ligne);
 
@@ -353,7 +354,7 @@ class SousCommissionExport
 
             $this->myExcelWriter->createSheet('Grand Jury ' . $semestre->display());
 
-            $colonne = 0;
+            $colonne = 1;
             $ligne = 4;
 
             $this->myExcelWriter->mergeCellsCaR(7, 3, 13, 3);
@@ -407,8 +408,8 @@ class SousCommissionExport
             $ligne++;
 
             foreach ($etudiants as $etu) {
-                if ($ssCommTravail->etudiant($etu->getId()) !== null) {
-                    $colonne = 0;
+                if ($etu->getAnneeSortie() === 0 && $ssCommTravail->etudiant($etu->getId()) !== null) {
+                    $colonne = 1;
                     $this->myExcelWriter->ecritLigne([
                         $etu->getNumEtudiant(),
                         ucfirst($etu->getNom()) . ' ' . ucfirst($etu->getPrenom()),
@@ -417,7 +418,7 @@ class SousCommissionExport
                         $etu->getBac() !== null ? $etu->getBac()->getLibelle() : 'err',
                         $etu->getAnneeBac()
                     ], $colonne, $ligne);
-                    $colonne = 6;
+                    $colonne = 7;
 
                     //$this->myExcelWriter->writeCellXY($colonne, $ligne, $this->parcours[$etu->getId()]['nbsemestre']);
 
