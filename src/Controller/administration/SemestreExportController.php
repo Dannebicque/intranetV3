@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/SemestreExportController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 17/12/2020 15:15
+// @lastUpdate 19/01/2021 20:11
 
 namespace App\Controller\administration;
 
@@ -26,15 +26,16 @@ use Twig\Error\SyntaxError;
  */
 class SemestreExportController extends BaseController
 {
-    //todo: gestion de l'année universitaire
     /**
      * @Route("/all/{semestre}", name="administration_semestre_export_tous_les_releves_provisoires")
-     * @param MyEvaluations $myEvaluations
      * @param Semestre      $semestre
      */
-    public function exportTousLesRelevesProvisoires(MyEvaluations $myEvaluations, Semestre $semestre): void
-    {
-
+    public function exportTousLesRelevesProvisoires(
+        EtudiantExportReleve $etudiantExportReleve,
+        Semestre $semestre
+    ): void {
+        $etudiantExportReleve->exportAllReleveProvisoire($semestre,
+            $this->dataUserSession->getAnneeUniversitaire());
     }
 
     /**
