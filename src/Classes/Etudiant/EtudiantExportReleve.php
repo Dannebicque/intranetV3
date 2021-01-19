@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantExportReleve.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/01/2021 20:18
+// @lastUpdate 19/01/2021 20:24
 
 namespace App\Classes\Etudiant;
 
@@ -110,18 +110,19 @@ class EtudiantExportReleve
         $this->myEvaluations->getEvaluationsSemestre($semestre, $anneeUniversitaire);
         $tabNotes = [];
         $etudiants = $semestre->getEtudiants();
-        $notes = $this->noteRepository->findBySemestre($semestre, $anneeUniversitaire);
+        //$notes = $this->noteRepository->findBySemestre($semestre, $anneeUniversitaire);
         foreach ($etudiants as $etudiant) {
             if ($etudiant->getAnneeSortie() === 0) {
-                $tabNotes[$etudiant->getId()] = [];
+                $this->etudiant = $etudiant;
+                $tabNotes[$etudiant->getId()] = $this->getNotesEtudiantSemestre($semestre, $anneeUniversitaire);
             }
         }
 
-        foreach ($notes as $note) {
+//        foreach ($notes as $note) {
 //            if (array_key_exists($note->getEtudiant()->getId(), $tabNotes)) {
-                $tabNotes[$note->getEtudiant()->getId()][] = $note;
-            // }
-        }
+//                $tabNotes[$note->getEtudiant()->getId()][] = $note;
+//            }
+//        }
 
 
         $this->myPdf::generePdf('pdf/allReleveProvisoire.html.twig', [
