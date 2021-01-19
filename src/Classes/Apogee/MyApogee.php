@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Apogee/MyApogee.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 18/01/2021 20:58
+// @lastUpdate 19/01/2021 11:20
 
 namespace App\Classes\Apogee;
 
@@ -154,7 +154,7 @@ class MyApogee
 
         $i = 0;
         foreach ($objPHPExcel->getNamedRanges() as $name => $namedRange) {
-            if (strpos($name, 'APOL_') === 0) {
+            if (strpos(strtolower($name), 'apol_') === 0) {
                 $G_tab_apoL[$i] = $name;
                 $G_tab_apoL_Coord[$i] = $namedRange->getRange();
                 $i++;
@@ -163,12 +163,13 @@ class MyApogee
 
         $i = 0;
         foreach ($objPHPExcel->getNamedRanges() as $name => $namedRange) {
-            if (strpos($name, 'APOC_') === 0) {
+            if (strpos(strtolower($name), 'apoc_') === 0) {
                 $G_tab_apoC[$i] = $name;
                 $G_tab_apoC_Coord[$i] = $namedRange->getRange();
                 $i++;
             }
         }
+
 
         $v_cell_apo_col_val_fin = 0;
         // nombre de lignes
@@ -181,7 +182,7 @@ class MyApogee
         // repere 1
         $notesSheet->setCellValue('A1', 'XX-APO_TITRES-XX');
         // 1ere colonne
-        $i = 0;
+        $i = 1;
         // 2ème ligne
         $j = 2;
         foreach ($G_tab_apoC_Coord as $key => $name) {
@@ -219,7 +220,7 @@ class MyApogee
 
             // on est à la fin des codes on tague le fichier texte
             if ($v_cell_occ == 2) {
-                $notesSheet->setCellValueByColumnAndRow(0, $j, 'APO_COL_VAL_FIN');
+                $notesSheet->setCellValueByColumnAndRow(1, $j, 'APO_COL_VAL_FIN');
                 $j++;
                 $v_cell_occ = 1;
             }
@@ -245,20 +246,20 @@ class MyApogee
                 }
                 //-- fin conversion_adm_temoin --
 
-                if ($G_tab_apoL[$key] === 'APOL_A04_NAISSANCE') {
-                    $notesSheet->setCellValueByColumnAndRow(0, $j + 1, 'APO_COL_VAL_DEB');
+                if (strtolower($G_tab_apoL[$key]) === 'apol_a04_naissance') {
+                    $notesSheet->setCellValueByColumnAndRow(1, $j + 1, 'APO_COL_VAL_DEB');
                     $j++;
                 }
             }
 
             if ($v_cpt_cell_vide === 'APO_COL_VAL_FIN' ||
-                $maquetteSheet->getCell($this->getNewCoordinates($deb, 0, 1))->getValue() == 'APO_COL_VAL_FIN'
+                $maquetteSheet->getCell($this->getNewCoordinates($deb, 0, 1))->getValue() === 'APO_COL_VAL_FIN'
             ) {
                 break;
             }
 
             // colonne 1
-            $i = 0;
+            $i = 1;
 
             // ligne suivante
             $j++;
@@ -268,10 +269,10 @@ class MyApogee
 
         $j++;
         $j++;
-        $notesSheet->setCellValueByColumnAndRow(0, $j, 'XX-APO_VALEURS-XX');
+        $notesSheet->setCellValueByColumnAndRow(1, $j, 'XX-APO_VALEURS-XX');
         $j++;
         // 1ere colonne
-        $i = 0;
+        $i = 1;
         // sauvegarde $j (numero de ligne)
         $k = $j;
 
@@ -306,7 +307,7 @@ class MyApogee
                         $notesSheet->setCellValueByColumnAndRow($i, $j, $cellValue[0]);
                     }
 
-                    if ($G_tab_apoL[$key] !== 'APOL_A01_CODE' && $G_tab_apoL[$key] !== 'APOL_A02_NOM' && $G_tab_apoL[$key] !== 'APOL_A03_PRENOM' && $G_tab_apoL[$key] !== 'APOL_A04_NAISSANCE') {
+                    if (strtolower($G_tab_apoL[$key]) !== 'apol_a01_code' && strtolower($G_tab_apoL[$key]) !== 'apol_a02_nom' && strtolower($G_tab_apoL[$key]) !== 'apol_a03_prenom' && strtolower($G_tab_apoL[$key]) !== 'apol_04_naissance') {
 
                         $cell = Coordinate::stringFromColumnIndex($i) . $j;
                         $notesSheet->getStyle($cell)->getNumberFormat()->setFormatCode('#,##0.00');
