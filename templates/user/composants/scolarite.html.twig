@@ -11,12 +11,15 @@
                 <th>{{ 'table.decision'|trans }}</th>
                 <th>{{ 'table.proposition'|trans }}</th>
                 <th>{{ 'table.infos'|trans }}</th>
-                <th>{{ 'table.releve'|trans }}</th>
+                {% if  user_data.isGoodDepartement('ROLE_NOTE') or  user_data.isGoodDepartement('ROLE_CDD')
+                    or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ADMIN') %}
+                    <th>{{ 'table.releve'|trans }}</th>
+                {% endif %}
             </tr>
             </thead>
             <tbody>
             {% for parcour in scolarites %}
-                {% if  (user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or
+                {% if  (user_data.isGoodDepartement('ROLE_NOTE') or user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or
                     user_data.isGoodDepartement('ROLE_ADMIN')) or parcour.diffuse ==true %}
                     <tr class="{% if parcour.diffuse == false %}bg-secondary{% endif %}">
                         <td>{{ parcour.ordre }} {% if parcour.diffuse == false %}(Non diffusé){% endif %}</td>
@@ -30,20 +33,25 @@
                                 {% endfor %}
                             {% else %}
                                 EC
-                        {% endif %}</td>
-                    <td>{{ parcour.moyenne|format_note(3, 10) }}</td>
-                    <td>{{ parcour.decision }}</td>
-                    <td>{{ parcour.proposition }}</td>
-                    <td><a href="{{ path('app_etudiant_scolarite_detail', {'id': parcour.id}) }}"
-                           class="btn btn-info btn-outline btn-square btn-xs" data-provide="tooltip"
-                           data-placement="bottom" title="{{ 'atitle.details'|trans }}"><i class="{{ iconShow }}"></i></a>
-                        <a href="{{ path('administration_scolarite_etudiant_edit', {slug: etudiant.slug,scolarite:parcour.id }) }}" title="Editer la scolarité de {{ etudiant.displayPr }}"
-                           data-provide="tooltip"
-                           data-placement="bottom"
-                           class="btn btn-warning btn-outline btn-square btn-xs"><i class="{{ iconEdit }}"></i></a>
-                    </td>
-                    <td>
-                        {% if  user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ADMIN') %}
+                            {% endif %}</td>
+                        <td>{{ parcour.moyenne|format_note(3, 10) }}</td>
+                        <td>{{ parcour.decision }}</td>
+                        <td>{{ parcour.proposition }}</td>
+                        <td><a href="{{ path('app_etudiant_scolarite_detail', {'id': parcour.id}) }}"
+                               class="btn btn-info btn-outline btn-square btn-xs" data-provide="tooltip"
+                               data-placement="bottom" title="{{ 'atitle.details'|trans }}"><i class="{{ iconShow }}"></i></a>
+                            {% if  user_data.isGoodDepartement('ROLE_NOTE') or
+                                user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ADMIN') %}
+                                <a href="{{ path('administration_scolarite_etudiant_edit', {slug: etudiant.slug,scolarite:parcour.id }) }}" title="Editer la scolarité de {{ etudiant.displayPr }}"
+                                   data-provide="tooltip"
+                                   data-placement="bottom"
+                                   class="btn btn-warning btn-outline btn-square btn-xs"><i class="{{ iconEdit }}"></i></a>
+                            {% endif %}
+                        </td>
+                        {% if  user_data.isGoodDepartement('ROLE_NOTE') or  user_data.isGoodDepartement('ROLE_CDD')
+                            or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ADMIN') %}
+                            <td>
+
                                 {% if parcour.scolaritePromo != null %}
                                     <a href="{{ path('administration_semestre_export_releve_definitif',{slug:etudiant
                                     .slug, scolarite: parcour.id}) }}"
@@ -53,9 +61,10 @@
                                 {% else %}
                                     Le relevé n'est disponible qu'à partir de Sept. 2020
                                 {% endif %}
+
+                            </td>
                         {% endif %}
-                    </td>
-                </tr>
+                    </tr>
                 {% endif %}
             {% endfor %}
 
