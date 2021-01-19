@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Notification.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/10/2020 14:36
+// @lastUpdate 19/01/2021 12:14
 
 namespace App\Entity;
 
@@ -24,6 +24,7 @@ class Notification extends BaseEntity
         'carnet.added'                       => 'ti-bookmark-alt',
         'absence.removed'                    => 'ti-bookmark-alt',
         'absence.added'                      => 'ti-bookmark-alt',
+        'absence.justified'                  => 'ti-check',
         'decision.rattrapage.acceptee'       => 'ti-check',
         'decision.rattrapage.refusee'        => 'ti-na',
         'chgt.etat_stage_autorise'           => 'ti-info',
@@ -43,6 +44,7 @@ class Notification extends BaseEntity
         'carnet.added'                       => 'info',
         'absence.removed'                    => 'success',
         'absence.added'                      => 'danger',
+        'absence.justified'                  => 'success',
         'decision.rattrapage.acceptee'       => 'success',
         'decision.rattrapage.refusee'        => 'warning',
         'chgt.etat_stage_autorise'           => 'info',
