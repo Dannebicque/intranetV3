@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/SousCommission/SousCommissionExport.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/01/2021 12:00
+// @lastUpdate 19/01/2021 12:26
 
 namespace App\Classes\SousCommission;
 
@@ -420,7 +420,7 @@ class SousCommissionExport
                     ], $colonne, $ligne);
                     $colonne = 7;
 
-                    //$this->myExcelWriter->writeCellXY($colonne, $ligne, $this->parcours[$etu->getId()]['nbsemestre']);
+                    $this->myExcelWriter->writeCellXY($colonne, $ligne, count($ssCommTravail->recupereScolarite($etu)));
 
                     foreach ($ues as $ue) {
                         $colonne++;

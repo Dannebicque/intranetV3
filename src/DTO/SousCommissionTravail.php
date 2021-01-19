@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/SousCommissionTravail.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/12/2020 08:39
+// @lastUpdate 19/01/2021 12:45
 
 namespace App\DTO;
 
@@ -98,5 +98,17 @@ class SousCommissionTravail
         return $this->ssComm;
     }
 
+    public function recupereScolarite($etudiant)
+    {
+        $tScolarite = [];
+        //on ne récupère la scolarité que par rapport au diplôme en cours
+        foreach ($etudiant->getScolarites() as $scolarite) {
+            if ($scolarite->getSemestre()->getDiplome() === $etudiant->getDiplome()) {
+                $tScolarite[$scolarite->getSemestre()->getOrdreLmd()] = new Scolarite($scolarite);
+            }
+        }
+
+        return $tScolarite;
+    }
 
 }
