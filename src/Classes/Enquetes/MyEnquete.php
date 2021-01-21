@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Enquetes/MyEnquete.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/12/2020 14:42
+// @lastUpdate 21/01/2021 08:58
 
 namespace App\Classes\Enquetes;
 
@@ -28,6 +28,7 @@ class MyEnquete
 {
 
     public const SEUIL = 65;
+    public const COLOR_QUALITE = 'bb1e10';
     private QuestionnaireEtudiantReponseRepository $quizzEtudiantReponseRepository;
 
     private QuestionnaireEtudiantRepository $quizzEtudiantRepository;
@@ -81,11 +82,12 @@ class MyEnquete
      */
     public function exportExcel(QuestionnaireQualite $questionnaire, $previsionnel): StreamedResponse
     {
+        $quizzEtudiants = $this->quizzEtudiantRepository->findBy(['questionnaireQualite' => $questionnaire->getId()]);
         $this->previsionnel = $previsionnel;
         //data
         $this->getReponseFromQuestionnaire($questionnaire);
         $nbEtudiants = count($questionnaire->getSemestre()->getEtudiants());
-        $this->nbReponses = count($questionnaire->getQuizzEtudiants());
+        $this->nbReponses = count($quizzEtudiants);
         $pourcentageReponses = $this->nbReponses / $nbEtudiants;
         //export
         $this->myExcelWriter->createSheet(substr('Exp ' . $questionnaire->getLibelle(), 0, 31));
@@ -96,7 +98,7 @@ class MyEnquete
         $this->myExcelWriter->mergeCellsCaR(1, 2, 3, 2);
         $this->myExcelWriter->writeCellXY(1, 1, $questionnaire->getTitre(),
             [
-                'color'       => $this->configuration->get('COLOR_IUT'),
+                'color'       => self::COLOR_QUALITE,
                 'font-size'   => 16,
                 'font-weight' => 'bold',
                 'style'       => 'HORIZONTAL_CENTER'
@@ -104,14 +106,14 @@ class MyEnquete
         $this->myExcelWriter->writeCellXY(1, 2,
             $questionnaire->getSemestre()->getDiplome()->getDisplay() . ' - ' . $questionnaire->getSemestre()->getAnneeUniversitaire()->displayAnneeUniversitaire(),
             [
-                'color'       => $this->configuration->get('COLOR_IUT'),
+                'color'       => self::COLOR_QUALITE,
                 'font-size'   => 16,
                 'font-weight' => 'bold',
                 'style'       => 'HORIZONTAL_CENTER'
             ]);
 
         $this->myExcelWriter->borderBottomCellsRange(1, 3, 3, 3,
-            ['color' => $this->configuration->get('COLOR_IUT'), 'size' => Border::BORDER_MEDIUM]);
+            ['color' => self::COLOR_QUALITE, 'size' => Border::BORDER_MEDIUM]);
 
         $this->myExcelWriter->writeCellXY(1, 5, 'Nombre de questionnaires envoyés :');
         $this->myExcelWriter->writeCellXY(2, 5, $nbEtudiants, ['style' => 'HORIZONTAL_CENTER']);
@@ -121,14 +123,14 @@ class MyEnquete
         $this->myExcelWriter->writeCellXY(2, 7, $pourcentageReponses,
             ['style' => 'HORIZONTAL_CENTER', 'number_format' => NumberFormat::FORMAT_PERCENTAGE]);
         $this->myExcelWriter->borderBottomCellsRange(1, 8, 3, 8,
-            ['color' => $this->configuration->get('COLOR_IUT'), 'size' => Border::BORDER_MEDIUM]);
+            ['color' => self::COLOR_QUALITE, 'size' => Border::BORDER_MEDIUM]);
 
         $this->ligne = 11;
-        foreach ($questionnaire->getQualiteQuestionnaireSections() as $qualiteQuestionnaireSection) {
+        foreach ($questionnaire->getSections() as $qualiteQuestionnaireSection) {
             if ($qualiteQuestionnaireSection->getSection() !== null) {
                 $this->myExcelWriter->writeCellXY(1, $this->ligne,
                     $qualiteQuestionnaireSection->getOrdre() . '. ' . $qualiteQuestionnaireSection->getSection()->getTitre(),
-                    ['color' => $this->configuration->get('COLOR_IUT'), 'font-size' => 10, 'font-weight' => 'bold']);
+                    ['color' => self::COLOR_QUALITE, 'font-size' => 10, 'font-weight' => 'bold']);
                 $this->ligne += 2;
                 if ($qualiteQuestionnaireSection->getSection()->getConfig() !== null && $qualiteQuestionnaireSection->getSection()->getConfig() !== '') {
                     $arrayConfig = explode('-', $qualiteQuestionnaireSection->getSection()->getConfig());
@@ -175,8 +177,6 @@ class MyEnquete
      */
     public function getReponseFromQuestionnaire(QuestionnaireQualite $questionnaire): void
     {
-        $quizzEtudiants = $this->quizzEtudiantRepository->findBy(['questionnaire' => $questionnaire->getId()]);
-        //todo: a modifier, dépend du type de questionnaire
         $reponsesEtudiants = $this->quizzEtudiantReponseRepository->findByQuestionnaire($questionnaire);
 
         /** @var QuestionnaireEtudiantReponse $reponse */
@@ -270,7 +270,7 @@ class MyEnquete
                             'wrap'          => true,
                             'font-weight'   => 'bold',
                             'style'         => 'HORIZONTAL_CENTER',
-                            'color'         => 'bb1e10',
+                            'color'         => self::COLOR_QUALITE,
                             'number_format' => NumberFormat::FORMAT_PERCENTAGE
                         ]);
                 } else {
