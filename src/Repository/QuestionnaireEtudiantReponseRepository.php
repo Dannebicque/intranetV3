@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/QuestionnaireEtudiantReponseRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/01/2021 12:12
+// @lastUpdate 21/01/2021 09:19
 
 namespace App\Repository;
 
@@ -67,10 +67,9 @@ class QuestionnaireEtudiantReponseRepository extends ServiceEntityRepository
 
     public function findByQuestionnaire(QuestionnaireQualite $questionnaire): array
     {
-        //todo: a adapter selon le type...
         return $this->createQueryBuilder('q')
-            ->innerJoin(QuestionnaireEtudiant::class, 'e', 'WITH', 'q.quizzEtudiant=e.id')
-            ->where('e.questionnaireQualite = :questionnaire')
+            ->innerJoin(QuestionnaireEtudiant::class, 'e', 'WITH', 'q.questionnaireEtudiant=e.id')
+            ->where('e.questionnaireQualite = :questionnaireQualite')
             ->setParameter('questionnaireQualite', $questionnaire->getId())
             ->orderBy('q.cleQuestion', 'ASC')
             ->getQuery()
