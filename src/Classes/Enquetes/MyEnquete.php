@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Enquetes/MyEnquete.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 21/01/2021 08:58
+// @lastUpdate 21/01/2021 15:27
 
 namespace App\Classes\Enquetes;
 
@@ -12,10 +12,10 @@ use App\Classes\Configuration;
 use App\Classes\Excel\MyExcelWriter;
 use App\Classes\Tools;
 use App\Entity\Previsionnel;
-use App\Entity\QuestionnaireQualite;
-use App\Entity\QuestionnaireSection;
 use App\Entity\QuestionnaireEtudiantReponse;
+use App\Entity\QuestionnaireQualite;
 use App\Entity\QuestionnaireQuestion;
+use App\Entity\QuestionnaireSection;
 use App\Repository\QuestionnaireEtudiantReponseRepository;
 use App\Repository\QuestionnaireEtudiantRepository;
 use PhpOffice\PhpSpreadsheet\Exception;
@@ -98,7 +98,7 @@ class MyEnquete
         $this->myExcelWriter->mergeCellsCaR(1, 2, 3, 2);
         $this->myExcelWriter->writeCellXY(1, 1, $questionnaire->getTitre(),
             [
-                'color'       => self::COLOR_QUALITE,
+                'color'       => $this->configuration->get('COLOR_IUT'),
                 'font-size'   => 16,
                 'font-weight' => 'bold',
                 'style'       => 'HORIZONTAL_CENTER'
@@ -106,14 +106,14 @@ class MyEnquete
         $this->myExcelWriter->writeCellXY(1, 2,
             $questionnaire->getSemestre()->getDiplome()->getDisplay() . ' - ' . $questionnaire->getSemestre()->getAnneeUniversitaire()->displayAnneeUniversitaire(),
             [
-                'color'       => self::COLOR_QUALITE,
+                'color'       => $this->configuration->get('COLOR_IUT'),
                 'font-size'   => 16,
                 'font-weight' => 'bold',
                 'style'       => 'HORIZONTAL_CENTER'
             ]);
 
         $this->myExcelWriter->borderBottomCellsRange(1, 3, 3, 3,
-            ['color' => self::COLOR_QUALITE, 'size' => Border::BORDER_MEDIUM]);
+            ['color' => $this->configuration->get('COLOR_IUT'), 'size' => Border::BORDER_MEDIUM]);
 
         $this->myExcelWriter->writeCellXY(1, 5, 'Nombre de questionnaires envoyés :');
         $this->myExcelWriter->writeCellXY(2, 5, $nbEtudiants, ['style' => 'HORIZONTAL_CENTER']);
@@ -123,14 +123,14 @@ class MyEnquete
         $this->myExcelWriter->writeCellXY(2, 7, $pourcentageReponses,
             ['style' => 'HORIZONTAL_CENTER', 'number_format' => NumberFormat::FORMAT_PERCENTAGE]);
         $this->myExcelWriter->borderBottomCellsRange(1, 8, 3, 8,
-            ['color' => self::COLOR_QUALITE, 'size' => Border::BORDER_MEDIUM]);
+            ['color' => $this->configuration->get('COLOR_IUT'), 'size' => Border::BORDER_MEDIUM]);
 
         $this->ligne = 11;
         foreach ($questionnaire->getSections() as $qualiteQuestionnaireSection) {
             if ($qualiteQuestionnaireSection->getSection() !== null) {
                 $this->myExcelWriter->writeCellXY(1, $this->ligne,
                     $qualiteQuestionnaireSection->getOrdre() . '. ' . $qualiteQuestionnaireSection->getSection()->getTitre(),
-                    ['color' => self::COLOR_QUALITE, 'font-size' => 10, 'font-weight' => 'bold']);
+                    ['color' => $this->configuration->get('COLOR_IUT'), 'font-size' => 10, 'font-weight' => 'bold']);
                 $this->ligne += 2;
                 if ($qualiteQuestionnaireSection->getSection()->getConfig() !== null && $qualiteQuestionnaireSection->getSection()->getConfig() !== '') {
                     $arrayConfig = explode('-', $qualiteQuestionnaireSection->getSection()->getConfig());
@@ -228,6 +228,14 @@ class MyEnquete
             $this->myExcelWriter->getRowDimension($this->ligne, 30);
         }
         $this->ligne++;
+
+        if ($question->getHelp() !== '') {
+            $this->myExcelWriter->mergeCellsCaR(1, $this->ligne, 3, $this->ligne);
+            $this->myExcelWriter->writeCellXY(1, $this->ligne, $question->getHelp(),
+                ['wrap' => true, 'font-italic' => true, 'style' => 'HORIZONTAL_CENTER', 'valign' => 'VERTICAL_TOP']);
+            $this->ligne++;
+        }
+
         $this->ligne++;
 
         if ($section->getTypeCalcul() === QuestionnaireSection::GROUPE) {
