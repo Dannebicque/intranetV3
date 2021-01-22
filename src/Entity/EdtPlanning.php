@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/EdtPlanning.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 14/12/2020 09:37
+// @lastUpdate 22/01/2021 12:07
 
 namespace App\Entity;
 
@@ -337,7 +337,8 @@ class EdtPlanning
     {
         $date = new Carbon();
         //todo: gérer la semaine qui n'est pas la semaine annuel
-        $date->setISODate(date('Y'), $this->getSemaine() + 35);
+
+        $date->setISODate(date('Y') - 1, $this->getSemaine() + 35);
 
         return $date->startOfWeek()->addDays($this->jour - 1);
     }
