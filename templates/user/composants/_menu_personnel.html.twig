@@ -7,8 +7,7 @@
     <a class="nav-link changeprofil" href="{{ path('profil_personnel_previsionnel', {slug: user.slug}) }}"
        id="profil-previsionnel">{{ 'tab.previsionnel'|trans }}</a>
 {% endif %}
-{% if (user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE')) or user_data
-    .isGoodDepartement('ROLE_RP')) %}
+{% if (user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_RP')) %}
     <a class="nav-link changeprofil" href="{{ path('profil_personnel_action', {slug: user.slug}) }}"
        id="profil-actions">{{ 'tab.actions'|trans }}</a>
 {% endif %}
