@@ -132,6 +132,12 @@
     "erusev/parsedown-extra": {
         "version": "0.8.1"
     },
+    "ezyang/htmlpurifier": {
+        "version": "v4.13.0"
+    },
+    "friendsofphp/proxy-manager-lts": {
+        "version": "v1.0.3"
+    },
     "friendsofsymfony/jsrouting-bundle": {
         "version": "2.3",
         "recipe": {
@@ -164,6 +170,21 @@
     },
     "khanamiryan/qrcode-detector-decoder": {
         "version": "1.0.4"
+    },
+    "knplabs/knp-snappy": {
+        "version": "v1.2.1"
+    },
+    "knplabs/knp-snappy-bundle": {
+        "version": "1.5",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "1.5",
+            "ref": "c81bdcf4a9d4e7b1959071457f9608631865d381"
+        },
+        "files": [
+            "config/packages/knp_snappy.yaml"
+        ]
     },
     "laminas/laminas-code": {
         "version": "3.5.1"
@@ -210,9 +231,6 @@
     },
     "ninsuo/symfony-collection": {
         "version": "2.1.33"
-    },
-    "ocramius/proxy-manager": {
-        "version": "2.10.0"
     },
     "phenx/php-font-lib": {
         "version": "0.5.2"
@@ -286,6 +304,9 @@
             "config/packages/sensio_framework_extra.yaml"
         ]
     },
+    "symfony/amqp-messenger": {
+        "version": "v5.2.1"
+    },
     "symfony/asset": {
         "version": "v5.2.0"
     },
@@ -324,6 +345,9 @@
     },
     "symfony/doctrine-bridge": {
         "version": "v5.2.0"
+    },
+    "symfony/doctrine-messenger": {
+        "version": "v5.2.1"
     },
     "symfony/dom-crawler": {
         "version": "v5.1.6"
@@ -417,6 +441,18 @@
             "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
         }
     },
+    "symfony/messenger": {
+        "version": "4.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.3",
+            "ref": "e9a414b113ceadbf4e52abe37bf8f1b443f06ccb"
+        },
+        "files": [
+            "config/packages/messenger.yaml"
+        ]
+    },
     "symfony/mime": {
         "version": "v5.2.0"
     },
@@ -491,6 +527,12 @@
     },
     "symfony/property-info": {
         "version": "v5.1.0"
+    },
+    "symfony/proxy-manager-bridge": {
+        "version": "v5.2.1"
+    },
+    "symfony/redis-messenger": {
+        "version": "v5.2.1"
     },
     "symfony/routing": {
         "version": "5.1",
@@ -659,9 +701,6 @@
         "files": [
             "config/packages/vich_uploader.yaml"
         ]
-    },
-    "webimpress/safe-writer": {
-        "version": "2.1.0"
     },
     "willdurand/jsonp-callback-validator": {
         "version": "v1.1.0"

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEvaluation.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 29/12/2020 18:10
+// @lastUpdate 22/01/2021 17:28
 
 /**
  * Created by PhpStorm.
@@ -22,6 +22,8 @@ use App\Entity\Note;
 use App\Classes\Excel\MyExcelMultiExport;
 use App\Classes\Pdf\MyPDF;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
+use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Twig\Error\LoaderError;
@@ -258,23 +260,22 @@ class MyEvaluation
      * @param             $groupes
      * @param Departement $departement
      *
-     * @return StreamedResponse|null
+     * @return PdfResponse|StreamedResponse|null
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function exportReleve($_format, $groupes, Departement $departement): ?StreamedResponse
+    public function exportReleve($_format, $groupes, Departement $departement)
     {
         $notes = $this->getNotesTableau();
         $name = 'releve-' . $this->evaluation->getMatiere()->getCodeMatiere();
         switch ($_format) {
             case Constantes::FORMAT_PDF:
-                $this->myPdf::generePdf('pdf/releveEvaluation.html.twig', [
+                return $this->myPdf::generePdf('pdf/releveEvaluation.html.twig', [
                     'evaluation' => $this->evaluation,
                     'groupes'    => $groupes,
                     'notes'      => $notes
                 ], $name, $departement->getLibelle());
-                return null;
             case Constantes::FORMAT_EXCEL:
                 $this->myExcelMultiExport->genereReleveExcel(
                     $this->evaluation,
@@ -302,7 +303,7 @@ class MyEvaluation
      *
      *
      * @return array|null
-     * @throws \Exception
+     * @throws Exception
      */
     public function importEvaluation(Evaluation $evaluation, string $fichier): ?array
     {
@@ -330,7 +331,7 @@ class MyEvaluation
      * @param            $data
      *
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
     private function insertNotes(Evaluation $evaluation, $data): array
     {
