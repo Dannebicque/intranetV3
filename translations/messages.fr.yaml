@@ -737,6 +737,7 @@ atitle:
   voir_fichier: 'Voir fichier'
   voir: Voir
   service_chronologique: 'Service Chronologique'
+  basculer.sous_comm_live: 'Basculer vers la sous-commission en temps réel'
 
 au: au
 aucun: aucun
@@ -2140,3 +2141,4 @@ motifEval: 'Evaluation'
 questionnaire.duplicate.success.flashbag: 'Questionnaire dupliqué avec succès'
 administratif:
   enquetes.heading: 'Gestion des enquêtes'
+changement.semestre.effectue: 'Changement de semestre effectué pour les étudiants'

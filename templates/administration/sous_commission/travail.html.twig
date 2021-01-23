@@ -155,8 +155,12 @@
                                 <td>{{ sc.etudiant(etudiant.id).proposition }}</td>
                                 <td>{{ sc.etudiant(etudiant.id).nbAbsences }}</td>
                                 {% for matiere in sc.matieres %}
-                                    {% if matiere.nbNotes > 0 and matiere.suspendu == false %}
-                                        <td>{{ sc.matiere(etudiant.id, matiere.id).moyenne|number_format(2) }}</td>
+                                    {% if sc.matiere(etudiant.id, matiere.id) != null %}
+                                        {% if sc.matiere(etudiant.id, matiere.id).pasoption is defined %}
+                                            <td>N.C.</td>
+                                        {% else %}
+                                            <td>{{ sc.matiere(etudiant.id, matiere.id).moyenne|number_format(2) }}</td>
+                                        {% endif %}
                                     {% endif %}
                                 {% endfor %}
                             {% endif %}
