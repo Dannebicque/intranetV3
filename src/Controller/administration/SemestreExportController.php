@@ -3,17 +3,20 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/SemestreExportController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/01/2021 20:11
+// @lastUpdate 23/01/2021 14:30
 
 namespace App\Controller\administration;
 
 use App\Classes\Etudiant\EtudiantExportReleve;
 use App\Classes\MyEvaluations;
 use App\Controller\BaseController;
+use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Entity\Scolarite;
 use App\Entity\Semestre;
+use App\Message\ExportReleve;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -28,14 +31,21 @@ class SemestreExportController extends BaseController
 {
     /**
      * @Route("/all/{semestre}", name="administration_semestre_export_tous_les_releves_provisoires")
-     * @param Semestre      $semestre
+     * @param Semestre $semestre
+     *
+     * @return RedirectResponse
      */
     public function exportTousLesRelevesProvisoires(
-        EtudiantExportReleve $etudiantExportReleve,
         Semestre $semestre
-    ): void {
-        $etudiantExportReleve->exportAllReleveProvisoire($semestre,
-            $this->dataUserSession->getAnneeUniversitaire());
+    ): RedirectResponse {
+        $this->dispatchMessage(new ExportReleve($semestre->getId(),
+            $this->dataUserSession->getAnneeUniversitaire()->getId(), $this->getConnectedUser()->getId()));
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS,
+            'La génération des documents est en cours. Vous recevrez un mail pour télécharger les éléments dans quelques minutes.');
+
+        return $this->redirectToRoute('administration_notes_semestre_index', [
+            'semestre' => $semestre->getId()
+        ]);
     }
 
     /**
