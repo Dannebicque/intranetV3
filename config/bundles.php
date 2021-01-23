@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/config/bundles.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 04/12/2020 13:43
+// @lastUpdate 23/01/2021 14:30
 
 return [
     Symfony\Bundle\FrameworkBundle\FrameworkBundle::class                => ['all' => true],
@@ -24,4 +24,5 @@ return [
     Symfony\WebpackEncoreBundle\WebpackEncoreBundle::class               => ['all' => true],
     Bugsnag\BugsnagBundle\BugsnagBundle::class                           => ['all' => true],
     Symfony\UX\Chartjs\ChartjsBundle::class                              => ['all' => true],
+    Knp\Bundle\SnappyBundle\KnpSnappyBundle::class                       => ['all' => true],
 ];

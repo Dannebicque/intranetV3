@@ -14,6 +14,7 @@
     "liip/imagine-bundle": "^2.3",
     "ninsuo/symfony-collection": "^2.1",
     "phpoffice/phpspreadsheet": "^1.12",
+    "knplabs/knp-snappy-bundle": "^1.8",
     "ramsey/uuid-doctrine": "^1.6",
     "sensio/framework-extra-bundle": "^5.5",
     "erusev/parsedown": "^1.7",
@@ -28,6 +29,8 @@
     "symfony/ldap": "^5.1",
     "symfony/mailer": "^5.1",
     "symfony/mime": "^5.1",
+    "symfony/messenger": "^5.1",
+    "symfony/amqp-messenger": "^5.1",
     "symfony/monolog-bundle": "^3.5",
     "symfony/orm-pack": "^2.0",
     "symfony/routing": "^5.1",
@@ -42,7 +45,8 @@
     "twig/intl-extra": "^3.0",
     "vich/uploader-bundle": "^1.8",
     "symfony/webpack-encore-bundle": "^1.7",
-    "nesbot/carbon": "^2.37"
+    "nesbot/carbon": "^2.37",
+    "ext-zip": "*"
   },
   "config": {
     "preferred-install": {
