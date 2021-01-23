@@ -93,8 +93,7 @@
         {% endblock %}
     </style>
 
-    <title>{% block title %}{% endblock %} -
-                                           Intranet {% if is_granted('ROLE_SUPER_ADMIN') %}SUPER ADMINISTRATION{% else %}{{ user_data.departement.libelle }}{% endif %}</title>
+    <title>{% block title %}{% endblock %} - Intranet</title>
 </head>
 
 <body>
