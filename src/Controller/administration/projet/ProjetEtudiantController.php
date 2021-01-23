@@ -1,12 +1,13 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/projet/ProjetEtudiantController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+// @lastUpdate 23/01/2021 14:47
 
 namespace App\Controller\administration\projet;
 
+use App\Classes\Pdf\MyPDF;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
@@ -15,13 +16,15 @@ use App\Entity\ProjetPeriode;
 use App\Form\ProjetEtudiantType;
 use App\Classes\MyProjetEtudiant;
 use Doctrine\ORM\NonUniqueResultException;
-use Dompdf\Dompdf;
-use Dompdf\Options;
+use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 /**
  *  * @Route("/administration/projet/etudiant")
@@ -111,29 +114,24 @@ class ProjetEtudiantController extends BaseController
     }
 
 
-
     /**
      * @Route("/convention/pdf/{id}", name="administration_projet_etudiant_convention_pdf", methods="GET")
+     * @param MyPDF          $myPDF
      * @param ProjetEtudiant $projetEtudiant
      *
-     * @return Response
+     * @return PdfResponse
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
-    public function conventionPdf(ProjetEtudiant $projetEtudiant): Response
+    public function conventionPdf(MyPDF $myPDF, ProjetEtudiant $projetEtudiant): PdfResponse
     {
-        $html = $this->renderView('pdf/projetTutore/conventionProjet.html.twig', [
-            'projetEtudiant' => $projetEtudiant,
-        ]);
-
-        $options = new Options();
-        $options->set('isRemoteEnabled', true);
-        $options->set('isPhpEnabled', true);
-
-        $dompdf = new Dompdf($options);
-        $dompdf->loadHtml($html);
-        $dompdf->render();
-
-        return new Response($dompdf->stream('Convention-' . $projetEtudiant->getEtudiants()[0]->getNom(),
-            ['Attachment' => 1]));
-
+        return $myPDF::generePdf('pdf/projetTutore/conventionProjet.html.twig',
+            [
+                'projetEtudiant' => $projetEtudiant,
+            ],
+            'Convention-' . $projetEtudiant->getEtudiants()[0]->getNom(),
+            $this->dataUserSession->getDepartement()
+        );
     }
 }

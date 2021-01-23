@@ -7,7 +7,6 @@
     "php": "^7.4.2",
     "ext-json": "*",
     "bugsnag/bugsnag-symfony": "^1.5",
-    "dompdf/dompdf": "^0.8.5",
     "endroid/qr-code-bundle": "^3.4",
     "friendsofsymfony/jsrouting-bundle": "^2.6",
     "jasig/phpcas": "^1.3",
