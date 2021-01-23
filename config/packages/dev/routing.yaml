@@ -1,3 +1,4 @@
 framework:
     router:
         strict_requirements: true
+        default_uri: 'http://newintranet:8888/'

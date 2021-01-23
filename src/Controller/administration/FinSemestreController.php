@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/FinSemestreController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 21/12/2020 14:06
+// @lastUpdate 23/01/2021 17:06
 
 namespace App\Controller\administration;
 
@@ -58,10 +58,10 @@ class FinSemestreController extends BaseController
 
     /**
      * @Route("/confirme/{semestre}", name="administration_fin_semestre_confirme")
+     * @param EtudiantScolarite  $etudiantScolarite
      * @param EtudiantRepository $etudiantRepository
      * @param Request            $request
      * @param SemestreRepository $semestreRepository
-     * @param EtudiantGroupes    $etudiantGroupes
      * @param Semestre           $semestre
      *
      * @return Response
@@ -99,11 +99,6 @@ class FinSemestreController extends BaseController
                         if ($se !== null) {
                             $e->setSemestre($se);
                         }
-
-                        $p = new Scolarite($e, $se);
-                        $p->setDecision('E.C.');
-                        $p->setOrdre($se->getOrdreLmd());//todo: vérifier si pas déjà un semestre ?
-                        $this->entityManager->persist($p);
                         break;
                 }
                 $this->entityManager->persist($e);

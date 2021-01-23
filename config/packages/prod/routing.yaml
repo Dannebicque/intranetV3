@@ -1,3 +1,4 @@
 framework:
   router:
     strict_requirements: null
+    default_uri: 'https://intranetv3.iut-troyes.univ-reims.fr/'
