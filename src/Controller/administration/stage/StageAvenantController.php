@@ -1,22 +1,25 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StageAvenantController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/12/2020 14:31
+// @lastUpdate 23/01/2021 14:47
 
 namespace App\Controller\administration\stage;
 
+use App\Classes\Pdf\MyPDF;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\StageAvenant;
 use App\Entity\StageEtudiant;
 use App\Form\StageAvenantType;
-use Dompdf\Dompdf;
-use Dompdf\Options;
+use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 /**
  * @Route("/administration/stage/avenant")
@@ -40,27 +43,24 @@ class StageAvenantController extends BaseController
 
     /**
      * @Route("/avenant/pdf/{id}", name="administration_stage_avenant_pdf", methods="GET")
+     * @param MyPDF        $myPDF
      * @param StageAvenant $stageAvenant
      *
-     * @return Response
+     * @return PdfResponse
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
-    public function avenantPdf(StageAvenant $stageAvenant): Response
+    public function avenantPdf(MyPDF $myPDF, StageAvenant $stageAvenant): PdfResponse
     {
-        $html = $this->renderView('pdf/stage/avenantStage.html.twig', [
-            'stage_avenant' => $stageAvenant,
-            'proposition'   => $stageAvenant->getStageEtudiant()
-        ]);
-
-        $options = new Options();
-        $options->set('isRemoteEnabled', true);
-        $options->set('isPhpEnabled', true);
-
-        $dompdf = new Dompdf($options);
-        $dompdf->loadHtml($html);
-        $dompdf->render();
-
-        return new Response($dompdf->stream('avenant-' . $stageAvenant->getStageEtudiant()->getEtudiant()->getNom(),
-            ['Attachment' => 1]));
+        return $myPDF::generePdf('pdf/stage/avenantStage.html.twig',
+            [
+                'stage_avenant' => $stageAvenant,
+                'proposition'   => $stageAvenant->getStageEtudiant()
+            ],
+            'avenant-' . $stageAvenant->getStageEtudiant()->getEtudiant()->getNom(),
+            $this->dataUserSession->getDepartement()
+        );
     }
 
     /**

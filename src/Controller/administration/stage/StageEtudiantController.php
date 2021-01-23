@@ -1,13 +1,14 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StageEtudiantController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+// @lastUpdate 23/01/2021 14:47
 
 namespace App\Controller\administration\stage;
 
 use App\Classes\MyStageEtudiant;
+use App\Classes\Pdf\MyPDF;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
@@ -18,8 +19,7 @@ use App\Form\StageEtudiantType;
 use App\Repository\PersonnelRepository;
 use App\Repository\StageMailTemplateRepository;
 use Doctrine\ORM\NonUniqueResultException;
-use Dompdf\Dompdf;
-use Dompdf\Options;
+use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -28,6 +28,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Twig\Environment;
 use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
 /**
@@ -175,56 +176,51 @@ class StageEtudiantController extends BaseController
 
     /**
      * @Route("/convention/pdf/{id}", name="administration_stage_etudiant_convention_pdf", methods="GET")
+     * @param MyPDF         $myPDF
      * @param StageEtudiant $stageEtudiant
      *
-     * @return Response
+     * @return PdfResponse
+     * @throws LoaderError
+     * @throws SyntaxError
+     * @throws RuntimeError
      */
-    public function conventionPdf(StageEtudiant $stageEtudiant): Response
+    public function conventionPdf(MyPDF $myPDF, StageEtudiant $stageEtudiant): PdfResponse
     {
         //1. regarder si convention existe dans le répertoire ? (un champ avec le nom dans la BDD ?)
         //2. Si oui envoyer
         //3. Si non générer et envoyer + sauvegarde
         //todo: prevoir bouton pour "regenerer" la convention
-        $html = $this->renderView('pdf/stage/conventionStagePDF.html.twig', [
-            'proposition' => $stageEtudiant,
-        ]);
 
-        $options = new Options();
-        $options->set('isRemoteEnabled', true);
-        $options->set('isPhpEnabled', true);
-
-        $dompdf = new Dompdf($options);
-        $dompdf->loadHtml($html);
-        $dompdf->render();
-
-        return new Response($dompdf->stream('Convention-' . $stageEtudiant->getEtudiant()->getNom(),
-            ['Attachment' => 1]));
+        return $myPDF::generePdf('pdf/stage/conventionStagePDF.html.twig',
+            [
+                'proposition' => $stageEtudiant,
+            ],
+            'Convention-' . $stageEtudiant->getEtudiant()->getNom(),
+            $this->dataUserSession->getDepartement()
+        );
     }
 
 
     /**
      * @Route("/courrier/pdf/{id}", name="administration_stage_etudiant_courrier_pdf", methods="GET")
+     * @param MyPDF         $myPDF
      * @param StageEtudiant $stageEtudiant
      *
-     * @return Response
+     * @return PdfResponse
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
-    public function courrierPdf(StageEtudiant $stageEtudiant): Response
+    public function courrierPdf(MyPDF $myPDF, StageEtudiant $stageEtudiant): PdfResponse
     {
+        return $myPDF::generePdf('pdf/stage/baseCourrier.html.twig',
+            [
+                'stageEtudiant' => $stageEtudiant,
+            ],
+            'courrier-' . $stageEtudiant->getEtudiant()->getNom(),
+            $this->dataUserSession->getDepartement()
+        );
 
-        $html = $this->renderView('pdf/stage/baseCourrier.html.twig', [
-            'stageEtudiant' => $stageEtudiant,
-        ]);
-
-        $options = new Options();
-        $options->set('isRemoteEnabled', true);
-        $options->set('isPhpEnabled', true);
-
-        $dompdf = new Dompdf($options);
-        $dompdf->loadHtml($html);
-        $dompdf->render();
-
-        return new Response($dompdf->stream('courrier-' . $stageEtudiant->getEtudiant()->getNom(),
-            ['Attachment' => 1]));
     }
 
     /**
@@ -262,26 +258,22 @@ class StageEtudiantController extends BaseController
 
     /**
      * @Route("/fiche-enseignant/{id}", name="administration_stage_etudiant_fiche_enseignant", methods="GET")
+     * @param MyPDF         $myPDF
      * @param StageEtudiant $stageEtudiant
      *
-     * @return Response
+     * @return PdfResponse
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
-    public function ficheEnseignant(StageEtudiant $stageEtudiant): Response
+    public function ficheEnseignant(MyPDF $myPDF, StageEtudiant $stageEtudiant): PdfResponse
     {
-        $html = $this->renderView('pdf/fichePDFStage.html.twig',
+        return $myPDF::generePdf('pdf/fichePDFStage.html.twig',
             [
                 'stageEtudiant' => $stageEtudiant
-            ]);
-
-        $options = new Options();
-        $options->set('isRemoteEnabled', true);
-        $options->set('isPhpEnabled', true);
-
-        $dompdf = new Dompdf($options);
-        $dompdf->loadHtml($html);
-        $dompdf->render();
-
-        return new Response ($dompdf->stream('Fiche-Enseignant-stage-' . $stageEtudiant->getEtudiant()->getNom(),
-            ['Attachment' => 1]));
+            ],
+            'Fiche-Enseignant-stage-' . $stageEtudiant->getEtudiant()->getNom(),
+            $this->dataUserSession->getDepartement()
+        );
     }
 }
