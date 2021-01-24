@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Constantes.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 18/01/2021 16:43
+// @lastUpdate 24/01/2021 12:50
 
 /**
  * Created by PhpStorm.
@@ -206,7 +206,9 @@ class Constantes
         Constantes::SEMESTRE_NON_VALIDE => 'ffff0000',
         Constantes::SEMESTRE_VCA        => 'fff0a300',
         Constantes::SEMESTRE_VCJ        => 'fff30900',
-        ''                              => 'ffffff'
+        ''                              => 'ffffff',
+        'EC'                            => 'ffff0000',
+        'E.C.'                          => 'ffff0000'
     ];
     public const NB_MESSAGE_PAR_PAGE = 10;
     public const TAB_HEURES_EDT = [
