@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/TrombinoscopeController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/01/2021 11:10
+// @lastUpdate 24/01/2021 17:28
 
 namespace App\Controller;
 
@@ -16,6 +16,7 @@ use App\Classes\MyExport;
 use App\Classes\MyExportListing;
 use App\Repository\GroupeRepository;
 use App\Repository\PersonnelRepository;
+use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use PhpOffice\PhpSpreadsheet\Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
@@ -107,9 +108,9 @@ class TrombinoscopeController extends BaseController
     public function trombiEtudiantExportImage(
         MyPDF $myPDF,
         TypeGroupe $typeGroupe
-    ): Response {
+    ): PdfResponse {
 
-        $myPDF::generePdf('pdf/trombinoscope.html.twig',
+        return $myPDF::generePdf('pdf/trombinoscope.html.twig',
             [
                 'typeGroupe' => $typeGroupe,
                 'groupes'    => $typeGroupe->getGroupes(),
@@ -119,7 +120,6 @@ class TrombinoscopeController extends BaseController
             $this->getDepartement() !== null ? $this->getDepartement()->getLibelle() : ''
         );
 
-        return new Response(Response::HTTP_OK);
     }
 
     /**
