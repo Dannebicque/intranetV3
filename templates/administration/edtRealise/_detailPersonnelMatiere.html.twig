@@ -29,7 +29,6 @@
             <thead>
             <tr>
                 <th>#</th>
-                <th>Jour</th>
                 <th>Date</th>
                 <th>Heure</th>
                 <th>Salle</th>
@@ -41,9 +40,8 @@
             {% for pl in planning %}
                 <tr>
                     <td>{{ pl.id }}</td>
-                    <td>{{ pl.jourLong }}</td>
-                    <td>{{ pl.datelong(calendrier[pl.semaine].lundi)|format_date('short') }}</td>
-                    <td>{{ pl.hDebut }} | {{ pl.hFin }}</td>
+                    <td>{{ pl.date|format_date(pattern='EEEE d LLLL y ') }}</td>
+                    <td>{{ pl.debutTexte }} | {{ pl.finTexte }}</td>
                     <td>{{ pl.salle }}</td>
                     <td>{{ pl.type|upper }}</td>
                     <td>{{ pl.displayGroupe }}</td>{# todo voir pour récupérer le code du groupe ... #}

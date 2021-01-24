@@ -38,23 +38,15 @@
                         {% endfor %}
                     </select>
                 </div>
-                <div class="form-group">
-                    <label for="edtSelectSemestre">
-                        Semestre
-                    </label>
-                    <select name="edtSelectSemestre" id="edtSelectSemestre"
-                            class="form-control selectpicker">
-                        <option value="0">Choisissez un semestre</option>
-                        {% for semestre in semestres %}
-                            <option value="{{ semestre.id }}">{{ semestre.display }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
+
                 <div class="form-group">
                     <label for="selectmatiere">Module</label>
                     <select id="selectmatiere" name="selectmatiere"
                             class="form-control selectpicker">
-                        <option value="0">Choisissez d'abord un semestre</option>
+                        <option value="0">Choisissez une matière</option>
+                        {% for matiere in matieres %}
+                            <option value="{{ matiere.id }}">{{ matiere.display }}</option>
+                        {% endfor %}
                     </select>
                 </div>
                 <div class="row">
@@ -76,4 +68,15 @@
         </div>
     </div>
 
+{% endblock %}
+
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('adm.edt') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('adm.edt') }}
 {% endblock %}
