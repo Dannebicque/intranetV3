@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEdtCompare.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/08/2020 10:27
+// @lastUpdate 24/01/2021 17:35
 
 namespace App\Classes;
 
@@ -26,11 +26,15 @@ class MyEdtCompare
      * @var Previsionnel[]
      */
     private $planning;
+    /**
+     * @var Previsionnel[]
+     */
+    private array $previsionnel;
 
     /**
      * MyEdtCompare constructor.
      *
-     * @param EdtPlanningRepository $edtPlanningRepository
+     * @param EdtPlanningRepository  $edtPlanningRepository
      * @param PrevisionnelRepository $previsionnelRepository
      */
     public function __construct(
@@ -51,7 +55,7 @@ class MyEdtCompare
      */
     public function realise(Matiere $matiere, Personnel $personnel, int $anneePrevi): array
     {
-        $m = $this->edtPlanningRepository->findBy([
+        $this->planning = $this->edtPlanningRepository->findBy([
             'matiere'     => $matiere->getId(),
             'intervenant' => $personnel->getId()
         ],
@@ -61,7 +65,7 @@ class MyEdtCompare
                 'debut'   => 'ASC'
             ]);
 
-        $this->planning = $this->previsionnelRepository->findBy([
+        $this->previsionnel = $this->previsionnelRepository->findBy([
             'personnel' => $personnel->getId(),
             'matiere'   => $matiere->getId(),
             'annee'     => $anneePrevi
@@ -75,13 +79,13 @@ class MyEdtCompare
         $t['td']['real'] = 0;
         $t['tp']['real'] = 0;
 
-        foreach ($p as $pr) {
+        foreach ($this->previsionnel as $pr) {
             $t['cm']['previ'] += $pr->getNbHCM();
             $t['td']['previ'] += $pr->getNbHTD() * $pr->getNbGrTD();
             $t['tp']['previ'] += $pr->getNbHTP() * $pr->getNbGrTP();
         }
 
-        foreach ($m as $ma) {
+        foreach ($this->planning as $ma) {
             switch ($ma->getType()) {
                 case 'CM':
                 case 'cm':

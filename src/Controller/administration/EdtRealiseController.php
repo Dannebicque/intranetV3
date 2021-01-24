@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtRealiseController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/07/2020 18:05
+// @lastUpdate 24/01/2021 17:35
 
 namespace App\Controller\administration;
 
@@ -14,6 +14,7 @@ use App\Entity\Previsionnel;
 use App\Classes\MyEdtCompare;
 use App\Repository\CalendrierRepository;
 use App\Repository\EdtPlanningRepository;
+use App\Repository\MatiereRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\PrevisionnelRepository;
 use App\Repository\SemestreRepository;
@@ -58,13 +59,13 @@ class EdtRealiseController extends BaseController
      * @return Response
      * @Route("", name="administration_edt_service_realise", methods={"GET"})
      */
-    public function index(PersonnelRepository $personnelRepository): Response
+    public function index(MatiereRepository $matiereRepository, PersonnelRepository $personnelRepository): Response
     {
         $personnels = $personnelRepository->findByDepartement($this->dataUserSession->getDepartement());
 
         return $this->render('administration/edtRealise/index.html.twig', [
             'personnels' => $personnels,
-            'semestres'  => $this->dataUserSession->getSemestres(),
+            'matieres'   => $matiereRepository->findByDepartement($this->getDepartement()),
         ]);
     }
 
@@ -74,7 +75,7 @@ class EdtRealiseController extends BaseController
      * @param Personnel    $personnel
      *
      * @return Response
-     * @Route("/service-realise/{semestre}/{matiere}/{personnel}", name="administration_edt_service_realise_affiche",
+     * @Route("/service-realise/{matiere}/{personnel}", name="administration_edt_service_realise_affiche",
      *                                                             options={"expose"=true}, methods={"POST","GET"})
      */
     public function serviceRealisePersonnelMatiere(

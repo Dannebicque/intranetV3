@@ -1,8 +1,8 @@
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.edt.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 15/09/2020 06:51
+// @lastUpdate 24/01/2021 17:05
 
 import '../../vendor/jqueryui/jquery-ui.min'
 
@@ -191,13 +191,7 @@ $(document).on('change', '#affichematiere', function () {
 
 
 $(document).on('change', '#selectpersonnel', function () {
-  const selectSemestre = $('#selectsemestre')
   const selectMatiere = $('#selectmatiere')
-
-  selectSemestre.val('0')
-  selectMatiere.selectpicker('destroy')
-  selectMatiere.empty()
-  selectMatiere.append(new Option('Choisissez un semestre !', '0'))
   selectMatiere.selectpicker('val', '0')
 
 })
@@ -233,7 +227,6 @@ $(document).on('click', '#btnafficheRealise', function (e) {
   const $bloc = $('#blocchrono')
   $bloc.empty()
   $bloc.load(Routing.generate('administration_edt_service_realise_affiche', {
-    semestre: $('#edtSelectSemestre').val(),
     personnel: $('#selectpersonnel').val(),
     matiere: $('#selectmatiere').val()
   }))
