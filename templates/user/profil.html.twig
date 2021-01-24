@@ -8,7 +8,7 @@
             {{ 'profil.personnel.heading'|trans({'%user%': user.displayPr}) }}
         {% elseif user.typeUser|lower == 'etudiant' %}
             {{ 'profil.heading'|trans({'%user%': user.displayPr, '%semestre%': user.semestre != null ? user.semestre
-                .libelle : 'non.defini'}) }}
+            .libelle : 'non.defini'|trans}) }}
         {% endif %}
     {% endif %}
 {% endblock %}
@@ -58,7 +58,7 @@
                     <h5 class="mt-2 mb-0 profil-nom">{{ user.displayPr }}</h5>
                     {% if user.typeUser|lower == 'etudiant' %}
                         <h6 class="overlay" style="background-color: #FAB001;">
-                            {{ user.diplome.display() }}
+                            {{ user.diplome != null ? user.diplome.display() : 'Sans département' }}
                             <br>{% for gr in user.groupes %} {{ gr.libelle }}{% if not loop.last %}, {% endif %}
                             {% endfor %}</h6>
                     {% else %}
