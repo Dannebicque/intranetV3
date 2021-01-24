@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/SousCommission/SousCommission.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/01/2021 12:19
+// @lastUpdate 24/01/2021 12:21
 
 namespace App\Classes\SousCommission;
 
@@ -148,12 +148,12 @@ class SousCommission
     {
         $tabUes = [];
         foreach ($this->ues as $ue) {
-            $tabUes[$ue->getId()] = new MoyenneUe($ue, $this->semestre->getOptPointPenaliteAbsence());
+            $tabUes[$ue->getNumeroUe()] = new MoyenneUe($ue, $this->semestre->getOptPointPenaliteAbsence());
         }
 
         /** @var MoyenneMatiere $matiere */
         foreach ($moyenneMatieres as $matiere) {
-            $idUe = $matiere->matiere->getUe()->getId();
+            $idUe = $matiere->matiere->getUe()->getNumeroUe();
             if (array_key_exists($idUe, $tabUes)) {
                 $tabUes[$idUe]->addMatiere($matiere);
             }

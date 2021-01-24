@@ -151,15 +151,15 @@
                             {# decision semestre #}
 
                             {% for u in sousCommission.ues %}
-                                <td><span class="{{ myEtudiant.moyenneUes[u.id].styleMoyenne }}">{{ myEtudiant.moyenneUes[u.id]
+                                <td><span class="{{ myEtudiant.moyenneUes[u.numeroUe].styleMoyenne }}">{{ myEtudiant.moyenneUes[u.numeroUe]
                                         .moyenne|number_format(3) }}</span>
                                 </td>
 
                                 {# Penalite #}
                                 {% if semestre.optPenaliteAbsence == true %}
                                     <td style="background-color: #00B7FC;">
-                                                <span class="{{ myEtudiant.moyenneUes[u.id].styleMoyennePenalisee }}">
-                                                {{ myEtudiant.moyenneUes[u.id].moyennePenalisee|number_format(3) }}
+                                                <span class="{{ myEtudiant.moyenneUes[u.numeroUe].styleMoyennePenalisee }}">
+                                                {{ myEtudiant.moyenneUes[u.numeroUe].moyennePenalisee|number_format(3) }}
                                                 </span>
                                     </td>
                                 {% endif %}
@@ -201,9 +201,10 @@
                                 {% for ue in sem.ues %}
                                     {% if myEtudiant.scolarite[sem.ordreLmd] is defined %}
                                         <td>
-                                            {% if yEtudiant.scolarite[sem.ordreLmd].parcoursUe[ue.id] is defined %}
-                                                <span class="{{ myEtudiant.scolarite[sem.ordreLmd].parcoursUe[ue.id].style }}">
-                                                    {{ myEtudiant.scolarite[sem.ordreLmd].parcoursUe[ue.id]
+                                            {% if myEtudiant.scolarite[sem.ordreLmd].parcoursUe[ue.numeroUe] is
+                                                defined %}
+                                                <span class="{{ myEtudiant.scolarite[sem.ordreLmd].parcoursUe[ue.numeroUe].style }}">
+                                                    {{ myEtudiant.scolarite[sem.ordreLmd].parcoursUe[ue.numeroUe]
                                                     .moyenne|number_format(3) }}
                                                     </span>
                                             {% else %}

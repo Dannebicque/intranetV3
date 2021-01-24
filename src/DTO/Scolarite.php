@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/Scolarite.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 14/01/2021 15:09
+// @lastUpdate 24/01/2021 12:24
 
 namespace App\DTO;
 
@@ -26,7 +26,7 @@ class Scolarite
         $this->styleMoyenne = $this->getStyleNote($scolarite->getMoyenne());
 
         foreach ($scolarite->getSemestre()->getUes() as $ue) {
-            $this->parcoursUe[$ue->getId()] = $scolarite->getMoyennesUeSousComm($ue->getId());
+            $this->parcoursUe[$ue->getNumeroUe()] = $scolarite->getMoyennesUeSousComm($ue->getId());
         }
     }
 

@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Scolarite.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 18/01/2021 17:32
+// @lastUpdate 24/01/2021 12:40
 
 namespace App\Entity;
 
@@ -375,8 +375,6 @@ class Scolarite extends BaseEntity
     {
         $ue = $this->getMoyennesUesById($idUe);
         if ($ue !== []) {
-
-
             return [
                 'style'   => $this->getStyle($ue['moyenne']),
                 'moyenne' => $ue['moyenne']
