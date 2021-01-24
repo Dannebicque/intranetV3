@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantScolarite.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 22/12/2020 16:14
+// @lastUpdate 24/01/2021 17:35
 
 namespace App\Classes\Etudiant;
 
@@ -20,7 +20,7 @@ class EtudiantScolarite
 {
 
     private Etudiant $etudiant;
-    private Semestre $semestre;
+    private ?Semestre $semestre;
     private AnneeUniversitaire $anneeUniversitaire;
     private EtudiantGroupes $etudiantsGroupes;
     private EntityManagerInterface $entityManger;
@@ -62,6 +62,7 @@ class EtudiantScolarite
     public function setEtudiant(Etudiant $etudiant): void
     {
         $this->etudiant = $etudiant;
+        $this->semestre = $etudiant->getSemestre();
     }
 
     public function changeEtat($etat): void
@@ -71,8 +72,8 @@ class EtudiantScolarite
             case Constantes::SCOLARITE_DIPLOME:
             case Constantes::SEMESTRE_DEMISSIONNAIRE:
             case Constantes::SEMESTRE_REORIENTE:
-                $this->finFormation();
-                $this->updateScolarite($etat);
+            $this->updateScolarite($etat);
+            $this->finFormation();
                 break;
             case 'erreur':
                 $this->etudiant->setSemestre(null);
@@ -98,22 +99,22 @@ class EtudiantScolarite
     public function updateScolarite(
         $etat
     ) {
-        $scolarite = $this->scolariteRepository->findOneBy([
-            'semestre'           => $this->semestre->getId(),
-            'anneeUniversitaire' => $this->anneeUniversitaire->getId(),
-            'etudiant'           => $this->etudiant->getId()
-        ]);
+        if ($this->semestre !== null) {
+            $scolarite = $this->scolariteRepository->findOneBy([
+                'semestre'           => $this->semestre->getId(),
+                'anneeUniversitaire' => $this->anneeUniversitaire->getId(),
+                'etudiant'           => $this->etudiant->getId()
+            ]);
 
-        if ($scolarite === null) {
-            //si non ??? Créer mais comment associer à une sous-comm?
-            $scolarite = new Scolarite($this->etudiant, $this->semestre, $this->anneeUniversitaire);
+            if ($scolarite === null) {
+                //si non ??? Créer mais comment associer à une sous-comm?
+                $scolarite = new Scolarite($this->etudiant, $this->semestre, $this->anneeUniversitaire);
+            }
+
+            $scolarite->setDecision($this->getDecisionFromEtat($etat));
+            $scolarite->setProposition($etat);
+            $this->entityManger->persist($scolarite);
         }
-
-        $scolarite->setDecision($this->getDecisionFromEtat($etat));
-        $scolarite->setProposition($etat);
-        $this->entityManger->persist($scolarite);
-
-
     }
 
     private function getDecisionFromEtat($etat)
