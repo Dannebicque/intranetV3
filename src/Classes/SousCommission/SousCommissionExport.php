@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/SousCommission/SousCommissionExport.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 24/01/2021 12:50
+// @lastUpdate 24/01/2021 12:59
 
 namespace App\Classes\SousCommission;
 
@@ -128,7 +128,9 @@ class SousCommissionExport
 
         foreach ($ues as $ue) {
             $this->myExcelWriter->writeCellXY($colonne, $ligne,
-                'UE ' . $ue->getNumeroUe() . '(' . $ue->getCoefficient() . ')');
+                'UE ' . $ue->getNumeroUe());
+            $this->myExcelWriter->writeCellXY($colonne, $ligne + 1,
+                $ue->getCoefficient());
             $colonne++;
         }
 
@@ -154,6 +156,7 @@ class SousCommissionExport
             /** @var Ue $ue */
             foreach ($s->getUes() as $ue) {
                 $this->myExcelWriter->writeCellXY($colonne, $ligne, 'UE ' . $ue->getNumeroUe());
+                $this->myExcelWriter->writeCellXY($colonne, $ligne + 1, $ue->getCoefficient());
                 $colonne++;
             }
             $this->myExcelWriter->writeCellXY($colonne, $ligne, 'Moy. ');
