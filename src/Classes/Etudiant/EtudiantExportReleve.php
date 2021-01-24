@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantExportReleve.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 23/01/2021 14:29
+// @lastUpdate 24/01/2021 13:03
 
 namespace App\Classes\Etudiant;
 
@@ -112,9 +112,9 @@ class EtudiantExportReleve
 
         // Create new Zip Archive.
         $zip = new ZipArchive();
-        $fileName = $semestre->getLibelle() . '-' . date('YmdHis');
+        $fileName = $semestre->getLibelle() . '-' . date('YmdHis') . '.zip';
         // The name of the Zip documents.
-        $zipName = $this->dir . $semestre->getLibelle() . $fileName . '.zip';
+        $zipName = $this->dir . $fileName;
 
         $zip->open($zipName, ZipArchive::CREATE);
         $tabFiles = [];
