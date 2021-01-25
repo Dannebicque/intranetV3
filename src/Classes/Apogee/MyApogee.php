@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Apogee/MyApogee.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/01/2021 11:59
+// @lastUpdate 25/01/2021 17:33
 
 namespace App\Classes\Apogee;
 
@@ -172,7 +172,7 @@ class MyApogee
 
         $v_cell_apo_col_val_fin = 0;
         // nombre de lignes
-        $v_nb_lig = $objPHPExcel->setActiveSheetIndex(0)->getHighestRow() - 1;
+       $v_nb_lig = $maquetteSheet->getHighestRow('A') - 1;
 
         // deprotection feuille
         $maquetteSheet->getStyle('A1:GV200')->getProtection()->setLocked(Protection::PROTECTION_UNPROTECTED);
@@ -205,7 +205,6 @@ class MyApogee
             $fin = $this->getNewCoordinates($deb, 0, 11);
             $v_cell_occ = 0;
             $v_cpt_cell_vide = $maquetteSheet->getCell($deb)->getValue();
-
             if (!empty($v_cpt_cell_vide)) {
                 if ($v_cpt_cell_vide === 'APO_COL_VAL_FIN' ||
                     $maquetteSheet->getCell($this->getNewCoordinates($deb, 0, 1))->getValue() === 'APO_COL_VAL_FIN'
@@ -285,8 +284,7 @@ class MyApogee
             $numLigne = $maquetteSheet->getCell($name)->getRow();
 
             // cellule de fin
-            $fin = $this->getNewCoordinates($titre, 0, $v_nb_lig - $numLigne);
-
+            $fin = $this->getNewCoordinates($titre, 0, $v_nb_lig - $numLigne - 12);
             // si on est pas a la derniere colonne
             if ($titre != $celluleFin) {
 
