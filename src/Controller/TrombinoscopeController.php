@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/TrombinoscopeController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 24/01/2021 17:28
+// @lastUpdate 25/01/2021 09:16
 
 namespace App\Controller;
 
@@ -59,7 +59,7 @@ class TrombinoscopeController extends BaseController
         MyExportListing $myExportListing,
         TypeGroupe $typeGroupe,
         $_format
-    ): ?StreamedResponse {
+    ) {
         return $myExportListing->genereFichier(
             Constantes::TYPEDOCUMENT_EMARGEMENT,
             $_format,
