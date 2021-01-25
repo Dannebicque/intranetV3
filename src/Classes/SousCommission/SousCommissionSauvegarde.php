@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/SousCommission/SousCommissionSauvegarde.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/01/2021 08:42
+// @lastUpdate 25/01/2021 08:43
 
 namespace App\Classes\SousCommission;
 
@@ -82,10 +82,10 @@ class SousCommissionSauvegarde
                 $tUe = [];
                 foreach ($ues as $ue) {
                     if ($semestre->isOptPenaliteAbsence() === true) {
-                        $tUe[$ue->getId()]['moyenne'] = $scEtudiant->moyenneUes[$ue->getNumero()]->getMoyennePenalisee();
+                        $tUe[$ue->getId()]['moyenne'] = $scEtudiant->moyenneUes[$ue->getNumeroUe()]->getMoyennePenalisee();
                         $tUe[$ue->getId()]['rang'] = -1;
                     } else {
-                        $tUe[$ue->getId()]['moyenne'] = $scEtudiant->moyenneUes[$ue->getNumero()]->getMoyenne();
+                        $tUe[$ue->getId()]['moyenne'] = $scEtudiant->moyenneUes[$ue->getNumeroUe()]->getMoyenne();
                         $tUe[$ue->getId()]['rang'] = -1;
                     }
                 }
