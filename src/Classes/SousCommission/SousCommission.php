@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/SousCommission/SousCommission.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 24/01/2021 12:21
+// @lastUpdate 25/01/2021 08:40
 
 namespace App\Classes\SousCommission;
 
@@ -14,6 +14,7 @@ use App\Classes\Tools;
 use App\DTO\EtudiantSousCommission;
 use App\DTO\MoyenneMatiere;
 use App\DTO\MoyenneUe;
+use App\DTO\StatitiquesBac;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
@@ -272,8 +273,21 @@ class SousCommission
 
     public function getBySemestreAnneeUniversitaire(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire)
     {
-        return $this->entityManager->getRepository(ScolaritePromo::class)->findOneBy(['semestre'           => $semestre->getId(),
-                                                                                      'anneeUniversitaire' => $anneeUniversitaire->getId()
+        return $this->entityManager->getRepository(ScolaritePromo::class)->findOneBy([
+            'semestre'           => $semestre->getId(),
+            'anneeUniversitaire' => $anneeUniversitaire->getId()
         ]);
+    }
+
+    public function calculStats(array $bacs)
+    {
+        $tStats = [];
+        foreach ($bacs as $bac) {
+            $tStats[$bac->getId()] = new StatitiquesBac();
+        }
+        $tStats['global'] = new StatitiquesBac();
+
+
+        return $tStats;
     }
 }

@@ -237,4 +237,52 @@
             </div>
         </div>
     </div>
+
+
+    {# <div class="card"> #}
+    {# <div class="card-header"> #}
+    {# <h4><strong>Statistiques</strong> | {{ semestre.display }}</h4> #}
+    {# </div> #}
+    {# <div class="card-body"> #}
+    {# <table class="table table-striped table-bordered"> #}
+    {# <thead> #}
+    {# <tr> #}
+    {# <th>Bac</th> #}
+    {# <th colspan="2">Validé</th> #}
+    {# <th colspan="2">Non validé</th> #}
+    {# <th colspan="2">Réorientation</th> #}
+    {# <th colspan="2">Redoublement</th> #}
+    {# </tr> #}
+    {# </thead> #}
+    {# <tbody> #}
+    {# <tr> #}
+    {# {% set effectif = sousCommission.etudiants|length %} #}
+    {# <th>Global</th> #}
+    {# <td>{{ stats['global'].nbValide }}</td> #}
+    {# <td>{{ stats['global'].pourcentageValide(effectif)|number_format(2) }}%</td> #}
+    {# <td>{{ stats['global'].nbNonvalide }}</td> #}
+    {# <td>{{ stats['global'].pourcentageNonValide(effectif)|number_format(2) }}%</td> #}
+    {# <td>{{ stats['global'].nbReorientation }}</td> #}
+    {# <td>{{ stats['global'].pourcentageReorientation(effectif)|number_format(2) }}%</td> #}
+    {# <td>{{ stats['global'].nbRedoublement }}</td> #}
+    {# <td>{{ stats['global'].pourcentageRedoublement(effectif)|number_format(2) }}%</td> #}
+
+    {# </tr> #}
+    {# {% for bac in bacs %} #}
+    {# <tr> #}
+    {# <th>{{ bac.libelle }}</th> #}
+    {# <td>{{ stats[bac.id].nbValide }}</td> #}
+    {# <td>{{ stats[bac.id].pourcentageValide(effectif)|number_format(2) }}%</td> #}
+    {# <td>{{ stats[bac.id].nbNonvalide }}</td> #}
+    {# <td>{{ stats[bac.id].pourcentageNonValide(effectif)|number_format(2) }}%</td> #}
+    {# <td>{{ stats[bac.id].nbReorientation }}</td> #}
+    {# <td>{{ stats[bac.id].pourcentageReorientation(effectif)|number_format(2) }}%</td> #}
+    {# <td>{{ stats[bac.id].nbRedoublement }}</td> #}
+    {# <td>{{ stats[bac.id].pourcentageRedoublement(effectif)|number_format(2) }}%</td> #}
+    {# </tr> #}
+    {# {% endfor %} #}
+    {# </tbody> #}
+    {# </table> #}
+    {# </div> #}
+    {# </div> #}
 {% endblock %}
