@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/EdtPlanning.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 22/01/2021 12:07
+// @lastUpdate 25/01/2021 10:04
 
 namespace App\Entity;
 
@@ -303,7 +303,27 @@ class EdtPlanning
     public function getDureeTexte(): string
     {
         $d = $this->fin - $this->debut;
-        $td = array('0h00', '0h30', '1h00', '1h30', '2h00', '2h30', '3h00', '3h30', '4h00', '4h30', '5h00');
+        $td = [
+            '0h00',
+            '0h30',
+            '1h00',
+            '1h30',
+            '2h00',
+            '2h30',
+            '3h00',
+            '3h30',
+            '4h00',
+            '4h30',
+            '5h00',
+            '5h30',
+            '6h00',
+            '6h30',
+            '7h00',
+            '7h30',
+            '8h00',
+            '8h30',
+            '9h00'
+        ];
 
         return $td[$d];
     }
