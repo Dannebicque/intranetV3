@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtExport.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/12/2020 14:31
+// @lastUpdate 25/01/2021 10:04
 
 namespace App\Classes\Edt;
 
@@ -203,7 +203,8 @@ class MyEdtExport
         if ($source === 'intranet') {
             $planning = $this->edtPlanningRepository->findEdtProf($personnel->getId());
             $this->myPDF::genereAndSavePdf('pdf/edt/planning.html.twig',
-                ['planning' => $planning, 'personnel' => $personnel], $personnel->getId() . '_' . $personnel->getNom(),
+                ['planning' => $planning, 'personnel' => $personnel],
+                $personnel->getId() . '_' . $personnel->getInitiales(),
                 $dir, $departement->getLibelle());
         }
     }

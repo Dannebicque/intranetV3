@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Covid/MyExportPresence.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 17/01/2021 08:53
+// @lastUpdate 25/01/2021 09:39
 
 namespace App\Classes\Covid;
 
@@ -138,7 +138,7 @@ class MyExportPresence
     public function genereAttestationPdf(CovidAttestationPersonnel $covidAttestationPersonnel, $sortie)
     {
         if ($sortie === 'force') {
-            $this->myPdf::generePdf(
+            return $this->myPdf::generePdf(
                 'pdf/covid/autorisationPersonnel.html.twig',
                 [
                     'covidAttestationPersonnel' => $covidAttestationPersonnel
