@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Semestre/NotesExport.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+// @lastUpdate 25/01/2021 17:39
 
 namespace App\Classes\Semestre;
 
@@ -87,6 +87,9 @@ class NotesExport
                         $notes[$etu->getId()])) {
                     $this->myExcel->writeCellXY($colonne, $ligne,
                         number_format($notes[$etu->getId()][$eval->getId()]['note'], 2));
+                    if ($notes[$etu->getId()][$eval->getId()]['note'] < 0 || $notes[$etu->getId()][$eval->getId()]['note'] > 20) {
+                        $this->myExcel->colorCellRange($colonne, $ligne, 'ffffcc00');
+                    }
                 } else {
                     $this->myExcel->writeCellXY($colonne, $ligne,
                         '-');
