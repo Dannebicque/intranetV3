@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Semestre/NotesExport.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/01/2021 17:39
+// @lastUpdate 25/01/2021 18:06
 
 namespace App\Classes\Semestre;
 
@@ -50,7 +50,7 @@ class NotesExport
      */
     public function exportXlsToutesLesNotes(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire)
     {
-        $this->myExcel->createSheet('Export des notes du semestre ' . $semestre->getLibelle());
+        $this->myExcel->createSheet('semestre ' . $semestre->getLibelle());
 
         $etudiants = $semestre->getEtudiants();
         $evaluations = $this->evaluationRepository->findBySemestre($semestre, $anneeUniversitaire);
