@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/EdtController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/12/2020 14:31
+// @lastUpdate 25/01/2021 09:14
 
 namespace App\Controller;
 
@@ -223,7 +223,7 @@ class EdtController extends BaseController
     public function exportEtudiantSemaine(
         MyPDF $myPDF,
         $semaine = 0
-    ): ?RedirectResponse {
+    ) {
         if ($semaine === 0) {
             $semaine = (int)date('W');
         }
@@ -240,7 +240,8 @@ class EdtController extends BaseController
                 $this->dataUserSession->getAnneeUniversitaire(), $semaine);
         }
 
-        $myPDF->generePdf('pdf/edt/edtPersoSemaine.html.twig', ['edt' => $edt, 'tabHeures' => Constantes::TAB_HEURES],
+        return $myPDF->generePdf('pdf/edt/edtPersoSemaine.html.twig',
+            ['edt' => $edt, 'tabHeures' => Constantes::TAB_HEURES],
             'export-semaine-edt', $this->dataUserSession->getDepartement()->getLibelle());
     }
 

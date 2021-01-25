@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtExportController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+// @lastUpdate 25/01/2021 09:12
 
 namespace App\Controller\administration;
 
@@ -13,6 +13,9 @@ use App\Repository\PersonnelRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 /**
  * Class EdtController
@@ -82,22 +85,22 @@ class EdtExportController extends BaseController
      * @param                     $source
      *
      * @return Response
-     * @throws \Twig\Error\LoaderError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\SyntaxError
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function exportProfs(
         Request $request,
         PersonnelRepository $personnelRepository,
         MyEdtExport $myEdtExport,
         $source
-    ): Response {
+    ) {
         $profs = $request->request->get('personnels');
 
         foreach ($profs as $prof) {
             $personnel = $personnelRepository->find($prof);
             if ($personnel !== null) {
-                $myEdtExport->generePdf($personnel, $source, $this->getDepartement());
+                return $myEdtExport->generePdf($personnel, $source, $this->getDepartement());
             }
         }
 

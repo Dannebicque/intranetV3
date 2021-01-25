@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyExportListing.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 01/12/2020 16:48
+// @lastUpdate 25/01/2021 09:14
 
 /**
  * Created by PhpStorm.
@@ -147,8 +147,7 @@ class MyExportListing
             case Constantes::FORMAT_EXCEL:
                 return $this->exportExcel();
                 case Constantes::FORMAT_PDF:
-                    $this->exportPdf();
-                    exit;
+                    return $this->exportPdf();
             }
 
 
@@ -437,7 +436,7 @@ class MyExportListing
      */
     private function exportPdf()
     {
-        $this->myPdf::generePdf('pdf/listing.html.twig',
+        return $this->myPdf::generePdf('pdf/listing.html.twig',
             [
                 'typeGroupe' => $this->typeGroupe,
                 'matiere'    => $this->matiere,
