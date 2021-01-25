@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/SousCommission/SousCommissionSauvegarde.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/01/2021 08:43
+// @lastUpdate 25/01/2021 10:18
 
 namespace App\Classes\SousCommission;
 
@@ -68,48 +68,50 @@ class SousCommissionSauvegarde
             //sauvegarde des données
             foreach ($etudiants as $etudiant) {
                 $scEtudiant = $sousCommission->getSousCommissionEtudiant($etudiant->getId());
-                $scSemestre = $this->getOrCreateScolariteEtudiant($etudiant, $semestre, $anneeUniversitaire);
-                $scSemestre->setScolaritePromo($ssComm);
-                if ($semestre->isOptPenaliteAbsence() === true) {
-                    $scSemestre->setMoyenne($scEtudiant->moyenneSemestrePenalisee);
-                } else {
-                    $scSemestre->setMoyenne($scEtudiant->moyenneSemestre);
-                }
-
-                $scSemestre->setDecision($scEtudiant->decision);
-                $scSemestre->setProposition($scEtudiant->proposition);
-                $scSemestre->setNbAbsences($scEtudiant->nbAbsences());
-                $tUe = [];
-                foreach ($ues as $ue) {
+                if ($scEtudiant !== null) {
+                    $scSemestre = $this->getOrCreateScolariteEtudiant($etudiant, $semestre, $anneeUniversitaire);
+                    $scSemestre->setScolaritePromo($ssComm);
                     if ($semestre->isOptPenaliteAbsence() === true) {
-                        $tUe[$ue->getId()]['moyenne'] = $scEtudiant->moyenneUes[$ue->getNumeroUe()]->getMoyennePenalisee();
-                        $tUe[$ue->getId()]['rang'] = -1;
+                        $scSemestre->setMoyenne($scEtudiant->moyenneSemestrePenalisee);
                     } else {
-                        $tUe[$ue->getId()]['moyenne'] = $scEtudiant->moyenneUes[$ue->getNumeroUe()]->getMoyenne();
-                        $tUe[$ue->getId()]['rang'] = -1;
+                        $scSemestre->setMoyenne($scEtudiant->moyenneSemestre);
                     }
-                }
-                $scSemestre->setMoyennesUes($tUe);
 
-                $tMatiere = [];
-                foreach ($matieres as $matiere) {
-                    if (array_key_exists($matiere->getId(), $scEtudiant->moyenneMatieres)) {
-                        if ($scEtudiant->moyenneMatieres[$matiere->getId()]->optionFaite === true) {
-                            if ($semestre->isOptPenaliteAbsence() === true) {
-                                $tMatiere[$matiere->getId()]['moyenne'] = $scEtudiant->moyenneMatieres[$matiere->getId()]->getMoyennePenalisee();
-                                $tMatiere[$matiere->getId()]['rang'] = -1;
-
-                            } else {
-                                $tMatiere[$matiere->getId()]['moyenne'] = $scEtudiant->moyenneMatieres[$matiere->getId()]->getMoyenne();
-                                $tMatiere[$matiere->getId()]['rang'] = -1;
-                            }
+                    $scSemestre->setDecision($scEtudiant->decision);
+                    $scSemestre->setProposition($scEtudiant->proposition);
+                    $scSemestre->setNbAbsences($scEtudiant->nbAbsences());
+                    $tUe = [];
+                    foreach ($ues as $ue) {
+                        if ($semestre->isOptPenaliteAbsence() === true) {
+                            $tUe[$ue->getId()]['moyenne'] = $scEtudiant->moyenneUes[$ue->getNumeroUe()]->getMoyennePenalisee();
+                            $tUe[$ue->getId()]['rang'] = -1;
                         } else {
-                            $tMatiere[$matiere->getId()]['pasoption'] = true;
-                            $tMatiere[$matiere->getId()]['rang'] = -1;
+                            $tUe[$ue->getId()]['moyenne'] = $scEtudiant->moyenneUes[$ue->getNumeroUe()]->getMoyenne();
+                            $tUe[$ue->getId()]['rang'] = -1;
                         }
                     }
+                    $scSemestre->setMoyennesUes($tUe);
+
+                    $tMatiere = [];
+                    foreach ($matieres as $matiere) {
+                        if (array_key_exists($matiere->getId(), $scEtudiant->moyenneMatieres)) {
+                            if ($scEtudiant->moyenneMatieres[$matiere->getId()]->optionFaite === true) {
+                                if ($semestre->isOptPenaliteAbsence() === true) {
+                                    $tMatiere[$matiere->getId()]['moyenne'] = $scEtudiant->moyenneMatieres[$matiere->getId()]->getMoyennePenalisee();
+                                    $tMatiere[$matiere->getId()]['rang'] = -1;
+
+                                } else {
+                                    $tMatiere[$matiere->getId()]['moyenne'] = $scEtudiant->moyenneMatieres[$matiere->getId()]->getMoyenne();
+                                    $tMatiere[$matiere->getId()]['rang'] = -1;
+                                }
+                            } else {
+                                $tMatiere[$matiere->getId()]['pasoption'] = true;
+                                $tMatiere[$matiere->getId()]['rang'] = -1;
+                            }
+                        }
+                    }
+                    $scSemestre->setMoyennesMatieres($tMatiere);
                 }
-                $scSemestre->setMoyennesMatieres($tMatiere);
             }
             $this->entityManager->flush();
         }
