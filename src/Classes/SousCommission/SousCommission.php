@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/SousCommission/SousCommission.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/01/2021 08:40
+// @lastUpdate 25/01/2021 10:15
 
 namespace App\Classes\SousCommission;
 
@@ -199,7 +199,7 @@ class SousCommission
      *
      * @return EtudiantSousCommission
      */
-    public function getSousCommissionEtudiant($idEtudiant): EtudiantSousCommission
+    public function getSousCommissionEtudiant($idEtudiant): ?EtudiantSousCommission
     {
         return $this->sousCommissionEtudiant[$idEtudiant];
     }
