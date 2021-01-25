@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyExportListing.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/01/2021 09:14
+// @lastUpdate 25/01/2021 09:16
 
 /**
  * Created by PhpStorm.
@@ -108,7 +108,6 @@ class MyExportListing
      *
      * @param Personnel|null $personnel
      *
-     * @return null|StreamedResponse
      * @throws Exception
      * @throws LoaderError
      * @throws RuntimeError
@@ -121,7 +120,7 @@ class MyExportListing
         $exportFiltre,
         ?Matiere $matiere = null,
         ?Personnel $personnel = null
-    ): ?StreamedResponse {
+    ) {
         $this->exportTypeDocument = $exportTypeDocument;
         $this->exportChamps = $exportChamps;
         $this->matiere = $matiere;
