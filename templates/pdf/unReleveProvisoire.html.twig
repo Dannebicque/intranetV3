@@ -57,7 +57,7 @@
         {% else %}
             <tr>
                 <td>&nbsp;{{ n.evaluation.id }}&nbsp;</td>
-                <td style="text-align: center">{{ n.evaluation.dateEvaluation|format_date('short') }}</td>
+                <td style="text-align: center">{{ n.evaluation.dateEvaluation|date('d/m/Y') }}</td>
                 <td>&nbsp;&nbsp;{{ n.evaluation.matiere.display }}</td>
                 <td style="text-align: center">{{ n.evaluation.coefficient|number_format(2,'.') }}</td>
                 <td style="text-align: center">{{ n.note|number_format(2,'.') }}</td>
