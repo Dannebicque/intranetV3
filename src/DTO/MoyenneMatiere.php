@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/MoyenneMatiere.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 14/01/2021 18:16
+// @lastUpdate 25/01/2021 16:31
 
 namespace App\DTO;
 
@@ -61,10 +61,12 @@ class MoyenneMatiere
 
     public function addNote(Note $note): void
     {
-        $this->notes[] = $note->getNote();
-        $this->coefficients[] = $note->getEvaluation()->getCoefficient();
-        $this->totalNotes += $note->getNote() * $note->getEvaluation()->getCoefficient();
-        $this->totalCoefficient += $note->getEvaluation()->getCoefficient();
+        if ($note->getAbsenceJustifie() === false) {
+            $this->notes[] = $note->getNote();
+            $this->coefficients[] = $note->getEvaluation()->getCoefficient();
+            $this->totalNotes += $note->getNote() * $note->getEvaluation()->getCoefficient();
+            $this->totalCoefficient += $note->getEvaluation()->getCoefficient();
+        }
     }
 
     public function getStyle(): string
