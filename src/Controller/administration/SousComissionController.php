@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/SousComissionController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 18/01/2021 21:32
+// @lastUpdate 25/01/2021 08:40
 
 namespace App\Controller\administration;
 
@@ -16,6 +16,7 @@ use App\Entity\Scolarite;
 use App\Entity\ScolaritePromo;
 use App\Entity\Semestre;
 use App\Event\SousCommissionEvent;
+use App\Repository\BacRepository;
 use App\Repository\NoteRepository;
 use PhpOffice\PhpSpreadsheet\Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -33,18 +34,22 @@ class SousComissionController extends BaseController
 {
     /**
      * @Route("/live/{semestre}", name="administration_sous_commission_live")
+     * @param BacRepository  $bacRepository
      * @param SousCommission $sousCommission
      * @param Semestre       $semestre
      *
      * @return Response
      */
-    public function live(SousCommission $sousCommission, Semestre $semestre): Response
+    public function live(BacRepository $bacRepository, SousCommission $sousCommission, Semestre $semestre): Response
     {
         $sousCommission->calcul($semestre, $this->dataUserSession->getAnneeUniversitaire());
+        $bacs = $bacRepository->findAll();
 
         return $this->render('administration/sous_commission/live.html.twig', [
             'semestre'       => $semestre,
-            'sousCommission' => $sousCommission
+            'sousCommission' => $sousCommission,
+            'bacs'           => $bacs,
+            'stats'          => $sousCommission->calculStats($bacs)
         ]);
     }
 
