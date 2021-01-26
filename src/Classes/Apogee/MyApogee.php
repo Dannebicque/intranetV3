@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Apogee/MyApogee.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/01/2021 17:33
+// @lastUpdate 26/01/2021 11:17
 
 namespace App\Classes\Apogee;
 
@@ -284,7 +284,8 @@ class MyApogee
             $numLigne = $maquetteSheet->getCell($name)->getRow();
 
             // cellule de fin
-            $fin = $this->getNewCoordinates($titre, 0, $v_nb_lig - $numLigne - 12);
+            $fin = $this->getNewCoordinates($titre, 0, $v_nb_lig - $numLigne);
+
             // si on est pas a la derniere colonne
             if ($titre != $celluleFin) {
 
