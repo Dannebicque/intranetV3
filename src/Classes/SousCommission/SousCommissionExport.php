@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/SousCommission/SousCommissionExport.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 24/01/2021 12:59
+// @lastUpdate 26/01/2021 18:55
 
 namespace App\Classes\SousCommission;
 
@@ -151,7 +151,7 @@ class SousCommissionExport
         foreach ($this->sousCommission->getSemestresScolarite() as $s) {
             //titre semestre
             $this->myExcelWriter->writeCellXY($colonne, $ligne - 1, $s->getLibelle(), ['style' => 'HORIZONTAL_CENTER']);
-            $colFin = $colonne + count($s->getUes()) + 2;
+            $colFin = $colonne + count($s->getUes()) + 1;
             $this->myExcelWriter->mergeCellsCaR($colonne, $ligne - 1, $colFin, $ligne - 1);
             /** @var Ue $ue */
             foreach ($s->getUes() as $ue) {
