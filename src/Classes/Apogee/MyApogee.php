@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Apogee/MyApogee.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/01/2021 11:17
+// @lastUpdate 26/01/2021 15:18
 
 namespace App\Classes\Apogee;
 
@@ -171,12 +171,17 @@ class MyApogee
         }
 
         $v_cell_apo_col_val_fin = 0;
-        // nombre de lignes
-       $v_nb_lig = $maquetteSheet->getHighestRow('A') - 1;
+
 
         // deprotection feuille
         $maquetteSheet->getStyle('A1:GV200')->getProtection()->setLocked(Protection::PROTECTION_UNPROTECTED);
         $maquetteSheet->getProtection()->setSheet(true);
+        $i = 17;
+        // nombre de lignes
+        while (trim($maquetteSheet->getCellByColumnAndRow(1, $i)->getValue()) !== '') {
+            $i++;
+        }
+        $v_nb_lig = $i - 1;
 
         // repere 1
         $notesSheet->setCellValue('A1', 'XX-APO_TITRES-XX');
@@ -285,7 +290,6 @@ class MyApogee
 
             // cellule de fin
             $fin = $this->getNewCoordinates($titre, 0, $v_nb_lig - $numLigne);
-
             // si on est pas a la derniere colonne
             if ($titre != $celluleFin) {
 
