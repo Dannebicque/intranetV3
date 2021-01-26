@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Pdf/MyPDF.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 23/01/2021 14:30
+// @lastUpdate 26/01/2021 15:40
 
 /**
  * Created by PhpStorm.
@@ -111,6 +111,10 @@ class MyPDF
 //            $canvas->page_text(500, 800, 'Page {PAGE_NUM} sur {PAGE_COUNT}', 'Arial', 10, [0, 0, 0]);
 //            $canvas->page_text(43, 800, $departement . ' | ' . $date->format('d/m/Y') . '. Généré depuis l\'intranet',
 //                'Arial', 10, [0, 0, 0]);
+        }
+
+        if (substr($name, -4) !== '.pdf') {
+            $name .= '.pdf';
         }
 
         return new PdfResponse(
