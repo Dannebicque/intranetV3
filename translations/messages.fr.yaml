@@ -1407,7 +1407,7 @@ personnel: Personnel
 personnelf.add.success.flash: 'Personnel créé avec succès'
 personnelf.delete.success.flash: 'Personnel retiré du département avec succès'
 personnelf.delete.error.flash: 'Erreur lors de la suppression d''un personnel'
-personnelf.edit.succes.flash: 'Personnel modifié avec succès'
+personnelf.edit.success.flash: 'Personnel modifié avec succès'
 personnelf.droit.access: 'Droit d''accès'
 
 Place: Place
