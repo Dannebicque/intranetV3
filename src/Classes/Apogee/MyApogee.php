@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Apogee/MyApogee.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/01/2021 15:18
+// @lastUpdate 27/01/2021 15:43
 
 namespace App\Classes\Apogee;
 
@@ -12,14 +12,12 @@ use App\Entity\Semestre;
 use App\Classes\Tools;
 use PDO;
 use PDOException;
-use PhpOffice\PhpSpreadsheet\Cell\Cell;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use PhpOffice\PhpSpreadsheet\Exception;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Protection;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class MyApogee
@@ -27,24 +25,24 @@ class MyApogee
     /** @var PDO */
     private PDO $conn;
 
-    private ?Request $request;
+    private ParameterBagInterface $parameterBag;
 
     /**
      * MyApogee constructor.
      *
-     * @param RequestStack $request
+     * @param ParameterBagInterface $parameterBag
      */
-    public function __construct(RequestStack $request)
+    public function __construct(ParameterBagInterface $parameterBag)
     {
-        $this->request = $request->getCurrentRequest();
+        $this->parameterBag = $parameterBag;
     }
 
     private function connect(): ?PDO
     {
         try {
-            $this->conn = new PDO('oci:dbname=' . $this->request->server->get('APOGEE_STRING'),
-                $this->request->server->get('APOGEE_LOGIN'),
-                $this->request->server->get('APOGEE_PASSWORD'));
+            $this->conn = new PDO('oci:dbname=' . $this->parameterBag->get('APOGEE_STRING'),
+                $this->parameterBag->get('APOGEE_LOGIN'),
+                $this->parameterBag->get('APOGEE_PASSWORD'));
 
             return $this->conn;
         } catch (PDOException $e) {

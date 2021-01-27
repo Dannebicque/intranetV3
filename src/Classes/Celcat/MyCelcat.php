@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Celcat/MyCelcat.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+// @lastUpdate 27/01/2021 15:43
 
 /**
  * Created by PhpStorm.
@@ -22,33 +22,34 @@ use App\Entity\Semestre;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 
 class MyCelcat
 {
     private $conn;
 
     private EntityManagerInterface $entityManger;
-    private ?Request $request;
+
+    private ParameterBagInterface $parameterBag;
 
     /**
      * MyCelcat constructor.
      *
      * @param EntityManagerInterface $entityManger
-     * @param RequestStack           $request
+     * @param ParameterBagInterface  $parameterBag
      */
-    public function __construct(EntityManagerInterface $entityManger, RequestStack $request)
+    public function __construct(EntityManagerInterface $entityManger, ParameterBagInterface $parameterBag)
     {
         $this->entityManger = $entityManger;
-        $this->request = $request->getCurrentRequest();
+        $this->parameterBag = $parameterBag;
     }
 
 
     private function connect()
     {
-        $this->conn = odbc_connect('MSSQLSRV', $this->request->server->get('MSSQL_USER'),
-            $this->request->server->get('MSSQL_PASS'));
+        $this->conn = odbc_connect('MSSQLSRV', $this->parameterBag->get('MSSQL_USER'),
+            $this->parameterBag->get('MSSQL_PASS'));
 
         return $this->conn;
     }
