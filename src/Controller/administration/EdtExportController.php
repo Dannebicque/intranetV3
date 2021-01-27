@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtExportController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/01/2021 09:12
+// @lastUpdate 27/01/2021 07:58
 
 namespace App\Controller\administration;
 
@@ -100,7 +100,7 @@ class EdtExportController extends BaseController
         foreach ($profs as $prof) {
             $personnel = $personnelRepository->find($prof);
             if ($personnel !== null) {
-                return $myEdtExport->generePdf($personnel, $source, $this->getDepartement());
+                $myEdtExport->generePdf($personnel, $source, $this->getDepartement());
             }
         }
 
