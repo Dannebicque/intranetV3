@@ -1,41 +1,41 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/LDAP/MyLdap.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/09/2020 15:42
+// @lastUpdate 27/01/2021 15:43
 
 namespace App\Classes\LDAP;
 
 
 use Exception;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class MyLdap
 {
     private $ds;
 
-    private ?Request $request;
+    private ParameterBagInterface $parameterBag;
+
 
     /**
      * MyApogee constructor.
      *
-     * @param RequestStack $request
+     * @param ParameterBagInterface $parameterBag
      */
-    public function __construct(RequestStack $request)
+    public function __construct(ParameterBagInterface $parameterBag)
     {
-        $this->request = $request->getCurrentRequest();
+        $this->parameterBag = $parameterBag;
     }
 
     public function connect(): void
     {
         try {
-            $this->ds = ldap_connect($this->request->server->get('LDAP_HOST'));
+            $this->ds = ldap_connect($this->parameterBag->get('LDAP_HOST'));
             ldap_set_option($this->ds, LDAP_OPT_PROTOCOL_VERSION, 3);
             if ($this->ds) {
-                ldap_bind($this->ds, $this->request->server->get('LDAP_LOGIN'),
-                    $this->request->server->get('LDAP_PASSWORD'));
+                ldap_bind($this->ds, $this->parameterBag->get('LDAP_LOGIN'),
+                    $this->parameterBag->get('LDAP_PASSWORD'));
             }
 
         } catch (Exception $e) {
@@ -46,7 +46,7 @@ class MyLdap
     public function getInfoEtudiant($numetudiant)
     {
         $this->connect();
-        $sr = ldap_search($this->ds, $this->request->server->get('LDAP_BASE_DN'), 'supannetuid=' . $numetudiant);
+        $sr = ldap_search($this->ds, $this->parameterBag->get('LDAP_BASE_DN'), 'supannetuid=' . $numetudiant);
         if (ldap_count_entries($this->ds, $sr) === 1) {
             $etudiant = ldap_get_entries($this->ds, $sr);
             $t['login'] = $etudiant[0]['uid'][0];
@@ -63,7 +63,7 @@ class MyLdap
     public function getInfoPersonnel($numeroHarpege)
     {
         $this->connect();
-        $sr = ldap_search($this->ds, $this->request->server->get('LDAP_BASE_DN'), 'supannEmpId=' . $numeroHarpege);
+        $sr = ldap_search($this->ds, $this->parameterBag->get('LDAP_BASE_DN'), 'supannEmpId=' . $numeroHarpege);
         if (ldap_count_entries($this->ds, $sr) === 1) {
             $personnel = ldap_get_entries($this->ds, $sr);
             $t['login'] = $personnel[0]['uid'][0];

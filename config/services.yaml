@@ -6,6 +6,15 @@
 parameters:
     locale: fr
     BASE_URL: '%env(resolve:BASE_URL)%'
+    APOGEE_LOGIN: '%env(resolve:APOGEE_LOGIN)%'
+    APOGEE_PASSWORD: '%env(resolve:APOGEE_PASSWORD)%'
+    APOGEE_STRING: '%env(resolve:APOGEE_STRING)%'
+    MSSQL_PASS: '%env(resolve:MSSQL_PASS)%'
+    MSSQL_USER: '%env(resolve:MSSQL_USER)%'
+    LDAP_HOST: '%env(resolve:LDAP_HOST)%'
+    LDAP_LOGIN: '%env(resolve:LDAP_LOGIN)%'
+    LDAP_PASSWORD: '%env(resolve:LDAP_PASSWORD)%'
+    LDAP_BASE_DN: '%env(resolve:LDAP_BASE_DN)%'
 
 services:
     # default configuration for services in *this* file
