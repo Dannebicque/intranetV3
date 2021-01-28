@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/CovidAttestationPersonnel.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 28/01/2021 16:21
+// @lastUpdate 28/01/2021 16:34
 
 namespace App\Entity;
 
@@ -261,7 +261,7 @@ class CovidAttestationPersonnel extends BaseEntity
             'velo'      => 'Vélo',
             'pied'      => 'A pieds',
             'vehicule'  => 'Véhicule personnel',
-            'transport' => 'Transports en commun (bus, train, ...)',
+            'transport' => 'Transports en commun (bus, train, ...)'
         ];
 
         if (array_key_exists($this->moyenDeplacement, $tab)) {
