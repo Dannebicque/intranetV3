@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Covid/MyExportPresence.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/01/2021 09:39
+// @lastUpdate 28/01/2021 16:44
 
 namespace App\Classes\Covid;
 
@@ -195,7 +195,7 @@ class MyExportPresence
     public function sendOneConvocation(CovidAttestationEtudiant $covidAttestationEtudiant, Etudiant $etudiant): void
     {
 
-        $name = 'convocation-covid-' . $covidAttestationEtudiant->getDatePresence()->format('d-m-Y') . '-' . $etudiant->getNumEtudiant();
+        $name = 'convocation-covid-' . $covidAttestationEtudiant->getDateDebut()->format('d-m-Y') . '-' . $etudiant->getNumEtudiant();
         $this->myPdf::genereAndSavePdf(
             'pdf/covid/autorisationEtudiant.html.twig',
             [
@@ -214,10 +214,10 @@ class MyExportPresence
 
         //joindre le PDF
         $this->myMailer->attachFile($this->dir . 'covid/convocations/' . $name . '.pdf');
-        $this->myMailer->attachFile($this->dir . 'covid/Conditions accès  IUT  Troyes - Note aux étudiants 18.01.2021.pdf');
+        $this->myMailer->attachFile($this->dir . 'covid/Conditions accès  IUT  Troyes au 01.02.2021- Note aux étudiants.pdf');
         $this->myMailer->sendMessage(
             $etudiant->getMails(),
-            'Convocation pour le ' . $covidAttestationEtudiant->getDatePresence()->format('d/m/Y') . ' dans le cadre du protocole sanitaire COVID',
+            'Attestation de présence pour la période du ' . $covidAttestationEtudiant->getDateDebut()->format('d/m/Y') . '  au ' . $covidAttestationEtudiant->getDateFin()->format('d/m/Y'),
             [
                 'replyTo' => [$covidAttestationEtudiant->getDiplome()->getAssistantDiplome()->getMailUniv()],
                 'from'    => [$covidAttestationEtudiant->getDiplome()->getAssistantDiplome()->getMailUniv()]
