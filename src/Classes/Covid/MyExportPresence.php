@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Covid/MyExportPresence.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 28/01/2021 16:44
+// @lastUpdate 28/01/2021 17:10
 
 namespace App\Classes\Covid;
 
@@ -96,7 +96,7 @@ class MyExportPresence
                     $presence->getPersonnel() !== null ? $presence->getPersonnel()->getMailUniv() : '',
                     $presence->getMotifLong(),
                     $presence->getDiplome()->getLibelle(),
-                    $presence->getMoyenDeplacement(),
+                    $presence->moyenLong(),
                     $presence->getValidationDepartementDisplay(),
                     $presence->getDateValidationDepartement() !== null ? $presence->getDateValidationDepartement()->format('d/m/Y H:i') : '-',
                     $presence->getValidationDirectionDisplay(),
@@ -247,15 +247,16 @@ class MyExportPresence
     {
         $this->myExcelWriter->createSheet('stage');
         $tEnTete = [
-            'date présence',
-            'Heure',
+            'date début',
+            'date fin',
+            //'Heure',
             'Civ.',
             'Nom',
             'Prénom',
             'Mail',
-            'Motif',
+            // 'Motif',
             'diplôme',
-            'Salles'
+            // 'Salles'
         ];
         $this->myExcelWriter->ecritLigne($tEnTete, 1, 1);
 
@@ -266,15 +267,15 @@ class MyExportPresence
             foreach ($presence->getGroupes() as $groupe) {
                 foreach ($groupe->getEtudiants() as $etudiant) {
                     $t = [
-                        $presence->getDatePresence() !== null ? $presence->getDatePresence()->format('d/m/Y H:i') : '-',
-                        $presence->heureLong(),
+                        $presence->getDateDebut() !== null ? $presence->getDateDebut()->format('d/m/Y H:i') : '-',
+                        $presence->getDateFin() !== null ? $presence->getDateFin()->format('d/m/Y H:i') : '-',
                         $etudiant->getCiviliteLong(),
                         $etudiant->getNom(),
                         $etudiant->getPrenom(),
                         $etudiant->getMailUniv(),
-                        $presence->getMotif(),
+                        // $presence->getMotif(),
                         $etudiant->getSemestre()->display(),
-                        $presence->getSalles()
+                        //  $presence->getSalles()
                     ];
 
                     $this->myExcelWriter->ecritLigne($t, 1, $ligne);
