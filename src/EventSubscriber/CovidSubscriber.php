@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/CovidSubscriber.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 15/01/2021 10:56
+// @lastUpdate 28/01/2021 15:55
 
 namespace App\EventSubscriber;
 
@@ -155,7 +155,7 @@ class CovidSubscriber implements EventSubscriberInterface
                 ]);
                 //joindre le PDF
                 $this->myMailer->attachFile($file);
-                $this->myMailer->attachFile($this->dir . 'covid/Organisation Accès  IUT  Troyes - Note personnels 15.01.2020.pdf');
+                $this->myMailer->attachFile($this->dir . 'covid/Organisation Accès  IUT  Troyes - Note personnels 27.01.2020.pdf');
                 $this->myMailer->sendMessage(
                     $covidAttestationPersonnel->getPersonnel()->getMails(),
                     'Demande d\'autorisation de déplacement acceptée',

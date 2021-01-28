@@ -49,14 +49,19 @@
         </tr>
     </table>
     <br>
-    <h1 class="text-encadre">CONVOCATION</h1>
+    <h1 class="text-encadre">JUSTIFICATIF DE DÉPLACEMENT UNIVERSITAIRE</h1>
     <br>
     <br>
     <br>
-
-    <p>Je soussigné, Martial MARTIN, Directeur de l’IUT de TROYES, atteste que dans le cadre des activités en présentiel
-       autorisées par décret du Ministère de l’Enseignement Supérieur et la Recherche et arrêtés de la Rectrice ESR
-       Grand-Est :</p>
+    <p class="text-center"><strong>
+            En application des dispositions de l’article 4 du décret n°2020-1310 du 29 octobre
+            2020 prescrivant les mesures générales nécessaires pour faire face à l'épidémie de Covid19
+            dans le cadre de l'état d'urgence sanitaire.
+        </strong>
+    </p>
+    <p>Je soussigné, <br><strong>Guillaume GELLÉ, président de l’université de Reims Champagne-Ardenne,</strong> <br>
+       certifie que les déplacements de la personne ci-après, étudiant.e à l’université de Reims Champagne-Ardenne,
+       entre son domicile et le lieu d’enseignement, ne peuvent être différés.</p>
     <br>
     <br>
     <p>Nom : <strong>{{ etudiant.nom }}</strong></p>
@@ -69,27 +74,34 @@
 
     <p>Numéro étudiant : <strong>{{ etudiant.numEtudiant }}</strong></p>
 
+    <p>Formation : <strong>{{ etudiant.semestre.diplome.libelleLong }}</strong></p>
+
     <p>Adresse du domicile : <strong>{{ etudiant.adresse != null ?
             etudiant.adresse.display|striptags }}</strong></p>
-    <br><br>
-    <p class="text-center">est convoqué(e) à se rendre à l’IUT de TROYES,<br>
-                           9 rue de Québec 10000 TROYES, pour :
+    <p>Lieux d’enseignement : <strong>IUT de Troyes, 9 rue de Québec 10000 TROYES</strong></p>
+
+    <p>Moyen de déplacement : moyen de transport personnel (vélo, voiture) /transport en commun</p>
+    <p>Période
+       :<strong>du {{ covidAttestationEtudiant.dateDebut != null ? covidAttestationEtudiant.dateDebut|format_date('short') : '' }}
+                au {{ covidAttestationEtudiant.dateFin != null ?
+            covidAttestationEtudiant.dateFin|format_date('short') : '' }}</strong></p>
+
+    <p>Nature et justificatif de la venue sur site de l’université de Reims Champagne-Ardenne :</p>
+    <ul>
+        <li>ctivités de formation autorisées : sur présentation du planning (Bureau virtuel URCA)</li>
+        <li>Concours : sur présentation de la convocation</li>
+        <li>Examens : sur présentation du planning (Bureau virtuel URCA)</li>
+        <li>Venue à la Bibliothèque universitaire : sur réservation et convocation</li>
+        <li>Utilisation d’une salle de travail équipée en matériel informatique ou avec accès internet : sur réservation
+            et convocation
+        </li>
+    </ul>
+
+
+    <p>L’étudiant.e a pris connaissance des mesures sanitaires mises en place et s’engage à les respecter.
+       Il/elle doit
+       également présenter sa carte d’étudiant lorsqu’il/elle se rend sur un site de l’URCA.
     </p>
-    <br><br>
-
-    <p>un devoir surveillé / un TP / un TD, </p>
-
-    <p>dans le cadre de la matière (code et intitulé) :
-        <strong>{% for matiere in covidAttestationEtudiant.matieres %}{{ matiere.display }}{% if not loop.last %}, {% endif %}{% endfor %}</strong>
-    </p>
-
-    <p>De la formation : <strong>{{ covidAttestationEtudiant.diplome.display }}</strong></p>
-
-    <p>qui aura lieu à la date du : <strong>{{ covidAttestationEtudiant.datePresence != null ?
-            covidAttestationEtudiant.datePresence|format_date('medium') : '-' }}
-            , {{ covidAttestationEtudiant.heureLong }}</strong><br>
-    </p>
-    <p>en salle : <strong>{{ covidAttestationEtudiant.salles }}</strong></p>
 
     <br>
     <table style="width: 100%">
@@ -98,22 +110,10 @@
                 <p>Fait à TROYES, le {{ 'now'|format_date('medium') }}</p>
             </td>
             <td style="width: 40%">
-                <img src="{{ settings('BASE_PATH') }}covid/cachet.png" width="100px" style="float:left" alt="Cachet
-                IUT">
-                <img src="{{ settings('BASE_PATH') }}covid/signature.png" width="100px" style="float:left;
-                margin-top:40px" alt="Signature">
-                <p style="clear: both">
-                    Martial MARTIN<br>
-                    Directeur
-                </p>
+                <img src="{{ settings('BASE_PATH') }}covid/cachetpresident.jpg" width="100px" style="float:left"
+                     alt="Cachet IUT"><br>
+                Guillaume Gellé, Président de l'Université de Reims Champagne Ardenne
             </td>
         </tr>
     </table>
-    <br><br>
-    <footer>
-        <hr>
-        <p class="text-center">I.U.T. de TROYES – 9, rue de Québec – CS 90 396 – 10026 TROYES Cedex<br>
-                               Téléphone : 03 25 42 46 46</p>
-    </footer>
-
 {% endblock %}

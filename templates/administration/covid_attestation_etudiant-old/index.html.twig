@@ -17,9 +17,12 @@
             <table class="table table-striped table-bordered" data-provide="datatables">
                 <thead>
                 <tr>
-                    <th>Date Début</th>
-                    <th>Date Fin</th>
+                    <th>Date</th>
+                    <th>Heure</th>
+                    <th>Matières</th>
                     <th>Groupe(s)</th>
+                    <th>Motif</th>
+                    <th>Salles</th>
                     <th>Envoyé?</th>
                     <th>actions</th>
                 </tr>
@@ -27,13 +30,16 @@
                 <tbody>
                 {% for covid_attestation_etudiant in covid_attestation_etudiants %}
                     <tr>
-                        <td>{{ covid_attestation_etudiant.dateDebut != null ? covid_attestation_etudiant
-                            .dateDebut|format_date('short') : '' }}</td>
-                        <td>{{ covid_attestation_etudiant.dateFin != null ? covid_attestation_etudiant
-                            .dateFin|format_date('short') : '' }}</td>
+                        <td>{{ covid_attestation_etudiant.datePresence != null ? covid_attestation_etudiant
+                            .datePresence|format_date('short') : '' }}</td>
+                        <td>{{ covid_attestation_etudiant.heureLong }}</td>
+                        <td>{% for matiere in covid_attestation_etudiant.matieres %}{{ matiere.codeMatiere }}{% if not loop
+                            .last %}, {% endif %}{% endfor %}</td>
                         <td>{% for groupe in covid_attestation_etudiant.groupes %}{{ groupe.displaySemestre }}{% if not
                                 loop
                                 .last %}, {% endif %}{% endfor %}</td>
+                        <td>{{ covid_attestation_etudiant.motif|trans }}</td>
+                        <td>{{ covid_attestation_etudiant.salles }}</td>
                         <td>{% if covid_attestation_etudiant.convocationEnvoyee == true %}
                                 {{ covid_attestation_etudiant.dateEnvoi != null ? covid_attestation_etudiant
                                 .dateEnvoi|format_date('short') : '' }}
@@ -87,7 +93,7 @@
                     </tr>
                 {% else %}
                     <tr>
-                        <td colspan="5">no records found</td>
+                        <td colspan="7">no records found</td>
                     </tr>
                 {% endfor %}
                 </tbody>

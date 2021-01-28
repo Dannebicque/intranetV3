@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/CovidAttestationPersonnel.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/11/2020 14:55
+// @lastUpdate 28/01/2021 16:21
 
 namespace App\Entity;
 
@@ -253,5 +253,21 @@ class CovidAttestationPersonnel extends BaseEntity
         $this->motifRefus = $motifRefus;
 
         return $this;
+    }
+
+    public function moyenLong()
+    {
+        $tab = [
+            'velo'      => 'Vélo',
+            'pied'      => 'A pieds',
+            'vehicule'  => 'Véhicule personnel',
+            'transport' => 'Transports en commun (bus, train, ...)',
+        ];
+
+        if (array_key_exists($this->moyenDeplacement, $tab)) {
+            return $tab[$this->moyenDeplacement];
+        }
+
+        return 'non précisé';
     }
 }
