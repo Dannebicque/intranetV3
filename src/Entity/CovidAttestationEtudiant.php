@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/CovidAttestationEtudiant.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+// @lastUpdate 28/01/2021 15:20
 
 namespace App\Entity;
 
@@ -24,7 +24,7 @@ class CovidAttestationEtudiant extends BaseEntity
     public const TOUTELAJOURNEE = 'AL';
 
     /**
-     * @ORM\Column(type="string", length=10)
+     * @ORM\Column(type="string", length=10, nullable=true)
      */
     private $motif;
 
@@ -39,7 +39,7 @@ class CovidAttestationEtudiant extends BaseEntity
     private $matieres;
 
     /**
-     * @ORM\Column(type="string", length=150)
+     * @ORM\Column(type="string", length=150, nullable=true)
      */
     private $salles;
 
@@ -49,14 +49,14 @@ class CovidAttestationEtudiant extends BaseEntity
     private $groupes;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="date", nullable=true)
      */
     private $datePresence;
 
     /**
      * @ORM\Column(type="string", length=2)
      */
-    private $heure;
+    private $heure = 'AL';
 
     /**
      * @ORM\Column(type="boolean")
@@ -67,6 +67,16 @@ class CovidAttestationEtudiant extends BaseEntity
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $dateEnvoi;
+
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $dateDebut;
+
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $dateFin;
 
     public function __construct()
     {
@@ -237,5 +247,29 @@ class CovidAttestationEtudiant extends BaseEntity
         return serialize([
             $this->getId()
         ]);
+    }
+
+    public function getDateDebut(): ?\DateTimeInterface
+    {
+        return $this->dateDebut;
+    }
+
+    public function setDateDebut(?\DateTimeInterface $dateDebut): self
+    {
+        $this->dateDebut = $dateDebut;
+
+        return $this;
+    }
+
+    public function getDateFin(): ?\DateTimeInterface
+    {
+        return $this->dateFin;
+    }
+
+    public function setDateFin(?\DateTimeInterface $dateFin): self
+    {
+        $this->dateFin = $dateFin;
+
+        return $this;
     }
 }

@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Form/CovidAttestationPersonnelType.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 10/11/2020 12:09
+// @lastUpdate 28/01/2021 16:18
 
 namespace App\Form;
 
@@ -41,7 +41,7 @@ class CovidAttestationPersonnelType extends AbstractType
             ->add('moyenDeplacement', ChoiceType::class, [
                 'choices'  => [
                     'Vélo'                                   => 'velo',
-                    'A pieds'                                => 'velo',
+                    'A pieds'                                => 'pied',
                     'Véhicule personnel'                     => 'vehicule',
                     'Transports en commun (bus, train, ...)' => 'transport',
                 ],

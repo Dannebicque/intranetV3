@@ -17,32 +17,31 @@
             <table class="table">
                 <tbody>
                 <tr>
-                    <td>Période</td>
-                    <td>{{ covid_attestation_etudiant.dateDebut != null ? covid_attestation_etudiant
-                        .dateDebut|format_date('short') : '' }} au {{ covid_attestation_etudiant.dateFin != null ?
-                        covid_attestation_etudiant.dateFin|format_date('short') : '' }}</td>
+                    <td>Date</td>
+                    <td>{{ covid_attestation_etudiant.datePresence != null ? covid_attestation_etudiant
+                        .datePresence|format_date('short') : '' }}</td>
                 </tr>
-                {# <tr> #}
-                {# <td>Heure</td> #}
-                {# <td>{{ covid_attestation_etudiant.heureLong }}</td> #}
-                {# </tr> #}
-                {# <tr> #}
-                {# <td>Matieres</td> #}
-                {# <td>{% for matiere in covid_attestation_etudiant.matieres %}{{ matiere.codeMatiere }}{% if not loop #}
-                {# .last %}, {% endif %}{% endfor %}</td> #}
-                {# </tr> #}
+                <tr>
+                    <td>Heure</td>
+                    <td>{{ covid_attestation_etudiant.heureLong }}</td>
+                </tr>
+                <tr>
+                    <td>Matieres</td>
+                    <td>{% for matiere in covid_attestation_etudiant.matieres %}{{ matiere.codeMatiere }}{% if not loop
+                        .last %}, {% endif %}{% endfor %}</td>
+                </tr>
                 <tr>
                     <td>Groupes</td>
                     <td>{% for groupe in covid_attestation_etudiant.groupes %}{{ groupe.displaySemestre }}{% if not loop.last %}, {% endif %}{% endfor %}</td>
                 </tr>
-                {# <tr> #}
-                {# <th>Motif</th> #}
-                {# <td>{{ covid_attestation_etudiant.motif|trans }}</td> #}
-                {# </tr> #}
-                {# <tr> #}
-                {# <th>Salles</th> #}
-                {# <td>{{ covid_attestation_etudiant.salles }}</td> #}
-                {# </tr> #}
+                <tr>
+                    <th>Motif</th>
+                    <td>{{ covid_attestation_etudiant.motif|trans }}</td>
+                </tr>
+                <tr>
+                    <th>Salles</th>
+                    <td>{{ covid_attestation_etudiant.salles }}</td>
+                </tr>
                 </tbody>
             </table>
         </div>
