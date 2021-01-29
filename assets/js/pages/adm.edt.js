@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.edt.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 24/01/2021 17:05
+// @lastUpdate 29/01/2021 11:18
 
 import '../../vendor/jqueryui/jquery-ui.min'
 
@@ -232,4 +232,23 @@ $(document).on('click', '#btnafficheRealise', function (e) {
   }))
 })
 
+$(document).on('click', '#genereCode', function () {
+  $.ajax(
+    {
+      url: Routing.generate('administration_edt_export_script_ajax', {
+        semestre: $('#semestre').val(),
+        debut: $('#semaineDebut').val(),
+        fin: $('#semaineFin').val(),
+        groupe: $('#groupe').val()
+      }),
+      type: 'POST',
+      dataType: 'json', //Return data type (what we expect).
+      success: function (data) {
+        console.log(data)
+        $('#codegenere').html(data.code)
+      },
+      error: function () {
 
+      }
+    })
+})
