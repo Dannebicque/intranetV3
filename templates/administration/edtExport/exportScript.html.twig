@@ -19,54 +19,33 @@
             <strong>{{ 'adm.edt.actions'|trans }}</strong>
         </h4>
         <div class="card-body">
-            <div class="row">
-                <div class="col-3">
-                    <label for="semestre">Semestre</label>
-                    <select name="semestre" id="semestre">
-                        <option>Choisir</option>
-                        {% for semestre in semestres %}
-                            <option value="{{ semestre.id }}">{{ semestre.display }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="col-5">
-                    <label for="groupe">Groupe</label>
-                    <select name="groupe" id="groupe">
-                        <option>Choisir</option>
-                        {% for groupe in groupes %}
-                            <option value="{{ groupe.id }}">{{ groupe.libelle }} | {{ groupe.displaySemestre }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="col-2">
-                    <label for="semaineDebut">Semaine début</label>
-                    <select name="semaineDebut" id="semaineDebut">
-                        <option>Choisir</option>
-                        {% for semaine in 1..52 %}
-                            <option value="{{ semaine }}">{{ semaine }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
+            <form action="{{ path('administration_edt_export_script_ajax') }}" method="POST">
+                <div class="row">
+                    <div class="col-3">
+                        <label for="semestre">Semestre</label>
+                        <select name="semestre" id="semestre">
+                            <option>Choisir</option>
+                            {% for semestre in semestres %}
+                                <option value="{{ semestre.id }}">{{ semestre.display }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-2">
+                        <label for="semaine">Semaine MMI</label>
+                        <select name="semaine" id="semaine">
+                            <option>Choisir</option>
+                            {% for semaine in 1..52 %}
+                                <option value="{{ semaine }}">{{ semaine }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
 
-                <div class="col-2">
-                    <button class="btn btn-success btn-block" id="genereCode">Générer</button>
+                    <div class="col-2">
+                        <button class="btn btn-success btn-block" type="submit">Générer</button>
+                    </div>
                 </div>
-            </div>
-            <div class="row col-12">
-            <pre id="codegenere">
-
-            </pre>
-            </div>
+            </form>
         </div>
     </div>
 {% endblock %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    {{ encore_entry_link_tags('adm.edt') }}
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    {{ encore_entry_script_tags('adm.edt') }}
-{% endblock %}
