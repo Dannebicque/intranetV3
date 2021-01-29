@@ -3,15 +3,13 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtExportController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 29/01/2021 22:14
+// @lastUpdate 29/01/2021 22:16
 
 namespace App\Controller\administration;
 
 use App\Classes\Edt\MyEdtExport;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
-use App\Entity\Groupe;
-use App\Entity\Semestre;
 use App\Repository\EdtPlanningRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\PersonnelRepository;
@@ -23,7 +21,6 @@ use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use ZipArchive;
-use ZipStream\Option\Archive;
 
 /**
  * Class EdtController
@@ -225,7 +222,10 @@ class EdtExportController extends BaseController
         }
 
         foreach ($pl as $p) {
-            if (array_key_exists($p->getIntervenant()->getNumeroHarpege(), $tabProf) &&
+            if (
+                $p->getIntervenant() !== null &&
+                $p->getMatiere() !== null &&
+                array_key_exists($p->getIntervenant()->getNumeroHarpege(), $tabProf) &&
                 array_key_exists($p->getSalle(), $tabSalles)) {
                 /*
                  * # 1= jour de la semaine (ex: 1 pour lundi)
