@@ -29,7 +29,7 @@
                         {% endfor %}
                     </select>
                 </div>
-                <div class="col-3">
+                <div class="col-5">
                     <label for="groupe">Groupe</label>
                     <select name="groupe" id="groupe">
                         <option>Choisir</option>
@@ -47,15 +47,7 @@
                         {% endfor %}
                     </select>
                 </div>
-                <div class="col-2">
-                    <label for="semaineFin">Semaine fin</label>
-                    <select name="semaineFin" id="semaineFin">
-                        <option>Choisir</option>
-                        {% for semaine in 1..52 %}
-                            <option value="{{ semaine }}">{{ semaine }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
+
                 <div class="col-2">
                     <button class="btn btn-success btn-block" id="genereCode">Générer</button>
                 </div>

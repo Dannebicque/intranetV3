@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtExportController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 29/01/2021 11:39
+// @lastUpdate 29/01/2021 16:05
 
 namespace App\Controller\administration;
 
@@ -97,14 +97,49 @@ class EdtExportController extends BaseController
         EdtPlanningRepository $edtPlanningRepository,
         Semestre $semestre,
         Groupe $groupe,
-        int $debut,
-        int $fin = 0
+        int $debut
     ): Response {
+        $tabProf = [
+            16041,
+            33407,
+            34188,
+            3601,
+            33513,
+            32822,
+            3132,
+            30722,
+            31405,
+            3604,
+            33740,
+            25261,
+            3680,
+            3994,
+            22885,
+            2569,
+            6509,
+            20289,
+            24594,
+            20900,
+            3920,
+            30125,
+            22615,
+            2158,
+            14478,
+            34044,
+            21399
+        ];
+
+        $tabProf = array_flip($tabProf);
+
         $pl = $edtPlanningRepository->findEdtSemestre($semestre, $debut);
         $code = '';
         foreach ($pl as $p) {
-            if ($p->getType() === $groupe->getTypeGroupe()->getType() && $p->getGroupe() === $groupe->getOrdre()) {
-                $code .= 'ajouter ' . $p->getJour() . ' ' . Constantes::TAB_HEURES[$p->getDebut()] . ' ' . Constantes::TAB_HEURES[$p->getFin()] . "\n";
+            if ($groupe->getTypeGroupe() !== null &&
+                $p->getGroupe() === $groupe->getOrdre() &&
+                array_key_exists($p->getIntervenant()->getNumeroHarpege(), $tabProf) &&
+                $p->getType() === $groupe->getTypeGroupe()->getType()
+            ) {
+                $code .= './ajouter ' . $p->getJour() . ' ' . Constantes::TAB_HEURES[$p->getDebut()] . ' ' . Constantes::TAB_HEURES[$p->getFin()] . ' ' . $tabProf[$p->getIntervenant()->getNumeroHarpege()] . ' ' . "\n";
             }
         }
 
