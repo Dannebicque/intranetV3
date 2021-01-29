@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.edt.index.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="material-icons">build</i></a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">
+            <strong>{{ 'adm.edt.actions'|trans }}</strong>
+        </h4>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-3">
+                    <label for="semestre">Semestre</label>
+                    <select name="semestre" id="semestre">
+                        <option>Choisir</option>
+                        {% for semestre in semestres %}
+                            <option value="{{ semestre.id }}">{{ semestre.display }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-3">
+                    <label for="groupe">Groupe</label>
+                    <select name="groupe" id="groupe">
+                        <option>Choisir</option>
+                        {% for groupe in groupes %}
+                            <option value="{{ groupe.id }}">{{ groupe.libelle }} | {{ groupe.displaySemestre }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-2">
+                    <label for="semaineDebut">Semaine début</label>
+                    <select name="semaineDebut" id="semaineDebut">
+                        <option>Choisir</option>
+                        {% for semaine in 1..52 %}
+                            <option value="{{ semaine }}">{{ semaine }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-2">
+                    <label for="semaineFin">Semaine fin</label>
+                    <select name="semaineFin" id="semaineFin">
+                        <option>Choisir</option>
+                        {% for semaine in 1..52 %}
+                            <option value="{{ semaine }}">{{ semaine }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-2">
+                    <button class="btn btn-success btn-block" id="genereCode">Générer</button>
+                </div>
+            </div>
+            <div class="row col-12">
+            <pre id="codegenere">
+
+            </pre>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('adm.edt') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('adm.edt') }}
+{% endblock %}
