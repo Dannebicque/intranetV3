@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtExportController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/01/2021 13:39
+// @lastUpdate 30/01/2021 14:39
 
 namespace App\Controller\administration;
 
@@ -156,21 +156,21 @@ class EdtExportController extends BaseController
             'S4'  => [
                 '3TW4X101' => 0,
                 '3TW4X102' => 1,
-                '3TW4B103' => 3,
-                '3TW4X103' => 4,
-                '3TW4A103' => 5,
-                '3TW4M103' => 6,
-                '3TW4S103' => 7,
-                '3TW4X110' => 8,
-                '3TW4X111' => 9,
-                '3TW4X201' => 10,
-                '3TW4M203' => 11,
-                '3TW4A203' => 12,
-                '3TW4B203' => 13,
-                '3TW4S203' => 14,
-                '3TW4X204' => 15,
-                '3TW4X210' => 16,
-                '3TW4X211' => 17,
+                '3TW4B103' => 2,
+                '3TW4X103' => 3,
+                '3TW4A103' => 4,
+                '3TW4M103' => 5,
+                '3TW4S103' => 6,
+                '3TW4X110' => 7,
+                '3TW4X111' => 8,
+                '3TW4X201' => 9,
+                '3TW4M203' => 10,
+                '3TW4A203' => 11,
+                '3TW4B203' => 12,
+                '3TW4S203' => 13,
+                '3TW4X204' => 14,
+                '3TW4X210' => 15,
+                '3TW4X211' => 16,
             ]
         ];
 
