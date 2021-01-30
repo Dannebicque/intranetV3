@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtExportController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/01/2021 13:16
+// @lastUpdate 30/01/2021 13:37
 
 namespace App\Controller\administration;
 
@@ -16,6 +16,7 @@ use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -92,6 +93,7 @@ class EdtExportController extends BaseController
      * @return Response
      */
     public function exportScriptAjax(
+        KernelInterface $kernel,
         Request $request,
         EdtPlanningRepository $edtPlanningRepository,
         SemestreRepository $semestreRepository
@@ -219,6 +221,7 @@ class EdtExportController extends BaseController
         $pl = $edtPlanningRepository->findEdtSemestre($semestre, $semaine);
         $code = [];
         $codeGroupe = [];
+
         foreach ($semestre->getTypeGroupes() as $tg) {
             $code[$tg->getType()] = [];
             foreach ($tg->getGroupes() as $groupe) {
@@ -247,7 +250,7 @@ class EdtExportController extends BaseController
         }
 
         $zip = new ZipArchive();
-        $zipName = 'ajouter_S' . $semaine . '_' . $semestre->getLibelle() . '.zip';
+        $zipName = $kernel->getProjectDir() . '/public/upload/temp/ajouter_S' . $semaine . '_' . $semestre->getLibelle() . '.zip';
 
         $zip->open($zipName, ZipArchive::OVERWRITE);
 
