@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtExportController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/01/2021 22:14
+// @lastUpdate 30/01/2021 22:18
 
 namespace App\Controller\administration;
 
@@ -295,13 +295,14 @@ class EdtExportController extends BaseController
         @unlink($zipName);
         $zip->open($zipName, ZipArchive::CREATE);
         $i = 0;
+        sort($code);
         foreach ($code as $type => $value) {
             foreach ($value as $groupe => $c) {
                 $codeComplet .= './groupe ' . $i . "\n";
                 $n = $semestre->getLibelle() . '_S' . $semaine . '_' . $type . '_' . $codeGroupe[$type . '_' . $groupe] . '.sh';
                 $zip->addFromString($n, $c);
                 $codeComplet .= './' . $n . " \n";
-                $codeComplet .= './fingroupe ' . $i . "\n";
+                $codeComplet .= './fingroupe ' . "\n";
                 $i++;
             }
         }
