@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtExportController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/01/2021 13:13
+// @lastUpdate 30/01/2021 13:16
 
 namespace App\Controller\administration;
 
@@ -222,7 +222,7 @@ class EdtExportController extends BaseController
         foreach ($semestre->getTypeGroupes() as $tg) {
             $code[$tg->getType()] = [];
             foreach ($tg->getGroupes() as $groupe) {
-                $code[strtoupper($tg->getType())][$groupe->getOrdre()] = '';
+                $code[strtoupper($tg->getType())][$groupe->getOrdre()] = 'sleep 5' . "\n";
                 $codeGroupe[strtoupper($tg->getType()) . '_' . $groupe->getOrdre()] = $groupe->getLibelle();
             }
         }
