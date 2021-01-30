@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtExportController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 29/01/2021 22:18
+// @lastUpdate 30/01/2021 10:37
 
 namespace App\Controller\administration;
 
@@ -172,6 +172,12 @@ class EdtExportController extends BaseController
             ]
         ];
 
+        $tabType = [
+            'CM' => 1,
+            'TD' => 4,
+            'TP' => 6,
+        ];
+
         $tabSalles = [
             'H001',
             'H002',
@@ -236,7 +242,7 @@ class EdtExportController extends BaseController
 # 6= indice de la matiere (ex:1 premiere matiere de la liste des matieres)
 # 7= type de cours (CM=1, TD=4, TP=6)
                  */
-                $code[strtoupper($p->getType())][$p->getGroupe()] .= './ajouter ' . $p->getJour() . ' ' . Constantes::TAB_HEURES[$p->getDebut()] . ' ' . Constantes::TAB_HEURES[$p->getFin()] . ' ' . $tabProf[$p->getIntervenant()->getNumeroHarpege()] . ' ' . $tabSalles[$p->getSalle()] . ' ' . $tabMatieres[$semestre->getLibelle()][$p->getMatiere()->getCodeElement()] . ' ' . strtoupper($p->getType()) . "\n";
+                $code[strtoupper($p->getType())][$p->getGroupe()] .= './ajouter ' . $p->getJour() . ' ' . Constantes::TAB_HEURES[$p->getDebut()] . ' ' . Constantes::TAB_HEURES[$p->getFin()] . ' ' . $tabProf[$p->getIntervenant()->getNumeroHarpege()] . ' ' . $tabSalles[$p->getSalle()] . ' ' . $tabMatieres[$semestre->getLibelle()][$p->getMatiere()->getCodeElement()] . ' ' . $tabType[strtoupper($p->getType())] . "\n";
             }
         }
 
