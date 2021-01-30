@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtExportController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/01/2021 15:04
+// @lastUpdate 30/01/2021 22:14
 
 namespace App\Controller\administration;
 
@@ -77,8 +77,8 @@ class EdtExportController extends BaseController
         GroupeRepository $groupeRepository,
         $source
     ): Response {
-        $semestres = $semestreRepository->findByDepartement($this->getDepartement());
-        $groupes = $groupeRepository->findByDepartement($this->getDepartement());
+        $semestres = $semestreRepository->findByDepartementActif($this->getDepartement());
+        $groupes = $groupeRepository->findByDepartementSemestreActif($this->getDepartement());
 
         return $this->render('administration/edtExport/exportScript.html.twig', [
             'semestres' => $semestres,
@@ -288,18 +288,24 @@ class EdtExportController extends BaseController
             }
         }
 
+        $codeComplet = '';
+
         $zip = new ZipArchive();
         $zipName = $kernel->getProjectDir() . '/public/upload/temp/ajouter_S' . $semaine . '_' . $semestre->getLibelle() . '.zip';
         @unlink($zipName);
         $zip->open($zipName, ZipArchive::CREATE);
-
+        $i = 0;
         foreach ($code as $type => $value) {
             foreach ($value as $groupe => $c) {
-                $zip->addFromString($semestre->getLibelle() . '_S' . $semaine . '_' . $type . '_' . $codeGroupe[$type . '_' . $groupe] . '.sh',
-                    $c);
+                $codeComplet .= './groupe ' . $i . "\n";
+                $n = $semestre->getLibelle() . '_S' . $semaine . '_' . $type . '_' . $codeGroupe[$type . '_' . $groupe] . '.sh';
+                $zip->addFromString($n, $c);
+                $codeComplet .= './' . $n . " \n";
+                $codeComplet .= './fingroupe ' . $i . "\n";
+                $i++;
             }
         }
-
+        $zip->addFromString('script' . $semaine . '.sh', $codeComplet);
         $zip->close();
 
         $response = new Response(file_get_contents($zipName));
