@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtExportController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/01/2021 14:39
+// @lastUpdate 30/01/2021 15:04
 
 namespace App\Controller\administration;
 
@@ -151,8 +151,47 @@ class EdtExportController extends BaseController
                 '3TW11206' => 14,
                 '3TW11207' => 15
             ],
-            'S2'  => [],
-            'S3D' => [],
+            'S2'  => [
+                '3TW22101' => 0,
+                '3TW22102' => 1,
+                '3TW22103' => 2,
+                '3TW22104' => 3,
+                '3TW22105' => 4,
+                '3TW22106' => 5,
+                '3TW22107' => 6,
+                '3TW22108' => 7,
+                '3TW22109' => 8,
+                '3TW22110' => 9,
+                '3TW22201' => 10,
+                '3TW22202' => 11,
+                '3TW22203' => 12,
+                '3TW22204' => 13,
+                '3TW22205' => 14,
+                '3TW22206' => 15,
+                '3TW22207' => 16,
+                '3TW22210' => 17
+
+            ],
+            'S3D' => [
+                '3TW73101' => 0,
+                '3TW73102' => 1,
+                '3TW73103' => 2,
+                '3TW73104' => 3,
+                '3TW73105' => 4,
+                '3TW73106' => 5,
+                '3TW73107' => 6,
+                '3TW73108' => 7,
+                '3TW73109' => 8,
+                '3TW73110' => 9,
+                '3TW73201' => 10,
+                '3TW73202' => 11,
+                '3TW73203' => 12,
+                '3TW73204' => 13,
+                '3TW73205' => 14,
+                '3TW73206' => 15,
+                '3TW73207' => 16,
+                '3TW73212' => 17
+            ],
             'S4'  => [
                 '3TW4X101' => 0,
                 '3TW4X102' => 1,
