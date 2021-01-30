@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/GroupeRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/11/2020 14:01
+// @lastUpdate 30/01/2021 18:04
 
 
 namespace App\Repository;
@@ -36,7 +36,7 @@ class GroupeRepository extends ServiceEntityRepository
         parent::__construct($registry, Groupe::class);
     }
 
-    public function findByDepartementBuilder(Departement $departement)
+    public function findByDepartementBuilder(Departement $departement): QueryBuilder
     {
         return $this->createQueryBuilder('g')
             ->innerJoin(TypeGroupe::class, 't', 'WITH', 'g.typeGroupe = t.id')
@@ -184,6 +184,25 @@ class GroupeRepository extends ServiceEntityRepository
             ->where('g.typeGroupe = :typeGroupe')
             ->orderBy('g.ordre', 'ASC')
             ->setParameter('typeGroupe', $typegroupe)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByDepartementSemestreActifBuilder(Departement $departement): QueryBuilder
+    {
+        return $this->createQueryBuilder('g')
+            ->innerJoin(TypeGroupe::class, 't', 'WITH', 'g.typeGroupe = t.id')
+            ->innerJoin(Semestre::class, 's', 'WITH', 't.semestre = s.id')
+            ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
+            ->innerJoin(Diplome::class, 'd', 'WITH', 'd.id = a.diplome')
+            ->where('d.departement = :departement')
+            ->andWhere('s.actif = 1')
+            ->setParameter('departement', $departement->getId());
+    }
+
+    public function findByDepartementSemestreActif(Departement $departement)
+    {
+        return $this->findByDepartementSemestreActifBuilder($departement)
             ->getQuery()
             ->getResult();
     }
