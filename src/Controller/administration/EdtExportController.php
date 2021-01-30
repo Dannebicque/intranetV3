@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtExportController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/01/2021 13:37
+// @lastUpdate 30/01/2021 13:38
 
 namespace App\Controller\administration;
 
@@ -265,7 +265,8 @@ class EdtExportController extends BaseController
 
         $response = new Response(file_get_contents($zipName));
         $response->headers->set('Content-Type', 'application/zip');
-        $response->headers->set('Content-Disposition', 'attachment;filename="' . $zipName . '"');
+        $response->headers->set('Content-Disposition',
+            'attachment;filename="ajouter_S' . $semaine . '_' . $semestre->getLibelle() . '.zip"');
         $response->headers->set('Content-length', filesize($zipName));
 
         return $response;
