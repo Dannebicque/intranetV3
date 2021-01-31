@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Semestre.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 21/11/2020 07:35
+// @lastUpdate 31/01/2021 08:17
 
 namespace App\Entity;
 
@@ -222,7 +222,7 @@ class Semestre extends BaseEntity
     private $ues;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\TypeGroupe", mappedBy="semestre")
+     * @ORM\OneToMany(targetEntity="App\Entity\TypeGroupe", mappedBy="semestre", fetch="EAGER")
      * @ORM\OrderBy({"libelle" = "ASC"})
      */
     private $typeGroupes;
