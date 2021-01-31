@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/CovidAttestationPersonnelController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+// @lastUpdate 31/01/2021 15:14
 
 namespace App\Controller\appPersonnel;
 
@@ -18,6 +18,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 /**
  * @Route("/covid/attestation/personnel", name="application_personnel_")
@@ -96,17 +99,16 @@ class CovidAttestationPersonnelController extends BaseController
      * @param CovidAttestationPersonnel $covidAttestationPersonnel
      *
      * @return Response
-     * @throws \Twig\Error\LoaderError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\SyntaxError
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function pdf(
         MyExportPresence $myExportPresence,
         CovidAttestationPersonnel $covidAttestationPersonnel
-    ): ?Response {
+    ) {
         if ($covidAttestationPersonnel->getPersonnel()->getId() === $this->getConnectedUser()->getId()) {
-            $myExportPresence->genereAttestationPdf($covidAttestationPersonnel, 'force');
-            return new Response();
+            return $myExportPresence->genereAttestationPdf($covidAttestationPersonnel, 'force');
         }
 
         return $this->redirectToRoute('erreur_666');
