@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtExportController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/01/2021 22:20
+// @lastUpdate 31/01/2021 08:20
 
 namespace App\Controller\administration;
 
@@ -95,6 +95,7 @@ class EdtExportController extends BaseController
     public function exportScriptAjax(
         KernelInterface $kernel,
         Request $request,
+        GroupeRepository $groupeRepository,
         EdtPlanningRepository $edtPlanningRepository,
         SemestreRepository $semestreRepository
     ): Response {
@@ -263,7 +264,8 @@ class EdtExportController extends BaseController
 
         foreach ($semestre->getTypeGroupes() as $tg) {
             $code[$tg->getType()] = [];
-            foreach ($tg->getGroupes() as $groupe) {
+            $groupes = $groupeRepository->findBy(['typeGroupe' => $tg->getId()], ['ordre' => 'ASC']);
+            foreach ($groupes as $groupe) {
                 $code[strtoupper($tg->getType())][$groupe->getOrdre()] = 'sleep 5' . "\n";
                 $codeGroupe[strtoupper($tg->getType()) . '_' . $groupe->getOrdre()] = $groupe->getLibelle();
             }

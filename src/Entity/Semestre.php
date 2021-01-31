@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Semestre.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 31/01/2021 08:17
+// @lastUpdate 31/01/2021 08:19
 
 namespace App\Entity;
 
@@ -222,7 +222,7 @@ class Semestre extends BaseEntity
     private $ues;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\TypeGroupe", mappedBy="semestre", fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="App\Entity\TypeGroupe", mappedBy="semestre")
      * @ORM\OrderBy({"libelle" = "ASC"})
      */
     private $typeGroupes;
