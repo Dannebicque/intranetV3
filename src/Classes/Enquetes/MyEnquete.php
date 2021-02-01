@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Enquetes/MyEnquete.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 21/01/2021 15:27
+// @lastUpdate 01/02/2021 12:17
 
 namespace App\Classes\Enquetes;
 
@@ -132,8 +132,8 @@ class MyEnquete
                     $qualiteQuestionnaireSection->getOrdre() . '. ' . $qualiteQuestionnaireSection->getSection()->getTitre(),
                     ['color' => $this->configuration->get('COLOR_IUT'), 'font-size' => 10, 'font-weight' => 'bold']);
                 $this->ligne += 2;
-                if ($qualiteQuestionnaireSection->getSection()->getConfig() !== null && $qualiteQuestionnaireSection->getSection()->getConfig() !== '') {
-                    $arrayConfig = explode('-', $qualiteQuestionnaireSection->getSection()->getConfig());
+                if ($qualiteQuestionnaireSection->getConfig() !== null && $qualiteQuestionnaireSection->getConfig() !== '') {
+                    $arrayConfig = explode('-', $qualiteQuestionnaireSection->getConfig());
                     $arrayConfig = explode(',', $arrayConfig[1]);
                     foreach ($arrayConfig as $config) {
                         foreach ($qualiteQuestionnaireSection->getSection()->getQualiteSectionQuestions() as $qualiteSectionQuestion) {
