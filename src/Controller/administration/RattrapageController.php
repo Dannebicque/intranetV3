@@ -1,13 +1,14 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/RattrapageController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+// @lastUpdate 01/02/2021 16:58
 
 namespace App\Controller\administration;
 
 use App\Controller\BaseController;
+use App\Entity\Annee;
 use App\Entity\Constantes;
 use App\Entity\Rattrapage;
 use App\Entity\Semestre;
@@ -112,6 +113,31 @@ class RattrapageController extends BaseController
     }
 
     /**
+     * @Route("/supprimer-annee/{semestre}", name="administration_rattrapage_delete_all", methods="DELETE")
+     *
+     * @param RattrapageRepository $rattrapageRepository
+     * @param Semestre             $semestre
+     *
+     * @return Response
+     */
+    public function deleteAllAnnee(RattrapageRepository $rattrapageRepository, Semestre $semestre): Response
+    {
+        $rattrapages = $rattrapageRepository->findByAnnee($semestre->getAnnee());
+        foreach ($rattrapages as $rattrapage) {
+            $this->entityManager->remove($rattrapage);
+
+        }
+        $this->entityManager->flush();
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'rattrapage_all.delete.success.flash');
+
+        return $this->json([
+            'redirect' => true,
+            'url'      => $this->generateUrl('administration_rattrapage_semestre_index',
+                ['semestre' => $semestre->getId()])
+        ]);
+    }
+
+    /**
      * @Route("/{uuid}", name="administration_rattrapage_delete", methods="DELETE")
      * @param Request    $request
      * @param Rattrapage $rattrapage
@@ -133,4 +159,6 @@ class RattrapageController extends BaseController
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
+
+
 }

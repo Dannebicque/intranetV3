@@ -1,14 +1,15 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/AbsenceJustificatifRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 14/09/2020 20:55
+// @lastUpdate 01/02/2021 16:58
 
 namespace App\Repository;
 
 use App\Entity\Absence;
 use App\Entity\AbsenceJustificatif;
+use App\Entity\Annee;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Etudiant;
 use App\Entity\Semestre;
@@ -102,6 +103,18 @@ class AbsenceJustificatifRepository extends ServiceEntityRepository
             ->andWhere('j.anneeUniversitaire = :annee')
             ->setParameter('etudiant', $etudiant->getId())
             ->setParameter('annee', $etudiant->getAnneeUniversitaire())
+            ->orderBy('j.created', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByAnnee(Annee $annee)
+    {
+        return $this->createQueryBuilder('j')
+            ->innerJoin(Etudiant::class, 'e', 'WITH', 'j.etudiant = e.id')
+            ->innerJoin(Semestre::class, 's', 'WITH', 'e.semestre = s.id')
+            ->where('s.annee = :annee')
+            ->setParameter('annee', $annee->getId())
             ->orderBy('j.created', 'DESC')
             ->getQuery()
             ->getResult();
