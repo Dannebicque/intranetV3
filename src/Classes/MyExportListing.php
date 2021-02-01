@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyExportListing.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/01/2021 09:16
+// @lastUpdate 01/02/2021 18:01
 
 /**
  * Created by PhpStorm.
@@ -145,9 +145,9 @@ class MyExportListing
                 return $this->exportCsv(',');
             case Constantes::FORMAT_EXCEL:
                 return $this->exportExcel();
-                case Constantes::FORMAT_PDF:
-                    return $this->exportPdf();
-            }
+            case Constantes::FORMAT_PDF:
+                return $this->exportPdf();
+        }
 
 
         return null;
@@ -165,6 +165,9 @@ class MyExportListing
         $semestre = $this->typeGroupe->getSemestre() ? $this->typeGroupe->getSemestre()->getLibelle() : 'sans-semestre';
 
         switch ($this->exportTypeDocument) {
+            case Constantes::TYPEDOCUMENT_LISTE:
+                $this->name = 'listing-' . $semestre;
+                break;
             case Constantes::TYPEDOCUMENT_EMARGEMENT:
                 $this->name = 'emargement-' . $semestre;
                 $this->titre = 'FEUILLE D\'EMARGEMENT - Semestre ' . $semestre;
@@ -442,7 +445,7 @@ class MyExportListing
                 'personnel'  => $this->personnel,
                 'groupes'    => $this->groupes
             ],
-            $this->name,
+            $this->name . '.pdf',
             $this->dataUserSession->getDepartement()->getLibelle());
     }
 
