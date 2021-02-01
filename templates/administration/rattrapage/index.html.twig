@@ -20,6 +20,10 @@
 {% block headeractions %}
     <div class="header-action">
         <div class="buttons">
+            <a href="{{ path('administration_rattrapage_delete_all', {semestre: semestre.id}) }}"
+               class="btn btn-danger btn-sm btn-float supprimer" data-provide="tooltip"
+               data-placement="bottom" title="Supprimer toutes les demandes de rattrapage pour l'année {{ semestre
+            .annee.libelle }}"><i class="{{ iconDelete }}"></i></a>
             <a href="{{ path('administration_rattrapage_planning_index', {diplome: semestre.diplome.id}) }}"
                class="btn btn-success btn-sm btn-float" data-provide="tooltip"
                data-placement="bottom" title="{{ 'atitle.planning'|trans }}"><i class="fas fa-calendar-alt"></i></a>

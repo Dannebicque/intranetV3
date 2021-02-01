@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/RattrapageRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/08/2020 10:23
+// @lastUpdate 01/02/2021 16:02
 
 namespace App\Repository;
 
@@ -118,6 +118,19 @@ class RattrapageRepository extends ServiceEntityRepository
             ->setParameter('etat', 'A')
             ->setParameter('anneeuniversitaire', $annee)
             ->orderBy('e.semestre.libelle', 'ASC')
+            ->orderBy('e.nom', 'ASC')
+            ->orderBy('e.prenom', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByAnnee(Annee $annee)
+    {
+        return $this->createQueryBuilder('r')
+            ->innerJoin(Etudiant::class, 'e', 'WITH', 'r.etudiant = e.id')
+            ->innerJoin(Semestre::class, 's', 'WITH', 'e.semestre = s.id')
+            ->where('s.annee = :annee')
+            ->setParameter('annee', $annee->getId())
             ->orderBy('e.nom', 'ASC')
             ->orderBy('e.prenom', 'ASC')
             ->getQuery()

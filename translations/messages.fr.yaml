@@ -100,6 +100,7 @@ absence:
   added: 'Absence ajoutée'
   delete.success.flash: 'Absence supprimée avec succès'
   justificatif.valide.success.flash: 'Justificatif d''absence validé avec succès'
+  justificatif_all.delete.success.flash: 'Tous les justificatifs de l''année concernée ont été supprimés'
   removed: 'Absence supprimée'
 
 ACCEPTE: ACCEPTE
@@ -1461,6 +1462,8 @@ quizz:
 
 rang: rang
 rapport.pour.le: 'Rapport pour le'
+rattrapage_all.delete.success.flash: 'Toutes les demandes de rattrapages ont été supprimées pour l''année concernée'
+
 recherche:
   etudiant.heading: 'Rechercher un étudiant'
   personnel.heading: 'Rechercher un personnel/intervenant'

@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/AbsenceJustificatifController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+// @lastUpdate 01/02/2021 16:58
 
 namespace App\Controller\administration;
 
@@ -17,6 +17,7 @@ use App\Repository\AbsenceJustificatifRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
@@ -74,6 +75,33 @@ class AbsenceJustificatifController extends BaseController
             ['justificatif_administration', 'utilisateur'],
             ['dateDebut', 'heureDebut', 'dateFin', 'heureFin', 'motif', 'etat', 'etudiant' => ['prenom', 'nom']]
         );
+    }
+
+    /**
+     * @Route("/supprimer-annee/{semestre}", name="administration_absence_justificatif_delete_all", methods="DELETE")
+     *
+     * @param AbsenceJustificatifRepository $absenceJustificatifRepository
+     * @param Semestre                      $semestre
+     *
+     * @return Response
+     */
+    public function deleteAllAnnee(
+        AbsenceJustificatifRepository $absenceJustificatifRepository,
+        Semestre $semestre
+    ): Response {
+        $absenceJustificatifs = $absenceJustificatifRepository->findByAnnee($semestre->getAnnee());
+        foreach ($absenceJustificatifs as $absenceJustificatif) {
+            $this->entityManager->remove($absenceJustificatif);
+
+        }
+        $this->entityManager->flush();
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'absence.justificatif_all.delete.success.flash');
+
+        return $this->json([
+            'redirect' => true,
+            'url'      => $this->generateUrl('administration_absences_justificatif_semestre_liste',
+                ['semestre' => $semestre->getId()])
+        ]);
     }
 
     /**
