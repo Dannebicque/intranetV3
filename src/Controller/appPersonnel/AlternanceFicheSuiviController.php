@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/AlternanceFicheSuiviController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+// @lastUpdate 01/02/2021 21:17
 
 namespace App\Controller\appPersonnel;
 
@@ -16,6 +16,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 /**
  * @Route("/application/personnel/alternance/fiche-suivi")
@@ -86,17 +89,15 @@ class AlternanceFicheSuiviController extends AbstractController
      * @param AlternanceFicheSuivi   $alternanceFicheSuivi
      *
      * @return Response
-     * @throws \Twig\Error\LoaderError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\SyntaxError
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function print(
         MyAlternanceFicheSuivi $myAlternanceFicheSuivi,
         AlternanceFicheSuivi $alternanceFicheSuivi
-    ): ?Response {
-        $myAlternanceFicheSuivi->print($alternanceFicheSuivi);
-
-        return null;
+    ): Response {
+        return $myAlternanceFicheSuivi->print($alternanceFicheSuivi);
     }
 
     /**
