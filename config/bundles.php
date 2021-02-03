@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/config/bundles.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 31/01/2021 21:52
+// @lastUpdate 03/02/2021 15:52
 
 return [
     Symfony\Bundle\FrameworkBundle\FrameworkBundle::class                => ['all' => true],
@@ -24,6 +24,5 @@ return [
     Symfony\WebpackEncoreBundle\WebpackEncoreBundle::class               => ['all' => true],
     Bugsnag\BugsnagBundle\BugsnagBundle::class                           => ['all' => true],
     Symfony\UX\Chartjs\ChartjsBundle::class                              => ['all' => true],
-    Knp\Bundle\SnappyBundle\KnpSnappyBundle::class                       => ['all' => true],
-    Sentry\SentryBundle\SentryBundle::class                              => ['all' => true],
+    Knp\Bundle\SnappyBundle\KnpSnappyBundle::class => ['all' => true]
 ];

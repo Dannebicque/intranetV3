@@ -1,5 +1,0 @@
-sentry:
-  dsn: '%env(SENTRY_DSN)%'
-  options:
-    environment: '%kernel.environment%'
-    release: '%env(APP_VERSION)%'
