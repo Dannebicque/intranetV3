@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Covid/MyExportPresence.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 28/01/2021 17:10
+// @lastUpdate 03/02/2021 16:43
 
 namespace App\Classes\Covid;
 
@@ -14,6 +14,7 @@ use App\Entity\CovidAttestationEtudiant;
 use App\Entity\CovidAttestationPersonnel;
 use App\Entity\Etudiant;
 use DateTime;
+use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -130,7 +131,7 @@ class MyExportPresence
      * @param CovidAttestationPersonnel $covidAttestationPersonnel
      * @param                           $sortie
      *
-     * @return bool|string
+     * @return bool|PdfResponse|string
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -172,14 +173,24 @@ class MyExportPresence
     public function genereConvocationPdf(
         CovidAttestationEtudiant $covidAttestationEtudiant,
         Etudiant $etudiant
-    ): void {
+    ): void
+    {
+        if ($covidAttestationEtudiant->getDatePresence() !== null) {
+            $date = $covidAttestationEtudiant->getDatePresence();
+        } else {
+            if ($covidAttestationEtudiant->getDateDebut() !== null) {
+                $date = $covidAttestationEtudiant->getDateDebut();
+            } else {
+                $date = 'err-' . md5((new DateTime('now'))->format('dmYHis'));
+            }
+        }
         $this->myPdf::generePdf(
             'pdf/covid/autorisationEtudiant.html.twig',
             [
                 'covidAttestationEtudiant' => $covidAttestationEtudiant,
                 'etudiant'                 => $etudiant
             ],
-            'convocation-covid-' . $covidAttestationEtudiant->getDatePresence()->format('d-m-Y') . '-' . $etudiant->getNumEtudiant()
+            'convocation-covid-' . $date->format('d-m-Y') . '-' . $etudiant->getNumEtudiant()
         );
     }
 

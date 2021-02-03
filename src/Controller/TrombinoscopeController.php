@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/TrombinoscopeController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/01/2021 09:16
+// @lastUpdate 03/02/2021 16:43
 
 namespace App\Controller;
 
@@ -69,13 +69,14 @@ class TrombinoscopeController extends BaseController
     }
 
     /**
-     * @Route("/etudiant/export-groupe/{groupe<\d+>}.{_format}", name="trombinoscope_etudiant_export_groupe", methods="GET",
-     *                                                   requirements={"_format"="csv|xlsx|pdf"})
+     * @Route("/etudiant/export-groupe/{groupe<\d+>}.{_format}", name="trombinoscope_etudiant_export_groupe",
+     *                                                           methods="GET",
+     *                                                           requirements={"_format"="csv|xlsx|pdf"})
      * @param MyExportListing  $myExportListing
      * @param Groupe           $groupe
      * @param                  $_format
      *
-     * @return null|StreamedResponse
+     * @return PdfResponse
      * @throws Exception
      * @throws LoaderError
      * @throws RuntimeError
@@ -85,7 +86,7 @@ class TrombinoscopeController extends BaseController
         MyExportListing $myExportListing,
         Groupe $groupe,
         $_format
-    ): ?StreamedResponse {
+    ): PdfResponse {
         return $myExportListing->genereFichier(
             Constantes::TYPEDOCUMENT_EMARGEMENT,
             $_format,
