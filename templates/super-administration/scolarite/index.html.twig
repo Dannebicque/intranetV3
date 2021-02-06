@@ -46,11 +46,11 @@
     <div class="card">
         <h4 class="card-title">{{ 'scolarite.index.heading'|trans }}</h4>
         <div class="card-body">
-            <table class="table table-bordered">
+            <table class="table table-bordered" data-provide="datatables">
                 <thead>
                 <tr>
-                    <th>Diplôme</th>
                     <th>Type</th>
+                    <th>Diplôme</th>
                     <th>Actif</th>
                     <th>Année en cours</th>
                     <th></th>
@@ -59,8 +59,8 @@
                 <tbody>
                 {% for diplome in diplomes %}
                     <tr>
-                        <td>{{ diplome.libelle }}</td>
                         <td>{{ diplome.typeDiplome.libelle }}</td>
+                        <td>{{ diplome.libelle }}</td>
                         <td>{{ diplome.actif == true ? 'Actif' : 'Désactivé' }}</td>
                         <td>{{ diplome.anneeUniversitaire.libelle }}</td>
                         <td>
@@ -80,3 +80,14 @@
         </div>
     </div>
 {% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('datatable') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('datatable') }}
+{% endblock %}
+
