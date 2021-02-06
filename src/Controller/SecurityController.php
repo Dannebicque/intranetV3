@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/SecurityController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 10/01/2021 17:30
+// @lastUpdate 28/01/2021 14:05
 
 namespace App\Controller;
 
@@ -129,7 +129,6 @@ class SecurityController extends AbstractController
      * @throws TransportExceptionInterface
      */
     public function initPassword(
-
         UserPasswordEncoderInterface $passwordEncoder,
         EntityManagerInterface $entityManager,
         MailerFromTwig $mailerFromTwig,
