@@ -1,18 +1,20 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtImport.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/09/2020 19:20
+// @lastUpdate 06/02/2021 23:47
 
 namespace App\Classes\Edt;
 
 
+use App\Entity\Calendrier;
 use App\Entity\EdtPlanning;
 use App\Entity\Semestre;
 use App\Classes\DataUserSession;
 use App\Classes\MyUpload;
 use App\Entity\TypeGroupe;
+use App\Repository\CalendrierRepository;
 use App\Repository\EdtPlanningRepository;
 use App\Repository\MatiereRepository;
 use App\Repository\PersonnelRepository;
@@ -22,38 +24,35 @@ use Exception;
 
 class MyEdtImport
 {
+    private PersonnelRepository $personnelRepository;
 
-    /** @var PersonnelRepository */
-    private $personnelRepository;
+    private MatiereRepository $matiereRepository;
 
-    /** @var MatiereRepository */
-    private $matiereRepository;
+    private SemestreRepository $semestreRepository;
 
-    /** @var SemestreRepository */
-    private $semestreRepository;
+    private EntityManagerInterface $entityManager;
 
-    /** @var EntityManagerInterface */
-    private $entityManager;
-
-    private $dir;
-    private $nomfile;
+    private ?string $dir;
+    private ?string $nomfile;
 
     private $semaine;
 
     private $semestre;
-    /**
-     * @var DataUserSession
-     */
-    private $dataUserSession;
-    /**
-     * @var MyUpload
-     */
-    private $myUpload;
+
+    private DataUserSession $dataUserSession;
+
+    private MyUpload $myUpload;
+    private Calendrier $calendrier;
+
+    private CalendrierRepository $calendrierRepository;
+
+    private EdtPlanningRepository $edtPlanningRepository;
 
     /**
      * MyEdtImport constructor.
      *
      * @param EdtPlanningRepository  $edtPlanningRepository
+     * @param CalendrierRepository   $calendrierRepository
      * @param PersonnelRepository    $personnelRepository
      * @param MatiereRepository      $matiereRepository
      * @param SemestreRepository     $semestreRepository
@@ -62,6 +61,7 @@ class MyEdtImport
      */
     public function __construct(
         EdtPlanningRepository $edtPlanningRepository,
+        CalendrierRepository $calendrierRepository,
         PersonnelRepository $personnelRepository,
         MatiereRepository $matiereRepository,
         SemestreRepository $semestreRepository,
@@ -69,6 +69,7 @@ class MyEdtImport
         MyUpload $myUpload
     ) {
         $this->edtPlanningRepository = $edtPlanningRepository;
+        $this->calendrierRepository = $calendrierRepository;
         $this->personnelRepository = $personnelRepository;
         $this->matiereRepository = $matiereRepository;
         $this->semestreRepository = $semestreRepository;
@@ -125,7 +126,10 @@ class MyEdtImport
                         //on mémorise le semestre
                         $tSemaineClear[$semestre] = true;
                     }
-
+                    $this->calendrier = $this->calendrierRepository->findOneBy(['semaineFormation'   => $this->semaine,
+                                                                                'anneeUniversitaire' => $this->dataUserSession->getAnneeUniversitaire()->getId()
+                    ]);
+                    $date = $this->convertToDate($jour);
                     $groupe = $phrase[7];
 
                     if ($phrase[8] === 'Z') {
@@ -139,6 +143,7 @@ class MyEdtImport
                         $pl->setMatiere(null);
                         $pl->setIntervenant(null);
                         $pl->setJour($jour);
+                        $pl->setDate($date);
                         $pl->setSalle($salle);
                         $pl->setGroupe(1);
                         if (substr($pl->getSemestre()->getLibelle(), -1) === 'D') {
@@ -194,6 +199,7 @@ class MyEdtImport
                             $pl->setJour($jour);
                             $pl->setSalle($salle);
                             $pl->setOrdre($ordre);
+                            $pl->setDate($date);
                             $pl->setGroupe(ord($groupe) - 64);
                             $pl->setType(strtoupper($typecours));
                             $pl->setDebut($tabdebut[$heure]);
@@ -234,16 +240,30 @@ class MyEdtImport
         return $this->semestre;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getCalendrier()
+    {
+        return $this->calendrier;
+    }
+
+
     private function clearSemaine($semaine, Semestre $semestre): void
     {
-        $sem = $this->edtPlanningRepository->findBy(array(
+        $sem = $this->edtPlanningRepository->findBy([
             'semaine'  => $semaine,
             'semestre' => $semestre
-        ));
+        ]);
 
         foreach ($sem as $s) {
             $this->entityManager->remove($s);
         }
         $this->entityManager->flush();
+    }
+
+    private function convertToDate($jour)
+    {
+        return $this->calendrier->getDateLundi()->addDays($jour - 1);
     }
 }

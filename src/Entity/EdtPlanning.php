@@ -3,7 +3,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/EdtPlanning.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/01/2021 10:04
+// @lastUpdate 06/02/2021 23:47
 
 namespace App\Entity;
 
@@ -91,6 +91,11 @@ class EdtPlanning
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $commentaire;
+
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $date;
 
     public function getId(): ?int
     {
@@ -355,12 +360,7 @@ class EdtPlanning
 
     public function getDate(): Carbon
     {
-        $date = new Carbon();
-        //todo: gérer la semaine qui n'est pas la semaine annuel
-
-        $date->setISODate(date('Y') - 1, $this->getSemaine() + 35);
-
-        return $date->startOfWeek()->addDays($this->jour - 1);
+        return $this->date;
     }
 
     /**
@@ -388,7 +388,14 @@ class EdtPlanning
             'matiereId'   => $this->getMatiere() !== null ? $this->getMatiere()->getId() : null,
             'personnelId' => $this->getIntervenant() !== null ? $this->getIntervenant()->getId() : null,
             'groupe'      => $this->getGroupe(),
-            'groupeId' => $this->getGroupe()
+            'groupeId'    => $this->getGroupe()
         ];
+    }
+
+    public function setDate(?\DateTimeInterface $date): self
+    {
+        $this->date = $date;
+
+        return $this;
     }
 }

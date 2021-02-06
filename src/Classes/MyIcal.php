@@ -1,12 +1,13 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyIcal.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/09/2020 08:39
+// @lastUpdate 06/02/2021 23:47
 
 namespace App\Classes;
 
+use Carbon\CarbonImmutable;
 use DateTime;
 
 /**
@@ -110,34 +111,15 @@ class MyIcal
     }
 
     /**
-     * @param $lundi
-     * @param $jour
+     * @param $date
      * @param $creneau
      */
-    public function setDtstart($lundi, $jour, $creneau): void
+    public function setDtstart(CarbonImmutable $date, $creneau): void
     {
-        $jour--;
-
-        $d = $this->getJourFromWeek($lundi, $jour);
         $h = explode(':', $this->tabheure[$creneau]);
 
-        $timestamp = mktime($h[0], $h[1], '00', $d[1], $d[0], $d[2]);
+        $timestamp = mktime($h[0], $h[1], '00', $date->month, $date->day, $date->year);
         $this->dtstart = 'DTSTART:' . $this->calculHeureEte($timestamp); //retirer 1 à jour car le lundi = 1, et on a déjà la date du lundi
-    }
-
-    /**3
-     * @param $lundi
-     * @param $jour
-     *
-     * @return array
-     */
-    private function getJourFromWeek($lundi, $jour): array
-    {
-        $lundi = date_format($lundi, 'Y-m-d');
-        $d = explode('-', $lundi);
-        $datej = date('d/m/Y', mktime(12, 30, 00, $d[1], $d[2] + $jour, $d[0]));
-
-        return explode('/', $datej);
     }
 
     /**
@@ -212,19 +194,16 @@ class MyIcal
     }
 
     /**
-     * @param $lundi
-     * @param $jour
-     * @param $creneau
+     * @param CarbonImmutable $date
+     * @param                 $creneau
      */
-    public function setDtend($lundi, $jour, $creneau): void
+    public function setDtend(CarbonImmutable $date, $creneau): void
     {
-        $jour--;
 
-        $d = $this->getJourFromWeek($lundi, $jour);
         $h = explode(':', $this->tabheure[$creneau]);
 
-        $timestamp = mktime($h[0], $h[1], '00', $d[1], $d[0], $d[2]);
-        $this->dtend = 'DTEND:' . $this->calculHeureEte($timestamp); //retirer 1 à jour car le lundi = 1, et on a déjà la date du lundi
+        $timestamp = mktime($h[0], $h[1], '00', $date->month, $date->day, $date->year);
+        $this->dtend = 'DTEND:' . $this->calculHeureEte($timestamp);
     }
 
     /**
