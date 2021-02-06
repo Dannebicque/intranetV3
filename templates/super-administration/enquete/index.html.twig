@@ -16,14 +16,14 @@
     <div class="card">
         <h4 class="card-title">{{ 'enquete.index.heading'|trans }}</h4>
         <div class="card-body">
-            <table class="table table-bordered">
+            <table class="table table-bordered" data-provide="datatables">
                 <thead>
                 <tr>
                     <th>Formation</th>
                     <th>Nb Etudiant</th>
                     <th>Semestres</th>
-                    <th colspan="2">Formateurs</th>
-                    <th colspan="2">Entreprises</th>
+                    <th>Formateurs</th>
+                    <th>Entreprises</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -37,8 +37,8 @@
                         btn-primary">{{ semestre.libelle }}</a>
                         {% endfor %}
                     </td>
-                    <td colspan="2">Formateurs</td>
-                    <td colspan="2">Entreprises</td>
+                      <td>Formateurs</td>
+                      <td>Entreprises</td>
                   </tr>
                 {% endfor %}
                 </tbody>
@@ -46,3 +46,14 @@
         </div>
     </div>
 {% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('datatable') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('datatable') }}
+{% endblock %}
+
