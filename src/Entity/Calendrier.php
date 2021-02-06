@@ -1,12 +1,13 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Calendrier.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+// @lastUpdate 06/02/2021 23:20
 
 namespace App\Entity;
 
+use Carbon\CarbonImmutable;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -31,7 +32,7 @@ class Calendrier extends BaseEntity
     private $semaineReelle;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime_immutable")
      * @Groups({"celcat_administration"})
      */
     private $dateLundi;
@@ -81,7 +82,7 @@ class Calendrier extends BaseEntity
         return $this;
     }
 
-    public function getDateLundi(): ?DateTimeInterface
+    public function getDateLundi(): ?CarbonImmutable
     {
         return $this->dateLundi;
     }

@@ -1,16 +1,16 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtActionsController.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/08/2020 15:24
+// @lastUpdate 06/02/2021 23:21
 
 namespace App\Controller\administration;
 
+use App\Classes\Edt\MyEdtImport;
+use App\Classes\Edt\MyEdtIntranet;
 use App\Controller\BaseController;
 use App\Entity\EdtPlanning;
-use App\Classes\Edt\MyEdtIntranet;
-use App\Classes\Edt\MyEdtImport;
 use App\Repository\CalendrierRepository;
 use App\Repository\EdtPlanningRepository;
 use Exception;
@@ -29,7 +29,6 @@ class EdtActionsController extends BaseController
 {
     /**
      * @Route("/uploadsemaine", name="administration_edt_action_upload")
-     * @param CalendrierRepository $calendrierRepository
      * @param Request              $request
      * @param MyEdtImport          $myEdtImport
      *
@@ -37,7 +36,6 @@ class EdtActionsController extends BaseController
      * @throws Exception
      */
     public function uploadSemaine(
-        CalendrierRepository $calendrierRepository,
         Request $request,
         MyEdtImport $myEdtImport
     ): ?RedirectResponse {
@@ -46,7 +44,7 @@ class EdtActionsController extends BaseController
         $myEdtImport->init($request->files->get('fichieredt'), $this->dataUserSession)->traite();
 
         /* fin necessaire ? */
-        $s = $calendrierRepository->findOneBy(['semaineFormation' => $myEdtImport->getSemaine()]);
+        $s = $myEdtImport->getCalendrier();
 
         if ($s) {
             return $this->redirectToRoute('administration_edt_index',

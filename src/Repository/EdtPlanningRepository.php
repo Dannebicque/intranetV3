@@ -1,9 +1,9 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/EdtPlanningRepository.php
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/12/2020 15:18
+// @lastUpdate 06/02/2021 23:31
 
 namespace App\Repository;
 
@@ -61,7 +61,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
      *
      * @return array
      */
-    public function findEdtSemestre($semestre, $semaine): array
+    public function findEdtSemestre($semestre, $semaine)
     {
         return $this->createQueryBuilder('p')
             ->where('p.semaine = :semaine')
@@ -372,6 +372,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
                 $pl['fin'] = $event->getFin();
                 $pl['commentaire'] = '';
                 $pl['ical'] = $event->getDisplayIcal();
+                $pl['date'] = $event->getDate();
                 $pl['salle'] = $event->getSalle();
                 $t[] = $pl;
             }
