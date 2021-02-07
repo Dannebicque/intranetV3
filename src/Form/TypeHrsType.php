@@ -31,16 +31,16 @@ class TypeHrsType extends AbstractType
                 'label' => 'label.incluService',
             ])
             ->add('type', ChoiceType::class, [
-                'label'                     => 'label.typehrs',
-                'choices'                   => [
-                    'choice.hrs'   => 'HRS',
-                    'choice.pca'   => 'PCA',
-                    'choice.prp'   => 'PRP',
+                'label' => 'label.typehrs',
+                'choices' => [
+                    'choice.hrs' => 'HRS',
+                    'choice.pca' => 'PCA',
+                    'choice.prp' => 'PRP',
                     'choice.suivi' => 'Suivi',
                     'choice.autre' => 'Autre',
                 ],
                 'choice_translation_domain' => 'form',
-                'expanded'                  => true,
+                'expanded' => true,
             ])
             ->add('maximum', TextType::class, ['label' => 'label.maximum']);
     }
@@ -51,7 +51,7 @@ class TypeHrsType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class'         => TypeHrs::class,
+            'data_class' => TypeHrs::class,
             'translation_domain' => 'form',
         ]);
     }
