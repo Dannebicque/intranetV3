@@ -4,9 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/ArticleController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:11
+ * @lastUpdate 07/02/2021 11:20
  */
-
 
 namespace App\Controller\administration;
 
@@ -67,7 +66,7 @@ class ArticleController extends BaseController
             $article,
             [
                 'departement' => $this->getDepartement(),
-                'attr'        => [
+                'attr' => [
                     'data-provide' => 'validation',
                 ],
             ]
@@ -106,7 +105,7 @@ class ArticleController extends BaseController
             $article,
             [
                 'departement' => $this->dataUserSession->getDepartement(),
-                'attr'        => [
+                'attr' => [
                     'data-provide' => 'validation',
                 ],
             ]

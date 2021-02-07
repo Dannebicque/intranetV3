@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/StageEtudiantType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:11
+ * @lastUpdate 07/02/2021 11:20
  */
 
 namespace App\Form;
@@ -83,7 +83,7 @@ class StageEtudiantType extends AbstractType
                     'mapped'    => false,
                     'date_data' => [
                         'from' => $stageEtudiant->getDateDebutStage(),
-                        'to'   => $stageEtudiant->getDateFinStage()
+                        'to'   => $stageEtudiant->getDateFinStage(),
                     ],
                 ]);
             })

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Apc/ApcStructure.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:11
+ * @lastUpdate 07/02/2021 11:16
  */
 
 /*
@@ -14,7 +14,6 @@
 namespace App\Classes\Apc;
 
 use App\Entity\Diplome;
-use function array_key_exists;
 
 class ApcStructure
 {
@@ -26,7 +25,7 @@ class ApcStructure
             foreach ($parcours->getApcParcoursNiveaux() as $niveau) {
                 if (null !== $niveau && null !== $niveau->getNiveau()) {
                     $niv = $niveau->getNiveau();
-                    if (null !== $niv && null !== $niv->getCompetence() && !array_key_exists($niv->getCompetence()->getId(),
+                    if (null !== $niv && null !== $niv->getCompetence() && !\array_key_exists($niv->getCompetence()->getId(),
                             $tParcours[$parcours->getId()])) {
                         $tParcours[$parcours->getId()][$niv->getCompetence()->getId()] = [];
                     }

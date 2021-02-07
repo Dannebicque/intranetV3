@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:11
+ * @lastUpdate 07/02/2021 11:20
  */
 
 /*
@@ -301,7 +301,7 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
             case 'cm':
             case 'td':
             case 'tp':
-                return mb_strtolower($p->getType()) . '_' . $p->getSemestre()->getAnnee()->getCouleur();
+            return mb_strtolower($p->getType()) . '_' . $p->getSemestre()->getAnnee()->getCouleur();
             default:
                 return 'CCCCCC';
         }

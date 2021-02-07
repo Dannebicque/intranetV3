@@ -4,9 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EvaluationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:11
+ * @lastUpdate 07/02/2021 11:20
  */
-
 
 namespace App\Controller\administration;
 
@@ -59,10 +58,10 @@ class EvaluationController extends BaseController
      * @param $_format
      *
      * @return RedirectResponse|Response
-     * @throws RuntimeError
      * @throws SyntaxError
-     *
      * @throws LoaderError
+     *
+     * @throws RuntimeError
      */
     public function exportEvaluation(
         MyEvaluation $myEvaluation,

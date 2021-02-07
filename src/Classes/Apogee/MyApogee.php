@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Apogee/MyApogee.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:11
+ * @lastUpdate 07/02/2021 11:20
  */
 
 /*
@@ -132,8 +132,6 @@ class MyApogee
     }
 
     /**
-     *
-     * @return StreamedResponse|null
      * @throws Exception
      */
     public function transformeApogeeTexte($fichier, string $nomfichier): ?StreamedResponse

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/StageController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:11
+ * @lastUpdate 07/02/2021 11:20
  */
 
 namespace App\Controller\appPersonnel;
@@ -36,11 +36,11 @@ class StageController extends BaseController
     ): Response {
         if (null !== $this->getConnectedUser()) {
             return $this->render('appPersonnel/stage/index.html.twig', [
-                'stagesEnCours'         => $stageEtudiantRepository->findByPersonnelAnnee($this->getConnectedUser(),
+                'stagesEnCours'      => $stageEtudiantRepository->findByPersonnelAnnee($this->getConnectedUser(),
                     $this->dataUserSession->getAnneeUniversitaire()),
-                'stagesHistorique'      => $stageEtudiantRepository->findByPersonnelHistorique($this->getConnectedUser(),
+                'stagesHistorique'   => $stageEtudiantRepository->findByPersonnelHistorique($this->getConnectedUser(),
                     $this->dataUserSession->getAnneeUniversitaire()),
-                'alternancesEnCours'    => $alternanceRepository->getByPersonnelAndAnneeUniversitaire($this->getConnectedUser(),
+                'alternancesEnCours' => $alternanceRepository->getByPersonnelAndAnneeUniversitaire($this->getConnectedUser(),
                     $this->dataUserSession->getAnneeUniversitaire()),
                 'alternancesHistorique' => $alternanceRepository->getHistoriqueByPersonnelAndAnneeUniversitaire($this->getConnectedUser(),
                     $this->dataUserSession->getAnneeUniversitaire()),
@@ -105,13 +105,14 @@ class StageController extends BaseController
             $alternances,
             'alternances',
             ['alternance_administration', 'utilisateur'],
-            ['entreprise'          => ['libelle'],
-             'tuteur'              => ['nom', 'prenom', 'fonction', 'telephone', 'email', 'portable'],
-             'etudiant'            => ['nom', 'prenom', 'mailUniv'],
-             'tuteurUniversitaire' => ['nom', 'prenom', 'mailUniv'],
-             'typeContrat',
-             'dateDebut',
-             'dateFin'
+            [
+                'entreprise'          => ['libelle'],
+                'tuteur'              => ['nom', 'prenom', 'fonction', 'telephone', 'email', 'portable'],
+                'etudiant'            => ['nom', 'prenom', 'mailUniv'],
+                'tuteurUniversitaire' => ['nom', 'prenom', 'mailUniv'],
+                'typeContrat',
+                'dateDebut',
+                'dateFin',
             ]
         );
     }

@@ -4,9 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/RattrapageController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:11
+ * @lastUpdate 07/02/2021 11:20
  */
-
 
 namespace App\Controller\administration;
 
@@ -118,7 +117,7 @@ class RattrapageController extends BaseController
 
         return $this->json([
             'redirect' => true,
-            'url'      => $this->generateUrl('administration_rattrapage_semestre_index',
+            'url' => $this->generateUrl('administration_rattrapage_semestre_index',
                 ['semestre' => $semestre->getId()]),
         ]);
     }

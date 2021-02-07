@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyStageEtudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:11
+ * @lastUpdate 07/02/2021 11:20
  */
 
 /*
@@ -124,9 +124,9 @@ class MyStageEtudiant
 
     /**
      * @return StageEtudiant|mixed
-     * @throws Exception
-     *
      * @throws NonUniqueResultException
+     *
+     * @throws Exception
      */
     private function checkStageEtudiantExist(StagePeriode $stagePeriode, Etudiant $etudiant)
     {

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/AnneeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:11
+ * @lastUpdate 07/02/2021 11:20
  */
 
 namespace App\Controller\superAdministration;
@@ -38,7 +38,7 @@ class AnneeController extends BaseController
             $annee->setDiplome($diplome);
             $form = $this->createForm(AnneeType::class, $annee, [
                 'departement' => $diplome->getDepartement(),
-                'attr'        => [
+                'attr' => [
                     'data-provide' => 'validation',
                 ],
             ]);
@@ -83,7 +83,7 @@ class AnneeController extends BaseController
                 $annee,
                 [
                     'departement' => $annee->getDiplome()->getDepartement(),
-                    'attr'        => [
+                    'attr' => [
                         'data-provide' => 'validation',
                     ],
                 ]

@@ -4,9 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/HrsController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:11
+ * @lastUpdate 07/02/2021 11:20
  */
-
 
 namespace App\Controller\administration;
 
@@ -41,7 +40,7 @@ class HrsController extends BaseController
         $hrs = new Hrs($this->dataUserSession->getDepartement());
         $form = $this->createForm(HrsType::class, $hrs, [
             'departement' => $this->dataUserSession->getDepartement(),
-            'attr'        => [
+            'attr' => [
                 'data-provide' => 'validation',
             ],
         ]);
@@ -68,7 +67,7 @@ class HrsController extends BaseController
     {
         $form = $this->createForm(HrsType::class, $hrs, [
             'departement' => $this->dataUserSession->getDepartement(),
-            'attr'        => [
+            'attr' => [
                 'data-provide' => 'validation',
             ],
         ]);

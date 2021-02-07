@@ -1,9 +1,5 @@
 <?php
 
-$fileHeaderComment = <<<COMMENT
-Pull your hearder here, for exemple, Licence header.
-COMMENT;
-
 $finder = PhpCsFixer\Finder::create()
     ->in(__DIR__)
     ->exclude('bin')
@@ -23,7 +19,6 @@ return PhpCsFixer\Config::create()
         '@Symfony:risky' => true,
         'array_syntax' => ['syntax' => 'short'],
         'compact_nullable_typehint' => true,
-        'header_comment' => ['header' => $fileHeaderComment, 'separate' => 'both'],
         'linebreak_after_opening_tag' => true,
         'mb_str_functions' => true,
         'no_php4_constructor' => true,

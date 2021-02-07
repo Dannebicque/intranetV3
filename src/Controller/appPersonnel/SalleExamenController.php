@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/SalleExamenController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:11
+ * @lastUpdate 07/02/2021 11:20
  */
 
 namespace App\Controller\appPersonnel;
@@ -49,10 +49,10 @@ class SalleExamenController extends BaseController
      * @Route("/application/salle-examen/genere/document",
      *     name="application_personnel_salle_examen_genere_placement",
      *     methods={"POST"})
-     * @throws RuntimeError
      * @throws SyntaxError
-     *
      * @throws LoaderError
+     *
+     * @throws RuntimeError
      */
     public function generePlacement(MySalleExamen $mySalleExamen, Request $request): ?RedirectResponse
     {

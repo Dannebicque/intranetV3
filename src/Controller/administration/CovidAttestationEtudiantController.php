@@ -4,9 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/CovidAttestationEtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:11
+ * @lastUpdate 07/02/2021 11:20
  */
-
 
 namespace App\Controller\administration;
 
@@ -82,10 +81,10 @@ class CovidAttestationEtudiantController extends BaseController
      *                                requirements={"etudiant":"\d+"})
      *
      * @return Response
-     * @throws RuntimeError
      * @throws SyntaxError
-     *
      * @throws LoaderError
+     *
+     * @throws RuntimeError
      */
     public function pdf(
         MyExportPresence $myExportPresence,

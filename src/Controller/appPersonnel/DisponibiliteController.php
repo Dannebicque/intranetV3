@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/DisponibiliteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:11
+ * @lastUpdate 07/02/2021 11:20
  */
 
 namespace App\Controller\appPersonnel;
@@ -62,8 +62,7 @@ class DisponibiliteController extends BaseController
     public function updateDisponibilites(
         Request $request,
         DisponibiliteRepository $disponibiliteRepository
-    ): JsonResponse
-    {
+    ): JsonResponse {
         $jour = $request->request->get('jour');
         $heure = $request->request->get('heure');
         $etat = $request->request->get('etat');

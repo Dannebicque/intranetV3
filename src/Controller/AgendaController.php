@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/AgendaController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:11
+ * @lastUpdate 07/02/2021 11:20
  */
 
 namespace App\Controller;
@@ -71,8 +71,7 @@ class AgendaController extends BaseController
         $semaine = 0,
         $filtre = 'prof',
         $valeur = ''
-    ): Response
-    {
+    ): Response {
         if (0 === $semaine) {
             $semaine = (int)date('W');
         }

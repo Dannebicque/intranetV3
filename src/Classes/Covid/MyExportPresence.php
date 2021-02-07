@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Covid/MyExportPresence.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:11
+ * @lastUpdate 07/02/2021 11:20
  */
 
 /*
@@ -127,10 +127,10 @@ class MyExportPresence
      * @param $sortie
      *
      * @return bool|PdfResponse|string
-     * @throws RuntimeError
      * @throws SyntaxError
-     *
      * @throws LoaderError
+     *
+     * @throws RuntimeError
      */
     public function genereAttestationPdf(CovidAttestationPersonnel $covidAttestationPersonnel, $sortie)
     {

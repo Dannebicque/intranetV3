@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/TrombinoscopeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:11
+ * @lastUpdate 07/02/2021 11:20
  */
 
 namespace App\Controller;
@@ -97,10 +97,10 @@ class TrombinoscopeController extends BaseController
      * @Route("/etudiant/export-image/{typeGroupe<\d+>}.pdf", name="trombinoscope_etudiant_image", methods="GET")
      *
      * @return Response
-     * @throws RuntimeError
      * @throws SyntaxError
-     *
      * @throws LoaderError
+     *
+     * @throws RuntimeError
      */
     public function trombiEtudiantExportImage(
         MyPDF $myPDF,

@@ -4,9 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/MaterielController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:11
+ * @lastUpdate 07/02/2021 11:20
  */
-
 
 namespace App\Controller\administration;
 
@@ -60,7 +59,7 @@ class MaterielController extends BaseController
     {
         $materiel = new Materiel();
         $form = $this->createForm(MaterielType::class, $materiel, [
-            'attr'        => [
+            'attr' => [
                 'data-provide' => 'validation',
             ],
             'departement' => $this->dataUserSession->getDepartement(),
@@ -95,7 +94,7 @@ class MaterielController extends BaseController
     public function edit(Request $request, Materiel $materiel): Response
     {
         $form = $this->createForm(MaterielType::class, $materiel, [
-            'attr'        => [
+            'attr' => [
                 'data-provide' => 'validation',
             ],
             'departement' => $this->dataUserSession->getDepartement(),

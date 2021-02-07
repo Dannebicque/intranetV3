@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/ParcourController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:11
+ * @lastUpdate 07/02/2021 11:20
  */
 
 namespace App\Controller\superAdministration;
@@ -33,7 +33,7 @@ class ParcourController extends BaseController
 
             $form = $this->createForm(ParcourType::class, $parcour, [
                 'diplome' => $semestre->getAnnee()->getDiplome(),
-                'attr'    => [
+                'attr' => [
                     'data-provide' => 'validation',
                 ],
             ]);
@@ -72,7 +72,7 @@ class ParcourController extends BaseController
         if (null !== $parcour->getDiplome()) {
             $form = $this->createForm(ParcourType::class, $parcour, [
                 'diplome' => $parcour->getDiplome(),
-                'attr'    => [
+                'attr' => [
                     'data-provide' => 'validation',
                 ],
             ]);
