@@ -1,15 +1,10 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Traits/SoftDeletableTrait.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 05/07/2020 08:14
-
-/**
- * Created by PhpStorm.
- * User: davidannebicque
- * Date: 26/08/2018
- * Time: 11:05
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Traits/SoftDeletableTrait.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:49
  */
 
 namespace App\Entity\Traits;

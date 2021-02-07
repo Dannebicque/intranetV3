@@ -1,56 +1,45 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyExport.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyExport.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
-/**
- * Created by PhpStorm.
- * User: davidannebicque
- * Date: 12/07/2018
- * Time: 13:10
+/*
+ * Pull your hearder here, for exemple, Licence header.
  */
 
 namespace App\Classes;
 
-use App\Entity\Evaluation;
 use App\Classes\Excel\MyExcelMultiExport;
+use App\Entity\Evaluation;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class MyExport
 {
-
-
     /** @var MyExcelMultiExport */
     protected $excel;
 
     /**
      * MyExport constructor.
-     *
-     * @param MyExcelMultiExport $excel
      */
     public function __construct(MyExcelMultiExport $excel)
     {
         $this->excel = $excel;
     }
 
-    /**
-     * @return MyExcelMultiExport
-     */
     public function getExcel(): MyExcelMultiExport
     {
         return $this->excel;
     }
 
-
     /**
-     * @param        $format
-     * @param        $data
-     * @param        $nomFichier
-     * @param array  $groups
-     * @param array  $colonne
+     * @param $format
+     * @param $data
+     * @param $nomFichier
      *
      * @return Response|bool
      */
@@ -93,15 +82,10 @@ class MyExport
         return false;
     }
 
-    /**
-     * @param Evaluation $evaluation
-     *
-     * @return Response|null
-     */
     public function genereModeleImportNote(Evaluation $evaluation): ?Response
     {
         $semestre = $evaluation->getSemestre();
-        if ($semestre !== null) {
+        if (null !== $semestre) {
             $this->excel->genereModeleExcel($semestre);
 
             return $this->excel->saveXlsx('modele-import-note-' . $semestre->getLibelle());

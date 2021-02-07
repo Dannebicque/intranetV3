@@ -1,15 +1,14 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyAbsences.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 12/12/2020 14:31
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyAbsences.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
-/**
- * Created by PhpStorm.
- * User: davidannebicque
- * Date: 02/04/2018
- * Time: 17:03
+/*
+ * Pull your hearder here, for exemple, Licence header.
  */
 
 namespace App\Classes;
@@ -26,8 +25,7 @@ use App\Repository\EtudiantRepository;
 use Exception;
 
 /**
- * Class MyAbsences
- * @package App\Classes
+ * Class MyAbsences.
  */
 class MyAbsences
 {
@@ -42,22 +40,12 @@ class MyAbsences
      */
     private $etudiants;
 
-    /**
-     * @var MyExcelMultiExport
-     */
     private MyExcelMultiExport $myExcelMultiExport;
-    /**
-     * @var EtudiantAbsences
-     */
+
     private EtudiantAbsences $etudiantAbsences;
 
     /**
      * MyAbsences constructor.
-     *
-     * @param AbsenceRepository  $absenceRepository
-     * @param EtudiantRepository $etudiantRepository
-     * @param MyExcelMultiExport $myExcelMultiExport
-     * @param EtudiantAbsences   $etudiantAbsences
      */
     public function __construct(
         AbsenceRepository $absenceRepository,
@@ -71,9 +59,6 @@ class MyAbsences
         $this->etudiantAbsences = $etudiantAbsences;
     }
 
-    /**
-     * @return array
-     */
     public function getStatistiques(): array
     {
         return $this->statistiques;
@@ -90,8 +75,6 @@ class MyAbsences
     /**
      * @param $matiere
      * @param $anneeCourante
-     *
-     * @return mixed
      */
     public function getAbsencesMatiere(Matiere $matiere, AnneeUniversitaire $anneeCourante)
     {
@@ -99,8 +82,6 @@ class MyAbsences
     }
 
     /**
-     * @param Semestre $semestre
-     *
      * @throws Exception
      */
     public function getAbsencesSemestre(Semestre $semestre): void
@@ -129,6 +110,7 @@ class MyAbsences
                 $this->myExcelMultiExport->genereReleveAbsencesMatiereExcel(
                     $absences
                 );
+
                 return $this->myExcelMultiExport->savePdf($name);
             case Constantes::FORMAT_EXCEL:
                 $this->myExcelMultiExport->genereReleveAbsencesMatiereExcel(
@@ -146,5 +128,4 @@ class MyAbsences
 
         return false;
     }
-
 }

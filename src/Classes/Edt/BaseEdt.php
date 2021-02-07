@@ -1,12 +1,17 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/BaseEdt.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 06/02/2021 23:31
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/BaseEdt.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
+/*
+ * Pull your hearder here, for exemple, Licence header.
+ */
 
 namespace App\Classes\Edt;
-
 
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Calendrier;
@@ -19,7 +24,7 @@ use Carbon\Carbon;
 use Carbon\CarbonImmutable;
 use RuntimeException;
 
-Abstract class BaseEdt
+abstract class BaseEdt
 {
     protected array $tabJour = [];
 
@@ -62,8 +67,6 @@ Abstract class BaseEdt
 
     /**
      * MyEdt constructor.
-     *
-     * @param CalendrierRepository $calendrierRepository
      */
     public function __construct(
         CalendrierRepository $calendrierRepository
@@ -72,31 +75,22 @@ Abstract class BaseEdt
         $this->semestre = null;
     }
 
-    /**
-     * @return mixed
-     */
     public function getSemaineFormation()
     {
         return $this->semaineFormationIUT;
     }
 
-    /**
-     * @return mixed
-     */
     public function getSemaine()
     {
         return $this->semaine;
     }
 
-    /**
-     * @return array
-     */
     public function getTabJour(): array
     {
         return $this->tabJour;
     }
 
-    protected function init(AnneeUniversitaire $anneeUniversitaire, $filtre = '', $valeur = '', $semaine = 0): BaseEdt
+    protected function init(AnneeUniversitaire $anneeUniversitaire, $filtre = '', $valeur = '', $semaine = 0): self
     {
         $dateDuJour = Carbon::now();
         $this->anneeUniversitaire = $anneeUniversitaire;
@@ -109,7 +103,7 @@ Abstract class BaseEdt
             $semaine = 35;
         }
 
-        if ($semaine === 0) {
+        if (0 === $semaine) {
             $semaine = $dateDuJour->weekOfYear;
 
             if ($semaine >= 29 && $semaine < 35) {
@@ -118,8 +112,8 @@ Abstract class BaseEdt
             $this->semaine = $semaine;
 
             //traitement du Week end
-            if ($dateDuJour->dayOfWeek === Carbon::SATURDAY || $dateDuJour->dayOfWeek === Carbon::SUNDAY) {
-                $this->semaine++;
+            if (Carbon::SATURDAY === $dateDuJour->dayOfWeek || Carbon::SUNDAY === $dateDuJour->dayOfWeek) {
+                ++$this->semaine;
                 if ($this->semaine > Carbon::WEEKS_PER_YEAR) {
                     $this->semaine = 1;
                 }
@@ -131,19 +125,20 @@ Abstract class BaseEdt
             $this->semaine = $semaine;
         }
 
-
-        $this->calendrier = $this->calendrierRepository->findOneBy(['semaineReelle'      => $this->semaine,
-                                                                    'anneeUniversitaire' => $anneeUniversitaire->getId()
+        $this->calendrier = $this->calendrierRepository->findOneBy([
+            'semaineReelle'      => $this->semaine,
+            'anneeUniversitaire' => $anneeUniversitaire->getId(),
         ]);
-        if ($this->calendrier !== null) {
+        if (null !== $this->calendrier) {
             $this->semaineFormationIUT = $this->calendrier->getSemaineFormation();
             $this->semaineFormationLundi = $this->calendrier->getDatelundi();
         } else {
             //si la requete est vide, on prend la première...
-            $this->calendrier = $this->calendrierRepository->findOneBy(['semaineFormation'   => 1,
-                                                                        'anneeUniversitaire' => $anneeUniversitaire->getId()
+            $this->calendrier = $this->calendrierRepository->findOneBy([
+                'semaineFormation'   => 1,
+                'anneeUniversitaire' => $anneeUniversitaire->getId(),
             ]);
-            if ($this->calendrier !== null) {
+            if (null !== $this->calendrier) {
                 $this->semaineFormationIUT = $this->calendrier->getSemaineFormation();
                 $this->semaineFormationLundi = $this->calendrier->getDatelundi();
                 $this->semaine = $this->calendrier->getSemaineReelle();
@@ -152,14 +147,14 @@ Abstract class BaseEdt
             }
         }
 
-        if ($filtre === '') {
+        if ('' === $filtre) {
             $this->filtre = 'promo';
             //récupérer promo par défaut !
         } else {
             $this->filtre = $filtre;
         }
 
-        if ($valeur === '') {
+        if ('' === $valeur) {
             //todo: a refaire...
         } else {
             $this->valeur = $valeur;
@@ -178,107 +173,72 @@ Abstract class BaseEdt
         $this->tabJour['vendredi'] = $this->semaineFormationLundi->addDays(4);
     }
 
-    /**
-     * @return mixed
-     */
     public function getFiltre()
     {
         return $this->filtre;
     }
 
-    /**
-     * @return mixed
-     */
     public function getValeur()
     {
         return $this->valeur;
     }
 
-    /**
-     * @return mixed
-     */
     public function getPlanning()
     {
         return $this->planning;
     }
 
-    /**
-     * @return int
-     */
     public function getSemainePrecedente(): int
     {
         $s = (int)$this->semaine - 1;
 
-        if ($s === 0) {
+        if (0 === $s) {
             return Carbon::WEEKS_PER_YEAR;
         }
-            return $s;
 
+        return $s;
     }
 
-    /**
-     * @return int
-     */
     public function getSemaineSuivante(): int
     {
         $s = $this->semaine + 1;
         if ($s > Carbon::WEEKS_PER_YEAR) {
             return 1;
         }
-            return $s;
+
+        return $s;
     }
 
-    /**
-     * @return array
-     */
     public function getTotal(): array
     {
         return $this->total;
     }
 
-    /**
-     * @return Semestre|null
-     */
     public function getSemestre(): ?Semestre
     {
         return $this->semestre;
     }
 
-    /**
-     * @return Matiere|null
-     */
     public function getModule(): ?Matiere
     {
         return $this->module;
     }
 
-    /**
-     * @return mixed
-     */
     public function getJour()
     {
         return $this->jour;
     }
 
-    /**
-     * @return mixed
-     */
     public function getSalle()
     {
         return $this->salle;
     }
 
-    /**
-     * @return mixed
-     */
     public function getGroupes()
     {
         return $this->groupes;
     }
 
-    /**
-     * @return array
-     */
     protected function calculSemaines(): array
     {
         $allsemaine = $this->calendrierRepository->findByAnneeUniversitaire($this->anneeUniversitaire);
@@ -293,16 +253,12 @@ Abstract class BaseEdt
             $date1 = strtotime($t[$i]['debut']->format('Y-m-d'));
             $fin = date('d-m-Y', mktime(12, 30, 00, date('n', $date1), date('j', $date1) + 7, date('Y', $date1)));
             $t[$i]['fin'] = $fin;
-            $i++;
+            ++$i;
         }
 
         return $t;
     }
 
-
-    /**
-     * @return mixed
-     */
     public function getSemaines()
     {
         return $this->semaines;

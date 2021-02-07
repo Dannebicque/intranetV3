@@ -1,12 +1,17 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEmprunts.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 19/12/2020 15:09
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEmprunts.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
+/*
+ * Pull your hearder here, for exemple, Licence header.
+ */
 
 namespace App\Classes;
-
 
 use App\Classes\Pdf\MyPDF;
 use App\Entity\Constantes;
@@ -46,12 +51,6 @@ class MyEmprunts
 
     /**
      * MyEmprunts constructor.
-     *
-     * @param EmpruntRepository        $empruntRepository
-     * @param MaterielRepository       $materielRepository
-     * @param EntityManagerInterface   $entityManager
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param MyPDF                    $myPDF
      */
     public function __construct(
         EmpruntRepository $empruntRepository,
@@ -60,7 +59,6 @@ class MyEmprunts
         EventDispatcherInterface $eventDispatcher,
         MyPDF $myPDF
     ) {
-
         $this->materielRepository = $materielRepository;
         $this->empruntRepository = $empruntRepository;
         $this->myPDF = $myPDF;
@@ -71,13 +69,10 @@ class MyEmprunts
             Emprunt::ACCEPTE => 0,
             Emprunt::SORTIE  => 0,
             Emprunt::REFUS   => 0,
-            Emprunt::REVENU  => 0
+            Emprunt::REVENU  => 0,
         ];
     }
 
-    /**
-     * @return array
-     */
     public function getJours(): array
     {
         return $this->jours;
@@ -92,7 +87,7 @@ class MyEmprunts
     private function calculStatistiques(): void
     {
         foreach ($this->emprunts as $emprunt) {
-            $this->statistiques[$emprunt->getEtat()]++;
+            ++$this->statistiques[$emprunt->getEtat()];
         }
     }
 
@@ -104,9 +99,6 @@ class MyEmprunts
         return $this->emprunts;
     }
 
-    /**
-     * @return array
-     */
     public function getStatistiques(): array
     {
         return $this->statistiques;
@@ -143,7 +135,7 @@ class MyEmprunts
 
         $event = new EmpruntEvent($this->emprunt);
 
-        if ($eventNotif !== '') {
+        if ('' !== $eventNotif) {
             $this->eventDispatcher->dispatch($event, $eventNotif);
         }
 
@@ -155,9 +147,9 @@ class MyEmprunts
     {
         $this->jours = [];
 
-        if ($role === 'ETU') {
+        if ('ETU' === $role) {
             $nbjouremprunt = 7;
-            if (date('N') === '5') {
+            if ('5' === date('N')) {
                 $j = 4;
             } else {
                 $j = 2;
@@ -167,18 +159,18 @@ class MyEmprunts
             $j = -2;
         }
 
-        for ($i = 0; $i < $nbjouremprunt; $i++) {
+        for ($i = 0; $i < $nbjouremprunt; ++$i) {
             $d = mktime(0, 0, 0, date('m'), date('d') + $j, date('Y'));
 
-            if (date('N', $d) == 6) {
+            if (6 === date('N', $d)) {
                 $d2 = mktime(0, 0, 0, date('m'), date('d') + $j + 1, date('Y'));
                 $this->jours[$i]['jour'] = 'WE';
                 $this->jours[$i]['texte'] = date('d/m/Y', $d) . '-' . date('d/m/Y', $d2);
                 $this->jours[$i]['date'] = date('Y-m-d', $d);
                 $this->jours[$i]['objDate'] = $d;
                 $this->jours[$i]['i'] = $i;
-                $j++;
-            } elseif (date('N', $d) == 7) {
+                ++$j;
+            } elseif (7 === date('N', $d)) {
                 $d2 = mktime(0, 0, 0, date('m'), date('d') + $j - 1, date('Y'));
                 $this->jours[$i]['jour'] = 'WE';
                 $this->jours[$i]['texte'] = date('d/m/Y', $d2) . '-' . date('d/m/Y', $d);
@@ -192,36 +184,32 @@ class MyEmprunts
                 $this->jours[$i]['objDate'] = $d;
                 $this->jours[$i]['i'] = $i;
             }
-            $j++;
+            ++$j;
         }
 
         return $this->jours;
     }
 
     /**
-     * @param Emprunt $emprunt
-     *
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      */
     public function genereFiche(Emprunt $emprunt): void
     {
-        $nom = $emprunt->getEtudiant() !== null ? $emprunt->getEtudiant()->getNom() : 'etudiant';
+        $nom = null !== $emprunt->getEtudiant() ? $emprunt->getEtudiant()->getNom() : 'etudiant';
 
         $this->myPDF::generePdf('pdf/ficheEmprunt.html.twig', [
             'emprunt' => $emprunt,
         ],
             'pret-' . $nom,
-            $emprunt->getDepartement() !== null ? $emprunt->getDepartement()->getLibelle() : 'departement');
+            null !== $emprunt->getDepartement() ? $emprunt->getDepartement()->getLibelle() : 'departement');
     }
-
 
     public function empruntDemande(
         Request $request,
         Etudiant $etudiant
     ) {
-
         $pret = new EmpruntEtudiant($etudiant);
 
         $pret->setMotif($request->request->get('listemotif'));
@@ -244,13 +232,13 @@ class MyEmprunts
 
         foreach ($materieljour as $m) {
             $t = explode('_', $m); //jour, AM/PM, matériel
-            if (array_key_exists($t[1], $tmat)) {
+            if (\array_key_exists($t[1], $tmat)) {
                 //matériel existant, on ajoute
-                if (!array_key_exists($t[1], $matde)) {
+                if (!\array_key_exists($t[1], $matde)) {
                     $matde[$t[1]] = $tmat[$t[1]];
                 }
 
-                if ($d1 === null) {
+                if (null === $d1) {
                     $d1 = $t[0];
                     $d2 = $t[0];
                 } else {

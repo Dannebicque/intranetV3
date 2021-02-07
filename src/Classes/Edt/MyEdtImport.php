@@ -1,18 +1,23 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtImport.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 06/02/2021 23:47
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtImport.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
+/*
+ * Pull your hearder here, for exemple, Licence header.
+ */
 
 namespace App\Classes\Edt;
 
-
+use App\Classes\DataUserSession;
+use App\Classes\MyUpload;
 use App\Entity\Calendrier;
 use App\Entity\EdtPlanning;
 use App\Entity\Semestre;
-use App\Classes\DataUserSession;
-use App\Classes\MyUpload;
 use App\Entity\TypeGroupe;
 use App\Repository\CalendrierRepository;
 use App\Repository\EdtPlanningRepository;
@@ -50,14 +55,6 @@ class MyEdtImport
 
     /**
      * MyEdtImport constructor.
-     *
-     * @param EdtPlanningRepository  $edtPlanningRepository
-     * @param CalendrierRepository   $calendrierRepository
-     * @param PersonnelRepository    $personnelRepository
-     * @param MatiereRepository      $matiereRepository
-     * @param SemestreRepository     $semestreRepository
-     * @param EntityManagerInterface $entityManager
-     * @param MyUpload               $myUpload
      */
     public function __construct(
         EdtPlanningRepository $edtPlanningRepository,
@@ -78,22 +75,18 @@ class MyEdtImport
     }
 
     /**
-     * @param                 $file
-     * @param DataUserSession $dataUserSession
+     * @param $file
      *
-     * @return MyEdtImport
      * @throws Exception
      */
-    public function init($file, DataUserSession $dataUserSession): MyEdtImport
+    public function init($file, DataUserSession $dataUserSession): self
     {
         $this->dataUserSession = $dataUserSession;
 
         $this->nomfile = $this->myUpload->upload($file, 'temp/', ['txt']);
 
         return $this;
-
     }
-
 
     public function traite(): void
     {
@@ -103,7 +96,7 @@ class MyEdtImport
         $tabSemestre = $this->semestreRepository->tableauSemestres($this->dataUserSession->getDepartement());
         $tabdebut = [1 => 1, 2 => 4, 3 => 7, 4 => 13, 5 => 16, 6 => 19, 7 => 22];
 
-        $handle = fopen($this->nomfile, 'rb');
+        $handle = fopen($this->nomfile, 'r');
         $tSemaineClear = []; //tableau pour mémoriser les semaines à supprimer
 
         /*Si on a réussi à ouvrir le fichier*/
@@ -113,30 +106,31 @@ class MyEdtImport
                 /*On lit la ligne courante*/
                 $phrase = fgets($handle);
                 $phrase = trim($phrase);
-                if (strlen($phrase) > 10 && $phrase[strlen($phrase) - 1] !== '*') {
-                    $this->semaine = substr($phrase, 1, 2); //on ne récupère pas le S
+                if (mb_strlen($phrase) > 10 && '*' !== $phrase[mb_strlen($phrase) - 1]) {
+                    $this->semaine = mb_substr($phrase, 1, 2); //on ne récupère pas le S
                     $jour = $phrase[3];
                     $heure = $phrase[4]; //a convertir
-                    $semestre = substr($phrase, 5, 2);
+                    $semestre = mb_substr($phrase, 5, 2);
 
-                    if (!array_key_exists($semestre, $tSemaineClear)) {
+                    if (!\array_key_exists($semestre, $tSemaineClear)) {
                         //si la clé n'est pas dans le tableau, la semaine n'a pas encore été effacée, on supprime
                         $this->clearSemaine($this->semaine, $tabSemestre[$semestre]);
 
                         //on mémorise le semestre
                         $tSemaineClear[$semestre] = true;
                     }
-                    $this->calendrier = $this->calendrierRepository->findOneBy(['semaineFormation'   => $this->semaine,
-                                                                                'anneeUniversitaire' => $this->dataUserSession->getAnneeUniversitaire()->getId()
+                    $this->calendrier = $this->calendrierRepository->findOneBy([
+                        'semaineFormation'   => $this->semaine,
+                        'anneeUniversitaire' => $this->dataUserSession->getAnneeUniversitaire()->getId(),
                     ]);
                     $date = $this->convertToDate($jour);
                     $groupe = $phrase[7];
 
-                    if ($phrase[8] === 'Z') {
+                    if ('Z' === $phrase[8]) {
                         //prof commence par Z, donc, c'est une zone sans enseignant
-                        $salle = substr($phrase, 11, 4);
+                        $salle = mb_substr($phrase, 11, 4);
                         $fin = $phrase[15];
-                        $texte = substr($phrase, 16);
+                        $texte = mb_substr($phrase, 16);
 
                         $pl = new EdtPlanning();
                         $pl->setSemestre($tabSemestre[$semestre]);
@@ -146,7 +140,7 @@ class MyEdtImport
                         $pl->setDate($date);
                         $pl->setSalle($salle);
                         $pl->setGroupe(1);
-                        if (substr($pl->getSemestre()->getLibelle(), -1) === 'D') {
+                        if ('D' === mb_substr($pl->getSemestre()->getLibelle(), -1)) {
                             $pl->setType(TypeGroupe::TYPE_GROUPE_TD);
                         } else {
                             $pl->setType(TypeGroupe::TYPE_GROUPE_CM);
@@ -159,38 +153,36 @@ class MyEdtImport
                         $pl->setTexte($texte);
 
                         $this->entityManager->persist($pl);
-
                     } else {
+                        $prof = mb_substr($phrase, 8, 3);
 
-                        $prof = substr($phrase, 8, 3);
-
-                        if ($semestre[1] === 'D') {
-                            $matiere = substr($phrase, 11, 6);
-                            $typecours = substr($phrase, 17, 2);
-                            if ($typecours[0] !== 'T' && $typecours[0] !== 'C') {
+                        if ('D' === $semestre[1]) {
+                            $matiere = mb_substr($phrase, 11, 6);
+                            $typecours = mb_substr($phrase, 17, 2);
+                            if ('T' !== $typecours[0] && 'C' !== $typecours[0]) {
                                 $matiere .= $typecours[0];
-                                $typecours = substr($phrase, 18, 2);
-                                $ordre = substr($phrase, 20, 2);
-                                $salle = substr($phrase, 22);
+                                $typecours = mb_substr($phrase, 18, 2);
+                                $ordre = mb_substr($phrase, 20, 2);
+                                $salle = mb_substr($phrase, 22);
                             } else {
-                                $ordre = substr($phrase, 19, 2);
-                                $salle = substr($phrase, 21);
+                                $ordre = mb_substr($phrase, 19, 2);
+                                $salle = mb_substr($phrase, 21);
                             }
                         } else {
-                            $matiere = substr($phrase, 11, 5);
-                            $typecours = substr($phrase, 16, 2);
-                            if ($typecours[0] !== 'T' && $typecours[0] !== 'C') {
+                            $matiere = mb_substr($phrase, 11, 5);
+                            $typecours = mb_substr($phrase, 16, 2);
+                            if ('T' !== $typecours[0] && 'C' !== $typecours[0]) {
                                 $matiere .= $typecours[0];
-                                $typecours = substr($phrase, 17, 2);
-                                $ordre = substr($phrase, 19, 2);
-                                $salle = substr($phrase, 21);
+                                $typecours = mb_substr($phrase, 17, 2);
+                                $ordre = mb_substr($phrase, 19, 2);
+                                $salle = mb_substr($phrase, 21);
                             } else {
-                                $ordre = substr($phrase, 18, 2);
-                                $salle = substr($phrase, 20);
+                                $ordre = mb_substr($phrase, 18, 2);
+                                $salle = mb_substr($phrase, 20);
                             }
                         }
 
-                        if (array_key_exists($matiere, $tabMatieres) && array_key_exists($prof, $tabIntervenants)) {
+                        if (\array_key_exists($matiere, $tabMatieres) && \array_key_exists($prof, $tabIntervenants)) {
                             $pl = new EdtPlanning();
                             $pl->setSemestre($tabMatieres[$matiere]->getUE()->getSemestre());
                             $this->semestre = $pl->getSemestre()->getId();
@@ -200,12 +192,12 @@ class MyEdtImport
                             $pl->setSalle($salle);
                             $pl->setOrdre($ordre);
                             $pl->setDate($date);
-                            $pl->setGroupe(ord($groupe) - 64);
-                            $pl->setType(strtoupper($typecours));
+                            $pl->setGroupe(\ord($groupe) - 64);
+                            $pl->setType(mb_strtoupper($typecours));
                             $pl->setDebut($tabdebut[$heure]);
                             $pl->setFin($tabdebut[$heure] + 3);
                             $pl->setSemaine($this->semaine);
-                            if ($salle === 'EVAL') {
+                            if ('EVAL' === $salle) {
                                 $pl->setEvaluation(true);
                             } else {
                                 $pl->setEvaluation(false);
@@ -220,40 +212,29 @@ class MyEdtImport
             fclose($handle);
             unlink($this->dir . $this->nomfile); //suppression du fichier
             $this->entityManager->flush();
-
         }
     }
 
-    /**
-     * @return mixed
-     */
     public function getSemaine()
     {
         return $this->semaine;
     }
 
-    /**
-     * @return mixed
-     */
     public function getSemestre()
     {
         return $this->semestre;
     }
 
-    /**
-     * @return mixed
-     */
     public function getCalendrier()
     {
         return $this->calendrier;
     }
 
-
     private function clearSemaine($semaine, Semestre $semestre): void
     {
         $sem = $this->edtPlanningRepository->findBy([
             'semaine'  => $semaine,
-            'semestre' => $semestre
+            'semestre' => $semestre,
         ]);
 
         foreach ($sem as $s) {

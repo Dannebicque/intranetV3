@@ -1,9 +1,12 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcParcoursNiveauController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 08/01/2021 15:56
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcParcoursNiveauController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
 
 namespace App\Controller\administration\apc;
 
@@ -23,10 +26,6 @@ class ApcParcoursNiveauController extends BaseController
 {
     /**
      * @Route("/new/{parcours}", name="apc_parcours_niveau_new", methods={"GET","POST"})
-     * @param Request     $request
-     * @param ApcParcours $parcours
-     *
-     * @return Response
      */
     public function new(Request $request, ApcParcours $parcours): Response
     {
@@ -51,10 +50,6 @@ class ApcParcoursNiveauController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="apc_parcours_niveau_edit", methods={"GET","POST"})
-     * @param Request           $request
-     * @param ApcParcoursNiveau $apcParcoursNiveau
-     *
-     * @return Response
      */
     public function edit(Request $request, ApcParcoursNiveau $apcParcoursNiveau): Response
     {
@@ -77,10 +72,6 @@ class ApcParcoursNiveauController extends BaseController
 
     /**
      * @Route("/{id}", name="apc_parcours_niveau_delete", methods={"DELETE"})
-     * @param Request           $request
-     * @param ApcParcoursNiveau $apcParcoursNiveau
-     *
-     * @return Response
      */
     public function delete(Request $request, ApcParcoursNiveau $apcParcoursNiveau): Response
     {

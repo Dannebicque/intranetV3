@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/TypeDocument.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 25/07/2020 11:21
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/TypeDocument.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:50
+ */
 
 namespace App\Entity;
 
@@ -18,7 +20,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
  */
 class TypeDocument extends BaseEntity
 {
-
     /**
      * @var string
      *
@@ -39,8 +40,6 @@ class TypeDocument extends BaseEntity
 
     /**
      * TypeDocument constructor.
-     *
-     * @param Departement $departement
      */
     public function __construct(Departement $departement)
     {
@@ -56,25 +55,17 @@ class TypeDocument extends BaseEntity
         return $this->libelle;
     }
 
-    /**
-     * @param string $libelle
-     */
     public function setLibelle(string $libelle): void
     {
         $this->libelle = $libelle;
     }
 
-    /**
-     * @return Departement|null
-     */
     public function getDepartement(): ?Departement
     {
         return $this->departement;
     }
 
     /**
-     * @param Departement|null $departement
-     *
      * @return TypeDocument
      */
     public function setDepartement(?Departement $departement): self
@@ -93,8 +84,6 @@ class TypeDocument extends BaseEntity
     }
 
     /**
-     * @param Document $document
-     *
      * @return TypeDocument
      */
     public function addDocument(Document $document): self
@@ -108,8 +97,6 @@ class TypeDocument extends BaseEntity
     }
 
     /**
-     * @param Document $document
-     *
      * @return TypeDocument
      */
     public function removeDocument(Document $document): self

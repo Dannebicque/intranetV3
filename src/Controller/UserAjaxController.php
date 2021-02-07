@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/UserAjaxController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/UserAjaxController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller;
 
@@ -26,18 +28,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class UserController
- * @package App\Controller
+ * Class UserController.
+ *
  * @Route("/utilisateur/ajax")
  */
 class UserAjaxController extends BaseController
 {
     /**
-     * @param FavoriRepository   $favoriRepository
-     * @param EtudiantRepository $etudiantRepository
-     * @param Request            $request
-     *
-     * @return Response
      * @throws NonUniqueResultException
      * @throws Exception
      * @Route("/add-favori", name="user_add_favori", options={"expose":true})
@@ -49,7 +46,7 @@ class UserAjaxController extends BaseController
     ): Response {
         $action = $request->request->get('etat');
         $user = $etudiantRepository->findOneBySlug($request->request->get('user'));
-        if ($user && $action === 'true') {
+        if ($user && 'true' === $action) {
             $fav = new Favori($this->getConnectedUser(), $user);
 
             $this->entityManager->persist($fav);
@@ -58,10 +55,10 @@ class UserAjaxController extends BaseController
             return new Response('ok', Response::HTTP_OK);
         }
 
-        if ($user && $action === 'false') {
+        if ($user && 'false' === $action) {
             $fav = $favoriRepository->findBy([
                 'etudiantDemandeur' => $this->getConnectedUser()->getId(),
-                'etudiantDemande'   => $user->getId()
+                'etudiantDemande'   => $user->getId(),
             ]);
             foreach ($fav as $f) {
                 $this->entityManager->remove($f);
@@ -76,8 +73,6 @@ class UserAjaxController extends BaseController
 
     /**
      * @Route("/change-defaut/{departement}", name="user_change_departement_defaut", options={"expose":true})
-     * @param PersonnelDepartementRepository $personnelDepartementRepository
-     * @param Departement                    $departement
      * @ParamConverter("departement", options={"mapping": {"departement": "uuid"}})
      *
      * @return JsonResponse
@@ -86,11 +81,11 @@ class UserAjaxController extends BaseController
         PersonnelDepartementRepository $personnelDepartementRepository,
         Departement $departement
     ): ?JsonResponse {
-        if ($this->getConnectedUser() !== null && $this->getConnectedUser()->getTypeUser() === 'permanent') {
+        if (null !== $this->getConnectedUser() && 'permanent' === $this->getConnectedUser()->getTypeUser()) {
             $pf = $personnelDepartementRepository->findByPersonnel($this->getConnectedUser());
             /** @var PersonnelDepartement $p */
             foreach ($pf as $p) {
-                if ($p->getDepartement() !== null && $p->getDepartement()->getId() === $departement->getId()) {
+                if (null !== $p->getDepartement() && $p->getDepartement()->getId() === $departement->getId()) {
                     $p->setDefaut(true);
                 } else {
                     $p->setDefaut(false);
@@ -108,9 +103,7 @@ class UserAjaxController extends BaseController
     /**
      * @Route("/change-semestre/{etudiant}/{semestre}", name="user_change_semestre", options={"expose":true})
      *
-     * @param SemestreRepository $semestreRepository
-     * @param Etudiant           $etudiant
-     * @param Semestre           $semestre
+     * @param Semestre $semestre
      *
      * @return JsonResponse
      */
@@ -120,7 +113,7 @@ class UserAjaxController extends BaseController
         $semestre
     ): ?JsonResponse {
         $semestre = $semestreRepository->find($semestre);
-        if ($semestre !== null) {
+        if (null !== $semestre) {
             $etudiant->setSemestre($semestre);
         } else {
             $etudiant->setSemestre(null);
@@ -137,10 +130,8 @@ class UserAjaxController extends BaseController
 
     /**
      * @Route("/change-departement/{etudiant}/{departement}", name="user_change_departement", options={"expose":true})
-     * @param DepartementRepository $departementRepository
-     * @param Etudiant              $etudiant
      *
-     * @param                       $departement
+     * @param $departement
      *
      * @return JsonResponse
      */
@@ -150,7 +141,7 @@ class UserAjaxController extends BaseController
         $departement
     ): ?JsonResponse {
         $departement = $departementRepository->find($departement);
-        if ($departement !== null) {
+        if (null !== $departement) {
             $etudiant->setDepartement($departement);
         } else {
             $etudiant->setDepartement(null);
@@ -169,9 +160,8 @@ class UserAjaxController extends BaseController
 
     /**
      * @Route("/change-annee-sortie/{etudiant}/{annee}", name="user_change_annee_sortie", options={"expose":true})
-     * @param Etudiant              $etudiant
      *
-     * @param                       $annee
+     * @param $annee
      *
      * @return JsonResponse
      */
@@ -180,7 +170,7 @@ class UserAjaxController extends BaseController
         $annee
     ): ?JsonResponse {
         $etudiant->setAnneeSortie($annee);
-        if ($annee !== 0) {
+        if (0 !== $annee) {
             $etudiant->setSemestre(null);
             //suppression des groupes
             foreach ($etudiant->getGroupes() as $groupe) {

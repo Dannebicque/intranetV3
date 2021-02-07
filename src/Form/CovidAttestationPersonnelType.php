@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Form/CovidAttestationPersonnelType.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 28/01/2021 16:18
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/CovidAttestationPersonnelType.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Form;
 
@@ -21,7 +23,6 @@ class CovidAttestationPersonnelType extends AbstractType
 {
     protected $departement;
 
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->departement = $options['departement'];
@@ -35,7 +36,7 @@ class CovidAttestationPersonnelType extends AbstractType
                 'query_builder' => function(DiplomeRepository $diplomeRepository) {
                     return $diplomeRepository->findByDepartementBuilder($this->departement);
                 },
-                'label'         => 'Diplôme concerné par votre demande (pour validation par le responsable)'
+                'label'         => 'Diplôme concerné par votre demande (pour validation par le responsable)',
             ])
             ->add('personnel', CovidPersonnelType::class)
             ->add('moyenDeplacement', ChoiceType::class, [
@@ -46,7 +47,7 @@ class CovidAttestationPersonnelType extends AbstractType
                     'Transports en commun (bus, train, ...)' => 'transport',
                 ],
                 'expanded' => true,
-                'label'    => 'label.moyenDeplacement'
+                'label'    => 'label.moyenDeplacement',
             ])
             ->add('covidCreneauPresences', CollectionType::class, [
                 'entry_type'    => CovidCreneauPresenceType::class,
@@ -58,9 +59,8 @@ class CovidAttestationPersonnelType extends AbstractType
                 'by_reference'  => false,
                 'attr'          => [
                     'class' => 'selector-covidCreneauPresence',
-
                 ],
-                'help'          => 'Ajoutez les créneaux pendant lesquels vous serez présent. Sans dépasser une semaine.'
+                'help'          => 'Ajoutez les créneaux pendant lesquels vous serez présent. Sans dépasser une semaine.',
             ])
             ->add('motif', ChoiceType::class, [
                 'choices' => [
@@ -69,7 +69,7 @@ class CovidAttestationPersonnelType extends AbstractType
                     'Demandes ponctuelles (récupérer dossiers, BU)'                                                                 => 'motif3',
                     'Encadrement doctorant sur site'                                                                                => 'motif4',
                 ],
-                'label'   => 'label.motifDeplacement'
+                'label'   => 'label.motifDeplacement',
             ]);
     }
 
@@ -78,7 +78,7 @@ class CovidAttestationPersonnelType extends AbstractType
         $resolver->setDefaults([
             'data_class'         => CovidAttestationPersonnel::class,
             'translation_domain' => 'form',
-            'departement'        => null
+            'departement'        => null,
         ]);
     }
 }

@@ -1,12 +1,17 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Semestre/NotesExport.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 25/01/2021 18:06
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Semestre/NotesExport.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
+/*
+ * Pull your hearder here, for exemple, Licence header.
+ */
 
 namespace App\Classes\Semestre;
-
 
 use App\Classes\Excel\MyExcelWriter;
 use App\Entity\AnneeUniversitaire;
@@ -18,17 +23,12 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class NotesExport
 {
-
     private MyExcelWriter $myExcel;
     private NoteRepository $noteRepository;
     private EvaluationRepository $evaluationRepository;
 
     /**
      * NotesExport constructor.
-     *
-     * @param MyExcelWriter        $myExcel
-     * @param NoteRepository       $noteRepository
-     * @param EvaluationRepository $evaluationRepository
      */
     public function __construct(
         MyExcelWriter $myExcel,
@@ -40,50 +40,46 @@ class NotesExport
         $this->evaluationRepository = $evaluationRepository;
     }
 
-
     /**
-     * @param Semestre           $semestre
-     * @param AnneeUniversitaire $anneeUniversitaire
-     *
      * @return StreamedResponse
      * @return StreamedResponse
      */
     public function exportXlsToutesLesNotes(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire)
     {
         $this->myExcel->createSheet('semestre ' . $semestre->getLibelle());
-
+        //todo: filtrer si option faite ou pas
         $etudiants = $semestre->getEtudiants();
         $evaluations = $this->evaluationRepository->findBySemestre($semestre, $anneeUniversitaire);
         $notes = $this->noteRepository->findByEtudiantSemestreArray($semestre, $anneeUniversitaire, $etudiants);
 
         $ligne = 2;
         $colonne = 4;
-        $this->myExcel->writeCellName("C2", "Module");
-        $this->myExcel->writeCellName("C3", "Code Apogee");
-        $this->myExcel->writeCellName("C4", "Libellé");
+        $this->myExcel->writeCellName('C2', 'Module');
+        $this->myExcel->writeCellName('C3', 'Code Apogee');
+        $this->myExcel->writeCellName('C4', 'Libellé');
 
         foreach ($evaluations as $eval) {
-            if ($eval->getMatiere() !== null) {
+            if (null !== $eval->getMatiere()) {
                 $this->myExcel->writeCellXY($colonne, $ligne, $eval->getMatiere()->getCodeMatiere());
-                $ligne++;
+                ++$ligne;
                 $this->myExcel->writeCellXY($colonne, $ligne, $eval->getMatiere()->getCodeElement());
-                $ligne++;
+                ++$ligne;
                 $this->myExcel->writeCellXY($colonne, $ligne, $eval->getMatiere()->getLibelle());
                 $ligne = 2;
-                $colonne++;
+                ++$colonne;
             }
         }
         $ligne = 5;
 
         foreach ($etudiants as $etu) {
-            $ligne++;
+            ++$ligne;
             $colonne = 4;
             $this->myExcel->writeCellXY(1, $ligne, $etu->getNom());
             $this->myExcel->writeCellXY(2, $ligne, $etu->getPrenom());
             $this->myExcel->writeCellXY(3, $ligne, $etu->getNumetudiant());
 
             foreach ($evaluations as $eval) {
-                if (array_key_exists($etu->getId(), $notes) && array_key_exists($eval->getId(),
+                if (\array_key_exists($etu->getId(), $notes) && \array_key_exists($eval->getId(),
                         $notes[$etu->getId()])) {
                     $this->myExcel->writeCellXY($colonne, $ligne,
                         number_format($notes[$etu->getId()][$eval->getId()]['note'], 2));
@@ -94,7 +90,7 @@ class NotesExport
                     $this->myExcel->writeCellXY($colonne, $ligne,
                         '-');
                 }
-                $colonne++;
+                ++$colonne;
             }
         }
 
@@ -108,7 +104,7 @@ class NotesExport
             200,
             [
                 'Content-Type'        => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                'Content-Disposition' => 'attachment;filename="Export des notes du semestre ' . $semestre->getLibelle() . '.xlsx"'
+                'Content-Disposition' => 'attachment;filename="Export des notes du semestre ' . $semestre->getLibelle() . '.xlsx"',
             ]
         );
     }

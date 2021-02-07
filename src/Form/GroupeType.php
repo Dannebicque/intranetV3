@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Form/GroupeType.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 07/08/2020 09:50
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/GroupeType.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Form;
 
@@ -20,17 +22,12 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class GroupeType
- * @package App\Form
+ * Class GroupeType.
  */
 class GroupeType extends AbstractType
 {
     private $semestre;
 
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->semestre = $options['semestre'];
@@ -48,7 +45,7 @@ class GroupeType extends AbstractType
                 },
                 'required'      => true,
                 'expanded'      => false,
-                'multiple'      => false
+                'multiple'      => false,
             ])
             ->add('parent', EntityType::class, [
                 'class'         => Groupe::class,
@@ -59,7 +56,7 @@ class GroupeType extends AbstractType
                 },
                 'required'      => false,
                 'expanded'      => false,
-                'multiple'      => false
+                'multiple'      => false,
             ])
             ->add('parcours', EntityType::class, [
                 'class'         => Parcour::class,
@@ -70,13 +67,10 @@ class GroupeType extends AbstractType
                 },
                 'required'      => false,
                 'expanded'      => false,
-                'multiple'      => false
+                'multiple'      => false,
             ]);
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

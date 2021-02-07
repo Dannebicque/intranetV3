@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Notification.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 19/01/2021 12:14
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Notification.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Entity;
 
@@ -17,6 +19,7 @@ use Ramsey\Uuid\Uuid;
  */
 class Notification extends BaseEntity
 {
+    use UuidTrait;
     public const ETUDIANT = 'e';
     public const PERSONNEL = 'p';
 
@@ -38,7 +41,7 @@ class Notification extends BaseEntity
         'chgt.emprunt.accepte'               => 'ti-success',
         'chgt.emprunt.refus'                 => 'ti-danger',
         'decision.justificatif.acceptee'     => 'ti-success',
-        'decision.justificatif.refuse'       => 'ti-danger'
+        'decision.justificatif.refuse'       => 'ti-danger',
     ];
     public const TABCOLOR = [
         'carnet.added'                       => 'info',
@@ -58,10 +61,8 @@ class Notification extends BaseEntity
         'chgt.emprunt.accepte'               => 'success',
         'chgt.emprunt.refus'                 => 'danger',
         'decision.justificatif.acceptee'     => 'success',
-        'decision.justificatif.refuse'       => 'danger'
+        'decision.justificatif.refuse'       => 'danger',
     ];
-
-    use UuidTrait;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Etudiant", inversedBy="notifications")
@@ -95,6 +96,7 @@ class Notification extends BaseEntity
 
     /**
      * Absence constructor.
+     *
      * @throws Exception
      */
     public function __construct()
@@ -107,17 +109,12 @@ class Notification extends BaseEntity
         $this->setUuid(Uuid::uuid4());
     }
 
-    /**
-     * @return Etudiant|null
-     */
     public function getEtudiant(): ?Etudiant
     {
         return $this->etudiant;
     }
 
     /**
-     * @param Etudiant|null $etudiant
-     *
      * @return Notification
      */
     public function setEtudiant(?Etudiant $etudiant): self
@@ -127,17 +124,12 @@ class Notification extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
     public function getType(): ?string
     {
         return $this->type;
     }
 
     /**
-     * @param string $type
-     *
      * @return Notification
      */
     public function setType(string $type): self
@@ -147,17 +139,12 @@ class Notification extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
     public function getUrl(): ?string
     {
         return $this->url;
     }
 
     /**
-     * @param string $url
-     *
      * @return Notification
      */
     public function setUrl(string $url): self
@@ -167,17 +154,12 @@ class Notification extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return bool|null
-     */
     public function getLu(): ?bool
     {
         return $this->lu;
     }
 
     /**
-     * @param bool $lu
-     *
      * @return Notification
      */
     public function setLu(bool $lu): self
@@ -187,17 +169,12 @@ class Notification extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
     public function getTypeUser(): ?string
     {
         return $this->typeUser;
     }
 
     /**
-     * @param string $typeUser
-     *
      * @return Notification
      */
     public function setTypeUser(string $typeUser): self
@@ -207,17 +184,12 @@ class Notification extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return Personnel|null
-     */
     public function getPersonnel(): ?Personnel
     {
         return $this->personnel;
     }
 
     /**
-     * @param Personnel|null $personnel
-     *
      * @return Notification
      */
     public function setPersonnel(?Personnel $personnel): self
@@ -227,17 +199,11 @@ class Notification extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
     public function icone()
     {
         return self::TABICONE[$this->type];
     }
 
-    /**
-     * @return mixed
-     */
     public function color()
     {
         return self::TABCOLOR[$this->type];

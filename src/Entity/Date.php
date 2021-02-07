@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Date.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 23/07/2020 09:06
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Date.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Entity;
 
@@ -29,14 +31,14 @@ class Date extends BaseEntity
     public const TYPE_VACANCES = 'type.vacances';
 
     public const COULEUR_BADGE = [
-        Date::TYPE_STAGE      => 'badge-primary',
-        Date::TYPE_SOUTENANCE => 'badge-danger',
-        Date::TYPE_PROJET     => 'badge-purple',
-        Date::TYPE_AUTRE      => 'badge-pink',
-        Date::TYPE_COMMISSION => 'badge-warning',
-        Date::TYPE_REUNION    => 'badge-yellow',
-        Date::TYPE_RENTREE    => 'badge-success',
-        Date::TYPE_VACANCES   => 'badge-info'
+        self::TYPE_STAGE      => 'badge-primary',
+        self::TYPE_SOUTENANCE => 'badge-danger',
+        self::TYPE_PROJET     => 'badge-purple',
+        self::TYPE_AUTRE      => 'badge-pink',
+        self::TYPE_COMMISSION => 'badge-warning',
+        self::TYPE_REUNION    => 'badge-yellow',
+        self::TYPE_RENTREE    => 'badge-success',
+        self::TYPE_VACANCES   => 'badge-info',
     ];
 
     public const QUI_ETUDIANT = 'E';
@@ -95,7 +97,7 @@ class Date extends BaseEntity
     private $lieu;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(type="boolean")
      * @Groups({"date_administration"})
@@ -134,9 +136,6 @@ class Date extends BaseEntity
         $this->semestres = new ArrayCollection();
     }
 
-    /**
-     * @return array
-     */
     public static function getTypeList(): array
     {
         return [
@@ -150,17 +149,12 @@ class Date extends BaseEntity
         ];
     }
 
-    /**
-     * @return null|string
-     */
     public function getLibelle(): ?string
     {
         return $this->libelle;
     }
 
     /**
-     * @param string $libelle
-     *
      * @return Date
      */
     public function setLibelle(string $libelle): self
@@ -170,17 +164,12 @@ class Date extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
     public function getTexte(): ?string
     {
         return $this->texte;
     }
 
     /**
-     * @param string $texte
-     *
      * @return Date
      */
     public function setTexte(string $texte): self
@@ -198,9 +187,6 @@ class Date extends BaseEntity
         return $this->dateDebut;
     }
 
-    /**
-     * @param DateTime $dateDebut
-     */
     public function setDateDebut(DateTime $dateDebut): void
     {
         $this->dateDebut = $dateDebut;
@@ -214,9 +200,6 @@ class Date extends BaseEntity
         return $this->heureDebut;
     }
 
-    /**
-     * @param DateTime $heureDebut
-     */
     public function setHeureDebut(DateTime $heureDebut): void
     {
         $this->heureDebut = $heureDebut;
@@ -230,9 +213,6 @@ class Date extends BaseEntity
         return $this->dateFin;
     }
 
-    /**
-     * @param DateTime $dateFin
-     */
     public function setDateFin(DateTime $dateFin): void
     {
         $this->dateFin = $dateFin;
@@ -246,9 +226,6 @@ class Date extends BaseEntity
         return $this->heureFin;
     }
 
-    /**
-     * @param DateTime $heureFin
-     */
     public function setHeureFin(DateTime $heureFin): void
     {
         $this->heureFin = $heureFin;
@@ -262,25 +239,16 @@ class Date extends BaseEntity
         return $this->lieu;
     }
 
-    /**
-     * @param string $lieu
-     */
     public function setLieu(string $lieu): void
     {
         $this->lieu = $lieu;
     }
 
-    /**
-     * @return bool
-     */
     public function isAllday(): bool
     {
         return $this->allday;
     }
 
-    /**
-     * @param bool $allday
-     */
     public function setAllday(bool $allday): void
     {
         $this->allday = $allday;
@@ -294,9 +262,6 @@ class Date extends BaseEntity
         return $this->qui;
     }
 
-    /**
-     * @param string $qui
-     */
     public function setQui(string $qui): void
     {
         $this->qui = $qui;
@@ -310,9 +275,6 @@ class Date extends BaseEntity
         return $this->departement;
     }
 
-    /**
-     * @param Departement $departement
-     */
     public function setDepartement(Departement $departement): void
     {
         $this->departement = $departement;
@@ -327,8 +289,6 @@ class Date extends BaseEntity
     }
 
     /**
-     * @param Semestre $semestre
-     *
      * @return Date
      */
     public function addSemestre(Semestre $semestre): self
@@ -341,8 +301,6 @@ class Date extends BaseEntity
     }
 
     /**
-     * @param Semestre $semestre
-     *
      * @return Date
      */
     public function removeSemestre(Semestre $semestre): self
@@ -354,17 +312,12 @@ class Date extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
     public function getType(): ?string
     {
         return $this->type;
     }
 
     /**
-     * @param string $type
-     *
      * @return Date
      */
     public function setType(string $type): self

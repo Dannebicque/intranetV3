@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/TypeGroupeRepository.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 07/08/2020 09:52
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/TypeGroupeRepository.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:09
+ */
 
 namespace App\Repository;
 
@@ -13,8 +15,8 @@ use App\Entity\Diplome;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method TypeGroupe|null find($id, $lockMode = null, $lockVersion = null)
@@ -26,8 +28,6 @@ class TypeGroupeRepository extends ServiceEntityRepository
 {
     /**
      * TypeGroupeRepository constructor.
-     *
-     * @param ManagerRegistry $registry
      */
     public function __construct(ManagerRegistry $registry)
     {
@@ -36,8 +36,6 @@ class TypeGroupeRepository extends ServiceEntityRepository
 
     /**
      * @param $semestre
-     *
-     * @return QueryBuilder
      */
     public function findBySemestreBuilder(Semestre $semestre): QueryBuilder
     {
@@ -70,8 +68,8 @@ class TypeGroupeRepository extends ServiceEntityRepository
         $t = [];
         /** @var TypeGroupe $tg */
         foreach ($req as $tg) {
-            if ($tg->getSemestre() !== null) {
-                if (!array_key_exists($tg->getSemestre()->getCodeElement(), $t)) {
+            if (null !== $tg->getSemestre()) {
+                if (!\array_key_exists($tg->getSemestre()->getCodeElement(), $t)) {
                     $t[$tg->getSemestre()->getCodeElement()] = [];
                 }
                 $t[$tg->getSemestre()->getCodeElement()][$tg->getLibelle()] = $tg;

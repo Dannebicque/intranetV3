@@ -1,12 +1,13 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/MessageHandler/ExportReleveHandler.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 23/01/2021 14:29
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/MessageHandler/ExportReleveHandler.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\MessageHandler;
-
 
 use App\Classes\Etudiant\EtudiantExportReleve;
 use App\Message\ExportReleve;
@@ -27,12 +28,6 @@ class ExportReleveHandler implements MessageHandlerInterface
 
     /**
      * ExportReleveHandler constructor.
-     *
-     * @param EtudiantExportReleve         $etudiantExportReleve
-     * @param SemestreRepository           $semestreRepository
-     * @param AnneeUniversitaireRepository $anneeUniversitaireRepository
-     * @param MailerInterface              $mailer
-     * @param PersonnelRepository          $personnelRepository
      */
     public function __construct(
         EtudiantExportReleve $etudiantExportReleve,
@@ -48,17 +43,16 @@ class ExportReleveHandler implements MessageHandlerInterface
         $this->mailer = $mailer;
     }
 
-
     public function __invoke(ExportReleve $exportReleve)
     {
         $semestre = $this->semestreRepository->find($exportReleve->getSemestre());
         $anneeUniversitaire = $this->anneeUniversitaireRepository->find($exportReleve->getAnneeUniversitaire());
         $personnel = $this->personnelRepository->find($exportReleve->getPersonnel());
 
-        if ($semestre !== null && $anneeUniversitaire !== null) {
+        if (null !== $semestre && null !== $anneeUniversitaire) {
             $lien = $this->etudiantExportReleve->exportAllReleveProvisoire($semestre, $anneeUniversitaire);
 
-            if ($personnel !== null) {
+            if (null !== $personnel) {
                 $mail = (new TemplatedEmail())
                     ->from('intranet@iut-troyes.univ-reims.fr')
                     ->to($personnel->getMailUniv())

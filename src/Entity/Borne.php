@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Borne.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 03/08/2020 16:52
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Borne.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Entity;
 
@@ -22,7 +24,7 @@ class Borne extends BaseEntity
     public const ICONES = [
         'information' => 'fas fa-info-circle',
         'danger'      => 'fas fa-exclamation-circle',
-        'demande'     => 'fas fa-question-circle'
+        'demande'     => 'fas fa-question-circle',
     ];
     public const COULEURS = ['Rouge' => '#FF0000', 'Vert' => '#00FF00', 'Bleu' => '#0000FF'];
 
@@ -81,17 +83,12 @@ class Borne extends BaseEntity
         $this->dateFinPublication = new DateTime();
     }
 
-    /**
-     * @return null|string
-     */
     public function getIcone(): ?string
     {
         return $this->icone;
     }
 
     /**
-     * @param string $icone
-     *
      * @return Borne
      */
     public function setIcone(string $icone): self
@@ -101,17 +98,12 @@ class Borne extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
     public function getCouleur(): ?string
     {
         return $this->couleur;
     }
 
     /**
-     * @param string $couleur
-     *
      * @return Borne
      */
     public function setCouleur(string $couleur): self
@@ -121,17 +113,12 @@ class Borne extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
     public function getMessage(): ?string
     {
         return $this->message;
     }
 
     /**
-     * @param string $message
-     *
      * @return Borne
      */
     public function setMessage(string $message): self
@@ -141,17 +128,12 @@ class Borne extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
     public function getUrl(): ?string
     {
         return $this->url;
     }
 
     /**
-     * @param string $url
-     *
      * @return Borne
      */
     public function setUrl(string $url): self
@@ -161,17 +143,12 @@ class Borne extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return DateTimeInterface|null
-     */
     public function getDateDebutPublication(): ?DateTimeInterface
     {
         return $this->dateDebutPublication;
     }
 
     /**
-     * @param DateTimeInterface $dateDebutPublication
-     *
      * @return Borne
      */
     public function setDateDebutPublication(DateTimeInterface $dateDebutPublication): self
@@ -181,17 +158,12 @@ class Borne extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return DateTimeInterface|null
-     */
     public function getDateFinPublication(): ?DateTimeInterface
     {
         return $this->dateFinPublication;
     }
 
     /**
-     * @param DateTimeInterface $dateFinPublication
-     *
      * @return Borne
      */
     public function setDateFinPublication(DateTimeInterface $dateFinPublication): self
@@ -201,17 +173,12 @@ class Borne extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return bool|null
-     */
     public function getVisible(): ?bool
     {
         return $this->visible;
     }
 
     /**
-     * @param bool $visible
-     *
      * @return Borne
      */
     public function setVisible(bool $visible): self
@@ -230,8 +197,6 @@ class Borne extends BaseEntity
     }
 
     /**
-     * @param Semestre $semestre
-     *
      * @return Borne
      */
     public function addSemestre(Semestre $semestre): self
@@ -244,8 +209,6 @@ class Borne extends BaseEntity
     }
 
     /**
-     * @param Semestre $semestre
-     *
      * @return Borne
      */
     public function removeSemestre(Semestre $semestre): self

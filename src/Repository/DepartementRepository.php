@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/DepartementRepository.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/DepartementRepository.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:08
+ */
 
 namespace App\Repository;
 
@@ -15,8 +17,8 @@ use App\Entity\Personnel;
 use App\Entity\PersonnelDepartement;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method Departement|null find($id, $lockMode = null, $lockVersion = null)
@@ -28,8 +30,6 @@ class DepartementRepository extends ServiceEntityRepository
 {
     /**
      * DepartementRepository constructor.
-     *
-     * @param ManagerRegistry $registry
      */
     public function __construct(ManagerRegistry $registry)
     {
@@ -37,9 +37,6 @@ class DepartementRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Etudiant $etudiant
-     *
-     * @return mixed
      * @throws NonUniqueResultException
      */
     public function findDepartementEtudiant(Etudiant $etudiant)
@@ -55,11 +52,6 @@ class DepartementRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    /**
-     * @param Personnel $personnel
-     *
-     * @return mixed
-     */
     public function findDepartementPersonnelDefaut(Personnel $personnel)
     {
         return $this->createQueryBuilder('f')
@@ -72,11 +64,6 @@ class DepartementRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    /**
-     * @param Personnel $personnel
-     *
-     * @return mixed
-     */
     public function findDepartementPersonnel(Personnel $personnel)
     {
         return $this->createQueryBuilder('f')

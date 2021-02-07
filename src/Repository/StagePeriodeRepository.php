@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/StagePeriodeRepository.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 01/10/2020 19:44
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/StagePeriodeRepository.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:08
+ */
 
 namespace App\Repository;
 
@@ -30,27 +32,14 @@ class StagePeriodeRepository extends ServiceEntityRepository
         parent::__construct($registry, StagePeriode::class);
     }
 
-    /**
-     * @param Diplome            $diplome
-     * @param AnneeUniversitaire $anneeUniversitaire
-     *
-     * @return mixed
-     */
     public function findByDiplome(Diplome $diplome, AnneeUniversitaire $anneeUniversitaire)
     {
         return $this->findByDiplomeBuilder($diplome, $anneeUniversitaire)->getQuery()
             ->getResult();
     }
 
-    /**
-     * @param Diplome            $diplome
-     * @param AnneeUniversitaire $anneeUniversitaire
-     *
-     * @return QueryBuilder
-     */
     public function findByDiplomeBuilder(Diplome $diplome, AnneeUniversitaire $anneeUniversitaire): QueryBuilder
     {
-
         return $this->createQueryBuilder('p')
             ->innerJoin(Semestre::class, 's', 'WITH', 'p.semestre = s.id')
             ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
@@ -68,7 +57,7 @@ class StagePeriodeRepository extends ServiceEntityRepository
         $query = $this->createQueryBuilder('s')
             ->where('s.semestre = :semestreCourant');
 
-        if ($semestre->getSuivant() !== null) {
+        if (null !== $semestre->getSuivant()) {
             $query->orWhere('s.semestre = :semestreSuivant')
                 ->setParameter('semestreSuivant', $semestre->getSuivant()->getId());
         }
@@ -76,7 +65,7 @@ class StagePeriodeRepository extends ServiceEntityRepository
         $query->andWhere('s.anneeUniversitaire = :annee')
             ->setParameter('semestreCourant', $semestre->getId())
             ->setParameter('annee', $semestre->getAnneeUniversitaire()->getId());
-        if ($semestre->getSuivant() !== null) {
+        if (null !== $semestre->getSuivant()) {
             $query->orWhere('s.semestre = :semestreSuivant')
                 ->setParameter('semestreSuivant', $semestre->getSuivant()->getId());
         }
@@ -85,11 +74,6 @@ class StagePeriodeRepository extends ServiceEntityRepository
         return $query->getQuery()->getResult();
     }
 
-    /**
-     * @param Departement $departement
-     *
-     * @return mixed
-     */
     public function findByDepartement(Departement $departement)
     {
         $query = $this->createQueryBuilder('p')

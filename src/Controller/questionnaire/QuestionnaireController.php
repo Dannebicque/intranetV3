@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/questionnaire/QuestionnaireController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 07/01/2021 13:51
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/questionnaire/QuestionnaireController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller\questionnaire;
 
@@ -29,12 +31,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class QualiteController
- * @package App\Controller
+ * Class QualiteController.
  */
 class QuestionnaireController extends AbstractController
 {
-
     private QuestionnaireQualiteRepository $questionnaireQualiteRepository;
 
     private QuestionnaireQuizzRepository $questionnaireQuizzRepository;
@@ -52,17 +52,9 @@ class QuestionnaireController extends AbstractController
     }
 
     /**
-     * @param PrevisionnelRepository                 $previsionnelRepository
-     * @param QuestionnaireEtudiantRepository        $quizzEtudiantRepository
-     * @param QuestionnaireEtudiantReponseRepository $quizzEtudiantReponseRepository
-     * @param QuestionnaireQuestionnaireSection      $questionnaireSection
-     *
-     * @param                                        $type
-     * @param Etudiant                               $etudiant
-     * @param int                                    $onglet
-     * @param bool                                   $apercu
-     *
-     * @return Response
+     * @param      $type
+     * @param int  $onglet
+     * @param bool $apercu
      */
     public function section(
         PrevisionnelRepository $previsionnelRepository,
@@ -73,26 +65,25 @@ class QuestionnaireController extends AbstractController
         Etudiant $etudiant,
         $onglet = 1,
         $apercu = false
-    ) {
-
+    ): Response {
         switch ($type) {
             case 'quizz':
                 $questionnaire = $questionnaireSection->getQuestionnaireQuizz()->getId();
                 $quizzEtudiant = $quizzEtudiantRepository->findOneBy([
                     'questionnaireQuizz' => $questionnaire,
-                    'etudiant'           => $etudiant->getId()
+                    'etudiant'           => $etudiant->getId(),
                 ]);
                 break;
             case 'qualite':
                 $questionnaire = $questionnaireSection->getQuestionnaireQualite()->getId();
                 $quizzEtudiant = $quizzEtudiantRepository->findOneBy([
                     'questionnaireQualite' => $questionnaire,
-                    'etudiant'             => $etudiant->getId()
+                    'etudiant'             => $etudiant->getId(),
                 ]);
                 break;
         }
 
-        if ($quizzEtudiant !== null) {
+        if (null !== $quizzEtudiant) {
             $reponses = $quizzEtudiantReponseRepository->findByQuizzEtudiant($quizzEtudiant);
         } else {
             $reponses = [];
@@ -108,23 +99,17 @@ class QuestionnaireController extends AbstractController
             'etudiant'          => $etudiant,
             'typeQuestionnaire' => $type,
             'onglet'            => $onglet,
-            'apercu'            => $apercu
+            'apercu'            => $apercu,
         ]);
     }
 
     /**
      * @Route("/api/ajax/reponse/{questionnaire}/{typeQuestionnaire}", name="app_etudiant_qualite_ajax_reponse",
      *                                                                 options={"expose"=true})
-     * @param EtudiantRepository                     $etudiantRepository
-     * @param QuestionnaireQuestionRepository        $quizzQuestionRepository
-     * @param QuestionnaireReponseRepository         $quizzReponseRepository
-     * @param QuestionnaireEtudiantRepository        $quizzEtudiantRepository
-     * @param QuestionnaireEtudiantReponseRepository $quizzEtudiantReponseRepository
-     * @param Request                                $request
-     * @param                                        $questionnaire
-     * @param                                        $typeQuestionnaire
      *
-     * @return JsonResponse
+     * @param $questionnaire
+     * @param $typeQuestionnaire
+     *
      * @throws NonUniqueResultException
      */
     public function sauvegardeReponse(
@@ -141,47 +126,46 @@ class QuestionnaireController extends AbstractController
         $cleQuestion = $request->request->get('cleQuestion');
         $etudiant = $etudiantRepository->find($request->request->get('etudiant'));
 
-        if ($etudiant !== null) {
+        if (null !== $etudiant) {
             switch ($typeQuestionnaire) {
                 case 'quizz':
                     $questionnaire = $this->questionnaireQuizzRepository->find($questionnaire);
                     $quizzEtudiant = $quizzEtudiantRepository->findOneBy([
                         'questionnaireQuizz' => $questionnaire->getId(),
-                        'etudiant'           => $etudiant
+                        'etudiant'           => $etudiant,
                     ]);
                     break;
                 case 'qualite':
                     $questionnaire = $this->questionnaireQualiteRepository->find($questionnaire);
                     $quizzEtudiant = $quizzEtudiantRepository->findOneBy([
                         'questionnaireQualite' => $questionnaire->getId(),
-                        'etudiant'             => $etudiant
+                        'etudiant'             => $etudiant,
                     ]);
                     break;
             }
 
-            if ($quizzEtudiant === null) {
+            if (null === $quizzEtudiant) {
                 $quizzEtudiant = new QuestionnaireEtudiant($etudiant, $questionnaire, $typeQuestionnaire);
                 $this->entityManager->persist($quizzEtudiant);
             }
-
 
             /** @var QuestionnaireEtudiantReponse $exist */
             $exist = $quizzEtudiantReponseRepository->findExistQuestion($cleQuestion, $quizzEtudiant->getId());
 
             $t = explode('_', $cleReponse);
-            $question = $quizzQuestionRepository->find(substr($t[3], 1, strlen($t[0])));
-            if (strpos($t[4], 'c') === 0) {
+            $question = $quizzQuestionRepository->find(mb_substr($t[3], 1, mb_strlen($t[0])));
+            if (0 === mb_strpos($t[4], 'c')) {
                 $reponse = $quizzReponseRepository->find($t[5]);
             } else {
                 $reponse = $quizzReponseRepository->find($t[4]);
             }
 
-            if ($question !== null && $reponse !== null) {
-                if ($exist === null) {
+            if (null !== $question && null !== $reponse) {
+                if (null === $exist) {
                     $qr = new QuestionnaireEtudiantReponse($quizzEtudiant);
                     $qr->setCleQuestion($cleQuestion);
 
-                    if ($question->getType() === QuestionnaireQuestion::QUESTION_TYPE_QCM) {
+                    if (QuestionnaireQuestion::QUESTION_TYPE_QCM === $question->getType()) {
                         $qr->setCleReponse(json_encode([$cleReponse]));
                         $qr->setValeur(json_encode([$reponse->getValeur()]));
                     } else {
@@ -190,16 +174,16 @@ class QuestionnaireController extends AbstractController
                     }
 
                     $this->entityManager->persist($qr);
-                } else if ($question->getType() === QuestionnaireQuestion::QUESTION_TYPE_QCU || $question->getType() === QuestionnaireQuestion::QUESTION_TYPE_ECHELLE || $question->getType() === QuestionnaireQuestion::QUESTION_TYPE_YESNO) {
+                } elseif (QuestionnaireQuestion::QUESTION_TYPE_QCU === $question->getType() || QuestionnaireQuestion::QUESTION_TYPE_ECHELLE === $question->getType() || QuestionnaireQuestion::QUESTION_TYPE_YESNO === $question->getType()) {
                     $exist->setCleReponse($cleReponse);
                     $exist->setValeur($reponse->getValeur());
-                } elseif ($question->getType() === QuestionnaireQuestion::QUESTION_TYPE_QCM) {
+                } elseif (QuestionnaireQuestion::QUESTION_TYPE_QCM === $question->getType()) {
                     //si c'est un QCM, on fait un tableau de réponse.
                     $cleReponses = json_decode($exist->getCleReponse(), false);
                     $valeurs = json_decode($exist->getValeur(), false);
                     $idCle = array_search($cleReponse, $cleReponses, true);
                     $idValeur = array_search($reponse->getValeur(), $valeurs, true);
-                    if ($idCle !== false && $idValeur !== false) {
+                    if (false !== $idCle && false !== $idValeur) {
                         //réponse déjà présente on supprime
                         unset($cleReponses[$idCle], $valeurs[$idValeur]);
                         $cleReponses = array_values($cleReponses);
@@ -226,15 +210,10 @@ class QuestionnaireController extends AbstractController
     /**
      * @Route("/api/ajax/reponse-txt/{questionnaire}/{typeQuestionnaire}", name="app_etudiant_qualite_ajax_reponse_txt",
      *                                             options={"expose"=true})
-     * @param EtudiantRepository                     $etudiantRepository
-     * @param QuestionnaireQuestionRepository        $quizzQuestionRepository
-     * @param QuestionnaireEtudiantReponseRepository $quizzEtudiantReponseRepository
-     * @param QuestionnaireEtudiantRepository        $quizzEtudiantRepository
-     * @param Request                                $request
-     * @param                                        $questionnaire
-     * @param                                        $typeQuestionnaire
      *
-     * @return JsonResponse
+     * @param $questionnaire
+     * @param $typeQuestionnaire
+     *
      * @throws NonUniqueResultException
      */
     public function sauvegardeReponseTxt(
@@ -249,25 +228,25 @@ class QuestionnaireController extends AbstractController
         $cleQuestion = $request->request->get('cleQuestion');
         $etudiant = $etudiantRepository->find($request->request->get('etudiant'));
 
-        if ($etudiant !== null) {
+        if (null !== $etudiant) {
             switch ($typeQuestionnaire) {
                 case 'quizz':
                     $questionnaire = $this->questionnaireQuizzRepository->find($questionnaire);
                     $quizzEtudiant = $quizzEtudiantRepository->findOneBy([
                         'questionnaireQuizz' => $questionnaire->getId(),
-                        'etudiant'           => $etudiant
+                        'etudiant'           => $etudiant,
                     ]);
                     break;
                 case 'qualite':
                     $questionnaire = $this->questionnaireQualiteRepository->find($questionnaire);
                     $quizzEtudiant = $quizzEtudiantRepository->findOneBy([
                         'questionnaireQualite' => $questionnaire->getId(),
-                        'etudiant'             => $etudiant
+                        'etudiant'             => $etudiant,
                     ]);
                     break;
             }
 
-            if ($quizzEtudiant === null) {
+            if (null === $quizzEtudiant) {
                 $quizzEtudiant = new QuestionnaireEtudiant($etudiant, $questionnaire, $typeQuestionnaire);
                 $this->entityManager->persist($quizzEtudiant);
             }
@@ -275,9 +254,9 @@ class QuestionnaireController extends AbstractController
             $exist = $quizzEtudiantReponseRepository->findExistQuestion($cleQuestion, $quizzEtudiant);
 
             $t = explode('_', $cleQuestion);
-            $question = $quizzQuestionRepository->find(substr($t[3], 1, strlen($t[0])));
-            if ($question !== null) {
-                if ($exist === null) {
+            $question = $quizzQuestionRepository->find(mb_substr($t[3], 1, mb_strlen($t[0])));
+            if (null !== $question) {
+                if (null === $exist) {
                     $qr = new QuestionnaireEtudiantReponse($quizzEtudiant);
                     $qr->setCleQuestion($cleQuestion);
                     $qr->setCleReponse(null);

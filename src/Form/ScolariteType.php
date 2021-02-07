@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ScolariteType.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 16/01/2021 11:45
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ScolariteType.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Form;
 
@@ -32,32 +34,32 @@ class ScolariteType extends AbstractType
         $builder
             ->add('ordre', ChoiceType::class, [
                 'choices' => [
-                    1 => 1,
-                    2 => 2,
-                    3 => 3,
-                    4 => 4,
-                    5 => 5,
-                    6 => 6,
-                    7 => 7,
-                    8 => 8,
-                    9 => 9,
-                    10 => 10
-                    ],
-                'label'         => 'label.ordre',
+                    1  => 1,
+                    2  => 2,
+                    3  => 3,
+                    4  => 4,
+                    5  => 5,
+                    6  => 6,
+                    7  => 7,
+                    8  => 8,
+                    9  => 9,
+                    10 => 10,
+                ],
+                'label'   => 'label.ordre',
             ])
             ->add('semestre', EntityType::class, [
                 'label'         => 'label.semestre',
-                'placeholder' => 'Choisir le semestre',
+                'placeholder'   => 'Choisir le semestre',
                 'class'         => Semestre::class,
                 'query_builder' => function(SemestreRepository $semestreRepository) {
                     return $semestreRepository->findByDepartementBuilder($this->departement);
                 },
-                'choice_label'  => 'libelle'
+                'choice_label'  => 'libelle',
             ])
             ->add('anneeUniversitaire', EntityType::class, [
-                'label'         => 'label.anneeUniversitaire',
+                'label'        => 'label.anneeUniversitaire',
                 'class'        => AnneeUniversitaire::class,
-                'choice_label' => 'libelle'
+                'choice_label' => 'libelle',
             ])
             ->add('decision', ChoiceType::class, [
                 'choices' => [
@@ -68,24 +70,24 @@ class ScolariteType extends AbstractType
                     'Réorientation' => Constantes::SEMESTRE_REORIENTE,
                     'VCJ'           => Constantes::SEMESTRE_VCJ,
                     'VCA'           => Constantes::SEMESTRE_VCA,
-                    'Blanchimenent' => Constantes::SEMESTRE_BLANCHIMENT
+                    'Blanchimenent' => Constantes::SEMESTRE_BLANCHIMENT,
                 ],
-                'label'         => 'label.decision',
+                'label'   => 'label.decision',
             ])
             ->add('proposition', TextType::class, [
                 'label'    => 'label.proposition',
                 'required' => false,
-                'help'     => 'Sn+1, DUT, ...'
+                'help'     => 'Sn+1, DUT, ...',
             ])
             ->add('moyenne', TextType::class, [
-                'label'         => 'label.moyenne',
+                'label' => 'label.moyenne',
             ])
             ->add('nbAbsences', TextType::class, [
-                'label'         => 'label.nbAbsences',
+                'label' => 'label.nbAbsences',
             ])
             ->add('commentaire', TextareaType::class, [
-                'label'         => 'label.commentaire',
-                'required' => false
+                'label'    => 'label.commentaire',
+                'required' => false,
             ])
            ;
     }

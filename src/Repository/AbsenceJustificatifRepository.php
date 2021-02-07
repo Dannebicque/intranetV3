@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/AbsenceJustificatifRepository.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 01/02/2021 16:58
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/AbsenceJustificatifRepository.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Repository;
 
@@ -14,9 +16,9 @@ use App\Entity\AnneeUniversitaire;
 use App\Entity\Etudiant;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method AbsenceJustificatif|null find($id, $lockMode = null, $lockVersion = null)
@@ -31,11 +33,6 @@ class AbsenceJustificatifRepository extends ServiceEntityRepository
         parent::__construct($registry, AbsenceJustificatif::class);
     }
 
-    /**
-     * @param Semestre $semestre
-     *
-     * @return mixed
-     */
     public function findBySemestre(Semestre $semestre)
     {
         return $this->createQueryBuilder('j')
@@ -51,17 +48,15 @@ class AbsenceJustificatifRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Semestre $semestre
-     * @param int|null      $annee
+     * @param int|null $annee
      *
-     * @return mixed
      * @throws NonUniqueResultException
      * @throws NoResultException
      */
     public function findBySemestreCount(Semestre $semestre, $annee = 0)
     {
-        if ($annee === 0) {
-            $annee = $semestre->getAnneeUniversitaire() !== null ? $semestre->getAnneeUniversitaire()->getAnnee() : (int)date('Y');
+        if (0 === $annee) {
+            $annee = null !== $semestre->getAnneeUniversitaire() ? $semestre->getAnneeUniversitaire()->getAnnee() : (int)date('Y');
         }
 
         return $this->createQueryBuilder('j')
@@ -92,7 +87,7 @@ class AbsenceJustificatifRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
 
-        return count($query) >= 1;
+        return \count($query) >= 1;
     }
 
     public function findByEtudiant(Etudiant $etudiant)

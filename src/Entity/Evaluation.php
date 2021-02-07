@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Evaluation.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 13/10/2020 06:34
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Evaluation.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Entity;
 
@@ -96,10 +98,6 @@ class Evaluation extends BaseEntity
     /**
      * Evaluation constructor.
      *
-     * @param Personnel   $personnel
-     * @param Matiere     $matiere
-     * @param Departement $departement
-     *
      * @throws Exception
      */
     public function __construct(Personnel $personnel, Matiere $matiere, Departement $departement)
@@ -108,8 +106,8 @@ class Evaluation extends BaseEntity
 
         $this->matiere = $matiere;
         $this->personnelAuteur = $personnel;
-        $this->anneeUniversitaire = $matiere->getSemestre() !== null ? $matiere->getSemestre()->getAnneeUniversitaire() : null;
-        if ($matiere->getUe() !== null && $matiere->getUe()->getSemestre() !== null) {
+        $this->anneeUniversitaire = null !== $matiere->getSemestre() ? $matiere->getSemestre()->getAnneeUniversitaire() : null;
+        if (null !== $matiere->getUe() && null !== $matiere->getUe()->getSemestre()) {
             $this->setModifiable($matiere->getUe()->getSemestre()->isOptEvaluationModifiable());
             $this->setVisible($matiere->getUe()->getSemestre()->isOptEvaluationVisible());
         }
@@ -121,23 +119,17 @@ class Evaluation extends BaseEntity
         $this->enfants = new ArrayCollection();
     }
 
-
     public function __clone()
     {
         $this->setUuid(Uuid::uuid4());
     }
 
-    /**
-     * @return Matiere|null
-     */
     public function getMatiere(): ?Matiere
     {
         return $this->matiere;
     }
 
     /**
-     * @param Matiere|null $matiere
-     *
      * @return Evaluation
      */
     public function setMatiere(?Matiere $matiere): self
@@ -147,17 +139,12 @@ class Evaluation extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return Personnel|null
-     */
     public function getPersonnelAuteur(): ?Personnel
     {
         return $this->personnelAuteur;
     }
 
     /**
-     * @param Personnel|null $personnelAuteur
-     *
      * @return Evaluation
      */
     public function setPersonnelAuteur(?Personnel $personnelAuteur): self
@@ -176,8 +163,6 @@ class Evaluation extends BaseEntity
     }
 
     /**
-     * @param Personnel $personnelAutorise
-     *
      * @return Evaluation
      */
     public function addPersonnelAutorise(Personnel $personnelAutorise): self
@@ -190,8 +175,6 @@ class Evaluation extends BaseEntity
     }
 
     /**
-     * @param Personnel $personnelAutorise
-     *
      * @return Evaluation
      */
     public function removePersonnelAutorise(Personnel $personnelAutorise): self
@@ -203,17 +186,12 @@ class Evaluation extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return DateTimeInterface|null
-     */
     public function getDateEvaluation(): ?DateTimeInterface
     {
         return $this->dateEvaluation;
     }
 
     /**
-     * @param DateTimeInterface $dateEvaluation
-     *
      * @return Evaluation
      */
     public function setDateEvaluation(DateTimeInterface $dateEvaluation): self
@@ -223,17 +201,12 @@ class Evaluation extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return bool|null
-     */
     public function getVisible(): ?bool
     {
         return $this->visible;
     }
 
     /**
-     * @param bool $visible
-     *
      * @return Evaluation
      */
     public function setVisible(bool $visible): self
@@ -243,17 +216,12 @@ class Evaluation extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return bool|null
-     */
     public function getModifiable(): ?bool
     {
         return $this->modifiable;
     }
 
     /**
-     * @param bool $modifiable
-     *
      * @return Evaluation
      */
     public function setModifiable(bool $modifiable): self
@@ -263,17 +231,12 @@ class Evaluation extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return float|null
-     */
     public function getCoefficient(): ?float
     {
         return $this->coefficient;
     }
 
     /**
-     * @param float $coefficient
-     *
      * @return Evaluation
      */
     public function setCoefficient(float $coefficient): self
@@ -283,17 +246,12 @@ class Evaluation extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
     public function getCommentaire(): ?string
     {
         return $this->commentaire;
     }
 
     /**
-     * @param string $commentaire
-     *
      * @return Evaluation
      */
     public function setCommentaire(string $commentaire): self
@@ -312,8 +270,6 @@ class Evaluation extends BaseEntity
     }
 
     /**
-     * @param Note $note
-     *
      * @return Evaluation
      */
     public function addNote(Note $note): self
@@ -327,8 +283,6 @@ class Evaluation extends BaseEntity
     }
 
     /**
-     * @param Note $note
-     *
      * @return Evaluation
      */
     public function removeNote(Note $note): self
@@ -353,11 +307,9 @@ class Evaluation extends BaseEntity
     }
 
     /**
-     * @param Evaluation $enfant
-     *
      * @return Evaluation
      */
-    public function addEnfant(Evaluation $enfant): self
+    public function addEnfant(self $enfant): self
     {
         if (!$this->enfants->contains($enfant)) {
             $this->enfants[] = $enfant;
@@ -368,11 +320,9 @@ class Evaluation extends BaseEntity
     }
 
     /**
-     * @param Evaluation $enfant
-     *
      * @return Evaluation
      */
-    public function removeEnfant(Evaluation $enfant): self
+    public function removeEnfant(self $enfant): self
     {
         if ($this->enfants->contains($enfant)) {
             $this->enfants->removeElement($enfant);
@@ -385,37 +335,27 @@ class Evaluation extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return Evaluation|null
-     */
-    public function getParent(): ?Evaluation
+    public function getParent(): ?self
     {
         return $this->parent;
     }
 
     /**
-     * @param Evaluation|null $parent
-     *
      * @return Evaluation
      */
-    public function setParent(?Evaluation $parent): self
+    public function setParent(?self $parent): self
     {
         $this->parent = $parent;
 
         return $this;
     }
 
-    /**
-     * @return TypeGroupe|null
-     */
     public function getTypeGroupe(): ?TypeGroupe
     {
         return $this->typeGroupe;
     }
 
     /**
-     * @param TypeGroupe|null $typeGroupe
-     *
      * @return Evaluation
      */
     public function setTypeGroupe(?TypeGroupe $typeGroupe): self
@@ -430,12 +370,9 @@ class Evaluation extends BaseEntity
         return (string)$this->getUuid();
     }
 
-    /**
-     * @return Semestre|null
-     */
     public function getSemestre(): ?Semestre
     {
-        if ($this->matiere !== null && $this->matiere->getUe() !== null) {
+        if (null !== $this->matiere && null !== $this->matiere->getUe()) {
             return $this->matiere->getUe()->getSemestre();
         }
 
@@ -468,12 +405,12 @@ class Evaluation extends BaseEntity
 
     public function getAutorise($personnelId): bool
     {
-        $personnels[] = $this->getPersonnelAuteur() !== null ? $this->getPersonnelAuteur()->getId() : null;
+        $personnels[] = null !== $this->getPersonnelAuteur() ? $this->getPersonnelAuteur()->getId() : null;
         $autorises = $this->getPersonnelAutorise();
         foreach ($autorises as $autorise) {
             $personnels[] = $autorise->getId();
         }
 
-        return in_array($personnelId, $personnels, true);
+        return \in_array($personnelId, $personnels, true);
     }
 }

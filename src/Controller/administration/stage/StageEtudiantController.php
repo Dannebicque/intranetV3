@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StageEtudiantController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 23/01/2021 14:47
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StageEtudiantController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller\administration\stage;
 
@@ -38,10 +40,6 @@ class StageEtudiantController extends BaseController
 {
     /**
      * @Route("/{id}", name="administration_stage_etudiant_show", methods="GET")
-     * @param PersonnelRepository $personnelRepository
-     * @param StageEtudiant       $stageEtudiant
-     *
-     * @return Response
      */
     public function show(PersonnelRepository $personnelRepository, StageEtudiant $stageEtudiant): Response
     {
@@ -49,7 +47,7 @@ class StageEtudiantController extends BaseController
             'administration/stage/stage_etudiant/show.html.twig',
             [
                 'stageEtudiant' => $stageEtudiant,
-                'personnels'    => $personnelRepository->findByDepartement($this->dataUserSession->getDepartement())
+                'personnels'    => $personnelRepository->findByDepartement($this->dataUserSession->getDepartement()),
             ]
         );
     }
@@ -57,12 +55,6 @@ class StageEtudiantController extends BaseController
     /**
      * @Route("/ajax/edit/{id}", name="administration_stage_etudiant_ajax_edit", options={"expose":true})
      *
-     * @param MyStageEtudiant $myStageEtudiant
-     * @param Request         $request
-     *
-     * @param StageEtudiant   $stageEtudiant
-     *
-     * @return JsonResponse
      * @throws \Exception
      */
     public function ajaxEdit(
@@ -82,10 +74,6 @@ class StageEtudiantController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_stage_etudiant_edit", methods="GET|POST")
-     * @param Request       $request
-     * @param StageEtudiant $stageEtudiant
-     *
-     * @return Response
      */
     public function edit(Request $request, StageEtudiant $stageEtudiant): Response
     {
@@ -107,10 +95,6 @@ class StageEtudiantController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_stage_etudiant_delete", methods="DELETE")
-     * @param Request       $request
-     * @param StageEtudiant $stageEtudiant
-     *
-     * @return Response
      */
     public function delete(Request $request, StageEtudiant $stageEtudiant): Response
     {
@@ -125,18 +109,14 @@ class StageEtudiantController extends BaseController
 
         return $this->json([
             'redirect' => true,
-            'url'      => $stageEtudiant->getStagePeriode() !== null ? $this->generateUrl('administration_stage_periode_gestion',
-                ['uuid' => $stageEtudiant->getStagePeriode()->getUuidString()]) : $this->generateUrl('administration_index')
+            'url'      => null !== $stageEtudiant->getStagePeriode() ? $this->generateUrl('administration_stage_periode_gestion',
+                ['uuid' => $stageEtudiant->getStagePeriode()->getUuidString()]) : $this->generateUrl('administration_index'),
         ]);
     }
 
     /**
-     * @param MyStageEtudiant $myStageEtudiant
-     * @param StagePeriode    $stagePeriode
-     * @param Etudiant        $etudiant
-     * @param                 $etat
+     * @param $etat
      *
-     * @return RedirectResponse
      * @throws NonUniqueResultException
      * @Route("/change-etat/{stagePeriode}/{etudiant}/{etat}", name="administration_stage_etudiant_change_etat")
      * @ParamConverter("stagePeriode", options={"mapping": {"stagePeriode": "uuid"}})
@@ -157,10 +137,6 @@ class StageEtudiantController extends BaseController
     /**
      * @Route("/change-tuteur/{stageEtudiant}/{tuteur}", name="administration_stage_etudiant_change_tuteur",
      *                                                   options={"expose"=true})
-     * @param StageEtudiant $stageEtudiant
-     * @param Personnel     $tuteur
-     *
-     * @return JsonResponse
      */
     public function changeTuteur(
         StageEtudiant $stageEtudiant,
@@ -176,10 +152,7 @@ class StageEtudiantController extends BaseController
 
     /**
      * @Route("/convention/pdf/{id}", name="administration_stage_etudiant_convention_pdf", methods="GET")
-     * @param MyPDF         $myPDF
-     * @param StageEtudiant $stageEtudiant
      *
-     * @return PdfResponse
      * @throws LoaderError
      * @throws SyntaxError
      * @throws RuntimeError
@@ -200,13 +173,9 @@ class StageEtudiantController extends BaseController
         );
     }
 
-
     /**
      * @Route("/courrier/pdf/{id}", name="administration_stage_etudiant_courrier_pdf", methods="GET")
-     * @param MyPDF         $myPDF
-     * @param StageEtudiant $stageEtudiant
      *
-     * @return PdfResponse
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -220,15 +189,9 @@ class StageEtudiantController extends BaseController
             'courrier-' . $stageEtudiant->getEtudiant()->getNom(),
             $this->dataUserSession->getDepartement()
         );
-
     }
 
     /**
-     * @param Environment                 $twig
-     * @param StageMailTemplateRepository $stageMailTemplateRepository
-     * @param StageEtudiant               $stageEtudiant
-     *
-     * @return Response
      * @throws LoaderError
      * @throws NonUniqueResultException
      * @throws SyntaxError
@@ -243,8 +206,7 @@ class StageEtudiantController extends BaseController
             $stageEtudiant->getStagePeriode()
         );
 
-        if ($mailTemplate !== null && $mailTemplate->getTwigTemplate() !== null) {
-
+        if (null !== $mailTemplate && null !== $mailTemplate->getTwigTemplate()) {
             $template = $twig->createTemplate($mailTemplate->getTwigTemplate()->getSource());
             $html = $template->render(['stageEtudiant' => $stageEtudiant]);
 
@@ -258,10 +220,7 @@ class StageEtudiantController extends BaseController
 
     /**
      * @Route("/fiche-enseignant/{id}", name="administration_stage_etudiant_fiche_enseignant", methods="GET")
-     * @param MyPDF         $myPDF
-     * @param StageEtudiant $stageEtudiant
      *
-     * @return PdfResponse
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -270,7 +229,7 @@ class StageEtudiantController extends BaseController
     {
         return $myPDF::generePdf('pdf/fichePDFStage.html.twig',
             [
-                'stageEtudiant' => $stageEtudiant
+                'stageEtudiant' => $stageEtudiant,
             ],
             'Fiche-Enseignant-stage-' . $stageEtudiant->getEtudiant()->getNom(),
             $this->dataUserSession->getDepartement()

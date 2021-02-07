@@ -1,9 +1,12 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/projet/ProjetPeriodeGestionController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/projet/ProjetPeriodeGestionController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
 
 namespace App\Controller\administration\projet;
 
@@ -17,10 +20,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class StagePeriodeGestionController
- * @package App\Controller\administration
- * @Route("/administration/projet/periode/gestion")
+ * Class StagePeriodeGestionController.
  *
+ * @Route("/administration/projet/periode/gestion")
  */
 class ProjetPeriodeGestionController extends BaseController
 {
@@ -28,11 +30,8 @@ class ProjetPeriodeGestionController extends BaseController
      * @Route("/{uuid}/export.{_format}", name="administration_projet_periode_gestion_export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"})
      * @ParamConverter("stagePeriode", options={"mapping": {"uuid": "uuid"}})
-     * @param MyExport               $myExport
-     * @param ProjetPeriode          $projetPeriode
-     * @param                        $_format
      *
-     * @return Response
+     * @param $_format
      */
     public function export(MyExport $myExport, ProjetPeriode $projetPeriode, $_format): Response
     {
@@ -49,7 +48,7 @@ class ProjetPeriodeGestionController extends BaseController
                 'tuteur'              => ['nom', 'prenom', 'fonction', 'telephone', 'email'],
                 'tuteurUniversitaire' => ['nom', 'prenom'],
                 'dateDebutStage',
-                'dateFinStage'
+                'dateFinStage',
             ]
         );
     }
@@ -57,11 +56,6 @@ class ProjetPeriodeGestionController extends BaseController
     /**
      * @Route("/{uuid}", name="administration_projet_periode_gestion")
      * @ParamConverter("projetPeriode", options={"mapping": {"uuid": "uuid"}})
-     * @param ProjetPeriodeRepository $projetPeriodeRepository
-     * @param MyProjet                $myProjet
-     * @param ProjetPeriode           $projetPeriode
-     *
-     * @return Response
      */
     public function periode(
         ProjetPeriodeRepository $projetPeriodeRepository,
@@ -79,9 +73,7 @@ class ProjetPeriodeGestionController extends BaseController
         return $this->render('administration/projet/projet_periode_gestion/index.html.twig', [
             'projetPeriode' => $projetPeriode,
             'periodes'      => $periodes,
-            'myProjet'      => $myProjet->getDataPeriode($projetPeriode)
+            'myProjet'      => $myProjet->getDataPeriode($projetPeriode),
         ]);
     }
-
-
 }

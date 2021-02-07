@@ -1,15 +1,14 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Csv/Csv.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 08/08/2020 10:27
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Csv/Csv.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:06
+ */
 
-/**
- * Created by PhpStorm.
- * User: davidannebicque
- * Date: 18/05/2018
- * Time: 12:06
+/*
+ * Pull your hearder here, for exemple, Licence header.
  */
 
 namespace App\Classes\Csv;
@@ -28,8 +27,7 @@ use Symfony\Component\Serializer\Serializer;
 use UnexpectedValueException;
 
 /**
- * Class Csv
- * @package App\Classes\Csv
+ * Class Csv.
  */
 class Csv
 {
@@ -38,12 +36,6 @@ class Csv
     private $file;
     private string$filename;
 
-    /**
-     * @param string $filename
-     * @param array  $data
-     * @param array  $groups
-     *
-     */
     public function export(string $filename, array $data, array $groups): void
     {
         $this->filename = $filename;
@@ -57,15 +49,14 @@ class Csv
         $serializer = new Serializer([
             new DateTimeNormalizer([DateTime::ATOM]),
             new DataUriNormalizer(),
-            $normalizer
-        ], array($encoder));
+            $normalizer,
+        ], [$encoder]);
 
         // encoding contents in CSV format
         $this->file = $serializer->serialize($data, 'csv', ['enable_max_depth' => true, 'groups' => $groups]);
     }
 
     /**
-     * @return Response
      * @throws UnexpectedValueException
      * @throws InvalidArgumentException
      */

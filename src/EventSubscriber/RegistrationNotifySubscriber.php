@@ -1,11 +1,12 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/RegistrationNotifySubscriber.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 16/08/2020 08:33
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/RegistrationNotifySubscriber.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
-// App\EventSubscriber\RegistrationNotifySubscriber.php
 namespace App\EventSubscriber;
 
 use App\Entity\Absence;
@@ -21,8 +22,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Routing\RouterInterface;
 
 /**
- * Envoi un mail de bienvenue à chaque creation d'un utilisateur
- *
+ * Envoi un mail de bienvenue à chaque creation d'un utilisateur.
  */
 class RegistrationNotifySubscriber implements EventSubscriberInterface
 {
@@ -31,9 +31,6 @@ class RegistrationNotifySubscriber implements EventSubscriberInterface
 
     /**
      * RegistrationNotifySubscriber constructor.
-     *
-     * @param EntityManagerInterface $entityManager
-     * @param RouterInterface        $router
      */
     public function __construct(
         EntityManagerInterface $entityManager,
@@ -43,10 +40,6 @@ class RegistrationNotifySubscriber implements EventSubscriberInterface
         $this->router = $router;
     }
 
-
-    /**
-     * @return array
-     */
     public static function getSubscribedEvents(): array
     {
         return [
@@ -60,14 +53,11 @@ class RegistrationNotifySubscriber implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param CarnetEvent $event
-     */
     public function onCarnetAdded(CarnetEvent $event): void
     {
         $cahier = $event->getCahierTexte();
 
-        if ($cahier->getSemestre() !== null) {
+        if (null !== $cahier->getSemestre()) {
             /** @var Etudiant $etudiant */
             foreach ($cahier->getSemestre()->getEtudiants() as $etudiant) {
                 $notif = new Notification();
@@ -82,9 +72,6 @@ class RegistrationNotifySubscriber implements EventSubscriberInterface
         }
     }
 
-    /**
-     * @param NoteEvent $event
-     */
     public function onNoteAdded(NoteEvent $event): void
     {
         $note = $event->getNote();
@@ -98,17 +85,11 @@ class RegistrationNotifySubscriber implements EventSubscriberInterface
         $this->entityManager->persist($notif);
     }
 
-    /**
-     * @param AbsenceEvent $event
-     */
     public function onAbsenceAdded(AbsenceEvent $event): void
     {
         $this->onAbsence($event->getAbsence(), AbsenceEvent::ADDED);
     }
 
-    /**
-     * @param RattrapageEvent $event
-     */
     public function onDecisionRattrapge(RattrapageEvent $event): void
     {
         $rattrapage = $event->getRattrapage();
@@ -117,7 +98,7 @@ class RegistrationNotifySubscriber implements EventSubscriberInterface
         $notif->setEtudiant($rattrapage->getEtudiant());
         $notif->setPersonnel(null);
         $notif->setTypeUser(Notification::ETUDIANT);
-        if ($rattrapage->getEtatDemande() === 'A') {
+        if ('A' === $rattrapage->getEtatDemande()) {
             $notif->setType(RattrapageEvent::DECISION_RATTRAPAGE_ACCEPTEE);
         } else {
             $notif->setType(RattrapageEvent::DECISION_RATTRAPAGE_REFUSEE);
@@ -130,7 +111,7 @@ class RegistrationNotifySubscriber implements EventSubscriberInterface
         $notif->setEtudiant(null);
         $notif->setPersonnel($rattrapage->getPersonnel());
         $notif->setTypeUser(Notification::PERSONNEL);
-        if ($rattrapage->getEtatDemande() === 'A') {
+        if ('A' === $rattrapage->getEtatDemande()) {
             $notif->setType(RattrapageEvent::DECISION_RATTRAPAGE_ACCEPTEE);
         } else {
             $notif->setType(RattrapageEvent::DECISION_RATTRAPAGE_REFUSEE);
@@ -141,9 +122,6 @@ class RegistrationNotifySubscriber implements EventSubscriberInterface
         $this->entityManager->flush();
     }
 
-    /**
-     * @param JustificatifEvent $event
-     */
     public function onDecisionJustficatif(JustificatifEvent $event): void
     {
         $absenceJustificatif = $event->getAbsenceJustificatif();
@@ -152,7 +130,7 @@ class RegistrationNotifySubscriber implements EventSubscriberInterface
         $notif->setEtudiant($absenceJustificatif->getEtudiant());
         $notif->setPersonnel(null);
         $notif->setTypeUser(Notification::ETUDIANT);
-        if ($absenceJustificatif->getEtat() === 'A') {
+        if ('A' === $absenceJustificatif->getEtat()) {
             $notif->setType(JustificatifEvent::DECISION_JUSTIFICATIF_ACCEPTEE);
         } else {
             $notif->setType(JustificatifEvent::DECISION_JUSTIFICATIF_REFUSEE);
@@ -163,29 +141,21 @@ class RegistrationNotifySubscriber implements EventSubscriberInterface
         $this->entityManager->flush();
     }
 
-    /**
-     * @param AbsenceEvent $event
-     */
     public function onAbsenceRemoved(AbsenceEvent $event): void
     {
         $this->onAbsence($event->getAbsence(), AbsenceEvent::REMOVED);
     }
 
-    /**
-     * @param AbsenceEvent $event
-     */
     public function onAbsenceJustified(AbsenceEvent $event): void
     {
         $this->onAbsence($event->getAbsence(), AbsenceEvent::JUSTIFIED);
     }
 
     /**
-     * @param Absence $absence
-     * @param         $etat
+     * @param $etat
      */
     private function onAbsence(Absence $absence, $etat): void
     {
-
         $notif = new Notification();
         $notif->setEtudiant($absence->getEtudiant());
         $notif->setPersonnel($absence->getPersonnel());

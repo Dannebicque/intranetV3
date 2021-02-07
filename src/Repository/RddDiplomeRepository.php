@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/RddDiplomeRepository.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/RddDiplomeRepository.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Repository;
 
@@ -28,8 +30,9 @@ class RddDiplomeRepository extends ServiceEntityRepository
 
     /**
      * @return int|mixed|string
-     * @throws NoResultException
      * @throws NonUniqueResultException
+     *
+     * @throws NoResultException
      */
     public function countComplet()
     {
@@ -38,7 +41,5 @@ class RddDiplomeRepository extends ServiceEntityRepository
             ->select('COUNT(p)')
             ->getQuery()
             ->getSingleScalarResult();
-
     }
-
 }

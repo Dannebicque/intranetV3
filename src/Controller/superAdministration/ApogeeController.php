@@ -1,10 +1,11 @@
 <?php
-
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/ApogeeController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 01/02/2021 15:08
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/ApogeeController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller\superAdministration;
 
@@ -35,12 +36,6 @@ class ApogeeController extends BaseController
     /**
      * @Route("/", methods={"GET"}, name="sa_apogee_index")
      * @IsGranted("ROLE_SUPER_ADMIN")
-     *
-     * @param SemestreRepository           $semestreRepository
-     *
-     * @param AnneeUniversitaireRepository $anneeUniversitaireRepository
-     *
-     * @return Response
      */
     public function index(
         SemestreRepository $semestreRepository,
@@ -48,7 +43,7 @@ class ApogeeController extends BaseController
     ): Response {
         return $this->render('super-administration/apogee/index.html.twig', [
             'semestres'           => $semestreRepository->findAll(),
-            'anneeUniversitaires' => $anneeUniversitaireRepository->findAll()
+            'anneeUniversitaires' => $anneeUniversitaireRepository->findAll(),
         ]);
     }
 
@@ -56,16 +51,8 @@ class ApogeeController extends BaseController
      * @Route("/import/diplome/{type}", methods={"POST"}, name="sa_apogee_maj")
      * @IsGranted("ROLE_SUPER_ADMIN")
      *
-     * @param MyApogee                     $myApogee
-     * @param EtudiantImport               $etudiantImport
-     * @param Request                      $request
-     * @param SemestreRepository           $semestreRepository
-     * @param EtudiantRepository           $etudiantRepository
-     * @param AnneeUniversitaireRepository $anneeUniversitaireRepository
-     * @param BacRepository                $bacRepository
-     * @param                              $type
+     * @param $type
      *
-     * @return Response
      * @throws Exception
      */
     public function importMaj(
@@ -91,12 +78,12 @@ class ApogeeController extends BaseController
                     $dataApogee = $myApogee->transformeApogeeToArray($row, $bacRepository->getApogeeArray());
                     $numEtudiant = $dataApogee['etudiant']['setNumEtudiant'];
                     $etudiant = $etudiantRepository->findOneBy(['numEtudiant' => $numEtudiant]);
-                    if ($etudiant === null) {
+                    if (null === $etudiant) {
                         //l'étudiant n'existe pas, quelque soit la situation, on va l'ajouter
                         $etudiant = $etudiantImport->createEtudiant($semestre, $dataApogee);
                         $this->etudiants[$numEtudiant]['etat'] = 'force';
                         $this->etudiants[$numEtudiant]['data'] = $etudiant;
-                    } elseif ($etudiant && $type === 'force') {
+                    } elseif ($etudiant && 'force' === $type) {
                         //l'étudiant existe, et on force la mise à jour
                         $etudiant = $etudiantImport->updateEtudiant($etudiant, $semestre, $dataApogee);
                         $this->etudiants[$numEtudiant]['etat'] = 'maj';
@@ -109,7 +96,7 @@ class ApogeeController extends BaseController
             $this->addFlashBag('success', 'import.etudiant.apogee.ok');
 
             return $this->render('super-administration/apogee/confirmation.html.twig', [
-                'etudiants' => $this->etudiants
+                'etudiants' => $this->etudiants,
             ]);
         }
         $this->addFlashBag('error', 'import.etudiant.apogee.erreur.diplome');
@@ -121,16 +108,6 @@ class ApogeeController extends BaseController
      * @Route("/import/etudiant", methods={"POST"}, name="sa_apogee_import_etudiant")
      * @IsGranted("ROLE_SUPER_ADMIN")
      *
-     * @param EtudiantImport     $etudiantImport
-     * @param MyApogee           $myApogee
-     * @param Request            $request
-     *
-     * @param EtudiantRepository $etudiantRepository
-     *
-     * @param SemestreRepository $semestreRepository
-     * @param BacRepository      $bacRepository
-     *
-     * @return Response
      * @throws Exception
      */
     public function importEtudiant(
@@ -169,9 +146,7 @@ class ApogeeController extends BaseController
         $this->addFlashBag('success', 'import.etudiant.apogee.ok');
 
         return $this->render('super-administration/apogee/confirmation.html.twig', [
-            'etudiants' => $this->etudiants
+            'etudiants' => $this->etudiants,
         ]);
     }
-
-
 }

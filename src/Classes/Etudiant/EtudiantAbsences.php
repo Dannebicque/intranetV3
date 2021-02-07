@@ -1,12 +1,17 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantAbsences.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 26/09/2020 08:52
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantAbsences.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:07
+ */
+
+/*
+ * Pull your hearder here, for exemple, Licence header.
+ */
 
 namespace App\Classes\Etudiant;
-
 
 use App\Entity\Absence;
 use App\Entity\AnneeUniversitaire;
@@ -23,7 +28,6 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class EtudiantAbsences
 {
-
     private AbsenceRepository $absenceRepository;
 
     private Etudiant $etudiant;
@@ -38,17 +42,12 @@ class EtudiantAbsences
 
     /**
      * EtudiantAbsences constructor.
-     *
-     * @param AbsenceRepository        $absenceRepository
-     * @param EntityManagerInterface   $entityManager
-     * @param EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
         AbsenceRepository $absenceRepository,
         EntityManagerInterface $entityManager,
         EventDispatcherInterface $eventDispatcher
     ) {
-
         $this->absenceRepository = $absenceRepository;
         $this->entityManager = $entityManager;
         $this->eventDispatcher = $eventDispatcher;
@@ -63,7 +62,7 @@ class EtudiantAbsences
         Semestre $semestre,
         AnneeUniversitaire $anneeUniversitaire
     ) {
-        if ($semestre === null) {
+        if (null === $semestre) {
             $semestre = $this->etudiant->getSemestre();
         }
 
@@ -117,13 +116,12 @@ class EtudiantAbsences
 
         /** @var Absence $absence */
         foreach ($this->absences as $absence) {
-            if ($absence->getJustifie() === false && $absence->getMatiere() !== null) {
+            if (false === $absence->getJustifie() && null !== $absence->getMatiere()) {
                 $idMatiere = $absence->getMatiere()->getId();
-                if (array_key_exists($idMatiere, $tabMatiere)) {
-                    $tabMatiere[$idMatiere]->absences++;
+                if (\array_key_exists($idMatiere, $tabMatiere)) {
+                    ++$tabMatiere[$idMatiere]->absences;
                 }
             }
         }
     }
-
 }

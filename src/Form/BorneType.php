@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Form/BorneType.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 03/08/2020 16:52
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/BorneType.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Form;
 
@@ -23,17 +25,12 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class BorneType
- * @package App\Form
+ * Class BorneType.
  */
 class BorneType extends AbstractType
 {
     private $departement;
 
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->departement = $options['departement'];
@@ -57,17 +54,17 @@ class BorneType extends AbstractType
             ])
             ->add('url', TextType::class, [
                 'label'    => 'label.url',
-                'required' => false
+                'required' => false,
             ])
             ->add('dateRange', DateRangeType::class, ['label' => 'dateRange', 'mapped' => false, 'required' => true])
             ->add(
                 'visible',
                 YesNoType::class,
                 [
-                    'label' => 'label.visible'
+                    'label' => 'label.visible',
                 ]
             )
-            ->add('semestres', EntityType::class, array(
+            ->add('semestres', EntityType::class, [
                 'class'         => Semestre::class,
                 'label'         => 'label.semestres_date',
                 'choice_label'  => 'libelle',
@@ -76,8 +73,8 @@ class BorneType extends AbstractType
                 },
                 'required'      => true,
                 'expanded'      => true,
-                'multiple'      => true
-            ))
+                'multiple'      => true,
+            ])
             ->addEventListener(FormEvents::POST_SUBMIT, static function(FormEvent $event) {
                 $borne = $event->getData();
                 $form = $event->getForm();
@@ -93,21 +90,18 @@ class BorneType extends AbstractType
                     'mapped'    => false,
                     'date_data' => [
                         'from' => $borne->getDateDebutPublication(),
-                        'to'   => $borne->getDateFinPublication()
-                    ]
+                        'to'   => $borne->getDateFinPublication(),
+                    ],
                 ]);
             });
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class'         => Borne::class,
-            'departement'          => null,
-            'translation_domain' => 'form'
+            'departement'        => null,
+            'translation_domain' => 'form',
         ]);
     }
 }

@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/DateRepository.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 08/08/2020 10:20
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/DateRepository.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Repository;
 
@@ -26,8 +28,6 @@ class DateRepository extends ServiceEntityRepository
 {
     /**
      * DateRepository constructor.
-     *
-     * @param ManagerRegistry $registry
      */
     public function __construct(ManagerRegistry $registry)
     {
@@ -37,8 +37,6 @@ class DateRepository extends ServiceEntityRepository
     /**
      * @param $departement
      * @param $nbResult
-     *
-     * @return mixed
      */
     public function findByDepartement(Departement $departement, $nbResult = 0)
     {
@@ -49,7 +47,7 @@ class DateRepository extends ServiceEntityRepository
             ->where('p.departement = :departement')
             ->setParameter('departement', $departement->getId())
             ->orderBy('d.dateDebut', 'DESC');
-        if ($nbResult !== 0) {
+        if (0 !== $nbResult) {
             $query->setMaxResults($nbResult);
         }
 
@@ -60,7 +58,6 @@ class DateRepository extends ServiceEntityRepository
      * @param $departement
      * @param $annee
      *
-     * @return array
      * @throws Exception
      */
     public function findByDepartementPlanning($departement, $annee): array
@@ -87,9 +84,9 @@ class DateRepository extends ServiceEntityRepository
 
         /** @var Date $event */
         foreach ($query as $event) {
-            if ($event->getDateDebut() !== null) {
+            if (null !== $event->getDateDebut()) {
                 $key = $event->getDateDebut()->format('Y-m-d');
-                if (!array_key_exists($key, $tab)) {
+                if (!\array_key_exists($key, $tab)) {
                     $tab[$key] = [];
                 }
                 $tab[$key][] = $event;

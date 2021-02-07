@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/AlternanceRepository.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 05/07/2020 08:14
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/AlternanceRepository.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:08
+ */
 
 namespace App\Repository;
 
@@ -91,12 +93,6 @@ class AlternanceRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    /**
-     * @param Annee              $annee
-     * @param AnneeUniversitaire $anneeUniversitaire
-     *
-     * @return array
-     */
     public function getByAnneeAndAnneeUniversitaireArray(Annee $annee, AnneeUniversitaire $anneeUniversitaire): array
     {
         $alternances = $this->getByAnneeAndAnneeUniversitaire($annee, $anneeUniversitaire);
@@ -104,7 +100,7 @@ class AlternanceRepository extends ServiceEntityRepository
         $tab = [];
         /** @var Alternance $alternance */
         foreach ($alternances as $alternance) {
-            if ($alternance->getEtudiant() !== null) {
+            if (null !== $alternance->getEtudiant()) {
                 $tab[$alternance->getEtudiant()->getId()] = $alternance;
             }
         }
@@ -113,10 +109,6 @@ class AlternanceRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Etudiant           $etudiant
-     * @param AnneeUniversitaire $anneeUniversitaire
-     *
-     * @return mixed
      * @throws NonUniqueResultException
      */
     public function getOneByEtudiantAndAnneeUniversitaire(Etudiant $etudiant, AnneeUniversitaire $anneeUniversitaire)

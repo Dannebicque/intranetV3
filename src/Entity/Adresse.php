@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Adresse.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 02/10/2020 10:36
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Adresse.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Entity;
 
@@ -59,24 +61,20 @@ class Adresse extends BaseEntity
 
     /**
      * Adresse constructor.
-     *
      */
     public function __construct()
     {
     }
 
-    /**
-     * @return null|string
-     */
     public function getDisplay(): ?string
     {
-        if ($this->getAdresse1() !== '' && $this->getCodePostal() !== '' && $this->getVille() !== '') {
+        if ('' !== $this->getAdresse1() && '' !== $this->getCodePostal() && '' !== $this->getVille()) {
             $html = $this->getAdresse1();
-            if ($this->getAdresse2() !== '') {
+            if ('' !== $this->getAdresse2()) {
                 $html .= ' <br />' . $this->getAdresse2();
             }
 
-            if ($this->getAdresse3() !== '') {
+            if ('' !== $this->getAdresse3()) {
                 $html .= ' <br />' . $this->getAdresse3();
             }
 
@@ -85,20 +83,16 @@ class Adresse extends BaseEntity
         } else {
             $html = '';
         }
+
         return $html;
     }
 
-    /**
-     * @return null|string
-     */
     public function getAdresse1(): ?string
     {
         return $this->adresse1;
     }
 
     /**
-     * @param string|null $adresse1
-     *
      * @return Adresse
      */
     public function setAdresse1(?string $adresse1 = ''): self
@@ -108,9 +102,6 @@ class Adresse extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
     public function getAdresse2(): ?string
     {
         return trim($this->adresse2);
@@ -128,9 +119,6 @@ class Adresse extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
     public function getAdresse3(): ?string
     {
         return trim($this->adresse3);
@@ -148,17 +136,12 @@ class Adresse extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
     public function getCodePostal(): ?string
     {
         return $this->codePostal;
     }
 
     /**
-     * @param string|null $codePostal
-     *
      * @return Adresse
      */
     public function setCodePostal(?string $codePostal = ''): self
@@ -168,17 +151,12 @@ class Adresse extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
     public function getVille(): ?string
     {
         return $this->ville;
     }
 
     /**
-     * @param string|null $ville
-     *
      * @return Adresse
      */
     public function setVille(?string $ville = ''): self
@@ -188,17 +166,12 @@ class Adresse extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
     public function getPays(): ?string
     {
         return $this->pays;
     }
 
     /**
-     * @param string|null $pays
-     *
      * @return Adresse
      */
     public function setPays(?string $pays = 'France'): self

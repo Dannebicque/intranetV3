@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Form/StagePeriodeType.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 05/08/2020 09:03
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/StagePeriodeType.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Form;
 
@@ -31,10 +33,6 @@ class StagePeriodeType extends AbstractType
 {
     private $departement;
 
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->departement = $options['departement'];
@@ -43,9 +41,9 @@ class StagePeriodeType extends AbstractType
             ->add('numeroPeriode', ChoiceType::class, [
                 'label'              => 'label.ordre_annee',
                 'choices'            => [1 => 1, 2 => 2, 3 => 3, 4 => 4, 5 => 5, 6 => 6],
-                'translation_domain' => 'form'
+                'translation_domain' => 'form',
             ])
-            ->add('semestre', EntityType::class, array(
+            ->add('semestre', EntityType::class, [
                 'class'         => Semestre::class,
                 'label'         => 'label.semestre_stage_periode',
                 'choice_label'  => 'libelle',
@@ -54,8 +52,8 @@ class StagePeriodeType extends AbstractType
                 },
                 'required'      => true,
                 'expanded'      => true,
-                'multiple'      => false
-            ))
+                'multiple'      => false,
+            ])
             ->add('responsables', EntityType::class, [
                 'label'         => 'label.responsables',
                 'expanded'      => true,
@@ -65,12 +63,12 @@ class StagePeriodeType extends AbstractType
                 'choice_label'  => 'display',
                 'query_builder' => function(PersonnelRepository $personnelRepository) {
                     return $personnelRepository->findByDepartementBuilder($this->departement);
-                }
+                },
             ])
             ->add('anneeUniversitaire', EntityType::class, [
                 'label'        => 'label.anneeUniversitaire',
                 'choice_label' => 'displayAnneeUniversitaire',
-                'class'        => AnneeUniversitaire::class
+                'class'        => AnneeUniversitaire::class,
             ])
             ->add('dateRange', DateRangeType::class,
                 ['label' => 'dateRange.periode', 'mapped' => false, 'required' => true])
@@ -85,9 +83,9 @@ class StagePeriodeType extends AbstractType
                 'prototype'     => true,
                 'allow_delete'  => true,
                 'by_reference'  => false,
-                'attr'          => array(
+                'attr'          => [
                     'class' => 'selector-stagePeriodeInterruptions',
-                ),
+                ],
             ])
             ->add('stagePeriodeSoutenances', CollectionType::class, [
                 'entry_type'    => StagePeriodeSoutenanceType::class,
@@ -96,9 +94,9 @@ class StagePeriodeType extends AbstractType
                 'prototype'     => true,
                 'allow_delete'  => true,
                 'by_reference'  => false,
-                'attr'          => array(
+                'attr'          => [
                     'class' => 'selector-stagePeriodeSoutenances',
-                ),
+                ],
             ])
             ->add('copieAssistant', YesNoType::class,
                 ['label' => 'label.copieAssistant', 'help' => 'help.copieAssistant'])
@@ -107,7 +105,7 @@ class StagePeriodeType extends AbstractType
                 'label'          => 'label.fichier',
                 'download_label' => 'label.apercu',
                 'allow_delete'   => true,
-                'help'           => 'help.ficheRenseignement'
+                'help'           => 'help.ficheRenseignement',
             ])
             ->add('texteLibre', TextareaType::class, ['label' => 'label.texteLibre', 'help' => 'help.texteLibre'])
             ->add('competencesVisees', TextareaType::class,
@@ -134,10 +132,9 @@ class StagePeriodeType extends AbstractType
                 $form->add('dateRange', DateRangeType::class, [
                     'label'     => 'dateRange.periode',
                     'mapped'    => false,
-                    'date_data' => ['from' => $stagePeriode->getDateDebut(), 'to' => $stagePeriode->getDateFin()]
+                    'date_data' => ['from' => $stagePeriode->getDateDebut(), 'to' => $stagePeriode->getDateFin()],
                 ]);
             });
-
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -145,7 +142,7 @@ class StagePeriodeType extends AbstractType
         $resolver->setDefaults([
             'data_class'         => StagePeriode::class,
             'departement'        => null,
-            'translation_domain' => 'form'
+            'translation_domain' => 'form',
         ]);
     }
 }

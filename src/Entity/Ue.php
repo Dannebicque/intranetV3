@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Ue.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 05/12/2020 15:06
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Ue.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:50
+ */
 
 namespace App\Entity;
 
@@ -23,7 +25,7 @@ class Ue extends BaseEntity
     private $libelle;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      */
@@ -54,7 +56,6 @@ class Ue extends BaseEntity
      */
     private $semestre;
 
-
     /**
      * @ORM\Column(type="boolean")
      */
@@ -72,8 +73,6 @@ class Ue extends BaseEntity
 
     /**
      * Ue constructor.
-     *
-     * @param Semestre $semestre
      */
     public function __construct(Semestre $semestre)
     {
@@ -89,68 +88,44 @@ class Ue extends BaseEntity
         return $this->libelle;
     }
 
-    /**
-     * @param mixed $libelle
-     */
     public function setLibelle($libelle): void
     {
         $this->libelle = $libelle;
     }
 
-    /**
-     * @return int
-     */
     public function getNumeroUe(): int
     {
         return $this->numeroUe;
     }
 
-    /**
-     * @param int $numeroUe
-     */
     public function setNumeroUe(int $numeroUe): void
     {
         $this->numeroUe = $numeroUe;
     }
 
-    /**
-     * @return float
-     */
     public function getCoefficient(): float
     {
         return $this->coefficient;
     }
 
-    /**
-     * @param float $coefficient
-     */
     public function setCoefficient(float $coefficient): void
     {
         $this->coefficient = $coefficient;
     }
 
-    /**
-     * @return float
-     */
     public function getNbEcts(): float
     {
         return $this->nbEcts;
     }
 
-    /**
-     * @param float $nbEcts
-     */
     public function setNbEcts(float $nbEcts): void
     {
         $this->nbEcts = $nbEcts;
     }
 
-    /**
-     * @return Diplome|null
-     */
     public function getDiplome(): ?Diplome
     {
-        if ($this->semestre !== null && $this->semestre->getAnnee() !== null && $this->semestre->getAnnee()->getDiplome() !== null) {
+        if (null !== $this->semestre && null !== $this->semestre->getAnnee() && null !== $this->semestre->getAnnee()->getDiplome()) {
             return $this->semestre->getAnnee()->getDiplome();
         }
 
@@ -166,8 +141,6 @@ class Ue extends BaseEntity
     }
 
     /**
-     * @param Matiere $matiere
-     *
      * @return Ue
      */
     public function addMatiere(Matiere $matiere): self
@@ -181,8 +154,6 @@ class Ue extends BaseEntity
     }
 
     /**
-     * @param Matiere $matiere
-     *
      * @return Ue
      */
     public function removeMatiere(Matiere $matiere): self
@@ -198,17 +169,12 @@ class Ue extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return Semestre|null
-     */
     public function getSemestre(): ?Semestre
     {
         return $this->semestre;
     }
 
     /**
-     * @param Semestre|null $semestre
-     *
      * @return Ue
      */
     public function setSemestre(?Semestre $semestre): self

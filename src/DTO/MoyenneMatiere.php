@@ -1,12 +1,13 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/MoyenneMatiere.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 25/01/2021 16:31
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/MoyenneMatiere.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:41
+ */
 
 namespace App\DTO;
-
 
 use App\Entity\Constantes;
 use App\Entity\Matiere;
@@ -40,14 +41,14 @@ class MoyenneMatiere
 
     public function isOption($groupes)
     {
-        if ($this->matiere->getParcours() === null) {
+        if (null === $this->matiere->getParcours()) {
             $this->optionFaite = true;
 
             return $this->optionFaite;
         }
 
         foreach ($groupes as $groupe) {
-            if (($groupe->getParcours() !== null) && $groupe->getParcours()->getId() === $this->matiere->getParcours()->getId()) {
+            if ((null !== $groupe->getParcours()) && $groupe->getParcours()->getId() === $this->matiere->getParcours()->getId()) {
                 $this->optionFaite = true;
 
                 return $this->optionFaite;
@@ -61,7 +62,7 @@ class MoyenneMatiere
 
     public function addNote(Note $note): void
     {
-        if ($note->getAbsenceJustifie() === false) {
+        if (false === $note->getAbsenceJustifie()) {
             $this->notes[] = $note->getNote();
             $this->coefficients[] = $note->getEvaluation()->getCoefficient();
             $this->totalNotes += $note->getNote() * $note->getEvaluation()->getCoefficient();
@@ -80,7 +81,7 @@ class MoyenneMatiere
             return Constantes::PAS_OPTION;
         }
 
-        if ($note === 0) {
+        if (0 === $note) {
             return 'badge badge-danger';
         }
 
@@ -98,14 +99,9 @@ class MoyenneMatiere
         return $moy < 0 ? 0 : $moy;
     }
 
-    /**
-     *
-     * @return string
-     */
     public function getStylePenalisee(): string
     {
         return $this->style($this->getMoyennePenalisee());
-
     }
 
     public function getMoyennePenalisee()

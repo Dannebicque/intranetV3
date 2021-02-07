@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Form/CovidAttestationEtudiantType.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 30/01/2021 18:04
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/CovidAttestationEtudiantType.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Form;
 
@@ -38,7 +40,7 @@ class CovidAttestationEtudiantType extends AbstractType
                 'query_builder' => function(DiplomeRepository $diplomeRepository) {
                     return $diplomeRepository->findByDepartementBuilder($this->departement);
                 },
-                'label'         => 'Diplôme concerné par votre demande'
+                'label'         => 'Diplôme concerné par votre demande',
             ])
             ->add('dateDebut', DateType::class, [
                 'label'  => 'Date du début de la période',
@@ -46,7 +48,7 @@ class CovidAttestationEtudiantType extends AbstractType
                 'data'   => $date->addDays(2),
                 'widget' => 'single_text',
                 'html5'  => false,
-                'attr'   => ['data-provide' => 'datepicker']
+                'attr'   => ['data-provide' => 'datepicker'],
             ])
             ->add('dateFin', DateType::class, [
                 'label'  => 'Date de fin de la période',
@@ -55,7 +57,7 @@ class CovidAttestationEtudiantType extends AbstractType
                 'widget' => 'single_text',
                 'html5'  => false,
                 'attr'   => ['data-provide' => 'datepicker'],
-                'help'   => 'Merci de ne pas dépasser un délai d\'une semaine'
+                'help'   => 'Merci de ne pas dépasser un délai d\'une semaine',
             ])
             ->add('groupes', EntityType::class, [
                 'label'         => 'Choisissez des groupes présents',
@@ -76,7 +78,7 @@ class CovidAttestationEtudiantType extends AbstractType
         $resolver->setDefaults([
             'data_class'         => CovidAttestationEtudiant::class,
             'translation_domain' => 'form',
-            'departement'        => null
+            'departement'        => null,
         ]);
     }
 }

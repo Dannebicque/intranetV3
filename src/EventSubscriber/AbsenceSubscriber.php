@@ -1,11 +1,12 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/AbsenceSubscriber.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 13/09/2020 15:37
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/AbsenceSubscriber.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
-// App\EventSubscriber\RegistrationNotifySubscriber.php
 namespace App\EventSubscriber;
 
 use App\Entity\Absence;
@@ -18,8 +19,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
- * Envoi un mail de bienvenue à chaque creation d'un utilisateur
- *
+ * Envoi un mail de bienvenue à chaque creation d'un utilisateur.
  */
 class AbsenceSubscriber implements EventSubscriberInterface
 {
@@ -31,10 +31,6 @@ class AbsenceSubscriber implements EventSubscriberInterface
 
     /**
      * RegistrationNotifySubscriber constructor.
-     *
-     * @param EntityManagerInterface        $entityManager
-     * @param AbsenceRepository             $absenceRepository
-     * @param AbsenceJustificatifRepository $absenceJustificatifRepository
      */
     public function __construct(
         EntityManagerInterface $entityManager,
@@ -46,15 +42,11 @@ class AbsenceSubscriber implements EventSubscriberInterface
         $this->absenceJustificatifRepository = $absenceJustificatifRepository;
     }
 
-
-    /**
-     * @return array
-     */
     public static function getSubscribedEvents(): array
     {
         return [
             JustificatifEvent::DECISION_JUSTIFICATIF_ACCEPTEE => 'onJustificatifAccepte',
-            AbsenceEvent::ADDED                               => 'onVerificationJustificatif'
+            AbsenceEvent::ADDED                               => 'onVerificationJustificatif',
         ];
     }
 

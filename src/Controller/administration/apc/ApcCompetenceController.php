@@ -1,9 +1,12 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcCompetenceController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 08/01/2021 16:12
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcCompetenceController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
 
 namespace App\Controller\administration\apc;
 
@@ -26,12 +29,8 @@ class ApcCompetenceController extends BaseController
     /**
      * @Route("/{diplome}/export.{_format}", name="administration_apc_competence_export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"})
-     * @param MyExport               $myExport
-     * @param ApcComptenceRepository $apcComptenceRepository
-     * @param Diplome                $diplome
-     * @param                        $_format
      *
-     * @return Response
+     * @param $_format
      */
     public function export(
         MyExport $myExport,
@@ -52,10 +51,6 @@ class ApcCompetenceController extends BaseController
 
     /**
      * @Route("/{diplome}/new", name="administration_apc_competence_new", methods={"GET","POST"})
-     * @param Request $request
-     * @param Diplome $diplome
-     *
-     * @return Response
      */
     public function new(Request $request, Diplome $diplome): Response
     {
@@ -74,15 +69,12 @@ class ApcCompetenceController extends BaseController
         return $this->render('apc/apc_competence/new.html.twig', [
             'apc_competence' => $apcComptence,
             'form'           => $form->createView(),
-            'diplome'        => $diplome
+            'diplome'        => $diplome,
         ]);
     }
 
     /**
      * @Route("/{id}/detail", name="administration_apc_competence_show", methods={"GET"})
-     * @param ApcCompetence $apcCompetence
-     *
-     * @return Response
      */
     public function show(ApcCompetence $apcCompetence): Response
     {
@@ -93,10 +85,6 @@ class ApcCompetenceController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_apc_competence_edit", methods={"GET","POST"})
-     * @param Request       $request
-     * @param ApcCompetence $apcCompetence
-     *
-     * @return Response
      */
     public function edit(Request $request, ApcCompetence $apcCompetence): Response
     {
@@ -119,10 +107,6 @@ class ApcCompetenceController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_apc_competence_delete", methods={"DELETE"})
-     * @param Request       $request
-     * @param ApcCompetence $apcCompetence
-     *
-     * @return Response
      */
     public function delete(Request $request, ApcCompetence $apcCompetence): Response
     {
@@ -138,15 +122,12 @@ class ApcCompetenceController extends BaseController
 
         return $this->redirectToRoute('administration_apc_referentiel_index',
             [
-                'diplome' => $diplome->getId()
+                'diplome' => $diplome->getId(),
             ]);
     }
 
     /**
      * @Route("/{id}/duplicate", name="administration_apc_competence_duplicate", methods="GET|POST")
-     * @param ApcCompetence $apcCompetence
-     *
-     * @return Response
      */
     public function duplicate(ApcCompetence $apcCompetence): Response
     {

@@ -1,12 +1,16 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/projet/ProjetEtudiantController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 23/01/2021 14:47
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/projet/ProjetEtudiantController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
 
 namespace App\Controller\administration\projet;
 
+use App\Classes\MyProjetEtudiant;
 use App\Classes\Pdf\MyPDF;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
@@ -14,7 +18,6 @@ use App\Entity\Etudiant;
 use App\Entity\ProjetEtudiant;
 use App\Entity\ProjetPeriode;
 use App\Form\ProjetEtudiantType;
-use App\Classes\MyProjetEtudiant;
 use Doctrine\ORM\NonUniqueResultException;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -33,15 +36,11 @@ class ProjetEtudiantController extends BaseController
 {
     /**
      * @Route("/{id}/edit", name="administration_projet_etudiant_edit", methods="GET|POST")
-     * @param Request        $request
-     * @param ProjetEtudiant $projetEtudiant
-     *
-     * @return Response
      */
     public function edit(Request $request, ProjetEtudiant $projetEtudiant): Response
     {
         $form = $this->createForm(ProjetEtudiantType::class, $projetEtudiant, [
-            'semestre' => $projetEtudiant->getProjetPeriode()->getSemestre()
+            'semestre' => $projetEtudiant->getProjetPeriode()->getSemestre(),
         ]);
         $form->handleRequest($request);
 
@@ -49,9 +48,9 @@ class ProjetEtudiantController extends BaseController
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'projet_etudiant.edit.success.flash');
 
-            if ($request->request->get('btn_update') !== null) {
+            if (null !== $request->request->get('btn_update')) {
                 return $this->redirectToRoute('administration_projet_periode_gestion', [
-                    'uuid' => $projetEtudiant->getProjetPeriode()->getUuidString()
+                    'uuid' => $projetEtudiant->getProjetPeriode()->getUuidString(),
                 ]);
             }
 
@@ -66,10 +65,6 @@ class ProjetEtudiantController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_projet_etudiant_delete", methods="DELETE")
-     * @param Request        $request
-     * @param ProjetEtudiant $projetEtudiant
-     *
-     * @return Response
      */
     public function delete(Request $request, ProjetEtudiant $projetEtudiant): Response
     {
@@ -84,18 +79,14 @@ class ProjetEtudiantController extends BaseController
 
         return $this->json([
             'redirect' => true,
-            'url'      => $projetEtudiant->getProjetPeriode() !== null ? $this->generateUrl('administration_projet_periode_gestion',
-                ['uuid' => $projetEtudiant->getProjetPeriode()->getUuidString()]) : $this->generateUrl('administration_index')
+            'url'      => null !== $projetEtudiant->getProjetPeriode() ? $this->generateUrl('administration_projet_periode_gestion',
+                ['uuid' => $projetEtudiant->getProjetPeriode()->getUuidString()]) : $this->generateUrl('administration_index'),
         ]);
     }
 
     /**
-     * @param MyProjetEtudiant $myProjetEtudiant
-     * @param ProjetPeriode    $projetPeriode
-     * @param Etudiant         $etudiant
-     * @param                  $etat
+     * @param $etat
      *
-     * @return RedirectResponse
      * @throws NonUniqueResultException
      * @Route("/change-etat/{projetPeriode}/{etudiant}/{etat}", name="administration_projet_etudiant_change_etat")
      * @ParamConverter("projetPeriode", options={"mapping": {"projetPeriode": "uuid"}})
@@ -105,7 +96,7 @@ class ProjetEtudiantController extends BaseController
         ProjetPeriode $projetPeriode,
         Etudiant $etudiant,
         $etat
-    ) {
+    ): RedirectResponse {
         $myProjetEtudiant->changeEtat($projetPeriode, $etudiant, $etat);
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'projet_etudiant.change_etat.success.flash');
 
@@ -113,13 +104,9 @@ class ProjetEtudiantController extends BaseController
             ['uuid' => $projetPeriode->getUuidString()]);
     }
 
-
     /**
      * @Route("/convention/pdf/{id}", name="administration_projet_etudiant_convention_pdf", methods="GET")
-     * @param MyPDF          $myPDF
-     * @param ProjetEtudiant $projetEtudiant
      *
-     * @return PdfResponse
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError

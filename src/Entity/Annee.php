@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Annee.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 12/12/2020 14:31
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Annee.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:49
+ */
 
 namespace App\Entity;
 
@@ -29,23 +31,17 @@ class Annee extends BaseEntity
     private ?string $libelle;
 
     /**
-     * @var integer
-     *
      * @ORM\Column(name="ordre", type="integer")
      */
     private int $ordre = 1;
 
     /**
-     * @var string|null
-     *
      * @ORM\Column(type="string", length=150, nullable=true)
      * @Groups({"annee"})
      */
     private ?string $libelleLong;
 
     /**
-     * @var boolean
-     *
      * @ORM\Column(type="boolean")
      */
     private bool $optAlternance = false;
@@ -96,9 +92,6 @@ class Annee extends BaseEntity
         return $this->libelle;
     }
 
-    /**
-     * @param mixed $libelle
-     */
     public function setLibelle($libelle): void
     {
         $this->libelle = $libelle;
@@ -112,9 +105,6 @@ class Annee extends BaseEntity
         return $this->ordre;
     }
 
-    /**
-     * @param int $ordre
-     */
     public function setOrdre(int $ordre): void
     {
         $this->ordre = $ordre;
@@ -128,25 +118,16 @@ class Annee extends BaseEntity
         return $this->libelleLong;
     }
 
-    /**
-     * @param string $libelleLong
-     */
     public function setLibelleLong(string $libelleLong): void
     {
         $this->libelleLong = $libelleLong;
     }
 
-    /**
-     * @return bool
-     */
     public function isOptAlternance(): bool
     {
         return $this->optAlternance;
     }
 
-    /**
-     * @param bool $optAlternance
-     */
     public function setOptAlternance(bool $optAlternance): void
     {
         $this->optAlternance = $optAlternance;
@@ -161,17 +142,12 @@ class Annee extends BaseEntity
         Tools::updateFields($name, $value, $this);
     }
 
-    /**
-     * @return Diplome|null
-     */
     public function getDiplome(): ?Diplome
     {
         return $this->diplome;
     }
 
     /**
-     * @param Diplome|null $diplome
-     *
      * @return Annee
      */
     public function setDiplome(?Diplome $diplome): self
@@ -190,8 +166,6 @@ class Annee extends BaseEntity
     }
 
     /**
-     * @param Semestre $semestre
-     *
      * @return Annee
      */
     public function addSemestre(Semestre $semestre): self
@@ -205,8 +179,6 @@ class Annee extends BaseEntity
     }
 
     /**
-     * @param Semestre $semestre
-     *
      * @return Annee
      */
     public function removeSemestre(Semestre $semestre): self
@@ -265,8 +237,9 @@ class Annee extends BaseEntity
         return $this;
     }
 
-    public function getAnneeUniversitaire() {
-        if ($this->getDiplome() !== null && $this->getDiplome()->getAnneeUniversitaire() !== null) {
+    public function getAnneeUniversitaire()
+    {
+        if (null !== $this->getDiplome() && null !== $this->getDiplome()->getAnneeUniversitaire()) {
             return $this->getDiplome()->getAnneeUniversitaire()->getAnnee();
         }
 

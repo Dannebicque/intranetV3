@@ -1,33 +1,32 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/PrevisionnelController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 13/10/2020 21:14
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/PrevisionnelController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller\appPersonnel;
 
+use App\Classes\MyPrevisionnel;
 use App\Classes\ServiceRealise\ServiceRealiseCelcat;
 use App\Classes\ServiceRealise\ServiceRealiseIntranet;
 use App\Controller\BaseController;
-use App\Classes\MyPrevisionnel;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class PrevisionnelController
+ * Class PrevisionnelController.
+ *
  * @IsGranted("ROLE_PERMANENT")
- * @package App\Controller
  * @Route("/application/personnel/previsionnel")
  */
 class PrevisionnelController extends BaseController
 {
     /**
      * @Route("/", name="previsionnel_index")
-     * @param MyPrevisionnel $myPrevisionnel
-     *
-     * @return Response
      */
     public function index(MyPrevisionnel $myPrevisionnel): Response
     {
@@ -38,31 +37,25 @@ class PrevisionnelController extends BaseController
 
         return $this->render('appPersonnel/previsionnel/index.html.twig', [
             'previsionnel' => $myPrevisionnel,
-            'personnel'    => $this->getConnectedUser()
+            'personnel'    => $this->getConnectedUser(),
         ]);
     }
 
     /**
      * @Route("/chronologique", name="previsionnel_chronologique")
-     *
-     * @param ServiceRealiseIntranet $serviceRealiseIntranet
-     * @param ServiceRealiseCelcat   $serviceRealiseCelcat
-     *
-     * @return Response
      */
     public function chronologique(
         ServiceRealiseIntranet $serviceRealiseIntranet,
         ServiceRealiseCelcat $serviceRealiseCelcat
     ): Response {
-
-        if ($this->getDepartement() !== null && $this->getDepartement()->getOptUpdateCelcat() === true) {
+        if (null !== $this->getDepartement() && true === $this->getDepartement()->getOptUpdateCelcat()) {
             $chronologique = $serviceRealiseCelcat;
         } else {
             $chronologique = $serviceRealiseIntranet;
         }
 
         return $this->render('appPersonnel/previsionnel/chronologique.html.twig', [
-            'chronologique' => $chronologique->getServiceRealiserParEnseignant($this->getConnectedUser())
+            'chronologique' => $chronologique->getServiceRealiserParEnseignant($this->getConnectedUser()),
         ]);
     }
 

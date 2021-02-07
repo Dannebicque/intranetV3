@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Form/DatesType.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/DatesType.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Form;
 
@@ -24,17 +26,12 @@ use Symfony\Component\OptionsResolver\Exception\AccessException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class DatesType
- * @package App\Form
+ * Class DatesType.
  */
 class DatesType extends AbstractType
 {
     private $departement;
 
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->departement = $options['departement'];
@@ -45,7 +42,7 @@ class DatesType extends AbstractType
             ])
             ->add('texte', TextType::class, [
                 'label'    => 'label.texte_date',
-                'required' => false
+                'required' => false,
             ])
             ->add('dateRange', DateRangeType::class, ['label' => 'dateRange', 'mapped' => false, 'required' => true])
             ->add('heureDebut', TimeType::class, ['widget' => 'single_text', 'label' => 'label.heure_debut'])
@@ -54,13 +51,13 @@ class DatesType extends AbstractType
                 'label' => 'label.lieu_date',
             ])
             ->add('allday', YesNoType::class, [
-                'label' => 'label.allday'
+                'label' => 'label.allday',
             ])
             ->add('qui', ChoiceType::class, [
                 'label'    => 'label.qui_concerne',
                 'expanded' => true,
                 'multiple' => false,
-                'choices'  => [Date::QUI_ETUDIANT => Date::QUI_ETUDIANT, Date::QUI_PERSONNEL => Date::QUI_PERSONNEL]
+                'choices'  => [Date::QUI_ETUDIANT => Date::QUI_ETUDIANT, Date::QUI_PERSONNEL => Date::QUI_PERSONNEL],
             ])
             ->add('type', ChoiceType::class, [
                 'label'    => 'label.typedate',
@@ -73,10 +70,10 @@ class DatesType extends AbstractType
                     Date::TYPE_PROJET     => Date::TYPE_PROJET,
                     Date::TYPE_COMMISSION => Date::TYPE_COMMISSION,
                     Date::TYPE_AUTRE      => Date::TYPE_AUTRE,
-                    Date::TYPE_RENTREE    => Date::TYPE_RENTREE
-                ]
+                    Date::TYPE_RENTREE    => Date::TYPE_RENTREE,
+                ],
             ])
-            ->add('semestres', EntityType::class, array(
+            ->add('semestres', EntityType::class, [
                 'class'         => Semestre::class,
                 'label'         => 'label.semestres_date',
                 'choice_label'  => 'libelle',
@@ -85,8 +82,8 @@ class DatesType extends AbstractType
                 },
                 'required'      => true,
                 'expanded'      => true,
-                'multiple'      => true
-            ))
+                'multiple'      => true,
+            ])
             ->addEventListener(FormEvents::POST_SUBMIT, static function(FormEvent $event) {
                 $date = $event->getData();
                 $form = $event->getForm();
@@ -100,23 +97,20 @@ class DatesType extends AbstractType
                 $form->add('dateRange', DateRangeType::class, [
                     'label'     => 'dateRange',
                     'mapped'    => false,
-                    'date_data' => ['from' => $date->getDateDebut(), 'to' => $date->getDateFin()]
+                    'date_data' => ['from' => $date->getDateDebut(), 'to' => $date->getDateFin()],
                 ]);
             });
-
     }
 
     /**
-     * @param OptionsResolver $resolver
-     *
      * @throws AccessException
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class'         => Date::class,
-            'departement'          => null,
-            'translation_domain' => 'form'
+            'departement'        => null,
+            'translation_domain' => 'form',
         ]);
     }
 }

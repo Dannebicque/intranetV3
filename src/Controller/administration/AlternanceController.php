@@ -1,12 +1,16 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/AlternanceController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/AlternanceController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
 
 namespace App\Controller\administration;
 
+use App\Classes\MyExport;
 use App\Controller\BaseController;
 use App\Entity\Alternance;
 use App\Entity\Annee;
@@ -14,7 +18,6 @@ use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Entity\Personnel;
 use App\Form\AlternanceType;
-use App\Classes\MyExport;
 use App\Repository\AlternanceRepository;
 use App\Repository\EtudiantRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -30,11 +33,6 @@ class AlternanceController extends BaseController
 {
     /**
      * @Route("/init/all/{annee}", name="administration_alternance_init_all")
-     * @param EtudiantRepository   $etudiantRepository
-     * @param AlternanceRepository $alternanceRepository
-     * @param Annee                $annee
-     *
-     * @return RedirectResponse
      */
     public function initAll(
         EtudiantRepository $etudiantRepository,
@@ -48,12 +46,12 @@ class AlternanceController extends BaseController
             $exist = $alternanceRepository->findBy([
                 'etudiant'           => $etudiant->getId(),
                 'anneeUniversitaire' => $annee->getAnneeUniversitaire(),
-                'annee'              => $annee->getId()
+                'annee'              => $annee->getId(),
             ]);
-            if (count($exist) === 0) {
+            if (0 === \count($exist)) {
                 $alternance = new Alternance();
                 $alternance->setEtudiant($etudiant);
-                $alternance->setAnneeUniversitaire($annee->getDiplome() !== null ? $annee->getDiplome()->getAnneeUniversitaire() : null);
+                $alternance->setAnneeUniversitaire(null !== $annee->getDiplome() ? $annee->getDiplome()->getAnneeUniversitaire() : null);
                 $alternance->setAnnee($annee);
                 $alternance->setEtat('init');
                 $this->entityManager->persist($alternance);
@@ -68,21 +66,18 @@ class AlternanceController extends BaseController
     }
 
     /**
-     * @param Etudiant $etudiant
-     * @param          $action
-     * @param Annee    $annee
+     * @param $action
      *
-     * @return RedirectResponse
      * @Route("/init/{annee}/{action}/{etudiant}", name="administration_alternance_init")
      */
     public function init(Etudiant $etudiant, $action, Annee $annee): RedirectResponse
     {
         $alternance = new Alternance();
         $alternance->setEtudiant($etudiant);
-        $alternance->setAnneeUniversitaire($annee->getDiplome() !== null ? $annee->getDiplome()->getAnneeUniversitaire() : null);
+        $alternance->setAnneeUniversitaire(null !== $annee->getDiplome() ? $annee->getDiplome()->getAnneeUniversitaire() : null);
         $alternance->setAnnee($annee);
 
-        if ($action === 'init-false') {
+        if ('init-false' === $action) {
             $alternance->setEtat('sans');
         } else {
             $alternance->setEtat('init');
@@ -96,16 +91,11 @@ class AlternanceController extends BaseController
         return $this->redirectToRoute('administration_alternance_index', ['annee' => $annee->getId()]);
     }
 
-
     /**
      * @Route("/export/{annee}.{_format}", name="administration_alternance_export", methods="GET",
      *                                     requirements={"_format"="csv|xlsx|pdf"})
-     * @param MyExport             $myExport
-     * @param AlternanceRepository $alternanceRepository
-     * @param Annee                $annee
-     * @param                      $_format
      *
-     * @return Response
+     * @param $_format
      */
     public function export(
         MyExport $myExport,
@@ -114,29 +104,27 @@ class AlternanceController extends BaseController
         $_format
     ): Response {
         $actualites = $alternanceRepository->getByAnneeAndAnneeUniversitaire($annee,
-            $annee->getDiplome() !== null ? $annee->getDiplome()->getAnneeUniversitaire() : null);
+            null !== $annee->getDiplome() ? $annee->getDiplome()->getAnneeUniversitaire() : null);
 
         return $myExport->genereFichierGenerique(
             $_format,
             $actualites,
             'alternances',
             ['alternance_administration', 'utilisateur'],
-            ['entreprise'          => ['libelle'],
-             'tuteur'              => ['nom', 'prenom', 'fonction', 'telephone', 'email', 'portable'],
-             'etudiant'            => ['nom', 'prenom', 'mailUniv'],
-             'tuteurUniversitaire' => ['nom', 'prenom', 'mailUniv'],
-             'typeContrat',
-             'dateDebut',
-             'dateFin'
+            [
+                'entreprise'          => ['libelle'],
+                'tuteur'              => ['nom', 'prenom', 'fonction', 'telephone', 'email', 'portable'],
+                'etudiant'            => ['nom', 'prenom', 'mailUniv'],
+                'tuteurUniversitaire' => ['nom', 'prenom', 'mailUniv'],
+                'typeContrat',
+                'dateDebut',
+                'dateFin',
             ]
         );
     }
 
     /**
      * @Route("/details/{id}", name="administration_alternance_show", methods="GET")
-     * @param Alternance $alternance
-     *
-     * @return Response
      */
     public function show(Alternance $alternance): Response
     {
@@ -145,10 +133,6 @@ class AlternanceController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_alternance_edit", methods="GET|POST")
-     * @param Request    $request
-     * @param Alternance $alternance
-     *
-     * @return Response
      */
     public function edit(Request $request, Alternance $alternance): Response
     {
@@ -171,11 +155,6 @@ class AlternanceController extends BaseController
 
     /**
      * @Route("/{annee}", name="administration_alternance_index", methods="GET", requirements={"annee"="\d+"})
-     * @param EtudiantRepository   $etudiantRepository
-     * @param AlternanceRepository $alternanceRepository
-     * @param Annee                $annee
-     *
-     * @return Response
      */
     public function index(
         EtudiantRepository $etudiantRepository,
@@ -193,14 +172,8 @@ class AlternanceController extends BaseController
             ]);
     }
 
-
-
     /**
      * @Route("/{id}", name="administration_alternance_delete", methods="DELETE")
-     * @param Request    $request
-     * @param Alternance $alternance
-     *
-     * @return Response
      */
     public function delete(Request $request, Alternance $alternance): Response
     {
@@ -222,11 +195,7 @@ class AlternanceController extends BaseController
     }
 
     /**
-     * @param Alternance $alternance
-     * @param Personnel  $personnel
      * @Route("/update/tuteur-universitaire/{alternance}/{personnel}", name="administration_alternance_update_tuteur_universitaire", options={"expose":true})
-     *
-     * @return JsonResponse
      */
     public function updateTuteurUniversitaire(Alternance $alternance, Personnel $personnel): JsonResponse
     {

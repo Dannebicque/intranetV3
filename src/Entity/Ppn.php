@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Ppn.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Ppn.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Entity;
 
@@ -25,7 +27,7 @@ class Ppn extends BaseEntity
     private $libelle;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      */
@@ -53,7 +55,6 @@ class Ppn extends BaseEntity
         $this->semestres = new ArrayCollection();
     }
 
-
     /**
      * @return string
      */
@@ -62,30 +63,20 @@ class Ppn extends BaseEntity
         return $this->libelle;
     }
 
-    /**
-     * @param string $libelle
-     */
     public function setLibelle(string $libelle): void
     {
         $this->libelle = $libelle;
     }
 
-    /**
-     * @return int
-     */
     public function getAnnee(): int
     {
         return $this->annee;
     }
 
-    /**
-     * @param int $annee
-     */
     public function setAnnee(int $annee): void
     {
         $this->annee = $annee;
     }
-
 
     /**
      * @return Collection|Matiere[]
@@ -96,8 +87,6 @@ class Ppn extends BaseEntity
     }
 
     /**
-     * @param Matiere $matiere
-     *
      * @return Ppn
      */
     public function addMatiere(Matiere $matiere): self
@@ -111,8 +100,6 @@ class Ppn extends BaseEntity
     }
 
     /**
-     * @param Matiere $matiere
-     *
      * @return Ppn
      */
     public function removeMatiere(Matiere $matiere): self
@@ -128,17 +115,12 @@ class Ppn extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return Diplome|null
-     */
     public function getDiplome(): ?Diplome
     {
         return $this->diplome;
     }
 
     /**
-     * @param Diplome|null $diplome
-     *
      * @return Ppn
      */
     public function setDiplome(?Diplome $diplome): self

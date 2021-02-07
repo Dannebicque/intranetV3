@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/PersonnelDepartementRepository.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 26/09/2020 08:41
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/PersonnelDepartementRepository.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Repository;
 
@@ -11,8 +13,8 @@ use App\Entity\Departement;
 use App\Entity\Personnel;
 use App\Entity\PersonnelDepartement;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Routing\RouterInterface;
 
 /**
@@ -27,9 +29,6 @@ class PersonnelDepartementRepository extends ServiceEntityRepository
 
     /**
      * PersonnelDepartementRepository constructor.
-     *
-     * @param ManagerRegistry $registry
-     * @param RouterInterface $router
      */
     public function __construct(ManagerRegistry $registry, RouterInterface $router)
     {
@@ -40,8 +39,6 @@ class PersonnelDepartementRepository extends ServiceEntityRepository
     /**
      * @param $type
      * @param $departement
-     *
-     * @return array
      */
     public function findByType($type, $departement): array
     {
@@ -93,10 +90,6 @@ class PersonnelDepartementRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Personnel   $personnel
-     * @param Departement $departement
-     *
-     * @return PersonnelDepartement|null
      * @throws NonUniqueResultException
      */
     public function findOneByPersonnelDepartement(Personnel $personnel, Departement $departement): ?PersonnelDepartement
@@ -123,11 +116,7 @@ class PersonnelDepartementRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param             $needle
-     *
-     * @param Departement $departement
-     *
-     * @return array
+     * @param $needle
      */
     public function search($needle, Departement $departement): array
     {

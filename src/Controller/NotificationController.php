@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/NotificationController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 08/08/2020 08:36
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/NotificationController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:38
+ */
 
 namespace App\Controller;
 
@@ -15,21 +17,16 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class MessagerieController
- * @package App\Controller
- * @Route("/notification")
+ * Class MessagerieController.
  *
+ * @Route("/notification")
  */
 class NotificationController extends BaseController
 {
     // feature: comment détailler plus que le type ? des "sous-classes" ? En sauvegardant le type d'objet et un id ?
 
-
     /**
      * @Route("/", name="notification_index")
-     * @param NotificationRepository $notificationRepository
-     *
-     * @return Response
      */
     public function index(NotificationRepository $notificationRepository): Response
     {
@@ -39,11 +36,8 @@ class NotificationController extends BaseController
     }
 
     /**
-     * @param Notification $notification
      * @Route("/lire/{uuid}", name="notification_lire")
      * @ParamConverter("notification", options={"mapping": {"uuid": "uuid"}})
-     *
-     * @return RedirectResponse
      */
     public function lire(Notification $notification): RedirectResponse
     {
@@ -55,10 +49,6 @@ class NotificationController extends BaseController
 
     /**
      * @Route("/marquer", name="notification_marquer_lu", options={"expose":true})
-     *
-     * @param NotificationRepository $notificationRepository
-     *
-     * @return Response
      */
     public function marquerCommeLu(NotificationRepository $notificationRepository): Response
     {

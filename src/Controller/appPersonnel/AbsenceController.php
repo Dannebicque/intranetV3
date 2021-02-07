@@ -1,23 +1,24 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/AbsenceController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 19/12/2020 15:06
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/AbsenceController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller\appPersonnel;
 
 use App\Classes\Etudiant\EtudiantAbsences;
+use App\Classes\MyAbsences;
+use App\Classes\MyGroupes;
+use App\Classes\Tools;
 use App\Controller\BaseController;
 use App\Entity\Absence;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Entity\Matiere;
-use App\Classes\MyAbsences;
-use App\Classes\MyGroupes;
-use App\Classes\Tools;
 use App\Repository\AbsenceRepository;
-use App\Repository\CalendrierRepository;
 use App\Repository\CelcatEventsRepository;
 use App\Repository\EdtPlanningRepository;
 use App\Repository\MatiereRepository;
@@ -30,11 +31,10 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use function count;
 
 /**
- * Class AbsenceController
- * @package App\Controller
+ * Class AbsenceController.
+ *
  * @Route("/application/personnel/absence")
  * @IsGranted("ROLE_PERMANENT")
  */
@@ -44,8 +44,6 @@ class AbsenceController extends BaseController
 
     /**
      * AbsenceController constructor.
-     *
-     * @param MyAbsences $myAbsences
      */
     public function __construct(MyAbsences $myAbsences)
     {
@@ -54,19 +52,16 @@ class AbsenceController extends BaseController
 
     /**
      * @Route("/{matiere}", name="application_personnel_absence_index", requirements={"matiere"="\d+"}, methods={"GET"})
-     * @param Matiere              $matiere
-     *
-     * @return Response
      */
     public function index(
         Matiere $matiere
     ): Response {
         $semestre = $matiere->getSemestre();
 
-        if ($semestre !== null) {
+        if (null !== $semestre) {
             return $this->render('appPersonnel/absence/index.html.twig', [
                 'semestre' => $semestre,
-                'matiere'  => $matiere
+                'matiere'  => $matiere,
             ]);
         }
 
@@ -77,13 +72,7 @@ class AbsenceController extends BaseController
      * @Route("/edt/{event}", name="application_personnel_absence_from_planning", requirements={"event"="\d+"},
      *                        methods={"GET"})
      *
-     * @param MatiereRepository      $matiereRepository
-     * @param EdtPlanningRepository  $edtPlanningRepository
-     * @param CelcatEventsRepository $celcatEventsRepository
-     * @param MyGroupes              $myGroupes
-     * @param                        $event
-     *
-     * @return Response
+     * @param $event
      */
     public function saisieFromEdt(
         MatiereRepository $matiereRepository,
@@ -92,18 +81,17 @@ class AbsenceController extends BaseController
         MyGroupes $myGroupes,
         $event
     ): Response {
-
-        if ($this->dataUserSession->getDepartement() !== null && $this->dataUserSession->getDepartement()->isOptUpdateCelcat() === true) {
+        if (null !== $this->dataUserSession->getDepartement() && true === $this->dataUserSession->getDepartement()->isOptUpdateCelcat()) {
             $planning = $celcatEventsRepository->find($event);
-            $matiere = $planning !== null ? $matiereRepository->findOneBy(['codeElement' => $planning->getCodeModule()]) : null;
+            $matiere = null !== $planning ? $matiereRepository->findOneBy(['codeElement' => $planning->getCodeModule()]) : null;
         } else {
             $planning = $edtPlanningRepository->find($event);
-            $matiere = $planning !== null ? $planning->getMatiere() : null;
+            $matiere = null !== $planning ? $planning->getMatiere() : null;
         }
 
-        if ($planning !== null) {
+        if (null !== $planning) {
             return $this->render('appPersonnel/absence/index.html.twig', [
-                'semestre' => $matiere !== null ? $matiere->getSemestre() : null,
+                'semestre' => null !== $matiere ? $matiere->getSemestre() : null,
                 'matiere'  => $matiere,
                 'event'    => $planning,
                 'groupes'  => $myGroupes->getGroupesPlanning($planning),
@@ -115,12 +103,8 @@ class AbsenceController extends BaseController
         return $this->redirectToRoute('erreur_666');
     }
 
-
     /**
      * @Route("/voir/{matiere}", name="application_personnel_absence_voir", requirements={"matiere"="\d+"})
-     * @param Matiere $matiere
-     *
-     * @return Response
      */
     public function voir(Matiere $matiere): Response
     {
@@ -129,15 +113,14 @@ class AbsenceController extends BaseController
             'absences' => $this->myAbsences->getAbsencesMatiere(
                 $matiere,
                 $matiere->getSemestre() ? $matiere->getSemestre()->getAnneeUniversitaire() : 0
-            )
+            ),
         ]);
     }
 
     /**
      * @Route("/export/{matiere}/export.{_format}", name="application_personnel_absence_export", methods="GET")
-     * @param Matiere $matiere
      *
-     * @param         $_format
+     * @param $_format
      *
      * @return Response
      */
@@ -148,11 +131,7 @@ class AbsenceController extends BaseController
 
     /**
      * @Route("/{uuid}", name="application_personnel_absence_delete", methods="DELETE")
-     * @param EtudiantAbsences $etudiantAbsences
-     * @param Request          $request
-     * @param Absence          $absence
      *
-     * @return Response
      * @ParamConverter("absence", options={"mapping": {"uuid": "uuid"}})
      */
     public function supprimer(EtudiantAbsences $etudiantAbsences, Request $request, Absence $absence): Response
@@ -173,10 +152,6 @@ class AbsenceController extends BaseController
     /**
      * @Route("/ajax/absences/{matiere}", name="application_personnel_absence_get_ajax", methods="GET",
      *                                    options={"expose":true})
-     * @param AbsenceRepository $absenceRepository
-     * @param Matiere           $matiere
-     *
-     * @return JsonResponse
      */
     public function ajaxGetAbsencesMatiere(
         AbsenceRepository $absenceRepository,
@@ -193,14 +168,10 @@ class AbsenceController extends BaseController
     /**
      * @Route("/ajax/saisie/{matiere}/{etudiant}", name="application_personnel_absence_saisie_ajax", methods="POST",
      *                                             options={"expose":true})
-     * @param EtudiantAbsences  $etudiantAbsences
-     * @param AbsenceRepository $absenceRepository
-     * @param Request           $request
-     * @param Matiere           $matiere
-     * @param Etudiant          $etudiant
      *
      * @return JsonResponse|Response
      * @throws Exception
+     *
      */
     public function ajaxSaisie(
         EtudiantAbsences $etudiantAbsences,
@@ -214,10 +185,10 @@ class AbsenceController extends BaseController
             'matiere'            => $matiere->getId(),
             'etudiant'           => $etudiant->getId(),
             'dateHeure'          => $dateHeure,
-            'anneeUniversitaire' => $etudiant->getSemestre() ? $etudiant->getSemestre()->getAnneeUniversitaire()->getId() : 0
+            'anneeUniversitaire' => $etudiant->getSemestre() ? $etudiant->getSemestre()->getAnneeUniversitaire()->getId() : 0,
         ]);
 
-        if ($request->get('action') === 'saisie' && count($absence) === 0) {
+        if ('saisie' === $request->get('action') && 0 === \count($absence)) {
             if ($this->saisieAutorise($matiere->getSemestre()->getOptNbJoursSaisieAbsence(), $dateHeure)) {
                 $etudiantAbsences->setEtudiant($etudiant);
 
@@ -231,15 +202,14 @@ class AbsenceController extends BaseController
                     $matiere,
                     $matiere->getSemestre() ? $matiere->getSemestre()->getAnneeUniversitaire() : null
                 );
+
                 return $this->json($absences);
             }
 
             return new response('out', 500);
         }
 
-        if (count($absence) === 1) {
-
-
+        if (1 === \count($absence)) {
             //un tableau, donc une absence ?
             $etudiantAbsences->removeAbsence($absence[0]);
 
@@ -255,14 +225,10 @@ class AbsenceController extends BaseController
     }
 
     /**
-     * @param                 $nbjour
-     *
-     * @param CarbonInterface $datesymfony
-     *
-     * @return bool
+     * @param $nbjour
      */
     private function saisieAutorise($nbjour, CarbonInterface $datesymfony): bool
     {
-        return $nbjour === 0 ? true : ($datesymfony->diffInDays(Carbon::now()) <= $nbjour);
+        return 0 === $nbjour ? true : ($datesymfony->diffInDays(Carbon::now()) <= $nbjour);
     }
 }

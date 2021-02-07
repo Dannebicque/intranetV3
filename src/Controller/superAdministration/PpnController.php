@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/PpnController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/PpnController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller\superAdministration;
 
@@ -36,10 +38,6 @@ class PpnController extends BaseController
     /**
      * @Route("/copie", name="sa_ppn_copie_integrale", methods="POST")
      *
-     * @param PpnRepository $ppnRepository
-     * @param Request       $request
-     *
-     * @return Response
      * @throws Exception
      */
     public function copieIntegrale(PpnRepository $ppnRepository, Request $request): Response
@@ -47,7 +45,7 @@ class PpnController extends BaseController
         $ppnOrigine = $ppnRepository->find($request->request->get('ppn_origine'));
         $ppnDest = $ppnRepository->find($request->request->get('ppn_dest'));
 
-        if ($ppnDest !== null && $ppnOrigine !== null) {
+        if (null !== $ppnDest && null !== $ppnOrigine) {
             //effacer contenu PPN de destination
             foreach ($ppnDest->getMatieres() as $matiere) {
                 $this->entityManager->remove($matiere);
@@ -66,16 +64,12 @@ class PpnController extends BaseController
 
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'ppn.copie.integrale.success.flash');
         }
+
         return $this->redirectToRoute('sa_ppn_index');
     }
 
     /**
      * @Route("/new/{diplome}", name="sa_ppn_new", methods="GET|POST")
-     * @param Request $request
-     *
-     * @param Diplome $diplome
-     *
-     * @return Response
      */
     public function create(Request $request, Diplome $diplome): Response
     {
@@ -84,8 +78,8 @@ class PpnController extends BaseController
         $form = $this->createForm(PpnType::class, $ppn, [
             'departement' => $diplome->getDepartement(),
             'attr'        => [
-                'data-provide' => 'validation'
-            ]
+                'data-provide' => 'validation',
+            ],
         ]);
         $form->handleRequest($request);
 
@@ -105,9 +99,6 @@ class PpnController extends BaseController
 
     /**
      * @Route("/{id}", name="sa_ppn_show", methods="GET")
-     * @param Ppn $ppn
-     *
-     * @return Response
      */
     public function show(Ppn $ppn): Response
     {
@@ -116,18 +107,14 @@ class PpnController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="sa_ppn_edit", methods="GET|POST")
-     * @param Request $request
-     * @param Ppn     $ppn
-     *
-     * @return Response
      */
     public function edit(Request $request, Ppn $ppn): Response
     {
         $form = $this->createForm(PpnType::class, $ppn, [
             'departement' => $this->dataUserSession->getDepartement(),
             'attr'        => [
-                'data-provide' => 'validation'
-            ]
+                'data-provide' => 'validation',
+            ],
         ]);
         $form->handleRequest($request);
 
@@ -146,10 +133,6 @@ class PpnController extends BaseController
 
     /**
      * @Route("/{id}", name="sa_ppn_delete", methods="DELETE")
-     * @param Request $request
-     * @param Ppn     $ppn
-     *
-     * @return Response
      */
     public function delete(Request $request, Ppn $ppn): Response
     {
@@ -171,9 +154,6 @@ class PpnController extends BaseController
 
     /**
      * @Route("/{id}/duplicate", name="sa_ppn_duplicate", methods="GET|POST")
-     * @param Ppn $ppn
-     *
-     * @return Response
      */
     public function duplicate(Ppn $ppn): Response
     {
@@ -185,6 +165,4 @@ class PpnController extends BaseController
 
         return $this->redirectToRoute('sa_ppn_edit', ['id' => $newPpn->getId()]);
     }
-
-
 }

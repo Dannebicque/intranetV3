@@ -47,7 +47,13 @@
                 <td style="text-align: center">{{ n.evaluation.dateEvaluation|date('d/m/Y') }}</td>
                 <td>&nbsp;&nbsp;{{ n.evaluation.matiere.display }}</td>
                 <td style="text-align: center">{{ n.evaluation.coefficient|number_format(2,'.') }}</td>
-                <td style="text-align: center">{{ n.note|number_format(2,'.') }}</td>
+                <td style="text-align: center">
+                    {% if n.note.absence_justifie %}
+                        Absent
+                    {% else %}
+                        {{ n.note|number_format(2,'.') }}
+                    {% endif %}
+                </td>
                 <td style="text-align: center">{{ syntheses[n.evaluation.id]['promo'].moyenne|number_format(2,'.') }}</td>
                 <td style="text-align: center">{{ syntheses[n.evaluation.id]['promo'].min|number_format(2,'.') }}</td>
                 <td style="text-align: center">{{ syntheses[n.evaluation.id]['promo'].max|number_format(2,'.') }}</td>
@@ -60,7 +66,13 @@
                 <td style="text-align: center">{{ n.evaluation.dateEvaluation|date('d/m/Y') }}</td>
                 <td>&nbsp;&nbsp;{{ n.evaluation.matiere.display }}</td>
                 <td style="text-align: center">{{ n.evaluation.coefficient|number_format(2,'.') }}</td>
-                <td style="text-align: center">{{ n.note|number_format(2,'.') }}</td>
+                <td style="text-align: center">
+                    {% if n.note.absence_justifie %}
+                        Absent
+                    {% else %}
+                        {{ n.note|number_format(2,'.') }}
+                    {% endif %}
+                </td>
                 <td style="text-align: center">{{ syntheses[n.evaluation.id]['promo'].moyenne|number_format(2,'.') }}</td>
                 <td style="text-align: center">{{ syntheses[n.evaluation.id]['promo'].min|number_format(2,'.') }}</td>
                 <td style="text-align: center">{{ syntheses[n.evaluation.id]['promo'].max|number_format(2,'.') }}</td>

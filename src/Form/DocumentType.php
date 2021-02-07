@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Form/DocumentType.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 23/09/2020 11:46
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/DocumentType.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Form;
 
@@ -22,17 +24,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 
 /**
- * Class DocumentType
- * @package App\Form
+ * Class DocumentType.
  */
 class DocumentType extends AbstractType
 {
     private $departement;
 
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->departement = $options['departement'];
@@ -44,7 +41,7 @@ class DocumentType extends AbstractType
                 'required'       => false,
                 'label'          => 'label.fichier',
                 'download_label' => 'label.apercu',
-                'allow_delete'   => false
+                'allow_delete'   => false,
             ])
             ->add(
                 'type_document',
@@ -58,7 +55,7 @@ class DocumentType extends AbstractType
                     },
                 ]
             )
-            ->add('semestres', EntityType::class, array(
+            ->add('semestres', EntityType::class, [
                 'class'         => Semestre::class,
                 'label'         => 'label.semestres_document',
                 'choice_label'  => 'libelle',
@@ -67,22 +64,19 @@ class DocumentType extends AbstractType
                 },
                 'required'      => true,
                 'expanded'      => true,
-                'multiple'      => true
-            ));
+                'multiple'      => true,
+            ]);
     }
 
     /**
-     * @param OptionsResolver $resolver
-     *
      * @throws AccessException
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class'         => Document::class,
-            'departement'          => null,
-            'translation_domain' => 'form'
-
+            'departement'        => null,
+            'translation_domain' => 'form',
         ]);
     }
 }

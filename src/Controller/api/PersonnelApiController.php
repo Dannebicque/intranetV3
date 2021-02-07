@@ -1,17 +1,19 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/api/PersonnelApiController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 08/08/2020 10:20
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/api/PersonnelApiController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller\api;
 
+use App\Classes\MyPersonnel;
 use App\Controller\BaseController;
 use App\Entity\Departement;
 use App\Entity\Personnel;
 use App\Entity\PersonnelDepartement;
-use App\Classes\MyPersonnel;
 use App\Repository\PersonnelDepartementRepository;
 use App\Repository\PersonnelRepository;
 use Doctrine\ORM\NonUniqueResultException;
@@ -21,11 +23,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
-use function count;
 
 /**
- * Class AgendaController
- * @package App\Controller
+ * Class AgendaController.
+ *
  * @Route("/api/personnel")
  */
 class PersonnelApiController extends BaseController
@@ -35,20 +36,16 @@ class PersonnelApiController extends BaseController
 
     /**
      * EtudiantApiController constructor.
-     *
-     * @param PersonnelRepository $personnelRepository
      */
     public function __construct(PersonnelRepository $personnelRepository)
     {
         $this->personnelRepository = $personnelRepository;
     }
 
-
     /**
      * @Route("/enseignants/{type}", name="api_enseignants_type", options={"expose":true})
-     * @param                              $type
      *
-     * @return Response
+     * @param $type
      */
     public function getEnseignantsByType($type): Response
     {
@@ -60,7 +57,7 @@ class PersonnelApiController extends BaseController
 
         /** @var Personnel $p */
         foreach ($personnels as $p) {
-            if ($p !== null) {
+            if (null !== $p) {
                 $t = [];
                 $t['nom'] = $p->getNom();
                 $t['prenom'] = $p->getPrenom();
@@ -79,8 +76,6 @@ class PersonnelApiController extends BaseController
 
     /**
      * @Route("/enseignants", name="api_enseignants_departement", options={"expose":true})
-     *
-     * @return Response
      */
     public function getEnseignantsByDepartement(): Response
     {
@@ -103,11 +98,10 @@ class PersonnelApiController extends BaseController
     }
 
     /**
-     * @param SerializerInterface $serialize
-     * @param                     $needle
+     * @param $needle
      *
-     * @return Response
      * @Route("/personnel/recherche/{needle}", name="api_personnel_recherche", options={"expose":true})
+     *
      * @throws InvalidArgumentException
      */
     public function searchPersonnel(
@@ -125,12 +119,8 @@ class PersonnelApiController extends BaseController
     }
 
     /**
-     * @param PersonnelDepartementRepository $personnelDepartementRepository
-     * @param                                $slug
+     * @param $slug
      *
-     * @param Departement|null               $departement
-     *
-     * @return Response
      * @throws NonUniqueResultException
      * @Route("/personnel/departement/add/{slug}/{departement}", name="api_personnel_add_to_departement",
      *                                                           options={"expose":true})
@@ -143,12 +133,12 @@ class PersonnelApiController extends BaseController
         $personnel = $this->personnelRepository->findOneBySlug($slug);
         $departement = $departement ?? $this->dataUserSession->getDepartement();
 
-        if ($personnel !== null && $departement !== null) {
+        if (null !== $personnel && null !== $departement) {
             $existe = $personnelDepartementRepository->findOneBy([
                 'departement' => $departement->getId(),
-                'personnel'   => $personnel->getId()
+                'personnel'   => $personnel->getId(),
             ]);
-            if ($existe === null) {
+            if (null === $existe) {
                 $pf = new PersonnelDepartement($personnel, $departement);
                 $this->entityManager->persist($pf);
                 $this->entityManager->flush();
@@ -163,19 +153,15 @@ class PersonnelApiController extends BaseController
     }
 
     /**
-     * @param MyPersonnel $myPersonnel
-     * @param Request     $request
-     *
-     * @return Response
      * @Route("/all", name="api_all_personnel", options={"expose":true})
      */
     public function getAllPersonnel(MyPersonnel $myPersonnel, Request $request): Response
     {
         $length = $request->get('length');
-        $length = $length && ($length !== -1) ? $length : 0;
+        $length = $length && (-1 !== $length) ? $length : 0;
 
         $start = $request->get('start');
-        $start = $length ? ($start && ($start !== -1) ? $start : 0) / $length : 0;
+        $start = $length ? ($start && (-1 !== $start) ? $start : 0) / $length : 0;
 
         $search = $request->get('search');
 
@@ -183,7 +169,7 @@ class PersonnelApiController extends BaseController
 
         $filters = [
             'query' => $search['value'],
-            'order' => $order
+            'order' => $order,
         ];
 
         $users = $myPersonnel->getArrayAllPersonnel(
@@ -195,16 +181,16 @@ class PersonnelApiController extends BaseController
         $output = [
             'draw'            => $request->get('draw'),
             'data'            => $users,
-            'recordsFiltered' => count($this->personnelRepository->getAllPersonnel(
+            'recordsFiltered' => \count($this->personnelRepository->getAllPersonnel(
                 $filters,
                 0,
                 false
             )),
-            'recordsTotal'    => count($this->personnelRepository->getAllPersonnel(
+            'recordsTotal'    => \count($this->personnelRepository->getAllPersonnel(
                 [],
                 0,
                 false
-            ))
+            )),
         ];
 
         return $this->json($output, Response::HTTP_OK);

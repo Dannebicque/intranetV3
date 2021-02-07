@@ -1,12 +1,13 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/Scolarite.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 24/01/2021 12:24
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/Scolarite.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:41
+ */
 
 namespace App\DTO;
-
 
 use App\Entity\Constantes;
 
@@ -47,13 +48,10 @@ class Scolarite
 
     public function getStyleNote($note)
     {
-
         if ($note < 10) {
             return 'badge badge-danger';
         }
 
         return 'notenormale';
-
     }
-
 }

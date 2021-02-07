@@ -1,12 +1,17 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyArticle.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 30/07/2020 13:04
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyArticle.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:10
+ */
+
+/*
+ * Pull your hearder here, for exemple, Licence header.
+ */
 
 namespace App\Classes;
-
 
 use App\Entity\Article;
 use App\Entity\ArticleLikeEtudiant;
@@ -32,11 +37,6 @@ class MyArticle
 
     /**
      * MyArticle constructor.
-     *
-     * @param EntityManagerInterface         $entityManager
-     * @param ArticleRepository              $articleRepository
-     * @param ArticleLikeEtudiantRepository  $articleLikeEtudiantRepository
-     * @param ArticleLikePersonnelRepository $articleLikePersonnelRepository
      */
     public function __construct(
         EntityManagerInterface $entityManager,
@@ -50,8 +50,7 @@ class MyArticle
         $this->articleLikePersonnelRepository = $articleLikePersonnelRepository;
     }
 
-
-    public function setArticle(Article $article): MyArticle
+    public function setArticle(Article $article): self
     {
         $this->article = $article;
 
@@ -62,7 +61,7 @@ class MyArticle
     {
         if ($getConnectedUser instanceof Personnel) {
             $r = $this->articleLikePersonnelRepository->findLike($getConnectedUser, $this->article);
-            if ($r === null || count($r) === 0) {
+            if (null === $r || 0 === \count($r)) {
                 //add
                 $n = new ArticleLikePersonnel($getConnectedUser, $this->article);
                 $this->entityManager->persist($n);
@@ -72,7 +71,7 @@ class MyArticle
             }
         } elseif ($getConnectedUser instanceof Etudiant) {
             $r = $this->articleLikeEtudiantRepository->findLike($getConnectedUser, $this->article);
-            if ($r === null || count($r) === 0) {
+            if (null === $r || 0 === \count($r)) {
                 //add
                 $n = new ArticleLikeEtudiant($getConnectedUser, $this->article);
                 $this->entityManager->persist($n);

@@ -1,12 +1,17 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyMaterielCommunReservation.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 12/12/2020 14:31
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyMaterielCommunReservation.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:17
+ */
+
+/*
+ * Pull your hearder here, for exemple, Licence header.
+ */
 
 namespace App\Classes;
-
 
 use App\Entity\MaterielCommunPret;
 use App\Entity\Personnel;
@@ -19,7 +24,6 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class MyMaterielCommunReservation
 {
-
     private MaterielCommunRepository $materielCommunRepository;
     private MaterielCommunPretRepository $materielCommunPretRepository;
     private EntityManagerInterface $entityManager;
@@ -27,11 +31,6 @@ class MyMaterielCommunReservation
 
     /**
      * MyMaterielCommun constructor.
-     *
-     * @param MaterielCommunRepository     $materielCommunRepository
-     * @param MaterielCommunPretRepository $materielCommunPretRepository
-     * @param EntityManagerInterface       $entityManager
-     * @param EventDispatcherInterface     $eventDispatcher
      */
     public function __construct(
         MaterielCommunRepository $materielCommunRepository,
@@ -46,19 +45,17 @@ class MyMaterielCommunReservation
     }
 
     /**
-     * @param           $materiel
-     * @param           $dateEmprunt
-     * @param           $creneau
-     * @param Personnel $personnel
+     * @param $materiel
+     * @param $dateEmprunt
+     * @param $creneau
      *
-     * @return bool
      * @throws Exception
      */
-    public function addReservation($materiel, $dateEmprunt, $creneau, Personnel $personnel)
+    public function addReservation($materiel, $dateEmprunt, $creneau, Personnel $personnel): bool
     {
         $mat = $this->materielCommunRepository->find(trim($materiel));
 
-        if ($mat !== null) {
+        if (null !== $mat) {
             $pret = new MaterielCommunPret();
             $pret->setPersonnel($personnel);
             $pret->setDateEmprunt(Tools::convertDateToObject($dateEmprunt))
@@ -80,7 +77,7 @@ class MyMaterielCommunReservation
     public function supprReservation(int $id)
     {
         $pret = $this->materielCommunPretRepository->find(trim($id));
-        if ($pret !== null) {
+        if (null !== $pret) {
             $event = new MaterielCommunReservationEvent($pret);
             //On déclenche les events
             $this->eventDispatcher->dispatch($event, MaterielCommunReservationEvent::REMOVED);

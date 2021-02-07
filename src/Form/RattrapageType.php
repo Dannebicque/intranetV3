@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Form/RattrapageType.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 28/10/2020 07:53
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/RattrapageType.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Form;
 
@@ -21,17 +23,12 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class RattrapageType
- * @package App\Form
+ * Class RattrapageType.
  */
 class RattrapageType extends AbstractType
 {
     private $semestre;
 
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->semestre = $options['semestre'];
@@ -44,7 +41,7 @@ class RattrapageType extends AbstractType
                 'format'   => 'dd/MM/yyyy',
                 'widget'   => 'single_text',
                 'html5'    => false,
-                'attr'     => ['data-provide' => 'datepicker', 'data-language' => $locale]
+                'attr'     => ['data-provide' => 'datepicker', 'data-language' => $locale],
             ])
             ->add('heureEval', TimeType::class, ['label' => 'label.heure_evaluation', 'required' => false])
             ->add('duree', TextType::class, ['label' => 'label.duree_evaluation', 'required' => false])
@@ -58,10 +55,9 @@ class RattrapageType extends AbstractType
                 'required'      => true,
                 'expanded'      => false,
                 'multiple'      => false,
-                'attr'          => ['class' => 'form-control selectpicker']
-
+                'attr'          => ['class' => 'form-control selectpicker'],
             ])
-            ->add('personnel', EntityType::class, array(
+            ->add('personnel', EntityType::class, [
                 'class'         => Personnel::class,
                 'label'         => 'label.personnel',
                 'choice_label'  => 'displayPr',
@@ -71,20 +67,16 @@ class RattrapageType extends AbstractType
                 'required'      => true,
                 'expanded'      => false,
                 'multiple'      => false,
-                'attr'          => ['class' => 'form-control selectpicker']
-
-            ));
+                'attr'          => ['class' => 'form-control selectpicker'],
+            ]);
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Rattrapage::class,
             'semestre'   => null,
-            'locale'     => 'fr'
+            'locale'     => 'fr',
         ]);
     }
 }

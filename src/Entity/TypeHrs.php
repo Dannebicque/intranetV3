@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/TypeHrs.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/TypeHrs.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:50
+ */
 
 namespace App\Entity;
 
@@ -17,7 +19,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
  */
 class TypeHrs extends BaseEntity
 {
-
     //STAGE, PRP, PCA, HRS
 
     /**
@@ -54,18 +55,12 @@ class TypeHrs extends BaseEntity
         $this->hrs = new ArrayCollection();
     }
 
-
-    /**
-     * @return null|string
-     */
     public function getLibelle(): ?string
     {
         return $this->libelle;
     }
 
     /**
-     * @param string $libelle
-     *
      * @return TypeHrs
      */
     public function setLibelle(string $libelle): self
@@ -84,8 +79,6 @@ class TypeHrs extends BaseEntity
     }
 
     /**
-     * @param Hrs $hr
-     *
      * @return TypeHrs
      */
     public function addHr(Hrs $hr): self
@@ -99,8 +92,6 @@ class TypeHrs extends BaseEntity
     }
 
     /**
-     * @param Hrs $hr
-     *
      * @return TypeHrs
      */
     public function removeHr(Hrs $hr): self
@@ -116,17 +107,12 @@ class TypeHrs extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return bool|null
-     */
     public function getIncluService(): ?bool
     {
         return $this->incluService;
     }
 
     /**
-     * @param bool $incluService
-     *
      * @return TypeHrs
      */
     public function setIncluService(bool $incluService): self
@@ -136,17 +122,12 @@ class TypeHrs extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return float|null
-     */
     public function getMaximum(): ?float
     {
         return $this->maximum;
     }
 
     /**
-     * @param float $maximum
-     *
      * @return TypeHrs
      */
     public function setMaximum(float $maximum): self
@@ -156,17 +137,11 @@ class TypeHrs extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
     public function getType()
     {
         return $this->type;
     }
 
-    /**
-     * @param mixed $type
-     */
     public function setType($type): void
     {
         $this->type = $type;

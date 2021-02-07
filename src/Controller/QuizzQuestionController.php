@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/QuizzQuestionController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 21/11/2020 07:26
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/QuizzQuestionController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller;
 
@@ -23,9 +25,6 @@ class QuizzQuestionController extends BaseController
 {
     /**
      * @Route("/", name="quizz_question_index", methods={"GET"})
-     * @param QuestionnaireQuestionRepository $quizzQuestionRepository
-     *
-     * @return Response
      */
     public function index(QuestionnaireQuestionRepository $quizzQuestionRepository): Response
     {
@@ -36,9 +35,6 @@ class QuizzQuestionController extends BaseController
 
     /**
      * @Route("/new", name="quizz_question_new", methods={"GET","POST"})
-     * @param Request $request
-     *
-     * @return Response
      */
     public function new(Request $request): Response
     {
@@ -52,8 +48,8 @@ class QuizzQuestionController extends BaseController
             //fonction du type on ajoute
             switch ($quizzQuestion->getType()) {
                 case 'qcu':
-                    $nbreponses = count($request->request->get('question_qcu'));
-                    for ($i = 1; $i <= $nbreponses; $i++) {
+                    $nbreponses = \count($request->request->get('question_qcu'));
+                    for ($i = 1; $i <= $nbreponses; ++$i) {
                         $reponse = new QuestionnaireReponse();
                         $reponse->setQuestion($quizzQuestion);
                         $reponse->setLibelle($request->request->get('question_qcu')[$i]);
@@ -62,8 +58,8 @@ class QuizzQuestionController extends BaseController
                     }
                     break;
                 case 'qcm':
-                    $nbreponses = count($request->request->get('question_qcm'));
-                    for ($i = 1; $i <= $nbreponses; $i++) {
+                    $nbreponses = \count($request->request->get('question_qcm'));
+                    for ($i = 1; $i <= $nbreponses; ++$i) {
                         $reponse = new QuestionnaireReponse();
                         $reponse->setQuestion($quizzQuestion);
                         $reponse->setLibelle($request->request->get('question_qcm')[$i]);
@@ -100,7 +96,7 @@ class QuizzQuestionController extends BaseController
                     $reponse->setValeur($max);
                     $this->entityManager->persist($reponse);
 
-                    for ($i = $min + 1; $i < $max; $i++) {
+                    for ($i = $min + 1; $i < $max; ++$i) {
                         $reponse = new QuestionnaireReponse();
                         $reponse->setQuestion($quizzQuestion);
                         $reponse->setLibelle($i);
@@ -124,9 +120,6 @@ class QuizzQuestionController extends BaseController
 
     /**
      * @Route("/{id}", name="quizz_question_show", methods={"GET"})
-     * @param QuestionnaireQuestion $quizzQuestion
-     *
-     * @return Response
      */
     public function show(QuestionnaireQuestion $quizzQuestion): Response
     {
@@ -138,10 +131,6 @@ class QuizzQuestionController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="quizz_question_edit", methods={"GET","POST"})
-     * @param Request               $request
-     * @param QuestionnaireQuestion $quizzQuestion
-     *
-     * @return Response
      */
     public function edit(Request $request, QuestionnaireQuestion $quizzQuestion): Response
     {
@@ -162,10 +151,6 @@ class QuizzQuestionController extends BaseController
 
     /**
      * @Route("/{id}", name="quizz_question_delete", methods={"DELETE"})
-     * @param Request               $request
-     * @param QuestionnaireQuestion $quizzQuestion
-     *
-     * @return Response
      */
     public function delete(Request $request, QuestionnaireQuestion $quizzQuestion): Response
     {
@@ -180,10 +165,6 @@ class QuizzQuestionController extends BaseController
 
     /**
      * @Route("/{id}/duplicate", name="quizz_question_duplicate", methods="GET|POST")
-     *
-     * @param QuestionnaireQuestion $quizzQuestion
-     *
-     * @return Response
      */
     public function duplicate(QuestionnaireQuestion $quizzQuestion): Response
     {

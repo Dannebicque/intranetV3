@@ -1,17 +1,20 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/SalleExamenController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/SalleExamenController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
 
 namespace App\Controller\administration;
 
+use App\Classes\MyExport;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\SalleExamen;
 use App\Form\SalleExamenType;
-use App\Classes\MyExport;
 use App\Repository\SalleExamenRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,9 +27,6 @@ class SalleExamenController extends BaseController
 {
     /**
      * @Route("/", name="administration_salle_examen_index", methods="GET")
-     * @param SalleExamenRepository $salleExamenRepository
-     *
-     * @return Response
      */
     public function index(SalleExamenRepository $salleExamenRepository): Response
     {
@@ -37,11 +37,8 @@ class SalleExamenController extends BaseController
     /**
      * @Route("/export.{_format}", name="administration_salle_examen_export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"})
-     * @param MyExport              $myExport
-     * @param SalleExamenRepository $salleExamenRepository
-     * @param                       $_format
      *
-     * @return Response
+     * @param $_format
      */
     public function export(MyExport $myExport, SalleExamenRepository $salleExamenRepository, $_format): Response
     {
@@ -58,9 +55,6 @@ class SalleExamenController extends BaseController
 
     /**
      * @Route("/new", name="administration_salle_examen_new", methods="GET|POST")
-     * @param Request $request
-     *
-     * @return Response
      */
     public function create(Request $request): Response
     {
@@ -84,9 +78,6 @@ class SalleExamenController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_salle_examen_show", methods="GET")
-     * @param SalleExamen $salleExaman
-     *
-     * @return Response
      */
     public function show(SalleExamen $salleExaman): Response
     {
@@ -95,10 +86,6 @@ class SalleExamenController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_salle_examen_edit", methods="GET|POST")
-     * @param Request     $request
-     * @param SalleExamen $salleExaman
-     *
-     * @return Response
      */
     public function edit(Request $request, SalleExamen $salleExaman): Response
     {
@@ -108,7 +95,7 @@ class SalleExamenController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'salle_examen.edit.success.flash');
-            if ($request->request->get('btn_update') !== null) {
+            if (null !== $request->request->get('btn_update')) {
                 return $this->redirectToRoute('administration_salle_examen_index');
             }
 
@@ -123,10 +110,6 @@ class SalleExamenController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_salle_examen_delete", methods="DELETE")
-     * @param Request     $request
-     * @param SalleExamen $salleExamen
-     *
-     * @return Response
      */
     public function delete(Request $request, SalleExamen $salleExamen): Response
     {
@@ -145,9 +128,6 @@ class SalleExamenController extends BaseController
 
     /**
      * @Route("/{id}/duplicate", name="administration_salle_examen_duplicate", methods="GET")
-     * @param SalleExamen $salleExamen
-     *
-     * @return Response
      */
     public function duplicate(SalleExamen $salleExamen): Response
     {

@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/QuestionnaireEtudiantReponse.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 11/01/2021 12:12
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/QuestionnaireEtudiantReponse.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:49
+ */
 
 namespace App\Entity;
 
@@ -33,7 +35,6 @@ class QuestionnaireEtudiantReponse extends BaseEntity
      * @ORM\ManyToOne(targetEntity="QuestionnaireEtudiant", inversedBy="questionnaireEtudiantReponses")
      */
     private ?QuestionnaireEtudiant $questionnaireEtudiant;
-
 
     public function __construct(QuestionnaireEtudiant $quizzEtudiant)
     {
@@ -92,7 +93,6 @@ class QuestionnaireEtudiantReponse extends BaseEntity
     {
         $t = explode('_', $this->cleReponse);
 
-        return $t[count($t) - 1];
+        return $t[\count($t) - 1];
     }
-
 }

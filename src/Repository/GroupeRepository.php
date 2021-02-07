@@ -1,10 +1,11 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/GroupeRepository.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 30/01/2021 18:04
-
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/GroupeRepository.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Repository;
 
@@ -28,8 +29,6 @@ class GroupeRepository extends ServiceEntityRepository
 {
     /**
      * GroupeRepository constructor.
-     *
-     * @param ManagerRegistry $registry
      */
     public function __construct(ManagerRegistry $registry)
     {
@@ -54,7 +53,6 @@ class GroupeRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-
     public function findBySemestre(Semestre $semestre)
     {
         return $this->findBySemestreBuilder($semestre)
@@ -73,7 +71,6 @@ class GroupeRepository extends ServiceEntityRepository
 
     public function findAllGroupes(Semestre $semestre): array
     {
-
         $groupes = [];
         $gtp = $this->getGroupesTP($semestre->getId());
 
@@ -81,21 +78,18 @@ class GroupeRepository extends ServiceEntityRepository
         /** @var Groupe $g */
         foreach ($gtp as $g) {
             $groupes[$i] = $g->getLibelle();
-            $i++;
+            ++$i;
         }
 
-        for ($j = $i; $j <= $semestre->getNbgroupeTpEdt() + 1; $j++) {
+        for ($j = $i; $j <= $semestre->getNbgroupeTpEdt() + 1; ++$j) {
             $groupes[$j] = '';
         }
 
         return $groupes;
-
     }
 
     /**
      * @param $semestre
-     *
-     * @return array
      */
     public function getGroupesTP($semestre): array
     {
@@ -103,7 +97,7 @@ class GroupeRepository extends ServiceEntityRepository
             ->innerJoin(TypeGroupe::class, 't', 'WITH', 'g.typeGroupe = t.id')
             ->where('t.type = :type')
             ->andWhere('t.semestre = :semestre')
-            ->setParameters(array('type' => 'TP', 'semestre' => $semestre))
+            ->setParameters(['type' => 'TP', 'semestre' => $semestre])
             ->orderBy('g.libelle', 'ASC')
             ->getQuery()
             ->getResult();
@@ -111,8 +105,6 @@ class GroupeRepository extends ServiceEntityRepository
 
     /**
      * @param $semestre
-     *
-     * @return array
      */
     public function getGroupesTD($semestre): array
     {
@@ -120,17 +112,12 @@ class GroupeRepository extends ServiceEntityRepository
             ->innerJoin(TypeGroupe::class, 't', 'WITH', 'g.typeGroupe = t.id')
             ->where('t.type = :type')
             ->andWhere('t.semestre = :semestre')
-            ->setParameters(array('type' => 'TD', 'semestre' => $semestre))
+            ->setParameters(['type' => 'TD', 'semestre' => $semestre])
             ->orderBy('g.libelle', 'ASC')
             ->getQuery()
             ->getResult();
     }
 
-    /**
-     * @param Semestre $semestre
-     *
-     * @return array
-     */
     public function findBySemestreArray(Semestre $semestre): array
     {
         $groupes = $this->findBySemestre($semestre);
@@ -142,14 +129,8 @@ class GroupeRepository extends ServiceEntityRepository
         }
 
         return $t;
-
     }
 
-    /**
-     * @param Semestre $semestre
-     *
-     * @return array
-     */
     public function findGroupeSemestreEdt(Semestre $semestre): array
     {
         $groupes = [];
@@ -160,19 +141,19 @@ class GroupeRepository extends ServiceEntityRepository
         $groupes[0]['id'] = 'CM-1';
         $groupes[0]['display'] = 'CM | CM';
 
-        /** @var  Groupe $g */
+        /** @var Groupe $g */
         foreach ($gtp as $g) {
             $groupes[$i]['id'] = 'TP-' . $g->getOrdre();
             $groupes[$i]['display'] = 'TP' . $g->getLibelle() . ' | TP ' . $g->getLibelle();
-            $i++;
+            ++$i;
         }
 
-        /** @var  Groupe $g */
+        /** @var Groupe $g */
         foreach ($gtd as $g) {
             $or = $g->getOrdre();
             $groupes[$i]['id'] = 'TD-' . $or;
             $groupes[$i]['display'] = 'TD' . $g->getLibelle() . ' | TD ' . $g->getLibelle();
-            $i++;
+            ++$i;
         }
 
         return $groupes;

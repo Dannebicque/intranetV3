@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/StageEtudiant.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 03/11/2020 11:06
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/StageEtudiant.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:49
+ */
 
 namespace App\Entity;
 
@@ -45,7 +47,7 @@ class StageEtudiant extends BaseEntity
         self::ETAT_STAGE_INCOMPLET,
         self::ETAT_STAGE_CONVENTION_IMPRIMEE,
         self::ETAT_STAGE_CONVENTION_ENVOYEE,
-        self::ETAT_STAGE_CONVENTION_RECUE
+        self::ETAT_STAGE_CONVENTION_RECUE,
     ];
 
     /**
@@ -214,9 +216,6 @@ class StageEtudiant extends BaseEntity
         $this->setUuid(Uuid::uuid4());
     }
 
-    /**
-     * @return StagePeriode|null
-     */
     public function getStagePeriode(): ?StagePeriode
     {
         return $this->stagePeriode;
@@ -550,12 +549,12 @@ class StageEtudiant extends BaseEntity
 
     public function dateDebutStageFr(): string
     {
-        return $this->getDateDebutStage() !== null ? $this->getDateDebutStage()->format('d/m/Y') : '-';
+        return null !== $this->getDateDebutStage() ? $this->getDateDebutStage()->format('d/m/Y') : '-';
     }
 
     public function dateFinStageFr(): string
     {
-        return $this->getDateFinStage() !== null ? $this->getDateFinStage()->format('d/m/Y') : '-';
+        return null !== $this->getDateFinStage() ? $this->getDateFinStage()->format('d/m/Y') : '-';
     }
 
     /**

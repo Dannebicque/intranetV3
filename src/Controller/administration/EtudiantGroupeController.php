@@ -1,19 +1,22 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EtudiantGroupeController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 01/09/2020 12:24
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EtudiantGroupeController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
 
 namespace App\Controller\administration;
 
+use App\Classes\MyGroupes;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Entity\Groupe;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
-use App\Classes\MyGroupes;
 use App\Repository\EtudiantRepository;
 use App\Repository\GroupeRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,33 +24,24 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class CommissionAbsenceController
- * @package App\Controller\administration
+ * Class CommissionAbsenceController.
+ *
  * @Route("/administration/etudiant/groupe")
  */
 class EtudiantGroupeController extends BaseController
 {
     /**
      * @Route("/semestre/{semestre}", name="administration_etudiant_groupe_semestre_index")
-     * @param Semestre $semestre
-     *
-     * @return Response
      */
     public function index(Semestre $semestre): Response
     {
         return $this->render('administration/etudiant_groupe/index.html.twig', [
-            'semestre' => $semestre
+            'semestre' => $semestre,
         ]);
     }
 
-
     /**
      * @Route("/affecte/{typeGroupe}", name="administration_etudiant_groupe_affecte", options={"expose":true})
-     * @param GroupeRepository $groupeRepository
-     * @param EtudiantRepository $etudiantRepository
-     * @param TypeGroupe $typeGroupe
-     *
-     * @return Response
      */
     public function affecte(
         GroupeRepository $groupeRepository,
@@ -60,16 +54,12 @@ class EtudiantGroupeController extends BaseController
         return $this->render('administration/etudiant_groupe/affecte.html.twig', [
             'typeGroupe' => $typeGroupe,
             'groupes'    => $groupes,
-            'etudiants'  => $etudiants
+            'etudiants'  => $etudiants,
         ]);
     }
 
     /**
      * @Route("/synchro/apogee/{semestre}", name="administration_etudiant_groupe_synchro_apogee")
-     * @param MyGroupes $myGroupes
-     * @param Semestre  $semestre
-     *
-     * @return Response
      */
     public function synchroApogee(MyGroupes $myGroupes, Semestre $semestre): Response
     {
@@ -83,11 +73,6 @@ class EtudiantGroupeController extends BaseController
 
     /**
      * @Route("/synchro/parent/{semestre}", name="administration_etudiant_groupe_synchro_parent")
-     *
-     * @param MyGroupes $myGroupes
-     * @param Semestre  $semestre
-     *
-     * @return Response
      */
     public function synchroParent(MyGroupes $myGroupes, Semestre $semestre): Response
     {
@@ -96,17 +81,10 @@ class EtudiantGroupeController extends BaseController
 
         return $this->redirectToRoute('administration_etudiant_groupe_semestre_index',
             ['semestre' => $semestre->getId()]);
-
     }
 
     /**
      * @Route("/change", name="administration_etudiant_groupe_change", options={"expose":true})
-     *
-     * @param Request            $request
-     * @param EtudiantRepository $etudiantRepository
-     * @param GroupeRepository   $groupeRepository
-     *
-     * @return Response
      */
     public function change(
         Request $request,
@@ -120,18 +98,18 @@ class EtudiantGroupeController extends BaseController
 
         //récupére l'étudiant
         $etu = $etudiantRepository->find($id[1]);
-        if ($etu !== null) {
+        if (null !== $etu) {
             //efface l'ancien groupe
-            if ($request->request->get('oldgroupe') !== 0) {
+            if (0 !== $request->request->get('oldgroupe')) {
                 $oldgroupe = $groupeRepository->find($request->request->get('oldgroupe'));
-                if ($oldgroupe !== null) {
+                if (null !== $oldgroupe) {
                     $oldgroupe->removeEtudiant($etu);
                     $this->entityManager->persist($oldgroupe);
                     $this->entityManager->flush();
                 }
             }
 
-            if ($t[1] !== 0) {
+            if (0 !== $t[1]) {
                 $groupe = $groupeRepository->find(trim($t[1])); //récupérer groupe etudiant...
                 if ($groupe) {
                     //supprimer l'ancier groupe...
@@ -149,12 +127,6 @@ class EtudiantGroupeController extends BaseController
 
     /**
      * @Route("/{id}/{etudiant}", name="administration_etudiant_groupe_delete", methods="DELETE")
-     * @param Request  $request
-     * @param Groupe   $groupe
-     *
-     * @param Etudiant $etudiant
-     *
-     * @return Response
      */
     public function delete(Request $request, Groupe $groupe, Etudiant $etudiant): Response
     {

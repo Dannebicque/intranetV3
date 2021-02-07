@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/TypeDocumentRepository.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 31/08/2020 18:13
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/TypeDocumentRepository.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:08
+ */
 
 namespace App\Repository;
 
@@ -22,8 +24,6 @@ class TypeDocumentRepository extends ServiceEntityRepository
 {
     /**
      * TypeDocumentRepository constructor.
-     *
-     * @param ManagerRegistry $registry
      */
     public function __construct(ManagerRegistry $registry)
     {
@@ -32,8 +32,6 @@ class TypeDocumentRepository extends ServiceEntityRepository
 
     /**
      * @param $departement
-     *
-     * @return mixed
      */
     public function findByDepartement(Departement $departement)
     {

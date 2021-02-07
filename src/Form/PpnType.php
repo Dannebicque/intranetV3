@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Form/PpnType.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/PpnType.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Form;
 
@@ -18,17 +20,12 @@ use Symfony\Component\OptionsResolver\Exception\AccessException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class PpnType
- * @package App\Form
+ * Class PpnType.
  */
 class PpnType extends AbstractType
 {
     protected $departement;
 
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->departement = $options['departement'];
@@ -45,23 +42,20 @@ class PpnType extends AbstractType
                     'query_builder' => function(DiplomeRepository $diplomeRepository) {
                         return $diplomeRepository->findByDepartementBuilder($this->departement);
                     },
-                    'label'         => 'label.diplome'
+                    'label'         => 'label.diplome',
                 ]
             );
     }
 
     /**
-     * @param OptionsResolver $resolver
-     *
      * @throws AccessException
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class'         => Ppn::class,
-            'departement'          => null,
-            'translation_domain' => 'form'
-
+            'departement'        => null,
+            'translation_domain' => 'form',
         ]);
     }
 }

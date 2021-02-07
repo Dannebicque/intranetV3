@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/StageEtudiantRepository.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 26/11/2020 17:46
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/StageEtudiantRepository.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:08
+ */
 
 namespace App\Repository;
 
@@ -14,8 +16,8 @@ use App\Entity\Personnel;
 use App\Entity\StageEtudiant;
 use App\Entity\StagePeriode;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method StageEtudiant|null find($id, $lockMode = null, $lockVersion = null)
@@ -31,10 +33,6 @@ class StageEtudiantRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param StagePeriode $stagePeriode
-     * @param Etudiant     $etudiant
-     *
-     * @return mixed
      * @throws NonUniqueResultException
      */
     public function findExist(StagePeriode $stagePeriode, Etudiant $etudiant)

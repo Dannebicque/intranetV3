@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/AlternanceFicheSuiviController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 01/02/2021 21:17
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/AlternanceFicheSuiviController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller\appPersonnel;
 
@@ -27,24 +29,18 @@ class AlternanceFicheSuiviController extends AbstractController
 {
     /**
      * @Route("/{alternance}", name="application_personnel_alternance_fiche_suivi_alternance", methods={"GET"})
-     * @param Alternance $alternance
-     *
-     * @return Response
      */
     public function index(Alternance $alternance): Response
     {
         return $this->render('appPersonnel/alternance_fiche_suivi/index.html.twig', [
             'alternance_fiche_suivis' => $alternance->getAlternanceFicheSuivis(),
-            'alternance'              => $alternance
+            'alternance'              => $alternance,
         ]);
     }
 
     /**
      * @Route("/{alternance}/new", name="application_personnel_alternance_fiche_suivi_new", methods={"GET","POST"})
-     * @param Request    $request
-     * @param Alternance $alternance
      *
-     * @return Response
      * @throws Exception
      */
     public function new(Request $request, Alternance $alternance): Response
@@ -65,16 +61,12 @@ class AlternanceFicheSuiviController extends AbstractController
         return $this->render('appPersonnel/alternance_fiche_suivi/new.html.twig', [
             'alternance_fiche_suivi' => $alternanceFicheSuivi,
             'form'                   => $form->createView(),
-            'alternance'             => $alternance
-
+            'alternance'             => $alternance,
         ]);
     }
 
     /**
      * @Route("/{id}/details", name="application_personnel_alternance_fiche_suivi_show", methods={"GET"})
-     * @param AlternanceFicheSuivi $alternanceFicheSuivi
-     *
-     * @return Response
      */
     public function show(AlternanceFicheSuivi $alternanceFicheSuivi): Response
     {
@@ -85,10 +77,7 @@ class AlternanceFicheSuiviController extends AbstractController
 
     /**
      * @Route("/{id}/imprimer", name="application_personnel_alternance_fiche_suivi_print", methods={"GET"})
-     * @param MyAlternanceFicheSuivi $myAlternanceFicheSuivi
-     * @param AlternanceFicheSuivi   $alternanceFicheSuivi
      *
-     * @return Response
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -102,10 +91,6 @@ class AlternanceFicheSuiviController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="application_personnel_alternance_fiche_suivi_edit", methods={"GET","POST"})
-     * @param Request              $request
-     * @param AlternanceFicheSuivi $alternanceFicheSuivi
-     *
-     * @return Response
      */
     public function edit(Request $request, AlternanceFicheSuivi $alternanceFicheSuivi): Response
     {
@@ -117,7 +102,6 @@ class AlternanceFicheSuiviController extends AbstractController
 
             return $this->redirectToRoute('application_personnel_alternance_fiche_suivi_show',
                 ['id' => $alternanceFicheSuivi->getId()]);
-
         }
 
         return $this->render('appPersonnel/alternance_fiche_suivi/edit.html.twig', [
@@ -128,10 +112,6 @@ class AlternanceFicheSuiviController extends AbstractController
 
     /**
      * @Route("/{id}", name="application_personnel_alternance_fiche_suivi_delete", methods={"DELETE"})
-     * @param Request              $request
-     * @param AlternanceFicheSuivi $alternanceFicheSuivi
-     *
-     * @return Response
      */
     public function delete(Request $request, AlternanceFicheSuivi $alternanceFicheSuivi): Response
     {

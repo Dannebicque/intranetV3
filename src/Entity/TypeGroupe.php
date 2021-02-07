@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/TypeGroupe.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 07/09/2020 15:21
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/TypeGroupe.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Entity;
 
@@ -58,17 +60,12 @@ class TypeGroupe extends BaseEntity
         $this->groupes = new ArrayCollection();
     }
 
-    /**
-     * @return Semestre|null
-     */
     public function getSemestre(): ?Semestre
     {
         return $this->semestre;
     }
 
     /**
-     * @param Semestre|null $semestre
-     *
      * @return TypeGroupe
      */
     public function setSemestre(?Semestre $semestre): self
@@ -78,17 +75,12 @@ class TypeGroupe extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
     public function getLibelle(): ?string
     {
         return $this->libelle;
     }
 
     /**
-     * @param string $libelle
-     *
      * @return TypeGroupe
      */
     public function setLibelle(string $libelle): self
@@ -107,8 +99,6 @@ class TypeGroupe extends BaseEntity
     }
 
     /**
-     * @param Groupe $groupe
-     *
      * @return TypeGroupe
      */
     public function addGroupe(Groupe $groupe): self
@@ -122,8 +112,6 @@ class TypeGroupe extends BaseEntity
     }
 
     /**
-     * @param Groupe $groupe
-     *
      * @return TypeGroupe
      */
     public function removeGroupe(Groupe $groupe): self
@@ -151,31 +139,28 @@ class TypeGroupe extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return array
-     */
     public function getArray(): array
     {
         return [
-            'id' => $this->getId(),
+            'id'      => $this->getId(),
             'libelle' => $this->getLibelle(),
-            'defaut' => $this->getDefaut()
+            'defaut'  => $this->getDefaut(),
         ];
     }
 
     public function isTD(): bool
     {
-        return strtoupper($this->getType()) === self::TYPE_GROUPE_TD;
+        return self::TYPE_GROUPE_TD === mb_strtoupper($this->getType());
     }
 
     public function isTP(): bool
     {
-        return strtoupper($this->getType()) === self::TYPE_GROUPE_TP;
+        return self::TYPE_GROUPE_TP === mb_strtoupper($this->getType());
     }
 
     public function isCM(): bool
     {
-        return strtoupper($this->getType()) === self::TYPE_GROUPE_CM;
+        return self::TYPE_GROUPE_CM === mb_strtoupper($this->getType());
     }
 
     public function getType(): ?string
@@ -190,7 +175,8 @@ class TypeGroupe extends BaseEntity
         return $this;
     }
 
-    public function getDisplay(){
-        return $this->getSemestre() !== null ? $this->getSemestre()->getLibelle() . ' | '.$this->getLibelle() : $this->getLibelle();
+    public function getDisplay()
+    {
+        return null !== $this->getSemestre() ? $this->getSemestre()->getLibelle() . ' | ' . $this->getLibelle() : $this->getLibelle();
     }
 }

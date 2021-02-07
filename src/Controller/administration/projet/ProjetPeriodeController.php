@@ -1,9 +1,12 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/projet/ProjetPeriodeController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/projet/ProjetPeriodeController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
 
 namespace App\Controller\administration\projet;
 
@@ -25,9 +28,6 @@ class ProjetPeriodeController extends BaseController
 {
     /**
      * @Route("/", name="administration_projet_periode_index", methods={"GET"})
-     * @param ProjetPeriodeRepository $projetPeriodeRepository
-     *
-     * @return Response
      */
     public function index(ProjetPeriodeRepository $projetPeriodeRepository): Response
     {
@@ -39,11 +39,8 @@ class ProjetPeriodeController extends BaseController
     /**
      * @Route("/export.{_format}", name="administration_projet_periode_export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"})
-     * @param MyExport                $myExport
-     * @param ProjetPeriodeRepository $projetPeriodeRepository
-     * @param                         $_format
      *
-     * @return Response
+     * @param $_format
      */
     public function export(MyExport $myExport, ProjetPeriodeRepository $projetPeriodeRepository, $_format): Response
     {
@@ -60,9 +57,6 @@ class ProjetPeriodeController extends BaseController
 
     /**
      * @Route("/new", name="administration_projet_periode_new", methods={"GET","POST"})
-     * @param Request $request
-     *
-     * @return Response
      */
     public function new(Request $request): Response
     {
@@ -71,8 +65,8 @@ class ProjetPeriodeController extends BaseController
         $form = $this->createForm(ProjetPeriodeType::class, $projetPeriode, [
             'departement' => $this->dataUserSession->getDepartement(),
             'attr'        => [
-                'data-provide' => 'validation'
-            ]
+                'data-provide' => 'validation',
+            ],
         ]);
         $form->handleRequest($request);
 
@@ -93,9 +87,6 @@ class ProjetPeriodeController extends BaseController
     /**
      * @Route("/{id}", name="administration_projet_periode_show", methods={"GET"})
      * @ParamConverter("projetPeriode", options={"mapping": {"id": "uuid"}})
-     * @param ProjetPeriode $projetPeriode
-     *
-     * @return Response
      */
     public function show(ProjetPeriode $projetPeriode): Response
     {
@@ -107,18 +98,14 @@ class ProjetPeriodeController extends BaseController
     /**
      * @Route("/{id}/edit", name="administration_projet_periode_edit", methods={"GET","POST"})
      * @ParamConverter("projetPeriode", options={"mapping": {"id": "uuid"}})
-     * @param Request       $request
-     * @param ProjetPeriode $projetPeriode
-     *
-     * @return Response
      */
     public function edit(Request $request, ProjetPeriode $projetPeriode): Response
     {
         $form = $this->createForm(ProjetPeriodeType::class, $projetPeriode, [
             'departement' => $this->dataUserSession->getDepartement(),
             'attr'        => [
-                'data-provide' => 'validation'
-            ]
+                'data-provide' => 'validation',
+            ],
         ]);
         $form->handleRequest($request);
 
@@ -138,10 +125,6 @@ class ProjetPeriodeController extends BaseController
     /**
      * @Route("/{id}", name="administration_projet_periode_delete", methods={"DELETE"})
      * @ParamConverter("projetPeriode", options={"mapping": {"id": "uuid"}})
-     * @param Request       $request
-     * @param ProjetPeriode $projetPeriode
-     *
-     * @return Response
      */
     public function delete(Request $request, ProjetPeriode $projetPeriode): Response
     {
@@ -155,7 +138,6 @@ class ProjetPeriodeController extends BaseController
                 'projet_periode.delete.success.flash'
             );
 
-
             return $this->json($id, Response::HTTP_OK);
         }
 
@@ -167,9 +149,6 @@ class ProjetPeriodeController extends BaseController
     /**
      * @Route("/{id}/duplicate", name="administration_projet_periode_duplicate", methods="GET")
      * @ParamConverter("projetPeriode", options={"mapping": {"id": "uuid"}})
-     * @param ProjetPeriode $projetPeriode
-     *
-     * @return Response
      */
     public function duplicate(ProjetPeriode $projetPeriode): Response
     {

@@ -1,9 +1,12 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/GroupeController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/GroupeController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
 
 namespace App\Controller\administration;
 
@@ -26,24 +29,17 @@ class GroupeController extends BaseController
 {
     /**
      * @Route("/{semestre}", name="administration_groupe_index", methods={"GET"}, requirements={"semestre":"\d+"})
-     * @param Semestre|null $semestre
-     *
-     * @return Response
      */
     public function index(Semestre $semestre = null): Response
     {
         return $this->render('administration/groupe/index.html.twig', [
-            'afficheSemestre' => $semestre !== null ? $semestre->getId() : null
+            'afficheSemestre' => null !== $semestre ? $semestre->getId() : null,
         ]);
     }
 
     /**
      * @Route("/liste/{semestre}", name="administration_groupe_liste_semestre", methods={"GET"},
      *                             options={"expose":true})
-     * @param GroupeRepository $groupeRepository
-     * @param Semestre         $semestre
-     *
-     * @return Response
      */
     public function listeSemestre(GroupeRepository $groupeRepository, Semestre $semestre): Response
     {
@@ -55,20 +51,15 @@ class GroupeController extends BaseController
             'semestre'    => $semestre,
             'groupes'     => $groupes,
             'typeGroupes' => $typeGroupes,
-            'parcours'    => $parcours
+            'parcours'    => $parcours,
         ]);
     }
 
     /**
      * @Route("/{semestre}/export.{_format}", name="administration_groupe_export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"}, options={"expose":true})
-     * @param MyExport            $myExport
-     * @param GroupeRepository    $groupeRepository
      *
-     * @param Semestre            $semestre
-     * @param                     $_format
-     *
-     * @return Response
+     * @param $_format
      */
     public function export(
         MyExport $myExport,
@@ -89,17 +80,13 @@ class GroupeController extends BaseController
                 'codeApogee',
                 'parent'     => ['libelle'],
                 'ordre',
-                'parcours'   => ['libelle']
+                'parcours'   => ['libelle'],
             ]
         );
     }
 
     /**
      * @Route("/new/{semestre}", name="administration_groupe_new", methods={"GET","POST"}, options={"expose":true})
-     * @param Request  $request
-     * @param Semestre $semestre
-     *
-     * @return Response
      */
     public function new(Request $request, Semestre $semestre): Response
     {
@@ -125,9 +112,6 @@ class GroupeController extends BaseController
 
     /**
      * @Route("/duplicate/{groupe}", name="administration_groupe_duplicate", methods={"GET"}, options={"expose":true})
-     * @param Groupe $groupe
-     *
-     * @return Response
      */
     public function duplicate(Groupe $groupe): Response
     {
@@ -143,10 +127,6 @@ class GroupeController extends BaseController
 
     /**
      * @Route("/supprimer/{id}", name="administration_groupe_delete", methods={"DELETE"})
-     * @param Request $request
-     * @param Groupe  $groupe
-     *
-     * @return Response
      */
     public function delete(Request $request, Groupe $groupe): Response
     {

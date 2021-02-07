@@ -1,9 +1,15 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Excel/MyExcelRead.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 18/01/2021 18:24
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Excel/MyExcelRead.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
+/*
+ * Pull your hearder here, for exemple, Licence header.
+ */
 
 namespace App\Classes\Excel;
 
@@ -14,12 +20,10 @@ use PhpOffice\PhpSpreadsheet\Reader\Exception;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 /**
- * Class MyExcel
- * @package App\Classes
+ * Class MyExcel.
  */
 class MyExcelRead
 {
-
     protected $response;
 
     protected $phpExcelObject;
@@ -31,13 +35,11 @@ class MyExcelRead
     protected $line = 1;
     protected $nbColumns = -1; //on ne connait pas l nombre de colonne
 
-
     /**
      * MyExcelRead constructor.
      */
     public function __construct()
     {
-
     }
 
     /**
@@ -51,56 +53,50 @@ class MyExcelRead
         $inputFileType = IOFactory::identify($fichier);
         /**  Create a new Reader of the type that has been identified  **/
         $reader = IOFactory::createReader($inputFileType);
-        /**  Load $inputFileName to a Spreadsheet Object  **/
+        /*  Load $inputFileName to a Spreadsheet Object  **/
         $this->phpExcelObject = $reader->load($fichier);
         $this->sheet = $this->phpExcelObject->getSheet(0);
     }
 
     /**
-     * Lecture séquentielle du fichier. Retourne false si ligne vide
+     * Lecture séquentielle du fichier. Retourne false si ligne vide.
      */
     public function readNewLine()
     {
-        if ($this->nbColumns === -1) {
+        if (-1 === $this->nbColumns) {
             //on analyse le nombre de colonne
             $this->countColumns();
         }
 
-        if ($this->sheet->getCellByColumnAndRow(0, $this->line) != '') {
+        if ('' !== $this->sheet->getCellByColumnAndRow(0, $this->line)) {
             $t = [];
-            for ($col = 0; $col < $this->nbColumns; $col++) {
+            for ($col = 0; $col < $this->nbColumns; ++$col) {
                 $t[$col] = $this->sheet->getCellByColumnAndRow($col, $this->line);
             }
-            $this->line++;
+            ++$this->line;
 
             return $t;
         }
 
         return false;
-
     }
 
-    /**
-     *
-     */
     private function countColumns(): void
     {
         $fin = true;
         $i = 1;
-        while ($fin === true) {
-            if ($this->sheet->getCellByColumnAndRow($i, 1) == '') {
+        while (true === $fin) {
+            if ('' === $this->sheet->getCellByColumnAndRow($i, 1)) {
                 $fin = false;
                 $this->nbColumns = $i;
             }
-            $i++;
+            ++$i;
         }
     }
 
     /**
-     * @param integer $col
-     * @param integer $lig
-     *
-     * @return Cell
+     * @param int $col
+     * @param int $lig
      */
     public function getCellColLigne($col, $lig): Cell
     {
@@ -128,5 +124,4 @@ class MyExcelRead
         $objWriter = IOFactory::createWriter($this->phpExcelObject, 'Xls');
         $objWriter->save($filename);
     }
-
 }

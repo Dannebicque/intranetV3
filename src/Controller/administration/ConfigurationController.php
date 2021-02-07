@@ -1,14 +1,17 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/ConfigurationController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/ConfigurationController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
 
 namespace App\Controller\administration;
 
-use App\Controller\BaseController;
 use App\Classes\MyConfiguration;
+use App\Controller\BaseController;
 use App\Repository\AnneeUniversitaireRepository;
 use InvalidArgumentException;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,31 +19,25 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class ConfigurationController
- * @package App\Controller\administration
+ * Class ConfigurationController.
+ *
  * @Route("/administration/configuration")
  */
 class ConfigurationController extends BaseController
 {
     /**
      * @Route("/configuration", name="administration_configuration")
-     * @param AnneeUniversitaireRepository $anneeUniversitaireRepository
-     *
-     * @return Response
      */
     public function index(AnneeUniversitaireRepository $anneeUniversitaireRepository): Response
     {
         return $this->render('administration/configuration/index.html.twig', [
-            'anneeUniversitaire' => $anneeUniversitaireRepository->findAll()
+            'anneeUniversitaire' => $anneeUniversitaireRepository->findAll(),
         ]);
     }
 
     /**
      * @Route("/configuration/change", name="administration_configuration_change_option", options={"expose":true})
-     * @param MyConfiguration $myConfiguration
-     * @param Request         $request
      *
-     * @return Response
      * @throws InvalidArgumentException
      */
     public function changeOption(MyConfiguration $myConfiguration, Request $request): Response

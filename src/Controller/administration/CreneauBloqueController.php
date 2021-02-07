@@ -1,9 +1,12 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/CreneauBloqueController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/CreneauBloqueController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
 
 namespace App\Controller\administration;
 
@@ -25,24 +28,19 @@ class CreneauBloqueController extends BaseController
 {
     /**
      * @Route("/", name="administration_creneau_bloque_index", methods={"GET"})
-     * @param CreneauBloqueRepository $creneauBloqueRepository
-     * @param CreneauCoursRepository  $creneauCoursRepository
-     * @param CalendrierRepository    $calendrierRepository
-     *
-     * @return Response
      */
     public function index(
         CreneauBloqueRepository $creneauBloqueRepository,
         CreneauCoursRepository $creneauCoursRepository,
         CalendrierRepository $calendrierRepository
     ): Response {
-        if ($this->dataUserSession->getDepartement() !== null && $this->dataUserSession->getDepartement()->getAnneeUniversitairePrepare() !== null) {
+        if (null !== $this->dataUserSession->getDepartement() && null !== $this->dataUserSession->getDepartement()->getAnneeUniversitairePrepare()) {
             $creneaux = $creneauCoursRepository->findByAnneeDepartement($this->dataUserSession->getDepartement(),
                 $this->dataUserSession->getDepartement()->getAnneeUniversitairePrepare());
             $tCreneaux = [];
             /** @var CreneauCours $creneau */
             foreach ($creneaux as $creneau) {
-                if (!array_key_exists($creneau->getJourLong(), $tCreneaux)) {
+                if (!\array_key_exists($creneau->getJourLong(), $tCreneaux)) {
                     $tCreneaux[$creneau->getJourLong()] = [];
                 }
                 $tCreneaux[$creneau->getJourLong()][] = $creneau;
@@ -51,7 +49,7 @@ class CreneauBloqueController extends BaseController
             return $this->render('administration/creneau_bloque/index.html.twig', [
                 'creneau_bloques' => $creneauBloqueRepository->findAll(),
                 'creneaux'        => $tCreneaux,
-                'semaines'        => $calendrierRepository->findByAnneeUniversitaire($this->dataUserSession->getDepartement()->getAnneeUniversitairePrepare())
+                'semaines'        => $calendrierRepository->findByAnneeUniversitaire($this->dataUserSession->getDepartement()->getAnneeUniversitairePrepare()),
             ]);
         }
 
@@ -61,10 +59,6 @@ class CreneauBloqueController extends BaseController
     /**
      * @Route("/modifie_etat", name="administration_creneau_bloque_modifie_etat", methods={"POST"},
      *                         options={"expose"=true})
-     * @param CreneauCoursRepository  $creneauCoursRepository
-     * @param CalendrierRepository    $calendrierRepository
-     * @param CreneauBloqueRepository $creneauBloqueRepository
-     * @param Request                 $request
      *
      * @return JsonResponse
      */
@@ -81,8 +75,8 @@ class CreneauBloqueController extends BaseController
             $type = $request->request->get('type');
             $crBl = $creneauBloqueRepository->findBy(['creneau' => $cr->getId(), 'semaine' => $semaine->getId()]);
 
-            if (count($crBl) === 1) {
-                if ($type === 'dispo') {
+            if (1 === \count($crBl)) {
+                if ('dispo' === $type) {
                     $this->entityManager->remove($crBl[0]);
                 } else {
                     $crBl[0]->setType($type);
@@ -93,7 +87,7 @@ class CreneauBloqueController extends BaseController
                 return $this->json(true, Response::HTTP_OK);
             }
 
-            if (count($crBl) === 0) {
+            if (0 === \count($crBl)) {
                 $crBl = new CreneauBloque();
                 $crBl->setType($type);
                 $crBl->setCreneau($cr);
@@ -108,6 +102,5 @@ class CreneauBloqueController extends BaseController
         }
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
-
     }
 }

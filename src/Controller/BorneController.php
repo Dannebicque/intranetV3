@@ -1,15 +1,17 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/BorneController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 28/09/2020 06:44
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/BorneController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller;
 
+use App\Classes\Edt\MyEdtBorne;
 use App\Entity\Constantes;
 use App\Entity\Semestre;
-use App\Classes\Edt\MyEdtBorne;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,11 +20,6 @@ class BorneController extends AbstractController
 {
     /**
      * @Route("/borne/{semestre1}/{semestre2}", name="borne")
-     * @param MyEdtBorne $myEdtBorne
-     * @param Semestre   $semestre1
-     * @param Semestre   $semestre2
-     *
-     * @return Response
      */
     public function index(MyEdtBorne $myEdtBorne, Semestre $semestre1, Semestre $semestre2): Response
     {
@@ -39,7 +36,7 @@ class BorneController extends AbstractController
         $content = $this->renderView('borne/index.html.twig', [
             't'        => $myEdtBorne->getData(),
             'messages' => $messages,
-            'lignes'   => Constantes::TAB_CRENEAUX
+            'lignes'   => Constantes::TAB_CRENEAUX,
         ]);
 
         $response->setContent($content);

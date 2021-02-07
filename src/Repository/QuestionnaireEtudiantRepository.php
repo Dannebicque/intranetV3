@@ -1,21 +1,23 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/QuestionnaireEtudiantRepository.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 07/01/2021 16:27
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/QuestionnaireEtudiantRepository.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:08
+ */
 
 namespace App\Repository;
 
 use App\Entity\Etudiant;
-use App\Entity\QuestionnaireQualite;
 use App\Entity\QuestionnaireEtudiant;
+use App\Entity\QuestionnaireQualite;
 use App\Entity\QuestionnaireQuizz;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method QuestionnaireEtudiant|null find($id, $lockMode = null, $lockVersion = null)
@@ -31,9 +33,6 @@ class QuestionnaireEtudiantRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param QuestionnaireQualite $qualiteQuestionnaire
-     *
-     * @return mixed
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
@@ -50,11 +49,6 @@ class QuestionnaireEtudiantRepository extends ServiceEntityRepository
             ->getSingleScalarResult();
     }
 
-    /**
-     * @param Semestre $semestre
-     *
-     * @return array
-     */
     public function findBySemestreArray(Semestre $semestre): array
     {
         $q = $this->createQueryBuilder('q')
@@ -68,8 +62,8 @@ class QuestionnaireEtudiantRepository extends ServiceEntityRepository
 
         /** @var QuestionnaireEtudiant $r */
         foreach ($q as $r) {
-            if ($r->getQuestionnaireQualite() !== null && $r->getEtudiant() !== null) {
-                if (!array_key_exists($r->getQuestionnaireQualite()->getId(), $t)) {
+            if (null !== $r->getQuestionnaireQualite() && null !== $r->getEtudiant()) {
+                if (!\array_key_exists($r->getQuestionnaireQualite()->getId(), $t)) {
                     $t[$r->getQuestionnaireQualite()->getId()] = [];
                 }
                 $t[$r->getQuestionnaireQualite()->getId()][$r->getEtudiant()->getId()] = $r;
@@ -90,7 +84,7 @@ class QuestionnaireEtudiantRepository extends ServiceEntityRepository
         $t = [];
         /** @var QuestionnaireEtudiant $q */
         foreach ($r as $q) {
-            if ($q->getQuestionnaireQualite() !== null) {
+            if (null !== $q->getQuestionnaireQualite()) {
                 $t[$q->getQuestionnaireQualite()->getId()] = $q;
             }
         }

@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/CovidAttestationPersonnel.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 28/01/2021 16:34
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/CovidAttestationPersonnel.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Entity;
 
@@ -76,7 +78,6 @@ class CovidAttestationPersonnel extends BaseEntity
         $this->covidCreneauPresences = new ArrayCollection();
     }
 
-
     public function getMoyenDeplacement(): ?string
     {
         return $this->moyenDeplacement;
@@ -115,20 +116,20 @@ class CovidAttestationPersonnel extends BaseEntity
 
     public function getValidationDepartementDisplay(): ?string
     {
-        if ($this->validationDepartement === null) {
+        if (null === $this->validationDepartement) {
             return 'en.attente';
         }
 
-        return $this->validationDepartement === true ? 'Yes' : 'No';
+        return true === $this->validationDepartement ? 'Yes' : 'No';
     }
 
     public function getValidationDirectionDisplay(): ?string
     {
-        if ($this->validationDirection === null) {
+        if (null === $this->validationDirection) {
             return 'en.attente';
         }
 
-        return $this->validationDirection === true ? 'Yes' : 'No';
+        return true === $this->validationDirection ? 'Yes' : 'No';
     }
 
     public function getDateValidationDepartement(): ?DateTimeInterface
@@ -237,7 +238,7 @@ class CovidAttestationPersonnel extends BaseEntity
         $tab = [
             'motif1' => 'Assurer TP / devoirs sur tables',
             'motif2' => 'Assurer sur site les enseignants car ne dispose pas des conditions satisfaisantes pour le faire en distanciel',
-            'motif3' => 'Demandes ponctuelles (récupérer dossiers, BU)'
+            'motif3' => 'Demandes ponctuelles (récupérer dossiers, BU)',
         ];
 
         return $tab[$this->motif];
@@ -261,10 +262,10 @@ class CovidAttestationPersonnel extends BaseEntity
             'velo'      => 'Vélo',
             'pied'      => 'A pieds',
             'vehicule'  => 'Véhicule personnel',
-            'transport' => 'Transports en commun (bus, train, ...)'
+            'transport' => 'Transports en commun (bus, train, ...)',
         ];
 
-        if (array_key_exists($this->moyenDeplacement, $tab)) {
+        if (\array_key_exists($this->moyenDeplacement, $tab)) {
             return $tab[$this->moyenDeplacement];
         }
 

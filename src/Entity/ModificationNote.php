@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ModificationNote.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ModificationNote.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:49
+ */
 
 namespace App\Entity;
 
@@ -14,8 +16,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class ModificationNote extends BaseEntity
 {
-
-
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Note", inversedBy="modificationNotes")
      */
@@ -36,17 +36,12 @@ class ModificationNote extends BaseEntity
      */
     private $nouvelleNote;
 
-    /**
-     * @return Note|null
-     */
     public function getNote(): ?Note
     {
         return $this->note;
     }
 
     /**
-     * @param Note|null $note
-     *
      * @return ModificationNote
      */
     public function setNote(?Note $note): self
@@ -56,17 +51,12 @@ class ModificationNote extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return Personnel|null
-     */
     public function getPersonnel(): ?Personnel
     {
         return $this->personnel;
     }
 
     /**
-     * @param Personnel|null $personnel
-     *
      * @return ModificationNote
      */
     public function setPersonnel(?Personnel $personnel): self
@@ -76,17 +66,12 @@ class ModificationNote extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return float|null
-     */
     public function getAncienneNote(): ?float
     {
         return $this->ancienneNote;
     }
 
     /**
-     * @param float $ancienneNote
-     *
      * @return ModificationNote
      */
     public function setAncienneNote(float $ancienneNote): self
@@ -96,17 +81,12 @@ class ModificationNote extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return float|null
-     */
     public function getNouvelleNote(): ?float
     {
         return $this->nouvelleNote;
     }
 
     /**
-     * @param float $nouvelleNote
-     *
      * @return ModificationNote
      */
     public function setNouvelleNote(float $nouvelleNote): self

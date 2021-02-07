@@ -1,13 +1,17 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/ServiceRealise/ServiceRealiseIntranet.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 14/10/2020 11:56
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/ServiceRealise/ServiceRealiseIntranet.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
+/*
+ * Pull your hearder here, for exemple, Licence header.
+ */
 
 namespace App\Classes\ServiceRealise;
-
 
 use App\DTO\EvenementEdt;
 use App\Entity\Constantes;
@@ -18,9 +22,6 @@ use App\Repository\EdtPlanningRepository;
 
 class ServiceRealiseIntranet implements ServiceRealiseInterface
 {
-    /**
-     * @var EdtPlanningRepository
-     */
     private EdtPlanningRepository $edtPlanningRepository;
 
     public function __construct(EdtPlanningRepository $edtPlanningRepository)
@@ -30,7 +31,7 @@ class ServiceRealiseIntranet implements ServiceRealiseInterface
 
     public function getServiceRealiseParMatiere(Matiere $matiere): array
     {
-        $events = $this->edtPlanningRepository->findBy(['matiere' => $matiere->getId(),],
+        $events = $this->edtPlanningRepository->findBy(['matiere' => $matiere->getId()],
             ['semaine' => 'ASC', 'jour' => 'ASC', 'debut' => 'ASC']);
         $tabEvent = [];
         foreach ($events as $event) {
@@ -44,7 +45,7 @@ class ServiceRealiseIntranet implements ServiceRealiseInterface
     {
         $events = $this->edtPlanningRepository->findBy([
             'intervenant' => $personnel->getId(),
-            'matiere'     => $matiere->getId()
+            'matiere'     => $matiere->getId(),
         ],
             ['semaine' => 'ASC', 'jour' => 'ASC', 'debut' => 'ASC']);
         $tabEvent = [];
@@ -69,8 +70,6 @@ class ServiceRealiseIntranet implements ServiceRealiseInterface
 
     /**
      * @param EdtPlanning $event
-     *
-     * @return EvenementEdt
      */
     public function convertToEvenementEdt($event): EvenementEdt
     {
@@ -83,13 +82,12 @@ class ServiceRealiseIntranet implements ServiceRealiseInterface
         $ev->duree = $event->getDureeInt();
         $ev->date = $date->isoFormat('L');
         $ev->heure = Constantes::TAB_HEURES[$event->getDebut()] . ' à ' . Constantes::TAB_HEURES[$event->getFin()];
-        $ev->matiere = $event->getMatiere() !== null ? $event->getMatiere()->getDisplay() : $event->getTexte();
+        $ev->matiere = null !== $event->getMatiere() ? $event->getMatiere()->getDisplay() : $event->getTexte();
         $ev->type_cours = $event->getType();
-        $ev->personnel = $event->getIntervenant() !== null ? $event->getIntervenantEdt() : '';
+        $ev->personnel = null !== $event->getIntervenant() ? $event->getIntervenantEdt() : '';
 
         return $ev;
     }
-
 
     public function statistiques(array $chronologique)
     {
@@ -104,9 +102,9 @@ class ServiceRealiseIntranet implements ServiceRealiseInterface
 
         /** @var EvenementEdt $event */
         foreach ($chronologique as $event) {
-            $tab['nb' . $event->type_cours]++;
+            ++$tab['nb' . $event->type_cours];
             $tab['nbH' . $event->type_cours] += $event->duree;
-            $tab['total']++;
+            ++$tab['total'];
             $tab['totalH'] += $event->duree;
         }
 

@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Form/EtudiantType.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 17/08/2020 08:53
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/EtudiantType.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Form;
 
@@ -24,26 +26,19 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 
 /**
- * Class EtudiantType
- * @package App\Form
+ * Class EtudiantType.
  */
 class EtudiantType extends AbstractType
 {
     private $departement;
 
-
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->departement = $options['departement'];
 
-
         $builder
             ->add('civilite', CiviliteType::class, [
-                'label' => 'label.civilite'
+                'label' => 'label.civilite',
             ])
             ->add('nom', TextType::class, ['label' => 'label.nom'])
             ->add('prenom', TextType::class, ['label' => 'label.prenom'])
@@ -64,7 +59,7 @@ class EtudiantType extends AbstractType
                 'query_builder' => function(SemestreRepository $semestreRepository) {
                     return $semestreRepository->findByDepartementBuilder($this->departement);
                 },
-                'choice_label'  => 'libelle'
+                'choice_label'  => 'libelle',
             ])
             ->add('mail_univ', TextType::class, ['label' => 'label.mail_univ'])
             ->add('site_univ', TextType::class, ['label' => 'label.site_univ', 'required' => false])
@@ -84,8 +79,6 @@ class EtudiantType extends AbstractType
     }
 
     /**
-     * @param OptionsResolver $resolver
-     *
      * @throws AccessException
      */
     public function configureOptions(OptionsResolver $resolver): void

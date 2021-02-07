@@ -1,9 +1,12 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/PersonnelController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/PersonnelController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
 
 namespace App\Controller\administration;
 
@@ -26,9 +29,6 @@ class PersonnelController extends BaseController
 {
     /**
      * @Route("/", name="administration_personnel_index", methods="GET")
-     * @param PersonnelDepartementRepository $personnelRepository
-     *
-     * @return Response
      */
     public function index(PersonnelDepartementRepository $personnelRepository): Response
     {
@@ -37,7 +37,7 @@ class PersonnelController extends BaseController
             [
                 'personnels' => $personnelRepository->findByType('permanent',
                     $this->dataUserSession->getDepartementId()),
-                'type'       => 'permanent'
+                'type'       => 'permanent',
             ]
         );
     }
@@ -45,10 +45,8 @@ class PersonnelController extends BaseController
     /**
      * @Route("/ajax/load-liste/{type}", name="administration_personnel_load_liste", options={"expose"=true},
      *                                   requirements={"type": "permanent|vacataire"})
-     * @param PersonnelDepartementRepository $personnelRepository
-     * @param                                $type
      *
-     * @return Response
+     * @param $type
      */
     public function loadListe(PersonnelDepartementRepository $personnelRepository, $type): Response
     {
@@ -56,7 +54,7 @@ class PersonnelController extends BaseController
             'administration/personnel/_listePersonnel.html.twig',
             [
                 'personnels' => $personnelRepository->findByType($type, $this->dataUserSession->getDepartementId()),
-                'type'       => $type
+                'type'       => $type,
             ]
         );
     }
@@ -64,12 +62,9 @@ class PersonnelController extends BaseController
     /**
      * @Route("/export_{type}.{_format}", name="administration_personnel_export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"}, options={"expose":true})
-     * @param MyExport            $myExport
-     * @param PersonnelRepository $personnelRepository
-     * @param                     $type
-     * @param                     $_format
      *
-     * @return Response
+     * @param $type
+     * @param $_format
      */
     public function export(MyExport $myExport, PersonnelRepository $personnelRepository, $type, $_format): Response
     {
@@ -94,17 +89,14 @@ class PersonnelController extends BaseController
 
     /**
      * @Route("/create", name="administration_personnel_create", methods="GET|POST", options={"expose"=true})
-     * @param Request $request
-     *
-     * @return Response
      */
     public function create(Request $request): Response
     {
         $personnel = new Personnel();
         $form = $this->createForm(PersonnelType::class, $personnel, [
             'attr' => [
-                'data-provide' => 'validation'
-            ]
+                'data-provide' => 'validation',
+            ],
         ]);
         $form->handleRequest($request);
 
@@ -114,7 +106,6 @@ class PersonnelController extends BaseController
             $personnelDepartement = new PersonnelDepartement($personnel, $this->dataUserSession->getDepartement());
             $this->entityManager->persist($personnelDepartement);
             $this->entityManager->flush();
-
 
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'personnelf.add.success.flash');
 
@@ -129,9 +120,6 @@ class PersonnelController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_personnel_show", methods="GET", options={"expose":true})
-     * @param Personnel $personnel
-     *
-     * @return Response
      */
     public function show(Personnel $personnel): Response
     {
@@ -140,24 +128,20 @@ class PersonnelController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_personnel_edit", methods="GET|POST", options={"expose":true})
-     * @param Request   $request
-     * @param Personnel $personnel
-     *
-     * @return Response
      */
     public function edit(Request $request, Personnel $personnel): Response
     {
         $form = $this->createForm(PersonnelType::class, $personnel, [
             'attr' => [
-                'data-provide' => 'validation'
-            ]
+                'data-provide' => 'validation',
+            ],
         ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'personnelf.edit.success.flash');
-            if ($request->request->get('btn_update') !== null) {
+            if (null !== $request->request->get('btn_update')) {
                 return $this->redirectToRoute('administration_personnel_index');
             }
 
@@ -172,9 +156,6 @@ class PersonnelController extends BaseController
 
     /**
      * @Route("/{id}/duplicate", name="administration_personnel_duplicate", methods="GET|POST")
-     * @param Personnel $personnel
-     *
-     * @return Response
      */
     public function duplicate(Personnel $personnel): Response
     {
@@ -189,11 +170,6 @@ class PersonnelController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_personnel_delete", methods="DELETE", options={"expose":true})
-     * @param PersonnelDepartementRepository $personnelDepartementRepository
-     * @param Request                        $request
-     * @param Personnel                      $personnel
-     *
-     * @return Response
      */
     public function delete(
         PersonnelDepartementRepository $personnelDepartementRepository,
@@ -202,7 +178,6 @@ class PersonnelController extends BaseController
     ): Response {
         $id = $personnel->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
-
             $pf = $personnelDepartementRepository->findByPersonnelDepartement($personnel,
                 $this->dataUserSession->getDepartement());
             foreach ($pf as $p) {
@@ -224,18 +199,12 @@ class PersonnelController extends BaseController
 
     /**
      * @Route("/gestion/droit/{personnel}", name="administration_personnel_droit")
-     * @param PersonnelDepartementRepository $personnelDepartementRepository
-     * @param Personnel                      $personnel
-     *
-     * @return Response
      */
     public function gestionDroit(
         PersonnelDepartementRepository $personnelDepartementRepository,
         Personnel $personnel
     ): Response {
-
         if ($this->dataUserSession->isGoodDepartement('ROLE_CDD') || $this->dataUserSession->isGoodDepartement('ROLE_DDE') || $this->dataUserSession->isGoodDepartement('ROLE_ADMIN')) {
-
             $droits = $personnelDepartementRepository->findDroitsByPersonnelDepartement($personnel,
                 $this->dataUserSession->getDepartement());
 
@@ -248,23 +217,19 @@ class PersonnelController extends BaseController
 
     /**
      * @Route("/modifier-droit/{personnel}", name="admin_personnel_departement_modifier_droit", options={"expose":true})
-     * @param Request                        $request
-     * @param PersonnelDepartementRepository $personnelDepartementRepository
-     * @param Personnel                      $personnel
-     *
-     * @return Response
      */
     public function modifierDroits(
         Request $request,
         PersonnelDepartementRepository $personnelDepartementRepository,
         Personnel $personnel
-    ): Response {
+    ): Response
+    {
         $droit = $request->request->get('droit');
         $pf = $personnelDepartementRepository->findByPersonnelDepartement($personnel,
             $this->dataUserSession->getDepartement());
 
-        if (count($pf) === 1 && in_array($droit, Constantes::ROLE_LISTE, true)) {
-            if (in_array($droit, $pf[0]->getRoles())) {
+        if (1 === \count($pf) && \in_array($droit, Constantes::ROLE_LISTE, true)) {
+            if (\in_array($droit, $pf[0]->getRoles(), true)) {
                 //deja existant on retire
                 $pf[0]->removeRole($droit);
                 $this->entityManager->flush();
@@ -279,7 +244,7 @@ class PersonnelController extends BaseController
             return $this->json($droit, Response::HTTP_OK);
         }
 
-        if (count($pf) === 0 && in_array($droit, Constantes::ROLE_LISTE, true)) {
+        if (0 === \count($pf) && \in_array($droit, Constantes::ROLE_LISTE, true)) {
             //etrangement pas dans un département, on ajoute.
             $pf = new PersonnelDepartement($personnel, $this->dataUserSession->getDepartement());
             $pf->setDepartement();
@@ -288,6 +253,5 @@ class PersonnelController extends BaseController
         }
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
-
     }
 }

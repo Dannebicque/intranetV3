@@ -1,12 +1,13 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Message/ExportReleve.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 20/01/2021 17:13
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Message/ExportReleve.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:59
+ */
 
 namespace App\Message;
-
 
 class ExportReleve
 {
@@ -21,29 +22,18 @@ class ExportReleve
         $this->personnel = $personnel;
     }
 
-    /**
-     * @return int
-     */
     public function getSemestre(): int
     {
         return $this->semestre;
     }
 
-    /**
-     * @return int
-     */
     public function getAnneeUniversitaire(): int
     {
         return $this->anneeUniversitaire;
     }
 
-    /**
-     * @return int
-     */
     public function getPersonnel(): int
     {
         return $this->personnel;
     }
-
-
 }

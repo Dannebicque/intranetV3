@@ -1,18 +1,20 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/ArticleRepository.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 22/07/2020 14:50
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/ArticleRepository.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:08
+ */
 
 namespace App\Repository;
 
 use App\Entity\Article;
 use App\Entity\ArticleCategorie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method Article|null find($id, $lockMode = null, $lockVersion = null)
@@ -24,8 +26,6 @@ class ArticleRepository extends ServiceEntityRepository
 {
     /**
      * ArticleRepository constructor.
-     *
-     * @param ManagerRegistry $registry
      */
     public function __construct(ManagerRegistry $registry)
     {
@@ -35,8 +35,6 @@ class ArticleRepository extends ServiceEntityRepository
     /**
      * @param $type
      * @param $departement
-     *
-     * @return mixed
      */
     public function findByTypeDepartement($type, $departement)
     {
@@ -45,11 +43,9 @@ class ArticleRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-
     /**
      * @param $slug
      *
-     * @return mixed
      * @throws NonUniqueResultException
      */
     public function findOneBySlug($slug)
@@ -62,12 +58,9 @@ class ArticleRepository extends ServiceEntityRepository
             ;
     }
 
-
     /**
      * @param $type
      * @param $departement
-     *
-     * @return QueryBuilder
      */
     public function findByTypeDepartementBuilder($type, $departement): QueryBuilder
     {
@@ -94,7 +87,7 @@ class ArticleRepository extends ServiceEntityRepository
             ->setParameter('departement', $departement)
             ->orderBy('a.created', 'DESC');
 
-        if ($nbResult !== 0) {
+        if (0 !== $nbResult) {
             $q->setMaxResults($nbResult);
         }
 

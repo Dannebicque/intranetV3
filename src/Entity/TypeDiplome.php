@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/TypeDiplome.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 08/01/2021 12:11
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/TypeDiplome.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:50
+ */
 
 namespace App\Entity;
 
@@ -38,7 +40,7 @@ class TypeDiplome extends BaseEntity
     private $sigle;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      * @Groups({"type_diplome_administration"})
@@ -46,7 +48,7 @@ class TypeDiplome extends BaseEntity
     private $nbSemestres = 2;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      * @Groups({"type_diplome_administration"})
@@ -54,7 +56,7 @@ class TypeDiplome extends BaseEntity
     private $niveauEntree = 0;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      * @Groups({"type_diplome_administration"})
@@ -71,17 +73,11 @@ class TypeDiplome extends BaseEntity
         $this->diplomes = new ArrayCollection();
     }
 
-    /**
-     * @return mixed
-     */
     public function getLibelle()
     {
         return $this->libelle;
     }
 
-    /**
-     * @param mixed $libelle
-     */
     public function setLibelle($libelle): void
     {
         $this->libelle = $libelle;
@@ -95,57 +91,36 @@ class TypeDiplome extends BaseEntity
         return $this->sigle;
     }
 
-    /**
-     * @param string $sigle
-     */
     public function setSigle(string $sigle): void
     {
         $this->sigle = $sigle;
     }
 
-    /**
-     * @return int
-     */
     public function getNbSemestres(): int
     {
         return $this->nbSemestres;
     }
 
-    /**
-     * @param int $nbSemestres
-     */
     public function setNbSemestres(int $nbSemestres): void
     {
         $this->nbSemestres = $nbSemestres;
     }
 
-    /**
-     * @return int
-     */
     public function getNiveauEntree(): int
     {
         return $this->niveauEntree;
     }
 
-    /**
-     * @param int $niveauEntree
-     */
     public function setNiveauEntree(int $niveauEntree): void
     {
         $this->niveauEntree = $niveauEntree;
     }
 
-    /**
-     * @return int
-     */
     public function getNiveauSortie(): int
     {
         return $this->niveauSortie;
     }
 
-    /**
-     * @param int $niveauSortie
-     */
     public function setNiveauSortie(int $niveauSortie): void
     {
         $this->niveauSortie = $niveauSortie;

@@ -1,9 +1,15 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Command/UpdateVilleCommand.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 12/12/2020 14:46
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Command/UpdateVilleCommand.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:26
+ */
+
+/*
+ * Pull your hearder here, for exemple, Licence header.
+ */
 
 namespace App\Command;
 
@@ -24,10 +30,6 @@ class UpdateVilleCommand extends Command
 
     /**
      * ClearOldNotificationCommand constructor.
-     *
-     * @param EntityManagerInterface $entityManager
-     * @param EtudiantRepository     $etudiantRepository
-     * @param CodeInseeRepository    $codeInseeRepository
      */
     public function __construct(
         EntityManagerInterface $entityManager,
@@ -40,7 +42,6 @@ class UpdateVilleCommand extends Command
 
         parent::__construct();
     }
-
 
     protected function configure()
     {
@@ -57,18 +58,17 @@ class UpdateVilleCommand extends Command
             $codeVille[trim($code['code_insee'])] = $code['ville'];
         }
 
-
         $datas = $this->etudiantRepository->findAll();
         $i = 0;
         $io->writeln('depart');
         foreach ($datas as $data) {
             $adresse = $data->getAdresse();
 
-            if ($adresse !== null && $adresse->getVille() !== null && preg_match("(\d{5})",
-                    $adresse->getVille()) === 1 && array_key_exists(trim($adresse->getVille()), $codeVille)) {
+            if (null !== $adresse && null !== $adresse->getVille() && 1 === preg_match("(\d{5})",
+                    $adresse->getVille()) && \array_key_exists(trim($adresse->getVille()), $codeVille)) {
                 $adresse->setVille($codeVille[trim($adresse->getVille())]);
                 $this->entityManager->persist($adresse);
-                $i++;
+                ++$i;
             }
         }
         $this->entityManager->flush();

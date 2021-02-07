@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/LdapController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/LdapController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:38
+ */
 
 namespace App\Controller;
 
@@ -13,18 +15,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class ActualiteController
- * @package App\Controller
+ * Class ActualiteController.
+ *
  * @Route("/ldap")
  */
 class LdapController extends BaseController
 {
     /**
      * @Route("/search-ldap", name="ldap_search", options={"expose"=true})
-     * @param MyLdap  $myLdap
-     * @param Request $request
-     *
-     * @return Response
      */
     public function searchLdap(MyLdap $myLdap, Request $request): Response
     {

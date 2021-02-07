@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/StageOffreController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/StageOffreController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:38
+ */
 
 namespace App\Controller;
 
@@ -12,23 +14,19 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class StageOffreController
- * @package App\Controller
+ * Class StageOffreController.
+ *
  * @Route("/application/stage/offres")
-
  */
 class StageOffreController extends BaseController
 {
     /**
      * @Route("/", name="stage_offre_stage_index")
-     * @param StagePeriodeOffreRepository $stagePeriodeOffreRepository
-     *
-     * @return Response
      */
     public function index(StagePeriodeOffreRepository $stagePeriodeOffreRepository): Response
     {
         return $this->render('stage_offre/index.html.twig', [
-            'offres' => $stagePeriodeOffreRepository->findOffreDepartement($this->dataUserSession->getDepartement())
+            'offres' => $stagePeriodeOffreRepository->findOffreDepartement($this->dataUserSession->getDepartement()),
         ]);
     }
 }

@@ -1,16 +1,18 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/DisponibiliteRepository.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 19/12/2020 15:18
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/DisponibiliteRepository.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:08
+ */
 
 namespace App\Repository;
 
 use App\Entity\Disponibilite;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method Disponibilite|null find($id, $lockMode = null, $lockVersion = null)
@@ -30,7 +32,6 @@ class DisponibiliteRepository extends ServiceEntityRepository
      * @param $jour
      * @param $heure
      *
-     * @return mixed
      * @throws NonUniqueResultException
      */
     public function findByPersonnelCreneau($personnel, $jour, $heure)
@@ -59,7 +60,7 @@ class DisponibiliteRepository extends ServiceEntityRepository
         foreach ($query as $dispo) {
             $jour = $dispo->getJour();
             $heure = $dispo->getHeure();
-            if (!array_key_exists($jour, $t)) {
+            if (!\array_key_exists($jour, $t)) {
                 $t[$jour] = [];
             }
 
@@ -68,5 +69,4 @@ class DisponibiliteRepository extends ServiceEntityRepository
 
         return $t;
     }
-
 }

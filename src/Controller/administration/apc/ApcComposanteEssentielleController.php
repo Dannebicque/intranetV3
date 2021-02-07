@@ -1,9 +1,12 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcComposanteEssentielleController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 08/01/2021 15:26
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcComposanteEssentielleController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
 
 namespace App\Controller\administration\apc;
 
@@ -23,10 +26,6 @@ class ApcComposanteEssentielleController extends BaseController
 {
     /**
      * @Route("/{competence}/new", name="administration_apc_composante_essentielle_new", methods={"GET","POST"})
-     * @param Request       $request
-     * @param ApcCompetence $competence
-     *
-     * @return Response
      */
     public function new(Request $request, ApcCompetence $competence): Response
     {
@@ -45,16 +44,12 @@ class ApcComposanteEssentielleController extends BaseController
         return $this->render('apc/apc_composante_essentielle/new.html.twig', [
             'apc_composante_essentielle' => $apcComposanteEssentielle,
             'form'                       => $form->createView(),
-            'competence'                 => $competence
+            'competence'                 => $competence,
         ]);
     }
 
     /**
      * @Route("/{id}/edit", name="administration_apc_composante_essentielle_edit", methods={"GET","POST"})
-     * @param Request                  $request
-     * @param ApcComposanteEssentielle $apcComposanteEssentielle
-     *
-     * @return Response
      */
     public function edit(Request $request, ApcComposanteEssentielle $apcComposanteEssentielle): Response
     {
@@ -76,10 +71,6 @@ class ApcComposanteEssentielleController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_apc_composante_essentielle_delete", methods={"DELETE"})
-     * @param Request                  $request
-     * @param ApcComposanteEssentielle $apcComposanteEssentielle
-     *
-     * @return Response
      */
     public function delete(Request $request, ApcComposanteEssentielle $apcComposanteEssentielle): Response
     {

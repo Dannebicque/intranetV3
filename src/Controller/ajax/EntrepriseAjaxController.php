@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ajax/EntrepriseAjaxController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 25/09/2020 08:59
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ajax/EntrepriseAjaxController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:36
+ */
 
 namespace App\Controller\ajax;
 
@@ -17,8 +19,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class AbsenceApiController
- * @package App\Controller
+ * Class AbsenceApiController.
+ *
  * @Route("/ajax/entreprise")
  * @IsGranted("ROLE_PERMANENT")
  */
@@ -26,13 +28,6 @@ class EntrepriseAjaxController extends BaseController
 {
     /**
      * @Route("/edit/{id}", name="entreprise_ajax_edit", options={"expose":true})
-     *
-     * @param MyEntreprise $myEntreprise
-     * @param Request      $request
-     *
-     * @param Entreprise   $entreprise
-     *
-     * @return JsonResponse
      */
     public function edit(MyEntreprise $myEntreprise, Request $request, Entreprise $entreprise): JsonResponse
     {

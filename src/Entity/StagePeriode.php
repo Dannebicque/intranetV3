@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/StagePeriode.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 12/12/2020 14:31
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/StagePeriode.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:50
+ */
 
 namespace App\Entity;
 
@@ -27,7 +29,6 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  */
 class StagePeriode extends BaseEntity implements Serializable
 {
-
     use UuidTrait;
 
     /**
@@ -466,17 +467,12 @@ class StagePeriode extends BaseEntity implements Serializable
         return $this;
     }
 
-    /**
-     * @return null|File
-     */
     public function getDocumentFile(): ?File
     {
         return $this->documentFile;
     }
 
     /**
-     * @param File|null $document
-     *
      * @throws Exception
      */
     public function setDocumentFile(?File $document = null): void
@@ -498,9 +494,6 @@ class StagePeriode extends BaseEntity implements Serializable
         return $this->documentName;
     }
 
-    /**
-     * @param string|null $documentName
-     */
     public function setDocumentName(?string $documentName): void
     {
         $this->documentName = $documentName;
@@ -596,8 +589,9 @@ class StagePeriode extends BaseEntity implements Serializable
         return $this;
     }
 
-    public function getMailAssistant() {
-        if ($this->getSemestre() !== null && $this->getSemestre()->getDiplome() !== null && $this->getSemestre()->getDiplome()->getAssistantDiplome() !== null && $this->getSemestre()->getDiplome()->getAssistantDiplome()->getMailUniv() !== null && $this->getSemestre()->getDiplome()->getAssistantDiplome()->getMailUniv() !== '') {
+    public function getMailAssistant()
+    {
+        if (null !== $this->getSemestre() && null !== $this->getSemestre()->getDiplome() && null !== $this->getSemestre()->getDiplome()->getAssistantDiplome() && null !== $this->getSemestre()->getDiplome()->getAssistantDiplome()->getMailUniv() && '' !== $this->getSemestre()->getDiplome()->getAssistantDiplome()->getMailUniv()) {
             return [$this->getSemestre()->getDiplome()->getAssistantDiplome()->getMailUniv()];
         }
 

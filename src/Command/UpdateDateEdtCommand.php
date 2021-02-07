@@ -1,9 +1,15 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Command/UpdateDateEdtCommand.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 06/02/2021 23:47
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Command/UpdateDateEdtCommand.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:26
+ */
+
+/*
+ * Pull your hearder here, for exemple, Licence header.
+ */
 
 namespace App\Command;
 
@@ -25,13 +31,8 @@ class UpdateDateEdtCommand extends Command
 
     private EntityManagerInterface $entityManager;
 
-
     /**
      * ClearOldNotificationCommand constructor.
-     *
-     * @param CalendrierRepository   $calendrierRepository
-     * @param EdtPlanningRepository  $edtPlanningRepository
-     * @param EntityManagerInterface $entityManager
      */
     public function __construct(
         CalendrierRepository $calendrierRepository,
@@ -45,17 +46,12 @@ class UpdateDateEdtCommand extends Command
         parent::__construct();
     }
 
-
     protected function configure()
     {
         $this->setDescription('Add a short description for your command');
     }
 
     /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
-     * @return int
      * @throws Exception
      */
     protected function execute(InputInterface $input, OutputInterface $output): int

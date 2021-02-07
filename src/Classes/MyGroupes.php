@@ -1,13 +1,19 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyGroupes.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 12/12/2020 14:31
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyGroupes.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
+/*
+ * Pull your hearder here, for exemple, Licence header.
+ */
 
 namespace App\Classes;
 
-
+use App\Classes\Celcat\MyCelcat;
 use App\Entity\Departement;
 use App\Entity\EdtPlanning;
 use App\Entity\Etudiant;
@@ -15,7 +21,6 @@ use App\Entity\Groupe;
 use App\Entity\Parcour;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
-use App\Classes\Celcat\MyCelcat;
 use App\Repository\EtudiantRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\TypeGroupeRepository;
@@ -24,8 +29,7 @@ use Exception;
 
 class MyGroupes
 {
-
-    /** @var  EntityManagerInterface */
+    /** @var EntityManagerInterface */
     protected $entityManager;
 
     protected $groupedefaut;
@@ -45,20 +49,11 @@ class MyGroupes
     /** @var EtudiantRepository */
     protected $etudiantRepository;
     private $myUpload;
-    /**
-     * @var MyCelcat
-     */
+
     private MyCelcat $myCelcat;
 
     /**
      * MyGroupes constructor.
-     *
-     * @param EntityManagerInterface $entityManager
-     * @param TypeGroupeRepository   $typeGroupeRepository
-     * @param GroupeRepository       $groupeRepository
-     * @param MyUpload               $myUpload
-     * @param MyCelcat               $myCelcat
-     * @param EtudiantRepository     $etudiantRepository
      */
     public function __construct(
         EntityManagerInterface $entityManager,
@@ -77,15 +72,12 @@ class MyGroupes
         $this->myCelcat = $myCelcat;
     }
 
-    /**
-     * @param Semestre $semestre
-     */
     public function getGroupesSemestre(Semestre $semestre): void
     {
         $this->typeGroupes = $this->typeGroupeRepository->findBy(['semestre' => $semestre->getId()]);
 
         foreach ($this->typeGroupes as $tg) {
-            if ($tg->getDefaut() === true) {
+            if (true === $tg->getDefaut()) {
                 $this->groupedefaut = $tg;
             }
         }
@@ -93,18 +85,13 @@ class MyGroupes
         $this->groupes = $this->groupeRepository->findBy(['typegroupe' => $this->groupedefaut->getId()]);
     }
 
-    /**
-     * @param EdtPlanning $planning
-     *
-     * @return MyGroupes
-     */
-    public function getGroupesPlanning(EdtPlanning $planning): MyGroupes
+    public function getGroupesPlanning(EdtPlanning $planning): self
     {
         //todo: tester le type si planning ou celcat
         $this->typeGroupes = $this->typeGroupeRepository->findBySemestre($planning->getSemestre());
         /** @var TypeGroupe $tg */
         foreach ($this->typeGroupes as $tg) {
-            if (strtoupper($tg->getLibelle()) === strtoupper($planning->getType())) {
+            if (mb_strtoupper($tg->getLibelle()) === mb_strtoupper($planning->getType())) {
                 $this->groupedefaut = $tg;
             }
         }
@@ -122,17 +109,11 @@ class MyGroupes
         return $this->groupedefaut;
     }
 
-    /**
-     * @return mixed
-     */
     public function getGroupes()
     {
         return $this->groupes;
     }
 
-    /**
-     * @return mixed
-     */
     public function getTypeGroupes()
     {
         return $this->typeGroupes;
@@ -144,10 +125,10 @@ class MyGroupes
         /** @var Groupe $groupe */
         foreach ($groupes as $groupe) {
             //pas d'enfant c'est le groupe de plus bas  niveau
-            if (count($groupe->getEnfants()) === 0 && $groupe->getTypeGroupe()->getType() !== TypeGroupe::TYPE_GROUPE_LV) {
+            if (0 === \count($groupe->getEnfants()) && TypeGroupe::TYPE_GROUPE_LV !== $groupe->getTypeGroupe()->getType()) {
                 $groupeParents = [];
                 $g = $groupe;
-                while ($g->getParent() !== null) {
+                while (null !== $g->getParent()) {
                     $groupeParents[] = $g->getParent();
                     $g = $g->getParent();
                 }
@@ -193,10 +174,8 @@ class MyGroupes
     }
 
     /**
-     * @param             $fichier
-     * @param Departement $departement
+     * @param $fichier
      *
-     * @return bool
      * @throws Exception
      */
     public function importCsv($fichier, Departement $departement): bool
@@ -207,7 +186,7 @@ class MyGroupes
 
         $file = $this->myUpload->upload($fichier, 'temp');
 
-        $handle = fopen($file, 'rb');
+        $handle = fopen($file, 'r');
 
         /*Si on a réussi à ouvrir le fichier*/
         if ($handle) {
@@ -218,8 +197,8 @@ class MyGroupes
                 /*On lit la ligne courante*/
                 $ligne = fgetcsv($handle, 1024);
                 //nomgroupe,"ordre","codeapogee","option_apogee","semestre","tg_nom","tg_type"
-                if (is_array($ligne) && count($ligne) > 5 && array_key_exists($ligne[4], $semestres)) {
-                    if (!array_key_exists($ligne[4], $typeGroupes) || !array_key_exists($ligne[5],
+                if (\is_array($ligne) && \count($ligne) > 5 && \array_key_exists($ligne[4], $semestres)) {
+                    if (!\array_key_exists($ligne[4], $typeGroupes) || !\array_key_exists($ligne[5],
                             $typeGroupes[$ligne[4]])) {
                         //le type de groupe n'existe pas encore, donc on ajoute.
                         $tg = new TypeGroupe($semestres[$ligne[4]]);
@@ -235,8 +214,8 @@ class MyGroupes
                     $groupe->setLibelle($ligne[0]);
                     $groupe->setOrdre($ligne[1]);
                     $groupe->setCodeApogee($ligne[2]);
-                    if ($ligne[3] !== '' || $ligne[3] !== null) {
-                        if (array_key_exists($ligne[3], $parcours)) {
+                    if ('' !== $ligne[3] || null !== $ligne[3]) {
+                        if (\array_key_exists($ligne[3], $parcours)) {
                             $groupe->setParcours($parcours[$ligne[3]]);
                         }
                     }
@@ -257,10 +236,8 @@ class MyGroupes
     }
 
     /**
-     * @param          $fichier
-     * @param Semestre $semestre
+     * @param $fichier
      *
-     * @return bool
      * @throws Exception
      */
     public function importGroupeEtudiantCsv($fichier, Semestre $semestre): bool
@@ -276,7 +253,7 @@ class MyGroupes
 
         $file = $this->myUpload->upload($fichier, 'temp');
 
-        $handle = fopen($file, 'rb');
+        $handle = fopen($file, 'r');
 
         /*Si on a réussi à ouvrir le fichier*/
         if ($handle) {
@@ -286,10 +263,10 @@ class MyGroupes
             while (!feof($handle)) {
                 /*On lit la ligne courante*/
                 $ligne = fgetcsv($handle, 1024);
-                if (is_array($ligne) && count($ligne) === 2 && array_key_exists($ligne[0],
-                        $groupes) && array_key_exists($ligne[1], $etudiants)) {
-                            $etudiants[$ligne[1]]->addGroupe($groupes[$ligne[0]]);
-                        }
+                if (\is_array($ligne) && 2 === \count($ligne) && \array_key_exists($ligne[0],
+                        $groupes) && \array_key_exists($ligne[1], $etudiants)) {
+                    $etudiants[$ligne[1]]->addGroupe($groupes[$ligne[0]]);
+                }
             }
             $this->entityManager->flush();
 

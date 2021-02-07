@@ -1,18 +1,21 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/ArticleController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/ArticleController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
 
 namespace App\Controller\administration;
 
+use App\Classes\MyExport;
 use App\Controller\BaseController;
 use App\Entity\Article;
 use App\Entity\ArticleCategorie;
 use App\Entity\Constantes;
 use App\Form\ArticleType;
-use App\Classes\MyExport;
 use App\Repository\ArticleCategorieRepository;
 use App\Repository\ArticleRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -27,9 +30,6 @@ class ArticleController extends BaseController
 {
     /**
      * @Route("/", name="administration_article_index", methods="GET")
-     * @param ArticleRepository $articleRepository
-     *
-     * @return Response
      */
     public function index(ArticleRepository $articleRepository): Response
     {
@@ -40,15 +40,13 @@ class ArticleController extends BaseController
     /**
      * @Route("/export.{_format}", name="administration_article_export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"})
-     * @param MyExport $myExport
-     * @param ArticleRepository $articleRepository
-     * @param                   $_format
      *
-     * @return Response
+     * @param $_format
      */
     public function export(MyExport $myExport, ArticleRepository $articleRepository, $_format): Response
     {
         $articles = $articleRepository->findByDepartement($this->getDepartement());
+
         return $myExport->genereFichierGenerique(
             $_format,
             $articles,
@@ -60,9 +58,6 @@ class ArticleController extends BaseController
 
     /**
      * @Route("/new", name="administration_article_new", methods="GET|POST")
-     * @param Request $request
-     *
-     * @return Response
      */
     public function create(Request $request): Response
     {
@@ -73,8 +68,8 @@ class ArticleController extends BaseController
             [
                 'departement' => $this->getDepartement(),
                 'attr'        => [
-                    'data-provide' => 'validation'
-                ]
+                    'data-provide' => 'validation',
+                ],
             ]
         );
         $form->handleRequest($request);
@@ -95,9 +90,6 @@ class ArticleController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_article_show", methods="GET")
-     * @param Article $article
-     *
-     * @return Response
      */
     public function show(Article $article): Response
     {
@@ -106,10 +98,6 @@ class ArticleController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_article_edit", methods="GET|POST")
-     * @param Request $request
-     * @param Article $article
-     *
-     * @return Response
      */
     public function edit(Request $request, Article $article): Response
     {
@@ -119,8 +107,8 @@ class ArticleController extends BaseController
             [
                 'departement' => $this->dataUserSession->getDepartement(),
                 'attr'        => [
-                    'data-provide' => 'validation'
-                ]
+                    'data-provide' => 'validation',
+                ],
             ]
         );
         $form->handleRequest($request);
@@ -129,7 +117,7 @@ class ArticleController extends BaseController
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'article.edit.success.flash');
 
-            if ($request->request->get('btn_update') !== null) {
+            if (null !== $request->request->get('btn_update')) {
                 return $this->redirectToRoute('administration_article_index');
             }
 
@@ -144,10 +132,6 @@ class ArticleController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_article_delete", methods="DELETE")
-     * @param Request $request
-     * @param Article $article
-     *
-     * @return Response
      */
     public function delete(Request $request, Article $article): Response
     {
@@ -166,9 +150,6 @@ class ArticleController extends BaseController
 
     /**
      * @Route("/{id}/duplicate", name="administration_article_duplicate", methods="GET|POST")
-     * @param Article $article
-     *
-     * @return Response
      */
     public function duplicate(Article $article): Response
     {
@@ -183,23 +164,16 @@ class ArticleController extends BaseController
 
     /**
      * @Route("/gestion/categories", name="administration_article_categories", methods="GET|POST")
-     *
-     * @return Response
      */
     public function gestionCategorie(): Response
     {
         return $this->render('administration/article/gestionCategorie.html.twig', [
-            'categories' => $this->dataUserSession->getArticlesCategories()
+            'categories' => $this->dataUserSession->getArticlesCategories(),
         ]);
     }
 
     /**
-     * @param ArticleCategorieRepository $categorieRepository
-     * @param Request                    $request
-     *
-     * @return JsonResponse
      * @Route("/gestion/categorie/add", name="administration_article_categorie_add", options={"expose"=true})
-     *
      */
     public function addCategorie(
         ArticleCategorieRepository $categorieRepository,
@@ -214,6 +188,5 @@ class ArticleController extends BaseController
         $this->entityManager->flush();
 
         return $this->json($categorieRepository->findByDepartementJson($this->dataUserSession->getDepartement()));
-
     }
 }

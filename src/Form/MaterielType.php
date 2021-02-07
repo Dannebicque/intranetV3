@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Form/MaterielType.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/MaterielType.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Form;
 
@@ -35,7 +37,7 @@ class MaterielType extends AbstractType
                 'required'       => false,
                 'label'          => 'label.photo',
                 'download_label' => 'label.apercu',
-                'allow_delete'   => false
+                'allow_delete'   => false,
             ])
             ->add('typeMateriel', EntityType::class, [
                 'class'         => TypeMateriel::class,
@@ -45,8 +47,7 @@ class MaterielType extends AbstractType
                     return $typeMaterielRepository->findByDepartementBuider($this->departement);
                 },
                 'label'         => 'label.type_materiel',
-                'expanded'      => false
-
+                'expanded'      => false,
             ])
         ;
     }
@@ -54,10 +55,9 @@ class MaterielType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Materiel::class,
+            'data_class'         => Materiel::class,
             'translation_domain' => 'form',
-            'departement'            => null,
-
+            'departement'        => null,
         ]);
     }
 }

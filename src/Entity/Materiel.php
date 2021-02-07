@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Materiel.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Materiel.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:49
+ */
 
 namespace App\Entity;
 
@@ -22,8 +24,6 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  */
 class Materiel extends BaseEntity
 {
-
-
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\TypeMateriel", inversedBy="materiels")
      */
@@ -110,8 +110,6 @@ class Materiel extends BaseEntity
     }
 
     /**
-     * @param File|null $document
-     *
      * @throws Exception
      */
     public function setPhotoFile(?File $document = null): void
@@ -125,9 +123,6 @@ class Materiel extends BaseEntity
         }
     }
 
-    /**
-     * @return null|File
-     */
     public function getPhotoFile(): ?File
     {
         return $this->photoFile;
@@ -141,9 +136,6 @@ class Materiel extends BaseEntity
         return $this->photoName;
     }
 
-    /**
-     * @param string $photoName
-     */
     public function setPhotoName(string $photoName): void
     {
         $this->photoName = $photoName;
@@ -203,6 +195,4 @@ class Materiel extends BaseEntity
 
         return $this;
     }
-
-
 }

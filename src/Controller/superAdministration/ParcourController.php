@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/ParcourController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/ParcourController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller\superAdministration;
 
@@ -23,21 +25,17 @@ class ParcourController extends BaseController
 {
     /**
      * @Route("/new/{semestre}", name="sa_parcour_new", methods="GET|POST")
-     * @param Request  $request
-     * @param Semestre $semestre
-     *
-     * @return Response
      */
     public function create(Request $request, Semestre $semestre): Response
     {
-        if ($semestre->getAnnee() !== null) {
+        if (null !== $semestre->getAnnee()) {
             $parcour = new Parcour($semestre);
 
             $form = $this->createForm(ParcourType::class, $parcour, [
                 'diplome' => $semestre->getAnnee()->getDiplome(),
                 'attr'    => [
-                    'data-provide' => 'validation'
-                ]
+                    'data-provide' => 'validation',
+                ],
             ]);
             $form->handleRequest($request);
 
@@ -60,9 +58,6 @@ class ParcourController extends BaseController
 
     /**
      * @Route("/{id}", name="sa_parcour_show", methods="GET")
-     * @param Parcour $parcour
-     *
-     * @return Response
      */
     public function show(Parcour $parcour): Response
     {
@@ -71,19 +66,15 @@ class ParcourController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="sa_parcour_edit", methods="GET|POST")
-     * @param Request $request
-     * @param Parcour $parcour
-     *
-     * @return Response
      */
     public function edit(Request $request, Parcour $parcour): Response
     {
-        if ($parcour->getDiplome() !== null) {
+        if (null !== $parcour->getDiplome()) {
             $form = $this->createForm(ParcourType::class, $parcour, [
                 'diplome' => $parcour->getDiplome(),
                 'attr'    => [
-                    'data-provide' => 'validation'
-                ]
+                    'data-provide' => 'validation',
+                ],
             ]);
             $form->handleRequest($request);
 
@@ -104,9 +95,6 @@ class ParcourController extends BaseController
 
     /**
      * @Route("/{id}/duplicate", name="sa_parcour_duplicate", methods="GET|POST")
-     * @param Parcour $parcour
-     *
-     * @return Response
      */
     public function duplicate(Parcour $parcour): Response
     {
@@ -122,7 +110,6 @@ class ParcourController extends BaseController
 
     /**
      * @Route("/{id}", name="sa_parcour_delete", methods="DELETE")
-     * @param Parcour $id
      */
     public function delete(Parcour $id): void
     {

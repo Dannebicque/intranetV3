@@ -1,11 +1,12 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Form/Type/DateRangeType.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/Type/DateRangeType.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
-// src/Form/Type/ShippingType.php
 namespace App\Form\Type;
 
 use DateTime;
@@ -15,8 +16,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class YesNoType
- * @package App\Form\Type
+ * Class YesNoType.
  */
 class DateRangeType extends AbstractType
 {
@@ -33,14 +33,13 @@ class DateRangeType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
-
         $resolver
-            ->setDefaults(array(
+            ->setDefaults([
                 'required'          => true,
-                'from_date_options' => array('widget' => 'single_text', 'html5' => false, 'format' => 'dd/MM/yyyy'),
-                'to_date_options'   => array('widget' => 'single_text', 'html5' => false, 'format' => 'dd/MM/yyyy'),
-                'date_data'         => ['from' => new DateTime('now'), 'to' => new DateTime('now')]
-            ));
+                'from_date_options' => ['widget' => 'single_text', 'html5' => false, 'format' => 'dd/MM/yyyy'],
+                'to_date_options'   => ['widget' => 'single_text', 'html5' => false, 'format' => 'dd/MM/yyyy'],
+                'date_data'         => ['from' => new DateTime('now'), 'to' => new DateTime('now')],
+            ]);
     }
 
     /**

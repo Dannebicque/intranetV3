@@ -1,12 +1,13 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/SousCommissionTravail.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 19/01/2021 12:45
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/SousCommissionTravail.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:41
+ */
 
 namespace App\DTO;
-
 
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Etudiant;
@@ -36,13 +37,6 @@ class SousCommissionTravail
 
     /**
      * SousCommissionTravail constructor.
-     *
-     * @param Semestre           $semestre
-     * @param AnneeUniversitaire $anneeUniversitaire
-     * @param array              $ues
-     * @param array              $matieres
-     * @param array              $etudiants
-     * @param ScolaritePromo     $ssComm
      */
     public function __construct(
         Semestre $semestre,
@@ -52,7 +46,6 @@ class SousCommissionTravail
         array $etudiants,
         ScolaritePromo $ssComm
     ) {
-
         $this->semestre = $semestre;
         $this->anneeUniversitaire = $anneeUniversitaire;
         $this->ues = $ues;
@@ -61,15 +54,13 @@ class SousCommissionTravail
         $this->ssComm = $ssComm;
 
         foreach ($ssComm->getScolarites() as $scolarite) {
-            if ($scolarite->getEtudiant() !== null) {
+            if (null !== $scolarite->getEtudiant()) {
                 $this->tEtudiants[$scolarite->getEtudiant()->getId()] = $scolarite;
                 foreach ($scolarite->getMoyennesUes() as $key => $ue) {
                     $this->tUes[$scolarite->getEtudiant()->getId()][$key] = $ue;
-
                 }
                 foreach ($scolarite->getMoyennesMatieres() as $key => $matiere) {
                     $this->tMatieres[$scolarite->getEtudiant()->getId()][$key] = $matiere;
-
                 }
             }
         }
@@ -90,9 +81,6 @@ class SousCommissionTravail
         return $this->tMatieres[$etudiant][$matiere] ?? null;
     }
 
-    /**
-     * @return ScolaritePromo
-     */
     public function getSsComm(): ScolaritePromo
     {
         return $this->ssComm;
@@ -110,5 +98,4 @@ class SousCommissionTravail
 
         return $tScolarite;
     }
-
 }

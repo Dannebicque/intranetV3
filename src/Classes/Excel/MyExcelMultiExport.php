@@ -1,15 +1,14 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Excel/MyExcelMultiExport.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 27/11/2020 15:06
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Excel/MyExcelMultiExport.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
-/**
- * Created by PhpStorm.
- * User: davidannebicque
- * Date: 21/06/2018
- * Time: 07:33
+/*
+ * Pull your hearder here, for exemple, Licence header.
  */
 
 namespace App\Classes\Excel;
@@ -26,11 +25,9 @@ use PhpOffice\PhpSpreadsheet\Writer\Csv;
 use PhpOffice\PhpSpreadsheet\Writer\Pdf\Dompdf;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Component\HttpFoundation\StreamedResponse;
-use function is_array;
 
 /**
- * Class MyExcelMultiExport
- * @package App\Classes\Excel
+ * Class MyExcelMultiExport.
  */
 class MyExcelMultiExport
 {
@@ -39,7 +36,6 @@ class MyExcelMultiExport
 
     /** @var MyExcelWriter */
     private $myExcelWriter;
-
 
     public function __construct(
         MySerializer $mySerializer,
@@ -51,8 +47,6 @@ class MyExcelMultiExport
 
     /**
      * @param $name
-     *
-     * @return StreamedResponse
      */
     public function saveXlsx($name): StreamedResponse
     {
@@ -66,14 +60,13 @@ class MyExcelMultiExport
             200,
             [
                 'Content-Type'        => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                'Content-Disposition' => 'attachment;filename="' . $name . '.xlsx"'
+                'Content-Disposition' => 'attachment;filename="' . $name . '.xlsx"',
             ]
         );
     }
 
     /**
      * @param $name
-     *
      */
     public function pageSetup($name): void
     {
@@ -93,9 +86,7 @@ class MyExcelMultiExport
     }
 
     /**
-     * @param       $name
-     *
-     * @return StreamedResponse
+     * @param $name
      */
     public function saveCsv($name): StreamedResponse
     {
@@ -109,15 +100,13 @@ class MyExcelMultiExport
             200,
             [
                 'Content-Type'        => 'application/csv',
-                'Content-Disposition' => 'attachment;filename="' . $name . '.csv"'
+                'Content-Disposition' => 'attachment;filename="' . $name . '.csv"',
             ]
         );
     }
 
     /**
-     * @param       $name
-     *
-     * @return StreamedResponse
+     * @param $name
      */
     public function savePdf($name): StreamedResponse
     {
@@ -132,7 +121,7 @@ class MyExcelMultiExport
             200,
             [
                 'Content-Type'        => 'application/pdf',
-                'Content-Disposition' => 'attachment;filename="' . $name . '.pdf"'
+                'Content-Disposition' => 'attachment;filename="' . $name . '.pdf"',
             ]
         );
     }
@@ -141,7 +130,6 @@ class MyExcelMultiExport
      * @param $data
      * @param $modele
      * @param $colonne
-     *
      */
     public function genereExcelFromSerialization($data, $modele, $colonne): void
     {
@@ -154,18 +142,18 @@ class MyExcelMultiExport
         $i = 1;
         $ligne = 1;
         foreach ($colonne as $value) {
-            if (is_array($value)) {
+            if (\is_array($value)) {
                 foreach ($value as $col) {
-                    if (is_array($col)) {
+                    if (\is_array($col)) {
                         foreach ($col as $col2) {
-                            if (is_array($col2)) {
+                            if (\is_array($col2)) {
                                 foreach ($col2 as $col3) {
                                     $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(
                                         $i,
                                         $ligne,
                                         $col3
                                     );
-                                    $i++;
+                                    ++$i;
                                 }
                             } else {
                                 $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(
@@ -173,7 +161,7 @@ class MyExcelMultiExport
                                     $ligne,
                                     $col2
                                 );
-                                $i++;
+                                ++$i;
                             }
                         }
                     } else {
@@ -182,51 +170,47 @@ class MyExcelMultiExport
                             $ligne,
                             $col
                         );
-                        $i++;
+                        ++$i;
                     }
                 }
             } else {
                 $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow($i, $ligne, $value);
-                $i++;
+                ++$i;
             }
         }
         $i = 1;
-        $ligne++;
+        ++$ligne;
         foreach ($tabData as $row) {
             foreach ($colonne as $key => $value) {
-                if ((!is_array($value) && array_key_exists($value, $row)) || (is_array($value) && array_key_exists($key,
+                if ((!\is_array($value) && \array_key_exists($value,
+                            $row)) || (\is_array($value) && \array_key_exists($key,
                             $row))) {
-                    if (is_array($value)) {
+                    if (\is_array($value)) {
                         foreach ($value as $k => $col) {
-                            if (is_array($row[$key])) {
+                            if (\is_array($row[$key])) {
                                 $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow($i, $ligne,
                                     $row[$key][$col]);
-                                $i++;
+                                ++$i;
                             } else {
                                 $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow($i, $ligne,
                                     '-');
-                                $i++;
+                                ++$i;
                             }
                         }
                     } else {
                         $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow($i, $ligne, $row[$value]);
-                        $i++;
+                        ++$i;
                     }
                 } else {
-                    $i++;
+                    ++$i;
                 }
             }
 
-
             $i = 1;
-            $ligne++;
+            ++$ligne;
         }
     }
 
-    /**
-     * @param MyAbsences $myAbsences
-     *
-     */
     public function genereExcelAbsence(MyAbsences $myAbsences): void
     {
         $this->myExcelWriter->createSheet('absences');
@@ -236,47 +220,43 @@ class MyExcelMultiExport
             'nbCoursManques',
             'totalDuree',
             'nbNonJustifie',
-            'nbJustifie'
+            'nbJustifie',
         ]);
         $ligne = 2;
         $colonne = 1;
         foreach ($myAbsences->getEtudiants() as $etudiant) {
             $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getNom());
-            $colonne++;
+            ++$colonne;
             $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getPrenom());
-            $colonne++;
+            ++$colonne;
             $this->myExcelWriter->writeCellXY(
                 $colonne,
                 $ligne,
                 $myAbsences->getStatistiques()[$etudiant->getId()]->nbCoursManques
             );
-            $colonne++;
+            ++$colonne;
             $this->myExcelWriter->writeCellXY(
                 $colonne,
                 $ligne,
                 $myAbsences->getStatistiques()[$etudiant->getId()]->totalDuree->format('H:i')
             );
-            $colonne++;
+            ++$colonne;
             $this->myExcelWriter->writeCellXY(
                 $colonne,
                 $ligne,
                 $myAbsences->getStatistiques()[$etudiant->getId()]->nbNonJustifie
             );
-            $colonne++;
+            ++$colonne;
             $this->myExcelWriter->writeCellXY(
                 $colonne,
                 $ligne,
                 $myAbsences->getStatistiques()[$etudiant->getId()]->nbJustifie
             );
-            $ligne++;
+            ++$ligne;
             $colonne = 1;
         }
     }
 
-    /**
-     * @param Semestre $semestre
-     *
-     */
     public function genereModeleExcel(Semestre $semestre): void
     {
         $this->myExcelWriter->createSheet('import');
@@ -286,35 +266,31 @@ class MyExcelMultiExport
         $colonne = 1;
         /** @var Etudiant $etudiant */
         foreach ($semestre->getEtudiants() as $etudiant) {
-            if (count($etudiant->getGroupes()) > 0) {
+            if (\count($etudiant->getGroupes()) > 0) {
                 //uniquement si l'étudiant est dans un groupe.
                 $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getNumEtudiant());
-                $colonne++;
+                ++$colonne;
                 $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getNom());
-                $colonne++;
+                ++$colonne;
                 $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getPrenom());
-                $ligne++;
+                ++$ligne;
                 $colonne = 1;
             }
         }
     }
 
     /**
-     * @param Evaluation $evaluation
-     * @param            $groupes
-     * @param            $notes
-     *
+     * @param $groupes
+     * @param $notes
      */
     public function genereReleveExcel(Evaluation $evaluation, $groupes, $notes): void
     {
-
         /** @var Groupe $groupe */
         foreach ($groupes as $groupe) {
             $this->myExcelWriter->createSheet($groupe->getLibelle());
             //todo: modifier en-tete pour ajouter les infos de l'évaluation. modele PDF. Sauf si CSV?
-            if ($evaluation->getSemestre()->getAnnee()->getDiplome()->isOptAnonymat() === true) {
+            if (true === $evaluation->getSemestre()->getAnnee()->getDiplome()->isOptAnonymat()) {
                 $this->myExcelWriter->writeHeader(['num_etudiant', 'note', 'remise copie', 'commentaire']);
-
             } else {
                 $this->myExcelWriter->writeHeader([
                     'num_etudiant',
@@ -322,7 +298,7 @@ class MyExcelMultiExport
                     'prenom',
                     'note',
                     'remise copie',
-                    'commentaire'
+                    'commentaire',
                 ]);
             }
             $ligne = 2;
@@ -331,28 +307,27 @@ class MyExcelMultiExport
             /** @var Etudiant $etudiant */
             foreach ($groupe->getEtudiants() as $etudiant) {
                 $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getNumEtudiant());
-                $colonne++;
-                if ($evaluation->getSemestre()->getAnnee()->getDiplome()->isOptAnonymat() === false) {
+                ++$colonne;
+                if (false === $evaluation->getSemestre()->getAnnee()->getDiplome()->isOptAnonymat()) {
                     $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getNom());
-                    $colonne++;
+                    ++$colonne;
                     $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getPrenom());
-                    $colonne++;
+                    ++$colonne;
                 }
 
-                if (array_key_exists($etudiant->getId(), $notes)) {
+                if (\array_key_exists($etudiant->getId(), $notes)) {
                     $this->myExcelWriter->writeCellXY($colonne, $ligne, $notes[$etudiant->getId()]->getNote());
-                    $colonne++;
+                    ++$colonne;
                     $this->myExcelWriter->writeCellXY($colonne, $ligne, '');
-                    $colonne++;
+                    ++$colonne;
                     $this->myExcelWriter->writeCellXY($colonne, $ligne,
                         $notes[$etudiant->getId()]->getCommentaire());
-
                 } else {
                     $this->myExcelWriter->writeCellXY($colonne, $ligne, '-');
                 }
 
                 $colonne = 1;
-                $ligne++;
+                ++$ligne;
             }
         }
     }
@@ -371,7 +346,7 @@ class MyExcelMultiExport
             'date Absence',
             'heure Absence',
             'Saisie par',
-            'Absence justifiée'
+            'Absence justifiée',
         ]);
 
         $ligne = 2;
@@ -381,23 +356,21 @@ class MyExcelMultiExport
         foreach ($absences as $absence) {
             $etudiant = $absence->getEtudiant();
             $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getNumEtudiant());
-            $colonne++;
+            ++$colonne;
 
             $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getNom());
-            $colonne++;
+            ++$colonne;
             $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getPrenom());
-            $colonne++;
+            ++$colonne;
             $this->myExcelWriter->writeCellXY($colonne, $ligne, $absence->getDateHeure()->format('d/m/Y'));
-            $colonne++;
+            ++$colonne;
             $this->myExcelWriter->writeCellXY($colonne, $ligne, $absence->getDateHeure()->format('H:i'));
-            $colonne++;
+            ++$colonne;
             $this->myExcelWriter->writeCellXY($colonne, $ligne, $absence->getPersonnel()->getDisplayPr());
-            $colonne++;
-            $this->myExcelWriter->writeCellXY($colonne, $ligne, $absence->getJustifie() == 1 ? 'Oui' : 'Non');
+            ++$colonne;
+            $this->myExcelWriter->writeCellXY($colonne, $ligne, 1 === $absence->getJustifie() ? 'Oui' : 'Non');
             $colonne = 1;
-            $ligne++;
+            ++$ligne;
         }
-
     }
-
 }

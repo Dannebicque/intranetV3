@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Form/EntrepriseType.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 03/11/2020 15:15
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/EntrepriseType.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Form;
 
@@ -23,7 +25,7 @@ class EntrepriseType extends AbstractType
             ->add('siret', TextType::class, [
                 'label'    => 'label.siret',
                 'required' => false,
-                'help'     => 'Le siret est obligatoire pour toutes les entreprise, sauf pour les organismes public.'
+                'help'     => 'Le siret est obligatoire pour toutes les entreprise, sauf pour les organismes public.',
             ])
             ->add('adresse', AdresseType::class, ['label' => 'label.adresse'])
             ->add('responsable', ContactType::class, ['label' => 'label.responsable'])
@@ -33,8 +35,8 @@ class EntrepriseType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Entreprise::class,
-            'translation_domain' => 'form'
+            'data_class'         => Entreprise::class,
+            'translation_domain' => 'form',
         ]);
     }
 }

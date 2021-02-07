@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/AlternanceFicheSuivi.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/AlternanceFicheSuivi.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:49
+ */
 
 namespace App\Entity;
 
@@ -90,7 +92,6 @@ class AlternanceFicheSuivi extends BaseEntity
         $this->setAlternance($alternance);
         $this->setDate(new DateTime('now'));
     }
-
 
     public function getMethode(): ?string
     {
@@ -225,9 +226,7 @@ class AlternanceFicheSuivi extends BaseEntity
     }
 
     /**
-     * Get comportement
-     *
-     * @return string
+     * Get comportement.
      */
     public function getIntegrationLong(): string
     {
@@ -235,9 +234,7 @@ class AlternanceFicheSuivi extends BaseEntity
     }
 
     /**
-     * Get comportement
-     *
-     * @return string
+     * Get comportement.
      */
     public function getInitiativeLong(): string
     {
@@ -245,9 +242,7 @@ class AlternanceFicheSuivi extends BaseEntity
     }
 
     /**
-     * Get comportement
-     *
-     * @return string
+     * Get comportement.
      */
     public function getAdaptationLong(): string
     {
@@ -255,9 +250,7 @@ class AlternanceFicheSuivi extends BaseEntity
     }
 
     /**
-     * Get comportement
-     *
-     * @return string
+     * Get comportement.
      */
     public function getPerformanceLong(): string
     {
@@ -265,9 +258,7 @@ class AlternanceFicheSuivi extends BaseEntity
     }
 
     /**
-     * Get comportement
-     *
-     * @return string
+     * Get comportement.
      */
     public function getDelaisLong(): string
     {
@@ -275,9 +266,7 @@ class AlternanceFicheSuivi extends BaseEntity
     }
 
     /**
-     * Get comportement
-     *
-     * @return string
+     * Get comportement.
      */
     public function getComportementLong(): string
     {
@@ -287,7 +276,7 @@ class AlternanceFicheSuivi extends BaseEntity
     public function getMethodeLong(): ?string
     {
         switch ($this->methode) {
-            case 'v' :
+            case 'v':
                 return 'Visite dans l\'entreprise';
             case 't':
                 return 'Entretien téléphonique';

@@ -1,9 +1,12 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/ScolariteController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 16/01/2021 11:43
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/ScolariteController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
 
 namespace App\Controller\administration;
 
@@ -27,8 +30,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class ScolariteController
- * @package App\Controller\administration
+ * Class ScolariteController.
+ *
  * @Route("/administration/scolarite")
  */
 class ScolariteController extends BaseController
@@ -36,11 +39,6 @@ class ScolariteController extends BaseController
     /**
      * @Route("/edit/{slug}/{scolarite?<\d+>}", name="administration_scolarite_etudiant_edit")
      *
-     * @param Request        $request
-     * @param Etudiant       $etudiant
-     * @param Scolarite|null $scolarite
-     *
-     * @return Response
      * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
      */
     public function editScolariteEtudiant(
@@ -49,7 +47,7 @@ class ScolariteController extends BaseController
         ?Scolarite $scolarite = null
     ): Response {
         $edit = true;
-        if ($scolarite === null) {
+        if (null === $scolarite) {
             $scolarite = new Scolarite($etudiant, $etudiant->getSemestre(),
                 $this->dataUserSession->getAnneeUniversitaire());
             $edit = false;
@@ -72,7 +70,6 @@ class ScolariteController extends BaseController
             $this->addFlashBag('success', 'adm.scolarite.add.flashbag');
 
             return $this->redirectToRoute('administration_scolarite_etudiant_edit', ['slug' => $etudiant->getSlug()]);
-
         }
 
         return $this->render('administration/scolarite/edit.html.twig', [
@@ -80,19 +77,15 @@ class ScolariteController extends BaseController
             'scolarites' => $etudiant->getScolarites(),
             'form'       => $form->createView(),
             'scolarite'  => $scolarite,
-            'edit'       => $edit
+            'edit'       => $edit,
         ]);
     }
 
     /**
-     * @param Semestre $semestre
-     *
-     * @return JsonResponse
      * @Route("/ajax/ues/{semestre}", name="administration_scolarite_ues_semestre", options={"expose"=true})
      */
     public function uesSemestre(Semestre $semestre): JsonResponse
     {
-
         $ues = $semestre->getUes();
 
         $t = [];
@@ -106,10 +99,7 @@ class ScolariteController extends BaseController
 
     /**
      * @Route("/import-intranet", name="administration_scolarite_import_intranetv2")
-     * @param MyScolarite $myScolarite
-     * @param Request     $request
      *
-     * @return RedirectResponse
      * @throws Exception
      */
     public function importScolarite(
@@ -141,29 +131,23 @@ class ScolariteController extends BaseController
 
     /**
      * @Route("/saisie/promo/{semestre}", name="administration_scolarite_saisie_promo")
-     * @param AnneeUniversitaireRepository $anneeUniversitaireRepository
-     * @param Semestre                     $semestre
-     *
-     * @return Response
      */
-    public function saisiePromotion(AnneeUniversitaireRepository $anneeUniversitaireRepository, Semestre $semestre)
-    {
+    public function saisiePromotion(
+        AnneeUniversitaireRepository $anneeUniversitaireRepository,
+        Semestre $semestre
+    ): Response {
         return $this->render('administration/scolarite/saisiePromotion.html.twig', [
             'semestre'             => $semestre,
             'semestres'            => $this->dataUserSession->getSemestres(),
-            'anneesUniversitaires' => $anneeUniversitaireRepository->findAll()
+            'anneesUniversitaires' => $anneeUniversitaireRepository->findAll(),
         ]);
     }
 
     /**
      * @Route("/ajax-saisie/promo/{semestre}/{anneeUniversitaire}", name="administration_scolarite_saisie_promo_ajax",
      *                                                              options={"expose"=true})
-     * @param Semestre           $semestre
-     * @param AnneeUniversitaire $anneeUniversitaire
-     *
-     * @return Response
      */
-    public function saisiePromotionAjax(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire)
+    public function saisiePromotionAjax(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): Response
     {
         return $this->render('administration/scolarite/_saisiePromotion.html.twig', [
             'semestre'           => $semestre,
@@ -174,12 +158,8 @@ class ScolariteController extends BaseController
     /**
      * @Route("/ajax-import/promo/{semestre}/{anneeUniversitaire}", name="administration_scolarite_saisie_promo_import_ajax",
      *                                                              options={"expose"=true})
-     * @param Semestre           $semestre
-     * @param AnneeUniversitaire $anneeUniversitaire
-     *
-     * @return Response
      */
-    public function importPromotionAjax(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire)
+    public function importPromotionAjax(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): Response
     {
         return $this->render('administration/scolarite/_importPromotion.html.twig', [
             'semestre'           => $semestre,

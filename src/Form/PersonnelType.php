@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Form/PersonnelType.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 22/10/2020 15:56
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/PersonnelType.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Form;
 
@@ -20,20 +22,15 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 
 /**
- * Class PersonnelType
- * @package App\Form
+ * Class PersonnelType.
  */
 class PersonnelType extends AbstractType
 {
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('civilite', CiviliteType::class, [
-                'label' => 'label.civilite'
+                'label' => 'label.civilite',
             ])
             ->add('nom', TextType::class, ['label' => 'label.nom'])
             ->add('prenom', TextType::class, ['label' => 'label.prenom'])
@@ -52,10 +49,10 @@ class PersonnelType extends AbstractType
                     'choice.prag'        => Personnel::PRAG,
                     'choice.prce'        => Personnel::PRCE,
                     'choice.vacataire'   => Personnel::VACATAIRE,
-                    'choice.ater'        => Personnel::ATER
+                    'choice.ater'        => Personnel::ATER,
                 ],
                 'choice_translation_domain' => 'form',
-                'expanded'                  => true
+                'expanded'                  => true,
             ])
             ->add('nbHeuresService', TextType::class, ['label' => 'label.nbHeuresService'])
             ->add('site_univ', TextType::class, ['label' => 'label.site_univ', 'required' => false])
@@ -76,22 +73,19 @@ class PersonnelType extends AbstractType
             ->add('adresse', AdresseType::class, ['label' => 'label.adresse', 'required' => false])
             ->add('cvFile', VichFileType::class, [
                 'label'    => 'label.cv',
-                'required' => false
+                'required' => false,
             ])//->add('photo', VichImageType::class, ['label' => 'label.photo'])
         ;
     }
 
     /**
-     * @param OptionsResolver $resolver
-     *
      * @throws AccessException
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class'         => Personnel::class,
-            'translation_domain' => 'form'
-
+            'translation_domain' => 'form',
         ]);
     }
 }

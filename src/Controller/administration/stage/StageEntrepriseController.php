@@ -1,37 +1,35 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StageEntrepriseController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StageEntrepriseController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
 
 namespace App\Controller\administration\stage;
 
+use App\Classes\MyExport;
 use App\Controller\BaseController;
 use App\Entity\Entreprise;
 use App\Entity\StageEtudiant;
 use App\Entity\StagePeriode;
-use App\Classes\MyExport;
 use App\Repository\StageEtudiantRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class StageEntrepriseController
- * @package App\Controller\administration\stage
- * @Route("/administration/stage/entreprise")
+ * Class StageEntrepriseController.
  *
+ * @Route("/administration/stage/entreprise")
  */
 class StageEntrepriseController extends BaseController
 {
     /**
      * @Route("/{uuid}", name="administration_stage_entreprise_index")
      * @ParamConverter("stagePeriode", options={"mapping": {"uuid": "uuid"}})
-     * @param StageEtudiantRepository $stageEtudiantRepository
-     * @param StagePeriode            $stagePeriode
-     *
-     * @return Response
      */
     public function index(StageEtudiantRepository $stageEtudiantRepository, StagePeriode $stagePeriode): Response
     {
@@ -39,10 +37,10 @@ class StageEntrepriseController extends BaseController
         $tEntreprises = [];
         /** @var StageEtudiant $entreprise */
         foreach ($entreprises as $entreprise) {
-            if ($entreprise->getEntreprise() !== null) {
-                if (array_key_exists(mb_strtolower($entreprise->getEntreprise()->getRaisonSociale()), $tEntreprises)) {
+            if (null !== $entreprise->getEntreprise()) {
+                if (\array_key_exists(mb_strtolower($entreprise->getEntreprise()->getRaisonSociale()), $tEntreprises)) {
                     $tEntreprises[mb_strtolower($entreprise->getEntreprise()->getRaisonSociale())]['entreprise'] = $entreprise->getEntreprise();
-                    $tEntreprises[mb_strtolower($entreprise->getEntreprise()->getRaisonSociale())]['nbstagiaire']++;
+                    ++$tEntreprises[mb_strtolower($entreprise->getEntreprise()->getRaisonSociale())]['nbstagiaire'];
                 } else {
                     $tEntreprises[mb_strtolower($entreprise->getEntreprise()->getRaisonSociale())]['entreprise'] = $entreprise->getEntreprise();
                     $tEntreprises[mb_strtolower($entreprise->getEntreprise()->getRaisonSociale())]['nbstagiaire'] = 1;
@@ -51,17 +49,13 @@ class StageEntrepriseController extends BaseController
         }
 
         return $this->render('administration/stage/stage_entreprise/index.html.twig', [
-            'entreprises' => $tEntreprises,
-            'stagePeriode' => $stagePeriode
+            'entreprises'  => $tEntreprises,
+            'stagePeriode' => $stagePeriode,
         ]);
     }
 
     /**
      * @Route("/details/{entreprise}", name="administration_stage_entreprise_detail", methods="GET")
-     *
-     * @param Entreprise $entreprise
-     *
-     * @return Response
      */
     public function details(Entreprise $entreprise): Response
     {
@@ -74,21 +68,17 @@ class StageEntrepriseController extends BaseController
      * @Route("/{uuid}/export.{_format}", name="administration_stage_entreprise_export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"})
      * @ParamConverter("stagePeriode", options={"mapping": {"uuid": "uuid"}})
-     * @param StageEtudiantRepository $stageEtudiantRepository
-     * @param MyExport                $myExport
-     * @param StagePeriode            $stagePeriode
-     * @param                         $_format
      *
-     * @return Response
+     * @param $_format
      */
     public function export(
         StageEtudiantRepository $stageEtudiantRepository,
         MyExport $myExport,
         StagePeriode $stagePeriode,
         $_format
-    ): Response
-    {
+    ): Response {
         $entreprises = $stageEtudiantRepository->findEntreprisesByPeriode($stagePeriode);
+
         return $myExport->genereFichierGenerique(
             $_format,
             $entreprises,
@@ -101,7 +91,7 @@ class StageEntrepriseController extends BaseController
                 'type',
                 'personnel'  => ['nom', 'prenom'],
                 'dateDebutStage',
-                'dateFinStage'
+                'dateFinStage',
             ]
         );
     }

@@ -1,18 +1,21 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StagePeriodeOffreController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StagePeriodeOffreController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
 
 namespace App\Controller\administration\stage;
 
+use App\Classes\MyExport;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\StagePeriode;
 use App\Entity\StagePeriodeOffre;
 use App\Form\StagePeriodeOffreType;
-use App\Classes\MyExport;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,9 +29,6 @@ class StagePeriodeOffreController extends BaseController
     /**
      * @Route("/{uuid}", name="administration_stage_periode_offre_index", methods="GET")
      * @ParamConverter("stagePeriode", options={"mapping": {"uuid": "uuid"}})
-     * @param StagePeriode $stagePeriode
-     *
-     * @return Response
      */
     public function index(StagePeriode $stagePeriode): Response
     {
@@ -36,7 +36,7 @@ class StagePeriodeOffreController extends BaseController
             'administration/stage/stage_periode_offre/index.html.twig',
             [
                 'stage_periode_offres' => $stagePeriode->getStagePeriodeOffres(),
-                'stagePeriode'         => $stagePeriode
+                'stagePeriode'         => $stagePeriode,
             ]
         );
     }
@@ -44,11 +44,9 @@ class StagePeriodeOffreController extends BaseController
     /**
      * @Route("/{stagePeriode}/export.{_format}", name="administration_stage_periode_offre_export", methods="GET",
      *                                            requirements={"_format"="csv|xlsx|pdf"})
-     * @param MyExport                    $myExport
-     * @param StagePeriode                $stagePeriode
-     * @param                             $_format
      *
-     * @return Response
+     * @param $_format
+     *
      * @ParamConverter("stagePeriode", options={"mapping": {"stagePeriode": "uuid"}})
      */
     public function export(
@@ -57,6 +55,7 @@ class StagePeriodeOffreController extends BaseController
         $_format
     ): Response {
         $offres = $stagePeriode->getStagePeriodeOffres();
+
         return $myExport->genereFichierGenerique(
             $_format,
             $offres,
@@ -69,10 +68,6 @@ class StagePeriodeOffreController extends BaseController
     /**
      * @Route("/new/{stagePeriode}", name="administration_stage_periode_offre_new", methods="GET|POST")
      * @ParamConverter("stagePeriode", options={"mapping": {"stagePeriode": "uuid"}})
-     * @param Request      $request
-     * @param StagePeriode $stagePeriode
-     *
-     * @return Response
      */
     public function create(Request $request, StagePeriode $stagePeriode): Response
     {
@@ -81,8 +76,8 @@ class StagePeriodeOffreController extends BaseController
             'departement' => $this->dataUserSession->getDepartement(),
             'annee'       => $stagePeriode->getAnneeUniversitaire(),
             'attr'        => [
-                'data-provide' => 'validation'
-            ]
+                'data-provide' => 'validation',
+            ],
         ]);
         $form->handleRequest($request);
 
@@ -98,26 +93,20 @@ class StagePeriodeOffreController extends BaseController
         return $this->render('administration/stage/stage_periode_offre/new.html.twig', [
             'stage_periode_offre' => $stagePeriodeOffre,
             'form'                => $form->createView(),
-            'stagePeriode'        => $stagePeriode
+            'stagePeriode'        => $stagePeriode,
         ]);
     }
 
-
-
     /**
      * @Route("/{id}/edit", name="administration_stage_periode_offre_edit", methods="GET|POST")
-     * @param Request           $request
-     * @param StagePeriodeOffre $stagePeriodeOffre
-     *
-     * @return Response
      */
     public function edit(Request $request, StagePeriodeOffre $stagePeriodeOffre): Response
     {
         $form = $this->createForm(StagePeriodeOffreType::class, $stagePeriodeOffre, [
             'departement' => $this->dataUserSession->getDepartement(),
             'attr'        => [
-                'data-provide' => 'validation'
-            ]
+                'data-provide' => 'validation',
+            ],
         ]);
 
         $form->handleRequest($request);
@@ -138,10 +127,6 @@ class StagePeriodeOffreController extends BaseController
 
     /**
      * @Route("/{id}/duplicate", name="administration_stage_periode_offre_duplicate", methods="GET")
-     *
-     * @param StagePeriodeOffre $stagePeriodeOffre
-     *
-     * @return Response
      */
     public function duplicate(StagePeriodeOffre $stagePeriodeOffre): Response
     {
@@ -157,26 +142,17 @@ class StagePeriodeOffreController extends BaseController
     /**
      * @Route("/{id}/{stagePeriode}", name="administration_stage_periode_offre_show", methods="GET")
      * @ParamConverter("stagePeriode", options={"mapping": {"stagePeriode": "uuid"}})
-     * @param StagePeriodeOffre $stagePeriodeOffre
-     * @param StagePeriode      $stagePeriode
-     *
-     * @return Response
      */
     public function show(StagePeriodeOffre $stagePeriodeOffre, StagePeriode $stagePeriode): Response
     {
         return $this->render('administration/stage/stage_periode_offre/show.html.twig', [
             'stage_periode_offre' => $stagePeriodeOffre,
-            'stagePeriode'        => $stagePeriode
+            'stagePeriode'        => $stagePeriode,
         ]);
     }
 
     /**
      * @Route("/{id}", name="administration_stage_periode_offre_delete", methods="DELETE")
-     * @param Request           $request
-     *
-     * @param StagePeriodeOffre $date
-     *
-     * @return Response
      */
     public function delete(Request $request, StagePeriodeOffre $date): Response
     {

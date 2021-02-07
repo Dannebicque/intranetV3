@@ -1,12 +1,17 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Stage/MailerStage.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Stage/MailerStage.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:10
+ */
+
+/*
+ * Pull your hearder here, for exemple, Licence header.
+ */
 
 namespace App\Classes\Stage;
-
 
 use App\Classes\Mail\MailerFromDatabase;
 use App\Classes\Mail\MailerFromTwig;
@@ -22,9 +27,6 @@ class MailerStage
 
     /**
      * MailerStage constructor.
-     *
-     * @param MailerFromTwig     $mailerFromTwig
-     * @param MailerFromDatabase $mailerFromDatabase
      */
     public function __construct(MailerFromTwig $mailerFromTwig, MailerFromDatabase $mailerFromDatabase)
     {
@@ -33,11 +35,6 @@ class MailerStage
     }
 
     /**
-     * @param string     $template
-     * @param array      $donnees
-     * @param array|null $destinataires
-     * @param string     $sujet
-     *
      * @throws TransportExceptionInterface
      */
     public function setTemplate(string $template, array $donnees, ?array $destinataires, string $sujet)
@@ -48,11 +45,6 @@ class MailerStage
     }
 
     /**
-     * @param TwigTemplate $template
-     * @param array        $donnees
-     * @param array|null   $destinataires
-     * @param string       $sujet
-     *
      * @throws LoaderError
      * @throws SyntaxError
      * @throws TransportExceptionInterface

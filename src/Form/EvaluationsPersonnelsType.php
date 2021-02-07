@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Form/EvaluationsPersonnelsType.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 20/07/2020 18:05
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/EvaluationsPersonnelsType.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Form;
 
@@ -17,17 +19,13 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class EvaluationsType
+ * Class EvaluationsType.
  */
 class EvaluationsPersonnelsType extends AbstractType
 {
     /** @var Semestre */
     protected $semestre;
 
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->semestre = $options['semestre'];
@@ -45,14 +43,11 @@ class EvaluationsPersonnelsType extends AbstractType
             ]);
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => Evaluation::class,
             'semestre'   => null,
-        ));
+        ]);
     }
 }

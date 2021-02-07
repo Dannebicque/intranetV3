@@ -1,12 +1,17 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Aide.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 13/01/2021 06:43
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Aide.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
+/*
+ * Pull your hearder here, for exemple, Licence header.
+ */
 
 namespace App\Classes;
-
 
 use App\DTO\ArticleAide;
 use Carbon\Carbon;
@@ -30,9 +35,7 @@ class Aide
     {
         $fichier = $this->getLink($sujet);
 
-
         if (file_exists($fichier)) {
-
             $content = file_get_contents($fichier);
             $article = new ArticleAide();
             $article->content = $this->parseDown->text($content);
@@ -43,17 +46,16 @@ class Aide
         }
 
         return null;
-
     }
 
     private function getLink($sujet)
     {
         $arbo = explode('-', $sujet);
-        if (count($arbo) === 0) {
+        if (0 === \count($arbo)) {
             return false;
         }
 
-        if (count($arbo) === 1) {
+        if (1 === \count($arbo)) {
             $fichier = $this->dir . '/' . $arbo[0] . '.md';
         } else {
             $fichier = $this->dir . '/' . $arbo[0] . '/' . $arbo[1] . '/' . $arbo[2] . '.md';
@@ -67,14 +69,9 @@ class Aide
         return $this->extractContentDir($dossier);
     }
 
-    /**
-     * @param string $dossier
-     *
-     * @return array
-     */
     private function extractContentDir(string $dossier): array
     {
-        if (substr($dossier, -1) !== '/') {
+        if ('/' !== mb_substr($dossier, -1)) {
             $dossier .= '/';
         }
         $categories = [];
@@ -83,20 +80,20 @@ class Aide
         $handle = opendir($this->dir . $dossier);
 
         while (false !== ($entry = readdir($handle))) {
-            if (!in_array($entry, self::EXCLUDES_DIR, true)) {
+            if (!\in_array($entry, self::EXCLUDES_DIR, true)) {
                 if (is_dir($this->dir . $dossier . $entry)) {
                     $t['nom'] = $entry;
                     $t['code_traduction'] = 'aide.' . str_replace('/', '-', $dossier . $entry);
-                    $t['nbArticles'] = count(scandir($this->dir . $dossier . $entry)) - 2;
+                    $t['nbArticles'] = \count(scandir($this->dir . $dossier . $entry)) - 2;
                     $categories['categories'][] = $t;
                 } else {
-                    $nom = substr($entry, 0, -3);
+                    $nom = mb_substr($entry, 0, -3);
 
-                    if ($dossier === '/') {
+                    if ('/' === $dossier) {
                         $lien = $nom;
                     } else {
-                        if ($dossier[0] === '/') {
-                            $dossier = substr($dossier, 1);
+                        if ('/' === $dossier[0]) {
+                            $dossier = mb_substr($dossier, 1);
                         }
                         $lien = str_replace('/', '-', $dossier . $nom);
                     }
@@ -119,28 +116,23 @@ class Aide
         return $this->extractContentDir($dossier);
     }
 
-    /**
-     * @param string $sujet
-     *
-     * @return string
-     */
     private function getDirFromSujet(string $sujet): string
     {
         $t = explode('-', $sujet);
 
-        if (count($t) === 0) {
+        if (0 === \count($t)) {
             return '/';
         }
 
         $dossier = '/';
-        for ($i = 0; $i < count($t) - 1; $i++) {
+        for ($i = 0; $i < \count($t) - 1; ++$i) {
             $dossier .= $t[$i] . '/';
         }
 
-        if ($dossier === '/') {
+        if ('/' === $dossier) {
             return '/';
         }
 
-        return substr($dossier, 0, -1);
+        return mb_substr($dossier, 0, -1);
     }
 }

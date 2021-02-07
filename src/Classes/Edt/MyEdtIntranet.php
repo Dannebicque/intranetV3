@@ -1,19 +1,17 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtIntranet.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 18/12/2020 16:44
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtIntranet.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
-/**
- * Created by PhpStorm.
- * User: davidannebicque
- * Date: 05/09/2018
- * Time: 16:46
+/*
+ * Pull your hearder here, for exemple, Licence header.
  */
 
 namespace App\Classes\Edt;
-
 
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Constantes;
@@ -36,7 +34,6 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
 {
     protected EdtPlanningRepository $edtPlanningRepository;
 
-
     private SemestreRepository $semestreRepository;
 
     private GroupeRepository $groupeRepository;
@@ -46,17 +43,8 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
     private EntityManagerInterface $entityManager;
     private array $tab = [];
 
-
     /**
      * MyEdt constructor.
-     *
-     * @param CalendrierRepository   $celcatCalendrierRepository
-     * @param EdtPlanningRepository  $edtPlanningRepository
-     * @param SemestreRepository     $semestreRepository
-     * @param GroupeRepository       $groupeRepository
-     * @param MatiereRepository      $matiereRepository
-     * @param PersonnelRepository    $personnelRepository
-     * @param EntityManagerInterface $entityManager
      */
     public function __construct(
         CalendrierRepository $celcatCalendrierRepository,
@@ -76,43 +64,30 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
         $this->entityManager = $entityManager;
     }
 
-
     /**
-     * @param Personnel          $personnel
-     *
-     * @param AnneeUniversitaire $anneeUniversitaire
-     * @param int                $semaine
-     *
-     * @return MyEdtIntranet
+     * @param int $semaine
      */
     public function initPersonnel(
         Personnel $personnel,
         AnneeUniversitaire $anneeUniversitaire,
         $semaine = 0
-    ): MyEdtIntranet {
+    ): self {
         $this->user = $personnel;
         $this->init($anneeUniversitaire, 'prof', $personnel->getId(), $semaine);
         $this->semaines = $this->calculSemaines();
-        $this->calculEdt();//todo: pour des datas en BDD sans scelcat. Ajouter test.
+        $this->calculEdt(); //todo: pour des datas en BDD sans scelcat. Ajouter test.
 
         return $this;
     }
 
-
     /**
-     * @param Etudiant           $etudiant
-     *
-     * @param AnneeUniversitaire $anneeUniversitaire
-     * @param int                $semaine
-     *
-     * @return MyEdtIntranet
+     * @param int $semaine
      */
     public function initEtudiant(
         Etudiant $etudiant,
         AnneeUniversitaire $anneeUniversitaire,
         $semaine = 0
-    ): MyEdtIntranet {
-
+    ): self {
         $this->user = $etudiant;
         $this->init($anneeUniversitaire, 'etudiant', $etudiant->getId(), $semaine);
         $this->calculEdt();
@@ -122,7 +97,7 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
 
     public function calculEdt(): bool
     {
-        if ($this->semaineFormationIUT !== '') {
+        if ('' !== $this->semaineFormationIUT) {
             switch ($this->filtre) {
                 case 'promo':
                     $this->semestre = $this->semestreRepository->find($this->valeur);
@@ -137,7 +112,7 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
                 case 'etudiant':
                     $this->groupes();
                     $pl = $this->edtPlanningRepository->findEdtEtu($this->user, $this->semaineFormationIUT);
-                    if ($pl !== null) {
+                    if (null !== $pl) {
                         $this->planning = $this->transformeEtudiant($pl);
                         $this->semestre = $this->user->getSemestre();
                     } else {
@@ -171,21 +146,19 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
         return false;
     }
 
-
     public function initAdministration(
         $departement,
         $semaine,
         $filtre,
         $valeur,
         AnneeUniversitaire $anneeUniversitaire
-    ): MyEdtIntranet {
-        if ($valeur === '') {
+    ): self {
+        if ('' === $valeur) {
             $semestres = $this->semestreRepository->findByDepartementActif($departement);
-            if (count($semestres) > 0) {
+            if (\count($semestres) > 0) {
                 $valeur = $semestres[0]->getId();
-            } else {
-                //erreur
             }
+            //erreur
         }
 
         $this->init($anneeUniversitaire, $filtre, $valeur, $semaine);
@@ -197,8 +170,6 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
 
     /**
      * @param $pl
-     *
-     * @return array
      */
     private function transformeProf($pl): array
     {
@@ -211,7 +182,7 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
 
             $this->tab[$p->getJour()][$dbtEdt]['duree'] = $p->getFin() - $p->getDebut();
 
-            for ($i = $dbtEdt; $i < $finEdt; $i++) {
+            for ($i = $dbtEdt; $i < $finEdt; ++$i) {
                 $this->tab[$p->getJour()][$i]['texte'] = 'xx';
             }
 
@@ -224,7 +195,6 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
             $this->tab[$p->getJour()][$dbtEdt]['format'] = 'ok';
             $this->valideFormat($p);
             $this->calculTotal($p);
-
         }
 
         return $this->tab;
@@ -232,8 +202,6 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
 
     /**
      * @param $pl
-     *
-     * @return array
      */
     private function transformeEtudiant($pl): array
     {
@@ -242,7 +210,7 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
 
         /** @var EdtPlanning $p */
         foreach ($pl as $p) {
-            if (($p->getType() === TypeGroupe::TYPE_GROUPE_CM) || ($p->getType() === TypeGroupe::TYPE_GROUPE_TD && $p->getGroupe() === $this->groupetd) || ($p->getType() === TypeGroupe::TYPE_GROUPE_TP && $p->getGroupe() === $this->groupetp)) {
+            if ((TypeGroupe::TYPE_GROUPE_CM === $p->getType()) || (TypeGroupe::TYPE_GROUPE_TD === $p->getType() && $p->getGroupe() === $this->groupetd) || (TypeGroupe::TYPE_GROUPE_TP === $p->getType() && $p->getGroupe() === $this->groupetp)) {
                 $dbtEdt = $this->convertEdt($p->getDebut());
                 $finEdt = $this->convertEdt($p->getFin());
                 $debut = $p->getDebut();
@@ -260,20 +228,18 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
                 $this->valideFormat($p);
             }
         }
+
         return $this->tab;
     }
 
     /**
      * @param $pl
-     *
-     * @return array
      */
     private function transformePromo($pl): array
     {
         $tab = [];
         /** @var EdtPlanning $p */
         foreach ($pl as $p) {
-
             $debut = $p->getDebut();
             $fin = $p->getFin();
 
@@ -296,30 +262,29 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
                     break;
                 case 'TD':
                 case 'td':
-                $tab[$p->getJour()][$debut][$p->getGroupe()]['largeur'] = 2;
-                $taille = 12;
+                    $tab[$p->getJour()][$debut][$p->getGroupe()]['largeur'] = 2;
+                    $taille = 12;
                     break;
             }
 
             $groupe = $p->getGroupe();
             $groupefin = $groupe + $tab[$p->getJour()][$debut][$p->getGroupe()]['largeur'];
-            for ($i = $debut; $i < $fin; $i++) {
-                for ($j = $groupe; $j < $groupefin; $j++) {
+            for ($i = $debut; $i < $fin; ++$i) {
+                for ($j = $groupe; $j < $groupefin; ++$j) {
                     $tab[$p->getJour()][$i][$j]['texte'] = 'xx';
                 }
             }
 
-            if ($p->getIntervenant() === null) {
+            if (null === $p->getIntervenant()) {
                 $inter = '';
-            } else if ($taille == 0) {
+            } elseif (0 === $taille) {
                 $inter = $p->getIntervenant()->getNom();
             } else {
-                $inter = substr($p->getIntervenant()->getNom(), 0, $taille);
+                $inter = mb_substr($p->getIntervenant()->getNom(), 0, $taille);
             }
 
             $tab[$p->getJour()][$debut][$p->getGroupe()]['texte'] = $this->isEvaluation($p) . '<br />' . $p->getSalle() . '<br />' . $inter . '<br />' . $p->getDisplayGroupe();
             $tab[$p->getJour()][$debut][$p->getGroupe()]['commentaire'] = $this->hasCommentaire($p);
-
         }
 
         return $tab;
@@ -332,11 +297,11 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
      */
     private function getCouleur(EdtPlanning $p): ?string
     {
-        switch (strtolower($p->getType())) {
+        switch (mb_strtolower($p->getType())) {
             case 'cm':
             case 'td':
             case 'tp':
-                return strtolower($p->getType()) . '_' . $p->getSemestre()->getAnnee()->getCouleur();
+                return mb_strtolower($p->getType()) . '_' . $p->getSemestre()->getAnnee()->getCouleur();
             default:
                 return 'CCCCCC';
         }
@@ -344,8 +309,6 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
 
     /**
      * @param $p
-     *
-     * @return string
      */
     private function getCouleurTexte(EdtPlanning $p): string
     {
@@ -360,17 +323,13 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
     }
 
     /**
-     * @param EdtPlanning $p
-     *
-     * @param string      $type
-     *
-     * @return string
+     * @param string $type
      */
     private function isEvaluation(EdtPlanning $p, $type = 'short'): string
     {
         if ($p->getEvaluation()) {
-            if ($p->getMatiere() !== null) {
-                if ($type === 'short') {
+            if (null !== $p->getMatiere()) {
+                if ('short' === $type) {
                     return '** ' . $p->getMatiere()->getCodeMatiere() . ' **';
                 }
 
@@ -380,8 +339,8 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
             return '** ' . $p->getTexte() . ' **';
         }
 
-        if ($p->getMatiere() !== null) {
-            if ($type === 'short') {
+        if (null !== $p->getMatiere()) {
+            if ('short' === $type) {
                 return $p->getMatiere()->getCodeMatiere();
             }
 
@@ -389,23 +348,16 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
         }
 
         return $p->getTexte();
-
-
     }
 
     /**
      * @param $p
-     *
-     * @return bool
      */
     private function hasCommentaire(EdtPlanning $p): bool
     {
-        return ($p->getCommentaire() !== '' && $p->getCommentaire() !== null);
+        return '' !== $p->getCommentaire() && null !== $p->getCommentaire();
     }
 
-    /**
-     * @param EdtPlanning $p
-     */
     private function calculTotal(EdtPlanning $p): void
     {
         switch ($p->getType()) {
@@ -424,20 +376,15 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
         }
     }
 
-
-    /**
-     *
-     */
     private function groupes(): void
     {
         /** @var Groupe $groupe */
         foreach ($this->user->getGroupes() as $groupe) {
-            if ($groupe->getTypegroupe() !== null) {
+            if (null !== $groupe->getTypegroupe()) {
                 if ($groupe->getTypegroupe()->isTd()) {
                     $this->groupetd = $groupe->getOrdre();
-                } else if ($groupe->getTypegroupe()->isTp()) {
+                } elseif ($groupe->getTypegroupe()->isTp()) {
                     $this->groupetp = $groupe->getOrdre();
-
                 }
             }
         }
@@ -445,8 +392,6 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
 
     /**
      * @param $pl
-     *
-     * @return array
      */
     private function transformeModule($pl): array
     {
@@ -482,20 +427,19 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
 
             $groupe = $p->getGroupe();
             $groupefin = $groupe + $tab[$p->getJour()][$debut][$p->getGroupe()]['largeur'];
-            for ($i = $debut; $i < $fin; $i++) {
-                for ($j = $groupe; $j < $groupefin; $j++) {
+            for ($i = $debut; $i < $fin; ++$i) {
+                for ($j = $groupe; $j < $groupefin; ++$j) {
                     $tab[$p->getJour()][$i][$j]['texte'] = 'xx';
                 }
             }
 
-            if ($p->getIntervenant() === null) {
+            if (null === $p->getIntervenant()) {
                 $inter = '';
-            } else if ($taille === 0) {
+            } elseif (0 === $taille) {
                 $inter = $p->getIntervenant()->getNom();
             } else {
-                $inter = substr($p->getIntervenant()->getNom(), 0, $taille);
+                $inter = mb_substr($p->getIntervenant()->getNom(), 0, $taille);
             }
-
 
             $tab[$p->getJour()][$debut][$p->getGroupe()]['texte'] = $this->isEvaluation($p) . '<br />' . $p->getSalle() . '<br />' . $inter . '<br />' . $p->getDisplayGroupe();
             $tab[$p->getJour()][$debut][$p->getGroupe()]['commentaire'] = $this->hasCommentaire($p);
@@ -506,8 +450,6 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
 
     /**
      * @param $pl
-     *
-     * @return array
      */
     private function transformeSalle($pl): array
     {
@@ -518,13 +460,13 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
             $debut = $p->getDebut();
             $tab[$p->getJour()][$debut]['duree'] = $p->getFin() - $debut;
             $fin = $p->getFin();
-            for ($i = $debut; $i < $fin; $i++) {
+            for ($i = $debut; $i < $fin; ++$i) {
                 $tab[$p->getJour()][$i]['texte'] = 'xx';
             }
 
             $tab[$p->getJour()][$debut]['texte'] = $this->isEvaluation($p) . '<br />' . $p->getSemestre()->getAnnee()->getLibelle() . ' <br /> ' . $p->getDisplayGroupe();
 
-            if ($p->getIntervenant() !== null) {
+            if (null !== $p->getIntervenant()) {
                 $tab[$p->getJour()][$debut]['texte'] .= ' <br /> ' . $p->getIntervenant()->getNom();
             }
 
@@ -538,8 +480,6 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
 
     /**
      * @param $pl
-     *
-     * @return array
      */
     private function transformeJour($pl): array
     {
@@ -571,20 +511,19 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
 
             $groupe = $p->getGroupe();
             $groupefin = $groupe + $tab[$p->getSemestre()->getId()][$debut][$p->getGroupe()]['largeur'];
-            for ($i = $debut; $i < $fin; $i++) {
-                for ($j = $groupe; $j < $groupefin; $j++) {
+            for ($i = $debut; $i < $fin; ++$i) {
+                for ($j = $groupe; $j < $groupefin; ++$j) {
                     $tab[$p->getSemestre()->getId()][$i][$j]['texte'] = 'xx';
                 }
             }
 
-            if ($p->getIntervenant() === null) {
+            if (null === $p->getIntervenant()) {
                 $inter = '';
-            } else if ($taille === 0) {
+            } elseif (0 === $taille) {
                 $inter = $p->getIntervenant()->getNom();
             } else {
-                $inter = substr($p->getIntervenant()->getNom(), 0, $taille);
+                $inter = mb_substr($p->getIntervenant()->getNom(), 0, $taille);
             }
-
 
             $tab[$p->getSemestre()->getId()][$debut][$p->getGroupe()]['texte'] = $this->isEvaluation($p) . '<br />' . $p->getSalle() . '<br />' . $inter . '<br />' . $p->getDisplayGroupe();
             $tab[$p->getSemestre()->getId()][$debut][$p->getGroupe()]['commentaire'] = $this->hasCommentaire($p);
@@ -593,19 +532,13 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
         return $tab;
     }
 
-    /**
-     * @param EdtPlanning|null $pl
-     *
-     * @return array|null
-     */
     public function transformeDetails(?EdtPlanning $pl): ?array
     {
-        if ($pl !== null) {
+        if (null !== $pl) {
             $t = [];
-            $t['matiere'] = $pl->getMatiere() !== null ? $pl->getMatiere()->getDisplay() : $pl->getTexte();
+            $t['matiere'] = null !== $pl->getMatiere() ? $pl->getMatiere()->getDisplay() : $pl->getTexte();
 
-
-            if ($pl->getIntervenant() !== null) {
+            if (null !== $pl->getIntervenant()) {
                 $t['enseignant'] = $pl->getIntervenant()->getDisplayPr();
             } else {
                 $t['enseignant'] = '';
@@ -622,15 +555,15 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
                     break;
                 case TypeGroupe::TYPE_GROUPE_TD:
                     $t['type'] = 'Travaux Dirigés';
-                    $t['groupes'] = chr($pl->getGroupe() + 64) . chr($pl->getGroupe() + 65);
+                    $t['groupes'] = \chr($pl->getGroupe() + 64) . \chr($pl->getGroupe() + 65);
                     break;
                 case TypeGroupe::TYPE_GROUPE_TP:
                     $t['type'] = 'Travaux Pratiques';
-                    $t['groupes'] = chr($pl->getGroupe() + 64);
+                    $t['groupes'] = \chr($pl->getGroupe() + 64);
                     break;
             }
 
-            if ($pl->getEvaluation() === 'O') {
+            if ('O' === $pl->getEvaluation()) {
                 $t['evaluation'] = 'Ce cours est une évaluation !';
             } else {
                 $t['evaluation'] = '';
@@ -646,11 +579,11 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
         int $semaine,
         Semestre $semestre,
         AnneeUniversitaire $anneeUniversitaire
-    ): MyEdtIntranet {
+    ): self {
         $this->semestre = $semestre;
         $this->init($anneeUniversitaire, 'promo', $semestre->getId(), $semaine);
         $this->semaines = $this->calculSemaines();
-        $this->calculEdt();//todo: pour des datas en BDD sasn scelcat. Ajouter test.
+        $this->calculEdt(); //todo: pour des datas en BDD sasn scelcat. Ajouter test.
 
         return $this;
     }
@@ -663,18 +596,16 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
         $pl->setSemaine($request->request->get('semaine'));
 
         return $this->updatePl($request, $pl);
-
     }
 
     public function updateCours(Request $request, EdtPlanning $plann)
     {
-
         return $this->updatePl($request, $plann);
     }
 
     private function updatePl($request, EdtPlanning $plann)
     {
-        if ($request->request->get('texte') !== '') {
+        if ('' !== $request->request->get('texte')) {
             $plann->setTexte($request->request->get('texte'));
             $plann->setMatiere(null);
         } else {
@@ -682,7 +613,7 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
             $plann->setMatiere($module);
         }
 
-        if ($request->request->get('selectenseignant') !== '' && $request->request->get('selectenseignant') !== null) {
+        if ('' !== $request->request->get('selectenseignant') && null !== $request->request->get('selectenseignant')) {
             $pr = $this->personnelRepository->find($request->request->get('selectenseignant'));
         } else {
             $pr = null;
@@ -708,7 +639,6 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
                 break;
         }
 
-
         $this->entityManager->persist($plann);
         $this->entityManager->flush();
 
@@ -725,33 +655,31 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
         $this->tab[$p->getJour()][$this->convertEdt($casedebut)]['format'] = 'aie';
 
         //regarde si le format entre dans une case ou dépasse. retourne 'ok' ou 'nok'
-        if (array_key_exists($casedebut, Constantes::TAB_CRENEAUX) && $duree % 3 === 0) {
+        if (\array_key_exists($casedebut, Constantes::TAB_CRENEAUX) && 0 === $duree % 3) {
             $this->tab[$p->getJour()][$idDebut]['format'] = 'ok';
 
-            if ($duree % 3 === 0) {
-                for ($i = 1; $i < $duree / 3; $i++) {
+            if (0 === $duree % 3) {
+                for ($i = 1; $i < $duree / 3; ++$i) {
                     $this->tab[$p->getJour()][$this->convertEdt($casedebut + ($i * 3))] = $this->tab[$p->getJour()][$idDebut];
                 }
             }
         } else {
             //pas sur un créneau classique pour le début
-            if ($casedebut === 11 || $casedebut === 12) {
+            if (11 === $casedebut || 12 === $casedebut) {
                 $casedebut = 10;
-            } else if ($casedebut === 2 || $casedebut === 3) {
+            } elseif (2 === $casedebut || 3 === $casedebut) {
                 $casedebut = 1;
-            } else if (!array_key_exists($casedebut, Constantes::TAB_CRENEAUX)) {
+            } elseif (!\array_key_exists($casedebut, Constantes::TAB_CRENEAUX)) {
                 $casedebut -= ($duree % 3);
             }
 
-            if ($idDebut !== null) {
+            if (null !== $idDebut) {
                 $this->tab[$p->getJour()][$this->convertEdt($casedebut)] = $this->tab[$p->getJour()][$idDebut];
             }
 
             $this->tab[$p->getJour()][$this->convertEdt($casedebut)]['debut'] = $p->getDebut();
             $this->tab[$p->getJour()][$this->convertEdt($casedebut)]['format'] = 'nok';
             $this->tab[$p->getJour()][$this->convertEdt($casedebut)]['fin'] = $casefin;
-
         }
     }
-
 }

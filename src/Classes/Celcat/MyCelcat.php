@@ -1,19 +1,17 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Celcat/MyCelcat.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 27/01/2021 15:43
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Celcat/MyCelcat.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
-/**
- * Created by PhpStorm.
- * User: davidannebicque
- * Date: 14/02/2019
- * Time: 12:49
+/*
+ * Pull your hearder here, for exemple, Licence header.
  */
 
 namespace App\Classes\Celcat;
-
 
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Calendrier;
@@ -23,7 +21,6 @@ use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Component\HttpFoundation\Request;
 
 class MyCelcat
 {
@@ -35,16 +32,12 @@ class MyCelcat
 
     /**
      * MyCelcat constructor.
-     *
-     * @param EntityManagerInterface $entityManger
-     * @param ParameterBagInterface  $parameterBag
      */
     public function __construct(EntityManagerInterface $entityManger, ParameterBagInterface $parameterBag)
     {
         $this->entityManger = $entityManger;
         $this->parameterBag = $parameterBag;
     }
-
 
     private function connect()
     {
@@ -55,8 +48,6 @@ class MyCelcat
     }
 
     /**
-     * @param AnneeUniversitaire $anneeUniversitaire
-     *
      * @throws Exception
      */
     public function getCalendar(AnneeUniversitaire $anneeUniversitaire): void
@@ -91,23 +82,18 @@ class MyCelcat
             $dept['code'] = odbc_result($results, 'dept_id');
             $departements[] = $dept;
         }
+
         return $departements;
     }
 
     /**
-     * @param int                     $codeCelcatDepartement
-     * @param AnneeUniversitaire|null $anneeUniversitaire
-     *
      * @throws Exception
      */
     public function getEvents(
         int $codeCelcatDepartement,
         ?AnneeUniversitaire $anneeUniversitaire
-    ): void
-    {
-        if ($anneeUniversitaire !== null) {
-
-
+    ): void {
+        if (null !== $anneeUniversitaire) {
             $this->connect();
             $query = 'SELECT CT_EVENT.event_id, CT_EVENT.day_of_week, CT_EVENT.start_time, CT_EVENT.end_time, CT_EVENT.weeks, CT_EVENT_CAT.name, CT_VIEW_EVENT_MODULE001.resourcecode, CT_VIEW_EVENT_MODULE001.resourcename, CT_VIEW_EVENT_STAFF001.resourcecode, CT_VIEW_EVENT_STAFF001.resourcename, CT_VIEW_EVENT_ROOM001.resourcecode, CT_VIEW_EVENT_ROOM001.resourcename, CT_VIEW_EVENT_GROUP001.resourcecode, CT_VIEW_EVENT_GROUP001.resourcename, CT_EVENT.date_change FROM CT_EVENT INNER JOIN CT_EVENT_CAT ON CT_EVENT_CAT.event_cat_id = CT_EVENT.event_cat_id INNER JOIN CT_VIEW_EVENT_STAFF001 ON CT_VIEW_EVENT_STAFF001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_GROUP001 ON CT_VIEW_EVENT_GROUP001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_MODULE001 ON CT_VIEW_EVENT_MODULE001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_ROOM001 ON CT_VIEW_EVENT_ROOM001.eid=CT_EVENT.event_id WHERE dept_id=? ORDER BY CT_EVENT.date_change DESC, CT_EVENT.event_id DESC';
 
@@ -120,12 +106,12 @@ class MyCelcat
                 //Et on ecrit la nouvelle version ou la nouvelle ligne
                 $debut = explode(' ', odbc_result($result, 3));
                 $fin = explode(' ', odbc_result($result, 4));
-                $type = substr(odbc_result($result, 6), 1, -1);
+                $type = mb_substr(odbc_result($result, 6), 1, -1);
                 $semaines = odbc_result($result, 5);
-                $lg = strlen($semaines);
+                $lg = mb_strlen($semaines);
 
-                for ($i = 0; $i < $lg; $i++) {
-                    if ($semaines[$i] === 'Y' || $semaines[$i] === 'y') {
+                for ($i = 0; $i < $lg; ++$i) {
+                    if ('Y' === $semaines[$i] || 'y' === $semaines[$i]) {
                         $semaine = $i;
                         $event = new CelcatEvent();
                         $event->setAnneeUniversitaire($anneeUniversitaire);
@@ -172,7 +158,7 @@ INNER JOIN CT_STUDENT ON CT_STUDENT.student_id=CT_GROUP_STUDENT.student_id WHERE
             // Vérifier si l'event est déjà dans l'intranet
             $gr = odbc_result($result, 1);
             $etu = odbc_result($result, 2);
-            if (array_key_exists($etu, $etudiants) && array_key_exists($gr, $groupes)) {
+            if (\array_key_exists($etu, $etudiants) && \array_key_exists($gr, $groupes)) {
                 $etudiants[$etu]->addGroupe($groupes[$gr]);
                 $groupes[$etu]->addEtudiant($etudiants[$gr]);
             }

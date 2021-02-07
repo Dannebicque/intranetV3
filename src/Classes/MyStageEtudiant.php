@@ -1,15 +1,14 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyStageEtudiant.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 12/12/2020 14:31
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyStageEtudiant.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
-/**
- * Created by PhpStorm.
- * User: davidannebicque
- * Date: 06/08/2018
- * Time: 15:49
+/*
+ * Pull your hearder here, for exemple, Licence header.
  */
 
 namespace App\Classes;
@@ -39,11 +38,6 @@ class MyStageEtudiant
 
     /**
      * MyStageEtudiant constructor.
-     *
-     * @param Configuration            $configuration
-     * @param EntityManagerInterface   $entityManager
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param StageEtudiantRepository  $stageEtudiantRepository
      */
     public function __construct(
         Configuration $configuration,
@@ -58,9 +52,7 @@ class MyStageEtudiant
     }
 
     /**
-     * @param StagePeriode $stagePeriode
-     * @param Etudiant     $etudiant
-     * @param              $etat
+     * @param $etat
      *
      * @throws NonUniqueResultException
      */
@@ -125,19 +117,16 @@ class MyStageEtudiant
 
         $event = new StageEvent($this->stageEtudiant);
 
-        if ($eventNotif !== '') {
+        if ('' !== $eventNotif) {
             $this->eventDispatcher->dispatch($event, $eventNotif);
         }
-
     }
 
     /**
-     * @param StagePeriode $stagePeriode
-     * @param Etudiant     $etudiant
-     *
      * @return StageEtudiant|mixed
-     * @throws NonUniqueResultException
      * @throws Exception
+     *
+     * @throws NonUniqueResultException
      */
     private function checkStageEtudiantExist(StagePeriode $stagePeriode, Etudiant $etudiant)
     {
@@ -147,10 +136,6 @@ class MyStageEtudiant
     }
 
     /**
-     * @param StagePeriode $stagePeriode
-     * @param Etudiant     $etudiant
-     *
-     * @return StageEtudiant
      * @throws Exception
      */
     private function createStageEtudiant(StagePeriode $stagePeriode, Etudiant $etudiant): StageEtudiant
@@ -169,30 +154,27 @@ class MyStageEtudiant
     }
 
     /**
-     * @param StageEtudiant $stageEtudiant
-     * @param               $name
-     * @param               $value
-     * @param string        $type
+     * @param        $name
+     * @param        $value
+     * @param string $type
      *
-     * @return bool
      * @throws Exception
      */
     public function update(StageEtudiant $stageEtudiant, $name, $value, $type = 'text'): bool
     {
-        if ($type === 'date') {
+        if ('date' === $type) {
             $value = Tools::convertDateToObject($value);
         }
 
-        if ($type === 'gratificationPeriode') {
-            $value = strtoupper(substr($value, 0, 1));
+        if ('gratificationPeriode' === $type) {
+            $value = mb_strtoupper(mb_substr($value, 0, 1));
         }
 
-        if ($type === 'gratificationMontant') {
+        if ('gratificationMontant' === $type) {
             $value = Tools::convertToFloat($value);
         }
 
         if ($stageEtudiant) {
-
             $method = 'set' . $name;
             if (method_exists($stageEtudiant, $method)) {
                 $stageEtudiant->$method($value);

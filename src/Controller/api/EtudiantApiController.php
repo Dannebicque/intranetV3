@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/api/EtudiantApiController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 30/07/2020 14:08
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/api/EtudiantApiController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller\api;
 
@@ -16,11 +18,10 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use function count;
 
 /**
- * Class AgendaController
- * @package App\Controller
+ * Class AgendaController.
+ *
  * @Route("/api/etudiant")
  */
 class EtudiantApiController extends BaseController
@@ -30,8 +31,6 @@ class EtudiantApiController extends BaseController
 
     /**
      * EtudiantApiController constructor.
-     *
-     * @param EtudiantRepository $etudiantRepository
      */
     public function __construct(EtudiantRepository $etudiantRepository)
     {
@@ -40,9 +39,6 @@ class EtudiantApiController extends BaseController
 
     /**
      * @Route("/semestre/{semestre}", name="api_etudiants_semestre", options={"expose":true})
-     * @param Semestre $semestre
-     *
-     * @return JsonResponse
      */
     public function trombinoscopeEtudiantsAjax(Semestre $semestre): JsonResponse
     {
@@ -65,28 +61,25 @@ class EtudiantApiController extends BaseController
     }
 
     /**
-     * @param Request $request
-     *
-     * @return Response
      * @Route("/departement", name="api_etudiant_departement", options={"expose":true})
+     *
      * @throws InvalidArgumentException
      */
     public function getEtudiantsByDepartement(Request $request): Response
     {
         $length = $request->get('length');
-        $length = $length && ($length !== -1) ? $length : 0;
+        $length = $length && (-1 !== $length) ? $length : 0;
 
         $start = $request->get('start');
-        $start = $length ? ($start && ($start !== -1) ? $start : 0) / $length : 0;
+        $start = $length ? ($start && (-1 !== $start) ? $start : 0) / $length : 0;
 
         $order = $request->get('order');
 
         $search = $request->get('search');
         $filters = [
             'query' => $search['value'],
-            'order' => $order
+            'order' => $order,
         ];
-
 
         $users = $this->etudiantRepository->getArrayEtudiantsByDepartement(
             $this->dataUserSession->getDepartementId(),
@@ -98,18 +91,18 @@ class EtudiantApiController extends BaseController
         $output = [
             'draw'            => $request->get('draw'),
             'data'            => $users,
-            'recordsFiltered' => count($this->etudiantRepository->getByDepartement(
+            'recordsFiltered' => \count($this->etudiantRepository->getByDepartement(
                 $this->dataUserSession->getDepartementId(),
                 $filters,
                 0,
                 false
             )),
-            'recordsTotal'    => count($this->etudiantRepository->getByDepartement(
+            'recordsTotal'    => \count($this->etudiantRepository->getByDepartement(
                 $this->dataUserSession->getDepartementId(),
                 [],
                 0,
                 false
-            ))
+            )),
         ];
 
         return $this->json($output, Response::HTTP_OK);

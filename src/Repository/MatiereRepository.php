@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/MatiereRepository.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 08/12/2020 08:27
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/MatiereRepository.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:08
+ */
 
 namespace App\Repository;
 
@@ -14,8 +16,8 @@ use App\Entity\Matiere;
 use App\Entity\Semestre;
 use App\Entity\Ue;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method Matiere|null find($id, $lockMode = null, $lockVersion = null)
@@ -27,19 +29,12 @@ class MatiereRepository extends ServiceEntityRepository
 {
     /**
      * MatiereRepository constructor.
-     *
-     * @param ManagerRegistry $registry
      */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Matiere::class);
     }
 
-    /**
-     * @param Semestre $semestre
-     *
-     * @return mixed
-     */
     public function findBySemestre(Semestre $semestre)
     {
         return $this->findBySemestreBuilder($semestre)
@@ -49,8 +44,6 @@ class MatiereRepository extends ServiceEntityRepository
 
     /**
      * @param $departement
-     *
-     * @return QueryBuilder
      */
     public function findByDepartementBuilder(Departement $departement): QueryBuilder
     {
@@ -66,11 +59,6 @@ class MatiereRepository extends ServiceEntityRepository
             ->addOrderBy('m.libelle', 'ASC');
     }
 
-    /**
-     * @param Semestre $semestre
-     *
-     * @return QueryBuilder
-     */
     public function findBySemestreBuilder(Semestre $semestre): QueryBuilder
     {
         return $this->createQueryBuilder('m')
@@ -88,11 +76,6 @@ class MatiereRepository extends ServiceEntityRepository
         return $this->findByDepartementBuilder($departement)->getQuery()->getResult();
     }
 
-    /**
-     * @param Diplome $diplome
-     *
-     * @return array
-     */
     public function tableauMatieresApogees(Diplome $diplome): array
     {
         $query = $this->createQueryBuilder('m')
@@ -106,7 +89,7 @@ class MatiereRepository extends ServiceEntityRepository
 
         $t = [];
 
-        /** @var  $q Matiere */
+        /** @var $q Matiere */
         foreach ($query as $q) {
             $t[$q->getCodeElement()] = $q;
         }
@@ -141,14 +124,13 @@ class MatiereRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
 
-        $t = array();
+        $t = [];
 
-        /** @var  $q Matiere */
+        /** @var $q Matiere */
         foreach ($query as $q) {
             $t[$q->getCodeMatiere()] = $q;
         }
 
         return $t;
     }
-
 }

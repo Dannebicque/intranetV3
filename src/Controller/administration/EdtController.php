@@ -1,15 +1,18 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 19/12/2020 15:11
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
 
 namespace App\Controller\administration;
 
-use App\Controller\BaseController;
-use App\Classes\Edt\MyEdtIntranet;
 use App\Classes\Edt\MyEdtCelcat;
+use App\Classes\Edt\MyEdtIntranet;
+use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Repository\GroupeRepository;
 use App\Repository\MatiereRepository;
@@ -19,8 +22,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class EdtController
- * @package App\Controller\administration
+ * Class EdtController.
+ *
  * @Route("/administration/emploi-du-temps")
  */
 class EdtController extends BaseController
@@ -31,15 +34,13 @@ class EdtController extends BaseController
      * @param int    $semaine
      * @param string $valeur
      * @param string $filtre
-     *
-     * @return Response
      */
     public function index($semaine = 0, $valeur = '', $filtre = ''): Response
     {
         return $this->render('administration/edt/index.html.twig', [
             'semaine' => $semaine,
             'valeur'  => $valeur,
-            'filtre'  => $filtre
+            'filtre'  => $filtre,
         ]);
     }
 
@@ -52,16 +53,10 @@ class EdtController extends BaseController
     }
 
     /**
-     * @param PersonnelRepository $personnelRepository
-     * @param MatiereRepository   $matiereRepository
-     * @param SalleRepository     $salleRepository
-     * @param GroupeRepository    $groupeRepository
-     * @param MyEdtIntranet       $myEdt
-     * @param                     $semaine
-     * @param                     $valeur
-     * @param                     $filtre
+     * @param $semaine
+     * @param $valeur
+     * @param $filtre
      *
-     * @return Response
      * @Route("/ajax-update/{filtre}/{valeur}/{semaine}", name="administration_edt_ajax_update",
      *                                                    options={"expose"=true})
      */
@@ -74,13 +69,11 @@ class EdtController extends BaseController
         $semaine,
         $valeur,
         $filtre
-    ): Response
-    {
+    ): Response {
         $edt = $myEdt->initAdministration($this->dataUserSession->getDepartement(), $semaine, $filtre,
             $valeur, $this->dataUserSession->getAnneeUniversitaire());
 
         switch ($filtre) {
-
             case 'prof':
                 return $this->render('administration/edt/_edt-prof.html.twig', [
                     'prof'       => $personnelRepository->find($valeur),
@@ -89,7 +82,7 @@ class EdtController extends BaseController
                     'salles'     => $salleRepository->findAll(),
                     'matieres'   => $matiereRepository->findByDepartement($this->dataUserSession->getDepartement()),
                     'edt'        => $edt,
-                    'tabHeures' => Constantes::TAB_HEURES_EDT
+                    'tabHeures'  => Constantes::TAB_HEURES_EDT,
                 ]);
 
             case 'module':
@@ -118,21 +111,10 @@ class EdtController extends BaseController
                     'matieres'   => $matiereRepository->findByDepartement($this->dataUserSession->getDepartement()),
                     'edt'        => $edt,
                     'groupes'    => $groupeRepository->findGroupeSemestreEdt($edt->getSemestre()),
-
                 ]);
         }
-
-
     }
 
-    /**
-     * @param PersonnelRepository $personnelRepository
-     * @param MatiereRepository   $matiereRepository
-     * @param SalleRepository     $salleRepository
-     * @param MyEdtCelcat         $myEdtCelcat
-     *
-     * @return Response
-     */
     public function edtCelcat(
         PersonnelRepository $personnelRepository,
         MatiereRepository $matiereRepository,
@@ -143,7 +125,7 @@ class EdtController extends BaseController
             'personnels' => $personnelRepository->findByDepartement($this->dataUserSession->getDepartement()),
             'salles'     => $salleRepository->findAll(),
             'matieres'   => $matiereRepository->findByDepartement($this->dataUserSession->getDepartement()),
-            'edt'        => $myEdtCelcat->initAdministration()
+            'edt'        => $myEdtCelcat->initAdministration(),
         ]);
     }
 }

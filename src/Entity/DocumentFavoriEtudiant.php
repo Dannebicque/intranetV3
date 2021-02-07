@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/DocumentFavoriEtudiant.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 30/07/2020 13:04
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/DocumentFavoriEtudiant.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:49
+ */
 
 namespace App\Entity;
 
@@ -19,20 +21,16 @@ class DocumentFavoriEtudiant extends DocumentFavori
      */
     private $etudiant;
 
-
     /**
      * EmpruntEtudiant constructor.
      *
-     * @param          $etudiant
-     *
-     * @param Document $document
+     * @param $etudiant
      */
     public function __construct($etudiant, Document $document)
     {
         $this->etudiant = $etudiant;
         $this->setDocument($document);
     }
-
 
     public function getEtudiant(): ?Etudiant
     {

@@ -1,21 +1,23 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EvaluationController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 12/01/2021 14:57
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EvaluationController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
 
 namespace App\Controller\administration;
 
+use App\Classes\MyEvaluation;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Evaluation;
 use App\Entity\Matiere;
 use App\Entity\Semestre;
 use App\Form\EvaluationType;
-use App\Classes\MyEvaluation;
 use App\Repository\EvaluationRepository;
-use App\Repository\GroupeRepository;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -28,8 +30,8 @@ use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
 /**
- * Class EvaluationController
- * @package App\Controller\administration
+ * Class EvaluationController.
+ *
  * @Route("/administration/evaluation")
  */
 class EvaluationController extends BaseController
@@ -37,8 +39,6 @@ class EvaluationController extends BaseController
     /**
      * @Route("/details/{uuid}", name="administration_evaluation_show", methods="GET|POST")
      * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
-     * @param MyEvaluation $myEvaluation
-     * @param Evaluation   $evaluation
      *
      * @return RedirectResponse|Response
      */
@@ -48,21 +48,21 @@ class EvaluationController extends BaseController
 
         return $this->render('administration/evaluation/show.html.twig', [
             'evaluation' => $evaluation,
-            'notes'      => $notes
+            'notes'      => $notes,
         ]);
     }
 
     /**
      * @Route("/export/{uuid}.{_format}", name="administration_evaluation_export", methods="GET")
      * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
-     * @param MyEvaluation $myEvaluation
-     * @param Evaluation   $evaluation
-     * @param              $_format
+     *
+     * @param $_format
      *
      * @return RedirectResponse|Response
-     * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
+     *
+     * @throws LoaderError
      */
     public function exportEvaluation(
         MyEvaluation $myEvaluation,
@@ -77,12 +77,10 @@ class EvaluationController extends BaseController
 
     /**
      * @Route("/ajouter/{matiere}", name="administration_evaluation_create", methods="GET|POST")
-     * @param Request $request
      *
-     * @param Matiere $matiere
+     * @throws Exception
      *
      * @return RedirectResponse|Response
-     * @throws Exception
      */
     public function create(Request $request, Matiere $matiere)
     {
@@ -98,8 +96,8 @@ class EvaluationController extends BaseController
                 'autorise'          => true,
                 'locale'            => $request->getLocale(),
                 'attr'              => [
-                    'data-provide' => 'validation'
-                ]
+                    'data-provide' => 'validation',
+                ],
             ]
         );
         $form->handleRequest($request);
@@ -118,17 +116,13 @@ class EvaluationController extends BaseController
 
         return $this->render('administration/evaluation/create.html.twig', [
             'form'    => $form->createView(),
-            'matiere' => $matiere
+            'matiere' => $matiere,
         ]);
     }
 
     /**
      * @Route("/saisie/etape-2/{uuid}", name="administration_note_saisie_2")
-     * @param MyEvaluation $myEvaluation
-     * @param Evaluation   $evaluation
      * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
-     *
-     * @return Response
      */
     public function saisieNotes(MyEvaluation $myEvaluation, Evaluation $evaluation): Response
     {
@@ -141,11 +135,8 @@ class EvaluationController extends BaseController
     }
 
     /**
-     * @param EvaluationRepository $evaluationRepository
-     * @param                      $etat
-     * @param Semestre             $semestre
+     * @param $etat
      *
-     * @return RedirectResponse
      * @Route("/visibilite/semestre/{semestre}/{etat}", name="administration_evaluation_visibilite_all",
      *                                                  methods={"GET"})
      */
@@ -156,10 +147,9 @@ class EvaluationController extends BaseController
     ): RedirectResponse {
         $evals = $evaluationRepository->findBySemestre($semestre, $this->dataUserSession->getAnneeUniversitaire());
 
-
         /** @var Evaluation $eval */
         foreach ($evals as $eval) {
-            $eval->setVisible($etat === 'visible');
+            $eval->setVisible('visible' === $etat);
             $this->entityManager->persist($eval);
         }
 
@@ -171,11 +161,8 @@ class EvaluationController extends BaseController
     }
 
     /**
-     * @param EvaluationRepository $evaluationRepository
-     * @param                      $etat
-     * @param Semestre             $semestre
+     * @param $etat
      *
-     * @return RedirectResponse
      * @Route("/modifiable/semestre/{semestre}/{etat}", name="administration_evaluation_modifiable_all",
      *                                                  methods={"GET"})
      */
@@ -188,7 +175,7 @@ class EvaluationController extends BaseController
 
         /** @var Evaluation $eval */
         foreach ($evals as $eval) {
-            $eval->setModifiable($etat === 'autorise');
+            $eval->setModifiable('autorise' === $etat);
             $this->entityManager->persist($eval);
         }
 
@@ -200,10 +187,6 @@ class EvaluationController extends BaseController
     }
 
     /**
-     *
-     * @param Evaluation $evaluation
-     *
-     * @return Response
      * @Route("/modifiable/{uuid}", name="administration_evaluation_modifiable", methods={"GET"},
      *                                    options={"expose":true})
      * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
@@ -217,11 +200,8 @@ class EvaluationController extends BaseController
     }
 
     /**
-     *
-     * @param Evaluation $evaluation
      * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
      *
-     * @return Response
      * @Route("/visibilite/{uuid}", name="administration_evaluation_visibilite", methods={"GET"},
      *                                    options={"expose":true})
      */
@@ -235,13 +215,8 @@ class EvaluationController extends BaseController
 
     /**
      * @Route("/{uuid}", name="administration_evaluation_delete", methods="DELETE")
-     * @param MyEvaluation $myEvaluation
-     * @param Request      $request
-     * @param Evaluation   $evaluation
      *
-     * @return Response
      * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
-     *
      */
     public function delete(MyEvaluation $myEvaluation, Request $request, Evaluation $evaluation): Response
     {

@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Form/EvaluationType.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 19/12/2020 15:00
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/EvaluationType.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Form;
 
@@ -26,18 +28,13 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class EvaluationType
- * @package App\Form
+ * Class EvaluationType.
  */
 class EvaluationType extends AbstractType
 {
     private Departement $departement;
     private Semestre $semestre;
 
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->departement = $options['departement'];
@@ -62,10 +59,11 @@ class EvaluationType extends AbstractType
                     },
                 ])
             ->add('libelle', TextType::class,
-                ['label'    => 'label.libelle_evaluation',
-                 'help'     => 'help.libelle_evaluation',
-                 'required' => false,
-                 'disabled' => $autorise
+                [
+                    'label'    => 'label.libelle_evaluation',
+                    'help'     => 'help.libelle_evaluation',
+                    'required' => false,
+                    'disabled' => $autorise,
                 ])
             ->add('dateEvaluation', DateType::class, [
                 'label'    => 'label.date_evaluation',
@@ -73,7 +71,7 @@ class EvaluationType extends AbstractType
                 'widget'   => 'single_text',
                 'html5'    => false,
                 'disabled' => $autorise,
-                'attr'     => ['data-provide' => 'datepicker', 'data-language' => $locale]
+                'attr'     => ['data-provide' => 'datepicker', 'data-language' => $locale],
             ])
             ->add('coefficient', TextType::class,
                 ['label' => 'label.coefficient', 'help' => 'help.coefficient', 'disabled' => $autorise])
@@ -91,7 +89,7 @@ class EvaluationType extends AbstractType
                 'required'      => true,
                 'expanded'      => false,
                 'multiple'      => false,
-                'disabled' => !($matiereDisabled && $autorise)
+                'disabled'      => !($matiereDisabled && $autorise),
             ])
             ->add('typeGroupe', EntityType::class, [
                 'class'         => TypeGroupe::class,
@@ -117,18 +115,15 @@ class EvaluationType extends AbstractType
                 },
                 'required'      => true,
                 'expanded'      => true,
-                'multiple'      => true
+                'multiple'      => true,
             ])//->add('parent')
         ;
 
-        if ($import === true) {
+        if (true === $import) {
             $builder->add('fichier_import', FileType::class, ['mapped' => false]);
         }
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
@@ -140,8 +135,7 @@ class EvaluationType extends AbstractType
             'personnelDisabled'  => null,
             'autorise'           => null,
             'translation_domain' => 'form',
-            'locale'             => 'fr'
-
+            'locale'             => 'fr',
         ]);
     }
 }

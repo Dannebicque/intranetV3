@@ -1,12 +1,18 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/ComparePrevisionnel/ComparePrevisonnelMatiere.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 26/09/2020 08:34
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/ComparePrevisionnel/ComparePrevisonnelMatiere.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:05
+ */
+
+/*
+ * Pull your hearder here, for exemple, Licence header.
+ */
+
 
 namespace App\Classes\ComparePrevisionnel;
-
 
 use App\Entity\Departement;
 use App\Entity\Matiere;
@@ -43,37 +49,30 @@ class ComparePrevisonnelMatiere extends ComparePrevisionnel
     }
 
     /**
-     * @param Departement $departement
-     * @param             $annee
-     *
-     * @param             $source
-     *
-     * @return array
+     * @param $annee
+     * @param $source
      */
     public function compareEdtPreviMatiere(Departement $departement, $annee, $source): array
     {
         $this->matieres = $this->matiereRepository->findByDepartement($departement);
         $previsonnel = $this->previsionnelRepository->findByDepartement($departement, $annee);
 
-        if ($source === 'intranet') {
+        if ('intranet' === $source) {
             $planning = $this->edtPlanningRepository->findByDepartement($departement);
-        } else {
-
         }
 
         $t = [];
 
-        /** @var Matiere $module */
+        /* @var Matiere $module */
         foreach ($this->matieres as $matiere) {
             $t[$matiere->getId()] = [];
         }
 
-        /** @var  $p Previsionnel */
+        /** @var $p Previsionnel */
         foreach ($previsonnel as $p) {
-            if (($p !== null && $p->getMatiere() !== null && $p->getPersonnel() !== null) &&
-                array_key_exists($p->getMatiere()->getId(), $t)) {
-                if (!array_key_exists($p->getPersonnel()->getId(), $t[$p->getMatiere()->getId()])) {
-
+            if ((null !== $p && null !== $p->getMatiere() && null !== $p->getPersonnel()) &&
+                \array_key_exists($p->getMatiere()->getId(), $t)) {
+                if (!\array_key_exists($p->getPersonnel()->getId(), $t[$p->getMatiere()->getId()])) {
                     $t[$p->getMatiere()->getId()][$p->getPersonnel()->getId()]['personnel'] = $p->getPersonnel();
                     $t[$p->getMatiere()->getId()][$p->getPersonnel()->getId()]['nbCMPrevi'] = 0;
                     $t[$p->getMatiere()->getId()][$p->getPersonnel()->getId()]['nbTDPrevi'] = 0;
@@ -81,7 +80,6 @@ class ComparePrevisonnelMatiere extends ComparePrevisionnel
                     $t[$p->getMatiere()->getId()][$p->getPersonnel()->getId()]['nbCMEDT'] = 0;
                     $t[$p->getMatiere()->getId()][$p->getPersonnel()->getId()]['nbTDEDT'] = 0;
                     $t[$p->getMatiere()->getId()][$p->getPersonnel()->getId()]['nbTPEDT'] = 0;
-
                 }
 
                 $t[$p->getMatiere()->getId()][$p->getPersonnel()->getId()]['nbCMPrevi'] += $p->getNbHCM();
@@ -91,10 +89,10 @@ class ComparePrevisonnelMatiere extends ComparePrevisionnel
         }
 
         foreach ($planning as $pl) {
-            if ($pl->getMatiere() !== null &&
-                $pl->getIntervenant() !== null &&
-                array_key_exists($pl->getMatiere()->getId(), $t)) {
-                if (!array_key_exists($pl->getIntervenant()->getId(), $t[$pl->getMatiere()->getId()])) {
+            if (null !== $pl->getMatiere() &&
+                null !== $pl->getIntervenant() &&
+                \array_key_exists($pl->getMatiere()->getId(), $t)) {
+                if (!\array_key_exists($pl->getIntervenant()->getId(), $t[$pl->getMatiere()->getId()])) {
                     $t[$pl->getMatiere()->getId()][$pl->getIntervenant()->getId()]['personnel'] = $pl->getIntervenant();
                     $t[$pl->getMatiere()->getId()][$pl->getIntervenant()->getId()]['nbCMPrevi'] = 0;
                     $t[$pl->getMatiere()->getId()][$pl->getIntervenant()->getId()]['nbTDPrevi'] = 0;
@@ -131,6 +129,4 @@ class ComparePrevisonnelMatiere extends ComparePrevisionnel
     {
         return $this->matieres;
     }
-
-
 }

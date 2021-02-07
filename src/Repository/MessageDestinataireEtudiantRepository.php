@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/MessageDestinataireEtudiantRepository.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 16/08/2020 16:45
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/MessageDestinataireEtudiantRepository.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Repository;
 
@@ -12,9 +14,9 @@ use App\Entity\Etudiant;
 use App\Entity\Message;
 use App\Entity\MessageDestinataireEtudiant;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
-use Doctrine\ORM\NonUniqueResultException;
 
 /**
  * @method MessageDestinataireEtudiant|null find($id, $lockMode = null, $lockVersion = null)
@@ -69,6 +71,7 @@ class MessageDestinataireEtudiantRepository extends ServiceEntityRepository
      *
      * @return mixed
      * @throws NonUniqueResultException
+     *
      */
     public function findDest(Etudiant $user, Message $message): ?MessageDestinataireEtudiant
     {
@@ -82,9 +85,6 @@ class MessageDestinataireEtudiantRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Etudiant $user
-     *
-     * @return mixed
      * @throws NonUniqueResultException
      * @throws NoResultException
      */

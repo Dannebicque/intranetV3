@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/DocumentController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 11/10/2020 12:15
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/DocumentController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller;
 
@@ -16,8 +18,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class DocumentController
- * @package App\Controller
+ * Class DocumentController.
+ *
  * @Route("/document")
  */
 class DocumentController extends BaseController
@@ -33,24 +35,17 @@ class DocumentController extends BaseController
 
     /**
      * @Route("/ajax/typedocument", name="typedocument_ajax", options={"expose": true})
-     * @param TypeDocumentRepository $typeDocumentRepository
-     *
-     * @return Response
      */
     public function typeDocument(TypeDocumentRepository $typeDocumentRepository): Response
     {
         $typeDocuments = $typeDocumentRepository->findByDepartement($this->getDepartement());
 
         return $this->render('document/typedocument.html.twig', [
-            'typedocuments' => $typeDocuments
+            'typedocuments' => $typeDocuments,
         ]);
     }
 
     /**
-     *
-     * @param MyDocument $myDocument
-     *
-     * @return Response
      * @Route("/ajax/document/favori", name="document_ajax_favori", options={"expose": true})
      */
     public function documentsFavoris(MyDocument $myDocument): Response
@@ -60,17 +55,13 @@ class DocumentController extends BaseController
 
         return $this->render('document/documents.html.twig', [
             'documents'     => $documents,
-            'listesFavoris' => $idDocuments
+            'listesFavoris' => $idDocuments,
         ]);
     }
 
     /**
-     * @param MyDocument         $myDocument
-     * @param DocumentRepository $documentRepository
+     * @param $typedocument
      *
-     * @param                    $typedocument
-     *
-     * @return Response
      * @Route("/ajax/document/{typedocument}", name="document_ajax", options={"expose": true})
      */
     public function documents(MyDocument $myDocument, DocumentRepository $documentRepository, $typedocument): Response
@@ -80,18 +71,13 @@ class DocumentController extends BaseController
 
         return $this->render('document/documents.html.twig', [
             'documents'     => $documents,
-            'listesFavoris' => $idDocuments
+            'listesFavoris' => $idDocuments,
         ]);
     }
-
 
     /**
      * @Route("/ajax/add-favori/{document}", name="document_add_favori", options={"expose": true})
      * @ParamConverter("document", options={"mapping": {"document": "uuid"}})
-     * @param MyDocument $myDocument
-     * @param Document   $document
-     *
-     * @return Response
      */
     public function addFavori(MyDocument $myDocument, Document $document): Response
     {

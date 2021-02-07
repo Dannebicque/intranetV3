@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Contact.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 30/12/2020 10:43
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Contact.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Entity;
 
@@ -168,11 +170,8 @@ class Contact extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getCiviliteLong(): ?string
     {
-        return $this->civilite === 'M.' ? 'Monsieur' : 'Madame';
+        return 'M.' === $this->civilite ? 'Monsieur' : 'Madame';
     }
 }

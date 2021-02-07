@@ -1,12 +1,17 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyScolarite.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 10/01/2021 17:07
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyScolarite.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:26
+ */
+
+/*
+ * Pull your hearder here, for exemple, Licence header.
+ */
 
 namespace App\Classes;
-
 
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Constantes;
@@ -29,10 +34,6 @@ class MyScolarite
 
     /**
      * MyPpn constructor.
-     *
-     * @param MyUpload               $myUpload
-     * @param EntityManagerInterface $entityManager
-     * @param ScolariteRepository    $scolariteRepository
      */
     public function __construct(
         MyUpload $myUpload,
@@ -45,10 +46,8 @@ class MyScolarite
     }
 
     /**
-     * @param             $data
-     * @param Departement $departement
+     * @param $data
      *
-     * @return bool
      * @throws Exception
      */
     public function importCsv($data, Departement $departement, AnneeUniversitaire $anneeUniversitaire): bool
@@ -59,7 +58,7 @@ class MyScolarite
         $semestres = $this->entityManager->getRepository(Semestre::class)->tableauSemestresApogee($departement);
         $etudiants = $this->entityManager->getRepository(Etudiant::class)->findByDepartementArray($departement);
 
-        $handle = fopen($file, 'rb');
+        $handle = fopen($file, 'r');
 
         /*Si on a réussi à ouvrir le fichier*/
         if ($handle) {
@@ -69,8 +68,8 @@ class MyScolarite
             while (!feof($handle)) {
                 /*On lit la ligne courante*/
                 $ligne = fgetcsv($handle, 1024, ';');
-                if ($ligne !== false && count($ligne) > 1) {
-                    if (array_key_exists($ligne[1], $semestres) && array_key_exists($ligne[0], $etudiants)) {
+                if (false !== $ligne && \count($ligne) > 1) {
+                    if (\array_key_exists($ligne[1], $semestres) && \array_key_exists($ligne[0], $etudiants)) {
                         //numetudiant	codesemestre	semestre	ordre	moyenne	nbabsences	decision	suite ues
                         $scol = new Scolarite($etudiants[$ligne[0]], $semestres[$ligne[1]]);
                         $scol->setAnneeUniversitaire($anneeUniversitaire);
@@ -80,18 +79,18 @@ class MyScolarite
                         $scol->setNbAbsences($ligne[5]);
                         $scol->setProposition($ligne[7]);
                         $scol->setDiffuse(true);
-                    $this->entityManager->persist($scol);
-                    $tues = explode('!', $ligne[8]);
-                    $tUe = [];
-                    foreach ($tues as $tue) {
-                        $ue = explode(':', $tue);
-                        if (array_key_exists($ue[0], $ues)) {
-                            $tUe[$ues[$ue[0]]->getId()]['moyenne'] = Tools::convertToFloat($ue[1]);
-                            $tUe[$ues[$ue[0]]->getId()]['rang'] = -1;
+                        $this->entityManager->persist($scol);
+                        $tues = explode('!', $ligne[8]);
+                        $tUe = [];
+                        foreach ($tues as $tue) {
+                            $ue = explode(':', $tue);
+                            if (\array_key_exists($ue[0], $ues)) {
+                                $tUe[$ues[$ue[0]]->getId()]['moyenne'] = Tools::convertToFloat($ue[1]);
+                                $tUe[$ues[$ue[0]]->getId()]['rang'] = -1;
+                            }
                         }
+                        $scol->setMoyennesUes($tUe);
                     }
-                    $scol->setMoyennesUes($tUe);
-                }
                 }
             }
             $this->entityManager->flush();
@@ -105,6 +104,7 @@ class MyScolarite
 
         return false;
     }
+
 //
 //    public function initSemestre(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire)
 //    {
@@ -124,5 +124,4 @@ class MyScolarite
 //        }
 //        $this->entityManager->flush();
 //    }
-
 }

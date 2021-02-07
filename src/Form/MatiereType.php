@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Form/MatiereType.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 07/09/2020 14:20
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/MatiereType.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Form;
 
@@ -30,8 +32,7 @@ use Symfony\Component\OptionsResolver\Exception\AccessException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class MatiereType
- * @package App\Form
+ * Class MatiereType.
  */
 class MatiereType extends AbstractType
 {
@@ -47,19 +48,14 @@ class MatiereType extends AbstractType
      */
     private $ueRepository;
 
-    /** @var ParcourRepository  */
+    /** @var ParcourRepository */
     private $parcourRepository;
 
-    /** @var MatiereRepository  */
+    /** @var MatiereRepository */
     private $matiereRepository;
 
     /**
      * MatiereType constructor.
-     *
-     * @param SemestreRepository $semestreRepository
-     * @param UeRepository       $ueRepository
-     * @param ParcourRepository  $parcourRepository
-     * @param MatiereRepository  $matiereRepository
      */
     public function __construct(
         SemestreRepository $semestreRepository,
@@ -73,11 +69,6 @@ class MatiereType extends AbstractType
         $this->matiereRepository = $matiereRepository;
     }
 
-
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->diplome = $options['diplome'];
@@ -86,7 +77,7 @@ class MatiereType extends AbstractType
             ->add('codeMatiere', TextType::class, ['label' => 'label.code_matiere'])
             ->add('codeElement', TextType::class, ['label' => 'label.code_element'])
             ->add('suspendu', YesNoType::class, [
-                'label' => 'label.suspendu'
+                'label' => 'label.suspendu',
             ])
             ->add('cmPpn', TextType::class, ['label' => 'label.cm_ppn'])
             ->add('tdPpn', TextType::class, ['label' => 'label.td_ppn'])
@@ -99,7 +90,7 @@ class MatiereType extends AbstractType
             ->add('coefficient', TextType::class, ['label' => 'label.coefficient'])
             ->add('nbEcts', TextType::class, ['label' => 'label.nb_ects'])
             ->add('pac', YesNoType::class, [
-                'label' => 'label.pac'
+                'label' => 'label.pac',
             ])
             ->add('objectifsModule', TextareaType::class, ['label' => 'label.objectifs_module', 'required' => false])
             ->add(
@@ -113,23 +104,18 @@ class MatiereType extends AbstractType
             ->add('prolongements', TextareaType::class, ['label' => 'label.prolongements', 'required' => false])
             ->add('motsCles', TextareaType::class, ['label' => 'label.mots_cles', 'required' => false])
             ->add('Ppn', EntityType::class, [
-                'label'        => 'label.Ppn',
-                'class'        => Ppn::class,
-                'choice_label' => 'libelle',
+                'label'         => 'label.Ppn',
+                'class'         => Ppn::class,
+                'choice_label'  => 'libelle',
                 'query_builder' => function(PpnRepository $ppnRepository) {
                     return $ppnRepository->findByDiplomeBuilder($this->diplome);
                 },
-            ])
-            ;
+            ]);
 
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this, 'onPreSetData'));
-        $builder->addEventListener(FormEvents::PRE_SUBMIT, array($this, 'onPreSubmit'));
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, [$this, 'onPreSetData']);
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, [$this, 'onPreSubmit']);
     }
 
-    /**
-     * @param FormInterface $form
-     * @param Semestre|null $semestre
-     */
     protected function addElements(FormInterface $form, Semestre $semestre = null): void
     {
         $form->add('semestre', EntityType::class, [
@@ -138,7 +124,7 @@ class MatiereType extends AbstractType
             'data'         => $semestre,
             'placeholder'  => 'Choisir un semestre ...',
             'class'        => Semestre::class,
-            'mapped'       => false
+            'mapped'       => false,
         ]);
 
         $ues = null;
@@ -151,30 +137,30 @@ class MatiereType extends AbstractType
             $matieres = $this->matiereRepository->findBySemestreBuilder($semestre);
         }
 
-        $form->add('ue', EntityType::class, array(
-            'required' => true,
-            'placeholder' => 'Choisir d\'abord un semestre ...',
-            'class' => Ue::class,
-            'choice_label' => 'display',
+        $form->add('ue', EntityType::class, [
+            'required'      => true,
+            'placeholder'   => 'Choisir d\'abord un semestre ...',
+            'class'         => Ue::class,
+            'choice_label'  => 'display',
             'query_builder' => $ues,
-        ));
+        ]);
 
-        $form->add('parcours', EntityType::class, array(
-            'required' => false,
-            'placeholder' => 'Choisir d\'abord un semestre ...',
-            'class' => Parcour::class,
-            'choice_label' => 'libelle',
+        $form->add('parcours', EntityType::class, [
+            'required'      => false,
+            'placeholder'   => 'Choisir d\'abord un semestre ...',
+            'class'         => Parcour::class,
+            'choice_label'  => 'libelle',
             'query_builder' => $parcours,
-        ));
+        ]);
 
         $form->add('matiereParent', EntityType::class, [
-                'label' => 'label.matiere.parent',
-                'required' => false,
-                'placeholder' => 'Choisir d\'abord un semestre ...',
-                'class' => Matiere::class,
-                'choice_label' => 'display',
-                'query_builder' => $matieres
-                ]);
+            'label'         => 'label.matiere.parent',
+            'required'      => false,
+            'placeholder'   => 'Choisir d\'abord un semestre ...',
+            'class'         => Matiere::class,
+            'choice_label'  => 'display',
+            'query_builder' => $matieres,
+        ]);
     }
 
     public function onPreSubmit(FormEvent $event): void
@@ -196,17 +182,14 @@ class MatiereType extends AbstractType
     }
 
     /**
-     * @param OptionsResolver $resolver
-     *
      * @throws AccessException
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class'         => Matiere::class,
-            'diplome'           => null,
-            'translation_domain' => 'form'
-
+            'diplome'            => null,
+            'translation_domain' => 'form',
         ]);
     }
 }

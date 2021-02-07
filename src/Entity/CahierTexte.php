@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/CahierTexte.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/CahierTexte.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:49
+ */
 
 namespace App\Entity;
 
@@ -64,17 +66,12 @@ class CahierTexte extends BaseEntity
         $this->fichiers = new ArrayCollection();
     }
 
-    /**
-     * @return null|string
-     */
     public function getLibelle(): ?string
     {
         return $this->libelle;
     }
 
     /**
-     * @param string $libelle
-     *
      * @return CahierTexte
      */
     public function setLibelle(string $libelle): self
@@ -84,17 +81,12 @@ class CahierTexte extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
     public function getDescription(): ?string
     {
         return $this->description;
     }
 
     /**
-     * @param string $description
-     *
      * @return CahierTexte
      */
     public function setDescription(string $description): self
@@ -104,17 +96,12 @@ class CahierTexte extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return DateTimeInterface|null
-     */
     public function getDateRetour(): ?DateTimeInterface
     {
         return $this->dateRetour;
     }
 
     /**
-     * @param DateTimeInterface $dateRetour
-     *
      * @return CahierTexte
      */
     public function setDateRetour(DateTimeInterface $dateRetour): self
@@ -124,17 +111,12 @@ class CahierTexte extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return Personnel|null
-     */
     public function getPersonnel(): ?Personnel
     {
         return $this->personnel;
     }
 
     /**
-     * @param Personnel|null $personnel
-     *
      * @return CahierTexte
      */
     public function setPersonnel(?Personnel $personnel): self
@@ -153,8 +135,6 @@ class CahierTexte extends BaseEntity
     }
 
     /**
-     * @param Fichier $fichier
-     *
      * @return CahierTexte
      */
     public function addFichier(Fichier $fichier): self
@@ -167,8 +147,6 @@ class CahierTexte extends BaseEntity
     }
 
     /**
-     * @param Fichier $fichier
-     *
      * @return CahierTexte
      */
     public function removeFichier(Fichier $fichier): self
@@ -180,17 +158,12 @@ class CahierTexte extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return Semestre|null
-     */
     public function getSemestre(): ?Semestre
     {
         return $this->semestre;
     }
 
     /**
-     * @param Semestre|null $semestre
-     *
      * @return CahierTexte
      */
     public function setSemestre(?Semestre $semestre): self
@@ -200,17 +173,12 @@ class CahierTexte extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return Matiere|null
-     */
     public function getMatiere(): ?Matiere
     {
         return $this->matiere;
     }
 
     /**
-     * @param Matiere|null $matiere
-     *
      * @return CahierTexte
      */
     public function setMatiere(?Matiere $matiere): self

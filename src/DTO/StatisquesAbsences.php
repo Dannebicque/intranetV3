@@ -1,12 +1,13 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/StatisquesAbsences.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 12/12/2020 14:31
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/StatisquesAbsences.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\DTO;
-
 
 use DateInterval;
 use DateTime;
@@ -14,7 +15,6 @@ use Exception;
 
 class StatisquesAbsences
 {
-
     public int $nbCoursManques = 0;
     public int $nbNonJustifie = 0;
     public int $nbDemiJournee = 0;
@@ -30,8 +30,6 @@ class StatisquesAbsences
     }
 
     /**
-     * @param DateTime $duree
-     *
      * @throws Exception
      */
     public function addDuree(DateTime $duree): void

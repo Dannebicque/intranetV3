@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/ProgressionPedagogiqueRepository.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 05/07/2020 08:13
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/ProgressionPedagogiqueRepository.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:08
+ */
 
 namespace App\Repository;
 
@@ -11,8 +13,8 @@ use App\Entity\Matiere;
 use App\Entity\Personnel;
 use App\Entity\ProgressionPedagogique;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method ProgressionPedagogique|null find($id, $lockMode = null, $lockVersion = null)
@@ -28,12 +30,9 @@ class ProgressionPedagogiqueRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Personnel $personnel
-     * @param           $semaine
-     * @param           $typeCours
-     * @param Matiere   $matiere
+     * @param $semaine
+     * @param $typeCours
      *
-     * @return mixed
      * @throws NonUniqueResultException
      */
     public function findBySemaineTypeMatiere(Personnel $personnel, $semaine, $typeCours, Matiere $matiere)
@@ -62,14 +61,14 @@ class ProgressionPedagogiqueRepository extends ServiceEntityRepository
         $t = [];
         /** @var ProgressionPedagogique $progression */
         foreach ($query as $progression) {
-            if ($progression->getMatiere() !== null) {
+            if (null !== $progression->getMatiere()) {
                 $matiere = $progression->getMatiere()->getId();
                 $semaine = $progression->getSemaine();
-                if (!array_key_exists($matiere, $t)) {
+                if (!\array_key_exists($matiere, $t)) {
                     $t[$matiere] = [];
                 }
 
-                if (!array_key_exists($semaine, $t[$matiere])) {
+                if (!\array_key_exists($semaine, $t[$matiere])) {
                     $t[$matiere][$semaine] = [];
                 }
 
@@ -79,6 +78,4 @@ class ProgressionPedagogiqueRepository extends ServiceEntityRepository
 
         return $t;
     }
-
-
 }

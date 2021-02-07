@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ajax/EtudiantAjaxController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ajax/EtudiantAjaxController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:36
+ */
 
 namespace App\Controller\ajax;
 
@@ -17,8 +19,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class AbsenceApiController
- * @package App\Controller
+ * Class AbsenceApiController.
+ *
  * @Route("/ajax/etudiant")
  */
 class EtudiantAjaxController extends BaseController
@@ -26,25 +28,12 @@ class EtudiantAjaxController extends BaseController
     /**
      * @Route("/edit/uuid/{uuid}", name="etudiant_ajax_edit_uuid", options={"expose":true})
      * @ParamConverter("etudiant", options={"mapping": {"uuid": "uuid"}})
-     * @param EtudiantUpdate $etudiantUpdate
-     * @param Request        $request
-     *
-     * @param Etudiant       $etudiant
-     *
-     * @return JsonResponse
      */
     public function editUuid(EtudiantUpdate $etudiantUpdate, Request $request, Etudiant $etudiant): JsonResponse
     {
         return $this->update($request, $etudiantUpdate, $etudiant);
     }
 
-    /**
-     * @param Request        $request
-     * @param EtudiantUpdate $etudiantUpdate
-     * @param Etudiant       $etudiant
-     *
-     * @return JsonResponse
-     */
     private function update(Request $request, EtudiantUpdate $etudiantUpdate, Etudiant $etudiant): JsonResponse
     {
         $name = $request->request->get('field');
@@ -58,18 +47,9 @@ class EtudiantAjaxController extends BaseController
 
     /**
      * @Route("/edit/{id}", name="etudiant_ajax_edit", options={"expose":true})
-     *
-     * @param EtudiantUpdate $etudiantUpdate
-     * @param Request        $request
-     *
-     * @param Etudiant       $etudiant
-     *
-     * @return JsonResponse
      */
     public function edit(EtudiantUpdate $etudiantUpdate, Request $request, Etudiant $etudiant): JsonResponse
     {
         return $this->update($request, $etudiantUpdate, $etudiant);
     }
-
-
 }

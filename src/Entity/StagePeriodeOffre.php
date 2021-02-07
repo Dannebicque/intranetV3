@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/StagePeriodeOffre.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/StagePeriodeOffre.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:50
+ */
 
 namespace App\Entity;
 
@@ -23,7 +25,6 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  */
 class StagePeriodeOffre extends BaseEntity
 {
-
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\StagePeriode", inversedBy="stagePeriodeOffres")
      */
@@ -130,8 +131,6 @@ class StagePeriodeOffre extends BaseEntity
     }
 
     /**
-     * @param File|null $document
-     *
      * @throws Exception
      */
     public function setDocumentFile(?File $document = null): void
@@ -145,9 +144,6 @@ class StagePeriodeOffre extends BaseEntity
         }
     }
 
-    /**
-     * @return null|File
-     */
     public function getDocumentFile(): ?File
     {
         return $this->documentFile;
@@ -161,9 +157,6 @@ class StagePeriodeOffre extends BaseEntity
         return $this->documentName;
     }
 
-    /**
-     * @param string $documentName
-     */
     public function setDocumentName(string $documentName): void
     {
         $this->documentName = $documentName;

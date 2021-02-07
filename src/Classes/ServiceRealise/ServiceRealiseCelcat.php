@@ -1,12 +1,17 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/ServiceRealise/ServiceRealiseCelcat.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 20/12/2020 16:46
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/ServiceRealise/ServiceRealiseCelcat.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:10
+ */
+
+/*
+ * Pull your hearder here, for exemple, Licence header.
+ */
 
 namespace App\Classes\ServiceRealise;
-
 
 use App\DTO\EvenementEdt;
 use App\Entity\CelcatEvent;
@@ -16,10 +21,6 @@ use App\Repository\CelcatEventsRepository;
 
 class ServiceRealiseCelcat implements ServiceRealiseInterface
 {
-
-    /**
-     * @var CelcatEventsRepository
-     */
     private CelcatEventsRepository $celcatEventsRepository;
 
     public function __construct(CelcatEventsRepository $celcatEventsRepository)
@@ -53,8 +54,6 @@ class ServiceRealiseCelcat implements ServiceRealiseInterface
 
     /**
      * @param CelcatEvent $event
-     *
-     * @return EvenementEdt
      */
     public function convertToEvenementEdt($event): EvenementEdt
     {
@@ -71,12 +70,6 @@ class ServiceRealiseCelcat implements ServiceRealiseInterface
         return $ev;
     }
 
-    /**
-     * @param Personnel $getConnectedUser
-     * @param Matiere   $getMatiere
-     *
-     * @return array
-     */
     public function getServiceRealiseParPersonnelMatiere(Personnel $getConnectedUser, Matiere $getMatiere): array
     {
     }

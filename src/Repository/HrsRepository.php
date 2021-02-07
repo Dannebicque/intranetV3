@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/HrsRepository.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/HrsRepository.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:08
+ */
 
 namespace App\Repository;
 
@@ -22,8 +24,6 @@ class HrsRepository extends ServiceEntityRepository
 {
     /**
      * HrsRepository constructor.
-     *
-     * @param ManagerRegistry $registry
      */
     public function __construct(ManagerRegistry $registry)
     {
@@ -33,8 +33,6 @@ class HrsRepository extends ServiceEntityRepository
     /**
      * @param $getUser
      * @param $annee
-     *
-     * @return mixed
      */
     public function findByEnseignant($getUser, $annee)
     {
@@ -50,10 +48,7 @@ class HrsRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Departement $departement
-     * @param           $annee
-     *
-     * @return mixed
+     * @param $annee
      */
     public function findByDepartement(Departement $departement, $annee)
     {

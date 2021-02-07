@@ -1,17 +1,19 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/ConfigurationController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/ConfigurationController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller\superAdministration;
 
+use App\Classes\MyExport;
 use App\Controller\BaseController;
 use App\Entity\Configuration;
 use App\Entity\Constantes;
 use App\Form\ConfigurationType;
-use App\Classes\MyExport;
 use App\Repository\ConfigurationRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,9 +26,6 @@ class ConfigurationController extends BaseController
 {
     /**
      * @Route("/", name="sa_configuration_index", methods="GET")
-     * @param ConfigurationRepository $configurationRepository
-     *
-     * @return Response
      */
     public function index(ConfigurationRepository $configurationRepository): Response
     {
@@ -35,17 +34,14 @@ class ConfigurationController extends BaseController
     }
 
     /**
-     *
      * @Route("/export/{_format}", name="sa_configuration_export", methods="GET")
-     * @param MyExport                $myExport
-     * @param ConfigurationRepository $configurationRepository
-     * @param                         $_format
      *
-     * @return Response
+     * @param $_format
      */
     public function export(MyExport $myExport, ConfigurationRepository $configurationRepository, $_format): Response
     {
         $configurations = $configurationRepository->findAll();
+
         return $myExport->genereFichierGenerique(
             $_format,
             $configurations,
@@ -57,9 +53,6 @@ class ConfigurationController extends BaseController
 
     /**
      * @Route("/new", name="sa_configuration_new", methods="GET|POST")
-     * @param Request $request
-     *
-     * @return Response
      */
     public function create(Request $request): Response
     {
@@ -83,9 +76,6 @@ class ConfigurationController extends BaseController
 
     /**
      * @Route("/{id}", name="sa_configuration_show", methods="GET")
-     * @param Configuration $configuration
-     *
-     * @return Response
      */
     public function show(Configuration $configuration): Response
     {
@@ -94,10 +84,6 @@ class ConfigurationController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="sa_configuration_edit", methods="GET|POST")
-     * @param Request       $request
-     * @param Configuration $configuration
-     *
-     * @return Response
      */
     public function edit(Request $request, Configuration $configuration): Response
     {
@@ -119,10 +105,6 @@ class ConfigurationController extends BaseController
 
     /**
      * @Route("/{id}/duplicate", name="sa_configuration_duplicate", methods="GET|POST")
-     *
-     * @param Configuration $configuration
-     *
-     * @return Response
      */
     public function duplicate(Configuration $configuration): Response
     {

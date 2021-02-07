@@ -1,17 +1,20 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/DateController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/DateController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
 
 namespace App\Controller\administration;
 
+use App\Classes\MyExport;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Date;
 use App\Form\DatesType;
-use App\Classes\MyExport;
 use App\Repository\DateRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,9 +27,6 @@ class DateController extends BaseController
 {
     /**
      * @Route("/", name="administration_date_index", methods="GET")
-     * @param DateRepository $dateRepository
-     *
-     * @return Response
      */
     public function index(DateRepository $dateRepository): Response
     {
@@ -38,15 +38,13 @@ class DateController extends BaseController
     /**
      * @Route("/export.{_format}", name="administration_date_export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"})
-     * @param MyExport          $myExport
-     * @param DateRepository    $dateRepository
-     * @param                   $_format
      *
-     * @return Response
+     * @param $_format
      */
     public function export(MyExport $myExport, DateRepository $dateRepository, $_format): Response
     {
         $dates = $dateRepository->findByDepartement($this->getDepartement());
+
         return $myExport->genereFichierGenerique(
             $_format,
             $dates,
@@ -63,16 +61,13 @@ class DateController extends BaseController
                 'allday',
                 'qui',
                 'type',
-                'semestre' => ['libelle']
+                'semestre' => ['libelle'],
             ]
         );
     }
 
     /**
      * @Route("/new", name="administration_date_new", methods="GET|POST")
-     * @param Request $request
-     *
-     * @return Response
      */
     public function create(Request $request): Response
     {
@@ -84,8 +79,8 @@ class DateController extends BaseController
             [
                 'departement' => $this->getDepartement(),
                 'attr'        => [
-                    'data-provide' => 'validation'
-                ]
+                    'data-provide' => 'validation',
+                ],
             ]
         );
         $form->handleRequest($request);
@@ -106,9 +101,6 @@ class DateController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_date_show", methods="GET")
-     * @param Date $date
-     *
-     * @return Response
      */
     public function show(Date $date): Response
     {
@@ -117,10 +109,6 @@ class DateController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_date_edit", methods="GET|POST")
-     * @param Request $request
-     * @param Date    $date
-     *
-     * @return Response
      */
     public function edit(Request $request, Date $date): Response
     {
@@ -130,8 +118,8 @@ class DateController extends BaseController
             [
                 'departement' => $this->dataUserSession->getDepartement(),
                 'attr'        => [
-                    'data-provide' => 'validation'
-                ]
+                    'data-provide' => 'validation',
+                ],
             ]
         );
         $form->handleRequest($request);
@@ -139,7 +127,7 @@ class DateController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'date.edit.success.flash');
-            if ($request->request->get('btn_update') !== null) {
+            if (null !== $request->request->get('btn_update')) {
                 return $this->redirectToRoute('administration_date_index');
             }
 
@@ -154,9 +142,6 @@ class DateController extends BaseController
 
     /**
      * @Route("/{id}/duplicate", name="administration_date_duplicate", methods="GET")
-     * @param Date $date
-     *
-     * @return Response
      */
     public function duplicate(Date $date): Response
     {
@@ -170,10 +155,6 @@ class DateController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_date_delete", methods="DELETE")
-     * @param Request $request
-     * @param Date    $date
-     *
-     * @return Response
      */
     public function delete(Request $request, Date $date): Response
     {

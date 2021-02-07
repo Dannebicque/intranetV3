@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/enquete/EnqueteCreationController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 07/01/2021 15:59
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/enquete/EnqueteCreationController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller\superAdministration\enquete;
 
@@ -24,13 +26,8 @@ class EnqueteCreationController extends BaseController
 {
     /**
      * @Route("/wizard-1/{action}/{semestre}/{qualiteQuestionnaire}", name="administratif_enquete_wizard_1")
-     * @param Request                   $request
-     * @param Semestre                  $semestre
      *
-     * @param string                    $action
-     * @param QuestionnaireQualite|null $qualiteQuestionnaire
-     *
-     * @return Response
+     * @param string $action
      */
     public function wizard1(
         Request $request,
@@ -38,19 +35,20 @@ class EnqueteCreationController extends BaseController
         $action = 'create',
         QuestionnaireQualite $qualiteQuestionnaire = null
     ): Response {
-        if ($qualiteQuestionnaire === null) {
+        if (null === $qualiteQuestionnaire) {
             $qualiteQuestionnaire = new QuestionnaireQualite($semestre);
         }
 
         $form = $this->createForm(QualiteQuestionnaireType::class, $qualiteQuestionnaire, [
             'attr'   => [
-                'data-provide' => 'validation'
+                'data-provide' => 'validation',
             ],
             'action' => $this->generateUrl('administratif_enquete_wizard_1',
-                ['semestre'             => $semestre->getId(),
-                 'action'               => $action,
-                 'qualiteQuestionnaire' => $qualiteQuestionnaire->getId()
-                ])
+                [
+                    'semestre'             => $semestre->getId(),
+                    'action'               => $action,
+                    'qualiteQuestionnaire' => $qualiteQuestionnaire->getId(),
+                ]),
         ]);
 
         $form->handleRequest($request);
@@ -60,25 +58,23 @@ class EnqueteCreationController extends BaseController
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'qualiteQuestionnaire.add.success.flash');
 
-            if ($action === 'edit') {
-                return $this->redirectToRoute('administratif_enquete_edit', ['questionnaire' => $qualiteQuestionnaire->getId(), 'step' => 2]);
+            if ('edit' === $action) {
+                return $this->redirectToRoute('administratif_enquete_edit',
+                    ['questionnaire' => $qualiteQuestionnaire->getId(), 'step' => 2]);
             }
+
             return $this->redirectToRoute('administratif_enquete_semestre_new', ['semestre' => $semestre->getId(), 'step' => 2, 'questionnaire' => $qualiteQuestionnaire->getId()]);
         }
 
         return $this->render('super-administration/enqueteCreation/wizard1.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ]);
     }
 
     /**
      * @Route("/wizard-2/{action}/{semestre}/{qualiteQuestionnaire}", name="administratif_enquete_wizard_2")
      *
-     * @param QuestionnaireQuestionRepository $quizzQuestionRepository
-     * @param string                          $action
-     * @param QuestionnaireQualite|null       $qualiteQuestionnaire
-     *
-     * @return Response
+     * @param string $action
      */
     public function wizard2(
         QuestionnaireQuestionRepository $quizzQuestionRepository,
@@ -89,7 +85,7 @@ class EnqueteCreationController extends BaseController
 
         return $this->render('super-administration/enqueteCreation/wizard2.html.twig', [
             'questionnaire' => $qualiteQuestionnaire,
-            'questions'     => $questions
+            'questions'     => $questions,
         ]);
     }
 }

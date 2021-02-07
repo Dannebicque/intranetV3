@@ -1,27 +1,29 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StagePeriodeGestionController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StagePeriodeGestionController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
 
 namespace App\Controller\administration\stage;
 
 use App\Classes\MyExport;
+use App\Classes\MyStage;
 use App\Classes\Stage\MyExportStage;
 use App\Controller\BaseController;
 use App\Entity\StagePeriode;
-use App\Classes\MyStage;
 use App\Repository\StagePeriodeRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class StagePeriodeGestionController
- * @package App\Controller\administration
- * @Route("/administration/stage/periode/gestion")
+ * Class StagePeriodeGestionController.
  *
+ * @Route("/administration/stage/periode/gestion")
  */
 class StagePeriodeGestionController extends BaseController
 {
@@ -29,12 +31,8 @@ class StagePeriodeGestionController extends BaseController
      * @Route("/{uuid}/export.{_format}", name="administration_stage_periode_gestion_export", methods="GET",
      *                             requirements={"_format"="csv|pdf"})
      * @ParamConverter("stagePeriode", options={"mapping": {"uuid": "uuid"}})
-     * @param MyExport               $myExport
-     * @param StagePeriode           $stagePeriode
      *
-     * @param                        $_format
-     *
-     * @return Response
+     * @param $_format
      */
     public function export(MyExport $myExport, StagePeriode $stagePeriode, $_format): Response
     {
@@ -52,7 +50,7 @@ class StagePeriodeGestionController extends BaseController
                 'tuteur'              => ['nom', 'prenom', 'fonction', 'telephone', 'email'],
                 'tuteurUniversitaire' => ['nom', 'prenom', 'mailUniv'],
                 'dateDebutStage',
-                'dateFinStage'
+                'dateFinStage',
             ]
         );
     }
@@ -60,11 +58,6 @@ class StagePeriodeGestionController extends BaseController
     /**
      * @Route("/{uuid}/export.xlsx", name="administration_stage_periode_gestion_export_xlsx", methods="GET")
      * @ParamConverter("stagePeriode", options={"mapping": {"uuid": "uuid"}})
-     * @param MyExportStage $myExport
-     * @param StagePeriode  $stagePeriode
-     *
-     *
-     * @return Response
      */
     public function exportXlsx(MyExportStage $myExport, StagePeriode $stagePeriode): Response
     {
@@ -74,11 +67,6 @@ class StagePeriodeGestionController extends BaseController
     /**
      * @Route("/{uuid}", name="administration_stage_periode_gestion")
      * @ParamConverter("stagePeriode", options={"mapping": {"uuid": "uuid"}})
-     * @param StagePeriodeRepository $stagePeriodeRepository
-     * @param MyStage                $myStage
-     * @param StagePeriode           $stagePeriode
-     *
-     * @return Response
      */
     public function periode(
         StagePeriodeRepository $stagePeriodeRepository,
@@ -96,9 +84,7 @@ class StagePeriodeGestionController extends BaseController
         return $this->render('administration/stage/stage_periode_gestion/index.html.twig', [
             'stagePeriode' => $stagePeriode,
             'periodes'     => $periodes,
-            'myStage'      => $myStage->getDataPeriode($stagePeriode)
+            'myStage'      => $myStage->getDataPeriode($stagePeriode),
         ]);
     }
-
-
 }

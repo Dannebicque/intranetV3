@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/SecurityController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 28/01/2021 14:05
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/SecurityController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller;
 
@@ -35,7 +37,6 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SecurityController extends AbstractController
 {
-
     /**
      * @Route("/sso/redirect/cas", name="sso_cas")
      */
@@ -55,16 +56,7 @@ class SecurityController extends AbstractController
 
     /**
      * @Route("/connexion/mot-de-passe-perdu", name="security_password_lost")
-     * @param Request                 $request
      *
-     * @param TokenGeneratorInterface $tokenGenerator
-     * @param EntityManagerInterface  $entityManager
-     *
-     * @param MailerFromTwig          $myMailer
-     * @param PersonnelRepository     $personnelRepository
-     * @param EtudiantRepository      $etudiantRepository
-     *
-     * @return Response
      * @throws TransportExceptionInterface
      */
     public function passwordLost(
@@ -78,19 +70,18 @@ class SecurityController extends AbstractController
         $submittedToken = $request->request->get('token');
 
         if ($request->isMethod('POST') && $this->isCsrfTokenValid('password-lost', $submittedToken)) {
-
             $email = $request->request->get('email');
 
             $etudiant = $etudiantRepository->findOneBy(['mailUniv' => $email]);
             $personnel = $personnelRepository->findOneBy(['mailUniv' => $email]);
             $user = null;
-            if ($personnel !== null && $etudiant === null) {
+            if (null !== $personnel && null === $etudiant) {
                 $user = $personnel;
-            } else if ($personnel === null && $etudiant !== null) {
+            } elseif (null === $personnel && null !== $etudiant) {
                 $user = $etudiant;
             }
 
-            if ($user === null) {
+            if (null === $user) {
                 return $this->redirectToRoute('security_login', ['message' => 'Email Inconnu']);
             }
             $token = $tokenGenerator->generateToken();
@@ -108,7 +99,6 @@ class SecurityController extends AbstractController
             $myMailer->setTemplate('mails/passwordLost.txt.twig', ['url' => $url, 'user' => $user]);
             $myMailer->sendMessage([$user->getMailUniv()], 'Mot de passe perdu');
 
-
             return $this->render('security/passwordLostConfirm.html.twig');
         }
 
@@ -118,14 +108,6 @@ class SecurityController extends AbstractController
     /**
      * @Route("/connexion/init-password/{user}", name="security_password_init", options={"expose"=true})
      *
-     * @param Personnel                    $user
-     * @param UserPasswordEncoderInterface $passwordEncoder
-     *
-     * @param EntityManagerInterface       $entityManager
-     *
-     * @param MailerFromTwig               $mailerFromTwig
-     *
-     * @return JsonResponse
      * @throws TransportExceptionInterface
      */
     public function initPassword(
@@ -134,7 +116,7 @@ class SecurityController extends AbstractController
         MailerFromTwig $mailerFromTwig,
         Personnel $user
     ): JsonResponse {
-        $password = substr(md5(mt_rand()), 0, 10);
+        $password = mb_substr(md5(mt_rand()), 0, 10);
         $passwordEncode = $passwordEncoder->encodePassword($user, $password);
 
         $user->setPassword($passwordEncode);
@@ -143,7 +125,7 @@ class SecurityController extends AbstractController
         $mailerFromTwig->initEmail();
         $mailerFromTwig->setTemplate('mails/security/initPassword.txt.twig', [
             'personnel' => $user,
-            'password'  => $password
+            'password'  => $password,
         ]);
         $mailerFromTwig->sendMessage($user->getMails(), 'Initialisation de votre compte');
 
@@ -159,16 +141,6 @@ class SecurityController extends AbstractController
 
     /**
      * @Route("/connexion/reset-password/{token}", name="security_reset_password")
-     * @param Request                      $request
-     *
-     * @param string                       $token
-     * @param PersonnelRepository          $personnelRepository
-     * @param EtudiantRepository           $etudiantRepository
-     * @param UserPasswordEncoderInterface $passwordEncoder
-     *
-     * @param EntityManagerInterface       $entityManager
-     *
-     * @return Response
      */
     public function resetPassword(
         Request $request,
@@ -178,20 +150,18 @@ class SecurityController extends AbstractController
         UserPasswordEncoderInterface $passwordEncoder,
         EntityManagerInterface $entityManager
     ): Response {
-
         if ($request->isMethod('POST')) {
-
             $etudiant = $etudiantRepository->findOneBy(['resetToken' => $token]);
             $personnel = $personnelRepository->findOneBy(['resetToken' => $token]);
 
             $user = null;
-            if ($personnel !== null && $etudiant === null) {
+            if (null !== $personnel && null === $etudiant) {
                 $user = $personnel;
-            } else if ($personnel === null && $etudiant !== null) {
+            } elseif (null === $personnel && null !== $etudiant) {
                 $user = $etudiant;
             }
 
-            if ($user === null) {
+            if (null === $user) {
                 return $this->redirectToRoute('security_login', ['message' => 'Token Inconnu']);
             }
 
@@ -207,11 +177,6 @@ class SecurityController extends AbstractController
 
     /**
      * @Route("/verouiller", name="security_lock")
-     * @param Request                      $request
-     *
-     * @param UserPasswordEncoderInterface $passwordEncoder
-     *
-     * @return Response
      */
     public function lock(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
@@ -219,9 +184,9 @@ class SecurityController extends AbstractController
             $credential = $request->request->get('password');
             $isPasswordValid = $passwordEncoder->isPasswordValid($this->getUser(), $credential);
 
-            if ($isPasswordValid && $this->getUser() !== null) {
-                if (in_array('ROLE_SUPER_ADMIN', $this->getUser()->getRoles()) || in_array('ROLE_SCOLARITE',
-                        $this->getUser()->getRoles())) {
+            if ($isPasswordValid && null !== $this->getUser()) {
+                if (\in_array('ROLE_SUPER_ADMIN', $this->getUser()->getRoles(), true) || \in_array('ROLE_SCOLARITE',
+                        $this->getUser()->getRoles(), true)) {
                     return new RedirectResponse($this->generateUrl('super_admin_homepage'));
                 }
 
@@ -237,11 +202,6 @@ class SecurityController extends AbstractController
     /**
      * @Route("/change-departement/{departement}", name="security_change_departement")
      * @ParamConverter("departement", options={"mapping": {"departement": "uuid"}})
-     * @param Request          $request
-     * @param SessionInterface $session
-     * @param Departement      $departement
-     *
-     * @return Response
      */
     public function changeDepartement(
         Request $request,
@@ -255,13 +215,6 @@ class SecurityController extends AbstractController
 
     /**
      * @Route("/choix-departement", name="security_choix_departement")
-     * @param TranslatorInterface            $translator
-     * @param FlashBagInterface              $flashBag
-     * @param SessionInterface               $session
-     * @param Request                        $request
-     * @param PersonnelDepartementRepository $personnelDepartementRepository
-     *
-     * @return Response
      */
     public function choixDepartement(
         TranslatorInterface $translator,
@@ -273,12 +226,12 @@ class SecurityController extends AbstractController
         $user = $this->getUser();
         $departements = $personnelDepartementRepository->findByPersonnel($user);
         $update = null;
-        if ($request->getMethod() === 'POST') {
+        if ('POST' === $request->getMethod()) {
             foreach ($departements as $departement) {
-                if ($departement->getDepartement() !== null) {
+                if (null !== $departement->getDepartement()) {
                     if ($departement->getDepartement()->getId() !== (int)$request->request->get('departement')) {
                         $departement->setDefaut(false);
-                    } else if ($departement->getDepartement()->getId() === (int)$request->request->get('departement')) {
+                    } elseif ($departement->getDepartement()->getId() === (int)$request->request->get('departement')) {
                         $departement->setDefaut(true);
                         $update = $departement;
                     }
@@ -287,7 +240,7 @@ class SecurityController extends AbstractController
 
             $em = $this->getDoctrine()->getManager();
             $em->flush();
-            if ($update !== null && $update->getDepartement() !== null) {
+            if (null !== $update && null !== $update->getDepartement()) {
                 $flashBag->add(Constantes::FLASHBAG_SUCCESS, $translator->trans('formation.par.defaut.sauvegarde'));
                 $session->set('departement', $update->getDepartement()->getUuid()); //on sauvegarde
 
@@ -298,7 +251,6 @@ class SecurityController extends AbstractController
 
             return $this->render('security/choix-departement.html.twig',
                 ['departements' => $departements, 'user' => $user]);
-
         }
 
         return $this->render('security/choix-departement.html.twig',
@@ -307,10 +259,8 @@ class SecurityController extends AbstractController
 
     /**
      * @Route("/connexion/{message}", name="security_login")
-     * @param AuthenticationUtils $authenticationUtils
-     * @param string              $message
      *
-     * @return Response
+     * @param string $message
      */
     public function login(AuthenticationUtils $authenticationUtils, $message = ''): Response
     {
@@ -318,7 +268,6 @@ class SecurityController extends AbstractController
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
-
 
         return $this->render('security/login.html.twig',
             ['message' => $message, 'last_username' => $lastUsername, 'error' => $error]);

@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/RddController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/RddController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller\superAdministration;
 
@@ -21,15 +23,9 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class RddController extends BaseController
 {
-
-
     /**
      * @Route("/", name="sa_rdd_index", methods="GET")
      *
-     * @param RddDiplomeRepository $rddDiplomeRepository
-     * @param EtudiantRepository   $etudiantRepository
-     *
-     * @return Response
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
@@ -49,18 +45,12 @@ class RddController extends BaseController
                 'diplomes'   => $diplomes,
                 'etudiants'  => $tEtudiant,
                 'nbComplet'  => $nbComplet,
-                'nbDiplomes' => count($diplomes)
+                'nbDiplomes' => \count($diplomes),
             ]);
     }
 
     /**
      * @Route("/export.{_format}", name="sa_rdd_export", methods="GET")
-     *
-     * @param MyExportRdd          $myExportRdd
-     * @param RddDiplomeRepository $rddDiplomeRepository
-     * @param EtudiantRepository   $etudiantRepository
-     *
-     * @return Response
      */
     public function export(
         MyExportRdd $myExportRdd,
@@ -75,6 +65,5 @@ class RddController extends BaseController
         }
 
         return $myExportRdd->genereFichier($diplomes, $tEtudiant);
-
     }
 }

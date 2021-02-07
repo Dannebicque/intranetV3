@@ -1,12 +1,17 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantScolarite.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 24/01/2021 17:35
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantScolarite.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
+/*
+ * Pull your hearder here, for exemple, Licence header.
+ */
 
 namespace App\Classes\Etudiant;
-
 
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Constantes;
@@ -18,7 +23,6 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class EtudiantScolarite
 {
-
     private Etudiant $etudiant;
     private ?Semestre $semestre;
     private AnneeUniversitaire $anneeUniversitaire;
@@ -28,9 +32,6 @@ class EtudiantScolarite
 
     /**
      * EtudiantScolarite constructor.
-     *
-     * @param EtudiantGroupes        $etudiantsGroupes
-     * @param EntityManagerInterface $entityManger
      */
     public function __construct(
         EtudiantGroupes $etudiantsGroupes,
@@ -42,22 +43,15 @@ class EtudiantScolarite
         $this->scolariteRepository = $scolariteRepository;
     }
 
-    /**
-     * @param Semestre $semestre
-     */
     public function setSemestre(Semestre $semestre): void
     {
         $this->semestre = $semestre;
     }
 
-    /**
-     * @param AnneeUniversitaire $anneeUniversitaire
-     */
     public function setAnneeUniversitaire(AnneeUniversitaire $anneeUniversitaire): void
     {
         $this->anneeUniversitaire = $anneeUniversitaire;
     }
-
 
     public function setEtudiant(Etudiant $etudiant): void
     {
@@ -67,7 +61,6 @@ class EtudiantScolarite
 
     public function changeEtat($etat): void
     {
-
         switch ($etat) {
             case Constantes::SCOLARITE_DIPLOME:
             case Constantes::SEMESTRE_DEMISSIONNAIRE:
@@ -85,7 +78,6 @@ class EtudiantScolarite
 
         $this->entityManger->persist($this->etudiant);
         $this->entityManger->flush();
-
     }
 
     private function finFormation(): void
@@ -99,14 +91,14 @@ class EtudiantScolarite
     public function updateScolarite(
         $etat
     ) {
-        if ($this->semestre !== null) {
+        if (null !== $this->semestre) {
             $scolarite = $this->scolariteRepository->findOneBy([
                 'semestre'           => $this->semestre->getId(),
                 'anneeUniversitaire' => $this->anneeUniversitaire->getId(),
-                'etudiant'           => $this->etudiant->getId()
+                'etudiant'           => $this->etudiant->getId(),
             ]);
 
-            if ($scolarite === null) {
+            if (null === $scolarite) {
                 //si non ??? Créer mais comment associer à une sous-comm?
                 $scolarite = new Scolarite($this->etudiant, $this->semestre, $this->anneeUniversitaire);
             }
@@ -119,7 +111,7 @@ class EtudiantScolarite
 
     private function getDecisionFromEtat($etat)
     {
-        if ($etat === Constantes::SCOLARITE_DIPLOME) {
+        if (Constantes::SCOLARITE_DIPLOME === $etat) {
             return Constantes::SEMESTRE_VALIDE;
         }
 

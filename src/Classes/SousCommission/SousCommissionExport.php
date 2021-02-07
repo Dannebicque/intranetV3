@@ -1,12 +1,17 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/SousCommission/SousCommissionExport.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 26/01/2021 18:55
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/SousCommission/SousCommissionExport.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
+/*
+ * Pull your hearder here, for exemple, Licence header.
+ */
 
 namespace App\Classes\SousCommission;
-
 
 use App\Classes\Apogee\MyApogee;
 use App\Classes\Excel\MyExcelRead;
@@ -37,14 +42,6 @@ class SousCommissionExport
 
     /**
      * SousCommissionExport constructor.
-     *
-     * @param SousCommission    $sousCommission
-     * @param KernelInterface   $kernel
-     * @param MyApogee          $myApogee
-     * @param MyExcelWriter     $myExcelWriter
-     * @param MyExcelRead       $myExcelRead
-     * @param MatiereRepository $matiereRepository
-     * @param MyUpload          $myUpload
      */
     public function __construct(
         SousCommission $sousCommission,
@@ -64,12 +61,7 @@ class SousCommissionExport
         $this->dir = $kernel->getProjectDir() . '/public/upload/temp/';
     }
 
-
     /**
-     * @param Semestre           $semestre
-     * @param AnneeUniversitaire $anneeUniversitaire
-     *
-     * @return StreamedResponse
      * @throws Exception
      */
     public function export(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): StreamedResponse
@@ -86,13 +78,12 @@ class SousCommissionExport
             'notenormale'          => 'ffffffff',
             'pasdenote'            => 'ffbbbbbb',
             Constantes::PAS_OPTION => 'ff000000',
-            ''                     => 'ffffff'
+            ''                     => 'ffffff',
         ];
-
 
         $ues = $this->sousCommission->getUes();
         $matieres = $this->sousCommission->getMatieres();
-        $nbUes = count($ues);
+        $nbUes = \count($ues);
 
         $this->myExcelWriter->writeCellName('B1', 'Sous commission ');
         $this->myExcelWriter->writeCellName('C1', $semestre->display());
@@ -101,7 +92,6 @@ class SousCommissionExport
         $now = new DateTime('now');
         $this->myExcelWriter->writeCellName('B3', 'Version du ');
         $this->myExcelWriter->writeCellName('C3', $now->format('d/m/Y H:i:s'));
-
 
         $this->myExcelWriter->writeCellName('B8', 'Etudiant');
         $this->myExcelWriter->writeCellName('C8', 'N° Etu.');
@@ -118,7 +108,7 @@ class SousCommissionExport
             if (!$matiere->isSuspendu() && $matiere->getNbnotes() > 0) {
                 $this->myExcelWriter->writeCellXY($colonne, $ligne, $matiere->getCodeMatiere());
                 $this->myExcelWriter->writeCellXY($colonne, $ligne + 1, $matiere->getCoefficient());
-                $colonne++;
+                ++$colonne;
             }
         }
 
@@ -131,86 +121,84 @@ class SousCommissionExport
                 'UE ' . $ue->getNumeroUe());
             $this->myExcelWriter->writeCellXY($colonne, $ligne + 1,
                 $ue->getCoefficient());
-            $colonne++;
+            ++$colonne;
         }
 
         $this->myExcelWriter->writeCellXY($colonne, $ligne, 'Moy.');
-        $colonne++;
+        ++$colonne;
         $this->myExcelWriter->writeCellXY($colonne, $ligne, 'Bonif.');
-        $colonne++;
+        ++$colonne;
         $this->myExcelWriter->writeCellXY($colonne, $ligne, 'Prop.');
-        $colonne++;
+        ++$colonne;
 
         $this->myExcelWriter->writeCellXY($colonne, $ligne, 'Décision');
-        $colonne++;
+        ++$colonne;
 
         $this->myExcelWriter->writeCellXY($colonne, $ligne, 'Abs.');
-        $colonne++;
+        ++$colonne;
         /* semestres précédent */
 
         foreach ($this->sousCommission->getSemestresScolarite() as $s) {
             //titre semestre
             $this->myExcelWriter->writeCellXY($colonne, $ligne - 1, $s->getLibelle(), ['style' => 'HORIZONTAL_CENTER']);
-            $colFin = $colonne + count($s->getUes()) + 1;
+            $colFin = $colonne + \count($s->getUes()) + 1;
             $this->myExcelWriter->mergeCellsCaR($colonne, $ligne - 1, $colFin, $ligne - 1);
             /** @var Ue $ue */
             foreach ($s->getUes() as $ue) {
                 $this->myExcelWriter->writeCellXY($colonne, $ligne, 'UE ' . $ue->getNumeroUe());
                 $this->myExcelWriter->writeCellXY($colonne, $ligne + 1, $ue->getCoefficient());
-                $colonne++;
+                ++$colonne;
             }
             $this->myExcelWriter->writeCellXY($colonne, $ligne, 'Moy. ');
-            $colonne++;
+            ++$colonne;
             $this->myExcelWriter->writeCellXY($colonne, $ligne, 'Décis. ');
-            $colonne++;
+            ++$colonne;
         }
 
         $maxcolonne = $colonne;
         $colonne = 2;
 
-        $ligne++;
-        $ligne++;
-
+        ++$ligne;
+        ++$ligne;
 
         foreach ($this->sousCommission->getEtudiants() as $etudiant) {
             $sousCommissionEtudiant = $this->sousCommission->getSousCommissionEtudiant($etudiant->getId());
             $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getDisplay());
             $this->myExcelWriter->getColumnAutoSize($colonne);
-            $colonne++;
+            ++$colonne;
 
             $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getNumetudiant());
             $this->myExcelWriter->getColumnAutoSize($colonne);
-            $colonne++;
+            ++$colonne;
 
             $this->myExcelWriter->writeCellXY($colonne, $ligne,
-                $etudiant->getBac() !== null ? $etudiant->getBac()->getLibelle() : 'N.C.');
+                null !== $etudiant->getBac() ? $etudiant->getBac()->getLibelle() : 'N.C.');
             $this->myExcelWriter->getColumnAutoSize($colonne);
-            $colonne++;
+            ++$colonne;
 
             $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getAnneebac());
             $this->myExcelWriter->getColumnAutoSize($colonne);
-            $colonne++;
+            ++$colonne;
 
             $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getCivilite());
             $this->myExcelWriter->getColumnAutoSize($colonne);
-            $colonne++;
+            ++$colonne;
 
             $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getDatenaissance()->format('d/m/Y'));
             $this->myExcelWriter->getColumnAutoSize($colonne);
-            $colonne++;
+            ++$colonne;
 
             $this->myExcelWriter->writeCellXY($colonne, $ligne,
                 $sousCommissionEtudiant->getNbSemestres());
-            $colonne++;
+            ++$colonne;
 
             foreach ($matieres as $matiere) {
-
-                if ($matiere->getNbnotes() > 0 && $matiere->isSuspendu() === false) {
-                    if (array_key_exists($matiere->getId(), $sousCommissionEtudiant->moyenneMatieres)) {
+                if ($matiere->getNbnotes() > 0 && false === $matiere->isSuspendu()) {
+                    if (\array_key_exists($matiere->getId(), $sousCommissionEtudiant->moyenneMatieres)) {
                         $moyenneMatiere = $sousCommissionEtudiant->moyenneMatieres[$matiere->getId()];
-                        if ($matiere->isPac() === true) {
+                        if (true === $matiere->isPac()) {
                             if ($moyenneMatiere->getMoyenne() > 0) {
-                                if ($semestre->isOptPenaliteAbsence() === true) {
+                                if (true === $semestre->isOptPenaliteAbsence()) {
                                     $this->myExcelWriter->writeCellXY($colonne, $ligne,
                                         $moyenneMatiere->getMoyennePenalisee(),
                                         ['style' => 'numerique']);
@@ -223,17 +211,14 @@ class SousCommissionExport
                                     $this->myExcelWriter->colorCellRange($colonne, $ligne,
                                         $tCouleur[$moyenneMatiere->getStyle()]);
                                 }
-
                             } else {
                                 $this->myExcelWriter->writeCellXY($colonne, $ligne, 'No PAC');
                                 $this->myExcelWriter->colorCellRange($colonne, $ligne, $tCouleur['pasoption']);
                             }
-
-                        } elseif ($moyenneMatiere->optionFaite === false) {
+                        } elseif (false === $moyenneMatiere->optionFaite) {
                             $this->myExcelWriter->writeCellXY($colonne, $ligne, 'N.C.');
                             $this->myExcelWriter->colorCellRange($colonne, $ligne, $tCouleur['pasoption']);
-
-                        } elseif ($semestre->isOptPenaliteAbsence() === true) {
+                        } elseif (true === $semestre->isOptPenaliteAbsence()) {
                             $this->myExcelWriter->writeCellXY($colonne, $ligne,
                                 $moyenneMatiere->getMoyennePenalisee(),
                                 ['style' => 'numerique']);
@@ -247,22 +232,18 @@ class SousCommissionExport
                         $this->myExcelWriter->colorCellRange($colonne, $ligne,
                             $tCouleur[$moyenneMatiere->getStyle()]);
                     }
-                    $colonne++;
-                } else {
-                    //note pas présente
+                    ++$colonne;
                 }
-
+                //note pas présente
             }
 
-
             foreach ($ues as $ue) {
-                if ($semestre->isOptPenaliteAbsence() === true) {
+                if (true === $semestre->isOptPenaliteAbsence()) {
                     $this->myExcelWriter->writeCellXY($colonne, $ligne,
                         $sousCommissionEtudiant->moyenneUes[$ue->getNumeroUe()]->getMoyennePenalisee(),
                         ['style' => 'numerique3']);
                     $this->myExcelWriter->colorCellRange($colonne, $ligne,
                         $tCouleur[$sousCommissionEtudiant->moyenneUes[$ue->getNumeroUe()]->getStyleMoyennePenalisee()]);
-
                 } else {
                     $this->myExcelWriter->writeCellXY($colonne, $ligne,
                         $sousCommissionEtudiant->moyenneUes[$ue->getNumeroUe()]->getMoyenne(),
@@ -271,10 +252,10 @@ class SousCommissionExport
                     $this->myExcelWriter->colorCellRange($colonne, $ligne,
                         $tCouleur[$sousCommissionEtudiant->moyenneUes[$ue->getNumeroUe()]->getStyleMoyenne()]);
                 }
-                $colonne++;
+                ++$colonne;
             }
 
-            if ($semestre->isOptPenaliteAbsence() === true) {
+            if (true === $semestre->isOptPenaliteAbsence()) {
                 $this->myExcelWriter->writeCellXY($colonne, $ligne,
                     $sousCommissionEtudiant->moyenneSemestrePenalisee, ['style' => 'numerique3']);
                 $this->myExcelWriter->colorCellRange($colonne, $ligne,
@@ -285,30 +266,29 @@ class SousCommissionExport
                 $this->myExcelWriter->colorCellRange($colonne, $ligne,
                     $tCouleur[$sousCommissionEtudiant->getStyleMoyenneSemestre()]);
             }
-            $colonne++;
+            ++$colonne;
 
             $this->myExcelWriter->writeCellXY($colonne, $ligne, $sousCommissionEtudiant->bonif,
                 ['style' => 'numerique']);
-            $colonne++;
+            ++$colonne;
 
             $this->myExcelWriter->writeCellXY($colonne, $ligne, $sousCommissionEtudiant->proposition);
-            $colonne++;
-
+            ++$colonne;
 
             $this->myExcelWriter->writeCellXY($colonne, $ligne, $sousCommissionEtudiant->decision);
             $this->myExcelWriter->colorCellRange($colonne, $ligne,
                 Constantes::SS_COMM_DECISION_COULEUR[$sousCommissionEtudiant->decision]);
-            $colonne++;
+            ++$colonne;
 
             $this->myExcelWriter->writeCellXY($colonne, $ligne,
                 $sousCommissionEtudiant->nbAbsences());
-            $colonne++;
+            ++$colonne;
 
             /* semestres précédent */
             foreach ($this->sousCommission->getSemestresScolarite() as $s) {
                 foreach ($s->getUes() as $ue) {
                     if (isset($sousCommissionEtudiant->getScolarite()[$s->getOrdreLmd()]) &&
-                        array_key_exists($ue->getNumeroUe(),
+                        \array_key_exists($ue->getNumeroUe(),
                             $sousCommissionEtudiant->getScolarite()[$s->getOrdreLmd()]->parcoursUe)
                     ) {
                         $this->myExcelWriter->writeCellXY($colonne, $ligne,
@@ -320,35 +300,32 @@ class SousCommissionExport
                         $this->myExcelWriter->writeCellXY($colonne, $ligne, ' - ');
                     }
 
-
-                    $colonne++;
+                    ++$colonne;
                 }
                 if (isset($sousCommissionEtudiant->getScolarite()[$s->getOrdreLmd()])) {
                     $this->myExcelWriter->writeCellXY($colonne, $ligne,
                         $sousCommissionEtudiant->getScolarite()[$s->getOrdreLmd()]->moyenne,
                         ['style' => 'numerique3']);
-                    $colonne++;
+                    ++$colonne;
                     $this->myExcelWriter->writeCellXY($colonne, $ligne,
                         $sousCommissionEtudiant->getScolarite()[$s->getOrdreLmd()]->decision);
                     $this->myExcelWriter->colorCellRange($colonne, $ligne,
                         Constantes::SS_COMM_DECISION_COULEUR[$sousCommissionEtudiant->getScolarite()[$s->getOrdreLmd()]->decision]);
-                    $colonne++;
+                    ++$colonne;
                 } else {
                     $this->myExcelWriter->writeCellXY($colonne, $ligne, ' - ');
-                    $colonne++;
+                    ++$colonne;
                     $this->myExcelWriter->writeCellXY($colonne, $ligne, ' - ');
-                    $colonne++;
+                    ++$colonne;
                 }
             }
             $this->myExcelWriter->getColumnDimension('H', 6);
 
             $colonne = 2;
-            $ligne++;
+            ++$ligne;
         }
 
-
         $this->myExcelWriter->borderCellsRange(1, 6, $maxcolonne, $ligne);
-
 
         $writer = new Xlsx($this->myExcelWriter->getSpreadsheet());
 
@@ -359,7 +336,7 @@ class SousCommissionExport
             200,
             [
                 'Content-Type'        => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                'Content-Disposition' => 'attachment;filename="Sous Commission ' . $semestre->getLibelle() . '.xlsx"'
+                'Content-Disposition' => 'attachment;filename="Sous Commission ' . $semestre->getLibelle() . '.xlsx"',
             ]
         );
     }
@@ -367,14 +344,13 @@ class SousCommissionExport
     public function exportGrandJury(ScolaritePromo $scolaritePromo, AnneeUniversitaire $anneeUniversitaire)
     {
         $semestre = $scolaritePromo->getSemestre();
-        if ($semestre !== null) {
+        if (null !== $semestre) {
             $ues = $semestre->getUes();
             $etudiants = $semestre->getEtudiants();
             $matieres = $this->matiereRepository->findBySemestre($semestre);
 
             $ssCommTravail = new SousCommissionTravail($semestre, $anneeUniversitaire,
                 $ues->getValues(), $matieres, $etudiants->getValues(), $scolaritePromo);
-
 
             $this->myExcelWriter->createSheet('Grand Jury ' . $semestre->display());
 
@@ -399,23 +375,22 @@ class SousCommissionExport
                 'UE5', //todo: rendre flexible
                 'Moyenne',
                 'Valid.',
-                'Décision'
+                'Décision',
             ], $colonne, $ligne);
 
             $colonne = 15;
 
             foreach ($matieres as $m) {
                 $this->myExcelWriter->writeCellXY($colonne, $ligne, $m->getCodeMatiere());
-                $colonne++;
+                ++$colonne;
             }
 
             $tsem = [];
             $precedent = $semestre->getPrecedent();
-            while ($precedent !== null) {
+            while (null !== $precedent) {
                 $tsem[] = $precedent;
                 $precedent = $precedent->getPrecedent();
             }
-
 
             /*foreach ($tsem as $prec) {
                 $coldebut = $colonne;
@@ -429,25 +404,26 @@ class SousCommissionExport
                 $colonne++;
             }*/
 
-            $ligne++;
+            ++$ligne;
 
             foreach ($etudiants as $etu) {
-                if ($etu->getAnneeSortie() === 0 && $ssCommTravail->etudiant($etu->getId()) !== null) {
+                if (0 === $etu->getAnneeSortie() && null !== $ssCommTravail->etudiant($etu->getId())) {
                     $colonne = 1;
                     $this->myExcelWriter->ecritLigne([
                         $etu->getNumEtudiant(),
                         ucfirst($etu->getNom()) . ' ' . ucfirst($etu->getPrenom()),
                         $etu->getDateNaissance()->format('d/m/Y'),
                         $etu->getCivilite(),
-                        $etu->getBac() !== null ? $etu->getBac()->getLibelle() : 'err',
-                        $etu->getAnneeBac()
+                        null !== $etu->getBac() ? $etu->getBac()->getLibelle() : 'err',
+                        $etu->getAnneeBac(),
                     ], $colonne, $ligne);
                     $colonne = 7;
 
-                    $this->myExcelWriter->writeCellXY($colonne, $ligne, count($ssCommTravail->recupereScolarite($etu)));
+                    $this->myExcelWriter->writeCellXY($colonne, $ligne,
+                        \count($ssCommTravail->recupereScolarite($etu)));
 
                     foreach ($ues as $ue) {
-                        $colonne++;
+                        ++$colonne;
                         $this->myExcelWriter->writeCellXY($colonne, $ligne,
                             number_format($ssCommTravail->ue($etu->getId(), $ue->getId())['moyenne'], 3), 'numerique3');
                     }
@@ -456,18 +432,18 @@ class SousCommissionExport
                     $this->myExcelWriter->writeCellXY($colonne, $ligne,
                         number_format($ssCommTravail->etudiant($etu->getId())->getMoyenne(), 3),
                         'numerique3');
-                    $colonne++;
+                    ++$colonne;
                     $this->myExcelWriter->writeCellXY($colonne, $ligne,
                         $ssCommTravail->etudiant($etu->getId())->getDecision());
-                    $colonne++;
+                    ++$colonne;
                     $this->myExcelWriter->writeCellXY($colonne, $ligne,
                         $ssCommTravail->etudiant($etu->getId())->getProposition());
 
                     $colonne = 15;
 
                     foreach ($matieres as $m) {
-                        if ($ssCommTravail->matiere($etu->getId(), $m->getId()) !== null) {
-                            if (array_key_exists('pasoption', $ssCommTravail->matiere($etu->getId(), $m->getId()))) {
+                        if (null !== $ssCommTravail->matiere($etu->getId(), $m->getId())) {
+                            if (\array_key_exists('pasoption', $ssCommTravail->matiere($etu->getId(), $m->getId()))) {
                                 $this->myExcelWriter->writeCellXY($colonne, $ligne, 'N.C.');
                             } else {
                                 $this->myExcelWriter->writeCellXY($colonne, $ligne,
@@ -475,7 +451,7 @@ class SousCommissionExport
                                     'numerique');
                             }
                         }
-                        $colonne++;
+                        ++$colonne;
                     }
 
                     /* foreach ($tsem as $prec) {
@@ -514,18 +490,17 @@ class SousCommissionExport
                 }*/
                     //}
 
-                    $ligne++;
+                    ++$ligne;
                 }
             }
 
-            for ($i = 0; $i < 100; $i++) {
+            for ($i = 0; $i < 100; ++$i) {
                 $this->myExcelWriter->getColumnAutoSize($i);
             }
 
             $this->myExcelWriter->writeCellName('A1', 'DUT : ');
             $this->myExcelWriter->writeCellName('B1',
                 $semestre->getAnnee()->getDiplome()->getDepartement()->getLibelle());
-
 
             $writer = new Xlsx($this->myExcelWriter->getSpreadsheet());
 
@@ -536,10 +511,9 @@ class SousCommissionExport
                 200,
                 [
                     'Content-Type'        => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                    'Content-Disposition' => 'attachment;filename="Export Grand Jury ' . $semestre->getLibelle() . '.xlsx"'
+                    'Content-Disposition' => 'attachment;filename="Export Grand Jury ' . $semestre->getLibelle() . '.xlsx"',
                 ]
             );
-
         }
     }
 
@@ -552,15 +526,15 @@ class SousCommissionExport
 
         /* récupère les étudiants */
         $tEtudiant = [];
-        while ($this->myExcelRead->getCellColLigne(1, $ligne) != '') {
+        while ('' !== $this->myExcelRead->getCellColLigne(1, $ligne)) {
             $tEtudiant[$ligne] = trim($this->myExcelRead->getCellColLigne(1, $ligne));
-            $ligne++;
+            ++$ligne;
         }
 
         /* récupère les modules */
         $tModule = [];
         $colonne = 5;
-        while ($this->myExcelRead->getCellColLigne($colonne, 14) != '') {
+        while ('' !== $this->myExcelRead->getCellColLigne($colonne, 14)) {
             $val = explode('-', $this->myExcelRead->getCellColLigne($colonne, 14));
             $tModule[$colonne] = trim($val[0]);
             $colonne += 2; //3 si colonne résultat
@@ -579,17 +553,17 @@ class SousCommissionExport
         }
 
         $ssComm = $this->sousCommission->getBySemestreAnneeUniversitaire($semestre, $anneeUniversitaire);
-        if ($ssComm !== null) {
+        if (null !== $ssComm) {
             $ssCommTravail = new SousCommissionTravail($semestre, $anneeUniversitaire,
                 $ues->getValues(), $matieres, $etudiants->getValues(), $ssComm);
 
             foreach ($tEtudiant as $keyTe => $valueTe) {
                 foreach ($tModule as $keyTm => $valueTm) {
-                    if (array_key_exists($valueTe, $etuApogee) &&
-                        array_key_exists($valueTm, $matApogee)
+                    if (\array_key_exists($valueTe, $etuApogee) &&
+                        \array_key_exists($valueTm, $matApogee)
                     ) {
-                        if ($ssCommTravail->matiere($etuApogee[$valueTe],
-                                $matApogee[$valueTm]) !== null && array_key_exists('moyenne',
+                        if (null !== $ssCommTravail->matiere($etuApogee[$valueTe],
+                                $matApogee[$valueTm]) && \array_key_exists('moyenne',
                                 $ssCommTravail->matiere($etuApogee[$valueTe], $matApogee[$valueTm]))) {
                             $moyenne = $ssCommTravail->matiere($etuApogee[$valueTe], $matApogee[$valueTm])['moyenne'];
                             $this->myExcelRead->writeCellColLigne($keyTm, $keyTe,
@@ -598,7 +572,6 @@ class SousCommissionExport
                         $this->myExcelRead->writeCellColLigne($keyTm + 1, $keyTe, 20);
                     }
                 }
-
             }
 
             //EXPORT
@@ -614,6 +587,5 @@ class SousCommissionExport
         }
 
         return Constantes::PAS_DE_SOUS_COMM;
-
     }
 }

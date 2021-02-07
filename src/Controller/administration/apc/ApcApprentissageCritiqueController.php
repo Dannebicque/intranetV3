@@ -1,9 +1,12 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcApprentissageCritiqueController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 08/01/2021 14:10
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcApprentissageCritiqueController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
 
 namespace App\Controller\administration\apc;
 
@@ -21,13 +24,8 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ApcApprentissageCritiqueController extends BaseController
 {
-
     /**
      * @Route("/new/{niveau}", name="administration_apc_apprentissage_critique_new", methods={"GET","POST"})
-     * @param Request   $request
-     * @param ApcNiveau $niveau
-     *
-     * @return Response
      */
     public function new(Request $request, ApcNiveau $niveau): Response
     {
@@ -47,16 +45,12 @@ class ApcApprentissageCritiqueController extends BaseController
         return $this->render('apc/apc_apprentissage_critique/new.html.twig', [
             'apc_apprentissage_critique' => $apcApprentissageCritique,
             'form'                       => $form->createView(),
-            'competence'                 => $niveau->getCompetence()
+            'competence'                 => $niveau->getCompetence(),
         ]);
     }
 
     /**
      * @Route("/{id}/edit", name="administration_apc_apprentissage_critique_edit", methods={"GET","POST"})
-     * @param Request                  $request
-     * @param ApcApprentissageCritique $apcApprentissageCritique
-     *
-     * @return Response
      */
     public function edit(Request $request, ApcApprentissageCritique $apcApprentissageCritique): Response
     {
@@ -78,10 +72,6 @@ class ApcApprentissageCritiqueController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_apc_apprentissage_critique_delete", methods={"DELETE"})
-     * @param Request                  $request
-     * @param ApcApprentissageCritique $apcApprentissageCritique
-     *
-     * @return Response
      */
     public function delete(Request $request, ApcApprentissageCritique $apcApprentissageCritique): Response
     {

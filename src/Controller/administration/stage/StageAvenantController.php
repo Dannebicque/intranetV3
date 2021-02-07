@@ -1,9 +1,12 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StageAvenantController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 23/01/2021 14:47
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StageAvenantController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
 
 namespace App\Controller\administration\stage;
 
@@ -28,25 +31,19 @@ class StageAvenantController extends BaseController
 {
     /**
      * @Route("/{stageEtudiant}", name="administration_stage_avenant_index", methods={"GET"})
-     * @param StageEtudiant $stageEtudiant
-     *
-     * @return Response
      */
     public function index(StageEtudiant $stageEtudiant): Response
     {
         return $this->render('administration/stage/stage_avenant/index.html.twig', [
             'stage_avenants' => $stageEtudiant->getStageAvenants(),
             'stagePeriode'   => $stageEtudiant->getStagePeriode(),
-            'stageEtudiant'  => $stageEtudiant
+            'stageEtudiant'  => $stageEtudiant,
         ]);
     }
 
     /**
      * @Route("/avenant/pdf/{id}", name="administration_stage_avenant_pdf", methods="GET")
-     * @param MyPDF        $myPDF
-     * @param StageAvenant $stageAvenant
      *
-     * @return PdfResponse
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -56,7 +53,7 @@ class StageAvenantController extends BaseController
         return $myPDF::generePdf('pdf/stage/avenantStage.html.twig',
             [
                 'stage_avenant' => $stageAvenant,
-                'proposition'   => $stageAvenant->getStageEtudiant()
+                'proposition'   => $stageAvenant->getStageEtudiant(),
             ],
             'avenant-' . $stageAvenant->getStageEtudiant()->getEtudiant()->getNom(),
             $this->dataUserSession->getDepartement()
@@ -65,10 +62,6 @@ class StageAvenantController extends BaseController
 
     /**
      * @Route("/new/{stageEtudiant}", name="administration_stage_avenant_new", methods={"GET","POST"})
-     * @param Request       $request
-     * @param StageEtudiant $stageEtudiant
-     *
-     * @return Response
      */
     public function new(Request $request, StageEtudiant $stageEtudiant): Response
     {
@@ -95,24 +88,17 @@ class StageAvenantController extends BaseController
 
     /**
      * @Route("/voir/{id}", name="administration_stage_avenant_show", methods={"GET"})
-     * @param StageAvenant $stageAvenant
-     *
-     * @return Response
      */
     public function show(StageAvenant $stageAvenant): Response
     {
         return $this->render('administration/stage/stage_avenant/show.html.twig', [
             'stage_avenant' => $stageAvenant,
-            'stageEtudiant' => $stageAvenant->getStageEtudiant()
+            'stageEtudiant' => $stageAvenant->getStageEtudiant(),
         ]);
     }
 
     /**
      * @Route("/{id}/edit", name="administration_stage_avenant_edit", methods={"GET","POST"})
-     * @param Request      $request
-     * @param StageAvenant $stageAvenant
-     *
-     * @return Response
      */
     public function edit(Request $request, StageAvenant $stageAvenant): Response
     {
@@ -137,10 +123,6 @@ class StageAvenantController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_stage_avenant_delete", methods={"DELETE"})
-     * @param Request      $request
-     * @param StageAvenant $stageAvenant
-     *
-     * @return Response
      */
     public function delete(Request $request, StageAvenant $stageAvenant): Response
     {
@@ -152,14 +134,10 @@ class StageAvenantController extends BaseController
         }
 
         return $this->redirectToRoute('administration_stage_avenant_index', ['stageEtudiant' => $id]);
-
     }
 
     /**
      * @Route("/{id}/duplicate", name="administration_stage_avenant_duplicate", methods="GET")
-     * @param StageAvenant $stageAvenant
-     *
-     * @return Response
      */
     public function duplicate(StageAvenant $stageAvenant): Response
     {

@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ProjetEtudiant.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 12/12/2020 14:31
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ProjetEtudiant.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:49
+ */
 
 namespace App\Entity;
 
@@ -20,6 +22,7 @@ use Ramsey\Uuid\Uuid;
  */
 class ProjetEtudiant extends BaseEntity
 {
+    use UuidTrait;
 
     public const ETAT_PROJET_ATTENTE = 'ETAT_PROJET_ATTENTE';
     public const ETAT_PROJET_AUTORISE = 'ETAT_PROJET_AUTORISE';
@@ -28,8 +31,6 @@ class ProjetEtudiant extends BaseEntity
     public const ETAT_PROJET_IMPRIME = 'ETAT_PROJET_IMPRIME';
     public const DUREE_HEURE = 'h';
     public const DUREE_JOUR = 'j';
-
-    use UuidTrait;
 
     /**
      * @ORM\ManyToOne(targetEntity=ProjetPeriode::class, inversedBy="projetEtudiants")

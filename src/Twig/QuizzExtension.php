@@ -1,49 +1,42 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Twig/QuizzExtension.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 21/11/2020 07:26
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Twig/QuizzExtension.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:10
+ */
 
 namespace App\Twig;
 
-use App\Entity\QuestionnaireQuestion;
 use App\Classes\Tools;
+use App\Entity\QuestionnaireQuestion;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
 /**
- * Class QizzExtension
- * @package App\Twig
+ * Class QizzExtension.
  */
 class QuizzExtension extends AbstractExtension
 {
-
     /**
      * AppExtension constructor.
-     *
      */
     public function __construct()
     {
-
     }
 
-    /**
-     * @return array
-     */
     public function getFilters(): array
     {
         return [
             new TwigFilter('type_question', [$this, 'typeQuestion']),
             new TwigFilter('has_reponse', [$this, 'hasReponse']),
-            new TwigFilter('personnalise', [$this, 'personnalise'])
+            new TwigFilter('personnalise', [$this, 'personnalise']),
         ];
     }
 
     /**
      * @param $type
-     *
-     * @return null|string
      */
     public function typeQuestion($type): ?string
     {
@@ -64,7 +57,7 @@ class QuizzExtension extends AbstractExtension
 
     public function hasReponse($tab, $reponse)
     {
-        if (in_array($reponse, json_decode($tab, false), true)) {
+        if (\in_array($reponse, json_decode($tab, false), true)) {
             return true;
         }
 

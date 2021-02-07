@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/AnneeController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/AnneeController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller\superAdministration;
 
@@ -23,26 +25,22 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class AnneeController extends BaseController
 {
-
     /**
      * @Route("/nouveau/{diplome}", name="sa_annee_new",
      *                                    methods="GET|POST")
-     * @param Request $request
-     *
-     * @param Diplome $diplome
      *
      * @return RedirectResponse|Response
      */
     public function create(Request $request, Diplome $diplome)
     {
-        if ($diplome->getDepartement() !== null) {
+        if (null !== $diplome->getDepartement()) {
             $annee = new Annee();
             $annee->setDiplome($diplome);
             $form = $this->createForm(AnneeType::class, $annee, [
                 'departement' => $diplome->getDepartement(),
                 'attr'        => [
-                    'data-provide' => 'validation'
-                ]
+                    'data-provide' => 'validation',
+                ],
             ]);
             $form->handleRequest($request);
 
@@ -68,9 +66,6 @@ class AnneeController extends BaseController
 
     /**
      * @Route("/{id}", name="sa_annee_show", methods="GET")
-     * @param Annee $annee
-     *
-     * @return Response
      */
     public function show(Annee $annee): Response
     {
@@ -79,22 +74,18 @@ class AnneeController extends BaseController
 
     /**
      * @Route("/{id}/modifier", name="sa_annee_edit", methods="GET|POST")
-     * @param Request $request
-     * @param Annee   $annee
-     *
-     * @return Response
      */
     public function edit(Request $request, Annee $annee): Response
     {
-        if ($annee->getDiplome() !== null && $annee->getDiplome()->getDepartement() !== null) {
+        if (null !== $annee->getDiplome() && null !== $annee->getDiplome()->getDepartement()) {
             $form = $this->createForm(
                 AnneeType::class,
                 $annee,
                 [
                     'departement' => $annee->getDiplome()->getDepartement(),
                     'attr'        => [
-                        'data-provide' => 'validation'
-                    ]
+                        'data-provide' => 'validation',
+                    ],
                 ]
             );
             $form->handleRequest($request);
@@ -120,9 +111,6 @@ class AnneeController extends BaseController
 
     /**
      * @Route("/{id}/duplicate", name="sa_annee_duplicate", methods="GET|POST")
-     * @param Annee $annee
-     *
-     * @return Response
      */
     public function duplicate(Annee $annee): Response
     {
@@ -138,16 +126,12 @@ class AnneeController extends BaseController
 
     /**
      * @Route("/{id}", name="sa_annee_delete", methods="DELETE")
-     * @param Request $request
-     * @param Annee   $annee
-     *
-     * @return Response
      */
     public function delete(Request $request, Annee $annee): Response
     {
         $id = $annee->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
-            if (count($annee->getSemestres()) === 0) {
+            if (0 === \count($annee->getSemestres())) {
                 $this->entityManager->remove($annee);
                 $this->entityManager->flush();
                 $this->addFlashBag(
@@ -169,13 +153,8 @@ class AnneeController extends BaseController
     }
 
     /**
-     * @param Annee $annee
-     * @param bool  $etat
-     *
-     * @return RedirectResponse
      * @Route("/activate/{annee}/{etat}", methods={"GET"}, name="sa_annee_activate")
      * @IsGranted("ROLE_SUPER_ADMIN")
-     *
      */
     public function activate(Annee $annee, bool $etat): RedirectResponse
     {
@@ -184,6 +163,5 @@ class AnneeController extends BaseController
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'annee.activate.' . $etat . '.flash');
 
         return $this->redirectToRoute('super_admin_homepage');
-
     }
 }

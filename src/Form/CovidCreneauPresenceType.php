@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Form/CovidCreneauPresenceType.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 06/11/2020 15:33
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/CovidCreneauPresenceType.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Form;
 
@@ -27,7 +29,7 @@ class CovidCreneauPresenceType extends AbstractType
                 'data'   => $date->addDays(2),
                 'widget' => 'single_text',
                 'html5'  => false,
-                'attr'   => ['data-provide' => 'datepicker']
+                'attr'   => ['data-provide' => 'datepicker'],
             ])
             ->add('heureArrivee', TimeType::class, ['data' => new Carbon('08:00'), 'label' => 'Heure d\'arrivée'])
             ->add('heureDepart', TimeType::class, ['data' => new Carbon('12:00'), 'label' => 'Heure de départ']);
@@ -37,7 +39,7 @@ class CovidCreneauPresenceType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class'         => CovidCreneauPresence::class,
-            'translation_domain' => 'form'
+            'translation_domain' => 'form',
         ]);
     }
 }

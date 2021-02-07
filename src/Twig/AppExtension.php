@@ -1,36 +1,32 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Twig/AppExtension.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 06/11/2020 18:24
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Twig/AppExtension.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Twig;
 
-use App\Entity\Constantes;
 use App\Classes\Configuration;
 use App\Classes\Tools;
+use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Entity\Personnel;
+use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
-use function chr;
-use Carbon\Carbon;
 
 /**
- * Class AppExtension
- * @package App\Twig
+ * Class AppExtension.
  */
 class AppExtension extends AbstractExtension
 {
-    /** @var Configuration */
     protected Configuration $config;
 
-    /**
-     * @return array
-     */
     public function getFilters(): array
     {
         return [
@@ -47,14 +43,13 @@ class AppExtension extends AbstractExtension
             new TwigFilter('link', [$this, 'link'], ['is_safe' => ['html']]),
             new TwigFilter('border', [$this, 'border']),
             new TwigFilter('format_note', [$this, 'formatNote'], ['is_safe' => ['html']]),
-            new TwigFilter('formatHeure', [$this, 'formatHeure'])
-
+            new TwigFilter('formatHeure', [$this, 'formatHeure']),
         ];
     }
 
     public function formatHeure($heure)
     {
-        return strlen($heure) === 1 ? '0' . $heure : $heure;
+        return 1 === mb_strlen($heure) ? '0' . $heure : $heure;
     }
 
     public function formatNote($note, $nbdecimales = 2, $seuil = 10)
@@ -68,11 +63,11 @@ class AppExtension extends AbstractExtension
 
     public function getFunctions(): array
     {
-        return array(
-            new TwigFunction('settings', array($this, 'getSetting')),
-            new TwigFunction('datedujourlong', array($this, 'dateDuJourLong')),
-            new TwigFunction('convertHeureEdt', array($this, 'convertHeureEdt'))
-        );
+        return [
+            new TwigFunction('settings', [$this, 'getSetting']),
+            new TwigFunction('datedujourlong', [$this, 'dateDuJourLong']),
+            new TwigFunction('convertHeureEdt', [$this, 'convertHeureEdt']),
+        ];
     }
 
     public function border($statut): string
@@ -96,24 +91,24 @@ class AppExtension extends AbstractExtension
 
     public function bg($value): string
     {
-        if ($value === null) {
+        if (null === $value) {
             return 'bg-pale-warning';
         }
 
-        return $value === true ? 'bg-pale-success' : 'bg-pale-danger';
+        return true === $value ? 'bg-pale-success' : 'bg-pale-danger';
     }
 
     public function displayGroupes(Etudiant $etudiant): string
     {
         $html = '';
-        $nbGroupes = count($etudiant->getGroupes());
+        $nbGroupes = \count($etudiant->getGroupes());
         $loop = 0;
         foreach ($etudiant->getGroupes() as $groupe) {
             $html = $groupe->getLibelle();
             if ($loop < $nbGroupes - 1) {
                 $html .= ', ';
             }
-            $loop++;
+            ++$loop;
         }
 
         return $html;
@@ -131,7 +126,6 @@ class AppExtension extends AbstractExtension
 
     /**
      * @param $texte
-     * @return string
      */
     public function upper($texte): string
     {
@@ -140,8 +134,6 @@ class AppExtension extends AbstractExtension
 
     /**
      * @param $duree
-     *
-     * @return string
      */
     public function convertHeureEdt($duree): string
     {
@@ -150,17 +142,12 @@ class AppExtension extends AbstractExtension
 
     /**
      * @param $locale
-     *
-     * @return string
      */
     public function dateDuJourLong($locale): string
     {
         return Carbon::now()->locale($locale)->isoFormat('dddd Do MMMM YYYY');
     }
 
-    /**
-     * @param Configuration $config
-     */
     public function setConfig(Configuration $config): void
     {
         $this->config = $config;
@@ -173,11 +160,10 @@ class AppExtension extends AbstractExtension
 
     /**
      * @param $var
-     * @return string
      */
-    public function mychr($var):string
+    public function mychr($var): string
     {
-        return chr($var);
+        return \chr($var);
     }
 
     public function escapetitle($texte): ?string
@@ -187,8 +173,6 @@ class AppExtension extends AbstractExtension
 
     /**
      * @param $number
-     *
-     * @return null|string
      */
     public function badge($number): ?string
     {
@@ -209,8 +193,6 @@ class AppExtension extends AbstractExtension
 
     /**
      * @param $number
-     *
-     * @return null|string
      */
     public function telFormat($number): ?string
     {
@@ -218,10 +200,7 @@ class AppExtension extends AbstractExtension
     }
 
     /**
-     *
-     * @param CarbonInterface $date
-     *
-     * @param                 $locale
+     * @param $locale
      *
      * @return mixed|string
      */

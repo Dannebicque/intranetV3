@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Event/SousCommissionEvent.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 11/12/2020 14:35
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Event/SousCommissionEvent.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:51
+ */
 
 namespace App\Event;
 
@@ -22,13 +24,8 @@ class SousCommissionEvent extends Event
         $this->scolaritePromo = $scolaritePromo;
     }
 
-    /**
-     * @return ScolaritePromo
-     */
     public function getScolaritePromo(): ScolaritePromo
     {
         return $this->scolaritePromo;
     }
-
-
 }

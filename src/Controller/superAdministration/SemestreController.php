@@ -1,10 +1,11 @@
 <?php
-
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/SemestreController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/SemestreController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller\superAdministration;
 
@@ -26,21 +27,17 @@ class SemestreController extends BaseController
 {
     /**
      * @Route("/new/{annee}", name="sa_semestre_new", methods="GET|POST")
-     * @param Request $request
-     * @param Annee   $annee
-     *
-     * @return Response
      */
     public function create(Request $request, Annee $annee): Response
     {
-        if ($annee->getDiplome() !== null) {
+        if (null !== $annee->getDiplome()) {
             $semestre = new Semestre();
             $semestre->setAnnee($annee);
             $form = $this->createForm(SemestreType::class, $semestre, [
                 'diplome' => $annee->getDiplome(),
                 'attr'    => [
-                    'data-provide' => 'validation'
-                ]
+                    'data-provide' => 'validation',
+                ],
             ]);
             $form->handleRequest($request);
 
@@ -66,9 +63,6 @@ class SemestreController extends BaseController
 
     /**
      * @Route("/{id}", name="sa_semestre_show", methods="GET")
-     * @param Semestre $semestre
-     *
-     * @return Response
      */
     public function show(Semestre $semestre): Response
     {
@@ -77,22 +71,18 @@ class SemestreController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="sa_semestre_edit", methods="GET|POST")
-     * @param Request  $request
-     * @param Semestre $semestre
-     *
-     * @return Response
      */
     public function edit(Request $request, Semestre $semestre): Response
     {
-        if ($semestre->getAnnee() !== null && $semestre->getAnnee()->getDiplome() !== null) {
+        if (null !== $semestre->getAnnee() && null !== $semestre->getAnnee()->getDiplome()) {
             $form = $this->createForm(
                 SemestreType::class,
                 $semestre,
                 [
                     'diplome' => $semestre->getAnnee()->getDiplome(),
                     'attr'    => [
-                        'data-provide' => 'validation'
-                    ]
+                        'data-provide' => 'validation',
+                    ],
                 ]
             );
             $form->handleRequest($request);
@@ -118,9 +108,6 @@ class SemestreController extends BaseController
 
     /**
      * @Route("/{id}/duplicate", name="sa_semestre_duplicate", methods="GET|POST")
-     * @param Semestre $semestre
-     *
-     * @return Response
      */
     public function duplicate(Semestre $semestre): Response
     {
@@ -135,16 +122,12 @@ class SemestreController extends BaseController
 
     /**
      * @Route("/{id}", name="sa_semestre_delete", methods="DELETE")
-     * @param Request  $request
-     * @param Semestre $semestre
-     *
-     * @return Response
      */
     public function delete(Request $request, Semestre $semestre): Response
     {
         $id = $semestre->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
-            if (count($semestre->getUes()) === 0 && count($semestre->getParcours()) === 0 && count($semestre->getEtudiants()) === 0) {
+            if (0 === \count($semestre->getUes()) && 0 === \count($semestre->getParcours()) && 0 === \count($semestre->getEtudiants())) {
                 $this->entityManager->remove($semestre);
                 $this->entityManager->flush();
                 $this->addFlashBag(
@@ -166,13 +149,8 @@ class SemestreController extends BaseController
     }
 
     /**
-     * @param Semestre $semestre
-     * @param bool     $etat
-     *
-     * @return RedirectResponse
      * @Route("/activate/{semestre}/{etat}", methods={"GET"}, name="sa_semestre_activate")
      * @IsGranted("ROLE_SUPER_ADMIN")
-     *
      */
     public function activate(Semestre $semestre, bool $etat): RedirectResponse
     {
@@ -181,6 +159,5 @@ class SemestreController extends BaseController
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'semestre.activate.' . $etat . '.flash');
 
         return $this->redirectToRoute('super_admin_homepage');
-
     }
 }

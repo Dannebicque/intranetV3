@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/StageMailTemplateRepository.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 13/10/2020 15:21
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/StageMailTemplateRepository.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:08
+ */
 
 namespace App\Repository;
 
@@ -27,12 +29,9 @@ class StageMailTemplateRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param              $codeEvent
-     * @param StagePeriode $stagePeriode
+     * @param $codeEvent
      *
-     * @return StageMailTemplate|null
      * @throws NonUniqueResultException
-     *
      */
     public function findEventPeriode($codeEvent, StagePeriode $stagePeriode): ?StageMailTemplate
     {
@@ -81,5 +80,4 @@ class StageMailTemplateRepository extends ServiceEntityRepository
 
         return $t;
     }
-
 }

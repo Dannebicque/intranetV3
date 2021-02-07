@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/ProgressionController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/ProgressionController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller\appPersonnel;
 
@@ -20,8 +22,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class ProgressionController
- * @package App\Controller
+ * Class ProgressionController.
+ *
  * @Route("/application/personnel/progression")
  * @IsGranted("ROLE_PERMANENT")
  */
@@ -29,11 +31,6 @@ class ProgressionController extends BaseController
 {
     /**
      * @Route("/", name="application_personnel_progression_index")
-     * @param PrevisionnelRepository           $previsionnelRepository
-     *
-     * @param ProgressionPedagogiqueRepository $progressionPedagogiqueRepository
-     *
-     * @return Response
      */
     public function index(
         PrevisionnelRepository $previsionnelRepository,
@@ -45,24 +42,21 @@ class ProgressionController extends BaseController
 
         return $this->render('appPersonnel/progression/index.html.twig', [
             'matieres'     => $matieres,
-            'progressions' => $progressions
+            'progressions' => $progressions,
         ]);
     }
 
     /**
      * @Route("/update/{matiere}", name="application_personnel_progression_update", options={"expose"=true})
-     * @param Request                          $request
-     * @param Matiere                          $matiere
-     * @param ProgressionPedagogiqueRepository $progressionPedagogiqueRepository
      *
-     * @return JsonResponse
      * @throws NonUniqueResultException
      */
     public function updateDisponibilites(
         Request $request,
         Matiere $matiere,
         ProgressionPedagogiqueRepository $progressionPedagogiqueRepository
-    ): JsonResponse {
+    ): JsonResponse
+    {
         $semaine = $request->request->get('semaine');
         $typeCours = $request->request->get('typecours');
         $nbSeances = $request->request->get('nbSeances');
@@ -70,8 +64,8 @@ class ProgressionController extends BaseController
         $progression = $progressionPedagogiqueRepository->findBySemaineTypeMatiere($this->getConnectedUser(), $semaine,
             $typeCours, $matiere);
 
-        if ($progression !== null) {
-            if ($nbSeances !== '0' && trim($nbSeances) !== '') {
+        if (null !== $progression) {
+            if ('0' !== $nbSeances && '' !== trim($nbSeances)) {
                 $progression->setNbSeance($nbSeances);
                 $this->entityManager->flush();
 
@@ -81,7 +75,6 @@ class ProgressionController extends BaseController
             $this->entityManager->flush();
 
             return $this->json(true, Response::HTTP_OK);
-
         }
         $progression = new ProgressionPedagogique();
         $progression->setPersonnel($this->getConnectedUser());
@@ -93,6 +86,5 @@ class ProgressionController extends BaseController
         $this->entityManager->flush();
 
         return $this->json(true, Response::HTTP_OK);
-
     }
 }

@@ -1,9 +1,12 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/CovidAttestationEtudiantController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/CovidAttestationEtudiantController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
 
 namespace App\Controller\administration;
 
@@ -29,9 +32,6 @@ class CovidAttestationEtudiantController extends BaseController
 {
     /**
      * @Route("/", name="covid_attestation_etudiant_index", methods={"GET"})
-     * @param CovidAttestationEtudiantRepository $covidAttestationEtudiantRepository
-     *
-     * @return Response
      */
     public function index(CovidAttestationEtudiantRepository $covidAttestationEtudiantRepository): Response
     {
@@ -42,16 +42,13 @@ class CovidAttestationEtudiantController extends BaseController
 
     /**
      * @Route("/new", name="covid_attestation_etudiant_new", methods={"GET","POST"})
-     * @param Request $request
-     *
-     * @return Response
      */
     public function new(Request $request): Response
     {
         $covidAttestationEtudiant = new CovidAttestationEtudiant();
         $form = $this->createForm(CovidAttestationEtudiantType::class, $covidAttestationEtudiant,
             [
-                'departement' => $this->getDepartement()
+                'departement' => $this->getDepartement(),
             ]);
         $form->handleRequest($request);
 
@@ -72,9 +69,6 @@ class CovidAttestationEtudiantController extends BaseController
 
     /**
      * @Route("/{id}", name="covid_attestation_etudiant_show", methods={"GET"})
-     * @param CovidAttestationEtudiant $covidAttestationEtudiant
-     *
-     * @return Response
      */
     public function show(CovidAttestationEtudiant $covidAttestationEtudiant): Response
     {
@@ -86,14 +80,12 @@ class CovidAttestationEtudiantController extends BaseController
     /**
      * @Route("/{id}/{etudiant}.pdf", name="covid_attestation_etudiant_export_one", methods={"GET"},
      *                                requirements={"etudiant":"\d+"})
-     * @param MyExportPresence         $myExportPresence
-     * @param CovidAttestationEtudiant $covidAttestationEtudiant
-     * @param Etudiant                 $etudiant
      *
      * @return Response
-     * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
+     *
+     * @throws LoaderError
      */
     public function pdf(
         MyExportPresence $myExportPresence,
@@ -108,14 +100,12 @@ class CovidAttestationEtudiantController extends BaseController
     /**
      * @Route("/{id}/{etudiant}/send-one", name="covid_attestation_etudiant_send_one", methods={"GET"},
      *                                     requirements={"etudiant":"\d+"})
-     * @param MyExportPresence         $myExportPresence
-     * @param CovidAttestationEtudiant $covidAttestationEtudiant
-     * @param Etudiant                 $etudiant
      *
-     * @return Response
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
+     *
+     * @return Response
      */
     public function sendOne(
         MyExportPresence $myExportPresence,
@@ -130,10 +120,7 @@ class CovidAttestationEtudiantController extends BaseController
 
     /**
      * @Route("/{id}/send-all", name="covid_attestation_etudiant_send_all", methods={"GET"})
-     * @param MyExportPresence         $myExportPresence
-     * @param CovidAttestationEtudiant $covidAttestationEtudiant
      *
-     * @return Response|null
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -141,8 +128,7 @@ class CovidAttestationEtudiantController extends BaseController
     public function sendAll(
         MyExportPresence $myExportPresence,
         CovidAttestationEtudiant $covidAttestationEtudiant
-    ): ?Response
-    {
+    ): ?Response {
         $myExportPresence->sendAllConvocation($covidAttestationEtudiant);
         $covidAttestationEtudiant->setConvocationEnvoyee(true);
         $covidAttestationEtudiant->setDateEnvoi(new DateTime());
@@ -150,26 +136,18 @@ class CovidAttestationEtudiantController extends BaseController
 
         return $this->redirectToRoute('administration_covid_attestation_etudiant_show',
             ['id' => $covidAttestationEtudiant->getId()]);
-
     }
-
 
     /**
      * @Route("/{id}/edit", name="covid_attestation_etudiant_edit", methods={"GET","POST"})
-     * @param Request                  $request
-     * @param CovidAttestationEtudiant $covidAttestationEtudiant
-     *
-     * @return Response
      */
-    public
-    function edit(
+    public function edit(
         Request $request,
         CovidAttestationEtudiant $covidAttestationEtudiant
-    ): Response
-    {
+    ): Response {
         $form = $this->createForm(CovidAttestationEtudiantType::class, $covidAttestationEtudiant,
             [
-                'departement' => $this->getDepartement()
+                'departement' => $this->getDepartement(),
             ]);
         $form->handleRequest($request);
 
@@ -177,13 +155,12 @@ class CovidAttestationEtudiantController extends BaseController
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'covid_attestation_etudiant.edit.success.flash');
 
-            if ($request->request->get('btn_update') !== null) {
+            if (null !== $request->request->get('btn_update')) {
                 return $this->redirectToRoute('administration_covid_attestation_etudiant_index');
             }
 
             return $this->redirectToRoute('administration_covid_attestation_etudiant_edit',
                 ['id' => $covidAttestationEtudiant->getId()]);
-
         }
 
         return $this->render('administration/covid_attestation_etudiant/edit.html.twig', [
@@ -194,13 +171,8 @@ class CovidAttestationEtudiantController extends BaseController
 
     /**
      * @Route("/{id}", name="covid_attestation_etudiant_delete", methods="DELETE")
-     * @param Request                  $request
-     * @param CovidAttestationEtudiant $covidAttestationEtudiant
-     *
-     * @return Response
      */
-    public
-    function delete(
+    public function delete(
         Request $request,
         CovidAttestationEtudiant $covidAttestationEtudiant
     ): Response {
@@ -223,12 +195,8 @@ class CovidAttestationEtudiantController extends BaseController
 
     /**
      * @Route("/{id}/duplicate", name="covid_attestation_etudiant_duplicate", methods="GET|POST")
-     * @param CovidAttestationEtudiant $covidAttestationEtudiant
-     *
-     * @return Response
      */
-    public
-    function duplicate(
+    public function duplicate(
         CovidAttestationEtudiant $covidAttestationEtudiant
     ): Response {
         $newcovidAttestationEtudiant = clone $covidAttestationEtudiant;

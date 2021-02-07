@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Etudiant.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 12/12/2020 14:46
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Etudiant.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Entity;
 
@@ -59,7 +61,6 @@ class Etudiant extends Utilisateur
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Note", mappedBy="etudiant")
-     *
      */
     private $notes;
 
@@ -228,9 +229,9 @@ class Etudiant extends Utilisateur
      */
     private $projetEtudiants;
 
-
     /**
      * Etudiant constructor.
+     *
      * @throws Exception
      */
     public function __construct()
@@ -262,16 +263,11 @@ class Etudiant extends Utilisateur
         $this->projetEtudiants = new ArrayCollection();
     }
 
-
     public function __clone()
     {
         $this->setUuid(Uuid::uuid4());
     }
 
-
-    /**
-     * @return mixed
-     */
     public function getId()
     {
         return $this->id;
@@ -285,9 +281,6 @@ class Etudiant extends Utilisateur
         return $this->semestre;
     }
 
-    /**
-     * @param Semestre|null $semestre
-     */
     public function setSemestre(?Semestre $semestre): void
     {
         $this->semestre = $semestre;
@@ -302,8 +295,6 @@ class Etudiant extends Utilisateur
     }
 
     /**
-     * @param Note $note
-     *
      * @return Etudiant
      */
     public function addNote(Note $note): self
@@ -317,8 +308,6 @@ class Etudiant extends Utilisateur
     }
 
     /**
-     * @param Note $note
-     *
      * @return Etudiant
      */
     public function removeNote(Note $note): self
@@ -334,18 +323,12 @@ class Etudiant extends Utilisateur
         return $this;
     }
 
-
-    /**
-     * @return null|string
-     */
     public function getNumEtudiant(): ?string
     {
         return $this->numEtudiant;
     }
 
     /**
-     * @param string $numEtudiant
-     *
      * @return Etudiant
      */
     public function setNumEtudiant(string $numEtudiant): self
@@ -355,17 +338,12 @@ class Etudiant extends Utilisateur
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
     public function getNumIne(): ?string
     {
         return $this->numIne;
     }
 
     /**
-     * @param string $numIne
-     *
      * @return Etudiant
      */
     public function setNumIne(string $numIne): self
@@ -375,18 +353,12 @@ class Etudiant extends Utilisateur
         return $this;
     }
 
-
-    /**
-     * @return int|null
-     */
     public function getAnneeBac(): ?int
     {
         return $this->anneeBac;
     }
 
     /**
-     * @param int|null $anneeBac
-     *
      * @return Etudiant
      */
     public function setAnneeBac(?int $anneeBac): self
@@ -405,8 +377,6 @@ class Etudiant extends Utilisateur
     }
 
     /**
-     * @param Absence $absence
-     *
      * @return Etudiant
      */
     public function addAbsence(Absence $absence): self
@@ -420,8 +390,6 @@ class Etudiant extends Utilisateur
     }
 
     /**
-     * @param Absence $absence
-     *
      * @return Etudiant
      */
     public function removeAbsence(Absence $absence): self
@@ -437,17 +405,12 @@ class Etudiant extends Utilisateur
         return $this;
     }
 
-    /**
-     * @return Adresse|null
-     */
     public function getAdresseParentale(): ?Adresse
     {
         return $this->adresseParentale;
     }
 
     /**
-     * @param Adresse|null $adresseParentale
-     *
      * @return Etudiant
      */
     public function setAdresseParentale(?Adresse $adresseParentale): self
@@ -466,8 +429,6 @@ class Etudiant extends Utilisateur
     }
 
     /**
-     * @param Rattrapage $rattrapage
-     *
      * @return Etudiant
      */
     public function addRattrapage(Rattrapage $rattrapage): self
@@ -481,8 +442,6 @@ class Etudiant extends Utilisateur
     }
 
     /**
-     * @param Rattrapage $rattrapage
-     *
      * @return Etudiant
      */
     public function removeRattrapage(Rattrapage $rattrapage): self
@@ -507,8 +466,6 @@ class Etudiant extends Utilisateur
     }
 
     /**
-     * @param Favori $etudiantDemande
-     *
      * @return Etudiant
      */
     public function addEtudiantDemande(Favori $etudiantDemande): self
@@ -522,8 +479,6 @@ class Etudiant extends Utilisateur
     }
 
     /**
-     * @param Favori $etudiantDemande
-     *
      * @return Etudiant
      */
     public function removeEtudiantDemande(Favori $etudiantDemande): self
@@ -548,8 +503,6 @@ class Etudiant extends Utilisateur
     }
 
     /**
-     * @param Favori $etudiantDemandeur
-     *
      * @return Etudiant
      */
     public function addEtudiantDemandeur(Favori $etudiantDemandeur): self
@@ -563,8 +516,6 @@ class Etudiant extends Utilisateur
     }
 
     /**
-     * @param Favori $etudiantDemandeur
-     *
      * @return Etudiant
      */
     public function removeEtudiantDemandeur(Favori $etudiantDemandeur): self
@@ -589,8 +540,6 @@ class Etudiant extends Utilisateur
     }
 
     /**
-     * @param Scolarite $scolarite
-     *
      * @return Etudiant
      */
     public function addScolarite(Scolarite $scolarite): self
@@ -604,8 +553,6 @@ class Etudiant extends Utilisateur
     }
 
     /**
-     * @param Scolarite $scolarite
-     *
      * @return Etudiant
      */
     public function removeScolarite(Scolarite $scolarite): self
@@ -630,8 +577,6 @@ class Etudiant extends Utilisateur
     }
 
     /**
-     * @param Notification $notification
-     *
      * @return Etudiant
      */
     public function addNotification(Notification $notification): self
@@ -645,8 +590,6 @@ class Etudiant extends Utilisateur
     }
 
     /**
-     * @param Notification $notification
-     *
      * @return Etudiant
      */
     public function removeNotification(Notification $notification): self
@@ -663,30 +606,33 @@ class Etudiant extends Utilisateur
     }
 
     /**
-     * String representation of object
-     * @link  http://php.net/manual/en/serializable.serialize.php
+     * String representation of object.
+     *
+     * @see   http://php.net/manual/en/serializable.serialize.php
+     *
      * @return string the string representation of the object or null
+     *
      * @since 5.1.0
      */
     public function serialize(): string
     {
         // Ajouté pour le problème de connexion avec le usernametoken
-        return serialize(array(
+        return serialize([
             $this->id,
             $this->password,
-            $this->username
-        ));
+            $this->username,
+        ]);
     }
 
     /**
-     * Constructs the object
-     * @link  http://php.net/manual/en/serializable.unserialize.php
+     * Constructs the object.
+     *
+     * @see   http://php.net/manual/en/serializable.unserialize.php
      *
      * @param string $serialized <p>
      *                           The string representation of the object.
      *                           </p>
      *
-     * @return void
      * @since 5.1.0
      */
     public function unserialize($serialized): void
@@ -699,17 +645,12 @@ class Etudiant extends Utilisateur
         ] = unserialize($serialized, ['allowed_classes' => false]);
     }
 
-    /**
-     * @return bool|null
-     */
     public function getBoursier(): ?bool
     {
         return $this->boursier;
     }
 
     /**
-     * @param bool $boursier
-     *
      * @return Etudiant
      */
     public function setBoursier(bool $boursier): self
@@ -719,17 +660,12 @@ class Etudiant extends Utilisateur
         return $this;
     }
 
-    /**
-     * @return bool|null
-     */
     public function getDemandeurEmploi(): ?bool
     {
         return $this->demandeurEmploi;
     }
 
     /**
-     * @param bool $demandeurEmploi
-     *
      * @return Etudiant
      */
     public function setDemandeurEmploi(bool $demandeurEmploi): self
@@ -748,8 +684,6 @@ class Etudiant extends Utilisateur
     }
 
     /**
-     * @param Groupe $groupe
-     *
      * @return Etudiant
      */
     public function addGroupe(Groupe $groupe): self
@@ -762,8 +696,6 @@ class Etudiant extends Utilisateur
     }
 
     /**
-     * @param Groupe $groupe
-     *
      * @return Etudiant
      */
     public function removeGroupe(Groupe $groupe): self
@@ -899,18 +831,18 @@ class Etudiant extends Utilisateur
         return $this;
     }
 
-    public function getDiplome() : ?Diplome
+    public function getDiplome(): ?Diplome
     {
-        if ($this->getSemestre() !== null && $this->getSemestre()->getAnnee() !== null && $this->getSemestre()->getAnnee()->getDiplome() !== null) {
+        if (null !== $this->getSemestre() && null !== $this->getSemestre()->getAnnee() && null !== $this->getSemestre()->getAnnee()->getDiplome()) {
             return $this->getSemestre()->getAnnee()->getDiplome();
         }
 
         return null;
     }
 
-    public function getAnnee() : ?Annee
+    public function getAnnee(): ?Annee
     {
-        if ($this->getSemestre() !== null && $this->getSemestre()->getAnnee() !== null) {
+        if (null !== $this->getSemestre() && null !== $this->getSemestre()->getAnnee()) {
             return $this->getSemestre()->getAnnee();
         }
 
@@ -967,7 +899,7 @@ class Etudiant extends Utilisateur
 
     public function getAnneeUniversitaire(): ?AnneeUniversitaire
     {
-        if ($this->getSemestre() !== null) {
+        if (null !== $this->getSemestre()) {
             return $this->getSemestre()->getAnneeUniversitaire();
         }
 
@@ -998,9 +930,6 @@ class Etudiant extends Utilisateur
         return $this;
     }
 
-    /**
-     * @return null|File
-     */
     public function getPhotoFile(): ?File
     {
         return $this->photoFile;
@@ -1012,8 +941,6 @@ class Etudiant extends Utilisateur
      * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
      * must be able to accept an instance of 'File' as the bundle will inject one here
      * during Doctrine hydration.
-     *
-     * @param null|File $photo
      */
     public function setPhotoFile(?File $photo = null): void
     {
@@ -1034,9 +961,6 @@ class Etudiant extends Utilisateur
         return $this->photoName;
     }
 
-    /**
-     * @param string $photoName
-     */
     public function setPhotoName(string $photoName): void
     {
         $this->photoName = $photoName;

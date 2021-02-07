@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ArticleType.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ArticleType.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Form;
 
@@ -21,17 +23,12 @@ use Symfony\Component\OptionsResolver\Exception\AccessException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class ArticleType
- * @package App\Form
+ * Class ArticleType.
  */
 class ArticleType extends AbstractType
 {
     private $departement;
 
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->departement = $options['departement'];
@@ -42,7 +39,7 @@ class ArticleType extends AbstractType
             ])
             ->add('texte', TextareaType::class, [
                 'label' => 'label.texte',
-                'attr'  => ['data-provide' => 'quill', 'rows' => 20]
+                'attr'  => ['data-provide' => 'quill', 'rows' => 20],
             ])
             ->add('categorie', EntityType::class, [
                 'class'         => ArticleCategorie::class,
@@ -53,9 +50,9 @@ class ArticleType extends AbstractType
                 },
                 'required'      => true,
                 'expanded'      => false,
-                'multiple'      => false
+                'multiple'      => false,
             ])
-            ->add('semestres', EntityType::class, array(
+            ->add('semestres', EntityType::class, [
                 'class'         => Semestre::class,
                 'label'         => 'label.semestres_article',
                 'choice_label'  => 'libelle',
@@ -64,22 +61,19 @@ class ArticleType extends AbstractType
                 },
                 'required'      => true,
                 'expanded'      => true,
-                'multiple'      => true
-            ));
+                'multiple'      => true,
+            ]);
     }
 
     /**
-     * @param OptionsResolver $resolver
-     *
      * @throws AccessException
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class'         => Article::class,
-            'departement'          => null,
-            'translation_domain' => 'form'
-
+            'departement'        => null,
+            'translation_domain' => 'form',
         ]);
     }
 }

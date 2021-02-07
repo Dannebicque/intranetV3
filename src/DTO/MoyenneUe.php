@@ -1,12 +1,13 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/MoyenneUe.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 14/01/2021 19:29
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/MoyenneUe.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:41
+ */
 
 namespace App\DTO;
-
 
 use App\Entity\Ue;
 
@@ -22,8 +23,7 @@ class MoyenneUe
     /**
      * MoyenneUe constructor.
      *
-     * @param Ue $ue
-     * @param    $penalite
+     * @param $penalite
      */
     public function __construct(Ue $ue, $penalite)
     {
@@ -33,7 +33,7 @@ class MoyenneUe
 
     public function addMatiere(MoyenneMatiere $moyenneMatiere)
     {
-        if ($moyenneMatiere->optionFaite && $moyenneMatiere->matiere->isPac() === false) {
+        if ($moyenneMatiere->optionFaite && false === $moyenneMatiere->matiere->isPac()) {
             $this->totalMatiere += $moyenneMatiere->getMoyenne() * $moyenneMatiere->matiere->getCoefficient();
             $this->totalMatierePenalisee += $moyenneMatiere->getMoyennePenalisee() * $moyenneMatiere->matiere->getCoefficient();
             $this->totalCoefficient += $moyenneMatiere->matiere->getCoefficient();
@@ -63,14 +63,9 @@ class MoyenneUe
         return $this->totalCoefficient > 0 ? $this->totalMatiere / $this->totalCoefficient : -0.01;
     }
 
-    /**
-     *
-     * @return string
-     */
     public function getStyleMoyennePenalisee(): string
     {
         return $this->style($this->getMoyennePenalisee());
-
     }
 
     public function getMoyennePenalisee()

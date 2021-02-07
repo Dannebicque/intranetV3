@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Traits/UuidTrait.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 08/08/2020 10:27
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Traits/UuidTrait.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Entity\Traits;
 
@@ -16,12 +18,8 @@ trait UuidTrait
      */
     private $uuid;
 
-    /**
-     * @return string
-     */
     public function getUuidString(): string
     {
-
         return (string)$this->getUuid();
     }
 
@@ -30,9 +28,6 @@ trait UuidTrait
         return $this->uuid;
     }
 
-    /**
-     * @param mixed $uuid
-     */
     public function setUuid($uuid): void
     {
         $this->uuid = $uuid;

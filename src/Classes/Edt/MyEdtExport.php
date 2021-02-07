@@ -1,27 +1,34 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtExport.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 25/01/2021 10:04
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtExport.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
+/*
+ * Pull your hearder here, for exemple, Licence header.
+ */
 
 namespace App\Classes\Edt;
 
-
+use App\Classes\MyIcal;
 use App\Classes\Pdf\MyPDF;
 use App\Classes\Tools;
 use App\Entity\Departement;
 use App\Entity\Etudiant;
 use App\Entity\Personnel;
-use App\Classes\MyIcal;
 use App\Entity\Semestre;
 use App\Repository\CalendrierRepository;
 use App\Repository\CelcatEventsRepository;
 use App\Repository\EdtPlanningRepository;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
+use ZipArchive;
 
 class MyEdtExport
 {
@@ -35,7 +42,6 @@ class MyEdtExport
 
     private $calendrier;
 
-
     /**
      * @var string
      */
@@ -43,15 +49,6 @@ class MyEdtExport
 
     /**
      * MyEdtExport constructor.
-     *
-     * @param EdtPlanningRepository  $edtPlanningRepository
-     * @param CelcatEventsRepository $celcatEventsRepository
-     * @param CalendrierRepository   $calendrierRepository
-     * @param MyEdtIntranet          $myEdtIntranet
-     * @param MyEdtCelcat            $myEdtCelcat
-     * @param MyIcal                 $myIcal
-     * @param MyPDF                  $myPDF
-     * @param KernelInterface        $kernel
      */
     public function __construct(
         EdtPlanningRepository $edtPlanningRepository,
@@ -63,7 +60,6 @@ class MyEdtExport
         MyPDF $myPDF,
         KernelInterface $kernel
     ) {
-
         $this->dir = $kernel->getProjectDir() . '/public/upload/';
 
         $this->edtPlanningRepository = $edtPlanningRepository;
@@ -75,12 +71,11 @@ class MyEdtExport
         $this->myPDF = $myPDF;
     }
 
-
     public function export($user, $_format, $type)
     {
         $this->calendrier = $this->calendrierRepository->findCalendrierArray();
         $edt = [];
-        if ($type === 'Personnel') {
+        if ('Personnel' === $type) {
             $temp = $this->edtPlanningRepository->getByPersonnelArray($user);
             foreach ($temp as $row) {
                 $edt[] = $row;
@@ -91,21 +86,21 @@ class MyEdtExport
             }
         } else {
             /** @var Etudiant $user */
-            $nbSemaines = $user->getSemestre()->getAnnee()->getDiplome()->getOptSemainesVisibles() !== 0 ? $user->getSemestre()->getAnnee()->getDiplome()->getOptSemainesVisibles() : 52;
+            $nbSemaines = 0 !== $user->getSemestre()->getAnnee()->getDiplome()->getOptSemainesVisibles() ? $user->getSemestre()->getAnnee()->getDiplome()->getOptSemainesVisibles() : 52;
             $emaineActuelle = $this->calendrierRepository->findOneBy([
                 'semaineReelle'      => date('W'),
-                'anneeUniversitaire' => $user->getAnneeUniversitaire()->getId()
+                'anneeUniversitaire' => $user->getAnneeUniversitaire()->getId(),
             ]);
             $max = $emaineActuelle->getSemaineFormation() + $nbSemaines;
             if ($user->getDepartement()->isOptUpdateCelcat()) {
-                for ($i = $emaineActuelle->getSemaineFormation(); $i < $max; $i++) {
+                for ($i = $emaineActuelle->getSemaineFormation(); $i < $max; ++$i) {
                     $temp = $this->celcatEventsRepository->getByEtudiantArray($user, $i);
                     foreach ($temp as $row) {
                         $edt[] = $row;
                     }
                 }
             } else {
-                for ($i = $emaineActuelle->getSemaineFormation(); $i < $max; $i++) {
+                for ($i = $emaineActuelle->getSemaineFormation(); $i < $max; ++$i) {
                     $temp = $this->edtPlanningRepository->getByEtudiantArray($user, $i);
                     foreach ($temp as $row) {
                         $edt[] = $row;
@@ -125,9 +120,8 @@ class MyEdtExport
     private function genereIcal($edt)
     {
         foreach ($edt as $pl) {
-            //todo: surement possible d'exploiter la date depuis EdtPlanning...
-            $this->myIcal->setDtstart($this->calendrier[$pl['semaine']]['lundi'], $pl['jour'], $pl['debut']);
-            $this->myIcal->setDtend($this->calendrier[$pl['semaine']]['lundi'], $pl['jour'], $pl['fin']);
+            $this->myIcal->setDtstart($pl['date'], $pl['debut']);
+            $this->myIcal->setDtend($pl['date'], $pl['fin']);
             $this->myIcal->setDescription($pl['commentaire']);
             $this->myIcal->setSummary($pl['ical']);
             $this->myIcal->setLocation($pl['salle']);
@@ -144,12 +138,7 @@ class MyEdtExport
         return $content;
     }
 
-    /**
-     * @param Departement $departement
-     *
-     * @return array
-     */
-    public function getAllDocs(Departement $departement)
+    public function getAllDocs(Departement $departement): array
     {
         //parcour fichiers
         $folder = $this->dir . 'pdfedt/' . $departement->getId() . '/';
@@ -157,8 +146,7 @@ class MyEdtExport
 
         $t = [];
         while ($fichier = readdir($dossier)) {
-
-            if ($fichier !== '.' && $fichier !== '..') {
+            if ('.' !== $fichier && '..' !== $fichier) {
                 $id = explode('_', $fichier);
                 $t[$id[0]] = $fichier;
             }
@@ -171,11 +159,10 @@ class MyEdtExport
 
     public function genereAllDocument($source, $_format, ?Departement $departement): void
     {
-        if ($_format === 'pdf') {
+        if ('pdf' === $_format) {
             $this->genereaAllPdf($source, $departement);
-        } else {
-            //todo: export CSV/XLSX
         }
+        //todo: export CSV/XLSX
     }
 
     private function genereaAllPdf($source, ?Departement $departement): void
@@ -187,9 +174,7 @@ class MyEdtExport
     }
 
     /**
-     * @param Personnel   $personnel
-     * @param             $source
-     * @param Departement $departement
+     * @param $source
      *
      * @throws LoaderError
      * @throws RuntimeError
@@ -200,7 +185,7 @@ class MyEdtExport
         $dir = $this->dir . 'pdfedt/' . $departement->getId() . '/';
         Tools::checkDirectoryExist($dir);
 
-        if ($source === 'intranet') {
+        if ('intranet' === $source) {
             $planning = $this->edtPlanningRepository->findEdtProf($personnel->getId());
             $this->myPDF::genereAndSavePdf('pdf/edt/planning.html.twig',
                 ['planning' => $planning, 'personnel' => $personnel],
@@ -210,8 +195,7 @@ class MyEdtExport
     }
 
     /**
-     * @param          $semaine
-     * @param Semestre $semestre
+     * @param $semaine
      *
      * @throws LoaderError
      * @throws RuntimeError
@@ -220,7 +204,7 @@ class MyEdtExport
     public function exportSemestre($semaine, Semestre $semestre): void
     {
         $departement = $semestre->getDiplome()->getDepartement();
-        if ($departement !== null && $departement->getOptUpdateCelcat() === true) {
+        if (null !== $departement && true === $departement->getOptUpdateCelcat()) {
             $edt = $this->celcatEventsRepository->findEdtSemestre($semestre, $semaine);
         } else {
             $edt = $this->myEdtIntranet->initSemestre($semaine, $semestre, $semestre->getAnneeUniversitaire());
@@ -230,5 +214,42 @@ class MyEdtExport
         $this->myPDF::generePdf('pdf/edt/edtSemestre.html.twig',
             ['edt' => $edt, 'semestre' => $semestre, 'departement' => $departement], $semestre->getLibelle(),
             $departement->getLibelle());
+    }
+
+    public function compressDir(Departement $departement)
+    {
+        $dir = $this->dir . 'pdfedt/' . $departement->getId() . '/';
+        Tools::checkDirectoryExist($dir);
+        $zip = new ZipArchive();
+        $fileName = 'pdf-edt-' . date('YmdHis') . '.zip';
+        // The name of the Zip documents.
+        $zipName = $this->dir . $fileName;
+
+        $zip->open($zipName, ZipArchive::CREATE);
+        $tabFiles = [];
+
+        //lecture du repertoire
+        $repertoire = opendir($dir);
+        while ($file = @readdir($repertoire)) {
+            if ('.' !== $file && '..' !== $file) {
+                $tabFiles[] = $file;
+                $zip->addFile($file,
+                    'pdfEdt-' . $file . '.pdf');
+            }
+        }
+
+        $zip->close();
+
+        //suppression des PDF
+        foreach ($tabFiles as $file) {
+            unlink($file);
+        }
+
+        $response = new Response(file_get_contents($zipName));
+        $response->headers->set('Content-Type', 'application/zip');
+        $response->headers->set('Content-Disposition', 'attachment;filename="' . $zipName . '"');
+        $response->headers->set('Content-length', filesize($zipName));
+
+        return $fileName;
     }
 }

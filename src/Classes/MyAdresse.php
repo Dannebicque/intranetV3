@@ -1,12 +1,17 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyAdresse.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 25/09/2020 09:54
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyAdresse.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
+/*
+ * Pull your hearder here, for exemple, Licence header.
+ */
 
 namespace App\Classes;
-
 
 use App\Entity\Adresse;
 use Doctrine\ORM\EntityManagerInterface;
@@ -17,19 +22,15 @@ class MyAdresse
 
     /**
      * MyAdresse constructor.
-     *
-     * @param EntityManagerInterface $entityManager
      */
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
     }
 
-
     public function update(Adresse $adresse, $name, $value): bool
     {
         if ($adresse) {
-
             $method = 'set' . $name;
             if (method_exists($adresse, $method)) {
                 $adresse->$method($value);
@@ -41,5 +42,4 @@ class MyAdresse
 
         return false;
     }
-
 }

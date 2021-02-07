@@ -1,41 +1,40 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/CohorteController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 09/01/2021 15:08
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/CohorteController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
 
 namespace App\Controller\administration;
 
 use App\Controller\BaseController;
 use App\Entity\Scolarite;
 use App\Repository\AnneeUniversitaireRepository;
-use App\Repository\EtudiantRepository;
 use App\Repository\ScolariteRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class CohorteController
- * @package App\Controller\administration
+ * Class CohorteController.
+ *
  * @Route("/administration/cohorte")
  */
 class CohorteController extends BaseController
 {
     /**
      * @Route("/{annee}", name="administration_cohorte_index")
-     * @param EtudiantRepository  $etudiantRepository
-     * @param ScolariteRepository $scolariteRepository
-     * @param int                 $annee
      *
-     * @return Response
+     * @param int $annee
      */
     public function index(
         AnneeUniversitaireRepository $anneeUniversitaireRepository,
         ScolariteRepository $scolariteRepository,
         $annee = 0
     ): Response {
-        if ($annee === 0) {
+        if (0 === $annee) {
             $annee = date('Y') - 1;
         }
         //on ne récupère la cohorte que de la departement.
@@ -44,7 +43,7 @@ class CohorteController extends BaseController
 
         /** @var Scolarite $parcour */
         foreach ($parcours as $parcour) {
-            if ($parcour->getEtudiant() !== null && !array_key_exists($parcour->getEtudiant()->getId(), $etudiants)) {
+            if (null !== $parcour->getEtudiant() && !\array_key_exists($parcour->getEtudiant()->getId(), $etudiants)) {
                 $etudiants[$parcour->getEtudiant()->getId()] = $parcour->getEtudiant();
             }
         }
@@ -53,7 +52,7 @@ class CohorteController extends BaseController
             'parcours'             => $parcours,
             'etudiants'            => $etudiants,
             'annee'                => $annee,
-            'anneesUniversitaires' => $anneeUniversitaireRepository->findAll()
+            'anneesUniversitaires' => $anneeUniversitaireRepository->findAll(),
         ]);
     }
 

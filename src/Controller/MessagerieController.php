@@ -1,17 +1,19 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/MessagerieController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 17/01/2021 09:24
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/MessagerieController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller;
 
+use App\Classes\MyMessagerie;
 use App\Classes\MyUpload;
 use App\Entity\Etudiant;
 use App\Entity\Message;
 use App\Entity\Personnel;
-use App\Classes\MyMessagerie;
 use App\Repository\MessageDestinataireEtudiantRepository;
 use App\Repository\MessageDestinatairePersonnelRepository;
 use App\Repository\MessageRepository;
@@ -26,18 +28,16 @@ use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class MessagerieController
- * @package App\Controller
- * @Route("/messagerie")
+ * Class MessagerieController.
  *
+ * @Route("/messagerie")
  */
 class MessagerieController extends BaseController
 {
     /**
      * @Route("/{param}", name="messagerie_index", requirements={"param"="\d+"})
-     * @param string $param
      *
-     * @return Response
+     * @param string $param
      */
     public function index($param = ''): Response
     {
@@ -49,28 +49,18 @@ class MessagerieController extends BaseController
 
     /**
      * @Route("/ecrire/{message}", name="messagerie_nouveau", options={"expose":true})
-     * @param TypeGroupeRepository $typeGroupeRepository
-     *
-     * @param Message|null         $message
-     *
-     * @return Response
      */
     public function nouveauMessage(TypeGroupeRepository $typeGroupeRepository, ?Message $message = null): Response
     {
         return $this->render('messagerie/nouveauMessage.html.twig', [
             'type_groupes' => $typeGroupeRepository->findByDepartement($this->dataUserSession->getDepartement()),
-            'message'      => $message
+            'message'      => $message,
         ]);
     }
 
     /**
      * @Route("/change-etat", name="messagerie_change_etat", options={"expose":true})
-     * @param MessageDestinatairePersonnelRepository $messagePersonnelRepository
-     * @param MessageDestinataireEtudiantRepository  $messageEtudiantRepository
-     * @param MessageRepository                      $messageRepository
-     * @param Request                                $request
      *
-     * @return JsonResponse
      * @throws NonUniqueResultException
      */
     public function changeEtat(
@@ -82,7 +72,7 @@ class MessagerieController extends BaseController
         $message = $messageRepository->find($request->request->get('message'));
         $etat = $request->request->get('etat');
 
-        if ($message !== null) {
+        if (null !== $message) {
             if ($this->getConnectedUser() instanceof Etudiant) {
                 $messaged = $messageEtudiantRepository->findDest($this->getConnectedUser(), $message);
             } elseif ($this->getConnectedUser() instanceof Personnel) {
@@ -91,7 +81,7 @@ class MessagerieController extends BaseController
                 return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
             }
 
-            if ($messaged !== null) {
+            if (null !== $messaged) {
                 $messaged->setEtat($etat);
                 $this->entityManager->persist($messaged);
                 $this->entityManager->flush();
@@ -104,10 +94,7 @@ class MessagerieController extends BaseController
     }
 
     /**
-     * @param MessageRepository                      $messageRepository
-     * @param MessageDestinatairePersonnelRepository $messagePersonnelRepository
-     * @param MessageDestinataireEtudiantRepository  $messageEtudiantRepository
-     * @param                                        $filtre
+     * @param $filtre
      *
      * @return JsonResponse
      * @Route("/filtre/{filtre}", name="messagerie_filtre", options={"expose"=true})
@@ -118,13 +105,12 @@ class MessagerieController extends BaseController
         MessageDestinataireEtudiantRepository $messageEtudiantRepository,
         $filtre
     ): Response {
-
-        if ($filtre === 'sent') {
+        if ('sent' === $filtre) {
             $messages = $messageRepository->findBy(['expediteur' => $this->getConnectedUser()], ['updated' => 'DESC']);
-        } elseif ($filtre === 'draft') {
+        } elseif ('draft' === $filtre) {
             $messages = $messageRepository->findBy(['expediteur' => $this->getConnectedUser(), 'etat' => 'D'],
                 ['updated' => 'DESC']);
-        } else if ($this->getConnectedUser() instanceof Etudiant) {
+        } elseif ($this->getConnectedUser() instanceof Etudiant) {
             $messages = $messageEtudiantRepository->findLast($this->getConnectedUser(), 0, $filtre);
         } elseif ($this->getConnectedUser() instanceof Personnel) {
             $messages = $messagePersonnelRepository->findLast($this->getConnectedUser(), 0, $filtre);
@@ -135,19 +121,15 @@ class MessagerieController extends BaseController
         return $this->render('messagerie/listeMessages.html.twig', [
             'filtre'     => $filtre,
             'messages'   => $messages,
-            'pagination' => ['depart' => 1, 'fin' => count($messages)]
+            'pagination' => ['depart' => 1, 'fin' => \count($messages)],
         ]);
     }
 
     /**
      * @Route("/liste-messages/{filtre}/{page}", name="messagerie_liste_messages", options={"expose":true})
-     * @param MessageRepository                      $messageRepository
-     * @param MessageDestinatairePersonnelRepository $messagePersonnelRepository
-     * @param MessageDestinataireEtudiantRepository  $messageEtudiantRepository
-     * @param string                                 $filtre
-     * @param int                                    $page
      *
-     * @return Response
+     * @param string $filtre
+     * @param int    $page
      */
     public function listeMessages(
         MessageRepository $messageRepository,
@@ -156,11 +138,11 @@ class MessagerieController extends BaseController
         $filtre = 'all',
         $page = 0
     ): Response {
-        if ($filtre === 'send') {
+        if ('send' === $filtre) {
             $messages = $messageRepository->findBy(['expediteur' => $this->getConnectedUser(), 'etat' => 'E']);
-        } elseif ($filtre === 'draft') {
+        } elseif ('draft' === $filtre) {
             $messages = $messageRepository->findBy(['expediteur' => $this->getConnectedUser(), 'etat' => 'D']);
-        } else if ($this->getConnectedUser() instanceof Etudiant) {
+        } elseif ($this->getConnectedUser() instanceof Etudiant) {
             $messages = $messageEtudiantRepository->findLast($this->getConnectedUser(), 0, $filtre, $page);
         } elseif ($this->getConnectedUser() instanceof Personnel) {
             $messages = $messagePersonnelRepository->findLast($this->getConnectedUser(), 0, $filtre, $page);
@@ -172,17 +154,13 @@ class MessagerieController extends BaseController
         return $this->render('messagerie/listeMessages.html.twig', [
             'filtre'     => $filtre,
             'messages'   => $messages,
-            'pagination' => ['depart' => 1, 'fin' => count($messages)]
+            'pagination' => ['depart' => 1, 'fin' => \count($messages)],
         ]);
     }
 
     /**
      * @Route("/envoyer", name="messagerie_sent", methods={"POST"}, options={"expose":true})
-     * @param MyUpload     $myUpload
-     * @param Request      $request
-     * @param MyMessagerie $messagerie
      *
-     * @return JsonResponse
      * @throws TransportExceptionInterface
      * @throws Exception
      */
@@ -196,7 +174,7 @@ class MessagerieController extends BaseController
         $message = $request->request->get('message');
 
         foreach ($request->files as $file) {
-            if ($file !== null) {
+            if (null !== $file) {
                 $fichier = $myUpload->upload($file, 'pj/');
                 chmod($fichier, 775);
                 $messagerie->addPj($fichier);
@@ -206,8 +184,7 @@ class MessagerieController extends BaseController
         $messagerie->setMessage($sujet, $message, $this->getConnectedUser());
         $messagerie->sendToDestinataires($this->checkArray($destinataires), $typeDestinataire, $this->getDepartement());
 
-
-        if (is_countable($copie) && count($copie) > 0) {
+        if (is_countable($copie) && \count($copie) > 0) {
             $messagerie->setCopie($copie, $this->getDepartement());
         }
 
@@ -218,16 +195,11 @@ class MessagerieController extends BaseController
 
     /**
      * @Route("/sauvegarder", name="messagerie_draft", methods={"POST"}, options={"expose":true})
-     * @param Request      $request
-     * @param MyMessagerie $messagerie
-     *
-     * @return JsonResponse
      */
     public function messageSave(Request $request, MyMessagerie $messagerie): JsonResponse
     {
         $typeDestinataire = $request->request->get('typeDestinataire');
         $destinataires = $this->getDestinataires($typeDestinataire, $request);
-
 
         $sujet = $request->request->get('sujet');
         $copie = $request->request->get('copie');
@@ -249,7 +221,6 @@ class MessagerieController extends BaseController
                 return $request->request->get('messageToLibreEtudiant');
             case 'p':
                 return $request->request->get('messageToLibrePersonnel');
-
         }
 
         return null;
@@ -257,26 +228,18 @@ class MessagerieController extends BaseController
 
     /**
      * @Route("/message-envoye/{message}", name="messagerie_message_envoye", options={"expose":true})
-     * @param Message $message
-     *
-     * @return Response
      */
     public function messageSent(
         Message $message
     ): Response {
         return $this->render('messagerie/message_envoye.html.twig', [
-            'message' => $message
+            'message' => $message,
         ]);
     }
 
-
     /**
      * @Route("/{message}", name="messagerie_message", options={"expose":true})
-     * @param MessageDestinatairePersonnelRepository $messagePersonnelRepository
-     * @param MessageDestinataireEtudiantRepository  $messageEtudiantRepository
-     * @param Message                                $message
      *
-     * @return Response
      * @throws NonUniqueResultException
      */
     public function message(
@@ -292,7 +255,7 @@ class MessagerieController extends BaseController
             return $this->redirectToRoute('erreur_666');
         }
 
-        if ($messaged->getEtat() === 'U') {
+        if ('U' === $messaged->getEtat()) {
             $messaged->setEtat('R');
             $messaged->setDateLu(new DateTime('now'));
             $this->entityManager->persist($messaged);
@@ -300,18 +263,16 @@ class MessagerieController extends BaseController
         }
 
         return $this->render('messagerie/message.html.twig', [
-            'message' => $message
+            'message' => $message,
         ]);
     }
 
     private function checkArray($get)
     {
-        if (!is_array($get)) {
+        if (!\is_array($get)) {
             return [$get];
         }
 
         return $get;
     }
-
-
 }

@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/RddDiplome.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 15/01/2021 16:07
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/RddDiplome.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:49
+ */
 
 namespace App\Entity;
 
@@ -16,7 +18,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class RddDiplome extends BaseEntity
 {
-
     /**
      * @ORM\Column(type="string", length=10)
      */

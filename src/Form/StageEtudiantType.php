@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Form/StageEtudiantType.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 26/11/2020 15:20
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/StageEtudiantType.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Form;
 
@@ -30,7 +32,7 @@ class StageEtudiantType extends AbstractType
             ->add('adresseStage', AdresseType::class, [
                 'label'    => 'Adresse du lieu où le stage sera effectué',
                 'help'     => 'Cette adresse peut être différente du siège de l\'entreprise.',
-                'required' => false
+                'required' => false,
             ])
             ->add('serviceStageEntreprise', TextType::class,
                 ['label' => 'label.serviceStageEntreprise', 'required' => false])
@@ -47,7 +49,7 @@ class StageEtudiantType extends AbstractType
                 [
                     'label'    => 'label.commentaireDureeHebdomadaire',
                     'help'     => 'help.commentaireDureeHebdomadaire',
-                    'required' => false
+                    'required' => false,
                 ]
             )
             ->add('dureeJoursStage', TextType::class, ['label' => 'label.dureeJoursStage'])
@@ -60,8 +62,8 @@ class StageEtudiantType extends AbstractType
                 'choices' => [
                     'Heure' => StageEtudiant::PERIODE_GRATIFICATION_HEURE,
                     'Jour'  => StageEtudiant::PERIODE_GRATIFICATION_JOUR,
-                    'Mois'  => StageEtudiant::PERIODE_GRATIFICATION_MOIS
-                ]
+                    'Mois'  => StageEtudiant::PERIODE_GRATIFICATION_MOIS,
+                ],
             ])
             ->add('avantages', TextareaType::class, ['label' => 'label.avantages', 'required' => false])
             ->addEventListener(FormEvents::POST_SUBMIT, static function(FormEvent $event) {
@@ -79,12 +81,14 @@ class StageEtudiantType extends AbstractType
                 $form->add('dateRange', DateRangeType::class, [
                     'label'     => 'dateRange.periode',
                     'mapped'    => false,
-                    'date_data' => ['from' => $stageEtudiant->getDateDebutStage(), 'to' => $stageEtudiant->getDateFinStage()]
+                    'date_data' => [
+                        'from' => $stageEtudiant->getDateDebutStage(),
+                        'to'   => $stageEtudiant->getDateFinStage()
+                    ],
                 ]);
             })
             ->add('dateRange', DateRangeType::class,
                 ['label' => 'dateRange.periode.stage.etudiant', 'mapped' => false, 'required' => true])
-
             ->add(
                 'dureeJoursStage',
                 TextType::class,
@@ -107,20 +111,17 @@ class StageEtudiantType extends AbstractType
                     'mapped'    => false,
                     'date_data' => [
                         'from' => $stageEtudiant->getDateDebutStage(),
-                        'to'   => $stageEtudiant->getDateFinStage()
-                    ]
+                        'to'   => $stageEtudiant->getDateFinStage(),
+                    ],
                 ]);
             });
-
-
-
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => StageEtudiant::class,
-            'translation_domain' => 'form'
+            'data_class'         => StageEtudiant::class,
+            'translation_domain' => 'form',
         ]);
     }
 }

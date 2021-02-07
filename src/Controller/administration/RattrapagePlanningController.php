@@ -1,17 +1,20 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/RattrapagePlanningController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/RattrapagePlanningController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
 
 namespace App\Controller\administration;
 
+use App\Classes\MyExport;
+use App\Classes\Tools;
 use App\Controller\BaseController;
 use App\Entity\Diplome;
 use App\Entity\Rattrapage;
-use App\Classes\MyExport;
-use App\Classes\Tools;
 use App\Repository\RattrapageRepository;
 use DateTime;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -20,19 +23,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class RattrapageController
- * @package App\Controller\administration
+ * Class RattrapageController.
+ *
  * @Route("/administration/rattrapage/planning")
  */
 class RattrapagePlanningController extends BaseController
 {
     /**
      * @Route("/{diplome}", name="administration_rattrapage_planning_index")
-     * @param RattrapageRepository $rattrapageRepository
-     *
-     * @param Diplome              $diplome
-     *
-     * @return Response
      */
     public function index(
         RattrapageRepository $rattrapageRepository,
@@ -40,19 +38,15 @@ class RattrapagePlanningController extends BaseController
     ): Response {
         return $this->render('administration/rattrapagePlanning/index.html.twig', [
             'rattrapages' => $rattrapageRepository->findValidByDiplome($diplome, $diplome->getAnneeUniversitaire()),
-            'diplome'     => $diplome
+            'diplome'     => $diplome,
         ]);
     }
 
     /**
      * @Route("/{diplome}/export.{_format}", name="administration_rattrapage_planning_export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"})
-     * @param MyExport             $myExport
-     * @param RattrapageRepository $rattrapageRepository
-     * @param Diplome              $diplome
-     * @param                      $_format
      *
-     * @return Response
+     * @param $_format
      */
     public function export(
         MyExport $myExport,
@@ -77,7 +71,7 @@ class RattrapagePlanningController extends BaseController
                 'dateRattrapage',
                 'heureRattrapage',
                 'salle',
-                'etatDemande'
+                'etatDemande',
             ]
         );
     }
@@ -86,12 +80,9 @@ class RattrapagePlanningController extends BaseController
      * @Route("/change/{uuid}/{type}", name="administration_rattrapage_planning_change", methods="POST",
      *                                    requirements={"type"="date|heure|salle"}, options={"expose":true})
      * @ParamConverter("rattrapage", options={"mapping": {"uuid": "uuid"}})
-     * @param Request    $request
-     * @param Rattrapage $rattrapage
      *
-     * @param            $type
+     * @param $type
      *
-     * @return Response
      * @throws \Exception
      */
     public function change(Request $request, Rattrapage $rattrapage, $type): Response
@@ -113,18 +104,14 @@ class RattrapagePlanningController extends BaseController
         $this->entityManager->flush();
 
         return $this->json(true, Response::HTTP_OK);
-
     }
 
     /**
      * @Route("/update_global/{type}/{diplome}", name="administration_rattrapage_update_global", methods="POST",
      *                                    requirements={"type"="salle|heure|date"}, options={"expose":true})
-     * @param Request              $request
-     * @param RattrapageRepository $rattrapageRepository
-     * @param                      $type
-     * @param Diplome              $diplome
      *
-     * @return Response
+     * @param $type
+     *
      * @throws \Exception
      */
     public function updateGlobal(
@@ -155,6 +142,5 @@ class RattrapagePlanningController extends BaseController
         $this->entityManager->flush();
 
         return $this->json(true, Response::HTTP_OK);
-
     }
 }

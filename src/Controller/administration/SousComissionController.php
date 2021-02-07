@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/SousComissionController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 25/01/2021 08:40
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/SousComissionController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller\administration;
 
@@ -26,19 +28,14 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
- * Class SousComissionController
- * @package App\Controller\administration
+ * Class SousComissionController.
+ *
  * @Route("/administration/sous-commission")
  */
 class SousComissionController extends BaseController
 {
     /**
      * @Route("/live/{semestre}", name="administration_sous_commission_live")
-     * @param BacRepository  $bacRepository
-     * @param SousCommission $sousCommission
-     * @param Semestre       $semestre
-     *
-     * @return Response
      */
     public function live(BacRepository $bacRepository, SousCommission $sousCommission, Semestre $semestre): Response
     {
@@ -49,17 +46,12 @@ class SousComissionController extends BaseController
             'semestre'       => $semestre,
             'sousCommission' => $sousCommission,
             'bacs'           => $bacs,
-            'stats'          => $sousCommission->calculStats($bacs)
+            'stats'          => $sousCommission->calculStats($bacs),
         ]);
     }
 
     /**
      * @Route("/travail/{semestre}", name="administration_sous_commission_travail")
-     * @param SousCommission $sousCommission
-     * @param SousCommissionSauvegarde $sousCommissionSauvegarde
-     * @param Semestre $semestre
-     *
-     * @return Response
      */
     public function travail(
         SousCommission $sousCommission,
@@ -71,27 +63,23 @@ class SousComissionController extends BaseController
 
         return $this->render('administration/sous_commission/travail.html.twig', [
             'semestre' => $semestre,
-            'sc'       => $sousCommissionTravail
+            'sc'       => $sousCommissionTravail,
         ]);
     }
 
     /**
      * @Route("/purger/{scolaritePromo}", name="administration_sous_commission_purger")
-     * @param NoteRepository $noteRepository
-     * @param ScolaritePromo $scolaritePromo
-     *
-     * @return Response
      */
     public function purger(NoteRepository $noteRepository, ScolaritePromo $scolaritePromo): Response
     {
         $semestre = $scolaritePromo->getSemestre();
-        if ($semestre !== null) {
+        if (null !== $semestre) {
             $notes = $noteRepository->findAllNotesSemestre($semestre, $scolaritePromo->getAnneeUniversitaire());
 
             $em = $this->getDoctrine()->getManager();
 
             foreach ($notes as $n) {
-                if ($n->getNote() === -0.01) {
+                if (-0.01 === $n->getNote()) {
                     $n->setNote(0);
                     $em->persist($n);
                 }
@@ -108,10 +96,6 @@ class SousComissionController extends BaseController
 
     /**
      * @Route("/recalculer/{ssComm}", name="administration_sous_commission_recalculer")
-     * @param SousCommissionSauvegarde $sousCommissionSauvegarde
-     * @param ScolaritePromo           $ssComm
-     *
-     * @return Response
      */
     public function recalculer(SousCommissionSauvegarde $sousCommissionSauvegarde, ScolaritePromo $ssComm): Response
     {
@@ -124,11 +108,6 @@ class SousComissionController extends BaseController
 
     /**
      * @Route("/publier/{ssComm}", name="administration_sous_commission_publier")
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param SousCommissionSauvegarde $sousCommissionSauvegarde
-     * @param ScolaritePromo           $ssComm
-     *
-     * @return Response
      */
     public function publier(
         EventDispatcherInterface $eventDispatcher,
@@ -147,10 +126,6 @@ class SousComissionController extends BaseController
 
     /**
      * @Route("/depublier/{ssComm}", name="administration_sous_commission_depublier")
-     * @param SousCommissionSauvegarde $sousCommissionSauvegarde
-     * @param ScolaritePromo           $ssComm
-     *
-     * @return Response
      */
     public function depublier(
         SousCommissionSauvegarde $sousCommissionSauvegarde,
@@ -160,16 +135,12 @@ class SousComissionController extends BaseController
         $sousCommissionSauvegarde->visibilite($ssComm, false);
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'scolarite.depubliee.success.flash');
 
-
         return $this->redirectToRoute('administration_sous_commission_travail', ['semestre' => $semestre->getId()]);
     }
 
     /**
      * @Route("/exporter/{semestre}", name="administration_sous_commission_exporter")
-     * @param SousCommissionExport $sousCommission
-     * @param Semestre             $semestre
      *
-     * @return Response
      * @throws Exception
      */
     public function exporter(SousCommissionExport $sousCommission, Semestre $semestre): Response
@@ -179,10 +150,6 @@ class SousComissionController extends BaseController
 
     /**
      * @Route("/grand-jury/{scolaritePromo}", name="administration_sous_commission_exporter_grand_jury")
-     * @param SousCommissionExport $sousCommissionExport
-     * @param ScolaritePromo       $scolaritePromo
-     *
-     * @return Response
      */
     public function grandJury(SousCommissionExport $sousCommissionExport, ScolaritePromo $scolaritePromo): Response
     {
@@ -191,12 +158,8 @@ class SousComissionController extends BaseController
 
     /**
      * @Route("/ajax/semestre/{id}/{type}", name="administration_ss_comm_ajax_edit", options={"expose"=true})
-     * @param SousCommission $sousCommission
-     * @param Request        $request
-     * @param Scolarite      $scolarite
-     * @param                $type
      *
-     * @return JsonResponse
+     * @param $type
      */
     public function ajaxEditSsComm(
         SousCommission $sousCommission,

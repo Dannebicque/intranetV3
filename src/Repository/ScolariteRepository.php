@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/ScolariteRepository.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 21/12/2020 13:25
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/ScolariteRepository.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Repository;
 
@@ -29,8 +31,6 @@ class ScolariteRepository extends ServiceEntityRepository
 {
     /**
      * ScolariteRepository constructor.
-     *
-     * @param ManagerRegistry $registry
      */
     public function __construct(ManagerRegistry $registry)
     {
@@ -84,11 +84,10 @@ class ScolariteRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Etudiant $etudiant
-     *
      * @return int|mixed|string
-     * @throws NoResultException
      * @throws NonUniqueResultException
+     *
+     * @throws NoResultException
      */
     public function findOrdreMax(Etudiant $etudiant)
     {
@@ -116,6 +115,5 @@ class ScolariteRepository extends ServiceEntityRepository
         }
 
         return $t;
-
     }
 }

@@ -1,9 +1,12 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StagePeriodeCourrierController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 17/12/2020 13:43
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StagePeriodeCourrierController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
 
 namespace App\Controller\administration\stage;
 
@@ -23,13 +26,12 @@ use Twig\Error\LoaderError;
 use Twig\Error\SyntaxError;
 
 /**
- * Class StagePeriodeCourrierController
- * @package App\Controller\administration\stage
+ * Class StagePeriodeCourrierController.
+ *
  * @Route("/administration/stage/periode/courrier")
  */
 class StagePeriodeCourrierController extends BaseController
 {
-
     private $donnees = [
         'etudiant'            => [
             'civilite'  => 'M.',
@@ -40,21 +42,21 @@ class StagePeriodeCourrierController extends BaseController
                 'annee' => [
                     'diplome' => [
                         'typediplome' => [
-                            'libelle' => 'DUT'
+                            'libelle' => 'DUT',
                         ],
                         'libelle'     => 'MMI',
                         'departement' => [
                             'ufr' => [
                                 'sitePrincipal' => [
                                     'adresse' => [
-                                        'display' => '9 rue de Québec, 10026 Troyes Cedex'
-                                    ]
-                                ]
-                            ]
-                        ]
-                    ]
-                ]
-            ]
+                                        'display' => '9 rue de Québec, 10026 Troyes Cedex',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
         ],
         'entreprise'          => [
             'raisonSociale' => 'Fictive Compagnie',
@@ -63,7 +65,7 @@ class StagePeriodeCourrierController extends BaseController
                 'civiliteLong' => 'Monsieur',
                 'prenom'       => 'Jacques',
                 'nom'          => 'Paul',
-            ]
+            ],
         ],
         'tuteur'              => [
             'civilite' => 'M.',
@@ -78,40 +80,31 @@ class StagePeriodeCourrierController extends BaseController
         'stagePeriode'        => [
             'libelle'      => 'Période de stage fictive',
             'responsables' => [
-                0 =>
-                    ['displayPr' => 'Paul Pierre']
-            ]
+                0 => ['displayPr' => 'Paul Pierre'],
+            ],
         ],
         'dateDebutStageFr'    => '01/01/2020',
-        'dateFinStageFr'      => '31/12/2020'
-
+        'dateFinStageFr'      => '31/12/2020',
     ];
-
 
     /**
      * @Route("/apercu-defaut/{mail}", name="administration_stage_periode_courrier_apercu_defaut")
      *
      * @param $mail
-     *
-     * @return Response
      */
     public function apercuDefaut($mail): Response
     {
         return $this->render('administration/stage/stage_periode_courrier/apercuDefaut.html.twig', [
             'mail'          => $mail,
-            'stageEtudiant' => $this->donnees
+            'stageEtudiant' => $this->donnees,
         ]);
     }
 
     /**
      * @Route("/apercu/{stagePeriode}/{mail}", name="administration_stage_periode_courrier_apercu_modele")
      *
-     * @param Environment                 $twig
-     * @param StageMailTemplateRepository $stageMailTemplateRepository
-     * @param StagePeriode                $stagePeriode
-     * @param                             $mail
+     * @param $mail
      *
-     * @return Response
      * @throws LoaderError
      * @throws NonUniqueResultException
      * @throws SyntaxError
@@ -127,32 +120,27 @@ class StagePeriodeCourrierController extends BaseController
             $stagePeriode
         );
 
-        if ($mailTemplate !== null && $mailTemplate->getTwigTemplate() !== null) {
+        if (null !== $mailTemplate && null !== $mailTemplate->getTwigTemplate()) {
             $template = $twig->createTemplate($mailTemplate->getTwigTemplate()->getSource());
             $mail = $template->render(['stageEtudiant' => $this->donnees]);
 
             return $this->render('administration/stage/stage_periode_courrier/apercu.html.twig', [
-                'mail' => $mail
+                'mail' => $mail,
             ]);
         }
 
         return $this->render('administration/stage/stage_periode_courrier/apercu.html.twig', [
-            'mail' => null
+            'mail' => null,
         ]);
-
-
     }
 
     /**
      * @Route("/sauvegarde-modele/{uuid}/{mail}", name="administration_stage_periode_courrier_sauvegarde_modele",
      *                                            options={"expose"=true})
      * @ParamConverter("stagePeriode", options={"mapping": {"uuid": "uuid"}})
-     * @param MyStageMailTemplate $myStageMailTemplate
-     * @param Request             $request
-     * @param StagePeriode        $stagePeriode
-     * @param                     $mail
      *
-     * @return Response
+     * @param $mail
+     *
      * @throws NonUniqueResultException
      */
     public function sauvegardeModele(
@@ -173,11 +161,7 @@ class StagePeriodeCourrierController extends BaseController
     /**
      * @Route("/reset/{id}/{etat}", name="administration_stage_periode_courrier_reset", options={"expose"=true})
      *
-     * @param StageMailTemplateRepository $stageMailTemplateRepository
-     * @param StagePeriode                $stagePeriode
-     * @param                             $etat
-     *
-     * @return Response
+     * @param $etat
      */
     public function reset(
         StageMailTemplateRepository $stageMailTemplateRepository,
@@ -186,7 +170,7 @@ class StagePeriodeCourrierController extends BaseController
     ): Response {
         $mails = $stageMailTemplateRepository->findBy(['stagePeriode' => $stagePeriode->getId(), 'event' => $etat]);
         foreach ($mails as $mail) {
-            if ($mail->getTwigTemplate() !== null) {
+            if (null !== $mail->getTwigTemplate()) {
                 $this->entityManager->remove($mail->getTwigTemplate());
             }
             $this->entityManager->remove($mail);
@@ -199,24 +183,17 @@ class StagePeriodeCourrierController extends BaseController
     /**
      * @Route("/{uuid}", name="administration_stage_periode_courrier_index")
      * @ParamConverter("stagePeriode", options={"mapping": {"uuid": "uuid"}})
-     * @param StageMailTemplateRepository $stageMailTemplateRepository
-     * @param StagePeriode                $stagePeriode
-     *
-     * @return Response
      */
     public function index(
         StageMailTemplateRepository $stageMailTemplateRepository,
         StagePeriode $stagePeriode
     ): Response {
-
         $courriers = $stageMailTemplateRepository->findByStagePeriodeArray($stagePeriode);
 
         return $this->render('administration/stage/stage_periode_courrier/index.html.twig', [
             'etatsConvention' => StageEtudiant::ETATS,
             'stagePeriode'    => $stagePeriode,
-            'courriers'       => $courriers
+            'courriers'       => $courriers,
         ]);
     }
-
-
 }

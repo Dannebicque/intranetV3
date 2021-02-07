@@ -1,22 +1,16 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Constantes.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 24/01/2021 12:50
-
-/**
- * Created by PhpStorm.
- * User: davidannebicque
- * Date: 28/04/2018
- * Time: 07:09
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Constantes.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
  */
 
 namespace App\Entity;
 
 /**
- * Class Constantes
- * @package App\Entity
+ * Class Constantes.
  */
 class Constantes
 {
@@ -74,7 +68,7 @@ class Constantes
         self::ROLE_NOTES,
         self::ROLE_AUTEUR,
         self::ROLE_MAT,
-        self::ROLE_PRJ
+        self::ROLE_PRJ,
     ];
 
     public const TAB_HEURES = [
@@ -104,7 +98,7 @@ class Constantes
         '19:00',
         '19:30',
         '20:00',
-        '20:30'
+        '20:30',
     ];
 
     public const TAB_HEURES_INDEX = [
@@ -134,7 +128,7 @@ class Constantes
         '19:00:00' => 23,
         '19:30:00' => 24,
         '20:00:00' => 25,
-        '20:30:00' => 26
+        '20:30:00' => 26,
     ];
 
     public const MOYENNE_MODULES = 'moymodules';
@@ -154,8 +148,6 @@ class Constantes
         'S2 TP22'     => 4,
         'S2 TP31'     => 5,
         'S2 TP32'     => 6,
-
-
     ];
 
     public const TAB_JOURS = ['', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi'];
@@ -172,7 +164,7 @@ class Constantes
         'Septembre',
         'Octobre',
         'Novembre',
-        'Décembre'
+        'Décembre',
     ];
 
     public const TAB_CRENEAUX = [
@@ -182,7 +174,7 @@ class Constantes
         10 => ['12h35', '14h00'],
         13 => ['14h00', '15h25'],
         16 => ['15h35', '17h00'],
-        19 => ['17h10', '18h35']
+        19 => ['17h10', '18h35'],
     ];
 
     //Sous Commission
@@ -202,13 +194,13 @@ class Constantes
     public const SCOLARITE_DIPLOME = 'diplome';
 
     public const SS_COMM_DECISION_COULEUR = [
-        Constantes::SEMESTRE_VALIDE     => 'ff00cc00',
-        Constantes::SEMESTRE_NON_VALIDE => 'ffff0000',
-        Constantes::SEMESTRE_VCA        => 'fff0a300',
-        Constantes::SEMESTRE_VCJ        => 'fff30900',
-        ''                              => 'ffffff',
-        'EC'                            => 'ffff0000',
-        'E.C.'                          => 'ffff0000'
+        self::SEMESTRE_VALIDE     => 'ff00cc00',
+        self::SEMESTRE_NON_VALIDE => 'ffff0000',
+        self::SEMESTRE_VCA        => 'fff0a300',
+        self::SEMESTRE_VCJ        => 'fff30900',
+        ''                        => 'ffffff',
+        'EC'                      => 'ffff0000',
+        'E.C.'                    => 'ffff0000',
     ];
     public const NB_MESSAGE_PAR_PAGE = 10;
     public const TAB_HEURES_EDT = [
@@ -218,7 +210,7 @@ class Constantes
         4 => ['12h35', '14h00'],
         5 => ['14h00', '15h25'],
         6 => ['15h35', '17h00'],
-        7 => ['17h10', '18h35']
+        7 => ['17h10', '18h35'],
     ];
 
     public const COULEURS = [
@@ -231,8 +223,7 @@ class Constantes
         'Jaune'         => 'yellow',
         'Vert'          => 'green',
         'Turquoise'     => 'teal',
-        'Cyan'          => 'cyan'
+        'Cyan'          => 'cyan',
     ];
     public const PAS_DE_SOUS_COMM = 'PAS_DE_SOUS_COMM';
-
 }

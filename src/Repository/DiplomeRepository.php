@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/DiplomeRepository.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 06/02/2021 22:27
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/DiplomeRepository.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:08
+ */
 
 namespace App\Repository;
 
@@ -23,8 +25,6 @@ class DiplomeRepository extends ServiceEntityRepository
 {
     /**
      * DiplomeRepository constructor.
-     *
-     * @param ManagerRegistry $registry
      */
     public function __construct(ManagerRegistry $registry)
     {
@@ -43,8 +43,6 @@ class DiplomeRepository extends ServiceEntityRepository
 
     /**
      * @param $departement
-     *
-     * @return mixed
      */
     public function findByDepartement(Departement $departement)
     {
@@ -55,8 +53,6 @@ class DiplomeRepository extends ServiceEntityRepository
 
     /**
      * @param $departement
-     *
-     * @return QueryBuilder
      */
     public function findByDepartementBuilder($departement): QueryBuilder
     {

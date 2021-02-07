@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Diplome.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 20/12/2020 16:39
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Diplome.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Entity;
 
@@ -12,8 +14,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Serializable;
-use function chr;
-use function ord;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\DiplomeRepository")
@@ -48,21 +48,21 @@ class Diplome extends BaseEntity implements Serializable
     private $typeDiplome;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      */
     private $optNbJoursSaisie = 15;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(type="boolean")
      */
     private $optDilpomeDecale = false; //existance du diplôme en décalé
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(type="boolean")
      */
@@ -76,35 +76,35 @@ class Diplome extends BaseEntity implements Serializable
     private $optMethodeCalcul = 'moymodules'; //ou moyues
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(type="boolean")
      */
     private $optAnonymat = false;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column( type="boolean")
      */
     private $optCommentairesReleve = false;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(type="boolean")
      */
     private $optEspacePersoVisible = true;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      */
     private $volumeHoraire = 0;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      */
@@ -193,29 +193,20 @@ class Diplome extends BaseEntity implements Serializable
         $this->apcParcours = new ArrayCollection();
     }
 
-    /**
-     * @return null|string
-     */
     public function getDisplay(): ?string
     {
-        if ($this->getTypeDiplome() !== null) {
+        if (null !== $this->getTypeDiplome()) {
             return $this->getTypeDiplome()->getSigle() . ' ' . $this->libelle;
         }
 
         return $this->libelle;
     }
 
-    /**
-     * @return mixed
-     */
     public function getLibelle()
     {
         return $this->libelle;
     }
 
-    /**
-     * @param mixed $libelle
-     */
     public function setLibelle($libelle): void
     {
         $this->libelle = $libelle;
@@ -229,9 +220,6 @@ class Diplome extends BaseEntity implements Serializable
         return $this->responsableDiplome;
     }
 
-    /**
-     * @param Personnel $responsableDiplome
-     */
     public function setResponsableDiplome(Personnel $responsableDiplome): void
     {
         $this->responsableDiplome = $responsableDiplome;
@@ -245,9 +233,6 @@ class Diplome extends BaseEntity implements Serializable
         return $this->assistantDiplome;
     }
 
-    /**
-     * @param Personnel $assistantDiplome
-     */
     public function setAssistantDiplome(Personnel $assistantDiplome): void
     {
         $this->assistantDiplome = $assistantDiplome;
@@ -261,145 +246,91 @@ class Diplome extends BaseEntity implements Serializable
         return $this->typeDiplome;
     }
 
-    /**
-     * @param mixed $typeDiplome
-     */
     public function setTypeDiplome($typeDiplome): void
     {
         $this->typeDiplome = $typeDiplome;
     }
 
-    /**
-     * @return int
-     */
     public function getOptNbJoursSaisie(): int
     {
         return $this->optNbJoursSaisie;
     }
 
-    /**
-     * @param int $optNbJoursSaisie
-     */
     public function setOptNbJoursSaisie(int $optNbJoursSaisie): void
     {
         $this->optNbJoursSaisie = $optNbJoursSaisie;
     }
 
-    /**
-     * @return bool
-     */
     public function isOptDilpomeDecale(): bool
     {
         return $this->optDilpomeDecale;
     }
 
-    /**
-     * @param bool $optDilpomeDecale
-     */
     public function setOptDilpomeDecale(bool $optDilpomeDecale): void
     {
         $this->optDilpomeDecale = $optDilpomeDecale;
     }
 
-    /**
-     * @return bool
-     */
     public function isOptSupprAbsence(): bool
     {
         return $this->optSupprAbsence;
     }
 
-    /**
-     * @param bool $optSupprAbsence
-     */
     public function setOptSupprAbsence(bool $optSupprAbsence): void
     {
         $this->optSupprAbsence = $optSupprAbsence;
     }
 
-    /**
-     * @return string
-     */
     public function getOptMethodeCalcul(): string
     {
         return $this->optMethodeCalcul;
     }
 
-    /**
-     * @param string $optMethodeCalcul
-     */
     public function setOptMethodeCalcul(string $optMethodeCalcul): void
     {
         $this->optMethodeCalcul = $optMethodeCalcul;
     }
 
-    /**
-     * @return bool
-     */
     public function isOptAnonymat(): bool
     {
         return $this->optAnonymat;
     }
 
-    /**
-     * @param bool $optAnonymat
-     */
     public function setOptAnonymat(bool $optAnonymat): void
     {
         $this->optAnonymat = $optAnonymat;
     }
 
-    /**
-     * @return bool
-     */
     public function isOptCommentairesReleve(): bool
     {
         return $this->optCommentairesReleve;
     }
 
-    /**
-     * @param bool $optCommentairesReleve
-     */
     public function setOptCommentairesReleve(bool $optCommentairesReleve): void
     {
         $this->optCommentairesReleve = $optCommentairesReleve;
     }
 
-    /**
-     * @return bool
-     */
     public function isOptEspacePersoVisible(): bool
     {
         return $this->optEspacePersoVisible;
     }
 
-    /**
-     * @param bool $optEspacePersoVisible
-     */
     public function setOptEspacePersoVisible(bool $optEspacePersoVisible): void
     {
         $this->optEspacePersoVisible = $optEspacePersoVisible;
     }
 
-    /**
-     * @return int
-     */
     public function getVolumeHoraire(): int
     {
         return $this->volumeHoraire;
     }
 
-    /**
-     * @param int $volumeHoraire
-     */
     public function setVolumeHoraire(int $volumeHoraire): void
     {
         $this->volumeHoraire = $volumeHoraire;
     }
 
-    /**
-     * @return int
-     */
     public function getCodeCelcatDepartement(): int
     {
         return $this->codeCelcatDepartement;
@@ -422,8 +353,6 @@ class Diplome extends BaseEntity implements Serializable
     }
 
     /**
-     * @param Hrs $hr
-     *
      * @return Diplome
      */
     public function addHr(Hrs $hr): self
@@ -437,8 +366,6 @@ class Diplome extends BaseEntity implements Serializable
     }
 
     /**
-     * @param Hrs $hr
-     *
      * @return Diplome
      */
     public function removeHr(Hrs $hr): self
@@ -463,8 +390,6 @@ class Diplome extends BaseEntity implements Serializable
     }
 
     /**
-     * @param Ppn $ppn
-     *
      * @return Diplome
      */
     public function addPpn(Ppn $ppn): self
@@ -478,8 +403,6 @@ class Diplome extends BaseEntity implements Serializable
     }
 
     /**
-     * @param Ppn $ppn
-     *
      * @return Diplome
      */
     public function removePpn(Ppn $ppn): self
@@ -498,12 +421,10 @@ class Diplome extends BaseEntity implements Serializable
     /**
      * @param $name
      * @param $value
-     *
-     * @return bool
      */
     public function update($name, $value): bool
     {
-        $name[0] = chr(ord($name[0]) - 32);
+        $name[0] = \chr(\ord($name[0]) - 32);
         $method = 'set' . $name;
         if (method_exists($this, $method)) {
             $this->$method($value);
@@ -514,17 +435,12 @@ class Diplome extends BaseEntity implements Serializable
         return false;
     }
 
-    /**
-     * @return Departement|null
-     */
     public function getDepartement(): ?Departement
     {
         return $this->departement;
     }
 
     /**
-     * @param Departement|null $departement
-     *
      * @return Diplome
      */
     public function setDepartement(?Departement $departement): self
@@ -543,8 +459,6 @@ class Diplome extends BaseEntity implements Serializable
     }
 
     /**
-     * @param Annee $annee
-     *
      * @return Diplome
      */
     public function addAnnee(Annee $annee): self
@@ -558,8 +472,6 @@ class Diplome extends BaseEntity implements Serializable
     }
 
     /**
-     * @param Annee $annee
-     *
      * @return Diplome
      */
     public function removeAnnee(Annee $annee): self
@@ -575,17 +487,12 @@ class Diplome extends BaseEntity implements Serializable
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
     public function getSigle(): ?string
     {
         return $this->sigle;
     }
 
     /**
-     * @param string $sigle
-     *
      * @return Diplome
      */
     public function setSigle(string $sigle): self
@@ -607,14 +514,9 @@ class Diplome extends BaseEntity implements Serializable
         return $this;
     }
 
-
-    /**
-     * @return string
-     */
     public function displayAnneeUniversitaire(): string
     {
-        return $this->getAnneeUniversitaire() !== null ? $this->getAnneeUniversitaire()->displayAnneeUniversitaire() : 'err';
-
+        return null !== $this->getAnneeUniversitaire() ? $this->getAnneeUniversitaire()->displayAnneeUniversitaire() : 'err';
     }
 
     public function getAnneeUniversitaire(): ?AnneeUniversitaire
@@ -641,12 +543,9 @@ class Diplome extends BaseEntity implements Serializable
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getLibelleLong(): string
     {
-        if ($this->getTypeDiplome() !== null) {
+        if (null !== $this->getTypeDiplome()) {
             return $this->getTypeDiplome()->getSigle() . ' ' . $this->getLibelle();
         }
 
@@ -812,7 +711,7 @@ class Diplome extends BaseEntity implements Serializable
         // Ajouté pour le problème de connexion avec le usernametoken
         return serialize([
             $this->getId(),
-            $this->getLibelle()
+            $this->getLibelle(),
         ]);
     }
 

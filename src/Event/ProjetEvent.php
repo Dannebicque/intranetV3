@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Event/ProjetEvent.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 26/09/2020 08:52
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Event/ProjetEvent.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Event;
 
@@ -21,7 +23,7 @@ class ProjetEvent extends Event
         self::CHGT_ETAT_PROJET_AUTORISE => ProjetEtudiant::ETAT_PROJET_AUTORISE,
         self::CHGT_ETAT_PROJET_DEPOSE   => ProjetEtudiant::ETAT_PROJET_DEPOSE,
         self::CHGT_ETAT_PROJET_VALIDE   => ProjetEtudiant::ETAT_PROJET_VALIDE,
-        self::CHGT_ETAT_PROJET_IMPRIME  => ProjetEtudiant::ETAT_PROJET_IMPRIME
+        self::CHGT_ETAT_PROJET_IMPRIME  => ProjetEtudiant::ETAT_PROJET_IMPRIME,
     ];
 
     /** @var ProjetEtudiant */

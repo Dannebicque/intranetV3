@@ -1,26 +1,25 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEvaluation.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 22/01/2021 17:28
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEvaluation.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
-/**
- * Created by PhpStorm.
- * User: davidannebicque
- * Date: 10/06/2018
- * Time: 10:26
+/*
+ * Pull your hearder here, for exemple, Licence header.
  */
 
 namespace App\Classes;
 
+use App\Classes\Excel\MyExcelMultiExport;
+use App\Classes\Pdf\MyPDF;
 use App\Entity\Constantes;
 use App\Entity\Departement;
 use App\Entity\Etudiant;
 use App\Entity\Evaluation;
 use App\Entity\Note;
-use App\Classes\Excel\MyExcelMultiExport;
-use App\Classes\Pdf\MyPDF;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
@@ -29,11 +28,9 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
-use function count;
 
 /**
- * Class MyEvaluation
- * @package App\Classes
+ * Class MyEvaluation.
  */
 class MyEvaluation
 {
@@ -54,41 +51,29 @@ class MyEvaluation
 
     /**
      * MyEvaluation constructor.
-     *
-     * @param EntityManagerInterface $entityManager
-     * @param MyPDF                  $myPdf
-     * @param MyExcelMultiExport     $myExcelMultiExport
      */
     public function __construct(
         EntityManagerInterface $entityManager,
         MyPDF $myPdf,
         MyExcelMultiExport $myExcelMultiExport
-    )
-    {
+    ) {
         $this->entityManager = $entityManager;
         $this->myPdf = $myPdf;
         $this->myExcelMultiExport = $myExcelMultiExport;
     }
 
-
-    /**
-     * @param Evaluation $evaluation
-     *
-     * @return MyEvaluation
-     */
-    public function setEvaluation(Evaluation $evaluation): MyEvaluation
+    public function setEvaluation(Evaluation $evaluation): self
     {
         $this->evaluation = $evaluation;
 
         return $this;
     }
 
-
-    public function calculStatistiquesGlobales(): MyEvaluation
+    public function calculStatistiquesGlobales(): self
     {
         $this->notes = $this->evaluation->getNotes();
         $repartition = [];
-        for ($i = 0; $i <= 20; $i++) {
+        for ($i = 0; $i <= 20; ++$i) {
             $repartition[$i] = 0;
         }
 
@@ -98,21 +83,20 @@ class MyEvaluation
 
         /** @var Note $note */
         foreach ($this->notes as $note) {
-            if ($note->getEtudiant() !== null) {
+            if (null !== $note->getEtudiant()) {
                 if ($note->getNote() >= 0) {
-                    $repartition[floor($note->getNote())]++;
+                    ++$repartition[floor($note->getNote())];
                 }
                 $t[$note->getEtudiant()->getId()] = $note->getNote();
                 $this->classement[$note->getEtudiant()->getId()] = $note->getNote();
             }
         }
 
-
-        if ($this->evaluation->getTypeGroupe() !== null) {
+        if (null !== $this->evaluation->getTypeGroupe()) {
             foreach ($this->evaluation->getTypeGroupe()->getGroupes() as $groupe) {
                 $tgroupes[$groupe->getId()] = [];
                 foreach ($groupe->getEtudiants() as $etu) {
-                    if (array_key_exists($etu->getId(), $t)) {
+                    if (\array_key_exists($etu->getId(), $t)) {
                         $tgroupes[$groupe->getId()][$etu->getId()] = $t[$etu->getId()];
                     }
                 }
@@ -123,18 +107,19 @@ class MyEvaluation
 
         foreach ($this->evaluation->getTypeGroupe()->getGroupes() as $groupe) {
             $grid = $groupe->getId();
-            $this->statistiques[$grid]['min'] = count($tgroupes[$grid]) > 0 ? min($tgroupes[$grid]) : -0.01;
-            $this->statistiques[$grid]['max'] = count($tgroupes[$grid]) > 0 ? max($tgroupes[$grid]) : -0.01;
-            $this->statistiques[$grid]['moyenne'] = count($tgroupes[$grid]) > 0 ? array_sum($tgroupes[$grid]) / count($tgroupes[$grid]) : -0.01;
-            $this->statistiques[$grid]['ecart_type'] = count($tgroupes[$grid]) > 0 ? $this->ecartType($tgroupes[$grid]) : -0.01;
+            $this->statistiques[$grid]['min'] = \count($tgroupes[$grid]) > 0 ? min($tgroupes[$grid]) : -0.01;
+            $this->statistiques[$grid]['max'] = \count($tgroupes[$grid]) > 0 ? max($tgroupes[$grid]) : -0.01;
+            $this->statistiques[$grid]['moyenne'] = \count($tgroupes[$grid]) > 0 ? array_sum($tgroupes[$grid]) / \count($tgroupes[$grid]) : -0.01;
+            $this->statistiques[$grid]['ecart_type'] = \count($tgroupes[$grid]) > 0 ? $this->ecartType($tgroupes[$grid]) : -0.01;
         }
 
-        $this->statistiques['promo']['min'] = count($t) > 0 ? min($t) : -0.01;
-        $this->statistiques['promo']['max'] = count($t) > 0 ? max($t) : -0.01;
-        $this->statistiques['promo']['moyenne'] = count($t) > 0 ? array_sum($t) / count($t) : -0.01;
-        $this->statistiques['promo']['ecart_type'] = count($t) > 0 ? $this->ecartType($t) : -0.01;
+        $this->statistiques['promo']['min'] = \count($t) > 0 ? min($t) : -0.01;
+        $this->statistiques['promo']['max'] = \count($t) > 0 ? max($t) : -0.01;
+        $this->statistiques['promo']['moyenne'] = \count($t) > 0 ? array_sum($t) / \count($t) : -0.01;
+        $this->statistiques['promo']['ecart_type'] = \count($t) > 0 ? $this->ecartType($t) : -0.01;
         $this->statistiques['promo']['rang'] = $this->classement;
         $this->statistiques['repartition'] = $repartition;
+
         return $this;
     }
 
@@ -146,8 +131,8 @@ class MyEvaluation
     private function ecartType($donnees)
     {
         //0 - Nombre d’éléments dans le tableau
-        $population = count($donnees);
-        if ($population !== 0) {
+        $population = \count($donnees);
+        if (0 !== $population) {
             //1 - somme du tableau
             $somme_tableau = array_sum($donnees);
             //2 - Calcul de la moyenne
@@ -177,19 +162,11 @@ class MyEvaluation
         return $ecart_type;
     }
 
-    /**
-     * @return array
-     */
     public function getStatistiques(): array
     {
         return $this->statistiques;
     }
 
-    /**
-     * @param Etudiant $etudiant
-     *
-     * @return int|null
-     */
     public function classement(Etudiant $etudiant): ?int
     {
         $rangreel = 0;
@@ -197,11 +174,11 @@ class MyEvaluation
         $rangEtudiant = 0;
         foreach ($this->classement as $key => $value) {
             if ($value !== $notePrec) {
-                $rangreel++; //index de la note en cours de lecture
+                ++$rangreel; //index de la note en cours de lecture
                 $rangEtudiant = $rangreel;
                 $notePrec = $value;
             } else {
-                $rangreel++; //index de la note en cours de lecture
+                ++$rangreel; //index de la note en cours de lecture
             }
             if ($key === $etudiant->getId()) {
                 return $rangEtudiant; //si c'est l'étudiant, on retourne le rang
@@ -217,7 +194,7 @@ class MyEvaluation
 
         $tabEtudiant = [];
         foreach ($this->notes as $note) {
-            if ($note->getEtudiant() !== null) {
+            if (null !== $note->getEtudiant()) {
                 $tabEtudiant[$note->getEtudiant()->getId()] = $note;
             } else {
                 //note sans étudiant, on la supprime ?
@@ -229,9 +206,6 @@ class MyEvaluation
         return $tabEtudiant;
     }
 
-    /**
-     * @param Note $note
-     */
     public function deleteNote(Note $note): void
     {
         foreach ($note->getModificationNotes() as $modif) {
@@ -240,9 +214,6 @@ class MyEvaluation
         $this->entityManager->remove($note);
     }
 
-    /**
-     * @return bool
-     */
     public function delete(): bool
     {
         $this->notes = $this->evaluation->getNotes();
@@ -256,14 +227,14 @@ class MyEvaluation
     }
 
     /**
-     * @param             $_format
-     * @param             $groupes
-     * @param Departement $departement
+     * @param $_format
+     * @param $groupes
      *
      * @return PdfResponse|StreamedResponse|null
-     * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
+     *
+     * @throws LoaderError
      */
     public function exportReleve($_format, $groupes, Departement $departement)
     {
@@ -274,7 +245,7 @@ class MyEvaluation
                 return $this->myPdf::generePdf('pdf/releveEvaluation.html.twig', [
                     'evaluation' => $this->evaluation,
                     'groupes'    => $groupes,
-                    'notes'      => $notes
+                    'notes'      => $notes,
                 ], $name, $departement->getLibelle());
             case Constantes::FORMAT_EXCEL:
                 $this->myExcelMultiExport->genereReleveExcel(
@@ -298,17 +269,12 @@ class MyEvaluation
     }
 
     /**
-     * @param Evaluation $evaluation
-     * @param string     $fichier
-     *
-     *
-     * @return array|null
      * @throws Exception
      */
     public function importEvaluation(Evaluation $evaluation, string $fichier): ?array
     {
         $t = explode('.', $fichier);
-        $extension = $t[count($t) - 1];
+        $extension = $t[\count($t) - 1];
 
         switch ($extension) {
             case 'xlsx':
@@ -327,10 +293,8 @@ class MyEvaluation
     }
 
     /**
-     * @param Evaluation $evaluation
-     * @param            $data
+     * @param $data
      *
-     * @return array
      * @throws Exception
      */
     private function insertNotes(Evaluation $evaluation, $data): array
@@ -349,8 +313,9 @@ class MyEvaluation
         }
 
         foreach ($data as $note) {
-            if (array_key_exists((string)$note['num_etudiant'], $etudiants)) {
-                if (array_key_exists((string)$note['num_etudiant'], $notes) && $notes[$note['num_etudiant']] !== '-0.01') {
+            if (\array_key_exists((string)$note['num_etudiant'], $etudiants)) {
+                if (\array_key_exists((string)$note['num_etudiant'],
+                        $notes) && '-0.01' !== $notes[$note['num_etudiant']]) {
                     //déjà une note, on ne remplace pas. On récupère les éléments pour alimenter le tableau
                     $newnote = [];
                     $newnote['idetudiant'] = $notes[$note['num_etudiant']]->getEtudiant()->getId();
@@ -380,14 +345,10 @@ class MyEvaluation
             }
         }
         $this->entityManager->flush();
+
         return $notes;
     }
 
-    /**
-     * @param string $fichier
-     *
-     * @return array
-     */
     private function importXlsx(string $fichier): array
     {
         $excel = IOFactory::load($fichier);
@@ -395,14 +356,14 @@ class MyEvaluation
         $data = [];
         $ordre = [];
         foreach ($sheetData[1] as $key) {
-            $ordre[] = strtolower($key);
+            $ordre[] = mb_strtolower($key);
         }
 
-        $nblignes = count($sheetData);
-        for ($i = 2; $i <= $nblignes; $i++) {
-            $nb = count($sheetData[$i]);
-            for ($j = 1; $j <= $nb; $j++) {
-                $t[$ordre[$j - 1]] = $sheetData[$i][chr($j + 64)];
+        $nblignes = \count($sheetData);
+        for ($i = 2; $i <= $nblignes; ++$i) {
+            $nb = \count($sheetData[$i]);
+            for ($j = 1; $j <= $nb; ++$j) {
+                $t[$ordre[$j - 1]] = $sheetData[$i][\chr($j + 64)];
             }
             $data[] = $t;
         }
@@ -412,7 +373,7 @@ class MyEvaluation
 
     private function importCsv(string $fichier): array
     {
-        $handle = fopen($fichier, 'rb');
+        $handle = fopen($fichier, 'r');
         $data = [];
         $ordre = [];
 
@@ -421,24 +382,23 @@ class MyEvaluation
             //on récupère l'en-tête
             $phrase = fgetcsv($handle, 1024, ';');
 
-            if (in_array('num_etudiant', $phrase, true) && in_array('commentaire',
-                    $phrase, true) && in_array('note', $phrase, true)) {
+            if (\in_array('num_etudiant', $phrase, true) && \in_array('commentaire',
+                    $phrase, true) && \in_array('note', $phrase, true)) {
                 //on vérifie que les clés existent.
                 //todo: commentaire ne devrais pas être obligatoire ? Supprimer l'option avec , dans le texte
                 foreach ($phrase as $key) {
                     $ordre[] = $key;
                 }
-            } else {
-                //pas de clé en en-tête
-                //s'assurer que c'est les bonnes données ?
             }
+            //pas de clé en en-tête
+            //s'assurer que c'est les bonnes données ?
 
             /*Tant que l'on est pas à la fin du fichier*/
             while (!feof($handle)) {
                 /*On lit la ligne courante*/
                 $phrase = fgetcsv($handle, 1024, ';');
-                $nb = count($phrase);
-                for ($i = 0; $i < $nb; $i++) {
+                $nb = \count($phrase);
+                for ($i = 0; $i < $nb; ++$i) {
                     $t[$ordre[$i]] = $phrase[$i];
                 }
                 $data[] = $t;

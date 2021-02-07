@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Form/HrsType.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 20/07/2020 18:05
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/HrsType.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Form;
 
@@ -22,17 +24,12 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class HrsType
- * @package App\Form
+ * Class HrsType.
  */
 class HrsType extends AbstractType
 {
     protected $departement;
 
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->departement = $options['departement'];
@@ -46,13 +43,13 @@ class HrsType extends AbstractType
                     return $personnelRepository->findByDepartementBuilder($this->departement);
                 },
                 'attr'          => ['class' => 'form-control selectpicker'],
-                'label'         => 'label.personnel'
+                'label'         => 'label.personnel',
             ])
             ->add('typeHrs', EntityType::class, [
                 'class'        => TypeHrs::class,
                 'required'     => true,
                 'choice_label' => 'libelle',
-                'label'        => 'label.typehrs'
+                'label'        => 'label.typehrs',
             ])
             ->add('libelle', TextType::class, ['label' => 'label.libelle'])
             ->add('nbHeuresTd', TextType::class, ['label' => 'label.nbHeuresTd'])
@@ -63,7 +60,7 @@ class HrsType extends AbstractType
                 'query_builder' => function(SemestreRepository $semestreRepository) {
                     return $semestreRepository->findByDepartementBuilder($this->departement);
                 },
-                'label'         => 'label.semestre'
+                'label'         => 'label.semestre',
             ])
             ->add('diplome', EntityType::class, [
                 'class'         => Diplome::class,
@@ -72,19 +69,16 @@ class HrsType extends AbstractType
                 'query_builder' => function(DiplomeRepository $diplomeRepository) {
                     return $diplomeRepository->findByDepartementBuilder($this->departement);
                 },
-                'label'         => 'label.diplome'
+                'label'         => 'label.diplome',
             ]);
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class'         => Hrs::class,
-            'departement'          => null,
-            'translation_domain' => 'form'
+            'departement'        => null,
+            'translation_domain' => 'form',
         ]);
     }
 }

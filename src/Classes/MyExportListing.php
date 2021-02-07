@@ -1,27 +1,26 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyExportListing.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 01/02/2021 18:01
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyExportListing.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
-/**
- * Created by PhpStorm.
- * User: davidannebicque
- * Date: 12/07/2018
- * Time: 13:10
+/*
+ * Pull your hearder here, for exemple, Licence header.
  */
 
 namespace App\Classes;
 
+use App\Classes\Excel\MyExcelWriter;
+use App\Classes\Pdf\MyPDF;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Entity\Groupe;
 use App\Entity\Matiere;
 use App\Entity\Personnel;
 use App\Entity\TypeGroupe;
-use App\Classes\Excel\MyExcelWriter;
-use App\Classes\Pdf\MyPDF;
 use App\Repository\GroupeRepository;
 use App\Repository\TypeGroupeRepository;
 use PhpOffice\PhpSpreadsheet\Exception;
@@ -68,20 +67,11 @@ class MyExportListing
     /** @var MyPDF */
     private $myPdf;
     private $titre = '';
-    /**
-     * @var Personnel|null
-     */
+
     private ?Personnel $personnel;
 
     /**
      * MyExport constructor.
-     *
-     * @param TypeGroupeRepository $typeGroupeRepository
-     * @param GroupeRepository     $groupeRepository
-     * @param DataUserSession      $dataUserSession
-     * @param KernelInterface      $kernel
-     * @param MyExcelWriter        $myExcelWriter
-     * @param MyPDF                $myPdf
      */
     public function __construct(
         TypeGroupeRepository $typeGroupeRepository,
@@ -100,13 +90,10 @@ class MyExportListing
     }
 
     /**
-     * @param                $exportTypeDocument
-     * @param                $exportFormat
-     * @param                $exportChamps
-     * @param                $exportFiltre
-     * @param Matiere|null   $matiere
-     *
-     * @param Personnel|null $personnel
+     * @param $exportTypeDocument
+     * @param $exportFormat
+     * @param $exportChamps
+     * @param $exportFiltre
      *
      * @throws Exception
      * @throws LoaderError
@@ -131,7 +118,7 @@ class MyExportListing
             $this->groupes = [$exportFiltre];
         } else {
             $this->typeGroupe = $this->typeGroupeRepository->find($exportFiltre);
-            if ($this->typeGroupe !== null) {
+            if (null !== $this->typeGroupe) {
                 $this->groupes = $this->typeGroupe->getGroupes();
             }
         }
@@ -148,7 +135,6 @@ class MyExportListing
             case Constantes::FORMAT_PDF:
                 return $this->exportPdf();
         }
-
 
         return null;
     }
@@ -171,7 +157,7 @@ class MyExportListing
             case Constantes::TYPEDOCUMENT_EMARGEMENT:
                 $this->name = 'emargement-' . $semestre;
                 $this->titre = 'FEUILLE D\'EMARGEMENT - Semestre ' . $semestre;
-                for ($i = 0; $i < 5; $i++) {
+                for ($i = 0; $i < 5; ++$i) {
                     $this->colonnesEnTete[] = '';
                 }
                 break;
@@ -189,7 +175,7 @@ class MyExportListing
     private function exportCsv($separateur): StreamedResponse
     {
         $this->myExcelWriter->createSheet('export');
-        if (count($this->colonnesEnTete) > 1) {
+        if (\count($this->colonnesEnTete) > 1) {
             foreach ($this->colonnesEnTete as $col) {
                 $this->myExcelWriter->writeCellXY($this->colonne, $this->ligne, $col);
                 $this->newColonne();
@@ -213,7 +199,6 @@ class MyExportListing
             }
         }
 
-
         $writer = new Csv($this->myExcelWriter->getSpreadsheet());
         $writer->setDelimiter($separateur);
 
@@ -224,13 +209,12 @@ class MyExportListing
             200,
             [
                 'Content-Type'        => 'application/csv',
-                'Content-Disposition' => 'attachment;filename="' . $this->name . '.csv"'
+                'Content-Disposition' => 'attachment;filename="' . $this->name . '.csv"',
             ]
         );
     }
 
     /**
-     * @return StreamedResponse
      * @throws Exception
      */
     private function exportExcel(): StreamedResponse
@@ -246,7 +230,7 @@ class MyExportListing
             /** @var Etudiant $etudiant */
             foreach ($groupe->getEtudiants() as $etudiant) {
                 $this->writeLine($etudiant, $groupe);
-                $id++;
+                ++$id;
             }
 
             $this->myExcelWriter->writeCellName('A16', $id);
@@ -276,14 +260,12 @@ class MyExportListing
             200,
             [
                 'Content-Type'        => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                'Content-Disposition' => 'attachment;filename="' . $this->name . '.xlsx"'
+                'Content-Disposition' => 'attachment;filename="' . $this->name . '.xlsx"',
             ]
         );
     }
 
     /**
-     * @param Groupe $groupe
-     *
      * @throws Exception
      */
     private function writeSpecialHeader(Groupe $groupe): void
@@ -309,7 +291,7 @@ class MyExportListing
 
         switch ($this->exportTypeDocument) {
             case Constantes::TYPEDOCUMENT_EMARGEMENT:
-                if ($this->matiere !== null) {
+                if (null !== $this->matiere) {
                     $this->myExcelWriter->writeCellName(
                         'A10',
                         'MATIERE ENSEIGNEE :' . $this->matiere->getDisplay()
@@ -321,7 +303,7 @@ class MyExportListing
                     );
                 }
 
-                if ($this->personnel !== null) {
+                if (null !== $this->personnel) {
                     $this->myExcelWriter->writeCellName(
                         'A8',
                         'NOM DE L\'ENSEIGNANT :' . $this->personnel->getDisplayPr()
@@ -412,18 +394,15 @@ class MyExportListing
 
     private function newLine(): void
     {
-        $this->ligne++;
+        ++$this->ligne;
         $this->colonne = 1;
     }
 
     private function newColonne(): void
     {
-        $this->colonne++;
+        ++$this->colonne;
     }
 
-    /**
-     *
-     */
     private function setMiseEnPage(): void
     {
         $this->myExcelWriter->getSheet()->getHeaderFooter()->setOddHeader('&C&H' . $this->titre);
@@ -443,20 +422,16 @@ class MyExportListing
                 'typeGroupe' => $this->typeGroupe,
                 'matiere'    => $this->matiere,
                 'personnel'  => $this->personnel,
-                'groupes'    => $this->groupes
+                'groupes'    => $this->groupes,
             ],
             $this->name . '.pdf',
             $this->dataUserSession->getDepartement()->getLibelle());
     }
 
-    /**
-     * @param Etudiant $etudiant
-     * @param Groupe   $groupe
-     */
     private function writeLine(Etudiant $etudiant, Groupe $groupe): void
     {
-        if (count($this->colonnesEnTete) > 1) {
-            $this->myExcelWriter->writeCellXY($this->colonne, $this->ligne, strtoupper($etudiant->getNom()));
+        if (\count($this->colonnesEnTete) > 1) {
+            $this->myExcelWriter->writeCellXY($this->colonne, $this->ligne, mb_strtoupper($etudiant->getNom()));
             $this->newColonne();
             $this->myExcelWriter->writeCellXY($this->colonne, $this->ligne, mb_strtoupper($etudiant->getPrenom()));
             $this->newColonne();
@@ -469,7 +444,7 @@ class MyExportListing
                         break;
                     case Constantes::CHAMPS_BAC:
                         $this->myExcelWriter->writeCellXY($this->colonne, $this->ligne,
-                            mb_strtoupper($etudiant->getBac() !== null ? $etudiant->getBac()->getLibelle() : 'Non défini'));
+                            mb_strtoupper(null !== $etudiant->getBac() ? $etudiant->getBac()->getLibelle() : 'Non défini'));
                         $this->newColonne();
                         break;
                     case Constantes::CHAMPS_GROUPE:

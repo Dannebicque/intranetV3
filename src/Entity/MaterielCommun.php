@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/MaterielCommun.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 19/09/2020 09:29
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/MaterielCommun.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:49
+ */
 
 namespace App\Entity;
 
@@ -98,17 +100,12 @@ class MaterielCommun extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return null|File
-     */
     public function getPhotoFile(): ?File
     {
         return $this->photoFile;
     }
 
     /**
-     * @param File|null $document
-     *
      * @throws Exception
      */
     public function setPhotoFile(?File $document = null): void
@@ -130,9 +127,6 @@ class MaterielCommun extends BaseEntity
         return $this->photoName;
     }
 
-    /**
-     * @param string $photoName
-     */
     public function setPhotoName(string $photoName): void
     {
         $this->photoName = $photoName;

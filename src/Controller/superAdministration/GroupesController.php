@@ -1,13 +1,16 @@
 <?php
-
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/GroupesController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 26/09/2020 09:02
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/GroupesController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller\superAdministration;
 
+use App\Classes\Apogee\MyApogee;
+use App\Classes\MyGroupes;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Departement;
@@ -15,8 +18,6 @@ use App\Entity\Etudiant;
 use App\Entity\Groupe;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
-use App\Classes\Apogee\MyApogee;
-use App\Classes\MyGroupes;
 use App\Repository\EtudiantRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\SemestreRepository;
@@ -32,12 +33,6 @@ class GroupesController extends BaseController
 {
     /**
      * @Route("/{departement}/{semestre}", name="sa_groupes_departement_index")
-     * @param SemestreRepository $semestreRepository
-     * @param Departement        $departement
-     *
-     * @param Semestre|null      $semestre
-     *
-     * @return Response
      */
     public function index(
         SemestreRepository $semestreRepository,
@@ -47,17 +42,12 @@ class GroupesController extends BaseController
         return $this->render('super-administration/groupes/index.html.twig', [
             'departement'     => $departement,
             'semestres'       => $semestreRepository->findByDepartement($departement),
-            'afficheSemestre' => $semestre !== null ? $semestre->getId() : null
+            'afficheSemestre' => null !== $semestre ? $semestre->getId() : null,
         ]);
     }
 
     /**
      * @Route("/synchronise/departement/{departement}", name="sa_groupes_departement_synchro_all")
-     * @param MyApogee $myApogee
-     * @param SemestreRepository $semestreRepository
-     * @param Departement $departement
-     *
-     * @return Response
      */
     public function synchroApogeeAll(
         MyApogee $myApogee,
@@ -70,11 +60,11 @@ class GroupesController extends BaseController
             $groupes = $myApogee->getHierarchieGroupesSemestre($semestre);
             $nbgroupes = $groupes->rowCount();
             //todo: déplacer dans une classe si OK.
-            if ($nbgroupes === 0) {
+            if (0 === $nbgroupes) {
                 //pas de hierarchie
                 $groupes = $myApogee->getGroupesSemestre($semestre);
                 $i = 1;
-                if (count($semestre->getTypeGroupes()) > 0) {
+                if (\count($semestre->getTypeGroupes()) > 0) {
                     $tg = $semestre->getTypeGroupes()[0];
                 } else {
                     //si pas de type de groupe on en ajoute un par défaut.
@@ -91,15 +81,11 @@ class GroupesController extends BaseController
                     $groupe->setCodeApogee($ligne['COD_EXT_GPE']);
                     $groupe->setLibelle($ligne['LIB_GPE']);
                     $groupe->setOrdre($i);
-                    $i++;
+                    ++$i;
                     $this->entityManager->persist($groupe);
                 }
                 $this->entityManager->flush();
-            } else {
-
             }
-
-
         }
         $this->addFlashBag('success', 'sa_groupes_departement_synchro_all.success');
 
@@ -108,11 +94,6 @@ class GroupesController extends BaseController
 
     /**
      * @Route("/synchronise/semestre/{semestre}", name="sa_groupes_departement_synchro_semestre")
-     * @param MyApogee         $myApogee
-     * @param GroupeRepository $groupeRepository
-     * @param Semestre         $semestre
-     *
-     * @return Response
      */
     public function synchroApogeeSemestre(
         MyApogee $myApogee,
@@ -126,18 +107,11 @@ class GroupesController extends BaseController
         $groupes = $myApogee->getHierarchieGroupesSemestre($semestre);
 
         while ($row = $groupes->fetch($groupes)) {
-
         }
     }
 
     /**
      * @Route("/synchronise/etudiant/semestre/{semestre}", name="sa_groupes_etudiant_synchro_semestre")
-     * @param MyApogee           $myApogee
-     * @param EtudiantRepository $etudiantRepository
-     * @param GroupeRepository   $groupeRepository
-     * @param Semestre           $semestre
-     *
-     * @return Response
      */
     public function synchroApogeeEtudiantSemestre(
         MyApogee $myApogee,
@@ -166,7 +140,8 @@ class GroupesController extends BaseController
         $groupes = $myApogee->getEtudiantsGroupesSemestre($semestre);
 
         while ($groupe = $groupes->fetch()) {
-            if (array_key_exists($groupe['COD_ETU'], $tEtudiants) && array_key_exists($groupe['COD_EXT_GPE'], $tGroupes)) {
+            if (\array_key_exists($groupe['COD_ETU'], $tEtudiants) && \array_key_exists($groupe['COD_EXT_GPE'],
+                    $tGroupes)) {
                 $tEtudiants[$groupe['COD_ETU']]->addGroupe($tGroupes[$groupe['COD_EXT_GPE']]);
                 $tGroupes[$groupe['COD_EXT_GPE']]->addEtudiant($tEtudiants[$groupe['COD_ETU']]);
                 $tEtudiants[$groupe['COD_ETU']]->setSemestre($tGroupes[$groupe['COD_EXT_GPE']]->getTypeGroupe()->getSemestre());
@@ -177,16 +152,11 @@ class GroupesController extends BaseController
 
         return $this->redirectToRoute('sa_groupes_departement_index',
             ['departement' => $semestre->getAnnee()->getDiplome()->getDepartement()->getId()]);
-
     }
 
     /**
      * @Route("/import/{departement}", name="sa_groupes_import")
-     * @param MyGroupes   $myGroupes
-     * @param Request     $request
-     * @param Departement $departement
      *
-     * @return Response
      * @throws Exception
      */
     public function import(MyGroupes $myGroupes, Request $request, Departement $departement): Response
@@ -206,11 +176,7 @@ class GroupesController extends BaseController
 
     /**
      * @Route("/import-etudiant/{semestre}", name="sa_groupes_etudiant_import_semestre")
-     * @param MyGroupes $myGroupes
-     * @param Request   $request
-     * @param Semestre  $semestre
      *
-     * @return Response
      * @throws Exception
      */
     public function importEtudiant(MyGroupes $myGroupes, Request $request, Semestre $semestre): Response
@@ -225,7 +191,7 @@ class GroupesController extends BaseController
         return $this->render('administration/groupe/import-etudiant.html.twig',
             [
                 'semestre'    => $semestre,
-                'departement' => $semestre->getDiplome()->getDepartement()
+                'departement' => $semestre->getDiplome()->getDepartement(),
             ]
         );
     }

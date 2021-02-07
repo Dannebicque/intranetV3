@@ -1,15 +1,14 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Pdf/MyPDF.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 26/01/2021 15:40
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Pdf/MyPDF.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
-/**
- * Created by PhpStorm.
- * User: davidannebicque
- * Date: 26/07/2018
- * Time: 08:10
+/*
+ * Pull your hearder here, for exemple, Licence header.
  */
 
 namespace App\Classes\Pdf;
@@ -32,9 +31,6 @@ class MyPDF
 
     /**
      * MyPDF constructor.
-     *
-     * @param Environment $templating
-     * @param Pdf         $pdf
      */
     public function __construct(Environment $templating, Pdf $pdf)
     {
@@ -57,7 +53,6 @@ class MyPDF
      * @param $name
      * @param $departement
      *
-     * @return PdfResponse
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -68,12 +63,6 @@ class MyPDF
     }
 
     /**
-     * @param string      $template
-     * @param array       $data
-     * @param string      $name
-     * @param string      $dir
-     * @param string|null $departement
-     *
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -95,7 +84,6 @@ class MyPDF
      * @param $data
      * @param $departement
      *
-     * @return PdfResponse
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -104,8 +92,7 @@ class MyPDF
     {
         $html = self::$templating->render($template, $data);
 
-
-        if ($departement !== null) {
+        if (null !== $departement) {
             $date = new DateTime('now');
 //            $canvas = self::$domPdf->getCanvas();
 //            $canvas->page_text(500, 800, 'Page {PAGE_NUM} sur {PAGE_COUNT}', 'Arial', 10, [0, 0, 0]);
@@ -113,7 +100,7 @@ class MyPDF
 //                'Arial', 10, [0, 0, 0]);
         }
 
-        if (substr($name, -4) !== '.pdf') {
+        if ('.pdf' !== mb_substr($name, -4)) {
             $name .= '.pdf';
         }
 

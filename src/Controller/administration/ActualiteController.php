@@ -1,17 +1,20 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/ActualiteController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 12/12/2020 14:31
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/ActualiteController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
 
 namespace App\Controller\administration;
 
+use App\Classes\MyExport;
 use App\Controller\BaseController;
 use App\Entity\Actualite;
 use App\Entity\Constantes;
 use App\Form\ActualiteType;
-use App\Classes\MyExport;
 use App\Repository\ActualiteRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,9 +27,6 @@ class ActualiteController extends BaseController
 {
     /**
      * @Route("/", name="administration_actualite_index", methods="GET")
-     * @param ActualiteRepository $actualiteRepository
-     *
-     * @return Response
      */
     public function index(ActualiteRepository $actualiteRepository): Response
     {
@@ -39,16 +39,13 @@ class ActualiteController extends BaseController
     /**
      * @Route("/export.{_format}", name="administration_actualite_export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"})
-     * @param MyExport            $myExport
-     * @param ActualiteRepository $actualiteRepository
      *
-     * @param                     $_format
-     *
-     * @return Response
+     * @param $_format
      */
     public function export(MyExport $myExport, ActualiteRepository $actualiteRepository, $_format): Response
     {
         $actualites = $actualiteRepository->getByDepartement($this->getDepartement());
+
         return $myExport->genereFichierGenerique(
             $_format,
             $actualites,
@@ -60,9 +57,6 @@ class ActualiteController extends BaseController
 
     /**
      * @Route("/new", name="administration_actualite_new", methods="GET|POST")
-     * @param Request $request
-     *
-     * @return Response
      */
     public function create(Request $request): Response
     {
@@ -70,8 +64,8 @@ class ActualiteController extends BaseController
         $form = $this->createForm(ActualiteType::class, $actualite, [
             'attr' => [
                 'data-provide' => 'validation',
-                'novalidate'   => true
-            ]
+                'novalidate'   => true,
+            ],
         ]);
         $form->handleRequest($request);
 
@@ -91,9 +85,6 @@ class ActualiteController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_actualite_show", methods="GET")
-     * @param Actualite $actualite
-     *
-     * @return Response
      */
     public function show(Actualite $actualite): Response
     {
@@ -102,17 +93,13 @@ class ActualiteController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_actualite_edit", methods="GET|POST")
-     * @param Request   $request
-     * @param Actualite $actualite
-     *
-     * @return Response
      */
     public function edit(Request $request, Actualite $actualite): Response
     {
         $form = $this->createForm(ActualiteType::class, $actualite, [
             'attr' => [
-                'data-provide' => 'validation'
-            ]
+                'data-provide' => 'validation',
+            ],
         ]);
         $form->handleRequest($request);
 
@@ -120,7 +107,7 @@ class ActualiteController extends BaseController
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'actualite.edit.success.flash');
 
-            if ($request->request->get('btn_update') !== null) {
+            if (null !== $request->request->get('btn_update')) {
                 return $this->redirectToRoute('administration_actualite_index');
             }
 
@@ -135,10 +122,6 @@ class ActualiteController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_actualite_delete", methods="DELETE")
-     * @param Request   $request
-     * @param Actualite $actualite
-     *
-     * @return Response
      */
     public function delete(Request $request, Actualite $actualite): Response
     {
@@ -161,9 +144,6 @@ class ActualiteController extends BaseController
 
     /**
      * @Route("/{id}/duplicate", name="administration_actualite_duplicate", methods="GET|POST")
-     * @param Actualite $actualite
-     *
-     * @return Response
      */
     public function duplicate(Actualite $actualite): Response
     {

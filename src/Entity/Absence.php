@@ -1,9 +1,12 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Absence.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 13/10/2020 06:34
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Absence.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
 
 namespace App\Entity;
 
@@ -11,10 +14,10 @@ use App\Entity\Traits\UuidTrait;
 use Carbon\CarbonInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
+use Ramsey\Uuid\Uuid;
 use Serializable;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
-use Ramsey\Uuid\Uuid;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AbsenceRepository")
@@ -25,21 +28,18 @@ class Absence extends BaseEntity implements Serializable
     use UuidTrait;
 
     /**
-     *
      * @ORM\Column(name="dateHeure", type="datetime")
      * @Groups({"absences_administration"})
      */
     private ?CarbonInterface $dateHeure;
 
     /**
-     *
      * @ORM\Column(name="duree", type="time")
      * @Groups({"absences_administration"})
      */
     private ?CarbonInterface $duree;
 
     /**
-     *
      * @ORM\Column(name="justifie", type="boolean")
      * @Groups({"absences_administration"})
      */
@@ -60,7 +60,6 @@ class Absence extends BaseEntity implements Serializable
     private Matiere $matiere;
 
     /**
-     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Etudiant", inversedBy="absences")
      * @MaxDepth(2)
      * @Groups({"absences_administration"})
@@ -79,6 +78,7 @@ class Absence extends BaseEntity implements Serializable
 
     /**
      * Absence constructor.
+     *
      * @throws Exception
      */
     public function __construct()
@@ -99,9 +99,6 @@ class Absence extends BaseEntity implements Serializable
         return $this->dateHeure;
     }
 
-    /**
-     * @param CarbonInterface $dateHeure
-     */
     public function setDateHeure(CarbonInterface $dateHeure): void
     {
         $this->dateHeure = $dateHeure;
@@ -115,30 +112,20 @@ class Absence extends BaseEntity implements Serializable
         return $this->duree;
     }
 
-    /**
-     * @param CarbonInterface $duree
-     */
     public function setDuree(CarbonInterface $duree): void
     {
         $this->duree = $duree;
     }
 
-    /**
-     * @return bool
-     */
     public function isJustifie(): bool
     {
         return $this->justifie;
     }
 
-    /**
-     * @param bool $justifie
-     */
     public function setJustifie(bool $justifie): void
     {
         $this->justifie = $justifie;
     }
-
 
     /**
      * @return mixed
@@ -148,9 +135,6 @@ class Absence extends BaseEntity implements Serializable
         return $this->personnel;
     }
 
-    /**
-     * @param mixed $personnel
-     */
     public function setPersonnel($personnel): void
     {
         $this->personnel = $personnel;
@@ -164,25 +148,17 @@ class Absence extends BaseEntity implements Serializable
         return $this->etudiant;
     }
 
-    /**
-     * @param mixed $etudiant
-     */
     public function setEtudiant($etudiant): void
     {
         $this->etudiant = $etudiant;
     }
 
-    /**
-     * @return Matiere|null
-     */
     public function getMatiere(): ?Matiere
     {
         return $this->matiere;
     }
 
     /**
-     * @param Matiere $matiere
-     *
      * @return Absence
      */
     public function setMatiere(Matiere $matiere): self
@@ -210,10 +186,10 @@ class Absence extends BaseEntity implements Serializable
             'id'          => $this->getId(),
             'justifie'    => $this->isJustifie(),
             'uuidString'  => $this->getUuidString(),
-            'date'        => $this->getDateHeure() !== null ? $this->getDateHeure()->format('d/m/Y') : '-',
-            'heure'       => $this->getDateHeure() !== null ? $this->getDateHeure()->format('H:i') : '-',
-            'personnel'   => $this->getPersonnel() !== null ? $this->getPersonnel()->getDisplay() : '-',
-            'codeMatiere' => $this->getMatiere() !== null ? $this->getMatiere()->getCodeMatiere() : '-',
+            'date'        => null !== $this->getDateHeure() ? $this->getDateHeure()->format('d/m/Y') : '-',
+            'heure'       => null !== $this->getDateHeure() ? $this->getDateHeure()->format('H:i') : '-',
+            'personnel'   => null !== $this->getPersonnel() ? $this->getPersonnel()->getDisplay() : '-',
+            'codeMatiere' => null !== $this->getMatiere() ? $this->getMatiere()->getCodeMatiere() : '-',
         ];
     }
 
@@ -242,14 +218,14 @@ class Absence extends BaseEntity implements Serializable
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function serialize()
     {
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      */
     public function unserialize($serialized)
     {

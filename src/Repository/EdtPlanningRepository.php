@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/EdtPlanningRepository.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 06/02/2021 23:31
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/EdtPlanningRepository.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Repository;
 
@@ -33,10 +35,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param integer $prof
-     * @param integer $semaine
-     *
-     * @return array
+     * @param int $semaine
      */
     public function findEdtProf(int $prof, $semaine = 0): array
     {
@@ -44,24 +43,21 @@ class EdtPlanningRepository extends ServiceEntityRepository
             ->where('p.intervenant = :idprof')
             ->setParameter('idprof', $prof);
 
-        if ($semaine !== 0) {
+        if (0 !== $semaine) {
             $query->andWhere('p.semaine = :semaine')
                 ->setParameter('semaine', $semaine);
         }
         $query->orderBy('p.semaine, p.jour, p.debut, p.groupe');
-
 
         return $query->getQuery()
             ->getResult();
     }
 
     /**
-     * @param         $semestre
-     * @param integer $semaine
-     *
-     * @return array
+     * @param     $semestre
+     * @param int $semaine
      */
-    public function findEdtSemestre($semestre, $semaine)
+    public function findEdtSemestre($semestre, $semaine): array
     {
         return $this->createQueryBuilder('p')
             ->where('p.semaine = :semaine')
@@ -73,10 +69,8 @@ class EdtPlanningRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param integer $module
-     * @param integer $semaine
-     *
-     * @return array
+     * @param int $module
+     * @param int $semaine
      */
     public function findEdtModule($module, $semaine): array
     {
@@ -90,10 +84,8 @@ class EdtPlanningRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param integer $jour
-     * @param integer $semaine
-     *
-     * @return array
+     * @param int $jour
+     * @param int $semaine
      */
     public function findEdtJour($jour, $semaine): array
     {
@@ -107,10 +99,8 @@ class EdtPlanningRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param string  $salle
-     * @param integer $semaine
-     *
-     * @return array
+     * @param string $salle
+     * @param int    $semaine
      */
     public function findEdtSalle($salle, $semaine): array
     {
@@ -131,7 +121,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
         foreach ($user->getGroupes() as $groupe) {
             if ($groupe->getTypeGroupe()->isTD()) {
                 $this->groupetd = $groupe->getOrdre();
-            } else if ($groupe->getTypegroupe()->isTP()) {
+            } elseif ($groupe->getTypegroupe()->isTP()) {
                 $this->groupetp = $groupe->getOrdre();
             }
         }
@@ -140,8 +130,6 @@ class EdtPlanningRepository extends ServiceEntityRepository
     /**
      * @param $semaine
      * @param $jour
-     *
-     * @return array
      */
     public function findEdtSalleJour($semaine, $jour): array
     {
@@ -150,7 +138,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
             ->andWhere('p.jour = :jour')
             ->setParameters([
                 'semaine' => $semaine,
-                'jour'    => $jour
+                'jour'    => $jour,
             ])
             ->orderBy('p.debut')
             ->getQuery()
@@ -158,14 +146,13 @@ class EdtPlanningRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Etudiant $user
-     * @param integer  $semaine
+     * @param int $semaine
      *
      * @return array
      */
     public function findEdtEtu(Etudiant $user, $semaine): ?array
     {
-        if ($user->getSemestre() !== null) {
+        if (null !== $user->getSemestre()) {
             $this->groupes($user);
 
             return $this->createQueryBuilder('p')
@@ -184,15 +171,11 @@ class EdtPlanningRepository extends ServiceEntityRepository
         }
 
         return null;
-
     }
 
     /**
-     * @param integer  $numSemaine
-     * @param Semestre $semestre
-     * @param integer  $jour
-     *
-     * @return array
+     * @param int $numSemaine
+     * @param int $jour
      */
     public function recupereEDTBornes($numSemaine, Semestre $semestre, $jour): array
     {
@@ -203,7 +186,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
             10 => ['12h30', '14h00'],
             13 => ['14h00', '15h30'],
             16 => ['15h30', '17h00'],
-            19 => ['17h00', '18h30']
+            19 => ['17h00', '18h30'],
         ];
 
         $nbgroupetp = $semestre->getNbgroupeTpEdt();
@@ -229,7 +212,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
 
         $planning = [];
 
-        /** @var  EdtPlanning $row */
+        /** @var EdtPlanning $row */
         foreach ($query as $row) {
             $casedebut = $row->getDebut();
             $casefin = $row->getFin();
@@ -237,23 +220,23 @@ class EdtPlanningRepository extends ServiceEntityRepository
             $groupe = $row->getGroupe();
             $type = $row->getType();
             $max = 20;
-            if ($type === 'tp' || $type === 'TP') {
+            if ('tp' === $type || 'TP' === $type) {
                 $max = 6;
             }
 
-            if ($row->getIntervenant() !== null) {
+            if (null !== $row->getIntervenant()) {
                 $prof = mb_substr($row->getIntervenant()->getNom(), 0, $max);
             } else {
                 $prof = '';
             }
 
-            if ($row->getMatiere() === null) {
+            if (null === $row->getMatiere()) {
                 $refmatiere = $row->getTexte();
             } else {
                 $refmatiere = $row->getMatiere()->getCodeMatiere();
             }
 
-            if (array_key_exists($casedebut, $creneaux) && $duree % 3 === 0) {
+            if (\array_key_exists($casedebut, $creneaux) && 0 === $duree % 3) {
                 $planning[$casedebut][$groupe]['prof'] = $prof;
                 $planning[$casedebut][$groupe]['module'] = $refmatiere;
                 $planning[$casedebut][$groupe]['salle'] = mb_substr($row->getSalle(), 0, $max);
@@ -264,40 +247,40 @@ class EdtPlanningRepository extends ServiceEntityRepository
                 $planning[$casedebut][$groupe]['texte'] = $row->getTexte();
                 $planning[$casedebut][$groupe]['format'] = 'ok';
 
-                if (strtoupper($type) === 'TD') {
+                if ('TD' === mb_strtoupper($type)) {
                     $planning[$casedebut][$groupe + 1]['module'] = 'xt';
                 }
 
-                if (strtoupper($type) === 'CM') {
-                    for ($gr = 1; $gr < $nbgroupetp; $gr++) {
+                if ('CM' === mb_strtoupper($type)) {
+                    for ($gr = 1; $gr < $nbgroupetp; ++$gr) {
                         $planning[$casedebut][$groupe + $gr]['module'] = 'xt';
                     }
                 }
 
                 $planning[$casedebut][$groupe]['module'] = $refmatiere; //création du premier créneaux
 
-                if ($duree % 3 === 0) {
-                    for ($i = 1; $i < $duree / 3; $i++) {
+                if (0 === $duree % 3) {
+                    for ($i = 1; $i < $duree / 3; ++$i) {
                         $planning[$casedebut + ($i * 3)] = $planning[$casedebut];
                     }
                 }
             } else {
                 //pas sur un créneau classique pour le début
-                if (!array_key_exists($casedebut, $creneaux)) {
+                if (!\array_key_exists($casedebut, $creneaux)) {
                     $casedebut -= ($duree % 3);
                 }
 
-                if ($casedebut === 11 || $casedebut === 12) {
+                if (11 === $casedebut || 12 === $casedebut) {
                     $casedebut = 10;
                 }
 
-                if ($casedebut === 2 || $casedebut === 3) {
+                if (2 === $casedebut || 3 === $casedebut) {
                     $casedebut = 1;
                 }
 
                 $planning[$casedebut][$groupe]['prof'] = $prof;
                 $planning[$casedebut][$groupe]['module'] = $refmatiere;
-                $planning[$casedebut][$groupe]['salle'] = substr($row->getSalle(), 0, $max);
+                $planning[$casedebut][$groupe]['salle'] = mb_substr($row->getSalle(), 0, $max);
                 $planning[$casedebut][$groupe]['type'] = $type;
                 $planning[$casedebut][$groupe]['typebloc'] = $typebloc;
                 $planning[$casedebut][$groupe]['duree'] = $duree;
@@ -307,12 +290,12 @@ class EdtPlanningRepository extends ServiceEntityRepository
                 $planning[$casedebut][$groupe]['debut'] = $row->getDebut();
                 $planning[$casedebut][$groupe]['fin'] = $casefin;
 
-                if (strtoupper($type) === 'TD') {
+                if ('TD' === mb_strtoupper($type)) {
                     $planning[$casedebut][$groupe + 1]['module'] = 'xt';
                 }
 
-                if (strtoupper($type) === 'CM') {
-                    for ($gr = 1; $gr < $nbgroupetp; $gr++) {
+                if ('CM' === mb_strtoupper($type)) {
+                    for ($gr = 1; $gr < $nbgroupetp; ++$gr) {
                         $planning[$casedebut][$groupe + $gr]['module'] = 'xt';
                     }
                 }
@@ -363,7 +346,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
         $t = [];
         /** @var EdtPlanning $event */
         foreach ($data as $event) {
-            if (($event->getType() === TypeGroupe::TYPE_GROUPE_CM) || ($event->getType() === TypeGroupe::TYPE_GROUPE_TD && $event->getGroupe() === $this->groupetd) || ($event->getType() === TypeGroupe::TYPE_GROUPE_TP && $event->getGroupe() === $this->groupetp)) {
+            if ((TypeGroupe::TYPE_GROUPE_CM === $event->getType()) || (TypeGroupe::TYPE_GROUPE_TD === $event->getType() && $event->getGroupe() === $this->groupetd) || (TypeGroupe::TYPE_GROUPE_TP === $event->getType() && $event->getGroupe() === $this->groupetp)) {
                 $pl = [];
                 $pl['id'] = $event->getId();
                 $pl['semaine'] = $event->getSemaine();
@@ -389,11 +372,10 @@ class EdtPlanningRepository extends ServiceEntityRepository
             foreach ($diplome->getSemestres() as $semestre) {
                 $quer = $quer->orWhere('p.semestre = :anne' . $i)
                     ->setParameter('anne' . $i, $semestre->getId());
-                $i++;
+                ++$i;
             }
         }
 
         return $quer->getQuery()->getResult();
     }
-
 }

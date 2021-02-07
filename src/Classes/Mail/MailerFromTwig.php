@@ -1,9 +1,15 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Mail/MailerFromTwig.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 12/12/2020 14:31
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Mail/MailerFromTwig.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:10
+ */
+
+/*
+ * Pull your hearder here, for exemple, Licence header.
+ */
 
 namespace App\Classes\Mail;
 
@@ -13,10 +19,8 @@ use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-
 /**
- * Class MailerFromTwig
- * @package App\Classes\Mail
+ * Class MailerFromTwig.
  */
 class MailerFromTwig extends BaseMailer
 {
@@ -24,10 +28,6 @@ class MailerFromTwig extends BaseMailer
 
     /**
      * MailerFromTwig constructor.
-     *
-     * @param MailerInterface     $mailer
-     * @param TranslatorInterface $translator
-     * @param Configuration       $configuration
      */
     public function __construct(
         MailerInterface $mailer,
@@ -37,7 +37,6 @@ class MailerFromTwig extends BaseMailer
         parent::__construct($mailer, $translator, $configuration);
     }
 
-
     public function initEmail(): void
     {
         $this->mail = new TemplatedEmail();
@@ -46,24 +45,20 @@ class MailerFromTwig extends BaseMailer
     /**
      * @param $template
      * @param $data
-     *
      */
     public function setTemplate($template, $data): void
     {
-        if (strpos($template, 'html') === false) {
+        if (false === mb_strpos($template, 'html')) {
             $this->mail->textTemplate($template)
                 ->context($data);
         } else {
             $this->mail->htmlTemplate($template)
                 ->context($data);
         }
-
     }
 
     /**
-     * @param array $to
-     * @param       $subject
-     * @param array $options
+     * @param $subject
      *
      * @throws TransportExceptionInterface
      */

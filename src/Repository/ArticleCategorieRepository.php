@@ -1,17 +1,19 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/ArticleCategorieRepository.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 05/07/2020 08:13
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/ArticleCategorieRepository.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Repository;
 
 use App\Entity\ArticleCategorie;
 use App\Entity\Departement;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method ArticleCategorie|null find($id, $lockMode = null, $lockVersion = null)
@@ -40,9 +42,11 @@ class ArticleCategorieRepository extends ServiceEntityRepository
         $t = [];
         /** @var ArticleCategorie $d */
         foreach ($data as $d) {
-            $t[] = ['libelle' => $d->getLibelle(),
-                'id' => $d->getId(),
-                'nbArticles' => count($d->getArticles())];
+            $t[] = [
+                'libelle'    => $d->getLibelle(),
+                'id'         => $d->getId(),
+                'nbArticles' => \count($d->getArticles()),
+            ];
         }
 
         return $t;
