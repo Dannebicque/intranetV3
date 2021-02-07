@@ -4,11 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Command/UpdateDateEdtCommand.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:26
- */
-
-/*
- * Pull your hearder here, for exemple, Licence header.
+ * @lastUpdate 07/02/2021 14:04
  */
 
 namespace App\Command;
