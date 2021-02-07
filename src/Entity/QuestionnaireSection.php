@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/QuestionnaireSection.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 07/01/2021 13:40
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/QuestionnaireSection.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:49
+ */
 
 namespace App\Entity;
 
@@ -56,7 +58,6 @@ class QuestionnaireSection extends BaseEntity
         $this->qualiteSectionQuestions = new ArrayCollection();
         $this->qualiteQuestionnaireSections = new ArrayCollection();
     }
-
 
     public function getTitre(): ?string
     {

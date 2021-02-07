@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Emprunt.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 13/10/2020 06:34
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Emprunt.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Entity;
 
@@ -25,6 +27,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  */
 abstract class Emprunt extends BaseEntity
 {
+    use UuidTrait;
     public const DEMANDE = 'DEMANDE';
     public const ACCEPTE = 'ACCEPTE';
     public const SORTIE = 'SORTIE';
@@ -32,12 +35,10 @@ abstract class Emprunt extends BaseEntity
     public const REVENU = 'REVENU';
 
     public const ETATS = [
-        Emprunt::DEMANDE => 'Demandes A valider',
-        Emprunt::ACCEPTE => 'Demandes acceptées',
-        Emprunt::SORTIE  => 'Matériel sorti',
+        self::DEMANDE => 'Demandes A valider',
+        self::ACCEPTE => 'Demandes acceptées',
+        self::SORTIE  => 'Matériel sorti',
     ];
-
-    use UuidTrait;
 
     /**
      * @ORM\Column(type="datetime")
@@ -93,6 +94,7 @@ abstract class Emprunt extends BaseEntity
 
     /**
      * Emprunt constructor.
+     *
      * @throws Exception
      */
     public function __construct()
@@ -102,12 +104,10 @@ abstract class Emprunt extends BaseEntity
         $this->setEtat(self::DEMANDE);
     }
 
-
     public function __clone()
     {
         $this->setUuid(Uuid::uuid4());
     }
-
 
     public function getDateDebut(): ?DateTimeInterface
     {
@@ -250,7 +250,7 @@ abstract class Emprunt extends BaseEntity
 
     public function getResponsable()
     {
-        if ($this->getDepartement() !== null) {
+        if (null !== $this->getDepartement()) {
             return $this->getDepartement()->getRespMateriel();
         }
 

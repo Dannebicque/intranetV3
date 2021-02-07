@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Form/QualiteQuestionnaireType.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 09/12/2020 15:53
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/QualiteQuestionnaireType.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Form;
 
@@ -27,7 +29,7 @@ class QualiteQuestionnaireType extends AbstractType
                 'help'         => 'help.semestre.enquete',
                 'class'        => Semestre::class,
                 'choice_label' => 'display',
-                'attr'         => ['class' => 'selectpicker']
+                'attr'         => ['class' => 'selectpicker'],
             ])
             ->add('libelle', TextType::class, ['label' => 'label.libelle', 'help' => 'help.libelle.enquete'])
             ->add('titre', TextType::class, ['label' => 'label.titre', 'help' => 'help.titre.enquete'])
@@ -40,7 +42,7 @@ class QualiteQuestionnaireType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class'         => QuestionnaireQualite::class,
-            'translation_domain' => 'form'
+            'translation_domain' => 'form',
         ]);
     }
 }

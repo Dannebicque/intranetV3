@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/StatistiqueController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 16/08/2020 09:48
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/StatistiqueController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller\administration;
 
@@ -14,18 +16,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class StatistiqueController
- * @package App\Controller\administration
+ * Class StatistiqueController.
+ *
  * @Route("/administration/statistique")
  */
 class StatistiqueController extends BaseController
 {
     /**
      * @Route("/", name="administration_statistique_index")
-     * @param BacRepository $bacRepository
-     * @param StatsSemestre $statsSemestre
-     *
-     * @return Response
      */
     public function index(BacRepository $bacRepository, StatsSemestre $statsSemestre): Response
     {
@@ -37,7 +35,7 @@ class StatistiqueController extends BaseController
 
         return $this->render('administration/statistique/index.html.twig', [
             'statistiques' => $tabSemestres,
-            'bacs'         => $bacs
+            'bacs'         => $bacs,
         ]);
     }
 }

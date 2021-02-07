@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/CovidAttestationPersonnelController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 31/01/2021 15:14
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/CovidAttestationPersonnelController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller\appPersonnel;
 
@@ -29,9 +31,6 @@ class CovidAttestationPersonnelController extends BaseController
 {
     /**
      * @Route("/", name="covid_attestation_personnel_index", methods={"GET"})
-     * @param CovidAttestationPersonnelRepository $covidAttestationPersonnelRepository
-     *
-     * @return Response
      */
     public function index(CovidAttestationPersonnelRepository $covidAttestationPersonnelRepository): Response
     {
@@ -42,11 +41,6 @@ class CovidAttestationPersonnelController extends BaseController
 
     /**
      * @Route("/new", name="covid_attestation_personnel_new", methods={"GET","POST"})
-     * @param Request                  $request
-     *
-     * @param EventDispatcherInterface $eventDispatcher
-     *
-     * @return Response
      */
     public function new(Request $request, EventDispatcherInterface $eventDispatcher): Response
     {
@@ -55,8 +49,8 @@ class CovidAttestationPersonnelController extends BaseController
             [
                 'departement' => $this->getDepartement(),
                 'attr'        => [
-                    'data-provide' => 'validation'
-                ]
+                    'data-provide' => 'validation',
+                ],
             ]);
         $form->handleRequest($request);
 
@@ -78,9 +72,6 @@ class CovidAttestationPersonnelController extends BaseController
 
     /**
      * @Route("/{id}", name="covid_attestation_personnel_show", methods={"GET"})
-     * @param CovidAttestationPersonnel $covidAttestationPersonnel
-     *
-     * @return Response
      */
     public function show(CovidAttestationPersonnel $covidAttestationPersonnel): Response
     {
@@ -95,10 +86,7 @@ class CovidAttestationPersonnelController extends BaseController
 
     /**
      * @Route("/{id}/pdf", name="covid_attestation_personnel_pdf", methods={"GET"})
-     * @param MyExportPresence          $myExportPresence
-     * @param CovidAttestationPersonnel $covidAttestationPersonnel
      *
-     * @return Response
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -106,7 +94,7 @@ class CovidAttestationPersonnelController extends BaseController
     public function pdf(
         MyExportPresence $myExportPresence,
         CovidAttestationPersonnel $covidAttestationPersonnel
-    ) {
+    ): Response {
         if ($covidAttestationPersonnel->getPersonnel()->getId() === $this->getConnectedUser()->getId()) {
             return $myExportPresence->genereAttestationPdf($covidAttestationPersonnel, 'force');
         }
@@ -116,11 +104,6 @@ class CovidAttestationPersonnelController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="covid_attestation_personnel_edit", methods={"GET","POST"})
-     * @param Request                   $request
-     * @param EventDispatcherInterface  $eventDispatcher
-     * @param CovidAttestationPersonnel $covidAttestationPersonnel
-     *
-     * @return Response
      */
     public function edit(
         Request $request,
@@ -131,8 +114,8 @@ class CovidAttestationPersonnelController extends BaseController
             $form = $this->createForm(CovidAttestationPersonnelType::class, $covidAttestationPersonnel, [
                 'departement' => $this->getDepartement(),
                 'attr'        => [
-                    'data-provide' => 'validation'
-                ]
+                    'data-provide' => 'validation',
+                ],
             ]);
             $form->handleRequest($request);
 
@@ -158,10 +141,6 @@ class CovidAttestationPersonnelController extends BaseController
 
     /**
      * @Route("/{id}", name="covid_attestation_personnel_delete", methods="DELETE")
-     * @param Request                   $request
-     * @param CovidAttestationPersonnel $covidAttestationPersonnel
-     *
-     * @return Response
      */
     public function delete(Request $request, CovidAttestationPersonnel $covidAttestationPersonnel): Response
     {
@@ -184,14 +163,10 @@ class CovidAttestationPersonnelController extends BaseController
 
     /**
      * @Route("/{id}/duplicate", name="covid_attestation_personnel_duplicate", methods="GET|POST")
-     * @param CovidAttestationPersonnel $covidAttestationPersonnel
-     *
-     * @return Response
      */
     public function duplicate(CovidAttestationPersonnel $covidAttestationPersonnel): Response
     {
         if ($covidAttestationPersonnel->getPersonnel()->getId() === $this->getConnectedUser()->getId()) {
-
             $newCovidAttestationPersonnel = clone $covidAttestationPersonnel;
 
             $this->entityManager->persist($newCovidAttestationPersonnel);
@@ -204,5 +179,4 @@ class CovidAttestationPersonnelController extends BaseController
 
         return $this->redirectToRoute('erreur_666');
     }
-
 }

@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/structure/DepartementController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/structure/DepartementController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller\administration\structure;
 
@@ -22,9 +24,6 @@ class DepartementController extends BaseController
 {
     /**
      * @Route("/{id}", name="administration_departement_show", methods="GET")
-     * @param Departement $departement
-     *
-     * @return Response
      */
     public function show(Departement $departement): Response
     {
@@ -33,24 +32,21 @@ class DepartementController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_departement_edit", methods="GET|POST")
-     * @param Request     $request
-     * @param Departement $departement
      *
-     * @return Response
      * @throws LogicException
      */
     public function delete(Request $request, Departement $departement): Response
     {
         $id = $departement->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token')) &&
-            count($departement->getDiplomes()) === 0 &&
-            count($departement->getHrs()) === 0 &&
-            count($departement->getEtudiants()) === 0 &&
-            count($departement->getPersonnelDepartements()) === 0 &&
-            count($departement->getArticleCategories()) === 0 &&
-            count($departement->getTypeDocuments()) === 0 &&
-            count($departement->getCreneauCours()) === 0 &&
-            count($departement->getActualites()) === 0) {
+            0 === \count($departement->getDiplomes()) &&
+            0 === \count($departement->getHrs()) &&
+            0 === \count($departement->getEtudiants()) &&
+            0 === \count($departement->getPersonnelDepartements()) &&
+            0 === \count($departement->getArticleCategories()) &&
+            0 === \count($departement->getTypeDocuments()) &&
+            0 === \count($departement->getCreneauCours()) &&
+            0 === \count($departement->getActualites())) {
             $this->entityManager->remove($departement);
             $this->entityManager->flush();
             $this->addFlashBag(

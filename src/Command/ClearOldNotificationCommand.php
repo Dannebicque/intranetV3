@@ -1,9 +1,15 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Command/ClearOldNotificationCommand.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 12/12/2020 14:31
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Command/ClearOldNotificationCommand.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:26
+ */
+
+/*
+ * Pull your hearder here, for exemple, Licence header.
+ */
 
 namespace App\Command;
 
@@ -22,8 +28,6 @@ class ClearOldNotificationCommand extends Command
 
     /**
      * ClearOldNotificationCommand constructor.
-     *
-     * @param NotificationRepository $notificationRepository
      */
     public function __construct(NotificationRepository $notificationRepository)
     {
@@ -32,17 +36,12 @@ class ClearOldNotificationCommand extends Command
         parent::__construct();
     }
 
-
     protected function configure()
     {
         $this->setDescription('Add a short description for your command');
     }
 
     /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     *
-     * @return int
      * @throws Exception
      */
     protected function execute(InputInterface $input, OutputInterface $output): int

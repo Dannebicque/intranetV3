@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/ProjetPeriodeRepository.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 18/09/2020 08:45
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/ProjetPeriodeRepository.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:08
+ */
 
 namespace App\Repository;
 
@@ -30,11 +32,6 @@ class ProjetPeriodeRepository extends ServiceEntityRepository
         parent::__construct($registry, ProjetPeriode::class);
     }
 
-    /**
-     * @param Departement $departement
-     *
-     * @return mixed
-     */
     public function findByDepartement(Departement $departement)
     {
         $query = $this->createQueryBuilder('p')
@@ -49,27 +46,14 @@ class ProjetPeriodeRepository extends ServiceEntityRepository
         return $query->getQuery()->getResult();
     }
 
-    /**
-     * @param Diplome            $diplome
-     * @param AnneeUniversitaire $anneeUniversitaire
-     *
-     * @return mixed
-     */
     public function findByDiplome(Diplome $diplome, AnneeUniversitaire $anneeUniversitaire)
     {
         return $this->findByDiplomeBuilder($diplome, $anneeUniversitaire)->getQuery()
             ->getResult();
     }
 
-    /**
-     * @param Diplome            $diplome
-     * @param AnneeUniversitaire $anneeUniversitaire
-     *
-     * @return QueryBuilder
-     */
     public function findByDiplomeBuilder(Diplome $diplome, AnneeUniversitaire $anneeUniversitaire): QueryBuilder
     {
-
         return $this->createQueryBuilder('p')
             ->innerJoin(Semestre::class, 's', 'WITH', 'p.semestre = s.id')
             ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')

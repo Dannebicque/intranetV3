@@ -1,12 +1,13 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/SynchroIcalController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 12/12/2020 14:31
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/SynchroIcalController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller;
-
 
 use App\Classes\Edt\MyEdtExport;
 use App\Repository\EtudiantRepository;
@@ -18,20 +19,18 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class EdtController
- * @package App\Controller
+ * Class EdtController.
+ *
  * @Route("/api/synchronisation/ical")
  */
 class SynchroIcalController extends AbstractController
 {
     /**
      * @Route("/intervenant/{code}.{_format}", name="edt_intervenant_synchro_ical")
-     * @param MyEdtExport         $myEdtExport
-     * @param PersonnelRepository $personnelRepository
-     * @param                     $code
-     * @param                     $_format
      *
-     * @return Response
+     * @param $code
+     * @param $_format
+     *
      * @throws NonUniqueResultException
      */
     public function synchroIntervenantIcal(
@@ -40,31 +39,27 @@ class SynchroIcalController extends AbstractController
         $code,
         $_format
     ): Response {
-
         //Toutes les semaines
         $personnel = $personnelRepository->findByCode($code);
-        if ($personnel !== null) {
+        if (null !== $personnel) {
             $ical = $myEdtExport->export($personnel, $_format, 'Personnel');
             $timestamp = new DateTime('now');
 
             return new Response($ical, 200, [
                 'Content-Type'        => 'text/calendar; charset=utf-8',
-                'Content-Disposition' => 'inline; filename="ical' . $timestamp->format('YmdHis') . '.ics"'
+                'Content-Disposition' => 'inline; filename="ical' . $timestamp->format('YmdHis') . '.ics"',
             ]);
         }
 
         return new Response(null, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-
     /**
      * @Route("/etudiant/{code}.{_format}", name="edt_etudiant_synchro_ical")
-     * @param MyEdtExport        $myEdtExport
-     * @param EtudiantRepository $etudiantRepository
-     * @param                    $code
-     * @param                    $_format
      *
-     * @return Response
+     * @param $code
+     * @param $_format
+     *
      * @throws NonUniqueResultException
      */
     public function synchroEtudiantIcal(
@@ -74,13 +69,13 @@ class SynchroIcalController extends AbstractController
         $_format
     ): Response {
         $etudiant = $etudiantRepository->findByCode($code);
-        if ($etudiant !== null) {
+        if (null !== $etudiant) {
             $ical = $myEdtExport->export($etudiant, $_format, 'Etudiant');
             $timestamp = new DateTime('now');
 
             return new Response($ical, 200, [
                 'Content-Type'        => 'text/calendar; charset=utf-8',
-                'Content-Disposition' => 'inline; filename="ical' . $timestamp->format('YmdHis') . '.ics"'
+                'Content-Disposition' => 'inline; filename="ical' . $timestamp->format('YmdHis') . '.ics"',
             ]);
         }
 

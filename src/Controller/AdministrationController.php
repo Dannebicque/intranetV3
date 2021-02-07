@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/AdministrationController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 18/09/2020 08:29
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/AdministrationController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:36
+ */
 
 namespace App\Controller;
 
@@ -13,20 +15,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class AdministrationController
- * @package App\Controller
- * @Route("/administration")
+ * Class AdministrationController.
  *
+ * @Route("/administration")
  */
 class AdministrationController extends BaseController
 {
     /**
      * @Route("/", name="administration_index")
-     * @param StagePeriodeRepository  $stagePeriodeRepository
-     *
-     * @param ProjetPeriodeRepository $projetPeriodeRepository
-     *
-     * @return Response
      */
     public function index(
         StagePeriodeRepository $stagePeriodeRepository,
@@ -47,7 +43,6 @@ class AdministrationController extends BaseController
                 $projetPeriodes[] = $periode;
             }
         }
-
 
         return $this->render(
             'administration/index.html.twig',

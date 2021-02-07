@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Scolarite.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 24/01/2021 12:40
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Scolarite.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Entity;
 
@@ -92,10 +94,6 @@ class Scolarite extends BaseEntity
 
     /**
      * Scolarite constructor.
-     *
-     * @param Etudiant                $etudiant
-     * @param Semestre                $semestre
-     * @param AnneeUniversitaire|null $anneeUniversitaire
      */
     public function __construct(Etudiant $etudiant, Semestre $semestre, AnneeUniversitaire $anneeUniversitaire = null)
     {
@@ -105,23 +103,17 @@ class Scolarite extends BaseEntity
         $this->setAnneeUniversitaire($anneeUniversitaire);
     }
 
-
     public function __clone()
     {
         $this->setUuid(Uuid::uuid4());
     }
 
-    /**
-     * @return int|null
-     */
     public function getOrdre(): ?int
     {
         return $this->ordre;
     }
 
     /**
-     * @param int $ordre
-     *
      * @return Scolarite
      */
     public function setOrdre(int $ordre): self
@@ -131,17 +123,12 @@ class Scolarite extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return Semestre|null
-     */
     public function getSemestre(): ?Semestre
     {
         return $this->semestre;
     }
 
     /**
-     * @param Semestre|null $semestre
-     *
      * @return Scolarite
      */
     public function setSemestre(?Semestre $semestre): self
@@ -151,17 +138,12 @@ class Scolarite extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
     public function getDecision(): ?string
     {
         return $this->decision;
     }
 
     /**
-     * @param string $decision
-     *
      * @return Scolarite
      */
     public function setDecision(string $decision): self
@@ -171,17 +153,12 @@ class Scolarite extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
     public function getProposition(): ?string
     {
         return $this->proposition;
     }
 
     /**
-     * @param string $proposition
-     *
      * @return Scolarite
      */
     public function setProposition(string $proposition): self
@@ -191,17 +168,12 @@ class Scolarite extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return float|null
-     */
     public function getMoyenne(): ?float
     {
         return $this->moyenne;
     }
 
     /**
-     * @param float $moyenne
-     *
      * @return Scolarite
      */
     public function setMoyenne(float $moyenne): self
@@ -211,17 +183,12 @@ class Scolarite extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return Etudiant|null
-     */
     public function getEtudiant(): ?Etudiant
     {
         return $this->etudiant;
     }
 
     /**
-     * @param Etudiant|null $etudiant
-     *
      * @return Scolarite
      */
     public function setEtudiant(?Etudiant $etudiant): self
@@ -231,17 +198,12 @@ class Scolarite extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return int|null
-     */
     public function getNbAbsences(): ?int
     {
         return $this->nbAbsences;
     }
 
     /**
-     * @param int $nbAbsences
-     *
      * @return Scolarite
      */
     public function setNbAbsences(int $nbAbsences): self
@@ -251,17 +213,12 @@ class Scolarite extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
     public function getCommentaire(): ?string
     {
         return $this->commentaire;
     }
 
     /**
-     * @param string $commentaire
-     *
      * @return Scolarite
      */
     public function setCommentaire(string $commentaire): self
@@ -270,7 +227,6 @@ class Scolarite extends BaseEntity
 
         return $this;
     }
-
 
     public function getAnneeUniversitaire(): ?AnneeUniversitaire
     {
@@ -341,7 +297,7 @@ class Scolarite extends BaseEntity
 
     public function getMoyennesUesById($ue): ?array
     {
-        return array_key_exists($ue, $this->moyennesUes) ? $this->moyennesUes[$ue] : [];
+        return \array_key_exists($ue, $this->moyennesUes) ? $this->moyennesUes[$ue] : [];
     }
 
     public function getRang(): ?int
@@ -358,7 +314,6 @@ class Scolarite extends BaseEntity
 
     public function getStyle($note)
     {
-
         if ($note < 8) {
             return 'badge badge-danger';
         }
@@ -368,22 +323,21 @@ class Scolarite extends BaseEntity
         }
 
         return 'notenormale';
-
     }
 
     public function getMoyennesUeSousComm($idUe)
     {
         $ue = $this->getMoyennesUesById($idUe);
-        if ($ue !== []) {
+        if ([] !== $ue) {
             return [
                 'style'   => $this->getStyle($ue['moyenne']),
-                'moyenne' => $ue['moyenne']
+                'moyenne' => $ue['moyenne'],
             ];
         }
 
         return [
             'style'   => 'notenormale',
-            'moyenne' => -0.01
+            'moyenne' => -0.01,
         ];
     }
 }

@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/CovidAttestationEtudiantController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 12/11/2020 09:46
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/CovidAttestationEtudiantController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:36
+ */
 
 namespace App\Controller\superAdministration;
 
@@ -21,9 +23,6 @@ class CovidAttestationEtudiantController extends BaseController
 {
     /**
      * @Route("/", name="covid_attestation_etudiant_index", methods={"GET"})
-     * @param CovidAttestationEtudiantRepository $covidAttestationEtudiantRepository
-     *
-     * @return Response
      */
     public function index(CovidAttestationEtudiantRepository $covidAttestationEtudiantRepository): Response
     {
@@ -34,11 +33,6 @@ class CovidAttestationEtudiantController extends BaseController
 
     /**
      * @Route("/export.xlsx", name="covid_attestation_etudiant_export", methods="GET")
-     *
-     * @param MyExportPresence                   $myExport
-     * @param CovidAttestationEtudiantRepository $covidAttestationEtudiantRepository
-     *
-     * @return Response
      */
     public function export(
         MyExportPresence $myExport,
@@ -47,14 +41,10 @@ class CovidAttestationEtudiantController extends BaseController
         $presences = $covidAttestationEtudiantRepository->findAll();
 
         return $myExport->genereFichierEtudiant($presences);
-
     }
 
     /**
      * @Route("/{id}", name="covid_attestation_etudiant_show", methods={"GET"})
-     * @param CovidAttestationEtudiant $covidAttestationEtudiant
-     *
-     * @return Response
      */
     public function show(CovidAttestationEtudiant $covidAttestationEtudiant): Response
     {
@@ -62,6 +52,4 @@ class CovidAttestationEtudiantController extends BaseController
             'covid_attestation_etudiant' => $covidAttestationEtudiant,
         ]);
     }
-
-
 }

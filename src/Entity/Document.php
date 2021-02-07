@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Document.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 13/10/2020 06:34
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Document.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Entity;
 
@@ -101,6 +103,7 @@ class Document extends BaseEntity
 
     /**
      * Document constructor.
+     *
      * @throws Exception
      */
     public function __construct()
@@ -114,17 +117,12 @@ class Document extends BaseEntity
         $this->setUuid(Uuid::uuid4());
     }
 
-    /**
-     * @return float|null
-     */
     public function getTaille(): ?float
     {
         return $this->taille;
     }
 
     /**
-     * @param float|null $taille
-     *
      * @return Document
      */
     public function setTaille(?float $taille = 0.0): self
@@ -134,17 +132,12 @@ class Document extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
     public function getTypeFichier(): ?string
     {
         return $this->typeFichier;
     }
 
     /**
-     * @param string|null $typeFichier
-     *
      * @return Document
      */
     public function setTypeFichier(?string $typeFichier): self
@@ -163,8 +156,6 @@ class Document extends BaseEntity
     }
 
     /**
-     * @param TypeDocument $typeDocument
-     *
      * @return Document
      */
     public function setTypeDocument(TypeDocument $typeDocument): self
@@ -183,8 +174,6 @@ class Document extends BaseEntity
     }
 
     /**
-     * @param string $description
-     *
      * @return Document
      */
     public function setDescription(string $description): self
@@ -203,8 +192,6 @@ class Document extends BaseEntity
     }
 
     /**
-     * @param mixed $libelle
-     *
      * @return Document
      */
     public function setLibelle($libelle): self
@@ -214,10 +201,7 @@ class Document extends BaseEntity
         return $this;
     }
 
-
     /**
-     * @param File|null $documentFile
-     *
      * @throws Exception
      */
     public function setDocumentFile(?File $documentFile = null): void
@@ -231,9 +215,6 @@ class Document extends BaseEntity
         }
     }
 
-    /**
-     * @return null|File
-     */
     public function getDocumentFile(): ?File
     {
         return $this->documentFile;
@@ -247,9 +228,6 @@ class Document extends BaseEntity
         return $this->documentName;
     }
 
-    /**
-     * @param string|null $documentName
-     */
     public function setDocumentName(?string $documentName): void
     {
         $this->documentName = $documentName;
@@ -264,8 +242,6 @@ class Document extends BaseEntity
     }
 
     /**
-     * @param Semestre $semestre
-     *
      * @return Document
      */
     public function addSemestre(Semestre $semestre): self
@@ -278,8 +254,6 @@ class Document extends BaseEntity
     }
 
     /**
-     * @param Semestre $semestre
-     *
      * @return Document
      */
     public function removeSemestre(Semestre $semestre): self
@@ -303,7 +277,7 @@ class Document extends BaseEntity
         return $this;
     }
 
-    public function duplicate(Document $document)
+    public function duplicate(self $document)
     {
         $this->setLibelle($document->getLibelle());
         $this->setDescription($document->getDescription());

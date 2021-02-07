@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/BaseController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 11/12/2020 11:43
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/BaseController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:36
+ */
 
 namespace App\Controller;
 
@@ -15,8 +17,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
- * Class BaseController
- * @package App\Controller
+ * Class BaseController.
  */
 class BaseController extends AbstractController
 {
@@ -27,8 +28,6 @@ class BaseController extends AbstractController
     protected TranslatorInterface $translator;
 
     /**
-     * @param DataUserSession $dataUserSession
-     *
      * @required
      */
     public function setDataUserSession(DataUserSession $dataUserSession): void
@@ -37,8 +36,6 @@ class BaseController extends AbstractController
     }
 
     /**
-     * @param EntityManagerInterface $entityManager
-     *
      * @required
      */
     public function setEntityManager(EntityManagerInterface $entityManager): void
@@ -47,8 +44,6 @@ class BaseController extends AbstractController
     }
 
     /**
-     * @param TranslatorInterface $translator
-     *
      * @required
      */
     public function setTranslator(TranslatorInterface $translator): void
@@ -80,14 +75,14 @@ class BaseController extends AbstractController
     {
         $this->denyAccessUnlessGranted('ROLE_ETUDIANT');
 
-        return $this->getUser() !== null ? $this->getUser()->getAnneeUniversitaire() : null;
+        return null !== $this->getUser() ? $this->getUser()->getAnneeUniversitaire() : null;
     }
 
     public function getEtudiantSemestre()
     {
         $this->denyAccessUnlessGranted('ROLE_ETUDIANT');
 
-        return $this->getUser() !== null ? $this->getUser()->getSemestre() : null;
+        return null !== $this->getUser() ? $this->getUser()->getSemestre() : null;
     }
 
     public function getDepartement()
@@ -95,20 +90,13 @@ class BaseController extends AbstractController
         return $this->dataUserSession->getDepartement();
     }
 
-    /**
-     * @return DataUserSession
-     */
     public function getDataUserSession(): DataUserSession
     {
         return $this->dataUserSession;
     }
 
-    /**
-     * @return EntityManagerInterface
-     */
     public function getEntityManager(): EntityManagerInterface
     {
         return $this->entityManager;
     }
 }
-

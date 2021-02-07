@@ -1,12 +1,13 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/StatistiquesSemestre.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 16/08/2020 09:43
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/StatistiquesSemestre.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:41
+ */
 
 namespace App\DTO;
-
 
 class StatistiquesSemestre
 {
@@ -20,12 +21,12 @@ class StatistiquesSemestre
 
     public function hommePourcentage(): float
     {
-        return $this->effectif !== 0 ? $this->hommes / ($this->effectif) * 100 : 0;
+        return 0 !== $this->effectif ? $this->hommes / ($this->effectif) * 100 : 0;
     }
 
     public function femmePourcentage(): float
     {
-        return $this->effectif !== 0 ? $this->femmes / ($this->effectif) * 100 : 0;
+        return 0 !== $this->effectif ? $this->femmes / ($this->effectif) * 100 : 0;
     }
 
     public function addBac($idBac)

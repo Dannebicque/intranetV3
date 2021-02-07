@@ -1,15 +1,14 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Excel/MyExcelWriter.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 12/12/2020 14:42
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Excel/MyExcelWriter.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
-/**
- * Created by PhpStorm.
- * User: davidannebicque
- * Date: 15/07/2018
- * Time: 15:37
+/*
+ * Pull your hearder here, for exemple, Licence header.
  */
 
 namespace App\Classes\Excel;
@@ -23,7 +22,6 @@ use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use function is_array;
 
 class MyExcelWriter
 {
@@ -39,8 +37,6 @@ class MyExcelWriter
     /**
      * MyExcelWriter constructor.
      *
-     * @param TranslatorInterface $translator
-     *
      * @throws Exception
      */
     public function __construct(TranslatorInterface $translator)
@@ -50,17 +46,11 @@ class MyExcelWriter
         $this->translator = $translator;
     }
 
-    /**
-     * @return Spreadsheet
-     */
     public function getSpreadsheet(): Spreadsheet
     {
         return $this->spreadsheet;
     }
 
-    /**
-     * @return Worksheet
-     */
     public function getSheet(): Worksheet
     {
         return $this->sheet;
@@ -68,7 +58,6 @@ class MyExcelWriter
 
     /**
      * @param $libelle
-     *
      */
     public function createSheet($libelle): void
     {
@@ -93,12 +82,12 @@ class MyExcelWriter
     public function writeHeader($array, $col = 1, $row = 1, $translate = true): void
     {
         foreach ($array as $value) {
-            if (!empty($value) && $value !== '#' && $translate === true) {
+            if (!empty($value) && '#' !== $value && true === $translate) {
                 $value = $this->translator->trans($value);
             }
 
             $this->writeCellXY($col, $row, $value);
-            $col++;
+            ++$col;
         }
     }
 
@@ -113,7 +102,7 @@ class MyExcelWriter
         $this->sheet->setCellValueByColumnAndRow($col, $row, $value);
         //traiter les options
         //style n'est pas un tableau
-        if (is_array($options) && $this->sheet->getCellByColumnAndRow($col,
+        if (\is_array($options) && $this->sheet->getCellByColumnAndRow($col,
                 $row)) {
             foreach ($options as $key => $valeur) {
                 switch ($key) {
@@ -152,7 +141,6 @@ class MyExcelWriter
                                 $this->sheet->getCellByColumnAndRow($col,
                                     $row)->getStyle()->getAlignment()->setVertical(Alignment::VERTICAL_BOTTOM);
                                 break;
-
                         }
                         break;
                     case 'number_format':
@@ -160,8 +148,8 @@ class MyExcelWriter
                             $row)->getStyle()->getNumberFormat()->setFormatCode($valeur);
                         break;
                     case 'color':
-                        if (strpos($valeur, '#') === 0) {
-                            $valeur = substr($valeur, 1, strlen($valeur));
+                        if (0 === mb_strpos($valeur, '#')) {
+                            $valeur = mb_substr($valeur, 1, mb_strlen($valeur));
                         }
 
                         $this->sheet->getCellByColumnAndRow($col,
@@ -185,16 +173,14 @@ class MyExcelWriter
     }
 
     /**
-     * @param       $adresse
-     * @param       $value
-     * @param array $options
-     *
+     * @param $adresse
+     * @param $value
      */
     public function writeCellName($adresse, $value, array $options = []): void
     {
         $this->sheet->setCellValue($adresse, $value);
 
-        if (is_array($options) && array_key_exists('style', $options)) {
+        if (\is_array($options) && \array_key_exists('style', $options)) {
             //style n'est pas un tableau
             switch ($options['style']) {
                 case 'HORIZONTAL_RIGHT':
@@ -209,7 +195,6 @@ class MyExcelWriter
                 case 'numerique3':
                     $this->sheet->getStyle($adresse)->getNumberFormat()->setFormatCode('#,##0.000');
                     break;
-
             }
         }
     }
@@ -218,7 +203,6 @@ class MyExcelWriter
      * @param $col
      * @param $lig
      * @param $couleur
-     *
      */
     public function colorCellRange($col, $lig, $couleur): void
     {
@@ -229,7 +213,6 @@ class MyExcelWriter
     /**
      * @param $cells
      * @param $couleur
-     *
      */
     public function colorCells($cells, $couleur): void
     {
@@ -264,8 +247,8 @@ class MyExcelWriter
     }
 
     /**
-     * @param integer $ligne
-     * @param integer $taille
+     * @param int $ligne
+     * @param int $taille
      */
     public function getRowDimension($ligne, $taille): void
     {
@@ -273,8 +256,8 @@ class MyExcelWriter
     }
 
     /**
-     * @param string  $col
-     * @param integer $taille
+     * @param string $col
+     * @param int    $taille
      */
     public function getColumnDimension($col, $taille): void
     {
@@ -319,18 +302,16 @@ class MyExcelWriter
     }
 
     /**
-     * @param       $col1
-     * @param       $lig1
-     * @param       $col2
-     * @param       $lig2
-     * @param array $array
-     *
+     * @param $col1
+     * @param $lig1
+     * @param $col2
+     * @param $lig2
      */
     public function borderBottomCellsRange($col1, $lig1, $col2, $lig2, array $array)
     {
         $color = $array['color'];
-        if (strpos($color, '#') === 0) {
-            $color = substr($color, 1, strlen($color));
+        if (0 === mb_strpos($color, '#')) {
+            $color = mb_substr($color, 1, mb_strlen($color));
         }
 
         $cell1 = Coordinate::stringFromColumnIndex($col1) . $lig1;
@@ -340,14 +321,14 @@ class MyExcelWriter
 
     /**
      * @param string[] $tEnTete
-     * @param integer  $colonne
-     * @param integer  $ligne
+     * @param int      $colonne
+     * @param int      $ligne
      */
     public function ecritLigne($tEnTete, $colonne, $ligne): void
     {
         foreach ($tEnTete as $t) {
             $this->writeCellXY($colonne, $ligne, $t);
-            $colonne++;
+            ++$colonne;
         }
     }
 

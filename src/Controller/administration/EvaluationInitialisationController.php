@@ -1,9 +1,12 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EvaluationInitialisationController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EvaluationInitialisationController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
 
 namespace App\Controller\administration;
 
@@ -19,8 +22,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class EvaluationInitialisationController
- * @package App\Controller\administration
+ * Class EvaluationInitialisationController.
+ *
  * @Route("/administration/initialisation-des-evaluations")
  */
 class EvaluationInitialisationController extends BaseController
@@ -28,12 +31,6 @@ class EvaluationInitialisationController extends BaseController
     /**
      * @Route("/{semestre}", name="administration_evaluation_initialisation_index", methods="GET|POST")
      *
-     * @param Request              $request
-     * @param MatiereRepository    $matiereRepository
-     * @param EvaluationRepository $evaluationRepository
-     * @param Semestre             $semestre
-     *
-     * @return Response
      * @throws Exception
      */
     public function index(
@@ -46,7 +43,7 @@ class EvaluationInitialisationController extends BaseController
         $evaluations = $evaluationRepository->findBySemestre($semestre,
             $this->dataUserSession->getAnneeUniversitaire());
 
-        if ($request->getMethod() === 'POST') {
+        if ('POST' === $request->getMethod()) {
             $tGroupes = [];
             foreach ($semestre->getTypeGroupes() as $tg) {
                 $tGroupes[$tg->getId()] = $tg;
@@ -60,9 +57,9 @@ class EvaluationInitialisationController extends BaseController
             /** @var Matiere $matiere */
             foreach ($matieres as $matiere) {
                 $nbNotes = $matiere->getNbnotes();
-                for ($i = 1; $i <= $nbNotes; $i++) {
+                for ($i = 1; $i <= $nbNotes; ++$i) {
                     if (!empty($request->request->get('commentaire_' . $matiere->getId() . '_' . $i))) {
-                        $nbEnseignant = count($request->request->get('enseignant_' . $matiere->getId() . '_' . $i));
+                        $nbEnseignant = \count($request->request->get('enseignant_' . $matiere->getId() . '_' . $i));
                         if ($nbEnseignant > 0) {
                             $pers = $tPersonnels[$request->request->get('enseignant_' . $matiere->getId() . '_' . $i)[0]];
                         } else {
@@ -73,7 +70,7 @@ class EvaluationInitialisationController extends BaseController
                         $eval->setLibelle($request->request->get('commentaire_' . $matiere->getId() . '_' . $i));
                         $eval->setTypegroupe($tGroupes[$request->request->get('typeGroupe_' . $matiere->getId() . '_' . $i)]);
 
-                        for ($j = 1; $j < $nbEnseignant; $j++) {
+                        for ($j = 1; $j < $nbEnseignant; ++$j) {
                             $eval->addPersonnelAutorise($tPersonnels[$request->request->get('enseignant_' . $matiere->getId() . '_' . $i)[$j]]);
                         }
                         $this->entityManager->persist($eval);
@@ -89,7 +86,7 @@ class EvaluationInitialisationController extends BaseController
         return $this->render('administration/evaluationInitialisation/index.html.twig', [
             'semestre'    => $semestre,
             'matieres'    => $matieres,
-            'evaluations' => $evaluations
+            'evaluations' => $evaluations,
         ]);
     }
 }

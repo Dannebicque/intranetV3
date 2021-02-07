@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Note.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 12/12/2020 14:31
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Note.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:49
+ */
 
 namespace App\Entity;
 
@@ -53,6 +55,7 @@ class Note extends BaseEntity
 
     /**
      * Note constructor.
+     *
      * @throws Exception
      */
     public function __construct()
@@ -66,18 +69,12 @@ class Note extends BaseEntity
         $this->setUuid(Uuid::uuid4());
     }
 
-
-    /**
-     * @return Evaluation|null
-     */
     public function getEvaluation(): ?Evaluation
     {
         return $this->evaluation;
     }
 
     /**
-     * @param Evaluation|null $evaluation
-     *
      * @return Note
      */
     public function setEvaluation(?Evaluation $evaluation): self
@@ -87,17 +84,12 @@ class Note extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return Etudiant|null
-     */
     public function getEtudiant(): ?Etudiant
     {
         return $this->etudiant;
     }
 
     /**
-     * @param Etudiant|null $etudiant
-     *
      * @return Note
      */
     public function setEtudiant(?Etudiant $etudiant): self
@@ -107,17 +99,12 @@ class Note extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return float|null
-     */
     public function getNote(): ?float
     {
         return $this->note;
     }
 
     /**
-     * @param float $note
-     *
      * @return Note
      */
     public function setNote(float $note): self
@@ -127,17 +114,12 @@ class Note extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
     public function getCommentaire(): ?string
     {
         return $this->commentaire;
     }
 
     /**
-     * @param string|null $commentaire
-     *
      * @return Note
      */
     public function setCommentaire(?string $commentaire): self
@@ -156,8 +138,6 @@ class Note extends BaseEntity
     }
 
     /**
-     * @param ModificationNote $modificationNote
-     *
      * @return Note
      */
     public function addModificationNote(ModificationNote $modificationNote): self
@@ -171,8 +151,6 @@ class Note extends BaseEntity
     }
 
     /**
-     * @param ModificationNote $modificationNote
-     *
      * @return Note
      */
     public function removeModificationNote(ModificationNote $modificationNote): self

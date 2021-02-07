@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Groupe.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 10/11/2020 16:58
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Groupe.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Entity;
 
@@ -76,17 +78,12 @@ class Groupe extends BaseEntity
         $this->covidAttestationEtudiants = new ArrayCollection();
     }
 
-    /**
-     * @return null|string
-     */
     public function getLibelle(): ?string
     {
         return $this->libelle;
     }
 
     /**
-     * @param string $libelle
-     *
      * @return Groupe
      */
     public function setLibelle(string $libelle): self
@@ -96,17 +93,12 @@ class Groupe extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return TypeGroupe|null
-     */
     public function getTypeGroupe(): ?TypeGroupe
     {
         return $this->typeGroupe;
     }
 
     /**
-     * @param TypeGroupe|null $typeGroupe
-     *
      * @return Groupe
      */
     public function setTypeGroupe(?TypeGroupe $typeGroupe): self
@@ -116,17 +108,12 @@ class Groupe extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
     public function getCodeApogee(): ?string
     {
         return $this->codeApogee;
     }
 
     /**
-     * @param string $codeApogee
-     *
      * @return Groupe
      */
     public function setCodeApogee(string $codeApogee): self
@@ -145,8 +132,6 @@ class Groupe extends BaseEntity
     }
 
     /**
-     * @param Etudiant $etudiant
-     *
      * @return Groupe
      */
     public function addEtudiant(Etudiant $etudiant): self
@@ -160,8 +145,6 @@ class Groupe extends BaseEntity
     }
 
     /**
-     * @param Etudiant $etudiant
-     *
      * @return Groupe
      */
     public function removeEtudiant(Etudiant $etudiant): self
@@ -182,20 +165,15 @@ class Groupe extends BaseEntity
         return $this->enfants;
     }
 
-    /**
-     * @return Groupe|null
-     */
-    public function getParent(): ?Groupe
+    public function getParent(): ?self
     {
         return $this->parent;
     }
 
     /**
-     * @param Groupe $parent
-     *
      * @return Groupe
      */
-    public function setParent(Groupe $parent): self
+    public function setParent(self $parent): self
     {
         $this->parent = $parent;
 
@@ -203,11 +181,9 @@ class Groupe extends BaseEntity
     }
 
     /**
-     * @param Groupe $groupe
-     *
      * @return Groupe
      */
-    public function addGroupe(Groupe $groupe): self
+    public function addGroupe(self $groupe): self
     {
         if (!$this->enfants->contains($groupe)) {
             $this->enfants[] = $groupe;
@@ -218,11 +194,9 @@ class Groupe extends BaseEntity
     }
 
     /**
-     * @param Groupe $groupe
-     *
      * @return Groupe
      */
-    public function removeGroupe(Groupe $groupe): self
+    public function removeGroupe(self $groupe): self
     {
         if ($this->enfants->contains($groupe)) {
             $this->enfants->removeElement($groupe);
@@ -259,7 +233,7 @@ class Groupe extends BaseEntity
         return $this;
     }
 
-    public function addEnfant(Groupe $enfant): self
+    public function addEnfant(self $enfant): self
     {
         if (!$this->enfants->contains($enfant)) {
             $this->enfants[] = $enfant;
@@ -269,7 +243,7 @@ class Groupe extends BaseEntity
         return $this;
     }
 
-    public function removeEnfant(Groupe $enfant): self
+    public function removeEnfant(self $enfant): self
     {
         if ($this->enfants->contains($enfant)) {
             $this->enfants->removeElement($enfant);
@@ -312,7 +286,7 @@ class Groupe extends BaseEntity
 
     public function getDisplaySemestre()
     {
-        if ($this->getTypeGroupe() !== null && $this->getTypeGroupe()->getSemestre() !== null) {
+        if (null !== $this->getTypeGroupe() && null !== $this->getTypeGroupe()->getSemestre()) {
             return $this->getTypeGroupe()->getSemestre()->display() . ' | ' . $this->getLibelle();
         }
 

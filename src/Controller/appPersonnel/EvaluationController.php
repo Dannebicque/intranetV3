@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/EvaluationController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/EvaluationController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller\appPersonnel;
 
@@ -22,8 +24,8 @@ use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
 /**
- * Class NotesController
- * @package App\Controller
+ * Class NotesController.
+ *
  * @Route("/application/personnel/evaluation")
  * @IsGranted("ROLE_PERMANENT")
  */
@@ -33,10 +35,6 @@ class EvaluationController extends BaseController
      * @Route("/details/{uuid}", name="application_personnel_evaluation_show",
      *                                    requirements={"evaluation"="\d+"})
      * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
-     * @param MyEvaluation $myEvaluation
-     * @param Evaluation   $evaluation
-     *
-     * @return Response
      */
     public function detailsEvaluation(MyEvaluation $myEvaluation, Evaluation $evaluation): Response
     {
@@ -45,7 +43,7 @@ class EvaluationController extends BaseController
         return $this->render('appPersonnel/note/saisie_2.html.twig', [
             'evaluation' => $evaluation,
             'notes'      => $notes,
-            'autorise'   => $evaluation->getAutorise($this->getConnectedUser()->getId())
+            'autorise'   => $evaluation->getAutorise($this->getConnectedUser()->getId()),
         ]);
     }
 
@@ -53,34 +51,25 @@ class EvaluationController extends BaseController
      * @Route("/visible/{uuid}/{etat}", name="application_personnel_evaluation_visible",
      *                                    requirements={"evaluation"="\d+"})
      * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
-     * @param MyEvaluation $myEvaluation
-     * @param Evaluation   $evaluation
      *
-     * @param              $etat
-     *
-     * @return Response
+     * @param $etat
      */
     public function evaluationVisible(MyEvaluation $myEvaluation, Evaluation $evaluation, $etat): Response
     {
         $notes = $myEvaluation->setEvaluation($evaluation)->getNotesTableau();
-        $evaluation->setVisible($etat === 'visible');
+        $evaluation->setVisible('visible' === $etat);
         $this->entityManager->flush();
 
         return $this->render('appPersonnel/note/saisie_2.html.twig', [
             'evaluation' => $evaluation,
             'notes'      => $notes,
-            'autorise'   => true
+            'autorise'   => true,
         ]);
     }
 
     /**
      * @Route("/update/{uuid}", name="application_personnel_evaluation_update")
      * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
-     * @param Request    $request
-     *
-     * @param Evaluation $evaluation
-     *
-     * @return Response
      */
     public function updateEvaluation(Request $request, Evaluation $evaluation): Response
     {
@@ -101,16 +90,15 @@ class EvaluationController extends BaseController
      * @Route("/export/{uuid}/{type}/{_format}", name="application_personnel_evaluation_export",
      *                                    requirements={"evaluation"="\d+","_format"="csv|xlsx|pdf"})
      * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
-     * @param GroupeRepository $groupeRepository
-     * @param MyEvaluation     $myEvaluation
-     * @param Evaluation       $evaluation
-     * @param                  $type
-     * @param                  $_format
+     *
+     * @param $type
+     * @param $_format
      *
      * @return Response|StreamedResponse|null
-     * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
+     *
+     * @throws LoaderError
      */
     public function exportEvaluation(
         GroupeRepository $groupeRepository,
@@ -120,10 +108,10 @@ class EvaluationController extends BaseController
         $_format
     ) {
         $t = explode('_', $type);
-        if ($t[0] === 'groupe') {
+        if ('groupe' === $t[0]) {
             $grp = $groupeRepository->find($t[1]);
             $data = [$grp];
-        } elseif ($t[0] === 'all' && $evaluation->getTypeGroupe() !== null) {
+        } elseif ('all' === $t[0] && null !== $evaluation->getTypeGroupe()) {
             $data = $evaluation->getTypeGroupe()->getGroupes();
         } else {
             return $this->render('bundles/TwigBundle/Exception/error666.html.twig');

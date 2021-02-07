@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/api/GroupesApiController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/api/GroupesApiController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:36
+ */
 
 namespace App\Controller\api;
 
@@ -15,18 +17,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class MatiereApiController
- * @package App\Controller
+ * Class MatiereApiController.
+ *
  * @Route("/api/groupe")
  */
 class GroupesApiController extends BaseController
 {
-
     /**
-     * @param Semestre $semestre
      * @Route("/type-groupe/{semestre}", name="api_type_groupe_semestre", options={"expose":true})
-     *
-     * @return Response
      */
     public function typeGroupeSemestreAjax(Semestre $semestre): Response
     {
@@ -41,9 +39,6 @@ class GroupesApiController extends BaseController
 
     /**
      * @Route("/groupe/{typeGroupe}", name="api_groupe_type_groupe", options={"expose":true})
-     * @param TypeGroupe $typeGroupe
-     *
-     * @return Response
      */
     public function grouepTypeGroupeAjax(TypeGroupe $typeGroupe): Response
     {

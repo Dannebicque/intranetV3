@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/StageSubscriber.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/StageSubscriber.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\EventSubscriber;
 
@@ -20,10 +22,8 @@ use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
-
 class StageSubscriber implements EventSubscriberInterface
 {
-
     protected MailerStage $myMailer;
 
     private EntityManagerInterface $entityManager;
@@ -34,11 +34,6 @@ class StageSubscriber implements EventSubscriberInterface
 
     /**
      * StageSubscriber constructor.
-     *
-     * @param EntityManagerInterface      $entityManager
-     * @param RouterInterface             $router
-     * @param MailerStage                 $myMailer
-     * @param StageMailTemplateRepository $stageMailTemplateRepository
      */
     public function __construct(
         EntityManagerInterface $entityManager,
@@ -67,8 +62,6 @@ class StageSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param StageEvent $event
-     *
      * @throws LoaderError
      * @throws NonUniqueResultException
      * @throws RuntimeError
@@ -83,7 +76,7 @@ class StageSubscriber implements EventSubscriberInterface
     private function addNotification(StageEvent $event, $codeEvent): void
     {
         $stageEtudiant = $event->getStageEtudiant();
-        if ($stageEtudiant->getEtudiant() !== null) {
+        if (null !== $stageEtudiant->getEtudiant()) {
             $notif = new Notification();
             $notif->setEtudiant($stageEtudiant->getEtudiant());
             $notif->setTypeUser(Notification::ETUDIANT);
@@ -98,8 +91,6 @@ class StageSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param StageEvent $event
-     *
      * @throws LoaderError
      * @throws NonUniqueResultException
      * @throws RuntimeError
@@ -112,8 +103,6 @@ class StageSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param StageEvent $event
-     *
      * @throws LoaderError
      * @throws NonUniqueResultException
      * @throws RuntimeError
@@ -123,12 +112,9 @@ class StageSubscriber implements EventSubscriberInterface
     {
         $this->addNotification($event, StageEvent::CHGT_ETAT_CONVENTION_RECUE);
         $this->sendMail($event, StageEvent::CHGT_ETAT_CONVENTION_RECUE);
-
     }
 
     /**
-     * @param StageEvent $event
-     *
      * @throws LoaderError
      * @throws NonUniqueResultException
      * @throws RuntimeError
@@ -137,7 +123,7 @@ class StageSubscriber implements EventSubscriberInterface
     public function onChgtEtatStageDepose(StageEvent $event): void
     {
         $stageEtudiant = $event->getStageEtudiant();
-        if ($stageEtudiant->getStagePeriode() !== null) {
+        if (null !== $stageEtudiant->getStagePeriode()) {
             foreach ($stageEtudiant->getStagePeriode()->getResponsables() as $personnel) {
                 $notif = new Notification();
                 $notif->setPersonnel($personnel);
@@ -156,8 +142,6 @@ class StageSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param StageEvent $event
-     *
      * @throws LoaderError
      * @throws NonUniqueResultException
      * @throws RuntimeError
@@ -170,8 +154,6 @@ class StageSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param StageEvent $event
-     *
      * @throws LoaderError
      * @throws NonUniqueResultException
      * @throws RuntimeError
@@ -184,8 +166,6 @@ class StageSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param StageEvent $event
-     *
      * @throws LoaderError
      * @throws NonUniqueResultException
      * @throws RuntimeError
@@ -198,8 +178,6 @@ class StageSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param StageEvent $event
-     *
      * @throws LoaderError
      * @throws NonUniqueResultException
      * @throws RuntimeError
@@ -209,13 +187,10 @@ class StageSubscriber implements EventSubscriberInterface
     {
         $this->addNotification($event, StageEvent::CHGT_ETAT_STAGE_CONVENTION_IMPRIMEE);
         $this->sendMail($event, StageEvent::CHGT_ETAT_STAGE_CONVENTION_IMPRIMEE);
-
     }
 
-
     /**
-     * @param StageEvent   $event
-     * @param              $codeEvent
+     * @param $codeEvent
      *
      * @throws LoaderError
      * @throws NonUniqueResultException
@@ -233,7 +208,7 @@ class StageSubscriber implements EventSubscriberInterface
             $stageEtudiant->getStagePeriode()
         );
 
-        if ($mailTemplate !== null && $mailTemplate->getTwigTemplate() !== null && $stageEtudiant->getEtudiant() !== null) {
+        if (null !== $mailTemplate && null !== $mailTemplate->getTwigTemplate() && null !== $stageEtudiant->getEtudiant()) {
             $this->myMailer->setTemplateFromDatabase(
                 $mailTemplate->getTwigTemplate(),
                 ['stageEtudiant' => $stageEtudiant],
@@ -258,7 +233,7 @@ class StageSubscriber implements EventSubscriberInterface
             $destinataires[] = $destinataire->getMailUniv();
         }
 
-        if ($mailTemplate !== null && $stageEtudiant !== null && $mailTemplate->getTwigTemplate()) {
+        if (null !== $mailTemplate && null !== $stageEtudiant && $mailTemplate->getTwigTemplate()) {
             //mail responsables
             $this->myMailer->setTemplateFromDatabase($mailTemplate->getTwigTemplate()->getName(),
                 ['stageEtudiant' => $stageEtudiant],
@@ -267,7 +242,7 @@ class StageSubscriber implements EventSubscriberInterface
             );
 
             //copie à l'assistante
-            if ($stageEtudiant->getStagePeriode() !== null && $stageEtudiant->getStagePeriode()->getCopieAssistant() && $stageEtudiant->getStagePeriode()->getMailAssistant() !== null) {
+            if (null !== $stageEtudiant->getStagePeriode() && $stageEtudiant->getStagePeriode()->getCopieAssistant() && null !== $stageEtudiant->getStagePeriode()->getMailAssistant()) {
                 $this->myMailer->setTemplateFromDatabase($mailTemplate->getTwigTemplate()->getName(),
                     ['stageEtudiant' => $stageEtudiant],
                     $stageEtudiant->getStagePeriode()->getMailAssistant(),
@@ -281,7 +256,7 @@ class StageSubscriber implements EventSubscriberInterface
                 $destinataires,
                 'copie ' . $codeEvent);
 
-            if ($stageEtudiant->getStagePeriode() !== null && $stageEtudiant->getStagePeriode()->getCopieAssistant() && $stageEtudiant->getStagePeriode()->getMailAssistant() !== null) {
+            if (null !== $stageEtudiant->getStagePeriode() && $stageEtudiant->getStagePeriode()->getCopieAssistant() && null !== $stageEtudiant->getStagePeriode()->getMailAssistant()) {
                 $this->myMailer->setTemplate('mails/stages/stage_assistant_' . $codeEvent . '.txt.twig',
                     ['stageEtudiant' => $stageEtudiant],
                     $stageEtudiant->getStagePeriode()->getMailAssistant(),

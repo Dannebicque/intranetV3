@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcComposanteEssentielle.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 08/01/2021 15:45
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcComposanteEssentielle.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:49
+ */
 
 namespace App\Entity;
 
@@ -15,8 +17,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class ApcComposanteEssentielle extends BaseEntity
 {
-
-
     /**
      * @ORM\Column(type="string", length=255)
      */

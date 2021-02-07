@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Form/CelcatCalendrierType.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/CelcatCalendrierType.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Form;
 
@@ -24,7 +26,7 @@ class CelcatCalendrierType extends AbstractType
             ->add('anneeUniversitaire', EntityType::class, [
                 'label'        => 'label.annee_universitaire',
                 'class'        => AnneeUniversitaire::class,
-                'choice_label' => 'displayAnneeUniversitaire'
+                'choice_label' => 'displayAnneeUniversitaire',
             ])
             ->add('semaineFormation', TextType::class, [
                 'label' => 'label.semaineFormation',
@@ -37,7 +39,7 @@ class CelcatCalendrierType extends AbstractType
                 'format' => 'dd/MM/yyyy',
                 'widget' => 'single_text',
                 'html5'  => false,
-                'attr'   => ['data-provide' => 'datepicker', 'data-language' => 'fr']
+                'attr'   => ['data-provide' => 'datepicker', 'data-language' => 'fr'],
             ]);
     }
 

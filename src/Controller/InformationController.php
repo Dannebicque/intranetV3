@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/InformationController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 11/10/2020 12:15
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/InformationController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller;
 
@@ -17,11 +19,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use function count;
 
 /**
- * Class InformationController
- * @package App\Controller
+ * Class InformationController.
+ *
  * @Route("/information")
  */
 class InformationController extends BaseController
@@ -32,19 +33,15 @@ class InformationController extends BaseController
     public function index(): Response
     {
         return $this->render('information/index.html.twig', [
-            'categories' => $this->dataUserSession->getArticlesCategories()
+            'categories' => $this->dataUserSession->getArticlesCategories(),
         ]);
     }
 
     /**
      * @Route("/categorie/{categorie}/{page}", name="information_categorie", options={"expose":true})
-     * @param MyPagination      $myPagination
-     * @param ArticleRepository $articleRepository
-     * @param                   $categorie
      *
-     * @param int               $page
-     *
-     * @return Response
+     * @param     $categorie
+     * @param int $page
      */
     public function categorie(
         MyPagination $myPagination,
@@ -63,52 +60,45 @@ class InformationController extends BaseController
 
         $mesArticles = [];
         foreach ($this->getConnectedUser()->getArticlesLike() as $like) {
-            if ($like->getArticle() !== null) {
+            if (null !== $like->getArticle()) {
                 $mesArticles[] = $like->getArticle()->getId();
             }
         }
 
         return $this->render('information/articles.html.twig', [
             'pagination'  => $myPagination,
-            'mesArticles' => $mesArticles
+            'mesArticles' => $mesArticles,
         ]);
     }
 
     /**
      * @Route("/show/{slug}", name="information_read_more")
      * @ParamConverter("article", options={"mapping": {"slug": "slug"}})
-     * @param Article $article
-     *
-     * @return Response
      */
     public function show(Article $article): Response
     {
         $like = false;
         /** @var ArticleLike $like */
         foreach ($this->getConnectedUser()->getArticlesLike() as $like) {
-            if ($like->getArticle() !== null && $like->getArticle()->getId() === $article->getId()) {
+            if (null !== $like->getArticle() && $like->getArticle()->getId() === $article->getId()) {
                 $like = true;
             }
         }
 
         return $this->render('information/article.html.twig', [
             'article' => $article,
-            'like'    => $like
+            'like'    => $like,
         ]);
     }
 
     /**
      * @Route("/like/{slug}", name="information_like", options={"expose":true})
      * @ParamConverter("article", options={"mapping": {"slug": "slug"}})
-     * @param MyArticle $myArticle
-     * @param Article   $article
-     *
-     * @return JsonResponse
      */
     public function like(MyArticle $myArticle, Article $article): JsonResponse
     {
         $myArticle->setArticle($article)->saveLike($this->getConnectedUser());
 
-        return $this->json(count($article->getArticleLikes()), Response::HTTP_OK);
+        return $this->json(\count($article->getArticleLikes()), Response::HTTP_OK);
     }
 }

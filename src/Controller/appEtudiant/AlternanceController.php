@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appEtudiant/AlternanceController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 01/12/2020 08:17
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appEtudiant/AlternanceController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller\appEtudiant;
 
@@ -19,8 +21,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class AlternanceController
- * @package App\Controller
+ * Class AlternanceController.
+ *
  * @Route("/application/etudiant/alternance")
  * @IsGranted("ROLE_ETUDIANT")
  */
@@ -28,9 +30,7 @@ class AlternanceController extends BaseController
 {
     /**
      * @Route("/", name="application_etudiant_alternance_index")
-     * @param AlternanceRepository $alternanceRepository
      *
-     * @return Response
      * @throws NonUniqueResultException
      */
     public function index(AlternanceRepository $alternanceRepository): Response
@@ -39,32 +39,28 @@ class AlternanceController extends BaseController
         $alternance = $alternanceRepository->getOneByEtudiantAndAnneeUniversitaire($this->getConnectedUser(),
             $this->getEtudiantAnneeUniversitaire());
         $form = null;
-        if ($alternance !== null) {
+        if (null !== $alternance) {
             $form = $this->createForm(
                 AlternanceEtudiantType::class,
                 $alternance,
                 [
                     'attr'   => [
-                        'data-provide' => 'validation'
+                        'data-provide' => 'validation',
                     ],
                     'action' => $this->generateUrl('application_etudiant_alternance_update',
-                        ['id' => $alternance->getId()])
+                        ['id' => $alternance->getId()]),
                 ]
             );
         }
 
         return $this->render('appEtudiant/alternance/index.html.twig', [
             'alternances' => $alternance,
-            'form'        => $form !== null ? $form->createView() : null
+            'form'        => null !== $form ? $form->createView() : null,
         ]);
     }
 
     /**
      * @Route("/{id}/edit", name="application_etudiant_alternance_update", methods="GET|POST")
-     * @param Request    $request
-     * @param Alternance $alternance
-     *
-     * @return Response
      */
     public function edit(Request $request, Alternance $alternance): Response
     {
@@ -73,9 +69,10 @@ class AlternanceController extends BaseController
             $alternance,
             [
                 'attr'   => [
-                    'data-provide' => 'validation'
+                    'data-provide' => 'validation',
                 ],
-                'action' => $this->generateUrl('application_etudiant_alternance_update', ['id' => $alternance->getId()])
+                'action' => $this->generateUrl('application_etudiant_alternance_update',
+                    ['id' => $alternance->getId()]),
             ]
         );
         $form->handleRequest($request);
@@ -90,6 +87,4 @@ class AlternanceController extends BaseController
 
         return $this->redirectToRoute('application_index', ['onglet' => 'alternance']);
     }
-
-
 }

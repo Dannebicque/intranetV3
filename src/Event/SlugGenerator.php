@@ -1,28 +1,30 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Event/SlugGenerator.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 30/08/2020 10:48
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Event/SlugGenerator.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:51
+ */
 
 namespace App\Event;
 
+use App\Classes\Tools;
 use App\Entity\Article;
 use App\Entity\Utilisateur;
-use App\Classes\Tools;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Events;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
 
 class SlugGenerator implements EventSubscriber
 {
-// this method can only return the event names; you cannot define a
-// custom method name to execute when each event triggers
+    // this method can only return the event names; you cannot define a
+    // custom method name to execute when each event triggers
     public function getSubscribedEvents()
     {
         return [
             Events::prePersist,
-            Events::preUpdate
+            Events::preUpdate,
         ];
     }
 
@@ -38,19 +40,19 @@ class SlugGenerator implements EventSubscriber
     {
         $entity = $args->getObject();
 
-// if this subscriber only applies to certain entity types,
-// add some code to check the entity type as early as possible
+        // if this subscriber only applies to certain entity types,
+        // add some code to check the entity type as early as possible
         if ($entity instanceof Article) {
             return $entity->setSlug(Tools::slug($entity->getTitre()));
         } elseif ($entity instanceof Utilisateur) {
-            if ($entity->getMailUniv() !== '' && $entity->getMailUniv() !== null) {
+            if ('' !== $entity->getMailUniv() && null !== $entity->getMailUniv()) {
                 $tabSlug = explode('@', $entity->getMailUniv());
 
                 return $entity->setSlug($tabSlug[0]);
             }
         }
 
-// ... get the entity information and log it somehow
+        // ... get the entity information and log it somehow
     }
 
     public function preUpdate(LifecycleEventArgs $args)

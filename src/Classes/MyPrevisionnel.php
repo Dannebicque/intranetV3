@@ -1,12 +1,19 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyPrevisionnel.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 21/12/2020 12:51
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyPrevisionnel.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
+/*
+ * Pull your hearder here, for exemple, Licence header.
+ */
 
 namespace App\Classes;
 
+use App\Classes\Excel\MyExcelWriter;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Departement;
 use App\Entity\Diplome;
@@ -15,7 +22,6 @@ use App\Entity\Matiere;
 use App\Entity\Personnel;
 use App\Entity\Previsionnel;
 use App\Entity\Semestre;
-use App\Classes\Excel\MyExcelWriter;
 use App\Repository\CelcatEventsRepository;
 use App\Repository\EdtPlanningRepository;
 use App\Repository\HrsRepository;
@@ -27,8 +33,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 /**
- * Class MyPrevisionnel
- * @package App\Classes
+ * Class MyPrevisionnel.
  */
 class MyPrevisionnel
 {
@@ -94,9 +99,6 @@ class MyPrevisionnel
      */
     private $personnels;
 
-    /**
-     * @return mixed
-     */
     public function getAnneePrevi()
     {
         return $this->anneePrevi;
@@ -118,15 +120,6 @@ class MyPrevisionnel
 
     /**
      * MyPrevisionnel constructor.
-     *
-     * @param EntityManagerInterface $entityManager
-     * @param PrevisionnelRepository $previsionnelRepository
-     * @param PersonnelRepository    $personnelRepository
-     * @param HrsRepository          $hrsRepository
-     * @param MyExcelWriter          $myExcelWriter
-     * @param EdtPlanningRepository  $edtPlanningRepository
-     * @param CelcatEventsRepository $celcatEventsRepository
-     * @param MyUpload               $myUpload
      */
     public function __construct(
         EntityManagerInterface $entityManager,
@@ -156,18 +149,11 @@ class MyPrevisionnel
         return $this->personnels;
     }
 
-    /**
-     * @return Semestre
-     */
     public function getSemestre(): Semestre
     {
         return $this->semestre;
     }
 
-
-    /**
-     * @return Matiere
-     */
     public function getMatiere(): Matiere
     {
         return $this->matiere;
@@ -205,33 +191,21 @@ class MyPrevisionnel
         return $this->servicePrevisionnelByDepartement;
     }
 
-    /**
-     * @return float
-     */
     public function getTotalCm(): float
     {
         return $this->totalCm;
     }
 
-    /**
-     * @return float
-     */
     public function getTotalTd(): float
     {
         return $this->totalTd;
     }
 
-    /**
-     * @return float
-     */
     public function getTotalTp(): float
     {
         return $this->totalTp;
     }
 
-    /**
-     * @return float
-     */
     public function getTotalEtu(): float
     {
         return $this->totalEtuCm + $this->totalEtuTd + $this->totalEtuTp;
@@ -245,57 +219,36 @@ class MyPrevisionnel
         return $this->hrs;
     }
 
-    /**
-     * @return Personnel
-     */
     public function getPersonnel(): Personnel
     {
         return $this->personnel;
     }
 
-    /**
-     * @param Personnel $personnel
-     */
     public function setPersonnel(Personnel $personnel): void
     {
         $this->personnel = $personnel;
     }
 
-    /**
-     * @return float
-     */
     public function getTotalEtuCm(): float
     {
         return $this->totalEtuCm;
     }
 
-    /**
-     * @return float
-     */
     public function getTotalEtuTd(): float
     {
         return $this->totalEtuTd;
     }
 
-    /**
-     * @return float
-     */
     public function getTotalEtuTp(): float
     {
         return $this->totalEtuTp;
     }
 
-    /**
-     * @return float
-     */
     public function getTotalHrs(): float
     {
         return $this->totalHrs;
     }
 
-    /**
-     * @return float
-     */
     public function getNbHeuresComplementaires(): float
     {
         $tot = $this->getTotalService() - $this->personnel->getNbHeuresService();
@@ -303,28 +256,16 @@ class MyPrevisionnel
         return $tot < 0 ? 0 : $tot;
     }
 
-    /**
-     * @return float
-     */
     public function getTotalService(): float
     {
         return $this->totalCm + $this->totalTd + $this->totalTp;
     }
 
-    /**
-     * @return float
-     */
     public function getTotalHrsService(): float
     {
         return $this->totalHrs + $this->getTotalService();
     }
 
-    /**
-     * @param Personnel   $personnel
-     * @param Departement $departement
-     *
-     * @return mixed
-     */
     public function getPrevisionnelEnseignantDepartement(
         Personnel $personnel,
         Departement $departement
@@ -333,10 +274,7 @@ class MyPrevisionnel
     }
 
     /**
-     * @param Personnel $personnel
-     * @param           $annee
-     *
-     * @return array
+     * @param $annee
      */
     public function getPrevisionnelEnseignantComplet(Personnel $personnel, $annee): array
     {
@@ -345,7 +283,6 @@ class MyPrevisionnel
 
     /**
      * @param $annee
-     *
      */
     public function getPrevisionnelEnseignantByDepartement($annee): void
     {
@@ -355,8 +292,8 @@ class MyPrevisionnel
         /** @var Previsionnel $pr */
         foreach ($previsionnels as $pr) {
             $departement = $pr->getDepartement() ? $pr->getDepartement()->getId() : null;
-            if ($departement !== null) {
-                if (!array_key_exists($departement, $tprev)) {
+            if (null !== $departement) {
+                if (!\array_key_exists($departement, $tprev)) {
                     $tprev[$departement] = [];
                     $this->departements[] = $pr->getDepartement();
                 }
@@ -372,7 +309,6 @@ class MyPrevisionnel
 
     /**
      * @param $annee
-     *
      */
     public function getPrevisionnelEnseignantBySemestre($annee): void
     {
@@ -384,8 +320,8 @@ class MyPrevisionnel
         foreach ($previsionnels as $pr) {
             $sem = $pr->getSemestre() ? $pr->getSemestre()->getId() : null;
 
-            if ($sem !== null) {
-                if (!array_key_exists($sem, $tprev)) {
+            if (null !== $sem) {
+                if (!\array_key_exists($sem, $tprev)) {
                     $tprev[$sem] = [];
                     $this->semestres[] = $pr->getSemestre();
                 }
@@ -412,8 +348,7 @@ class MyPrevisionnel
     }
 
     /**
-     * @param Matiere $matiere
-     * @param         $annee
+     * @param $annee
      */
     public function getPrevisionnelMatiere(Matiere $matiere, $annee): void
     {
@@ -433,8 +368,7 @@ class MyPrevisionnel
     }
 
     /**
-     * @param Semestre $semestre
-     * @param          $annee
+     * @param $annee
      */
     public function getPrevisionnelSemestre(Semestre $semestre, $annee): void
     {
@@ -456,15 +390,15 @@ class MyPrevisionnel
     public function update(Previsionnel $previ, $name, $value): bool
     {
         if ($previ) {
-            if ($name === 'personnel') {
-                if ($value === '') {
+            if ('personnel' === $name) {
+                if ('' === $value) {
                     $previ->setPersonnel(null);
                     $this->entityManager->flush();
 
                     return true;
                 }
                 $personnel = $this->personnelRepository->find($value);
-                if ($personnel !== null) {
+                if (null !== $personnel) {
                     $previ->setPersonnel($personnel);
                     $this->entityManager->flush();
 
@@ -472,26 +406,19 @@ class MyPrevisionnel
                 }
 
                 return false;
-            } else {
-                $method = 'set' . $name;
-                if (method_exists($previ, $method)) {
-                    $previ->$method(Tools::convertToFloat($value));
-                    $this->entityManager->flush();
+            }
+            $method = 'set' . $name;
+            if (method_exists($previ, $method)) {
+                $previ->$method(Tools::convertToFloat($value));
+                $this->entityManager->flush();
 
-                    return true;
-                }
+                return true;
             }
         }
 
         return false;
     }
 
-    /**
-     * @param Departement $departement
-     * @param int         $anneePrevisionnel
-     *
-     * @return StreamedResponse
-     */
     public function exportOmegaDepartement(Departement $departement, int $anneePrevisionnel): StreamedResponse
     {
         $previsionnels = $this->previsionnelRepository->findByDepartement($departement, $anneePrevisionnel);
@@ -510,7 +437,7 @@ class MyPrevisionnel
             'H TD PREVU*',
             'GP TD PREVU*',
             'H TP PREVU*',
-            'GP TP PREVU*'
+            'GP TP PREVU*',
         ]);
         $this->ligne = 2;
         $this->ecritPrevisionnel($previsionnels);
@@ -525,91 +452,90 @@ class MyPrevisionnel
             200,
             [
                 'Content-Type'        => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                'Content-Disposition' => 'attachment;filename="export-omega' . $departement->getLibelle() . '.xlsx"'
+                'Content-Disposition' => 'attachment;filename="export-omega' . $departement->getLibelle() . '.xlsx"',
             ]
         );
     }
 
-    private
-    function ecritPrevisionnel(
+    private function ecritPrevisionnel(
         $previsionnels
     ): void {
         /** @var Previsionnel $previ */
         foreach ($previsionnels as $previ) {
             $colonne = 1;
-            if ($previ->getMatiere() !== null) {
-                if ($previ->getMatiere()->getSemestre() !== null && $previ->getMatiere()->getSemestre()->getAnnee() !== null) {
+            if (null !== $previ->getMatiere()) {
+                if (null !== $previ->getMatiere()->getSemestre() && null !== $previ->getMatiere()->getSemestre()->getAnnee()) {
                     //CODE VET
                     $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
                         $previ->getMatiere()->getSemestre()->getAnnee()->getCodeEtape());
-                    $colonne++;
+                    ++$colonne;
                     //LIBELLE VET
                     $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
                         $previ->getMatiere()->getSemestre()->getAnnee()->getLibelleLong());
                 } else {
                     $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
                         'ERR');
-                    $colonne++;
+                    ++$colonne;
                     //LIBELLE VET
                     $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
                         'ERR');
                 }
-                $colonne++;
+                ++$colonne;
                 //CODE ELEMENT*
                 $this->myExcelWriter->writeCellXY($colonne, $this->ligne, $previ->getMatiere()->getCodeElement());
-                $colonne++;
+                ++$colonne;
                 //LIBELLE ELEMENT
                 $this->myExcelWriter->writeCellXY($colonne, $this->ligne, $previ->getMatiere()->getLibelle());
-                $colonne++;
+                ++$colonne;
             } else {
                 $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
                     'ERR');
-                $colonne++;
+                ++$colonne;
                 //LIBELLE VET
                 $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
                     'ERR');
-                $colonne++;
+                ++$colonne;
                 //CODE ELEMENT*
                 $this->myExcelWriter->writeCellXY($colonne, 'ERR');
-                $colonne++;
+                ++$colonne;
                 //LIBELLE ELEMENT
                 $this->myExcelWriter->writeCellXY($colonne, 'ERR');
-                $colonne++;
+                ++$colonne;
             }
 
-            if ($previ->getPersonnel() !== null) {
+            if (null !== $previ->getPersonnel()) {
                 //CODE HARPEGE*
                 $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
                     $previ->getPersonnel()->getNumeroHarpege());
-                $colonne++;
+                ++$colonne;
                 //NOM PRENOM
                 $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
-                    strtoupper(Tools::supprimeAccent($previ->getPersonnel()->getNom())) . ' ' . strtoupper(Tools::supprimeAccent($previ->getPersonnel()->getPrenom())));
+                    mb_strtoupper(Tools::supprimeAccent($previ->getPersonnel()->getNom())) . ' ' . mb_strtoupper(Tools::supprimeAccent($previ->getPersonnel()->getPrenom())));
             } else {
                 $this->myExcelWriter->writeCellXY($colonne, $this->ligne, 'ERR-XXX');
-                $colonne++;
+                ++$colonne;
                 $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
                     'ERR-XXX');
             }
-            $colonne++;
+            ++$colonne;
             //H CM PREVU*
             $this->myExcelWriter->writeCellXY($colonne, $this->ligne, $previ->getNbHCm());
-            $colonne++;
+            ++$colonne;
             //GP CM PREVU*
             $this->myExcelWriter->writeCellXY($colonne, $this->ligne, $previ->getNbGrCm());
-            $colonne++;
+            ++$colonne;
             // H TD PREVU*
             $this->myExcelWriter->writeCellXY($colonne, $this->ligne, $previ->getNbHTd());
-            $colonne++;
+            ++$colonne;
             //GP TD PREVU*
             $this->myExcelWriter->writeCellXY($colonne, $this->ligne, $previ->getNbGrTd());
-            $colonne++;
+            ++$colonne;
             //H TP PREVU*
             $this->myExcelWriter->writeCellXY($colonne, $this->ligne, $previ->getNbHTp());
-            $colonne++;
+            ++$colonne;
             //GP TP PREVU*
             $this->myExcelWriter->writeCellXY($colonne, $this->ligne, $previ->getNbGrTp());
-            $this->ligne++;
+            ++$this->ligne;
         }
     }
 
@@ -618,94 +544,92 @@ class MyPrevisionnel
      */
     private function ecritHRS($hrs): void
     {
-
         /** @var Hrs $previ */
         foreach ($hrs as $previ) {
             $colonne = 1;
             //CODE VET
-            if ($previ->getSemestre() !== null && $previ->getSemestre()->getAnnee() !== null) {
+            if (null !== $previ->getSemestre() && null !== $previ->getSemestre()->getAnnee()) {
                 $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
                     $previ->getSemestre()->getAnnee()->getCodeEtape());
-                $colonne++;
+                ++$colonne;
                 $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
                     $previ->getSemestre()->getAnnee()->getLibelleLong());
-            } elseif ($previ->getDiplome() !== null) {
+            } elseif (null !== $previ->getDiplome()) {
                 $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
                     $previ->getDiplome()->getCodeEtape());
-                $colonne++;
+                ++$colonne;
                 $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
                     $previ->getDiplome()->getLibelle());
             } else {
                 $this->myExcelWriter->writeCellXY($colonne, $this->ligne, '');
-                $colonne++;
+                ++$colonne;
                 $this->myExcelWriter->writeCellXY($colonne, $this->ligne, '');
             }
-            $colonne++;
-//CODE ELEMENT*
+            ++$colonne;
+            //CODE ELEMENT*
             $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
                 $previ->getTypeHrs() ? $previ->getTypeHrs()->getType() : 'non défini');
-            $colonne++;
-//LIBELLE ELEMENT
-            if ($previ->getTypeHrs() !== null) {
+            ++$colonne;
+            //LIBELLE ELEMENT
+            if (null !== $previ->getTypeHrs()) {
                 $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
                     $previ->getTypeHrs()->getLibelle() . ' ' . $previ->getLibelle());
             } else {
                 $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
                     'ERR');
             }
-            $colonne++;
+            ++$colonne;
 
-            if ($previ->getPersonnel() !== null) {
+            if (null !== $previ->getPersonnel()) {
                 //CODE HARPEGE*
                 $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
                     $previ->getPersonnel()->getNumeroHarpege());
-                $colonne++;
+                ++$colonne;
                 //NOM PRENOM
                 $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
-                    strtoupper(Tools::supprimeAccent($previ->getPersonnel()->getNom())) . ' ' . strtoupper(Tools::supprimeAccent($previ->getPersonnel()->getPrenom())));
+                    mb_strtoupper(Tools::supprimeAccent($previ->getPersonnel()->getNom())) . ' ' . mb_strtoupper(Tools::supprimeAccent($previ->getPersonnel()->getPrenom())));
             } else {
                 $this->myExcelWriter->writeCellXY($colonne, $this->ligne, 'ERR-XXX');
-                $colonne++;
+                ++$colonne;
                 $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
                     'ERR-XXX');
             }
-            $colonne++;
-//H CM PREVU*
+            ++$colonne;
+            //H CM PREVU*
             $this->myExcelWriter->writeCellXY($colonne, $this->ligne, 0);
-            $colonne++;
-//GP CM PREVU*
+            ++$colonne;
+            //GP CM PREVU*
             $this->myExcelWriter->writeCellXY($colonne, $this->ligne, 1);
-            $colonne++;
-// H TD PREVU*
+            ++$colonne;
+            // H TD PREVU*
             $this->myExcelWriter->writeCellXY($colonne, $this->ligne, $previ->getNbHeuresTd());
-            $colonne++;
-//GP TD PREVU*
+            ++$colonne;
+            //GP TD PREVU*
             $this->myExcelWriter->writeCellXY($colonne, $this->ligne, 1);
-            $colonne++;
-//H TP PREVU*
+            ++$colonne;
+            //H TP PREVU*
             $this->myExcelWriter->writeCellXY($colonne, $this->ligne, 0);
-            $colonne++;
-//GP TP PREVU*
+            ++$colonne;
+            //GP TP PREVU*
             $this->myExcelWriter->writeCellXY($colonne, $this->ligne, 1);
-            $this->ligne++;
+            ++$this->ligne;
         }
     }
 
     /**
      * @param $data
      *
-     * @return bool
      * @throws Exception
      */
     public function importCsv($data): bool
     {
         $file = $this->myUpload->upload($data['fichier'], 'temp');
 
-        if ($data['diplome'] !== null) {
+        if (null !== $data['diplome']) {
             $matieres = $this->entityManager->getRepository(Matiere::class)->tableauMatieresApogees($data['diplome']);
             $personnels = $this->entityManager->getRepository(Personnel::class)->tableauPersonnelHarpege($data['diplome']);
 
-            $handle = fopen($file, 'rb');
+            $handle = fopen($file, 'r');
 
             /*Si on a réussi à ouvrir le fichier*/
             if ($handle) {
@@ -720,7 +644,7 @@ class MyPrevisionnel
                     /*On lit la ligne courante*/
                     $ligne = fgetcsv($handle, 1024, ';');
 
-                    if (array_key_exists($ligne[2], $matieres)) {
+                    if (\array_key_exists($ligne[2], $matieres)) {
                         $personnel = $personnels[$ligne[4]] ?? null;
 
                         $pr = new Previsionnel($matieres[$ligne[2]], $annee, $personnel);
@@ -741,8 +665,10 @@ class MyPrevisionnel
 
                 return true;
             }
+
             return false;
         }
+
         return false;
     }
 
@@ -766,6 +692,5 @@ class MyPrevisionnel
         Personnel $personnel,
         AnneeUniversitaire $anneeUniversitaire
     ) {
-
     }
 }

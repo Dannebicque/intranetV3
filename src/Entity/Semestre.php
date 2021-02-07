@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Semestre.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 31/01/2021 08:19
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Semestre.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Entity;
 
@@ -34,21 +36,21 @@ class Semestre extends BaseEntity
     private $couleur;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      */
     private $ordreAnnee; //dans l'année
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      */
     private $ordreLmd; //dans le LMD
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(type="boolean")
      */
@@ -76,21 +78,21 @@ class Semestre extends BaseEntity
     private $decale; //semestre equivalent en décalé
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      */
     private $nbGroupesCm = 1;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      */
     private $nbGroupesTd = 1;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      */
@@ -104,14 +106,14 @@ class Semestre extends BaseEntity
     private $etudiants;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(type="boolean")
      */
     private $optMailReleve = false;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(type="boolean")
      */
@@ -132,28 +134,28 @@ class Semestre extends BaseEntity
     private $optDestMailModifNote;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(type="boolean")
      */
     private $optEvaluationVisible = true;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(type="boolean")
      */
     private $optEvaluationModifiable = true;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(type="boolean")
      */
     private $optPenaliteAbsence = true;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(type="boolean")
      */
@@ -167,7 +169,7 @@ class Semestre extends BaseEntity
     private $optDestMailAbsenceResp;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(type="boolean")
      */
@@ -296,17 +298,11 @@ class Semestre extends BaseEntity
         $this->projetPeriodes = new ArrayCollection();
     }
 
-    /**
-     * @return mixed
-     */
     public function getLibelle()
     {
         return $this->libelle;
     }
 
-    /**
-     * @param mixed $libelle
-     */
     public function setLibelle($libelle): void
     {
         $this->libelle = $libelle;
@@ -320,9 +316,6 @@ class Semestre extends BaseEntity
         return $this->couleur;
     }
 
-    /**
-     * @param string $couleur
-     */
     public function setCouleur(string $couleur): void
     {
         $this->couleur = $couleur;
@@ -336,9 +329,6 @@ class Semestre extends BaseEntity
         return $this->ordreAnnee;
     }
 
-    /**
-     * @param int $ordreAnnee
-     */
     public function setOrdreAnnee(int $ordreAnnee = 1): void
     {
         $this->ordreAnnee = $ordreAnnee;
@@ -352,25 +342,16 @@ class Semestre extends BaseEntity
         return $this->ordreLmd;
     }
 
-    /**
-     * @param int $ordreLmd
-     */
     public function setOrdreLmd(int $ordreLmd): void
     {
         $this->ordreLmd = $ordreLmd;
     }
 
-    /**
-     * @return bool
-     */
     public function isActif(): bool
     {
         return $this->actif;
     }
 
-    /**
-     * @param bool $actif
-     */
     public function setActif(bool $actif): void
     {
         $this->actif = $actif;
@@ -379,15 +360,12 @@ class Semestre extends BaseEntity
     /**
      * @return Semestre
      */
-    public function getPrecedent(): ?Semestre
+    public function getPrecedent(): ?self
     {
         return $this->precedent;
     }
 
-    /**
-     * @param Semestre|null $precedent
-     */
-    public function setPrecedent(?Semestre $precedent): void
+    public function setPrecedent(?self $precedent): void
     {
         $this->precedent = $precedent;
     }
@@ -395,15 +373,12 @@ class Semestre extends BaseEntity
     /**
      * @return Semestre
      */
-    public function getSuivant(): ?Semestre
+    public function getSuivant(): ?self
     {
         return $this->suivant;
     }
 
-    /**
-     * @param Semestre|null $suivant
-     */
-    public function setSuivant(?Semestre $suivant): void
+    public function setSuivant(?self $suivant): void
     {
         $this->suivant = $suivant;
     }
@@ -411,78 +386,51 @@ class Semestre extends BaseEntity
     /**
      * @return Semestre
      */
-    public function getDecale(): ?Semestre
+    public function getDecale(): ?self
     {
         return $this->decale;
     }
 
-    /**
-     * @param Semestre|null $decale
-     */
-    public function setDecale(?Semestre $decale): void
+    public function setDecale(?self $decale): void
     {
         $this->decale = $decale;
     }
 
-    /**
-     * @return int
-     */
     public function getNbGroupesTd(): int
     {
         return $this->nbGroupesTd;
     }
 
-    /**
-     * @param int $nbGroupesTd
-     */
     public function setNbGroupesTd(int $nbGroupesTd): void
     {
         $this->nbGroupesTd = $nbGroupesTd;
     }
 
-    /**
-     * @return int
-     */
     public function getNbGroupesTP(): int
     {
         return $this->nbGroupesTP;
     }
 
-    /**
-     * @param int $nbGroupesTP
-     */
     public function setNbGroupesTP(int $nbGroupesTP): void
     {
         $this->nbGroupesTP = $nbGroupesTP;
     }
 
-    /**
-     * @return bool
-     */
     public function isOptMailReleve(): bool
     {
         return $this->optMailReleve;
     }
 
-    /**
-     * @param bool $optMailReleve
-     */
     public function setOptMailReleve(bool $optMailReleve): void
     {
         $this->optMailReleve = $optMailReleve;
     }
 
-    /**
-     * @return bool
-     */
     public function isOptMailModificationNote(): bool
     {
         return $this->optMailModificationNote;
     }
 
-    /**
-     * @param bool $optMailModificationNote
-     */
     public function setOptMailModificationNote(bool $optMailModificationNote): void
     {
         $this->optMailModificationNote = $optMailModificationNote;
@@ -520,65 +468,41 @@ class Semestre extends BaseEntity
         $this->optDestMailModifNote = $optDestMailModifNote;
     }
 
-    /**
-     * @return bool
-     */
     public function isOptEvaluationVisible(): bool
     {
         return $this->optEvaluationVisible;
     }
 
-    /**
-     * @param bool $optEvaluationVisible
-     */
     public function setOptEvaluationVisible(bool $optEvaluationVisible): void
     {
         $this->optEvaluationVisible = $optEvaluationVisible;
     }
 
-    /**
-     * @return bool
-     */
     public function isOptEvaluationModifiable(): bool
     {
         return $this->optEvaluationModifiable;
     }
 
-    /**
-     * @param bool $optEvaluationModifiable
-     */
     public function setOptEvaluationModifiable(bool $optEvaluationModifiable): void
     {
         $this->optEvaluationModifiable = $optEvaluationModifiable;
     }
 
-    /**
-     * @return bool
-     */
     public function isOptPenaliteAbsence(): bool
     {
         return $this->optPenaliteAbsence;
     }
 
-    /**
-     * @param bool $optPenaliteAbsence
-     */
     public function setOptPenaliteAbsence(bool $optPenaliteAbsence): void
     {
         $this->optPenaliteAbsence = $optPenaliteAbsence;
     }
 
-    /**
-     * @return bool
-     */
     public function isOptMailAbsenceResp(): bool
     {
         return $this->optMailAbsenceResp;
     }
 
-    /**
-     * @param bool $optMailAbsenceResp
-     */
     public function setOptMailAbsenceResp(bool $optMailAbsenceResp): void
     {
         $this->optMailAbsenceResp = $optMailAbsenceResp;
@@ -600,60 +524,39 @@ class Semestre extends BaseEntity
         $this->optDestMailAbsenceResp = $optDestMailAbsenceResp;
     }
 
-    /**
-     * @return bool
-     */
     public function isOptMailAbsenceEtudiant(): bool
     {
         return $this->optMailAbsenceEtudiant;
     }
 
-    /**
-     * @param bool $optMailAbsenceEtudiant
-     */
     public function setOptMailAbsenceEtudiant(bool $optMailAbsenceEtudiant): void
     {
         $this->optMailAbsenceEtudiant = $optMailAbsenceEtudiant;
     }
 
-    /**
-     * @return float
-     */
     public function getOptPointPenaliteAbsence(): float
     {
         return $this->optPointPenaliteAbsence;
     }
 
-    /**
-     * @param float $optPointPenaliteAbsence
-     */
     public function setOptPointPenaliteAbsence(float $optPointPenaliteAbsence): void
     {
         $this->optPointPenaliteAbsence = $optPointPenaliteAbsence;
     }
 
-    /**
-     * @return mixed
-     */
     public function getEtudiants()
     {
         return $this->etudiants;
     }
 
-    /**
-     * @param mixed $etudiants
-     */
     public function setEtudiants($etudiants): void
     {
         $this->etudiants = $etudiants;
     }
 
-    /**
-     * @return string
-     */
     public function display(): string
     {
-        if ($this->getAnnee() !== null) {
+        if (null !== $this->getAnnee()) {
             return $this->libelle . ' | ' . $this->getAnnee()->getLibelle();
         }
 
@@ -668,9 +571,6 @@ class Semestre extends BaseEntity
         return $this->annee;
     }
 
-    /**
-     * @param Annee $annee
-     */
     public function setAnnee(Annee $annee): void
     {
         $this->annee = $annee;
@@ -685,8 +585,6 @@ class Semestre extends BaseEntity
     }
 
     /**
-     * @param Article $article
-     *
      * @return Semestre
      */
     public function addArticle(Article $article): self
@@ -700,8 +598,6 @@ class Semestre extends BaseEntity
     }
 
     /**
-     * @param Article $article
-     *
      * @return Semestre
      */
     public function removeArticle(Article $article): self
@@ -723,8 +619,6 @@ class Semestre extends BaseEntity
     }
 
     /**
-     * @param Document $document
-     *
      * @return Semestre
      */
     public function addDocument(Document $document): self
@@ -738,8 +632,6 @@ class Semestre extends BaseEntity
     }
 
     /**
-     * @param Document $document
-     *
      * @return Semestre
      */
     public function removeDocument(Document $document): self
@@ -761,8 +653,6 @@ class Semestre extends BaseEntity
     }
 
     /**
-     * @param Date $date
-     *
      * @return Semestre
      */
     public function addDate(Date $date): self
@@ -776,8 +666,6 @@ class Semestre extends BaseEntity
     }
 
     /**
-     * @param Date $date
-     *
      * @return Semestre
      */
     public function removeDate(Date $date): self
@@ -799,8 +687,6 @@ class Semestre extends BaseEntity
     }
 
     /**
-     * @param Hrs $hrs
-     *
      * @return Semestre
      */
     public function addHrs(Hrs $hrs): self
@@ -814,8 +700,6 @@ class Semestre extends BaseEntity
     }
 
     /**
-     * @param Hrs $hrs
-     *
      * @return Semestre
      */
     public function removeHrs(Hrs $hrs): self
@@ -840,8 +724,6 @@ class Semestre extends BaseEntity
     }
 
     /**
-     * @param Parcour $option
-     *
      * @return Semestre
      */
     public function addParcour(Parcour $option): self
@@ -855,8 +737,6 @@ class Semestre extends BaseEntity
     }
 
     /**
-     * @param Parcour $option
-     *
      * @return Semestre
      */
     public function removeParcour(Parcour $option): self
@@ -881,8 +761,6 @@ class Semestre extends BaseEntity
     }
 
     /**
-     * @param Borne $borne
-     *
      * @return Semestre
      */
     public function addBorne(Borne $borne): self
@@ -896,8 +774,6 @@ class Semestre extends BaseEntity
     }
 
     /**
-     * @param Borne $borne
-     *
      * @return Semestre
      */
     public function removeBorne(Borne $borne): self
@@ -928,8 +804,6 @@ class Semestre extends BaseEntity
     }
 
     /**
-     * @param CahierTexte $cahierTexte
-     *
      * @return Semestre
      */
     public function addCahierTexte(CahierTexte $cahierTexte): self
@@ -943,8 +817,6 @@ class Semestre extends BaseEntity
     }
 
     /**
-     * @param CahierTexte $cahierTexte
-     *
      * @return Semestre
      */
     public function removeCahierTexte(CahierTexte $cahierTexte): self
@@ -960,16 +832,12 @@ class Semestre extends BaseEntity
         return $this;
     }
 
-    /**
-     */
     public function getUes()
     {
         return $this->ues;
     }
 
     /**
-     * @param Ue $ue
-     *
      * @return Semestre
      */
     public function addUe(Ue $ue): self
@@ -983,8 +851,6 @@ class Semestre extends BaseEntity
     }
 
     /**
-     * @param Ue $ue
-     *
      * @return Semestre
      */
     public function removeUe(Ue $ue): self
@@ -1009,8 +875,6 @@ class Semestre extends BaseEntity
     }
 
     /**
-     * @param TypeGroupe $typeGroupe
-     *
      * @return Semestre
      */
     public function addTypeGroupe(TypeGroupe $typeGroupe): self
@@ -1024,8 +888,6 @@ class Semestre extends BaseEntity
     }
 
     /**
-     * @param TypeGroupe $typeGroupe
-     *
      * @return Semestre
      */
     public function removeTypeGroupe(TypeGroupe $typeGroupe): self
@@ -1041,17 +903,12 @@ class Semestre extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return int|null
-     */
     public function getMoisDebut(): ?int
     {
         return $this->moisDebut;
     }
 
     /**
-     * @param int $moisDebut
-     *
      * @return Semestre
      */
     public function setMoisDebut(int $moisDebut): self
@@ -1094,7 +951,7 @@ class Semestre extends BaseEntity
 
     public function getDiplome()
     {
-        if ($this->getAnnee() !== null && $this->getAnnee()->getDiplome() !== null) {
+        if (null !== $this->getAnnee() && null !== $this->getAnnee()->getDiplome()) {
             return $this->getAnnee()->getDiplome();
         }
 
@@ -1106,12 +963,11 @@ class Semestre extends BaseEntity
      */
     public function getAnneeUniversitaire(): ?AnneeUniversitaire
     {
-        if ($this->getDiplome() !== null && $this->getDiplome()->getAnneeUniversitaire() !== null) {
+        if (null !== $this->getDiplome() && null !== $this->getDiplome()->getAnneeUniversitaire()) {
             return $this->getDiplome()->getAnneeUniversitaire();
         }
 
         return null;
-
     }
 
     /**
@@ -1158,13 +1014,11 @@ class Semestre extends BaseEntity
     }
 
     /**
-     * Get nbgroupeTP
-     *
-     * @return integer
+     * Get nbgroupeTP.
      */
     public function getNbgroupeTpEdt(): int
     {
-        if ($this->nbGroupesTP % 2 === 0) {
+        if (0 === $this->nbGroupesTP % 2) {
             return $this->nbGroupesTP;
         }
 

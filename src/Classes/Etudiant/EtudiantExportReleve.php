@@ -1,12 +1,17 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantExportReleve.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 24/01/2021 13:03
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantExportReleve.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
+/*
+ * Pull your hearder here, for exemple, Licence header.
+ */
 
 namespace App\Classes\Etudiant;
-
 
 use App\Classes\MyEvaluations;
 use App\Classes\Pdf\MyPDF;
@@ -15,7 +20,6 @@ use App\Entity\Etudiant;
 use App\Entity\Scolarite;
 use App\Entity\Semestre;
 use App\Repository\NoteRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Twig\Error\LoaderError;
@@ -25,7 +29,6 @@ use ZipArchive;
 
 class EtudiantExportReleve
 {
-
     public NoteRepository $noteRepository;
 
     private Etudiant $etudiant;
@@ -38,14 +41,8 @@ class EtudiantExportReleve
 
     private EtudiantNotes $etudiantNotes;
 
-
     /**
      * EtudiantNotes constructor.
-     *
-     * @param EtudiantNotes   $etudiantNotes
-     * @param MyPDF           $myPdf
-     * @param KernelInterface $kernel
-     * @param MyEvaluations   $myEvaluations
      */
     public function __construct(
         EtudiantNotes $etudiantNotes,
@@ -59,16 +56,12 @@ class EtudiantExportReleve
         $this->dir = $kernel->getProjectDir() . '/public/upload/temp/pdf/';
     }
 
-
     public function setEtudiant(Etudiant $etudiant)
     {
         $this->etudiant = $etudiant;
     }
 
     /**
-     * @param Semestre           $semestre
-     * @param AnneeUniversitaire $anneeUniversitaire
-     *
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -82,10 +75,9 @@ class EtudiantExportReleve
             'notes'              => $this->getNotesEtudiantSemestre($semestre, $anneeUniversitaire),
             'syntheses'          => $this->myEvaluations->getStatistiques(),
             'anneeUniversitaire' => $semestre->getAnneeUniversitaire(),
-            'semestre'           => $semestre
+            'semestre'           => $semestre,
         ], 'releveNoteProvisoire-' . $this->etudiant->getNom() . '.pdf',
             $this->etudiant->getDepartement()->getLibelle());
-
     }
 
     public function getNotesEtudiantSemestre(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire)
@@ -98,7 +90,7 @@ class EtudiantExportReleve
     public function exportReleveDefinitif(Scolarite $scolarite)
     {
         return $this->myPdf::generePdf('pdf/releveDefinitif.html.twig', [
-            'scolarite' => $scolarite
+            'scolarite' => $scolarite,
         ], 'releveNotedefinitif-' . $scolarite->getEtudiant()->getNom() . '.pdf',
             $scolarite->getEtudiant()->getDepartement()->getLibelle());
     }
@@ -121,14 +113,14 @@ class EtudiantExportReleve
 
         $etudiants = $semestre->getEtudiants();
         foreach ($etudiants as $etudiant) {
-            if ($etudiant->getAnneeSortie() === 0) {
+            if (0 === $etudiant->getAnneeSortie()) {
                 $this->etudiant = $etudiant;
                 $this->myPdf::genereAndSavePdf('pdf/releveProvisoire.html.twig', [
                     'etudiant'           => $this->etudiant,
                     'notes'              => $this->getNotesEtudiantSemestre($semestre, $anneeUniversitaire),
                     'syntheses'          => $statistiques,
                     'anneeUniversitaire' => $anneeUniversitaire,
-                    'semestre'           => $semestre
+                    'semestre'           => $semestre,
                 ], 'releveNoteProvisoire-' . $this->etudiant->getNom(),
                     $this->dir,
                     $libelleDepartement);

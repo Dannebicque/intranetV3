@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Form/DiplomeType.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 20/07/2020 18:05
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/DiplomeType.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Form;
 
@@ -22,28 +24,23 @@ use Symfony\Component\OptionsResolver\Exception\AccessException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class DiplomeType
- * @package App\Form
+ * Class DiplomeType.
  */
 class DiplomeType extends AbstractType
 {
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('type_diplome', EntityType::class, [
                 'class'        => TypeDiplome::class,
                 'choice_label' => 'libelle',
-                'label'        => 'label.type_diplome'
+                'label'        => 'label.type_diplome',
             ])
             ->add('libelle', TextType::class, [
-                'label' => 'label.libelle'
+                'label' => 'label.libelle',
             ])
             ->add('sigle', TextType::class, [
-                'label' => 'label.sigle'
+                'label' => 'label.sigle',
             ])
             ->add('responsable_diplome', EntityType::class, [
                 'class'         => Personnel::class,
@@ -52,7 +49,7 @@ class DiplomeType extends AbstractType
                 },
                 'attr'          => ['class' => 'form-control selectpicker'],
                 'choice_label'  => 'display',
-                'label'         => 'label.responsable_diplome'
+                'label'         => 'label.responsable_diplome',
             ])
             ->add('assistant_diplome', EntityType::class, [
                 'class'         => Personnel::class,
@@ -61,41 +58,40 @@ class DiplomeType extends AbstractType
                 },
                 'attr'          => ['class' => 'form-control selectpicker'],
                 'choice_label'  => 'display',
-                'label'         => 'label.assistant_diplome'
+                'label'         => 'label.assistant_diplome',
             ])
             ->add('anneeUniversitaire', EntityType::class, [
                 'label'        => 'label.annee_courante',
                 'class'        => AnneeUniversitaire::class,
-                'choice_label' => 'displayAnneeUniversitaire'
+                'choice_label' => 'displayAnneeUniversitaire',
             ])
             ->add('code_diplome', TextType::class, [
-                'label' => 'label.code_diplome'
+                'label' => 'label.code_diplome',
             ])
             ->add('code_etape', TextType::class, [
-                'label' => 'label.code_etape'
+                'label' => 'label.code_etape',
             ])
             ->add('code_version', TextType::class, [
-                'label' => 'label.code_version'
+                'label' => 'label.code_version',
             ])
             ->add('code_departement', TextType::class, [
-                'label' => 'label.code_departement'
+                'label' => 'label.code_departement',
             ])
             ->add('opt_nb_jours_saisie', TextType::class, [
-                'label' => 'label.opt_nb_jours_saisie'
+                'label' => 'label.opt_nb_jours_saisie',
             ])
             ->add(
                 'opt_dilpome_decale',
                 YesNoType::class,
                 [
-
-                    'label' => 'label.opt_dilpome_decale'
+                    'label' => 'label.opt_dilpome_decale',
                 ]
             )
             ->add(
                 'opt_suppr_absence',
                 YesNoType::class,
                 [
-                    'label' => 'label.opt_suppr_absence'
+                    'label' => 'label.opt_suppr_absence',
                 ]
             )
             ->add(
@@ -105,53 +101,46 @@ class DiplomeType extends AbstractType
                     'choices'                   => ['choice.moymodules' => 'moymodules', 'choice.moyues' => 'moyues'],
                     'expanded'                  => true,
                     'label'                     => 'label.opt_methode_calcul',
-                    'choice_translation_domain' => 'form'
-
+                    'choice_translation_domain' => 'form',
                 ]
             )
             ->add(
                 'opt_anonymat',
                 YesNoType::class,
                 [
-                    'label' => 'label.opt_anonymat'
+                    'label' => 'label.opt_anonymat',
                 ]
             )
             ->add(
                 'opt_commentaires_releve',
                 YesNoType::class,
                 [
-
-                    'label' => 'label.opt_commentaires_releve'
+                    'label' => 'label.opt_commentaires_releve',
                 ]
             )
             ->add(
                 'opt_espace_perso_visible',
                 YesNoType::class,
                 [
-
                     'label' => 'label.opt_espace_perso_visible',
-
                 ]
             )
             ->add('volume_horaire', TextType::class, [
-                'label' => 'label.volume_horaire'
+                'label' => 'label.volume_horaire',
             ])
             ->add('code_celcat_departement', TextType::class, [
-                'label' => 'label.code_celcat_departement'
+                'label' => 'label.code_celcat_departement',
             ]);
     }
 
     /**
-     * @param OptionsResolver $resolver
-     *
      * @throws AccessException
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class'         => Diplome::class,
-            'translation_domain' => 'form'
-
+            'translation_domain' => 'form',
         ]);
     }
 }

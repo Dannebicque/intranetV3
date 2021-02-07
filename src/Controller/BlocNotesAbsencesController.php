@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/BlocNotesAbsencesController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 16/07/2020 08:41
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/BlocNotesAbsencesController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller;
 
@@ -16,32 +18,21 @@ use Exception;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class BlocNotesAbsencesController
- * @package App\Controller
+ * Class BlocNotesAbsencesController.
  */
 class BlocNotesAbsencesController extends BaseController
 {
-    /**
-     * @param MyPrevisionnel $myPrevisionnel
-     *
-     * @return Response
-     */
     public function personnel(MyPrevisionnel $myPrevisionnel): Response
     {
         return $this->render('bloc_notes_absences/personnel.html.twig', [
             'previsionnel' => $myPrevisionnel->getPrevisionnelEnseignantDepartement(
                 $this->getConnectedUser(),
                 $this->dataUserSession->getDepartement()
-            )
+            ),
         ]);
     }
 
     /**
-     *
-     * @param EtudiantAbsences $etudiantAbsences
-     * @param StatsAbsences    $statsAbsences
-     *
-     * @return Response
      * @throws Exception
      */
     public function etudiantAbsences(EtudiantAbsences $etudiantAbsences, StatsAbsences $statsAbsences): Response
@@ -55,16 +46,10 @@ class BlocNotesAbsencesController extends BaseController
         return $this->render('bloc_notes_absences/etudiant_absences.html.twig', [
             'absences'             => $absences,
             'etudiant'             => $this->getConnectedUser(),
-            'statistiquesAbsences' => $statistiquesAbsences
+            'statistiquesAbsences' => $statistiquesAbsences,
         ]);
     }
 
-    /**
-     *
-     * @param EtudiantNotes $etudiantNotes
-     *
-     * @return Response
-     */
     public function etudiantNotes(EtudiantNotes $etudiantNotes): Response
     {
         $etudiantNotes->setEtudiant($this->getConnectedUser());
@@ -80,7 +65,7 @@ class BlocNotesAbsencesController extends BaseController
     public function mccSemestre(MatiereRepository $matiereRepository): Response
     {
         return $this->render('bloc_notes_absences/mcc.html.twig', [
-            'matieres' => $matiereRepository->findBySemestre($this->getEtudiantSemestre())
+            'matieres' => $matiereRepository->findBySemestre($this->getEtudiantSemestre()),
         ]);
     }
 }

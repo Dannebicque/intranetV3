@@ -1,18 +1,20 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/CarnetController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/CarnetController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller\appPersonnel;
 
+use App\Classes\MyExport;
 use App\Controller\BaseController;
 use App\Entity\CahierTexte;
 use App\Entity\Constantes;
 use App\Event\CarnetEvent;
 use App\Form\CahierTexteType;
-use App\Classes\MyExport;
 use App\Repository\CahierTexteRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,8 +23,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
- * Class CarnetController
- * @package App\Controller
+ * Class CarnetController.
+ *
  * @Route("/application/personnel/carnet")
  * @IsGranted("ROLE_PERMANENT")
  */
@@ -30,9 +32,6 @@ class CarnetController extends BaseController
 {
     /**
      * @Route("/", name="application_personnel_carnet_index", methods="GET")
-     * @param CahierTexteRepository $cahierRepository
-     *
-     * @return Response
      */
     public function index(CahierTexteRepository $cahierRepository): Response
     {
@@ -45,16 +44,13 @@ class CarnetController extends BaseController
     /**
      * @Route("/export.{_format}", name="application_personnel_carnet_export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"})
-     * @param MyExport              $myExport
-     * @param CahierTexteRepository $cahierTexteRepository
      *
-     * @param                       $_format
-     *
-     * @return Response
+     * @param $_format
      */
     public function export(MyExport $myExport, CahierTexteRepository $cahierTexteRepository, $_format): Response
     {
         $actualites = $cahierTexteRepository->findByPersonnel($this->getConnectedUser());
+
         return $myExport->genereFichierGenerique(
             $_format,
             $actualites,
@@ -66,17 +62,13 @@ class CarnetController extends BaseController
                 'dateRetour',
                 'personnel' => ['nom', 'prenom'],
                 'semestre'  => ['libelle'],
-                'matiere'   => ['libelle', 'codeMatiere']
+                'matiere'   => ['libelle', 'codeMatiere'],
             ]
         );
     }
 
     /**
      * @Route("/new", name="application_personnel_carnet_new", methods="GET|POST")
-     * @param Request                  $request
-     * @param EventDispatcherInterface $eventDispatcher
-     *
-     * @return Response
      */
     public function create(
         Request $request,
@@ -90,8 +82,8 @@ class CarnetController extends BaseController
             [
                 'departement' => $this->dataUserSession->getDepartement(),
                 'attr'        => [
-                    'data-provide' => 'validation'
-                ]
+                    'data-provide' => 'validation',
+                ],
             ]
         );
         $form->handleRequest($request);
@@ -115,9 +107,6 @@ class CarnetController extends BaseController
 
     /**
      * @Route("/{id}", name="application_personnel_carnet_show", methods="GET")
-     * @param CahierTexte $cahierTexte
-     *
-     * @return Response
      */
     public function show(CahierTexte $cahierTexte): Response
     {
@@ -126,10 +115,6 @@ class CarnetController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="application_personnel_carnet_edit", methods="GET|POST")
-     * @param Request     $request
-     * @param CahierTexte $cahierTexte
-     *
-     * @return Response
      */
     public function edit(Request $request, CahierTexte $cahierTexte): Response
     {
@@ -139,8 +124,8 @@ class CarnetController extends BaseController
             [
                 'departement' => $this->dataUserSession->getDepartement(),
                 'attr'        => [
-                    'data-provide' => 'validation'
-                ]
+                    'data-provide' => 'validation',
+                ],
             ]
         );
         $form->handleRequest($request);
@@ -159,10 +144,6 @@ class CarnetController extends BaseController
 
     /**
      * @Route("/{id}", name="application_personnel_carnet_delete", methods="DELETE")
-     * @param Request     $request
-     * @param CahierTexte $cahierTexte
-     *
-     * @return Response
      */
     public function delete(Request $request, CahierTexte $cahierTexte): Response
     {
@@ -179,9 +160,6 @@ class CarnetController extends BaseController
 
     /**
      * @Route("/{id}/duplicate", name="application_personnel_carnet_duplicate", methods="GET|POST")
-     * @param CahierTexte $cahierTexte
-     *
-     * @return Response
      */
     public function duplicate(CahierTexte $cahierTexte): Response
     {

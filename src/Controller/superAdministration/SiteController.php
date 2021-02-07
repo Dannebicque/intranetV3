@@ -1,17 +1,19 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/SiteController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/SiteController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller\superAdministration;
 
+use App\Classes\MyExport;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Site;
 use App\Form\SiteType;
-use App\Classes\MyExport;
 use App\Repository\SiteRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,9 +26,6 @@ class SiteController extends BaseController
 {
     /**
      * @Route("/", name="sa_site_index", methods="GET")
-     * @param SiteRepository $siteRepository
-     *
-     * @return Response
      */
     public function index(SiteRepository $siteRepository): Response
     {
@@ -35,12 +34,8 @@ class SiteController extends BaseController
 
     /**
      * @Route("/export.{_format}", name="sa_site_export", methods="GET", requirements={"_format"="csv|xlsx|pdf"})
-     * @param MyExport            $myExport
-     * @param SiteRepository      $siteRepository
      *
-     * @param                     $_format
-     *
-     * @return Response
+     * @param $_format
      */
     public function export(MyExport $myExport, SiteRepository $siteRepository, $_format): Response
     {
@@ -57,17 +52,14 @@ class SiteController extends BaseController
 
     /**
      * @Route("/new", name="sa_site_new", methods="GET|POST")
-     * @param Request $request
-     *
-     * @return Response
      */
     public function create(Request $request): Response
     {
         $site = new Site();
         $form = $this->createForm(SiteType::class, $site, [
             'attr' => [
-                'data-provide' => 'validation'
-            ]
+                'data-provide' => 'validation',
+            ],
         ]);
         $form->handleRequest($request);
 
@@ -87,9 +79,6 @@ class SiteController extends BaseController
 
     /**
      * @Route("/{id}", name="sa_site_show", methods="GET")
-     * @param Site $site
-     *
-     * @return Response
      */
     public function show(Site $site): Response
     {
@@ -98,17 +87,13 @@ class SiteController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="sa_site_edit", methods="GET|POST")
-     * @param Request $request
-     * @param Site    $site
-     *
-     * @return Response
      */
     public function edit(Request $request, Site $site): Response
     {
         $form = $this->createForm(SiteType::class, $site, [
             'attr' => [
-                'data-provide' => 'validation'
-            ]
+                'data-provide' => 'validation',
+            ],
         ]);
         $form->handleRequest($request);
 
@@ -127,9 +112,6 @@ class SiteController extends BaseController
 
     /**
      * @Route("/{id}/duplicate", name="sa_site_duplicate", methods="GET|POST")
-     * @param Site $site
-     *
-     * @return Response
      */
     public function duplicate(Site $site): Response
     {
@@ -145,16 +127,12 @@ class SiteController extends BaseController
 
     /**
      * @Route("/{id}", name="sa_site_delete", methods="DELETE")
-     * @param Request $request
-     * @param Site    $site
-     *
-     * @return Response
      */
     public function delete(Request $request, Site $site): Response
     {
         $id = $site->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
-            if (count($site->getUfrs()) === 0 && count($site->getUfrPrincipales()) === 0) {
+            if (0 === \count($site->getUfrs()) && 0 === \count($site->getUfrPrincipales())) {
                 $this->entityManager->remove($site);
                 $this->entityManager->flush();
 

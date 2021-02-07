@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/RhController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 04/12/2020 17:34
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/RhController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller\superAdministration;
 
@@ -19,8 +21,8 @@ use Symfony\Component\Ldap\Ldap;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class RhController
- * @package App\Controller\superAdministration
+ * Class RhController.
+ *
  * @Route("/administratif/ressources-humaines")
  */
 class RhController extends BaseController
@@ -36,41 +38,34 @@ class RhController extends BaseController
 
     /**
      * @Route("/show/{id}", name="sa_rh_personnel_show", options={"expose"=true})
-     * @param Personnel $personnel
-     *
-     * @return Response
      */
     public function show(Personnel $personnel): Response
     {
         return $this->render('super-administration/rh/show.html.twig', [
-            'personnel' => $personnel
+            'personnel' => $personnel,
         ]);
     }
 
     /**
      * @Route("/import", name="sa_rh_import_personnel")
-     * @param Request $request
-     *
-     * @return Response
      */
     public function import(Request $request): Response
     {
         //Todo: si fonctionne à faire en ajax?
-        if ($request->getMethod() === 'POST') {
+        if ('POST' === $request->getMethod()) {
             $username = $request->request->get('username');
             $ldap = Ldap::create('ext_ldap', [
                 'host'       => 'ldap.univ-reims.fr',
                 'encryption' => 'ssl',
             ]);
             $ldap->bind('uid=app-intranet-iut,ou=account,ou=app,dc=univ-reims,dc=fr', 'heXzHr7p7MKuccQ2UqKu');
-//supannEmpId ou uid
+            //supannEmpId ou uid
             $query = $ldap->query('ou=people,dc=univ-reims,dc=fr',
                 '(|(supannEmpId=' . $username . ')(uid=' . $username . ')(mail=' . $username . ')(sn=' . $username . '))');
             $results = $query->execute();
 
             return $this->render('super-administration/rh/liste-result.html.twig', [
             ]);
-
         }
 
         return $this->render('super-administration/rh/import.html.twig', [
@@ -79,17 +74,13 @@ class RhController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="sa_rh_personnel_edit", methods="GET|POST", options={"expose":true})
-     * @param Request   $request
-     * @param Personnel $personnel
-     *
-     * @return Response
      */
     public function edit(Request $request, Personnel $personnel): Response
     {
         $form = $this->createForm(PersonnelType::class, $personnel, [
             'attr' => [
-                'data-provide' => 'validation'
-            ]
+                'data-provide' => 'validation',
+            ],
         ]);
         $form->handleRequest($request);
 
@@ -108,9 +99,7 @@ class RhController extends BaseController
 
     /**
      * @Route("/create", name="sa_rh_add_personnel", methods="GET|POST")
-     * @param Request $request
      *
-     * @return Response
      * @throws JsonException
      */
     public function create(Request $request): Response
@@ -118,8 +107,8 @@ class RhController extends BaseController
         $personnel = new Personnel();
         $form = $this->createForm(PersonnelType::class, $personnel, [
             'attr' => [
-                'data-provide' => 'validation'
-            ]
+                'data-provide' => 'validation',
+            ],
         ]);
         $form->handleRequest($request);
 
@@ -140,11 +129,6 @@ class RhController extends BaseController
 
     /**
      * @Route("/{id}", name="sa_rh_delete_personnel", methods="DELETE", options={"expose"=true})
-     * @param PersonnelDepartementRepository $personnelDepartementRepository
-     * @param Request                        $request
-     * @param Personnel                      $personnel
-     *
-     * @return Response
      */
     public function delete(
         PersonnelDepartementRepository $personnelDepartementRepository,

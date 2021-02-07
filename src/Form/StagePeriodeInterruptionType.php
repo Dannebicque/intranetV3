@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Form/StagePeriodeInterruptionType.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/StagePeriodeInterruptionType.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Form;
 
@@ -33,15 +35,15 @@ class StagePeriodeInterruptionType extends AbstractType
             })
             ->addEventListener(FormEvents::PRE_SET_DATA, static function(FormEvent $event) {
                 $stagePeriodeInterruption = $event->getData();
-                if ($stagePeriodeInterruption !== null) {
+                if (null !== $stagePeriodeInterruption) {
                     $form = $event->getForm();
                     $form->add('dateRange', DateRangeType::class, [
                         'label'     => 'dateRange.interruption',
                         'mapped'    => false,
                         'date_data' => [
                             'from' => $stagePeriodeInterruption->getDateDebut(),
-                            'to'   => $stagePeriodeInterruption->getDateFin()
-                        ]
+                            'to'   => $stagePeriodeInterruption->getDateFin(),
+                        ],
                     ]);
                 }
             });

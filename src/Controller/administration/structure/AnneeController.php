@@ -1,9 +1,12 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/structure/AnneeController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 15/10/2020 12:30
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/structure/AnneeController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
 
 namespace App\Controller\administration\structure;
 
@@ -20,29 +23,25 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/administration/structure/annee")
- *
  */
 class AnneeController extends BaseController
 {
     /**
      * @Route("/nouveau/{diplome}", name="administration_annee_new",
      *                                    methods="GET|POST")
-     * @param Request $request
-     *
-     * @param Diplome $diplome
      *
      * @return RedirectResponse|Response
      */
     public function create(Request $request, Diplome $diplome)
     {
-        if ($diplome->getDepartement() !== null) {
+        if (null !== $diplome->getDepartement()) {
             $annee = new Annee();
             $annee->setDiplome($diplome);
             $form = $this->createForm(AnneeType::class, $annee, [
                 'departement' => $diplome->getDepartement(),
                 'attr'        => [
-                    'data-provide' => 'validation'
-                ]
+                    'data-provide' => 'validation',
+                ],
             ]);
             $form->handleRequest($request);
 
@@ -65,9 +64,6 @@ class AnneeController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_annee_show", methods="GET")
-     * @param Annee $annee
-     *
-     * @return Response
      */
     public function show(Annee $annee): Response
     {
@@ -76,23 +72,20 @@ class AnneeController extends BaseController
 
     /**
      * @Route("/{id}/modifier", name="administration_annee_edit", methods="GET|POST")
-     * @param Request $request
-     * @param Annee   $annee
      *
-     * @return Response
      * @throws LogicException
      */
     public function edit(Request $request, Annee $annee): Response
     {
-        if ($annee->getDiplome() !== null && $annee->getDiplome()->getDepartement() !== null) {
+        if (null !== $annee->getDiplome() && null !== $annee->getDiplome()->getDepartement()) {
             $form = $this->createForm(
                 AnneeType::class,
                 $annee,
                 [
                     'departement' => $annee->getDiplome()->getDepartement()->getId(),
                     'attr'        => [
-                        'data-provide' => 'validation'
-                    ]
+                        'data-provide' => 'validation',
+                    ],
                 ]
             );
             $form->handleRequest($request);
@@ -115,9 +108,6 @@ class AnneeController extends BaseController
 
     /**
      * @Route("/{id}/duplicate", name="administration_annee_duplicate", methods="GET|POST")
-     * @param Annee $annee
-     *
-     * @return Response
      */
     public function duplicate(Annee $annee): Response
     {
@@ -132,18 +122,14 @@ class AnneeController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_annee_delete", methods="DELETE")
-     * @param Request $request
-     * @param Annee   $annee
-     *
-     * @return Response
      */
     public function delete(Request $request, Annee $annee): Response
     {
         $id = $annee->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token')) &&
-            count($annee->getSemestres()) === 0 &&
-            count($annee->getAlternances()) === 0 &&
-            count($annee->getApcNiveaux()) === 0) {
+            0 === \count($annee->getSemestres()) &&
+            0 === \count($annee->getAlternances()) &&
+            0 === \count($annee->getApcNiveaux())) {
             $this->entityManager->remove($annee);
             $this->entityManager->flush();
             $this->addFlashBag(

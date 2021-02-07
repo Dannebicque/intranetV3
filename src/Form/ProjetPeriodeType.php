@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ProjetPeriodeType.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 06/09/2020 10:59
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ProjetPeriodeType.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Form;
 
@@ -41,7 +43,7 @@ class ProjetPeriodeType extends AbstractType
                 },
                 'required'      => true,
                 'expanded'      => true,
-                'multiple'      => false
+                'multiple'      => false,
             ])
             ->add('responsables', EntityType::class, [
                 'label'         => 'label.responsables',
@@ -52,12 +54,12 @@ class ProjetPeriodeType extends AbstractType
                 'choice_label'  => 'display',
                 'query_builder' => function(PersonnelRepository $personnelRepository) {
                     return $personnelRepository->findByDepartementBuilder($this->departement);
-                }
+                },
             ])
             ->add('anneeUniversitaire', EntityType::class, [
                 'label'        => 'label.anneeUniversitaire',
                 'choice_label' => 'displayAnneeUniversitaire',
-                'class'        => AnneeUniversitaire::class
+                'class'        => AnneeUniversitaire::class,
             ])
             ->addEventListener(FormEvents::POST_SUBMIT, static function(FormEvent $event) {
                 $stagePeriode = $event->getData();
@@ -72,10 +74,9 @@ class ProjetPeriodeType extends AbstractType
                 $form->add('dateRange', DateRangeType::class, [
                     'label'     => 'dateRange.periode',
                     'mapped'    => false,
-                    'date_data' => ['from' => $stagePeriode->getDateDebut(), 'to' => $stagePeriode->getDateFin()]
+                    'date_data' => ['from' => $stagePeriode->getDateDebut(), 'to' => $stagePeriode->getDateFin()],
                 ]);
             });
-
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -83,7 +84,7 @@ class ProjetPeriodeType extends AbstractType
         $resolver->setDefaults([
             'data_class'         => ProjetPeriode::class,
             'departement'        => null,
-            'translation_domain' => 'form'
+            'translation_domain' => 'form',
         ]);
     }
 }

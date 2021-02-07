@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Alternance.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Alternance.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:49
+ */
 
 namespace App\Entity;
 
@@ -19,13 +21,11 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
  */
 class Alternance extends BaseEntity
 {
-
     public const ALTERNANCE_APPRENTISSAGE = 'apprentissage';
     public const ALTERNANCE_PROFESSIONALISATION = 'professionalisation';
     public const ALTERNANCE_ETAT_INITIALISE = 'init';
     public const ALTERNANCE_ETAT_COMPLETE = 'complete';
     public const ALTERNANCE_ETAT_VALIDE = 'valide';
-
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Entreprise", cascade={"persist", "remove"})

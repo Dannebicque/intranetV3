@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Parcour.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 08/08/2020 08:19
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Parcour.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:49
+ */
 
 namespace App\Entity;
 
@@ -50,17 +52,12 @@ class Parcour extends BaseEntity
         $this->groupes = new ArrayCollection();
     }
 
-    /**
-     * @return null|string
-     */
     public function getLibelle(): ?string
     {
         return $this->libelle;
     }
 
     /**
-     * @param string $libelle
-     *
      * @return Parcour
      */
     public function setLibelle(string $libelle): self
@@ -79,8 +76,6 @@ class Parcour extends BaseEntity
     }
 
     /**
-     * @param Matiere $matiere
-     *
      * @return Parcour
      */
     public function addMatiere(Matiere $matiere): self
@@ -94,8 +89,6 @@ class Parcour extends BaseEntity
     }
 
     /**
-     * @param Matiere $matiere
-     *
      * @return Parcour
      */
     public function removeMatiere(Matiere $matiere): self
@@ -111,17 +104,12 @@ class Parcour extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return Semestre|null
-     */
     public function getSemestre(): ?Semestre
     {
         return $this->semestre;
     }
 
     /**
-     * @param Semestre $semestre
-     *
      * @return Parcour
      */
     public function setSemestre(Semestre $semestre): self
@@ -131,14 +119,9 @@ class Parcour extends BaseEntity
         return $this;
     }
 
-
-
-    /**
-     * @return Diplome|null
-     */
     public function getDiplome(): ?Diplome
     {
-        if ($this->semestre !== null && $this->semestre->getAnnee() !== null && $this->semestre->getAnnee()->getDiplome() !== null) {
+        if (null !== $this->semestre && null !== $this->semestre->getAnnee() && null !== $this->semestre->getAnnee()->getDiplome()) {
             return $this->semestre->getAnnee()->getDiplome();
         }
 

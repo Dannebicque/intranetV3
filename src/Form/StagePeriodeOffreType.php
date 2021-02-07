@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Form/StagePeriodeOffreType.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/StagePeriodeOffreType.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Form;
 
@@ -24,10 +26,6 @@ class StagePeriodeOffreType extends AbstractType
     private $departement;
     private $annee;
 
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->departement = $options['departement'];
@@ -41,9 +39,9 @@ class StagePeriodeOffreType extends AbstractType
                 'required'       => false,
                 'label'          => 'label.fichier',
                 'download_label' => 'label.apercu',
-                'allow_delete'   => false
+                'allow_delete'   => false,
             ])
-            ->add('stagePeriodes', EntityType::class, array(
+            ->add('stagePeriodes', EntityType::class, [
                 'class'         => StagePeriode::class,
                 'label'         => 'label.stagePeriodes',
                 'choice_label'  => 'libelle',
@@ -53,18 +51,17 @@ class StagePeriodeOffreType extends AbstractType
                 },
                 'required'      => true,
                 'expanded'      => true,
-                'multiple'      => true
-            ));
-
+                'multiple'      => true,
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class'         => StagePeriodeOffre::class,
-            'departement'          => null,
-            'annee'          => null,
-            'translation_domain' => 'form'
+            'departement'        => null,
+            'annee'              => null,
+            'translation_domain' => 'form',
         ]);
     }
 }

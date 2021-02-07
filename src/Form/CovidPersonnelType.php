@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Form/CovidPersonnelType.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/CovidPersonnelType.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Form;
 
@@ -16,15 +18,10 @@ use Symfony\Component\OptionsResolver\Exception\AccessException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class PersonnelType
- * @package App\Form
+ * Class PersonnelType.
  */
 class CovidPersonnelType extends AbstractType
 {
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -36,22 +33,19 @@ class CovidPersonnelType extends AbstractType
             ->add('mail_perso', TextType::class, [
                 'label'    => 'label.mail_perso',
                 'required' => false,
-                'help'     => 'Indiquer votre mail personnel permettra de faire suivre l\'attestation en PDF sur vos deux adresses. Sans obligation.'
+                'help'     => 'Indiquer votre mail personnel permettra de faire suivre l\'attestation en PDF sur vos deux adresses. Sans obligation.',
             ])
             ->add('adresse', AdresseType::class, ['label' => 'label.adresse']);
     }
 
     /**
-     * @param OptionsResolver $resolver
-     *
      * @throws AccessException
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class'         => Personnel::class,
-            'translation_domain' => 'form'
-
+            'translation_domain' => 'form',
         ]);
     }
 }

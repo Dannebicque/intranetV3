@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Form/QuizzQuestionType.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 21/11/2020 07:26
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/QuizzQuestionType.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Form;
 
@@ -26,10 +28,9 @@ class QuizzQuestionType extends AbstractType
                     'expanded' => true,
                     'multiple' => false,
                     'choices'  => QuestionnaireQuestion::LISTE_TYPE_QUESTION,
-                    'help'     => 'texte d\'aide'
+                    'help'     => 'texte d\'aide',
                 ]);
     }
-
 
     public function configureOptions(OptionsResolver $resolver): void
     {

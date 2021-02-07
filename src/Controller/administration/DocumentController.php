@@ -1,9 +1,12 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/DocumentController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 18/12/2020 11:24
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/DocumentController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
 
 namespace App\Controller\administration;
 
@@ -28,9 +31,6 @@ class DocumentController extends BaseController
 {
     /**
      * @Route("/", name="administration_document_index", methods="GET")
-     * @param DocumentRepository $documentRepository
-     *
-     * @return Response
      */
     public function index(DocumentRepository $documentRepository): Response
     {
@@ -41,11 +41,8 @@ class DocumentController extends BaseController
     /**
      * @Route("/export.{_format}", name="administration_document_export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"})
-     * @param MyExport           $myExport
-     * @param DocumentRepository $documentRepository
-     * @param                    $_format
      *
-     * @return Response
+     * @param $_format
      */
     public function export(MyExport $myExport, DocumentRepository $documentRepository, $_format): Response
     {
@@ -62,9 +59,7 @@ class DocumentController extends BaseController
 
     /**
      * @Route("/new", name="administration_document_new", methods="GET|POST")
-     * @param Request $request
      *
-     * @return Response
      * @throws Exception
      */
     public function create(Request $request): Response
@@ -76,8 +71,8 @@ class DocumentController extends BaseController
             [
                 'departement' => $this->dataUserSession->getDepartement(),
                 'attr'        => [
-                    'data-provide' => 'validation'
-                ]
+                    'data-provide' => 'validation',
+                ],
             ]
         );
         $form->handleRequest($request);
@@ -100,10 +95,7 @@ class DocumentController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_document_show", methods="GET")
-     * @param Document $document
      * @ParamConverter("document", options={"mapping": {"id": "uuid"}})
-     *
-     * @return Response
      */
     public function show(Document $document): Response
     {
@@ -112,11 +104,7 @@ class DocumentController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_document_edit", methods="GET|POST")
-     * @param Request  $request
-     * @param Document $document
      * @ParamConverter("document", options={"mapping": {"id": "uuid"}})
-     *
-     * @return Response
      */
     public function edit(Request $request, Document $document): Response
     {
@@ -126,8 +114,8 @@ class DocumentController extends BaseController
             [
                 'departement' => $this->dataUserSession->getDepartement(),
                 'attr'        => [
-                    'data-provide' => 'validation'
-                ]
+                    'data-provide' => 'validation',
+                ],
             ]
         );
         $form->handleRequest($request);
@@ -135,7 +123,7 @@ class DocumentController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'document.edit.success.flash');
-            if ($request->request->get('btn_update') !== null) {
+            if (null !== $request->request->get('btn_update')) {
                 return $this->redirectToRoute('administration_document_index');
             }
 
@@ -150,14 +138,8 @@ class DocumentController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_document_delete", methods="DELETE")
-     * @param DocumentFavoriEtudiantRepository $documentFavoriEtudiantRepository
-     * @param DocumentFavoriPersonnelRepository $documentFavoriPersonnelRepository
-     * @param Request $request
-     * @param Document $document
      *
-     * @return Response
      * @ParamConverter("document", options={"mapping": {"id": "uuid"}})
-     *
      */
     public function delete(
         DocumentFavoriEtudiantRepository $documentFavoriEtudiantRepository,
@@ -167,7 +149,6 @@ class DocumentController extends BaseController
     ): Response {
         $id = $document->getUuidString();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
-
             //suppression des favoris
             $docs = $documentFavoriEtudiantRepository->findBy(['document' => $document->getId()]);
             foreach ($docs as $doc) {
@@ -192,10 +173,8 @@ class DocumentController extends BaseController
 
     /**
      * @Route("/{id}/duplicate", name="administration_document_duplicate", methods="GET|POST")
-     * @param Document $document
      * @ParamConverter("document", options={"mapping": {"id": "uuid"}})
      *
-     * @return Response
      * @throws Exception
      */
     public function duplicate(Document $document): Response

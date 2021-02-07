@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ProjetEtudiantEtudiantType.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 26/09/2020 08:52
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ProjetEtudiantEtudiantType.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Form;
 
@@ -38,7 +40,7 @@ class ProjetEtudiantEtudiantType extends AbstractType
                     return $etudiantRepository->findBySemestreBuilder($this->semestre);
                 },
                 'multiple'      => true,
-                'expanded'      => true
+                'expanded'      => true,
             ])
             ->add('tempComplet', YesNoType::class)
             ->add('duree', TextType::class,
@@ -46,11 +48,11 @@ class ProjetEtudiantEtudiantType extends AbstractType
             ->add('uniteDuree', ChoiceType::class, [
                 'choices'  => [
                     ProjetEtudiant::DUREE_HEURE => ProjetEtudiant::DUREE_HEURE,
-                    ProjetEtudiant::DUREE_JOUR  => ProjetEtudiant::DUREE_JOUR
+                    ProjetEtudiant::DUREE_JOUR  => ProjetEtudiant::DUREE_JOUR,
                 ],
                 'expanded' => true,
                 'label'    => 'label.uniteduree',
-                'help'     => 'Choisir si la durée est exprimée en nombre de jour ou en heure par semaine'
+                'help'     => 'Choisir si la durée est exprimée en nombre de jour ou en heure par semaine',
             ]);
     }
 
@@ -59,7 +61,7 @@ class ProjetEtudiantEtudiantType extends AbstractType
         $resolver->setDefaults([
             'data_class'         => ProjetEtudiant::class,
             'translation_domain' => 'form',
-            'semestre'           => null
+            'semestre'           => null,
         ]);
     }
 }

@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Site.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Site.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:49
+ */
 
 namespace App\Entity;
 
@@ -52,33 +54,22 @@ class Site extends BaseEntity
         $this->ufrPrincipales = new ArrayCollection();
     }
 
-    /**
-     * @return mixed
-     */
     public function getLibelle()
     {
         return $this->libelle;
     }
 
-    /**
-     * @param mixed $libelle
-     */
     public function setLibelle($libelle): void
     {
         $this->libelle = $libelle;
     }
 
-    /**
-     * @return Adresse|null
-     */
     public function getAdresse(): ?Adresse
     {
         return $this->adresse;
     }
 
     /**
-     * @param Adresse|null $adresse
-     *
      * @return Site
      */
     public function setAdresse(?Adresse $adresse): self
@@ -97,8 +88,6 @@ class Site extends BaseEntity
     }
 
     /**
-     * @param Ufr $ufr
-     *
      * @return Site
      */
     public function addUfr(Ufr $ufr): self
@@ -112,8 +101,6 @@ class Site extends BaseEntity
     }
 
     /**
-     * @param Ufr $ufr
-     *
      * @return Site
      */
     public function removeUfr(Ufr $ufr): self
@@ -135,8 +122,6 @@ class Site extends BaseEntity
     }
 
     /**
-     * @param Salle $salle
-     *
      * @return Site
      */
     public function addSalle(Salle $salle): self
@@ -150,8 +135,6 @@ class Site extends BaseEntity
     }
 
     /**
-     * @param Salle $salle
-     *
      * @return Site
      */
     public function removeSalle(Salle $salle): self

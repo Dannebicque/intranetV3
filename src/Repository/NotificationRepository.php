@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/NotificationRepository.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 08/08/2020 08:37
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/NotificationRepository.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Repository;
 
@@ -23,13 +25,10 @@ use Exception;
  */
 class NotificationRepository extends ServiceEntityRepository
 {
-
     private const DAYS_BEFORE_REMOVE = 30;
 
     /**
      * NotificationRepository constructor.
-     *
-     * @param ManagerRegistry $registry
      */
     public function __construct(ManagerRegistry $registry)
     {
@@ -37,7 +36,6 @@ class NotificationRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return mixed
      * @throws Exception
      */
     public function deleteOldNotification()
@@ -46,7 +44,6 @@ class NotificationRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return QueryBuilder
      * @throws Exception
      */
     public function getDeleteOldNotification(): QueryBuilder
@@ -69,7 +66,6 @@ class NotificationRepository extends ServiceEntityRepository
         $query->setParameter('user', $user->getId());
 
         return $query->getQuery()->getResult();
-
     }
 
     public function findByUser($user)

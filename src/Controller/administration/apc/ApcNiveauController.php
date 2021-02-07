@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcNiveauController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 08/01/2021 16:12
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcNiveauController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller\administration\apc;
 
@@ -21,13 +23,8 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ApcNiveauController extends BaseController
 {
-
     /**
      * @Route("/{competence}/new", name="administration_apc_niveau_new", methods={"GET","POST"})
-     * @param Request       $request
-     * @param ApcCompetence $competence
-     *
-     * @return Response
      */
     public function new(Request $request, ApcCompetence $competence): Response
     {
@@ -46,16 +43,12 @@ class ApcNiveauController extends BaseController
         return $this->render('apc/apc_niveau/new.html.twig', [
             'apc_niveau' => $apcNiveau,
             'form'       => $form->createView(),
-            'competence' => $competence
+            'competence' => $competence,
         ]);
     }
 
     /**
      * @Route("/{id}/edit", name="administration_apc_niveau_edit", methods={"GET","POST"})
-     * @param Request   $request
-     * @param ApcNiveau $apcNiveau
-     *
-     * @return Response
      */
     public function edit(Request $request, ApcNiveau $apcNiveau): Response
     {
@@ -78,10 +71,6 @@ class ApcNiveauController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_apc_niveau_delete", methods={"DELETE"})
-     * @param Request   $request
-     * @param ApcNiveau $apcNiveau
-     *
-     * @return Response
      */
     public function delete(Request $request, ApcNiveau $apcNiveau): Response
     {

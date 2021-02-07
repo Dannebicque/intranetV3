@@ -1,9 +1,12 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EtudiantController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 12/12/2020 14:31
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EtudiantController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
 
 namespace App\Controller\administration;
 
@@ -24,16 +27,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class EtudiantController
- * @package App\Controller\administration
+ * Class EtudiantController.
+ *
  * @Route("/administration/etudiant")
  */
 class EtudiantController extends BaseController
 {
     /**
      * @Route("/", name="administration_etudiant_index")
-     *
-     * @return Response
      */
     public function index(): Response
     {
@@ -43,10 +44,8 @@ class EtudiantController extends BaseController
 
     /**
      * @Route("/edit/{id}/{origin}", name="administration_etudiant_edit", methods="GET|POST")
-     * @param Request  $request
-     * @param Etudiant $etudiant
-     * @param string   $origin
-     * @return Response
+     *
+     * @param string $origin
      */
     public function edit(Request $request, Etudiant $etudiant, $origin = 'semestre'): Response
     {
@@ -55,9 +54,9 @@ class EtudiantController extends BaseController
             $etudiant,
             [
                 'attr'        => [
-                    'data-provide' => 'validation'
+                    'data-provide' => 'validation',
                 ],
-                'departement' => $this->dataUserSession->getDepartement()
+                'departement' => $this->dataUserSession->getDepartement(),
             ]
         );
 
@@ -69,14 +68,13 @@ class EtudiantController extends BaseController
 
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'etudiant.edit.success.flash');
 
-            if ($request->request->get('btn_update') !== null) {
-                if ($origin === 'semestre' && $etudiant->getSemestre() !== null) {
+            if (null !== $request->request->get('btn_update')) {
+                if ('semestre' === $origin && null !== $etudiant->getSemestre()) {
                     return $this->redirectToRoute('administration_semestre_index',
                         ['semestre' => $etudiant->getSemestre()->getId()]);
                 }
 
                 return $this->redirectToRoute('administration_etudiant_index');
-
             }
 
             $this->redirectToRoute('administration_etudiant_index', ['semestre' => $etudiant->getSemestre()->getId()]);
@@ -85,16 +83,13 @@ class EtudiantController extends BaseController
         return $this->render('administration/etudiant/edit.html.twig', [
             'etudiant' => $etudiant,
             'form'     => $form->createView(),
-            'origin'   => $origin
+            'origin'   => $origin,
         ]);
     }
 
-
     /**
      * @Route("/add", name="administration_etudiant_add", methods="POST")
-     * @param Request $request
      *
-     * @return Response
      * @throws Exception
      */
     public function create(Request $request): Response
@@ -106,9 +101,9 @@ class EtudiantController extends BaseController
             $etudiant,
             [
                 'attr'        => [
-                    'data-provide' => 'validation'
+                    'data-provide' => 'validation',
                 ],
-                'departement' => $this->dataUserSession->getDepartement()
+                'departement' => $this->dataUserSession->getDepartement(),
             ]
         );
 
@@ -127,11 +122,8 @@ class EtudiantController extends BaseController
     /**
      * @Route("/change-etat/{uuid}/{etat}", name="adm_etudiant_change_etat", methods="POST", options={"expose":true})
      * @ParamConverter("etudiant", options={"mapping": {"uuid": "uuid"}})
-     * @param EtudiantScolarite $etudiantScolarite
-     * @param Etudiant          $etudiant
-     * @param                   $etat
      *
-     * @return JsonResponse
+     * @param $etat
      */
     public function changeEtat(EtudiantScolarite $etudiantScolarite, Etudiant $etudiant, $etat): JsonResponse
     {
@@ -144,10 +136,6 @@ class EtudiantController extends BaseController
     /**
      * @Route("/demissionnaire/{uuid}", name="administration_etudiant_demissionnaire", methods="GET")
      * @ParamConverter("etudiant", options={"mapping": {"uuid": "uuid"}})
-     * @param EtudiantScolarite $etudiantScolarite
-     * @param Etudiant          $etudiant
-     *
-     * @return RedirectResponse
      */
     public function demissionnaire(
         EtudiantScolarite $etudiantScolarite,
@@ -161,11 +149,6 @@ class EtudiantController extends BaseController
 
     /**
      * @Route("/edit-ajax/{id}", name="adm_etudiant_edit_ajax", methods="POST", options={"expose":true})
-     * @param EtudiantUpdate $etudiantUpdate
-     * @param Request        $request
-     * @param Etudiant       $etudiant
-     *
-     * @return JsonResponse
      */
     public function editAjax(EtudiantUpdate $etudiantUpdate, Request $request, Etudiant $etudiant): JsonResponse
     {
@@ -177,15 +160,11 @@ class EtudiantController extends BaseController
         return $this->json(true, Response::HTTP_OK);
     }
 
-
     /**
      * @Route("/export.{_format}", name="administration_all_etudiant_export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"})
-     * @param MyExport           $myExport
-     * @param EtudiantRepository $etudiantRepository
-     * @param                    $_format
      *
-     * @return Response
+     * @param $_format
      */
     public function export(MyExport $myExport, EtudiantRepository $etudiantRepository, $_format): Response
     {
@@ -199,6 +178,4 @@ class EtudiantController extends BaseController
             ['nom', 'prenom', 'civilite', 'numEtudiant', 'mailUniv', 'semestre' => ['libelle']]
         );
     }
-
-
 }

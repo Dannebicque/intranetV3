@@ -1,18 +1,20 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/QuestionnaireEtudiantReponseRepository.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 21/01/2021 09:19
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/QuestionnaireEtudiantReponseRepository.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Repository;
 
-use App\Entity\QuestionnaireQualite;
 use App\Entity\QuestionnaireEtudiant;
 use App\Entity\QuestionnaireEtudiantReponse;
+use App\Entity\QuestionnaireQualite;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method QuestionnaireEtudiantReponse|null find($id, $lockMode = null, $lockVersion = null)
@@ -32,7 +34,6 @@ class QuestionnaireEtudiantReponseRepository extends ServiceEntityRepository
      * @param                       $cle
      * @param QuestionnaireEtudiant $quizzEtudiant
      *
-     * @return mixed
      * @throws NonUniqueResultException
      */
     public function findExistQuestion(
@@ -74,7 +75,5 @@ class QuestionnaireEtudiantReponseRepository extends ServiceEntityRepository
             ->orderBy('q.cleQuestion', 'ASC')
             ->getQuery()
             ->getResult();
-
-
     }
 }

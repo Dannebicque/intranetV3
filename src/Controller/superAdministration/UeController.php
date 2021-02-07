@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/UeController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/UeController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller\superAdministration;
 
@@ -25,21 +27,16 @@ class UeController extends BaseController
 {
     /**
      * @Route("/new/{semestre}", name="sa_ue_new", methods="GET|POST")
-     * @param Request  $request
-     *
-     * @param Semestre $semestre
-     *
-     * @return Response
      */
     public function create(Request $request, Semestre $semestre): Response
     {
-        if ($semestre->getAnnee() !== null) {
+        if (null !== $semestre->getAnnee()) {
             $ue = new Ue($semestre);
             $form = $this->createForm(UeType::class, $ue, [
                 'diplome' => $semestre->getAnnee()->getDiplome(),
                 'attr'    => [
-                    'data-provide' => 'validation'
-                ]
+                    'data-provide' => 'validation',
+                ],
             ]);
             $form->handleRequest($request);
 
@@ -65,9 +62,6 @@ class UeController extends BaseController
 
     /**
      * @Route("/{id}", name="sa_ue_show", methods="GET")
-     * @param Ue $ue
-     *
-     * @return Response
      */
     public function show(Ue $ue): Response
     {
@@ -76,19 +70,15 @@ class UeController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="sa_ue_edit", methods="GET|POST")
-     * @param Request $request
-     * @param Ue      $ue
-     *
-     * @return Response
      */
     public function edit(Request $request, Ue $ue): Response
     {
-        if ($ue->getDiplome() !== null) {
+        if (null !== $ue->getDiplome()) {
             $form = $this->createForm(UeType::class, $ue, [
                 'diplome' => $ue->getDiplome(),
                 'attr'    => [
-                    'data-provide' => 'validation'
-                ]
+                    'data-provide' => 'validation',
+                ],
             ]);
             $form->handleRequest($request);
 
@@ -109,14 +99,10 @@ class UeController extends BaseController
         }
 
         return $this->redirectToRoute('erreur_666');
-
     }
 
     /**
      * @Route("/{id}/duplicate", name="sa_ue_duplicate", methods="GET|POST")
-     * @param Ue $ue
-     *
-     * @return Response
      */
     public function duplicate(Ue $ue): Response
     {
@@ -131,16 +117,12 @@ class UeController extends BaseController
 
     /**
      * @Route("/{id}", name="sa_ue_delete", methods="DELETE")
-     * @param Request $request
-     * @param Ue      $ue
-     *
-     * @return Response
      */
     public function delete(Request $request, Ue $ue): Response
     {
         $id = $ue->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
-            if (count($ue->getMatieres()) === 0) {
+            if (0 === \count($ue->getMatieres())) {
                 $this->entityManager->remove($ue);
                 $this->entityManager->flush();
                 $this->addFlashBag(
@@ -162,13 +144,8 @@ class UeController extends BaseController
     }
 
     /**
-     * @param Ue   $ue
-     * @param bool $etat
-     *
-     * @return RedirectResponse
      * @Route("/activate/{ue}/{etat}", methods={"GET"}, name="sa_ue_activate")
      * @IsGranted("ROLE_SUPER_ADMIN")
-     *
      */
     public function activate(Ue $ue, bool $etat): RedirectResponse
     {
@@ -177,6 +154,5 @@ class UeController extends BaseController
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'ue.activate.' . $etat . '.flash');
 
         return $this->redirectToRoute('super_admin_homepage');
-
     }
 }

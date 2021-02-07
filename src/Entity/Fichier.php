@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Fichier.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Fichier.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:49
+ */
 
 namespace App\Entity;
 
@@ -48,17 +50,12 @@ class Fichier
         return $this->id;
     }
 
-    /**
-     * @return null|string
-     */
     public function getLibelle(): ?string
     {
         return $this->libelle;
     }
 
     /**
-     * @param string $libelle
-     *
      * @return Fichier
      */
     public function setLibelle(string $libelle): self
@@ -68,17 +65,12 @@ class Fichier
         return $this;
     }
 
-    /**
-     * @return float|null
-     */
     public function getTaille(): ?float
     {
         return $this->taille;
     }
 
     /**
-     * @param float $taille
-     *
      * @return Fichier
      */
     public function setTaille(float $taille): self
@@ -97,8 +89,6 @@ class Fichier
     }
 
     /**
-     * @param CahierTexte $cahierTexte
-     *
      * @return Fichier
      */
     public function addCahierTexte(CahierTexte $cahierTexte): self
@@ -112,8 +102,6 @@ class Fichier
     }
 
     /**
-     * @param CahierTexte $cahierTexte
-     *
      * @return Fichier
      */
     public function removeCahierTexte(CahierTexte $cahierTexte): self

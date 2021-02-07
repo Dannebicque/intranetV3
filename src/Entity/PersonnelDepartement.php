@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/PersonnelDepartement.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 16/10/2020 11:52
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/PersonnelDepartement.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Entity;
 
@@ -51,9 +53,6 @@ class PersonnelDepartement
 
     /**
      * PersonnelDepartement constructor.
-     *
-     * @param Personnel   $personnel
-     * @param Departement $departement
      */
     public function __construct(Personnel $personnel, Departement $departement)
     {
@@ -68,17 +67,12 @@ class PersonnelDepartement
         return $this->id;
     }
 
-    /**
-     * @return Personnel|null
-     */
     public function getPersonnel(): ?Personnel
     {
         return $this->personnel;
     }
 
     /**
-     * @param Personnel|null $personnel
-     *
      * @return PersonnelDepartement
      */
     public function setPersonnel(?Personnel $personnel): self
@@ -88,17 +82,12 @@ class PersonnelDepartement
         return $this;
     }
 
-    /**
-     * @return Departement|null
-     */
     public function getDepartement(): ?Departement
     {
         return $this->departement;
     }
 
     /**
-     * @param Departement|null $departement
-     *
      * @return PersonnelDepartement
      */
     public function setDepartement(?Departement $departement): self
@@ -108,17 +97,12 @@ class PersonnelDepartement
         return $this;
     }
 
-    /**
-     * @return int|null
-     */
     public function getAnnee(): ?int
     {
         return $this->annee;
     }
 
     /**
-     * @param int $annee
-     *
      * @return PersonnelDepartement
      */
     public function setAnnee(int $annee): self
@@ -128,17 +112,12 @@ class PersonnelDepartement
         return $this;
     }
 
-    /**
-     * @return null|array
-     */
     public function getRoles(): ?array
     {
         return json_decode($this->roles);
     }
 
     /**
-     * @param string $role
-     *
      * @return PersonnelDepartement
      */
     public function addRole(string $role): self
@@ -156,6 +135,7 @@ class PersonnelDepartement
     public function clearRole(): self
     {
         $this->roles = json_encode([]);
+
         return $this;
     }
 
@@ -171,6 +151,7 @@ class PersonnelDepartement
         unset($roles[$key]);
         $roles = array_values($roles);
         $this->roles = json_encode($roles);
+
         return $this;
     }
 

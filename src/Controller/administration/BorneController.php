@@ -1,17 +1,20 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/BorneController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/BorneController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
 
 namespace App\Controller\administration;
 
+use App\Classes\MyExport;
 use App\Controller\BaseController;
 use App\Entity\Borne;
 use App\Entity\Constantes;
 use App\Form\BorneType;
-use App\Classes\MyExport;
 use App\Repository\BorneRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,9 +28,6 @@ class BorneController extends BaseController
 {
     /**
      * @Route("/", name="administration_borne_index", methods="GET")
-     * @param BorneRepository $borneRepository
-     *
-     * @return Response
      */
     public function index(BorneRepository $borneRepository): Response
     {
@@ -37,15 +37,13 @@ class BorneController extends BaseController
     /**
      * @Route("/export.{_format}", name="administration_borne_export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"})
-     * @param MyExport        $myExport
-     * @param BorneRepository $borneRepository
-     * @param                 $_format
      *
-     * @return Response
+     * @param $_format
      */
     public function export(MyExport $myExport, BorneRepository $borneRepository, $_format): Response
     {
         $bornes = $borneRepository->findByDepartement($this->dataUserSession->getDepartement(), 0);
+
         return $myExport->genereFichierGenerique(
             $_format,
             $bornes,
@@ -57,9 +55,6 @@ class BorneController extends BaseController
 
     /**
      * @Route("/{id}/duplicate", name="administration_borne_duplicate", methods="GET")
-     * @param Borne $borne
-     *
-     * @return Response
      */
     public function duplicate(Borne $borne): Response
     {
@@ -73,9 +68,6 @@ class BorneController extends BaseController
 
     /**
      * @Route("/new", name="administration_borne_new", methods="GET|POST")
-     * @param Request $request
-     *
-     * @return Response
      */
     public function create(Request $request): Response
     {
@@ -86,14 +78,13 @@ class BorneController extends BaseController
             [
                 'departement' => $this->dataUserSession->getDepartement(),
                 'attr'        => [
-                    'data-provide' => 'validation'
-                ]
+                    'data-provide' => 'validation',
+                ],
             ]
         );
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $this->entityManager->persist($borne);
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'borne.add.success.flash');
@@ -109,9 +100,6 @@ class BorneController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_borne_show", methods="GET")
-     * @param Borne $borne
-     *
-     * @return Response
      */
     public function show(Borne $borne): Response
     {
@@ -120,10 +108,6 @@ class BorneController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_borne_edit", methods="GET|POST")
-     * @param Request $request
-     * @param Borne   $borne
-     *
-     * @return Response
      */
     public function edit(Request $request, Borne $borne): Response
     {
@@ -133,8 +117,8 @@ class BorneController extends BaseController
             [
                 'departement' => $this->dataUserSession->getDepartement(),
                 'attr'        => [
-                    'data-provide' => 'validation'
-                ]
+                    'data-provide' => 'validation',
+                ],
             ]
         );
         $form->handleRequest($request);
@@ -142,7 +126,7 @@ class BorneController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'borne.edit.success.flash');
-            if ($request->request->get('btn_update') !== null) {
+            if (null !== $request->request->get('btn_update')) {
                 return $this->redirectToRoute('administration_borne_index');
             }
 
@@ -157,10 +141,6 @@ class BorneController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_borne_delete", methods="DELETE")
-     * @param Request $request
-     * @param Borne   $borne
-     *
-     * @return Response
      */
     public function delete(Request $request, Borne $borne): Response
     {
@@ -179,9 +159,6 @@ class BorneController extends BaseController
 
     /**
      * @Route("/visibilite/{id}", name="administration_borne_visibilite", options={"expose"=true})
-     * @param Borne $borne
-     *
-     * @return JsonResponse
      */
     public function visibilite(Borne $borne): JsonResponse
     {

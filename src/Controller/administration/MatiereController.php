@@ -1,20 +1,23 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/MatiereController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/MatiereController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
 
 namespace App\Controller\administration;
 
+use App\Classes\Configuration;
+use App\Classes\MyExport;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Diplome;
 use App\Entity\Matiere;
 use App\Entity\Ue;
 use App\Form\MatiereType;
-use App\Classes\Configuration;
-use App\Classes\MyExport;
 use App\Repository\MatiereRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,10 +28,8 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class MatiereController extends BaseController
 {
-
     /**
      * @Route("/", name="administration_matiere_index", methods="GET")
-     * @return Response
      */
     public function index(): Response
     {
@@ -37,37 +38,27 @@ class MatiereController extends BaseController
 
     /**
      * @Route("/diplome/{diplome}", name="administration_matiere_diplome", methods="GET", options={"expose":true})
-     * @param MatiereRepository $matiereRepository
-     * @param Diplome           $diplome
-     *
-     * @return Response
      */
     public function diplome(MatiereRepository $matiereRepository, Diplome $diplome): Response
     {
         return $this->render('administration/matiere/_tableau.html.twig', [
             'diplome'  => $diplome,
-            'matieres' => $matiereRepository->findByDiplome($diplome)
+            'matieres' => $matiereRepository->findByDiplome($diplome),
         ]);
     }
-
 
     /**
      * @Route("/{diplome}/export.{_format}", name="administration_matiere_export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"}, options={"expose":true})
-     * @param MyExport $myExport
-     * @param MatiereRepository $matiereRepository
-     * @param Diplome $diplome
-     * @param                   $_format
      *
-     * @return Response
+     * @param $_format
      */
     public function export(
         MyExport $myExport,
         MatiereRepository $matiereRepository,
         Diplome $diplome,
         $_format
-    ): Response
-    {
+    ): Response {
         $actualites = $matiereRepository->findByDiplome($diplome);
 
         return $myExport->genereFichierGenerique(
@@ -88,33 +79,23 @@ class MatiereController extends BaseController
                 'coefficient',
                 'pac',
                 'nbEcts',
-                'suspendu'
+                'suspendu',
             ]
         );
     }
 
-
     /**
      * @Route("/new/{diplome}/{ue}", name="administration_matiere_new", methods="GET|POST")
-     * @param Configuration $configuration
-     * @param Request       $request
-     *
-     * @param Diplome       $diplome
-     *
-     * @param Ue|null       $ue
-     *
-     * @return Response
      */
     public function create(Configuration $configuration, Request $request, Diplome $diplome, Ue $ue = null): Response
     {
-        if ($configuration->get('MODIFICATION_PPN') === '1') {
-
+        if ('1' === $configuration->get('MODIFICATION_PPN')) {
             $matiere = new Matiere();
             $form = $this->createForm(MatiereType::class, $matiere, [
                 'diplome' => $diplome,
                 'attr'    => [
-                    'data-provide' => 'validation'
-                ]
+                    'data-provide' => 'validation',
+                ],
             ]);
             $form->handleRequest($request);
 
@@ -122,7 +103,7 @@ class MatiereController extends BaseController
                 $this->entityManager->persist($matiere);
                 $this->entityManager->flush();
                 $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'matiere.add.success.flash');
-                if ($request->request->get('btn_update') !== null) {
+                if (null !== $request->request->get('btn_update')) {
                     return $this->redirectToRoute('administration_matiere_index');
                 }
 
@@ -140,9 +121,6 @@ class MatiereController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_matiere_show", methods="GET")
-     * @param Matiere $matiere
-     *
-     * @return Response
      */
     public function show(Matiere $matiere): Response
     {
@@ -151,20 +129,15 @@ class MatiereController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_matiere_edit", methods="GET|POST")
-     * @param Configuration $configuration
-     * @param Request       $request
-     * @param Matiere       $matiere
-     *
-     * @return Response
      */
     public function edit(Configuration $configuration, Request $request, Matiere $matiere): Response
     {
-        if ($configuration->get('MODIFICATION_PPN') === '1') {
+        if ('1' === $configuration->get('MODIFICATION_PPN')) {
             $form = $this->createForm(MatiereType::class, $matiere, [
                 'diplome' => $matiere->getSemestre()->getAnnee()->getDiplome(),
                 'attr'    => [
-                    'data-provide' => 'validation'
-                ]
+                    'data-provide' => 'validation',
+                ],
             ]);
             $form->handleRequest($request);
 
@@ -184,18 +157,12 @@ class MatiereController extends BaseController
         return $this->redirectToRoute('erreur_666');
     }
 
-
     /**
      * @Route("/{id}/duplicate", name="administration_matiere_duplicate", methods="GET|POST")
-     * @param Configuration $configuration
-     * @param Matiere       $matiere
-     *
-     * @return Response
      */
     public function duplicate(Configuration $configuration, Matiere $matiere): Response
     {
-
-        if ((int)$configuration->get('MODIFICATION_PPN') === '1') {
+        if ('1' === (int)$configuration->get('MODIFICATION_PPN')) {
             $newMatiere = clone $matiere;
 
             $this->entityManager->persist($newMatiere);

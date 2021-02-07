@@ -43,7 +43,22 @@
                         <td class="hide">{{ nnote.evaluation.dateEvaluation ? nnote.evaluation.dateEvaluation|format_datetime('long',
                                 'short') : '' }}</td>
                         <td class="hide">{{ nnote.evaluation.commentaire }}</td>
-                        <td>{{ nnote.note|format_note(2, 10) }}</td>
+                        <td>
+                            {% if nnote.absence_justifie == true %}
+                                Absence justifiée
+                            {% else %}
+                                {# todo: améliorer l'affichage. -0.01 absence de note #}
+                                {% if nnote.note == -0.01 and nnote.evaluation.matiere.pac == true %}
+                                    Pas d'option
+                                {% else %}
+                                    {% if nnote.note == -0.01 %}
+                                        Note non saisie
+                                    {% else %}
+                                        {{ nnote.note|format_note(2, 10) }}
+                                    {% endif %}
+                                {% endif %}
+                            {% endif %}
+                        </td>
                         <td class="hide">{{ nnote.evaluation.coefficient|number_format(2) }}</td>
                         <td>
                             <button data-provide="modaler tooltip"

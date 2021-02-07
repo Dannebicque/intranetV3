@@ -1,17 +1,20 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/MaterielController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/MaterielController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
 
 namespace App\Controller\administration;
 
+use App\Classes\MyExport;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Materiel;
 use App\Form\MaterielType;
-use App\Classes\MyExport;
 use App\Repository\MaterielRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,9 +27,6 @@ class MaterielController extends BaseController
 {
     /**
      * @Route("/", name="administration_materiel_index", methods="GET")
-     * @param MaterielRepository $materielRepository
-     *
-     * @return Response
      */
     public function index(MaterielRepository $materielRepository): Response
     {
@@ -37,16 +37,13 @@ class MaterielController extends BaseController
     /**
      * @Route("/export.{_format}", name="administration_materiel_export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"})
-     * @param MyExport            $myExport
-     * @param MaterielRepository  $materielRepository
      *
-     * @param                     $_format
-     *
-     * @return Response
+     * @param $_format
      */
     public function export(MyExport $myExport, MaterielRepository $materielRepository, $_format): Response
     {
         $materiels = $materielRepository->findByDepartement($this->dataUserSession->getDepartement());
+
         return $myExport->genereFichierGenerique(
             $_format,
             $materiels,
@@ -58,18 +55,15 @@ class MaterielController extends BaseController
 
     /**
      * @Route("/new", name="administration_materiel_new", methods="GET|POST")
-     * @param Request $request
-     *
-     * @return Response
      */
     public function create(Request $request): Response
     {
         $materiel = new Materiel();
         $form = $this->createForm(MaterielType::class, $materiel, [
             'attr'        => [
-                'data-provide' => 'validation'
+                'data-provide' => 'validation',
             ],
-            'departement' => $this->dataUserSession->getDepartement()
+            'departement' => $this->dataUserSession->getDepartement(),
         ]);
         $form->handleRequest($request);
 
@@ -89,9 +83,6 @@ class MaterielController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_materiel_show", methods="GET")
-     * @param Materiel $materiel
-     *
-     * @return Response
      */
     public function show(Materiel $materiel): Response
     {
@@ -100,25 +91,21 @@ class MaterielController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_materiel_edit", methods="GET|POST")
-     * @param Request  $request
-     * @param Materiel $materiel
-     *
-     * @return Response
      */
     public function edit(Request $request, Materiel $materiel): Response
     {
         $form = $this->createForm(MaterielType::class, $materiel, [
             'attr'        => [
-                'data-provide' => 'validation'
+                'data-provide' => 'validation',
             ],
-            'departement' => $this->dataUserSession->getDepartement()
+            'departement' => $this->dataUserSession->getDepartement(),
         ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'materiel.edit.success.flash');
-            if ($request->request->get('btn_update') !== null) {
+            if (null !== $request->request->get('btn_update')) {
                 return $this->redirectToRoute('administration_materiel_index');
             }
 
@@ -133,10 +120,6 @@ class MaterielController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_materiel_delete", methods="DELETE")
-     * @param Request  $request
-     * @param Materiel $materiel
-     *
-     * @return Response
      */
     public function delete(Request $request, Materiel $materiel): Response
     {
@@ -159,9 +142,6 @@ class MaterielController extends BaseController
 
     /**
      * @Route("/{id}/duplicate", name="administration_materiel_duplicate", methods="GET|POST")
-     * @param Materiel $materiel
-     *
-     * @return Response
      */
     public function duplicate(Materiel $materiel): Response
     {
@@ -173,5 +153,4 @@ class MaterielController extends BaseController
 
         return $this->redirectToRoute('administration_materiel_edit', ['id' => $newMateriel->getId()]);
     }
-
 }

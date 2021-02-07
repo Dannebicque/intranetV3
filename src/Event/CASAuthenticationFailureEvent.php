@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Event/CASAuthenticationFailureEvent.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Event/CASAuthenticationFailureEvent.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:51
+ */
 
 namespace App\Event;
 
@@ -25,43 +27,28 @@ class CASAuthenticationFailureEvent extends Event
         $this->response = $response;
     }
 
-    /**
-     * @return Response
-     */
     public function getResponse(): Response
     {
         return $this->response;
     }
 
-    /**
-     * @param Response $response
-     */
     public function setResponse(Response $response): void
     {
         $this->response = $response;
     }
 
-    /**
-     * @return Request
-     */
     public function getRequest(): Request
     {
         return $this->request;
     }
 
-    /**
-     * @return AuthenticationException
-     */
     public function getException(): AuthenticationException
     {
         return $this->exception;
     }
 
-    /**
-     * @return string
-     */
     public function getExceptionType(): string
     {
-        return get_class($this->exception);
+        return \get_class($this->exception);
     }
 }

@@ -1,15 +1,14 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyConfiguration.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 10/12/2020 08:44
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyConfiguration.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:10
+ */
 
-/**
- * Created by PhpStorm.
- * User: davidannebicque
- * Date: 19/05/2018
- * Time: 18:48
+/*
+ * Pull your hearder here, for exemple, Licence header.
  */
 
 namespace App\Classes;
@@ -23,11 +22,9 @@ use App\Repository\DiplomeRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use function strlen;
 
 /**
- * Class MyConfiguration
- * @package App\Classes
+ * Class MyConfiguration.
  */
 class MyConfiguration
 {
@@ -47,14 +44,6 @@ class MyConfiguration
 
     /**
      * MyConfiguration constructor.
-     *
-     * @param DepartementRepository        $departementRepository
-     * @param DiplomeRepository            $diplomeRepository
-     * @param AnneeRepository              $anneeRepository
-     * @param SemestreRepository           $semestreRepository
-     * @param PersonnelRepository          $personnelRepository
-     * @param AnneeUniversitaireRepository $anneeUniversitaireRepository
-     * @param EntityManagerInterface       $entityManager
      */
     public function __construct(
         DepartementRepository $departementRepository,
@@ -79,8 +68,6 @@ class MyConfiguration
      * @param $id
      * @param $name
      * @param $value
-     *
-     * @return boolean
      */
     public function updateOption($type, $id, $name, $value): bool
     {
@@ -102,8 +89,6 @@ class MyConfiguration
      * @param $id
      * @param $name
      * @param $value
-     *
-     * @return bool
      */
     private function updateDepartement($id, $name, $value): bool
     {
@@ -122,27 +107,27 @@ class MyConfiguration
     /**
      * @param $value
      *
-     * @return Personnel|bool|null|AnneeUniversitaire
+     * @return Personnel|bool|AnneeUniversitaire|null
      */
     private function transformeValue($value)
     {
-        if ($value === 'false') {
+        if ('false' === $value) {
             return false;
         }
 
-        if ($value === 'true') {
+        if ('true' === $value) {
             return true;
         }
 
-        if (0 === strpos($value, 'pers')) {
-            return $this->personnelRepository->find(substr($value, 4, strlen($value)));
+        if (0 === mb_strpos($value, 'pers')) {
+            return $this->personnelRepository->find(mb_substr($value, 4, mb_strlen($value)));
         }
 
-        if (0 === strpos($value, 'anneeuniv')) {
-            return $this->anneeUniversitaireRepository->find(substr($value, 9, strlen($value)));
+        if (0 === mb_strpos($value, 'anneeuniv')) {
+            return $this->anneeUniversitaireRepository->find(mb_substr($value, 9, mb_strlen($value)));
         }
 
-        if (empty($value) && $value !== '0') {
+        if (empty($value) && '0' !== $value) {
             return null;
         }
 
@@ -153,8 +138,6 @@ class MyConfiguration
      * @param $id
      * @param $name
      * @param $value
-     *
-     * @return bool
      */
     private function updateDiplome($id, $name, $value): bool
     {
@@ -173,8 +156,6 @@ class MyConfiguration
      * @param $id
      * @param $name
      * @param $value
-     *
-     * @return bool
      */
     private function updateAnnee($id, $name, $value): bool
     {
@@ -193,8 +174,6 @@ class MyConfiguration
      * @param $id
      * @param $name
      * @param $value
-     *
-     * @return bool
      */
     private function updateSemestre($id, $name, $value): bool
     {

@@ -1,9 +1,15 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Rdd/MyExportRdd.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 15/01/2021 16:08
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Rdd/MyExportRdd.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
+/*
+ * Pull your hearder here, for exemple, Licence header.
+ */
 
 namespace App\Classes\Rdd;
 
@@ -18,26 +24,18 @@ class MyExportRdd
 {
     private MyExcelWriter $myExcelWriter;
 
-
     /**
      * MyExport constructor.
-     *
-     * @param MyExcelWriter $myExcelWriter
      */
     public function __construct(
         MyExcelWriter $myExcelWriter
-
     ) {
         $this->myExcelWriter = $myExcelWriter;
     }
 
     /**
-     *
-     *
      * @param RddDiplome[] $diplomes
      * @param Etudiant[]   $etudiants
-     *
-     * @return null|StreamedResponse
      */
     public function genereFichier(
         $diplomes,
@@ -64,14 +62,14 @@ class MyExportRdd
             'confirme',
             'mail URCA',
             'mail Perso',
-            'update'
+            'update',
         ];
         $this->myExcelWriter->ecritLigne($tEnTete, 1, 1);
 
         $ligne = 2;
 
         foreach ($diplomes as $diplome) {
-            if (array_key_exists($diplome->getNumEtudiant(), $etudiants)) {
+            if (\array_key_exists($diplome->getNumEtudiant(), $etudiants)) {
                 $t = [
                     $diplome->getNumEtudiant(),
                     $etudiants[$diplome->getNumEtudiant()]->getCiviliteLong(),
@@ -82,19 +80,18 @@ class MyExportRdd
                     $diplome->getLibelleDiplome(),
                     $etudiants[$diplome->getNumEtudiant()]->getNumIne(),
                     $etudiants[$diplome->getNumEtudiant()]->getTel1(),
-                    $etudiants[$diplome->getNumEtudiant()]->getAdresse() !== null ? $etudiants[$diplome->getNumEtudiant()]->getAdresse()->getAdresse1() : '-',
-                    $etudiants[$diplome->getNumEtudiant()]->getAdresse() !== null ? $etudiants[$diplome->getNumEtudiant()]->getAdresse()->getAdresse2() : '-',
-                    $etudiants[$diplome->getNumEtudiant()]->getAdresse() !== null ? $etudiants[$diplome->getNumEtudiant()]->getAdresse()->getAdresse3() : '-',
-                    $etudiants[$diplome->getNumEtudiant()]->getAdresse() !== null ? $etudiants[$diplome->getNumEtudiant()]->getAdresse()->getCodePostal() : '-',
-                    $etudiants[$diplome->getNumEtudiant()]->getAdresse() !== null ? $etudiants[$diplome->getNumEtudiant()]->getAdresse()->getVille() : '-',
-                    $etudiants[$diplome->getNumEtudiant()]->getAdresse() !== null ? $etudiants[$diplome->getNumEtudiant()]->getAdresse()->getPays() : '-',
-                    $etudiants[$diplome->getNumEtudiant()]->getAdresse() !== null ? str_replace("<br />", "\r\n",
+                    null !== $etudiants[$diplome->getNumEtudiant()]->getAdresse() ? $etudiants[$diplome->getNumEtudiant()]->getAdresse()->getAdresse1() : '-',
+                    null !== $etudiants[$diplome->getNumEtudiant()]->getAdresse() ? $etudiants[$diplome->getNumEtudiant()]->getAdresse()->getAdresse2() : '-',
+                    null !== $etudiants[$diplome->getNumEtudiant()]->getAdresse() ? $etudiants[$diplome->getNumEtudiant()]->getAdresse()->getAdresse3() : '-',
+                    null !== $etudiants[$diplome->getNumEtudiant()]->getAdresse() ? $etudiants[$diplome->getNumEtudiant()]->getAdresse()->getCodePostal() : '-',
+                    null !== $etudiants[$diplome->getNumEtudiant()]->getAdresse() ? $etudiants[$diplome->getNumEtudiant()]->getAdresse()->getVille() : '-',
+                    null !== $etudiants[$diplome->getNumEtudiant()]->getAdresse() ? $etudiants[$diplome->getNumEtudiant()]->getAdresse()->getPays() : '-',
+                    null !== $etudiants[$diplome->getNumEtudiant()]->getAdresse() ? str_replace('<br />', "\r\n",
                         $etudiants[$diplome->getNumEtudiant()]->getAdresse()->getDisplay()) : '-',
-                    $diplome->getConfirme() === true ? 'Oui' : 'Non',
+                    true === $diplome->getConfirme() ? 'Oui' : 'Non',
                     $etudiants[$diplome->getNumEtudiant()]->getMailUniv(),
                     $etudiants[$diplome->getNumEtudiant()]->getMailUniv(),
-                    $diplome->getUpdated()->format('d/m/Y H:i')
-
+                    $diplome->getUpdated()->format('d/m/Y H:i'),
                 ];
             } else {
                 $t = [
@@ -112,14 +109,13 @@ class MyExportRdd
                     '',
                     '',
                     '',
-                    $diplome->getConfirme() === true ? 'Oui' : 'Non',
+                    true === $diplome->getConfirme() ? 'Oui' : 'Non',
                     '',
-                    ''
+                    '',
                 ];
             }
             $this->myExcelWriter->ecritLigne($t, 1, $ligne);
-            $ligne++;
-
+            ++$ligne;
         }
         $this->myExcelWriter->getColumnsAutoSize('A', 'Z');
         $writer = new Xlsx($this->myExcelWriter->getSpreadsheet());
@@ -132,7 +128,7 @@ class MyExportRdd
             200,
             [
                 'Content-Type'        => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                'Content-Disposition' => 'attachment;filename="rdd' . $date->format('d-m-Y') . '.xlsx"'
+                'Content-Disposition' => 'attachment;filename="rdd' . $date->format('d-m-Y') . '.xlsx"',
             ]
         );
     }

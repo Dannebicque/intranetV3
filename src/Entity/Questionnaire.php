@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Questionnaire.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 21/11/2020 08:34
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Questionnaire.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:49
+ */
 
 namespace App\Entity;
 
@@ -19,7 +21,6 @@ use Ramsey\Uuid\Uuid;
  */
 abstract class Questionnaire extends BaseEntity
 {
-
     use UuidTrait;
 
     /**
@@ -36,8 +37,6 @@ abstract class Questionnaire extends BaseEntity
      * @ORM\Column(type="datetime")
      */
     private ?DateTimeInterface $dateFermeture;
-
-
 
     /**
      * @ORM\Column(type="string", length=150)

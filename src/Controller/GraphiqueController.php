@@ -1,12 +1,13 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/GraphiqueController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 12/01/2021 15:05
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/GraphiqueController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller;
-
 
 use App\Classes\MyEvaluations;
 use App\Entity\Evaluation;
@@ -15,8 +16,8 @@ use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 use Symfony\UX\Chartjs\Model\Chart;
 
 /**
- * Class ActualiteController
- * @package App\Controller
+ * Class ActualiteController.
+ *
  * @Route("/graphiques")
  */
 class GraphiqueController extends BaseController
@@ -27,14 +28,14 @@ class GraphiqueController extends BaseController
         Evaluation $evaluation,
         $repartition = null
     ) {
-        if ($repartition === null) {
+        if (null === $repartition) {
             $myEvaluations->setMatiere($evaluation->getMatiere());
             $myEvaluations->getEvaluationsMatiere($this->dataUserSession->getAnneeUniversitaire());
             $repartition = $myEvaluations->getStatistiques()[$evaluation->getId()];
         }
 
         $labels = [];
-        for ($i = 0; $i <= 20; $i++) {
+        for ($i = 0; $i <= 20; ++$i) {
             $labels[] = $i;
         }
 
@@ -54,6 +55,5 @@ class GraphiqueController extends BaseController
         return $this->render('graphique/evaluation.html.twig', [
             'chart' => $chart,
         ]);
-
     }
 }

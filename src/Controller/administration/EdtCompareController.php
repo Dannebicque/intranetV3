@@ -1,9 +1,12 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtCompareController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtCompareController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
 
 namespace App\Controller\administration;
 
@@ -17,8 +20,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class EdtController
- * @package App\Controller\administration
+ * Class EdtController.
+ *
  * @Route("/administration/emploi-du-temps/compare")
  */
 class EdtCompareController extends BaseController
@@ -29,9 +32,6 @@ class EdtCompareController extends BaseController
 
     /**
      * EdtRealiseController constructor.
-     *
-     * @param EdtPlanningRepository $edtPlanningRepository
-     * @param CalendrierRepository  $calendrierRepository
      */
     public function __construct(
         EdtPlanningRepository $edtPlanningRepository,
@@ -42,12 +42,8 @@ class EdtCompareController extends BaseController
     }
 
     /**
+     * @param $source
      *
-     * @param ComparePrevisionnelPersonnel $myPrevisionnel
-     *
-     * @param                              $source
-     *
-     * @return Response
      * @Route("/personnels/{source}", name="administration_edt_compare_personnels", methods={"GET"})
      */
     public function comparePersonnel(ComparePrevisionnelPersonnel $myPrevisionnel, $source): Response
@@ -58,17 +54,13 @@ class EdtCompareController extends BaseController
         return $this->render('administration/edtCompare/comparePersonnel.html.twig', [
             'comparatifs' => $comparatif,
             'personnels'  => $myPrevisionnel->getPersonnels(),
-            'source'      => $source
+            'source'      => $source,
         ]);
     }
 
     /**
+     * @param $source
      *
-     * @param ComparePrevisonnelMatiere $myPrevisionnel
-     *
-     * @param                           $source
-     *
-     * @return Response
      * @Route("/matieres/{source}", name="administration_edt_compare_matiere", methods={"GET"})
      */
     public function compareMatiereAction(ComparePrevisonnelMatiere $myPrevisionnel, $source): Response
@@ -79,15 +71,11 @@ class EdtCompareController extends BaseController
         return $this->render('administration/edtCompare/compareMatieres.html.twig', [
             'comparatifs' => $comparatif,
             'matieres'    => $myPrevisionnel->getMatieres(),
-            'source'      => $source
+            'source'      => $source,
         ]);
     }
 
     /**
-     *
-     * @param Matiere $matiere
-     *
-     * @return Response
      * @Route("/ajax/enseignants/plusinfo/{matiere}", name="administration_edt_compare_plus_info")
      */
     public function comparePlusInfoAction(Matiere $matiere): Response
@@ -100,9 +88,7 @@ class EdtCompareController extends BaseController
         return $this->render('administration/edtCompare/_plusInfo.html.twig', [
             'planning'   => $planning,
             'matiere'    => $matiere,
-            'calendrier' => $calendrier
+            'calendrier' => $calendrier,
         ]);
     }
-
-
 }

@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appEtudiant/RattrapageController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 20/09/2020 15:12
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appEtudiant/RattrapageController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller\appEtudiant;
 
@@ -21,18 +23,16 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * @Route("/application/etudiant/rattrapage")
  * Class RattrapageController
- * @package App\Controller\appEtudiant
  * @IsGranted("ROLE_ETUDIANT")
  */
 class RattrapageController extends BaseController
 {
     /**
      * @Route("/", name="application_etudiant_rattrapage_index")
-     * @param RattrapageRepository $rattrapageRepository
-     * @param Request              $request
      *
      * @return RedirectResponse|Response
      * @throws Exception
+     *
      */
     public function index(
         RattrapageRepository $rattrapageRepository,
@@ -46,9 +46,9 @@ class RattrapageController extends BaseController
                 'semestre' => $this->getConnectedUser()->getSemestre(),
                 'locale'   => $request->getLocale(),
                 'attr'     => [
-                    'data-provide' => 'validation'
+                    'data-provide' => 'validation',
                 ],
-                'action'   => $this->generateUrl('application_etudiant_rattrapage_index')
+                'action'   => $this->generateUrl('application_etudiant_rattrapage_index'),
             ]
         );
         $form->handleRequest($request);
@@ -63,7 +63,7 @@ class RattrapageController extends BaseController
 
         return $this->render('appEtudiant/rattrapage/index.html.twig', [
             'form'        => $form->createView(),
-            'rattrapages' => $rattrapageRepository->findByEtudiant($this->getConnectedUser())
+            'rattrapages' => $rattrapageRepository->findByEtudiant($this->getConnectedUser()),
         ]);
     }
 }

@@ -1,9 +1,12 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/AbsenceController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 12/12/2020 14:31
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/AbsenceController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
 
 namespace App\Controller\administration;
 
@@ -30,8 +33,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
- * Class AbsenceController
- * @package App\Controller\administration
+ * Class AbsenceController.
+ *
  * @Route("/administration/absence")
  */
 class AbsenceController extends BaseController
@@ -39,11 +42,7 @@ class AbsenceController extends BaseController
     /**
      * @Route("/semestre/etudiant/{etudiant}", name="administration_absences_liste_absence_etudiant",
      *                                         options={"expose":true})
-     * @param EtudiantAbsences $etudiantAbsences
-     * @param StatsAbsences    $statsAbsences
-     * @param Etudiant         $etudiant
      *
-     * @return Response
      * @throws Exception
      */
     public function listeAbsenceEtudiant(
@@ -60,16 +59,13 @@ class AbsenceController extends BaseController
         return $this->render('administration/absence/_listeEtudiant.html.twig', [
             'absences'             => $absences,
             'etudiant'             => $etudiant,
-            'statistiquesAbsences' => $statistiquesAbsences
+            'statistiquesAbsences' => $statistiquesAbsences,
         ]);
     }
 
     /**
      * @Route("/semestre/{semestre}/liste", name="administration_absences_semestre_liste")
-     * @param MyAbsences $myAbsences
-     * @param Semestre   $semestre
      *
-     * @return Response
      * @throws Exception
      */
     public function liste(MyAbsences $myAbsences, Semestre $semestre): Response
@@ -78,46 +74,35 @@ class AbsenceController extends BaseController
 
         return $this->render('administration/absence/liste.html.twig', [
             'semestre' => $semestre,
-            'absences' => $myAbsences
+            'absences' => $myAbsences,
         ]);
     }
 
     /**
      * @Route("/semestre/{semestre}/justifier", name="administration_absences_semestre_justifier")
-     * @param Semestre $semestre
-     *
-     * @return Response
      */
     public function justifier(Semestre $semestre): Response
     {
         return $this->render('administration/absence/justifier.html.twig', [
-            'semestre' => $semestre
+            'semestre' => $semestre,
         ]);
     }
 
     /**
      * @Route("/semestre/{semestre}/saisie", name="administration_absences_semestre_saisie")
-     * @param Semestre $semestre
-     *
-     * @return Response
      */
     public function saisie(Semestre $semestre): Response
     {
         return $this->render('administration/absence/saisie.html.twig', [
-            'semestre' => $semestre
+            'semestre' => $semestre,
         ]);
     }
 
     /**
      * @Route("/semestre/{semestre}/justificatif/export.{_format}", name="administration_absences_semestre_justificatif_export",
      *                                                              requirements={"_format"="csv|xlsx|pdf"})
-     * @param MyExport                      $myExport
-     * @param AbsenceJustificatifRepository $absenceJustificatifRepository
-     * @param Semestre                      $semestre
      *
-     * @param                               $_format
-     *
-     * @return Response
+     * @param $_format
      */
     public function exportJustificatif(
         MyExport $myExport,
@@ -133,13 +118,9 @@ class AbsenceController extends BaseController
     /**
      * @Route("/semestre/{semestre}/export.{_format}", name="administration_absences_semestre_liste_export",
      *                                                 requirements={"_format"="csv|xlsx|pdf"})
-     * @param MyExport   $myExport
-     * @param MyAbsences $myAbsences
-     * @param Semestre   $semestre
      *
-     * @param            $_format
+     * @param $_format
      *
-     * @return Response
      * @throws Exception
      */
     public function export(MyExport $myExport, MyAbsences $myAbsences, Semestre $semestre, $_format): Response
@@ -152,13 +133,8 @@ class AbsenceController extends BaseController
     /**
      * @Route("/all/semestre/{semestre}/export.{_format}", name="administration_all_absences_semestre_export",
      *                                                     requirements={"_format"="csv|xlsx|pdf"})
-     * @param MyExport          $myExport
-     * @param AbsenceRepository $absenceRepository
-     * @param Semestre          $semestre
      *
-     * @param                   $_format
-     *
-     * @return Response
+     * @param $_format
      */
     public function exportAllAbsences(
         MyExport $myExport,
@@ -180,19 +156,13 @@ class AbsenceController extends BaseController
                 'etudiant'  => ['nom', 'prenom'],
                 'justifie',
                 'matiere'   => ['libelle'],
-                'personnel' => ['nom', 'prenom']
+                'personnel' => ['nom', 'prenom'],
             ]
         );
     }
 
     /**
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param Absence                  $absence
-     * @param bool                     $etat
-     *
-     * @return JsonResponse
      * @Route("/ajax/justifie/{absence}/{etat}", name="administration_absences_justifie", options={"expose":true})
-     *
      */
     public function justifie(
         EventDispatcherInterface $eventDispatcher,
@@ -202,7 +172,7 @@ class AbsenceController extends BaseController
         $absence->setJustifie($etat);
         $this->entityManager->flush();
 
-        if ($etat === true) {
+        if (true === $etat) {
             $event = new AbsenceEvent($absence);
             $eventDispatcher->dispatch($event, AbsenceEvent::JUSTIFIED);
         }
@@ -211,14 +181,6 @@ class AbsenceController extends BaseController
     }
 
     /**
-     * @param MatiereRepository  $matiereRepository
-     * @param Request            $request
-     *
-     *
-     * @param EtudiantRepository $etudiantRepository
-     * @param EtudiantAbsences   $etudiantAbsences
-     *
-     * @return JsonResponse
      * @throws Exception
      * @Route("/ajax/addabs",
      *     name="administration_absences_ajax_add",
@@ -232,9 +194,9 @@ class AbsenceController extends BaseController
         EtudiantAbsences $etudiantAbsences
     ): JsonResponse {
         $etudiant = $etudiantRepository->find($request->request->get('etudiant'));
-        if ($etudiant !== null) {
+        if (null !== $etudiant) {
             $matiere = $matiereRepository->find($request->request->get('matiere'));
-            if ($matiere !== null) {
+            if (null !== $matiere) {
                 $etudiantAbsences->setEtudiant($etudiant);
                 $absence = $etudiantAbsences->addAbsence(
                     Tools::convertDateHeureToObject($request->request->get('date'), $request->request->get('heure')),
@@ -254,10 +216,6 @@ class AbsenceController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_absence_delete", methods="DELETE", options={"expose":true})
-     * @param Request $request
-     * @param Absence $absence
-     *
-     * @return Response
      */
     public function delete(Request $request, Absence $absence): Response
     {

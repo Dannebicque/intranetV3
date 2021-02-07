@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appEtudiant/CovidController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appEtudiant/CovidController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:36
+ */
 
 namespace App\Controller\appEtudiant;
 
@@ -19,29 +21,23 @@ use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
 /**
- * Class AbsenceController
- * @package App\Controller
+ * Class AbsenceController.
+ *
  * @Route("/application/etudiant/covid")
  */
 class CovidController extends BaseController
 {
     public function index(CovidAttestationEtudiantRepository $covidAttestationEtudiantRepository): Response
     {
-
         return $this->render('appEtudiant/covid/_index.html.twig', [
-            'convocations' => $covidAttestationEtudiantRepository->findNext($this->getConnectedUser())
+            'convocations' => $covidAttestationEtudiantRepository->findNext($this->getConnectedUser()),
         ]);
     }
 
     /**
-     *
      * @Route("/export/{id}.pdf", name="app_etudiant_covid_attestation_pdf")
      * @ParamConverter("absence", options={"mapping": {"uuid": "uuid"}})
      *
-     * @param MyExportPresence         $myExportPresence
-     * @param CovidAttestationEtudiant $attestationEtudiant
-     *
-     * @return Response
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError

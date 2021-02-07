@@ -1,9 +1,12 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/AlternanceFicheSuiviController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/AlternanceFicheSuiviController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
 
 namespace App\Controller\administration;
 
@@ -25,11 +28,7 @@ class AlternanceFicheSuiviController extends BaseController
 {
     /**
      * @Route("/new/{alternance}", name="administration_alternance_fiche_suivi_new", methods={"GET","POST"})
-     * @param Request    $request
      *
-     * @param Alternance $alternance
-     *
-     * @return Response
      * @throws Exception
      */
     public function new(Request $request, Alternance $alternance): Response
@@ -54,8 +53,6 @@ class AlternanceFicheSuiviController extends BaseController
 
     /**
      * @Route("/imprimer/{id}", name="administration_alternance_fiche_suivi_export", methods={"GET"})
-     * @param MyAlternanceFicheSuivi $myAlternanceFicheSuivi
-     * @param AlternanceFicheSuivi   $alternanceFicheSuivi
      *
      * @throws \Twig\Error\LoaderError
      * @throws \Twig\Error\RuntimeError
@@ -68,12 +65,8 @@ class AlternanceFicheSuiviController extends BaseController
         $myAlternanceFicheSuivi->print($alternanceFicheSuivi);
     }
 
-
     /**
      * @Route("/{id}", name="administration_alternance_fiche_suivi_show", methods={"GET"})
-     * @param AlternanceFicheSuivi $alternanceFicheSuivi
-     *
-     * @return Response
      */
     public function show(AlternanceFicheSuivi $alternanceFicheSuivi): Response
     {
@@ -84,10 +77,6 @@ class AlternanceFicheSuiviController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_alternance_fiche_suivi_edit", methods={"GET","POST"})
-     * @param Request              $request
-     * @param AlternanceFicheSuivi $alternanceFicheSuivi
-     *
-     * @return Response
      */
     public function edit(Request $request, AlternanceFicheSuivi $alternanceFicheSuivi): Response
     {
@@ -98,7 +87,7 @@ class AlternanceFicheSuiviController extends BaseController
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'fiche_suivi.edit.success.flash');
 
-            if ($request->request->get('btn_update') !== null && $alternanceFicheSuivi->getAlternance() !== null) {
+            if (null !== $request->request->get('btn_update') && null !== $alternanceFicheSuivi->getAlternance()) {
                 return $this->redirectToRoute('administration_alternance_show',
                     ['alternance' => $alternanceFicheSuivi->getAlternance()->getId()]);
             }
@@ -115,10 +104,6 @@ class AlternanceFicheSuiviController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_alternance_fiche_suivi_delete", methods={"DELETE"})
-     * @param Request              $request
-     * @param AlternanceFicheSuivi $alternanceFicheSuivi
-     *
-     * @return Response
      */
     public function delete(Request $request, AlternanceFicheSuivi $alternanceFicheSuivi): Response
     {
@@ -130,11 +115,10 @@ class AlternanceFicheSuiviController extends BaseController
             $entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'fiche_suivi.delete.success.flash');
         }
-        if ($alternance !== null) {
+        if (null !== $alternance) {
             return $this->redirectToRoute('administration_alternance_show', ['alternance' => $alternance->getId()]);
         }
 
         return $this->redirectToRoute('administration_index');
     }
-
 }

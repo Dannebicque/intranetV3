@@ -1,12 +1,17 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/SousCommission/SousCommission.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 25/01/2021 10:15
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/SousCommission/SousCommission.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
+/*
+ * Pull your hearder here, for exemple, Licence header.
+ */
 
 namespace App\Classes\SousCommission;
-
 
 use App\Classes\Etudiant\EtudiantAbsences;
 use App\Classes\Etudiant\EtudiantNotes;
@@ -66,13 +71,6 @@ class SousCommission
 
     /**
      * SousCommission constructor.
-     *
-     * @param EntityManagerInterface $entityManager
-     * @param EtudiantRepository     $etudiantRepository
-     * @param UeRepository           $ueRepository
-     * @param MatiereRepository      $matiereRepository
-     * @param EtudiantNotes          $etudiantNotes
-     * @param EtudiantAbsences       $etudiantAbsences
      */
     public function __construct(
         EntityManagerInterface $entityManager,
@@ -114,10 +112,10 @@ class SousCommission
             $etudiantSousCommission->moyenneUes = $this->calculMoyenneUes($etudiantSousCommission->moyenneMatieres);
 
             //calculer la moyenne générale selon l'option séléctionnée (avec et sans pénalité)
-            if ($semestre->getDiplome() !== null) {
-                if ($semestre->getDiplome()->getOptMethodeCalcul() === Constantes::MOYENNE_MODULES) {
+            if (null !== $semestre->getDiplome()) {
+                if (Constantes::MOYENNE_MODULES === $semestre->getDiplome()->getOptMethodeCalcul()) {
                     $etudiantSousCommission->calculMoyenneSemestreMatiere();
-                } elseif ($semestre->getDiplome()->getOptMethodeCalcul() === Constantes::MOYENNE_UES) {
+                } elseif (Constantes::MOYENNE_UES === $semestre->getDiplome()->getOptMethodeCalcul()) {
                     $etudiantSousCommission->calculMoyenneSemestreUes();
                 }
             }
@@ -139,7 +137,7 @@ class SousCommission
 
         //récupération des semestres précédents
         $sem = $this->semestre;
-        while ($sem->getPrecedent() !== null) {
+        while (null !== $sem->getPrecedent()) {
             $this->semestresScolarite[] = $sem->getPrecedent();
             $sem = $sem->getPrecedent();
         }
@@ -155,10 +153,11 @@ class SousCommission
         /** @var MoyenneMatiere $matiere */
         foreach ($moyenneMatieres as $matiere) {
             $idUe = $matiere->matiere->getUe()->getNumeroUe();
-            if (array_key_exists($idUe, $tabUes)) {
+            if (\array_key_exists($idUe, $tabUes)) {
                 $tabUes[$idUe]->addMatiere($matiere);
             }
         }
+
         return $tabUes;
     }
 
@@ -186,9 +185,6 @@ class SousCommission
         return $this->etudiants;
     }
 
-    /**
-     * @return array
-     */
     public function getSemestresScolarite(): array
     {
         return $this->semestresScolarite;
@@ -204,17 +200,11 @@ class SousCommission
         return $this->sousCommissionEtudiant[$idEtudiant];
     }
 
-    /**
-     * @return Semestre
-     */
     public function getSemestre(): Semestre
     {
         return $this->semestre;
     }
 
-    /**
-     * @return AnneeUniversitaire
-     */
     public function getAnneeUniversitaire(): AnneeUniversitaire
     {
         return $this->anneeUniversitaire;
@@ -275,7 +265,7 @@ class SousCommission
     {
         return $this->entityManager->getRepository(ScolaritePromo::class)->findOneBy([
             'semestre'           => $semestre->getId(),
-            'anneeUniversitaire' => $anneeUniversitaire->getId()
+            'anneeUniversitaire' => $anneeUniversitaire->getId(),
         ]);
     }
 
@@ -286,7 +276,6 @@ class SousCommission
             $tStats[$bac->getId()] = new StatitiquesBac();
         }
         $tStats['global'] = new StatitiquesBac();
-
 
         return $tStats;
     }

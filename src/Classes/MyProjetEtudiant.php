@@ -1,15 +1,14 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyProjetEtudiant.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 19/12/2020 15:00
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyProjetEtudiant.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
-/**
- * Created by PhpStorm.
- * User: davidannebicque
- * Date: 06/08/2018
- * Time: 15:49
+/*
+ * Pull your hearder here, for exemple, Licence header.
  */
 
 namespace App\Classes;
@@ -36,10 +35,6 @@ class MyProjetEtudiant
 
     /**
      * MyProjetEtudiant constructor.
-     *
-     * @param EntityManagerInterface   $entityManger
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param ProjetEtudiantRepository $projetEtudiantRepository
      */
     public function __construct(
         EntityManagerInterface $entityManger,
@@ -52,9 +47,7 @@ class MyProjetEtudiant
     }
 
     /**
-     * @param ProjetPeriode $projetPeriode
-     * @param Etudiant      $etudiant
-     * @param               $etat
+     * @param $etat
      *
      * @throws NonUniqueResultException
      */
@@ -89,7 +82,7 @@ class MyProjetEtudiant
 
         $event = new ProjetEvent($this->stageEtudiant);
 
-        if ($eventNotif !== '') {
+        if ('' !== $eventNotif) {
             $this->eventDispatcher->dispatch($event, $eventNotif);
         }
 
@@ -98,11 +91,9 @@ class MyProjetEtudiant
     }
 
     /**
-     * @param ProjetPeriode $projetPeriode
-     * @param Etudiant      $etudiant
-     *
      * @return ProjetEtudiant|mixed
      * @throws NonUniqueResultException
+     *
      */
     private function checkProjetEtudiantExist(ProjetPeriode $projetPeriode, Etudiant $etudiant)
     {
@@ -111,12 +102,6 @@ class MyProjetEtudiant
         return $result ?? $this->createProjetEtudiant($projetPeriode, $etudiant);
     }
 
-    /**
-     * @param ProjetPeriode $projetPeriode
-     * @param Etudiant      $etudiant
-     *
-     * @return ProjetEtudiant
-     */
     private function createProjetEtudiant(ProjetPeriode $projetPeriode, Etudiant $etudiant): ProjetEtudiant
     {
         $projetEtudiant = new ProjetEtudiant();

@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/EtudiantDepartementController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/EtudiantDepartementController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller\superAdministration;
 
@@ -16,33 +18,25 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class PersonnelDepartementController
- * @package App\Controller\superAdministration
+ * Class PersonnelDepartementController.
+ *
  * @Route("/administratif/departement/etudiant")
  */
 class EtudiantDepartementController extends BaseController
 {
     /**
      * @Route("/{departement}", name="sa_etudiant_departement_index")
-     * @param Departement        $departement
-     *
-     * @return Response
      */
     public function index(Departement $departement): Response
     {
         return $this->render('super-administration/etudiant_departement/index.html.twig', [
             'etudiants'   => $departement->getEtudiants(),
-            'departement' => $departement
+            'departement' => $departement,
         ]);
     }
 
     /**
      * @Route("/remove/{id}", name="sa_etudiant_remove", methods="DELETE")
-     * @param Request  $request
-     *
-     * @param Etudiant $etudiant
-     *
-     * @return Response
      */
     public function delete(Request $request, Etudiant $etudiant): Response
     {

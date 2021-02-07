@@ -1,12 +1,17 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Enquetes/MyEnquete.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 01/02/2021 12:17
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Enquetes/MyEnquete.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
+/*
+ * Pull your hearder here, for exemple, Licence header.
+ */
 
 namespace App\Classes\Enquetes;
-
 
 use App\Classes\Configuration;
 use App\Classes\Excel\MyExcelWriter;
@@ -26,7 +31,6 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class MyEnquete
 {
-
     public const SEUIL = 65;
     public const COLOR_QUALITE = 'bb1e10';
     private QuestionnaireEtudiantReponseRepository $quizzEtudiantReponseRepository;
@@ -48,18 +52,11 @@ class MyEnquete
      * @var float|int
      */
     private $sommePourcentage = 0;
-    /**
-     * @var Configuration
-     */
+
     private Configuration $configuration;
 
     /**
      * MyEnquete constructor.
-     *
-     * @param QuestionnaireEtudiantReponseRepository $quizzEtudiantReponseRepository
-     * @param QuestionnaireEtudiantRepository        $quizzEtudiantRepository
-     * @param MyExcelWriter                          $myExcelWriter
-     * @param Configuration                          $configuration
      */
     public function __construct(
         QuestionnaireEtudiantReponseRepository $quizzEtudiantReponseRepository,
@@ -74,10 +71,8 @@ class MyEnquete
     }
 
     /**
-     * @param QuestionnaireQualite $questionnaire
-     * @param                      $previsionnel
+     * @param $previsionnel
      *
-     * @return StreamedResponse
      * @throws Exception
      */
     public function exportExcel(QuestionnaireQualite $questionnaire, $previsionnel): StreamedResponse
@@ -86,11 +81,11 @@ class MyEnquete
         $this->previsionnel = $previsionnel;
         //data
         $this->getReponseFromQuestionnaire($questionnaire);
-        $nbEtudiants = count($questionnaire->getSemestre()->getEtudiants());
-        $this->nbReponses = count($quizzEtudiants);
+        $nbEtudiants = \count($questionnaire->getSemestre()->getEtudiants());
+        $this->nbReponses = \count($quizzEtudiants);
         $pourcentageReponses = $this->nbReponses / $nbEtudiants;
         //export
-        $this->myExcelWriter->createSheet(substr('Exp ' . $questionnaire->getLibelle(), 0, 31));
+        $this->myExcelWriter->createSheet(mb_substr('Exp ' . $questionnaire->getLibelle(), 0, 31));
         $this->myExcelWriter->getColumnDimension('A', 60);
         $this->myExcelWriter->getColumnDimension('B', 15);
         $this->myExcelWriter->getColumnDimension('C', 20);
@@ -101,7 +96,7 @@ class MyEnquete
                 'color'       => $this->configuration->get('COLOR_IUT'),
                 'font-size'   => 16,
                 'font-weight' => 'bold',
-                'style'       => 'HORIZONTAL_CENTER'
+                'style'       => 'HORIZONTAL_CENTER',
             ]);
         $this->myExcelWriter->writeCellXY(1, 2,
             $questionnaire->getSemestre()->getDiplome()->getDisplay() . ' - ' . $questionnaire->getSemestre()->getAnneeUniversitaire()->displayAnneeUniversitaire(),
@@ -109,7 +104,7 @@ class MyEnquete
                 'color'       => $this->configuration->get('COLOR_IUT'),
                 'font-size'   => 16,
                 'font-weight' => 'bold',
-                'style'       => 'HORIZONTAL_CENTER'
+                'style'       => 'HORIZONTAL_CENTER',
             ]);
 
         $this->myExcelWriter->borderBottomCellsRange(1, 3, 3, 3,
@@ -127,12 +122,12 @@ class MyEnquete
 
         $this->ligne = 11;
         foreach ($questionnaire->getSections() as $qualiteQuestionnaireSection) {
-            if ($qualiteQuestionnaireSection->getSection() !== null) {
+            if (null !== $qualiteQuestionnaireSection->getSection()) {
                 $this->myExcelWriter->writeCellXY(1, $this->ligne,
                     $qualiteQuestionnaireSection->getOrdre() . '. ' . $qualiteQuestionnaireSection->getSection()->getTitre(),
                     ['color' => $this->configuration->get('COLOR_IUT'), 'font-size' => 10, 'font-weight' => 'bold']);
                 $this->ligne += 2;
-                if ($qualiteQuestionnaireSection->getConfig() !== null && $qualiteQuestionnaireSection->getConfig() !== '') {
+                if (null !== $qualiteQuestionnaireSection->getConfig() && '' !== $qualiteQuestionnaireSection->getConfig()) {
                     $arrayConfig = explode('-', $qualiteQuestionnaireSection->getConfig());
                     $arrayConfig = explode(',', $arrayConfig[1]);
                     foreach ($arrayConfig as $config) {
@@ -140,7 +135,7 @@ class MyEnquete
                             $this->writeExcelQuestion($qualiteSectionQuestion->getQuestion(),
                                 $qualiteQuestionnaireSection->getSection(), '_c' . $config);
                         }
-                        $this->ligne++;
+                        ++$this->ligne;
                         $this->myExcelWriter->borderBottomCellsRange(1, $this->ligne, 3, $this->ligne,
                             ['color' => '000000', 'size' => Border::BORDER_THIN]);
                         $this->ligne += 2;
@@ -150,7 +145,7 @@ class MyEnquete
                         $this->writeExcelQuestion($qualiteSectionQuestion->getQuestion(),
                             $qualiteQuestionnaireSection->getSection());
                     }
-                    $this->ligne++;
+                    ++$this->ligne;
                     $this->myExcelWriter->borderBottomCellsRange(1, $this->ligne, 3, $this->ligne,
                         ['color' => '000000', 'size' => Border::BORDER_THIN]);
                     $this->ligne += 2;
@@ -167,14 +162,11 @@ class MyEnquete
             200,
             [
                 'Content-Type'        => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                'Content-Disposition' => 'attachment;filename="' . $questionnaire->getLibelle() . '.xlsx"'
+                'Content-Disposition' => 'attachment;filename="' . $questionnaire->getLibelle() . '.xlsx"',
             ]
         );
     }
 
-    /**
-     * @param QuestionnaireQualite $questionnaire
-     */
     public function getReponseFromQuestionnaire(QuestionnaireQualite $questionnaire): void
     {
         $reponsesEtudiants = $this->quizzEtudiantReponseRepository->findByQuestionnaire($questionnaire);
@@ -182,27 +174,23 @@ class MyEnquete
         /** @var QuestionnaireEtudiantReponse $reponse */
         foreach ($reponsesEtudiants as $reponse) {
             $cle = $reponse->getCleQuestion();
-            if (!array_key_exists($cle, $this->resultatQuestion)) {
+            if (!\array_key_exists($cle, $this->resultatQuestion)) {
                 $this->resultatQuestion[$cle]['nbreponse'] = 0;
                 $this->resultatQuestion[$cle]['totalReponse'] = [];
                 $this->resultatQuestion[$cle]['autre'] = [];
             }
-            $this->resultatQuestion[$cle]['nbreponse']++;
+            ++$this->resultatQuestion[$cle]['nbreponse'];
             $cleR = $reponse->getValeur();
-            if (!array_key_exists($cleR, $this->resultatQuestion[$cle]['totalReponse'])) {
+            if (!\array_key_exists($cleR, $this->resultatQuestion[$cle]['totalReponse'])) {
                 $this->resultatQuestion[$cle]['totalReponse'][$cleR] = 0;
             }
 
-            $this->resultatQuestion[$cle]['totalReponse'][$cleR]++;
-
-
+            ++$this->resultatQuestion[$cle]['totalReponse'][$cleR];
         }
     }
 
     /**
-     * @param QuestionnaireQuestion $question
-     * @param QuestionnaireSection  $section
-     * @param string                $config
+     * @param string $config
      *
      * @throws Exception
      */
@@ -211,64 +199,61 @@ class MyEnquete
         QuestionnaireSection $section,
         $config = ''
     ): void {
-        if ($config === '') {
+        if ('' === $config) {
             $libQuestion = $question->getLibelle();
         } else {
-            $c = substr($config, 2, strlen($config));
-            if (array_key_exists($c, $this->previsionnel)) {
+            $c = mb_substr($config, 2, mb_strlen($config));
+            if (\array_key_exists($c, $this->previsionnel)) {
                 $libQuestion = Tools::personnaliseTexte($question->getLibelle(),
                     $this->previsionnel[$c]);
             }
         }
-        $this->ligne++;
+        ++$this->ligne;
         $this->myExcelWriter->mergeCellsCaR(1, $this->ligne, 3, $this->ligne);
         $this->myExcelWriter->writeCellXY(1, $this->ligne, $libQuestion,
             ['wrap' => true, 'font-weight' => 'bold', 'style' => 'HORIZONTAL_CENTER', 'valign' => 'VERTICAL_TOP']);
-        if (strlen($libQuestion) > 92) {
+        if (mb_strlen($libQuestion) > 92) {
             $this->myExcelWriter->getRowDimension($this->ligne, 30);
         }
-        $this->ligne++;
+        ++$this->ligne;
 
-        if ($question->getHelp() !== '') {
+        if ('' !== $question->getHelp()) {
             $this->myExcelWriter->mergeCellsCaR(1, $this->ligne, 3, $this->ligne);
             $this->myExcelWriter->writeCellXY(1, $this->ligne, $question->getHelp(),
                 ['wrap' => true, 'font-italic' => true, 'style' => 'HORIZONTAL_CENTER', 'valign' => 'VERTICAL_TOP']);
-            $this->ligne++;
+            ++$this->ligne;
         }
 
-        $this->ligne++;
+        ++$this->ligne;
 
-        if ($section->getTypeCalcul() === QuestionnaireSection::GROUPE) {
+        if (QuestionnaireSection::GROUPE === $section->getTypeCalcul()) {
             $this->myExcelWriter->writeCellXY(3, $this->ligne, '% satisfaction',
                 ['wrap' => true, 'style' => 'HORIZONTAL_CENTER']);
-            $this->ligne++;
+            ++$this->ligne;
         }
 
-        if ($question->getQuestionParent() === null && count($question->getQuestionsEnfants()) === 0) {
-
+        if (null === $question->getQuestionParent() && 0 === \count($question->getQuestionsEnfants())) {
             //si QCU/QCM
             $this->writeExcelReponses($question, $section, $config);
-
         } else {
             $this->sommePourcentage = 0;
             $nbQuestionsPourcentage = 0;
             foreach ($question->getQuestionsEnfants() as $subQuestion) {
-
-                $this->ligne++;
-                if ($section->getTypeCalcul() === QuestionnaireSection::GROUPE) {
+                ++$this->ligne;
+                if (QuestionnaireSection::GROUPE === $section->getTypeCalcul()) {
                     $this->myExcelWriter->writeCellXY(1, $this->ligne, $subQuestion->getLibelle(),
                         ['wrap' => true, 'style' => $subQuestion->getAlignement()]);
-                } elseif ($section->getTypeCalcul() === QuestionnaireSection::DETAIL) {
+                } elseif (QuestionnaireSection::DETAIL === $section->getTypeCalcul()) {
                     $this->myExcelWriter->mergeCellsCaR(1, $this->ligne, 3, $this->ligne);
                     $this->myExcelWriter->writeCellXY(1, $this->ligne, $subQuestion->getLibelle(),
                         ['wrap' => true, 'font-weight' => 'bold', 'style' => 'HORIZONTAL_CENTER']);
-                    $this->ligne++;
+                    ++$this->ligne;
                 }
                 //si QCU/QCM
-                $nbQuestionsPourcentage++;
+                ++$nbQuestionsPourcentage;
                 $this->writeExcelReponses($subQuestion, $section, $config, $question);
             }
-            if ($section->getTypeCalcul() === QuestionnaireSection::GROUPE) {
+            if (QuestionnaireSection::GROUPE === $section->getTypeCalcul()) {
                 $moyenne = $this->sommePourcentage / $nbQuestionsPourcentage;
                 $this->myExcelWriter->writeCellXY(1, $this->ligne, 'Satisfaction globale =',
                     ['wrap' => true, 'font-weight' => 'bold', 'style' => 'HORIZONTAL_CENTER']);
@@ -279,7 +264,7 @@ class MyEnquete
                             'font-weight'   => 'bold',
                             'style'         => 'HORIZONTAL_CENTER',
                             'color'         => self::COLOR_QUALITE,
-                            'number_format' => NumberFormat::FORMAT_PERCENTAGE
+                            'number_format' => NumberFormat::FORMAT_PERCENTAGE,
                         ]);
                 } else {
                     $this->myExcelWriter->writeCellXY(3, $this->ligne, $moyenne,
@@ -287,21 +272,16 @@ class MyEnquete
                             'wrap'          => true,
                             'font-weight'   => 'bold',
                             'style'         => 'HORIZONTAL_CENTER',
-                            'number_format' => NumberFormat::FORMAT_PERCENTAGE
+                            'number_format' => NumberFormat::FORMAT_PERCENTAGE,
                         ]);
                 }
-                $this->ligne++;
+                ++$this->ligne;
             }
-
         }
-
     }
 
     /**
-     * @param QuestionnaireQuestion      $question
-     * @param QuestionnaireSection       $section
-     * @param string                     $config
-     * @param QuestionnaireQuestion|null $questionParent
+     * @param string $config
      */
     private function writeExcelReponses(
         QuestionnaireQuestion $question,
@@ -309,44 +289,43 @@ class MyEnquete
         $config = '',
         QuestionnaireQuestion $questionParent = null
     ): void {
-        if ($questionParent === null) {
+        if (null === $questionParent) {
             $questionParent = $question;
         }
         $satisfaction = 0;
         $nbProps = 0;
 
-        if (in_array($question->getType(), [
+        if (\in_array($question->getType(), [
             QuestionnaireQuestion::QUESTION_TYPE_ECHELLE,
             QuestionnaireQuestion::QUESTION_TYPE_QCM,
             QuestionnaireQuestion::QUESTION_TYPE_QCU,
-            QuestionnaireQuestion::QUESTION_TYPE_YESNO
+            QuestionnaireQuestion::QUESTION_TYPE_YESNO,
         ], true)) {
-            if ($section->getTypeCalcul() === QuestionnaireSection::DETAIL) {
+            if (QuestionnaireSection::DETAIL === $section->getTypeCalcul()) {
                 $this->myExcelWriter->writeCellXY(1, $this->ligne, 'Réponse', ['style' => 'HORIZONTAL_CENTER']);
                 $this->myExcelWriter->writeCellXY(2, $this->ligne, 'Décompte', ['style' => 'HORIZONTAL_CENTER']);
                 $this->myExcelWriter->writeCellXY(3, $this->ligne, 'Pourcentage', ['style' => 'HORIZONTAL_CENTER']);
-                $this->ligne++;
+                ++$this->ligne;
             }
 
             $cleQ = $question->getCle() . $config;
             $nbTotalReponseQuestion = 0;
             foreach ($questionParent->getQuizzReponses() as $reponse) {
                 $cleR = $reponse->getValeur();
-                $nbProps++;
+                ++$nbProps;
                 $totRep = 0;
-                if (array_key_exists($cleQ, $this->resultatQuestion) && array_key_exists($cleR,
+                if (\array_key_exists($cleQ, $this->resultatQuestion) && \array_key_exists($cleR,
                         $this->resultatQuestion[$cleQ]['totalReponse'])) {
                     $nbReponses = $this->resultatQuestion[$cleQ]['totalReponse'][$cleR];
 
-                    if (is_int($this->resultatQuestion[$cleQ]['totalReponse'][$cleR])) {
+                    if (\is_int($this->resultatQuestion[$cleQ]['totalReponse'][$cleR])) {
                         $pourcentage = $this->resultatQuestion[$cleQ]['totalReponse'][$cleR] / $this->resultatQuestion[$cleQ]['nbreponse'];
 
-                        if (is_int((int)$reponse->getLibelle())) {
+                        if (\is_int((int)$reponse->getLibelle())) {
                             $totRep = $nbReponses * (int)$reponse->getLibelle();
                             $nbTotalReponseQuestion += $nbReponses;
                             $satisfaction += $totRep;
                         }
-
                     } else {
                         $pourcentage = 0;
                     }
@@ -355,14 +334,14 @@ class MyEnquete
                     $pourcentage = 0;
                 }
 
-                if ($reponse->getLibelle() == 'Je n\'ai pas suivi ce cours') {
-                    $nbProps--;
+                if ('Je n\'ai pas suivi ce cours' === $reponse->getLibelle()) {
+                    --$nbProps;
                     $retire = $nbReponses;
                 } else {
                     $retire = 0;
                 }
                 //version détaillée, on affiche tout.
-                if ($section->getTypeCalcul() === QuestionnaireSection::DETAIL) {
+                if (QuestionnaireSection::DETAIL === $section->getTypeCalcul()) {
                     $this->myExcelWriter->writeCellXY(1, $this->ligne, $reponse->getLibelle(),
                         ['style' => $reponse->getAlignement()]);
                     $this->myExcelWriter->writeCellXY(2, $this->ligne, $nbReponses,
@@ -370,66 +349,65 @@ class MyEnquete
                     $this->sommePourcentage += $pourcentage;
                     $this->myExcelWriter->writeCellXY(3, $this->ligne, $pourcentage, [
                         'style'         => 'HORIZONTAL_CENTER',
-                        'number_format' => NumberFormat::FORMAT_PERCENTAGE
+                        'number_format' => NumberFormat::FORMAT_PERCENTAGE,
                     ]);
-                    $this->ligne++;
+                    ++$this->ligne;
                 }
                 //si autre, énumérer les réponses autres
-                if (array_key_exists($cleQ . '_autre',
-                        $this->resultatQuestion) && $reponse->getValeur() === 'CHX:OTHER') {
+                if (\array_key_exists($cleQ . '_autre',
+                        $this->resultatQuestion) && 'CHX:OTHER' === $reponse->getValeur()) {
                     foreach ($this->resultatQuestion[$cleQ . '_autre']['totalReponse'] as $key => $value) {
                         $this->myExcelWriter->writeCellXY(1, $this->ligne, $key,
                             ['wrap' => true, 'style' => 'HORIZONTAL_LEFT', 'valign' => 'VERTICAL_TOP']);
-                        $nbCar = strlen($key);
+                        $nbCar = mb_strlen($key);
                         if ($nbCar > 55) {
                             $n = ceil($nbCar / 55);
                             $this->myExcelWriter->getRowDimension($this->ligne, 15 * $n);
                         }
-                        $this->ligne++;
+                        ++$this->ligne;
                     }
                 }
-
             }
-            if ($question->getType() === QuestionnaireQuestion::QUESTION_TYPE_ECHELLE) {
+            if (QuestionnaireQuestion::QUESTION_TYPE_ECHELLE === $question->getType()) {
                 //si échelle ... tôt de satisfaction
                 $total = $satisfaction / ($nbProps * ($nbTotalReponseQuestion - $retire));
-                if ($section->getTypeCalcul() === QuestionnaireSection::DETAIL) {
+                if (QuestionnaireSection::DETAIL === $section->getTypeCalcul()) {
                     $this->myExcelWriter->writeCellXY(1, $this->ligne, 'soit',
                         ['font-weight' => 'bold', 'style' => 'HORIZONTAL_CENTER']);
                     $this->myExcelWriter->writeCellXY(2, $this->ligne, $total,
                         [
                             'font-weight'   => 'bold',
                             'style'         => 'HORIZONTAL_CENTER',
-                            'number_format' => NumberFormat::FORMAT_PERCENTAGE
+                            'number_format' => NumberFormat::FORMAT_PERCENTAGE,
                         ]);
                     $this->myExcelWriter->writeCellXY(3, $this->ligne, 'de satisfaction',
                         ['font-weight' => 'bold', 'style' => 'HORIZONTAL_CENTER']);
-                    $this->ligne++;
-                } elseif ($section->getTypeCalcul() === QuestionnaireSection::GROUPE) {
+                    ++$this->ligne;
+                } elseif (QuestionnaireSection::GROUPE === $section->getTypeCalcul()) {
                     $this->sommePourcentage += $total;
                     $this->myExcelWriter->writeCellXY(3, $this->ligne, $total,
                         ['style' => 'HORIZONTAL_CENTER', 'number_format' => NumberFormat::FORMAT_PERCENTAGE]);
                 }
             }
-        } elseif ($question->getType() === QuestionnaireQuestion::QUESTION_TYPE_LIBRE) {
+        } elseif (QuestionnaireQuestion::QUESTION_TYPE_LIBRE === $question->getType()) {
             $this->myExcelWriter->writeCellXY(1, $this->ligne, 'Réponse', ['style' => 'HORIZONTAL_CENTER']);
 
             $lgRep = $this->ligne;
             $nbRep = 0;
-            $this->ligne++;
+            ++$this->ligne;
             $cleQ = 'quizz_question_text_q' . $question->getId();
-            if (array_key_exists($cleQ, $this->resultatQuestion)) {
+            if (\array_key_exists($cleQ, $this->resultatQuestion)) {
                 //liste les réponses
                 foreach ($this->resultatQuestion[$cleQ]['totalReponse'] as $key => $rep) {
-                    $nbRep++;
+                    ++$nbRep;
                     $this->myExcelWriter->writeCellXY(1, $this->ligne, $key,
                         ['wrap' => true, 'style' => 'HORIZONTAL_LEFT', 'valign' => 'VERTICAL_TOP']);
-                    $nbCar = strlen($key);
+                    $nbCar = mb_strlen($key);
                     if ($nbCar > 55) {
                         $n = ceil($nbCar / 55);
                         $this->myExcelWriter->getRowDimension($this->ligne, 15 * $n);
                     }
-                    $this->ligne++;
+                    ++$this->ligne;
                 }
             }
             $p = number_format($nbRep / $this->nbReponses * 100);

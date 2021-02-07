@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/StageAvenant.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 04/11/2020 12:17
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/StageAvenant.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:49
+ */
 
 namespace App\Entity;
 
@@ -85,7 +87,6 @@ class StageAvenant extends BaseEntity
     {
         $this->stageEtudiant = $stageEtudiant;
     }
-
 
     public function getStageEtudiant(): ?StageEtudiant
     {

@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/CovidAttestationPersonnelController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 12/11/2020 14:59
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/CovidAttestationPersonnelController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller\superAdministration;
 
@@ -27,9 +29,6 @@ class CovidAttestationPersonnelController extends BaseController
 {
     /**
      * @Route("/", name="covid_attestation_personnel_index", methods={"GET"})
-     * @param CovidAttestationPersonnelRepository $covidAttestationPersonnelRepository
-     *
-     * @return Response
      */
     public function index(CovidAttestationPersonnelRepository $covidAttestationPersonnelRepository): Response
     {
@@ -40,11 +39,6 @@ class CovidAttestationPersonnelController extends BaseController
 
     /**
      * @Route("/export.xlsx", name="covid_attestation_personnel_export", methods="GET")
-     *
-     * @param MyExportPresence                    $myExport
-     * @param CovidAttestationPersonnelRepository $covidAttestationPersonnelRepository
-     *
-     * @return Response
      */
     public function export(
         MyExportPresence $myExport,
@@ -53,16 +47,12 @@ class CovidAttestationPersonnelController extends BaseController
         $presences = $covidAttestationPersonnelRepository->findAll();
 
         return $myExport->genereFichier($presences);
-
     }
 
     /**
      * @Route("/change-etat/{id}/{etat}", name="covid_attestation_personnel_change_etat", methods={"GET"})
-     * @param EventDispatcherInterface  $eventDispatcher
-     * @param CovidAttestationPersonnel $covidAttestationPersonnel
-     * @param                           $etat
      *
-     * @return Response
+     * @param $etat
      */
     public function changeEtat(
         EventDispatcherInterface $eventDispatcher,
@@ -74,7 +64,7 @@ class CovidAttestationPersonnelController extends BaseController
         $this->entityManager->flush();
 
         $event = new CovidEvent($covidAttestationPersonnel);
-        if ($covidAttestationPersonnel->getValidationDepartement() === true) {
+        if (true === $covidAttestationPersonnel->getValidationDepartement()) {
             $eventDispatcher->dispatch($event, CovidEvent::COVID_AUTORISATION_VALIDEE_DIRECTION);
         } else {
             $eventDispatcher->dispatch($event, CovidEvent::COVID_AUTORISATION_REFUSEE_DIRECTION);
@@ -85,9 +75,6 @@ class CovidAttestationPersonnelController extends BaseController
 
     /**
      * @Route("/details/{id}", name="covid_attestation_personnel_show", methods={"GET"})
-     * @param CovidAttestationPersonnel $covidAttestationPersonnel
-     *
-     * @return Response
      */
     public function show(CovidAttestationPersonnel $covidAttestationPersonnel): Response
     {
@@ -98,10 +85,6 @@ class CovidAttestationPersonnelController extends BaseController
 
     /**
      * @Route("/{id}", name="covid_attestation_personnel_delete", methods="DELETE")
-     * @param Request                   $request
-     * @param CovidAttestationPersonnel $covidAttestationPersonnel
-     *
-     * @return Response
      */
     public function delete(Request $request, CovidAttestationPersonnel $covidAttestationPersonnel): Response
     {
@@ -121,5 +104,4 @@ class CovidAttestationPersonnelController extends BaseController
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
-
 }

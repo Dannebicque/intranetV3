@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/QuestionnaireQuestion.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 09/12/2020 20:53
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/QuestionnaireQuestion.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Entity;
 
@@ -23,11 +25,11 @@ class QuestionnaireQuestion extends BaseEntity
     public const QUESTION_TYPE_LIBRE = 'libre';
 
     public const LISTE_TYPE_QUESTION = [
-        QuestionnaireQuestion::QUESTION_TYPE_QCU     => QuestionnaireQuestion::QUESTION_TYPE_QCU,
-        QuestionnaireQuestion::QUESTION_TYPE_QCM     => QuestionnaireQuestion::QUESTION_TYPE_QCM,
-        QuestionnaireQuestion::QUESTION_TYPE_YESNO   => QuestionnaireQuestion::QUESTION_TYPE_YESNO,
-        QuestionnaireQuestion::QUESTION_TYPE_ECHELLE => QuestionnaireQuestion::QUESTION_TYPE_ECHELLE,
-        QuestionnaireQuestion::QUESTION_TYPE_LIBRE   => QuestionnaireQuestion::QUESTION_TYPE_LIBRE
+        self::QUESTION_TYPE_QCU     => self::QUESTION_TYPE_QCU,
+        self::QUESTION_TYPE_QCM     => self::QUESTION_TYPE_QCM,
+        self::QUESTION_TYPE_YESNO   => self::QUESTION_TYPE_YESNO,
+        self::QUESTION_TYPE_ECHELLE => self::QUESTION_TYPE_ECHELLE,
+        self::QUESTION_TYPE_LIBRE   => self::QUESTION_TYPE_LIBRE,
     ];
 
     /**
@@ -263,8 +265,7 @@ class QuestionnaireQuestion extends BaseEntity
 
     public function getCle($config = '')
     {
-        if ($config !== '' && $config !== null) {
-
+        if ('' !== $config && null !== $config) {
         } else {
             return 'quizz_question_reponses_q' . $this->getId();
         }
@@ -272,7 +273,7 @@ class QuestionnaireQuestion extends BaseEntity
 
     public function getAlignement(): ?string
     {
-        return $this->alignement === '' ? 'HORIZONTAL_CENTER' : $this->alignement;
+        return '' === $this->alignement ? 'HORIZONTAL_CENTER' : $this->alignement;
     }
 
     public function setAlignement(string $alignement): self
@@ -284,7 +285,7 @@ class QuestionnaireQuestion extends BaseEntity
 
     public function getParametre(): ?array
     {
-        if ($this->parametre !== null || $this->parametre !== '') {
+        if (null !== $this->parametre || '' !== $this->parametre) {
             return json_decode($this->parametre, true);
         }
 

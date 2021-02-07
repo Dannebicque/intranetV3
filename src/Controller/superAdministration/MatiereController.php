@@ -1,12 +1,15 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/MatiereController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/MatiereController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller\superAdministration;
 
+use App\Classes\MyPpn;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Departement;
@@ -14,7 +17,6 @@ use App\Entity\Matiere;
 use App\Entity\Ue;
 use App\Form\MatiereType;
 use App\Form\PpnImportType;
-use App\Classes\MyPpn;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -27,10 +29,8 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class MatiereController extends BaseController
 {
-
     /**
      * @Route("/", name="sa_matiere_index", methods="GET")
-     * @return Response
      */
     public function index(): Response
     {
@@ -39,11 +39,7 @@ class MatiereController extends BaseController
 
     /**
      * @Route("/import/{departement}", name="sa_matiere_import")
-     * @param MyPpn       $myPpn
-     * @param Request     $request
-     * @param Departement $departement
      *
-     * @return Response
      * @throws Exception
      */
     public function import(MyPpn $myPpn, Request $request, Departement $departement): Response
@@ -54,8 +50,8 @@ class MatiereController extends BaseController
             [
                 'departement' => $departement,
                 'attr'        => [
-                    'data-provide' => 'validation'
-                ]
+                    'data-provide' => 'validation',
+                ],
             ]
         );
 
@@ -70,18 +66,13 @@ class MatiereController extends BaseController
         return $this->render('administration/matiere/import.html.twig',
             [
                 'departement' => $departement,
-                'form'        => $form->createView()
+                'form'        => $form->createView(),
             ]
         );
     }
 
     /**
      * @Route("/new/{ue}", name="sa_matiere_new", methods="GET|POST")
-     * @param Request $request
-     *
-     * @param Ue      $ue
-     *
-     * @return Response
      */
     public function create(Request $request, Ue $ue): Response
     {
@@ -90,8 +81,8 @@ class MatiereController extends BaseController
         $form = $this->createForm(MatiereType::class, $matiere, [
             'diplome' => $ue->getDiplome(),
             'attr'    => [
-                'data-provide' => 'validation'
-            ]
+                'data-provide' => 'validation',
+            ],
         ]);
         $form->handleRequest($request);
 
@@ -112,9 +103,6 @@ class MatiereController extends BaseController
 
     /**
      * @Route("/{id}", name="sa_matiere_show", methods="GET")
-     * @param Matiere $matiere
-     *
-     * @return Response
      */
     public function show(Matiere $matiere): Response
     {
@@ -123,18 +111,14 @@ class MatiereController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="sa_matiere_edit", methods="GET|POST")
-     * @param Request $request
-     * @param Matiere $matiere
-     *
-     * @return Response
      */
     public function edit(Request $request, Matiere $matiere): Response
     {
         $form = $this->createForm(MatiereType::class, $matiere, [
             'diplome' => $matiere->getSemestre()->getAnnee()->getDiplome(),
             'attr'    => [
-                'data-provide' => 'validation'
-            ]
+                'data-provide' => 'validation',
+            ],
         ]);
         $form->handleRequest($request);
 
@@ -152,12 +136,8 @@ class MatiereController extends BaseController
         ]);
     }
 
-
     /**
      * @Route("/{id}/duplicate", name="sa_matiere_duplicate", methods="GET|POST")
-     * @param Matiere $matiere
-     *
-     * @return Response
      */
     public function duplicate(Matiere $matiere): Response
     {
@@ -179,13 +159,8 @@ class MatiereController extends BaseController
     }
 
     /**
-     * @param Matiere $matiere
-     * @param bool    $etat
-     *
-     * @return RedirectResponse
      * @Route("/activate/{matiere}/{etat}", methods={"GET"}, name="sa_matiere_activate")
      * @IsGranted("ROLE_SUPER_ADMIN")
-     *
      */
     public function activate(Matiere $matiere, bool $etat): RedirectResponse
     {
@@ -194,6 +169,5 @@ class MatiereController extends BaseController
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'matiere.activate.' . $etat . '.flash');
 
         return $this->redirectToRoute('super_admin_homepage');
-
     }
 }

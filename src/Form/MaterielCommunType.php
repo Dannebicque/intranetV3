@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Form/MaterielCommunType.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 26/09/2020 08:52
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/MaterielCommunType.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Form;
 
@@ -29,7 +31,7 @@ class MaterielCommunType extends AbstractType
                 'required'       => false,
                 'label'          => 'label.fichier',
                 'download_label' => 'label.apercu',
-                'allow_delete'   => false
+                'allow_delete'   => false,
             ])
             ->add('contact', EntityType::class, [
                 'class'         => Personnel::class,
@@ -38,7 +40,7 @@ class MaterielCommunType extends AbstractType
                 },
                 'attr'          => ['class' => 'form-control selectpicker'],
                 'choice_label'  => 'display',
-                'label'         => 'label.contact_materiel_commun'
+                'label'         => 'label.contact_materiel_commun',
             ]);
     }
 
@@ -46,7 +48,7 @@ class MaterielCommunType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class'         => MaterielCommun::class,
-            'translation_domain' => 'form'
+            'translation_domain' => 'form',
         ]);
     }
 }

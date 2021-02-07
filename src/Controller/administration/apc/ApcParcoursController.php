@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcParcoursController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 08/01/2021 16:12
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcParcoursController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller\administration\apc;
 
@@ -24,10 +26,6 @@ class ApcParcoursController extends BaseController
 {
     /**
      * @Route("/{diplome}/new", name="apc_parcours_new", methods={"GET","POST"})
-     * @param Request $request
-     * @param Diplome $diplome
-     *
-     * @return Response
      */
     public function new(Request $request, Diplome $diplome): Response
     {
@@ -46,30 +44,23 @@ class ApcParcoursController extends BaseController
         return $this->render('apc/apc_parcours/new.html.twig', [
             'apc_parcour' => $apcParcour,
             'form'        => $form->createView(),
-            'diplome'     => $diplome
+            'diplome'     => $diplome,
         ]);
     }
 
     /**
      * @Route("/{id}", name="apc_parcours_show", methods={"GET"})
-     * @param ApcParcours $apcParcour
-     *
-     * @return Response
      */
     public function show(ApcStructure $apcStructure, ApcParcours $apcParcour): Response
     {
         return $this->render('apc/apc_parcours/show.html.twig', [
             'parcour'         => $apcParcour,
-            'parcoursNiveaux' => $apcStructure->parcoursNiveaux($apcParcour->getDiplome())
+            'parcoursNiveaux' => $apcStructure->parcoursNiveaux($apcParcour->getDiplome()),
         ]);
     }
 
     /**
      * @Route("/{id}/edit", name="apc_parcours_edit", methods={"GET","POST"})
-     * @param Request     $request
-     * @param ApcParcours $apcParcour
-     *
-     * @return Response
      */
     public function edit(Request $request, ApcParcours $apcParcour): Response
     {
@@ -91,10 +82,6 @@ class ApcParcoursController extends BaseController
 
     /**
      * @Route("/{id}", name="apc_parcours_delete", methods={"DELETE"})
-     * @param Request     $request
-     * @param ApcParcours $apcParcour
-     *
-     * @return Response
      */
     public function delete(Request $request, ApcParcours $apcParcour): Response
     {
@@ -111,9 +98,6 @@ class ApcParcoursController extends BaseController
 
     /**
      * @Route("/{id}/duplicate", name="apc_parcours_duplicate", methods="GET|POST")
-     * @param ApcParcours $apcParcours
-     *
-     * @return Response
      */
     public function duplicate(ApcParcours $apcParcours): Response
     {

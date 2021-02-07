@@ -1,14 +1,16 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/EtudiantController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 21/09/2020 15:45
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/EtudiantController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller\superAdministration;
 
-use App\Controller\BaseController;
 use App\Classes\MyEtudiants;
+use App\Controller\BaseController;
 use App\Repository\DepartementRepository;
 use App\Repository\EtudiantRepository;
 use App\Repository\SemestreRepository;
@@ -19,8 +21,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class ScolariteController
- * @package App\Controller\superAdministration
+ * Class ScolariteController.
+ *
  * @Route("/administratif/etudiants")
  */
 class EtudiantController extends BaseController
@@ -35,20 +37,16 @@ class EtudiantController extends BaseController
 
     /**
      * @Route("/importer", name="sa_etudiant_importer")
-     * @param SemestreRepository $semestreRepository
-     * @param MyEtudiants        $myEtudiants
-     * @param Request            $request
      *
-     * @return RedirectResponse
      * @throws Exception
      */
     public function importerListeEtudiant(
         SemestreRepository $semestreRepository,
         MyEtudiants $myEtudiants,
         Request $request
-    ) {
+    ): RedirectResponse {
         $semestre = $semestreRepository->find($request->request->get('importer_etudiant_semestre'));
-        if ($semestre !== null) {
+        if (null !== $semestre) {
             $myEtudiants->importListeCsv($request->files->get('fichier_import'), $semestre);
             $this->addFlashBag('success', 'import.fichier.csv.success');
 
@@ -62,11 +60,8 @@ class EtudiantController extends BaseController
 
     /**
      * @Route("/recherche/{needle}", name="sa_etudiant_recherche", options={"expose"=true})
-     * @param DepartementRepository $departementRepository
-     * @param EtudiantRepository    $etudiantRepository
-     * @param                       $needle
      *
-     * @return Response
+     * @param $needle
      */
     public function rechercheEtudiants(
         DepartementRepository $departementRepository,
@@ -77,7 +72,7 @@ class EtudiantController extends BaseController
 
         return $this->render('super-administration/etudiant/recherche.html.twig', [
             'etudiants'    => $etudiants,
-            'departements' => $departementRepository->findActifs()
+            'departements' => $departementRepository->findActifs(),
         ]);
     }
 }

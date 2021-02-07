@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcNiveau.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 08/01/2021 16:12
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcNiveau.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Entity;
 
@@ -17,8 +19,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class ApcNiveau extends BaseEntity
 {
-
-
     /**
      * @ORM\Column(type="string", length=255)
      */
@@ -55,8 +55,6 @@ class ApcNiveau extends BaseEntity
         $this->apcApprentissageCritiques = new ArrayCollection();
         $this->apcParcoursNiveaux = new ArrayCollection();
     }
-
-
 
     public function getLibelle(): ?string
     {
@@ -166,7 +164,6 @@ class ApcNiveau extends BaseEntity
 
         return $this;
     }
-
 
     public function display()
     {

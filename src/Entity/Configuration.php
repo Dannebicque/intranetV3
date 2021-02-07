@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Configuration.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Configuration.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:49
+ */
 
 namespace App\Entity;
 
@@ -33,17 +35,12 @@ class Configuration extends BaseEntity
      */
     private $type = 'T';
 
-    /**
-     * @return null|string
-     */
     public function getCle(): ?string
     {
         return $this->cle;
     }
 
     /**
-     * @param string $cle
-     *
      * @return Configuration
      */
     public function setCle(string $cle): self
@@ -53,17 +50,12 @@ class Configuration extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
     public function getValeur(): ?string
     {
         return $this->valeur;
     }
 
     /**
-     * @param string $valeur
-     *
      * @return Configuration
      */
     public function setValeur(string $valeur): self
@@ -85,11 +77,8 @@ class Configuration extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getTypeLong(): string
     {
-        return $this->type === 'T' ? 'Texte' : 'Fichier';
+        return 'T' === $this->type ? 'Texte' : 'Fichier';
     }
 }

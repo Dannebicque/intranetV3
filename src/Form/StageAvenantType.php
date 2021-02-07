@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Form/StageAvenantType.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 04/11/2020 12:20
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/StageAvenantType.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Form;
 
@@ -26,17 +28,18 @@ class StageAvenantType extends AbstractType
                 'widget'   => 'single_text',
                 'html5'    => false,
 
-                'attr' => ['placeholder'   => 'Saisir une date...',
-                           'data-provide'  => 'datepicker',
-                           'data-language' => 'fr',
-                           'class'         => 'col-sm-3'
-                ]
+                'attr' => [
+                    'placeholder'   => 'Saisir une date...',
+                    'data-provide'  => 'datepicker',
+                    'data-language' => 'fr',
+                    'class'         => 'col-sm-3',
+                ],
             ])
             ->add('nouvelleDureeJour', TextType::class, [
                 'required' => false,
                 'label'    => 'nouvelleDureeJour',
 
-                'attr' => ['placeholder' => 'Saisir un nombre de jour...', 'class' => 'col-sm-3']
+                'attr' => ['placeholder' => 'Saisir un nombre de jour...', 'class' => 'col-sm-3'],
             ])
             ->add('dateDebutAbsence', DateType::class, [
                 'required' => false,
@@ -45,11 +48,12 @@ class StageAvenantType extends AbstractType
                 'widget'   => 'single_text',
                 'html5'    => false,
 
-                'attr' => ['placeholder'   => 'Saisir une date...',
-                           'data-provide'  => 'datepicker',
-                           'data-language' => 'fr',
-                           'class'         => 'col-sm-3'
-                ]
+                'attr' => [
+                    'placeholder'   => 'Saisir une date...',
+                    'data-provide'  => 'datepicker',
+                    'data-language' => 'fr',
+                    'class'         => 'col-sm-3',
+                ],
             ])
             ->add('dateDebutSuspension', DateType::class, [
                 'required' => false,
@@ -58,11 +62,12 @@ class StageAvenantType extends AbstractType
                 'widget'   => 'single_text',
                 'html5'    => false,
 
-                'attr' => ['placeholder'   => 'Saisir une date...',
-                           'data-provide'  => 'datepicker',
-                           'data-language' => 'fr',
-                           'class'         => 'col-sm-3'
-                ]
+                'attr' => [
+                    'placeholder'   => 'Saisir une date...',
+                    'data-provide'  => 'datepicker',
+                    'data-language' => 'fr',
+                    'class'         => 'col-sm-3',
+                ],
             ])
             ->add('dateFinAbsence', DateType::class, [
                 'required' => false,
@@ -71,11 +76,12 @@ class StageAvenantType extends AbstractType
                 'widget'   => 'single_text',
                 'html5'    => false,
 
-                'attr' => ['placeholder'   => 'Saisir une date...',
-                           'data-provide'  => 'datepicker',
-                           'data-language' => 'fr',
-                           'class'         => 'col-sm-3'
-                ]
+                'attr' => [
+                    'placeholder'   => 'Saisir une date...',
+                    'data-provide'  => 'datepicker',
+                    'data-language' => 'fr',
+                    'class'         => 'col-sm-3',
+                ],
             ])
             ->add('dateFinSuspension', DateType::class, [
                 'required' => false,
@@ -84,11 +90,12 @@ class StageAvenantType extends AbstractType
                 'widget'   => 'single_text',
                 'html5'    => false,
 
-                'attr' => ['placeholder'   => 'Saisir une date...',
-                           'data-provide'  => 'datepicker',
-                           'data-language' => 'fr',
-                           'class'         => 'col-sm-3'
-                ]
+                'attr' => [
+                    'placeholder'   => 'Saisir une date...',
+                    'data-provide'  => 'datepicker',
+                    'data-language' => 'fr',
+                    'class'         => 'col-sm-3',
+                ],
             ])
             ->add('dateRepriseStage', DateType::class, [
                 'required' => false,
@@ -96,11 +103,12 @@ class StageAvenantType extends AbstractType
                 'format'   => 'dd/MM/yyyy',
                 'widget'   => 'single_text',
                 'html5'    => false,
-                'attr'     => ['placeholder'   => 'Saisir une date...',
-                               'data-provide'  => 'datepicker',
-                               'data-language' => 'fr',
-                               'class'         => 'col-sm-3'
-                ]
+                'attr'     => [
+                    'placeholder'   => 'Saisir une date...',
+                    'data-provide'  => 'datepicker',
+                    'data-language' => 'fr',
+                    'class'         => 'col-sm-3',
+                ],
             ])
             ->add('dateInterruption', DateType::class, [
                 'required' => false,
@@ -108,11 +116,12 @@ class StageAvenantType extends AbstractType
                 'format'   => 'dd/MM/yyyy',
                 'widget'   => 'single_text',
                 'html5'    => false,
-                'attr'     => ['placeholder'   => 'Saisir une date...',
-                               'data-provide'  => 'datepicker',
-                               'data-language' => 'fr',
-                               'class'         => 'col-sm-3'
-                ]
+                'attr'     => [
+                    'placeholder'   => 'Saisir une date...',
+                    'data-provide'  => 'datepicker',
+                    'data-language' => 'fr',
+                    'class'         => 'col-sm-3',
+                ],
             ])
             ->add('nouvelleAdresse', AdresseType::class, ['required' => false, 'label' => 'nouvelleAdresse']);
     }
@@ -121,7 +130,7 @@ class StageAvenantType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class'         => StageAvenant::class,
-            'translation_domain' => 'form'
+            'translation_domain' => 'form',
         ]);
     }
 }

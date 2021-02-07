@@ -1,9 +1,12 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/HrsController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/HrsController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
 
 namespace App\Controller\administration;
 
@@ -17,8 +20,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class PrevisionnelController
- * @package App\Controller\administration
+ * Class PrevisionnelController.
+ *
  * @Route("/administration/service-previsionnel/hrs")
  */
 class HrsController extends BaseController
@@ -26,16 +29,12 @@ class HrsController extends BaseController
     /**
      * @Route("/{annee}", name="administration_hrs_index", methods="GET|POST", options={"expose":true},
      *                    requirements={"annee":"\d+"})
-     * @param Request       $request
-     * @param HrsRepository $hrsRepository
      *
-     * @param int           $annee
-     *
-     * @return Response
+     * @param int $annee
      */
     public function index(Request $request, HrsRepository $hrsRepository, $annee = 0): Response
     {
-        if ($annee === 0 && $this->dataUserSession->getDepartement() !== null) {
+        if (0 === $annee && null !== $this->dataUserSession->getDepartement()) {
             $annee = $this->dataUserSession->getDepartement()->getOptAnneePrevisionnel();
         }
 
@@ -43,8 +42,8 @@ class HrsController extends BaseController
         $form = $this->createForm(HrsType::class, $hrs, [
             'departement' => $this->dataUserSession->getDepartement(),
             'attr'        => [
-                'data-provide' => 'validation'
-            ]
+                'data-provide' => 'validation',
+            ],
         ]);
 
         $form->handleRequest($request);
@@ -58,24 +57,20 @@ class HrsController extends BaseController
         return $this->render('administration/hrs/index.html.twig', [
             'hrs'   => $hrsRepository->findByDepartement($this->dataUserSession->getDepartement(), $annee),
             'annee' => $annee,
-            'form'  => $form->createView()
+            'form'  => $form->createView(),
         ]);
     }
 
     /**
      * @Route("/{id}/edit", name="administration_hrs_edit", methods="GET|POST")
-     * @param Request $request
-     * @param Hrs     $hrs
-     *
-     * @return Response
      */
     public function edit(Request $request, Hrs $hrs): Response
     {
         $form = $this->createForm(HrsType::class, $hrs, [
             'departement' => $this->dataUserSession->getDepartement(),
             'attr'        => [
-                'data-provide' => 'validation'
-            ]
+                'data-provide' => 'validation',
+            ],
         ]);
         $form->handleRequest($request);
 
@@ -83,7 +78,7 @@ class HrsController extends BaseController
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'hrs.edit.success.flash');
 
-            if ($request->request->get('btn_update') !== null) {
+            if (null !== $request->request->get('btn_update')) {
                 return $this->redirectToRoute('administration_hrs_index');
             }
 
@@ -98,11 +93,6 @@ class HrsController extends BaseController
 
     /**
      * @Route("/annee/duplicate", name="administration_hrs_duplicate_annee", methods="POST")
-     *
-     * @param HrsRepository $hrsRepository
-     * @param Request       $request
-     *
-     * @return Response
      */
     public function duplicateAnnee(HrsRepository $hrsRepository, Request $request): Response
     {
@@ -111,7 +101,7 @@ class HrsController extends BaseController
         $annee_concerver = $request->request->get('annee_concerver');
 
         //on efface, sauf si la case est cochée.
-        if ($annee_concerver === null || $annee_concerver !== 'true') {
+        if (null === $annee_concerver || 'true' !== $annee_concerver) {
             $hrs = $hrsRepository->findByDepartement($this->dataUserSession->getDepartement(), $annee_destination);
             foreach ($hrs as $hr) {
                 $this->entityManager->remove($hr);
@@ -136,9 +126,6 @@ class HrsController extends BaseController
 
     /**
      * @Route("/{id}/duplicate", name="administration_hrs_duplicate", methods="GET")
-     * @param Hrs $hrs
-     *
-     * @return Response
      */
     public function duplicate(Hrs $hrs): Response
     {
@@ -153,9 +140,6 @@ class HrsController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_hrs_show", methods="GET")
-     * @param Hrs $hrs
-     *
-     * @return Response
      */
     public function show(Hrs $hrs): Response
     {
@@ -164,10 +148,6 @@ class HrsController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_hrs_delete", methods="DELETE")
-     * @param Request $request
-     * @param Hrs     $hrs
-     *
-     * @return Response
      */
     public function delete(Request $request, Hrs $hrs): Response
     {
@@ -187,11 +167,6 @@ class HrsController extends BaseController
 
     /**
      * @Route("/supprimer/annee", name="administration_hrs_supprimer_annee", methods="DELETE")
-     * @param Request       $request
-     *
-     * @param HrsRepository $hrsRepository
-     *
-     * @return Response
      */
     public function supprimer(Request $request, HrsRepository $hrsRepository): Response
     {

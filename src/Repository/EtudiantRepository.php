@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/EtudiantRepository.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 19/01/2021 11:32
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/EtudiantRepository.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Repository;
 
@@ -14,10 +16,10 @@ use App\Entity\Diplome;
 use App\Entity\Etudiant;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\QueryBuilder;
-use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Routing\RouterInterface;
 
 /**
@@ -32,9 +34,6 @@ class EtudiantRepository extends ServiceEntityRepository
 
     /**
      * EtudiantRepository constructor.
-     *
-     * @param ManagerRegistry $registry
-     * @param RouterInterface $router
      */
     public function __construct(ManagerRegistry $registry, RouterInterface $router)
     {
@@ -47,8 +46,6 @@ class EtudiantRepository extends ServiceEntityRepository
      * @param $filters
      * @param $start
      * @param $length
-     *
-     * @return array
      */
     public function getArrayEtudiantsByDepartement($getId, $filters, $start, $length): array
     {
@@ -88,7 +85,6 @@ class EtudiantRepository extends ServiceEntityRepository
                         <option value="erreur">Erreur/Pas dans la formation</option>
                         </select>';
 
-
             $tab[] = $t;
         }
 
@@ -113,7 +109,7 @@ class EtudiantRepository extends ServiceEntityRepository
             ->leftJoin(Semestre::class, 's', 'WITH', 's.id=u.semestre')
             ->where('u.departement = :departement')
             ->setParameters(['departement' => $departement]);
-        if ($order !== null) {
+        if (null !== $order) {
             switch ($order[0]['column']) {
                 case 0:
                     $qb->orderBy('u.numEtudiant', $order[0]['dir']);
@@ -153,8 +149,6 @@ class EtudiantRepository extends ServiceEntityRepository
 
     /**
      * @param $semestre
-     *
-     * @return QueryBuilder
      */
     public function findBySemestreBuilder($semestre): QueryBuilder
     {
@@ -168,8 +162,6 @@ class EtudiantRepository extends ServiceEntityRepository
 
     /**
      * @param $semestre
-     *
-     * @return array
      */
     public function findBySemestre($semestre): array
     {
@@ -181,7 +173,6 @@ class EtudiantRepository extends ServiceEntityRepository
     /**
      * @param $slug
      *
-     * @return mixed
      * @throws NonUniqueResultException
      */
     public function findOneBySlug($slug)
@@ -194,11 +185,7 @@ class EtudiantRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param             $needle
-     *
-     * @param Departement $departement
-     *
-     * @return array
+     * @param $needle
      */
     public function search($needle, Departement $departement): array
     {
@@ -214,9 +201,9 @@ class EtudiantRepository extends ServiceEntityRepository
             $tt['photo'] = $etudiant->getPhotoName();
             $tt['mailUniv'] = $etudiant->getMailUniv();
             $tt['mailPerso'] = $etudiant->getMailPerso();
-            $tt['semestre'] = $etudiant->getSemestre() !== null ? $etudiant->getSemestre()->getLibelle() : 'non défini';
-            $tt['semestreId'] = $etudiant->getSemestre() !== null ? $etudiant->getSemestre()->getId() : null;
-            $tt['diplomeId'] = $etudiant->getSemestre() !== null ? $etudiant->getDiplome()->getId() : null;
+            $tt['semestre'] = null !== $etudiant->getSemestre() ? $etudiant->getSemestre()->getLibelle() : 'non défini';
+            $tt['semestreId'] = null !== $etudiant->getSemestre() ? $etudiant->getSemestre()->getId() : null;
+            $tt['diplomeId'] = null !== $etudiant->getSemestre() ? $etudiant->getDiplome()->getId() : null;
             $tt['promo'] = $etudiant->getPromotion();
             $tt['anneeSortie'] = $etudiant->getAnneeSortie();
             $tt['avatarInitiales'] = $etudiant->getAvatarInitiales();
@@ -224,18 +211,13 @@ class EtudiantRepository extends ServiceEntityRepository
             foreach ($etudiant->getGroupes() as $groupe) {
                 $gr .= $groupe->getLibelle() . ', ';
             }
-            $tt['groupes'] = substr($gr, 0, -2);
+            $tt['groupes'] = mb_substr($gr, 0, -2);
             $t[] = $tt;
         }
 
         return $t;
     }
 
-    /**
-     * @param Annee $annee
-     *
-     * @return mixed
-     */
     public function findByAnnee(Annee $annee)
     {
         $query = $this->createQueryBuilder('e');
@@ -243,7 +225,7 @@ class EtudiantRepository extends ServiceEntityRepository
         foreach ($annee->getSemestres() as $semestre) {
             $query->orWhere('e.semestre = ?' . $i)
                 ->setParameter($i, $semestre->getId());
-            $i++;
+            ++$i;
         }
 
         return $query->orderBy('e.nom', 'ASC')
@@ -289,7 +271,6 @@ class EtudiantRepository extends ServiceEntityRepository
     /**
      * @param $code
      *
-     * @return mixed
      * @throws NonUniqueResultException
      */
     public function findByCode($code)
@@ -364,7 +345,6 @@ class EtudiantRepository extends ServiceEntityRepository
         }
 
         return $t;
-
     }
 
     /**
@@ -373,6 +353,7 @@ class EtudiantRepository extends ServiceEntityRepository
      *
      * @return int|mixed|string|null
      * @throws NonUniqueResultException
+     *
      */
     public function identificationRdd($login, $date)
     {

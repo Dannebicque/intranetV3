@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/PersonnelRepository.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 03/09/2020 13:23
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/PersonnelRepository.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Repository;
 
@@ -27,27 +29,20 @@ use Symfony\Component\Routing\RouterInterface;
  */
 class PersonnelRepository extends ServiceEntityRepository
 {
-
     private $router;
 
     /**
      * PersonnelRepository constructor.
-     *
-     * @param ManagerRegistry $registry
-     * @param RouterInterface $router
      */
     public function __construct(ManagerRegistry $registry, RouterInterface $router)
     {
         parent::__construct($registry, Personnel::class);
         $this->router = $router;
-
     }
 
     /**
      * @param $type
      * @param $departement
-     *
-     * @return mixed
      */
     public function findByType($type, $departement)
     {
@@ -65,8 +60,6 @@ class PersonnelRepository extends ServiceEntityRepository
 
     /**
      * @param $needle
-     *
-     * @return array
      */
     public function search($needle): array
     {
@@ -113,11 +106,9 @@ class PersonnelRepository extends ServiceEntityRepository
         return $t;
     }
 
-
     /**
      * @param $slug
      *
-     * @return mixed
      * @throws NonUniqueResultException
      */
     public function findOneBySlug($slug)
@@ -131,8 +122,6 @@ class PersonnelRepository extends ServiceEntityRepository
 
     /**
      * @param $departement
-     *
-     * @return mixed
      */
     public function findByDepartement($departement)
     {
@@ -143,8 +132,6 @@ class PersonnelRepository extends ServiceEntityRepository
 
     /**
      * @param $departement
-     *
-     * @return QueryBuilder
      */
     public function findByDepartementBuilder($departement): QueryBuilder
     {
@@ -156,14 +143,9 @@ class PersonnelRepository extends ServiceEntityRepository
             ->addOrderBy('p.prenom', 'ASC');
     }
 
-    /**
-     * @param Semestre $semestre
-     *
-     * @return QueryBuilder|null
-     */
     public function findBySemestreBuilder(Semestre $semestre): ?QueryBuilder
     {
-        if ($semestre->getAnnee() !== null && $semestre->getAnnee()->getDiplome() !== null) {
+        if (null !== $semestre->getAnnee() && null !== $semestre->getAnnee()->getDiplome()) {
             return $this->findByDepartementBuilder($semestre->getAnnee()->getDiplome()->getDepartement());
         }
 
@@ -187,7 +169,7 @@ class PersonnelRepository extends ServiceEntityRepository
             ->select('u')
             ->from(Personnel::class, 'u');
 
-        if ($order !== null && count($order) > 0) {
+        if (null !== $order && \count($order) > 0) {
             switch ($order[0]['column']) {
                 case 0:
                     $qb->orderBy('u.numeroHarpege', $order[0]['dir']);
@@ -228,18 +210,13 @@ class PersonnelRepository extends ServiceEntityRepository
         return $getResult ? $preparedQuery->getResult() : $preparedQuery;
     }
 
-    /**
-     * @param Diplome $diplome
-     *
-     * @return array
-     */
     public function tableauPersonnelHarpege(Diplome $diplome): array
     {
         $p = $this->findByDepartement($diplome->getDepartement());
 
         $t = [];
 
-        /** @var  $pers Personnel */
+        /** @var $pers Personnel */
         foreach ($p as $pers) {
             $t[$pers->getNumeroHarpege()] = $pers;
         }
@@ -259,7 +236,7 @@ class PersonnelRepository extends ServiceEntityRepository
 
         $t = [];
 
-        /** @var  $q Personnel */
+        /** @var $q Personnel */
         foreach ($query as $q) {
             $t[$q->getInitiales()] = $q;
         }
@@ -270,7 +247,6 @@ class PersonnelRepository extends ServiceEntityRepository
     /**
      * @param $code
      *
-     * @return mixed
      * @throws NonUniqueResultException
      */
     public function findByCode($code)

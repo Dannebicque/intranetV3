@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ExportController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 26/09/2020 08:34
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ExportController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller;
 
@@ -19,28 +21,26 @@ use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
 /**
- * Class ExportController
- * @package App\Controller
+ * Class ExportController.
+ *
  * @Route("/export")
  */
 class ExportController extends AbstractController
 {
     /**
      * @Route("/listing", name="export_listing")
-     * @param MatiereRepository $matiereRepository
-     * @param MyExportListing   $myExport
-     * @param Request           $request
      *
-     * @return bool|null|StreamedResponse
-     * @throws Exception
+     * @return bool|StreamedResponse|null
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
+     *
+     * @throws Exception
      */
     public function listing(MatiereRepository $matiereRepository, MyExportListing $myExport, Request $request)
     {
         $matiere = $request->request->get('matiere');
-        if ($matiere !== 0) {
+        if (0 !== $matiere) {
             $matiere = $matiereRepository->find($matiere);
         }
 

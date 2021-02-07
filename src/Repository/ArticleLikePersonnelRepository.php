@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/ArticleLikePersonnelRepository.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 05/07/2020 08:13
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/ArticleLikePersonnelRepository.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:08
+ */
 
 namespace App\Repository;
 
@@ -28,7 +30,6 @@ class ArticleLikePersonnelRepository extends ServiceEntityRepository
 
     public function findLike(Personnel $personnel, Article $article)
     {
-
         return $this->createQueryBuilder('a')
             ->where('a.personnel = :personnel')
             ->andWhere('a.article = :article')
@@ -36,6 +37,5 @@ class ArticleLikePersonnelRepository extends ServiceEntityRepository
             ->setParameter('article', $article->getId())
             ->getQuery()
             ->getResult();
-
     }
 }

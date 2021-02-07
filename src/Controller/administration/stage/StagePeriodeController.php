@@ -1,17 +1,20 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StagePeriodeController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 12/12/2020 14:31
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StagePeriodeController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
 
 namespace App\Controller\administration\stage;
 
+use App\Classes\MyExport;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\StagePeriode;
 use App\Form\StagePeriodeType;
-use App\Classes\MyExport;
 use App\Repository\StagePeriodeRepository;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -26,9 +29,6 @@ class StagePeriodeController extends BaseController
 {
     /**
      * @Route("/", name="administration_stage_periode_index", methods="GET")
-     * @param StagePeriodeRepository $stagePeriodeRepository
-     *
-     * @return Response
      */
     public function index(StagePeriodeRepository $stagePeriodeRepository): Response
     {
@@ -41,15 +41,13 @@ class StagePeriodeController extends BaseController
     /**
      * @Route("/export.{_format}", name="administration_stage_periode_export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"})
-     * @param MyExport               $myExport
-     * @param StagePeriodeRepository $stagePeriodeRepository
-     * @param                        $_format
      *
-     * @return Response
+     * @param $_format
      */
     public function export(MyExport $myExport, StagePeriodeRepository $stagePeriodeRepository, $_format): Response
     {
         $dates = $stagePeriodeRepository->findByDepartement($this->dataUserSession->getDepartement());
+
         return $myExport->genereFichierGenerique(
             $_format,
             $dates,
@@ -61,9 +59,7 @@ class StagePeriodeController extends BaseController
 
     /**
      * @Route("/new", name="administration_stage_periode_new", methods="GET|POST")
-     * @param Request $request
      *
-     * @return Response
      * @throws Exception
      */
     public function create(Request $request): Response
@@ -73,8 +69,8 @@ class StagePeriodeController extends BaseController
         $form = $this->createForm(StagePeriodeType::class, $stagePeriode, [
             'departement' => $this->dataUserSession->getDepartement(),
             'attr'        => [
-                'data-provide' => 'validation'
-            ]
+                'data-provide' => 'validation',
+            ],
         ]);
         $form->handleRequest($request);
 
@@ -95,9 +91,6 @@ class StagePeriodeController extends BaseController
     /**
      * @Route("/{id}", name="administration_stage_periode_show", methods="GET")
      * @ParamConverter("stagePeriode", options={"mapping": {"id": "uuid"}})
-     * @param StagePeriode $stagePeriode
-     *
-     * @return Response
      */
     public function show(StagePeriode $stagePeriode): Response
     {
@@ -107,18 +100,14 @@ class StagePeriodeController extends BaseController
     /**
      * @Route("/{id}/edit", name="administration_stage_periode_edit", methods="GET|POST")
      * @ParamConverter("stagePeriode", options={"mapping": {"id": "uuid"}})
-     * @param Request      $request
-     * @param StagePeriode $stagePeriode
-     *
-     * @return Response
      */
     public function edit(Request $request, StagePeriode $stagePeriode): Response
     {
         $form = $this->createForm(StagePeriodeType::class, $stagePeriode, [
             'departement' => $this->dataUserSession->getDepartement(),
             'attr'        => [
-                'data-provide' => 'validation'
-            ]
+                'data-provide' => 'validation',
+            ],
         ]);
 
         $form->handleRequest($request);
@@ -140,10 +129,6 @@ class StagePeriodeController extends BaseController
     /**
      * @Route("/{id}", name="administration_stage_periode_delete", methods="DELETE")
      * @ParamConverter("stagePeriode", options={"mapping": {"id": "uuid"}})
-     * @param Request      $request
-     * @param StagePeriode $stagePeriode
-     *
-     * @return Response
      */
     public function delete(Request $request, StagePeriode $stagePeriode): Response
     {
@@ -157,7 +142,6 @@ class StagePeriodeController extends BaseController
                 'stage_periode.delete.success.flash'
             );
 
-
             return $this->json($id, Response::HTTP_OK);
         }
 
@@ -169,9 +153,6 @@ class StagePeriodeController extends BaseController
     /**
      * @Route("/{id}/duplicate", name="administration_stage_periode_duplicate", methods="GET")
      * @ParamConverter("stagePeriode", options={"mapping": {"id": "uuid"}})
-     * @param StagePeriode $stagePeriode
-     *
-     * @return Response
      */
     public function duplicate(StagePeriode $stagePeriode): Response
     {

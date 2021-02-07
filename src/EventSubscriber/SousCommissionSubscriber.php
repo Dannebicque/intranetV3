@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/SousCommissionSubscriber.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/SousCommissionSubscriber.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\EventSubscriber;
 
@@ -15,24 +17,16 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Routing\RouterInterface;
 
-
 class SousCommissionSubscriber implements EventSubscriberInterface
 {
-
     protected MailerFromTwig $myMailer;
 
     private RouterInterface $router;
-    /**
-     * @var EntityManagerInterface
-     */
+
     private EntityManagerInterface $entityManager;
 
     /**
      * StageSubscriber constructor.
-     *
-     * @param EntityManagerInterface $entityManager
-     * @param RouterInterface        $router
-     * @param MailerFromTwig         $myMailer
      */
     public function __construct(
         EntityManagerInterface $entityManager,
@@ -47,10 +41,9 @@ class SousCommissionSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            SousCommissionEvent::PUBLISHED => 'onSousCommissionPubliee'
+            SousCommissionEvent::PUBLISHED => 'onSousCommissionPubliee',
         ];
     }
-
 
     public function onSousCommissionPubliee(SousCommissionEvent $event): void
     {
@@ -64,8 +57,7 @@ class SousCommissionSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param Scolarite $scolarite
-     * @param           $codeEvent
+     * @param $codeEvent
      */
     private function addNotification(Scolarite $scolarite, $codeEvent): void
     {
@@ -81,8 +73,7 @@ class SousCommissionSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param Scolarite    $scolarite
-     * @param              $codeEvent
+     * @param $codeEvent
      *
      * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
      */

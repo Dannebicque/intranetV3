@@ -1,17 +1,20 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtRealiseController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 24/01/2021 17:35
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtRealiseController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
 
 namespace App\Controller\administration;
 
+use App\Classes\MyEdtCompare;
 use App\Controller\BaseController;
 use App\Entity\Matiere;
 use App\Entity\Personnel;
 use App\Entity\Previsionnel;
-use App\Classes\MyEdtCompare;
 use App\Repository\CalendrierRepository;
 use App\Repository\EdtPlanningRepository;
 use App\Repository\MatiereRepository;
@@ -25,8 +28,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class EdtRealiseController
- * @package App\Controller\administration
+ * Class EdtRealiseController.
+ *
  * @Route("/administration/emploi-du-temps/realise")
  */
 class EdtRealiseController extends BaseController
@@ -39,9 +42,6 @@ class EdtRealiseController extends BaseController
 
     /**
      * EdtRealiseController constructor.
-     *
-     * @param EdtPlanningRepository $edtPlanningRepository
-     * @param CalendrierRepository  $calendrierRepository
      */
     public function __construct(
         EdtPlanningRepository $edtPlanningRepository,
@@ -51,12 +51,7 @@ class EdtRealiseController extends BaseController
         $this->calendrierRepository = $calendrierRepository;
     }
 
-
     /**
-     *
-     * @param PersonnelRepository $personnelRepository
-     *
-     * @return Response
      * @Route("", name="administration_edt_service_realise", methods={"GET"})
      */
     public function index(MatiereRepository $matiereRepository, PersonnelRepository $personnelRepository): Response
@@ -70,11 +65,6 @@ class EdtRealiseController extends BaseController
     }
 
     /**
-     * @param MyEdtCompare $myEdtCompare
-     * @param Matiere      $matiere
-     * @param Personnel    $personnel
-     *
-     * @return Response
      * @Route("/service-realise/{matiere}/{personnel}", name="administration_edt_service_realise_affiche",
      *                                                             options={"expose"=true}, methods={"POST","GET"})
      */
@@ -91,7 +81,7 @@ class EdtRealiseController extends BaseController
                 'matiere'    => $matiere,
                 'calendrier' => $this->calendrierRepository->findByAnneeUniversitaire($this->dataUserSession->getAnneeUniversitaire()),
                 'personnel'  => $personnel,
-                't'          => $t
+                't'          => $t,
             ]);
         }
 
@@ -99,11 +89,6 @@ class EdtRealiseController extends BaseController
     }
 
     /**
-     * @param SemestreRepository     $semestreRepository
-     * @param PersonnelRepository    $personnelRepository
-     * @param PrevisionnelRepository $previsionnelRepository
-     * @param Request                $request
-     *
      * @return JsonResponse|RedirectResponse
      * @Route("/ajax/enseignant/modules", name="administration_edt_realise_ajax_modules", options={"expose"=true},
      *                                    methods={"POST"})
@@ -117,7 +102,7 @@ class EdtRealiseController extends BaseController
         $semestre = $semestreRepository->find($request->request->get('semestre'));
         $personnel = $personnelRepository->find($request->request->get('personnel'));
 
-        if ($semestre !== null && $personnel !== null) {
+        if (null !== $semestre && null !== $personnel) {
             $matieres = $previsionnelRepository->findServiceSemestre($personnel,
                 $semestre, $this->dataUserSession->getAnneePrevisionnel());
 
@@ -126,11 +111,11 @@ class EdtRealiseController extends BaseController
 
             /** @var Previsionnel $m */
             foreach ($matieres as $m) {
-                if ($m->getMatiere() !== null) {
+                if (null !== $m->getMatiere()) {
                     $array['matiere' . $i]['id'] = $m->getMatiere()->getId();
                     $array['matiere' . $i]['nom'] = $m->getMatiere()->getCodeMatiere() . ' | ' . $m->getMatiere()->getLibelle();
-                    $array['matiere' . $i]['ue'] = $m->getMatiere()->getUe() !== null ? $m->getMatiere()->getUe()->getNumeroUe() : 0;
-                    $i++;
+                    $array['matiere' . $i]['ue'] = null !== $m->getMatiere()->getUe() ? $m->getMatiere()->getUe()->getNumeroUe() : 0;
+                    ++$i;
                 }
             }
 
@@ -142,5 +127,4 @@ class EdtRealiseController extends BaseController
 
         return $this->redirect($this->generateUrl('erreur_666'));
     }
-
 }

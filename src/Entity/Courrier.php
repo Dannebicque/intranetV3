@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Courrier.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Courrier.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:49
+ */
 
 namespace App\Entity;
 
@@ -19,17 +21,12 @@ class Courrier extends BaseEntity
      */
     private $texte;
 
-    /**
-     * @return null|string
-     */
     public function getTexte(): ?string
     {
         return $this->texte;
     }
 
     /**
-     * @param string $texte
-     *
      * @return Courrier
      */
     public function setTexte(string $texte): self

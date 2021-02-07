@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Article.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 08/08/2020 10:20
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Article.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:49
+ */
 
 namespace App\Entity;
 
@@ -61,11 +63,8 @@ class Article extends BaseEntity
      */
     private $articleLikes;
 
-
     /**
      * Article constructor.
-     *
-     * @param Personnel|null $personnel
      */
     public function __construct(?Personnel $personnel)
     {
@@ -74,17 +73,12 @@ class Article extends BaseEntity
         $this->articleLikes = new ArrayCollection();
     }
 
-    /**
-     * @return null|string
-     */
     public function getTitre(): ?string
     {
         return $this->titre;
     }
 
     /**
-     * @param string $titre
-     *
      * @return Article
      */
     public function setTitre(string $titre): self
@@ -94,17 +88,12 @@ class Article extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
     public function getTexte(): ?string
     {
         return $this->texte;
     }
 
     /**
-     * @param string $texte
-     *
      * @return Article
      */
     public function setTexte(string $texte): self
@@ -114,9 +103,6 @@ class Article extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
     public function getSlug(): ?string
     {
         return $this->slug;
@@ -150,7 +136,7 @@ class Article extends BaseEntity
             $LongueurAvant = mb_strlen($texte);
             if ($LongueurAvant > $nbreCar) {
                 // pour ne pas couper un mot, on va à l'espace suivant
-                $texte = mb_substr($texte, 0, strpos($texte, ' ', $nbreCar));
+                $texte = mb_substr($texte, 0, mb_strpos($texte, ' ', $nbreCar));
                 // On ajoute (ou pas) des points de suspension à la fin si le texte brut est plus long que $nbreCar
                 if (!empty($PointSuspension)) {
                     $texte .= $PointSuspension;
@@ -172,8 +158,6 @@ class Article extends BaseEntity
     }
 
     /**
-     * @param Semestre $semestre
-     *
      * @return Article
      */
     public function addSemestre(Semestre $semestre): self
@@ -186,8 +170,6 @@ class Article extends BaseEntity
     }
 
     /**
-     * @param Semestre $semestre
-     *
      * @return Article
      */
     public function removeSemestre(Semestre $semestre): self
@@ -199,17 +181,12 @@ class Article extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return Personnel|null
-     */
     public function getPersonnel(): ?Personnel
     {
         return $this->personnel;
     }
 
     /**
-     * @param Personnel|null $personnel
-     *
      * @return Article
      */
     public function setPersonnel(?Personnel $personnel): self

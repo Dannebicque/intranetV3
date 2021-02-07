@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/AnneeUniversitaireController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/AnneeUniversitaireController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller\superAdministration;
 
@@ -24,9 +26,6 @@ class AnneeUniversitaireController extends BaseController
 {
     /**
      * @Route("/", name="sa_annee_universitaire_index", methods={"GET"})
-     * @param AnneeUniversitaireRepository $anneeUniversitaireRepository
-     *
-     * @return Response
      */
     public function index(AnneeUniversitaireRepository $anneeUniversitaireRepository): Response
     {
@@ -37,12 +36,6 @@ class AnneeUniversitaireController extends BaseController
 
     /**
      * @Route("/annee-active/change/{annee}", name="sa_annee_universitaire_change_active", options={"expose":true})
-     * @param AnneeUniversitaireRepository $anneeUniversitaireRepository
-     * @param Request                      $request
-     *
-     * @param AnneeUniversitaire           $annee
-     *
-     * @return Response
      */
     public function changeOption(
         AnneeUniversitaireRepository $anneeUniversitaireRepository,
@@ -50,7 +43,7 @@ class AnneeUniversitaireController extends BaseController
         AnneeUniversitaire $annee
     ): Response {
         $value = $request->request->get('value');
-        if ($value === 'true') {
+        if ('true' === $value) {
             $annees = $anneeUniversitaireRepository->findAll();
             foreach ($annees as $uneAnnee) {
                 $uneAnnee->setActive(false);
@@ -68,12 +61,8 @@ class AnneeUniversitaireController extends BaseController
     /**
      * @Route("/export.{_format}", name="sa_annee_universitaire_export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"})
-     * @param MyExport                     $myExport
-     * @param AnneeUniversitaireRepository $anneeUniversitaireRepository
      *
-     * @param                              $_format
-     *
-     * @return Response
+     * @param $_format
      */
     public function export(
         MyExport $myExport,
@@ -93,9 +82,6 @@ class AnneeUniversitaireController extends BaseController
 
     /**
      * @Route("/new", name="sa_annee_universitaire_new", methods={"GET","POST"})
-     * @param Request $request
-     *
-     * @return Response
      */
     public function new(Request $request): Response
     {
@@ -119,9 +105,6 @@ class AnneeUniversitaireController extends BaseController
 
     /**
      * @Route("/{id}", name="sa_annee_universitaire_show", methods={"GET"})
-     * @param AnneeUniversitaire $anneeUniversitaire
-     *
-     * @return Response
      */
     public function show(AnneeUniversitaire $anneeUniversitaire): Response
     {
@@ -132,10 +115,6 @@ class AnneeUniversitaireController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="sa_annee_universitaire_edit", methods={"GET","POST"})
-     * @param Request            $request
-     * @param AnneeUniversitaire $anneeUniversitaire
-     *
-     * @return Response
      */
     public function edit(Request $request, AnneeUniversitaire $anneeUniversitaire): Response
     {
@@ -159,9 +138,6 @@ class AnneeUniversitaireController extends BaseController
 
     /**
      * @Route("/{id}/duplicate", name="sa_annee_universitaire_duplicate", methods="GET|POST")
-     * @param AnneeUniversitaire $annee_universitaire
-     *
-     * @return Response
      */
     public function duplicate(AnneeUniversitaire $annee_universitaire): Response
     {
@@ -176,19 +152,15 @@ class AnneeUniversitaireController extends BaseController
 
     /**
      * @Route("/{id}", name="sa_annee_universitaire_delete", methods="DELETE")
-     * @param Request            $request
-     * @param AnneeUniversitaire $annee_universitaire
-     *
-     * @return Response
      */
     public function delete(Request $request, AnneeUniversitaire $annee_universitaire): Response
     {
         $id = $annee_universitaire->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
-            if (count($annee_universitaire->getDepartements()) === 0 &&
-                count($annee_universitaire->getDiplomes()) === 0 &&
-                count($annee_universitaire->getScolarites()) === 0 &&
-                count($annee_universitaire->getEvaluations()) === 0) {
+            if (0 === \count($annee_universitaire->getDepartements()) &&
+                0 === \count($annee_universitaire->getDiplomes()) &&
+                0 === \count($annee_universitaire->getScolarites()) &&
+                0 === \count($annee_universitaire->getEvaluations())) {
                 $this->entityManager->remove($annee_universitaire);
                 $this->entityManager->flush();
 

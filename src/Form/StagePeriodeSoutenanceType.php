@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Form/StagePeriodeSoutenanceType.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/StagePeriodeSoutenanceType.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Form;
 
@@ -35,14 +37,14 @@ class StagePeriodeSoutenanceType extends AbstractType
             ->addEventListener(FormEvents::PRE_SET_DATA, static function(FormEvent $event) {
                 $stagePeriodeSoutenance = $event->getData();
                 $form = $event->getForm();
-                if ($stagePeriodeSoutenance !== null) {
+                if (null !== $stagePeriodeSoutenance) {
                     $form->add('dateRange', DateRangeType::class, [
                         'label'     => 'dateRange.soutenance',
                         'mapped'    => false,
                         'date_data' => [
                             'from' => $stagePeriodeSoutenance->getDateDebut(),
-                            'to'   => $stagePeriodeSoutenance->getDateFin()
-                        ]
+                            'to'   => $stagePeriodeSoutenance->getDateFin(),
+                        ],
                     ]);
                 }
             });

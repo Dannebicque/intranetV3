@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/CelcatEventsRepository.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 25/09/2020 16:43
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/CelcatEventsRepository.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Repository;
 
@@ -53,13 +55,13 @@ class CelcatEventsRepository extends ServiceEntityRepository
 
     public function findEdtEtu(Etudiant $user, int $semaine)
     {
-        if ($user->getSemestre() !== null) {
+        if (null !== $user->getSemestre()) {
             $this->groupes($user);
             $this->params['semaine'] = $semaine;
             $query = $this->createQueryBuilder('p')
                 ->where('p.semaineFormation = :semaine');
 
-            if ($this->chaine !== '') {
+            if ('' !== $this->chaine) {
                 $query->andWhere($this->chaine);
             }
 
@@ -80,16 +82,14 @@ class CelcatEventsRepository extends ServiceEntityRepository
     {
         $i = 1;
         foreach ($user->getGroupes() as $groupe) {
-            if ($groupe->getTypeGroupe() !== null) {
-
+            if (null !== $groupe->getTypeGroupe()) {
                 if ($i > 1) {
                     $this->chaine .= ' OR ';
                 }
                 $this->chaine .= 'p.codeGroupe = :gr' . $i;
 
                 $this->params['gr' . $i] = $groupe->getCodeApogee();
-                $i++;
-
+                ++$i;
             }
         }
     }
@@ -98,8 +98,7 @@ class CelcatEventsRepository extends ServiceEntityRepository
         int $codeCelcatDepartement,
         ?AnneeUniversitaire $anneeUniversitaire
     ) {
-
-        if ($anneeUniversitaire === null) {
+        if (null === $anneeUniversitaire) {
             throw new InvalidArgumentException('L\'année universitaire n\'est pas définie');
         }
 
@@ -115,8 +114,6 @@ class CelcatEventsRepository extends ServiceEntityRepository
 
     public function recupereEDTBornes(int $semaineReelle, Semestre $semestre, $jsem): array
     {
-
-
         $nbgroupetp = $semestre->getNbgroupeTpEdt();
 
         if ($nbgroupetp <= 2) {
@@ -143,7 +140,7 @@ class CelcatEventsRepository extends ServiceEntityRepository
 
         $planning = [];
 
-        /** @var  $row CelcatEvent */
+        /** @var $row CelcatEvent */
         foreach ($query as $row) {
             $casedebut = Constantes::TAB_HEURES_INDEX[$row->getDebut()->format('H:i:s')];
             $casefin = Constantes::TAB_HEURES_INDEX[$row->getFin()->format('H:i:s')];
@@ -151,59 +148,58 @@ class CelcatEventsRepository extends ServiceEntityRepository
             $groupe = Constantes::TAB_GROUPES_INDEX[$row->getLibGroupe()]; //todo: pas idéal car dépend de MMI
             $type = $row->getType();
             $max = 20;
-            if ($type === 'tp' || $type === 'TP') {
+            if ('tp' === $type || 'TP' === $type) {
                 $max = 6;
             }
 
-            if ($row->getLibPersonnel() !== null) {
-                $prof = substr($row->getLibPersonnel(), 0, $max);
+            if (null !== $row->getLibPersonnel()) {
+                $prof = mb_substr($row->getLibPersonnel(), 0, $max);
             } else {
                 $prof = '';
             }
 
             $refmatiere = explode(' ', $row->getLibModule());
 
-
-            if (array_key_exists($casedebut, Constantes::TAB_CRENEAUX) && $duree % 3 === 0) {
+            if (\array_key_exists($casedebut, Constantes::TAB_CRENEAUX) && 0 === $duree % 3) {
                 $planning[$casedebut][$groupe]['prof'] = $prof;
                 $planning[$casedebut][$groupe]['module'] = $refmatiere[0];
-                $planning[$casedebut][$groupe]['salle'] = substr($row->getLibSalle(), 0, $max);
+                $planning[$casedebut][$groupe]['salle'] = mb_substr($row->getLibSalle(), 0, $max);
                 $planning[$casedebut][$groupe]['type'] = $type;
                 $planning[$casedebut][$groupe]['typebloc'] = $typebloc;
                 $planning[$casedebut][$groupe]['duree'] = $duree;
                 $planning[$casedebut][$groupe]['idplanning'] = $row->getId();
                 $planning[$casedebut][$groupe]['format'] = 'ok';
 
-                if (strtoupper($type) === 'TD') {
+                if ('TD' === mb_strtoupper($type)) {
                     $planning[$casedebut][$groupe + 1]['module'] = 'xt';
                 }
 
-                if (strtoupper($type) === 'CM') {
-                    for ($gr = 1; $gr < $nbgroupetp; $gr++) {
+                if ('CM' === mb_strtoupper($type)) {
+                    for ($gr = 1; $gr < $nbgroupetp; ++$gr) {
                         $planning[$casedebut][$groupe + $gr]['module'] = 'xt';
                     }
                 }
 
                 $planning[$casedebut][$groupe]['module'] = $refmatiere[0]; //création du premier créneaux
 
-                if ($duree % 3 == 0) {
-                    for ($i = 1; $i < $duree / 3; $i++) {
+                if (0 === $duree % 3) {
+                    for ($i = 1; $i < $duree / 3; ++$i) {
                         $planning[$casedebut + ($i * 3)] = $planning[$casedebut];
                     }
                 }
             } else {
                 //pas sur un créneau classique pour le début
-                if (!array_key_exists($casedebut, Constantes::TAB_CRENEAUX)) {
+                if (!\array_key_exists($casedebut, Constantes::TAB_CRENEAUX)) {
                     $casedebut -= ($duree % 3);
                 }
 
-                if ($casedebut == 11 || $casedebut == 12) {
+                if (11 === $casedebut || 12 === $casedebut) {
                     $casedebut = 10;
                 }
 
                 $planning[$casedebut][$groupe]['prof'] = $prof;
                 $planning[$casedebut][$groupe]['module'] = $refmatiere[0];
-                $planning[$casedebut][$groupe]['salle'] = substr($row->getLibSalle(), 0, $max);
+                $planning[$casedebut][$groupe]['salle'] = mb_substr($row->getLibSalle(), 0, $max);
                 $planning[$casedebut][$groupe]['type'] = $type;
                 $planning[$casedebut][$groupe]['typebloc'] = $typebloc;
                 $planning[$casedebut][$groupe]['duree'] = $duree;
@@ -212,12 +208,12 @@ class CelcatEventsRepository extends ServiceEntityRepository
                 $planning[$casedebut][$groupe]['debut'] = $row->getDebut();
                 $planning[$casedebut][$groupe]['fin'] = $casefin;
 
-                if (strtoupper($type) === 'TD') {
+                if ('TD' === mb_strtoupper($type)) {
                     $planning[$casedebut][$groupe + 1]['module'] = 'xt';
                 }
 
-                if (strtoupper($type) === 'CM') {
-                    for ($gr = 1; $gr < $nbgroupetp; $gr++) {
+                if ('CM' === mb_strtoupper($type)) {
+                    for ($gr = 1; $gr < $nbgroupetp; ++$gr) {
                         $planning[$casedebut][$groupe + $gr]['module'] = 'xt';
                     }
                 }
@@ -244,11 +240,6 @@ class CelcatEventsRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    /**
-     * @param Personnel $user
-     *
-     * @return array
-     */
     public function getByPersonnelArray(Personnel $user): array
     {
         $query = $this->createQueryBuilder('p')
@@ -268,7 +259,6 @@ class CelcatEventsRepository extends ServiceEntityRepository
         $query = $this->findEdtEtu($user, $semaine);
 
         return $this->transformeArray($query);
-
     }
 
     private function transformeArray($data): array

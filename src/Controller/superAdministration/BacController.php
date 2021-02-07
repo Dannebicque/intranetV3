@@ -1,17 +1,19 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/BacController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/BacController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller\superAdministration;
 
+use App\Classes\MyExport;
 use App\Controller\BaseController;
 use App\Entity\Bac;
 use App\Entity\Constantes;
 use App\Form\BacType;
-use App\Classes\MyExport;
 use App\Repository\BacRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,9 +26,6 @@ class BacController extends BaseController
 {
     /**
      * @Route("/", name="sa_bac_index", methods={"GET"})
-     * @param BacRepository $bacRepository
-     *
-     * @return Response
      */
     public function index(BacRepository $bacRepository): Response
     {
@@ -35,16 +34,13 @@ class BacController extends BaseController
 
     /**
      * @Route("/export.{_format}", name="sa_bac_export", methods="GET", requirements={"_format"="csv|xlsx|pdf"})
-     * @param MyExport            $myExport
-     * @param BacRepository       $bacRepository
      *
-     * @param                     $_format
-     *
-     * @return Response
+     * @param $_format
      */
     public function export(MyExport $myExport, BacRepository $bacRepository, $_format): Response
     {
         $bacs = $bacRepository->findAll();
+
         return $myExport->genereFichierGenerique(
             $_format,
             $bacs,
@@ -56,9 +52,6 @@ class BacController extends BaseController
 
     /**
      * @Route("/new", name="sa_bac_new", methods={"GET","POST"})
-     * @param Request $request
-     *
-     * @return Response
      */
     public function create(Request $request): Response
     {
@@ -82,9 +75,6 @@ class BacController extends BaseController
 
     /**
      * @Route("/{id}", name="sa_bac_show", methods={"GET"})
-     * @param Bac $bac
-     *
-     * @return Response
      */
     public function show(Bac $bac): Response
     {
@@ -93,10 +83,6 @@ class BacController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="sa_bac_edit", methods={"GET","POST"})
-     * @param Request $request
-     * @param Bac     $bac
-     *
-     * @return Response
      */
     public function edit(Request $request, Bac $bac): Response
     {
@@ -107,9 +93,10 @@ class BacController extends BaseController
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'bac.edit.success.flash');
 
-            if ($request->request->get('btn_update') !== null) {
+            if (null !== $request->request->get('btn_update')) {
                 return $this->redirectToRoute('sa_bac_index');
             }
+
             return $this->redirectToRoute('sa_bac_edit', ['id' => $bac->getId()]);
         }
 
@@ -121,9 +108,6 @@ class BacController extends BaseController
 
     /**
      * @Route("/{id}/duplicate", name="sa_bac_duplicate", methods="GET|POST")
-     * @param Bac $bac
-     *
-     * @return Response
      */
     public function duplicate(Bac $bac): Response
     {
@@ -138,10 +122,6 @@ class BacController extends BaseController
 
     /**
      * @Route("/{id}", name="sa_bac_delete", methods="DELETE")
-     * @param Request $request
-     * @param Bac     $bac
-     *
-     * @return Response
      */
     public function delete(Request $request, Bac $bac): Response
     {

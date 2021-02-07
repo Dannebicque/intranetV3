@@ -1,12 +1,17 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyStageMailTemplate.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 02/10/2020 12:18
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyStageMailTemplate.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
+/*
+ * Pull your hearder here, for exemple, Licence header.
+ */
 
 namespace App\Classes;
-
 
 use App\Entity\StageMailTemplate;
 use App\Entity\StagePeriode;
@@ -22,9 +27,6 @@ class MyStageMailTemplate
 
     /**
      * MyStageMailTemplate constructor.
-     *
-     * @param StageMailTemplateRepository $stageMailTemplateRepository
-     * @param EntityManagerInterface      $entityManager
      */
     public function __construct(
         StageMailTemplateRepository $stageMailTemplateRepository,
@@ -34,12 +36,10 @@ class MyStageMailTemplate
         $this->entityManager = $entityManager;
     }
 
-
     /**
-     * @param              $code
-     * @param              $sujet
-     * @param              $message
-     * @param StagePeriode $stagePeriode
+     * @param $code
+     * @param $sujet
+     * @param $message
      *
      * @throws NonUniqueResultException
      */
@@ -49,10 +49,10 @@ class MyStageMailTemplate
         //rechercher si le modèle existe
         $modele = $this->stageMailTemplateRepository->findEventPeriode($code, $stagePeriode);
 
-        if ($modele !== null) {
+        if (null !== $modele) {
             $modele->setSubject($sujet);
             $template = $modele->getTwigTemplate();
-            if ($template !== null) {
+            if (null !== $template) {
                 $template->setSource($this->transformeFromEditeur($message));
             } else {
                 $template = new TwigTemplate($code . '_' . $stagePeriode->getUuidString(),

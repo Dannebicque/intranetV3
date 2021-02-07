@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/MaterielCommunController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/MaterielCommunController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller\superAdministration;
 
@@ -24,9 +26,6 @@ class MaterielCommunController extends BaseController
 {
     /**
      * @Route("/", name="sa_materiel_commun_index", methods={"GET"})
-     * @param MaterielCommunRepository $materielCommunRepository
-     *
-     * @return Response
      */
     public function index(MaterielCommunRepository $materielCommunRepository): Response
     {
@@ -38,11 +37,8 @@ class MaterielCommunController extends BaseController
     /**
      * @Route("/export.{_format}", name="sa_materiel_commun_export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"})
-     * @param MyExport                 $myExport
-     * @param MaterielCommunRepository $materielCommunRepository
-     * @param                          $_format
      *
-     * @return Response
+     * @param $_format
      */
     public function export(MyExport $myExport, MaterielCommunRepository $materielCommunRepository, $_format): Response
     {
@@ -59,9 +55,6 @@ class MaterielCommunController extends BaseController
 
     /**
      * @Route("/new", name="sa_materiel_commun_new", methods={"GET","POST"})
-     * @param Request $request
-     *
-     * @return Response
      */
     public function new(Request $request): Response
     {
@@ -70,7 +63,6 @@ class MaterielCommunController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $this->entityManager->persist($materielCommun);
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'materiel_commun.add.success.flash');
@@ -86,9 +78,6 @@ class MaterielCommunController extends BaseController
 
     /**
      * @Route("/{id}", name="sa_materiel_commun_show", methods={"GET"})
-     * @param MaterielCommun $materielCommun
-     *
-     * @return Response
      */
     public function show(MaterielCommun $materielCommun): Response
     {
@@ -99,10 +88,6 @@ class MaterielCommunController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="sa_materiel_commun_edit", methods={"GET","POST"})
-     * @param Request        $request
-     * @param MaterielCommun $materielCommun
-     *
-     * @return Response
      */
     public function edit(Request $request, MaterielCommun $materielCommun): Response
     {
@@ -124,9 +109,6 @@ class MaterielCommunController extends BaseController
 
     /**
      * @Route("/{id}/duplicate", name="sa_materiel_commun_duplicate", methods="GET|POST")
-     * @param MaterielCommun $materielCommun
-     *
-     * @return Response
      */
     public function duplicate(MaterielCommun $materielCommun): Response
     {
@@ -141,10 +123,6 @@ class MaterielCommunController extends BaseController
 
     /**
      * @Route("/{id}", name="sa_materiel_commun_delete", methods="DELETE")
-     * @param Request        $request
-     * @param MaterielCommun $materielCommun
-     *
-     * @return Response
      */
     public function delete(Request $request, MaterielCommun $materielCommun): Response
     {

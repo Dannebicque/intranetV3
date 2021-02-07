@@ -1,12 +1,17 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtBorne.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 07/09/2020 12:27
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtBorne.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
+/*
+ * Pull your hearder here, for exemple, Licence header.
+ */
 
 namespace App\Classes\Edt;
-
 
 use App\Entity\Semestre;
 use App\Repository\CalendrierRepository;
@@ -32,11 +37,6 @@ class MyEdtBorne
 
     /**
      * MyEdtBorne constructor.
-     *
-     * @param CalendrierRepository   $calendrierRepository
-     * @param EdtPlanningRepository  $edtPlanningRepository
-     * @param CelcatEventsRepository $celcatEventRepository
-     * @param GroupeRepository       $groupeRepository
      */
     public function __construct(
         CalendrierRepository $calendrierRepository,
@@ -49,7 +49,6 @@ class MyEdtBorne
         $this->celcatEventRepository = $celcatEventRepository;
         $this->groupeRepository = $groupeRepository;
     }
-
 
     public function init(): void
     {
@@ -64,8 +63,8 @@ class MyEdtBorne
 
         $this->data['semestre1'] = $semestre1;
         $this->data['semestre2'] = $semestre2;
-        if ($semaine !== null) {
-            if ($semestre1->getDiplome() !== null && $semestre1->getDiplome()->getDepartement() !== null && $semestre1->getDiplome()->getDepartement()->isOptUpdateCelcat()) {
+        if (null !== $semaine) {
+            if (null !== $semestre1->getDiplome() && null !== $semestre1->getDiplome()->getDepartement() && $semestre1->getDiplome()->getDepartement()->isOptUpdateCelcat()) {
                 $this->data['p1']['planning'] = $this->celcatEventRepository->recupereEDTBornes($semaine->getSemaineFormation(),
                     $semestre1, $this->data['jsem']);
                 $this->data['p2']['planning'] = $this->celcatEventRepository->recupereEDTBornes($semaine->getSemaineFormation(),

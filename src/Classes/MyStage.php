@@ -1,15 +1,14 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyStage.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 19/10/2020 18:03
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyStage.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
-/**
- * Created by PhpStorm.
- * User: davidannebicque
- * Date: 06/08/2018
- * Time: 13:23
+/*
+ * Pull your hearder here, for exemple, Licence header.
  */
 
 namespace App\Classes;
@@ -23,7 +22,6 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class MyStage
 {
-
     /** @var EntityManagerInterface */
     protected $entityManger;
 
@@ -41,13 +39,8 @@ class MyStage
     protected $conventionComplete = [];
     private $conventionAImprimer = [];
 
-
     /**
      * MyStage constructor.
-     *
-     * @param EntityManagerInterface  $entityManger
-     * @param StageEtudiantRepository $stageEtudiantRepository
-     * @param EtudiantRepository      $etudiantRepository
      */
     public function __construct(
         EntityManagerInterface $entityManger,
@@ -59,15 +52,14 @@ class MyStage
         $this->etudiantRepository = $etudiantRepository;
     }
 
-
-    public function getDataPeriode(StagePeriode $stagePeriode, ?int $anneeUniversitaire = 0): MyStage
+    public function getDataPeriode(StagePeriode $stagePeriode, ?int $anneeUniversitaire = 0): self
     {
-        if ($anneeUniversitaire === 0) {
-            $anneeUniversitaire = $stagePeriode->getAnneeUniversitaire() !== null ? $stagePeriode->getAnneeUniversitaire()->getAnnee() : (int)date('Y');
+        if (0 === $anneeUniversitaire) {
+            $anneeUniversitaire = null !== $stagePeriode->getAnneeUniversitaire() ? $stagePeriode->getAnneeUniversitaire()->getAnnee() : (int)date('Y');
         }
 
         $etudiants = $this->etudiantRepository->findBySemestre($stagePeriode->getSemestre());
-        if (count($etudiants) === 0) {
+        if (0 === \count($etudiants)) {
             $etudiants = $this->etudiantRepository->findByAnnee($stagePeriode->getSemestre()->getAnnee());
         }
 
@@ -78,8 +70,8 @@ class MyStage
 
         /** @var StageEtudiant $stageEtudiant */
         foreach ($stagePeriode->getStageEtudiants() as $stageEtudiant) {
-            if ($stageEtudiant->getEtudiant() !== null) {
-                if (array_key_exists($stageEtudiant->getEtudiant()->getId(), $this->dataEtudiants)) {
+            if (null !== $stageEtudiant->getEtudiant()) {
+                if (\array_key_exists($stageEtudiant->getEtudiant()->getId(), $this->dataEtudiants)) {
                     $this->dataEtudiants[$stageEtudiant->getEtudiant()->getId()]['stage'] = $stageEtudiant;
                 }
 
@@ -106,49 +98,31 @@ class MyStage
         return $this;
     }
 
-    /**
-     * @return array
-     */
     public function getDataEtudiants(): array
     {
         return $this->dataEtudiants;
     }
 
-    /**
-     * @return array
-     */
     public function getPropositionsAValider(): array
     {
         return $this->propositionsAValider;
     }
 
-    /**
-     * @return array
-     */
     public function getConventionAEnvoyer(): array
     {
         return $this->conventionAEnvoyer;
     }
 
-    /**
-     * @return array
-     */
     public function getConventionAImprimer(): array
     {
         return $this->conventionAImprimer;
     }
 
-    /**
-     * @return array
-     */
     public function getConventionEnAttente(): array
     {
         return $this->conventionEnAttente;
     }
 
-    /**
-     * @return array
-     */
     public function getConventionComplete(): array
     {
         return $this->conventionComplete;

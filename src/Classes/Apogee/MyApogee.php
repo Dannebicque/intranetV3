@@ -1,15 +1,21 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Apogee/MyApogee.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 06/02/2021 21:53
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Apogee/MyApogee.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
+/*
+ * Pull your hearder here, for exemple, Licence header.
+ */
 
 namespace App\Classes\Apogee;
 
+use App\Classes\Tools;
 use App\Entity\Annee;
 use App\Entity\Semestre;
-use App\Classes\Tools;
 use PDO;
 use PDOException;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
@@ -22,15 +28,12 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class MyApogee
 {
-    /** @var PDO */
     private PDO $conn;
 
     private ParameterBagInterface $parameterBag;
 
     /**
      * MyApogee constructor.
-     *
-     * @param ParameterBagInterface $parameterBag
      */
     public function __construct(ParameterBagInterface $parameterBag)
     {
@@ -46,7 +49,7 @@ class MyApogee
 
             return $this->conn;
         } catch (PDOException $e) {
-            trigger_error(htmlentities('Connexion échouée : ' . $e->getMessage()), E_USER_ERROR);
+            trigger_error(htmlentities('Connexion échouée : ' . $e->getMessage()), \E_USER_ERROR);
         }
     }
 
@@ -96,6 +99,7 @@ class MyApogee
      *
      * @return array[]
      * @throws \Exception
+     *
      */
     public function transformeApogeeToArray($data, $tBac): array
     {
@@ -110,11 +114,11 @@ class MyApogee
                 'setAnneeBac'      => $data['DAA_OBT_BAC_IBA'],
                 'setPrenom'        => $data['LIB_PR1_IND'],
                 'setTel1'          => $data['NUM_TEL'],
-                'setCivilite'      => $data['COD_SEX_ETU'] === 'M' ? 'M.' : 'Mme', //M ou F
+                'setCivilite'      => 'M' === $data['COD_SEX_ETU'] ? 'M.' : 'Mme', //M ou F
                 'setTypeUser'      => 'etudiant',
-                'setBac'           => array_key_exists($data['COD_BAC'],
-                    $tBac) === true ? $tBac[$data['COD_BAC']] : null,
-                'setRemarque' => $data['COD_BAC']
+                'setBac'           => true === \array_key_exists($data['COD_BAC'],
+                    $tBac) ? $tBac[$data['COD_BAC']] : null,
+                'setRemarque'      => $data['COD_BAC'],
             ],
             'adresse'  => [
                 'setAdresse1'   => $data['LIB_AD1'],
@@ -123,18 +127,16 @@ class MyApogee
                 'setCodePostal' => $data['COD_BDI'],
                 'setVille'      => $data['COD_COM'], //code commune INSEE
                 'setPays'       => $data['COD_PAY'], //code
-            ]
+            ],
         ];
     }
 
     /**
-     * @param string $fichier
-     * @param        $nomfichier
      *
      * @return StreamedResponse|null
      * @throws Exception
      */
-    public function transformeApogeeTexte($fichier, $nomfichier): ?StreamedResponse
+    public function transformeApogeeTexte($fichier, string $nomfichier): ?StreamedResponse
     {
         $objPEENotes = new Spreadsheet();
         $objPEENotes->setActiveSheetIndex(0);
@@ -152,32 +154,31 @@ class MyApogee
 
         $i = 0;
         foreach ($objPHPExcel->getNamedRanges() as $name => $namedRange) {
-            if (strpos($name, 'APOL_') === 0) {
+            if (0 === mb_strpos($name, 'APOL_')) {
                 $G_tab_apoL[$i] = $namedRange->getName();
                 $G_tab_apoL_Coord[$i] = $namedRange->getRange();
-                $i++;
+                ++$i;
             }
         }
 
         $i = 0;
         foreach ($objPHPExcel->getNamedRanges() as $name => $namedRange) {
-            if (strpos($name, 'APOC_') === 0) {
+            if (0 === mb_strpos($name, 'APOC_')) {
                 $G_tab_apoC[$i] = $namedRange->getName();
                 $G_tab_apoC_Coord[$i] = $namedRange->getRange();
-                $i++;
+                ++$i;
             }
         }
 
         $v_cell_apo_col_val_fin = 0;
-
 
         // deprotection feuille
         $maquetteSheet->getStyle('A1:GV200')->getProtection()->setLocked(Protection::PROTECTION_UNPROTECTED);
         $maquetteSheet->getProtection()->setSheet(true);
         $i = 17;
         // nombre de lignes
-        while (trim($maquetteSheet->getCellByColumnAndRow(1, $i)->getValue()) !== '') {
-            $i++;
+        while ('' !== trim($maquetteSheet->getCellByColumnAndRow(1, $i)->getValue())) {
+            ++$i;
         }
         $v_nb_lig = $i - 1;
 
@@ -191,13 +192,13 @@ class MyApogee
             $val = $maquetteSheet->getCell($name)->getValue();
             $notesSheet->setCellValueByColumnAndRow($i, $j, $G_tab_apoC[$key]);
             $notesSheet->setCellValueByColumnAndRow(($i + 1), $j, $val);
-            $j++;
+            ++$j;
         }
 
         // repere 2
-        $j++;
+        ++$j;
         $notesSheet->setCellValueByColumnAndRow($i, $j, 'XX-APO_COLONNES-XX');
-        $j++;
+        ++$j;
 
         // tableau des libelles
         foreach ($G_tab_apoL_Coord as $key => $name) {
@@ -209,8 +210,8 @@ class MyApogee
             $v_cell_occ = 0;
             $v_cpt_cell_vide = $maquetteSheet->getCell($deb)->getValue();
             if (!empty($v_cpt_cell_vide)) {
-                if ($v_cpt_cell_vide === 'APO_COL_VAL_FIN' ||
-                    $maquetteSheet->getCell($this->getNewCoordinates($deb, 0, 1))->getValue() === 'APO_COL_VAL_FIN'
+                if ('APO_COL_VAL_FIN' === $v_cpt_cell_vide ||
+                    'APO_COL_VAL_FIN' === $maquetteSheet->getCell($this->getNewCoordinates($deb, 0, 1))->getValue()
                 ) {
                     $v_cell_apo_col_val_fin = $name;
                     $v_cell_occ = 2;
@@ -220,41 +221,41 @@ class MyApogee
             }
 
             // on est à la fin des codes on tague le fichier texte
-            if ($v_cell_occ == 2) {
+            if (2 === $v_cell_occ) {
                 $notesSheet->setCellValueByColumnAndRow(1, $j, 'APO_COL_VAL_FIN');
-                $j++;
+                ++$j;
                 $v_cell_occ = 1;
             }
 
             // recopie de la ligne de codes
-            if ($v_cell_occ == 1) {
+            if (1 === $v_cell_occ) {
                 // copie les cellules de la selection deb:fin (colonne)
                 $cellValues = $maquetteSheet->rangeToArray($deb . ':' . $fin);
 
                 // colle les cellules transposées (en ligne)
                 foreach ($cellValues as $cellValue) {
                     $notesSheet->setCellValueByColumnAndRow($i, $j, $cellValue[0]);
-                    $i++;
+                    ++$i;
                 }
 
                 // conversion_adm_temoin
                 $cellule = $notesSheet->getCellByColumnAndRow(10, $j);
-                if (empty($cellule->getValue()) && $v_cell_apo_col_val_fin == 0) {
+                if (null !== $cellule && empty($cellule->getValue()) && 0 === $v_cell_apo_col_val_fin) {
                     $cellule->setValue(1);
                 }
-                if ($cellule->getValue() === 'x') {
+                if ('x' === $cellule->getValue()) {
                     $cellule->setValue(0);
                 }
                 //-- fin conversion_adm_temoin --
 
-                if (strtolower($G_tab_apoL[$key]) === 'apol_a04_naissance') {
+                if ('apol_a04_naissance' === mb_strtolower($G_tab_apoL[$key])) {
                     $notesSheet->setCellValueByColumnAndRow(1, $j + 1, 'APO_COL_VAL_DEB');
-                    $j++;
+                    ++$j;
                 }
             }
 
-            if ($v_cpt_cell_vide === 'APO_COL_VAL_FIN' ||
-                $maquetteSheet->getCell($this->getNewCoordinates($deb, 0, 1))->getValue() === 'APO_COL_VAL_FIN'
+            if ('APO_COL_VAL_FIN' === $v_cpt_cell_vide ||
+                'APO_COL_VAL_FIN' === $maquetteSheet->getCell($this->getNewCoordinates($deb, 0, 1))->getValue()
             ) {
                 break;
             }
@@ -263,15 +264,15 @@ class MyApogee
             $i = 1;
 
             // ligne suivante
-            $j++;
+            ++$j;
         }
 
         $celluleFin = $maquetteSheet->getCell($v_cell_apo_col_val_fin)->getCoordinate();
 
-        $j++;
-        $j++;
+        ++$j;
+        ++$j;
         $notesSheet->setCellValueByColumnAndRow(1, $j, 'XX-APO_VALEURS-XX');
-        $j++;
+        ++$j;
         // 1ere colonne
         $i = 1;
         // sauvegarde $j (numero de ligne)
@@ -289,30 +290,27 @@ class MyApogee
             // cellule de fin
             $fin = $this->getNewCoordinates($titre, 0, $v_nb_lig - $numLigne);
             // si on est pas a la derniere colonne
-            if ($titre != $celluleFin) {
-
+            if ($titre !== $celluleFin) {
                 // copie les cellules de la selection deb:fin (colonne)
                 $cellValues = $maquetteSheet->rangeToArray($deb . ':' . $fin);
 
                 // recupere le titre
                 $val_titre = $maquetteSheet->getCell($titre)->getValue();
-                $j++;
+                ++$j;
 
                 // colle les donnees dans la bonne colonne
                 foreach ($cellValues as $cellValue) {
-                    if ($cellValue[0] === '-0.01') {
+                    if ('-0.01' === $cellValue[0]) {
                         $notesSheet->setCellValueByColumnAndRow($i, $j, 0);
-
                     } else {
                         $notesSheet->setCellValueByColumnAndRow($i, $j, $cellValue[0]);
                     }
 
-                    if (strtolower($G_tab_apoL[$key]) !== 'apol_a01_code' && strtolower($G_tab_apoL[$key]) !== 'apol_a02_nom' && strtolower($G_tab_apoL[$key]) !== 'apol_a03_prenom' && strtolower($G_tab_apoL[$key]) !== 'apol_04_naissance') {
-
+                    if ('apol_a01_code' !== mb_strtolower($G_tab_apoL[$key]) && 'apol_a02_nom' !== mb_strtolower($G_tab_apoL[$key]) && 'apol_a03_prenom' !== mb_strtolower($G_tab_apoL[$key]) && 'apol_04_naissance' !== mb_strtolower($G_tab_apoL[$key])) {
                         $cell = Coordinate::stringFromColumnIndex($i) . $j;
                         $notesSheet->getStyle($cell)->getNumberFormat()->setFormatCode('#,##0.00');
                     }
-                    $j++;
+                    ++$j;
                 }
 
                 // recupere le bon numero de ligne pour refaire un collage dans la colonne suivante
@@ -325,7 +323,7 @@ class MyApogee
             }
 
             // colonne suivante
-            $i++;
+            ++$i;
         }
 
         // enregistrement du fichier
@@ -340,7 +338,6 @@ class MyApogee
         $f = mb_convert_encoding($excelOutput, 'iso-8859-1');
         $f = trim($f) . "\r\n";
 
-
         return new StreamedResponse(
             function() use ($objWriter) {
                 $objWriter->save('php://output');
@@ -349,33 +346,29 @@ class MyApogee
             [
                 'Content-Type'        => 'text/plain',
                 'Content-Disposition' => 'attachment;filename="' . $nomfichier . '.txt"',
-                'Cache-Control'       => 'max-age=0'
+                'Cache-Control'       => 'max-age=0',
             ]
         );
     }
 
     /**
-     * Calcule les nouvelles coordonnées d'une cellule à partir des offsets x et y
+     * Calcule les nouvelles coordonnées d'une cellule à partir des offsets x et y.
      *
-     * @param     $cellCoordonate
-     * @param int $offsetX
-     * @param int $offsetY
-     *
-     * @return string
+     * @param $cellCoordonate
      */
     public function getNewCoordinates($cellCoordonate, int $offsetX = 0, int $offsetY = 0): string
     {
-        if (strlen($cellCoordonate) === 2) {
-            $colonne = substr($cellCoordonate, 0, 1);
-            $ligne = (int)substr($cellCoordonate, 1, 5);
+        if (2 === mb_strlen($cellCoordonate)) {
+            $colonne = mb_substr($cellCoordonate, 0, 1);
+            $ligne = (int)mb_substr($cellCoordonate, 1, 5);
         } else {
-            $colonne = substr($cellCoordonate, 0, 2);
-            $ligne = (int)substr($cellCoordonate, 2, 5);
+            $colonne = mb_substr($cellCoordonate, 0, 2);
+            $ligne = (int)mb_substr($cellCoordonate, 2, 5);
         }
-        if ($offsetX !== 0) { // decalage colonne
+        if (0 !== $offsetX) { // decalage colonne
             $colonne += $offsetX;
         }
-        if ($offsetY !== 0) { // decalage ligne
+        if (0 !== $offsetY) { // decalage ligne
             $ligne += $offsetY;
         }
 
@@ -400,7 +393,6 @@ class MyApogee
         $stid->execute([':etudiant' => '21601195']);
 
         return $stid;
-
     }
 
     public function testApogee2()
@@ -413,5 +405,4 @@ class MyApogee
 
         return $stid;
     }
-
 }

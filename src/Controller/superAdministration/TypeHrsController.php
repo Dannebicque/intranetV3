@@ -1,17 +1,19 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/TypeHrsController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/TypeHrsController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller\superAdministration;
 
+use App\Classes\MyExport;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\TypeHrs;
 use App\Form\TypeHrsType;
-use App\Classes\MyExport;
 use App\Repository\TypeHrsRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,9 +26,6 @@ class TypeHrsController extends BaseController
 {
     /**
      * @Route("/", name="sa_type_hrs_index", methods="GET")
-     * @param TypeHrsRepository $typeHrsRepository
-     *
-     * @return Response
      */
     public function index(TypeHrsRepository $typeHrsRepository): Response
     {
@@ -36,12 +35,8 @@ class TypeHrsController extends BaseController
 
     /**
      * @Route("/export.{_format}", name="sa_type_hrs_export", methods="GET", requirements={"_format"="csv|xlsx|pdf"})
-     * @param MyExport            $myExport
-     * @param TypeHrsRepository   $typeHrsRepository
      *
-     * @param                     $_format
-     *
-     * @return Response
+     * @param $_format
      */
     public function export(MyExport $myExport, TypeHrsRepository $typeHrsRepository, $_format): Response
     {
@@ -58,17 +53,14 @@ class TypeHrsController extends BaseController
 
     /**
      * @Route("/new", name="sa_type_hrs_new", methods="GET|POST")
-     * @param Request $request
-     *
-     * @return Response
      */
     public function create(Request $request): Response
     {
         $typeHr = new TypeHrs();
         $form = $this->createForm(TypeHrsType::class, $typeHr, [
             'attr' => [
-                'data-provide' => 'validation'
-            ]
+                'data-provide' => 'validation',
+            ],
         ]);
         $form->handleRequest($request);
 
@@ -88,9 +80,6 @@ class TypeHrsController extends BaseController
 
     /**
      * @Route("/{id}", name="sa_type_hrs_show", methods="GET")
-     * @param TypeHrs $typeHr
-     *
-     * @return Response
      */
     public function show(TypeHrs $typeHr): Response
     {
@@ -99,17 +88,13 @@ class TypeHrsController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="sa_type_hrs_edit", methods="GET|POST")
-     * @param Request $request
-     * @param TypeHrs $typeHr
-     *
-     * @return Response
      */
     public function edit(Request $request, TypeHrs $typeHr): Response
     {
         $form = $this->createForm(TypeHrsType::class, $typeHr, [
             'attr' => [
-                'data-provide' => 'validation'
-            ]
+                'data-provide' => 'validation',
+            ],
         ]);
         $form->handleRequest($request);
 
@@ -117,9 +102,10 @@ class TypeHrsController extends BaseController
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'type_hrs.edit.success.flash');
 
-            if ($request->request->get('btn_update') !== null) {
+            if (null !== $request->request->get('btn_update')) {
                 return $this->redirectToRoute('sa_type_hrs_index');
             }
+
             return $this->redirectToRoute('sa_type_hrs_edit', ['id' => $typeHr->getId()]);
         }
 
@@ -131,9 +117,6 @@ class TypeHrsController extends BaseController
 
     /**
      * @Route("/{id}/duplicate", name="sa_type_hrs_duplicate", methods="GET|POST")
-     * @param TypeHrs $typeHrs
-     *
-     * @return Response
      */
     public function duplicate(TypeHrs $typeHrs): Response
     {
@@ -147,26 +130,20 @@ class TypeHrsController extends BaseController
 
     /**
      * @Route("/{id}", name="sa_type_hrs_delete", methods="DELETE")
-     * @param Request $request
-     * @param TypeHrs $typeHrs
-     *
-     * @return Response
      */
     public function delete(Request $request, TypeHrs $typeHrs): Response
     {
         $id = $typeHrs->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
-            if (count($typeHrs->getHrs()) === 0) {
+            if (0 === \count($typeHrs->getHrs())) {
                 $this->entityManager->remove($typeHrs);
                 $this->entityManager->flush();
-
 
                 return $this->json($id, Response::HTTP_OK);
             }
 
             return $this->json('not_empty', Response::HTTP_INTERNAL_SERVER_ERROR);
         }
-
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }

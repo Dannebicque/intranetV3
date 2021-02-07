@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Rattrapage.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 13/10/2020 06:34
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Rattrapage.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Entity;
 
@@ -19,11 +21,10 @@ use Symfony\Component\Serializer\Annotation\Groups;
  */
 class Rattrapage extends BaseEntity
 {
+    use UuidTrait;
     public const DEMANDE_FAITE = 'f';
     public const DEMANDE_ACCEPTEE = 'a';
     public const DEMANDE_REFUSEE = 'r';
-
-    use UuidTrait;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Etudiant", inversedBy="rattrapages")
@@ -90,11 +91,8 @@ class Rattrapage extends BaseEntity
      */
     private $anneeUniversitaire;
 
-
     /**
      * Rattrapage constructor.
-     *
-     * @param Etudiant $etudiant
      *
      * @throws Exception
      */
@@ -103,7 +101,7 @@ class Rattrapage extends BaseEntity
         $this->setUuid(Uuid::uuid4());
         $this->etudiant = $etudiant;
         $this->etatDemande = self::DEMANDE_FAITE;
-        $this->anneeuniversitaire = $etudiant !== null ? $etudiant->getAnneeUniversitaire() : null;
+        $this->anneeuniversitaire = null !== $etudiant ? $etudiant->getAnneeUniversitaire() : null;
     }
 
     public function __clone()
@@ -111,18 +109,12 @@ class Rattrapage extends BaseEntity
         $this->setUuid(Uuid::uuid4());
     }
 
-
-    /**
-     * @return Etudiant|null
-     */
     public function getEtudiant(): ?Etudiant
     {
         return $this->etudiant;
     }
 
     /**
-     * @param Etudiant|null $etudiant
-     *
      * @return Rattrapage
      */
     public function setEtudiant(?Etudiant $etudiant): self
@@ -132,17 +124,12 @@ class Rattrapage extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return Matiere|null
-     */
     public function getMatiere(): ?Matiere
     {
         return $this->matiere;
     }
 
     /**
-     * @param Matiere|null $matiere
-     *
      * @return Rattrapage
      */
     public function setMatiere(?Matiere $matiere): self
@@ -152,17 +139,12 @@ class Rattrapage extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return Personnel|null
-     */
     public function getPersonnel(): ?Personnel
     {
         return $this->personnel;
     }
 
     /**
-     * @param Personnel|null $personnel
-     *
      * @return Rattrapage
      */
     public function setPersonnel(?Personnel $personnel): self
@@ -172,17 +154,12 @@ class Rattrapage extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return DateTimeInterface|null
-     */
     public function getDateEval(): ?DateTimeInterface
     {
         return $this->dateEval;
     }
 
     /**
-     * @param DateTimeInterface $dateEval
-     *
      * @return Rattrapage
      */
     public function setDateEval(DateTimeInterface $dateEval): self
@@ -192,17 +169,12 @@ class Rattrapage extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return DateTimeInterface|null
-     */
     public function getHeureEval(): ?DateTimeInterface
     {
         return $this->heureEval;
     }
 
     /**
-     * @param DateTimeInterface $heureEval
-     *
      * @return Rattrapage
      */
     public function setHeureEval(DateTimeInterface $heureEval): self
@@ -212,17 +184,12 @@ class Rattrapage extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
     public function getDuree(): ?string
     {
         return $this->duree;
     }
 
     /**
-     * @param string $duree
-     *
      * @return Rattrapage
      */
     public function setDuree(string $duree): self
@@ -232,17 +199,12 @@ class Rattrapage extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return DateTimeInterface|null
-     */
     public function getDateRattrapage(): ?DateTimeInterface
     {
         return $this->dateRattrapage;
     }
 
     /**
-     * @param DateTimeInterface $dateRattrapage
-     *
      * @return Rattrapage
      */
     public function setDateRattrapage(DateTimeInterface $dateRattrapage): self
@@ -252,17 +214,12 @@ class Rattrapage extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return DateTimeInterface|null
-     */
     public function getHeureRattrapage(): ?DateTimeInterface
     {
         return $this->heureRattrapage;
     }
 
     /**
-     * @param DateTimeInterface|null $heureRattrapage
-     *
      * @return Rattrapage
      */
     public function setHeureRattrapage(?DateTimeInterface $heureRattrapage): self
@@ -272,17 +229,12 @@ class Rattrapage extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
     public function getSalle(): ?string
     {
         return $this->salle;
     }
 
     /**
-     * @param null|string $salle
-     *
      * @return Rattrapage
      */
     public function setSalle(?string $salle): self
@@ -292,17 +244,12 @@ class Rattrapage extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
     public function getEtatDemande(): ?string
     {
         return $this->etatDemande;
     }
 
     /**
-     * @param string $etatDemande
-     *
      * @return Rattrapage
      */
     public function setEtatDemande(string $etatDemande): self

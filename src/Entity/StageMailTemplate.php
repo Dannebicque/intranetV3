@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/StageMailTemplate.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 17/12/2020 07:53
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/StageMailTemplate.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Entity;
 
@@ -34,9 +36,8 @@ class StageMailTemplate
         '{{nom_tuteur_univ}}'            => '{{stageEtudiant.tuteurUniversitaire.nom}}',
         '{{date_debut_stage}}'           => '{{stageEtudiant.dateDebutStageFr}}',
         '{{date_fin_stage}}'             => '{{stageEtudiant.dateDebutStageFr}}',
-        '{{nom_periode_stage}}'          => '{{stageEtudiant.stagePeriode.libelle}}'
+        '{{nom_periode_stage}}'          => '{{stageEtudiant.stagePeriode.libelle}}',
     ];
-
 
     /**
      * @ORM\Id()

@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/DisponibiliteController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/DisponibiliteController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller\appPersonnel;
 
@@ -18,8 +20,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class DisponibiliteController
- * @package App\Controller
+ * Class DisponibiliteController.
+ *
  * @Route("/application/personnel/disponibilite")
  * @IsGranted("ROLE_PERMANENT")
  */
@@ -27,9 +29,6 @@ class DisponibiliteController extends BaseController
 {
     /**
      * @Route("/", name="application_personnel_disponibilite_index")
-     * @param DisponibiliteRepository $disponibiliteRepository
-     *
-     * @return Response
      */
     public function index(DisponibiliteRepository $disponibiliteRepository): Response
     {
@@ -38,10 +37,10 @@ class DisponibiliteController extends BaseController
         $nbEviter = 0;
         foreach ($disponibilites as $disponibilite) {
             foreach ($disponibilite as $dispo) {
-                if ($dispo === 'E') {
-                    $nbEviter++;
-                } elseif ($dispo === 'I') {
-                    $nbInterdit++;
+                if ('E' === $dispo) {
+                    ++$nbEviter;
+                } elseif ('I' === $dispo) {
+                    ++$nbInterdit;
                 }
             }
         }
@@ -57,24 +56,22 @@ class DisponibiliteController extends BaseController
 
     /**
      * @Route("/update", name="application_personnel_disponibilite_update", options={"expose"=true})
-     * @param Request                 $request
-     * @param DisponibiliteRepository $disponibiliteRepository
      *
-     * @return JsonResponse
      * @throws NonUniqueResultException
      */
     public function updateDisponibilites(
         Request $request,
         DisponibiliteRepository $disponibiliteRepository
-    ): JsonResponse {
+    ): JsonResponse
+    {
         $jour = $request->request->get('jour');
         $heure = $request->request->get('heure');
         $etat = $request->request->get('etat');
 
         $disponibilite = $disponibiliteRepository->findByPersonnelCreneau($this->getConnectedUser(), $jour, $heure);
 
-        if ($disponibilite !== null) {
-            if ($etat === 'D') {
+        if (null !== $disponibilite) {
+            if ('D' === $etat) {
                 $this->entityManager->remove($disponibilite);
             } else {
                 $disponibilite->setEtat($etat);
@@ -92,6 +89,5 @@ class DisponibiliteController extends BaseController
         $this->entityManager->flush();
 
         return $this->json(true, Response::HTTP_OK);
-
     }
 }

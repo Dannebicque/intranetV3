@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/RedirectSubscriber.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 29/12/2020 18:05
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/RedirectSubscriber.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:52
+ */
 
 namespace App\EventSubscriber;
 
@@ -16,10 +18,6 @@ class RedirectSubscriber implements EventSubscriberInterface
 {
     private RouterInterface $router;
 
-    /**
-     *
-     * @param RouterInterface $router
-     */
     public function __construct(
         RouterInterface $router
     ) {

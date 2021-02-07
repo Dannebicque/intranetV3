@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ApcParcoursNiveauType.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 08/01/2021 16:12
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ApcParcoursNiveauType.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Form;
 
@@ -21,8 +23,7 @@ class ApcParcoursNiveauType extends AbstractType
         $builder
             ->add('niveau', EntityType::class, [
                 'class'        => ApcNiveau::class,
-                'choice_label' => 'display'
-
+                'choice_label' => 'display',
             ]);
     }
 

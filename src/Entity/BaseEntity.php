@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/BaseEntity.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/BaseEntity.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Entity;
 
@@ -26,14 +28,14 @@ abstract class BaseEntity
     private $id;
 
     /**
-     * @var DateTime $created
+     * @var DateTime
      * @ORM\Column(type="datetime")
      * @Groups({"acutalite_administration"})
      */
     private $created;
 
     /**
-     * @var DateTime $updated
+     * @var DateTime
      * @ORM\Column(type="datetime")
      * @Groups({"acutalite_administration"})
      */
@@ -47,9 +49,6 @@ abstract class BaseEntity
         return $this->created;
     }
 
-    /**
-     * @param DateTime $created
-     */
     public function setCreated(DateTime $created): void
     {
         $this->created = $created;
@@ -63,9 +62,6 @@ abstract class BaseEntity
         return $this->updated;
     }
 
-    /**
-     * @param DateTime $updated
-     */
     public function setUpdated(DateTime $updated): void
     {
         $this->updated = $updated;

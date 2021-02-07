@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appEtudiant/AbsenceController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appEtudiant/AbsenceController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:36
+ */
 
 namespace App\Controller\appEtudiant;
 
@@ -14,24 +16,20 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class AbsenceController
- * @package App\Controller
+ * Class AbsenceController.
+ *
  * @Route("/application/etudiant/absence")
  */
 class AbsenceController extends BaseController
 {
     /**
-     *
      * @Route("/details/{uuid}", name="app_etudiant_absence_detail", options={"expose" = true})
-     * @param Absence $absence
      * @ParamConverter("absence", options={"mapping": {"uuid": "uuid"}})
-     *
-     * @return Response
      */
     public function details(Absence $absence): Response
     {
         return $this->render('appEtudiant/absence/_detail.html.twig', [
-            'absence' => $absence
+            'absence' => $absence,
         ]);
     }
 }

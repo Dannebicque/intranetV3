@@ -1,12 +1,17 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEdtCompare.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 24/01/2021 17:35
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEdtCompare.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
+/*
+ * Pull your hearder here, for exemple, Licence header.
+ */
 
 namespace App\Classes;
-
 
 use App\Entity\Matiere;
 use App\Entity\Personnel;
@@ -16,7 +21,6 @@ use App\Repository\PrevisionnelRepository;
 
 class MyEdtCompare
 {
-
     /** @var EdtPlanningRepository */
     private $edtPlanningRepository;
 
@@ -33,9 +37,6 @@ class MyEdtCompare
 
     /**
      * MyEdtCompare constructor.
-     *
-     * @param EdtPlanningRepository  $edtPlanningRepository
-     * @param PrevisionnelRepository $previsionnelRepository
      */
     public function __construct(
         EdtPlanningRepository $edtPlanningRepository,
@@ -45,30 +46,22 @@ class MyEdtCompare
         $this->previsionnelRepository = $previsionnelRepository;
     }
 
-
-    /**
-     * @param Matiere   $matiere
-     * @param Personnel $personnel
-     * @param int       $anneePrevi
-     *
-     * @return array
-     */
     public function realise(Matiere $matiere, Personnel $personnel, int $anneePrevi): array
     {
         $this->planning = $this->edtPlanningRepository->findBy([
             'matiere'     => $matiere->getId(),
-            'intervenant' => $personnel->getId()
+            'intervenant' => $personnel->getId(),
         ],
             [
                 'semaine' => 'ASC',
                 'jour'    => 'ASC',
-                'debut'   => 'ASC'
+                'debut'   => 'ASC',
             ]);
 
         $this->previsionnel = $this->previsionnelRepository->findBy([
             'personnel' => $personnel->getId(),
             'matiere'   => $matiere->getId(),
-            'annee'     => $anneePrevi
+            'annee'     => $anneePrevi,
         ]);
 
         $t = [];
@@ -112,6 +105,4 @@ class MyEdtCompare
     {
         return $this->planning;
     }
-
-
 }

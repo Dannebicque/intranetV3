@@ -1,12 +1,17 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantNotes.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 06/01/2021 15:53
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantNotes.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
+/*
+ * Pull your hearder here, for exemple, Licence header.
+ */
 
 namespace App\Classes\Etudiant;
-
 
 use App\Classes\Tools;
 use App\DTO\MoyenneMatiere;
@@ -36,13 +41,8 @@ class EtudiantNotes
     private $notes;
     private $tabGraphique;
 
-
     /**
      * EtudiantNotes constructor.
-     *
-     * @param MatiereRepository      $matiereRepository
-     * @param NoteRepository         $noteRepository
-     * @param EntityManagerInterface $entityManager
      */
     public function __construct(
         MatiereRepository $matiereRepository,
@@ -54,7 +54,6 @@ class EtudiantNotes
         $this->matiereRepository = $matiereRepository;
     }
 
-
     public function setEtudiant(Etudiant $etudiant): void
     {
         $this->etudiant = $etudiant;
@@ -64,7 +63,7 @@ class EtudiantNotes
         ?Semestre $semestre,
         ?AnneeUniversitaire $anneeUniversitaire
     ) {
-        if ($semestre !== null && $anneeUniversitaire !== null) {
+        if (null !== $semestre && null !== $anneeUniversitaire) {
             $this->notes = $this->noteRepository->findByEtudiantSemestre($this->etudiant, $semestre,
                 $anneeUniversitaire);
 
@@ -75,12 +74,8 @@ class EtudiantNotes
     }
 
     /**
-     * @param Evaluation $evaluation
-     * @param            $data
+     * @param $data
      *
-     * @param Personnel  $personnel
-     *
-     * @return bool
      * @throws Exception
      */
     public function addNote(Evaluation $evaluation, $data, Personnel $personnel): bool
@@ -88,10 +83,10 @@ class EtudiantNotes
         //on cherche si deja une note de présente
         $note = $this->noteRepository->findBy([
             'evaluation' => $evaluation->getId(),
-            'etudiant'   => $this->etudiant->getId()
+            'etudiant'   => $this->etudiant->getId(),
         ]);
 
-        if (count($note) === 1) {
+        if (1 === \count($note)) {
             //update
             $modif = new ModificationNote();
             $modif->setNote($note[0]);
@@ -101,7 +96,7 @@ class EtudiantNotes
             $this->entityManager->persist($modif);
             $note[0]->setNote(Tools::convertToFloat($data['note']));
             $note[0]->setCommentaire($data['commentaire']);
-            if (isset($data['absence']) && $data['absence'] === 'true') {
+            if (isset($data['absence']) && 'true' === $data['absence']) {
                 $note[0]->setAbsenceJustifie(true);
             } else {
                 $note[0]->setAbsenceJustifie(false);
@@ -109,7 +104,7 @@ class EtudiantNotes
 
             $this->entityManager->persist($note[0]);
             $this->entityManager->flush();
-        } elseif (count($note) === 0) {
+        } elseif (0 === \count($note)) {
             //creation
 
             $newnote = new Note();
@@ -132,7 +127,6 @@ class EtudiantNotes
             $this->entityManager->remove($a);
         }
         $this->entityManager->flush();
-
     }
 
     public function getMoyenneParMatiereParSemestresEtAnneeUniversitaire(
@@ -145,7 +139,7 @@ class EtudiantNotes
         $tabMatiere = [];
         $groupes = $this->etudiant->getGroupes();
         foreach ($matieres as $matiere) {
-            if ($matiere->isSuspendu() === false && $matiere->getNbNotes() > 0) {
+            if (false === $matiere->isSuspendu() && $matiere->getNbNotes() > 0) {
                 $tabMatiere[$matiere->getId()] = new MoyenneMatiere($matiere, $semestre->getOptPointPenaliteAbsence(),
                     $groupes);
             }
@@ -153,9 +147,9 @@ class EtudiantNotes
 
         /** @var Note $note */
         foreach ($this->notes as $note) {
-            if ($note->getEvaluation() !== null && $note->getEvaluation()->getMatiere() !== null) {
+            if (null !== $note->getEvaluation() && null !== $note->getEvaluation()->getMatiere()) {
                 $idMatiere = $note->getEvaluation()->getMatiere()->getId();
-                if (array_key_exists($idMatiere, $tabMatiere)) {
+                if (\array_key_exists($idMatiere, $tabMatiere)) {
                     $tabMatiere[$idMatiere]->addNote($note);
                 }
             }
@@ -173,7 +167,7 @@ class EtudiantNotes
         }
 
         foreach ($this->notes as $note) {
-            if ($note->getEvaluation() !== null && $note->getEvaluation()->getMatiere() !== null) {
+            if (null !== $note->getEvaluation() && null !== $note->getEvaluation()->getMatiere()) {
                 $this->tabGraphique[$note->getEvaluation()->getMatiere()->getCodeMatiere()]['notes'] += $note->getNote() * $note->getEvaluation()->getCoefficient();
                 $this->tabGraphique[$note->getEvaluation()->getMatiere()->getCodeMatiere()]['coefficient'] += $note->getEvaluation()->getCoefficient();
             }
@@ -189,7 +183,7 @@ class EtudiantNotes
     {
         $t = [];
         foreach ($this->tabGraphique as $key => $matiere) {
-            if ($matiere['coefficient'] === 0) {
+            if (0 === $matiere['coefficient']) {
                 $t[] = 0;
             } else {
                 $t[] = $matiere['notes'] / $matiere['coefficient'];

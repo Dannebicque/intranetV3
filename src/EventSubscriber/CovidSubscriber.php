@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/CovidSubscriber.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 28/01/2021 15:55
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/CovidSubscriber.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\EventSubscriber;
 
@@ -16,10 +18,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 
-
 class CovidSubscriber implements EventSubscriberInterface
 {
-
     protected MailerFromTwig $myMailer;
 
     private EntityManagerInterface $entityManager;
@@ -27,14 +27,8 @@ class CovidSubscriber implements EventSubscriberInterface
     private MyExportPresence $myExportPresence;
     private string $dir;
 
-
     /**
      * StageSubscriber constructor.
-     *
-     * @param EntityManagerInterface $entityManager
-     * @param MailerFromTwig         $myMailer
-     * @param MyExportPresence       $myExportPresence
-     * @param KernelInterface        $kernel
      */
     public function __construct(
         EntityManagerInterface $entityManager,
@@ -56,10 +50,9 @@ class CovidSubscriber implements EventSubscriberInterface
             CovidEvent::COVID_AUTORISATION_VALIDEE_DEPARTEMENT => 'onCovidAutorisationValideeDepartement',
             CovidEvent::COVID_AUTORISATION_VALIDEE_DIRECTION   => 'onCovidAutorisationValideeDirection',
             CovidEvent::COVID_AUTORISATION_REFUSEE_DEPARTEMENT => 'onCovidAutorisationRefuseeDepartement',
-            CovidEvent::COVID_AUTORISATION_REFUSEE_DIRECTION   => 'onCovidAutorisationRefuseeDirection'
+            CovidEvent::COVID_AUTORISATION_REFUSEE_DIRECTION   => 'onCovidAutorisationRefuseeDirection',
         ];
     }
-
 
     public function onCovidAutorisationDeposee(CovidEvent $event): void
     {
@@ -72,14 +65,14 @@ class CovidSubscriber implements EventSubscriberInterface
     {
         $this->myMailer->initEmail();
         $this->myMailer->setTemplate('mails/covid/' . $codeEvent . '.html.twig', [
-            'covidAttestationPersonnel' => $covidAttestationPersonnel
+            'covidAttestationPersonnel' => $covidAttestationPersonnel,
         ]);
         $this->myMailer->sendMessage(
             [$covidAttestationPersonnel->getDiplome()->getResponsableDiplome()->getMailUniv()],
             'Nouvelle demande d\'autorisation de déplacement',
             [
                 'replyTo' => $covidAttestationPersonnel->getPersonnel()->getMailUniv(),
-                'from'    => [$covidAttestationPersonnel->getPersonnel()->getMailUniv()]
+                'from'    => [$covidAttestationPersonnel->getPersonnel()->getMailUniv()],
             ]
         );
     }
@@ -98,7 +91,6 @@ class CovidSubscriber implements EventSubscriberInterface
         $autorisation->setDateValidationDepartement(new DateTime());
         $this->entityManager->persist($autorisation);
         $this->entityManager->flush();
-
     }
 
     public function onCovidAutorisationValideeDirection(CovidEvent $event): void
@@ -118,30 +110,28 @@ class CovidSubscriber implements EventSubscriberInterface
         switch ($codeEvent) {
             case CovidEvent::COVID_AUTORISATION_REFUSEE_DEPARTEMENT:
                 $this->myMailer->setTemplate('mails/covid/' . $codeEvent . '.html.twig', [
-                    'covidAttestationPersonnel' => $covidAttestationPersonnel
+                    'covidAttestationPersonnel' => $covidAttestationPersonnel,
                 ]);
                 $this->myMailer->sendMessage(
                     $covidAttestationPersonnel->getPersonnel()->getMails(),
                     'Demande d\'autorisation de déplacement refusée',
                     [
                         'replyTo' => $covidAttestationPersonnel->getDiplome()->getResponsableDiplome()->getMailUniv(),
-                        'from'    => [$covidAttestationPersonnel->getDiplome()->getResponsableDiplome()->getMailUniv()]
+                        'from'    => [$covidAttestationPersonnel->getDiplome()->getResponsableDiplome()->getMailUniv()],
                     ]
-
                 );
                 break;
             case CovidEvent::COVID_AUTORISATION_REFUSEE_DIRECTION:
                 $this->myMailer->setTemplate('mails/covid/' . $codeEvent . '.html.twig', [
-                    'covidAttestationPersonnel' => $covidAttestationPersonnel
+                    'covidAttestationPersonnel' => $covidAttestationPersonnel,
                 ]);
                 $this->myMailer->sendMessage(
                     $covidAttestationPersonnel->getPersonnel()->getMails(),
                     'Demande d\'autorisation de déplacement refusée',
                     [
                         'replyTo' => 'direction.iut-troyes@univ-reims.fr',
-                        'from'    => ['direction.iut-troyes@univ-reims.fr']
+                        'from'    => ['direction.iut-troyes@univ-reims.fr'],
                     ]
-
                 );
                 break;
             case CovidEvent::COVID_AUTORISATION_VALIDEE_DIRECTION:
@@ -151,7 +141,7 @@ class CovidSubscriber implements EventSubscriberInterface
                 );
                 //générer le PDF et joindre au mail
                 $this->myMailer->setTemplate('mails/covid/' . $codeEvent . '.html.twig', [
-                    'covidAttestationPersonnel' => $covidAttestationPersonnel
+                    'covidAttestationPersonnel' => $covidAttestationPersonnel,
                 ]);
                 //joindre le PDF
                 $this->myMailer->attachFile($file);
@@ -161,13 +151,11 @@ class CovidSubscriber implements EventSubscriberInterface
                     'Demande d\'autorisation de déplacement acceptée',
                     [
                         'replyTo' => 'direction.iut-troyes@univ-reims.fr',
-                        'from'    => ['direction.iut-troyes@univ-reims.fr']
+                        'from'    => ['direction.iut-troyes@univ-reims.fr'],
                     ]
                 );
                 break;
         }
-
-
     }
 
     public function onCovidAutorisationRefuseeDepartement(CovidEvent $event): void

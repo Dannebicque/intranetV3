@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ajax/ContactAjaxController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 25/09/2020 09:02
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ajax/ContactAjaxController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:36
+ */
 
 namespace App\Controller\ajax;
 
@@ -17,8 +19,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class AbsenceApiController
- * @package App\Controller
+ * Class AbsenceApiController.
+ *
  * @Route("/ajax/contact")
  * @IsGranted("ROLE_PERMANENT")
  */
@@ -26,13 +28,6 @@ class ContactAjaxController extends BaseController
 {
     /**
      * @Route("/edit/{id}", name="contact_ajax_edit", options={"expose":true})
-     *
-     * @param MyContact $myContact
-     * @param Request   $request
-     *
-     * @param Contact   $contact
-     *
-     * @return JsonResponse
      */
     public function edit(MyContact $myContact, Request $request, Contact $contact): JsonResponse
     {

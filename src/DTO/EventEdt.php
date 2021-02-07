@@ -1,12 +1,13 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/EventEdt.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 19/08/2020 13:10
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/EventEdt.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:41
+ */
 
 namespace App\DTO;
-
 
 class EventEdt
 {
@@ -18,5 +19,4 @@ class EventEdt
     public ?string $couleur;
     public ?string $couleurTexte;
     public string $format;
-
 }

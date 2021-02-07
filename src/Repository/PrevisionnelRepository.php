@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/PrevisionnelRepository.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 08/01/2021 10:08
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/PrevisionnelRepository.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Repository;
 
@@ -29,20 +31,12 @@ class PrevisionnelRepository extends ServiceEntityRepository
 {
     /**
      * PrevisionnelRepository constructor.
-     *
-     * @param ManagerRegistry $registry
      */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Previsionnel::class);
     }
 
-    /**
-     * @param Personnel   $personnel
-     * @param Departement $departement
-     *
-     * @return mixed
-     */
     public function findPrevisionnelEnseignantDepartement(Personnel $personnel, Departement $departement)
     {
         return $this->createQueryBuilder('p')
@@ -62,10 +56,7 @@ class PrevisionnelRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Personnel $personnel
-     * @param           $annee
-     *
-     * @return array
+     * @param $annee
      */
     public function findPrevisionnelEnseignantComplet(Personnel $personnel, $annee): array
     {
@@ -80,10 +71,7 @@ class PrevisionnelRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Matiere $matiere
-     * @param         $annee
-     *
-     * @return mixed
+     * @param $annee
      */
     public function findPrevisionnelMatiere(Matiere $matiere, $annee)
     {
@@ -100,10 +88,7 @@ class PrevisionnelRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Semestre $semestre
-     * @param          $annee
-     *
-     * @return mixed
+     * @param $annee
      */
     public function findPrevisionnelSemestre(Semestre $semestre, $annee)
     {
@@ -122,7 +107,6 @@ class PrevisionnelRepository extends ServiceEntityRepository
 
     public function findByDepartement(Departement $departement, $annee)
     {
-
         return $this->createQueryBuilder('p')
             ->innerJoin(Matiere::class, 'm', 'WITH', 'p.matiere = m.id')
             ->innerJoin(Ue::class, 'u', 'WITH', 'm.ue = u.id')
@@ -139,7 +123,6 @@ class PrevisionnelRepository extends ServiceEntityRepository
             ->addOrderBy('m.codeMatiere', 'ASC')
             ->getQuery()
             ->getResult();
-
     }
 
     public function findByDiplome(Diplome $diplome, $annee)
@@ -177,8 +160,7 @@ class PrevisionnelRepository extends ServiceEntityRepository
 
     public function findServiceSemestre(Personnel $user, Semestre $semestre, $annePrevi)
     {
-
-        return$this->createQueryBuilder('s')
+        return $this->createQueryBuilder('s')
             ->innerJoin(Personnel::class, 'p', 'WITH', 's.personnel = p.id')
             ->innerJoin(Matiere::class, 'm', 'WITH', 's.matiere = m.id')
             ->innerJoin(Ue::class, 'u', 'WITH', 'm.UE = u.id')

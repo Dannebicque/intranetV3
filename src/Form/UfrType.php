@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Form/UfrType.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 20/07/2020 18:05
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/UfrType.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Form;
 
@@ -19,15 +21,10 @@ use Symfony\Component\OptionsResolver\Exception\AccessException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class UfrType
- * @package App\Form
+ * Class UfrType.
  */
 class UfrType extends AbstractType
 {
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -48,28 +45,25 @@ class UfrType extends AbstractType
                 'label'        => 'label.site_principal',
                 'choice_label' => 'libelle',
                 'expanded'     => true,
-                'multiple'     => false
+                'multiple'     => false,
             ])
             ->add('sites', EntityType::class, [
                 'class'        => Site::class,
                 'label'        => 'label.sites',
                 'choice_label' => 'libelle',
                 'expanded'     => true,
-                'multiple'     => true
+                'multiple'     => true,
             ]);
     }
 
     /**
-     * @param OptionsResolver $resolver
-     *
      * @throws AccessException
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class'         => Ufr::class,
-            'translation_domain' => 'form'
-
+            'translation_domain' => 'form',
         ]);
     }
 }

@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/UserController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 09/09/2020 06:35
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/UserController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller;
 
@@ -21,14 +23,15 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class UserController
- * @package App\Controller
+ * Class UserController.
+ *
  * @Route("/utilisateur")
  */
 class UserController extends BaseController
 {
     /**
      * @Route("/mon-profil/{onglet}", name="user_mon_profil")
+     *
      * @param string $onglet
      *
      * @return Response
@@ -38,21 +41,20 @@ class UserController extends BaseController
         return $this->render('user/profil.html.twig', [
             'user'      => $this->getConnectedUser(),
             'onglet'    => $onglet,
-            'monprofil' => true
+            'monprofil' => true,
         ]);
     }
 
     /**
      * @Route("/{type}/{slug}/{onglet}", name="user_profil", options={"expose": true})
-     * @param EtudiantRepository  $etudiantRepository
-     * @param PersonnelRepository $personnelRepository
-     * @param                     $type
-     * @param                     $slug
      *
-     * @param string              $onglet
+     * @param        $type
+     * @param        $slug
+     * @param string $onglet
      *
      * @return RedirectResponse|Response
      * @throws NonUniqueResultException
+     *
      */
     public function index(
         EtudiantRepository $etudiantRepository,
@@ -61,24 +63,24 @@ class UserController extends BaseController
         $slug,
         $onglet = 'scolarite'
     ) {
-        if ($type === 'personnel') {
+        if ('personnel' === $type) {
             $user = $personnelRepository->findOneBySlug($slug);
-            if ($user !== null) {
+            if (null !== $user) {
                 return $this->render('user/profil.html.twig', [
                     'user'      => $user,
                     'onglet'    => $onglet,
-                    'monprofil' => false
+                    'monprofil' => false,
                 ]);
             }
         }
 
-        if ($type === 'etudiant') {
+        if ('etudiant' === $type) {
             $user = $etudiantRepository->findOneBySlug($slug);
-            if ($user !== null) {
+            if (null !== $user) {
                 return $this->render('user/profil.html.twig', [
                     'user'      => $user,
                     'onglet'    => $onglet,
-                    'monprofil' => false
+                    'monprofil' => false,
                 ]);
             }
         }
@@ -86,12 +88,8 @@ class UserController extends BaseController
         return $this->redirectToRoute('erreur_404');
     }
 
-
     /**
      * @Route("/settings", name="user_settings")
-     * @param Request $request
-     *
-     * @return Response
      */
     public function settings(Request $request): Response
     {
@@ -103,8 +101,8 @@ class UserController extends BaseController
                 [
                     'locale' => $request->getLocale(),
                     'attr'   => [
-                        'data-provide' => 'validation'
-                    ]
+                        'data-provide' => 'validation',
+                    ],
                 ]
             );
             $form->handleRequest($request);
@@ -114,8 +112,7 @@ class UserController extends BaseController
             }
         } elseif ($user instanceof Etudiant) {
             $form = $this->createForm(EtudiantProfilType::class, $user, [
-                'attr' =>
-                    ['data-provide' => 'validation']
+                'attr' => ['data-provide' => 'validation'],
             ]);
             $form->handleRequest($request);
 
@@ -129,7 +126,7 @@ class UserController extends BaseController
 
         return $this->render('user/settings.html.twig', [
             'form' => $form->createView(),
-            'user' => $user
+            'user' => $user,
         ]);
     }
 }

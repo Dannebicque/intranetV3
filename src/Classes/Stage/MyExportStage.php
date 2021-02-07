@@ -1,9 +1,15 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Stage/MyExportStage.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 07/11/2020 08:59
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Stage/MyExportStage.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
+/*
+ * Pull your hearder here, for exemple, Licence header.
+ */
 
 namespace App\Classes\Stage;
 
@@ -19,22 +25,13 @@ class MyExportStage
 
     /**
      * MyExport constructor.
-     *
-     * @param MyExcelWriter $myExcelWriter
      */
     public function __construct(
         MyExcelWriter $myExcelWriter
     ) {
-
         $this->myExcelWriter = $myExcelWriter;
     }
 
-    /**
-     *
-     * @param StagePeriode $stagePeriode
-     *
-     * @return null|StreamedResponse
-     */
     public function genereFichier(
         StagePeriode $stagePeriode
     ): ?StreamedResponse {
@@ -85,48 +82,47 @@ class MyExportStage
             'Fonction tuteur',
             'Tél tuteur',
             'Mél tuteur',
-            'Lieu de stage différent'
+            'Lieu de stage différent',
         ];
         $this->myExcelWriter->ecritLigne($tEnTete, 1, 1);
 
         $ligne = 2;
 
-
         /** @var StageEtudiant $stage */
         foreach ($stagesEtudiants as $stage) {
             $adresse = ['-', '-', '-', '-'];
-            if ($stage->getEntreprise() !== null && $stage->getEntreprise()->getAdresse() !== null) {
+            if (null !== $stage->getEntreprise() && null !== $stage->getEntreprise()->getAdresse()) {
                 $adresse = [
                     $stage->getEntreprise()->getAdresse()->getAdresse1(),
                     $stage->getEntreprise()->getAdresse()->getAdresse2(),
-                    $stage->getEntreprise()->getAdresse()->getCodePostal() . ' ' . $stage->getEntreprise()->getAdresse()->getVille()
+                    $stage->getEntreprise()->getAdresse()->getCodePostal() . ' ' . $stage->getEntreprise()->getAdresse()->getVille(),
                 ];
             }
 
             $adresseEtu = ['-', '-', '-', '-'];
 
-            if ($stage->getEtudiant() !== null && $stage->getEtudiant()->getAdresse() !== null) {
+            if (null !== $stage->getEtudiant() && null !== $stage->getEtudiant()->getAdresse()) {
                 $adresseEtu = [
                     $stage->getEtudiant()->getAdresse()->getAdresse1(),
                     $stage->getEtudiant()->getAdresse()->getAdresse2(),
                     $stage->getEtudiant()->getAdresse()->getCodePostal(),
-                    $stage->getEtudiant()->getAdresse()->getVille()
+                    $stage->getEtudiant()->getAdresse()->getVille(),
                 ];
             }
 
             $adresse2 = '';
-            if ($stage->getAdresseStage() !== null) {
+            if (null !== $stage->getAdresseStage()) {
                 $adresse2 = $stage->getAdresseStage()->getAdresse1() . ' ' . $stage->getAdresseStage()->getAdresse2() . ' ' . $stage->getAdresseStage()->getCodePostal() . ' ' . $stage->getAdresseStage()->getVille();
             }
 
             $tuteurUniv = '-';
-            if ($stage->getTuteurUniversitaire() !== null) {
+            if (null !== $stage->getTuteurUniversitaire()) {
                 $tuteurUniv = $stage->getTuteurUniversitaire()->getPrenom() . ' ' . $stage->getTuteurUniversitaire()->getNom();
             }
             $groupes = '';
             $parcours = '';
             foreach ($stage->getEtudiant()->getGroupes() as $groupe) {
-                if ($groupe->getParcours() !== null) {
+                if (null !== $groupe->getParcours()) {
                     $parcours .= $groupe->getParcours()->getLibelle() . ', ';
                 }
                 $groupes .= $groupe->getLibelle() . ', ';
@@ -134,10 +130,10 @@ class MyExportStage
 
             $t = [
                 $stage->getEtudiant()->getNumetudiant(),
-                $stage->getDateDebutStage() !== null ? $stage->getDateDebutStage()->format('d/m/Y') : '-',
-                $stage->getDateFinStage() !== null ? $stage->getDateFinStage()->format('d/m/Y') : '-',
-                $stage->getDateConventionEnvoyee() !== null ? $stage->getDateConventionEnvoyee()->format('d/m/Y') : '-',
-                $stage->getDateConventionRecu() !== null ? $stage->getDateConventionRecu()->format('d/m/Y') : '-',
+                null !== $stage->getDateDebutStage() ? $stage->getDateDebutStage()->format('d/m/Y') : '-',
+                null !== $stage->getDateFinStage() ? $stage->getDateFinStage()->format('d/m/Y') : '-',
+                null !== $stage->getDateConventionEnvoyee() ? $stage->getDateConventionEnvoyee()->format('d/m/Y') : '-',
+                null !== $stage->getDateConventionRecu() ? $stage->getDateConventionRecu()->format('d/m/Y') : '-',
                 $stage->getEtudiant()->getNom(),
                 $stage->getEtudiant()->getPrenom(),
                 $stage->getEtudiant()->getCivilite(),
@@ -147,7 +143,7 @@ class MyExportStage
                 '',
                 $parcours,
                 $stage->getEtudiant()->getCivilite(),
-                $stage->getEtudiant()->getDatenaissance() !== null ? $stage->getEtudiant()->getDatenaissance()->format('d/m/Y') : '-',
+                null !== $stage->getEtudiant()->getDatenaissance() ? $stage->getEtudiant()->getDatenaissance()->format('d/m/Y') : '-',
                 $adresseEtu[0],
                 $adresseEtu[1],
                 $adresseEtu[2],
@@ -157,31 +153,31 @@ class MyExportStage
                 $stage->getEtudiant()->getMailperso(),
                 $stage->getEtudiant()->getIntituleSecuriteSociale(),
                 $stage->getEtudiant()->getAdresseSecuriteSociale(),
-                $stage->getEntreprise() !== null ? $stage->getEntreprise()->getRaisonSociale() : '-',
+                null !== $stage->getEntreprise() ? $stage->getEntreprise()->getRaisonSociale() : '-',
                 $adresse[0],
                 $adresse[1],
                 $adresse[2],
-                $stage->getEntreprise() !== null ? $stage->getEntreprise()->getSiret() : '-',
-                $stage->getEntreprise() !== null && $stage->getEntreprise()->getResponsable() ? $stage->getEntreprise()->getResponsable()->getPrenom() : '-',
-                $stage->getEntreprise() !== null && $stage->getEntreprise()->getResponsable() ? $stage->getEntreprise()->getResponsable()->getNom() : '-',
-                $stage->getEntreprise() !== null && $stage->getEntreprise()->getResponsable() ? $stage->getEntreprise()->getResponsable()->getCiviliteLong() : '-',
-                $stage->getEntreprise() !== null && $stage->getEntreprise()->getResponsable() ? $stage->getEntreprise()->getResponsable()->getFonction() : '-',
-                $stage->getEntreprise() !== null && $stage->getEntreprise()->getResponsable() ? $stage->getEntreprise()->getResponsable()->getTelephone() : '-',
+                null !== $stage->getEntreprise() ? $stage->getEntreprise()->getSiret() : '-',
+                null !== $stage->getEntreprise() && $stage->getEntreprise()->getResponsable() ? $stage->getEntreprise()->getResponsable()->getPrenom() : '-',
+                null !== $stage->getEntreprise() && $stage->getEntreprise()->getResponsable() ? $stage->getEntreprise()->getResponsable()->getNom() : '-',
+                null !== $stage->getEntreprise() && $stage->getEntreprise()->getResponsable() ? $stage->getEntreprise()->getResponsable()->getCiviliteLong() : '-',
+                null !== $stage->getEntreprise() && $stage->getEntreprise()->getResponsable() ? $stage->getEntreprise()->getResponsable()->getFonction() : '-',
+                null !== $stage->getEntreprise() && $stage->getEntreprise()->getResponsable() ? $stage->getEntreprise()->getResponsable()->getTelephone() : '-',
                 $stage->getServiceStageEntreprise(),
                 '',
                 '',
-                $stage->getEntreprise() !== null && $stage->getEntreprise()->getResponsable() ? $stage->getEntreprise()->getResponsable()->getEmail() : '-',
-                $stage->getTuteur() !== null ? $stage->getTuteur()->getPrenom() : '-',
-                $stage->getTuteur() !== null ? $stage->getTuteur()->getNom() : '-',
-                $stage->getTuteur() !== null ? $stage->getTuteur()->getCiviliteLong() : '-',
-                $stage->getTuteur() !== null ? $stage->getTuteur()->getFonction() : '-',
-                $stage->getTuteur() !== null ? $stage->getTuteur()->getTelephone() : '-',
-                $stage->getTuteur() !== null ? $stage->getTuteur()->getEmail() : '-',
-                $adresse2
+                null !== $stage->getEntreprise() && $stage->getEntreprise()->getResponsable() ? $stage->getEntreprise()->getResponsable()->getEmail() : '-',
+                null !== $stage->getTuteur() ? $stage->getTuteur()->getPrenom() : '-',
+                null !== $stage->getTuteur() ? $stage->getTuteur()->getNom() : '-',
+                null !== $stage->getTuteur() ? $stage->getTuteur()->getCiviliteLong() : '-',
+                null !== $stage->getTuteur() ? $stage->getTuteur()->getFonction() : '-',
+                null !== $stage->getTuteur() ? $stage->getTuteur()->getTelephone() : '-',
+                null !== $stage->getTuteur() ? $stage->getTuteur()->getEmail() : '-',
+                $adresse2,
             ];
 
             $this->myExcelWriter->ecritLigne($t, 1, $ligne);
-            $ligne++;
+            ++$ligne;
         }
 
         $writer = new Xlsx($this->myExcelWriter->getSpreadsheet());
@@ -193,7 +189,7 @@ class MyExportStage
             200,
             [
                 'Content-Type'        => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                'Content-Disposition' => 'attachment;filename="' . $stagePeriode->getLibelle() . '.xlsx"'
+                'Content-Disposition' => 'attachment;filename="' . $stagePeriode->getLibelle() . '.xlsx"',
             ]
         );
     }

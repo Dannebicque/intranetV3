@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/ProjetSubscriber.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 13/10/2020 20:16
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/ProjetSubscriber.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\EventSubscriber;
 
@@ -14,10 +16,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Routing\RouterInterface;
 
-
 class ProjetSubscriber implements EventSubscriberInterface
 {
-
     protected MailerStage $myMailer;
 
     private EntityManagerInterface $entityManager;
@@ -26,10 +26,6 @@ class ProjetSubscriber implements EventSubscriberInterface
 
     /**
      * StageSubscriber constructor.
-     *
-     * @param EntityManagerInterface $entityManager
-     * @param RouterInterface        $router
-     * @param MailerStage            $myMailer
      */
     public function __construct(
         EntityManagerInterface $entityManager,
@@ -47,14 +43,10 @@ class ProjetSubscriber implements EventSubscriberInterface
             ProjetEvent::CHGT_ETAT_PROJET_AUTORISE => 'onChgtEtatProjetAutorise',
             ProjetEvent::CHGT_ETAT_PROJET_DEPOSE   => 'onChgtEtatProjetDepose',
             ProjetEvent::CHGT_ETAT_PROJET_VALIDE   => 'onChgtEtatProjetValide',
-            ProjetEvent::CHGT_ETAT_PROJET_IMPRIME  => 'onChgtEtatProjetImprime'
+            ProjetEvent::CHGT_ETAT_PROJET_IMPRIME  => 'onChgtEtatProjetImprime',
         ];
     }
 
-    /**
-     * @param ProjetEvent $event
-     *
-     */
     public function onChgtEtatProjetAutorise(ProjetEvent $event): void
     {
         $this->sendMail($event, ProjetEvent::CHGT_ETAT_PROJET_AUTORISE);
@@ -62,9 +54,7 @@ class ProjetSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param ProjetEvent  $event
-     * @param              $codeEvent
-     *
+     * @param $codeEvent
      */
     public function sendMail(ProjetEvent $event, $codeEvent): void
     {
@@ -112,14 +102,10 @@ class ProjetSubscriber implements EventSubscriberInterface
         $this->entityManager->flush();
     }
 
-    /**
-     * @param ProjetEvent $event
-     *
-     */
     public function onChgtEtatProjetDepose(ProjetEvent $event): void
     {
         $projetEtudiant = $event->getProjetEtudiant();
-        if ($projetEtudiant->getProjetPeriode() !== null) {
+        if (null !== $projetEtudiant->getProjetPeriode()) {
             foreach ($projetEtudiant->getProjetPeriode()->getResponsables() as $personnel) {
                 $notif = new Notification();
                 $notif->setPersonnel($personnel);
@@ -137,24 +123,15 @@ class ProjetSubscriber implements EventSubscriberInterface
         $this->addNotification($event, ProjetEvent::CHGT_ETAT_PROJET_DEPOSE);
     }
 
-    /**
-     * @param ProjetEvent $event
-     *
-     */
     public function onChgtEtatProjetValide(ProjetEvent $event): void
     {
         $this->addNotification($event, ProjetEvent::CHGT_ETAT_PROJET_VALIDE);
         $this->sendMail($event, ProjetEvent::CHGT_ETAT_PROJET_VALIDE);
     }
 
-    /**
-     * @param ProjetEvent $event
-     *
-     */
     public function onChgtEtatProjetImprime(ProjetEvent $event): void
     {
         $this->addNotification($event, ProjetEvent::CHGT_ETAT_PROJET_IMPRIME);
         $this->sendMail($event, ProjetEvent::CHGT_ETAT_PROJET_IMPRIME);
     }
-
 }

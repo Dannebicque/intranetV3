@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appEtudiant/ProjetController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 26/09/2020 08:52
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appEtudiant/ProjetController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller\appEtudiant;
 
@@ -21,17 +23,14 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
- * Class StageController
- * @package App\Controller
+ * Class StageController.
+ *
  * @Route("/application/etudiant/projet")
  */
 class ProjetController extends BaseController
 {
     /**
      * @Route("/", name="application_etudiant_projet_index")
-     * @param ProjetPeriodeRepository $projetPeriodeRepository
-     *
-     * @return Response
      */
     public function index(ProjetPeriodeRepository $projetPeriodeRepository): Response
     {
@@ -39,14 +38,14 @@ class ProjetController extends BaseController
         $projetsEtudiants = [];
 
         foreach ($this->getConnectedUser()->getProjetEtudiants() as $projetEtudiant) {
-            if ($projetEtudiant->getProjetPeriode() !== null) {
+            if (null !== $projetEtudiant->getProjetPeriode()) {
                 $projetsEtudiants[$projetEtudiant->getProjetPeriode()->getId()] = $projetEtudiant;
             }
         }
 
         return $this->render('appEtudiant/projet/index.html.twig', [
             'projetsPeriodes'  => $projetsPeriodes,
-            'projetsEtudiants' => $projetsEtudiants
+            'projetsEtudiants' => $projetsEtudiants,
         ]);
     }
 
@@ -66,24 +65,18 @@ class ProjetController extends BaseController
     /**
      * @Route("/formulaire/{projetEtudiant}", name="application_etudiant_projet_formulaire", methods="GET|POST")
      * @ParamConverter("projetEtudiant", options={"mapping": {"projetEtudiant": "uuid"}})
-     *
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param Request                  $request
-     * @param ProjetEtudiant           $projetEtudiant
-     *
-     * @return Response
      */
     public function create(
         EventDispatcherInterface $eventDispatcher,
         Request $request,
         ProjetEtudiant $projetEtudiant
     ): Response {
-        if ($projetEtudiant->getProjetPeriode() !== null) {
+        if (null !== $projetEtudiant->getProjetPeriode()) {
             $form = $this->createForm(ProjetEtudiantEtudiantType::class, $projetEtudiant, [
                 'semestre' => $this->getConnectedUser()->getSemestre(),
                 'attr'     => [
-                    'data-provide' => 'validation'
-                ]
+                    'data-provide' => 'validation',
+                ],
             ]);
             $form->handleRequest($request);
 

@@ -1,9 +1,15 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Mail/BaseMailer.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 07/11/2020 10:16
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Mail/BaseMailer.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:10
+ */
+
+/*
+ * Pull your hearder here, for exemple, Licence header.
+ */
 
 namespace App\Classes\Mail;
 
@@ -19,13 +25,8 @@ class BaseMailer
     protected TranslatorInterface $translator;
     protected Configuration $configuration;
 
-
     /**
      * MyMailer constructor.
-     *
-     * @param MailerInterface     $mailer
-     * @param TranslatorInterface $translator
-     * @param Configuration       $configuration
      */
     public function __construct(
         MailerInterface $mailer,
@@ -38,10 +39,7 @@ class BaseMailer
     }
 
     /**
-     * @param        $mail
-     * @param array  $to
-     * @param string $subject
-     * @param array  $options
+     * @param $mail
      *
      * @throws TransportExceptionInterface
      */
@@ -56,15 +54,9 @@ class BaseMailer
         $this->mailer->send($mail);
     }
 
-    /**
-     *
-     * @param array $options
-     *
-     * @return Address
-     */
     private function getFrom(array $options): Address
     {
-        if (array_key_exists('from', $options) && count($options['from']) > 0) {
+        if (\array_key_exists('from', $options) && \count($options['from']) > 0) {
             return new Address($options['from'][0]);
         }
 
@@ -72,13 +64,11 @@ class BaseMailer
     }
 
     /**
-     * @param array $options
-     *
      * @return array|string
      */
     private function getReplyTo(array $options)
     {
-        if (array_key_exists('replyTofrom', $options) && $options['replyTo'] !== '') {
+        if (\array_key_exists('replyTofrom', $options) && '' !== $options['replyTo']) {
             return new Address($options['replyTo']);
         }
 
@@ -86,13 +76,12 @@ class BaseMailer
     }
 
     /**
-     * @param       $mail
-     * @param array $mails
+     * @param $mail
      */
     private function checkTo(&$mail, array $mails): void
     {
         foreach ($mails as $m) {
-            if ($m !== null && trim($m) !== '') {
+            if (null !== $m && '' !== trim($m)) {
                 $mail->addTo(new Address(trim($m)));
             }
         }
@@ -100,7 +89,7 @@ class BaseMailer
 
     private function checkCc(&$mail, array $options): void
     {
-        if (array_key_exists('cc', $options) && count($options['cc']) > 0) {
+        if (\array_key_exists('cc', $options) && \count($options['cc']) > 0) {
             foreach ($options['cc'] as $cc) {
                 $mail->addCc(new Address($cc));
             }
@@ -111,5 +100,4 @@ class BaseMailer
     {
         $mail->attachFromPath($file);
     }
-
 }

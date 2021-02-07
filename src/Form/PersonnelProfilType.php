@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Form/PersonnelProfilType.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 08/08/2020 22:44
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/PersonnelProfilType.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Form;
 
@@ -20,23 +22,17 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 
 /**
- * Class PersonnelProfilType
- * @package App\Form
+ * Class PersonnelProfilType.
  */
 class PersonnelProfilType extends AbstractType
 {
-
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $locale = $options['locale'];
 
         $builder
             ->add('civilite', CiviliteType::class, [
-                'label' => 'label.civilite'
+                'label' => 'label.civilite',
             ])
             ->add('nom', TextType::class, ['label' => 'label.nom'])
             ->add('prenom', TextType::class, ['label' => 'label.prenom'])
@@ -49,7 +45,7 @@ class PersonnelProfilType extends AbstractType
                 'format' => 'dd/MM/yyyy',
                 'widget' => 'single_text',
                 'html5'  => false,
-                'attr' => ['data-provide' => 'datepicker', 'data-language' => $locale]
+                'attr'   => ['data-provide' => 'datepicker', 'data-language' => $locale],
             ])
             ->add(
                 'numero_harpege',
@@ -63,10 +59,10 @@ class PersonnelProfilType extends AbstractType
                     'choice.pr'        => 'PU',
                     'choice.prag'      => 'PRAG',
                     'choice.prce'      => 'PRCE',
-                    'choice.vacataire' => 'PRO'
+                    'choice.vacataire' => 'PRO',
                 ],
                 'choice_translation_domain' => 'form',
-                'expanded'                  => true
+                'expanded'                  => true,
             ])
             ->add('poste_interne', TextType::class, ['label' => 'label.poste_interne', 'required' => false])
             ->add('tel_bureau', TextType::class, ['label' => 'label.tel_bureau', 'required' => false])
@@ -84,19 +80,17 @@ class PersonnelProfilType extends AbstractType
                 'label'          => 'label.cv',
                 'required'       => false,
                 'download_label' => 'label.apercu',
-                'allow_delete'   => false
+                'allow_delete'   => false,
             ])
             ->add('photoFile', VichFileType::class, [
                 'label'          => 'label.photo',
                 'required'       => false,
                 'download_label' => 'label.apercu',
-                'allow_delete'   => false
+                'allow_delete'   => false,
             ]);
     }
 
     /**
-     * @param OptionsResolver $resolver
-     *
      * @throws AccessException
      */
     public function configureOptions(OptionsResolver $resolver): void
@@ -104,8 +98,7 @@ class PersonnelProfilType extends AbstractType
         $resolver->setDefaults([
             'data_class'         => Personnel::class,
             'translation_domain' => 'form',
-            'locale'             => 'fr'
-
+            'locale'             => 'fr',
         ]);
     }
 }

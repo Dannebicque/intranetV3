@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ajax/AdresseAjaxController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ajax/AdresseAjaxController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:36
+ */
 
 namespace App\Controller\ajax;
 
@@ -16,21 +18,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class AbsenceApiController
- * @package App\Controller
+ * Class AbsenceApiController.
+ *
  * @Route("/ajax/adresse")
  */
 class AdresseAjaxController extends BaseController
 {
     /**
      * @Route("/edit/{id}", name="adresse_ajax_edit", options={"expose":true})
-     *
-     * @param MyAdresse $myAdresse
-     * @param Request   $request
-     *
-     * @param Adresse   $adresse
-     *
-     * @return JsonResponse
      */
     public function edit(MyAdresse $myAdresse, Request $request, Adresse $adresse): JsonResponse
     {

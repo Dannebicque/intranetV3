@@ -1,11 +1,12 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/MaterielCommunReservationSubscriber.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 26/09/2020 08:39
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/MaterielCommunReservationSubscriber.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
-// App\EventSubscriber\RegistrationNotifySubscriber.php
 namespace App\EventSubscriber;
 
 use App\Classes\Mail\MailerFromTwig;
@@ -15,26 +16,18 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
- * Envoi un mail de bienvenue à chaque creation d'un utilisateur
- *
+ * Envoi un mail de bienvenue à chaque creation d'un utilisateur.
  */
 class MaterielCommunReservationSubscriber implements EventSubscriberInterface
 {
     private EntityManagerInterface $entityManager;
 
     private MaterielCommunPretRepository $materielCommunPretRepository;
-    /**
-     * @var MailerFromTwig
-     */
-    private MailerFromTwig $myMailer;
 
+    private MailerFromTwig $myMailer;
 
     /**
      * RegistrationNotifySubscriber constructor.
-     *
-     * @param EntityManagerInterface       $entityManager
-     * @param MaterielCommunPretRepository $materielCommunPretRepository
-     * @param MailerFromTwig               $myMailer
      */
     public function __construct(
         EntityManagerInterface $entityManager,
@@ -46,15 +39,11 @@ class MaterielCommunReservationSubscriber implements EventSubscriberInterface
         $this->myMailer = $myMailer;
     }
 
-
-    /**
-     * @return array
-     */
     public static function getSubscribedEvents(): array
     {
         return [
             MaterielCommunReservationEvent::ADDED   => 'onMaterielCommunReservationAdded',
-            MaterielCommunReservationEvent::REMOVED => 'onMaterielCommunReservationRemoved'
+            MaterielCommunReservationEvent::REMOVED => 'onMaterielCommunReservationRemoved',
         ];
     }
 
@@ -62,15 +51,15 @@ class MaterielCommunReservationSubscriber implements EventSubscriberInterface
     {
         $reservation = $event->getReservationMaterielCommun();
 
-        if ($reservation->getMaterielCommun() !== null && $reservation->getMaterielCommun()->getContact() !== null) {
+        if (null !== $reservation->getMaterielCommun() && null !== $reservation->getMaterielCommun()->getContact()) {
             $this->myMailer->initEmail();
             $this->myMailer->setTemplate('mails/materielCommunReservation/nouvelleDemande.txt.twig',
                 ['reservation' => $reservation]);
             $this->myMailer->sendMessage($reservation->getMaterielCommun()->getContact()->getMails(),
                 'Nouvelle demande de matériel commun',
                 [
-                    'replyTo' => $reservation->getPersonnel() !== null ? $reservation->getPersonnel()->getMailUniv() : null,
-                    'cc'      => $reservation->getPersonnel() !== null ? $reservation->getPersonnel()->getMails() : null
+                    'replyTo' => null !== $reservation->getPersonnel() ? $reservation->getPersonnel()->getMailUniv() : null,
+                    'cc'      => null !== $reservation->getPersonnel() ? $reservation->getPersonnel()->getMails() : null,
                 ]);
         }
     }
@@ -79,7 +68,7 @@ class MaterielCommunReservationSubscriber implements EventSubscriberInterface
     {
         $reservation = $event->getReservationMaterielCommun();
 
-        if ($reservation->getMaterielCommun() !== null && $reservation->getMaterielCommun()->getContact() !== null) {
+        if (null !== $reservation->getMaterielCommun() && null !== $reservation->getMaterielCommun()->getContact()) {
             $this->myMailer->initEmail();
             $this->myMailer->setTemplate('mails/materielCommunReservation/annuleDemande.txt.twig',
                 ['reservation' => $reservation]);

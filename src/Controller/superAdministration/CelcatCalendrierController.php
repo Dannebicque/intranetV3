@@ -1,18 +1,20 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/CelcatCalendrierController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/CelcatCalendrierController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller\superAdministration;
 
+use App\Classes\Celcat\MyCelcat;
+use App\Classes\MyExport;
 use App\Controller\BaseController;
 use App\Entity\Calendrier;
 use App\Entity\Constantes;
 use App\Form\CelcatCalendrierType;
-use App\Classes\Celcat\MyCelcat;
-use App\Classes\MyExport;
 use App\Repository\AnneeUniversitaireRepository;
 use App\Repository\CalendrierRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,9 +28,6 @@ class CelcatCalendrierController extends BaseController
 {
     /**
      * @Route("/", name="sa_celcat_calendrier_index", methods="GET")
-     * @param CalendrierRepository $celcatCalendrierRepository
-     *
-     * @return Response
      */
     public function index(CalendrierRepository $celcatCalendrierRepository): Response
     {
@@ -39,15 +38,13 @@ class CelcatCalendrierController extends BaseController
     /**
      * @Route("/export.{_format}", name="sa_celcat_calendrier_export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"})
-     * @param MyExport             $myExport
-     * @param CalendrierRepository $celcatCalendrierRepository
-     * @param                      $_format
      *
-     * @return Response
+     * @param $_format
      */
     public function export(MyExport $myExport, CalendrierRepository $celcatCalendrierRepository, $_format): Response
     {
         $articles = $celcatCalendrierRepository->findAll();
+
         return $myExport->genereFichierGenerique(
             $_format,
             $articles,
@@ -59,9 +56,6 @@ class CelcatCalendrierController extends BaseController
 
     /**
      * @Route("/new", name="sa_celcat_calendrier_new", methods="GET|POST")
-     * @param Request $request
-     *
-     * @return Response
      */
     public function create(Request $request): Response
     {
@@ -85,12 +79,7 @@ class CelcatCalendrierController extends BaseController
 
     /**
      * @Route("/new/year", name="sa_celcat_calendrier_new_year", methods="GET|POST")
-     * @param MyCelcat                     $myCelcat
-     * @param Request                      $request
      *
-     * @param AnneeUniversitaireRepository $anneeUniversitaireRepository
-     *
-     * @return Response
      * @throws \Exception
      */
     public function createNewYear(
@@ -116,9 +105,6 @@ class CelcatCalendrierController extends BaseController
 
     /**
      * @Route("/{id}", name="sa_celcat_calendrier_show", methods="GET")
-     * @param Calendrier $celcatCalendrier
-     *
-     * @return Response
      */
     public function show(Calendrier $celcatCalendrier): Response
     {
@@ -128,10 +114,6 @@ class CelcatCalendrierController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="sa_celcat_calendrier_edit", methods="GET|POST")
-     * @param Request    $request
-     * @param Calendrier $celcatCalendrier
-     *
-     * @return Response
      */
     public function edit(Request $request, Calendrier $celcatCalendrier): Response
     {
@@ -151,13 +133,8 @@ class CelcatCalendrierController extends BaseController
         ]);
     }
 
-
     /**
      * @Route("/{id}", name="sa_celcat_calendrier_delete", methods="DELETE")
-     * @param Request    $request
-     * @param Calendrier $celcatCalendrier
-     *
-     * @return Response
      */
     public function delete(Request $request, Calendrier $celcatCalendrier): Response
     {
@@ -176,9 +153,6 @@ class CelcatCalendrierController extends BaseController
 
     /**
      * @Route("/{id}/duplicate", name="sa_celcat_calendrier_duplicate", methods="GET|POST")
-     * @param Calendrier $celcatCalendrier
-     *
-     * @return Response
      */
     public function duplicate(Calendrier $celcatCalendrier): Response
     {

@@ -1,15 +1,14 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyUpload.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 24/11/2020 21:50
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyUpload.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
-/**
- * Created by PhpStorm.
- * User: davidannebicque
- * Date: 27/12/2018
- * Time: 09:08
+/*
+ * Pull your hearder here, for exemple, Licence header.
  */
 
 namespace App\Classes;
@@ -18,7 +17,6 @@ use Exception;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use ZipArchive;
-
 
 class MyUpload
 {
@@ -30,21 +28,20 @@ class MyUpload
     }
 
     /**
-     * @param UploadedFile $fichier
-     * @param              $destination
-     * @param array        $extensions
+     * @param       $destination
+     * @param array $extensions
      *
      * @return bool|string
      * @throws Exception
+     *
      */
     public function upload(UploadedFile $fichier, $destination, $extensions = [])
     {
         $extension = $this->getExtension($fichier);
         $dir = $this->valideDir($destination);
 
-        if ($fichier !== null) {
-
-            if ((count($extensions) > 0) && !in_array($extension, $extensions)) {
+        if (null !== $fichier) {
+            if ((\count($extensions) > 0) && !\in_array($extension, $extensions, true)) {
                 return false; //extension interdite
             }
 
@@ -59,22 +56,17 @@ class MyUpload
 
     private function valideDir($dir)
     {
-        if ($dir[0] === '/') {
-            $dir = substr($dir, 1, strlen($dir));
+        if ('/' === $dir[0]) {
+            $dir = mb_substr($dir, 1, mb_strlen($dir));
         }
 
-        if ($dir[strlen($dir) - 1] !== '/') {
+        if ('/' !== $dir[mb_strlen($dir) - 1]) {
             $dir .= '/';
         }
 
         return $dir;
     }
 
-    /**
-     * @param UploadedFile $fichier
-     *
-     * @return string
-     */
     public function getExtension(UploadedFile $fichier): string
     {
         return $fichier->getClientOriginalExtension();
@@ -92,12 +84,12 @@ class MyUpload
         //2)Tant que le dossier est aps vide
         while ($fichier = readdir($dossier)) {
             //todo: supprimer si existe ou ca remplace ? Purger le cache de vich ?
-            if ($fichier !== '.' && $fichier !== '..') {
+            if ('.' !== $fichier && '..' !== $fichier) {
                 $t = explode('.', $fichier);
                 $vidage = $folder . $fichier;
-                if ($t[1] === 'jpg' || $t[1] === 'jpeg') {
+                if ('jpg' === $t[1] || 'jpeg' === $t[1]) {
                     $f = explode('_', $fichier);
-                    $name = $f[count($f) - 1];
+                    $name = $f[\count($f) - 1];
                     rename($vidage, $newdir . $name);
                 } else {
                     unlink($vidage); //suppression du fichier
@@ -111,9 +103,9 @@ class MyUpload
     {
         chmod($fichier, 0777);
         $filezip = realpath($fichier);
-        $zip = new ZipArchive;
+        $zip = new ZipArchive();
         // Ouvrir l'archive
-        if ($zip->open($filezip) !== true) {
+        if (true !== $zip->open($filezip)) {
             return false;
         }
         // Extraire le contenu dans le dossier de destination

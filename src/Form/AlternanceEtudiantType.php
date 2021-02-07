@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Form/AlternanceEtudiantType.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 20/07/2020 18:05
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/AlternanceEtudiantType.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Form;
 
@@ -32,10 +34,10 @@ class AlternanceEtudiantType extends AbstractType
             ->add('typeContrat', ChoiceType::class, [
                 'choices'  => [
                     Alternance::ALTERNANCE_APPRENTISSAGE       => Alternance::ALTERNANCE_APPRENTISSAGE,
-                    Alternance::ALTERNANCE_PROFESSIONALISATION => Alternance::ALTERNANCE_PROFESSIONALISATION
+                    Alternance::ALTERNANCE_PROFESSIONALISATION => Alternance::ALTERNANCE_PROFESSIONALISATION,
                 ],
                 'expanded' => true,
-                'label'    => 'label.contrat_alternance'
+                'label'    => 'label.contrat_alternance',
             ])
             ->add('dateRange', DateRangeType::class, ['label' => 'dateRange.periode.alternance', 'mapped' => false, 'required' => true])
             ->add('entreprise', EntrepriseType::class, ['label' => 'label.entreprise'])
@@ -71,8 +73,8 @@ class AlternanceEtudiantType extends AbstractType
                     'mapped'    => false,
                     'date_data' => [
                         'from' => $alternance->getDateDebut(),
-                        'to'   => $alternance->getDateFin()
-                    ]
+                        'to'   => $alternance->getDateFin(),
+                    ],
                 ]);
             });
     }
@@ -82,7 +84,7 @@ class AlternanceEtudiantType extends AbstractType
         $resolver->setDefaults([
             'data_class'         => Alternance::class,
             'translation_domain' => 'form',
-            'departement'          => null
+            'departement'        => null,
         ]);
     }
 }

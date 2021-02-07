@@ -1,12 +1,17 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyPpn.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 05/07/2020 08:33
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyPpn.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:26
+ */
+
+/*
+ * Pull your hearder here, for exemple, Licence header.
+ */
 
 namespace App\Classes;
-
 
 use App\Entity\Departement;
 use App\Entity\Matiere;
@@ -26,9 +31,6 @@ class MyPpn
 
     /**
      * MyPpn constructor.
-     *
-     * @param MyUpload               $myUpload
-     * @param EntityManagerInterface $entityManager
      */
     public function __construct(MyUpload $myUpload, EntityManagerInterface $entityManager)
     {
@@ -37,22 +39,20 @@ class MyPpn
     }
 
     /**
-     * @param             $data
-     * @param Departement $departement
+     * @param $data
      *
-     * @return bool
      * @throws Exception
      */
     public function importCsv($data, Departement $departement): bool
     {
         $ppn = $this->entityManager->getRepository(Ppn::class)->find($data['ppn']);
-        if ($ppn !== null) {
+        if (null !== $ppn) {
             $file = $this->myUpload->upload($data['fichier'], 'temp');
 
             $ues = $this->entityManager->getRepository(Ue::class)->tableauUeApogee($departement);
             $parcours = $this->entityManager->getRepository(Parcour::class)->tableauParcourApogee($departement);
 
-            $handle = fopen($file, 'rb');
+            $handle = fopen($file, 'r');
 
             /*Si on a réussi à ouvrir le fichier*/
             if ($handle) {
@@ -63,10 +63,10 @@ class MyPpn
                     /*On lit la ligne courante*/
                     $ligne = fgetcsv($handle, 1024, ';');
 
-                    if (array_key_exists($ligne[0], $ues)) {
+                    if (\array_key_exists($ligne[0], $ues)) {
                         $matiere = new Matiere();
-                        if ($ligne[1] !== '' || $ligne[1] !== null) {
-                            if (array_key_exists($ligne[1], $parcours)) {
+                        if ('' !== $ligne[1] || null !== $ligne[1]) {
+                            if (\array_key_exists($ligne[1], $parcours)) {
                                 $matiere->setParcours($parcours[$ligne[1]]);
                             }
                         }
@@ -109,5 +109,4 @@ class MyPpn
 
         return false;
     }
-
 }

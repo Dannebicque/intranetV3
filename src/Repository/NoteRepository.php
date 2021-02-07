@@ -1,10 +1,11 @@
 <?php
-
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/NoteRepository.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 18/01/2021 21:44
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/NoteRepository.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:08
+ */
 
 namespace App\Repository;
 
@@ -28,8 +29,6 @@ class NoteRepository extends ServiceEntityRepository
 {
     /**
      * NoteRepository constructor.
-     *
-     * @param ManagerRegistry $registry
      */
     public function __construct(ManagerRegistry $registry)
     {
@@ -57,7 +56,6 @@ class NoteRepository extends ServiceEntityRepository
         Semestre $semestre,
         AnneeUniversitaire $annee
     ) {
-
         return $this->createQueryBuilder('n')
             ->innerJoin(Evaluation::class, 'e', 'WITH', 'n.evaluation = e.id')
             ->innerJoin(Matiere::class, 'm', 'WITH', 'e.matiere = m.id')
@@ -74,18 +72,17 @@ class NoteRepository extends ServiceEntityRepository
 
     public function findByEtudiantSemestreArray(Semestre $semestre, AnneeUniversitaire $annee, $etudiants): array
     {
-
         $notes = $this->findBySemestre($semestre, $annee);
 
         $t = [];
 
-        /** @var  $etu Etudiant */
+        /** @var $etu Etudiant */
         foreach ($etudiants as $etu) {
             $t[$etu->getId()] = [];
 
             /** @var Note $note */
             foreach ($notes as $note) {
-                if ($note->getEtudiant() !== null && $note->getEvaluation() !== null && $note->getEvaluation()->getMatiere() !== null && $note->getEtudiant()->getId() === $etu->getId()) {
+                if (null !== $note->getEtudiant() && null !== $note->getEvaluation() && null !== $note->getEvaluation()->getMatiere() && $note->getEtudiant()->getId() === $etu->getId()) {
                     $t[$etu->getId()][$note->getEvaluation()->getId()]['eval'] = $note->getEvaluation();
                     $t[$etu->getId()][$note->getEvaluation()->getId()]['note'] = $note->getNote();
                 }
@@ -93,7 +90,6 @@ class NoteRepository extends ServiceEntityRepository
         }
 
         return $t;
-
     }
 
     public function findAllNotesSemestre(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire)

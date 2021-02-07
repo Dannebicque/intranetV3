@@ -1,12 +1,13 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/EtudiantSousCommission.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 19/01/2021 12:21
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/EtudiantSousCommission.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:41
+ */
 
 namespace App\DTO;
-
 
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
@@ -35,9 +36,6 @@ class EtudiantSousCommission
 
     /**
      * EtudiantSousCommission constructor.
-     *
-     * @param Etudiant $etudiant
-     * @param Semestre $semestre
      */
     public function __construct(Etudiant $etudiant, Semestre $semestre)
     {
@@ -52,21 +50,20 @@ class EtudiantSousCommission
         $totalMatieresPenalise = 0;
         $this->calculBonficiation();
         foreach ($this->moyenneMatieres as $moyenneMatiere) {
-
-            if ($moyenneMatiere->optionFaite === true && $moyenneMatiere->matiere->isPac() === false) {
+            if (true === $moyenneMatiere->optionFaite && false === $moyenneMatiere->matiere->isPac()) {
                 $totalMatieres += $moyenneMatiere->getMoyenne() * $moyenneMatiere->matiere->getCoefficient();
                 $totalMatieresPenalise += $moyenneMatiere->getMoyennePenalisee() * $moyenneMatiere->matiere->getCoefficient();
                 $totcoeff += $moyenneMatiere->matiere->getCoefficient();
             }
         }
-        $totcoeff !== 0 ? $this->moyenneSemestre = $totalMatieres / $totcoeff + $this->bonif : $this->moyenneSemestre = 0;
-        $totcoeff !== 0 ? $this->moyenneSemestrePenalisee = $totalMatieresPenalise / $totcoeff + $this->bonif : $this->moyenneSemestrePenalisee = 0;
+        0 !== $totcoeff ? $this->moyenneSemestre = $totalMatieres / $totcoeff + $this->bonif : $this->moyenneSemestre = 0;
+        0 !== $totcoeff ? $this->moyenneSemestrePenalisee = $totalMatieresPenalise / $totcoeff + $this->bonif : $this->moyenneSemestrePenalisee = 0;
     }
 
     private function calculBonficiation()
     {
         foreach ($this->moyenneMatieres as $moyenneMatiere) {
-            if ($moyenneMatiere->matiere->isPac() === true) {
+            if (true === $moyenneMatiere->matiere->isPac()) {
                 $this->bonif += $moyenneMatiere->getBonification();
             }
         }
@@ -79,41 +76,40 @@ class EtudiantSousCommission
         $totalUesPenalise = 0;
         $this->calculBonficiation();
 
-
-        /** @var Ue $ue */
+        /* @var Ue $ue */
         foreach ($this->moyenneUes as $moyenneUe) {
             $totalUes += $moyenneUe->getMoyenne() * $moyenneUe->ue->getCoefficient();
             $totalUesPenalise += $moyenneUe->getMoyennePenalisee() * $moyenneUe->ue->getCoefficient();
             $totcoeff += $moyenneUe->ue->getCoefficient();
         }
 
-        $totcoeff !== 0 ? $this->moyenneSemestre = $totalUes / $totcoeff + $this->bonif : $this->moyenneSemestre = 0;
-        $totcoeff !== 0 ? $this->moyenneSemestrePenalisee = $totalUesPenalise / $totcoeff + $this->bonif : $this->moyenneSemestrePenalisee = 0;
+        0 !== $totcoeff ? $this->moyenneSemestre = $totalUes / $totcoeff + $this->bonif : $this->moyenneSemestre = 0;
+        0 !== $totcoeff ? $this->moyenneSemestrePenalisee = $totalUesPenalise / $totcoeff + $this->bonif : $this->moyenneSemestrePenalisee = 0;
     }
 
     public function calculDecision(): void
     {
-        if ($this->hasPoleFaible() === false && (($this->semestre->isOptPenaliteAbsence() === true &&
-                    $this->moyenneSemestrePenalisee >= Constantes::SEUIL_MOYENNE) || ($this->semestre->isOptPenaliteAbsence() === false && $this->moyenneSemestre >= Constantes::SEUIL_MOYENNE))) {
+        if (false === $this->hasPoleFaible() && ((true === $this->semestre->isOptPenaliteAbsence() &&
+                    $this->moyenneSemestrePenalisee >= Constantes::SEUIL_MOYENNE) || (false === $this->semestre->isOptPenaliteAbsence() && $this->moyenneSemestre >= Constantes::SEUIL_MOYENNE))) {
             //semestre >=10 et UE >=8
             //todo: vérifier semestres rpécédents
             $this->decision = Constantes::SEMESTRE_VALIDE;
 
-            if ($this->semestre->getSuivant() !== null) {
+            if (null !== $this->semestre->getSuivant()) {
                 $this->proposition = $this->semestre->getSuivant()->getLibelle();
             } else {
                 $this->proposition = Constantes::PROPOSITION_INDEFINIE;
             }
-        } else if ($this->semestre->getOrdreLmd() === 1) {
+        } elseif (1 === $this->semestre->getOrdreLmd()) {
             //premier semestre
             $this->decision = Constantes::SEMESTRE_NON_VALIDE;
             $this->proposition = Constantes::PROPOSITION_INDEFINIE;
-        } else if (array_key_exists($this->semestre->getOrdreLmd() - 1, $this->scolarite)) {
+        } elseif (\array_key_exists($this->semestre->getOrdreLmd() - 1, $this->scolarite)) {
             //c'est pas le premier, on regarde le passé.
             $prec = $this->scolarite[$this->semestre->getOrdreLmd() - 1];
-            if (in_array($prec->decision, [Constantes::SEMESTRE_VALIDE, Constantes::SEMESTRE_NON_VALIDE], true)) {
+            if (\in_array($prec->decision, [Constantes::SEMESTRE_VALIDE, Constantes::SEMESTRE_NON_VALIDE], true)) {
                 //donc pas utilisé pour VCA ou VCJ
-                if ($this->semestre->isOptPenaliteAbsence() === true) {
+                if (true === $this->semestre->isOptPenaliteAbsence()) {
                     $moyenneS = ($this->moyenneSemestrePenalisee + $prec->moyenne) / 2;
                 } else {
                     $moyenneS = ($this->moyenneSemestre + $prec->moyenne) / 2;
@@ -121,7 +117,7 @@ class EtudiantSousCommission
 
                 if ($moyenneS >= 10) {
                     $this->decision = Constantes::SEMESTRE_VCA;
-                    if ($this->semestre->getSuivant() !== null) {
+                    if (null !== $this->semestre->getSuivant()) {
                         $this->proposition = $this->semestre->getSuivant()->getLibelle();
                     } else {
                         $this->proposition = Constantes::PROPOSITION_INDEFINIE;
@@ -143,7 +139,7 @@ class EtudiantSousCommission
     private function hasPoleFaible(): bool
     {
         foreach ($this->moyenneUes as $moyenneUe) {
-            if (($this->semestre->isOptPenaliteAbsence() === true && $moyenneUe->getMoyennePenalisee() < Constantes::SEUIL_UE) || ($this->semestre->isOptPenaliteAbsence() === false && $moyenneUe->getMoyenne() < Constantes::SEUIL_UE)) {
+            if ((true === $this->semestre->isOptPenaliteAbsence() && $moyenneUe->getMoyennePenalisee() < Constantes::SEUIL_UE) || (false === $this->semestre->isOptPenaliteAbsence() && $moyenneUe->getMoyenne() < Constantes::SEUIL_UE)) {
                 return true;
             }
         }
@@ -151,19 +147,11 @@ class EtudiantSousCommission
         return false;
     }
 
-    /**
-     * @return mixed
-     */
     public function getStyleMoyenneSemestre()
     {
         return $this->styleMoyenne($this->moyenneSemestre);
     }
 
-    /**
-     * @param float $note
-     *
-     * @return string
-     */
     private function styleMoyenne(float $note): string
     {
         if ($note <= Constantes::SEUIL_MOYENNE) {
@@ -173,17 +161,11 @@ class EtudiantSousCommission
         return '';
     }
 
-    /**
-     * @return mixed
-     */
     public function getStyleMoyenneSemestrePenalisee()
     {
         return $this->styleMoyenne($this->moyenneSemestrePenalisee);
     }
 
-    /**
-     * @return string
-     */
     public function getDecisionStyle(): string
     {
         switch ($this->decision) {
@@ -225,12 +207,9 @@ class EtudiantSousCommission
 
     public function getNbSemestres()
     {
-        return count($this->scolarite);
+        return \count($this->scolarite);
     }
 
-    /**
-     * @return array
-     */
     public function getScolarite(): array
     {
         return $this->scolarite;
@@ -245,6 +224,4 @@ class EtudiantSousCommission
             }
         }
     }
-
-
 }

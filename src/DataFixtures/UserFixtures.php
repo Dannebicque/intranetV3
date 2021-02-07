@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/DataFixtures/UserFixtures.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 12/12/2020 14:31
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/DataFixtures/UserFixtures.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:40
+ */
 
 namespace App\DataFixtures;
 
@@ -19,15 +21,12 @@ class UserFixtures extends Fixture
     private $encoder;
     public const PERMANENT_USER_REFERENCE = 'permanent-user';
 
-
     public function __construct(UserPasswordEncoderInterface $encoder)
     {
         $this->encoder = $encoder;
     }
 
     /**
-     * @param ObjectManager $manager
-     *
      * @throws JsonException
      */
     public function load(ObjectManager $manager): void

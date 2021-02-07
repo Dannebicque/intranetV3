@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/SemestreRepository.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 29/08/2020 11:30
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/SemestreRepository.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Repository;
 
@@ -12,8 +14,8 @@ use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method Semestre|null find($id, $lockMode = null, $lockVersion = null)
@@ -25,8 +27,6 @@ class SemestreRepository extends ServiceEntityRepository
 {
     /**
      * SemestreRepository constructor.
-     *
-     * @param ManagerRegistry $registry
      */
     public function __construct(ManagerRegistry $registry)
     {
@@ -35,8 +35,6 @@ class SemestreRepository extends ServiceEntityRepository
 
     /**
      * @param $departement
-     *
-     * @return QueryBuilder
      */
     public function findByDepartementBuilder($departement): QueryBuilder
     {
@@ -51,8 +49,6 @@ class SemestreRepository extends ServiceEntityRepository
 
     /**
      * @param $departement
-     *
-     * @return mixed
      */
     public function findByDepartementActif($departement)
     {
@@ -68,8 +64,6 @@ class SemestreRepository extends ServiceEntityRepository
 
     /**
      * @param $diplome
-     *
-     * @return QueryBuilder
      */
     public function findByDiplomeBuilder($diplome): QueryBuilder
     {
@@ -82,8 +76,6 @@ class SemestreRepository extends ServiceEntityRepository
 
     /**
      * @param $diplome
-     *
-     * @return mixed
      */
     public function findByDiplome($diplome)
     {
@@ -110,14 +102,13 @@ class SemestreRepository extends ServiceEntityRepository
 
         /** @var Semestre $semestre */
         foreach ($semestres as $semestre) {
-            $index = substr($semestre->getLibelle(), 1);
+            $index = mb_substr($semestre->getLibelle(), 1);
 
-            if (strlen($index) === 1) {
+            if (1 === mb_strlen($index)) {
                 $index = '0' . $index;
             }
             $tabsemestre[$index] = $semestre;
         }
-
 
         return $tabsemestre;
     }

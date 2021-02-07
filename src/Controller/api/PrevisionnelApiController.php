@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/api/PrevisionnelApiController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/api/PrevisionnelApiController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:36
+ */
 
 namespace App\Controller\api;
 
@@ -15,16 +17,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class MatiereApiController
- * @package App\Controller
+ * Class MatiereApiController.
+ *
  * @Route("/api/previsionnel")
  */
 class PrevisionnelApiController extends BaseController
 {
     /**
      * @Route("/matiere/{matiere}", name="api_previsionnel_matiere", options={"expose":true})
-     * @param PrevisionnelRepository $previsionnelRepository
-     * @param Matiere                $matiere
      *
      * @return JsonResponse
      */

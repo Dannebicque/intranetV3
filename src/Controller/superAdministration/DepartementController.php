@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/DepartementController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/DepartementController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller\superAdministration;
 
@@ -25,9 +27,7 @@ class DepartementController extends BaseController
 {
     /**
      * @Route("/new", name="sa_departement_new", methods="GET|POST")
-     * @param Request $request
      *
-     * @return Response
      * @throws Exception
      */
     public function create(Request $request): Response
@@ -35,8 +35,8 @@ class DepartementController extends BaseController
         $departement = new Departement();
         $form = $this->createForm(DepartementType::class, $departement, [
             'attr' => [
-                'data-provide' => 'validation'
-            ]
+                'data-provide' => 'validation',
+            ],
         ]);
         $form->handleRequest($request);
 
@@ -56,9 +56,6 @@ class DepartementController extends BaseController
 
     /**
      * @Route("/{id}", name="sa_departement_show", methods="GET")
-     * @param Departement $departement
-     *
-     * @return Response
      */
     public function show(Departement $departement): Response
     {
@@ -67,17 +64,13 @@ class DepartementController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="sa_departement_edit", methods="GET|POST")
-     * @param Request     $request
-     * @param Departement $departement
-     *
-     * @return Response
      */
     public function edit(Request $request, Departement $departement): Response
     {
         $form = $this->createForm(DepartementType::class, $departement, [
             'attr' => [
-                'data-provide' => 'validation'
-            ]
+                'data-provide' => 'validation',
+            ],
         ]);
         $form->handleRequest($request);
 
@@ -102,12 +95,8 @@ class DepartementController extends BaseController
     }
 
     /**
-     * @param Departement $departement
-     * @param bool        $etat
      * @Route("/activate/{departement}/{etat}", methods={"GET"}, name="sa_departement_activate")
      * @IsGranted("ROLE_SUPER_ADMIN")
-     *
-     * @return RedirectResponse
      */
     public function activate(Departement $departement, bool $etat): RedirectResponse
     {
@@ -116,6 +105,5 @@ class DepartementController extends BaseController
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'departement.activate.' . $etat . '.flash');
 
         return $this->redirectToRoute('super_admin_homepage');
-
     }
 }

@@ -1,19 +1,22 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/RattrapageController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 01/02/2021 16:58
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/RattrapageController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
 
 namespace App\Controller\administration;
 
+use App\Classes\MyExport;
 use App\Controller\BaseController;
 use App\Entity\Annee;
 use App\Entity\Constantes;
 use App\Entity\Rattrapage;
 use App\Entity\Semestre;
 use App\Event\RattrapageEvent;
-use App\Classes\MyExport;
 use App\Repository\AbsenceRepository;
 use App\Repository\RattrapageRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -23,19 +26,14 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
- * Class RattrapageController
- * @package App\Controller\administration
+ * Class RattrapageController.
+ *
  * @Route("/administration/rattrapage")
  */
 class RattrapageController extends BaseController
 {
     /**
      * @Route("/semestre/{semestre}", name="administration_rattrapage_semestre_index")
-     * @param AbsenceRepository    $absenceRepository
-     * @param RattrapageRepository $rattrapageRepository
-     * @param Semestre             $semestre
-     *
-     * @return Response
      */
     public function index(
         AbsenceRepository $absenceRepository,
@@ -45,19 +43,16 @@ class RattrapageController extends BaseController
         return $this->render('administration/rattrapage/index.html.twig', [
             'rattrapages' => $rattrapageRepository->findBySemestre($semestre, $semestre->getAnneeUniversitaire()),
             'semestre'    => $semestre,
-            'absences'    => $absenceRepository->findBySemestreRattrapage($semestre, $semestre->getAnneeUniversitaire())
+            'absences'    => $absenceRepository->findBySemestreRattrapage($semestre,
+                $semestre->getAnneeUniversitaire()),
         ]);
     }
 
     /**
      * @Route("/{semestre}/export.{_format}", name="administration_rattrapage_export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"})
-     * @param MyExport             $myExport
-     * @param RattrapageRepository $rattrapageRepository
-     * @param Semestre             $semestre
-     * @param                      $_format
      *
-     * @return Response
+     * @param $_format
      */
     public function export(
         MyExport $myExport,
@@ -82,7 +77,7 @@ class RattrapageController extends BaseController
                 'dateRattrapage',
                 'heureRattrapage',
                 'salle',
-                'etatDemande'
+                'etatDemande',
             ]
         );
     }
@@ -91,15 +86,12 @@ class RattrapageController extends BaseController
      * @Route("/change-etat/{uuid}/{etat}", name="administration_rattrapage_change_etat", methods="GET",
      *                                    requirements={"etat"="A|R"}, options={"expose":true})
      * @ParamConverter("rattrapage", options={"mapping": {"uuid": "uuid"}})
-     * @param EventDispatcherInterface $eventDispatcher
-     * @param Rattrapage               $rattrapage
-     * @param                          $etat
      *
-     * @return Response
+     * @param $etat
      */
     public function accepte(EventDispatcherInterface $eventDispatcher, Rattrapage $rattrapage, $etat): Response
     {
-        if ($etat === 'A' || $etat === 'R') {
+        if ('A' === $etat || 'R' === $etat) {
             $rattrapage->setEtatDemande($etat);
             $this->entityManager->flush();
 
@@ -114,18 +106,12 @@ class RattrapageController extends BaseController
 
     /**
      * @Route("/supprimer-annee/{semestre}", name="administration_rattrapage_delete_all", methods="DELETE")
-     *
-     * @param RattrapageRepository $rattrapageRepository
-     * @param Semestre             $semestre
-     *
-     * @return Response
      */
     public function deleteAllAnnee(RattrapageRepository $rattrapageRepository, Semestre $semestre): Response
     {
         $rattrapages = $rattrapageRepository->findByAnnee($semestre->getAnnee());
         foreach ($rattrapages as $rattrapage) {
             $this->entityManager->remove($rattrapage);
-
         }
         $this->entityManager->flush();
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'rattrapage_all.delete.success.flash');
@@ -133,17 +119,13 @@ class RattrapageController extends BaseController
         return $this->json([
             'redirect' => true,
             'url'      => $this->generateUrl('administration_rattrapage_semestre_index',
-                ['semestre' => $semestre->getId()])
+                ['semestre' => $semestre->getId()]),
         ]);
     }
 
     /**
      * @Route("/{uuid}", name="administration_rattrapage_delete", methods="DELETE")
-     * @param Request    $request
-     * @param Rattrapage $rattrapage
      * @ParamConverter("rattrapage", options={"mapping": {"uuid": "uuid"}})
-     *
-     * @return Response
      */
     public function delete(Request $request, Rattrapage $rattrapage): Response
     {
@@ -159,6 +141,4 @@ class RattrapageController extends BaseController
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
-
-
 }

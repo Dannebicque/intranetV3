@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Form/SalleType.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 16/09/2020 17:20
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/SalleType.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Form;
 
@@ -17,15 +19,10 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class SalleType
- * @package App\Form
+ * Class SalleType.
  */
 class SalleType extends AbstractType
 {
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -36,25 +33,22 @@ class SalleType extends AbstractType
                     Salle::SALLE_AMPHI        => Salle::SALLE_AMPHI,
                     Salle::SALLE_INFORMATIQUE => Salle::SALLE_INFORMATIQUE,
                     Salle::SALLE_TD           => Salle::SALLE_TD,
-                    Salle::SALLE_TP           => Salle::SALLE_TP
+                    Salle::SALLE_TP           => Salle::SALLE_TP,
                 ],
-                'label'   => 'label.typesalle'
+                'label'   => 'label.typesalle',
             ])
             ->add('site', EntityType::class, [
                 'class'        => Site::class,
                 'choice_label' => 'libelle',
-                'label'        => 'label.site'
+                'label'        => 'label.site',
             ]);
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Salle::class,
-            'translation_domain' => 'form'
+            'data_class'         => Salle::class,
+            'translation_domain' => 'form',
         ]);
     }
 }

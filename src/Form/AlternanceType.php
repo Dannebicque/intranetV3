@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Form/AlternanceType.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 20/07/2020 18:05
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/AlternanceType.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Form;
 
@@ -32,19 +34,19 @@ class AlternanceType extends AbstractType
             ->add('typeContrat', ChoiceType::class, [
                 'choices'  => [
                     Alternance::ALTERNANCE_APPRENTISSAGE       => Alternance::ALTERNANCE_APPRENTISSAGE,
-                    Alternance::ALTERNANCE_PROFESSIONALISATION => Alternance::ALTERNANCE_PROFESSIONALISATION
+                    Alternance::ALTERNANCE_PROFESSIONALISATION => Alternance::ALTERNANCE_PROFESSIONALISATION,
                 ],
                 'expanded' => true,
-                'label'    => 'label.contrat_alternance'
+                'label'    => 'label.contrat_alternance',
             ])
             ->add('etat', ChoiceType::class, [
                 'choices'  => [
                     Alternance::ALTERNANCE_ETAT_INITIALISE => Alternance::ALTERNANCE_ETAT_INITIALISE,
                     Alternance::ALTERNANCE_ETAT_COMPLETE   => Alternance::ALTERNANCE_ETAT_COMPLETE,
-                    Alternance::ALTERNANCE_ETAT_VALIDE     => Alternance::ALTERNANCE_ETAT_VALIDE
+                    Alternance::ALTERNANCE_ETAT_VALIDE     => Alternance::ALTERNANCE_ETAT_VALIDE,
                 ],
                 'expanded' => true,
-                'label'    => 'label.etat_alternance'
+                'label'    => 'label.etat_alternance',
             ])
             ->add('dateRange', DateRangeType::class, ['label' => 'dateRange.periode.alternance', 'mapped' => false, 'required' => true])
             ->add('entreprise', EntrepriseType::class, ['label' => 'label.entreprise'])
@@ -79,8 +81,8 @@ class AlternanceType extends AbstractType
                     'mapped'    => false,
                     'date_data' => [
                         'from' => $alternance->getDateDebut(),
-                        'to'   => $alternance->getDateFin()
-                    ]
+                        'to'   => $alternance->getDateFin(),
+                    ],
                 ]);
             });
     }
@@ -90,7 +92,7 @@ class AlternanceType extends AbstractType
         $resolver->setDefaults([
             'data_class'         => Alternance::class,
             'translation_domain' => 'form',
-            'departement'          => null
+            'departement'        => null,
         ]);
     }
 }

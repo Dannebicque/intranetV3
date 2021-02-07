@@ -1,15 +1,14 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MySerializer.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 08/08/2020 10:27
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MySerializer.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:26
+ */
 
-/**
- * Created by PhpStorm.
- * User: davidannebicque
- * Date: 14/07/2018
- * Time: 10:14
+/*
+ * Pull your hearder here, for exemple, Licence header.
  */
 
 namespace App\Classes;
@@ -36,8 +35,8 @@ class MySerializer
         $serializer = new Serializer([
             new DateTimeNormalizer(),
             new DataUriNormalizer(),
-            $normalizer
-        ], array($encoder));
+            $normalizer,
+        ], [$encoder]);
 
         // encoding contents in JSON format
         return $serializer->serialize($data, 'json', ['enable_max_depth' => true, 'groups' => $groups]);

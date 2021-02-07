@@ -1,12 +1,17 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyDocument.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 08/08/2020 10:27
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyDocument.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:10
+ */
+
+/*
+ * Pull your hearder here, for exemple, Licence header.
+ */
 
 namespace App\Classes;
-
 
 use App\Entity\Document;
 use App\Entity\DocumentFavoriEtudiant;
@@ -33,10 +38,6 @@ class MyDocument
 
     /**
      * MyArticle constructor.
-     *
-     * @param EntityManagerInterface            $entityManager
-     * @param DocumentFavoriEtudiantRepository  $documentFavoriEtudiantRepository
-     * @param DocumentFavoriPersonnelRepository $documentFavoriPersonnelRepository
      */
     public function __construct(
         EntityManagerInterface $entityManager,
@@ -48,7 +49,6 @@ class MyDocument
         $this->documentFavoriPersonnelRepository = $documentFavoriPersonnelRepository;
     }
 
-
     public function setDocument(Document $document)
     {
         $this->document = $document;
@@ -59,7 +59,7 @@ class MyDocument
         $etat = '';
         if ($getConnectedUser instanceof Personnel) {
             $r = $this->documentFavoriPersonnelRepository->findFavori($getConnectedUser, $this->document);
-            if ($r === null || count($r) === 0) {
+            if (null === $r || 0 === \count($r)) {
                 //add
                 $n = new DocumentFavoriPersonnel($getConnectedUser, $this->document);
                 $this->entityManager->persist($n);
@@ -71,7 +71,7 @@ class MyDocument
             }
         } elseif ($getConnectedUser instanceof Etudiant) {
             $r = $this->documentFavoriEtudiantRepository->findFavori($getConnectedUser, $this->document);
-            if ($r === null || count($r) === 0) {
+            if (null === $r || 0 === \count($r)) {
                 //add
                 $n = new DocumentFavoriEtudiant($getConnectedUser, $this->document);
                 $this->entityManager->persist($n);

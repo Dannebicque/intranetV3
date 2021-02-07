@@ -1,12 +1,17 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantImport.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantImport.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
+/*
+ * Pull your hearder here, for exemple, Licence header.
+ */
 
 namespace App\Classes\Etudiant;
-
 
 use App\Classes\LDAP\MyLdap;
 use App\Entity\Adresse;
@@ -16,15 +21,11 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class EtudiantImport
 {
-
     private MyLdap $myLdap;
     private EntityManagerInterface $entity;
 
     /**
      * EtudiantImport constructor.
-     *
-     * @param MyLdap                 $myLdap
-     * @param EntityManagerInterface $entity
      */
     public function __construct(MyLdap $myLdap, EntityManagerInterface $entity)
     {
@@ -32,13 +33,10 @@ class EtudiantImport
         $this->entity = $entity;
     }
 
-
     /**
-     * @param Semestre|null $semestre
-     * @param array         $dataApogee
-     *
      * @return Etudiant
      * @throws \JsonException
+     *
      */
     public function createEtudiant(?Semestre $semestre, array $dataApogee): ?Etudiant
     {
@@ -49,7 +47,7 @@ class EtudiantImport
         $etudiant->setPhotoName($etudiant->getNumEtudiant() . '.jpg');
         $update = $this->updateLdap($etudiant);
         $this->saveAdresse($dataApogee, $etudiant);
-        if ($update === true) {
+        if (true === $update) {
             $this->entity->persist($etudiant);
 
             return $etudiant;
@@ -61,17 +59,17 @@ class EtudiantImport
     private function updateLdap(Etudiant $etudiant)
     {
         $etuLdap = $this->myLdap->getInfoEtudiant($etudiant->getNumEtudiant());
-        if (is_array($etuLdap) && count($etuLdap) === 2 && $etuLdap['mail'] !== '' && $etuLdap['login'] !== '') {
+        if (\is_array($etuLdap) && 2 === \count($etuLdap) && '' !== $etuLdap['mail'] && '' !== $etuLdap['login']) {
             $etudiant->updateFromLdap($etuLdap);
 
             return true;
         }
 
-        $etudiant->setUsername(substr($etudiant->getNumEtudiant(), 0, 6));
-        $etudiant->setSlug(substr($etudiant->getNumEtudiant(), 0, 6));
-        $etudiant->setMailUniv(substr($etudiant->getNumEtudiant(), 0, 6));
-        return false;
+        $etudiant->setUsername(mb_substr($etudiant->getNumEtudiant(), 0, 6));
+        $etudiant->setSlug(mb_substr($etudiant->getNumEtudiant(), 0, 6));
+        $etudiant->setMailUniv(mb_substr($etudiant->getNumEtudiant(), 0, 6));
 
+        return false;
     }
 
     private function saveAdresse($dataApogee, Etudiant $etudiant): void
@@ -104,6 +102,5 @@ class EtudiantImport
         $this->entity->clear($etudiant);
 
         return null;
-
     }
 }

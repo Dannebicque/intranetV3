@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Form/AbsenceJustificatifType.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 10/09/2020 18:21
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/AbsenceJustificatifType.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Form;
 
@@ -31,7 +33,7 @@ class AbsenceJustificatifType extends AbstractType
                 'label'          => 'label.fichier',
                 'download_label' => 'label.apercu',
                 'allow_delete'   => false,
-                'help'           => 'Le justificitif ne peut être qu\'une convocation officielle ou un certificat médicale'
+                'help'           => 'Le justificitif ne peut être qu\'une convocation officielle ou un certificat médicale',
             ]);
     }
 
@@ -39,7 +41,7 @@ class AbsenceJustificatifType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class'         => AbsenceJustificatif::class,
-            'translation_domain' => 'form'
+            'translation_domain' => 'form',
         ]);
     }
 }

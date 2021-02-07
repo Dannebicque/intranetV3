@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/QuestionnaireSectionQuestion.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 21/11/2020 07:31
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/QuestionnaireSectionQuestion.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:49
+ */
 
 namespace App\Entity;
 
@@ -28,7 +30,6 @@ class QuestionnaireSectionQuestion extends BaseEntity
      * @ORM\Column(type="integer")
      */
     private $ordre;
-
 
     public function getSection(): ?QuestionnaireSection
     {

@@ -1,14 +1,15 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/SemestreExportController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 23/01/2021 14:30
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/SemestreExportController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:36
+ */
 
 namespace App\Controller\administration;
 
 use App\Classes\Etudiant\EtudiantExportReleve;
-use App\Classes\MyEvaluations;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
@@ -23,17 +24,14 @@ use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
 /**
- * Class SemestreExportController
- * @package App\Controller\administration
+ * Class SemestreExportController.
+ *
  * @Route("/administration/semestre/export")
  */
 class SemestreExportController extends BaseController
 {
     /**
      * @Route("/all/{semestre}", name="administration_semestre_export_tous_les_releves_provisoires")
-     * @param Semestre $semestre
-     *
-     * @return RedirectResponse
      */
     public function exportTousLesRelevesProvisoires(
         Semestre $semestre
@@ -44,15 +42,12 @@ class SemestreExportController extends BaseController
             'La génération des documents est en cours. Vous recevrez un mail pour télécharger les éléments dans quelques minutes.');
 
         return $this->redirectToRoute('administration_notes_semestre_index', [
-            'semestre' => $semestre->getId()
+            'semestre' => $semestre->getId(),
         ]);
     }
 
     /**
      * @Route("/provisoire/{slug}/{semestre}", name="administration_semestre_export_releve_provisoire")
-     * @param EtudiantExportReleve $etudiantExportReleve
-     * @param Etudiant             $etudiant
-     * @param Semestre|null        $semestre
      *
      * @throws LoaderError
      * @throws RuntimeError
@@ -71,9 +66,6 @@ class SemestreExportController extends BaseController
 
     /**
      * @Route("/definitif/{slug}/{scolarite}", name="administration_semestre_export_releve_definitif")
-     * @param EtudiantExportReleve $etudiantExportReleve
-     * @param Etudiant             $etudiant
-     * @param Scolarite            $scolarite
      * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
      */
     public function exportReleveDefinitif(
@@ -84,6 +76,4 @@ class SemestreExportController extends BaseController
         $etudiantExportReleve->setEtudiant($etudiant);
         $etudiantExportReleve->exportReleveDefinitif($scolarite);
     }
-
-
 }

@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/TypeDocumentController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/TypeDocumentController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller\administration;
 
@@ -24,9 +26,6 @@ class TypeDocumentController extends BaseController
 {
     /**
      * @Route("/", name="administration_type_document_index", methods="GET")
-     * @param TypeDocumentRepository $typeDocumentRepository
-     *
-     * @return Response
      */
     public function index(TypeDocumentRepository $typeDocumentRepository): Response
     {
@@ -39,11 +38,8 @@ class TypeDocumentController extends BaseController
     /**
      * @Route("/export.{_format}", name="administration_type_document_export", methods="GET",
      *                             requirements={"_format":"pdf|csv|xlsx"})
-     * @param MyExport               $myExport
-     * @param TypeDocumentRepository $typeDocumentRepository
-     * @param                        $_format
      *
-     * @return Response
+     * @param $_format
      */
     public function export(MyExport $myExport, TypeDocumentRepository $typeDocumentRepository, $_format): Response
     {
@@ -56,25 +52,21 @@ class TypeDocumentController extends BaseController
             ['typedocument_administration'],
             [
                 'libelle',
-                'nbDocuments',//todo: comment l'intégrer ?
-
+                'nbDocuments', //todo: comment l'intégrer ?
             ]
         );
     }
 
     /**
      * @Route("/new", name="administration_type_document_new", methods="GET|POST")
-     * @param Request $request
-     *
-     * @return Response
      */
     public function create(Request $request): Response
     {
         $typeDocument = new TypeDocument($this->dataUserSession->getDepartement());
         $form = $this->createForm(TypeDocumentType::class, $typeDocument, [
             'attr' => [
-                'data-provide' => 'validation'
-            ]
+                'data-provide' => 'validation',
+            ],
         ]);
         $form->handleRequest($request);
 
@@ -94,9 +86,6 @@ class TypeDocumentController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_type_document_show", methods="GET")
-     * @param TypeDocument $typeDocument
-     *
-     * @return Response
      */
     public function show(TypeDocument $typeDocument): Response
     {
@@ -105,24 +94,20 @@ class TypeDocumentController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_type_document_edit", methods="GET|POST")
-     * @param Request      $request
-     * @param TypeDocument $typeDocument
-     *
-     * @return Response
      */
     public function edit(Request $request, TypeDocument $typeDocument): Response
     {
         $form = $this->createForm(TypeDocumentType::class, $typeDocument, [
             'attr' => [
-                'data-provide' => 'validation'
-            ]
+                'data-provide' => 'validation',
+            ],
         ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'type_document.edit.success.flash');
-            if ($request->request->get('btn_update') !== null) {
+            if (null !== $request->request->get('btn_update')) {
                 return $this->redirectToRoute('administration_type_document_index');
             }
 
@@ -137,10 +122,6 @@ class TypeDocumentController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_type_document_delete", methods="DELETE")
-     * @param Request      $request
-     * @param TypeDocument $typeDocument
-     *
-     * @return Response
      */
     public function delete(
         Request $request,
@@ -163,9 +144,6 @@ class TypeDocumentController extends BaseController
 
     /**
      * @Route("/{id}/duplicate", name="administration_type_document_duplicate", methods="GET|POST")
-     * @param TypeDocument $type_document
-     *
-     * @return Response
      */
     public function duplicate(TypeDocument $type_document): Response
     {

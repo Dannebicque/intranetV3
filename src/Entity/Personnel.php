@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Personnel.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 12/12/2020 14:31
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Personnel.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Entity;
 
@@ -20,11 +22,9 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ORM\Entity(repositoryClass="App\Repository\PersonnelRepository")
  * @ORM\HasLifecycleCallbacks()
  * @Vich\Uploadable
- *
  */
 class Personnel extends Utilisateur implements Serializable // implements SerializerInterface
 {
-
     public const PERMANENT = 'permanent';
     public const VACATAIRE = 'vacataire';
     public const CONTRACTUEL = 'contractuel';
@@ -45,61 +45,51 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
 
     /**
      * @ORM\Column(type="string", length=15)
-     *
      */
     protected $statut;
 
     /**
      * @ORM\Column(type="string", length=10,nullable=true)
-     *
      */
     protected $posteInterne;
 
     /**
      * @ORM\Column(type="string", length=20,nullable=true)
-     *
      */
     protected $telBureau;
 
     /**
      * @ORM\Column(type="text",nullable=true)
-     *
      */
     protected $responsabilites;
 
     /**
      * @ORM\Column(type="text",nullable=true)
-     *
      */
     protected $domaines;
 
     /**
      * @ORM\Column(type="string", length=255,nullable=true)
-     *
      */
     protected $entreprise;
 
     /**
      * @ORM\Column(type="string", length=20,nullable=true)
-     *
      */
     protected $bureau1;
 
     /**
      * @ORM\Column(type="string", length=20,nullable=true)
-     *
      */
     protected $bureau2;
 
     /**
      * @ORM\Column(type="integer",nullable=true)
-     *
      */
     protected $numeroHarpege;
 
     /**
      * @ORM\Column(type="string",length=10,nullable=true)
-     *
      */
     protected $initiales;
 
@@ -280,6 +270,7 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
 
     /**
      * Personnel constructor.
+     *
      * @throws JsonException
      */
     public function __construct()
@@ -313,29 +304,19 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
         $this->covidAttestationPersonnels = new ArrayCollection();
     }
 
-    /**
-     * @return mixed
-     */
     public function getId()
     {
         return $this->id;
     }
 
-
-    /**
-     * @return mixed
-     */
     public function getStatut()
     {
         return $this->statut;
     }
 
-    /**
-     * @param mixed $statut
-     */
     public function setStatut($statut): void
     {
-        if ($statut === self::VACATAIRE) {
+        if (self::VACATAIRE === $statut) {
             $this->setTypeUser(self::VACATAIRE);
         } else {
             $this->setTypeUser(self::PERMANENT);
@@ -344,145 +325,91 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
         $this->statut = $statut;
     }
 
-    /**
-     * @return mixed
-     */
     public function getPosteInterne()
     {
         return $this->posteInterne;
     }
 
-    /**
-     * @param mixed $posteInterne
-     */
     public function setPosteInterne($posteInterne): void
     {
         $this->posteInterne = $posteInterne;
     }
 
-    /**
-     * @return mixed
-     */
     public function getTelBureau()
     {
         return $this->telBureau;
     }
 
-    /**
-     * @param mixed $telBureau
-     */
     public function setTelBureau($telBureau): void
     {
         $this->telBureau = $telBureau;
     }
 
-    /**
-     * @return mixed
-     */
     public function getResponsabilites()
     {
         return $this->responsabilites;
     }
 
-    /**
-     * @param mixed $responsabilites
-     */
     public function setResponsabilites($responsabilites): void
     {
         $this->responsabilites = $responsabilites;
     }
 
-    /**
-     * @return mixed
-     */
     public function getDomaines()
     {
         return $this->domaines;
     }
 
-    /**
-     * @param mixed $domaines
-     */
     public function setDomaines($domaines): void
     {
         $this->domaines = $domaines;
     }
 
-    /**
-     * @return mixed
-     */
     public function getEntreprise()
     {
         return $this->entreprise;
     }
 
-    /**
-     * @param mixed $entreprise
-     */
     public function setEntreprise($entreprise): void
     {
         $this->entreprise = $entreprise;
     }
 
-    /**
-     * @return mixed
-     */
     public function getBureau1()
     {
         return $this->bureau1;
     }
 
-    /**
-     * @param mixed $bureau1
-     */
     public function setBureau1($bureau1): void
     {
         $this->bureau1 = $bureau1;
     }
 
-    /**
-     * @return mixed
-     */
     public function getBureau2()
     {
         return $this->bureau2;
     }
 
-    /**
-     * @param mixed $bureau2
-     */
     public function setBureau2($bureau2): void
     {
         $this->bureau2 = $bureau2;
     }
 
-    /**
-     * @return mixed
-     */
     public function getNumeroHarpege()
     {
         return $this->numeroHarpege;
     }
 
-    /**
-     * @param mixed $numeroHarpege
-     */
     public function setNumeroHarpege($numeroHarpege): void
     {
         $this->numeroHarpege = $numeroHarpege;
     }
 
-    /**
-     * @return mixed
-     */
     public function getInitiales()
     {
         return $this->initiales;
     }
 
-    /**
-     * @param mixed $initiales
-     */
     public function setInitiales($initiales): void
     {
         $this->initiales = $initiales;
@@ -494,8 +421,6 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
      * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
      * must be able to accept an instance of 'File' as the bundle will inject one here
      * during Doctrine hydration.
-     *
-     * @param File|null $cv
      */
     public function setCvFile(?File $cv = null): void
     {
@@ -508,25 +433,16 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
         }
     }
 
-    /**
-     * @return null|File
-     */
     public function getCvFile(): ?File
     {
         return $this->cvFile;
     }
 
-    /**
-     * @return null|string
-     */
     public function getCvName(): ?string
     {
         return $this->cvName;
     }
 
-    /**
-     * @param string $cvName
-     */
     public function setCvName(string $cvName): void
     {
         $this->cvName = $cvName;
@@ -541,8 +457,6 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
     }
 
     /**
-     * @param Hrs $hr
-     *
      * @return Personnel
      */
     public function addHr(Hrs $hr): self
@@ -556,8 +470,6 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
     }
 
     /**
-     * @param Hrs $hr
-     *
      * @return Personnel
      */
     public function removeHr(Hrs $hr): self
@@ -582,8 +494,6 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
     }
 
     /**
-     * @param Previsionnel $previsionnel
-     *
      * @return Personnel
      */
     public function addPrevisionnel(Previsionnel $previsionnel): self
@@ -597,8 +507,6 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
     }
 
     /**
-     * @param Previsionnel $previsionnel
-     *
      * @return Personnel
      */
     public function removePrevisionnel(Previsionnel $previsionnel): self
@@ -623,8 +531,6 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
     }
 
     /**
-     * @param Evaluation $evaluationsAuteur
-     *
      * @return Personnel
      */
     public function addEvaluationsAuteur(Evaluation $evaluationsAuteur): self
@@ -638,8 +544,6 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
     }
 
     /**
-     * @param Evaluation $evaluationsAuteur
-     *
      * @return Personnel
      */
     public function removeEvaluationsAuteur(Evaluation $evaluationsAuteur): self
@@ -664,8 +568,6 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
     }
 
     /**
-     * @param Evaluation $evaluationsAutorise
-     *
      * @return Personnel
      */
     public function addEvaluationsAutorise(Evaluation $evaluationsAutorise): self
@@ -679,8 +581,6 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
     }
 
     /**
-     * @param Evaluation $evaluationsAutorise
-     *
      * @return Personnel
      */
     public function removeEvaluationsAutorise(Evaluation $evaluationsAutorise): self
@@ -702,8 +602,6 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
     }
 
     /**
-     * @param ModificationNote $modificationNote
-     *
      * @return Personnel
      */
     public function addModificationNote(ModificationNote $modificationNote): self
@@ -717,8 +615,6 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
     }
 
     /**
-     * @param ModificationNote $modificationNote
-     *
      * @return Personnel
      */
     public function removeModificationNote(ModificationNote $modificationNote): self
@@ -734,17 +630,12 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
         return $this;
     }
 
-    /**
-     * @return float|null
-     */
     public function getNbHeuresService(): ?float
     {
         return $this->nbHeuresService;
     }
 
     /**
-     * @param float $nbHeuresService
-     *
      * @return Personnel
      */
     public function setNbHeuresService(float $nbHeuresService = 192): self
@@ -763,8 +654,6 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
     }
 
     /**
-     * @param CahierTexte $cahierTexte
-     *
      * @return Personnel
      */
     public function addCahierTexte(CahierTexte $cahierTexte): self
@@ -778,8 +667,6 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
     }
 
     /**
-     * @param CahierTexte $cahierTexte
-     *
      * @return Personnel
      */
     public function removeCahierTexte(CahierTexte $cahierTexte): self
@@ -804,8 +691,6 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
     }
 
     /**
-     * @param Notification $notification
-     *
      * @return Personnel
      */
     public function addNotification(Notification $notification): self
@@ -819,8 +704,6 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
     }
 
     /**
-     * @param Notification $notification
-     *
      * @return Personnel
      */
     public function removeNotification(Notification $notification): self
@@ -837,9 +720,12 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
     }
 
     /**
-     * String representation of object
-     * @link  http://php.net/manual/en/serializable.serialize.php
+     * String representation of object.
+     *
+     * @see   http://php.net/manual/en/serializable.serialize.php
+     *
      * @return string the string representation of the object or null
+     *
      * @since 5.1.0
      */
     public function serialize(): string
@@ -848,19 +734,19 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
         return serialize([
             $this->id,
             $this->password,
-            $this->username
+            $this->username,
         ]);
     }
 
     /**
-     * Constructs the object
-     * @link  http://php.net/manual/en/serializable.unserialize.php
+     * Constructs the object.
+     *
+     * @see   http://php.net/manual/en/serializable.unserialize.php
      *
      * @param string $serialized <p>
      *                           The string representation of the object.
      *                           </p>
      *
-     * @return void
      * @since 5.1.0
      */
     public function unserialize($serialized): void
@@ -882,8 +768,6 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
     }
 
     /**
-     * @param PersonnelDepartement $personnelDepartement
-     *
      * @return Personnel
      */
     public function addPersonnelDepartement(PersonnelDepartement $personnelDepartement): self
@@ -897,8 +781,6 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
     }
 
     /**
-     * @param PersonnelDepartement $personnelDepartement
-     *
      * @return Personnel
      */
     public function removePersonnelDepartement(PersonnelDepartement $personnelDepartement): self
@@ -1078,17 +960,12 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
     public function getCouleur(): ?string
     {
         return $this->couleur;
     }
 
     /**
-     * @param string $couleur
-     *
      * @return Personnel
      */
     public function setCouleur(string $couleur): self
@@ -1129,9 +1006,6 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
         return $this;
     }
 
-    /**
-     * @return null|File
-     */
     public function getPhotoFile(): ?File
     {
         return $this->photoFile;
@@ -1143,8 +1017,6 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
      * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
      * must be able to accept an instance of 'File' as the bundle will inject one here
      * during Doctrine hydration.
-     *
-     * @param null|File $photo
      */
     public function setPhotoFile(?File $photo = null): void
     {
@@ -1165,9 +1037,6 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
         return $this->photoName;
     }
 
-    /**
-     * @param string $photoName
-     */
     public function setPhotoName(string $photoName): void
     {
         $this->photoName = $photoName;

@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Ufr.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Ufr.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:50
+ */
 
 namespace App\Entity;
 
@@ -51,17 +53,11 @@ class Ufr extends BaseEntity
         $this->departements = new ArrayCollection();
     }
 
-    /**
-     * @return mixed
-     */
     public function getLibelle()
     {
         return $this->libelle;
     }
 
-    /**
-     * @param mixed $libelle
-     */
     public function setLibelle($libelle): void
     {
         $this->libelle = $libelle;
@@ -76,8 +72,6 @@ class Ufr extends BaseEntity
     }
 
     /**
-     * @param Site $site
-     *
      * @return Ufr
      */
     public function addSite(Site $site): self
@@ -90,8 +84,6 @@ class Ufr extends BaseEntity
     }
 
     /**
-     * @param Site $site
-     *
      * @return Ufr
      */
     public function removeSite(Site $site): self
@@ -103,17 +95,12 @@ class Ufr extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return Personnel|null
-     */
     public function getResponsable(): ?Personnel
     {
         return $this->responsable;
     }
 
     /**
-     * @param Personnel|null $responsable
-     *
      * @return Ufr
      */
     public function setResponsable(?Personnel $responsable): self

@@ -1,15 +1,14 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyProjet.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 19/12/2020 14:57
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyProjet.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
-/**
- * Created by PhpStorm.
- * User: davidannebicque
- * Date: 06/08/2018
- * Time: 13:23
+/*
+ * Pull your hearder here, for exemple, Licence header.
  */
 
 namespace App\Classes;
@@ -23,7 +22,6 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class MyProjet
 {
-
     protected EntityManagerInterface $entityManger;
 
     protected ProjetEtudiantRepository $projetEtudiantRepository;
@@ -34,10 +32,6 @@ class MyProjet
 
     /**
      * MyStage constructor.
-     *
-     * @param EntityManagerInterface   $entityManger
-     * @param ProjetEtudiantRepository $projetEtudiantRepository
-     * @param EtudiantRepository       $etudiantRepository
      */
     public function __construct(
         EntityManagerInterface $entityManger,
@@ -49,11 +43,10 @@ class MyProjet
         $this->etudiantRepository = $etudiantRepository;
     }
 
-
-    public function getDataPeriode(ProjetPeriode $projetPeriode, ?int $anneeUniversitaire = 0): MyProjet
+    public function getDataPeriode(ProjetPeriode $projetPeriode, ?int $anneeUniversitaire = 0): self
     {
-        if ($anneeUniversitaire === 0) {
-            $anneeUniversitaire = $projetPeriode->getAnneeUniversitaire() !== null ? $projetPeriode->getAnneeUniversitaire()->getAnnee() : (int)date('Y');
+        if (0 === $anneeUniversitaire) {
+            $anneeUniversitaire = null !== $projetPeriode->getAnneeUniversitaire() ? $projetPeriode->getAnneeUniversitaire()->getAnnee() : (int)date('Y');
         }
 
         $etudiants = $this->etudiantRepository->findBySemestre($projetPeriode->getSemestre());
@@ -66,19 +59,15 @@ class MyProjet
         /** @var ProjetEtudiant $projetEtudiants */
         foreach ($projetPeriode->getProjetEtudiants() as $projetEtudiants) {
             foreach ($projetEtudiants->getEtudiants() as $etudiant) {
-                if (array_key_exists($etudiant->getId(), $this->dataEtudiants)) {
+                if (\array_key_exists($etudiant->getId(), $this->dataEtudiants)) {
                     $this->dataEtudiants[$etudiant->getId()]['projet'] = $projetEtudiants;
                 }
             }
         }
 
-
         return $this;
     }
 
-    /**
-     * @return array
-     */
     public function getDataEtudiants(): array
     {
         return $this->dataEtudiants;

@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/TwigTemplate.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 05/09/2020 13:06
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/TwigTemplate.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:50
+ */
 
 namespace App\Entity;
 
@@ -14,8 +16,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class TwigTemplate extends BaseEntity
 {
-
-
     /**
      * @ORM\Column(type="string", length=255)
      */
@@ -25,7 +25,6 @@ class TwigTemplate extends BaseEntity
      * @ORM\Column(type="text")
      */
     private $source;
-
 
     public function getName(): ?string
     {

@@ -1,9 +1,12 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/structure/DiplomeController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 15/10/2020 12:28
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/structure/DiplomeController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
 
 namespace App\Controller\administration\structure;
 
@@ -24,11 +27,6 @@ class DiplomeController extends BaseController
 {
     /**
      * @Route("/new/{departement}", name="administration_diplome_new", methods="GET|POST")
-     * @param Request     $request
-     *
-     * @param Departement $departement
-     *
-     * @return Response
      */
     public function create(Request $request, Departement $departement): Response
     {
@@ -36,8 +34,8 @@ class DiplomeController extends BaseController
         $diplome->setDepartement($this->dataUserSession->getDepartement());
         $form = $this->createForm(DiplomeType::class, $diplome, [
             'attr' => [
-                'data-provide' => 'validation'
-            ]
+                'data-provide' => 'validation',
+            ],
         ]);
         $form->handleRequest($request);
 
@@ -57,9 +55,6 @@ class DiplomeController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_diplome_show", methods="GET")
-     * @param Diplome $diplome
-     *
-     * @return Response
      */
     public function show(Diplome $diplome): Response
     {
@@ -68,18 +63,15 @@ class DiplomeController extends BaseController
 
     /**
      * @Route("/{id}/edit", name="administration_diplome_edit", methods="GET|POST")
-     * @param Request $request
-     * @param Diplome $diplome
      *
-     * @return Response
      * @throws LogicException
      */
     public function edit(Request $request, Diplome $diplome): Response
     {
         $form = $this->createForm(DiplomeType::class, $diplome, [
             'attr' => [
-                'data-provide' => 'validation'
-            ]
+                'data-provide' => 'validation',
+            ],
         ]);
         $form->handleRequest($request);
 
@@ -98,9 +90,6 @@ class DiplomeController extends BaseController
 
     /**
      * @Route("/{id}/duplicate", name="administration_diplome_duplicate", methods="GET|POST")
-     * @param Diplome $diplome
-     *
-     * @return Response
      */
     public function duplicate(Diplome $diplome): Response
     {
@@ -115,20 +104,16 @@ class DiplomeController extends BaseController
 
     /**
      * @Route("/{id}", name="administration_diplome_delete", methods="DELETE")
-     * @param Request $request
-     * @param Diplome $diplome
-     *
-     * @return Response
      */
     public function delete(Request $request, Diplome $diplome): Response
     {
         $id = $diplome->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token')) &&
-            count($diplome->getAnnees()) === 0 &&
-            count($diplome->getSemestres()) === 0 &&
-            count($diplome->getPpns()) === 0 &&
-            count($diplome->getHrs()) === 0 &&
-            count($diplome->getApcComptences()) === 0) {
+            0 === \count($diplome->getAnnees()) &&
+            0 === \count($diplome->getSemestres()) &&
+            0 === \count($diplome->getPpns()) &&
+            0 === \count($diplome->getHrs()) &&
+            0 === \count($diplome->getApcComptences())) {
             $this->entityManager->remove($diplome);
             $this->entityManager->flush();
             $this->addFlashBag(

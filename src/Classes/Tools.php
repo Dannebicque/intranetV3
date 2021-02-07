@@ -1,15 +1,14 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Tools.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 08/01/2021 10:54
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Tools.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
-/**
- * Created by PhpStorm.
- * User: davidannebicque
- * Date: 08/07/2018
- * Time: 11:54
+/*
+ * Pull your hearder here, for exemple, Licence header.
  */
 
 namespace App\Classes;
@@ -24,12 +23,11 @@ abstract class Tools
     /**
      * @param $date
      *
-     * @return DateTime
      * @throws Exception
      */
     public static function convertDateToObject($date): DateTime
     {
-        if (strpos($date, '/') === false) {
+        if (false === mb_strpos($date, '/')) {
             return Carbon::createFromFormat('Y-m-d', $date);
         }
 
@@ -39,7 +37,6 @@ abstract class Tools
     /**
      * @param $heure
      *
-     * @return DateTime
      * @throws Exception
      */
     public static function convertTimeToObject($heure): DateTime
@@ -50,7 +47,7 @@ abstract class Tools
     public static function convertToFloat($note)
     {
         $note = trim($note);
-        if ($note === '' || $note === null) {
+        if ('' === $note || null === $note) {
             $note = 0;
         }
 
@@ -59,26 +56,26 @@ abstract class Tools
 
     public static function convertToBool($texte): bool
     {
-        return $texte === 'true';
+        return 'true' === $texte;
     }
 
     public static function telFormat($number)
     {
         str_replace(['.', '-', ' '], '', $number);
 
-        if (strpos($number, '33') === 0) {
-            $number = '0' . substr($number, 2, strlen($number));
+        if (0 === mb_strpos($number, '33')) {
+            $number = '0' . mb_substr($number, 2, mb_strlen($number));
         }
 
-        if (strpos($number, '+33') === 0) {
-            $number = '0' . substr($number, 3, strlen($number));
+        if (0 === mb_strpos($number, '+33')) {
+            $number = '0' . mb_substr($number, 3, mb_strlen($number));
         }
 
-        if (strlen($number) === 9) {
+        if (9 === mb_strlen($number)) {
             $number = '0' . $number;
         }
 
-        if (strlen($number) === 10) {
+        if (10 === mb_strlen($number)) {
             $str = chunk_split($number, 2, ' ');
         } else {
             $str = str_replace('.', ' ', $number);
@@ -89,10 +86,10 @@ abstract class Tools
 
     public static function supprimeAccent(string $texte): string
     {
-        $search = explode(",",
-            "À,Á,Â,à,Ä,Å,à,á,â,à,ä,å,Ò,Ó,Ô,Õ,Ö,Ø,ò,ó,ô,õ,ö,ø,È,É,Ê,Ë,è,é,ê,ë,Ç,ç,Ì,Í,Î,Ï,ì,í,î,ï,Ù,Ú,Û,Ü,ù,ú,û,ü,ÿ,Ñ,ñ");
-        $replace = explode(",",
-            "a,a,a,a,a,a,a,a,a,a,a,a,o,o,o,o,o,o,o,o,o,o,o,o,e,e,e,e,e,e,e,e,c,c,i,i,i,i,i,i,i,i,u,u,u,u,u,u,u,u,y,n,n");
+        $search = explode(',',
+            'À,Á,Â,à,Ä,Å,à,á,â,à,ä,å,Ò,Ó,Ô,Õ,Ö,Ø,ò,ó,ô,õ,ö,ø,È,É,Ê,Ë,è,é,ê,ë,Ç,ç,Ì,Í,Î,Ï,ì,í,î,ï,Ù,Ú,Û,Ü,ù,ú,û,ü,ÿ,Ñ,ñ');
+        $replace = explode(',',
+            'a,a,a,a,a,a,a,a,a,a,a,a,o,o,o,o,o,o,o,o,o,o,o,o,e,e,e,e,e,e,e,e,c,c,i,i,i,i,i,i,i,i,u,u,u,u,u,u,u,u,y,n,n');
 
         return str_replace($search, $replace, $texte);
     }
@@ -105,7 +102,7 @@ abstract class Tools
         $texte = str_replace($search, $replace, $texte);
 
         /* Lowercase all the characters */
-        $texte = strtolower($texte);
+        $texte = mb_strtolower($texte);
 
         /* Avoid whitespace at the beginning and the ending */
         $texte = trim($texte);
@@ -120,7 +117,7 @@ abstract class Tools
 
     public static function personnaliseTexte($texte, $config)
     {
-        if (is_array($config)) {
+        if (\is_array($config)) {
             foreach ($config as $key => $elt) {
                 $texte = str_replace('{{' . $key . '}}', $elt, $texte);
             }
@@ -131,7 +128,7 @@ abstract class Tools
 
     public static function convertDateHeureToObject(string $dateString, string $heureString): Carbon
     {
-        if (strpos($dateString, '/') === false) {
+        if (false === mb_strpos($dateString, '/')) {
             $date = Carbon::createFromFormat('Y-m-d', trim($dateString));
         } else {
             $date = Carbon::createFromFormat('d/m/Y', trim($dateString));
@@ -145,7 +142,7 @@ abstract class Tools
     {
         $t = explode('_', $name);
         $name = $t[0];
-        $name[0] = chr(ord($name[0]) - 32);
+        $name[0] = \chr(\ord($name[0]) - 32);
 
         $method = 'set' . $name;
         if (method_exists($obj, $method)) {
@@ -155,7 +152,6 @@ abstract class Tools
 
     public static function checkDirectoryExist(string $dir)
     {
-
         if (!is_dir($dir) && !mkdir($dir)) {
             throw new RuntimeException(sprintf('Directory "%s" was not created', $dir));
         }
@@ -166,11 +162,10 @@ abstract class Tools
     public static function convertToInt($int)
     {
         $int = trim($int);
-        if ($int === '' || $int === null) {
+        if ('' === $int || null === $int) {
             $int = 0;
         }
 
         return $int;
-
     }
 }

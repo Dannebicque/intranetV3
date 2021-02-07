@@ -1,9 +1,15 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Configuration.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 24/07/2020 09:15
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Configuration.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:10
+ */
+
+/*
+ * Pull your hearder here, for exemple, Licence header.
+ */
 
 namespace App\Classes;
 
@@ -25,7 +31,7 @@ class Configuration
 
     public function get($name): string
     {
-        if (count($this->settings) === 0) {
+        if (0 === \count($this->settings)) {
             $this->getAllSettings();
         }
 

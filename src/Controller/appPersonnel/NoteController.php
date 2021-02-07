@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/NoteController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 12/12/2020 14:31
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/NoteController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller\appPersonnel;
 
@@ -27,8 +29,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class NotesController
- * @package App\Controller
+ * Class NotesController.
+ *
  * @Route("/application/personnel/note")
  *
  * @IsGranted("ROLE_PERMANENT")
@@ -37,12 +39,8 @@ class NoteController extends BaseController
 {
     /**
      * @Route("/{matiere}/{index}", name="application_personnel_note_index", requirements={"matiere"="\d+"})
-     * @param MyEvaluations $myEvaluations
-     * @param Matiere       $matiere
      *
-     * @param int           $index
-     *
-     * @return Response
+     * @param int $index
      */
     public function index(MyEvaluations $myEvaluations, Matiere $matiere, $index = 0): Response
     {
@@ -53,7 +51,7 @@ class NoteController extends BaseController
             return $this->render('appPersonnel/note/index.html.twig', [
                 'matiere'     => $matiere,
                 'evaluations' => $myEvaluations,
-                'indexEval'   => $index
+                'indexEval'   => $index,
             ]);
         }
 
@@ -62,15 +60,14 @@ class NoteController extends BaseController
 
     /**
      * @Route("/saisie/etape-1/{matiere}", name="application_personnel_note_saisie", requirements={"matiere"="\d+"})
-     * @param Request $request
-     * @param Matiere $matiere
      *
      * @return RedirectResponse|Response
      * @throws Exception
+     *
      */
     public function saisie(Request $request, Matiere $matiere)
     {
-        if ($matiere !== null && $matiere->getUe() !== null) {
+        if (null !== $matiere && null !== $matiere->getUe()) {
             $evaluation = new Evaluation($this->getConnectedUser(), $matiere, $this->dataUserSession->getDepartement());
             $form = $this->createForm(
                 EvaluationType::class,
@@ -83,8 +80,8 @@ class NoteController extends BaseController
                     'autorise'          => true,
                     'locale'            => $request->getLocale(),
                     'attr'              => [
-                        'data-provide' => 'validation'
-                    ]
+                        'data-provide' => 'validation',
+                    ],
                 ]
             );
 
@@ -104,7 +101,7 @@ class NoteController extends BaseController
 
             return $this->render('appPersonnel/note/saisie.html.twig', [
                 'matiere' => $matiere,
-                'form'    => $form->createView()
+                'form'    => $form->createView(),
             ]);
         }
 
@@ -114,13 +111,8 @@ class NoteController extends BaseController
     /**
      * @Route("/saisie/etape-2/{uuid}", name="application_personnel_note_saisie_2",
      *                                        requirements={"matiere"="\d+"})
-     * @param Request      $request
-     * @param MyEvaluation $myEvaluation
-     * @param Evaluation   $evaluation
      *
-     * @return Response
      * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
-     *
      */
     public function saisieNotes(Request $request, MyEvaluation $myEvaluation, Evaluation $evaluation): Response
     {
@@ -129,19 +121,14 @@ class NoteController extends BaseController
         return $this->render('appPersonnel/note/saisie_2.html.twig', [
             'evaluation' => $evaluation,
             'notes'      => $notes,
-            'autorise'   => true
+            'autorise'   => true,
         ]);
     }
 
     /**
-     * @param EtudiantNotes      $etudiantNotes
-     * @param EtudiantRepository $etudiantRepository
-     * @param Request            $request
-     *
-     * @param Evaluation         $evaluation
+     * @throws Exception
      *
      * @return RedirectResponse|Response
-     * @throws Exception
      * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
      *
      * @Route("/sauvegarde/{uuid}",
@@ -159,7 +146,7 @@ class NoteController extends BaseController
 
         foreach ($tnote as $iValue) {
             $etudiant = $etudiantRepository->find($iValue['id']);
-            if ($etudiant !== null) {
+            if (null !== $etudiant) {
                 $etudiantNotes->setEtudiant($etudiant);
                 $etudiantNotes->addNote($evaluation, $iValue, $this->getConnectedUser());
             }
@@ -170,12 +157,7 @@ class NoteController extends BaseController
 
     /**
      * @Route("/import/{evaluation}", name="application_personnel_note_import", requirements={"evaluation"="\d+"})
-     * @param Request      $request
-     * @param MyUpload     $myUpload
-     * @param MyEvaluation $myEvaluation
-     * @param Evaluation   $evaluation
      *
-     * @return Response
      * @throws Exception
      */
     public function import(
@@ -195,17 +177,12 @@ class NoteController extends BaseController
             'evaluation' => $evaluation,
             'notes'      => $notes,
             'import'     => true,
-            'autorise'   => true
+            'autorise'   => true,
         ]);
     }
 
     /**
      * @Route("/modele-import/{evaluation}", name="application_personnel_note_import_modele", methods="GET")
-     * @param MyExport   $myExport
-     *
-     * @param Evaluation $evaluation
-     *
-     * @return Response|null
      */
     public function modeleImport(MyExport $myExport, Evaluation $evaluation): ?Response
     {

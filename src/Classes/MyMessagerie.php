@@ -1,12 +1,17 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyMessagerie.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 17/01/2021 09:48
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyMessagerie.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
+/*
+ * Pull your hearder here, for exemple, Licence header.
+ */
 
 namespace App\Classes;
-
 
 use App\Entity\Departement;
 use App\Entity\Etudiant;
@@ -26,7 +31,6 @@ use Symfony\Component\Mailer\MailerInterface;
 
 class MyMessagerie
 {
-
     private Configuration $configuration;
     private MailerInterface $myMailer;
 
@@ -58,14 +62,6 @@ class MyMessagerie
 
     /**
      * MyMessagerie constructor.
-     *
-     * @param MailerInterface        $mailer
-     * @param EntityManagerInterface $entityManager
-     * @param GroupeRepository       $groupeRepository
-     * @param EtudiantRepository     $etudiantRepository
-     * @param PersonnelRepository    $personnelRepository
-     * @param Configuration          $configuration
-     * @param ParameterBagInterface  $parameterBag
      */
     public function __construct(
         MailerInterface $mailer,
@@ -85,11 +81,8 @@ class MyMessagerie
         $this->dir = $parameterBag->get('kernel.project_dir') . '/public/upload/pj/';
     }
 
-
     /**
-     * @param             $destinataires
-     *
-     * @param Departement $departement
+     * @param $destinataires
      *
      * @throws TransportExceptionInterface
      */
@@ -102,13 +95,13 @@ class MyMessagerie
         $this->typeDestinataires = '';
 
         foreach ($destinataires as $destinataire) {
-            if ($destinataire === Personnel::PERMANENT) {
+            if (Personnel::PERMANENT === $destinataire) {
                 $temp = $this->personnelRepository->findByType(Personnel::PERMANENT, $departement);
                 foreach ($temp as $dest) {
                     $listeDestinataires[] = $dest;
                 }
                 $this->typeDestinataires .= Personnel::PERMANENT . ', ';
-            } elseif ($destinataire === Personnel::VACATAIRE) {
+            } elseif (Personnel::VACATAIRE === $destinataire) {
                 $temp = $this->personnelRepository->findByType(Personnel::VACATAIRE, $departement);
                 foreach ($temp as $dest) {
                     $listeDestinataires[] = $dest;
@@ -120,8 +113,7 @@ class MyMessagerie
         }
         foreach ($listeDestinataires as $destinataire) {
             //foreach ($tdestinataire as $destinataire) {
-            if ($destinataire !== null) {
-
+            if (null !== $destinataire) {
                 $message = (new TemplatedEmail())
                     ->subject($this->sujet)
                     ->from($this->expediteur->getMailuniv())
@@ -130,18 +122,18 @@ class MyMessagerie
 
                 //récupération des fichiers uploadés
                 foreach ($this->pjs as $file) {
-                        $message->attachFromPath($file);
-                    }
-
-                    foreach ($destinataire->getMails() as $mail) {
-                        $message->addTo($mail);
-                    }
-
-                    $this->saveDestinatairePersonnelDatabase($mess, $destinataire);
-                    $this->nbEtudiants++;
-                    $this->myMailer->send($message);
-                    $this->nbMessagesEnvoyes++;
+                    $message->attachFromPath($file);
                 }
+
+                foreach ($destinataire->getMails() as $mail) {
+                    $message->addTo($mail);
+                }
+
+                $this->saveDestinatairePersonnelDatabase($mess, $destinataire);
+                ++$this->nbEtudiants;
+                $this->myMailer->send($message);
+                ++$this->nbMessagesEnvoyes;
+            }
             //}
         }
         $mess->setTypeDestinataires($this->typeDestinataires);
@@ -153,7 +145,6 @@ class MyMessagerie
      */
     public function sendToEtudiants(): void
     {
-
         //sauvegarde en BDD
         $mess = $this->saveMessageDatabase('E');
 
@@ -174,13 +165,12 @@ class MyMessagerie
             }
 
             $this->saveDestinataireEtudiantDatabase($mess, $etu);
-            $this->nbEtudiants++;
+            ++$this->nbEtudiants;
             $this->myMailer->send($message);
-            $this->nbMessagesEnvoyes++;
+            ++$this->nbMessagesEnvoyes;
         }
 
         $this->entityManager->flush();
-
     }
 
     public function setMessage($sujet, $message, $expediteur, $pjs = null): void
@@ -192,10 +182,6 @@ class MyMessagerie
     }
 
     /**
-     * @param array       $copie
-     *
-     * @param Departement $departement
-     *
      * @throws TransportExceptionInterface
      */
     public function setCopie(array $copie, Departement $departement): void
@@ -218,18 +204,15 @@ class MyMessagerie
                 'message'    => $this->message,
                 'expediteur' => $this->expediteur,
                 'nb'         => $this->nbMessagesEnvoyes,
-                'nbetudiant' => $this->nbEtudiants
+                'nbetudiant' => $this->nbEtudiants,
             ]);
 
         $this->myMailer->send($email);
-
     }
 
     /**
-     * @param                  $destinataires
-     * @param                  $typeDestinataire
-     *
-     * @param Departement|null $departement
+     * @param $destinataires
+     * @param $typeDestinataire
      *
      * @throws TransportExceptionInterface
      */
@@ -240,7 +223,7 @@ class MyMessagerie
         $this->nbEtudiants = 0;
         switch ($typeDestinataire) {
             case 'p':
-                if ($departement !== null) {
+                if (null !== $departement) {
                     $this->sendToPersonnels($destinataires, $departement);
                 }
                 break;
@@ -281,13 +264,12 @@ class MyMessagerie
         foreach ($this->pjs as $file) {
             $fichier = new MessagePieceJointe();
             $ext = explode('/', $file);
-            $fichier->setFichier($ext[count($ext) - 1]);
+            $fichier->setFichier($ext[\count($ext) - 1]);
             $ext = explode('.', $file);
-            $fichier->setExtension($ext[count($ext) - 1]);
+            $fichier->setExtension($ext[\count($ext) - 1]);
             $fichier->setMessage($mess);
             $this->entityManager->persist($fichier);
         }
-
 
         $this->entityManager->flush();
         $this->id = $mess->getId();
@@ -321,7 +303,7 @@ class MyMessagerie
     {
         //récupère tous les étudiants d'un ensemble de groupe
         $groupe = $this->groupeRepository->find($codeGroupe);
-        if ($groupe !== null) {
+        if (null !== $groupe) {
             $this->etudiants = $groupe->getEtudiants();
         }
     }
@@ -334,7 +316,7 @@ class MyMessagerie
         $this->etudiants = [];
         foreach ($destinataires as $destinatiare) {
             $etudiant = $this->etudiantRepository->find($destinatiare);
-            if ($etudiant !== null) {
+            if (null !== $etudiant) {
                 $this->etudiants[] = $etudiant;
             }
         }
@@ -350,9 +332,6 @@ class MyMessagerie
         $this->saveMessageDatabase();
     }
 
-    /**
-     * @return mixed
-     */
     public function getId()
     {
         return $this->id;
@@ -362,5 +341,4 @@ class MyMessagerie
     {
         $this->pjs[] = $file;
     }
-
 }

@@ -1,9 +1,15 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Covid/MyExportPresence.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 03/02/2021 16:43
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Covid/MyExportPresence.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
+/*
+ * Pull your hearder here, for exemple, Licence header.
+ */
 
 namespace App\Classes\Covid;
 
@@ -34,11 +40,6 @@ class MyExportPresence
 
     /**
      * MyExport constructor.
-     *
-     * @param MyExcelWriter   $myExcelWriter
-     * @param MyPDF           $myPdf
-     * @param KernelInterface $kernel
-     * @param MailerFromTwig  $myMailer
      */
     public function __construct(
         MyExcelWriter $myExcelWriter,
@@ -46,7 +47,6 @@ class MyExportPresence
         MyPdf $myPdf,
         KernelInterface $kernel
     ) {
-
         $this->myMailer = $myMailer;
         $this->myExcelWriter = $myExcelWriter;
         $this->myPdf = $myPdf;
@@ -54,10 +54,7 @@ class MyExportPresence
     }
 
     /**
-     *
      * @param CovidAttestationPersonnel[] $presences
-     *
-     * @return null|StreamedResponse
      */
     public function genereFichier(
         $presences
@@ -85,30 +82,29 @@ class MyExportPresence
 
         $ligne = 2;
 
-
         foreach ($presences as $presence) {
             foreach ($presence->getCovidCreneauPresences() as $creneau) {
                 $t = [
                     $presence->getId(),
-                    $presence->getCreated() !== null ? $presence->getCreated()->format('d/m/Y H:i') : '-',
-                    $presence->getPersonnel() !== null ? $presence->getPersonnel()->getCivilite() : '',
-                    $presence->getPersonnel() !== null ? $presence->getPersonnel()->getNom() : '',
-                    $presence->getPersonnel() !== null ? $presence->getPersonnel()->getPrenom() : '',
-                    $presence->getPersonnel() !== null ? $presence->getPersonnel()->getMailUniv() : '',
+                    null !== $presence->getCreated() ? $presence->getCreated()->format('d/m/Y H:i') : '-',
+                    null !== $presence->getPersonnel() ? $presence->getPersonnel()->getCivilite() : '',
+                    null !== $presence->getPersonnel() ? $presence->getPersonnel()->getNom() : '',
+                    null !== $presence->getPersonnel() ? $presence->getPersonnel()->getPrenom() : '',
+                    null !== $presence->getPersonnel() ? $presence->getPersonnel()->getMailUniv() : '',
                     $presence->getMotifLong(),
                     $presence->getDiplome()->getLibelle(),
                     $presence->moyenLong(),
                     $presence->getValidationDepartementDisplay(),
-                    $presence->getDateValidationDepartement() !== null ? $presence->getDateValidationDepartement()->format('d/m/Y H:i') : '-',
+                    null !== $presence->getDateValidationDepartement() ? $presence->getDateValidationDepartement()->format('d/m/Y H:i') : '-',
                     $presence->getValidationDirectionDisplay(),
-                    $presence->getDateValidationDirection() !== null ? $presence->getDateValidationDirection()->format('d/m/Y H:i') : '-',
-                    $creneau->getDate() !== null ? $creneau->getDate()->format('d/m/Y') : '-',
-                    $creneau->getHeureArrivee() !== null ? $creneau->getHeureArrivee()->format('H:i') : '-',
-                    $creneau->getHeureDepart() !== null ? $creneau->getHeureDepart()->format('H:i') : '-',
+                    null !== $presence->getDateValidationDirection() ? $presence->getDateValidationDirection()->format('d/m/Y H:i') : '-',
+                    null !== $creneau->getDate() ? $creneau->getDate()->format('d/m/Y') : '-',
+                    null !== $creneau->getHeureArrivee() ? $creneau->getHeureArrivee()->format('H:i') : '-',
+                    null !== $creneau->getHeureDepart() ? $creneau->getHeureDepart()->format('H:i') : '-',
                 ];
 
                 $this->myExcelWriter->ecritLigne($t, 1, $ligne);
-                $ligne++;
+                ++$ligne;
             }
         }
         $this->myExcelWriter->getColumnsAutoSize('A', 'Z');
@@ -122,50 +118,46 @@ class MyExportPresence
             200,
             [
                 'Content-Type'        => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                'Content-Disposition' => 'attachment;filename="presence' . $date->format('d-m-Y') . '.xlsx"'
+                'Content-Disposition' => 'attachment;filename="presence' . $date->format('d-m-Y') . '.xlsx"',
             ]
         );
     }
 
     /**
-     * @param CovidAttestationPersonnel $covidAttestationPersonnel
-     * @param                           $sortie
+     * @param $sortie
      *
      * @return bool|PdfResponse|string
-     * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
+     *
+     * @throws LoaderError
      */
     public function genereAttestationPdf(CovidAttestationPersonnel $covidAttestationPersonnel, $sortie)
     {
-        if ($sortie === 'force') {
+        if ('force' === $sortie) {
             return $this->myPdf::generePdf(
                 'pdf/covid/autorisationPersonnel.html.twig',
                 [
-                    'covidAttestationPersonnel' => $covidAttestationPersonnel
+                    'covidAttestationPersonnel' => $covidAttestationPersonnel,
                 ],
                 'attestation-' . $covidAttestationPersonnel->getPersonnel()->getNom()
             );
-        } else {
-            $this->myPdf::genereAndSavePdf(
-                'pdf/covid/autorisationPersonnel.html.twig',
-                [
-                    'covidAttestationPersonnel' => $covidAttestationPersonnel
-                ],
-                'attestation-' . $covidAttestationPersonnel->getCreated()->format('dmYHis'),
-                $this->dir . 'covid/attestation/'
-            );
-
-            return $this->dir . 'covid/attestation/' . 'attestation-' . $covidAttestationPersonnel->getCreated()->format('dmYHis') . '.pdf';
         }
+        $this->myPdf::genereAndSavePdf(
+            'pdf/covid/autorisationPersonnel.html.twig',
+            [
+                'covidAttestationPersonnel' => $covidAttestationPersonnel,
+            ],
+            'attestation-' . $covidAttestationPersonnel->getCreated()->format('dmYHis'),
+            $this->dir . 'covid/attestation/'
+        );
+
+        return $this->dir . 'covid/attestation/' . 'attestation-' . $covidAttestationPersonnel->getCreated()->format('dmYHis') . '.pdf';
 
         return true;
     }
 
     /**
-     * @param CovidAttestationEtudiant $covidAttestationEtudiant
-     * @param Etudiant                 $etudiant
-     *
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -173,12 +165,11 @@ class MyExportPresence
     public function genereConvocationPdf(
         CovidAttestationEtudiant $covidAttestationEtudiant,
         Etudiant $etudiant
-    ): void
-    {
-        if ($covidAttestationEtudiant->getDatePresence() !== null) {
+    ): void {
+        if (null !== $covidAttestationEtudiant->getDatePresence()) {
             $date = $covidAttestationEtudiant->getDatePresence();
         } else {
-            if ($covidAttestationEtudiant->getDateDebut() !== null) {
+            if (null !== $covidAttestationEtudiant->getDateDebut()) {
                 $date = $covidAttestationEtudiant->getDateDebut();
             } else {
                 $date = 'err-' . md5((new DateTime('now'))->format('dmYHis'));
@@ -188,16 +179,13 @@ class MyExportPresence
             'pdf/covid/autorisationEtudiant.html.twig',
             [
                 'covidAttestationEtudiant' => $covidAttestationEtudiant,
-                'etudiant'                 => $etudiant
+                'etudiant'                 => $etudiant,
             ],
             'convocation-covid-' . $date->format('d-m-Y') . '-' . $etudiant->getNumEtudiant()
         );
     }
 
     /**
-     * @param CovidAttestationEtudiant $covidAttestationEtudiant
-     * @param Etudiant                 $etudiant
-     *
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -205,13 +193,12 @@ class MyExportPresence
      */
     public function sendOneConvocation(CovidAttestationEtudiant $covidAttestationEtudiant, Etudiant $etudiant): void
     {
-
         $name = 'convocation-covid-' . $covidAttestationEtudiant->getDateDebut()->format('d-m-Y') . '-' . $etudiant->getNumEtudiant();
         $this->myPdf::genereAndSavePdf(
             'pdf/covid/autorisationEtudiant.html.twig',
             [
                 'covidAttestationEtudiant' => $covidAttestationEtudiant,
-                'etudiant'                 => $etudiant
+                'etudiant'                 => $etudiant,
             ],
             $name,
             $this->dir . 'covid/convocations/'
@@ -220,7 +207,7 @@ class MyExportPresence
         $this->myMailer->initEmail();
         $this->myMailer->setTemplate('mails/covid/convocationEtudiant.html.twig', [
             'covidAttestationEtudiant' => $covidAttestationEtudiant,
-            'etudiant'                 => $etudiant
+            'etudiant'                 => $etudiant,
         ]);
 
         //joindre le PDF
@@ -231,14 +218,12 @@ class MyExportPresence
             'Attestation de présence pour la période du ' . $covidAttestationEtudiant->getDateDebut()->format('d/m/Y') . '  au ' . $covidAttestationEtudiant->getDateFin()->format('d/m/Y'),
             [
                 'replyTo' => [$covidAttestationEtudiant->getDiplome()->getAssistantDiplome()->getMailUniv()],
-                'from'    => [$covidAttestationEtudiant->getDiplome()->getAssistantDiplome()->getMailUniv()]
+                'from'    => [$covidAttestationEtudiant->getDiplome()->getAssistantDiplome()->getMailUniv()],
             ]
         );
     }
 
     /**
-     * @param CovidAttestationEtudiant $covidAttestationEtudiant
-     *
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError|TransportExceptionInterface
@@ -278,8 +263,8 @@ class MyExportPresence
             foreach ($presence->getGroupes() as $groupe) {
                 foreach ($groupe->getEtudiants() as $etudiant) {
                     $t = [
-                        $presence->getDateDebut() !== null ? $presence->getDateDebut()->format('d/m/Y H:i') : '-',
-                        $presence->getDateFin() !== null ? $presence->getDateFin()->format('d/m/Y H:i') : '-',
+                        null !== $presence->getDateDebut() ? $presence->getDateDebut()->format('d/m/Y H:i') : '-',
+                        null !== $presence->getDateFin() ? $presence->getDateFin()->format('d/m/Y H:i') : '-',
                         $etudiant->getCiviliteLong(),
                         $etudiant->getNom(),
                         $etudiant->getPrenom(),
@@ -290,7 +275,7 @@ class MyExportPresence
                     ];
 
                     $this->myExcelWriter->ecritLigne($t, 1, $ligne);
-                    $ligne++;
+                    ++$ligne;
                 }
             }
         }
@@ -305,7 +290,7 @@ class MyExportPresence
             200,
             [
                 'Content-Type'        => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                'Content-Disposition' => 'attachment;filename="presence-etudiant-' . $date->format('d-m-Y') . '.xlsx"'
+                'Content-Disposition' => 'attachment;filename="presence-etudiant-' . $date->format('d-m-Y') . '.xlsx"',
             ]
         );
     }

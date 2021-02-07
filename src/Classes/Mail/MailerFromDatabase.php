@@ -1,9 +1,15 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Mail/MailerFromDatabase.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 12/12/2020 14:31
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Mail/MailerFromDatabase.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:10
+ */
+
+/*
+ * Pull your hearder here, for exemple, Licence header.
+ */
 
 namespace App\Classes\Mail;
 
@@ -25,11 +31,6 @@ class MailerFromDatabase extends BaseMailer
 
     /**
      * MailerFromDatabase constructor.
-     *
-     * @param Environment         $twig
-     * @param MailerInterface     $mailer
-     * @param TranslatorInterface $translator
-     * @param Configuration       $configuration
      */
     public function __construct(
         Environment $twig,
@@ -47,9 +48,6 @@ class MailerFromDatabase extends BaseMailer
     }
 
     /**
-     * @param TwigTemplate $templateName
-     * @param array        $array
-     *
      * @throws LoaderError
      * @throws SyntaxError
      */
@@ -60,9 +58,7 @@ class MailerFromDatabase extends BaseMailer
     }
 
     /**
-     * @param array $to
-     * @param       $subject
-     * @param array $options
+     * @param $subject
      *
      * @throws TransportExceptionInterface
      */

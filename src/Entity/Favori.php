@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Favori.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 05/07/2020 08:09
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Favori.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:49
+ */
 
 namespace App\Entity;
 
@@ -54,23 +56,17 @@ class Favori
         $this->dateAjout = new DateTime('now');
     }
 
-
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * @return Etudiant|null
-     */
     public function getEtudiantDemandeur(): ?Etudiant
     {
         return $this->etudiantDemandeur;
     }
 
     /**
-     * @param Etudiant|null $etudiantDemandeur
-     *
      * @return Favori
      */
     public function setEtudiantDemandeur(?Etudiant $etudiantDemandeur): self
@@ -80,17 +76,12 @@ class Favori
         return $this;
     }
 
-    /**
-     * @return Etudiant|null
-     */
     public function getEtudiantDemande(): ?Etudiant
     {
         return $this->etudiantDemande;
     }
 
     /**
-     * @param Etudiant|null $etudiantDemande
-     *
      * @return Favori
      */
     public function setEtudiantDemande(?Etudiant $etudiantDemande): self
@@ -100,17 +91,12 @@ class Favori
         return $this;
     }
 
-    /**
-     * @return DateTimeInterface|null
-     */
     public function getDateAjout(): ?DateTimeInterface
     {
         return $this->dateAjout;
     }
 
     /**
-     * @param DateTimeInterface $dateAjout
-     *
      * @return Favori
      */
     public function setDateAjout(DateTimeInterface $dateAjout): self

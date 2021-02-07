@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/AbsenceJustificatif.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 13/10/2020 06:34
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/AbsenceJustificatif.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Entity;
 
@@ -26,17 +28,16 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  */
 class AbsenceJustificatif extends BaseEntity implements Serializable
 {
+    use UuidTrait;
     public const ACCEPTE = 'A';
     public const REFUSE = 'R';
     public const DEPOSE = 'D';
 
-    Public const ETATLONG = [
+    public const ETATLONG = [
         'A' => 'Accepté',
         'R' => 'Refusé',
-        'D' => 'Déposé'
+        'D' => 'Déposé',
     ];
-
-    use UuidTrait;
 
     /**
      * @ORM\Column(type="datetime")
@@ -68,7 +69,6 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
      */
     private $etudiant;
 
-
     /**
      * @var string
      *
@@ -96,8 +96,6 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
     /**
      * AbsenceJustificatif constructor.
      *
-     * @param Etudiant $etudiant
-     *
      * @throws Exception
      */
     public function __construct(Etudiant $etudiant)
@@ -108,7 +106,7 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
         $this->heureFin = new DateTime('18:30');
         $this->etat = 'D';
         $this->setUuid(Uuid::uuid4());
-        $this->anneeUniversitaire = $etudiant !== null ? $etudiant->getAnneeUniversitaire() : null;
+        $this->anneeUniversitaire = null !== $etudiant ? $etudiant->getAnneeUniversitaire() : null;
         $this->setEtudiant($etudiant);
     }
 
@@ -178,8 +176,6 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
     }
 
     /**
-     * @param File|null $document
-     *
      * @throws Exception
      */
     public function setFichierFile(?File $document = null): void
@@ -191,9 +187,6 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
         }
     }
 
-    /**
-     * @return null|File
-     */
     public function getFichierFile(): ?File
     {
         return $this->fichierFile;
@@ -207,21 +200,17 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
         return $this->fichierName;
     }
 
-    /**
-     * @param string|null $fichierName
-     */
     public function setFichierName(?string $fichierName): void
     {
         $this->fichierName = $fichierName;
     }
-
 
     public function getEtatLong(): string
     {
         $tabEtat = [
             'A' => 'Accepté, absences justifiées',
             'R' => 'Refusé',
-            'D' => 'Déposé, en attente de validation'
+            'D' => 'Déposé, en attente de validation',
         ];
 
         return $tabEtat[$this->etat];
@@ -259,68 +248,43 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
     public function unserialize($serialized)
     {
         $this->uuid = unserialize($serialized, ['allowed_classes' => false]);
-
     }
 
-    /**
-     * @return mixed
-     */
     public function getDateDebut()
     {
         return $this->dateDebut;
     }
 
-    /**
-     * @return mixed
-     */
     public function getHeureDebut()
     {
         return $this->heureDebut;
     }
 
-    /**
-     * @return mixed
-     */
     public function getDateFin()
     {
         return $this->dateFin;
     }
 
-    /**
-     * @return mixed
-     */
     public function getHeureFin()
     {
         return $this->heureFin;
     }
 
-    /**
-     * @param mixed $dateDebut
-     */
     public function setDateDebut($dateDebut): void
     {
         $this->dateDebut = $dateDebut;
     }
 
-    /**
-     * @param mixed $heureDebut
-     */
     public function setHeureDebut($heureDebut): void
     {
         $this->heureDebut = $heureDebut;
     }
 
-    /**
-     * @param mixed $dateFin
-     */
     public function setDateFin($dateFin): void
     {
         $this->dateFin = $dateFin;
     }
 
-    /**
-     * @param mixed $heureFin
-     */
     public function setHeureFin($heureFin): void
     {
         $this->heureFin = $heureFin;
@@ -341,6 +305,4 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
         $this->setDateHeureFin(Carbon::createFromFormat('Y-m-d H:i',
             $this->getDateFin()->format('Y-m-d') . ' ' . $this->getHeureFin()->format('H:i')));
     }
-
-
 }

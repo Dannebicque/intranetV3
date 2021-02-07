@@ -1,12 +1,18 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/ComparePrevisionnel/ComparePrevisionnelPersonnel.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 13/09/2020 18:14
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/ComparePrevisionnel/ComparePrevisionnelPersonnel.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:05
+ */
+
+/*
+ * Pull your hearder here, for exemple, Licence header.
+ */
+
 
 namespace App\Classes\ComparePrevisionnel;
-
 
 use App\Entity\Departement;
 use App\Entity\Personnel;
@@ -46,7 +52,7 @@ class ComparePrevisionnelPersonnel extends ComparePrevisionnel
     {
         $this->personnels = $this->personnelRepository->findByDepartement($departement);
         $previsionnels = $this->previsionnelRepository->findByDepartement($departement, $annee);
-        if ($source === 'intranet') {
+        if ('intranet' === $source) {
             $planning = $this->edtPlanningRepository->findByDepartement($departement);
         }
         $t = [];
@@ -56,13 +62,13 @@ class ComparePrevisionnelPersonnel extends ComparePrevisionnel
             $t[$ens->getId()] = [];
         }
 
-        /** @var  $p Previsionnel */
+        /** @var $p Previsionnel */
         foreach ($previsionnels as $p) {
-            if ($p !== null &&
-                $p->getPersonnel() !== null &&
-                $p->getMatiere() !== null &&
-                array_key_exists($p->getPersonnel()->getId(), $t)) {
-                if (!array_key_exists($p->getMatiere()->getId(), $t[$p->getPersonnel()->getId()])) {
+            if (null !== $p &&
+                null !== $p->getPersonnel() &&
+                null !== $p->getMatiere() &&
+                \array_key_exists($p->getPersonnel()->getId(), $t)) {
+                if (!\array_key_exists($p->getMatiere()->getId(), $t[$p->getPersonnel()->getId()])) {
                     $ligne = $p->getPersonnel()->getId();
                     $colonne = $p->getMatiere()->getId();
                     $t[$ligne][$colonne]['matiere'] = $p->getMatiere();
@@ -72,7 +78,6 @@ class ComparePrevisionnelPersonnel extends ComparePrevisionnel
                     $t[$ligne][$colonne]['nbCMEDT'] = 0;
                     $t[$ligne][$colonne]['nbTDEDT'] = 0;
                     $t[$ligne][$colonne]['nbTPEDT'] = 0;
-
                 }
 
                 $t[$p->getPersonnel()->getId()][$p->getMatiere()->getId()]['nbCMPrevi'] += $p->getNbHCm();
@@ -82,10 +87,10 @@ class ComparePrevisionnelPersonnel extends ComparePrevisionnel
         }
 
         foreach ($planning as $pl) {
-            if ($pl->getMatiere() !== null &&
-                $pl->getIntervenant() !== null &&
-                array_key_exists($pl->getIntervenant()->getId(), $t)) {
-                if (!array_key_exists($pl->getMatiere()->getId(), $t[$pl->getIntervenant()->getId()])) {
+            if (null !== $pl->getMatiere() &&
+                null !== $pl->getIntervenant() &&
+                \array_key_exists($pl->getIntervenant()->getId(), $t)) {
+                if (!\array_key_exists($pl->getMatiere()->getId(), $t[$pl->getIntervenant()->getId()])) {
                     $t[$pl->getIntervenant()->getId()][$pl->getMatiere()->getId()]['matiere'] = $pl->getMatiere();
                     $t[$pl->getIntervenant()->getId()][$pl->getMatiere()->getId()]['nbCMPrevi'] = 0;
                     $t[$pl->getIntervenant()->getId()][$pl->getMatiere()->getId()]['nbTDPrevi'] = 0;
@@ -122,6 +127,4 @@ class ComparePrevisionnelPersonnel extends ComparePrevisionnel
     {
         return $this->personnels;
     }
-
-
 }

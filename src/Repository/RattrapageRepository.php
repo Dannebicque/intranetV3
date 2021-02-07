@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/RattrapageRepository.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 01/02/2021 16:02
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/RattrapageRepository.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Repository;
 
@@ -14,9 +16,9 @@ use App\Entity\Etudiant;
 use App\Entity\Rattrapage;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method Rattrapage|null find($id, $lockMode = null, $lockVersion = null)
@@ -28,8 +30,6 @@ class RattrapageRepository extends ServiceEntityRepository
 {
     /**
      * RattrapageRepository constructor.
-     *
-     * @param ManagerRegistry $registry
      */
     public function __construct(ManagerRegistry $registry)
     {
@@ -37,11 +37,7 @@ class RattrapageRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Semestre $semestre
-     *
-     * @param          $anneeUniversitaire
-     *
-     * @return mixed
+     * @param $anneeUniversitaire
      */
     public function findBySemestre(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire)
     {
@@ -57,11 +53,6 @@ class RattrapageRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    /**
-     * @param Etudiant $etudiant
-     *
-     * @return mixed
-     */
     public function findByEtudiant(Etudiant $etudiant)
     {
         return $this->createQueryBuilder('r')
@@ -74,17 +65,13 @@ class RattrapageRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Semestre $semestre
-     * @param int      $annee
-     *
-     * @return mixed
      * @throws NonUniqueResultException
      * @throws NoResultException
      */
     public function findBySemestreCount(Semestre $semestre, int $annee = 0)
     {
-        if ($annee === 0) {
-            $annee = $semestre->getAnneeUniversitaire() !== null ? $semestre->getAnneeUniversitaire()->getAnnee() : (int)date('Y');
+        if (0 === $annee) {
+            $annee = null !== $semestre->getAnneeUniversitaire() ? $semestre->getAnneeUniversitaire()->getAnnee() : (int)date('Y');
         }
 
         return $this->createQueryBuilder('r')
@@ -103,8 +90,7 @@ class RattrapageRepository extends ServiceEntityRepository
         Diplome $diplome,
         ?AnneeUniversitaire $anneeUniversitaire
     ) {
-
-        $annee = $anneeUniversitaire === null ? date('Y') : $anneeUniversitaire->getAnnee();
+        $annee = null === $anneeUniversitaire ? date('Y') : $anneeUniversitaire->getAnnee();
 
         return $this->createQueryBuilder('r')
             ->innerJoin(Etudiant::class, 'e', 'WITH', 'r.etudiant = e.id')

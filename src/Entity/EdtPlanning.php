@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/EdtPlanning.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 06/02/2021 23:47
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/EdtPlanning.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Entity;
 
@@ -50,7 +52,7 @@ class EdtPlanning
     /**
      * @ORM\Column(type="integer")
      */
-    private $semaine;//semaine réelle...
+    private $semaine; //semaine réelle...
 
     /**
      * @ORM\Column(type="boolean")
@@ -281,30 +283,24 @@ class EdtPlanning
             case 'td':
                 $tab = ['', 'AB', '', 'CD', '', 'EF', '', 'GH'];
 
-                return 'TD ' . $tab[$this->groupe];
+            return 'TD ' . $tab[$this->groupe];
             case 'TP':
             case 'tp':
-                return 'TP ' . chr($this->groupe + 64);
+            return 'TP ' . \chr($this->groupe + 64);
             default:
                 return '';
         }
     }
 
-    /**
-     * @return string
-     */
     public function getIntervenantEdt(): string
     {
-        if ($this->getIntervenant() !== null) {
+        if (null !== $this->getIntervenant()) {
             return $this->getIntervenant()->getPrenom()[0] . '. ' . $this->getIntervenant()->getNom();
         }
 
         return '*';
     }
 
-    /**
-     * @return string
-     */
     public function getDureeTexte(): string
     {
         $d = $this->fin - $this->debut;
@@ -327,20 +323,19 @@ class EdtPlanning
             '7h30',
             '8h00',
             '8h30',
-            '9h00'
+            '9h00',
         ];
 
         return $td[$d];
     }
 
-
     /**
-     * @return integer|double
+     * @return int|float
      */
     public function getDureeInt()
     {
         $d = $this->fin - $this->debut;
-        $td = array(0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5);
+        $td = [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5];
 
         return $td[$d];
     }
@@ -357,18 +352,14 @@ class EdtPlanning
         return $this;
     }
 
-
     public function getDate(): Carbon
     {
         return $this->date;
     }
 
-    /**
-     * @return string
-     */
     public function getDisplayIcal(): string
     {
-        if ($this->getMatiere() !== null) {
+        if (null !== $this->getMatiere()) {
             return $this->getMatiere()->getLibelle() . '(' . $this->getMatiere()->getCodeMatiere() . ') ' . $this->getDisplayGroupe();
         }
 
@@ -385,10 +376,10 @@ class EdtPlanning
             'salle'       => $this->getSalle(),
             'typecours'   => $this->getType(),
             'texte'       => $this->getTexte(),
-            'matiereId'   => $this->getMatiere() !== null ? $this->getMatiere()->getId() : null,
-            'personnelId' => $this->getIntervenant() !== null ? $this->getIntervenant()->getId() : null,
+            'matiereId'   => null !== $this->getMatiere() ? $this->getMatiere()->getId() : null,
+            'personnelId' => null !== $this->getIntervenant() ? $this->getIntervenant()->getId() : null,
             'groupe'      => $this->getGroupe(),
-            'groupeId'    => $this->getGroupe()
+            'groupeId'    => $this->getGroupe(),
         ];
     }
 

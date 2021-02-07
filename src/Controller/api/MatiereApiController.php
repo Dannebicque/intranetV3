@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/api/MatiereApiController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 08/08/2020 10:27
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/api/MatiereApiController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller\api;
 
@@ -25,8 +27,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class MatiereApiController
- * @package App\Controller
+ * Class MatiereApiController.
+ *
  * @Route("/api/matiere")
  */
 class MatiereApiController extends BaseController
@@ -36,8 +38,6 @@ class MatiereApiController extends BaseController
 
     /**
      * MatiereApiController constructor.
-     *
-     * @param MatiereRepository $matiereRepository
      */
     public function __construct(MatiereRepository $matiereRepository)
     {
@@ -46,9 +46,6 @@ class MatiereApiController extends BaseController
 
     /**
      * @Route("/semestre/{semestre}", name="api_matieres_semestre", options={"expose":true})
-     * @param Semestre $semestre
-     *
-     * @return JsonResponse
      */
     public function matieresSemestreAjax(Semestre $semestre): JsonResponse
     {
@@ -69,9 +66,6 @@ class MatiereApiController extends BaseController
 
     /**
      * @Route("/{matiere}", name="api_matiere", options={"expose":true})
-     * @param Matiere $matiere
-     *
-     * @return JsonResponse
      */
     public function matiereAjax(Matiere $matiere): JsonResponse
     {
@@ -80,27 +74,19 @@ class MatiereApiController extends BaseController
 
     /**
      * @Route("/document/export/{matiere}", name="api_export_document_matiere", options={"expose":true})
-     * @param Matiere $matiere
-     *
-     * @return Response
      */
     public function exportDocument(Matiere $matiere): Response
     {
         return $this->render('api/matiere/document/export.html.twig', [
             'matiere'     => $matiere,
-            'typeGroupes' => $matiere->getUe()->getSemestre()->getTypeGroupes()
+            'typeGroupes' => $matiere->getUe()->getSemestre()->getTypeGroupes(),
         ]);
     }
 
     /**
      * Returns a JSON string with the neighborhoods of the City with the providen id.
+     *
      * @Route("/ues/listbysemestre", name="api_liste_ue_by_semestre", options={"expose":true})
-     *
-     * @param Request            $request
-     * @param UeRepository       $ueRepository
-     * @param SemestreRepository $semestreRepository
-     *
-     * @return JsonResponse
      */
     public function listUesOfSemestre(
         Request $request,
@@ -108,7 +94,7 @@ class MatiereApiController extends BaseController
         SemestreRepository $semestreRepository
     ): JsonResponse {
         $semestre = $semestreRepository->find($request->request->get('semestreid'));
-        if ($semestre !== null) {
+        if (null !== $semestre) {
             // Search the neighborhoods that belongs to the city with the given id as GET parameter "cityid"
             $ues = $ueRepository->findBySemestre($semestre);
 
@@ -120,7 +106,7 @@ class MatiereApiController extends BaseController
                 $responseArray[] = [
                     'id'       => $ue->getId(),
                     'libelle'  => $ue->getLibelle(),
-                    'numeroUe' => $ue->getNumeroUe()
+                    'numeroUe' => $ue->getNumeroUe(),
                 ];
             }
 
@@ -133,13 +119,8 @@ class MatiereApiController extends BaseController
 
     /**
      * Returns a JSON string with the neighborhoods of the City with the providen id.
+     *
      * @Route("/parcours/listbysemestre", name="api_liste_parcour_by_semestre", options={"expose":true})
-     *
-     * @param Request            $request
-     * @param ParcourRepository  $parcourRepository
-     * @param SemestreRepository $semestreRepository
-     *
-     * @return JsonResponse
      */
     public function listParcoursOfSemestre(
         Request $request,
@@ -147,7 +128,7 @@ class MatiereApiController extends BaseController
         SemestreRepository $semestreRepository
     ): JsonResponse {
         $semestre = $semestreRepository->find($request->request->get('semestreid'));
-        if ($semestre !== null) {
+        if (null !== $semestre) {
             // Search the neighborhoods that belongs to the city with the given id as GET parameter "cityid"
             $parcours = $parcourRepository->findBySemestre($semestre);
 
@@ -159,7 +140,7 @@ class MatiereApiController extends BaseController
             foreach ($parcours as $parcour) {
                 $responseArray[] = [
                     'id'      => $parcour->getId(),
-                    'libelle' => $parcour->getLibelle()
+                    'libelle' => $parcour->getLibelle(),
                 ];
             }
 
@@ -171,22 +152,16 @@ class MatiereApiController extends BaseController
     }
 
     /**
-     * @param PrevisionnelRepository $previsionnelRepository
-     * @param Semestre               $semestre
-     * @param Personnel              $personnel
-     *
      * @return JsonResponse|RedirectResponse
      * @Route("/matiere/semestre/personnel/{semestre}/{personnel}", name="api_matieres_semestre_personnel",
      *                                                              options={"expose":true})
-     *
      */
     public function matiereSemestrePersonnel(
         PrevisionnelRepository $previsionnelRepository,
         Semestre $semestre,
         Personnel $personnel
     ) {
-
-        if ($semestre !== null && $personnel !== null) {
+        if (null !== $semestre && null !== $personnel) {
             $matieres = $previsionnelRepository->findPrevisionnelSemestrePersonnel($semestre, $personnel,
                 $this->dataUserSession->getAnneePrevisionnel());
 
@@ -195,11 +170,11 @@ class MatiereApiController extends BaseController
 
             /** @var Previsionnel $m */
             foreach ($matieres as $m) {
-                if ($m->getMatiere() !== null) {
+                if (null !== $m->getMatiere()) {
                     $array['matiere' . $i]['id'] = $m->getMatiere()->getId();
                     $array['matiere' . $i]['libelle'] = $m->getMatiere()->getDisplay();
                     $array['matiere' . $i]['ue'] = $m->getMatiere()->getUE()->getNumeroUe();
-                    $i++;
+                    ++$i;
                 }
             }
 

@@ -1,15 +1,14 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyPersonnel.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 05/07/2020 09:14
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyPersonnel.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
-/**
- * Created by PhpStorm.
- * User: davidannebicque
- * Date: 16/06/2018
- * Time: 09:05
+/*
+ * Pull your hearder here, for exemple, Licence header.
  */
 
 namespace App\Classes;
@@ -18,32 +17,25 @@ use App\Entity\Personnel;
 use App\Repository\PersonnelRepository;
 
 /**
- * Class MyPersonnel
- * @package App\Classes
+ * Class MyPersonnel.
  */
 class MyPersonnel
 {
     /** @var PersonnelRepository */
     private $personnelRepository;
 
-
     /**
      * MyPersonnel constructor.
-     *
-     * @param PersonnelRepository $personnelRepository
      */
     public function __construct(PersonnelRepository $personnelRepository)
     {
         $this->personnelRepository = $personnelRepository;
     }
 
-
     /**
      * @param $filters
      * @param $start
      * @param $length
-     *
-     * @return array
      */
     public function getArrayAllPersonnel($filters, $start, $length): array
     {

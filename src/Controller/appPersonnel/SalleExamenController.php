@@ -1,14 +1,16 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/SalleExamenController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 14/10/2020 21:57
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/SalleExamenController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller\appPersonnel;
 
-use App\Controller\BaseController;
 use App\Classes\MySalleExamen;
+use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Repository\PersonnelRepository;
 use App\Repository\SalleExamenRepository;
@@ -22,8 +24,8 @@ use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
 /**
- * Class QuizzController
- * @package App\Controller
+ * Class QuizzController.
+ *
  * @Route("/application/personnel/salle-examen")
  * @IsGranted("ROLE_PERMANENT")
  */
@@ -31,10 +33,6 @@ class SalleExamenController extends BaseController
 {
     /**
      * @Route("/", name="application_personnel_salle_examen_index")
-     * @param SalleExamenRepository $salleExamenRepository
-     * @param PersonnelRepository   $personnelRepository
-     *
-     * @return Response
      */
     public function index(
         SalleExamenRepository $salleExamenRepository,
@@ -42,22 +40,19 @@ class SalleExamenController extends BaseController
     ): Response {
         return $this->render('appPersonnel/salle_examen/index.html.twig', [
             'salles'     => $salleExamenRepository->findByDepartement($this->dataUserSession->getDepartement()),
-            'personnels' => $personnelRepository->findByDepartement($this->dataUserSession->getDepartement())
+            'personnels' => $personnelRepository->findByDepartement($this->dataUserSession->getDepartement()),
         ]);
     }
 
     /**
-     * @param MySalleExamen $mySalleExamen
-     * @param Request       $request
-     *
-     *
      * @return RedirectResponse
-     * @throws LoaderError
-     * @throws RuntimeError
-     * @throws SyntaxError
      * @Route("/application/salle-examen/genere/document",
      *     name="application_personnel_salle_examen_genere_placement",
      *     methods={"POST"})
+     * @throws RuntimeError
+     * @throws SyntaxError
+     *
+     * @throws LoaderError
      */
     public function generePlacement(MySalleExamen $mySalleExamen, Request $request): ?RedirectResponse
     {

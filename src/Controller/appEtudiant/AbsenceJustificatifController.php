@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appEtudiant/AbsenceJustificatifController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 06/09/2020 16:13
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appEtudiant/AbsenceJustificatifController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller\appEtudiant;
 
@@ -25,9 +27,6 @@ class AbsenceJustificatifController extends BaseController
 {
     /**
      * @Route("/", name="app_etudiant_absence_justificatif_index", methods="GET")
-     * @param AbsenceJustificatifRepository $absenceJustificatifRepository
-     *
-     * @return Response
      */
     public function index(AbsenceJustificatifRepository $absenceJustificatifRepository): Response
     {
@@ -37,14 +36,12 @@ class AbsenceJustificatifController extends BaseController
 
     /**
      * @Route("/depot", name="app_etudiant_absence_justificatif_new", methods="GET|POST")
-     * @param Request $request
      *
-     * @return Response
      * @throws Exception
      */
     public function depot(Request $request): Response
     {
-        if ($this->getConnectedUser() !== null) {
+        if (null !== $this->getConnectedUser()) {
             $absenceJustificatif = new AbsenceJustificatif($this->getConnectedUser());
             $form = $this->createForm(AbsenceJustificatifType::class, $absenceJustificatif);
             $form->handleRequest($request);
@@ -70,10 +67,6 @@ class AbsenceJustificatifController extends BaseController
     /**
      * @Route("/{id}/edit", name="app_etudiant_absence_justificatif_edit", methods="GET|POST")
      * @ParamConverter("absenceJustificatif", options={"mapping": {"id": "uuid"}})
-     * @param Request             $request
-     * @param AbsenceJustificatif $absenceJustificatif
-     *
-     * @return Response
      */
     public function edit(Request $request, AbsenceJustificatif $absenceJustificatif): Response
     {
@@ -81,8 +74,8 @@ class AbsenceJustificatifController extends BaseController
 
         $form = $this->createForm(AbsenceJustificatifType::class, $absenceJustificatif, [
             'action' => $this->generateUrl('app_etudiant_absence_justificatif_edit', [
-                'id' => $absenceJustificatif->getUuidString()
-            ])
+                'id' => $absenceJustificatif->getUuidString(),
+            ]),
         ]);
         $form->handleRequest($request);
 
@@ -103,12 +96,8 @@ class AbsenceJustificatifController extends BaseController
 
     /**
      * @Route("/{id}", name="app_etudiant_absence_justificatif_delete", methods="DELETE")
-     * @param Request             $request
-     * @param AbsenceJustificatif $absenceJustificatif
      *
-     * @return Response
      * @ParamConverter("absenceJustificatif", options={"mapping": {"id": "uuid"}})
-     *
      */
     public function delete(Request $request, AbsenceJustificatif $absenceJustificatif): Response
     {

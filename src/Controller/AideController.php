@@ -1,12 +1,13 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/AideController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 12/12/2020 14:31
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/AideController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller;
-
 
 use App\Classes\Aide;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,51 +16,37 @@ use Symfony\Component\Routing\Annotation\Route;
 class AideController extends BaseController
 {
     /**
-     *
      * @Route("/aide/", name="help_index")
-     * @param Aide $aide
-     *
-     * @return Response
      */
     public function index(Aide $aide): Response
     {
         $categories = $aide->getCategories();
 
-
         return $this->render('aide/index.html.twig', [
-            'categories' => $categories
+            'categories' => $categories,
         ]);
     }
 
     /**
-     *
      * @Route("/aide/categorie/{categorie}/{subcategorie}", name="help_categorie")
-     * @param Aide   $aide
+     *
      * @param string $categorie
      * @param string $subcategorie
-     *
-     * @return Response
      */
     public function categorie(Aide $aide, $categorie = '', $subcategorie = ''): Response
     {
-        $dir = $subcategorie === '' ? $categorie : $categorie . '/' . $subcategorie;
+        $dir = '' === $subcategorie ? $categorie : $categorie . '/' . $subcategorie;
 
         $categories = $aide->getCategories($dir);
 
-
         return $this->render('aide/index.html.twig', [
             'categories' => $categories,
-            'dossier'    => $categorie
+            'dossier'    => $categorie,
         ]);
     }
 
     /**
-     *
      * @Route("/aide/{sujet}", name="help_article")
-     * @param Aide   $aide
-     * @param string $sujet
-     *
-     * @return Response
      */
     public function aide(Aide $aide, string $sujet): Response
     {
@@ -67,6 +54,4 @@ class AideController extends BaseController
 
         return $this->render('aide/aide.html.twig', ['article' => $aide->getAide($sujet), 'categories' => $articles]);
     }
-
-
 }

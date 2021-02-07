@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/DiplomeController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 01/10/2020 16:58
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/DiplomeController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Controller\superAdministration;
 
@@ -28,19 +30,14 @@ class DiplomeController extends BaseController
 {
     /**
      * @Route("/new/{departement}", name="sa_diplome_new", methods="GET|POST")
-     * @param Request     $request
-     *
-     * @param Departement $departement
-     *
-     * @return Response
      */
     public function create(Request $request, Departement $departement): Response
     {
         $diplome = new Diplome($departement);
         $form = $this->createForm(DiplomeType::class, $diplome, [
             'attr' => [
-                'data-provide' => 'validation'
-            ]
+                'data-provide' => 'validation',
+            ],
         ]);
         $form->handleRequest($request);
 
@@ -61,9 +58,6 @@ class DiplomeController extends BaseController
 
     /**
      * @Route("/{id}", name="sa_diplome_show", methods="GET")
-     * @param Diplome $diplome
-     *
-     * @return Response
      */
     public function show(Diplome $diplome): Response
     {
@@ -71,20 +65,17 @@ class DiplomeController extends BaseController
     }
 
     /**
-     * @param Request $request
-     * @param Diplome $diplome
      * @Route("/{id}/edit", name="sa_diplome_edit", methods="GET|POST")
      *
-     * @return Response
      * @throws Exception
      */
     public function edit(Request $request, Diplome $diplome): Response
     {
-        if ($diplome->getDepartement() !== null) {
+        if (null !== $diplome->getDepartement()) {
             $form = $this->createForm(DiplomeType::class, $diplome, [
                 'attr' => [
-                    'data-provide' => 'validation'
-                ]
+                    'data-provide' => 'validation',
+                ],
             ]);
             $form->handleRequest($request);
 
@@ -106,11 +97,8 @@ class DiplomeController extends BaseController
     }
 
     /**
-     * @param Request $request
-     * @param Diplome $diplome
      * @Route("/{id}/edit-ajax", name="sa_diplome_edit_ajax", methods="POST", options={"expose":true})
      *
-     * @return Response
      * @throws Exception
      */
     public function editAjax(Request $request, Diplome $diplome): Response
@@ -127,9 +115,6 @@ class DiplomeController extends BaseController
 
     /**
      * @Route("/{id}/duplicate", name="sa_diplome_duplicate", methods="GET|POST")
-     * @param Diplome $diplome
-     *
-     * @return Response
      */
     public function duplicate(Diplome $diplome): Response
     {
@@ -145,16 +130,12 @@ class DiplomeController extends BaseController
 
     /**
      * @Route("/{id}", name="sa_diplome_delete", methods="DELETE")
-     * @param Request $request
-     * @param Diplome $diplome
-     *
-     * @return Response
      */
     public function delete(Request $request, Diplome $diplome): Response
     {
         $id = $diplome->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
-            if (count($diplome->getAnnees()) === 0) {
+            if (0 === \count($diplome->getAnnees())) {
                 $this->entityManager->remove($diplome);
                 $this->entityManager->flush();
                 $this->addFlashBag(
@@ -176,13 +157,8 @@ class DiplomeController extends BaseController
     }
 
     /**
-     * @param Diplome $diplome
-     * @param bool    $etat
-     *
-     * @return RedirectResponse
      * @Route("/activate/{diplome}/{etat}", methods={"GET"}, name="sa_diplome_activate")
      * @IsGranted("ROLE_SUPER_ADMIN")
-     *
      */
     public function activate(Diplome $diplome, bool $etat): RedirectResponse
     {
@@ -191,6 +167,5 @@ class DiplomeController extends BaseController
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'diplome.activate.' . $etat . '.flash');
 
         return $this->redirectToRoute('super_admin_homepage');
-
     }
 }

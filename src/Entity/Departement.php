@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Departement.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 06/11/2020 15:33
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Departement.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
 
 namespace App\Entity;
 
@@ -19,8 +21,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-use function chr;
-use function ord;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\DepartementRepository")
@@ -84,43 +84,43 @@ class Departement extends BaseEntity
      */
     private $description;
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(type="boolean")
      */
     private $optUpdateCelcat = false;
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(type="boolean")
      */
     private $optAgence = false;
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(type="boolean")
      */
     private $optMateriel = false;
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(type="boolean")
      */
     private $optEdt = true;
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(type="boolean")
      */
     private $optStage = true;
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(type="boolean")
      */
     private $optSynthese = true;
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(type="boolean")
      */
@@ -132,7 +132,7 @@ class Departement extends BaseEntity
      */
     private $respri;
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      */
@@ -181,7 +181,6 @@ class Departement extends BaseEntity
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\AnneeUniversitaire", inversedBy="departements")
      */
-
     private $anneeUniversitairePrepare;
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\CreneauCours", mappedBy="departement")
@@ -207,9 +206,9 @@ class Departement extends BaseEntity
      */
     private $etudiants;
 
-
     /**
      * Departement constructor.
+     *
      * @throws Exception
      */
     public function __construct()
@@ -236,7 +235,6 @@ class Departement extends BaseEntity
         $this->setUuid(Uuid::uuid4());
     }
 
-
     /**
      * @return Ufr
      */
@@ -245,9 +243,6 @@ class Departement extends BaseEntity
         return $this->ufr;
     }
 
-    /**
-     * @param Ufr $ufr
-     */
     public function setUfr(Ufr $ufr): void
     {
         $this->ufr = $ufr;
@@ -261,9 +256,6 @@ class Departement extends BaseEntity
         return $this->libelle;
     }
 
-    /**
-     * @param mixed $libelle
-     */
     public function setLibelle($libelle): void
     {
         $this->libelle = $libelle;
@@ -277,9 +269,6 @@ class Departement extends BaseEntity
         return $this->telContact;
     }
 
-    /**
-     * @param string $telContact
-     */
     public function setTelContact(string $telContact): void
     {
         $this->telContact = $telContact;
@@ -293,9 +282,6 @@ class Departement extends BaseEntity
         return $this->fax;
     }
 
-    /**
-     * @param string $fax
-     */
     public function setFax(string $fax): void
     {
         $this->fax = $fax;
@@ -309,9 +295,6 @@ class Departement extends BaseEntity
         return $this->couleur;
     }
 
-    /**
-     * @param string $couleur
-     */
     public function setCouleur(string $couleur): void
     {
         $this->couleur = $couleur;
@@ -325,9 +308,6 @@ class Departement extends BaseEntity
         return $this->siteWeb;
     }
 
-    /**
-     * @param string $siteWeb
-     */
     public function setSiteWeb(string $siteWeb): void
     {
         $this->siteWeb = $siteWeb;
@@ -341,121 +321,76 @@ class Departement extends BaseEntity
         return $this->description;
     }
 
-    /**
-     * @param string $description
-     */
     public function setDescription(string $description): void
     {
         $this->description = $description;
     }
 
-    /**
-     * @return bool
-     */
     public function isOptUpdateCelcat(): bool
     {
         return $this->optUpdateCelcat;
     }
 
-    /**
-     * @param bool $optUpdateCelcat
-     */
     public function setOptUpdateCelcat(bool $optUpdateCelcat): void
     {
         $this->optUpdateCelcat = $optUpdateCelcat;
     }
 
-    /**
-     * @return bool
-     */
     public function isOptAgence(): bool
     {
         return $this->optAgence;
     }
 
-    /**
-     * @param bool $optAgence
-     */
     public function setOptAgence(bool $optAgence): void
     {
         $this->optAgence = $optAgence;
     }
 
-    /**
-     * @return bool
-     */
     public function isOptMateriel(): bool
     {
         return $this->optMateriel;
     }
 
-    /**
-     * @param bool $optMateriel
-     */
     public function setOptMateriel(bool $optMateriel): void
     {
         $this->optMateriel = $optMateriel;
     }
 
-    /**
-     * @return bool
-     */
     public function isOptEdt(): bool
     {
         return $this->optEdt;
     }
 
-    /**
-     * @param bool $optEdt
-     */
     public function setOptEdt(bool $optEdt): void
     {
         $this->optEdt = $optEdt;
     }
 
-    /**
-     * @return bool
-     */
     public function isOptStage(): bool
     {
         return $this->optStage;
     }
 
-    /**
-     * @param bool $optStage
-     */
     public function setOptStage(bool $optStage): void
     {
         $this->optStage = $optStage;
     }
 
-    /**
-     * @return bool
-     */
     public function isOptSynthese(): bool
     {
         return $this->optSynthese;
     }
 
-    /**
-     * @param bool $optSynthese
-     */
     public function setOptSynthese(bool $optSynthese): void
     {
         $this->optSynthese = $optSynthese;
     }
 
-    /**
-     * @return bool
-     */
     public function isOptMessagerie(): bool
     {
         return $this->optMessagerie;
     }
 
-    /**
-     * @param bool $optMessagerie
-     */
     public function setOptMessagerie(bool $optMessagerie): void
     {
         $this->optMessagerie = $optMessagerie;
@@ -477,17 +412,11 @@ class Departement extends BaseEntity
         $this->respri = $respri;
     }
 
-    /**
-     * @return int
-     */
     public function getOptAnneePrevisionnel(): int
     {
         return $this->optAnneePrevisionnel;
     }
 
-    /**
-     * @param int $optAnneePrevisionnel
-     */
     public function setOptAnneePrevisionnel(int $optAnneePrevisionnel): void
     {
         $this->optAnneePrevisionnel = $optAnneePrevisionnel;
@@ -502,8 +431,6 @@ class Departement extends BaseEntity
     }
 
     /**
-     * @param TypeDocument $typeDocument
-     *
      * @return Departement
      */
     public function addTypeDocument(TypeDocument $typeDocument): self
@@ -517,8 +444,6 @@ class Departement extends BaseEntity
     }
 
     /**
-     * @param TypeDocument $typeDocument
-     *
      * @return Departement
      */
     public function removeTypeDocument(TypeDocument $typeDocument): self
@@ -534,17 +459,12 @@ class Departement extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return null|File
-     */
     public function getLogoFile(): ?File
     {
         return $this->logoFile;
     }
 
     /**
-     * @param File|null $logo
-     *
      * @throws Exception
      */
     public function setLogoFile(?File $logo = null): void
@@ -566,9 +486,6 @@ class Departement extends BaseEntity
         return $this->logoName;
     }
 
-    /**
-     * @param string $logoName
-     */
     public function setLogoName(string $logoName): void
     {
         $this->logoName = $logoName;
@@ -583,8 +500,6 @@ class Departement extends BaseEntity
     }
 
     /**
-     * @param PersonnelDepartement $personnelDepartement
-     *
      * @return Departement
      */
     public function addPersonnelDepartement(PersonnelDepartement $personnelDepartement): self
@@ -598,8 +513,6 @@ class Departement extends BaseEntity
     }
 
     /**
-     * @param PersonnelDepartement $personnelDepartement
-     *
      * @return Departement
      */
     public function removePersonnelDepartement(PersonnelDepartement $personnelDepartement): self
@@ -624,8 +537,6 @@ class Departement extends BaseEntity
     }
 
     /**
-     * @param Actualite $actualite
-     *
      * @return Departement
      */
     public function addActualite(Actualite $actualite): self
@@ -639,8 +550,6 @@ class Departement extends BaseEntity
     }
 
     /**
-     * @param Actualite $actualite
-     *
      * @return Departement
      */
     public function removeActualite(Actualite $actualite): self
@@ -662,7 +571,7 @@ class Departement extends BaseEntity
      */
     public function update($name, $value): void
     {
-        $name[0] = chr(ord($name[0]) - 32);
+        $name[0] = \chr(\ord($name[0]) - 32);
         $method = 'set' . $name;
         if (method_exists($this, $method)) {
             $this->$method($value);
@@ -678,8 +587,6 @@ class Departement extends BaseEntity
     }
 
     /**
-     * @param Diplome $diplome
-     *
      * @return Departement
      */
     public function addDiplome(Diplome $diplome): self
@@ -693,8 +600,6 @@ class Departement extends BaseEntity
     }
 
     /**
-     * @param Diplome $diplome
-     *
      * @return Departement
      */
     public function removeDiplome(Diplome $diplome): self

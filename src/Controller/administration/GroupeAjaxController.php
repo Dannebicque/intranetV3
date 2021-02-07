@@ -1,9 +1,12 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/GroupeAjaxController.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 07/08/2020 12:00
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/GroupeAjaxController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:11
+ */
+
 
 namespace App\Controller\administration;
 
@@ -25,12 +28,6 @@ class GroupeAjaxController extends BaseController
 {
     /**
      * @Route("/update/{id}", name="administration_groupe_ajax_edit", methods={"POST"}, options={"expose":true})
-     * @param MyGroupes $myGroupes
-     * @param Request   $request
-     *
-     * @param Groupe    $groupe
-     *
-     * @return JsonResponse|null
      */
     public function update(MyGroupes $myGroupes, Request $request, Groupe $groupe): ?JsonResponse
     {
@@ -45,17 +42,13 @@ class GroupeAjaxController extends BaseController
 
     /**
      * @Route("/update-parent", name="administration_groupe_change_parent", methods={"POST"}, options={"expose":true})
-     * @param GroupeRepository $groupeRepository
-     * @param Request          $request
-     *
-     * @return JsonResponse|null
      */
     public function updateParent(GroupeRepository $groupeRepository, Request $request): ?JsonResponse
     {
         $groupe = $groupeRepository->find($request->request->get('groupe'));
         $parent = $groupeRepository->find($request->request->get('parent'));
 
-        if ($groupe !== null && $parent !== null) {
+        if (null !== $groupe && null !== $parent) {
             $groupe->setParent($parent);
             $this->entityManager->flush();
 
@@ -68,11 +61,6 @@ class GroupeAjaxController extends BaseController
     /**
      * @Route("/update-typegroupe", name="administration_groupe_change_typegroupe", methods={"POST"},
      *                              options={"expose":true})
-     * @param TypeGroupeRepository $typeGroupeRepository
-     * @param GroupeRepository     $groupeRepository
-     * @param Request              $request
-     *
-     * @return JsonResponse|null
      */
     public function updateTypeGroupe(
         TypeGroupeRepository $typeGroupeRepository,
@@ -82,7 +70,7 @@ class GroupeAjaxController extends BaseController
         $groupe = $groupeRepository->find($request->request->get('groupe'));
         $typegroupe = $typeGroupeRepository->find($request->request->get('typegroupe'));
 
-        if ($groupe !== null && $typegroupe !== null) {
+        if (null !== $groupe && null !== $typegroupe) {
             $groupe->setTypeGroupe($typegroupe);
             $this->entityManager->flush();
 
@@ -95,11 +83,6 @@ class GroupeAjaxController extends BaseController
     /**
      * @Route("/update-parcours", name="administration_groupe_change_parcours", methods={"POST"},
      *                            options={"expose":true})
-     * @param ParcourRepository $parcourRepository
-     * @param GroupeRepository  $groupeRepository
-     * @param Request           $request
-     *
-     * @return JsonResponse|null
      */
     public function updateParcours(
         ParcourRepository $parcourRepository,
@@ -109,7 +92,7 @@ class GroupeAjaxController extends BaseController
         $groupe = $groupeRepository->find($request->request->get('groupe'));
         $parcours = $parcourRepository->find($request->request->get('parcours'));
 
-        if ($groupe !== null && $parcours !== null) {
+        if (null !== $groupe && null !== $parcours) {
             $groupe->setParcours($parcours);
             $this->entityManager->flush();
 

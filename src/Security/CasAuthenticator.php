@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Security/CasAuthenticator.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 12/12/2020 14:31
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Security/CasAuthenticator.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 11:10
+ */
 
 namespace App\Security;
 
@@ -34,7 +36,6 @@ class CasAuthenticator extends AbstractGuardAuthenticator
         UrlGeneratorInterface $urlGenerator,
         DepartementRepository $departementRepository,
         SessionInterface $session
-
     ) {
         $this->urlGenerator = $urlGenerator;
         $this->departementRepository = $departementRepository;
@@ -43,7 +44,7 @@ class CasAuthenticator extends AbstractGuardAuthenticator
 
     public function supports(Request $request): bool
     {
-        return $request->getPathInfo() === '/sso/cas';
+        return '/sso/cas' === $request->getPathInfo();
     }
 
     public function getCredentials(Request $request)
@@ -67,7 +68,6 @@ class CasAuthenticator extends AbstractGuardAuthenticator
         }
 
         return null;
-
     }
 
     public function getUser($credentials, UserProviderInterface $userProvider): ?UserInterface
@@ -85,24 +85,19 @@ class CasAuthenticator extends AbstractGuardAuthenticator
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
         $data = [
-            'message' => strtr($exception->getMessageKey(), $exception->getMessageData())
+            'message' => strtr($exception->getMessageKey(), $exception->getMessageData()),
         ];
 
         $def_response = new JsonResponse($data, 403);
         $event = new CASAuthenticationFailureEvent($request, $exception, $def_response);
 
         return $event->getResponse();
-
     }
 
     /**
-     * @param Request        $request
-     * @param TokenInterface $token
-     * @param string         $providerKey
-     *
-     * @return Response|null
+     * @param string $providerKey
      */
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey): ?Response
     {
         return AbstractAuthenticator::onAuthenticationSuccess(
             $this->urlGenerator,
@@ -118,5 +113,6 @@ class CasAuthenticator extends AbstractGuardAuthenticator
     }
 
     public function start(Request $request, AuthenticationException $authException = null)
-    {}
+    {
+    }
 }

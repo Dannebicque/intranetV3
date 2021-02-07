@@ -1,9 +1,11 @@
 <?php
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Previsionnel.php
-// @author davidannebicque
-// @project intranetV3
-// @lastUpdate 08/08/2020 10:20
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Previsionnel.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/02/2021 10:49
+ */
 
 namespace App\Entity;
 
@@ -15,7 +17,6 @@ use Doctrine\ORM\Mapping as ORM;
 class Previsionnel extends BaseEntity
 {
     public const DUREE_SEANCE = 1.5;
-
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Matiere", inversedBy="previsionnels", fetch="EAGER")
@@ -81,18 +82,12 @@ class Previsionnel extends BaseEntity
         $this->annee = $annee;
     }
 
-
-    /**
-     * @return Matiere|null
-     */
     public function getMatiere(): ?Matiere
     {
         return $this->matiere;
     }
 
     /**
-     * @param Matiere|null $matiere
-     *
      * @return Previsionnel
      */
     public function setMatiere(?Matiere $matiere): self
@@ -102,17 +97,12 @@ class Previsionnel extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return Personnel|null
-     */
     public function getPersonnel(): ?Personnel
     {
         return $this->personnel;
     }
 
     /**
-     * @param Personnel|null $personnel
-     *
      * @return Previsionnel
      */
     public function setPersonnel(?Personnel $personnel): self
@@ -122,17 +112,12 @@ class Previsionnel extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return int|null
-     */
     public function getAnnee(): ?int
     {
         return $this->annee;
     }
 
     /**
-     * @param int $annee
-     *
      * @return Previsionnel
      */
     public function setAnnee(int $annee): self
@@ -142,17 +127,12 @@ class Previsionnel extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return bool|null
-     */
     public function getReferent(): ?bool
     {
         return $this->referent;
     }
 
     /**
-     * @param bool $referent
-     *
      * @return Previsionnel
      */
     public function setReferent(bool $referent): self
@@ -162,17 +142,12 @@ class Previsionnel extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return float|null
-     */
     public function getNbHCm(): ?float
     {
         return $this->nbHCm;
     }
 
     /**
-     * @param float|null $nbHCm
-     *
      * @return Previsionnel
      */
     public function setNbHCm(?float $nbHCm = 0): self
@@ -182,17 +157,12 @@ class Previsionnel extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return float|null
-     */
     public function getNbHTd(): ?float
     {
         return $this->nbHTd;
     }
 
     /**
-     * @param float $nbHTd
-     *
      * @return Previsionnel
      */
     public function setNbHTd(float $nbHTd = 0): self
@@ -202,17 +172,12 @@ class Previsionnel extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return float|null
-     */
     public function getNbHTp(): ?float
     {
         return $this->nbHTp;
     }
 
     /**
-     * @param float $nbHTp
-     *
      * @return Previsionnel
      */
     public function setNbHTp(float $nbHTp = 0): self
@@ -222,17 +187,12 @@ class Previsionnel extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return int|null
-     */
     public function getNbGrCm(): ?int
     {
         return $this->nbGrCm;
     }
 
     /**
-     * @param int $nbGrCm
-     *
      * @return Previsionnel
      */
     public function setNbGrCm(int $nbGrCm = 0): self
@@ -242,17 +202,12 @@ class Previsionnel extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return int|null
-     */
     public function getNbGrTd(): ?int
     {
         return $this->nbGrTd;
     }
 
     /**
-     * @param int $nbGrTd
-     *
      * @return Previsionnel
      */
     public function setNbGrTd(int $nbGrTd = 0): self
@@ -262,17 +217,12 @@ class Previsionnel extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return int|null
-     */
     public function getNbGrTp(): ?int
     {
         return $this->nbGrTp;
     }
 
     /**
-     * @param int $nbGrTp
-     *
      * @return Previsionnel
      */
     public function setNbGrTp(int $nbGrTp = 0): self
@@ -282,38 +232,26 @@ class Previsionnel extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return Semestre|null
-     */
-    public function getSemestre() : ?Semestre
+    public function getSemestre(): ?Semestre
     {
-        if ($this->getMatiere() !== null) {
+        if (null !== $this->getMatiere()) {
             return $this->getMatiere()->getSemestre();
         }
 
         return null;
     }
 
-    /**
-     * @return string
-     */
-    public function getNbSeanceCm() :string
+    public function getNbSeanceCm(): string
     {
         return number_format($this->nbHCm / self::DUREE_SEANCE, 2);
     }
 
-    /**
-     * @return string
-     */
-    public function getNbSeanceTd() :string
+    public function getNbSeanceTd(): string
     {
         return number_format($this->nbHTd / self::DUREE_SEANCE, 2);
     }
 
-    /**
-     * @return string
-     */
-    public function getNbSeanceTp() :string
+    public function getNbSeanceTp(): string
     {
         return number_format($this->nbHTp / self::DUREE_SEANCE, 2);
     }
@@ -350,9 +288,6 @@ class Previsionnel extends BaseEntity
         return $this->getTotalHCm() * 1.5 + $this->getTotalHTd() + $this->getTotalHTp();
     }
 
-    /**
-     * @return mixed
-     */
     public function getTotalEtudiant()
     {
         return $this->nbHCm + $this->nbHTd + $this->nbHTp;
@@ -360,9 +295,9 @@ class Previsionnel extends BaseEntity
 
     public function getDepartement()
     {
-        if ($this->getSemestre() !== null &&
-            $this->getSemestre()->getDiplome() !== null &&
-            $this->getSemestre()->getDiplome()->getDepartement() !== null) {
+        if (null !== $this->getSemestre() &&
+            null !== $this->getSemestre()->getDiplome() &&
+            null !== $this->getSemestre()->getDiplome()->getDepartement()) {
             return $this->getSemestre()->getDiplome()->getDepartement();
         }
 
