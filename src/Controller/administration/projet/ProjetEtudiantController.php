@@ -4,9 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/projet/ProjetEtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:11
+ * @lastUpdate 07/02/2021 11:20
  */
-
 
 namespace App\Controller\administration\projet;
 
@@ -79,7 +78,7 @@ class ProjetEtudiantController extends BaseController
 
         return $this->json([
             'redirect' => true,
-            'url'      => null !== $projetEtudiant->getProjetPeriode() ? $this->generateUrl('administration_projet_periode_gestion',
+            'url' => null !== $projetEtudiant->getProjetPeriode() ? $this->generateUrl('administration_projet_periode_gestion',
                 ['uuid' => $projetEtudiant->getProjetPeriode()->getUuidString()]) : $this->generateUrl('administration_index'),
         ]);
     }

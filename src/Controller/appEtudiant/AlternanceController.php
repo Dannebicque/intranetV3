@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appEtudiant/AlternanceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:11
+ * @lastUpdate 07/02/2021 11:20
  */
 
 namespace App\Controller\appEtudiant;
@@ -44,7 +44,7 @@ class AlternanceController extends BaseController
                 AlternanceEtudiantType::class,
                 $alternance,
                 [
-                    'attr'   => [
+                    'attr' => [
                         'data-provide' => 'validation',
                     ],
                     'action' => $this->generateUrl('application_etudiant_alternance_update',
@@ -68,7 +68,7 @@ class AlternanceController extends BaseController
             AlternanceEtudiantType::class,
             $alternance,
             [
-                'attr'   => [
+                'attr' => [
                     'data-provide' => 'validation',
                 ],
                 'action' => $this->generateUrl('application_etudiant_alternance_update',

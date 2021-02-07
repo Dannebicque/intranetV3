@@ -4,9 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/AbsenceJustificatifController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:11
+ * @lastUpdate 07/02/2021 11:20
  */
-
 
 namespace App\Controller\administration;
 
@@ -83,7 +82,7 @@ class AbsenceJustificatifController extends BaseController
 
         return $this->json([
             'redirect' => true,
-            'url'      => $this->generateUrl('administration_absences_justificatif_semestre_liste',
+            'url' => $this->generateUrl('administration_absences_justificatif_semestre_liste',
                 ['semestre' => $semestre->getId()]),
         ]);
     }

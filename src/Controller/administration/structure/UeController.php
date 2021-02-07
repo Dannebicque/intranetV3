@@ -4,9 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/structure/UeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:11
+ * @lastUpdate 07/02/2021 11:20
  */
-
 
 namespace App\Controller\administration\structure;
 
@@ -34,7 +33,7 @@ class UeController extends BaseController
             $ue = new Ue($semestre);
             $form = $this->createForm(UeType::class, $ue, [
                 'diplome' => $semestre->getAnnee()->getDiplome(),
-                'attr'    => [
+                'attr' => [
                     'data-provide' => 'validation',
                 ],
             ]);
@@ -75,7 +74,7 @@ class UeController extends BaseController
         if (null !== $ue->getDiplome()) {
             $form = $this->createForm(UeType::class, $ue, [
                 'diplome' => $ue->getDiplome(),
-                'attr'    => [
+                'attr' => [
                     'data-provide' => 'validation',
                 ],
             ]);

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appEtudiant/StageController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:11
+ * @lastUpdate 07/02/2021 11:20
  */
 
 namespace App\Controller\appEtudiant;
@@ -75,7 +75,7 @@ class StageController extends BaseController
         if (null !== $stageEtudiant->getStagePeriode()) {
             $form = $this->createForm(StageEtudiantEtudiantType::class, $stageEtudiant, [
                 'flexible' => $stageEtudiant->getStagePeriode()->getDatesFlexibles(),
-                'attr'     => [
+                'attr' => [
                     'data-provide' => 'validation',
                 ],
             ]);

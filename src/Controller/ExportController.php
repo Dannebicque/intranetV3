@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ExportController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:11
+ * @lastUpdate 07/02/2021 11:20
  */
 
 namespace App\Controller;
@@ -31,11 +31,11 @@ class ExportController extends AbstractController
      * @Route("/listing", name="export_listing")
      *
      * @return bool|StreamedResponse|null
-     * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
-     *
      * @throws Exception
+     *
+     * @throws LoaderError
      */
     public function listing(MatiereRepository $matiereRepository, MyExportListing $myExport, Request $request)
     {

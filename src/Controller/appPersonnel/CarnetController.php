@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/CarnetController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:11
+ * @lastUpdate 07/02/2021 11:20
  */
 
 namespace App\Controller\appPersonnel;
@@ -81,7 +81,7 @@ class CarnetController extends BaseController
             $cahierTexte,
             [
                 'departement' => $this->dataUserSession->getDepartement(),
-                'attr'        => [
+                'attr' => [
                     'data-provide' => 'validation',
                 ],
             ]
@@ -123,7 +123,7 @@ class CarnetController extends BaseController
             $cahierTexte,
             [
                 'departement' => $this->dataUserSession->getDepartement(),
-                'attr'        => [
+                'attr' => [
                     'data-provide' => 'validation',
                 ],
             ]

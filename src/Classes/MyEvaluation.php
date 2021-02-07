@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEvaluation.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:11
+ * @lastUpdate 07/02/2021 11:20
  */
 
 /*
@@ -231,10 +231,10 @@ class MyEvaluation
      * @param $groupes
      *
      * @return PdfResponse|StreamedResponse|null
-     * @throws RuntimeError
      * @throws SyntaxError
-     *
      * @throws LoaderError
+     *
+     * @throws RuntimeError
      */
     public function exportReleve($_format, $groupes, Departement $departement)
     {

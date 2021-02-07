@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/RddDiplomeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:11
+ * @lastUpdate 07/02/2021 11:20
  */
 
 namespace App\Repository;
@@ -30,9 +30,9 @@ class RddDiplomeRepository extends ServiceEntityRepository
 
     /**
      * @return int|mixed|string
-     * @throws NonUniqueResultException
-     *
      * @throws NoResultException
+     *
+     * @throws NonUniqueResultException
      */
     public function countComplet()
     {

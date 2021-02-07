@@ -4,9 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/MatiereController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:11
+ * @lastUpdate 07/02/2021 11:20
  */
-
 
 namespace App\Controller\administration;
 
@@ -93,7 +92,7 @@ class MatiereController extends BaseController
             $matiere = new Matiere();
             $form = $this->createForm(MatiereType::class, $matiere, [
                 'diplome' => $diplome,
-                'attr'    => [
+                'attr' => [
                     'data-provide' => 'validation',
                 ],
             ]);
@@ -135,7 +134,7 @@ class MatiereController extends BaseController
         if ('1' === $configuration->get('MODIFICATION_PPN')) {
             $form = $this->createForm(MatiereType::class, $matiere, [
                 'diplome' => $matiere->getSemestre()->getAnnee()->getDiplome(),
-                'attr'    => [
+                'attr' => [
                     'data-provide' => 'validation',
                 ],
             ]);

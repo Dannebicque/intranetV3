@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/ProgressionController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:11
+ * @lastUpdate 07/02/2021 11:20
  */
 
 namespace App\Controller\appPersonnel;
@@ -55,8 +55,7 @@ class ProgressionController extends BaseController
         Request $request,
         Matiere $matiere,
         ProgressionPedagogiqueRepository $progressionPedagogiqueRepository
-    ): JsonResponse
-    {
+    ): JsonResponse {
         $semaine = $request->request->get('semaine');
         $typeCours = $request->request->get('typecours');
         $nbSeances = $request->request->get('nbSeances');

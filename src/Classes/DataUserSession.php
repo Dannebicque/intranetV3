@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/DataUserSession.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:11
+ * @lastUpdate 07/02/2021 11:20
  */
 
 /*
@@ -288,9 +288,9 @@ class DataUserSession
 
     /**
      * @return MessageDestinataireEtudiant[]|MessageDestinatairePersonnel[]|int|mixed|string
-     * @throws NoResultException
-     *
      * @throws NonUniqueResultException
+     *
+     * @throws NoResultException
      */
     public function getMessages()
     {

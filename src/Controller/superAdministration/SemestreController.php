@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/SemestreController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:11
+ * @lastUpdate 07/02/2021 11:20
  */
 
 namespace App\Controller\superAdministration;
@@ -35,7 +35,7 @@ class SemestreController extends BaseController
             $semestre->setAnnee($annee);
             $form = $this->createForm(SemestreType::class, $semestre, [
                 'diplome' => $annee->getDiplome(),
-                'attr'    => [
+                'attr' => [
                     'data-provide' => 'validation',
                 ],
             ]);
@@ -80,7 +80,7 @@ class SemestreController extends BaseController
                 $semestre,
                 [
                     'diplome' => $semestre->getAnnee()->getDiplome(),
-                    'attr'    => [
+                    'attr' => [
                         'data-provide' => 'validation',
                     ],
                 ]

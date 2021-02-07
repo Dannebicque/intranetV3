@@ -4,9 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StagePeriodeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:11
+ * @lastUpdate 07/02/2021 11:20
  */
-
 
 namespace App\Controller\administration\stage;
 
@@ -68,7 +67,7 @@ class StagePeriodeController extends BaseController
         $stagePeriode->setAnneeUniversitaire($this->dataUserSession->getAnneeUniversitaire());
         $form = $this->createForm(StagePeriodeType::class, $stagePeriode, [
             'departement' => $this->dataUserSession->getDepartement(),
-            'attr'        => [
+            'attr' => [
                 'data-provide' => 'validation',
             ],
         ]);
@@ -105,7 +104,7 @@ class StagePeriodeController extends BaseController
     {
         $form = $this->createForm(StagePeriodeType::class, $stagePeriode, [
             'departement' => $this->dataUserSession->getDepartement(),
-            'attr'        => [
+            'attr' => [
                 'data-provide' => 'validation',
             ],
         ]);

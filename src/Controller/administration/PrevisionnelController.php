@@ -4,9 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/PrevisionnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:11
+ * @lastUpdate 07/02/2021 11:20
  */
-
 
 namespace App\Controller\administration;
 
@@ -184,7 +183,7 @@ class PrevisionnelController extends BaseController
             null,
             [
                 'departement' => $this->dataUserSession->getDepartement(),
-                'attr'        => [
+                'attr' => [
                     'data-provide' => 'validation',
                 ],
             ]

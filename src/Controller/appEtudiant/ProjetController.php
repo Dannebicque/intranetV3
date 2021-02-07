@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appEtudiant/ProjetController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:11
+ * @lastUpdate 07/02/2021 11:20
  */
 
 namespace App\Controller\appEtudiant;
@@ -74,7 +74,7 @@ class ProjetController extends BaseController
         if (null !== $projetEtudiant->getProjetPeriode()) {
             $form = $this->createForm(ProjetEtudiantEtudiantType::class, $projetEtudiant, [
                 'semestre' => $this->getConnectedUser()->getSemestre(),
-                'attr'     => [
+                'attr' => [
                     'data-provide' => 'validation',
                 ],
             ]);

@@ -4,9 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtExportController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:11
+ * @lastUpdate 07/02/2021 11:20
  */
-
 
 namespace App\Controller\administration;
 
@@ -120,7 +119,7 @@ class EdtExportController extends BaseController
         $tabProf = array_flip($tabProf);
 
         $tabMatieres = [
-            'S1'  => [
+            'S1' => [
                 '3TW11101' => 0,
                 '3TW11102' => 1,
                 '3TW11103' => 2,
@@ -138,7 +137,7 @@ class EdtExportController extends BaseController
                 '3TW11206' => 14,
                 '3TW11207' => 15,
             ],
-            'S2'  => [
+            'S2' => [
                 '3TW22101' => 0,
                 '3TW22102' => 1,
                 '3TW22103' => 2,
@@ -178,7 +177,7 @@ class EdtExportController extends BaseController
                 '3TW73207' => 16,
                 '3TW73212' => 17,
             ],
-            'S4'  => [
+            'S4' => [
                 '3TW4X101' => 0,
                 '3TW4X102' => 1,
                 '3TW4B103' => 2,

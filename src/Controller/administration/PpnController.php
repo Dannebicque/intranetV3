@@ -4,9 +4,8 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/PpnController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:11
+ * @lastUpdate 07/02/2021 11:20
  */
-
 
 namespace App\Controller\administration;
 
@@ -89,7 +88,7 @@ class PpnController extends BaseController
         $ppn->setDiplome($diplome);
         $form = $this->createForm(PpnType::class, $ppn, [
             'departement' => $this->dataUserSession->getDepartement(),
-            'attr'        => [
+            'attr' => [
                 'data-provide' => 'validation',
             ],
         ]);
@@ -124,7 +123,7 @@ class PpnController extends BaseController
     {
         $form = $this->createForm(PpnType::class, $ppn, [
             'departement' => $this->dataUserSession->getDepartement(),
-            'attr'        => [
+            'attr' => [
                 'data-provide' => 'validation',
             ],
         ]);

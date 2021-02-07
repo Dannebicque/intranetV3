@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Security/AbstractAuthenticator.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:11
+ * @lastUpdate 07/02/2021 11:16
  */
 
 namespace App\Security;
@@ -25,8 +25,7 @@ class AbstractAuthenticator
         DepartementRepository $departementRepository,
         $user,
         $target = ''
-    )
-    {
+    ) {
         if (\in_array('ROLE_SUPER_ADMIN', $rolesTab, true) || \in_array('ROLE_ADMINISTRATIF', $rolesTab,
                 true) || \in_array('ROLE_SCOLARITE', $rolesTab, true) || \in_array('ROLE_QUALITE', $rolesTab,
                 true) || \in_array('ROLE_RH', $rolesTab, true)) {

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ProfilEtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:11
+ * @lastUpdate 07/02/2021 11:20
  */
 
 namespace App\Controller;
@@ -108,11 +108,11 @@ class ProfilEtudiantController extends BaseController
         $chart->setOptions(
             [
                 'legend' => ['position' => 'top'],
-                'title'  => [
+                'title' => [
                     'display' => true,
                     'text'    => 'Chart.js Radar Chart',
                 ],
-                'scale'  => [
+                'scale' => [
                     'ticks' => [
                         'beginAtZero'  => true,
                         'suggestedMax' => 20,
@@ -172,9 +172,9 @@ class ProfilEtudiantController extends BaseController
     ): Response {
         return $this->render('user/composants/stages.html.twig', [
             //todo: si l'étudiant n'est plus dans un semestre, garder l'historique uniquemenent. Dans ce cas l'historique ne doit pas dépendre d'une année ?
-            'stagesEnCours'      => $stageEtudiantRepository->findByEtudiantAnnee($etudiant,
+            'stagesEnCours'    => $stageEtudiantRepository->findByEtudiantAnnee($etudiant,
                 $etudiant->getAnneeUniversitaire()),
-            'stagesHistorique'   => $stageEtudiantRepository->findByEtudiantHistorique($etudiant,
+            'stagesHistorique' => $stageEtudiantRepository->findByEtudiantHistorique($etudiant,
                 $etudiant->getAnneeUniversitaire()),
             'alternancesEnCours' => $alternanceRepository->getByEtudiantAndAnneeUniversitaire($etudiant,
                 $etudiant->getAnneeUniversitaire()),

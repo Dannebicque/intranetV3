@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/UserController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:11
+ * @lastUpdate 07/02/2021 11:20
  */
 
 namespace App\Controller;
@@ -33,8 +33,6 @@ class UserController extends BaseController
      * @Route("/mon-profil/{onglet}", name="user_mon_profil")
      *
      * @param string $onglet
-     *
-     * @return Response
      */
     public function monProfil($onglet = 'scolarite'): Response
     {
@@ -100,7 +98,7 @@ class UserController extends BaseController
                 $user,
                 [
                     'locale' => $request->getLocale(),
-                    'attr'   => [
+                    'attr' => [
                         'data-provide' => 'validation',
                     ],
                 ]
