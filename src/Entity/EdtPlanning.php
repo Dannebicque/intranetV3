@@ -4,12 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/EdtPlanning.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 08/02/2021 09:15
  */
 
 namespace App\Entity;
 
 use Carbon\Carbon;
+use Carbon\CarbonInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -95,9 +96,9 @@ class EdtPlanning
     private $commentaire;
 
     /**
-     * @ORM\Column(type="date", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      */
-    private $date;
+    private ?CarbonInterface $date;
 
     public function getId(): ?int
     {
