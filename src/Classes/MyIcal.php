@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyIcal.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 08/02/2021 10:07
  */
 
 /*
@@ -14,6 +14,7 @@
 namespace App\Classes;
 
 use Carbon\CarbonImmutable;
+use Carbon\CarbonInterface;
 use DateTime;
 
 /**
@@ -116,7 +117,7 @@ class MyIcal
      * @param $date
      * @param $creneau
      */
-    public function setDtstart(CarbonImmutable $date, $creneau): void
+    public function setDtstart(CarbonInterface $date, $creneau): void
     {
         $h = explode(':', $this->tabheure[$creneau]);
 
@@ -194,7 +195,7 @@ class MyIcal
     /**
      * @param $creneau
      */
-    public function setDtend(CarbonImmutable $date, $creneau): void
+    public function setDtend(CarbonInterface $date, $creneau): void
     {
         $h = explode(':', $this->tabheure[$creneau]);
 
