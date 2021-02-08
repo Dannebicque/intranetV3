@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantScolarite.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 08/02/2021 18:30
  */
 
 /*
@@ -63,10 +63,12 @@ class EtudiantScolarite
     {
         switch ($etat) {
             case Constantes::SCOLARITE_DIPLOME:
-            case Constantes::SEMESTRE_DEMISSIONNAIRE:
             case Constantes::SEMESTRE_REORIENTE:
-            $this->updateScolarite($etat);
-            $this->finFormation();
+                $this->updateScolarite($etat);
+                $this->finFormation();
+                break;
+            case Constantes::SEMESTRE_DEMISSIONNAIRE:
+                $this->finFormation();
                 break;
             case 'erreur':
                 $this->etudiant->setSemestre(null);
