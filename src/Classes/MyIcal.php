@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyIcal.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/02/2021 10:07
+ * @lastUpdate 08/02/2021 11:39
  */
 
 /*
