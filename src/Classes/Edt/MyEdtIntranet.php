@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 08/02/2021 18:44
  */
 
 /*
@@ -588,23 +588,28 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
         return $this;
     }
 
-    public function addCours(Request $request): EdtPlanning
+    public function addCours(Request $request, AnneeUniversitaire $anneeUniversitaire): EdtPlanning
     {
         $pl = new EdtPlanning();
         $semestre = $this->semestreRepository->find($request->request->get('promo'));
         $pl->setSemestre($semestre);
         $pl->setSemaine($request->request->get('semaine'));
 
-        return $this->updatePl($request, $pl);
+        return $this->updatePl($request, $pl, $anneeUniversitaire);
     }
 
-    public function updateCours(Request $request, EdtPlanning $plann)
+    public function updateCours(Request $request, EdtPlanning $plann, AnneeUniversitaire $anneeUniversitaire)
     {
-        return $this->updatePl($request, $plann);
+        return $this->updatePl($request, $plann, $anneeUniversitaire);
     }
 
-    private function updatePl($request, EdtPlanning $plann)
+    private function updatePl($request, EdtPlanning $plann, AnneeUniversitaire $anneeUniversitaire)
     {
+        $this->calendrier = $this->calendrierRepository->findOneBy([
+            'semaineFormation' => $plann->getSemaine(),
+            'anneeUniversitaire' => $anneeUniversitaire->getId(),
+        ]);
+
         if ('' !== $request->request->get('texte')) {
             $plann->setTexte($request->request->get('texte'));
             $plann->setMatiere(null);
@@ -621,6 +626,7 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
 
         $plann->setDebut($request->request->get('hdbt'));
         $plann->setFin($request->request->get('hfin'));
+        $plann->setDate($this->convertToDate($request->request->get('jourc')));
         $plann->setIntervenant($pr);
         $plann->setSalle($request->request->get('salle'));
         $plann->setJour($request->request->get('jourc'));
