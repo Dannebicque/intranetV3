@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtActionsController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 08/02/2021 18:37
  */
 
 namespace App\Controller\administration;
@@ -32,8 +32,8 @@ class EdtActionsController extends BaseController
      * @Route("/uploadsemaine", name="administration_edt_action_upload")
      *
      * @return RedirectResponse
-     * @throws Exception
      *
+     * @throws Exception
      */
     public function uploadSemaine(
         Request $request,
@@ -65,16 +65,16 @@ class EdtActionsController extends BaseController
         if ('' !== $request->request->get('idEdtUpdate')) {
             $plann = $edtPlanningRepository->find($request->request->get('idEdtUpdate'));
             if (null !== $plann) {
-                $pl = $myEdt->updateCours($request, $plann);
+                $pl = $myEdt->updateCours($request, $plann, $this->dataUserSession->getAnneeUniversitaire());
             }
         } else {
-            $pl = $myEdt->addCours($request);
+            $pl = $myEdt->addCours($request, $this->dataUserSession->getAnneeUniversitaire());
         }
 
         return $this->redirectToRoute('administration_edt_index', [
             'semaine' => $request->request->get('semaine2'),
-            'filtre'  => 'promo',
-            'valeur'  => $pl->getSemestre()->getId(),
+            'filtre' => 'promo',
+            'valeur' => $pl->getSemestre()->getId(),
         ]);
     }
 
@@ -96,7 +96,7 @@ class EdtActionsController extends BaseController
 
         return $this->json([
             'redirect' => true,
-            'url'      => $request->server->get('HTTP_REFERER'),
+            'url' => $request->server->get('HTTP_REFERER'),
         ]);
     }
 }
