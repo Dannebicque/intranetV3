@@ -77,15 +77,14 @@
         <section class="edt-content">
 
             <!-- TRANCHE HORAIRE -->
-            <div class="time {{ t.semestre1.couleur }}">
+            <div class="time {{ t.semestre1.annee.couleur }}cm">
                 <div class="horaires">
                     <p>{{ value[0] }}<br>-<br>{{ value[1] }}</p>
                 </div>
             </div>
             <!-- /TRANCHE HORAIRE -->
             {% if (t.p1.planning[ligne][1] is defined and (t.p1.planning[ligne][1].type == "CM" or t.p1.planning[ligne][1].type == "cm")) %}
-                {% set col=t.semestre1.annee.couleurCM %}
-                <div class="cm {{ t.semestre1.annee.couleur }}cm">
+                <div class="cm {{ t.semestre1.couleur }}cm">
                     <div class="cours">
                         <p>{{ t.p1.planning[ligne][1].module }}
 
@@ -107,7 +106,6 @@
                             {% if t.p1.planning[ligne][groupe].module != "xt" %}
 
                                 {% if t.p1.planning[ligne][groupe].type == "TD" or t.p1.planning[ligne][groupe].type == "td" %}
-                                    {% set col=t.semestre1.annee.couleurTD %}
                                     <div class="{% if t.semestre1.nbgroupeTPEDT < 3 %}cm{% else %} td {% endif %} {{ t.semestre1.annee.couleur }}td">
                                         <div class="cours">
                                             <p>{{ t.p1.planning[ligne][groupe].module }}
@@ -195,7 +193,7 @@
         <section class="edt-content">
 
             <!-- TRANCHE HORAIRE -->
-            <div class="time {{ t.semestre2.annee.couleur }}">
+            <div class="time {{ t.semestre2.annee.couleur }}cm">
                 <div class="horaires">
                     <p>{{ value[0] }}<br>-<br>{{ value[1] }}</p>
                 </div>
@@ -203,8 +201,7 @@
 
             <!-- /TRANCHE HORAIRE -->
             {% if (t.p2.planning[ligne][1] is defined and (t.p2.planning[ligne][1].type == "CM" or t.p2.planning[ligne][1].type == "cm")) %}
-                {% set col=t.semestre2.annee.couleurCM %}
-                <div class="cm {{ t.semestre2.annee.couleur }}cm">
+                <div class="cm {{ t.semestre2.couleur }}cm">
                     <div class="cours">
                         <p>{{ t.p2.planning[ligne][1].module }}
                             {% if t.p2.planning[ligne][1].format == 'nok' %}
@@ -225,7 +222,6 @@
                             {% if t.p2.planning[ligne][groupe].module != "xt" %}
 
                                 {% if t.p2.planning[ligne][groupe].type == "TD" or t.p2.planning[ligne][groupe].type == "td" %}
-                                    {% set col=t.semestre2.annee.couleurTD %}
                                     <div class="{% if t.semestre2.nbgroupeTPEDT < 3 %}cm{% else %} td {% endif %} {{ t.semestre2.annee.couleur }}td">{# TD #}
                                         <div class="cours">
                                             <p>{{ t.p2.planning[ligne][groupe].module }}

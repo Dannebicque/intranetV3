@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/BorneController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 09/02/2021 09:23
  */
 
 namespace App\Controller;
@@ -24,7 +24,7 @@ class BorneController extends AbstractController
     public function index(MyEdtBorne $myEdtBorne, Semestre $semestre1, Semestre $semestre2): Response
     {
         $myEdtBorne->init();
-        $myEdtBorne->calculSemestre($semestre1, $semestre2);
+        $myEdtBorne->calculSemestre($semestre1, $semestre2, $semestre1->getAnneeUniversitaire());
         // récupération des messages
         $messages = [];
         $messages[] = $semestre1->getBornes();
@@ -34,9 +34,9 @@ class BorneController extends AbstractController
 
         $response->headers->set('Access-Control-Allow-Origin', '*');
         $content = $this->renderView('borne/index.html.twig', [
-            't'        => $myEdtBorne->getData(),
+            't' => $myEdtBorne->getData(),
             'messages' => $messages,
-            'lignes'   => Constantes::TAB_CRENEAUX,
+            'lignes' => Constantes::TAB_CRENEAUX,
         ]);
 
         $response->setContent($content);
