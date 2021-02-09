@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Apogee/MyApogee.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/02/2021 11:40
+ * @lastUpdate 09/02/2021 11:41
  */
 
 /*
@@ -175,7 +175,7 @@ class MyApogee
         $maquetteSheet->getProtection()->setSheet(true);
         $i = 17;
         // nombre de lignes
-        while ('' !== trim($maquetteSheet->getCellByColumnAndRow(1, $i)->getValue())) {
+        while ('' != trim($maquetteSheet->getCellByColumnAndRow(1, $i)->getValue())) {
             ++$i;
         }
         $v_nb_lig = $i - 1;
