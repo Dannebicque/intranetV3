@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyIcal.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/02/2021 11:39
+ * @lastUpdate 09/02/2021 09:08
  */
 
 /*
@@ -13,7 +13,6 @@
 
 namespace App\Classes;
 
-use Carbon\CarbonImmutable;
 use Carbon\CarbonInterface;
 use DateTime;
 
@@ -122,7 +121,7 @@ class MyIcal
         $h = explode(':', $this->tabheure[$creneau]);
 
         $timestamp = mktime($h[0], $h[1], '00', $date->month, $date->day, $date->year);
-        $this->dtstart = 'DTSTART:' . $this->calculHeureEte($timestamp); //retirer 1 à jour car le lundi = 1, et on a déjà la date du lundi
+        $this->dtstart = 'DTSTART:' . $this->calculHeureEte($timestamp);
     }
 
     /**

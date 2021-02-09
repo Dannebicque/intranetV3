@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 09/02/2021 09:08
  */
 
 /*
@@ -88,7 +88,7 @@ class MyEdtExport
             /** @var Etudiant $user */
             $nbSemaines = 0 !== $user->getSemestre()->getAnnee()->getDiplome()->getOptSemainesVisibles() ? $user->getSemestre()->getAnnee()->getDiplome()->getOptSemainesVisibles() : 52;
             $emaineActuelle = $this->calendrierRepository->findOneBy([
-                'semaineReelle'      => date('W'),
+                'semaineReelle' => date('W'),
                 'anneeUniversitaire' => $user->getAnneeUniversitaire()->getId(),
             ]);
             $max = $emaineActuelle->getSemaineFormation() + $nbSemaines;
@@ -120,12 +120,14 @@ class MyEdtExport
     private function genereIcal($edt)
     {
         foreach ($edt as $pl) {
-            $this->myIcal->setDtstart($pl['date'], $pl['debut']);
-            $this->myIcal->setDtend($pl['date'], $pl['fin']);
-            $this->myIcal->setDescription($pl['commentaire']);
-            $this->myIcal->setSummary($pl['ical']);
-            $this->myIcal->setLocation($pl['salle']);
-            $this->myIcal->addEvent($pl['id']);
+            if (null !== $pl['date']) {
+                $this->myIcal->setDtstart($pl['date'], $pl['debut']);
+                $this->myIcal->setDtend($pl['date'], $pl['fin']);
+                $this->myIcal->setDescription($pl['commentaire']);
+                $this->myIcal->setSummary($pl['ical']);
+                $this->myIcal->setLocation($pl['salle']);
+                $this->myIcal->addEvent($pl['id']);
+            }
         }
 
         $handle = fopen('php://memory', 'rb+');
