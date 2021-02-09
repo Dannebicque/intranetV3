@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/CelcatEventsRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 09/02/2021 09:40
  */
 
 namespace App\Repository;
@@ -129,8 +129,8 @@ class CelcatEventsRepository extends ServiceEntityRepository
             ->andWhere('p.jour = :jour ')
             ->andWhere('u.semestre = :semestre')
             ->setParameters([
-                'semaine'  => $semaineReelle,
-                'jour'     => $jsem + 1,
+                'semaine' => $semaineReelle,
+                'jour' => $jsem + 1,
                 'semestre' => $semestre->getId(),
             ])
             ->orderBy('p.codeGroupe', 'ASC')

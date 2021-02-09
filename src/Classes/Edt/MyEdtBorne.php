@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtBorne.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 09/02/2021 09:40
  */
 
 /*
@@ -13,6 +13,7 @@
 
 namespace App\Classes\Edt;
 
+use App\Entity\AnneeUniversitaire;
 use App\Entity\Semestre;
 use App\Repository\CalendrierRepository;
 use App\Repository\CelcatEventsRepository;
@@ -57,9 +58,15 @@ class MyEdtBorne
         $this->data['jsem'] = date('N');
     }
 
-    public function calculSemestre(Semestre $semestre1, Semestre $semestre2): void
-    {
-        $semaine = $this->calendrierRepository->findOneBy(['semaineReelle' => $this->data['semaine']]);
+    public function calculSemestre(
+        Semestre $semestre1,
+        Semestre $semestre2,
+        AnneeUniversitaire $anneeUniversitaire
+    ): void {
+        $semaine = $this->calendrierRepository->findOneBy([
+            'semaineReelle' => $this->data['semaine'],
+            'anneeUniversitaire' => $anneeUniversitaire->getId()
+        ]);
 
         $this->data['semestre1'] = $semestre1;
         $this->data['semestre2'] = $semestre2;
