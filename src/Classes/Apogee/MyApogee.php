@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Apogee/MyApogee.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/02/2021 11:41
+ * @lastUpdate 09/02/2021 12:06
  */
 
 /*
@@ -152,7 +152,7 @@ class MyApogee
 
         $i = 0;
         foreach ($objPHPExcel->getNamedRanges() as $name => $namedRange) {
-            if (0 === mb_strpos($name, 'APOL_')) {
+            if (0 === strpos($name, 'APOL_')) {
                 $G_tab_apoL[$i] = $namedRange->getName();
                 $G_tab_apoL_Coord[$i] = $namedRange->getRange();
                 ++$i;
@@ -161,7 +161,7 @@ class MyApogee
 
         $i = 0;
         foreach ($objPHPExcel->getNamedRanges() as $name => $namedRange) {
-            if (0 === mb_strpos($name, 'APOC_')) {
+            if (0 === strpos($name, 'APOC_')) {
                 $G_tab_apoC[$i] = $namedRange->getName();
                 $G_tab_apoC_Coord[$i] = $namedRange->getRange();
                 ++$i;
@@ -179,7 +179,6 @@ class MyApogee
             ++$i;
         }
         $v_nb_lig = $i - 1;
-
         // repere 1
         $notesSheet->setCellValue('A1', 'XX-APO_TITRES-XX');
         // 1ere colonne

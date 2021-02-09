@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/SousCommission/SousCommissionExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 09/02/2021 12:03
  */
 
 /*
@@ -526,7 +526,7 @@ class SousCommissionExport
 
         /* récupère les étudiants */
         $tEtudiant = [];
-        while ('' !== $this->myExcelRead->getCellColLigne(1, $ligne)) {
+        while ('' != $this->myExcelRead->getCellColLigne(1, $ligne)) {
             $tEtudiant[$ligne] = trim($this->myExcelRead->getCellColLigne(1, $ligne));
             ++$ligne;
         }
@@ -534,7 +534,7 @@ class SousCommissionExport
         /* récupère les modules */
         $tModule = [];
         $colonne = 5;
-        while ('' !== $this->myExcelRead->getCellColLigne($colonne, 14)) {
+        while ('' != $this->myExcelRead->getCellColLigne($colonne, 14)) {
             $val = explode('-', $this->myExcelRead->getCellColLigne($colonne, 14));
             $tModule[$colonne] = trim($val[0]);
             $colonne += 2; //3 si colonne résultat
