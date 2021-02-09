@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Apogee/MyApogee.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 09/02/2021 11:40
  */
 
 /*
@@ -219,14 +219,14 @@ class MyApogee
             }
 
             // on est à la fin des codes on tague le fichier texte
-            if (2 === $v_cell_occ) {
+            if ($v_cell_occ == 2) {
                 $notesSheet->setCellValueByColumnAndRow(1, $j, 'APO_COL_VAL_FIN');
                 ++$j;
                 $v_cell_occ = 1;
             }
 
             // recopie de la ligne de codes
-            if (1 === $v_cell_occ) {
+            if ($v_cell_occ == 1) {
                 // copie les cellules de la selection deb:fin (colonne)
                 $cellValues = $maquetteSheet->rangeToArray($deb . ':' . $fin);
 
@@ -238,7 +238,7 @@ class MyApogee
 
                 // conversion_adm_temoin
                 $cellule = $notesSheet->getCellByColumnAndRow(10, $j);
-                if (null !== $cellule && empty($cellule->getValue()) && 0 === $v_cell_apo_col_val_fin) {
+                if (empty($cellule->getValue()) && $v_cell_apo_col_val_fin == 0) {
                     $cellule->setValue(1);
                 }
                 if ('x' === $cellule->getValue()) {
@@ -288,7 +288,8 @@ class MyApogee
             // cellule de fin
             $fin = $this->getNewCoordinates($titre, 0, $v_nb_lig - $numLigne);
             // si on est pas a la derniere colonne
-            if ($titre !== $celluleFin) {
+            if ($titre != $celluleFin) {
+
                 // copie les cellules de la selection deb:fin (colonne)
                 $cellValues = $maquetteSheet->rangeToArray($deb . ':' . $fin);
 
