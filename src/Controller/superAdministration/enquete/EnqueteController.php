@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/enquete/EnqueteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 10/02/2021 17:59
  */
 
 namespace App\Controller\superAdministration\enquete;
@@ -98,7 +98,7 @@ class EnqueteController extends AbstractController
     public function edit(
         PrevisionnelRepository $previsionnelRepository,
         QuestionnaireQualite $questionnaire,
-        $step = 1
+        int $step = 1
     ): Response {
         if (2 === $step) {
             //etape 2 on récupère le prévisionnel
