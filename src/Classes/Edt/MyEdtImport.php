@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 11/02/2021 20:35
  */
 
 /*
@@ -210,7 +210,7 @@ class MyEdtImport
 
             /*On ferme le fichier*/
             fclose($handle);
-            unlink($this->dir . $this->nomfile); //suppression du fichier
+            unlink($this->nomfile); //suppression du fichier
             $this->entityManager->flush();
         }
     }
