@@ -1,23 +1,30 @@
 {
   "devDependencies": {
+    "@babel/core": "^7.12.3",
     "@fortawesome/fontawesome-free": "^5.13.1",
-    "@symfony/stimulus-bridge": "^1.0.0",
+    "@symfony/stimulus-bridge": "^2.0.0",
     "@symfony/ux-chartjs": "file:vendor/symfony/ux-chartjs/Resources/assets",
-    "@symfony/webpack-encore": "^0.32.0",
+    "@symfony/webpack-encore": "^1.0.0",
     "bootstrap": "^4.5.0",
     "bootstrap-select": "^1.13.18",
     "core-js": "^3.0.0",
+    "css-loader": "^5.0.1",
     "datatables.net": "^1.10.21",
+    "file-loader": "^6.2.0",
     "jquery": "^3.5.1",
     "node-sass": "^4.14.1",
     "perfect-scrollbar": "^1.5.0",
     "quill": "1.3.6",
     "regenerator-runtime": "^0.13.2",
-    "sass-loader": "^9.0.0",
-    "stimulus": "^1.1.1",
+    "sass-loader": "^9.0.3",
+    "stimulus": "^2.0.0",
+    "stimulus-clipboard": "^1.0.0",
     "sweetalert2": "^9.17.0",
-    "ts-loader": "^8.0.3",
+    "ts-loader": "^8.0.15",
     "typescript": "^4.0.2",
+    "vue": "^2.5",
+    "vue-loader": "^15",
+    "vue-template-compiler": "^2.6.12",
     "webpack-notifier": "^1.6.0"
   },
   "license": "UNLICENSED",
@@ -26,14 +33,13 @@
     "dev-server": "encore dev-server",
     "dev": "encore dev",
     "watch": "encore dev --watch",
-    "build": "encore production --progress",
-    "version": "auto-changelog -p && git add CHANGELOG.md"
+    "build": "encore production --progress"
   },
   "dependencies": {
     "babel-core": "^6.26.3",
-    "babel-loader": "^8.1.0",
+    "babel-loader": "^8.2.2",
     "babel-preset-es2015": "^6.24.1",
-    "html-loader": "^1.3.0",
+    "html-loader": "^1.3.2",
     "popper.js": "^1.16.1"
   },
   "version": "1.0.3"

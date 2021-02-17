@@ -1,15 +1,8 @@
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/app.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 04/12/2020 13:43
-
-// any CSS you import will output into a single css file (app.css in this case)
-import {startStimulusApp} from '@symfony/stimulus-bridge'
-
-export const app2 = startStimulusApp(
-  require.context('../controllers', true, /\.(j|t)sx?$/)
-)
+// @lastUpdate 11/02/2021 08:03
 
 import '@fortawesome/fontawesome-free/scss/fontawesome.scss'
 import '@fortawesome/fontawesome-free/scss/solid.scss'
@@ -39,12 +32,6 @@ $('input[type="file"]').on('change', function (e) {
 })
 
 $(document).ready(function () {
-  // copy link EDT
-  $(document).on('click', '#copyLink', function () {
-    $('#lienIcal').select()
-    document.execCommand('copy')
-  })
-
   // script pour afficher le fichier selectionné avec bootstrap4
   $('.custom-file input').change(function (e) {
     const files = []

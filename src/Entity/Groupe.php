@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Groupe.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 11/02/2021 20:35
  */
 
 namespace App\Entity;
@@ -32,7 +32,7 @@ class Groupe extends BaseEntity
     private ?TypeGroupe $typeGroupe;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, nullable=true)
      * @Groups({"groupe_administration"})
      */
     private ?string $codeApogee;

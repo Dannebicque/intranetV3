@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/EdtPlanningRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/02/2021 11:39
+ * @lastUpdate 17/02/2021 19:54
  */
 
 namespace App\Repository;
@@ -47,7 +47,10 @@ class EdtPlanningRepository extends ServiceEntityRepository
             $query->andWhere('p.semaine = :semaine')
                 ->setParameter('semaine', $semaine);
         }
-        $query->orderBy('p.semaine, p.jour, p.debut, p.groupe');
+        $query->orderBy('p.semaine', 'ASC')
+            ->addOrderBy('p.jour', 'ASC')
+            ->addOrderBy('p.debut', 'ASC')
+            ->addOrderBy('p.groupe', 'ASC');
 
         return $query->getQuery()
             ->getResult();
@@ -63,7 +66,9 @@ class EdtPlanningRepository extends ServiceEntityRepository
             ->where('p.semaine = :semaine')
             ->andWhere('p.semestre = :semestre')
             ->setParameters(['semaine' => $semaine, 'semestre' => $semestre])
-            ->orderBy('p.jour, p.debut, p.groupe')
+            ->orderBy('p.jour', 'ASC')
+            ->addOrderBy('p.debut', 'ASC')
+            ->addOrderBy('p.groupe', 'ASC')
             ->getQuery()
             ->getResult();
     }
@@ -78,7 +83,9 @@ class EdtPlanningRepository extends ServiceEntityRepository
             ->where('p.semaine = :semaine')
             ->andWhere('p.matiere = :matiere')
             ->setParameters(['semaine' => $semaine, 'matiere' => $module])
-            ->orderBy('p.jour, p.debut, p.groupe')
+            ->orderBy('p.jour', 'ASC')
+            ->addOrderBy('p.debut', 'ASC')
+            ->addOrderBy('p.groupe', 'ASC')
             ->getQuery()
             ->getResult();
     }
@@ -93,7 +100,9 @@ class EdtPlanningRepository extends ServiceEntityRepository
             ->where('p.semaine = :semaine')
             ->andWhere('p.jour = :jour')
             ->setParameters(['semaine' => $semaine, 'jour' => $jour])
-            ->orderBy('p.annee, p.debut, p.groupe')
+            ->orderBy('p.annee', 'ASC')
+            ->addOrderBy('p.debut', 'ASC')
+            ->addOrderBy('p.groupe', 'ASC')
             ->getQuery()
             ->getResult();
     }
@@ -108,7 +117,9 @@ class EdtPlanningRepository extends ServiceEntityRepository
             ->where('p.semaine = :semaine')
             ->andWhere('p.salle = :salle')
             ->setParameters(['semaine' => $semaine, 'salle' => $salle])
-            ->orderBy('p.semestre, p.debut, p.groupe')
+            ->orderBy('p.semestre', 'ASC')
+            ->addOrderBy('p.debut', 'ASC')
+            ->addOrderBy('p.groupe', 'ASC')
             ->getQuery()
             ->getResult();
     }
@@ -138,7 +149,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
             ->andWhere('p.jour = :jour')
             ->setParameters([
                 'semaine' => $semaine,
-                'jour'    => $jour,
+                'jour' => $jour,
             ])
             ->orderBy('p.debut')
             ->getQuery()
@@ -160,12 +171,13 @@ class EdtPlanningRepository extends ServiceEntityRepository
                 ->andWhere('p.semestre = :promo')
                 ->andWhere('p.groupe = 1 OR p.groupe = :groupetd OR p.groupe = :groupetp')
                 ->setParameters([
-                    'semaine'  => $semaine,
-                    'promo'    => $user->getSemestre()->getId(),
+                    'semaine' => $semaine,
+                    'promo' => $user->getSemestre()->getId(),
                     'groupetd' => $this->groupetd,
                     'groupetp' => $this->groupetp,
                 ])
-                ->orderBy('p.jour, p.debut')
+                ->orderBy('p.jour', 'ASC')
+                ->addOrderBy('p.debut', 'ASC')
                 ->getQuery()
                 ->getResult();
         }
@@ -180,9 +192,9 @@ class EdtPlanningRepository extends ServiceEntityRepository
     public function recupereEDTBornes($numSemaine, Semestre $semestre, $jour): array
     {
         $creneaux = [
-            1  => ['8h00', '9h30'],
-            4  => ['9h30', '11h00'],
-            7  => ['11h00', '12h30'],
+            1 => ['8h00', '9h30'],
+            4 => ['9h30', '11h00'],
+            7 => ['11h00', '12h30'],
             10 => ['12h30', '14h00'],
             13 => ['14h00', '15h30'],
             16 => ['15h30', '17h00'],
@@ -202,11 +214,12 @@ class EdtPlanningRepository extends ServiceEntityRepository
             ->andWhere('p.jour = :jour ')
             ->andWhere('p.semestre = :semestre')
             ->setParameters([
-                'semaine'  => $numSemaine,
-                'jour'     => $jour,
+                'semaine' => $numSemaine,
+                'jour' => $jour,
                 'semestre' => $semestre->getId(),
             ])
-            ->orderBy('p.groupe, p.debut')
+            ->orderBy('p.jour', 'ASC')
+            ->addOrderBy('p.debut', 'ASC')
             ->getQuery()
             ->getResult();
 
@@ -312,7 +325,9 @@ class EdtPlanningRepository extends ServiceEntityRepository
         $query = $this->createQueryBuilder('p')
             ->andWhere('p.intervenant = :idprof')
             ->setParameter('idprof', $user->getId())
-            ->orderBy('p.jour, p.debut, p.groupe')
+            ->orderBy('p.jour', 'ASC')
+            ->addOrderBy('p.debut', 'ASC')
+            ->addOrderBy('p.groupe', 'ASC')
             ->getQuery()
             ->getResult();
 

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/GraphiqueController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 07/02/2021 21:43
  */
 
 namespace App\Controller;
@@ -41,13 +41,13 @@ class GraphiqueController extends BaseController
 
         $chart = $chartBuilder->createChart(Chart::TYPE_BAR);
         $chart->setData([
-            'labels'   => $labels,
+            'labels' => $labels,
             'datasets' => [
                 [
-                    'label'           => $evaluation->getLibelle(),
+                    'label' => $evaluation->getLibelle(),
                     'backgroundColor' => 'rgb(255, 99, 132)',
-                    'borderColor'     => 'rgb(255, 99, 132)',
-                    'data'            => $repartition['repartition'],
+                    'borderColor' => 'rgb(255, 99, 132)',
+                    'data' => $repartition['repartition'],
                 ],
             ],
         ]);

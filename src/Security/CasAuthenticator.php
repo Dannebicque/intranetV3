@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Security/CasAuthenticator.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:10
+ * @lastUpdate 13/02/2021 22:52
  */
 
 namespace App\Security;
@@ -13,6 +13,7 @@ use App\Event\CASAuthenticationFailureEvent;
 use App\Repository\DepartementRepository;
 use phpCAS;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -114,5 +115,7 @@ class CasAuthenticator extends AbstractGuardAuthenticator
 
     public function start(Request $request, AuthenticationException $authException = null)
     {
+        //todo: a tester?
+        return new RedirectResponse($this->urlGenerator->generate('security_login'));
     }
 }

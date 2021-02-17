@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/EdtPlanning.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/02/2021 09:15
+ * @lastUpdate 17/02/2021 19:54
  */
 
 namespace App\Entity;
@@ -370,17 +370,17 @@ class EdtPlanning
     public function getJson()
     {
         return [
-            'id'          => $this->getId(),
-            'jour'        => $this->getJour(),
+            'id' => $this->getId(),
+            'jour' => $this->getJour(),
             'heureDbtInt' => $this->getDebut(),
             'heureFinInt' => $this->getFin(),
-            'salle'       => $this->getSalle(),
-            'typecours'   => $this->getType(),
-            'texte'       => $this->getTexte(),
-            'matiereId'   => null !== $this->getMatiere() ? $this->getMatiere()->getId() : null,
+            'salle' => $this->getSalle(),
+            'typecours' => $this->getType(),
+            'texte' => $this->getTexte(),
+            'matiereId' => null !== $this->getMatiere() ? $this->getMatiere()->getId() : null,
             'personnelId' => null !== $this->getIntervenant() ? $this->getIntervenant()->getId() : null,
-            'groupe'      => $this->getGroupe(),
-            'groupeId'    => $this->getGroupe(),
+            'groupe' => $this->getGroupe(),
+            'groupeId' => $this->getGroupe(),
         ];
     }
 

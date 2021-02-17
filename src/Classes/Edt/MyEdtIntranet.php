@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/02/2021 18:44
+ * @lastUpdate 17/02/2021 19:54
  */
 
 /*
@@ -193,7 +193,7 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
             $this->tab[$p->getJour()][$dbtEdt]['pl'] = $p->getId();
             $this->tab[$p->getJour()][$dbtEdt]['couleurTexte'] = $this->getCouleurTexte($p);
             $this->tab[$p->getJour()][$dbtEdt]['format'] = 'ok';
-            $this->valideFormat($p);
+            $this->valideFormat($p, $dbtEdt);
             $this->calculTotal($p);
         }
 
@@ -212,7 +212,15 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
         foreach ($pl as $p) {
             if ((TypeGroupe::TYPE_GROUPE_CM === $p->getType()) || (TypeGroupe::TYPE_GROUPE_TD === $p->getType() && $p->getGroupe() === $this->groupetd) || (TypeGroupe::TYPE_GROUPE_TP === $p->getType() && $p->getGroupe() === $this->groupetp)) {
                 $dbtEdt = $this->convertEdt($p->getDebut());
-                $finEdt = $this->convertEdt($p->getFin());
+                echo 'dbtEdt ' . $dbtEdt . '<br>';
+                if (
+                    array_key_exists($p->getJour(), $this->tab) &&
+                    array_key_exists($dbtEdt, $this->tab[$p->getJour()])) {
+                    //le créneau est déjà utilisé on utilise le suivant
+                    $dbtEdt++;
+                    echo 'dbtEdt augmenté ' . $dbtEdt . '<br>';
+                }
+
                 $debut = $p->getDebut();
                 $this->tab[$p->getJour()][$dbtEdt] = [];
                 $this->tab[$p->getJour()][$dbtEdt]['duree'] = $p->getFin() - $debut;
@@ -225,7 +233,7 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
                 $this->tab[$p->getJour()][$dbtEdt]['id'] = $p->getId();
                 $this->tab[$p->getJour()][$dbtEdt]['couleurTexte'] = $this->getCouleurTexte($p);
                 $this->tab[$p->getJour()][$dbtEdt]['commentaire'] = $this->hasCommentaire($p);
-                $this->valideFormat($p);
+                $this->valideFormat($p, $dbtEdt);
             }
         }
 
@@ -651,17 +659,16 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
         return $plann;
     }
 
-    private function valideFormat(EdtPlanning $p)
+    private function valideFormat(EdtPlanning $p, $idDebut)
     {
         $casedebut = $p->getDebut();
-        $idDebut = $this->convertEdt($casedebut);
         $casefin = $p->getFin();
         $duree = $casefin - $casedebut;
-        $this->tab[$p->getJour()][$this->convertEdt($casedebut)]['debut'] = $casedebut;
-        $this->tab[$p->getJour()][$this->convertEdt($casedebut)]['format'] = 'aie';
+        $this->tab[$p->getJour()][$idDebut]['debut'] = $casedebut;
+        $this->tab[$p->getJour()][$idDebut]['format'] = 'aie';
 
         //regarde si le format entre dans une case ou dépasse. retourne 'ok' ou 'nok'
-        if (\array_key_exists($casedebut, Constantes::TAB_CRENEAUX) && 0 === $duree % 3) {
+        if (\array_key_exists($casedebut, Constantes::TAB_CRENEAUX) && 0 === ($duree % 3)) {
             $this->tab[$p->getJour()][$idDebut]['format'] = 'ok';
 
             if (0 === $duree % 3) {
@@ -671,21 +678,22 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
             }
         } else {
             //pas sur un créneau classique pour le début
-            if (11 === $casedebut || 12 === $casedebut) {
-                $casedebut = 10;
-            } elseif (2 === $casedebut || 3 === $casedebut) {
-                $casedebut = 1;
-            } elseif (!\array_key_exists($casedebut, Constantes::TAB_CRENEAUX)) {
-                $casedebut -= ($duree % 3);
-            }
+//            if (11 === $casedebut || 12 === $casedebut) {
+//                $casedebut = 10;
+//            } elseif (2 === $casedebut || 3 === $casedebut) {
+//                $casedebut = 1;
+//            } elseif (!\array_key_exists($casedebut, Constantes::TAB_CRENEAUX)) {
+//                $casedebut -= ($duree % 3);
+//            }
 
-            if (null !== $idDebut) {
-                $this->tab[$p->getJour()][$this->convertEdt($casedebut)] = $this->tab[$p->getJour()][$idDebut];
-            }
+//            if (null !== $idDebut) {
+//                $this->tab[$p->getJour()][$this->convertEdt($casedebut)] = $this->tab[$p->getJour()][$idDebut];
+//            }
+            echo 'dbtEdt ' . $idDebut . ' nok<br>';
 
-            $this->tab[$p->getJour()][$this->convertEdt($casedebut)]['debut'] = $p->getDebut();
-            $this->tab[$p->getJour()][$this->convertEdt($casedebut)]['format'] = 'nok';
-            $this->tab[$p->getJour()][$this->convertEdt($casedebut)]['fin'] = $casefin;
+            $this->tab[$p->getJour()][$idDebut]['debut'] = $p->getDebut();
+            $this->tab[$p->getJour()][$idDebut]['format'] = 'nok';
+            $this->tab[$p->getJour()][$idDebut]['fin'] = $casefin;
         }
     }
 }

@@ -2,9 +2,21 @@
    format est ics.</p>
 
 <label for="lienIcal">Lien Ical</label>
-<div class="input-group">
-    <input type="text" class="form-control" value="{{ lienIcal }}" id="lienIcal">
+<div
+        data-controller="clipboard"
+        data-clipboard-success-content="Copié !"
+        class="input-group"
+>
+    <input type="text"
+           class="form-control"
+           value="{{ lienIcal }}"
+           data-clipboard-target="source">
     <span class="input-group-append">
-        <button class="btn btn-light" type="button" id="copyLink">Copier</button>
+        <button class="btn btn-light"
+                type="button"
+                data-action="clipboard#copy"
+                data-clipboard-target="button">
+            Copier
+        </button>
       </span>
 </div>
