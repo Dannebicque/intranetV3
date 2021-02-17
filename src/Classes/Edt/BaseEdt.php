@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/BaseEdt.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/02/2021 18:42
+ * @lastUpdate 17/02/2021 19:54
  */
 
 /*
@@ -126,7 +126,7 @@ abstract class BaseEdt
         }
 
         $this->calendrier = $this->calendrierRepository->findOneBy([
-            'semaineReelle'      => $this->semaine,
+            'semaineReelle' => $this->semaine,
             'anneeUniversitaire' => $anneeUniversitaire->getId(),
         ]);
         if (null !== $this->calendrier) {
@@ -135,7 +135,7 @@ abstract class BaseEdt
         } else {
             //si la requete est vide, on prend la première...
             $this->calendrier = $this->calendrierRepository->findOneBy([
-                'semaineFormation'   => 1,
+                'semaineFormation' => 1,
                 'anneeUniversitaire' => $anneeUniversitaire->getId(),
             ]);
             if (null !== $this->calendrier) {

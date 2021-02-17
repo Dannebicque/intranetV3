@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/webpack.config.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/01/2021 14:50
+// @lastUpdate 17/02/2021 19:54
 
 var Encore = require('@symfony/webpack-encore')
 var path = require('path')
@@ -14,7 +14,6 @@ if (!Encore.isRuntimeEnvironmentConfigured()) {
 }
 
 Encore
-
   // directory where compiled assets will be stored
   .setOutputPath('public/build/')
   // public path used by the web server to access the output path
@@ -30,7 +29,7 @@ Encore
    * Each entry will result in one JavaScript file (e.g. app.js)
    * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
    */
-  .addEntry('app', './assets/js/app.js')
+  .addEntry('app', './assets/app.js')
   .addEntry('covid', './assets/js/pages/covid.js')
   .addEntry('sadmCovid', './assets/js/pages/sadmCovid.js')
   .addEntry('agenda', './assets/js/pages/agenda.js')
@@ -74,6 +73,9 @@ Encore
   .addEntry('sadm.anneeuniversitaire', './assets/js/pages/sadm.anneeuniversitaire.js')
   .addEntry('adm.reservation.materiel_commun', './assets/js/pages/adm.reservation.materiel_commun.js')
 
+  //VueJs
+  //.enableVueLoader()
+  .enableStimulusBridge('./assets/controllers.json')
 
   // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
   .splitEntryChunks()
@@ -103,9 +105,8 @@ Encore
 
   // enables Sass/SCSS support
   .enableSassLoader()
-  .enableStimulusBridge(
-    './assets/controllers.json'
-  )
+
+
   // uncomment if you're having problems with a jQuery plugin
   .autoProvidejQuery()
   .configureBabel(function (babelConfig) {
@@ -115,7 +116,7 @@ Encore
     // no plugins are added by default, but you can add some
     //babelConfig.plugins.push('styled-jsx/babel');
   }, {})
-  .disableImagesLoader()
+  //.disableImagesLoader()
   .addRule({
     test: /\.(svg|png|jpg|jpeg|gif|ico)/,
     exclude: /node_modules\/quill\/assets\/icons\/(.*)\.svg$/,
@@ -152,13 +153,17 @@ Encore
       }
     }]
   })
+  .addAliases({
+    'parchment': path.resolve(__dirname, 'node_modules/parchment/src/parchment.ts'),
+    'quill$': path.resolve(__dirname, 'node_modules/quill/quill.js')
+  })
 
 config = Encore.getWebpackConfig()
 
-config.resolve.alias = {
-  'parchment': path.resolve(__dirname, 'node_modules/parchment/src/parchment.ts'),
-  'quill$': path.resolve(__dirname, 'node_modules/quill/quill.js')
-}
+
 config.resolve.extensions = ['.js', '.ts', '.svg']
 
 module.exports = config
+
+
+

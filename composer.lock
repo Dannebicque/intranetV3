@@ -4,7 +4,7 @@
     "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
     "This file is @generated automatically"
   ],
-  "content-hash": "5bf6d723e69a4a5395152d5a4e148cce",
+  "content-hash": "09a46dd2d158eabb0ea2d481cc9c4045",
   "packages": [
     {
       "name": "bacon/bacon-qr-code",
@@ -1422,16 +1422,16 @@
     },
     {
       "name": "doctrine/migrations",
-      "version": "3.0.2",
+      "version": "3.1.0",
       "source": {
         "type": "git",
         "url": "https://github.com/doctrine/migrations.git",
-        "reference": "6195e836ffc2e1bd5ddea468fa46015fbea00b3a"
+        "reference": "260991be753a38aa25b6f2d13dbb7f113f8dbf8f"
       },
       "dist": {
         "type": "zip",
-        "url": "https://api.github.com/repos/doctrine/migrations/zipball/6195e836ffc2e1bd5ddea468fa46015fbea00b3a",
-        "reference": "6195e836ffc2e1bd5ddea468fa46015fbea00b3a",
+        "url": "https://api.github.com/repos/doctrine/migrations/zipball/260991be753a38aa25b6f2d13dbb7f113f8dbf8f",
+        "reference": "260991be753a38aa25b6f2d13dbb7f113f8dbf8f",
         "shasum": ""
       },
       "require": {
@@ -1509,7 +1509,7 @@
       ],
       "support": {
         "issues": "https://github.com/doctrine/migrations/issues",
-        "source": "https://github.com/doctrine/migrations/tree/3.0.2"
+        "source": "https://github.com/doctrine/migrations/tree/3.1.0"
       },
       "funding": [
         {
@@ -1525,7 +1525,7 @@
           "type": "tidelift"
         }
       ],
-      "time": "2020-12-23T14:08:13+00:00"
+      "time": "2021-02-07T21:16:17+00:00"
     },
     {
       "name": "doctrine/orm",
@@ -3208,16 +3208,16 @@
         "branch-alias": {
           "dev-1.0": "1.7-dev",
           "dev-master": "2.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Liip\\ImagineBundle\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
+        }
+      },
+      "autoload": {
+        "psr-4": {
+          "Liip\\ImagineBundle\\": ""
+        },
+        "exclude-from-classmap": [
+          "/Tests/"
+        ]
+      },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
@@ -3348,52 +3348,52 @@
       "type": "library",
       "autoload": {
         "psr-4": {
-                    "Complex\\": "classes/src/"
-                },
-                "files": [
-                  "classes/src/functions/abs.php",
-                  "classes/src/functions/acos.php",
-                  "classes/src/functions/acosh.php",
-                  "classes/src/functions/acot.php",
-                  "classes/src/functions/acoth.php",
-                  "classes/src/functions/acsc.php",
-                  "classes/src/functions/acsch.php",
-                  "classes/src/functions/argument.php",
-                  "classes/src/functions/asec.php",
-                  "classes/src/functions/asech.php",
-                  "classes/src/functions/asin.php",
-                  "classes/src/functions/asinh.php",
-                  "classes/src/functions/atan.php",
-                  "classes/src/functions/atanh.php",
-                  "classes/src/functions/conjugate.php",
-                  "classes/src/functions/cos.php",
-                  "classes/src/functions/cosh.php",
-                  "classes/src/functions/cot.php",
-                  "classes/src/functions/coth.php",
-                  "classes/src/functions/csc.php",
-                  "classes/src/functions/csch.php",
-                  "classes/src/functions/exp.php",
-                  "classes/src/functions/inverse.php",
-                  "classes/src/functions/ln.php",
-                  "classes/src/functions/log2.php",
-                  "classes/src/functions/log10.php",
-                  "classes/src/functions/negative.php",
-                  "classes/src/functions/pow.php",
-                  "classes/src/functions/rho.php",
-                  "classes/src/functions/sec.php",
-                  "classes/src/functions/sech.php",
-                  "classes/src/functions/sin.php",
-                  "classes/src/functions/sinh.php",
-                  "classes/src/functions/sqrt.php",
-                  "classes/src/functions/tan.php",
-                  "classes/src/functions/tanh.php",
-                  "classes/src/functions/theta.php",
-                  "classes/src/operations/add.php",
-                  "classes/src/operations/subtract.php",
-                  "classes/src/operations/multiply.php",
-                  "classes/src/operations/divideby.php",
-                  "classes/src/operations/divideinto.php"
-                ]
+          "Complex\\": "classes/src/"
+        },
+        "files": [
+          "classes/src/functions/abs.php",
+          "classes/src/functions/acos.php",
+          "classes/src/functions/acosh.php",
+          "classes/src/functions/acot.php",
+          "classes/src/functions/acoth.php",
+          "classes/src/functions/acsc.php",
+          "classes/src/functions/acsch.php",
+          "classes/src/functions/argument.php",
+          "classes/src/functions/asec.php",
+          "classes/src/functions/asech.php",
+          "classes/src/functions/asin.php",
+          "classes/src/functions/asinh.php",
+          "classes/src/functions/atan.php",
+          "classes/src/functions/atanh.php",
+          "classes/src/functions/conjugate.php",
+          "classes/src/functions/cos.php",
+          "classes/src/functions/cosh.php",
+          "classes/src/functions/cot.php",
+          "classes/src/functions/coth.php",
+          "classes/src/functions/csc.php",
+          "classes/src/functions/csch.php",
+          "classes/src/functions/exp.php",
+          "classes/src/functions/inverse.php",
+          "classes/src/functions/ln.php",
+          "classes/src/functions/log2.php",
+          "classes/src/functions/log10.php",
+          "classes/src/functions/negative.php",
+          "classes/src/functions/pow.php",
+          "classes/src/functions/rho.php",
+          "classes/src/functions/sec.php",
+          "classes/src/functions/sech.php",
+          "classes/src/functions/sin.php",
+          "classes/src/functions/sinh.php",
+          "classes/src/functions/sqrt.php",
+          "classes/src/functions/tan.php",
+          "classes/src/functions/tanh.php",
+          "classes/src/functions/theta.php",
+          "classes/src/operations/add.php",
+          "classes/src/operations/subtract.php",
+          "classes/src/operations/multiply.php",
+          "classes/src/operations/divideby.php",
+          "classes/src/operations/divideinto.php"
+        ]
       },
       "notification-url": "https://packagist.org/downloads/",
       "license": [
@@ -3834,32 +3834,32 @@
       "autoload": {
         "psr-4": {
           "PhpOffice\\PhpSpreadsheet\\": "src/PhpSpreadsheet"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-              {
-                "name": "Maarten Balliauw",
-                "homepage": "https://blog.maartenballiauw.be"
-              },
-              {
-                "name": "Mark Baker",
-                "homepage": "https://markbakeruk.net"
-              },
-              {
-                "name": "Franck Lefevre",
-                "homepage": "https://rootslabs.net"
-              },
-              {
-                "name": "Erik Tilt"
-              },
-              {
-                "name": "Adrien Crivelli"
-              }
-            ],
+        }
+      },
+      "notification-url": "https://packagist.org/downloads/",
+      "license": [
+        "MIT"
+      ],
+      "authors": [
+        {
+          "name": "Maarten Balliauw",
+          "homepage": "https://blog.maartenballiauw.be"
+        },
+        {
+          "name": "Mark Baker",
+          "homepage": "https://markbakeruk.net"
+        },
+        {
+          "name": "Franck Lefevre",
+          "homepage": "https://rootslabs.net"
+        },
+        {
+          "name": "Erik Tilt"
+        },
+        {
+          "name": "Adrien Crivelli"
+        }
+      ],
       "description": "PHPSpreadsheet - Read, Create and Write Spreadsheet documents in PHP - Spreadsheet engine",
       "homepage": "https://github.com/PHPOffice/PhpSpreadsheet",
       "keywords": [
@@ -4576,31 +4576,31 @@
         "symfony/config": "^4.4|^5.0",
         "symfony/dependency-injection": "^4.4|^5.0",
         "symfony/framework-bundle": "^4.4|^5.0",
-                "symfony/http-kernel": "^4.4|^5.0"
-            },
-            "conflict": {
-                "doctrine/doctrine-cache-bundle": "<1.3.1",
-                "doctrine/persistence": "<1.3"
-            },
-            "require-dev": {
-              "doctrine/dbal": "^2.10|^3.0",
-              "doctrine/doctrine-bundle": "^1.11|^2.0",
-              "doctrine/orm": "^2.5",
-              "nyholm/psr7": "^1.1",
-              "symfony/browser-kit": "^4.4|^5.0",
-              "symfony/doctrine-bridge": "^4.4|^5.0",
-              "symfony/dom-crawler": "^4.4|^5.0",
-              "symfony/expression-language": "^4.4|^5.0",
-              "symfony/finder": "^4.4|^5.0",
-              "symfony/monolog-bridge": "^4.0|^5.0",
-              "symfony/monolog-bundle": "^3.2",
-              "symfony/phpunit-bridge": "^4.4.9|^5.0.9",
-              "symfony/psr-http-message-bridge": "^1.1",
-              "symfony/security-bundle": "^4.4|^5.0",
-              "symfony/twig-bundle": "^4.4|^5.0",
-              "symfony/yaml": "^4.4|^5.0",
-              "twig/twig": "^1.34|^2.4|^3.0"
-            },
+        "symfony/http-kernel": "^4.4|^5.0"
+      },
+      "conflict": {
+        "doctrine/doctrine-cache-bundle": "<1.3.1",
+        "doctrine/persistence": "<1.3"
+      },
+      "require-dev": {
+        "doctrine/dbal": "^2.10|^3.0",
+        "doctrine/doctrine-bundle": "^1.11|^2.0",
+        "doctrine/orm": "^2.5",
+        "nyholm/psr7": "^1.1",
+        "symfony/browser-kit": "^4.4|^5.0",
+        "symfony/doctrine-bridge": "^4.4|^5.0",
+        "symfony/dom-crawler": "^4.4|^5.0",
+        "symfony/expression-language": "^4.4|^5.0",
+        "symfony/finder": "^4.4|^5.0",
+        "symfony/monolog-bridge": "^4.0|^5.0",
+        "symfony/monolog-bundle": "^3.2",
+        "symfony/phpunit-bridge": "^4.4.9|^5.0.9",
+        "symfony/psr-http-message-bridge": "^1.1",
+        "symfony/security-bundle": "^4.4|^5.0",
+        "symfony/twig-bundle": "^4.4|^5.0",
+        "symfony/yaml": "^4.4|^5.0",
+        "twig/twig": "^1.34|^2.4|^3.0"
+      },
       "type": "symfony-bundle",
       "extra": {
         "branch-alias": {
@@ -10755,16 +10755,16 @@
     },
     {
       "name": "symfony/maker-bundle",
-      "version": "v1.28.0",
+      "version": "v1.29.0",
       "source": {
         "type": "git",
         "url": "https://github.com/symfony/maker-bundle.git",
-        "reference": "6f4d27a68c92179c124f5331a27e32d197c9bd59"
+        "reference": "9a9e3f4253ca0d923ad49b327db6f89a8f74fe4c"
       },
       "dist": {
         "type": "zip",
-        "url": "https://api.github.com/repos/symfony/maker-bundle/zipball/6f4d27a68c92179c124f5331a27e32d197c9bd59",
-        "reference": "6f4d27a68c92179c124f5331a27e32d197c9bd59",
+        "url": "https://api.github.com/repos/symfony/maker-bundle/zipball/9a9e3f4253ca0d923ad49b327db6f89a8f74fe4c",
+        "reference": "9a9e3f4253ca0d923ad49b327db6f89a8f74fe4c",
         "shasum": ""
       },
       "require": {
@@ -10823,7 +10823,7 @@
       ],
       "support": {
         "issues": "https://github.com/symfony/maker-bundle/issues",
-        "source": "https://github.com/symfony/maker-bundle/tree/v1.28.0"
+        "source": "https://github.com/symfony/maker-bundle/tree/v1.29.0"
       },
       "funding": [
         {
@@ -10839,7 +10839,7 @@
           "type": "tidelift"
         }
       ],
-      "time": "2021-01-15T18:19:20+00:00"
+      "time": "2021-02-07T01:02:28+00:00"
     },
     {
       "name": "symfony/phpunit-bridge",

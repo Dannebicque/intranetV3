@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/css/app.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/01/2021 12:23
+// @lastUpdate 17/02/2021 19:54
 
 @import "core.min.css";
 @import "./material-icons.css";
@@ -516,6 +516,10 @@ thead {
 
 .avatar-circle-lg {
   @include avatar(250px);
+}
+
+.avatar-circle-sm > .initials {
+  top: -3.5px;
 }
 
 .datepicker-days .datepicker-switch {
