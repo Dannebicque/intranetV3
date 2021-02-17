@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyIcal.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/02/2021 09:08
+ * @lastUpdate 17/02/2021 08:59
  */
 
 /*
@@ -139,7 +139,7 @@ class MyIcal
             $decalage_horaire = 1 * 3600;
         } elseif (($mois_courant > 3) && ($mois_courant < 10)) {
             $decalage_horaire = 2 * 3600;
-        } elseif (3 === $mois_courant) {
+        } elseif (3 === (int)$mois_courant) {
             if (!isset($num_dernier_dimanche[$annee_courante][$mois_courant])) {
                 $num_dernier_dimanche[$annee_courante][$mois_courant] = $this->getDernierDimancheDuMois2($mois_courant,
                     $annee_courante);
@@ -149,7 +149,7 @@ class MyIcal
             } else {
                 $decalage_horaire = 1 * 3600;
             }
-        } elseif ('10' === $mois_courant) {
+        } elseif (10 === (int)$mois_courant) {
             if (!isset($num_dernier_dimanche[$annee_courante][$mois_courant])) {
                 $num_dernier_dimanche[$annee_courante][$mois_courant] = $this->getDernierDimancheDuMois2($mois_courant,
                     $annee_courante);
