@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantExportReleve.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 18/02/2021 12:42
  */
 
 /*
@@ -15,6 +15,7 @@ namespace App\Classes\Etudiant;
 
 use App\Classes\MyEvaluations;
 use App\Classes\Pdf\MyPDF;
+use App\Classes\Tools;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Etudiant;
 use App\Entity\Scolarite;
@@ -71,12 +72,12 @@ class EtudiantExportReleve
         $this->myEvaluations->getEvaluationsSemestre($semestre, $anneeUniversitaire);
 
         return $this->myPdf::generePdf('pdf/releveProvisoire.html.twig', [
-            'etudiant'           => $this->etudiant,
-            'notes'              => $this->getNotesEtudiantSemestre($semestre, $anneeUniversitaire),
-            'syntheses'          => $this->myEvaluations->getStatistiques(),
+            'etudiant' => $this->etudiant,
+            'notes' => $this->getNotesEtudiantSemestre($semestre, $anneeUniversitaire),
+            'syntheses' => $this->myEvaluations->getStatistiques(),
             'anneeUniversitaire' => $semestre->getAnneeUniversitaire(),
-            'semestre'           => $semestre,
-        ], 'releveNoteProvisoire-' . $this->etudiant->getNom() . '.pdf',
+            'semestre' => $semestre,
+        ], 'releveNoteProvisoire-' . Tools::slug($this->etudiant->getNom()) . '.pdf',
             $this->etudiant->getDepartement()->getLibelle());
     }
 
@@ -116,11 +117,11 @@ class EtudiantExportReleve
             if (0 === $etudiant->getAnneeSortie()) {
                 $this->etudiant = $etudiant;
                 $this->myPdf::genereAndSavePdf('pdf/releveProvisoire.html.twig', [
-                    'etudiant'           => $this->etudiant,
-                    'notes'              => $this->getNotesEtudiantSemestre($semestre, $anneeUniversitaire),
-                    'syntheses'          => $statistiques,
+                    'etudiant' => $this->etudiant,
+                    'notes' => $this->getNotesEtudiantSemestre($semestre, $anneeUniversitaire),
+                    'syntheses' => $statistiques,
                     'anneeUniversitaire' => $anneeUniversitaire,
-                    'semestre'           => $semestre,
+                    'semestre' => $semestre,
                 ], 'releveNoteProvisoire-' . $this->etudiant->getNom(),
                     $this->dir,
                     $libelleDepartement);
