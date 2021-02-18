@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantExportReleve.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/02/2021 12:42
+ * @lastUpdate 18/02/2021 12:44
  */
 
 /*
@@ -92,7 +92,7 @@ class EtudiantExportReleve
     {
         return $this->myPdf::generePdf('pdf/releveDefinitif.html.twig', [
             'scolarite' => $scolarite,
-        ], 'releveNotedefinitif-' . $scolarite->getEtudiant()->getNom() . '.pdf',
+        ], 'releveNotedefinitif-' . Tools::slug($scolarite->getEtudiant()->getNom()) . '.pdf',
             $scolarite->getEtudiant()->getDepartement()->getLibelle());
     }
 
@@ -116,19 +116,20 @@ class EtudiantExportReleve
         foreach ($etudiants as $etudiant) {
             if (0 === $etudiant->getAnneeSortie()) {
                 $this->etudiant = $etudiant;
+                $nomFichier = 'releveNoteProvisoire-' . Tools::slug($this->etudiant->getNom());
                 $this->myPdf::genereAndSavePdf('pdf/releveProvisoire.html.twig', [
                     'etudiant' => $this->etudiant,
                     'notes' => $this->getNotesEtudiantSemestre($semestre, $anneeUniversitaire),
                     'syntheses' => $statistiques,
                     'anneeUniversitaire' => $anneeUniversitaire,
                     'semestre' => $semestre,
-                ], 'releveNoteProvisoire-' . $this->etudiant->getNom(),
+                ], $nomFichier,
                     $this->dir,
                     $libelleDepartement);
-                $file = $this->dir . 'releveNoteProvisoire-' . $this->etudiant->getNom() . '.pdf';
+                $file = $this->dir . $nomFichier . '.pdf';
                 $tabFiles[] = $file;
                 $zip->addFile($file,
-                    $semestre->getLibelle() . '/releveNoteProvisoire-' . $this->etudiant->getNom() . '.pdf');
+                    $semestre->getLibelle() . '/' . $nomFichier . '.pdf');
             }
         }
 
