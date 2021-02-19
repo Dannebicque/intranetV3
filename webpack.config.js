@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/webpack.config.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 17/02/2021 19:54
+// @lastUpdate 18/02/2021 18:02
 
 var Encore = require('@symfony/webpack-encore')
 var path = require('path')
@@ -19,7 +19,10 @@ Encore
   // public path used by the web server to access the output path
   .setPublicPath('/build')
   // only needed for CDN's or sub-directory deploy
-
+  .copyFiles({
+    from: 'node_modules/tinymce/skins',
+    to: 'skins/[path]/[name].[ext]'
+  })
   /*
    * ENTRY CONFIG
    *
@@ -117,28 +120,28 @@ Encore
     //babelConfig.plugins.push('styled-jsx/babel');
   }, {})
   //.disableImagesLoader()
-  .addRule({
-    test: /\.(svg|png|jpg|jpeg|gif|ico)/,
-    exclude: /node_modules\/quill\/assets\/icons\/(.*)\.svg$/,
-    use: [{
-      loader: 'file-loader',
-      options: {
-        filename: 'images/[name].[hash:8].[ext]',
-        publicPath: '/build/'
-      }
-    }]
-  })
-  .addLoader(
-    {
-      test: /\.svg$/,
-      use: [{
-        loader: 'html-loader',
-        options: {
-          minimize: true
-        }
-      }]
-    }
-  )
+  // .addRule({
+  //   test: /\.(svg|png|jpg|jpeg|gif|ico)/,
+  //   exclude: /node_modules\/quill\/assets\/icons\/(.*)\.svg$/,
+  //   use: [{
+  //     loader: 'file-loader',
+  //     options: {
+  //       filename: 'images/[name].[hash:8].[ext]',
+  //       publicPath: '/build/'
+  //     }
+  //   }]
+  // })
+  // .addLoader(
+  //   {
+  //     test: /node_modules\/quill\/assets\/icons\/(.*)\.svg$/,
+  //     use: [{
+  //       loader: 'html-loader',
+  //       options: {
+  //         minimize: true
+  //       }
+  //     }]
+  //   }
+  // )
   .addLoader({
     test: /\.ts$/,
     use: [{
@@ -155,11 +158,10 @@ Encore
   })
   .addAliases({
     'parchment': path.resolve(__dirname, 'node_modules/parchment/src/parchment.ts'),
-    'quill$': path.resolve(__dirname, 'node_modules/quill/quill.js')
+    //'quill$': path.resolve(__dirname, 'node_modules/quill/quill.js')
   })
 
 config = Encore.getWebpackConfig()
-
 
 config.resolve.extensions = ['.js', '.ts', '.svg']
 

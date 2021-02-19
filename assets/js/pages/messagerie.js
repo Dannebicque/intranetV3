@@ -1,8 +1,14 @@
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/messagerie.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 02/11/2020 09:05
+// @lastUpdate 19/02/2021 18:22
+
+import tinymce from 'tinymce/tinymce'
+import 'tinymce/icons/default'
+// A theme is also required
+import 'tinymce/themes/silver'
+import '../../vendor/tinyMceLang/fr_FR'
 
 $(document).on('click', '.messagerie-filtre', function (e) {
   e.preventDefault()
@@ -85,7 +91,20 @@ $(document).on('click', '#new-message', function (e) {
   e.preventDefault()
   e.stopPropagation()
 
-  $('#messages-liste').empty().load(Routing.generate('messagerie_nouveau'))
+  console.log('toto')
+
+
+  $('#messages-liste').empty().load(Routing.generate('messagerie_nouveau'), {}, (function () {
+      tinymce.init({
+        selector: '#messageMessage',
+        height: 300,
+        menubar: false,
+        language: 'fr_FR',
+        content_css: 'default',
+        toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent'
+      })
+    }
+  ))
 })
 
 $(document).on('click', '#marquerNotificationsRead', function (e) {
@@ -121,7 +140,7 @@ $(document).on('click', '#messageSent', function (e) {
   $(this).text('Envoi en cours...')
 
   let formData = new FormData($('form')[0])
-  formData.append('message', $('.ql-editor').html())
+  formData.append('messageMessage', tinymce.activeEditor.getContent({format: 'html'}))
 
   $.ajax({
     url: Routing.generate('messagerie_sent'),
@@ -182,25 +201,25 @@ $(document).on('click', '.messageDestinataireType', function () {
   const blocDestGroupe = $('#blocDestGroupe')
   const blocDestSemestre = $('#blocDestSemestre')
 
-  if (type === 'e'){
+  if (type === 'e') {
     blocDestLibreEtudiant.show()
     blocDestLibrePersonnel.hide()
     blocDestMessgaeInfo.hide()
     blocDestGroupe.hide()
     blocDestSemestre.hide()
-  } else if (type === 's'){
+  } else if (type === 's') {
     blocDestLibreEtudiant.hide()
     blocDestLibrePersonnel.hide()
     blocDestMessgaeInfo.hide()
     blocDestGroupe.hide()
     blocDestSemestre.show()
-  }else if (type === 'g'){
+  } else if (type === 'g') {
     blocDestLibreEtudiant.hide()
     blocDestLibrePersonnel.hide()
     blocDestMessgaeInfo.hide()
     blocDestGroupe.show()
     blocDestSemestre.hide()
-  }else if (type === 'p'){
+  } else if (type === 'p') {
     blocDestLibreEtudiant.hide()
     blocDestLibrePersonnel.show()
     blocDestMessgaeInfo.hide()

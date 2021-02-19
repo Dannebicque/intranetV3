@@ -118,12 +118,16 @@
                placeholder="{{ 'message.subject'|trans }}" id="messageSubject" name="messageSubject"
                {% if message != null %}value="{{ message.sujet }}"{% endif %}>
         <br>
-        <div class="quill">
-            <div data-provide="quill" data-placeholder="{{ 'votre.message'|trans }}..."
-                 style="height: 206px" id="messageMessage">
-                {% if message != null %}{{ message.message|raw }}{% endif %}
-            </div>
-        </div>
+        {# <div> #}
+        {# <div data-provide="quill" data-placeholder="{{ 'votre.message'|trans }}..." #}
+        {# style="height: 206px" id="messageMessage"> #}
+        {# {% if message != null %}{{ message.message|raw }}{% endif %} #}
+        {# </div> #}
+        {# </div> #}
+        <label for="messageMessage" class="sr-only">Message</label>
+        <textarea id="messageMessage" name="messageMessage">
+            {% if message != null %}{{ message.message|raw }}{% endif %}
+        </textarea>
         <br>
         <div style="display:none" id="blocPj">
             <div class="alert alert-info">
