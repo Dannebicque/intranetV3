@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 17/02/2021 19:54
+ * @lastUpdate 19/02/2021 08:18
  */
 
 /*
@@ -212,13 +212,11 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
         foreach ($pl as $p) {
             if ((TypeGroupe::TYPE_GROUPE_CM === $p->getType()) || (TypeGroupe::TYPE_GROUPE_TD === $p->getType() && $p->getGroupe() === $this->groupetd) || (TypeGroupe::TYPE_GROUPE_TP === $p->getType() && $p->getGroupe() === $this->groupetp)) {
                 $dbtEdt = $this->convertEdt($p->getDebut());
-                echo 'dbtEdt ' . $dbtEdt . '<br>';
                 if (
                     array_key_exists($p->getJour(), $this->tab) &&
                     array_key_exists($dbtEdt, $this->tab[$p->getJour()])) {
                     //le créneau est déjà utilisé on utilise le suivant
                     $dbtEdt++;
-                    echo 'dbtEdt augmenté ' . $dbtEdt . '<br>';
                 }
 
                 $debut = $p->getDebut();
@@ -689,8 +687,6 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
 //            if (null !== $idDebut) {
 //                $this->tab[$p->getJour()][$this->convertEdt($casedebut)] = $this->tab[$p->getJour()][$idDebut];
 //            }
-            echo 'dbtEdt ' . $idDebut . ' nok<br>';
-
             $this->tab[$p->getJour()][$idDebut]['debut'] = $p->getDebut();
             $this->tab[$p->getJour()][$idDebut]['format'] = 'nok';
             $this->tab[$p->getJour()][$idDebut]['fin'] = $casefin;
