@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MySalleExamen.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 19/02/2021 12:06
  */
 
 /*
@@ -27,6 +27,7 @@ use App\Repository\PersonnelRepository;
 use App\Repository\SalleExamenRepository;
 use App\Repository\TypeGroupeRepository;
 use Doctrine\Common\Collections\Collection;
+use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
@@ -75,6 +76,7 @@ class MySalleExamen
      * @param $requestenseignant1
      * @param $requestenseignant2
      *
+     * @return PdfResponse
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -85,7 +87,7 @@ class MySalleExamen
         $requestenseignant1,
         $requestenseignant2,
         Departement $departement
-    ): void {
+    ) {
         $this->matiere = $this->matiereRepository->find($requestmatiere);
 
         if (null !== $this->salle && null !== $this->matiere) {
@@ -114,18 +116,18 @@ class MySalleExamen
 
             /* document 1 par groupe */
             $data = [
-                'matiere'   => $this->matiere,
+                'matiere' => $this->matiere,
                 'etudiants' => $etudiants,
-                'tabplace'  => $this->placement($etudiants, $tabplace),
-                'typeg'     => $this->typeGroupe,
-                'salle'     => $this->salle,
-                'ens1'      => '' !== $requestenseignant1 ? $this->personnelRepository->find($requestenseignant1) : null,
-                'ens2'      => '' !== $requestenseignant2 ? $this->personnelRepository->find($requestenseignant2) : null,
-                'groupes'   => $grdetail,
-                'depreuve'  => (string)$requestdateeval,
+                'tabplace' => $this->placement($etudiants, $tabplace),
+                'typeg' => $this->typeGroupe,
+                'salle' => $this->salle,
+                'ens1' => '' !== $requestenseignant1 ? $this->personnelRepository->find($requestenseignant1) : null,
+                'ens2' => '' !== $requestenseignant2 ? $this->personnelRepository->find($requestenseignant2) : null,
+                'groupes' => $grdetail,
+                'depreuve' => (string)$requestdateeval,
             ];
 
-            $this->myPdf::generePdf('pdf/placement.html.twig', $data, 'placement', $departement->getLibelle());
+            return $this->myPdf::generePdf('pdf/placement.html.twig', $data, 'placement', $departement->getLibelle());
         }
     }
 
