@@ -1,10 +1,9 @@
-Copie du message envoyé à {{ nbetudiant }} personne(s). Au total {{ nb }} message(s) ont été envoyé(s) (mail
-université et mail personnel lorsque disponible).
+Copie du message envoyé à {{ nbetudiant }} personne(s). Au total {{ nb }} message(s) ont été envoyé(s) (mailuniversité et mail personnel lorsque disponible).
+<br>
 ====
-
+<br><br>
 {{ message|raw }}
-
-
+<br><br>
 {% if expediteur.signature=="" %}
     {{ expediteur.displayPr }}
 {% else %}

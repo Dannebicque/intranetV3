@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/MessagerieController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 18/02/2021 18:14
  */
 
 namespace App\Controller;
@@ -171,7 +171,7 @@ class MessagerieController extends BaseController
 
         $sujet = $request->request->get('messageSubject');
         $copie = $request->request->get('messageCopy');
-        $message = $request->request->get('message');
+        $message = $request->request->get('messageMessage');
 
         foreach ($request->files as $file) {
             if (null !== $file) {

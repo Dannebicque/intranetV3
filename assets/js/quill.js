@@ -1,13 +1,14 @@
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/quill.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 04/10/2020 06:58
+// @lastUpdate 19/02/2021 18:22
 
 import '../css/quill.css'
 
 import Quill from 'quill/core'
 
+import Icons from 'quill/ui/icons'
 import Toolbar from 'quill/modules/toolbar'
 import Snow from 'quill/themes/snow'
 
@@ -35,7 +36,8 @@ Quill.register({
   'formats/header': Header,
   'formats/list': List,
   'formats/list-item': ListItem,
-  'formats/align': AlignStyle
+  'formats/align': AlignStyle,
+  'ui/icons': Icons
 })
 
 
