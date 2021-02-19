@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/SalleExamenController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 19/02/2021 10:49
  */
 
 namespace App\Controller\appPersonnel;
@@ -45,7 +45,6 @@ class SalleExamenController extends BaseController
     }
 
     /**
-     * @return RedirectResponse
      * @Route("/application/salle-examen/genere/document",
      *     name="application_personnel_salle_examen_genere_placement",
      *     methods={"POST"})
@@ -54,20 +53,18 @@ class SalleExamenController extends BaseController
      *
      * @throws RuntimeError
      */
-    public function generePlacement(MySalleExamen $mySalleExamen, Request $request): ?RedirectResponse
+    public function generePlacement(MySalleExamen $mySalleExamen, Request $request)
     {
         $capacite = $mySalleExamen->calculCapacite($request->request->get('salle'),
             $request->request->get('selectgroupes'), $request->request->get('detail_groupes'));
         if ($capacite) {
-            $mySalleExamen->genereDocument(
+            return $mySalleExamen->genereDocument(
                 $request->request->get('dateeval'),
                 $request->request->get('selectmatiere'),
                 $request->request->get('enseignant1'),
                 $request->request->get('enseignant2'),
                 $this->dataUserSession->getDepartement()
             );
-
-            return null;
         }
 
         $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'Salle trop petite');
