@@ -20,11 +20,12 @@
                    data-placement="bottom" title="{{ 'atitle.import_ppn'|trans }}"><i class="fas fa-file-import"></i><span
                             class="sr-only">importer</span></a>
                 <a href="{{ path('super_admin_homepage') }}" class="btn btn-primary btn-float" data-provide="tooltip"
-                   data-placement="bottom" title="{{ 'atitle.retour_super_administration'|trans }}"><i
-                            class="material-icons">dashboard</i></a>
+                   data-placement="bottom" title="{{ 'atitle.retour_super_administration'|trans }}">
+                    <i class="{{ iconDashboard }}"><span class="sr-only">dashboard</span></i>
+                </a>
             {% else %}
                 <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
-                   data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="material-icons">build</i></a>
+                   data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="{{ iconAdmin }}"><span class="sr-only">Administration</span></i></a>
             {% endif %}
         </div>
     </div>

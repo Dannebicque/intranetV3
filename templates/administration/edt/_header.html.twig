@@ -11,15 +11,15 @@
                     <a class="btn btn-primary"
                        href="{{ path('administration_edt_index',{valeur:edt.valeur, filtre:edt.filtre,
                            semaine:edt.semainePrecedente}) }}" title="{{ 'semaine.precedente'|trans }}"><i
-                                class="material-icons">keyboard_arrow_left</i></a>
+                                class="fas fa-caret-left"></i></a>
                     <a class="btn btn-primary"
                        href="{{ path('administration_edt_index',{valeur:edt.valeur, filtre:edt.filtre,
                            semaine:'now'|date('W')}) }}" title="{{ 'semaine.courante'|trans }}"><i
-                                class="material-icons">perm_contact_calendar</i></a>
+                                class="fas fa-clock"></i></a>
                     <a class="btn btn-primary"
                        href="{{ path('administration_edt_index',{valeur:edt.valeur, filtre:edt.filtre,
                            semaine:edt.semaineSuivante}) }}" title="{{ 'semaine.suivante'|trans }}"><i
-                                class="material-icons">keyboard_arrow_right</i></a>
+                                class="fas fa-caret-right"></i></a>
                 </div>
             </div>
         </div>

@@ -12,8 +12,9 @@
                data-provide="tooltip"
                data-placement="bottom" title="{{ 'atitle.retour_index'|trans }}"><i class="fas fa-arrow-left"></i></a>
             <a href="{{ path('super_admin_homepage') }}" class="btn btn-primary btn-float" data-provide="tooltip"
-               data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i
-                        class="material-icons">dashboard</i></a>
+               data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}">
+                <i class="{{ iconDashboard }}"><span class="sr-only">dashboard</span></i>
+            </a>
         </div>
     </div>
 {% endblock %}
