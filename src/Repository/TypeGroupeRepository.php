@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/TypeGroupeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:09
+ * @lastUpdate 25/02/2021 11:06
  */
 
 namespace App\Repository;
@@ -57,6 +57,19 @@ class TypeGroupeRepository extends ServiceEntityRepository
             ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
             ->innerJoin(Diplome::class, 'd', 'WITH', 'a.diplome = d.id')
             ->where('d.departement = :departement')
+            ->setParameter('departement', $departement->getId())
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByDepartementSemestresActifs(Departement $departement)
+    {
+        return $this->createQueryBuilder('t')
+            ->innerJoin(Semestre::class, 's', 'WITH', 't.semestre = s.id')
+            ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
+            ->innerJoin(Diplome::class, 'd', 'WITH', 'a.diplome = d.id')
+            ->where('d.departement = :departement')
+            ->andWhere('s.actif = true')
             ->setParameter('departement', $departement->getId())
             ->getQuery()
             ->getResult();
