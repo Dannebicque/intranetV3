@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/MessagerieController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/02/2021 18:14
+ * @lastUpdate 25/02/2021 11:06
  */
 
 namespace App\Controller;
@@ -43,7 +43,7 @@ class MessagerieController extends BaseController
     {
         return $this->render('messagerie/index.html.twig', [
             'filtre' => 'all',
-            'param'  => $param,
+            'param' => $param,
         ]);
     }
 
@@ -53,8 +53,8 @@ class MessagerieController extends BaseController
     public function nouveauMessage(TypeGroupeRepository $typeGroupeRepository, ?Message $message = null): Response
     {
         return $this->render('messagerie/nouveauMessage.html.twig', [
-            'type_groupes' => $typeGroupeRepository->findByDepartement($this->dataUserSession->getDepartement()),
-            'message'      => $message,
+            'type_groupes' => $typeGroupeRepository->findByDepartementSemestresActifs($this->dataUserSession->getDepartement()),
+            'message' => $message,
         ]);
     }
 
@@ -119,8 +119,8 @@ class MessagerieController extends BaseController
         }
 
         return $this->render('messagerie/listeMessages.html.twig', [
-            'filtre'     => $filtre,
-            'messages'   => $messages,
+            'filtre' => $filtre,
+            'messages' => $messages,
             'pagination' => ['depart' => 1, 'fin' => \count($messages)],
         ]);
     }
@@ -152,8 +152,8 @@ class MessagerieController extends BaseController
 
         //feature: gérer la pagination?
         return $this->render('messagerie/listeMessages.html.twig', [
-            'filtre'     => $filtre,
-            'messages'   => $messages,
+            'filtre' => $filtre,
+            'messages' => $messages,
             'pagination' => ['depart' => 1, 'fin' => \count($messages)],
         ]);
     }
