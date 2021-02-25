@@ -8,7 +8,9 @@
             <a href="{{ path('application_personnel_absence_index',{matiere:matiere.id}) }}" class="btn btn-info btn-sm btn-float" data-provide="tooltip"
                data-placement="bottom" title="{{ 'atitle.retour_saisie'|trans }}"><i class="fas fa-plus"></i></a>
             <a href="{{ path('default_homepage') }}" class="btn btn-primary btn-float" data-provide="tooltip"
-               data-placement="bottom" title="{{ 'atitle.retour_dashboard'|trans }}"><span class="material-icons">dashboard</span></a>
+               data-placement="bottom" title="{{ 'atitle.retour_dashboard'|trans }}">
+                <i class="{{ iconDashboard }}"><span class="sr-only">dashboard</span></i>
+            </a>
         </div>
     </div>
 {% endblock %}

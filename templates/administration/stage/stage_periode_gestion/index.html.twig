@@ -22,24 +22,27 @@
         <div class="buttons">
             <a href="{{ path('administration_stage_periode_offre_index', {uuid: stagePeriode.uuidString}) }}"
                class="btn btn-info btn-sm btn-float" data-provide="tooltip"
-               data-placement="bottom" title="{{ 'atitle.stage_offres'|trans }}"><i class="material-icons">work</i></a>
+               data-placement="bottom" title="{{ 'atitle.stage_offres'|trans }}"><i class="fas fa-briefcase"></i></a>
             <a href="{{ path('administration_stage_entreprise_index', {uuid: stagePeriode.uuidString}) }}"
                class="btn btn-info btn-sm btn-float" data-provide="tooltip"
-               data-placement="bottom" title="{{ 'atitle.stage_entreprises'|trans }}"><i class="material-icons">account_balance</i></a>
+               data-placement="bottom" title="{{ 'atitle.stage_entreprises'|trans }}"><i
+                        class="fas fa-building"></i></a>
             <a href="{{ path('administration_stage_periode_soutenance_index', {uuid: stagePeriode.uuidString}) }}"
                class="btn btn-info btn-sm btn-float" data-provide="tooltip"
-               data-placement="bottom" title="{{ 'atitle.stage_soutenances'|trans }}"><i class="material-icons">insert_invitation</i></a>
+               data-placement="bottom" title="{{ 'atitle.stage_soutenances'|trans }}"><i
+                        class="fas fa-calendar"></i></a>
             <a href="{{ path('administration_stage_periode_courrier_index', {uuid: stagePeriode.uuidString}) }}"
                class="btn btn-info btn-sm btn-float" data-provide="tooltip"
-               data-placement="bottom" title="{{ 'atitle.stage_courrier'|trans }}"><i class="material-icons">local_post_office</i></a>
+               data-placement="bottom" title="{{ 'atitle.stage_courrier'|trans }}"><i
+                        class="fas fa-envelope"></i></a>
 
             <a href="{{ path('administration_stage_periode_edit', {id: stagePeriode.uuidString}) }}"
                class="btn btn-warning btn-sm btn-float" data-provide="tooltip"
                data-placement="bottom" title="{{ 'atitle.modifier.la.periode'|trans }}"><i
-                        class="material-icons">edit</i></a>
+                        class="{{ iconEdit }}"></i></a>
 
             <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
-               data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="material-icons">build</i></a>
+               data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="{{ iconAdmin }}"><span class="sr-only">Administration</span></i></a>
         </div>
     </div>
 {% endblock %}

@@ -28,7 +28,7 @@
                class="btn btn-primary btn-float" data-provide="tooltip"
                data-placement="bottom" title="{{ 'atitle.retour_semestres'|trans }}"><i class="fas fa-arrow-left"></i></a>
             <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
-               data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="material-icons">build</i></a>
+               data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="{{ iconAdmin }}"><span class="sr-only">Administration</span></i></a>
         </div>
     </div>
 {% endblock %}
@@ -69,43 +69,45 @@
                                         class="fas fa-eye"></i></button>
                             {% if justificatif.etat == 'A' %}
                                 <button
-                                   class="btn btn-success btn-outline bx_{{ justificatif.uuidString }}"
+                                        class="btn btn-success btn-outline bx_{{ justificatif.uuidString }}"
                                 ><i
                                             class="fas fa-check"></i> Accepté
                                 </button>
                                 <button
                                         data-justificatif="{{ justificatif.uuidString }}"
-                                   class="btn btn-danger btn-outline btn-square justificatif-annuler bx_{{ justificatif.uuidString }}" data-provide="tooltip" data-placement="bottom"
-                                        title="{{ 'atitle.annuler'|trans }}"><i
-                                            class="material-icons">undo</i></button>
+                                        class="btn btn-danger btn-outline btn-square justificatif-annuler bx_{{ justificatif.uuidString }}" data-provide="tooltip" data-placement="bottom"
+                                        title="{{ 'atitle.annuler'|trans }}">
+                                    <i class="fas fa-undo"></i>
+                                </button>
                             {% elseif justificatif.etat == 'R' %}
                                 <button
-                                   class="btn btn-warning btn-outline bx_{{ justificatif.uuidString }}"><i
+                                        class="btn btn-warning btn-outline bx_{{ justificatif.uuidString }}"><i
                                             class="fas fa-ban"></i> Refusé
                                 </button>
                                 <button
                                         data-justificatif="{{ justificatif.uuidString }}"
-                                   class="btn btn-danger btn-outline btn-square justificatif-annuler bx_{{ justificatif.uuidString }}" data-provide="tooltip" data-placement="bottom"
-                                        title="{{ 'atitle.annuler'|trans }}"><i
-                                            class="material-icons">undo</i></button>
+                                        class="btn btn-danger btn-outline btn-square justificatif-annuler bx_{{ justificatif.uuidString }}" data-provide="tooltip" data-placement="bottom"
+                                        title="{{ 'atitle.annuler'|trans }}">
+                                    <i class="fas fa-undo"></i>
+                                </button>
                             {% else %}
-                            <a href="#"
-                               class="btn btn-success btn-outline btn-square justificatif-accepte bx_{{ justificatif.uuidString }}" data-provide="tooltip"
-                               data-justificatif="{{ justificatif.uuidString }}"
-                               data-placement="bottom" title="{{ 'atitle.accepter.le.justificatif'|trans }}"><i
-                                        class="material-icons">check</i></a>
+                                <a href="#"
+                                   class="btn btn-success btn-outline btn-square justificatif-accepte bx_{{ justificatif.uuidString }}" data-provide="tooltip"
+                                   data-justificatif="{{ justificatif.uuidString }}"
+                                   data-placement="bottom" title="{{ 'atitle.accepter.le.justificatif'|trans }}">
+                                    <i class="fas fa-check"></i></a>
                                 <a href="#"
                                    class="btn btn-warning btn-outline btn-square justificatif-refuse bx_{{ justificatif.uuidString }}" data-provide="tooltip"
                                    data-justificatif="{{ justificatif.uuidString }}"
                                    data-placement="bottom" title="{{ 'atitle.refuser.le.justificatif'|trans }}"><i
-                                            class="material-icons">not_interested</i></a>
+                                            class="fas fa-ban"></i></a>
 
                                 <a href="{{ path('administration_absence_justificatif_delete', {id: justificatif.id}) }}"
                                    data-csrf="{{ csrf_token('delete' ~ justificatif.id) }}"
                                    data-provide="tooltip" data-placement="bottom"
                                    title="{{ 'atitle.supprimer'|trans }}"
                                    class="btn btn-danger btn-outline btn-square supprimer bx_{{ justificatif.uuidString }}"><i
-                                            class="material-icons">delete</i></a>
+                                            class="{{ iconDelete }}"></i></a>
                             {% endif %}
 
                             </td>

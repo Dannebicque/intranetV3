@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/NoteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 19/02/2021 16:38
  */
 
 namespace App\Controller\appPersonnel;
@@ -49,9 +49,9 @@ class NoteController extends BaseController
             $myEvaluations->getEvaluationsMatiere($this->dataUserSession->getAnneeUniversitaire());
 
             return $this->render('appPersonnel/note/index.html.twig', [
-                'matiere'     => $matiere,
+                'matiere' => $matiere,
                 'evaluations' => $myEvaluations,
-                'indexEval'   => $index,
+                'indexEval' => $index,
             ]);
         }
 
@@ -62,24 +62,25 @@ class NoteController extends BaseController
      * @Route("/saisie/etape-1/{matiere}", name="application_personnel_note_saisie", requirements={"matiere"="\d+"})
      *
      * @return RedirectResponse|Response
-     * @throws Exception
      *
+     * @throws Exception
      */
     public function saisie(Request $request, Matiere $matiere)
     {
+        //todo: vérifier les accès par des profs non autorisés ????
         if (null !== $matiere && null !== $matiere->getUe()) {
             $evaluation = new Evaluation($this->getConnectedUser(), $matiere, $this->dataUserSession->getDepartement());
             $form = $this->createForm(
                 EvaluationType::class,
                 $evaluation,
                 [
-                    'departement'       => $this->dataUserSession->getDepartement(),
-                    'semestre'          => $matiere->getSemestre(),
-                    'matiereDisabled'   => false,
+                    'departement' => $this->dataUserSession->getDepartement(),
+                    'semestre' => $matiere->getSemestre(),
+                    'matiereDisabled' => false,
                     'personnelDisabled' => true,
-                    'autorise'          => true,
-                    'locale'            => $request->getLocale(),
-                    'attr'              => [
+                    'autorise' => true,
+                    'locale' => $request->getLocale(),
+                    'attr' => [
                         'data-provide' => 'validation',
                     ],
                 ]
@@ -101,7 +102,7 @@ class NoteController extends BaseController
 
             return $this->render('appPersonnel/note/saisie.html.twig', [
                 'matiere' => $matiere,
-                'form'    => $form->createView(),
+                'form' => $form->createView(),
             ]);
         }
 
@@ -120,8 +121,8 @@ class NoteController extends BaseController
 
         return $this->render('appPersonnel/note/saisie_2.html.twig', [
             'evaluation' => $evaluation,
-            'notes'      => $notes,
-            'autorise'   => true,
+            'notes' => $notes,
+            'autorise' => true,
         ]);
     }
 
@@ -175,9 +176,9 @@ class NoteController extends BaseController
 
         return $this->render('appPersonnel/note/saisie_2.html.twig', [
             'evaluation' => $evaluation,
-            'notes'      => $notes,
-            'import'     => true,
-            'autorise'   => true,
+            'notes' => $notes,
+            'import' => true,
+            'autorise' => true,
         ]);
     }
 

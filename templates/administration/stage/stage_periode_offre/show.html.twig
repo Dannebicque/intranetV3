@@ -14,11 +14,11 @@
                data-placement="bottom"><i class="fas fa-trash"></i></a>
             <a href="{{ path('administration_stage_periode_offre_edit', {id: stage_periode_offre.id}) }}"
                class="btn btn-warning btn-sm btn-float" title="{{ 'atitle.modifier'|trans }}" data-provide="tooltip"
-               data-placement="bottom"><i class="material-icons">edit</i></a>
+               data-placement="bottom"><i class="{{ iconEdit }}"></i></a>
 
             <a href="{{ path('administration_stage_periode_offre_index', {uuid: stagePeriode.uuidString}) }}"
                class="btn btn-primary btn-float" data-provide="tooltip"
-               data-placement="bottom" title="{{ 'atitle.stage_periode_offre'|trans }}"><i class="material-icons">arrow_back</i></a>
+               data-placement="bottom" title="{{ 'atitle.stage_periode_offre'|trans }}"><i class="fas fa-arrow-left"></i></a>
 
         </div>
     </div>

@@ -14,17 +14,17 @@
           <i class="fas fa-file"></i>
       </a>
         <a href="{{ path('administration_article_index') }}"
-         class="btn btn-primary btn-float" data-provide="tooltip"
-         data-placement="bottom" title="{{ 'atitle.retour.articles'|trans }}"><i
-                class="material-icons">arrow_back</i></a>
-      <a href="{{ path('administration_index') }}"
-         class="btn btn-primary btn-float"
-         data-provide="tooltip"
-         data-placement="bottom"
-         title="{{ 'atitle.retour_administration'|trans }}">
-        <span class="material-icons">build</span></a>
-        </div>
+           class="btn btn-primary btn-float" data-provide="tooltip"
+           data-placement="bottom" title="{{ 'atitle.retour.articles'|trans }}"><i
+                    class="fas fa-arrow-left"></i></a>
+        <a href="{{ path('administration_index') }}"
+           class="btn btn-primary btn-float"
+           data-provide="tooltip"
+           data-placement="bottom"
+           title="{{ 'atitle.retour_administration'|trans }}">
+            <i class="{{ iconAdmin }}"><span class="sr-only">Administration</span></i></a>
     </div>
+  </div>
 {% endblock %}
 
 {% block content %}

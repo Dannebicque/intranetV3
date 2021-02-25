@@ -111,14 +111,14 @@
             {% block sidebar_menu %}
                 <li class="menu-item active" id="menu-tableau-de-bord">
                     <a class="menu-link" href="{{ path('default_homepage') }}">
-                        <span class="material-icons">dashboard</span>
+                        <i class="{{ iconDashboard }} fa-2x"><span class="sr-only">dashboard</span></i>
                         <span class="title">{{ 'menu.dashboard'|trans }}</span>
                     </a>
                 </li>
 
                 <li class="menu-item" id="menu-trombinoscope">
                     <a class="menu-link" href="{{ path('trombinoscope_index') }}">
-                        <span class="material-icons">group</span>
+                        <i class="fas fa-user-friends fa-2x"><span class="sr-only">group</span></i>
                         <span class="title">{{ 'menu.trombinoscope'|trans }}</span>
                     </a>
                 </li>
@@ -126,13 +126,13 @@
                 <li class="menu-item" id="menu-agenda">
                     {% if user_data.departement.optEdt == true %}
                         <a class="menu-link" href="{{ path('agenda_index') }}">
-                            <span class="material-icons">perm_contact_calendar</span>
+                            <i class="fas fa-calendar-alt fa-2x"><span class="sr-only">calendar</span></i>
                             <span class="title">{{ 'menu.agenda'|trans }}</span>
                         </a>
                     {% else %}
                         <a class="menu-link" href="{{ path('planning_index', {annee:user_data.anneeUniversitaire
                             .annee}) }}">
-                            <span class="material-icons">perm_contact_calendar</span>
+                            <i class="fas fa-calendar-alt fa-2x"><span class="sr-only">calendar</span></i>
                             <span class="title">{{ 'menu.agenda'|trans }}</span>
                         </a>
                     {% endif %}
@@ -140,21 +140,21 @@
 
                 <li class="menu-item" id="menu-application">
                     <a class="menu-link" href="{{ path('application_index') }}">
-                        <span class="material-icons">apps</span>
+                        <i class="fas fa-th fa-2x"><span class="sr-only">applications</span></i>
                         <span class="title">{{ 'menu.applications'|trans }}</span>
                     </a>
                 </li>
 
                 <li class="menu-item" id="menu-document">
                     <a class="menu-link" href="{{ path('document_index') }}">
-                        <span class="material-icons">folder</span>
+                        <i class="fas fa-folder fa-2x"><span class="sr-only">Documents</span></i>
                         <span class="title">{{ 'menu.documents'|trans }}</span>
                     </a>
                 </li>
 
                 <li class="menu-item" id="menu-information">
                     <a class="menu-link" href="{{ path('informations_index') }}">
-                        <span class="material-icons">insert_drive_file</span>
+                        <i class="fas fa-file-alt fa-2x"><span class="sr-only">Informations</span></i>
                         <span class="title">{{ 'menu.informations'|trans }}</span>
                     </a>
                 </li>
@@ -169,7 +169,7 @@
                     user_data.isGoodDepartement('ROLE_EDT') %}
                     <li class="menu-item" id="menu-administration">
                         <a class="menu-link" href="{{ path('administration_index') }}">
-                            <span class="material-icons">build</span>
+                            <i class="{{ iconAdmin }} fa-2x"><span class="sr-only">Administration</span></i>
                             <span class="title">{{ 'menu.administration'|trans }}</span>
                         </a>
                     </li>
@@ -203,17 +203,18 @@
         {% endif %}
         <a class="topbar-btn d-none d-md-block" href="#" data-provide="fullscreen tooltip"
            title="{{ 'fullscreen'|trans }}">
-            <i class="material-icons fullscreen-default">fullscreen</i>
-            <i class="material-icons fullscreen-active">fullscreen_exit</i>
+            <i class="fas fa-expand fullscreen-default"></i>
+            <i class="fas fa-compress fullscreen-active"></i>
+            <span class="sr-only">Fullscreen</span>
         </a>
         <a class="topbar-btn d-none d-md-block" href="{{ path('security_lock') }}" data-provide="tooltip"
            title="{{ 'lock'|trans }}">
-            <i class="material-icons">lock_outline</i><span
-                    class="sr-only">Vérouiller</span>
+            <i class="fas fa-lock"></i>
+            <span class="sr-only">Vérouiller</span>
         </a>
 
         <div class="dropdown d-none d-md-block">
-            <span class="topbar-btn" data-toggle="dropdown"><i class="material-icons">view_module</i></span>
+            <span class="topbar-btn" data-toggle="dropdown"><i class="fas fa-th-large"></i></span>
             <div class="dropdown-menu dropdown-grid">
                 <a class="dropdown-item" href="{{ path('default_homepage') }}">
                     <span class="fas fa-home fa-3x fa-color-home"></span>
@@ -240,7 +241,8 @@
 
         {% if (is_granted('ROLE_PERMANENT') and user_data.departementMultiple == true) %}
             <div class="dropdown d-none d-md-block">
-                <span class="topbar-btn" data-toggle="dropdown"><i class="material-icons">swap_vert</i></span>
+                <span class="topbar-btn" data-toggle="dropdown">
+                    <i class="fas fa-random"></i></span>
                 <div class="dropdown-menu dropdown-grid">
                     {% for departement in user_data.user.getPersonnelDepartements %}
                         <a class="dropdown-item {% if departement.defaut == true %}is-default{% endif %}"
@@ -258,7 +260,7 @@
         <a class="topbar-btn d-none d-md-block" href="#" data-provide="tooltip" title="{{ 'rechercher'|trans }}"
            id="lookup"
            data-original-title="{{ 'rechercher'|trans }}">
-            <i class="material-icons">search</i>
+            <i class="fas fa-search"></i>
         </a>
     </div>
 
@@ -340,10 +342,16 @@
 
                         <div class="right">
                             <a href="#" data-provide="tooltip" title="{{ 'marquer.tout.comme.lu'|trans }}"
-                               id="marquerNotificationsRead"><i
-                                        class="material-icons">radio_button_unchecked</i></a>
-                            <a href="#" data-provide="tooltip" title="{{ 'update'|trans }}"><i
-                                        class="material-icons">refresh</i></a>
+                               id="marquerNotificationsRead">
+                                <i class="fas fa-circle">
+                                    <span class="sr-only">Marquer comme lu</span>
+                                </i>
+                            </a>
+                            <a href="#" data-provide="tooltip" title="{{ 'update'|trans }}">
+                                <i class="fas fa-redo-alt">
+                                    <span class="sr-only">Marquer comme lu</span>
+                                </i>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -393,8 +401,11 @@
                             </div>
 
                             <div class="right">
-                                <a href="#" data-provide="tooltip" title="Mark all as read"><i
-                                            class="material-icons">radio_button_unchecked</i></a>
+                                <a href="#" data-provide="tooltip" title="Mark all as read">
+                                    <i class="fas fa-circle">
+                                        <span class="sr-only">Marquer comme lu</span>
+                                    </i>
+                                </a>
                             </div>
                         </div>
 

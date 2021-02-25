@@ -12,7 +12,7 @@
                data-provide="tooltip"
                data-placement="bottom"
                title="{{ 'atitle.retour_administration'|trans }}">
-                <span class="material-icons">build</span></a>
+                <i class="{{ iconAdmin }}"><span class="sr-only">Administration</span></i></a>
         </div>
     </div>
 {% endblock %}
@@ -68,7 +68,7 @@
                                    title="{{ 'atitle.valider'|trans }}"
                                    data-provide="tooltip"
                                    data-placement="bottom">
-                                    <i class="material-icons">check</i>
+                                    <i class="fas fa-check"></i>
                                     <span class="sr-only">{{ 'atitle.valider'|trans }}</span>
                                 </a>
                                 <a href="{{ path('administration_covid_attestation_personnel_change_etat', {id:
@@ -77,7 +77,7 @@
                                    title="{{ 'atitle.refuser'|trans }}"
                                    data-provide="tooltip"
                                    data-placement="bottom">
-                                    <i class="material-icons">not_interested</i>
+                                    <i class="fas fa-ban"></i>
                                     <span class="sr-only">{{ 'atitle.refuser'|trans }}</span>
                                 </a>
                                 <a href="{{ path('administration_covid_attestation_personnel_delete', {id:

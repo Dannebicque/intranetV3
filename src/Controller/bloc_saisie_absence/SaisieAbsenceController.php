@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/bloc_saisie_absence/SaisieAbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 19/02/2021 15:28
  */
 
 namespace App\Controller\bloc_saisie_absence;
@@ -57,18 +57,18 @@ class SaisieAbsenceController extends BaseController
         if (null !== $event) {
             $groupes = $typeGroupeRepository->findOneBy([
                 'semestre' => $semestre->getId(),
-                'type'     => $event->getType(),
+                'type' => $event->getType(),
             ]);
         } else {
             $groupes = null;
         }
 
         return $this->render('bloc_saisie_absence/_saisie_absence.html.twig', [
-            'matiere'     => $matiere,
-            'matieres'    => $matiereRepository->findBySemestre($semestre),
+            'matiere' => $matiere,
+            'matieres' => $matiereRepository->findBySemestre($semestre),
             'typeGroupes' => $typeGroupeRepository->findBySemestre($semestre),
-            'event'       => $event,
-            'groupes'     => $groupes,
+            'event' => $event,
+            'groupes' => $groupes,
         ]);
     }
 
@@ -93,8 +93,8 @@ class SaisieAbsenceController extends BaseController
      *                                             options={"expose":true})
      *
      * @return JsonResponse|Response
-     * @throws Exception
      *
+     * @throws Exception
      */
     public function ajaxSaisie(
         EtudiantAbsences $etudiantAbsences,
@@ -105,9 +105,9 @@ class SaisieAbsenceController extends BaseController
     ) {
         $dateHeure = Tools::convertDateHeureToObject($request->request->get('date'), $request->request->get('heure'));
         $absence = $absenceRepository->findBy([
-            'matiere'            => $matiere->getId(),
-            'etudiant'           => $etudiant->getId(),
-            'dateHeure'          => $dateHeure,
+            'matiere' => $matiere->getId(),
+            'etudiant' => $etudiant->getId(),
+            'dateHeure' => $dateHeure,
             'anneeUniversitaire' => $etudiant->getSemestre() ? $etudiant->getSemestre()->getAnneeUniversitaire()->getId() : 0,
         ]);
 
