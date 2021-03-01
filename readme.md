@@ -5,7 +5,7 @@
 
 Actuelle version de l'intranet
 
-Based on Symfony 5.x
+Based on Symfony 5.2
 
 # Installation
 
@@ -157,7 +157,7 @@ standard de SF 5.2 et PHP 7.4.
 * Celcat pour la récupération des emplois du temps ![Optimisation V3](https://img.shields.io/badge/Optimisation-V3-orange.svg)
 * Apogée pour la synchornisation des maquettes et la récupération des listes. ![Nouveauté V3](https://img.shields.io/badge/Nouveauté-V3-brightgreen.svg)
 
-# Features sur la version 3.1 ![Nouveauté V3.1 Début 2021](https://img.shields.io/badge/Nouveauté-V3.1-brightgreen.svg)
+# Features sur la version 3.1 (premier semestre 2021) ![Nouveauté V3.1 premier semestre 2021](https://img.shields.io/badge/Nouveauté-V3.1-brightgreen.svg)
 
 * Notion de "sous-évaluations" pour permettre la saisie de l'intérgalité des notes.
 * Prise en compte de l'évaluation en compétences
@@ -171,6 +171,14 @@ standard de SF 5.2 et PHP 7.4.
 * Formulaire de suivi de stage
 * Suivi des plans de cours dans le cadre d'une démarche qualité LP
 * Edition des plannings de soutenance de projet
+* Mise en place du B.U.T et de l'Approche par Compétences
+  * Référentiel de compétences
+  * Référentiel de formation
+    * Ressources
+    * SAÉ
+  * Adaptation de l'intranet pour gérer prévisionnel, notes avec le B.U.T.
+  * Mise en place des nouvelles règles de validation
+  * Portfolio
 
 ### Fonctionnalités pour le Niveau « Administration IUT » ![Nouveauté V3](https://img.shields.io/badge/Nouveauté-V3-brightgreen.svg)
 
