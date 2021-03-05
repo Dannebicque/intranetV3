@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Notification.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 05/03/2021 11:33
  */
 
 namespace App\Entity;
@@ -24,24 +24,24 @@ class Notification extends BaseEntity
     public const PERSONNEL = 'p';
 
     public const TABICONE = [
-        'carnet.added'                       => 'ti-bookmark-alt',
-        'absence.removed'                    => 'ti-bookmark-alt',
-        'absence.added'                      => 'ti-bookmark-alt',
-        'absence.justified'                  => 'ti-check',
-        'decision.rattrapage.acceptee'       => 'ti-check',
-        'decision.rattrapage.refusee'        => 'ti-na',
-        'chgt.etat_stage_autorise'           => 'ti-info',
-        'chgt.etat_stage_depose'             => 'ti-info',
-        'chgt.etat_stage_refuse'             => 'ti-danger',
-        'chgt.etat_stage_incomplet'          => 'ti-danger',
-        'chgt.etat_stage_valide'             => 'ti-info',
-        'chgt.etat_stage_convention_envoyee' => 'ti-info',
-        'chgt.etat_stage_convention_recue'   => 'ti-info',
-        'chgt.emprunt.demande'               => 'ti-info',
-        'chgt.emprunt.accepte'               => 'ti-success',
-        'chgt.emprunt.refus'                 => 'ti-danger',
-        'decision.justificatif.acceptee'     => 'ti-success',
-        'decision.justificatif.refuse'       => 'ti-danger',
+        'carnet.added' => 'fas fa-bookmark',
+        'absence.removed' => 'fas fa-bookmark',
+        'absence.added' => 'fas fa-bookmark',
+        'absence.justified' => 'fas fa-check',
+        'decision.rattrapage.acceptee' => 'fas fa-check',
+        'decision.rattrapage.refusee' => 'fas fa-ban',
+        'chgt.etat_stage_autorise' => 'fas fa-info',
+        'chgt.etat_stage_depose' => 'fas fa-info',
+        'chgt.etat_stage_refuse' => 'fas fa-ban',
+        'chgt.etat_stage_incomplet' => 'fas fa-exclamation',
+        'chgt.etat_stage_valide' => 'fas fa-info',
+        'chgt.etat_stage_convention_envoyee' => 'fas fa-info',
+        'chgt.etat_stage_convention_recue' => 'fas fa-info',
+        'chgt.emprunt.demande' => 'fas fa-info',
+        'chgt.emprunt.accepte' => 'fas fa-check',
+        'chgt.emprunt.refus' => 'fas fa-ban',
+        'decision.justificatif.acceptee' => 'fas fa-check',
+        'decision.justificatif.refuse' => 'fas fa-ban',
     ];
     public const TABCOLOR = [
         'carnet.added'                       => 'info',
