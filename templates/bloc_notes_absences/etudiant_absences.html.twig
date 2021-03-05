@@ -90,8 +90,15 @@
             </div>
         {% else %}
             <div class="alert alert-warning">
+                {% if absences|length == 0 %}
+                Vous n'avez pas d'absence ou de cours manqué.
+            {% elseif absences|length == 1 %}
+                Vous avez <strong> {{ absences|length }} </strong> cours manqué, dont
+                <strong>{{ statistiquesAbsences.nbNonJustifie }} non justifié(s)</strong>.
+            {% else %}
                 Vous avez <strong> {{ absences|length }} </strong> cours manqués, dont
-                <strong>{{ statistiquesAbsences.nbNonJustifie }} non justifiées</strong>. <br/>
+                <strong>{{ statistiquesAbsences.nbNonJustifie }} non justifié(s)</strong>.
+                {% endif %}<br/>
             </div>
         {% endif %}
     </div>
