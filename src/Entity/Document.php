@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Document.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/03/2021 16:02
+ * @lastUpdate 05/03/2021 22:19
  */
 
 namespace App\Entity;
@@ -29,6 +29,15 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 class Document extends BaseEntity
 {
     use UuidTrait;
+
+    const TYPE_DOCUMENT = [
+        'application/vnd.openxmlformats-officedocument.presentationml.presentation' => 'Prés. PPT',
+        'application/pdf' => 'PDF',
+        'application/vnd.ms-excel' => 'Tabl. Excel',
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => 'Tabl. Excel',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => 'Doc. Word',
+        'application/vnd.oasis.opendocument.text' => 'Doc. ODT',
+    ];
 
     /**
      * @var float
@@ -276,5 +285,19 @@ class Document extends BaseEntity
         $this->uuid = $uuid;
 
         return $this;
+    }
+
+    public function typeFichierTraduit()
+    {
+        if (array_key_exists($this->typeFichier, self::TYPE_DOCUMENT)) {
+            return self::TYPE_DOCUMENT[$this->typeFichier];
+        }
+
+        return $this->typeFichier;
+    }
+
+    public function tailleKo()
+    {
+        return $this->taille / 1024;
     }
 }
