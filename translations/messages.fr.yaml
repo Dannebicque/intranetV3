@@ -418,6 +418,20 @@ adm:
     modification.heading: 'Modification d''une UFR'
     new.heading: 'Création d''une UFR'
     show.heading: 'Détails d''une UFR'
+  apc_sae:
+    edit:
+      heading: 'Modification d''une SAÉ'
+    new:
+      heading: 'Création d''une SAÉ'
+    show:
+      heading: 'Détails d''une SAÉ'
+  apc_ressource:
+    edit:
+      heading: 'Modification d''une ressource'
+    new:
+      heading: 'Création d''une ressource'
+    show:
+      heading: 'Détails d''une ressource'
   apc_apprentissage_critique:
     modification:
       heading: 'Modificaition d''un apprentissage critique'
@@ -434,12 +448,20 @@ adm:
     modification:
       heading: 'Modification d''une composante essentielle'
     new:
-      heading: 'Création d''une composante essentielle'
+      heading: 'Création d''une composante essentielle pour la compétence %competence%'
+  apc_situation_professionnelle:
+    modification:
+      heading: 'Modification d''une situation profesionnelle'
+    new:
+      heading: 'Création d''une situation profesionnelle pour la compétence %competence%'
   apc_niveau:
     modification:
       heading: 'Modification d''un niveau de compétence'
     new:
-      heading: 'Création d''un niveau de compétence'
+      heading: 'Création d''un niveau pour la compétence %competence%'
+  apc_referentiel_formation:
+    grille:
+      heading: 'Référentiel de formation Ressources / SAÉ / Compétences'
   projet_etudiant:
     modification:
       heading: 'Modification d''un projet étudiant'
@@ -464,8 +486,12 @@ adm:
   apc_parcours:
     edit.heading: 'Modification d''un parcours'
     show.heading: 'Détails d''un parcours'
-  referentiel.de.competence.heading: 'Référentiel de compétence pour le diplôme %diplome%'
+    new.heading: 'Création d''un parcours'
+  referentiel.de.competence.heading: 'Référentiel de compétences pour le diplôme %diplome%'
   apc.parcours.heading: 'Parcours pour le diplôme %diplome%'
+  ressources.et.sae.index.heading: 'Ressources et SAÉ'
+  apc_parcours_niveau:
+    heading: 'Configuration du parcours : %parcours%'
 
 administratif_homepage.heading: 'Tableau de bord administratif'
 administratif.qualite.questionnaire.show.heading: 'Détails d''un questionnaire qualité'
@@ -739,6 +765,7 @@ atitle:
   voir: Voir
   service_chronologique: 'Service Chronologique'
   basculer.sous_comm_live: 'Basculer vers la sous-commission en temps réel'
+  referentiel: 'messages'
 
 au: au
 aucun: aucun
@@ -2145,3 +2172,4 @@ questionnaire.duplicate.success.flashbag: 'Questionnaire dupliqué avec succès'
 administratif:
   enquetes.heading: 'Gestion des enquêtes'
 changement.semestre.effectue: 'Changement de semestre effectué pour les étudiants'
+nb.saisie.par: 'Evaluation saisie par '
