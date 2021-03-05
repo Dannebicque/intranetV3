@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/css/theme.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/03/2021 11:26
+// @lastUpdate 05/03/2021 11:36
 /* @file /Users/davidannebicque/htdocs/intranetV3/assets/css/theme.css */
 /* @author davidannebicque */
 /* @project intranetV3 */
@@ -18615,10 +18615,10 @@ ul.flexbox {
 }
 
 .site-footer {
-    background-color: #fff;
+    background-color: var(--footer);
     font-size: 12px;
-    color: #616a78;
-    border-top: 1px solid #f1f2f3;
+    color: var(--police); //#616a78;
+    border-top: 1px solid var(--colorIUT);
 }
 
 .site-footer p {
