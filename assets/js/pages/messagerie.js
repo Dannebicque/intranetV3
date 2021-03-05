@@ -2,13 +2,8 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/messagerie.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/02/2021 18:22
+// @lastUpdate 05/03/2021 11:11
 
-import tinymce from 'tinymce/tinymce'
-import 'tinymce/icons/default'
-// A theme is also required
-import 'tinymce/themes/silver'
-import '../../vendor/tinyMceLang/fr_FR'
 
 $(document).on('click', '.messagerie-filtre', function (e) {
   e.preventDefault()

@@ -12,36 +12,36 @@
         {{ encore_entry_link_tags('app') }}
     {% endblock %}
     <style>
-        .btn-primary {
-            background-color: {{ settings('COLOR_IUT') }};
-            border-color: {{ settings('COLOR_IUT') }};
-            color: #3f4a59;
-        }
+        {#.btn-primary {#}
+        {#    background-color: {{ settings('COLOR_IUT') }};#}
+        {#    border-color: {{ settings('COLOR_IUT') }};#}
+        {#    color: #3f4a59;#}
+        {#}#}
 
-        .sidebar .menu:not(.menu-bordery) > .menu-item.active > .menu-link {
-            background-color: {{ settings('COLOR_IUT') }};
-            color: #3f4a59;
-        }
+        {#.sidebar .menu:not(.menu-bordery) > .menu-item.active > .menu-link {#}
+        {#    background-color: {{ settings('COLOR_IUT') }};#}
+        {#    color: #3f4a59;#}
+        {#}#}
 
-        .btn {
-            color: #313944;
-        }
+        {#.btn {#}
+        {#    color: #313944;#}
+        {#}#}
 
-        .nav-tabs .nav-link {
-            color: #313944;
-        }
+        {#.nav-tabs .nav-link {#}
+        {#    color: #313944;#}
+        {#}#}
 
-        time {
-            color: #24808A;
-        }
+        {#time {#}
+        {#    color: #4D3677;#}
+        {#}#}
 
-        .filter-option {
-            color: #313944;
-        }
+        {#.filter-option {#}
+        {#    color: #313944;#}
+        {#}#}
 
-        a {
-            color: #24808A;
-        }
+        {#a {#}
+        {#    color: #4D3677;#}
+        {#}#}
     </style>
     <!-- Favicons -->
     <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('apple-icon-57x57.png') }}">
@@ -207,11 +207,11 @@
             <i class="fas fa-compress fullscreen-active"></i>
             <span class="sr-only">Fullscreen</span>
         </a>
-        <a class="topbar-btn d-none d-md-block" href="{{ path('security_lock') }}" data-provide="tooltip"
-           title="{{ 'lock'|trans }}">
-            <i class="fas fa-lock"></i>
-            <span class="sr-only">Vérouiller</span>
-        </a>
+        {# <a class="topbar-btn d-none d-md-block" href="{{ path('security_lock') }}" data-provide="tooltip" #}
+        {# title="{{ 'lock'|trans }}"> #}
+        {# <i class="fas fa-lock"></i> #}
+        {# <span class="sr-only">Vérouiller</span> #}
+        {# </a> #}
 
         <div class="dropdown d-none d-md-block">
             <span class="topbar-btn" data-toggle="dropdown"><i class="fas fa-th-large"></i></span>
@@ -284,9 +284,10 @@
                     </a>
                     <a class="dropdown-item" href="{{ path('user_settings') }}"><i class="fas fa-cogs"></i> {{ 'parametres'|trans }}
                     </a>
+                    <a class="dropdown-item" href="#" id="darkMode"><i class="fas fa-adjust"></i> Dark Mode On</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="{{ path('security_lock') }}"><i class="fas fa-user-lock"></i> {{ 'verrouiller'|trans }}
-                    </a>
+                    {# <a class="dropdown-item" href="{{ path('security_lock') }}"><i class="fas fa-user-lock"></i> {{ 'verrouiller'|trans }} #}
+                    {# </a> #}
                     <a class="dropdown-item" href="{{ path('security_logout') }}"><i class="fas fa-sign-out-alt"></i>
                         {{ 'déconnexion'|trans }}</a>
                 </div>

@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/app.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/02/2021 08:03
+// @lastUpdate 05/03/2021 11:11
 
 import '@fortawesome/fontawesome-free/scss/fontawesome.scss'
 import '@fortawesome/fontawesome-free/scss/solid.scss'
@@ -10,6 +10,7 @@ import 'bootstrap-select/dist/css/bootstrap-select.min.css'
 import '../vendor/bootstrap-datepicker/css/bootstrap-datepicker3.min.css'
 import '../vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js'
 import '../vendor/bootstrap-datepicker/locales/bootstrap-datepicker.fr.min'
+
 import '../css/app.scss'
 
 import $ from 'jquery'
@@ -19,6 +20,12 @@ import {getDataOptions} from './util'
 import './material'
 import './search'
 import './modaler'
+
+import tinymce from 'tinymce/tinymce'
+import 'tinymce/icons/default'
+// A theme is also required
+import 'tinymce/themes/silver'
+import '../vendor/tinyMceLang/fr_FR'
 
 require('bootstrap')
 
@@ -32,6 +39,37 @@ $('input[type="file"]').on('change', function (e) {
 })
 
 $(document).ready(function () {
+  //dark mode
+  const currentTheme = localStorage.getItem('theme')
+
+  // If the current theme in localStorage is "dark"...
+  if (currentTheme === 'dark') {
+    // ...then use the .dark-theme class
+    document.body.classList.add('dark-theme')
+    $(this).html('<i class="fas fa-adjust"></i> Dark Mode Off')
+  } else {
+    $(this).html('<i class="fas fa-adjust"></i> Dark Mode On')
+  }
+
+  $(document).on('click', '#darkMode', function () {
+    // Toggle the .dark-theme class on each click
+    document.body.classList.toggle('dark-theme')
+
+    // Let's say the theme is equal to light
+    let theme = 'light'
+    // If the body contains the .dark-theme class...
+    if (document.body.classList.contains('dark-theme')) {
+      // ...then let's make the theme dark
+      theme = 'dark'
+      $(this).html('<i class="fas fa-adjust"></i> Dark Mode Off')
+    } else {
+      $(this).html('<i class="fas fa-adjust"></i> Dark Mode On')
+    }
+    // Then save the choice in localStorage
+    localStorage.setItem('theme', theme)
+  })
+
+
   // script pour afficher le fichier selectionné avec bootstrap4
   $('.custom-file input').change(function (e) {
     const files = []
@@ -95,6 +133,17 @@ $(document).on('click', '[data-provide~="modaler"]', function () {
 })
 
 function updateInterface () {
+  $('.callout').delay(5000).slideUp('slow')
+
+  tinymce.init({
+    selector: '.tinyMce',
+    height: 300,
+    menubar: false,
+    language: 'fr_FR',
+    content_css: 'default',
+    toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent '
+  })
+
   //selectpicker
   $('.selectpicker').selectpicker({
     iconBase: '',

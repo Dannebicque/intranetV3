@@ -2,9 +2,73 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/css/app.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/02/2021 10:38
+// @lastUpdate 05/03/2021 11:11
 
 @import "core.min.css";
+
+body {
+  --colorIUT: #F7B000;
+  --colorIUTComplementaire: #4D3677;
+
+  --colorTextA: #4D3677;
+
+  --body: #f5f6fa;
+  --header: #fff;
+  --card: #fff;
+  --borderCard: rgba(77, 82, 89, 0.07);
+  --police: #4d5259;
+  --policeH: #313944;
+  --colorHoverBtnTopBar: #4d5259;
+
+  --colorPrimaryHover: #4D3677;
+  --colorTextPrimaryHover: #F7B000;
+
+  --colorSuccess: #15c377;
+  --colorSecondary: #e4e7ea;
+  --colorPrimary: #F7B000;
+  --colorInfo: #48b0f7;
+  --colorWarning: #faa64b;
+  --colorDanger: #f96868;
+  --colorPink: #f96197;
+  --colorPurple: #926dde;
+  --colorBrown: #8d6658;
+  --colorCyan: #57c7d4;
+  --colorYellow: #fcc525;
+  --colorGray: #868e96;
+  --colorDark: #465161;
+}
+
+body.dark-theme {
+  --colorIUT: #F7B000;
+  --colorIUTComplementaire: #4D3677;
+  --colorTextA: #F7B000;
+
+  --body: #202945;
+  --header: #152028;
+  --card: #152028;
+  --police: #eaeaea;
+  --borderCard: #F7B000;
+  --colorHoverBtnTopBar: #F7B000;
+  --policeH: #eaeaea;
+
+  --colorPrimaryHover: #4D3677;
+  --colorTextPrimaryHover: #F7B000;
+
+  --colorSuccess: #008A00;
+  --colorPrimary: #F7B000;
+  --colorInfo: #238CF2;
+  --colorSecondary: #e4e7ea;
+  --colorWarning: #F0730B;
+  --colorDanger: #BF0000;
+  --colorPink: #f96197;
+  --colorPurple: #926dde;
+  --colorBrown: #8d6658;
+  --colorCyan: #1890A7;
+  --colorYellow: #fcc525;
+  --colorGray: #868e96;
+  --colorDark: #465161;
+}
+
 @import "./theme.scss";
 @import "./color.scss";
 @import "./apc.scss";
@@ -112,13 +176,13 @@ fieldset legend {
 }
 
 .is-default {
-  background-color: #33cabb;
+  background-color: var(--colorPrimary);
   opacity: 0.8;
   color: white;
 }
 
 .table-edt {
-  border: 1px solid #3f4a59;
+  border: 1px solid var(--colorIUTComplementaire);
   width: 100%;
 }
 
@@ -127,7 +191,7 @@ fieldset legend {
 }
 
 .table-edt td {
-  border: 1px solid #3f4a59;
+  border: 1px solid var(--colorIUTComplementaire);
   max-width: 15px;
   margin: 0;
   padding: 0;
@@ -136,7 +200,7 @@ fieldset legend {
 }
 
 .table-edt th {
-  border: 1px solid #3f4a59;
+  border: 1px solid var(--colorIUTComplementaire);
   font-style: italic;
   font-size: 10px;
   padding: 0;
@@ -157,7 +221,7 @@ fieldset legend {
 }
 
 .col-notes-header {
-  background-color: #3f4a59;
+  background-color: var(--colorIUTComplementaire);
   padding: 1em;
   margin: 0;
   grid-column-gap: 0;
@@ -184,7 +248,7 @@ fieldset legend {
 }
 
 .col-edt-header {
-  background-color: #3f4a59;
+  background-color: var(--colorIUTComplementaire);
   padding: 1em;
   color: white;
   text-align: center;
@@ -192,7 +256,7 @@ fieldset legend {
 }
 
 .col-edt-heure {
-  background-color: #3f4a59;
+  background-color: var(--colorIUTComplementaire);
   padding: 1em;
   color: white;
   text-align: center;
@@ -211,16 +275,16 @@ fieldset legend {
 }
 
 table {
-  border: 1px solid #3f4a59;
+  border: 1px solid var(--colorIUTComplementaire);
 }
 
 thead {
-  background-color: #3f4a59;
+  background-color: var(--colorIUTComplementaire);
   color: white;
 }
 
 .th_titre {
-  background-color: #3f4a59;
+  background-color: var(--colorIUTComplementaire);
   color: white;
 }
 
@@ -333,7 +397,7 @@ thead {
 }
 
 .reservationstudio {
-  background-color: orange;
+  background-color: var(--colorWarning);
 }
 
 .isDisabled {
@@ -472,7 +536,7 @@ thead {
   width: $sizeda;
   height: $sizeda;
   text-align: center;
-  background-color: #FAB001;
+  background-color: var(--colorPrimary);
   border-radius: 50%;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
@@ -483,7 +547,7 @@ thead {
     top: $sizeda*0.25;
     font-size: $sizeda*0.5;
     line-height: $sizeda*0.5;
-    color: #fff;
+    color: var(--colorIUTComplementaire);
     font-weight: bold;
   }
 }
@@ -548,7 +612,7 @@ thead {
 }
 
 .profil-nom {
-  background-color: #3f4a59;
+  background-color: var(--colorIUTComplementaire);
   color: white;
 }
 

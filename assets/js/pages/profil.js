@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/profil.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 10/01/2021 17:19
+// @lastUpdate 01/03/2021 18:49
 import {addCallout} from '../util'
 
 $(document).on('change', '#chgt_etudiant_departement', function () {
@@ -164,7 +164,6 @@ $(document).on('click', '.checkAbsence', function (e) {
       }
     }
   })
-
 })
 
 $(document).on('click', '#btnInit', function () {
