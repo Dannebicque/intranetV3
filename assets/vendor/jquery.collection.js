@@ -1,8 +1,8 @@
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/vendor/jquery.collection.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 17/08/2020 14:19
+// @lastUpdate 01/03/2021 18:49
 
 ;
 (function ($) {
@@ -28,7 +28,7 @@
         return true
       },
       allow_add: true,
-      add: '<a href="#">[ + ]</a>',
+      add: '<a href="#"><i class="fas fa-plus-circle"></i></a>',
       before_add: function (collection, element) {
         return true
       },
@@ -36,7 +36,7 @@
         return true
       },
       allow_remove: true,
-      remove: '<a href="#">[ - ]</a>',
+      remove: '<a href="#"><i class="fas fa-minus-circle"></i></a>',
       before_remove: function (collection, element) {
         return true
       },

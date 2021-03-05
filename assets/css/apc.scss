@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/css/apc.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/01/2021 13:57
+// @lastUpdate 05/03/2021 11:11
 @use "sass:map";
 
 $colorsApc: (
@@ -11,9 +11,27 @@ $colorsApc: (
         c3: rgb(229, 185, 77),
         c4: rgb(65, 108, 63),
         c5: rgb(43, 76, 118),
-        c6: #7f1f52
+        c6: rgb(127, 31, 83)
 );
 
+$colorsApcLight: (
+        c1:rgba(156, 43, 38, 0.2),
+        c2: rgba(208, 119, 64, 0.2),
+        c3: rgba(229, 185, 77, 0.2),
+        c4: rgba(65, 108, 63, 0.2),
+        c5: rgba(43, 76, 118, 0.2),
+        c6: rgba(127, 31, 83, 0.2)
+);
+
+$colorsApcMedium: (
+        c1:rgba(156, 43, 38, 0.6),
+        c2: rgba(208, 119, 64, 0.6),
+        c3: rgba(229, 185, 77, 0.6),
+        c4: rgba(65, 108, 63, 0.6),
+        c5: rgba(43, 76, 118, 0.6),
+        c6: rgba(127, 31, 83, 0.6)
+);
+//todo: gérer la déclinaison de couleur. Le jaune à 50% disparait ? définir les 3 nuances dans 3 tableaux
 .comp {
   display: flex;
   justify-content: center;
@@ -90,6 +108,24 @@ $colorsApc: (
 
 }
 
+@each $color-key, $color-value in $colorsApcMedium {
+  .niveau2#{$color-key} {
+    background-color: $color-value;
+  }
+
+}
+
+@each $color-key, $color-value in $colorsApcLight {
+  .situationliste#{$color-key} {
+    background-color: $color-value;
+  }
+
+
+  .niveau1#{$color-key} {
+    background-color: $color-value;
+  }
+}
+
 @each $color-key, $color-value in $colorsApc {
   .competence#{$color-key} {
     background-color: $color-value;
@@ -115,19 +151,12 @@ $colorsApc: (
     border-right: 4px solid $color-value;
   }
 
-  .situationliste#{$color-key} {
-    background-color: lighten($color-value, 50%);
-  }
-
-  .niveau1#{$color-key} {
-    background-color: lighten($color-value, 50%);
-  }
-
-  .niveau2#{$color-key} {
-    background-color: lighten($color-value, 40%);
-  }
-
   .niveau3#{$color-key} {
+    background-color: $color-value;
+    color: white;
+  }
+
+  .badge-#{$color-key} {
     background-color: $color-value;
     color: white;
   }
