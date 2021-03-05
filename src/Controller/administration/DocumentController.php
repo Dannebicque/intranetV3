@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/DocumentController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 05/03/2021 16:02
  */
 
 namespace App\Controller\administration;
@@ -178,8 +178,7 @@ class DocumentController extends BaseController
      */
     public function duplicate(Document $document): Response
     {
-        $newDocument = new Document();
-        $newDocument->duplicate($document);
+        $newDocument = clone $document;
 
         $this->entityManager->persist($newDocument);
         $this->entityManager->flush();
