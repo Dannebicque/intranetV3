@@ -81,25 +81,21 @@
         {% if  user_data.isGoodDepartement('ROLE_ABS') or user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ADMIN') %}
             <div class="alert alert-info">* Si la case est cochée, l'absence est justifiée.</div>
         {% endif %}
-        {% if etudiant.semestre.optPenaliteAbsence == true %}
-            <div class="alert alert-warning">
-                Vous avez <strong> {{ absences|length }} </strong> cours manqués, dont
-                <strong>{{ statistiquesAbsences.nbNonJustifie }} non justifiées</strong>. <br/>
-                <strong>Vous avez perdu ce semestre {{ statistiquesAbsences.nbNonJustifie * etudiant
-                    .semestre.optPointPenaliteAbsence }} points.</strong>
-            </div>
-        {% else %}
-            <div class="alert alert-warning">
-                {% if absences|length == 0 %}
+
+        <div class="alert alert-warning">
+            {% if absences|length == 0 %}
                 Vous n'avez pas d'absence ou de cours manqué.
-            {% elseif absences|length == 1 %}
-                Vous avez <strong> {{ absences|length }} </strong> cours manqué, dont
-                <strong>{{ statistiquesAbsences.nbNonJustifie }} non justifié(s)</strong>.
             {% else %}
-                Vous avez <strong> {{ absences|length }} </strong> cours manqués, dont
-                <strong>{{ statistiquesAbsences.nbNonJustifie }} non justifié(s)</strong>.
-                {% endif %}<br/>
-            </div>
-        {% endif %}
+                Vous avez
+                <strong> {{ absences|length }} </strong> cours manqué{% if absences|length > 1 %}s{% endif %}, dont
+                <strong>{{ statistiquesAbsences.nbNonJustifie }} non justifié{% if statistiquesAbsences.nbNonJustifie
+                        > 1 %}s{% endif %}</strong>.<br>
+                {% if etudiant.semestre.optPenaliteAbsence == true %}
+                    <strong>Vous avez perdu ce semestre {{ statistiquesAbsences.nbNonJustifie * etudiant
+                        .semestre.optPointPenaliteAbsence }} point{% if statistiquesAbsences.nbNonJustifie * etudiant
+                        .semestre.optPointPenaliteAbsence > 1 %}s{% endif %}.</strong>
+                {% endif %}
+            {% endif %}
+        </div>
     </div>
 </div>

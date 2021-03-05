@@ -115,12 +115,12 @@
                 'App\\Controller\\BlocNotesAbsencesController::personnel'
             )) }}
         {% elseif is_granted('ROLE_ETUDIANT') %}
-            <div class="col-lg-6 col-md-12 col-sm-12">
+            <div class="col-12">
                 {{ render_esi(controller(
                     'App\\Controller\\BlocNotesAbsencesController::etudiantAbsences'
                 )) }}
             </div>
-            <div class="col-lg-6 col-md-12 col-sm-12">
+            <div class="col-12">
                 {{ render_esi(controller(
                     'App\\Controller\\BlocNotesAbsencesController::etudiantNotes'
                 )) }}
