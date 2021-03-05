@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/NoteRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:08
+ * @lastUpdate 05/03/2021 16:40
  */
 
 namespace App\Repository;
@@ -66,6 +66,8 @@ class NoteRepository extends ServiceEntityRepository
             ->setParameter('annee', $annee->getId())
             ->setParameter('etudiant', $etudiant->getId())
             ->setParameter('semestre', $semestre->getId())
+            ->orderBy('m.codeMatiere', 'ASC')
+            ->addOrderBy('e.created', 'ASC')
             ->getQuery()
             ->getResult();
     }

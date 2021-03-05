@@ -7,6 +7,9 @@
     <dd class="col-md-7 col-sm-12">{{ note.evaluation.matiere.coefficient }}</dd>
     <dt class="col-md-5 col-sm-12">{{ 'nb.note.matiere'|trans }}:</dt>
     <dd class="col-md-7 col-sm-12">{{ note.evaluation.matiere.nbnotes }}</dd>
+    <dt class="col-md-5 col-sm-12">{{ 'nb.saisie.par'|trans }}:</dt>
+    <dd class="col-md-7 col-sm-12">{{ note.evaluation.personnelAuteur != null ? note.evaluation.personnelAuteur
+        .displayPr : 'non.defini'|trans }}</dd>
     <dt class="col-md-5 col-sm-12">{{ 'commentaire.evaluation'|trans }}:</dt>
     <dd class="col-md-7 col-sm-12">{{ note.evaluation.commentaire }}</dd>
 </dl>

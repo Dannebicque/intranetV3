@@ -18,8 +18,7 @@
                 <tr>
                     <td>{{ note.evaluation.libelle is defined ? note.evaluation.libelle : note.evaluation.id }}</td>
                     <td>{{ note.evaluation.matiere.codeMatiere }}</td>
-                    <td class="hide">{{ note.evaluation.dateEvaluation ? note.evaluation.dateEvaluation|format_datetime('long',
-                            'short') : '' }}</td>
+                    <td class="hide">{{ note.evaluation.dateEvaluation ? note.evaluation.dateEvaluation|format_date('long') : '' }}</td>
                     <td class="hide">{{ note.evaluation.commentaire }}</td>
                     <td>{{ note.note|format_note(2, 10) }}</td>
                     <td class="hide">{{ note.evaluation.coefficient|number_format(2) }}</td>

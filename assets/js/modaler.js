@@ -1,8 +1,8 @@
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/modaler.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 27/07/2020 11:23
+// @lastUpdate 05/03/2021 16:31
 
 // =====================
 // Modaler
@@ -23,10 +23,10 @@
     footerVisible: true,
     confirmVisible: true,
     confirmText: 'Ok',
-    confirmClass: 'btn btn-w-sm btn-flat btn-primary',
+    confirmClass: 'btn btn-w-sm btn-primary',
     cancelVisible: false,
     cancelText: 'Cancel',
-    cancelClass: 'btn btn-w-sm btn-flat btn-secondary',
+    cancelClass: 'btn btn-w-sm btn-secondary',
     bodyExtraClass: '',
     spinner: '<div class="h-200 center-vh"><svg class="spinner-circle-material-svg" viewBox="0 0 50 50"><circle class="circle" cx="25" cy="25" r="20"></svg></div>',
 
