@@ -9,108 +9,121 @@
         {% if is_granted('ROLE_SUPER_ADMIN') %}
             {{ include('composants/sadm-buttons-show.html.twig', {elt: 'departement', id: departement.id, retour: {path: 'sa_structure_index', titre: 'atitle.retour_structure'|trans, params:{departement:departement.id}}}) }}
         {% else %}
-            {{ include('composants/adm-buttons-show.html.twig', {elt: 'departement', id: departement.id, retour: {path: 'administration_structure_index', titre: 'atitle.retour_structure'|trans}}) }}
+            <div class="buttons">
+                <a href="{{ path('administration_departement_edit', {id: departement.id}) }}"
+                   class="btn btn-warning btn-sm btn-float"
+                   title="{{ 'atitle.modifier'|trans }}"
+                   data-provide="tooltip"
+                   data-placement="bottom">
+                    <i class="{{ iconEdit }}"></i>
+                    <span class="sr-only">{{ 'atitle.modifier'|trans }}</span>
+                </a>
+                <a href="{{ path('administration_structure_index') }}"
+                   class="btn btn-primary btn-float"
+                   data-provide="tooltip"
+                   data-placement="bottom"
+                   title="{{ 'atitle.retour_structure'|trans }}">
+                    <i class="fas fa-arrow-left"></i>
+                    <span class="sr-only">{{ 'atitle.retour_structure'|trans }}</span>
+                </a>
+
+            </div>
         {% endif %}
-
-
     </div>
 {% endblock %}
 
 {% block content %}
-<div class="card">
-    <h4 class="card-title">{{ 'adm.structure.departement.show.heading'|trans }}</h4>
-    <div class="card-body">
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.structure.departement.show.heading'|trans }}</h4>
+        <div class="card-body">
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>{{ 'table.id'|trans }}</th>
-                <td>{{ departement.id }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'table.libelle'|trans }}</th>
-                <td>{{ departement.libelle }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'table.site'|trans }}</th>
-                <td>{{ departement.site ? departement.site.libelle : 'non.defini'|trans }}</td>
-            </tr>
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th>{{ 'table.id'|trans }}</th>
+                    <td>{{ departement.id }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.libelle'|trans }}</th>
+                    <td>{{ departement.libelle }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.ufr'|trans }}</th>
+                    <td>{{ departement.ufr ? departement.ufr.libelle : 'non.defini'|trans }}</td>
+                </tr>
 
-            <tr>
-                <th>{{ 'table.logo'|trans }}</th>
-                <td><img src="{{ vich_uploader_asset(departement, 'logoFile') }}" alt="logo du département"/></td>
-            </tr>
-            <tr>
-                <th>{{ 'table.opt_annee_previsionnel'|trans }}</th>
-                <td>{{ departement.optAnneePrevisionnel }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'table.tel_contact'|trans }}</th>
-                <td>{{ departement.telContact|tel_format }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'table.fax'|trans }}</th>
-                <td>{{ departement.fax|tel_format }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'table.couleur'|trans }}</th>
-                <td><span class="carre"
-                          style="background-color: {{ departement.couleur }}">&nbsp;</span> {{ departement.couleur }} </td>
-            </tr>
-            <tr>
-                <th>{{ 'table.site_web'|trans }}</th>
-                <td><a href="{{ departement.siteWeb }}" target="_blank">{{ departement.siteWeb }}</a></td>
-            </tr>
-            <tr>
-                <th>{{ 'table.description'|trans }}</th>
-                <td>{{ departement.description }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'table.opt_update_celcat'|trans }}</th>
-                <td>{{ departement.optUpdateCelcat ? 'Yes'|trans : 'No'|trans }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'table.opt_agence'|trans }}</th>
-                <td>{{ departement.optAgence ? 'Yes'|trans : 'No'|trans }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'table.opt_materiel'|trans }}</th>
-                <td>{{ departement.optMateriel ? 'Yes'|trans : 'No'|trans }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'table.opt_edt'|trans }}</th>
-                <td>{{ departement.optEdt ? 'Yes'|trans : 'No'|trans }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'table.opt_stage'|trans }}</th>
-                <td>{{ departement.optStage ? 'Yes'|trans : 'No'|trans }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'table.opt_synthese'|trans }}</th>
-                <td>{{ departement.optSynthese ? 'Yes'|trans : 'No'|trans }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'table.opt_messagerie'|trans }}</th>
-                <td>{{ departement.optMessagerie ? 'Yes'|trans : 'No'|trans }}</td>
-            </tr>
-            <tr>
-              <th>{{ 'table.respRi'|trans }}</th>
-              <td>{{ departement.respri ? departement.respri.display : 'non.defini'|trans }}</td>
-            </tr>
-            <tr>
-              <th>{{ 'table.opt_Infos'|trans }}</th>
-              <td>{{ departement.optInfos ? 'Yes'|trans : 'No'|trans }}</td>
-            </tr>
-            <tr>
-              <th>{{ 'table.created'|trans }}</th>
-              <td>{{ departement.created ? departement.created|format_datetime('long', 'short') : '' }}</td>
-            </tr>
-            <tr>
-              <th>{{ 'table.updated'|trans }}</th>
-              <td>{{ departement.updated ? departement.updated|format_datetime('long', 'short') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
+                <tr>
+                    <th>{{ 'table.logo'|trans }}</th>
+                    <td><img src="{{ vich_uploader_asset(departement, 'logoFile') }}" alt="logo du département"/></td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.opt_annee_previsionnel'|trans }}</th>
+                    <td>{{ departement.optAnneePrevisionnel }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.tel_contact'|trans }}</th>
+                    <td>{{ departement.telContact|tel_format }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.fax'|trans }}</th>
+                    <td>{{ departement.fax|tel_format }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.couleur'|trans }}</th>
+                    <td><span class="carre"
+                              style="background-color: {{ departement.couleur }}">&nbsp;</span> {{ departement.couleur }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.site_web'|trans }}</th>
+                    <td><a href="{{ departement.siteWeb }}" target="_blank">{{ departement.siteWeb }}</a></td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.description'|trans }}</th>
+                    <td>{{ departement.description }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.opt_update_celcat'|trans }}</th>
+                    <td>{{ departement.optUpdateCelcat ? 'Yes'|trans : 'No'|trans }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.opt_agence'|trans }}</th>
+                    <td>{{ departement.optAgence ? 'Yes'|trans : 'No'|trans }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.opt_materiel'|trans }}</th>
+                    <td>{{ departement.optMateriel ? 'Yes'|trans : 'No'|trans }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.opt_edt'|trans }}</th>
+                    <td>{{ departement.optEdt ? 'Yes'|trans : 'No'|trans }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.opt_stage'|trans }}</th>
+                    <td>{{ departement.optStage ? 'Yes'|trans : 'No'|trans }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.opt_synthese'|trans }}</th>
+                    <td>{{ departement.optSynthese ? 'Yes'|trans : 'No'|trans }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.opt_messagerie'|trans }}</th>
+                    <td>{{ departement.optMessagerie ? 'Yes'|trans : 'No'|trans }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.respRi'|trans }}</th>
+                    <td>{{ departement.respri ? departement.respri.display : 'non.defini'|trans }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.created'|trans }}</th>
+                    <td>{{ departement.created ? departement.created|format_datetime('long', 'short') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.updated'|trans }}</th>
+                    <td>{{ departement.updated ? departement.updated|format_datetime('long', 'short') : '' }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
 {% endblock %}

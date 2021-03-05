@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Departement.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 05/03/2021 15:58
  */
 
 namespace App\Entity;
@@ -35,18 +35,20 @@ class Departement extends BaseEntity
      * @ORM\Column(type="string", length=255)
      * @Groups({"actualite_administration"})
      */
-    private $libelle;
+    private ?string $libelle;
     /**
      * @var Ufr
      * @ORM\ManyToOne(targetEntity="App\Entity\Ufr", inversedBy="departements")
      */
     private $ufr;
+
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=50)
      */
     private $logoName;
+
     /**
      * @var UploadedFile
      *
