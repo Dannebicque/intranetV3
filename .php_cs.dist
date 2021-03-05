@@ -33,6 +33,9 @@ return PhpCsFixer\Config::create()
         'semicolon_after_instruction' => true,
         'strict_comparison' => true,
         'strict_param' => true,
+        'no_trailing_comma_in_list_call' => true
+        'no_trailing_comma_in_singleline_array' => true,
+        'trailing_comma_in_multiline_array' => false
     ])
     ->setFinder($finder)
     ->setCacheFile(__DIR__.'/var/.php_cs.cache')
