@@ -29,13 +29,9 @@
                 <div class="tab-pane {% if loop.first %}fade active show{% endif %}"
                      id="semestre{{ semestre.id }}">
 
-                    <table class="table table-striped table-bordered
-                            {% if matieres|filter(matiere => matiere.semestre.id == semestre.id)|length > 0 %}
-                                      datatable_matieres
-                            {% endif %}"
-                            {% if matieres|filter(matiere => matiere.semestre.id == semestre.id)|length > 0 %}
-                                data-provide="datatables"
-                            {% endif %} id="tab_semestre{{ semestre.id }}">
+                    <table class="table table-striped table-bordered datatable_matieres"
+                           data-provide="datatables"
+                           id="tab_semestre{{ semestre.id }}">
                         <thead>
                         <tr>
                             <th>{{ 'table.code_element'|trans }}</th>
@@ -54,7 +50,7 @@
                         </thead>
                         <tbody>
                         {% for matiere in matieres|filter(matiere => matiere.semestre.id == semestre.id) %}
-                            <tr {% if matiere.suspendu == true %}class="bg-pale-warning"{% endif %}>
+                            <tr {% if matiere.suspendu == true %}class="bg-pale-warning"{% endif %} id="ligne_{{ matiere.id }}">
                                 <td>{{ matiere.codeElement }}</td>
                                 <td>{{ matiere.codeMatiere }}</td>
                                 <td>{{ matiere.libelle }}</td>

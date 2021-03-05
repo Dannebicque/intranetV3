@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/MatiereController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 05/03/2021 15:42
  */
 
 namespace App\Controller\administration;
@@ -17,6 +17,8 @@ use App\Entity\Diplome;
 use App\Entity\Matiere;
 use App\Entity\Ue;
 use App\Form\MatiereType;
+use App\Repository\ApcRessourceRepository;
+use App\Repository\ApcSaeRepository;
 use App\Repository\MatiereRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,20 +30,35 @@ use Symfony\Component\Routing\Annotation\Route;
 class MatiereController extends BaseController
 {
     /**
-     * @Route("/", name="administration_matiere_index", methods="GET")
+     * @Route("/{diplome}", name="administration_matiere_index", methods="GET")
      */
-    public function index(): Response
+    public function index(Diplome $diplome = null): Response
     {
-        return $this->render('administration/matiere/index.html.twig');
+        return $this->render('administration/matiere/index.html.twig',
+            [
+                'diplomeSelect' => $diplome
+            ]);
     }
 
     /**
      * @Route("/diplome/{diplome}", name="administration_matiere_diplome", methods="GET", options={"expose":true})
      */
-    public function diplome(MatiereRepository $matiereRepository, Diplome $diplome): Response
-    {
+    public function diplome(
+        MatiereRepository $matiereRepository,
+        ApcRessourceRepository $apcRessourceRepository,
+        ApcSaeRepository $apcSaeRepository,
+        Diplome $diplome
+    ): Response {
+        if (null !== $diplome->getTypeDiplome() && true === $diplome->getTypeDiplome()->getApc()) {
+            return $this->render('administration/matiere/_tableauApc.html.twig', [
+                'diplome' => $diplome,
+                'ressources' => $apcRessourceRepository->findByDiplome($diplome),
+                'saes' => $apcSaeRepository->findByDiplome($diplome)
+            ]);
+        }
+
         return $this->render('administration/matiere/_tableau.html.twig', [
-            'diplome'  => $diplome,
+            'diplome' => $diplome,
             'matieres' => $matiereRepository->findByDiplome($diplome),
         ]);
     }
@@ -111,7 +128,7 @@ class MatiereController extends BaseController
 
             return $this->render('administration/matiere/new.html.twig', [
                 'matiere' => $matiere,
-                'form'    => $form->createView(),
+                'form' => $form->createView(),
             ]);
         }
 
@@ -119,7 +136,7 @@ class MatiereController extends BaseController
     }
 
     /**
-     * @Route("/{id}", name="administration_matiere_show", methods="GET")
+     * @Route("/{id}/detail", name="administration_matiere_show", methods="GET")
      */
     public function show(Matiere $matiere): Response
     {
@@ -149,7 +166,7 @@ class MatiereController extends BaseController
 
             return $this->render('administration/matiere/edit.html.twig', [
                 'matiere' => $matiere,
-                'form'    => $form->createView(),
+                'form' => $form->createView(),
             ]);
         }
 
@@ -177,7 +194,31 @@ class MatiereController extends BaseController
     /**
      * @Route("/{id}", name="administration_matiere_delete", methods="DELETE")
      */
-    public function delete(): void
+    public function delete(Request $request, Matiere $matiere)
     {
+        $id = $matiere->getId();
+        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token')) &&
+            0 === \count($matiere->getEvaluations())) {
+            foreach ($matiere->getAbsences() as $abs) {
+                $this->entityManager->remove($abs);
+            }
+
+            foreach ($matiere->getPrevisionnels() as $previ) {
+                $this->entityManager->remove($previ);
+            }
+
+            $this->entityManager->remove($matiere);
+            $this->entityManager->flush();
+            $this->addFlashBag(
+                Constantes::FLASHBAG_SUCCESS,
+                'matiere.delete.success.flash'
+            );
+
+            return $this->json($id, Response::HTTP_OK);
+        }
+
+        $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'matiere.delete.error.flash');
+
+        return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }
