@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Document.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 05/03/2021 16:02
  */
 
 namespace App\Entity;
@@ -115,6 +115,7 @@ class Document extends BaseEntity
     public function __clone()
     {
         $this->setUuid(Uuid::uuid4());
+        $this->setCreated(new DateTime('now'));
     }
 
     public function getTaille(): ?float
@@ -273,21 +274,6 @@ class Document extends BaseEntity
     public function setUuid($uuid): self
     {
         $this->uuid = $uuid;
-
-        return $this;
-    }
-
-    public function duplicate(self $document)
-    {
-        $this->setLibelle($document->getLibelle());
-        $this->setDescription($document->getDescription());
-        $this->setTypeDocument($document->getTypeDocument());
-        $this->setDocumentName($document->getDocumentName());
-        $this->setTaille($document->getTaille());
-        $this->setTypeFichier($document->getTypeFichier());
-        foreach ($document->getSemestres() as $semestre) {
-            $this->addSemestre($semestre);
-        }
 
         return $this;
     }
