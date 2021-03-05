@@ -1,8 +1,8 @@
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.absences.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/10/2020 12:22
+// @lastUpdate 01/03/2021 18:49
 import {addCallout} from '../util'
 import '../../vendor/datatables'
 
@@ -12,7 +12,7 @@ $(document).on('change', '#justifier_etudiant', function () {
 
 $(document).on('click', '.checkAbsence', function (e) {
   let absence = $(this).data('absence')
-  console.log(absence)
+
   let etat = 0
 
   if (($(this).is(':checked'))) {

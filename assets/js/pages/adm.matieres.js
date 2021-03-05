@@ -1,8 +1,10 @@
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.matieres.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/08/2020 09:15
+// @lastUpdate 01/03/2021 18:49
+
+import {dataTableLangueFr} from '../lang/fr'
 
 $('#matiere_semestre').change(function () {
   const semestreSelector = $(this)
@@ -95,9 +97,9 @@ $(document).on('click', '.change-diplome', function (e) {
     type: 'GET',
     success: function (data) {
       $('#content_diplome').slideUp().empty().append(data).slideDown()
-      $('.datatable_matieres').dataTable({
-        language: langueFr
-      })
+      // $('.datatable_matieres').dataTable({
+      //   language: dataTableLangueFr
+      // })
       $('#export_csv').attr('href', Routing.generate('administration_matiere_export', {
         diplome: $diplome,
         '_format': 'csv'
