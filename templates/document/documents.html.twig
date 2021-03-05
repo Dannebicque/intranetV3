@@ -8,8 +8,8 @@
                 <div class="media-body">
                     <h5>{{ document.libelle }}</h5>
                     <p class="gap-items">
-                        <small>{{ 'taille'|trans }}: {{ document.taille }} ko</small>
-                        <small>{{ 'type_fichier'|trans }}: {{ document.typeFichier }}</small>
+                        <small>{{ 'taille'|trans }}: {{ document.tailleKo|number_format(2) }} ko</small>
+                        <small>{{ 'type_fichier'|trans }}: {{ document.typeFichierTraduit }}</small>
                     </p>
                     <p>
                         <small>{{ 'created'|trans }}: {{ document.updated|format_datetime('long', 'short') }}</small>
