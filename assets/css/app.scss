@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/css/app.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/03/2021 11:11
+// @lastUpdate 05/03/2021 11:32
 
 @import "core.min.css";
 
@@ -693,3 +693,6 @@ td.td-edt.col-new-day {
 }
 
 //correctifs accessibilité
+.dark-theme .card-warning .card-title {
+  color: var(--body);
+}
