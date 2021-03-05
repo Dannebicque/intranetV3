@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/css/theme.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/03/2021 11:11
+// @lastUpdate 05/03/2021 11:26
 /* @file /Users/davidannebicque/htdocs/intranetV3/assets/css/theme.css */
 /* @author davidannebicque */
 /* @project intranetV3 */
@@ -2419,7 +2419,7 @@ img {
 }
 
 .nav-tabs .nav-link:hover, .nav-tabs .nav-link.active, .nav-tabs .nav-link.active:focus, .nav-tabs .nav-link.active:hover {
-    color: var(--colorIUT);
+    color: white;
     border-color: var(--colorPrimary);
     background-color: var(--colorIUTComplementaire);
 }
