@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.apc_sae.new.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+
+                <a href="{{ path('administration_matiere_index', {diplome:diplome.id}) }}"
+                   class="btn btn-primary btn-float"
+                   title="{{ 'atitle.retour_liste'|trans }}"
+                   data-provide="tooltip"
+                   data-placement="bottom">
+                    <i class="fas fa-arrow-left"></i>
+                    <span class="sr-only">{{ 'atitle.retour_liste'|trans }}</span>
+                </a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.apc_sae.new.heading'|trans }}</h4>
+        <div class="card-body">
+            {{ form_start(form) }}
+            {% form_theme form 'form/my-form.html.twig' %}
+            {{ include('apc/apc_sae/_form.html.twig') }}
+
+            <button class="btn btn-success">{{ button_label|default('label.save'|trans) }}</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('apc') }}
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+      let sae = null
+    </script>
+    {{ parent() }}
+    {{ encore_entry_script_tags('apc') }}
+{% endblock %}
+
