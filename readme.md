@@ -3,9 +3,9 @@
 
 # IntranetV3
 
-Actuelle version de l'intranet
+Actuelle version de l'intranet des IUT de Troyes et de Reims-Châlons-Charleville
 
-Based on Symfony 5.2
+basé sur Symfony 5.2
 
 # Installation
 
@@ -13,7 +13,8 @@ Les instructions se trouve dans le fichier [install.md](install.md)
 
 # Objectifs
 
-Cet intranet est spécialisé dans la gestion de formation universitaire de type DUT ou Licences professionnelles.
+Cet intranet est spécialisé dans la gestion de formation universitaire de type DUT ou Licences professionnelles, **et
+très prochainement (rentrée 2021) de type B.U.T. (Bachelor Universitaire de Technologie).**
 
 Il propose de nombreuses gestions comme le suivi des notes, des absences, des rattrapages, des services prévisionnels
 des enseignants, des trombinoscopes et des groupes d'étudiants et beaucoup d'autres fonctionnalités.
@@ -21,13 +22,20 @@ des enseignants, des trombinoscopes et des groupes d'étudiants et beaucoup d'au
 Cette nouvelle version apporte une refonte ergonomique complète, et une optimisation du code, pour prendre en compte les
 standard de SF 5.2 et PHP 7.4.
 
+# Mises à jours
+
+Les améliorations sont régulières, tout comme des ajustements et des correctifs. Toutes les informations seront (autant
+que j'y pense) dans le [changelog](CHANGELOG.md)
+
 # Détails des fonctionnalités
 
 ## Fonctionnalités pour les étudiants
 
-* Consultation de leur emploi du temps (synchronisation avec Celcat) ![Nouveauté V3](https://img.shields.io/badge/Nouveauté-V3-brightgreen.svg)
+* Consultation de leur emploi du temps (synchronisation avec
+  Celcat) ![Nouveauté V3](https://img.shields.io/badge/Nouveauté-V3-brightgreen.svg)
 * Synchronisation ICAL avec leur agenda (format ics).
-* Paramétrage de la visibilité de l’emploi du temps, par les gestionnaires (nombre de semaines) ![Nouveauté V3](https://img.shields.io/badge/Nouveauté-V3-brightgreen.svg)
+* Paramétrage de la visibilité de l’emploi du temps, par les gestionnaires (nombre de
+  semaines) ![Nouveauté V3](https://img.shields.io/badge/Nouveauté-V3-brightgreen.svg)
 * Visibilité de leurs notes et leurs absences (en temps réel ou non)
 * Consultation de leur parcours scolaire (au sein de
   l’établissement) ![Optimisation V3](https://img.shields.io/badge/Optimisation-V3-orange.svg)
@@ -159,15 +167,9 @@ standard de SF 5.2 et PHP 7.4.
 
 # Features sur la version 3.1 (premier semestre 2021) ![Nouveauté V3.1 premier semestre 2021](https://img.shields.io/badge/Nouveauté-V3.1-brightgreen.svg)
 
-* Notion de "sous-évaluations" pour permettre la saisie de l'intérgalité des notes.
 * Prise en compte de l'évaluation en compétences
-* Dimension « sociale » et »participative » de l’intranet
+* Dimension "sociale" et "participative" de l’intranet
 * Mise en place d'API pour le développement d'applications tierces
-* Mise en place d'un "cahier de texte", auto-alimenté par les étudiants
-* Mise en place d’un « forum » d’échange sur les modules de la formation, avec différents niveaux (groupes TD/TP,
-  module).
-  * Répondre à une demande étudiante
-  * Possibilité pour l’équipe d’interagir sur ces forums
 * Formulaire de suivi de stage
 * Suivi des plans de cours dans le cadre d'une démarche qualité LP
 * Edition des plannings de soutenance de projet
@@ -185,3 +187,12 @@ standard de SF 5.2 et PHP 7.4.
 * Profil des étudiants et des enseignants
 * Suivi des services prévisionnels de manière globale par l’administration
 * Accès RH pour gérer les vacataires et nouveaux recrutements
+
+# Features sur la version 3.2 (deuxième semestre 2021) ![Nouveauté V3.2 deuxième semestre 2021](https://img.shields.io/badge/Nouveauté-V3.2-brightgreen.svg)
+
+* Notion de "sous-évaluations" pour permettre la saisie de l'intérgalité des notes.
+* Mise en place d'un "cahier de texte", auto-alimenté par les étudiants
+* Mise en place d’un « forum » d’échange sur les modules de la formation, avec différents niveaux (groupes TD/TP,
+  module).
+  * Répondre à une demande étudiante
+  * Possibilité pour l’équipe d’interagir sur ces forums
