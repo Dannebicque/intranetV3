@@ -1,0 +1,39 @@
+<table class="table table-striped table-bordered" data-provide="datatables">
+    <thead>
+    <tr>
+        <th>Libelle</th>
+        <th>Semestre</th>
+        <th>Compétences</th>
+        <th>Heures CM</th>
+        <th>Heures TD</th>
+        <th>Heures TP</th>
+        <th>Heures Projet</th>
+        <th>actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for apc_sae in apc_saes %}
+        <tr id="ligne_{{ apc_sae.id }}">
+            <td>{{ apc_sae.libelle }}</td>
+            <td>{{ apc_sae.semestre != null ? apc_sae.semestre.libelle : 'non.defini'|trans }}</td>
+            <td>
+                {% for competence in apc_sae.apcSaeCompetences %}
+                    <span class="badge badge-{{ competence.competence.couleur }}">
+                        {{ competence.competence.nomCourt }}
+                    </span>
+                {% endfor %}</td>
+            <td>{{ apc_sae.heuresCM }}</td>
+            <td>{{ apc_sae.heuresTD }}</td>
+            <td>{{ apc_sae.heuresTP }}</td>
+            <td>{{ apc_sae.heuresProjet }}</td>
+            <td>
+                {{ include('composants/adm-buttons-table-index.html.twig', {elt: 'apc_sae', id: apc_sae.id}) }}
+            </td>
+        </tr>
+    {% else %}
+        <tr class="bg-pale-warning">
+            <td colspan="9">{{ 'no.record.found'|trans }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

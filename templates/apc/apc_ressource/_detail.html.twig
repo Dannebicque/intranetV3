@@ -1,0 +1,74 @@
+<table class="table table-bordered">
+    <tr>
+        <th style="width: 25%">Nom de la ressource</th>
+        <td style="width: 25%">{{ apc_ressource.libelle }}</td>
+        <th style="width: 25%">Code</th>
+        <td style="width: 25%">{{ apc_ressource.codeRessource }}</td>
+    </tr>
+    <tr>
+        <th>Semestre</th>
+        <td colspan="3">{{ apc_ressource.semestre != null ? apc_ressource.semestre.display : 'non.defini'|trans }}</td>
+    </tr>
+    <tr>
+        <th>
+            Compétence(s) ciblée(s)
+        </th>
+        <td colspan="3">
+            {% for competence in apc_ressource.apcRessourceCompetences %}
+                <span class="badge badge-lg badge-{{ competence.competence.couleur }}"
+                      data-provide="tooltip"
+                      title="{{ competence.competence.libelle }}">
+                    {{ competence.competence.nomCourt }}
+                </span>
+            {% endfor %}{# todo: modal pour avoir le détail des AC sur chaque compétence #}
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Apprentissages critiques
+        </th>
+        <td colspan="3">
+            {% for ac in apc_ressource.apcRessourceApprentissageCritiques %}
+                <span class="badge badge-lg badge-{{ ac.apprentissageCritique.niveau.competence.couleur }}"
+                      data-provide="tooltip"
+                      title="{{ ac.apprentissageCritique.libelle }}">
+                    {{ ac.apprentissageCritique.code }}</span>
+            {% endfor %}
+        </td>
+    </tr>
+
+    <tr>
+        <th>SAÉ concerncée(s)</th>
+        <td colspan="3">
+            {% for sae in apc_ressource.apcSaeRessources %}
+                <span class="badge badge-lg badge-primary"
+                      data-provide="tooltip"
+                      title="{{ sae.sae.libelle }}"
+                >{{ sae.sae.codeSae }}</span>
+            {% endfor %}{# todo: modal pour avoir le détail des AC sur chaque compétence #}
+        </td>
+    </tr>
+    <tr>
+        <th>Prérequis</th>
+        <td colspan="3">{{ apc_ressource.preRequis }}</td>
+    </tr>
+    <tr>
+        <th>Description</th>
+        <td colspan="3">{{ apc_ressource.description|raw }}</td>
+    </tr>
+    <tr>
+        <th>Prérequis</th>
+        <td colspan="3">{{ apc_ressource.motsCles }}</td>
+    </tr>
+    <tr>
+        <th rowspan="2">Heures de formation</th>
+        <th class="text-center">Heures CM</th>
+        <th class="text-center">Heures TD</th>
+        <th class="text-center">Heures TP</th>
+    </tr>
+    <tr>
+        <th class="text-center">{{ apc_ressource.heuresCM }} heure(s)</th>
+        <th class="text-center">{{ apc_ressource.heuresTD }} heure(s)</th>
+        <th class="text-center">{{ apc_ressource.heuresTP }} heure(s)</th>
+    </tr>
+</table>
