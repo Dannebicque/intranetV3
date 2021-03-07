@@ -14,7 +14,7 @@
 {% endblock %}
 
 {% block headeractions %}
-    <div class="header-action bg-white">
+    <div class="header-action">
         <nav class="nav">
             {% if user.typeUser|lower == 'permanent' or user.typeUser|lower == 'vacataire' %}
                 {{ include('user/composants/_menu_personnel.html.twig') }}
