@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/UserAjaxController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 07/03/2021 21:05
  */
 
 namespace App\Controller;
@@ -26,6 +26,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * Class UserController.
@@ -58,7 +59,7 @@ class UserAjaxController extends BaseController
         if ($user && 'false' === $action) {
             $fav = $favoriRepository->findBy([
                 'etudiantDemandeur' => $this->getConnectedUser()->getId(),
-                'etudiantDemande'   => $user->getId(),
+                'etudiantDemande' => $user->getId(),
             ]);
             foreach ($fav as $f) {
                 $this->entityManager->remove($f);
@@ -95,6 +96,34 @@ class UserAjaxController extends BaseController
             $this->entityManager->flush();
 
             return new JsonResponse(true, Response::HTTP_OK);
+        }
+
+        return new JsonResponse(false, Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
+
+    /**
+     * @Route("/change-password", name="user_change_password", options={"expose":true})
+     *
+     * @return JsonResponse
+     */
+    public function changePassword(
+        UserPasswordEncoderInterface $passwordEncoder,
+        Request $request
+    ): ?JsonResponse {
+        if (null !== $this->getConnectedUser() && 'permanent' === $this->getConnectedUser()->getTypeUser()) {
+            $passwd1 = trim($request->request->get('passwd1'));
+            $passwd2 = trim($request->request->get('passwd2'));
+            $passwdActuel = trim($request->request->get('passwdactuel'));
+
+            if ($passwd1 === $passwd2 && $passwd1 !== '' && $passwordEncoder->isPasswordValid($this->getConnectedUser(),
+                    $passwdActuel)) {
+
+                $passwordEncode = $passwordEncoder->encodePassword($this->getConnectedUser(), $passwd1);
+                $this->getConnectedUser()->setPassword($passwordEncode);
+                $this->entityManager->flush();
+
+                return new JsonResponse(true, Response::HTTP_OK);
+            }
         }
 
         return new JsonResponse(false, Response::HTTP_INTERNAL_SERVER_ERROR);
