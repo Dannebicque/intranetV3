@@ -36,9 +36,60 @@
         </div>
         {% if not is_granted('ROLE_ETUDIANT') %}
             <div class="tab-pane" id="vosParametres">
+
+                {% if user.password is defined %}
+                    <div class="card">
+                        <h4 class="card-title">{{ 'settings.votre.password'|trans }}</h4>
+                        <div class="card-body">
+                            <div class="alert alert-warning">
+                                Attention ! Cette fonctionnalité n'est à utuliser que si vous n'utilisez pas le CAS de
+                                l'Université. Si vous utilisez le CAS la modification doit se faire sur votre bureau
+                                virtuel.
+                            </div>
+                            <form>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="password_actuel" class="required">Mot de passe actuel</label>
+                                            <input type="password"
+                                                   id="password_actuel"
+                                                   name="password_actuel"
+                                                   required="required"
+                                                   class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="password_1" class="required">Nouveau mot de passe</label>
+                                            <input type="password"
+                                                   id="password_1"
+                                                   name="password_1"
+                                                   required="required"
+                                                   class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="password_2" class="required">Répéter le nouveau mot de
+                                                                                     passe</label>
+                                            <input type="password"
+                                                   id="password_2"
+                                                   name="password_2"
+                                                   required="required"
+                                                   class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-block btn-success" id="valideNewpassword">
+                                    Enregistrer la modification du mot de passe
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                {% endif %}
+
                 <div class="card">
                     <h4 class="card-title">{{ 'settings.vos.parametres'|trans }}</h4>
-
                     <div class="card-body">
                         {% if user.typeUser == 'permanent' %}
                             <table class="table table-striped">
@@ -69,8 +120,6 @@
                                     </tr>
                                 {% endfor %}
                             </table>
-                        {% elseif user.typeUser == 'etudiant' %}
-
                         {% else %}
                             <div class="alert alert-danger">{{ 'erreur.type.user'|trans }}</div>
                         {% endif %}

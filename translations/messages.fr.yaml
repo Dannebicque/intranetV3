@@ -1651,6 +1651,7 @@ settings:
   heading: Paramètres
   vos.informations: 'Vos informations'
   vos.parametres: 'Vos paramètres'
+  votre.password: 'Modifier votre mot de passe'
 
 simulation.sous-commission: 'Simulation Sous-commission'
 site-personnel: 'Site personnel'
