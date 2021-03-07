@@ -5,8 +5,7 @@
 {% endblock %}
 
 {% block headeractions %}
-
-    <div class="header-action bg-white">
+    <div class="header-action">
         <nav class="nav nav-tabs">
             {% for semestre in user_data.semestres %}
                 {% if (semestre.diplome.responsableDiplome.id == user_data.user.id and user_data.isGoodDepartement('ROLE_RP')) or user_data.isGoodDepartement
