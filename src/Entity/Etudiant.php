@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Etudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:11
+ * @lastUpdate 07/03/2021 20:16
  */
 
 namespace App\Entity;
@@ -250,7 +250,6 @@ class Etudiant extends Utilisateur
         $this->absenceJustificatifs = new ArrayCollection();
         $this->stageEtudiants = new ArrayCollection();
         $this->alternances = new ArrayCollection();
-        $this->materielPrets = new ArrayCollection();
         $this->articlesLike = new ArrayCollection();
         $this->documentsFavoris = new ArrayCollection();
 
@@ -258,7 +257,6 @@ class Etudiant extends Utilisateur
         $this->anneeBac = date('Y');
         $this->typeUser = 'ETU';
         $this->emprunts = new ArrayCollection();
-        $this->empruntEtudiants = new ArrayCollection();
         $this->quizzEtudiants = new ArrayCollection();
         $this->projetEtudiants = new ArrayCollection();
     }
@@ -961,7 +959,7 @@ class Etudiant extends Utilisateur
         return $this->photoName;
     }
 
-    public function setPhotoName(string $photoName): void
+    public function setPhotoName(?string $photoName): void
     {
         $this->photoName = $photoName;
     }
