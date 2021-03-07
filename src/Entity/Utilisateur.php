@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Utilisateur.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/03/2021 10:47
+ * @lastUpdate 07/03/2021 17:46
  */
 
 namespace App\Entity;
@@ -146,11 +146,6 @@ abstract class Utilisateur implements UserInterface, Serializable
      * @ORM\Column(type="string", length=150, nullable=true)
      */
     private $lieuNaissance;
-
-    /**
-     * @ORM\Column(type="array", nullable=true)
-     */
-    private $configuration = [];
 
     public function __construct()
     {
@@ -507,18 +502,6 @@ abstract class Utilisateur implements UserInterface, Serializable
     public function setLieuNaissance(?string $lieuNaissance): self
     {
         $this->lieuNaissance = $lieuNaissance;
-
-        return $this;
-    }
-
-    public function getConfiguration(): ?array
-    {
-        return $this->configuration;
-    }
-
-    public function setConfiguration(?array $configuration): self
-    {
-        $this->configuration = $configuration;
 
         return $this;
     }
