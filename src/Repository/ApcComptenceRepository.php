@@ -4,12 +4,14 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/ApcComptenceRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:08
+ * @lastUpdate 02/03/2021 16:13
  */
 
 namespace App\Repository;
 
 use App\Entity\ApcCompetence;
+use App\Entity\ApcNiveau;
+use App\Entity\Diplome;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -24,5 +26,19 @@ class ApcComptenceRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, ApcCompetence::class);
+    }
+
+    public function findByDiplome(Diplome $diplome)
+    {
+        return $this->findByDiplomeBuilder($diplome)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByDiplomeBuilder(Diplome $diplome)
+    {
+        return $this->createQueryBuilder('c')
+            ->where('c.diplome = :diplome')
+            ->setParameter('diplome', $diplome->getId());
     }
 }

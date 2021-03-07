@@ -1,34 +1,17 @@
 <header class="flexbox align-items-center media-list-header bg-transparent b-0 py-16 pl-20">
     <div class="flexbox align-items-center">
-        <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input">
-            <label class="custom-control-label"></label>
+        <div>
+            <input type="checkbox">
         </div>
 
         <span class="divider-line mx-1"></span>
 
         <div class="btn-group">
-            <button class="btn" title="Archive" data-provide="tooltip"><i class="fa fa-archive"></i>
-            </button>
             <button class="btn" title="Trash" data-provide="tooltip"><i class="{{ iconDelete }}"></i>
             </button>
         </div>
 
         <span class="divider-line mx-1"></span>
-        <span class="divider-line mx-1 d-none d-md-block"></span>
-
-        <div class="dropdown d-none d-md-block">
-            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#" title="More"
-               data-provide="tooltip"><i class="fas fa-ellipsis-h pr-2"></i></a>
-            <div class="dropdown-menu">
-                <a class="dropdown-item" href="#">Mark as unread</a>
-                <a class="dropdown-item" href="#">Mark as unimportant</a>
-                <a class="dropdown-item" href="#">Add star</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Mute</a>
-            </div>
-        </div>
-
     </div>
 
     <div class="d-none d-md-block">
@@ -91,12 +74,10 @@
         {% endfor %}
     {% else %}
         {% for message in messages %}
-            <div class="media {% if message.etat == 'U' %}media-new{% endif %} align-items-center message-read" data-message="{{ message.message.id }}">
-                <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input">
-                    <label class="custom-control-label"></label>
+            <div class="media {% if message.etat == 'U' %}media-new{% endif %} align-items-center">
+                <div>
+                    <input type="checkbox">
                 </div>
-
                 <label class="toggler ml-20 fs-16">
                     <input type="checkbox" class="starred" data-message="{{ message.id }}" {% if message.starred == true %}checked{% endif %}>
                     <i class="fa fa-star"></i>
@@ -108,7 +89,7 @@
                     <span class="badge badge-dot opacity-0"></span>
                 {% endif %}
 
-                <a href="#">
+                <a href="#" class="message-read" data-message="{{ message.message.id }}">
                     {% if message.message.expediteur.photoName != null and message.message.expediteur.photoName != 'noimage.png' %}
                         <img class="avatar" src="{{ asset('upload/personnels/'~message.message.expediteur.photoName)
                         |imagine_filter('avatar') }}" alt="Avatar de l'expéditeur">
@@ -116,7 +97,7 @@
                         {{ include('composants/_avatar.html.twig', {user:message.message.expediteur, size:'sm'}) }}
                     {% endif %}
                 </a>
-                <a class="media-body text-truncate" href="#">
+                <a class="media-body text-truncate message-read" href="#" data-message="{{ message.message.id }}">
                     <h6>{{ message.message.expediteur.displayPr }}</h6>
                     <small>
                         <strong>{{ message.message.sujet }}</strong>
@@ -125,10 +106,11 @@
                 </a>
 
                 {% if message.message.messagePieceJointes|length > 0 %}
-                    <a class="text-lighter fs-18" href="#"><i
+                    <a class="text-lighter fs-18 message-read" href="#" data-message="{{ message.message.id }}"><i
                                 class="fas fa-clipboard"></i></a>
                 {% else %}
-                    <a class="text-lighter fs-18 opacity-0" href="#"><i class="fas fa-clipboard"></i></a>
+                    <a class="text-lighter fs-18 opacity-0 message-read" href="#" data-message="{{ message
+                    .message.id }}"><i class="fas fa-clipboard"></i></a>
                 {% endif %}
 
                 <time datetime="2018">{{ message.message.created|time_ago(app.request.locale) }}</time>

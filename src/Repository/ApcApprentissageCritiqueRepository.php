@@ -4,12 +4,16 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/ApcApprentissageCritiqueRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:08
+ * @lastUpdate 01/03/2021 21:24
  */
 
 namespace App\Repository;
 
+use App\Entity\Annee;
 use App\Entity\ApcApprentissageCritique;
+use App\Entity\ApcCompetence;
+use App\Entity\ApcNiveau;
+use App\Entity\Diplome;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -26,32 +30,39 @@ class ApcApprentissageCritiqueRepository extends ServiceEntityRepository
         parent::__construct($registry, ApcApprentissageCritique::class);
     }
 
-    // /**
-    //  * @return ApcApprentissageCritique[] Returns an array of ApcApprentissageCritique objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?ApcApprentissageCritique
+    public function findByDiplome(Diplome $diplome)
+    {
+        return $this->findByDiplomeBuilder()
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByDiplomeBuilder(Diplome $diplome)
     {
         return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->innerJoin(ApcNiveau::class, 'n', 'WITH', 'a.niveau = n.id')
+            ->innerJoin(ApcCompetence::class, 'c', 'WITH', 'c.id = n.competence')
+            ->where('c.diplome = :diplome')
+            ->setParameter('diplome', $diplome->getId());
     }
-    */
+
+    public function findBySemestreAndCompetences(
+        Annee $annee,
+        $idCompetences
+    ) {
+        $query = $this->createQueryBuilder('a')
+            ->innerJoin(ApcNiveau::class, 'n', 'WITH', 'a.niveau = n.id')
+            ->where('n.annee = :annee')
+            ->setParameter('annee', $annee->getId());
+
+        $ors = [];
+        foreach ($idCompetences as $comp) {
+            $ors[] = $query->expr()->orx('n.competence = ' . $query->expr()->literal($comp));
+        }
+
+        return $query->andWhere(implode(' OR ', $ors))
+            ->getQuery()
+            ->getResult();
+    }
 }

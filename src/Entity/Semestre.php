@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Semestre.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 01/03/2021 18:49
  */
 
 namespace App\Entity;
@@ -280,6 +280,16 @@ class Semestre extends BaseEntity
      */
     private $projetPeriodes;
 
+    /**
+     * @ORM\OneToMany(targetEntity=ApcRessource::class, mappedBy="semestre")
+     */
+    private $apcRessources;
+
+    /**
+     * @ORM\OneToMany(targetEntity=ApcSae::class, mappedBy="semestre")
+     */
+    private $apcSaes;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
@@ -296,6 +306,8 @@ class Semestre extends BaseEntity
         $this->etudiants = new ArrayCollection();
         $this->qualiteQuestionnaires = new ArrayCollection();
         $this->projetPeriodes = new ArrayCollection();
+        $this->apcRessources = new ArrayCollection();
+        $this->apcSaes = new ArrayCollection();
     }
 
     public function getLibelle()
@@ -1215,6 +1227,66 @@ class Semestre extends BaseEntity
             // set the owning side to null (unless already changed)
             if ($projetPeriode->getSemestre() === $this) {
                 $projetPeriode->setSemestre(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ApcRessource[]
+     */
+    public function getApcRessources(): Collection
+    {
+        return $this->apcRessources;
+    }
+
+    public function addApcRessource(ApcRessource $apcRessource): self
+    {
+        if (!$this->apcRessources->contains($apcRessource)) {
+            $this->apcRessources[] = $apcRessource;
+            $apcRessource->setSemestre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeApcRessource(ApcRessource $apcRessource): self
+    {
+        if ($this->apcRessources->removeElement($apcRessource)) {
+            // set the owning side to null (unless already changed)
+            if ($apcRessource->getSemestre() === $this) {
+                $apcRessource->setSemestre(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ApcSae[]
+     */
+    public function getApcSaes(): Collection
+    {
+        return $this->apcSaes;
+    }
+
+    public function addApcSae(ApcSae $apcSae): self
+    {
+        if (!$this->apcSaes->contains($apcSae)) {
+            $this->apcSaes[] = $apcSae;
+            $apcSae->setSemestre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeApcSae(ApcSae $apcSae): self
+    {
+        if ($this->apcSaes->removeElement($apcSae)) {
+            // set the owning side to null (unless already changed)
+            if ($apcSae->getSemestre() === $this) {
+                $apcSae->setSemestre(null);
             }
         }
 

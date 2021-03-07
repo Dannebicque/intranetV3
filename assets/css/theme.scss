@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/css/theme.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/03/2021 11:36
+// @lastUpdate 07/03/2021 17:33
 /* @file /Users/davidannebicque/htdocs/intranetV3/assets/css/theme.css */
 /* @author davidannebicque */
 /* @project intranetV3 */
@@ -1640,20 +1640,27 @@ img {
 }
 
 .thead-default th {
-    background-color: #fcfdfe;
+  background-color: #fcfdfe;
 }
 
 .table-hover tbody tr {
-    -webkit-transition: background-color 0.2s linear;
-    transition: background-color 0.2s linear;
+  -webkit-transition: background-color 0.2s linear;
+  transition: background-color 0.2s linear;
 }
 
+table tbody tr {
+  background-color: var(--header);
+  color: var(--police)
+}
+
+
 .table-striped tbody tr:nth-of-type(odd) {
-    background-color: #fcfdfe;
+  background-color: var(--body);
+  color: var(--police)
 }
 
 .table-hover tbody tr:hover {
-    background-color: #f9fafb;
+  background-color: #f9fafb;
 }
 
 .table-sm th,
@@ -19513,12 +19520,13 @@ ul.flexbox {
     padding: 0.75rem 1rem 1rem;
     border-bottom: 3px solid transparent;
     color: rgba(77, 82, 89, 0.7);
-    background-color: transparent !important;
+  //background-color: transparent !important;
 }
 
 .header-action .nav-link.active, .header-action .nav-link:hover {
-    color: #4d5259;
-    border-bottom-color: var(--colorPrimary);
+  color: white;
+  background-color: var(--colorIUTComplementaire);
+  border-bottom-color: var(--colorPrimary);
 }
 
 .header-action .nav-link + .nav-link {

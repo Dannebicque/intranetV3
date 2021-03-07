@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcParcoursNiveau.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:49
+ * @lastUpdate 01/03/2021 18:49
  */
 
 namespace App\Entity;
@@ -26,16 +26,6 @@ class ApcParcoursNiveau extends BaseEntity
      * @ORM\ManyToOne(targetEntity=ApcParcours::class, inversedBy="apcParcoursNiveaux")
      */
     private $parcours;
-
-    /**
-     * ApcParcoursNiveau constructor.
-     *
-     * @param $parcours
-     */
-    public function __construct($parcours)
-    {
-        $this->parcours = $parcours;
-    }
 
     public function getNiveau(): ?ApcNiveau
     {

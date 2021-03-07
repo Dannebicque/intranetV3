@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Entreprise.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:49
+ * @lastUpdate 02/03/2021 07:54
  */
 
 namespace App\Entity;
@@ -13,6 +13,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EntrepriseRepository")
@@ -21,6 +22,11 @@ class Entreprise extends BaseEntity
 {
     /**
      * @ORM\Column(type="string", length=30, nullable=true)
+     * @Assert\Length(
+     *      min = 0,
+     *      max = 30,
+     *      maxMessage = "Maximum {{ limit }} caractères"
+     * )
      */
     private ?string $siret;
 

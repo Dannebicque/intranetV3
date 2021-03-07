@@ -1,10 +1,85 @@
 {% extends is_granted('ROLE_SUPER_ADMIN') ? 'base-super_admin.html.twig' : 'base.html.twig' %}
 
-{% block title %}New ApcParcoursNiveau{% endblock %}
+{% block header %}
+    {{ 'adm.apc_parcours_niveau.heading'|trans({'%parcours%': parcours.libelle}) }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            {% if is_granted('ROLE_SUPER_ADMIN') %}
+                <a href="{{ path('super_admin_homepage') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+                   data-placement="bottom" title="{{ 'atitle.retour_super_administration'|trans }}">
+                    <i class="{{ iconDashboard }}"><span class="sr-only">dashboard</span></i>
+                </a>
+            {% else %}
+                <a href="{{ path('administration_apc_parcours_edit', {id: parcours.id}) }}"
+                   class="btn btn-warning btn-sm btn-float"
+                   title="{{ 'atitle.modifier'|trans }}"
+                   data-provide="tooltip"
+                   data-placement="bottom">
+                    <i class="{{ iconEdit }}"></i>
+                    <span class="sr-only">{{ 'atitle.modifier'|trans }}</span>
+                </a>
+                <a href="{{ path('administration_apc_referentiel_index', {diplome:parcours.diplome.id}) }}" class="btn
+                btn-primary btn-float"
+                   data-provide="tooltip"
+                   data-placement="bottom" title="{{ 'atitle.retour_referentiel'|trans }}"><i class="fas fa-arrow-left"><span class="sr-only">Retour au référentiel de compétences</span></i></a>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
 
 {% block content %}
-    <h1>Create new ApcParcoursNiveau</h1>
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.apc_parcours_niveau.heading'|trans({'%parcours%': parcours.libelle}) }}</h4>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Compétence</th>
+                    <th>niveau 1</th>
+                    <th>niveau 2</th>
+                    <th>niveau 3</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for competence in comptences %}
+                    <tr>
+                        <td>
+                            <span class="badge badge-lg badge-{{ competence.couleur }}">
+                                {{ competence.nomCourt }}
+                            </span>
+                        </td>
+                        {% for i in 1..3 %}
+                            <td>
+                                {% for niveau in competence.apcNiveaux|filter(niveau => niveau.ordre == i) %}
+                                    <label>
+                                        <input type="checkbox"
+                                               name="niveaux[]"
+                                               value="{{ niveau.id }}"
+                                               class="checkNiveau"
+                                               {% if tabNiveauxId[niveau.id] is defined %}checked="checked"{% endif %}
+                                               data-parcours="{{ parcours.id }}">
+                                        {{ niveau.libelle }}
+                                    </label>
+                                {% endfor %}
+                            </td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
 
-    {{ include('composants/adm-form.html.twig') }}
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('apc') }}
+{% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('apc') }}
 {% endblock %}

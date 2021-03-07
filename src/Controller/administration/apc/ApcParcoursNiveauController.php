@@ -4,16 +4,19 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcParcoursNiveauController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 07/03/2021 17:33
  */
 
 namespace App\Controller\administration\apc;
 
 use App\Controller\BaseController;
+use App\Entity\ApcNiveau;
 use App\Entity\ApcParcours;
 use App\Entity\ApcParcoursNiveau;
 use App\Entity\Constantes;
 use App\Form\ApcParcoursNiveauType;
+use App\Repository\ApcComptenceRepository;
+use App\Repository\ApcParcoursNiveauRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,64 +27,48 @@ use Symfony\Component\Routing\Annotation\Route;
 class ApcParcoursNiveauController extends BaseController
 {
     /**
-     * @Route("/new/{parcours}", name="apc_parcours_niveau_new", methods={"GET","POST"})
+     * @Route("/ajax/{parcours}/{etat}/{niveau}", name="apc_parcours_niveau_ajax", options={"expose":true})
      */
-    public function new(Request $request, ApcParcours $parcours): Response
-    {
-        $apcParcoursNiveau = new ApcParcoursNiveau($parcours);
-        $form = $this->createForm(ApcParcoursNiveauType::class, $apcParcoursNiveau);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->entityManager->persist($apcParcoursNiveau);
-            $this->entityManager->flush();
-            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'apc.parcoursNiveau.create.success.flash');
-
-            return $this->redirectToRoute('administration_apc_parcours_show',
-                ['id' => $apcParcoursNiveau->getParcours()->getId()]);
+    public function ajax(
+        ApcParcoursNiveauRepository $apcParcoursNiveauRepository,
+        ApcParcours $parcours,
+        $etat,
+        ApcNiveau $niveau
+    ): Response {
+        if (0 == $etat) {
+            //existe et on souhaite retirer
+            $pn = $apcParcoursNiveauRepository->findParcoursNiveau($parcours, $niveau);
+            if ($pn) {
+                $this->entityManager->remove($pn);
+            }
+        } else {
+            //n'existe pas on ajoute
+            $pn = new ApcParcoursNiveau();
+            $pn->setNiveau($niveau);
+            $pn->setParcours($parcours);
+            $this->entityManager->persist($pn);
         }
+
+        $this->entityManager->flush();
+
+        return $this->json(true);
+    }
+
+    /**
+     * @Route("/configuration/{parcours}", name="apc_parcours_niveau_new", methods={"GET","POST"})
+     */
+    public function new(
+        ApcParcoursNiveauRepository $apcParcoursNiveauRepository,
+        ApcComptenceRepository $apcComptenceRepository,
+        ApcParcours $parcours
+    ): Response {
+        $competences = $apcComptenceRepository->findByDiplome($parcours->getDiplome());
+        $tabNiveaux = $apcParcoursNiveauRepository->findNiveauByParcoursArray($parcours);
 
         return $this->render('apc/apc_parcours_niveau/new.html.twig', [
-            'apc_parcours_niveau' => $apcParcoursNiveau,
-            'form'                => $form->createView(),
+            'parcours' => $parcours,
+            'comptences' => $competences,
+            'tabNiveauxId' => $tabNiveaux
         ]);
-    }
-
-    /**
-     * @Route("/{id}/edit", name="apc_parcours_niveau_edit", methods={"GET","POST"})
-     */
-    public function edit(Request $request, ApcParcoursNiveau $apcParcoursNiveau): Response
-    {
-        $form = $this->createForm(ApcParcoursNiveauType::class, $apcParcoursNiveau);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->entityManager->flush();
-            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'apc.parcoursNiveau.edit.success.flash');
-
-            return $this->redirectToRoute('administration_apc_parcours_show',
-                ['id' => $apcParcoursNiveau->getParcours()->getId()]);
-        }
-
-        return $this->render('apc/apc_parcours_niveau/edit.html.twig', [
-            'apc_parcours_niveau' => $apcParcoursNiveau,
-            'form'                => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/{id}", name="apc_parcours_niveau_delete", methods={"DELETE"})
-     */
-    public function delete(Request $request, ApcParcoursNiveau $apcParcoursNiveau): Response
-    {
-        $parcour = $apcParcoursNiveau->getParcours();
-        if ($this->isCsrfTokenValid('delete' . $apcParcoursNiveau->getId(), $request->request->get('_token'))) {
-            $this->entityManager->remove($apcParcoursNiveau);
-            $this->entityManager->flush();
-            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'apc.parcoursNiveau.delete.success.flash');
-        }
-        $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'apc.parcoursNiveau.delete.error.flash');
-
-        return $this->redirectToRoute('administration_apc_parcours_show', ['id' => $parcour->getId()]);
     }
 }

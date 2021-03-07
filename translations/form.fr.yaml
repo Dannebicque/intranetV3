@@ -122,6 +122,17 @@ initiales: Initiales
 j: Jour
 Jour: Jour
 label:
+  apercu: 'Aperçu du fichier'
+  codeRessource: 'Code Ressource'
+  codeSae: 'Code SAÉ'
+  heuresPtut: 'Heures Projet Tutoré'
+  heuresCM: 'Heures CM'
+  heuresTD: 'Heures TD'
+  heuresTP: 'Heures TP'
+  preRequis: 'Pré-requis'
+  livrables: 'Livrables'
+  motsCles: 'Mots clés'
+  nomCourt.competence: 'Compétence'
   lieu_naissance: 'Lieu de naissance'
   moyenDeplacement: 'Moyen de déplacement utilisé'
   dureeValiditee: 'Dates et durée de validité de l''attestation'

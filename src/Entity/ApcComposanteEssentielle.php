@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcComposanteEssentielle.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:49
+ * @lastUpdate 01/03/2021 18:49
  */
 
 namespace App\Entity;
@@ -32,7 +32,7 @@ class ApcComposanteEssentielle extends BaseEntity
      *
      * @param $competence
      */
-    public function __construct($competence)
+    public function __construct($competence = null)
     {
         $this->competence = $competence;
     }

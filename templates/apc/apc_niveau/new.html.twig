@@ -1,7 +1,7 @@
 {% extends is_granted('ROLE_SUPER_ADMIN') ? 'base-super_admin.html.twig' : 'base.html.twig' %}
 
 {% block header %}
-    {{ 'adm.apc_niveau.new.heading'|trans }}
+    {{ 'adm.apc_niveau.new.heading'|trans({'%competence%': competence.nomCourt}) }}
 {% endblock %}
 
 {% block headeractions %}
@@ -21,9 +21,19 @@
 
 {% block content %}
     <div class="card">
-        <h4 class="card-title">{{ 'adm.apc_niveau.new.heading'|trans }}</h4>
+        <h4 class="card-title">{{ 'adm.apc_niveau.new.heading'|trans({'%competence%': competence.nomCourt}) }}</h4>
         <div class="card-body">
             {{ include('composants/adm-form.html.twig') }}
         </div>
     </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('apc') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('apc') }}
 {% endblock %}

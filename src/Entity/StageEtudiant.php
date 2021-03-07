@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/StageEtudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:49
+ * @lastUpdate 02/03/2021 07:53
  */
 
 namespace App\Entity;
@@ -16,6 +16,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\StageEtudiantRepository")
@@ -133,6 +134,9 @@ class StageEtudiant extends BaseEntity
 
     /**
      * @ORM\Column(type="float")
+     *
+     * @Assert\Type("float")
+     *
      */
     private $gratificationMontant;
 

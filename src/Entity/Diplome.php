@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Diplome.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 07/03/2021 17:33
  */
 
 namespace App\Entity;
@@ -200,6 +200,15 @@ class Diplome extends BaseEntity implements Serializable
         }
 
         return $this->libelle;
+    }
+
+    public function getDisplayCourt(): ?string
+    {
+        if (null !== $this->getTypeDiplome()) {
+            return $this->getTypeDiplome()->getSigle() . ' ' . $this->sigle;
+        }
+
+        return $this->sigle;
     }
 
     public function getLibelle()
