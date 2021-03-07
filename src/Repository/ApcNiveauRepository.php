@@ -4,12 +4,14 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/ApcNiveauRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:08
+ * @lastUpdate 01/03/2021 18:49
  */
 
 namespace App\Repository;
 
+use App\Entity\Annee;
 use App\Entity\ApcNiveau;
+use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -26,32 +28,13 @@ class ApcNiveauRepository extends ServiceEntityRepository
         parent::__construct($registry, ApcNiveau::class);
     }
 
-    // /**
-    //  * @return ApcNiveau[] Returns an array of ApcNiveau objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findBySemestre(Semestre $semestre)
     {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
+        return $this->createQueryBuilder('n')
+            ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = n.annee')
+            ->where('a.id = :annee')
+            ->setParameter('annee', $semestre->getAnnee()->getId())
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?ApcNiveau
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

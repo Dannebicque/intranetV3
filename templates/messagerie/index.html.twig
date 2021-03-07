@@ -1,8 +1,10 @@
 <div class="row">
-    <div class="col-sm-2">
-        {{ include('messagerie/sidebar.html.twig') }}
-    </div>
-    <div class="col-sm-10">
+    {% if is_granted('ROLE_PERMANENT') %}
+        <div class="col-2">
+            {{ include('messagerie/sidebar.html.twig') }}
+        </div>
+    {% endif %}
+    <div class="{% if is_granted('ROLE_PERMANENT') %}col-10{% else %}col-12{% endif %}">
         <div class="media-list media-list-divided media-list-hover" data-provide="selectall" id="messages-liste">
             {% if param != '' %}
                 {{ render(controller(

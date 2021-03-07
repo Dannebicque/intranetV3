@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/AnneeType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 07/03/2021 17:33
  */
 
 namespace App\Form;
@@ -35,40 +35,40 @@ class AnneeType extends AbstractType
 
         $builder
             ->add('libelle', TextType::class, [
-                'label' => 'label.libelle',
+                'label' => 'label.libelle'
             ])
             ->add('libelle_long', TextType::class, [
-                'label' => 'label.libelle_long',
+                'label' => 'label.libelle_long'
             ])
             ->add('diplome', EntityType::class, [
-                'class'         => Diplome::class,
-                'required'      => true,
-                'choice_label'  => 'libelle',
-                'expanded'      => true,
+                'class' => Diplome::class,
+                'required' => true,
+                'choice_label' => 'displayCourt',
+                'expanded' => true,
                 'query_builder' => function(DiplomeRepository $diplomeRepository) {
                     return $diplomeRepository->findByDepartementBuilder($this->departement);
                 },
-                'label'         => 'label.diplome',
+                'label' => 'label.diplome'
             ])
             ->add('codeEtape', TextType::class, [
-                'label' => 'label.code_etape',
+                'label' => 'label.code_etape'
             ])
             ->add('codeVersion', TextType::class, [
-                'label' => 'label.code_version',
+                'label' => 'label.code_version'
             ])
             ->add('codeDepartement', TextType::class, [
-                'label' => 'label.code_departement',
+                'label' => 'label.code_departement'
             ])
             ->add('ordre', TextType::class, [
-                'label' => 'label.ordre',
+                'label' => 'label.ordre'
             ])
             ->add('couleur', ChoiceType::class, [
-                'label'    => 'label.couleur',
+                'label' => 'label.couleur',
                 'required' => true,
-                'choices'  => Constantes::COULEURS,
+                'choices' => Constantes::COULEURS
             ])
             ->add('optAlternance', YesNoType::class, [
-                'label' => 'label.opt_alternance',
+                'label' => 'label.opt_alternance'
             ]);
     }
 
@@ -78,9 +78,9 @@ class AnneeType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class'         => Annee::class,
+            'data_class' => Annee::class,
             'translation_domain' => 'form',
-            'departement'        => null,
+            'departement' => null,
         ]);
     }
 }

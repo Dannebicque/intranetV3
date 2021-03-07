@@ -7,11 +7,12 @@
 
 {% block headeractions %}
 
-    <div class="header-action bg-white">
+    <div class="header-action">
         <nav class="nav nav-tabs">
             {% for diplome in user_data.diplomes %}
-                <a class="nav-link {% if loop.first %}active{% endif %} change-diplome"
-                   href="#" data-diplome="{{ diplome.id }}">{{ diplome.libelle }}</a>
+                <a class="nav-link {% if (diplomeSelect == null and loop.first) or (diplomeSelect != null and diplomeSelect
+                .id==diplome.id) %}active{% endif %} change-diplome"
+                   href="#" data-diplome="{{ diplome.id }}">{{ diplome.displayCourt }}</a>
             {% endfor %}
         </nav>
 
@@ -26,7 +27,7 @@
 {% block content %}
     <div id="content_diplome">
         {% for diplome in user_data.diplomes %}
-            {% if loop.first %}
+            {% if (diplomeSelect == null and loop.first) or (diplomeSelect != null and diplomeSelect.id==diplome.id) %}
                 {{ render(controller(
                     'App\\Controller\\administration\\MatiereController::diplome', {diplome:diplome.id}
                 )) }}

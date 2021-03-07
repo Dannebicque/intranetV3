@@ -3,19 +3,17 @@
        style="background-color: white; margin-left: -30px;margin-top: -30px; margin-bottom: 30px; height: 100%;
        padding-left: 10px; padding-right: 10px">
     <div class="aside-body">
-        {% if is_granted('ROLE_PERMANENT') %}
-            <button id="new-message" class="btn btn-primary">
-                <i class="fa fa-plus"></i>
-                {{ 'nouveau.message'|trans }}
-            </button>
-        {% endif %}
+
+        <button id="new-message" class="btn btn-primary">
+            <i class="fa fa-plus"></i>
+            {{ 'nouveau.message'|trans }}
+        </button>
         <ul class="nav nav-lg nav-pills flex-column">
             <li class="nav-item {% if filtre=='all' %}active{% endif %}">
                 <i class="fa fa-inbox"></i>
                 <a class="nav-link messagerie-filtre" href="#" data-filtre="all">{{ 'messagerie.boite.reception'|trans }}</a>
                 <span class="badge badge-pill badge-info">{{ user_data.nbUnread }}</span>
             </li>
-
             <li class="nav-item {% if filtre=='sent' %}active{% endif %}">
                 <i class="fa fa-envelope"></i>
                 <a class="nav-link messagerie-filtre" href="#" data-filtre="sent">{{ 'messagerie.boite.envoyes'|trans }}</a>
@@ -25,76 +23,9 @@
                 <i class="fa fa-file"></i>
                 <a class="nav-link messagerie-filtre" href="#" data-filtre="draft">{{ 'messagerie.boite.brouillons'|trans }}</a>
             </li>
-
-            <li class="nav-item {% if filtre=='trash' %}active{% endif %}">
-                <i class="{{ iconDelete }}"></i>
-                <a class="nav-link messagerie-filtre" href="#" data-filtre="trash">{{ 'messagerie.boite.corbeille'|trans }}</a>
-            </li>
-
-            <li class="nav-item {% if filtre=='starred' %}active{% endif %}">
-                <i class="fa fa-star"></i>
-                <a class="nav-link messagerie-filtre" href="#" data-filtre="starred">{{ 'messagerie.boite.epingles'|trans }}</a>
-            </li>
         </ul>
 
         <hr>
-
-        {#        <div class="aside-block">#}
-        {#            <div class="flexbox align-items-center mb-1">#}
-        {#                <h6 class="aside-title fs-13">Labels</h6>#}
-        {#                <a class="float-right text-lighter hover-success" href="#" data-provide="tooltip"#}
-        {#                   data-title="Create New Label" data-toggle="modal" data-target="#modal-add-label"><i#}
-        {#                            class="fas fa-plus"></i></a>#}
-        {#            </div>#}
-
-        {#            <ul class="nav flex-column">#}
-        {#                <li class="nav-item">#}
-        {#                    <a class="nav-link active" href="#">#}
-        {#                        <span class="badge badge-ring fill badge-danger"></span>#}
-        {#                        <span>Family</span>#}
-        {#                    </a>#}
-        {#                    <a class="nav-action hover-info" href="#" data-provide="tooltip" data-title="Edit"><span#}
-        {#                                class="{{ iconEdit }}"></span></a>#}
-        {#                    <a class="nav-action hover-danger delete-label" href="#" data-provide="tooltip"#}
-        {#                       data-title="Remove"><span class="{{ iconDelete }}"></span></a>#}
-        {#                </li>#}
-
-        {#                <li class="nav-item">#}
-        {#                    <a class="nav-link" href="#">#}
-        {#                        <span class="badge badge-ring badge-warning"></span>#}
-        {#                        <span>Fiends</span>#}
-        {#                    </a>#}
-        {#                    <a class="nav-action hover-info" href="#" data-provide="tooltip" data-title="Edit"><span#}
-        {#                                class="{{ iconEdit }}"></span></a>#}
-        {#                    <a class="nav-action hover-danger delete-label" href="#" data-provide="tooltip"#}
-        {#                       data-title="Remove"><span class="{{ iconDelete }}"></span></a>#}
-        {#                </li>#}
-
-        {#                <li class="nav-item">#}
-        {#                    <a class="nav-link" href="#">#}
-        {#                        <span class="badge badge-ring badge-info"></span>#}
-        {#                        <span>Work</span>#}
-        {#                    </a>#}
-        {#                    <a class="nav-action hover-info" href="#" data-provide="tooltip" data-title="Edit"><span#}
-        {#                                class="{{ iconEdit }}"></span></a>#}
-        {#                    <a class="nav-action hover-danger delete-label" href="#" data-provide="tooltip"#}
-        {#                       data-title="Remove"><span class="{{ iconDelete }}"></span></a>#}
-        {#                </li>#}
-
-        {#                <li class="nav-item">#}
-        {#                    <a class="nav-link" href="#">#}
-        {#                        <span class="badge badge-ring badge-purple"></span>#}
-        {#                        <span>Bills</span>#}
-        {#                    </a>#}
-        {#                    <a class="nav-action hover-info" href="#" data-provide="tooltip" data-title="Edit"><span#}
-        {#                                class="{{ iconEdit }}"></span></a>#}
-        {#                    <a class="nav-action hover-danger delete-label" href="#" data-provide="tooltip"#}
-        {#                       data-title="Remove"><span class="{{ iconDelete }}"></span></a>#}
-        {#                </li>#}
-        {#            </ul>#}
-        {#        </div>#}
-
-
     </div>
 
     <button class="aside-toggler"></button>

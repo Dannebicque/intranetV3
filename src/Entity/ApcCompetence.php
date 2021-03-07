@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcCompetence.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:49
+ * @lastUpdate 01/03/2021 18:49
  */
 
 namespace App\Entity;
@@ -40,20 +40,38 @@ class ApcCompetence extends BaseEntity
     private $diplome;
 
     /**
-     * @ORM\OneToMany(targetEntity=ApcComposanteEssentielle::class, mappedBy="competence")
+     * @ORM\OneToMany(targetEntity=ApcComposanteEssentielle::class, mappedBy="competence", cascade={"persist","remove"})
      */
     private $apcComposanteEssentielles;
 
     /**
-     * @ORM\OneToMany(targetEntity=ApcNiveau::class, mappedBy="competence")
+     * @ORM\OneToMany(targetEntity=ApcNiveau::class, mappedBy="competence", cascade={"persist","remove"})
      */
     private $apcNiveaux;
+
+    /**
+     * @ORM\OneToMany(targetEntity=ApcRessourceCompetence::class, mappedBy="competence")
+     */
+    private $apcRessourceCompetences;
+
+    /**
+     * @ORM\OneToMany(targetEntity=ApcSaeCompetence::class, mappedBy="competence")
+     */
+    private $apcSaeCompetences;
+
+    /**
+     * @ORM\OneToMany(targetEntity=ApcSituationProfessionnelle::class, mappedBy="competence")
+     */
+    private $apcSituationProfessionnelles;
 
     public function __construct(Diplome $diplome)
     {
         $this->apcComposanteEssentielles = new ArrayCollection();
         $this->apcNiveaux = new ArrayCollection();
         $this->setDiplome($diplome);
+        $this->apcRessourceCompetences = new ArrayCollection();
+        $this->apcSaeCompetences = new ArrayCollection();
+        $this->apcSituationProfessionnelles = new ArrayCollection();
     }
 
     public function getLibelle(): ?string
@@ -160,6 +178,96 @@ class ApcCompetence extends BaseEntity
             // set the owning side to null (unless already changed)
             if ($apcNiveau->getCompetence() === $this) {
                 $apcNiveau->setCompetence(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ApcRessourceCompetence[]
+     */
+    public function getApcRessourceCompetences(): Collection
+    {
+        return $this->apcRessourceCompetences;
+    }
+
+    public function addApcRessourceCompetence(ApcRessourceCompetence $apcRessourceCompetence): self
+    {
+        if (!$this->apcRessourceCompetences->contains($apcRessourceCompetence)) {
+            $this->apcRessourceCompetences[] = $apcRessourceCompetence;
+            $apcRessourceCompetence->setCompetence($this);
+        }
+
+        return $this;
+    }
+
+    public function removeApcRessourceCompetence(ApcRessourceCompetence $apcRessourceCompetence): self
+    {
+        if ($this->apcRessourceCompetences->removeElement($apcRessourceCompetence)) {
+            // set the owning side to null (unless already changed)
+            if ($apcRessourceCompetence->getCompetence() === $this) {
+                $apcRessourceCompetence->setCompetence(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ApcSaeCompetence[]
+     */
+    public function getApcSaeCompetences(): Collection
+    {
+        return $this->apcSaeCompetences;
+    }
+
+    public function addApcSaeCompetence(ApcSaeCompetence $apcSaeCompetence): self
+    {
+        if (!$this->apcSaeCompetences->contains($apcSaeCompetence)) {
+            $this->apcSaeCompetences[] = $apcSaeCompetence;
+            $apcSaeCompetence->setCompetence($this);
+        }
+
+        return $this;
+    }
+
+    public function removeApcSaeCompetence(ApcSaeCompetence $apcSaeCompetence): self
+    {
+        if ($this->apcSaeCompetences->removeElement($apcSaeCompetence)) {
+            // set the owning side to null (unless already changed)
+            if ($apcSaeCompetence->getCompetence() === $this) {
+                $apcSaeCompetence->setCompetence(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ApcSituationProfessionnelle[]
+     */
+    public function getApcSituationProfessionnelles(): Collection
+    {
+        return $this->apcSituationProfessionnelles;
+    }
+
+    public function addApcSituationProfessionnelle(ApcSituationProfessionnelle $apcSituationProfessionnelle): self
+    {
+        if (!$this->apcSituationProfessionnelles->contains($apcSituationProfessionnelle)) {
+            $this->apcSituationProfessionnelles[] = $apcSituationProfessionnelle;
+            $apcSituationProfessionnelle->setCompetence($this);
+        }
+
+        return $this;
+    }
+
+    public function removeApcSituationProfessionnelle(ApcSituationProfessionnelle $apcSituationProfessionnelle): self
+    {
+        if ($this->apcSituationProfessionnelles->removeElement($apcSituationProfessionnelle)) {
+            // set the owning side to null (unless already changed)
+            if ($apcSituationProfessionnelle->getCompetence() === $this) {
+                $apcSituationProfessionnelle->setCompetence(null);
             }
         }
 

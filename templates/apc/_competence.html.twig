@@ -32,16 +32,15 @@
         <div class="p-3 situationpro situation{{ competence.couleur }}">Situations professionnelles</div>
     </div>
     <div class="col-9 ms-3 situationliste">
-        <div class="p-3 situationliste{{ competence.couleur }}">Prestataire : Livrables sous forme de recommandation
-                                                                stratégique, dans une approche de communication ou de
-                                                                conception de produit / service.<br>
-                                                                Organisation traditionnelle : Direction marketing,
-                                                                communication, DPO, CRM… dans une entreprise, une
-                                                                administration ou une association.<br>
-                                                                Start-up : Les livrables sont utilisés de façon
-                                                                itérative pour améliorer le produit créé par
-                                                                l’organisation, amélioration pilotée par un product
-                                                                owner.
+        <div class="p-3 situationliste{{ competence.couleur }}">
+            {% for situation in competence.apcSituationProfessionnelles %}
+                <p>{{ situation.libelle }} <a href="{{ path('administration_apc_situation_professionnelle_edit',
+                        {id:situation.id}) }}">
+                        <i class="fas fa-edit"></i></a></p>
+            {% endfor %}
+            <a href="{{ path('administration_apc_situation_professionnelle_new', {competence:competence.id}) }}"><i class="fas
+            fa-plus-circle"></i>
+                Ajouter une situation professionnelle</a>
         </div>
     </div>
 </div>
@@ -85,7 +84,7 @@
                     {% endfor %}
                     <li>
                         <a href="{{ path('administration_apc_apprentissage_critique_new', {niveau:niveau.id}) }}"><i class="fas fa-plus-circle"></i>
-                            Ajouter une composante essentielle</a>
+                            Ajouter un apprentissage critique</a>
                     </li>
                 </ul>
 
