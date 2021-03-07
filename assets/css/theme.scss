@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/css/theme.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/03/2021 17:33
+// @lastUpdate 07/03/2021 21:25
 /* @file /Users/davidannebicque/htdocs/intranetV3/assets/css/theme.css */
 /* @author davidannebicque */
 /* @project intranetV3 */
@@ -1824,6 +1824,7 @@ table tbody tr {
     padding: 15px 20px;
     margin-bottom: 20px;
     border-left: 3px solid transparent;
+    color: var(--policeDark);
 }
 
 .callout-success {
@@ -19082,66 +19083,91 @@ ul.flexbox {
 .card-outline-primary {
     background-color: #fff;
     border: 1px solid var(--colorPrimary);
+    color: var(--policeDark);
 }
 
 .card-outline-secondary {
     background-color: #fff;
     border: 1px solid var(--colorSecondary);
+    color: var(--policeDark);
+
 }
 
 .card-outline-success {
     background-color: #fff;
     border: 1px solid var(--colorSuccess);
+    color: var(--policeDark);
+
 }
 
 .card-outline-info {
     background-color: #fff;
     border: 1px solid var(--colorInfo);
+    color: var(--policeDark);
+
 }
 
 .card-outline-warning {
     background-color: #fff;
     border: 1px solid var(--colorWarning);
+    color: var(--policeDark);
+
 }
 
 .card-outline-danger {
     background-color: #fff;
     border: 1px solid var(--colorDanger);
+    color: var(--policeDark);
+
 }
 
 .card-outline-pink {
     background-color: #fff;
     border: 1px solid var(--colorPink);
+    color: var(--policeDark);
+
 }
 
 .card-outline-purple {
     background-color: #fff;
     border: 1px solid var(--colorPurple);
+    color: var(--policeDark);
+
 }
 
 .card-outline-brown {
     background-color: #fff;
     border: 1px solid var(--colorBrown);
+    color: var(--policeDark);
+
 }
 
 .card-outline-cyan {
     background-color: #fff;
     border: 1px solid var(--colorCyan);
+    color: var(--policeDark);
+
 }
 
 .card-outline-yellow {
     background-color: #fff;
     border: 1px solid var(--colorYellow);
+    color: var(--policeDark);
+
 }
 
 .card-outline-gray {
     background-color: #fff;
     border: 1px solid var(--colorGray);
+    color: var(--policeDark);
+
 }
 
 .card-outline-dark {
     background-color: #fff;
     border: 1px solid var(--colorDark);
+    color: var(--policeDark);
+
 }
 
 .card-bordered {

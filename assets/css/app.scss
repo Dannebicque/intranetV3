@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/css/app.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/03/2021 11:36
+// @lastUpdate 07/03/2021 21:21
 
 @import "core.min.css";
 
@@ -11,7 +11,7 @@ body {
   --colorIUTComplementaire: #4D3677;
 
   --colorTextA: #4D3677;
-
+  --policeDark: #313944;
   --body: #f5f6fa;
   --header: #fff;
   --footer: #fff;
@@ -43,6 +43,7 @@ body.dark-theme {
   --colorIUT: #F7B000;
   --colorIUTComplementaire: #4D3677;
   --colorTextA: #F7B000;
+  --policeDark: #202945;
 
   --body: #202945;
   --header: #152028;
