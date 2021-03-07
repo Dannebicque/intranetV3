@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Personnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:11
+ * @lastUpdate 07/03/2021 20:17
  */
 
 namespace App\Entity;
@@ -1037,7 +1037,7 @@ class Personnel extends Utilisateur implements Serializable // implements Serial
         return $this->photoName;
     }
 
-    public function setPhotoName(string $photoName): void
+    public function setPhotoName(?string $photoName): void
     {
         $this->photoName = $photoName;
     }
