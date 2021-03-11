@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/modaler.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/03/2021 16:31
+// @lastUpdate 11/03/2021 14:29
 
 // =====================
 // Modaler
@@ -204,7 +204,7 @@
         html_header +=
           '<div class="modal-header"> \
             <h5 class="modal-title">' + setting.title + '</h5> \
-            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button> \
+            <button type="button" class="close myClose" data-dismiss="modal"><span aria-hidden="true">&times;</span></button> \
           </div>'
       }
 

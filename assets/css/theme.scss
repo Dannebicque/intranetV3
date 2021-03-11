@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/css/theme.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 09/03/2021 12:29
+// @lastUpdate 11/03/2021 13:14
 /* @file /Users/davidannebicque/htdocs/intranetV3/assets/css/theme.css */
 /* @author davidannebicque */
 /* @project intranetV3 */
@@ -4852,10 +4852,11 @@ progress {
 .modal-content {
     border-radius: 3px;
     border: none;
+    background-color: var(--body);
 }
 
 .modal-header {
-    border-bottom-color: #f1f2f3;
+    border-bottom-color: var(--colorIUT);
 }
 
 .modal-header.no-border {
@@ -20042,50 +20043,62 @@ ul.flexbox {
 
 .bg-lightest {
     background-color: #fcfdfe !important;
+    color: var(--policeDark);
 }
 
 .bg-lighter {
     background-color: #f9fafb !important;
+    color: var(--policeDark);
 }
 
 .bg-light {
     background-color: #f5f6f7 !important;
+    color: var(--policeDark);
 }
 
 .bg-pale-primary {
     background-color: #dcfcfa !important;
+    color: var(--policeDark);
 }
 
 .bg-pale-secondary {
     background-color: #f7fafc !important;
+    color: var(--policeDark);
 }
 
 .bg-pale-success {
     background-color: #e3fcf2 !important;
+    color: var(--policeDark);
 }
 
 .bg-pale-info {
     background-color: #e3f3fc !important;
+    color: var(--policeDark);
 }
 
 .bg-pale-warning {
     background-color: #fcf0e3 !important;
+    color: var(--policeDark);
 }
 
 .bg-pale-danger {
     background-color: #fce3e3 !important;
+    color: var(--policeDark);
 }
 
 .bg-pale-pink {
     background-color: #fce3ec !important;
+    color: var(--policeDark);
 }
 
 .bg-pale-purple {
     background-color: #ece3fc !important;
+    color: var(--policeDark);
 }
 
 .bg-pale-brown {
     background-color: #eddcd5 !important;
+    color: var(--policeDark);
 }
 
 .bg-pale-cyan {
