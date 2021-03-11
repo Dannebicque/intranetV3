@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ApcNiveauType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/03/2021 17:33
+ * @lastUpdate 11/03/2021 17:33
  */
 
 namespace App\Form;
@@ -32,6 +32,7 @@ class ApcNiveauType extends AbstractType
                 'allow_delete' => true,
                 'label' => 'Apprentissages critiques du niveau de compétence',
                 'by_reference' => false,
+                'prototype_name' => '__niveau__',
                 'attr' => [
                     'class' => 'selector-apprentissageCritique',
                 ],
@@ -43,6 +44,7 @@ class ApcNiveauType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => ApcNiveau::class,
+            'translation_domain' => 'form',
         ]);
     }
 }

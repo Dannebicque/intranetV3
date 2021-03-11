@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/apc.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 01/03/2021 18:49
+// @lastUpdate 11/03/2021 17:24
 import '../../vendor/jquery.collection'
 import '../../vendor/bootstrap-datepicker/locales/bootstrap-datepicker.fr.min'
 import $ from 'jquery'
@@ -102,6 +102,11 @@ $(document).ready(function () {
   let apprentissageCritique = $('.selector-apprentissageCritique')
   if (apprentissageCritique.length > 0) {
     apprentissageCritique.collection()
+  }
+
+  let niveauSituationsProfessionnelles = $('.selector-niveauSituationsProfessionnelles')
+  if (niveauSituationsProfessionnelles.length > 0) {
+    niveauSituationsProfessionnelles.collection()
   }
 })
 
