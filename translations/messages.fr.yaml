@@ -1050,6 +1050,7 @@ Etat: Etat
 ETU: ETU
 ETUDIANT: ETUDIANT
 etudiant.add.success.flash: 'Etudiant ajouté avec succès'
+etudiant.edit.success.flash: 'Etudiant modifié avec succès'
 etudiants: Etudiants
 etudiants.du.semestre: 'Etudiants du semestre'
 eval.de: 'Evaluation de'

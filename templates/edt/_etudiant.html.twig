@@ -1,50 +1,12 @@
 <div class="card">
     <header class="card-header">
-        <h4 class="card-title">{{ 'heading.edt.dashboard'|trans }} | {{ user_data.user.displayPr }} |
+        <h4 class="card-title">{{ 'heading.edt.dashboard'|trans }} |
                                                                    Semaine {{ edt.semaine }}
                                                                    (semaine formation {{ edt.semaineFormation }})</h4>
 
         <div class="card-header-actions">
 
-            <div class="btn-toolbar pull-right">
-                <div class="btn-group mr-2">
-                    <a class="btn btn-primary" href="{{ path('agenda_index', {semaine:'now'|date('W')}) }}"
-                       data-provide="tooltip" title="Cette semaine"><i class="fa
-	fa-calendar"></i><span class="sr-only">Semaine courante</span></a>
-                </div>
 
-                <div class="btn-group mr-2">
-                    {% if user_data.user.diplome.optSemainesVisibles > 2 or user_data.user.diplome
-                        .optSemainesVisibles == 0 %}
-                        <a class="btn btn-primary" href="{{ path('agenda_index', {semaine:edt.semainePrecedente,
-                            filtre:'etudiant'}) }}"
-                           data-provide="tooltip"
-                           title="Semaine précédente"
-                           id="semainePrecedente"><i
-                                    class="fa fa-caret-left"></i><span class="sr-only">Semaine précédente</span></a>
-                        <a class="btn btn-primary" href="{{ path('agenda_index', {semaine:edt.semaineSuivante,filtre:'etudiant'}) }}"
-                           data-provide="tooltip"
-                           title="Semaine suivante"
-                           id="semaineSuivante"><i
-                                    class="fa fa-caret-right"></i><span class="sr-only">Semaine suivante</span></a>
-                    {% else %}
-                        {% if edt.semaine=='now'|date('W') %}
-                            <a class="btn btn-primary" href="{{ path('agenda_index', {semaine:edt.semaineSuivante,filtre:'etudiant'}) }}"
-                               data-provide="tooltip"
-                               title="Semaine suivante"
-                               id="semaineSuivante"><i
-                                        class="fa fa-caret-right"></i><span class="sr-only">Semaine suivante</span></a>
-                        {% else %}
-                            <a class="btn btn-primary" href="{{ path('agenda_index', {semaine:edt.semainePrecedente,filtre:'etudiant'
-                            }) }}"
-                               data-provide="tooltip"
-                               title="Semaine précédente"
-                               id="semainePrecedente"><i
-                                        class="fa fa-caret-left"></i><span class="sr-only">Semaine précédente</span></a>
-                        {% endif %}
-                    {% endif %}
-                </div>
-            </div>
             <ul class="card-controls">
                 <li class="dropdown">
                     <a data-toggle="dropdown" href="#"><i
@@ -70,6 +32,60 @@
         </div>
     </header>
     <div class="card-body">
+        <div class="row">
+            <div class="col-md-3 col-sm-12 mt-2 ">
+                <div class="btn-group btn-block">
+                    {% if user_data.user.diplome.optSemainesVisibles > 2 or user_data.user.diplome
+                    .optSemainesVisibles == 0 %}
+                        <a class="btn btn-primary" href="{{ path('agenda_index', {semaine:edt.semainePrecedente,
+                            filtre:'etudiant'}) }}"
+                           data-provide="tooltip"
+                           title="Semaine précédente"
+                           id="semainePrecedente"><i
+                                    class="fa fa-caret-left"></i><span class="sr-only">Semaine précédente</span></a>
+                        <a class="btn btn-secondary" href="{{ path('agenda_index', {semaine:'now'|date('W')}) }}" data-provide="tooltip" title="Cette semaine"><i class="fa
+	fa-calendar"></i> Semaine</a>
+                        <a class="btn btn-primary" href="{{ path('agenda_index', {semaine:edt.semaineSuivante,filtre:'etudiant'}) }}"
+                           data-provide="tooltip"
+                           title="Semaine suivante"
+                           id="semaineSuivante"><i
+                                    class="fa fa-caret-right"></i><span class="sr-only">Semaine suivante</span></a>
+                    {% else %}
+                        {% if edt.semaine=='now'|date('W') %}
+                            <a class="btn btn-secondary" href="{{ path('agenda_index', {semaine:'now'|date('W')}) }}" data-provide="tooltip" title="Cette semaine"><i class="fa
+	fa-calendar"></i> Semaine</a>
+                            <a class="btn btn-primary" href="{{ path('agenda_index', {semaine:edt.semaineSuivante,filtre:'etudiant'}) }}"
+                               data-provide="tooltip"
+                               title="Semaine suivante"
+                               id="semaineSuivante"><i
+                                        class="fa fa-caret-right"></i><span class="sr-only">Semaine suivante</span></a>
+                        {% else %}
+                            <a class="btn btn-primary" href="{{ path('agenda_index', {semaine:edt.semainePrecedente,filtre:'etudiant'
+                            }) }}"
+                               data-provide="tooltip"
+                               title="Semaine précédente"
+                               id="semainePrecedente"><i
+                                        class="fa fa-caret-left"></i><span class="sr-only">Semaine précédente</span></a>
+                            <a class="btn btn-secondary" href="{{ path('agenda_index', {semaine:'now'|date('W')}) }}" data-provide="tooltip" title="Cette semaine"><i class="fa
+	fa-calendar"></i> Semaine</a>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-sm-12 hide-on-large mt-2 ">
+                <div class="btn-group btn-block">
+                    <a class="btn btn-primary w-25" href="#" data-provide="tooltip" title="Jour précédent"
+                       id="jourPrecedent"><i
+                                class="fa fa-caret-left"></i><span class="sr-only">Jour précédent</span></a>
+                    <a class="btn btn-secondary" href="" data-provide="tooltip" title="Aujourd'hui" id="jourCourant"><i
+                                class="fa
+	fa-calendar"></i> Aujourd'hui</a>
+                    <a class="btn btn-primary w-25" href="#" data-provide="tooltip" title="Jour suivant" id="jourSuivant"><i
+                                class="fa fa-caret-right"></i><span class="sr-only">Jour suivant</span></a>
+                </div>
+            </div>
+        </div>
+        <br>
         <div class="wrapper-edt-etudiant">
             {{ include('edt/_header_edt.html.twig') }}
             {% for ligne in 1..7 %}
