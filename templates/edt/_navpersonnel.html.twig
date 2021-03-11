@@ -1,8 +1,7 @@
 <div class="row">
-    <div class="col-sm-4">
+    <div class="col-md-3 col-sm-12 mt-2 ">
         <label for="semaine" class="sr-only">Choisir la semaine</label>
         <select class="form-control selectpicker"
-
                 id="semaine"
         >
             <option value="">Choisir</option>
@@ -14,27 +13,54 @@
 
         </select>
     </div>
-    <div class="col-sm-8">
-        <div class="btn-toolbar pull-right">
-            <div class="btn-group mr-2">
-                <a class="btn btn-primary" href="" data-provide="tooltip" title="Cette semaine"><i class="fa
-	fa-calendar"></i><span class="sr-only">Semaine courante</span></a>
+    <div class="col-md-6 col-sm-12">
+        <div class="btn-group btn-block  mt-2 hide-on-large">
+            <div class="btn-group" role="group">
+                <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Semestres
+                </button>
+                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                    {% for sem in user_data.semestresActifs %}
+                        <a class="dropdown-item" href="{{ path('agenda_index',{filtre:'promo',valeur:sem.id,semaine:edt.semaine}) }}">{{ sem.libelle }}</a>
+                    {% endfor %}
+                </div>
             </div>
-            <div class="btn-group mr-2">
-                <a class="btn btn-primary" href="{{ path('agenda_index',{filtre:filtre,valeur:valeur,semaine:edt
-                    .semainePrecedente}) }}" data-provide="tooltip" title="Semaine précédente"><i
-                            class="fa fa-caret-left"></i><span class="sr-only">Semaine précédente</span></a>
-                {% for sem in user_data.semestresActifs %}
-                    <a class="btn {% if filtre == 'promo' and semestre.id==sem.id %}btn-primary{% endif %}"
-                       href="{{ path('agenda_index',{filtre:'promo',valeur:sem.id,semaine:edt.semaine}) }}" data-provide="tooltip" title="Emploi du temps du semestre {{ sem.libelle }}">{{ sem.libelle }}</a>
-                {% endfor %}
-                <a class="btn {% if edt.filtre=='prof' %} btn-primary {% endif %}"
-                   href="{{ path('agenda_index',{filtre:'prof',valeur:user_data.user.id,semaine:edt.semaine}) }}"
-                   data-provide="tooltip" title="Votre emploi du temps">Perso.</a>
-                <a class="btn btn-primary" href="{{ path('agenda_index',{filtre:filtre,valeur:valeur,semaine:edt
-                    .semaineSuivante}) }}" data-provide="tooltip" title="Semaine suivante"><i
-                            class="fa fa-caret-right"></i><span class="sr-only">Semaine suivante</span></a>
-            </div>
+            <a class="btn {% if edt.filtre=='prof' %} btn-primary{% else %}btn-secondary{% endif %}"
+               href="{{ path('agenda_index',{filtre:'prof',valeur:user_data.user.id,semaine:edt.semaine}) }}"
+               data-provide="tooltip" title="Votre emploi du temps">Perso.</a>
+        </div>
+        <div class="btn-group btn-block hide-on-small">
+            {% for sem in user_data.semestresActifs %}
+                <a class="btn {% if filtre == 'promo' and semestre.id==sem.id %}btn-primary{% else %}btn-secondary{% endif %}"
+                   href="{{ path('agenda_index',{filtre:'promo',valeur:sem.id,semaine:edt.semaine}) }}" data-provide="tooltip" title="Emploi du temps du semestre {{ sem.libelle }}">{{ sem.libelle }}</a>
+            {% endfor %}
+            <a class="btn {% if edt.filtre=='prof' %} btn-primary{% else %}btn-secondary{% endif %}"
+               href="{{ path('agenda_index',{filtre:'prof',valeur:user_data.user.id,semaine:edt.semaine}) }}"
+               data-provide="tooltip" title="Votre emploi du temps">Perso.</a>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-12 mt-2 ">
+        <div class="btn-group btn-block">
+            <a class="btn btn-primary w-25" href="{{ path('agenda_index',{filtre:filtre,valeur:valeur,semaine:edt
+            .semainePrecedente}) }}" data-provide="tooltip" title="Semaine précédente"><i
+                        class="fa fa-caret-left"></i><span class="sr-only">Semaine précédente</span></a>
+            <a class="btn btn-secondary" href="{{ path('agenda_index', {semaine:'now'|date('W')}) }}" data-provide="tooltip" title="Cette semaine"><i class="fa
+	fa-calendar"></i> Semaine</a>
+            <a class="btn btn-primary w-25" href="{{ path('agenda_index',{filtre:filtre,valeur:valeur,semaine:edt
+            .semaineSuivante}) }}" data-provide="tooltip" title="Semaine suivante"><i
+                        class="fa fa-caret-right"></i><span class="sr-only">Semaine suivante</span></a>
+        </div>
+    </div>
+    <div class="col-sm-12 hide-on-large mt-2 ">
+        <div class="btn-group btn-block">
+            <a class="btn btn-primary w-25" href="#" data-provide="tooltip" title="Jour précédent"
+               id="jourPrecedent"><i
+                        class="fa fa-caret-left"></i><span class="sr-only">Jour précédent</span></a>
+            <a class="btn btn-secondary" href="" data-provide="tooltip" title="Aujourd'hui" id="jourCourant"><i
+                        class="fa
+	fa-calendar"></i> Aujourd'hui</a>
+            <a class="btn btn-primary w-25" href="#" data-provide="tooltip" title="Jour suivant" id="jourSuivant"><i
+                        class="fa fa-caret-right"></i><span class="sr-only">Jour suivant</span></a>
         </div>
     </div>
 </div>
