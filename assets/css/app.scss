@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/css/app.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/03/2021 21:21
+// @lastUpdate 11/03/2021 12:52
 
 @import "core.min.css";
 
@@ -292,8 +292,16 @@ thead {
 }
 
 /** Responsive */
+@media screen and (min-width: 640px) {
+  .hide-on-large {
+    display: none;
+  }
+}
 
 @media screen and (max-width: 640px) {
+  .hide-on-small {
+    display: none;
+  }
   /* Grid EDT Etudiant */
   .wrapper-edt-etudiant {
     display: grid;
