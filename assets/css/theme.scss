@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/css/theme.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/03/2021 16:40
+// @lastUpdate 11/03/2021 18:07
 /* @file /Users/davidannebicque/htdocs/intranetV3/assets/css/theme.css */
 /* @author davidannebicque */
 /* @project intranetV3 */
@@ -5193,8 +5193,8 @@ progress {
 }
 
 .btn-primary:hover {
-    background-color: var(--colorPrimary);
-    border-color: var(--colorPrimary);
+    background-color: var(--colorPrimaryHover);
+    border-color: var(--colorPrimaryHover);
     color: var(--colorTextPrimaryHover);
 }
 
