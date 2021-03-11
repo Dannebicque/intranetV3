@@ -1,11 +1,11 @@
 <div class="card">
     <h4 class="card-title">{{ 'bloc.note.etu.heading'|trans }}</h4>
     <div class="card-body">
-        <table class="table table-border">
+        <table class="table table-border table-striped" data-provide="datatables">
             <thead>
             <tr>
-                <th>{{ 'evaluation'|trans }}</th>
                 <th>{{ 'matiere'|trans }}</th>
+                <th>{{ 'evaluation'|trans }}</th>
                 <th class="hide">{{ 'date'|trans }}</th>
                 <th class="hide">{{ 'com_eval'|trans }}</th>
                 <th>{{ 'note'|trans }}</th>
@@ -16,8 +16,8 @@
             <tbody>
             {% for note in notes|filter(note => (note.evaluation.visible == true and note.evaluation.parent == null)) %}
                 <tr>
-                    <td>{{ note.evaluation.libelle is defined ? note.evaluation.libelle : note.evaluation.id }}</td>
                     <td>{{ note.evaluation.matiere.codeMatiere }}</td>
+                    <td>{{ note.evaluation.libelle is defined ? note.evaluation.libelle : note.evaluation.id }}</td>
                     <td class="hide">{{ note.evaluation.dateEvaluation ? note.evaluation.dateEvaluation|format_date('long') : '' }}</td>
                     <td class="hide">{{ note.evaluation.commentaire }}</td>
                     <td>{{ note.note|format_note(2, 10) }}</td>
