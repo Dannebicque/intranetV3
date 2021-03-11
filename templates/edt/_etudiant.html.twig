@@ -32,8 +32,8 @@
         </div>
     </header>
     <div class="card-body">
-        <div class="row">
-            <div class="col-md-3 col-sm-12 mt-2 ">
+        <div class="row justify-content-end">
+            <div class="col-md-3 col-sm-12 mt-2">
                 <div class="btn-group btn-block">
                     {% if user_data.user.diplome.optSemainesVisibles > 2 or user_data.user.diplome
                     .optSemainesVisibles == 0 %}
@@ -72,7 +72,7 @@
                     {% endif %}
                 </div>
             </div>
-            <div class="col-sm-12 hide-on-large mt-2 ">
+            <div class="col-sm-12 hide-on-large mt-2">
                 <div class="btn-group btn-block">
                     <a class="btn btn-primary w-25" href="#" data-provide="tooltip" title="Jour précédent"
                        id="jourPrecedent"><i
