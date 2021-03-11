@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/css/theme.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/03/2021 13:14
+// @lastUpdate 11/03/2021 16:40
 /* @file /Users/davidannebicque/htdocs/intranetV3/assets/css/theme.css */
 /* @author davidannebicque */
 /* @project intranetV3 */
@@ -19244,7 +19244,8 @@ ul.flexbox {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
     flex-direction: column;
-    background-color: #fff;
+    background-color: var(--body);
+    color: var(--police);
     width: 300px;
     max-width: calc(100% - 50px);
     position: fixed;
@@ -19329,12 +19330,13 @@ ul.flexbox {
     align-items: center;
     padding: 0 20px;
     min-height: 64px !important;
-    border-bottom: 1px solid #ebebeb;
+    border-bottom: 1px solid var(--colorIUT);
 }
 
 .quickview-header .close {
     margin-left: 16px;
     font-size: 16px;
+    color: var(--colorIut)
 }
 
 .quickview-header.nav-tabs {
@@ -19369,8 +19371,9 @@ ul.flexbox {
     align-items: center;
     padding: 0 16px;
     min-height: 64px;
-    background-color: #fcfdfe;
-    border-top: 1px solid #f1f2f3;
+    background-color: var(--body);
+    color: var(--police);
+    border-top: 1px solid var(--colorIUT);
 }
 
 .quickview-footer .row {
