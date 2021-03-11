@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ApcCompetenceType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/03/2021 17:33
+ * @lastUpdate 11/03/2021 17:26
  */
 
 namespace App\Form;
@@ -80,6 +80,7 @@ class ApcCompetenceType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => ApcCompetence::class,
+            'translation_domain' => 'form',
         ]);
     }
 }

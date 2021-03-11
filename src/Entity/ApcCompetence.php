@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcCompetence.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/03/2021 18:49
+ * @lastUpdate 11/03/2021 17:53
  */
 
 namespace App\Entity;
@@ -60,7 +60,8 @@ class ApcCompetence extends BaseEntity
     private $apcSaeCompetences;
 
     /**
-     * @ORM\OneToMany(targetEntity=ApcSituationProfessionnelle::class, mappedBy="competence")
+     * @ORM\OneToMany(targetEntity=ApcSituationProfessionnelle::class, mappedBy="competence",
+     *                                                                 cascade={"persist","remove"})
      */
     private $apcSituationProfessionnelles;
 
