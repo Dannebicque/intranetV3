@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Departement.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/03/2021 15:58
+ * @lastUpdate 12/03/2021 19:01
  */
 
 namespace App\Entity;
 
+use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\UuidTrait;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -30,6 +31,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 class Departement extends BaseEntity
 {
     use UuidTrait;
+    use LifeCycleTrait;
 
     /**
      * @ORM\Column(type="string", length=255)

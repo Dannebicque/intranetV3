@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Date.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 12/03/2021 19:07
  */
 
 namespace App\Entity;
 
+use App\Entity\Traits\LifeCycleTrait;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -21,6 +22,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
  */
 class Date extends BaseEntity
 {
+    use LifeCycleTrait;
+
     public const TYPE_STAGE = 'type.stage';
     public const TYPE_SOUTENANCE = 'type.soutenance';
     public const TYPE_PROJET = 'type.projet';

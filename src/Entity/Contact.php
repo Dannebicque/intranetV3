@@ -4,19 +4,23 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Contact.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 12/03/2021 22:10
  */
 
 namespace App\Entity;
 
+use App\Entity\Traits\LifeCycleTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ContactRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Contact extends BaseEntity
 {
+    use LifeCycleTrait;
+
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
      * @Groups({"alternance_administration", "stage_entreprise_administration"})

@@ -4,19 +4,23 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/StagePeriodeSoutenance.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:50
+ * @lastUpdate 12/03/2021 22:10
  */
 
 namespace App\Entity;
 
+use App\Entity\Traits\LifeCycleTrait;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\StagePeriodeSoutenanceRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class StagePeriodeSoutenance extends BaseEntity
 {
+    use LifeCycleTrait;
+
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\StagePeriode", inversedBy="stagePeriodeSoutenances")
      */

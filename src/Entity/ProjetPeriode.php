@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ProjetPeriode.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:49
+ * @lastUpdate 12/03/2021 22:10
  */
 
 namespace App\Entity;
 
+use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\UuidTrait;
 use App\Repository\ProjetPeriodeRepository;
 use DateTimeInterface;
@@ -19,10 +20,12 @@ use Ramsey\Uuid\Uuid;
 
 /**
  * @ORM\Entity(repositoryClass=ProjetPeriodeRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class ProjetPeriode extends BaseEntity
 {
     use UuidTrait;
+    use LifeCycleTrait;
 
     /**
      * @ORM\Column(type="string", length=100)

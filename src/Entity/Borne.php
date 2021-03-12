@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Borne.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 12/03/2021 22:12
  */
 
 namespace App\Entity;
 
+use App\Entity\Traits\LifeCycleTrait;
 use DateTime;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -18,13 +19,16 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\BorneRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Borne extends BaseEntity
 {
+    use LifeCycleTrait;
+
     public const ICONES = [
         'information' => 'fas fa-info-circle',
-        'danger'      => 'fas fa-exclamation-circle',
-        'demande'     => 'fas fa-question-circle',
+        'danger' => 'fas fa-exclamation-circle',
+        'demande' => 'fas fa-question-circle',
     ];
     public const COULEURS = ['Rouge' => '#FF0000', 'Vert' => '#00FF00', 'Bleu' => '#0000FF'];
 

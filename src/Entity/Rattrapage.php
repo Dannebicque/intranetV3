@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Rattrapage.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 12/03/2021 22:10
  */
 
 namespace App\Entity;
 
+use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\UuidTrait;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -18,10 +19,13 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\RattrapageRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Rattrapage extends BaseEntity
 {
     use UuidTrait;
+    use LifeCycleTrait;
+
     public const DEMANDE_FAITE = 'f';
     public const DEMANDE_ACCEPTEE = 'a';
     public const DEMANDE_REFUSEE = 'r';

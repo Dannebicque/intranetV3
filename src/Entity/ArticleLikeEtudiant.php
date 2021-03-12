@@ -4,18 +4,22 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ArticleLikeEtudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:49
+ * @lastUpdate 12/03/2021 22:10
  */
 
 namespace App\Entity;
 
+use App\Entity\Traits\LifeCycleTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ArticleLikeEtudiantRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class ArticleLikeEtudiant extends ArticleLike
 {
+    use LifeCycleTrait;
+
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Etudiant", inversedBy="articlesLike")
      */

@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Calendrier.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:49
+ * @lastUpdate 12/03/2021 22:10
  */
 
 namespace App\Entity;
 
+use App\Entity\Traits\LifeCycleTrait;
 use Carbon\CarbonImmutable;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -18,9 +19,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CalendrierRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Calendrier extends BaseEntity
 {
+    use LifeCycleTrait;
+
     /**
      * @ORM\Column(type="integer")
      * @Groups({"celcat_administration"})

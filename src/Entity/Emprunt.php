@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Emprunt.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 12/03/2021 22:10
  */
 
 namespace App\Entity;
 
+use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\UuidTrait;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -24,10 +25,13 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ORM\InheritanceType("SINGLE_TABLE")
  * @ORM\DiscriminatorColumn(name="type", type="string")
  * @ORM\DiscriminatorMap( {"emprunt" = "Emprunt", "personnel" = "EmpruntPersonnel",  "etudiant" = "EmpruntEtudiant"} )
+ * @ORM\HasLifecycleCallbacks()
  */
 abstract class Emprunt extends BaseEntity
 {
     use UuidTrait;
+    use LifeCycleTrait;
+
     public const DEMANDE = 'DEMANDE';
     public const ACCEPTE = 'ACCEPTE';
     public const SORTIE = 'SORTIE';

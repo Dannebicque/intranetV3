@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Absence.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 12/03/2021 19:01
  */
 
 namespace App\Entity;
 
+use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\UuidTrait;
 use Carbon\CarbonInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -25,6 +26,7 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
 class Absence extends BaseEntity implements Serializable
 {
     use UuidTrait;
+    use LifeCycleTrait;
 
     /**
      * @ORM\Column(name="dateHeure", type="datetime")

@@ -4,19 +4,23 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcParcoursNiveau.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/03/2021 18:49
+ * @lastUpdate 12/03/2021 22:10
  */
 
 namespace App\Entity;
 
+use App\Entity\Traits\LifeCycleTrait;
 use App\Repository\ApcParcoursNiveauRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=ApcParcoursNiveauRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class ApcParcoursNiveau extends BaseEntity
 {
+    use LifeCycleTrait;
+
     /**
      * @ORM\ManyToOne(targetEntity=ApcNiveau::class, inversedBy="apcParcoursNiveaux")
      */

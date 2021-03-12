@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/StageEtudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/03/2021 07:53
+ * @lastUpdate 12/03/2021 22:10
  */
 
 namespace App\Entity;
 
+use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\UuidTrait;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -20,10 +21,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\StageEtudiantRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class StageEtudiant extends BaseEntity
 {
     use UuidTrait;
+    use LifeCycleTrait;
 
     public const ETAT_STAGE_AUTORISE = 'ETAT_STAGE_AUTORISE';
     public const ETAT_STAGE_DEPOSE = 'ETAT_STAGE_DEPOSE';

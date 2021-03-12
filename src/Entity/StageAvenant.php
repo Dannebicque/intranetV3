@@ -4,20 +4,24 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/StageAvenant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:49
+ * @lastUpdate 12/03/2021 22:10
  */
 
 namespace App\Entity;
 
+use App\Entity\Traits\LifeCycleTrait;
 use App\Repository\StageAvenantRepository;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=StageAvenantRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class StageAvenant extends BaseEntity
 {
+    use LifeCycleTrait;
+
     public const CAS1 = 1;
     public const CAS2 = 2;
     public const CAS3 = 3;

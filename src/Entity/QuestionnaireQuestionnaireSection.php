@@ -4,18 +4,22 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/QuestionnaireQuestionnaireSection.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 12/03/2021 22:10
  */
 
 namespace App\Entity;
 
+use App\Entity\Traits\LifeCycleTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\QuestionnaireQuestionnaireSectionRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class QuestionnaireQuestionnaireSection extends BaseEntity
 {
+    use LifeCycleTrait;
+
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\QuestionnaireQualite", inversedBy="sections")
      */

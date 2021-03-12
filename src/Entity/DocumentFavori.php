@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/DocumentFavori.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:49
+ * @lastUpdate 12/03/2021 22:10
  */
 
 namespace App\Entity;
 
+use App\Entity\Traits\LifeCycleTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -18,6 +19,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\DiscriminatorColumn(name="type", type="string")
  * @ORM\DiscriminatorMap( {"documentFavori" = "DocumentFavori", "personnel" = "DocumentFavoriPersonnel",  "etudiant" =
  *                        "DocumentFavoriEtudiant"} )
+ * @ORM\HasLifecycleCallbacks()
  */
 abstract class DocumentFavori extends BaseEntity
 {

@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Note.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:49
+ * @lastUpdate 12/03/2021 22:10
  */
 
 namespace App\Entity;
 
+use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\UuidTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -18,10 +19,12 @@ use Ramsey\Uuid\Uuid;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\NoteRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Note extends BaseEntity
 {
     use UuidTrait;
+    use LifeCycleTrait;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Evaluation", inversedBy="notes")

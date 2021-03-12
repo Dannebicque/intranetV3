@@ -4,19 +4,22 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Previsionnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:49
+ * @lastUpdate 12/03/2021 22:10
  */
 
 namespace App\Entity;
 
+use App\Entity\Traits\LifeCycleTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PrevisionnelRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Previsionnel extends BaseEntity
 {
     public const DUREE_SEANCE = 1.5;
+    use LifeCycleTrait;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Matiere", inversedBy="previsionnels", fetch="EAGER")
