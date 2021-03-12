@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/AbsenceJustificatif.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 12/03/2021 22:10
  */
 
 namespace App\Entity;
 
+use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\UuidTrait;
 use Carbon\Carbon;
 use DateTime;
@@ -25,10 +26,13 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AbsenceJustificatifRepository")
  * @Vich\Uploadable
+ * @ORM\HasLifecycleCallbacks()
  */
 class AbsenceJustificatif extends BaseEntity implements Serializable
 {
     use UuidTrait;
+    use LifeCycleTrait;
+
     public const ACCEPTE = 'A';
     public const REFUSE = 'R';
     public const DEPOSE = 'D';

@@ -1,15 +1,26 @@
 <?php
+/*
+ * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcSaeApprentissageCritique.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 12/03/2021 22:10
+ */
 
 namespace App\Entity;
 
+use App\Entity\Traits\LifeCycleTrait;
 use App\Repository\ApcSaeApprentissageCritiqueRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=ApcSaeApprentissageCritiqueRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class ApcSaeApprentissageCritique extends BaseEntity
 {
+    use LifeCycleTrait;
+
     /**
      * @ORM\ManyToOne(targetEntity=ApcSae::class, inversedBy="apcSaeApprentissageCritiques")
      */

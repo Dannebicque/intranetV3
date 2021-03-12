@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Document.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/03/2021 22:19
+ * @lastUpdate 12/03/2021 22:10
  */
 
 namespace App\Entity;
 
+use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\UuidTrait;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -25,10 +26,12 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\DocumentRepository")
  * @Vich\Uploadable
+ * @ORM\HasLifecycleCallbacks()
  */
 class Document extends BaseEntity
 {
     use UuidTrait;
+    use LifeCycleTrait;
 
     const TYPE_DOCUMENT = [
         'application/vnd.openxmlformats-officedocument.presentationml.presentation' => 'Prés. PPT',
@@ -109,6 +112,8 @@ class Document extends BaseEntity
      * @ORM\OneToMany(targetEntity="App\Entity\DocumentFavori", mappedBy="document")
      */
     private $documentsFavoris;
+
+    private $updatedDate = null;
 
     /**
      * Document constructor.
@@ -217,11 +222,12 @@ class Document extends BaseEntity
     public function setDocumentFile(?File $documentFile = null): void
     {
         $this->documentFile = $documentFile;
+        $this->updatedDate = $this->updated;
 
         if (null !== $documentFile) {
             // It is required that at least one field changes if you are using doctrine
             // otherwise the event listeners won't be called and the file is lost
-            $this->setUpdated(new DateTime());
+            $this->updated = new \DateTime();
         }
     }
 
@@ -275,18 +281,6 @@ class Document extends BaseEntity
         return $this;
     }
 
-    public function getUuidString(): string
-    {
-        return (string)$this->getUuid();
-    }
-
-    public function setUuid($uuid): self
-    {
-        $this->uuid = $uuid;
-
-        return $this;
-    }
-
     public function typeFichierTraduit()
     {
         if (array_key_exists($this->typeFichier, self::TYPE_DOCUMENT)) {
@@ -299,5 +293,10 @@ class Document extends BaseEntity
     public function tailleKo()
     {
         return $this->taille / 1024;
+    }
+
+    public function getUpdatedDate()
+    {
+        return $this->updatedDate ?? $this->getUpdated();
     }
 }

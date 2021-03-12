@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/StagePeriodeOffre.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:50
+ * @lastUpdate 12/03/2021 22:10
  */
 
 namespace App\Entity;
 
+use App\Entity\Traits\LifeCycleTrait;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -22,9 +23,12 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\StagePeriodeOffreRepository")
  * @Vich\Uploadable
+ * @ORM\HasLifecycleCallbacks()
  */
 class StagePeriodeOffre extends BaseEntity
 {
+    use LifeCycleTrait;
+
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\StagePeriode", inversedBy="stagePeriodeOffres")
      */

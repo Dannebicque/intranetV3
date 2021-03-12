@@ -4,20 +4,24 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/RddDiplome.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:49
+ * @lastUpdate 12/03/2021 22:10
  */
 
 namespace App\Entity;
 
+use App\Entity\Traits\LifeCycleTrait;
 use App\Repository\RddDiplomeRepository;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=RddDiplomeRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class RddDiplome extends BaseEntity
 {
+    use LifeCycleTrait;
+
     /**
      * @ORM\Column(type="string", length=10)
      */

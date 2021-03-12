@@ -4,18 +4,23 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/DocumentFavoriEtudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:49
+ * @lastUpdate 12/03/2021 22:10
  */
 
 namespace App\Entity;
 
+use App\Entity\Traits\LifeCycleTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\DocumentFavoriEtudiantRepository")
+ * @ORM\HasLifecycleCallbacks()
+ *
  */
 class DocumentFavoriEtudiant extends DocumentFavori
 {
+    use LifeCycleTrait;
+
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Etudiant", inversedBy="documentsFavoris")
      */

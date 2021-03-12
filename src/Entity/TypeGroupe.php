@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/TypeGroupe.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 12/03/2021 22:10
  */
 
 namespace App\Entity;
 
+use App\Entity\Traits\LifeCycleTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -16,9 +17,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TypeGroupeRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class TypeGroupe extends BaseEntity
 {
+    use LifeCycleTrait;
+
     public const TYPE_GROUPE_CM = 'CM';
     public const TYPE_GROUPE_TD = 'TD';
     public const TYPE_GROUPE_TP = 'TP';

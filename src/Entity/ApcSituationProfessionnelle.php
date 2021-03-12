@@ -4,19 +4,23 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcSituationProfessionnelle.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/03/2021 18:49
+ * @lastUpdate 12/03/2021 22:10
  */
 
 namespace App\Entity;
 
+use App\Entity\Traits\LifeCycleTrait;
 use App\Repository\ApcSituationProfessionnelleRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=ApcSituationProfessionnelleRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class ApcSituationProfessionnelle extends BaseEntity
 {
+    use LifeCycleTrait;
+
     /**
      * @ORM\Column(type="string", length=255)
      */

@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Notification.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/03/2021 11:33
+ * @lastUpdate 12/03/2021 22:10
  */
 
 namespace App\Entity;
 
+use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\UuidTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
@@ -16,10 +17,13 @@ use Ramsey\Uuid\Uuid;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\NotificationRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Notification extends BaseEntity
 {
     use UuidTrait;
+    use LifeCycleTrait;
+
     public const ETUDIANT = 'e';
     public const PERSONNEL = 'p';
 

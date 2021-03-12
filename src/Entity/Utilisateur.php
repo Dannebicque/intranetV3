@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Utilisateur.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/03/2021 17:46
+ * @lastUpdate 12/03/2021 19:09
  */
 
 namespace App\Entity;
@@ -128,16 +128,6 @@ abstract class Utilisateur implements UserInterface, Serializable
     private string $roles = '';
 
     /**
-     * @ORM\Column(type="datetime")
-     */
-    private DateTime $created;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    protected DateTime $updated;
-
-    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private ?string $resetToken;
@@ -160,37 +150,6 @@ abstract class Utilisateur implements UserInterface, Serializable
     public function setSlug($slug): void
     {
         $this->slug = $slug;
-    }
-
-    /**
-     * @ORM\PrePersist()
-     */
-    public function setCreatedValue(): void
-    {
-        $this->created = new DateTime();
-    }
-
-    /**
-     * @ORM\PreUpdate()
-     */
-    public function setUpdatedValue(): void
-    {
-        $this->updated = new DateTime();
-    }
-
-    public function getCreated(): DateTime
-    {
-        return $this->created;
-    }
-
-    public function setCreated(DateTime $created): void
-    {
-        $this->created = $created;
-    }
-
-    public function getUpdated(): DateTime
-    {
-        return $this->updated;
     }
 
     public function getTypeUser()

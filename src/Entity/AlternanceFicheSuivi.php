@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/AlternanceFicheSuivi.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:49
+ * @lastUpdate 12/03/2021 22:10
  */
 
 namespace App\Entity;
 
+use App\Entity\Traits\LifeCycleTrait;
 use DateTime;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -16,9 +17,12 @@ use Exception;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AlternanceFicheSuiviRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class AlternanceFicheSuivi extends BaseEntity
 {
+    use LifeCycleTrait;
+
     protected static $tabTexte = [1 => 'Faible', 2 => 'Bonne', 3 => 'Très Bonne', 4 => 'Excellente'];
     protected static $tabTexteM = [1 => 'Faible', 2 => 'Bon', 3 => 'Très Bon', 4 => 'Excellent'];
 

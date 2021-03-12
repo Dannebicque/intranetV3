@@ -4,19 +4,23 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/CelcatEvent.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 12/03/2021 22:10
  */
 
 namespace App\Entity;
 
+use App\Entity\Traits\LifeCycleTrait;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CelcatEventsRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class CelcatEvent extends BaseEntity
 {
+    use LifeCycleTrait;
+
     /**
      * @ORM\Column(type="integer")
      */

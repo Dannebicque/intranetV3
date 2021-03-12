@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/CovidAttestationPersonnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 12/03/2021 22:10
  */
 
 namespace App\Entity;
 
+use App\Entity\Traits\LifeCycleTrait;
 use App\Repository\CovidAttestationPersonnelRepository;
 use DateTime;
 use DateTimeInterface;
@@ -18,9 +19,12 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=CovidAttestationPersonnelRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class CovidAttestationPersonnel extends BaseEntity
 {
+    use LifeCycleTrait;
+
     /**
      * @ORM\Column(type="string", length=150)
      */

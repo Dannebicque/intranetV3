@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/BaseEntity.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 12/03/2021 22:10
  */
 
 namespace App\Entity;
@@ -15,7 +15,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\MappedSuperclass
- * @ORM\HasLifecycleCallbacks()
  */
 abstract class BaseEntity
 {
@@ -26,63 +25,6 @@ abstract class BaseEntity
      * @Groups({"acutalite_administration"})
      */
     private $id;
-
-    /**
-     * @var DateTime
-     * @ORM\Column(type="datetime")
-     * @Groups({"acutalite_administration"})
-     */
-    private $created;
-
-    /**
-     * @var DateTime
-     * @ORM\Column(type="datetime")
-     * @Groups({"acutalite_administration"})
-     */
-    private $updated;
-
-    /**
-     * @return DateTime
-     */
-    public function getCreated(): ?DateTime
-    {
-        return $this->created;
-    }
-
-    public function setCreated(DateTime $created): void
-    {
-        $this->created = $created;
-    }
-
-    /**
-     * @return DateTime
-     */
-    public function getUpdated(): ?DateTime
-    {
-        return $this->updated;
-    }
-
-    public function setUpdated(DateTime $updated): void
-    {
-        $this->updated = $updated;
-    }
-
-    /**
-     * @ORM\PreUpdate()
-     * @ORM\PrePersist()
-     */
-    public function setUpdatedValue(): void
-    {
-        $this->updated = new DateTime();
-    }
-
-    /**
-     * @ORM\PrePersist()
-     */
-    public function setCreatedValue(): void
-    {
-        $this->created = new DateTime();
-    }
 
     public function getId()
     {

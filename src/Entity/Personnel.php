@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Personnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/03/2021 20:17
+ * @lastUpdate 12/03/2021 19:02
  */
 
 namespace App\Entity;
 
+use App\Entity\Traits\LifeCycleTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -25,6 +26,8 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  */
 class Personnel extends Utilisateur implements Serializable // implements SerializerInterface
 {
+    use LifeCycleTrait;
+
     public const PERMANENT = 'permanent';
     public const VACATAIRE = 'vacataire';
     public const CONTRACTUEL = 'contractuel';

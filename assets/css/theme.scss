@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/css/theme.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/03/2021 18:07
+// @lastUpdate 12/03/2021 21:55
 /* @file /Users/davidannebicque/htdocs/intranetV3/assets/css/theme.css */
 /* @author davidannebicque */
 /* @project intranetV3 */
@@ -582,10 +582,9 @@ div.prism-show-language > div.prism-show-language-label {
 }
 
 .code-preview {
-    border: 1px solid #ebebeb;
     border-bottom: none;
     padding: 20px;
-    background-color: #fff;
+    background-color: var(--card);
 }
 
 .code-preview > *:last-child {

@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcCompetence.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/03/2021 17:53
+ * @lastUpdate 12/03/2021 22:10
  */
 
 namespace App\Entity;
 
+use App\Entity\Traits\LifeCycleTrait;
 use App\Repository\ApcComptenceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -16,9 +17,12 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=ApcComptenceRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class ApcCompetence extends BaseEntity
 {
+    use LifeCycleTrait;
+
     /**
      * @ORM\Column(type="string", length=255)
      */

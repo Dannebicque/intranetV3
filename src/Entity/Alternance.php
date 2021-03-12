@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Alternance.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:49
+ * @lastUpdate 12/03/2021 22:10
  */
 
 namespace App\Entity;
 
+use App\Entity\Traits\LifeCycleTrait;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -18,9 +19,12 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AlternanceRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Alternance extends BaseEntity
 {
+    use LifeCycleTrait;
+
     public const ALTERNANCE_APPRENTISSAGE = 'apprentissage';
     public const ALTERNANCE_PROFESSIONALISATION = 'professionalisation';
     public const ALTERNANCE_ETAT_INITIALISE = 'init';

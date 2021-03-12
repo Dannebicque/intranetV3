@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Adresse.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 12/03/2021 19:01
  */
 
 namespace App\Entity;
 
+use App\Entity\Traits\LifeCycleTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -18,6 +19,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
  */
 class Adresse extends BaseEntity
 {
+    use LifeCycleTrait;
+
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"adresse"})

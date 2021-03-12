@@ -4,20 +4,24 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/TypeMateriel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:50
+ * @lastUpdate 12/03/2021 22:10
  */
 
 namespace App\Entity;
 
+use App\Entity\Traits\LifeCycleTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TypeMaterielRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class TypeMateriel extends BaseEntity
 {
+    use LifeCycleTrait;
+
     /**
      * @ORM\Column(type="string", length=100)
      */
