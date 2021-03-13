@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/DefaultController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 13/03/2021 10:20
  */
 
 namespace App\Controller;
@@ -33,9 +33,15 @@ class DefaultController extends BaseController
             return $this->redirectToRoute('security_choix_departement');
         }
 
+        if ($this->isGranted('ROLE_ETUDIANT')) {
+            $dates = $dateRepository->findByDateForEtudiant($this->getConnectedUser(), 2);
+        } else {
+            $dates = $dateRepository->findByDateForPersonnel($this->getDepartement(), 2);
+        }
+
         return $this->render('default/index.html.twig', [
             'actualites' => $actualiteRepository->getByDepartement($this->getDepartement()),
-            'dates'      => $dateRepository->findByDepartement($this->getDepartement(), 2),
+            'dates' => $dates
         ]);
     }
 

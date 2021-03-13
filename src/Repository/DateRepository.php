@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/DateRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 13/03/2021 10:15
  */
 
 namespace App\Repository;
@@ -13,6 +13,8 @@ use App\Entity\Annee;
 use App\Entity\Date;
 use App\Entity\Departement;
 use App\Entity\Diplome;
+use App\Entity\Etudiant;
+use App\Entity\Semestre;
 use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -41,10 +43,7 @@ class DateRepository extends ServiceEntityRepository
     public function findByDepartement(Departement $departement, $nbResult = 0)
     {
         $query = $this->createQueryBuilder('d')
-            ->leftJoin('d.semestres', 's')
-            ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
-            ->innerJoin(Diplome::class, 'p', 'WITH', 'p.id = a.diplome')
-            ->where('p.departement = :departement')
+            ->where('d.departement = :departement')
             ->setParameter('departement', $departement->getId())
             ->orderBy('d.dateDebut', 'DESC');
         if (0 !== $nbResult) {
@@ -97,7 +96,33 @@ class DateRepository extends ServiceEntityRepository
         return $tab;
     }
 
-    public function getByDepartement(?Departement $getDepartement)
+
+    public function findByDateForEtudiant(Etudiant $etudiant, int $nbResult)
     {
+        $query = $this->createQueryBuilder('d')
+            ->leftJoin('d.semestres', 's')
+            ->where('s.id = :semestre')
+            ->setParameter('semestre', $etudiant->getSemestre()->getId())
+            ->orderBy('d.dateDebut', 'DESC');
+        if (0 !== $nbResult) {
+            $query->setMaxResults($nbResult);
+        }
+
+        return $query->getQuery()->getResult();
+    }
+
+    public function findByDateForPersonnel(Departement $departement, int $nbResult)
+    {
+        $query = $this->createQueryBuilder('d')
+            ->where('d.departement = :departement')
+            ->andWhere('d.qui = :qui')
+            ->setParameter('departement', $departement->getId())
+            ->setParameter('qui', Date::QUI_PERSONNEL)
+            ->orderBy('d.dateDebut', 'DESC');
+        if (0 !== $nbResult) {
+            $query->setMaxResults($nbResult);
+        }
+
+        return $query->getQuery()->getResult();
     }
 }
