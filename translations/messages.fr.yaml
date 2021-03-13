@@ -927,6 +927,8 @@ date:
   de.levaluation: 'Date de l''évaluation'
   duplicate.success.flash: 'Evénement dupliqué avec succès'
   edit.success.flash: 'Evénement modifié avec succès'
+  delete.success.flash: 'Evénement supprimé avec succès'
+  delete.error.flash: 'Erreur lors de la suppression de l''evénement'
   naissance: 'Date de naissance'
 
 dateHeure: 'Date heure'
