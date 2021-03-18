@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/app.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/03/2021 12:51
+// @lastUpdate 18/03/2021 18:11
 
 import '@fortawesome/fontawesome-free/scss/fontawesome.scss'
 import '@fortawesome/fontawesome-free/scss/solid.scss'
@@ -153,6 +153,18 @@ function updateInterface () {
     liveSearch: true
   })
 
+  //notifications
+  $(document).on('click', '#marquerNotificationsRead', function (e) {
+    e.preventDefault()
+    e.stopPropagation()
+    $.ajax({
+      url: Routing.generate('notification_marquer_lu'),
+      success: function (e) {
+        $('.notification').removeClass('media-new')
+      }
+    })
+  })
+
   //tooltip
   $('[data-provide~="tooltip"]').each(function () {
     var color = ''
@@ -218,7 +230,6 @@ lookup.open = function (e) {
 var sidebar = {}
 
 // Scrollable
-console.log(document.getElementsByClassName('sidebar-navigation'))
 if (document.getElementsByClassName('sidebar-navigation').length > 0) {
   const ps = new PerfectScrollbar('.sidebar-navigation')
 }
@@ -355,7 +366,6 @@ $(document).on('click', '[data-toggle="quickview"]', function (e) {
     if (url !== 'no-url' && url !== '') {
       quickview.toggle(target, url)
     } else {
-      console.log('no-url')
       quickview.toggle(target, Routing.generate('quick_view'))
     }
   }
@@ -384,7 +394,6 @@ quickview.toggle = function (e, url) {
   } else {
 
     if (url !== '') {
-      console.log('2 ' + url)
       $(e).html('<div class="spinner-linear"><div class="line"></div></div>')
       $(e).load(url, function () {
         qps = new PerfectScrollbar('.quickview')
@@ -407,7 +416,6 @@ quickview.open = function (e) {
     } else {
       url = quickview.data('url')
     }
-    console.log('1:' + url)
     quickview.load(url, function () {
       qps = new PerfectScrollbar('.quickview')
 
@@ -478,9 +486,14 @@ $(document).on('click', '#jourPrecedent', function (e) {
   if (index > 0) {
     $(colonnes[index]).addClass('col-edt-hide')
     $(colonnes[index - 1]).removeClass('col-edt-hide')
+    $('.edt-jour-' + index).addClass('col-edt-hide')
+    $('.edt-jour-' + (index - 1)).removeClass('col-edt-hide')
+
   } else {
     $(colonnes[index]).addClass('col-edt-hide')
     $(colonnes[4]).removeClass('col-edt-hide')
+    $('.edt-jour-' + index).addClass('col-edt-hide')
+    $('.edt-jour-4').removeClass('col-edt-hide')
   }
 })
 
@@ -492,9 +505,13 @@ $(document).on('click', '#jourSuivant', function (e) {
   if (index < 4) {
     $(colonnes[index]).addClass('col-edt-hide')
     $(colonnes[index + 1]).removeClass('col-edt-hide')
+    $('.edt-jour-' + index).addClass('col-edt-hide')
+    $('.edt-jour-' + (index + 1)).removeClass('col-edt-hide')
   } else {
     $(colonnes[index]).addClass('col-edt-hide')
     $(colonnes[0]).removeClass('col-edt-hide')
+    $('.edt-jour-' + index).addClass('col-edt-hide')
+    $('.edt-jour-0').removeClass('col-edt-hide')
   }
 })
 
