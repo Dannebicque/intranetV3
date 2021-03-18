@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Message.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 18/03/2021 17:11
  */
 
 namespace App\Entity;
@@ -23,7 +23,7 @@ class Message extends BaseEntity
     use LifeCycleTrait;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=255)
      */
     private $sujet;
 
