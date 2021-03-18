@@ -114,16 +114,10 @@
         </div>
         <label for="messageSubject" class="sr-only">Sujet</label>
 
-        <input class="form-control form-control-lg" type="text"
+        <input class="form-control form-control-lg" type="text" maxlength="255"
                placeholder="{{ 'message.subject'|trans }}" id="messageSubject" name="messageSubject"
                {% if message != null %}value="{{ message.sujet }}"{% endif %}>
         <br>
-        {# <div> #}
-        {# <div data-provide="quill" data-placeholder="{{ 'votre.message'|trans }}..." #}
-        {# style="height: 206px" id="messageMessage"> #}
-        {# {% if message != null %}{{ message.message|raw }}{% endif %} #}
-        {# </div> #}
-        {# </div> #}
         <label for="messageMessage" class="sr-only">Message</label>
         <textarea id="messageMessage" name="messageMessage">
             {% if message != null %}{{ message.message|raw }}{% endif %}

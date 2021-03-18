@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/messagerie.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/03/2021 11:11
+// @lastUpdate 13/03/2021 10:35
 
 
 $(document).on('click', '.messagerie-filtre', function (e) {
@@ -102,18 +102,7 @@ $(document).on('click', '#new-message', function (e) {
   ))
 })
 
-$(document).on('click', '#marquerNotificationsRead', function (e) {
-  e.preventDefault()
-  e.stopPropagation()
 
-  $.ajax({
-    url: Routing.generate('notification_marquer_lu'),
-    success: function (e) {
-
-      $('.notification').removeClass('media-new')
-    }
-  })
-})
 
 $(document).on('change', '.pjFile', function () {
   let tailleTotale = 0
