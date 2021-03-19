@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Traits/LifeCycleTrait.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:04
+ * @lastUpdate 19/03/2021 16:27
  */
 
 namespace App\Entity\Traits;
@@ -38,7 +38,7 @@ trait LifeCycleTrait
         return $this->created ?? new DateTime();
     }
 
-    public function setCreated(DateTime $created): void
+    public function setCreated(?DateTime $created): void
     {
         $this->created = $created;
     }
@@ -51,7 +51,7 @@ trait LifeCycleTrait
         return $this->updated ?? new DateTime();
     }
 
-    public function setUpdated(DateTime $updated): void
+    public function setUpdated(?DateTime $updated): void
     {
         $this->updated = $updated;
     }
