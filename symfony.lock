@@ -195,6 +195,9 @@
     "laminas/laminas-code": {
         "version": "3.5.1"
     },
+    "laminas/laminas-escaper": {
+        "version": "2.7.0"
+    },
     "laminas/laminas-eventmanager": {
         "version": "3.3.0"
     },
@@ -261,6 +264,9 @@
     },
     "phpoffice/phpspreadsheet": {
         "version": "1.15.0"
+    },
+    "phpoffice/phpword": {
+        "version": "0.18.1"
     },
     "psr/cache": {
         "version": "1.0.1"
