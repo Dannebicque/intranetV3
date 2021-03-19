@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcSae.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 19/03/2021 16:11
  */
 
 namespace App\Entity;
@@ -41,22 +41,22 @@ class ApcSae extends BaseEntity
     /**
      * @ORM\Column(type="float")
      */
-    private $heuresCM;
+    private $heuresCM = 0;
 
     /**
      * @ORM\Column(type="float")
      */
-    private $heuresTD;
+    private $heuresTD = 0;
 
     /**
      * @ORM\Column(type="float")
      */
-    private $heuresTP;
+    private $heuresTP = 0;
 
     /**
      * @ORM\Column(type="float")
      */
-    private $heuresProjet;
+    private $heuresProjet = 0;
 
     /**
      * @ORM\Column(type="text", nullable=true)

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcRessource.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:12
+ * @lastUpdate 19/03/2021 16:18
  */
 
 namespace App\Entity;
@@ -26,7 +26,7 @@ class ApcRessource extends BaseEntity
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $libelle;
+    private ?string $libelle;
 
     /**
      * @ORM\ManyToOne(targetEntity=Semestre::class, inversedBy="apcRessources")
@@ -36,32 +36,32 @@ class ApcRessource extends BaseEntity
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $preRequis;
+    private ?string $preRequis;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $description;
+    private ?string $description;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $motsCles;
+    private ?string $motsCles;
 
     /**
      * @ORM\Column(type="float")
      */
-    private $heuresCM;
+    private float $heuresCM = 0;
 
     /**
      * @ORM\Column(type="float")
      */
-    private $heuresTD;
+    private float $heuresTD = 0;
 
     /**
      * @ORM\Column(type="float")
      */
-    private $heuresTP;
+    private float $heuresTP = 0;
 
     /**
      * @ORM\OneToMany(targetEntity=ApcRessourceCompetence::class, mappedBy="ressource", cascade={"persist","remove"} )
@@ -81,12 +81,12 @@ class ApcRessource extends BaseEntity
     /**
      * @ORM\Column(type="string", length=20)
      */
-    private $codeRessource;
+    private ?string $codeRessource;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $suspendu = false;
+    private bool $suspendu = false;
 
     public function __construct()
     {

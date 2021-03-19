@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcSaeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/03/2021 18:49
+ * @lastUpdate 19/03/2021 16:12
  */
 
 namespace App\Controller\administration\apc;
@@ -129,7 +129,7 @@ class ApcSaeController extends BaseController
             $this->entityManager->flush();
             $this->addFlashBag(
                 Constantes::FLASHBAG_SUCCESS,
-                'apc_sae.new.success.flash'
+                'apc.sae.new.success.flash'
             );
 
             return $this->redirectToRoute('administration_matiere_index', ['diplome' => $diplome->getId()]);
@@ -179,7 +179,7 @@ class ApcSaeController extends BaseController
             $this->entityManager->flush();
             $this->addFlashBag(
                 Constantes::FLASHBAG_SUCCESS,
-                'apc_sae.edit.success.flash'
+                'apc.sae.edit.success.flash'
             );
 
             return $this->redirectToRoute('administration_matiere_index', ['diplome' => $apcSae->getDiplome()->getId()]);
@@ -203,13 +203,13 @@ class ApcSaeController extends BaseController
             $this->entityManager->flush();
             $this->addFlashBag(
                 Constantes::FLASHBAG_SUCCESS,
-                'apc_sae.delete.success.flash'
+                'apc.sae.delete.success.flash'
             );
 
             return $this->json($id, Response::HTTP_OK);
         }
 
-        $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'apc_sae.delete.error.flash');
+        $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'apc.sae.delete.error.flash');
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
@@ -223,7 +223,7 @@ class ApcSaeController extends BaseController
 
         $this->entityManager->persist($newApcSae);
         $this->entityManager->flush();
-        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'apc_sae.duplicate.success.flash');
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'apc.sae.duplicate.success.flash');
 
         return $this->redirectToRoute('administration_apc_sae_edit', ['id' => $newApcSae->getId()]);
     }

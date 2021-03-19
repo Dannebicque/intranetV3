@@ -577,6 +577,18 @@ apc:
     delete.error.flash: 'Erreur lors de la suppression d''un niveau de compétence'
     duplicate.success.flash: 'Association Parcours / Niveau de compétence dupliqué avec succès'
     edit.success.flash: 'Association Parcours / Niveau de compétence modifié avec succès'
+  sae:
+    create.success.flash: 'SAÉ créée avec succès'
+    delete.success.flash: 'SAÉ supprimée avec succès'
+    delete.error.flash: 'Erreur lors de la suppression d''une SAÉ'
+    duplicate.success.flash: 'SAÉ dupliquée avec succès'
+    edit.success.flash: 'SAÉ modifiée avec succès'
+  ressource:
+    create.success.flash: 'Ressource créée avec succès'
+    delete.success.flash: 'Ressource supprimée avec succès'
+    delete.error.flash: 'Erreur lors de la suppression d''une Ressource'
+    duplicate.success.flash: 'Ressource dupliquée avec succès'
+    edit.success.flash: 'Ressource modifiée avec succès'
 app:
   alternance_fiche_suivi:
     new.heading: 'Création d''une fiche de suivi d''alternance'

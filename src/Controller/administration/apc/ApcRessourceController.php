@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcRessourceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/03/2021 18:49
+ * @lastUpdate 19/03/2021 16:18
  */
 
 namespace App\Controller\administration\apc;
@@ -74,6 +74,10 @@ class ApcRessourceController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($apcRessource);
             $this->entityManager->flush();
+            $this->addFlashBag(
+                Constantes::FLASHBAG_SUCCESS,
+                'apc.ressource.new.success.flash'
+            );
 
             return $this->redirectToRoute('administration_matiere_index', ['diplome' => $diplome->getId()]);
         }
@@ -106,9 +110,14 @@ class ApcRessourceController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $this->entityManager->flush();
+            $this->addFlashBag(
+                Constantes::FLASHBAG_SUCCESS,
+                'apc.ressource.edit.success.flash'
+            );
 
-            return $this->redirectToRoute('administration_matiere_index', ['diplome' => $apcRessource->getDiplome()->getId()]);
+            return $this->redirectToRoute('administration_matiere_index',
+                ['diplome' => $apcRessource->getDiplome()->getId()]);
         }
 
         return $this->render('apc/apc_ressource/edit.html.twig', [
@@ -129,13 +138,13 @@ class ApcRessourceController extends BaseController
             $this->entityManager->flush();
             $this->addFlashBag(
                 Constantes::FLASHBAG_SUCCESS,
-                'apc_ressource.delete.success.flash'
+                'apc.ressource.delete.success.flash'
             );
 
             return $this->json($id, Response::HTTP_OK);
         }
 
-        $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'apc_ressource.delete.error.flash');
+        $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'apc.ressource.delete.error.flash');
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
@@ -149,7 +158,7 @@ class ApcRessourceController extends BaseController
 
         $this->entityManager->persist($newApcRessource);
         $this->entityManager->flush();
-        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'apc_ressource.duplicate.success.flash');
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'apc.ressource.duplicate.success.flash');
 
         return $this->redirectToRoute('administration_apc_ressource_edit', ['id' => $newApcRessource->getId()]);
     }
