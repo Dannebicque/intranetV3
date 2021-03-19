@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ApcSaeType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/03/2021 16:06
+ * @lastUpdate 19/03/2021 21:30
  */
 
 namespace App\Form;
@@ -53,16 +53,18 @@ class ApcSaeType extends AbstractType
             ])
             ->add('competences', EntityType::class, [
                 'class' => ApcCompetence::class,
-                'choice_label'=> 'nomCourt',
+                'choice_label' => 'nomCourt',
                 'label' => 'label.nomCourt.competence',
-                'attr' => ['class'=> 'competencesSae'],
+                'attr' => ['class' => 'competencesSae'],
                 'expanded' => true,
                 'multiple' => true,
-                'query_builder' => function (ApcComptenceRepository $apcComptenceRepository) {
+                'query_builder' => function(ApcComptenceRepository $apcComptenceRepository) {
                     return $apcComptenceRepository->findByDiplomeBuilder($this->diplome);
                 },
                 'help' => 'Ajoutez les compétences couvertes par la SAÉ.',
             ])
+            ->add('exemples', TextareaType::class,
+                ['label' => 'label.livrables', 'required' => false])
         ;
     }
 

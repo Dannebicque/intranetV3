@@ -4,12 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcSaeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/03/2021 16:12
+ * @lastUpdate 19/03/2021 21:30
  */
 
 namespace App\Controller\administration\apc;
 
 use App\Classes\Pdf\MyPDF;
+use App\Classes\Word\MyWord;
 use App\Controller\BaseController;
 use App\Entity\ApcSae;
 use App\Entity\ApcSaeApprentissageCritique;
@@ -28,6 +29,15 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ApcSaeController extends BaseController
 {
+    /**
+     * @Route("/imprime/{id}.docx", name="apc_sae_export_one_word", methods="GET")
+     *
+     */
+    public function exportWordOne(MyWord $myWord, ApcSae $apcSae)
+    {
+        return $myWord->exportSae($apcSae);
+    }
+
     /**
      * @Route("/imprime/{id}.pdf", name="apc_sae_export_one", methods="GET")
      *

@@ -18,6 +18,7 @@
     "nesbot/carbon": "^2.37",
     "ninsuo/symfony-collection": "^2.1",
     "phpoffice/phpspreadsheet": "^1.12",
+    "phpoffice/phpword": "^0.18.1",
     "ramsey/uuid-doctrine": "^1.6",
     "sensio/framework-extra-bundle": "^5.5",
     "symfony/amqp-messenger": "^5.1",

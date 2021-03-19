@@ -578,13 +578,13 @@ apc:
     duplicate.success.flash: 'Association Parcours / Niveau de compétence dupliqué avec succès'
     edit.success.flash: 'Association Parcours / Niveau de compétence modifié avec succès'
   sae:
-    create.success.flash: 'SAÉ créée avec succès'
+    new.success.flash: 'SAÉ créée avec succès'
     delete.success.flash: 'SAÉ supprimée avec succès'
     delete.error.flash: 'Erreur lors de la suppression d''une SAÉ'
     duplicate.success.flash: 'SAÉ dupliquée avec succès'
     edit.success.flash: 'SAÉ modifiée avec succès'
   ressource:
-    create.success.flash: 'Ressource créée avec succès'
+    new.success.flash: 'Ressource créée avec succès'
     delete.success.flash: 'Ressource supprimée avec succès'
     delete.error.flash: 'Erreur lors de la suppression d''une Ressource'
     duplicate.success.flash: 'Ressource dupliquée avec succès'
@@ -1772,6 +1772,8 @@ table:
   code_departement: 'Code département'
   code_element: 'Code élément'
   code_matiere: 'Code matière'
+  code_ressource: 'Code ressource'
+  code_sae: 'Code SAÉ'
   code_version: 'Code Version'
   code: Code
   coefficient: Coefficient

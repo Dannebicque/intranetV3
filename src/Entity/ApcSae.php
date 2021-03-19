@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcSae.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/03/2021 16:27
+ * @lastUpdate 19/03/2021 21:14
  */
 
 namespace App\Entity;
@@ -83,6 +83,11 @@ class ApcSae extends BaseEntity
      * @ORM\OneToMany(targetEntity=ApcSaeApprentissageCritique::class, mappedBy="sae")
      */
     private $apcSaeApprentissageCritiques;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $exemples;
 
     public function __construct()
     {
@@ -337,6 +342,18 @@ class ApcSae extends BaseEntity
                 $apcSaeApprentissageCritique->setSae(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getExemples(): ?string
+    {
+        return $this->exemples;
+    }
+
+    public function setExemples(?string $exemples): self
+    {
+        $this->exemples = $exemples;
 
         return $this;
     }
