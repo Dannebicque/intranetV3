@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/ApcSaeRessourceRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/03/2021 18:49
+ * @lastUpdate 20/03/2021 17:50
  */
 
 namespace App\Repository;
 
+use App\Entity\ApcSaeApprentissageCritique;
 use App\Entity\ApcSaeRessource;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -26,32 +27,37 @@ class ApcSaeRessourceRepository extends ServiceEntityRepository
         parent::__construct($registry, ApcSaeRessource::class);
     }
 
-    // /**
-    //  * @return ApcSaeRessource[] Returns an array of ApcSaeRessource objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findArrayIdRessources($sae)
     {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
+        $query = $this->createQueryBuilder('a')
+            ->where('a.sae = :sae')
+            ->setParameter('sae', $sae)
             ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+            ->getResult();
 
-    /*
-    public function findOneBySomeField($value): ?ApcSaeRessource
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $t = [];
+        /** @var ApcSaeRessource $q */
+        foreach ($query as $q) {
+            $t[] = $q->getRessource()->getId();
+        }
+
+        return $t;
     }
-    */
+
+    public function findArrayIdSae($ressource)
+    {
+        $query = $this->createQueryBuilder('a')
+            ->where('a.ressource = :ressource')
+            ->setParameter('ressource', $ressource)
+            ->getQuery()
+            ->getResult();
+
+        $t = [];
+        /** @var ApcSaeRessource $q */
+        foreach ($query as $q) {
+            $t[] = $q->getSae()->getId();
+        }
+
+        return $t;
+    }
 }

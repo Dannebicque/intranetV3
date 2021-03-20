@@ -1,3 +1,5 @@
+<div id="appVue"></div>
+
 <table class="table table-bordered">
     <tr>
         <th style="width: 25%">Nom de la ressource</th>
@@ -14,7 +16,8 @@
             Compétence(s) ciblée(s)
         </th>
         <td colspan="3">
-            {% for competence in apc_ressource.apcRessourceCompetences %}
+            {% for competence in apc_ressource.apcRessourceCompetences|filter(competence => competence.competence !=
+                null) %}
                 <span class="badge badge-lg badge-{{ competence.competence.couleur }}"
                       data-provide="tooltip"
                       title="{{ competence.competence.libelle }}">
@@ -28,7 +31,8 @@
             Apprentissages critiques
         </th>
         <td colspan="3">
-            {% for ac in apc_ressource.apcRessourceApprentissageCritiques %}
+            {% for ac in apc_ressource.apcRessourceApprentissageCritiques|filter(ac => ac.apprentissageCritique !=
+                null) %}
                 <span class="badge badge-lg badge-{{ ac.apprentissageCritique.niveau.competence.couleur }}"
                       data-provide="tooltip"
                       title="{{ ac.apprentissageCritique.libelle }}">
@@ -40,7 +44,8 @@
     <tr>
         <th>SAÉ concerncée(s)</th>
         <td colspan="3">
-            {% for sae in apc_ressource.apcSaeRessources %}
+            {% for sae in apc_ressource.apcSaeRessources|filter(sae => sae.sae !=
+                null) %}
                 <span class="badge badge-lg badge-primary"
                       data-provide="tooltip"
                       title="{{ sae.sae.libelle }}"
@@ -50,15 +55,15 @@
     </tr>
     <tr>
         <th>Prérequis</th>
-        <td colspan="3">{{ apc_ressource.preRequis }}</td>
+        <td colspan="3">{{ apc_ressource.preRequis|raw }}</td>
     </tr>
     <tr>
         <th>Description</th>
         <td colspan="3">{{ apc_ressource.description|raw }}</td>
     </tr>
     <tr>
-        <th>Prérequis</th>
-        <td colspan="3">{{ apc_ressource.motsCles }}</td>
+        <th>Mots clés</th>
+        <td colspan="3">{{ apc_ressource.motsCles|keyWords }}</td>
     </tr>
     <tr>
         <th rowspan="2">Heures de formation</th>

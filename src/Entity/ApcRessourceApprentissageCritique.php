@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcRessourceApprentissageCritique.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 20/03/2021 15:50
  */
 
 namespace App\Entity;
@@ -30,6 +30,19 @@ class ApcRessourceApprentissageCritique extends BaseEntity
      * @ORM\ManyToOne(targetEntity=ApcApprentissageCritique::class, inversedBy="apcRessourceApprentissageCritiques")
      */
     private $apprentissageCritique;
+
+    /**
+     * ApcRessourceApprentissageCritique constructor.
+     *
+     * @param $ressource
+     * @param $apprentissageCritique
+     */
+    public function __construct($ressource, $apprentissageCritique)
+    {
+        $this->ressource = $ressource;
+        $this->apprentissageCritique = $apprentissageCritique;
+    }
+
 
     public function getRessource(): ?ApcRessource
     {

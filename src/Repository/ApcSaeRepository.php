@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/ApcSaeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/03/2021 18:49
+ * @lastUpdate 20/03/2021 15:29
  */
 
 namespace App\Repository;
@@ -39,6 +39,18 @@ class ApcSaeRepository extends ServiceEntityRepository
             ->setParameter('diplome', $diplome->getId())
             ->orderBy('s.ordreLmd', 'ASC')
             ->addOrderBy('r.codeSae', 'ASC')
+            ->addOrderBy('r.libelle', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findBySemestre(Semestre $semestre)
+    {
+        return $this->createQueryBuilder('r')
+            ->where('r.semestre = :semestre')
+            //->andWhere('s.ppn_actif = m.ppn')
+            ->setParameter('semestre', $semestre->getId())
+            ->orderBy('r.codeSae', 'ASC')
             ->addOrderBy('r.libelle', 'ASC')
             ->getQuery()
             ->getResult();

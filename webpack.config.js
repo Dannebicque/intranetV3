@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/webpack.config.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 01/03/2021 18:49
+// @lastUpdate 20/03/2021 12:46
 
 var Encore = require('@symfony/webpack-encore')
 var path = require('path')
@@ -78,7 +78,7 @@ Encore
   .addEntry('adm.reservation.materiel_commun', './assets/js/pages/adm.reservation.materiel_commun.js')
 
   //VueJs
-  //.enableVueLoader()
+  .enableVueLoader()
   .enableStimulusBridge('./assets/controllers.json')
 
   // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.

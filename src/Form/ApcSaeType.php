@@ -4,15 +4,17 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ApcSaeType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/03/2021 21:30
+ * @lastUpdate 19/03/2021 21:35
  */
 
 namespace App\Form;
 
 use App\Entity\ApcCompetence;
+use App\Entity\ApcRessource;
 use App\Entity\ApcSae;
 use App\Entity\Semestre;
 use App\Repository\ApcComptenceRepository;
+use App\Repository\ApcRessourceRepository;
 use App\Repository\SemestreRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -64,7 +66,7 @@ class ApcSaeType extends AbstractType
                 'help' => 'Ajoutez les compétences couvertes par la SAÉ.',
             ])
             ->add('exemples', TextareaType::class,
-                ['label' => 'label.livrables', 'required' => false])
+                ['label' => 'label.exemples', 'required' => false])
         ;
     }
 
