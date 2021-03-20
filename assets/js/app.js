@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/app.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 18/03/2021 18:11
+// @lastUpdate 20/03/2021 12:55
 
 import '@fortawesome/fontawesome-free/scss/fontawesome.scss'
 import '@fortawesome/fontawesome-free/scss/solid.scss'
@@ -32,6 +32,13 @@ require('bootstrap')
 let lookup = {}
 
 require('bootstrap-select')
+
+
+// import Vue from 'vue'
+// import App from '../components/App.vue'
+//
+// new Vue({ render: h => h(App) }).$mount('#appVue')
+
 
 $('input[type="file"]').on('change', function (e) {
   let filename = e.target.files[0].name

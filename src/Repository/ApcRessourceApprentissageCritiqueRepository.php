@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/ApcRessourceApprentissageCritiqueRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/03/2021 18:49
+ * @lastUpdate 20/03/2021 17:50
  */
 
 namespace App\Repository;
 
+use App\Entity\ApcRessource;
 use App\Entity\ApcRessourceApprentissageCritique;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -26,32 +27,20 @@ class ApcRessourceApprentissageCritiqueRepository extends ServiceEntityRepositor
         parent::__construct($registry, ApcRessourceApprentissageCritique::class);
     }
 
-    // /**
-    //  * @return ApcRessourceApprentissageCritique[] Returns an array of ApcRessourceApprentissageCritique objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findArrayIdAc($ressource)
     {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
+        $query = $this->createQueryBuilder('a')
+            ->where('a.ressource = :ressource')
+            ->setParameter('ressource', $ressource)
             ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+            ->getResult();
 
-    /*
-    public function findOneBySomeField($value): ?ApcRessourceApprentissageCritique
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        $t = [];
+        /** @var ApcRessourceApprentissageCritique $q */
+        foreach ($query as $q) {
+            $t[] = $q->getApprentissageCritique()->getId();
+        }
+
+        return $t;
     }
-    */
 }

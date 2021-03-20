@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/ApcRessourceRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/03/2021 18:49
+ * @lastUpdate 19/03/2021 21:52
  */
 
 namespace App\Repository;
@@ -38,6 +38,18 @@ class ApcRessourceRepository extends ServiceEntityRepository
             ->where('a.diplome = :diplome')
             //->andWhere('s.ppn_actif = m.ppn')
             ->setParameter('diplome', $diplome->getId())
+            ->orderBy('r.codeRessource', 'ASC')
+            ->addOrderBy('r.libelle', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findBySemestre(Semestre $semestre)
+    {
+        return $this->createQueryBuilder('r')
+            ->where('r.semestre = :semestre')
+            //->andWhere('s.ppn_actif = m.ppn')
+            ->setParameter('semestre', $semestre->getId())
             ->orderBy('r.codeRessource', 'ASC')
             ->addOrderBy('r.libelle', 'ASC')
             ->getQuery()

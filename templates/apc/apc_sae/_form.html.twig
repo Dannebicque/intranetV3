@@ -24,6 +24,9 @@
         {{ form_row(form.livrables) }}
     </div>
     <div class="col-sm-12">
+        {{ form_row(form.exemples) }}
+    </div>
+    <div class="col-sm-12">
         {{ form_row(form.semestre) }}
         {{ form_row(form.competences) }}
         <fieldset class="form-group">
@@ -33,7 +36,19 @@
             <div id="acSae">
                 <div class="alert alert-warning">Indiquer un semestre et au moins une compétence</div>
             </div>
-            <small id="apc_sae_competences_help" class="form-text text-muted">Ajoutez les compétences couvertes par la SAÉ.</small>
+            <small id="apc_sae_competences_help" class="form-text text-muted">Ajoutez les compétences couvertes par la
+                                                                              SAÉ.</small>
+        </fieldset>
+
+        <fieldset class="form-group">
+            <legend class="col-form-label required">
+                Ressources combinées
+            </legend>
+            <div id="ressourcesSae">
+                <div class="alert alert-warning">Indiquer un semestre</div>
+            </div>
+            <small id="apc_sae_ressource_help" class="form-text text-muted">Ajoutez les ressources couvertes par la SAÉ
+                                                                            .</small>
         </fieldset>
     </div>
     {# todo: gérer les ressources associées + champs pour ajouter des liens #}

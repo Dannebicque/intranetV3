@@ -4,20 +4,27 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcRessourceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/03/2021 16:18
+ * @lastUpdate 20/03/2021 16:18
  */
 
 namespace App\Controller\administration\apc;
 
 use App\Classes\Pdf\MyPDF;
+use App\Classes\Word\MyWord;
 use App\Controller\BaseController;
-use App\Entity\Actualite;
 use App\Entity\ApcRessource;
+use App\Entity\ApcRessourceApprentissageCritique;
 use App\Entity\ApcSae;
+use App\Entity\ApcSaeRessource;
 use App\Entity\Constantes;
 use App\Entity\Diplome;
 use App\Form\ApcRessourceType;
+use App\Repository\ApcApprentissageCritiqueRepository;
+use App\Repository\ApcRessourceApprentissageCritiqueRepository;
 use App\Repository\ApcRessourceRepository;
+use App\Repository\ApcSaeRepository;
+use App\Repository\ApcSaeRessourceRepository;
+use App\Repository\SemestreRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -28,6 +35,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class ApcRessourceController extends BaseController
 {
     /**
+     * @Route("/imprime/{id}.docx", name="apc_ressource_export_one_word", methods="GET")
+     *
+     */
+    public function exportWordOne(MyWord $myWord, ApcRessource $apcRessource)
+    {
+        return $myWord->exportRessource($apcRessource);
+    }
+
+    /**
      * @Route("/imprime/{id}.pdf", name="apc_ressource_export_one", methods="GET")
      *
      */
@@ -35,7 +51,7 @@ class ApcRessourceController extends BaseController
     {
         return $myPDF::generePdf(
             'pdf/apc/fiche_ressource.html.twig',
-            ['apc_sae' =>$apcRessource],
+            ['apc_sae' => $apcRessource],
             'ressource',
             $this->getDepartement()
         );
@@ -61,10 +77,92 @@ class ApcRessourceController extends BaseController
 //    }
 
     /**
+     * @Route("/ajax-ac", name="apc_ressources_ajax_ac", methods={"POST"}, options={"expose":true})
+     */
+    public function ajaxAc(
+        SemestreRepository $semestreRepository,
+        ApcRessourceApprentissageCritiqueRepository $apcRessourceApprentissageCritiqueRepository,
+        ApcApprentissageCritiqueRepository $apcApprentissageCritiqueRepository,
+        Request $request
+    ): Response {
+        $semestre = $semestreRepository->find($request->request->get('semestre'));
+        $competences = $request->request->get('competences');
+        if ($semestre !== null && count($competences) > 0) {
+            if ($request->request->get('sae') !== null) {
+                $tabAcSae = $apcRessourceApprentissageCritiqueRepository->findArrayIdAc($request->request->get('sae'));
+            } else {
+                $tabAcSae = [];
+            }
+
+            $datas = $apcApprentissageCritiqueRepository->findBySemestreAndCompetences($semestre->getAnnee(),
+                $competences);
+
+            $t = [];
+            foreach ($datas as $d) {
+                $b = [];
+
+                $b['id'] = $d->getId();
+                $b['libelle'] = $d->getLibelle();
+                $b['code'] = $d->getCode();
+                $b['checked'] = in_array($d->getId(), $tabAcSae) === true ? 'checked="checked"' : '';
+                if ($d->getNiveau() !== null && $d->getNiveau()->getCompetence() !== null && !array_key_exists($d->getNiveau()->getCompetence()->getNomCourt(),
+                        $t)) {
+                    $t[$d->getNiveau()->getCompetence()->getNomCourt()] = [];
+                }
+                $t[$d->getNiveau()->getCompetence()->getNomCourt()][] = $b;
+            }
+
+            return $this->json($t);
+        }
+
+        return $this->json(false);
+    }
+
+    /**
+     * @Route("/ajax-ressources", name="apc_ressources_ajax", methods={"POST"}, options={"expose":true})
+     */
+    public function ajaxRessources(
+        SemestreRepository $semestreRepository,
+        ApcSaeRessourceRepository $apcSaeRessourceRepository,
+        ApcSaeRepository $apcSaeRepository,
+        Request $request
+    ): Response {
+        $semestre = $semestreRepository->find($request->request->get('semestre'));
+        if ($semestre !== null) {
+            if ($request->request->get('sae') !== null) {
+                $tabAcSae = $apcSaeRessourceRepository->findArrayIdRessources($request->request->get('sae'));
+            } else {
+                $tabAcSae = [];
+            }
+
+            $datas = $apcSaeRepository->findBySemestre($semestre);
+
+            $t = [];
+            foreach ($datas as $d) {
+                $b = [];
+
+                $b['id'] = $d->getId();
+                $b['libelle'] = $d->getLibelle();
+                $b['code'] = $d->getCodeSae();
+                $b['checked'] = in_array($d->getId(), $tabAcSae) === true ? 'checked="checked"' : '';
+                $t[] = $b;
+            }
+
+            return $this->json($t);
+        }
+
+        return $this->json(false);
+    }
+
+    /**
      * @Route("/new/{diplome}", name="apc_ressource_new", methods={"GET","POST"})
      */
-    public function new(Request $request, Diplome $diplome): Response
-    {
+    public function new(
+        ApcApprentissageCritiqueRepository $apcApprentissageCritiqueRepository,
+        ApcSaeRepository $apcSaeRepository,
+        Request $request,
+        Diplome $diplome
+    ): Response {
         $apcRessource = new ApcRessource();
         $form = $this->createForm(ApcRessourceType::class, $apcRessource, [
             'diplome' => $diplome
@@ -73,6 +171,25 @@ class ApcRessourceController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($apcRessource);
+
+            $acs = $request->request->get('ac');
+            if (is_array($acs)) {
+                foreach ($acs as $idAc) {
+                    $ac = $apcApprentissageCritiqueRepository->find($idAc);
+                    $saeAc = new ApcRessourceApprentissageCritique($apcRessource, $ac);
+                    $this->entityManager->persist($saeAc);
+                }
+            }
+
+            $saes = $request->request->get('saes');
+            if (is_array($saes)) {
+                foreach ($saes as $idAc) {
+                    $apcSae = $apcSaeRepository->find($idAc);
+                    $saeRes = new ApcSaeRessource($apcSae, $apcRessource);
+                    $this->entityManager->persist($saeRes);
+                }
+            }
+
             $this->entityManager->flush();
             $this->addFlashBag(
                 Constantes::FLASHBAG_SUCCESS,

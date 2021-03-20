@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Twig/AppExtension.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 20/03/2021 17:50
  */
 
 namespace App\Twig;
@@ -35,6 +35,7 @@ class AppExtension extends AbstractExtension
             new TwigFilter('bg', [$this, 'bg']),
             new TwigFilter('time_ago', [$this, 'timeAgo']),
             new TwigFilter('badge', [$this, 'badge']),
+            new TwigFilter('keyWords', [$this, 'keyWords'], ['is_safe' => ['html']]),
             new TwigFilter('escapetitle', [$this, 'escapetitle']),
             new TwigFilter('chr', [$this, 'mychr']),
             new TwigFilter('upper', [$this, 'upper']),
@@ -189,6 +190,17 @@ class AppExtension extends AbstractExtension
         }
 
         return '';
+    }
+
+    public function keyWords($text)
+    {
+        $t = explode(';', $text);
+        $html = '';
+        foreach ($t as $word) {
+            $html .= '<span class="badge badge-primary">' . $word . '</span>';
+        }
+
+        return $html;
     }
 
     /**

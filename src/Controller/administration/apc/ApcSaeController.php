@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcSaeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/03/2021 21:30
+ * @lastUpdate 20/03/2021 17:50
  */
 
 namespace App\Controller\administration\apc;
@@ -14,11 +14,15 @@ use App\Classes\Word\MyWord;
 use App\Controller\BaseController;
 use App\Entity\ApcSae;
 use App\Entity\ApcSaeApprentissageCritique;
+use App\Entity\ApcSaeRessource;
 use App\Entity\Constantes;
 use App\Entity\Diplome;
 use App\Form\ApcSaeType;
 use App\Repository\ApcApprentissageCritiqueRepository;
+use App\Repository\ApcRessourceRepository;
 use App\Repository\ApcSaeApprentissageCritiqueRepository;
+use App\Repository\ApcSaeRepository;
+use App\Repository\ApcSaeRessourceRepository;
 use App\Repository\SemestreRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -99,7 +103,7 @@ class ApcSaeController extends BaseController
                 $b['id'] = $d->getId();
                 $b['libelle'] = $d->getLibelle();
                 $b['code'] = $d->getCode();
-                $b['checked'] = in_array($d->getId(), $tabAcSae) === true ? 'checked="checked"': '';
+                $b['checked'] = in_array($d->getId(), $tabAcSae) === true ? 'checked="checked"' : '';
                 if ($d->getNiveau() !== null && $d->getNiveau()->getCompetence() !== null && !array_key_exists($d->getNiveau()->getCompetence()->getNomCourt(),
                         $t)) {
                     $t[$d->getNiveau()->getCompetence()->getNomCourt()] = [];
@@ -114,10 +118,47 @@ class ApcSaeController extends BaseController
     }
 
     /**
+     * @Route("/ajax-sae", name="apc_sae_ajax", methods={"POST"}, options={"expose":true})
+     */
+    public function ajaxSae(
+        SemestreRepository $semestreRepository,
+        ApcSaeRessourceRepository $apcSaeRessourceRepository,
+        ApcSaeRepository $apcSaeRepository,
+        Request $request
+    ): Response {
+        $semestre = $semestreRepository->find($request->request->get('semestre'));
+        if ($semestre !== null) {
+            if ($request->request->get('sae') !== null) {
+                $tabAcSae = $apcSaeRessourceRepository->findArrayIdSae($request->request->get('ressource'));
+            } else {
+                $tabAcSae = [];
+            }
+
+            $datas = $apcSaeRepository->findBySemestre($semestre);
+
+            $t = [];
+            foreach ($datas as $d) {
+                $b = [];
+
+                $b['id'] = $d->getId();
+                $b['libelle'] = $d->getLibelle();
+                $b['code'] = $d->getCodeRessource();
+                $b['checked'] = in_array($d->getId(), $tabAcSae) === true ? 'checked="checked"' : '';
+                $t[] = $b;
+            }
+
+            return $this->json($t);
+        }
+
+        return $this->json(false);
+    }
+
+    /**
      * @Route("/new/{diplome}", name="apc_sae_new", methods={"GET","POST"})
      */
     public function new(
         ApcApprentissageCritiqueRepository $apcApprentissageCritiqueRepository,
+        ApcRessourceRepository $apcRessourceRepository,
         Request $request,
         Diplome $diplome
     ): Response {
@@ -134,6 +175,13 @@ class ApcSaeController extends BaseController
                 $ac = $apcApprentissageCritiqueRepository->find($idAc);
                 $saeAc = new ApcSaeApprentissageCritique($apcSae, $ac);
                 $this->entityManager->persist($saeAc);
+            }
+
+            $acs = $request->request->get('ressources');
+            foreach ($acs as $idAc) {
+                $res = $apcRessourceRepository->find($idAc);
+                $saeRes = new ApcSaeRessource($apcSae, $res);
+                $this->entityManager->persist($saeRes);
             }
 
             $this->entityManager->flush();
