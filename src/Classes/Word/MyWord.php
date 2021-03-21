@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Word/MyWord.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/03/2021 17:50
+ * @lastUpdate 21/03/2021 12:00
  */
 
 namespace App\Classes\Word;
@@ -56,15 +56,22 @@ class MyWord
             }
         }
 
+        $exemples = '';
+        $t = explode('-', strip_tags(html_entity_decode($apcSae->getExemples())));
+        foreach ($t as $ex) {
+            $ressources .= '- ' . $ex . "</w:t><w:br/><w:t>";
+        }
+
         $templateProcessor->setValue('competences', $competences);
-        $templateProcessor->setValue('description', strip_tags($apcSae->getDescription()));
+        $templateProcessor->setValue('description', strip_tags(html_entity_decode($apcSae->getDescription())));
         $templateProcessor->setValue('acs', $acs);
         $templateProcessor->setValue('heures', $apcSae->getHeuresCM() + $apcSae->getHeuresTD());
         $templateProcessor->setValue('heuresTP', $apcSae->getHeuresTP());
         $templateProcessor->setValue('heuresPtut', $apcSae->getHeuresProjet());
         $templateProcessor->setValue('ressources', $ressources);
-        $templateProcessor->setValue('livrables', strip_tags($apcSae->getLivrables()));
+        $templateProcessor->setValue('livrables', strip_tags(html_entity_decode($apcSae->getLivrables())));
         $templateProcessor->setValue('semestre', 'Semestre ' . $apcSae->getSemestre()->getOrdreLmd());
+        $templateProcessor->setValue('exemples', $exemples);
 
         $filename = 'sae_' . $apcSae->getCodeSae() . '.docx';
 
@@ -176,8 +183,8 @@ class MyWord
         $templateProcessor->setValue('heures', $apcRessource->getHeuresCM() + $apcRessource->getHeuresTD());
         $templateProcessor->setValue('heuresTP', $apcRessource->getHeuresTP());
         $templateProcessor->setValue('saes', $ressources);
-        $templateProcessor->setValue('prerequis', strip_tags($apcRessource->getPreRequis()));
-        $templateProcessor->setValue('motscles', strip_tags($apcRessource->getMotsCles()));
+        $templateProcessor->setValue('prerequis', strip_tags(html_entity_decode($apcRessource->getPreRequis())));
+        $templateProcessor->setValue('motscles', strip_tags(html_entity_decode($apcRessource->getMotsCles())));
         $templateProcessor->setValue('semestre', 'Semestre ' . $apcRessource->getSemestre()->getOrdreLmd());
 
         $filename = 'ressource_' . $apcRessource->getCodeRessource() . '.docx';
