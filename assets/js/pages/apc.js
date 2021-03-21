@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/apc.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/03/2021 17:50
+// @lastUpdate 20/03/2021 18:18
 import '../../vendor/jquery.collection'
 import '../../vendor/bootstrap-datepicker/locales/bootstrap-datepicker.fr.min'
 import $ from 'jquery'
@@ -33,17 +33,7 @@ $(document).on('change', 'input:radio[name="apc_ressource[semestre]"]', function
 })
 
 $(document).on('change', 'input:checkbox[name="apc_ressource[competences][]"]', function (e) {
-  console.log($('input:checkbox[name="apc_ressource[competences][]"]:checked'))
   competenceRessource = $('input:checkbox[name="apc_ressource[competences][]"]:checked').length > 0
-  updateRessourcesApprentisagesCritiques()
-})
-
-//mise à jour à l'affichage
-$(document).ready(function () {
-  semestreSae = true//$('input:radio[name="apc_sae[semestre]"]:checked').length() === 1
-  semestre = $('input:radio[name="apc_sae[semestre]"]').val()
-  competenceSae = $('input:checkbox[name="apc_sae[competences][]"]:checked').length > 0
-  updateSaeApprentisagesCritiques()
   updateRessourcesApprentisagesCritiques()
 })
 
@@ -55,7 +45,7 @@ function updateSaeRessources () {
       dataType: 'json',
       data: {
         semestre: semestre,
-        ressource: ressouce
+        ressource: ressource
       },
       success: function (data) {
         console.log(data)
@@ -164,7 +154,7 @@ function updateRessourceSae () {
 function updateRessourcesApprentisagesCritiques () {
   if (competenceRessource === true && semestreRessource === true) {
     let comps = []
-
+    console.log('update')
     $.each($('input:checkbox[name="apc_ressource[competences][]"]:checked'), function () {
       comps.push($(this).val())
     })
@@ -179,7 +169,6 @@ function updateRessourcesApprentisagesCritiques () {
         ressource: ressource
       },
       success: function (data) {
-        console.log(data)
         let html = ''
         if (data !== false) {
 
@@ -208,6 +197,23 @@ function updateRessourcesApprentisagesCritiques () {
 }
 
 $(document).ready(function () {
+  semestreSae = true //$('input:radio[name="apc_sae[semestre]"]:checked').length() === 1
+  semestreRessource = true //$('input:radio[name="apc_sae[semestre]"]:checked').length() === 1
+  if (sae !== null) {
+    semestre = $('input:radio[name="apc_sae[semestre]"]').val()
+  }
+  if (ressource !== null) {
+    semestre = $('input:radio[name="apc_ressource[semestre]"]').val()
+  }
+
+  competenceSae = $('input:checkbox[name="apc_sae[competences][]"]:checked').length > 0
+  competenceRessource = $('input:checkbox[name="apc_ressource[competences][]"]:checked').length > 0
+  updateSaeApprentisagesCritiques()
+  updateRessourcesApprentisagesCritiques()
+  updateRessourceSae()
+  updateSaeRessources()
+
+
   let niveauCompetence = $('.selector-niveauCompetence')
   if (niveauCompetence.length > 0) {
     niveauCompetence.collection()
