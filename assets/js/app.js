@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/app.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 21/03/2021 10:09
+// @lastUpdate 21/03/2021 12:07
 
 import '@fortawesome/fontawesome-free/scss/fontawesome.scss'
 import '@fortawesome/fontawesome-free/scss/solid.scss'
@@ -148,6 +148,8 @@ function updateInterface () {
     height: 300,
     menubar: false,
     plugins: 'lists',
+    entity_encoding: 'raw',
+    encoding: 'UTF-8',
     language: 'fr_FR',
     content_css: 'default',
     toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat'
