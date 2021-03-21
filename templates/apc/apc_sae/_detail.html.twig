@@ -56,11 +56,13 @@
     <tr>
         <th>Liste des ressources mobilisées et combinées</th>
         <td colspan="3">
-            <ul>
                 {% for ressource in apc_sae.apcSaeRessources %}
-                    <li>{{ ressource.ressource.libelle }}</li>
+                    <span class="badge badge-primary"
+                          data-provide="tooltip"
+                          title="{{ ressource.ressource.libelle }}">
+                    {{ ressource.ressource.codeRessource }} | {{ ressource.ressource.libelle }}
+                    </span>
                 {% endfor %}
-            </ul>
         </td>
     </tr>
     <tr>
