@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Word/MyWord.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/03/2021 12:00
+ * @lastUpdate 21/03/2021 12:12
  */
 
 namespace App\Classes\Word;
@@ -59,7 +59,7 @@ class MyWord
         $exemples = '';
         $t = explode('-', strip_tags(html_entity_decode($apcSae->getExemples())));
         foreach ($t as $ex) {
-            $ressources .= '- ' . $ex . "</w:t><w:br/><w:t>";
+            $exemples .= '- ' . $ex . "</w:t><w:br/><w:t>";
         }
 
         $templateProcessor->setValue('competences', $competences);
