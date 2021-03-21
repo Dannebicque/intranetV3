@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcRessourceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/03/2021 16:18
+ * @lastUpdate 20/03/2021 18:06
  */
 
 namespace App\Controller\administration\apc;
@@ -88,8 +88,8 @@ class ApcRessourceController extends BaseController
         $semestre = $semestreRepository->find($request->request->get('semestre'));
         $competences = $request->request->get('competences');
         if ($semestre !== null && count($competences) > 0) {
-            if ($request->request->get('sae') !== null) {
-                $tabAcSae = $apcRessourceApprentissageCritiqueRepository->findArrayIdAc($request->request->get('sae'));
+            if ($request->request->get('ressource') !== null) {
+                $tabAcSae = $apcRessourceApprentissageCritiqueRepository->findArrayIdAc($request->request->get('ressource'));
             } else {
                 $tabAcSae = [];
             }

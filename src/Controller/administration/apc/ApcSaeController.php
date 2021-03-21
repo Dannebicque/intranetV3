@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcSaeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/03/2021 17:50
+ * @lastUpdate 20/03/2021 18:15
  */
 
 namespace App\Controller\administration\apc;
@@ -128,7 +128,7 @@ class ApcSaeController extends BaseController
     ): Response {
         $semestre = $semestreRepository->find($request->request->get('semestre'));
         if ($semestre !== null) {
-            if ($request->request->get('sae') !== null) {
+            if ($request->request->get('ressource') !== null) {
                 $tabAcSae = $apcSaeRessourceRepository->findArrayIdSae($request->request->get('ressource'));
             } else {
                 $tabAcSae = [];
