@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ApcRessourceType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/03/2021 10:39
+ * @lastUpdate 22/03/2021 12:21
  */
 
 namespace App\Form;
@@ -35,7 +35,7 @@ class ApcRessourceType extends AbstractType
             ->add('preRequis', TextareaType::class,
                 ['label' => 'label.preRequis', 'attr' => ['rows' => 5], 'required' => false])
             ->add('description', TextareaType::class,
-                ['attr' => ['rows' => 20, 'class' => 'tinyMce'], 'label' => 'label.description', 'required' => false])
+                ['attr' => ['rows' => 20], 'label' => 'label.description', 'required' => false])
             ->add('motsCles', TextType::class,
                 [
                     'label' => 'label.motsCles',
