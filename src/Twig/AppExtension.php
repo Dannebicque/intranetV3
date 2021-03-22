@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Twig/AppExtension.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/03/2021 17:50
+ * @lastUpdate 22/03/2021 08:50
  */
 
 namespace App\Twig;
@@ -36,6 +36,7 @@ class AppExtension extends AbstractExtension
             new TwigFilter('time_ago', [$this, 'timeAgo']),
             new TwigFilter('badge', [$this, 'badge']),
             new TwigFilter('keyWords', [$this, 'keyWords'], ['is_safe' => ['html']]),
+            new TwigFilter('displayList', [$this, 'displaylist'], ['is_safe' => ['html']]),
             new TwigFilter('escapetitle', [$this, 'escapetitle']),
             new TwigFilter('chr', [$this, 'mychr']),
             new TwigFilter('upper', [$this, 'upper']),

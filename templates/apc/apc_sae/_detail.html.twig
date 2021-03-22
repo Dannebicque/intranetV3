@@ -9,7 +9,7 @@
 
     <tr>
         <th>Description des objectifs de la SAÉ et de la problèmatique professionnelle associée</th>
-        <td colspan="3">{{ apc_sae.description|raw }}</td>
+        <td colspan="3">{{ apc_sae.description|nl2br }}</td>
     </tr>
     <tr>
         <th>Compétence(s) ciblée(s)</th>
@@ -17,7 +17,7 @@
             {% for competence in apc_sae.apcSaeCompetences %}
                 <span class="badge badge-lg badge-{{ competence.competence.couleur }}"
                       data-provide="tooltip"
-                title="{{ competence.competence.libelle }}">
+                      title="{{ competence.competence.libelle }}">
                     {{ competence.competence.nomCourt }}
                 </span>
             {% endfor %}{# todo: modal pour avoir le détail des AC sur chaque compétence #}
@@ -67,11 +67,11 @@
     </tr>
     <tr>
         <th>Type de livrable ou de production</th>
-        <td colspan="3">{{ apc_sae.livrables|raw }}</td>
+        <td colspan="3">{{ apc_sae.livrables|nl2br }}</td>
     </tr>
     <tr>
         <th>Exemples</th>
-        <td colspan="3">{{ apc_sae.exemples|raw }}</td>
+        <td colspan="3">{{ apc_sae.exemples|nl2br }}</td>
     </tr>
     </tbody>
 </table>

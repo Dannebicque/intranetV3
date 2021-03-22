@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ApcSaeType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/03/2021 21:35
+ * @lastUpdate 21/03/2021 13:40
  */
 
 namespace App\Form;
@@ -35,13 +35,13 @@ class ApcSaeType extends AbstractType
             ->add('codeSae', TextType::class, ['label' => 'label.codeSae'])
             ->add('libelle', TextType::class, ['label' => 'label.libelle'])
             ->add('description', TextareaType::class,
-                ['attr' => ['class' => 'tinyMce'], 'label' => 'label.description', 'required' => false])
+                ['attr' => ['rows' => 20], 'label' => 'label.description', 'required' => false])
             ->add('heuresCM', TextType::class, ['label' => 'label.heuresCM'])
             ->add('heuresTD', TextType::class, ['label' => 'label.heuresTD'])
             ->add('heuresTP', TextType::class, ['label' => 'label.heuresTP'])
             ->add('heuresProjet', TextType::class, ['label' => 'label.heuresPtut'])
             ->add('livrables', TextareaType::class,
-                ['label' => 'label.livrables', 'attr' => ['class' => 'tinyMce'], 'required' => false])
+                ['label' => 'label.livrables', 'attr' => ['rows' => 20], 'required' => false])
             ->add('semestre', EntityType::class, [
                 'class' => Semestre::class,
                 'attr' => ['class'=> 'semestreSae'],

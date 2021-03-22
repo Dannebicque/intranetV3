@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Word/MyWord.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/03/2021 12:12
+ * @lastUpdate 22/03/2021 08:43
  */
 
 namespace App\Classes\Word;
@@ -56,24 +56,18 @@ class MyWord
             }
         }
 
-        $exemples = '';
-        $t = explode('-', strip_tags(html_entity_decode($apcSae->getExemples())));
-        foreach ($t as $ex) {
-            $exemples .= '- ' . $ex . "</w:t><w:br/><w:t>";
-        }
-
         $templateProcessor->setValue('competences', $competences);
-        $templateProcessor->setValue('description', strip_tags(html_entity_decode($apcSae->getDescription())));
+        $templateProcessor->setValue('description', $this->prepareTexte($apcSae->getDescription()));
         $templateProcessor->setValue('acs', $acs);
         $templateProcessor->setValue('heures', $apcSae->getHeuresCM() + $apcSae->getHeuresTD());
         $templateProcessor->setValue('heuresTP', $apcSae->getHeuresTP());
         $templateProcessor->setValue('heuresPtut', $apcSae->getHeuresProjet());
         $templateProcessor->setValue('ressources', $ressources);
-        $templateProcessor->setValue('livrables', strip_tags(html_entity_decode($apcSae->getLivrables())));
+        $templateProcessor->setValue('livrables', $this->prepareTexte($apcSae->getLivrables()));
         $templateProcessor->setValue('semestre', 'Semestre ' . $apcSae->getSemestre()->getOrdreLmd());
-        $templateProcessor->setValue('exemples', $exemples);
+        $templateProcessor->setValue('exemples', $this->prepareTexte($apcSae->getExemples()));
 
-        $filename = 'sae_' . $apcSae->getCodeSae() . '.docx';
+        $filename = 'sae_' . $apcSae->getCodeSae() . ' ' . $apcSae->getLibelle() . '.docx';
 
         return new StreamedResponse(
             static function() use ($templateProcessor) {
@@ -90,6 +84,14 @@ class MyWord
         );
 
 
+    }
+
+    private function prepareTexte($text)
+    {
+        $text = nl2br(trim($text));
+        $text = str_replace('<br />', '</w:t><w:br/><w:t>', $text);
+
+        return $text;
     }
 
     /**
@@ -183,11 +185,11 @@ class MyWord
         $templateProcessor->setValue('heures', $apcRessource->getHeuresCM() + $apcRessource->getHeuresTD());
         $templateProcessor->setValue('heuresTP', $apcRessource->getHeuresTP());
         $templateProcessor->setValue('saes', $ressources);
-        $templateProcessor->setValue('prerequis', strip_tags(html_entity_decode($apcRessource->getPreRequis())));
-        $templateProcessor->setValue('motscles', strip_tags(html_entity_decode($apcRessource->getMotsCles())));
+        $templateProcessor->setValue('prerequis', $this->prepareTexte($apcRessource->getPreRequis()));
+        $templateProcessor->setValue('motscles', $this->prepareTexte($apcRessource->getMotsCles()));
         $templateProcessor->setValue('semestre', 'Semestre ' . $apcRessource->getSemestre()->getOrdreLmd());
 
-        $filename = 'ressource_' . $apcRessource->getCodeRessource() . '.docx';
+        $filename = 'ressource_' . $apcRessource->getCodeRessource() . ' ' . $apcRessource->getLibelle() . '.docx';
 
         return new StreamedResponse(
             static function() use ($templateProcessor) {

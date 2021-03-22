@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/apc.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/03/2021 18:18
+// @lastUpdate 22/03/2021 10:31
 import '../../vendor/jquery.collection'
 import '../../vendor/bootstrap-datepicker/locales/bootstrap-datepicker.fr.min'
 import $ from 'jquery'
@@ -38,14 +38,14 @@ $(document).on('change', 'input:checkbox[name="apc_ressource[competences][]"]', 
 })
 
 function updateSaeRessources () {
-  if (semestre === true) {
+  if (semestreSae === true) {
     $.ajax({
-      url: Routing.generate('administration_apc_sae_ajax'),
+      url: Routing.generate('administration_apc_ressources_ajax'),
       type: 'POST',
       dataType: 'json',
       data: {
         semestre: semestre,
-        ressource: ressource
+        sae: sae
       },
       success: function (data) {
         console.log(data)
@@ -55,8 +55,8 @@ function updateSaeRessources () {
           for (var ressource in data) {
             html = html + '<div class="col-md-6">' +
               '<div class="form-check">' +
-              '<input type="checkbox" id="ac_' + data[ressource].id + '" name="ressources[]" class="form-check-input" value="' + data[ressource].id + '" ' + data[ressource].checked + '>\n' +
-              '<label class="form-check-label" for="ac_' + data[ressource].id + '">' + data[ressource].libelle + '</label></div>' +
+              '<input type="checkbox" id="ressource_' + data[ressource].id + '" name="ressources[]" class="form-check-input" value="' + data[ressource].id + '" ' + data[ressource].checked + '>\n' +
+              '<label class="form-check-label" for="ressource_' + data[ressource].id + '">' + data[ressource].libelle + '</label></div>' +
               '</div>'
           }
           html = html + '</div>'
@@ -117,16 +117,16 @@ function updateSaeApprentisagesCritiques () {
 }
 
 function updateRessourceSae () {
-  if (semestreSae === true) {
+  if (semestreRessource === true) {
 
 
     $.ajax({
-      url: Routing.generate('administration_apc_ressources_ajax'),
+      url: Routing.generate('administration_apc_sae_ajax'),
       type: 'POST',
       dataType: 'json',
       data: {
         semestre: semestre,
-        sae: sae
+        ressource: ressource
       },
       success: function (data) {
         console.log(data)
@@ -136,8 +136,8 @@ function updateRessourceSae () {
           for (var ressource in data) {
             html = html + '<div class="col-md-6">' +
               '<div class="form-check">' +
-              '<input type="checkbox" id="ac_' + data[ressource].id + '" name="saes[]" class="form-check-input" value="' + data[ressource].id + '" ' + data[ressource].checked + '>\n' +
-              '<label class="form-check-label" for="ac_' + data[ressource].id + '">' + data[ressource].libelle + '</label></div>' +
+              '<input type="checkbox" id="sae_' + data[ressource].id + '" name="saes[]" class="form-check-input" value="' + data[ressource].id + '" ' + data[ressource].checked + '>\n' +
+              '<label class="form-check-label" for="sae_' + data[ressource].id + '">' + data[ressource].libelle + '</label></div>' +
               '</div>'
           }
           html = html + '</div>'

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcSaeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/03/2021 18:15
+ * @lastUpdate 22/03/2021 10:39
  */
 
 namespace App\Controller\administration\apc;
@@ -118,23 +118,23 @@ class ApcSaeController extends BaseController
     }
 
     /**
-     * @Route("/ajax-sae", name="apc_sae_ajax", methods={"POST"}, options={"expose":true})
+     * @Route("/ajax-ressources", name="apc_ressources_ajax", methods={"POST"}, options={"expose":true})
      */
-    public function ajaxSae(
+    public function ajaxRessources(
         SemestreRepository $semestreRepository,
         ApcSaeRessourceRepository $apcSaeRessourceRepository,
-        ApcSaeRepository $apcSaeRepository,
+        ApcRessourceRepository $apcRessourceRepository,
         Request $request
     ): Response {
         $semestre = $semestreRepository->find($request->request->get('semestre'));
         if ($semestre !== null) {
-            if ($request->request->get('ressource') !== null) {
-                $tabAcSae = $apcSaeRessourceRepository->findArrayIdSae($request->request->get('ressource'));
+            if ($request->request->get('sae') !== null) {
+                $tabAcSae = $apcSaeRessourceRepository->findArrayIdRessources($request->request->get('sae'));
             } else {
                 $tabAcSae = [];
             }
 
-            $datas = $apcSaeRepository->findBySemestre($semestre);
+            $datas = $apcRessourceRepository->findBySemestre($semestre);
 
             $t = [];
             foreach ($datas as $d) {
@@ -152,6 +152,7 @@ class ApcSaeController extends BaseController
 
         return $this->json(false);
     }
+
 
     /**
      * @Route("/new/{diplome}", name="apc_sae_new", methods={"GET","POST"})
@@ -171,17 +172,21 @@ class ApcSaeController extends BaseController
             $this->entityManager->persist($apcSae);
             //sauvegarde des AC
             $acs = $request->request->get('ac');
-            foreach ($acs as $idAc) {
-                $ac = $apcApprentissageCritiqueRepository->find($idAc);
-                $saeAc = new ApcSaeApprentissageCritique($apcSae, $ac);
-                $this->entityManager->persist($saeAc);
+            if (is_array($acs)) {
+                foreach ($acs as $idAc) {
+                    $ac = $apcApprentissageCritiqueRepository->find($idAc);
+                    $saeAc = new ApcSaeApprentissageCritique($apcSae, $ac);
+                    $this->entityManager->persist($saeAc);
+                }
             }
 
             $acs = $request->request->get('ressources');
-            foreach ($acs as $idAc) {
-                $res = $apcRessourceRepository->find($idAc);
-                $saeRes = new ApcSaeRessource($apcSae, $res);
-                $this->entityManager->persist($saeRes);
+            if (is_array($acs)) {
+                foreach ($acs as $idAc) {
+                    $res = $apcRessourceRepository->find($idAc);
+                    $saeRes = new ApcSaeRessource($apcSae, $res);
+                    $this->entityManager->persist($saeRes);
+                }
             }
 
             $this->entityManager->flush();
@@ -213,16 +218,18 @@ class ApcSaeController extends BaseController
     /**
      * @Route("/{id}/edit", name="apc_sae_edit", methods={"GET","POST"})
      */
-    public function edit(ApcApprentissageCritiqueRepository $apcApprentissageCritiqueRepository,
-        Request $request, ApcSae $apcSae): Response
-    {
+    public function edit(
+        ApcRessourceRepository $apcRessourceRepository,
+        ApcApprentissageCritiqueRepository $apcApprentissageCritiqueRepository,
+        Request $request,
+        ApcSae $apcSae
+    ): Response {
         $form = $this->createForm(ApcSaeType::class, $apcSae, ['diplome' => $apcSae->getDiplome()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             //on supprimer ceux présent
-            foreach ($apcSae->getApcSaeApprentissageCritiques() as $ac)
-            {
+            foreach ($apcSae->getApcSaeApprentissageCritiques() as $ac) {
                 $this->entityManager->remove($ac);
             }
 
@@ -234,13 +241,27 @@ class ApcSaeController extends BaseController
                 $this->entityManager->persist($saeAc);
             }
 
+            foreach ($apcSae->getApcSaeRessources() as $ac) {
+                $this->entityManager->remove($ac);
+            }
+
+            $acs = $request->request->get('ressources');
+            if (is_array($acs)) {
+                foreach ($acs as $idAc) {
+                    $res = $apcRessourceRepository->find($idAc);
+                    $saeRes = new ApcSaeRessource($apcSae, $res);
+                    $this->entityManager->persist($saeRes);
+                }
+            }
+
             $this->entityManager->flush();
             $this->addFlashBag(
                 Constantes::FLASHBAG_SUCCESS,
                 'apc.sae.edit.success.flash'
             );
 
-            return $this->redirectToRoute('administration_matiere_index', ['diplome' => $apcSae->getDiplome()->getId()]);
+            return $this->redirectToRoute('administration_matiere_index',
+                ['diplome' => $apcSae->getDiplome()->getId()]);
         }
 
         return $this->render('apc/apc_sae/edit.html.twig', [
