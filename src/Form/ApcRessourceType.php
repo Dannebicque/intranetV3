@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ApcRessourceType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/03/2021 17:50
+ * @lastUpdate 22/03/2021 10:39
  */
 
 namespace App\Form;
@@ -33,11 +33,15 @@ class ApcRessourceType extends AbstractType
             ->add('codeRessource', TextType::class, ['label' => 'label.codeRessource'])
             ->add('libelle', TextType::class, ['label' => 'label.libelle'])
             ->add('preRequis', TextareaType::class,
-                ['label' => 'label.preRequis', 'attr' => ['rows' => 5, 'class' => 'tinyMce'], 'required' => false])
+                ['label' => 'label.preRequis', 'attr' => ['rows' => 5], 'required' => false])
             ->add('description', TextareaType::class,
                 ['attr' => ['rows' => 20, 'class' => 'tinyMce'], 'label' => 'label.description', 'required' => false])
             ->add('motsCles', TextType::class,
-                ['label' => 'label.motsCles', 'help' => 'Utilisez le ";" pour séparer les mots clés.'])
+                [
+                    'label' => 'label.motsCles',
+                    'help' => 'Utilisez le ";" pour séparer les mots clés.',
+                    'required' => false
+                ])
             ->add('heuresCM', TextType::class, ['label' => 'label.heuresCM'])
             ->add('heuresTD', TextType::class, ['label' => 'label.heuresTD'])
             ->add('heuresTP', TextType::class, ['label' => 'label.heuresTP'])

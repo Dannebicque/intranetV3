@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcRessourceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/03/2021 18:06
+ * @lastUpdate 22/03/2021 10:31
  */
 
 namespace App\Controller\administration\apc;
@@ -14,14 +14,12 @@ use App\Classes\Word\MyWord;
 use App\Controller\BaseController;
 use App\Entity\ApcRessource;
 use App\Entity\ApcRessourceApprentissageCritique;
-use App\Entity\ApcSae;
 use App\Entity\ApcSaeRessource;
 use App\Entity\Constantes;
 use App\Entity\Diplome;
 use App\Form\ApcRessourceType;
 use App\Repository\ApcApprentissageCritiqueRepository;
 use App\Repository\ApcRessourceApprentissageCritiqueRepository;
-use App\Repository\ApcRessourceRepository;
 use App\Repository\ApcSaeRepository;
 use App\Repository\ApcSaeRessourceRepository;
 use App\Repository\SemestreRepository;
@@ -119,9 +117,9 @@ class ApcRessourceController extends BaseController
     }
 
     /**
-     * @Route("/ajax-ressources", name="apc_ressources_ajax", methods={"POST"}, options={"expose":true})
+     * @Route("/ajax-sae", name="apc_sae_ajax", methods={"POST"}, options={"expose":true})
      */
-    public function ajaxRessources(
+    public function ajaxSae(
         SemestreRepository $semestreRepository,
         ApcSaeRessourceRepository $apcSaeRessourceRepository,
         ApcSaeRepository $apcSaeRepository,
@@ -129,8 +127,8 @@ class ApcRessourceController extends BaseController
     ): Response {
         $semestre = $semestreRepository->find($request->request->get('semestre'));
         if ($semestre !== null) {
-            if ($request->request->get('sae') !== null) {
-                $tabAcSae = $apcSaeRessourceRepository->findArrayIdRessources($request->request->get('sae'));
+            if ($request->request->get('ressource') !== null) {
+                $tabAcSae = $apcSaeRessourceRepository->findArrayIdSae($request->request->get('ressource'));
             } else {
                 $tabAcSae = [];
             }
@@ -219,15 +217,45 @@ class ApcRessourceController extends BaseController
     /**
      * @Route("/{id}/edit", name="apc_ressource_edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, ApcRessource $apcRessource): Response
-    {
+    public function edit(
+        ApcApprentissageCritiqueRepository $apcApprentissageCritiqueRepository,
+        ApcSaeRepository $apcSaeRepository,
+        Request $request,
+        ApcRessource $apcRessource
+    ): Response {
         $form = $this->createForm(ApcRessourceType::class, $apcRessource, [
             'diplome' => $apcRessource->getDiplome()
         ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            foreach ($apcRessource->getApcRessourceApprentissageCritiques() as $ac) {
+                $this->entityManager->remove($ac);
+            }
+
+            $acs = $request->request->get('ac');
+            if (is_array($acs)) {
+                foreach ($acs as $idAc) {
+                    $ac = $apcApprentissageCritiqueRepository->find($idAc);
+                    $saeAc = new ApcRessourceApprentissageCritique($apcRessource, $ac);
+                    $this->entityManager->persist($saeAc);
+                }
+            }
+
+            foreach ($apcRessource->getApcSaeRessources() as $ac) {
+                $this->entityManager->remove($ac);
+            }
+            $saes = $request->request->get('saes');
+            if (is_array($saes)) {
+                foreach ($saes as $idAc) {
+                    $apcSae = $apcSaeRepository->find($idAc);
+                    $saeRes = new ApcSaeRessource($apcSae, $apcRessource);
+                    $this->entityManager->persist($saeRes);
+                }
+            }
+
             $this->entityManager->flush();
+
             $this->addFlashBag(
                 Constantes::FLASHBAG_SUCCESS,
                 'apc.ressource.edit.success.flash'
