@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/apc.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 22/03/2021 10:31
+// @lastUpdate 22/03/2021 13:28
 import '../../vendor/jquery.collection'
 import '../../vendor/bootstrap-datepicker/locales/bootstrap-datepicker.fr.min'
 import $ from 'jquery'
@@ -48,7 +48,6 @@ function updateSaeRessources () {
         sae: sae
       },
       success: function (data) {
-        console.log(data)
         let html = '<div class="row">'
         if (data !== false) {
 
@@ -88,7 +87,6 @@ function updateSaeApprentisagesCritiques () {
         sae: sae
       },
       success: function (data) {
-        console.log(data)
         let html = ''
         if (data !== false) {
 
@@ -129,7 +127,6 @@ function updateRessourceSae () {
         ressource: ressource
       },
       success: function (data) {
-        console.log(data)
         let html = '<div class="row">'
         if (data !== false) {
 
@@ -154,7 +151,6 @@ function updateRessourceSae () {
 function updateRessourcesApprentisagesCritiques () {
   if (competenceRessource === true && semestreRessource === true) {
     let comps = []
-    console.log('update')
     $.each($('input:checkbox[name="apc_ressource[competences][]"]:checked'), function () {
       comps.push($(this).val())
     })
@@ -200,12 +196,12 @@ $(document).ready(function () {
   semestreSae = true //$('input:radio[name="apc_sae[semestre]"]:checked').length() === 1
   semestreRessource = true //$('input:radio[name="apc_sae[semestre]"]:checked').length() === 1
   if (sae !== null) {
-    semestre = $('input:radio[name="apc_sae[semestre]"]').val()
+    semestre = $('input:radio[name="apc_sae[semestre]"]:checked').val()
   }
   if (ressource !== null) {
-    semestre = $('input:radio[name="apc_ressource[semestre]"]').val()
+    semestre = $('input:radio[name="apc_ressource[semestre]"]:checked').val()
   }
-
+  console.log(semestre)
   competenceSae = $('input:checkbox[name="apc_sae[competences][]"]:checked').length > 0
   competenceRessource = $('input:checkbox[name="apc_ressource[competences][]"]:checked').length > 0
   updateSaeApprentisagesCritiques()
@@ -248,7 +244,6 @@ $(document).ready(function () {
 
 $(document).on('change', '.checkNiveau', function (e) {
   let etat = 0
-  console.log('toto')
   if (($(this).is(':checked'))) {
     etat = 1
   }
