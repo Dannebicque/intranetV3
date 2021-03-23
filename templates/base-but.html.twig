@@ -55,6 +55,7 @@
 <body {% block body %}{% endblock %}>
 <header class="topbar">
     <div class="topbar-left">
+        <button class="topbar-btn sidebar-toggler">☰</button>
         <a class="topbar-btn d-none d-md-block"
            href="{{ path('but_homepage') }}"
         >
@@ -74,6 +75,11 @@
            title="Ressources du S2">
             Ressources S2
         </a>
+        <div class="topbar-divider"></div>
+        <form class="lookup lookup-circle" action="{{ path('but_recherche') }}">
+            <input type="text" name="s">
+        </form>
+
     </div>
     <div class="topbar-right">
         <a class="dropdown-item" href="#" id="darkMode"><i class="fas fa-adjust"></i> Dark Mode On</a>
@@ -81,6 +87,9 @@
 </header>
 <main class="main-container">
     <div class="main-content" id="mainContent">
+        <div class="alaert alert-warning">Travail en cours de rédaction par l'ACD MMI. Les données présentées ne sont
+                                          pas encore validées ou officialisées. Publication prévue fin avril
+        </div>
         {% block content %}
 
         {% endblock %}

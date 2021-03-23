@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/ApcRessourceRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/03/2021 21:52
+ * @lastUpdate 23/03/2021 19:20
  */
 
 namespace App\Repository;
@@ -52,6 +52,18 @@ class ApcRessourceRepository extends ServiceEntityRepository
             ->setParameter('semestre', $semestre->getId())
             ->orderBy('r.codeRessource', 'ASC')
             ->addOrderBy('r.libelle', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function search(?string $search)
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.libelle LIKE :search')
+            ->orWhere('a.description LIKE :search')
+            ->orWhere('a.motsCles LIKE :search')
+            ->orWhere('a.libelle LIKE :search')
+            ->setParameter('search', '%' . $search . '%')
             ->getQuery()
             ->getResult();
     }
