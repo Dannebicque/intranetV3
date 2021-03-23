@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Word/MyWord.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/03/2021 08:43
+ * @lastUpdate 22/03/2021 18:45
  */
 
 namespace App\Classes\Word;
@@ -168,7 +168,7 @@ class MyWord
             }
         }
 
-        $templateProcessor->setValue('description', strip_tags($apcRessource->getDescription()));
+        $templateProcessor->setValue('description', $this->prepareTexte($apcRessource->getDescription()));
 
         $templateProcessor->setValue('comp1', $comp1);
         $templateProcessor->setValue('comp2', $comp2);

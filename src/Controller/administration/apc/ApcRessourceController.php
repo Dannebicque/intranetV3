@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcRessourceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/03/2021 10:31
+ * @lastUpdate 22/03/2021 18:52
  */
 
 namespace App\Controller\administration\apc;
@@ -261,8 +261,13 @@ class ApcRessourceController extends BaseController
                 'apc.ressource.edit.success.flash'
             );
 
-            return $this->redirectToRoute('administration_matiere_index',
-                ['diplome' => $apcRessource->getDiplome()->getId()]);
+            if (null !== $request->request->get('btn_update')) {
+                return $this->redirectToRoute('administration_matiere_index',
+                    ['diplome' => $apcRessource->getDiplome()->getId()]);
+            }
+
+            return $this->redirectToRoute('administration_apc_ressource_edit',
+                ['id' => $apcRessource->getId()]);
         }
 
         return $this->render('apc/apc_ressource/edit.html.twig', [

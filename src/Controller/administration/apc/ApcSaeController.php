@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcSaeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/03/2021 10:39
+ * @lastUpdate 22/03/2021 18:59
  */
 
 namespace App\Controller\administration\apc;
@@ -21,7 +21,6 @@ use App\Form\ApcSaeType;
 use App\Repository\ApcApprentissageCritiqueRepository;
 use App\Repository\ApcRessourceRepository;
 use App\Repository\ApcSaeApprentissageCritiqueRepository;
-use App\Repository\ApcSaeRepository;
 use App\Repository\ApcSaeRessourceRepository;
 use App\Repository\SemestreRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -235,10 +234,12 @@ class ApcSaeController extends BaseController
 
             //sauvegarde des AC
             $acs = $request->request->get('ac');
-            foreach ($acs as $idAc) {
-                $ac = $apcApprentissageCritiqueRepository->find($idAc);
-                $saeAc = new ApcSaeApprentissageCritique($apcSae, $ac);
-                $this->entityManager->persist($saeAc);
+            if (is_array($acs)) {
+                foreach ($acs as $idAc) {
+                    $ac = $apcApprentissageCritiqueRepository->find($idAc);
+                    $saeAc = new ApcSaeApprentissageCritique($apcSae, $ac);
+                    $this->entityManager->persist($saeAc);
+                }
             }
 
             foreach ($apcSae->getApcSaeRessources() as $ac) {
@@ -260,8 +261,14 @@ class ApcSaeController extends BaseController
                 'apc.sae.edit.success.flash'
             );
 
-            return $this->redirectToRoute('administration_matiere_index',
-                ['diplome' => $apcSae->getDiplome()->getId()]);
+
+            if (null !== $request->request->get('btn_update')) {
+                return $this->redirectToRoute('administration_matiere_index',
+                    ['diplome' => $apcSae->getDiplome()->getId()]);
+            }
+
+            return $this->redirectToRoute('administration_apc_sae_edit',
+                ['id' => $apcSae->getId()]);
         }
 
         return $this->render('apc/apc_sae/edit.html.twig', [
