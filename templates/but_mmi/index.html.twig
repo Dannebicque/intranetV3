@@ -15,17 +15,35 @@
                     <div class="card-body">
                         <p>{{ sae.description|nl2br }}</p>
                         <p>
-                            <button data-provide="modaler tooltip"
-                                    data-url="{{ path('but_fiche_sae',
-                                        {'apcSae': sae.id}) }}"
-                                    class="btn btn-info"
-                                    data-size="lg"
-                                    data-placement="bottom"
-                                    title="Voir la fiche SAE"
-                                    data-title="Fiche de la SAÉ : {{ sae.codeSae }} | {{ sae.libelle }}"
+                            <a data-provide="tooltip"
+                               href="{{ path('but_fiche_sae',
+                                   {'apcSae': sae.id}) }}"
+                               class="btn btn-info"
+                               data-placement="bottom"
+                               title="Voir la fiche SAE"
+                               target="_blank"
                             >
                                 Voir la fiche SAE
-                            </button>
+                            </a>
+                        </p>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>CM/TD</th>
+                                <th>TP</th>
+                                <th>Projet</th>
+                                <th>Coeff.</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>{{ sae.heuresCM + sae.heuresTD }} heure(s)</td>
+                                <td>{{ sae.heuresTP }} heures</td>
+                                <td>{{ sae.heuresProjet }} heures</td>
+                                <td>-</td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
                     <div class="card-footer">
                         {% for competence in sae.apcSaeCompetences %}
