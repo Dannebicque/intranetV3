@@ -9,24 +9,37 @@
         {% for ressource in ressources %}
             <div class="col-4">
                 <div class="card">
-                    <h4 class="card-title">{{ ressource.codeRessource }} | {{ ressource.libelle }}
-                        <span class="badge badge-primary">{{ ressource
-                            .semestre.libelle }}</span></h4>
+                    <h4 class="card-title">{{ ressource.codeRessource }} | {{ ressource.libelle }}</h4>
                     <div class="card-body">
-                        <p>{{ ressource.description|nl2br }}</p>
+                        <p>{{ ressource.motsCles|nl2br }}</p>
                         <p>
-                            <button data-provide="modaler tooltip"
-                                    data-url="{{ path('but_fiche_ressource',
-                                        {'apcRessource': ressource.id}) }}"
-                                    class="btn btn-info"
-                                    data-size="lg"
-                                    data-placement="bottom"
-                                    title="Voir la fiche ressource"
-                                    data-title="Fiche de la ressource : {{ ressource.codeRessource }} | {{ ressource
-                                    .libelle }}"
+                            <a data-provide="tooltip"
+                               href="{{ path('but_fiche_ressource',
+                                   {'apcRessource': ressource.id}) }}"
+                               class="btn btn-info"
+                               data-placement="bottom"
+                               title="Voir la fiche ressource"
+                               target="_blank"
                             >
                                 Voir la fiche ressource
-                            </button>
+                            </a>
+                        </p>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>CM/TD</th>
+                                <th>TP</th>
+                                <th>Coeff.</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>{{ ressource.heuresCM + ressource.heuresTD }} heure(s)</td>
+                                <td>{{ ressource.heuresTP }} heures</td>
+                                <td>-</td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
                     <div class="card-footer">
                         {% for competence in ressource.apcRessourceCompetences %}

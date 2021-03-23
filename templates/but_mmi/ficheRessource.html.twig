@@ -1,1 +1,8 @@
-{{ include('apc/apc_ressource/_detail.html.twig') }}
+{% extends 'base-but.html.twig' %}
+
+{% block header %}Fiche de la ressource : {{ apc_ressource.codeRessource }} | {{ apc_ressource
+.libelle }}{% endblock %}
+
+{% block content %}
+    {{ include('apc/apc_ressource/_detail.html.twig') }}
+{% endblock %}
