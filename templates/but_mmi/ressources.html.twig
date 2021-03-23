@@ -1,0 +1,41 @@
+{% extends 'base-but.html.twig' %}
+
+{% block header %}Ressources du semestre {{ semestre.libelle }}{% endblock %}
+
+{% block content %}
+
+
+    <div class="row">
+        {% for ressource in ressources %}
+            <div class="col-4">
+                <div class="card">
+                    <h4 class="card-title">{{ ressource.codeRessource }} | {{ ressource.libelle }}
+                        <span class="badge badge-primary">{{ ressource
+                            .semestre.libelle }}</span></h4>
+                    <div class="card-body">
+                        <p>{{ ressource.description|nl2br }}</p>
+                        <p>
+                            <button data-provide="modaler tooltip"
+                                    data-url="{{ path('but_fiche_ressource',
+                                        {'apcRessource': ressource.id}) }}"
+                                    class="btn btn-info"
+                                    data-size="lg"
+                                    data-placement="bottom"
+                                    title="Voir la fiche ressource"
+                                    data-title="Fiche de la ressource : {{ ressource.codeRessource }} | {{ ressource
+                                    .libelle }}"
+                            >
+                                Voir la fiche ressource
+                            </button>
+                    </div>
+                    <div class="card-footer">
+                        {% for competence in ressource.apcRessourceCompetences %}
+                            <span class="badge badge-{{ competence.competence.couleur }}">
+                        {{ competence.competence.nomCourt }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
