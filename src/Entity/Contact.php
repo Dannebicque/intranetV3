@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Contact.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 23/03/2021 19:26
  */
 
 namespace App\Entity;
@@ -78,7 +78,7 @@ class Contact extends BaseEntity
         return $this->fonction;
     }
 
-    public function setFonction(string $fonction): self
+    public function setFonction(?string $fonction): self
     {
         $this->fonction = $fonction;
 
@@ -90,7 +90,7 @@ class Contact extends BaseEntity
         return $this->telephone;
     }
 
-    public function setTelephone(string $telephone): self
+    public function setTelephone(?string $telephone): self
     {
         $this->telephone = $telephone;
 
@@ -102,7 +102,7 @@ class Contact extends BaseEntity
         return $this->email;
     }
 
-    public function setEmail(string $email): self
+    public function setEmail(?string $email): self
     {
         $this->email = $email;
 
@@ -114,7 +114,7 @@ class Contact extends BaseEntity
         return $this->portable;
     }
 
-    public function setPortable(string $portable): self
+    public function setPortable(?string $portable): self
     {
         $this->portable = $portable;
 
@@ -126,7 +126,7 @@ class Contact extends BaseEntity
         return $this->civilite;
     }
 
-    public function setCivilite(string $civilite): self
+    public function setCivilite(?string $civilite): self
     {
         $this->civilite = $civilite;
 
@@ -138,7 +138,7 @@ class Contact extends BaseEntity
         return $this->fax;
     }
 
-    public function setFax(string $fax): self
+    public function setFax(?string $fax): self
     {
         $this->fax = $fax;
 
@@ -155,7 +155,7 @@ class Contact extends BaseEntity
         return $this->prenom;
     }
 
-    public function setPrenom(string $prenom): self
+    public function setPrenom(?string $prenom): self
     {
         $this->prenom = $prenom;
 
@@ -167,7 +167,7 @@ class Contact extends BaseEntity
         return $this->nom;
     }
 
-    public function setNom(string $nom): self
+    public function setNom(?string $nom): self
     {
         $this->nom = $nom;
 
