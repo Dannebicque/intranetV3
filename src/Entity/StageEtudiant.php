@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/StageEtudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 23/03/2021 19:26
  */
 
 namespace App\Entity;
@@ -384,7 +384,7 @@ class StageEtudiant extends BaseEntity
         return $this->amenagementStage;
     }
 
-    public function setAmenagementStage(string $amenagementStage): self
+    public function setAmenagementStage(?string $amenagementStage): self
     {
         $this->amenagementStage = $amenagementStage;
 
@@ -420,7 +420,7 @@ class StageEtudiant extends BaseEntity
         return $this->gratificationPeriode;
     }
 
-    public function setGratificationPeriode(string $gratificationPeriode): self
+    public function setGratificationPeriode(?string $gratificationPeriode): self
     {
         $this->gratificationPeriode = $gratificationPeriode;
 
@@ -432,7 +432,7 @@ class StageEtudiant extends BaseEntity
         return $this->avantages;
     }
 
-    public function setAvantages(string $avantages): self
+    public function setAvantages(?string $avantages): self
     {
         $this->avantages = $avantages;
 
