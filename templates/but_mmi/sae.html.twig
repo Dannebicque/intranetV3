@@ -1,0 +1,11 @@
+{% extends 'base-but.html.twig' %}
+
+{% block header %}Référentiel de formation{% endblock %}
+
+{% block content %}
+    <div class="row">
+        {% for sae in saes %}
+            {{ include('but_mmi/_cardSae.html.twig') }}
+        {% endfor %}
+    </div>
+{% endblock %}

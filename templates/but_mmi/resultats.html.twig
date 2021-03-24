@@ -1,12 +1,21 @@
 {% extends 'base-but.html.twig' %}
 
-{% block content %}
-    Référentiel
+{% block header %}
+    Recherche dans le Référentiel
 {% endblock %}
 
-{% block header %}
+{% block content %}
     <h2>Ressources</h2>
-
+    <div class="row">
+        {% for ressource in ressources %}
+            {{ include('but_mmi/_cardRessource.html.twig') }}
+        {% endfor %}
+    </div>
     <h2>SAE</h2>
+    <div class="row">
+        {% for sae in saes %}
+            {{ include('but_mmi/_cardSae.html.twig') }}
+        {% endfor %}
+    </div>
 {% endblock %}
 

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ButMmiController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/03/2021 19:20
+ * @lastUpdate 24/03/2021 21:54
  */
 
 namespace App\Controller;
@@ -14,6 +14,7 @@ use App\Entity\ApcSae;
 use App\Entity\Semestre;
 use App\Repository\ApcRessourceRepository;
 use App\Repository\ApcSaeRepository;
+use App\Repository\DiplomeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,79 +27,102 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ButMmiController extends AbstractController
 {
+    private $diplomeRepository;
+
+    public function __construct(DiplomeRepository $diplomeRepository)
+    {
+        $this->diplomeRepository = $diplomeRepository;
+    }
 
     /**
-     * @Route("/", name="but_homepage")
+     * @Route("/{diplome}", name="but_homepage")
      */
-    public function homePage(): Response
+    public function homePage($diplome = 'mmi'): Response
     {
-        return $this->render('but_mmi/home.html.twig', [
 
+        return $this->render('but_mmi/index.html.twig', [
+            'diplome' => $this->diplomeRepository->findOneBy(['typeDiplome' => 4, 'sigle' => strtoupper($diplome)])
         ]);
     }
 
     /**
-     * @Route("/recherche", name="but_recherche")
+     * @Route("/{diplome}/recherche", name="but_recherche")
      */
     public function recherche(
+        Request $request,
         ApcRessourceRepository $apcRessourceRepository,
         ApcSaeRepository $apcSaeRepository,
-        Request $request
+        $diplome
     ): Response {
+        $diplome = $this->diplomeRepository->findOneBy(['typeDiplome' => 4, 'sigle' => strtoupper($diplome)]);
         $search = $request->query->get('s');
         $saes = $apcSaeRepository->search($search);
-        $ressources = $apcRessourceRepository->search($search);
+        $ressources = $apcRessourceRepository->search($search, $diplome);
 
         return $this->render('but_mmi/resultats.html.twig', [
             'saes' => $saes,
-            'ressources' => $ressources
+            'ressources' => $ressources,
+            'diplome' => $diplome
         ]);
     }
 
     /**
-     * @Route("/fiche-sae/{apcSae}", name="but_fiche_sae")
+     * @Route("/{diplome}/fiche-sae/{apcSae}", name="but_fiche_sae")
      */
     public function ficheSae(
-        ApcSae $apcSae
+        ApcSae $apcSae,
+        $diplome
     ): Response {
+        $diplome = $this->diplomeRepository->findOneBy(['typeDiplome' => 4, 'sigle' => strtoupper($diplome)]);
+
         return $this->render('but_mmi/ficheSae.html.twig', [
-            'apc_sae' => $apcSae
+            'apc_sae' => $apcSae,
+            'diplome' => $diplome
         ]);
     }
 
     /**
-     * @Route("/sae/{diplome}", name="but_sae")
+     * @Route("/{diplome}/sae", name="but_sae")
      */
     public function sae(
         ApcSaeRepository $apcSaeRepository,
-        $diplome = 'mmi'
+        $diplome
     ): Response {
-        return $this->render('but_mmi/index.html.twig', [
-            'saes' => $apcSaeRepository->findAll()
+        $diplome = $this->diplomeRepository->findOneBy(['typeDiplome' => 4, 'sigle' => strtoupper($diplome)]);
+
+        return $this->render('but_mmi/sae.html.twig', [
+            'saes' => $apcSaeRepository->findAll(),
+            'diplome' => $diplome
         ]);
     }
 
     /**
-     * @Route("/fiche-ressource/{apcRessource}", name="but_fiche_ressource")
+     * @Route("/{diplome}/fiche-ressource/{apcRessource}", name="but_fiche_ressource")
      */
     public function ficheRessource(
+        $diplome,
         ApcRessource $apcRessource
     ): Response {
+        $diplome = $this->diplomeRepository->findOneBy(['typeDiplome' => 4, 'sigle' => strtoupper($diplome)]);
         return $this->render('but_mmi/ficheRessource.html.twig', [
-            'apc_ressource' => $apcRessource
+            'apc_ressource' => $apcRessource,
+            'diplome' => $diplome
         ]);
     }
 
     /**
-     * @Route("/ressource/{semestre}", name="but_ressource")
+     * @Route("/{diplome}/ressource/{semestre}", name="but_ressource")
      */
     public function ressource(
         ApcRessourceRepository $apcRessourceRepository,
+        $diplome,
         Semestre $semestre
     ): Response {
+        $diplome = $this->diplomeRepository->findOneBy(['typeDiplome' => 4, 'sigle' => strtoupper($diplome)]);
         return $this->render('but_mmi/ressources.html.twig', [
             'ressources' => $apcRessourceRepository->findBySemestre($semestre),
-            'semestre' => $semestre
+            'semestre' => $semestre,
+            'diplome' => $diplome
         ]);
     }
 
