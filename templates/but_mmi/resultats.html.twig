@@ -10,8 +10,10 @@
         {% for ressource in ressources %}
             {{ include('but_mmi/_cardRessource.html.twig') }}
         {% else %}
-            <div class="alert alert-info">
-                Aucun résultat dans les ressources
+            <div class="col-sm-12">
+                <div class="alert alert-info">
+                    Aucun résultat dans les ressources
+                </div>
             </div>
         {% endfor %}
     </div>
@@ -20,8 +22,10 @@
         {% for sae in saes %}
             {{ include('but_mmi/_cardSae.html.twig') }}
         {% else %}
-            <div class="alert alert-info">
-                Aucun résultat dans les SAÉs
+            <div class="col-sm-12">
+                <div class="alert alert-info">
+                    Aucun résultat dans les SAÉs
+                </div>
             </div>
         {% endfor %}
     </div>
