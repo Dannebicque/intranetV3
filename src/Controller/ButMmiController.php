@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ButMmiController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/03/2021 21:54
+ * @lastUpdate 25/03/2021 09:51
  */
 
 namespace App\Controller;
 
+use App\Classes\Apc\ApcStructure;
 use App\Entity\ApcRessource;
 use App\Entity\ApcSae;
 use App\Entity\Semestre;
@@ -42,6 +43,22 @@ class ButMmiController extends AbstractController
 
         return $this->render('but_mmi/index.html.twig', [
             'diplome' => $this->diplomeRepository->findOneBy(['typeDiplome' => 4, 'sigle' => strtoupper($diplome)])
+        ]);
+    }
+
+    /**
+     * @Route("/{diplome}/referentiel-comptences", name="but_referentiel_competences")
+     */
+    public function referentielCompetences(ApcStructure $apcStructure, $diplome = 'mmi'): Response
+    {
+        $diplome = $this->diplomeRepository->findOneBy(['typeDiplome' => 4, 'sigle' => strtoupper($diplome)]);
+        $tParcours = $apcStructure->parcoursNiveaux($diplome);
+
+        return $this->render('but_mmi/referentielCompetences.html.twig', [
+            'diplome' => $diplome,
+            'competences' => $diplome->getApcComptences(),
+            'parcours' => $diplome->getApcParcours(),
+            'parcoursNiveaux' => $tParcours,
         ]);
     }
 
@@ -104,6 +121,7 @@ class ButMmiController extends AbstractController
         ApcRessource $apcRessource
     ): Response {
         $diplome = $this->diplomeRepository->findOneBy(['typeDiplome' => 4, 'sigle' => strtoupper($diplome)]);
+
         return $this->render('but_mmi/ficheRessource.html.twig', [
             'apc_ressource' => $apcRessource,
             'diplome' => $diplome
@@ -119,6 +137,7 @@ class ButMmiController extends AbstractController
         Semestre $semestre
     ): Response {
         $diplome = $this->diplomeRepository->findOneBy(['typeDiplome' => 4, 'sigle' => strtoupper($diplome)]);
+
         return $this->render('but_mmi/ressources.html.twig', [
             'ressources' => $apcRessourceRepository->findBySemestre($semestre),
             'semestre' => $semestre,
