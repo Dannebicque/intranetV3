@@ -1,8 +1,8 @@
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/util.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 01/12/2020 22:04
+// @lastUpdate 25/03/2021 14:37
 
 import $ from 'jquery'
 import Swal from 'sweetalert2'
@@ -174,31 +174,31 @@ $(document).on('keyup', '#myedit-input', function (e) {
   }
 })
 
-$(document).on('click', '#myedit-valide', function (e) {
+$(document).on('click', '.myedit-valide', function (e) {
   $stopCatchEnter = false
   e.preventDefault()
-  updateData()
+  updateData($(this).data('key'))
 })
 
 $(document).on('keypress', function (e) {
   if (EditOnLine === true && $stopCatchEnter === false && e.which === 13) {
     e.preventDefault()
-    updateData()
+    updateData($(this).data('key'))
   }
 
   if (EditOnLine === true && $stopCatchEnter === false && e.which === 27) {
     e.preventDefault()
-    $('#myEdit-zone').replaceWith(myEditInitialContent)
+    $('#myEdit-zone-' + $(this).data('key')).replaceWith(myEditInitialContent)
   }
 })
 
-$(document).on('click', '#myedit-annule', function (e) {
+$(document).on('click', '.myedit-annule', function (e) {
   e.preventDefault()
-  $('#myEdit-zone').replaceWith(myEditInitialContent)
+  $('#myEdit-zone-' + $(this).data('key')).replaceWith(myEditInitialContent)
 })
 
-function updateData () {
-  let val = $('#myedit-input').val()
+function updateData (key) {
+  let val = $('#myedit-input-' + key).val()
   $.ajax({
     url: myEditInitialContent.attr('href'),
     data: {
@@ -209,30 +209,31 @@ function updateData () {
     method: 'POST',
     success: function () {
       myEditInitialContent.html(val)
-      $('#myEdit-zone').replaceWith(myEditInitialContent)
+      $('#myEdit-zone-' + key).replaceWith(myEditInitialContent)
       EditOnLine = false
     }
   })
 }
 
 function genereTextArea ($obj) {
+  const key = Date.now()
   $stopCatchEnter = true
-  return '<div id="myEdit-zone">\n' +
-    '                      <textarea rows="5" class="form-control" id="myedit-input">' + $obj.html().trim() + '</textarea>\n' +
+  return '<div id="myEdit-zone-' + key + '">\n' +
+    '                      <textarea rows="5" class="form-control" id="myedit-input-' + key + '">' + $obj.html().trim() + '</textarea>\n' +
     '                      <span class="input-group-append">\n' +
-    ' <button class="btn btn-success-outline" id="myedit-valide"><i class="fas fa-check"></i></button>\n' +
-    '                        <button class="btn btn-danger-outline" id="myedit-annule"><i class="fas fa-times"></i></button>\n' +
+    ' <button class="btn btn-success-outline myedit-valide" data-key="' + key + '"><i class="fas fa-check"></i></button>\n' +
+    '                        <button class="btn btn-danger-outline myedit-annule"  data-key="' + key + '"><i class="fas fa-times"></i></button>\n' +
     '                      </span>\n' +
     '                    </div>'
 }
 
 function genereInput ($obj) {
-
-  return '<div id="myEdit-zone" class="input-group">\n' +
-    '                      <input type="text" class="form-control" id="myedit-input" value="' + $obj.html().trim() + '" >\n' +
+  const key = Date.now()
+  return '<div id="myEdit-zone-' + key + '" class="input-group">\n' +
+    '                      <input type="text" class="form-control" id="myedit-input-' + key + '" value="' + $obj.html().trim() + '" >\n' +
     '                      <span class="input-group-append">\n' +
-    ' <button class="btn btn-success-outline" id="myedit-valide"><i class="fas fa-check"></i></button>\n' +
-    '                        <button class="btn btn-danger-outline" id="myedit-annule"><i class="fas fa-times"></i></button>\n' +
+    ' <button class="btn btn-success-outline myedit-valide"  data-key="' + key + '"><i class="fas fa-check"></i></button>\n' +
+    '                        <button class="btn btn-danger-outline myedit-annule"  data-key="' + key + '"><i class="fas fa-times"></i></button>\n' +
     '                      </span>\n' +
     '                    </div>'
 }
