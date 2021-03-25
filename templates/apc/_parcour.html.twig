@@ -14,6 +14,8 @@
 {% endif %}
 <br>
 <br>
-<a href="{{ path('administration_apc_parcours_niveau_new', {parcours:parcour.id}) }}" class="btn btn-block
-btn-warning">
-    Configurer des niveaux au parcours</a>
+{% if is_granted('ROLE_PERMANENT') %}
+    <a href="{{ path('administration_apc_parcours_niveau_new',
+        {parcours:parcour.id}) }}" class="btn btn-block btn-warning">
+        Configurer des niveaux au parcours</a>
+{% endif %}
