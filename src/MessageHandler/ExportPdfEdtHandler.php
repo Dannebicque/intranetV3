@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/MessageHandler/ExportPdfEdtHandler.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 26/03/2021 08:13
  */
 
 namespace App\MessageHandler;
 
+use App\Classes\Configuration;
 use App\Classes\Edt\MyEdtExport;
 use App\Message\ExportPdfEdt;
 use App\Repository\DepartementRepository;
@@ -26,10 +27,13 @@ class ExportPdfEdtHandler implements MessageHandlerInterface
 
     private DepartementRepository $departementRepository;
 
+    private Configuration $configuration;
+
     /**
      * ExportReleveHandler constructor.
      */
     public function __construct(
+        Configuration $configuration,
         MyEdtExport $myEdtExport,
         DepartementRepository $departementRepository,
         MailerInterface $mailer,
@@ -39,6 +43,7 @@ class ExportPdfEdtHandler implements MessageHandlerInterface
         $this->personnelRepository = $personnelRepository;
         $this->departementRepository = $departementRepository;
         $this->mailer = $mailer;
+        $this->configuration = $configuration;
     }
 
     public function __invoke(ExportPdfEdt $exportPdfEdt)
@@ -57,7 +62,7 @@ class ExportPdfEdtHandler implements MessageHandlerInterface
 
             if (null !== $personnel) {
                 $mail = (new TemplatedEmail())
-                    ->from('intranet@iut-troyes.univ-reims.fr')
+                    ->from($this->configuration->get('MAIL_FROM'))
                     ->to($personnel->getMailUniv())
                     ->subject('Documents prêts')
 

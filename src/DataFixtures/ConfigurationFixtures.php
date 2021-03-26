@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/DataFixtures/ConfigurationFixtures.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:40
+ * @lastUpdate 25/03/2021 20:43
  */
 
 namespace App\DataFixtures;
@@ -19,7 +19,7 @@ class ConfigurationFixtures extends Fixture
     {
         $conf = new Configuration();
         $conf->setCle('MAIL_FROM');
-        $conf->setValeur('intranet@iut-troyes.univ-reims.fr');
+        $conf->setValeur('intranet-iut-troyes@univ-reims.fr');
         $manager->persist($conf);
 
         $conf = new Configuration();

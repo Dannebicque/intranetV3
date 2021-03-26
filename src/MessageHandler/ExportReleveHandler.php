@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/MessageHandler/ExportReleveHandler.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 26/03/2021 08:12
  */
 
 namespace App\MessageHandler;
 
+use App\Classes\Configuration;
 use App\Classes\Etudiant\EtudiantExportReleve;
 use App\Message\ExportReleve;
 use App\Repository\AnneeUniversitaireRepository;
@@ -25,11 +26,13 @@ class ExportReleveHandler implements MessageHandlerInterface
     private AnneeUniversitaireRepository $anneeUniversitaireRepository;
     private PersonnelRepository $personnelRepository;
     private MailerInterface $mailer;
+    private Configuration $configuration;
 
     /**
      * ExportReleveHandler constructor.
      */
     public function __construct(
+        Configuration $configuration,
         EtudiantExportReleve $etudiantExportReleve,
         SemestreRepository $semestreRepository,
         AnneeUniversitaireRepository $anneeUniversitaireRepository,
@@ -41,6 +44,7 @@ class ExportReleveHandler implements MessageHandlerInterface
         $this->anneeUniversitaireRepository = $anneeUniversitaireRepository;
         $this->personnelRepository = $personnelRepository;
         $this->mailer = $mailer;
+        $this->configuration = $configuration;
     }
 
     public function __invoke(ExportReleve $exportReleve)
@@ -54,7 +58,7 @@ class ExportReleveHandler implements MessageHandlerInterface
 
             if (null !== $personnel) {
                 $mail = (new TemplatedEmail())
-                    ->from('intranet@iut-troyes.univ-reims.fr')
+                    ->from($this->configuration->get('MAIL_FROM'))
                     ->to($personnel->getMailUniv())
                     ->subject('Documents prêts')
 
