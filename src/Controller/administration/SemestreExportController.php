@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/SemestreExportController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:36
+ * @lastUpdate 26/03/2021 09:52
  */
 
 namespace App\Controller\administration;
@@ -16,6 +16,7 @@ use App\Entity\Etudiant;
 use App\Entity\Scolarite;
 use App\Entity\Semestre;
 use App\Message\ExportReleve;
+use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -58,9 +59,10 @@ class SemestreExportController extends BaseController
         EtudiantExportReleve $etudiantExportReleve,
         Etudiant $etudiant,
         Semestre $semestre = null
-    ) {
+    ): PdfResponse {
         $etudiantExportReleve->setEtudiant($etudiant);
-        $etudiantExportReleve->exportReleveProvisoire($semestre ?: $etudiant->getSemestre(),
+
+        return $etudiantExportReleve->exportReleveProvisoire($semestre ?: $etudiant->getSemestre(),
             $etudiant->getAnneeUniversitaire());
     }
 
