@@ -2,8 +2,9 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/profil.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 01/03/2021 18:49
+// @lastUpdate 28/03/2021 12:43
 import {addCallout} from '../util'
+import {get, post} from '../fetch'
 
 $(document).on('change', '#chgt_etudiant_departement', function () {
   $.ajax({
@@ -34,6 +35,7 @@ $(document).on('change', '#chgt_etudiant_fin', function () {
   })
 })
 
+
 $(document).on('click', '.changeprofil', function (e) {
   e.preventDefault()
   e.stopPropagation()
@@ -41,6 +43,29 @@ $(document).on('click', '.changeprofil', function (e) {
   $('.changeprofil').removeClass('active show')
   $(this).addClass('active show')
   $('#profilContent').empty().load($(this).attr('href'), function () {
+    if ($onglet.attr('id') === 'profil-about') {
+      const obj = document.querySelector('#valideCommentaire')
+      obj.addEventListener('click', (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        post(Routing.generate('profil_etudiant_ajout_commentaire', {slug: obj.getAttribute('data-slug')}), {
+          commentaire: document.querySelector('#texteCommentaire').value
+        })
+          .then(data => {
+            // Handle data
+            let html = document.createElement('p')
+            html.textContent = data.commentaire
+
+            document.querySelector('#listeCommentaire').appendChild(html)
+            addCallout('Commentaire ajouté avec succès.', 'success')
+            document.querySelector('#texteCommentaire').value = ''
+          }).catch(error => {
+          // Handle error
+          addCallout('Erreur lors de l\'ajout du commentaire.', 'error')
+
+        })
+      })
+    }
     if ($onglet.attr('id') === 'profil-notes') {
       // console.log('graph')
       // const graph = $('#chart-radar')

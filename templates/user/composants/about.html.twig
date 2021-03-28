@@ -92,6 +92,42 @@
 {% endif %}
 
 {% if user.typeUser|lower == 'etudiant' %}
+    {% if ((user_data.isGoodDepartement('ROLE_ASS') or user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE'))) %}
+        <div class="card">
+            <h4 class="card-title">{{ 'commentaires.libres'|trans }}</h4>
+            <div class="card-body">
+                <div class="alert alert-info">Ces informations ne sont visibles que de la direction du département et de
+                                              l'assitant(e). <strong>Dans le cadre du RGPD ces données pourraient être
+                                                                     demandées par l'étudiant.</strong>
+                </div>
+                <div>
+                    {% for commentaire in user.commentaires %}
+                        <p>{{ commentaire.texte }}</p>
+                        <hr>
+                        {% if loop.last %}
+                            <div id="listeCommentaire"></div>
+                        {% endif %}
+                    {% else %}
+                        <div id="listeCommentaire">
+                            Aucun commentaire.
+                        </div>
+                    {% endfor %}
+                </div>
+                <div>
+                    <div class="form-group">
+                        <label for="texteCommentaire" class="label">Texte du commentaire : </label>
+                        <textarea class="form-control" id="texteCommentaire" rows="5"></textarea>
+                    </div>
+                    <div>
+                        <button id="valideCommentaire" class="btn btn-success" data-slug="{{ user.slug }}">Enregistrer
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+
     {% if (is_granted('ROLE_PERMANENT') and (user_data.isGoodDepartement('ROLE_STA') or user_data.isGoodDepartement('ROLE_ASS') or user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE'))) or (user.typeUser == user_data.user.typeUser and user.id == user_data.user.id) %}
         <div class="card">
             <h4 class="card-title">{{ 'amenagements.particuliers'|trans }}</h4>
