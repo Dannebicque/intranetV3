@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Etudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 26/03/2021 10:11
  */
 
 namespace App\Entity;
@@ -233,6 +233,11 @@ class Etudiant extends Utilisateur
     private $projetEtudiants;
 
     /**
+     * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="etudiant")
+     */
+    private $commentaires;
+
+    /**
      * Etudiant constructor.
      *
      * @throws Exception
@@ -262,6 +267,7 @@ class Etudiant extends Utilisateur
         $this->emprunts = new ArrayCollection();
         $this->quizzEtudiants = new ArrayCollection();
         $this->projetEtudiants = new ArrayCollection();
+        $this->commentaires = new ArrayCollection();
     }
 
     public function __clone()
@@ -1221,6 +1227,36 @@ class Etudiant extends Utilisateur
         if ($this->projetEtudiants->contains($projetEtudiant)) {
             $this->projetEtudiants->removeElement($projetEtudiant);
             $projetEtudiant->removeEtudiant($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Commentaire[]
+     */
+    public function getCommentaires(): Collection
+    {
+        return $this->commentaires;
+    }
+
+    public function addCommentaire(Commentaire $commentaire): self
+    {
+        if (!$this->commentaires->contains($commentaire)) {
+            $this->commentaires[] = $commentaire;
+            $commentaire->setEtudiant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentaire(Commentaire $commentaire): self
+    {
+        if ($this->commentaires->removeElement($commentaire)) {
+            // set the owning side to null (unless already changed)
+            if ($commentaire->getEtudiant() === $this) {
+                $commentaire->setEtudiant(null);
+            }
         }
 
         return $this;

@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/app.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 21/03/2021 12:07
+// @lastUpdate 28/03/2021 05:38
 
 import '@fortawesome/fontawesome-free/scss/fontawesome.scss'
 import '@fortawesome/fontawesome-free/scss/solid.scss'
@@ -27,7 +27,6 @@ import 'tinymce/icons/default'
 // A theme is also required
 import 'tinymce/themes/silver'
 import '../vendor/tinyMceLang/fr_FR'
-
 require('bootstrap')
 
 let lookup = {}

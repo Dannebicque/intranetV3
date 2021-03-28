@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ProfilEtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 28/03/2021 12:43
  */
 
 namespace App\Controller;
@@ -13,6 +13,7 @@ use App\Classes\Calendrier;
 use App\Classes\Etudiant\EtudiantAbsences;
 use App\Classes\Etudiant\EtudiantNotes;
 use App\Classes\StatsAbsences;
+use App\Entity\Commentaire;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Repository\AlternanceRepository;
@@ -22,6 +23,7 @@ use App\Repository\ScolariteRepository;
 use App\Repository\StageEtudiantRepository;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
@@ -193,5 +195,21 @@ class ProfilEtudiantController extends BaseController
         return $this->render('user/composants/about.html.twig', [
             'user' => $etudiant,
         ]);
+    }
+
+    /**
+     * @Route("/profil/{slug}/ajout-commentaire", name="profil_etudiant_ajout_commentaire", options={"expose"=true})
+     *
+     * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
+     */
+    public function ajoutCommentaire(Request $request, Etudiant $etudiant): Response
+    {
+        $datas = json_decode($request->getContent(), true);
+        $commentaire = new Commentaire($etudiant);
+        $commentaire->setTexte($datas['commentaire']);
+        $this->entityManager->persist($commentaire);
+        $this->entityManager->flush();
+
+        return $this->json($commentaire->getJson());
     }
 }
