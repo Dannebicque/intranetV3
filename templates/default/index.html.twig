@@ -251,11 +251,11 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-3 col-sm-6 text-center">
-                            <a href="https://www.univ-reims.fr" target="_blank"><img
-                                        src="{{ asset('upload/logo/urca_petit.jpg') }}"
-                                        alt="URCA" class="img-rounded"
+                            <a href="{{ settings('SITE_UNIVERSITE') }}" target="_blank"><img
+                                        src="{{ asset('upload/logo/'~ settings('LOGO_UNIVERSITE')) }}"
+                                        alt="{{ settings('NOM_UNIVERSITE') }}" class="img-rounded"
                                         width="90px"/><br/>
-                                URCA</a>
+                                {{ settings('NOM_UNIVERSITE') }}</a>
                         </div>
                         <div class="col-md-3 col-sm-6 text-center">
                             <a href="https://{{ settings('SITE_IUT') }}"
@@ -266,10 +266,10 @@
                                 {{ settings('NOM_IUT') }}</a>
                         </div>
                         <div class="col-md-3 col-sm-6 text-center">
-                            <a href="https://ebureau.univ-reims.fr/" target="_blank"><img
+                            <a href="{{ settings('SITE_ENT') }}" target="_blank"><img
                                         src="{{ asset('upload/logo/' ~ settings('LOGO_IUT')) }}"
-                                        alt="Bureau Virtuel" class="img-rounded" width="90px"/><br/>
-                                Bureau Virtuel
+                                        alt="Bureau Virtuel / ENT" class="img-rounded" width="90px"/><br/>
+                                Bureau Virtuel / ENT
                             </a>
                         </div>
                         <div class="col-md-3 col-sm-6 text-center">
