@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/CreneauCoursController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 29/03/2021 22:47
  */
 
 namespace App\Controller\administration;
@@ -35,10 +35,10 @@ class CreneauCoursController extends BaseController
         CreneauCoursRepository $creneauCoursRepository
     ): Response {
         return $this->render('administration/creneau_cours/index.html.twig', [
-            'creneau_cours'        => $creneauCoursRepository->findByAnneeDepartement($this->dataUserSession->getDepartement(),
+            'creneau_cours' => $creneauCoursRepository->findByAnneeDepartement($this->dataUserSession->getDepartement(),
                 $this->dataUserSession->getAnneeUniversitaire()),
             'annee_universitaires' => $anneeUniversitaireRepository->findAll(),
-            'defaut'               => null !== $this->dataUserSession->getDepartement() ? $this->dataUserSession->getDepartement()->getAnneeUniversitairePrepare() : date('Y'),
+            'defaut' => null !== $this->dataUserSession->getDepartement() ? $this->dataUserSession->getDepartement()->getAnneeUniversitairePrepare() : null,
         ]);
     }
 
