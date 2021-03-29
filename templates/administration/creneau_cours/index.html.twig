@@ -19,7 +19,7 @@
             <select id="change_annee_universitiare_temp" class="form-control">
                 <option value="0">{{ 'change_annee_universitiare_temp'|trans }}</option>
                 {% for annee in annee_universitaires %}
-                    <option value="{{ annee.id }}" {% if annee.id == defaut.id %}selected{% endif %}>{{ annee.libelle }}</option>
+                    <option value="{{ annee.id }}" {% if defaut != null %}{% if  annee.id == defaut.id %}selected{% endif %}{% endif %}>{{ annee.libelle }}</option>
                 {% endfor %}
             </select>
             <small class="form-text">Le changement d'année universitaire de manière permanent <a href="{{ path
@@ -87,7 +87,7 @@
                             <select name="annee_depart" id="annee_depart" class="form-control">
                                 <option value="">Choisir</option>
                                 {% for annee in annee_universitaires %}
-                                    <option value="{{ annee.id }}" {% if annee.id == defaut.id %}selected{% endif %}>{{ annee.libelle }}</option>
+                                    <option value="{{ annee.id }}" {% if defaut != null %}{% if  annee.id == defaut.id %}selected{% endif %}{% endif %}>{{ annee.libelle }}</option>
                                 {% endfor %}
                             </select>
                         </div>
