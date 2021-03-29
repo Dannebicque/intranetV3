@@ -114,6 +114,7 @@ actualite:
   liste.heading: 'Liste des actualités'
 
 adm:
+  creneau_cours_menu: 'Créneaux de cours'
   attestation_deplacement: 'Gestion des attestations de déplacement'
   actualite:
     index.heading: 'Liste des actualités'
