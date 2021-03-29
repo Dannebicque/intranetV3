@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Utilisateur.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 19:09
+ * @lastUpdate 29/03/2021 10:39
  */
 
 namespace App\Entity;
 
+use App\Entity\Traits\LifeCycleTrait;
 use DateTime;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -25,6 +26,8 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  */
 abstract class Utilisateur implements UserInterface, Serializable
 {
+    use LifeCycleTrait;
+
     public const HOMME = 'M.';
     public const FEMME = 'Mme';
 
@@ -36,7 +39,7 @@ abstract class Utilisateur implements UserInterface, Serializable
     /**
      * @ORM\Column(type="string", nullable=true)
      */
-    protected string $password = '';
+    protected ?string $password = '';
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)
@@ -139,7 +142,6 @@ abstract class Utilisateur implements UserInterface, Serializable
 
     public function __construct()
     {
-        $this->updated = new DateTime('now');
     }
 
     public function getSlug()

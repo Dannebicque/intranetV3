@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Personnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 19:02
+ * @lastUpdate 29/03/2021 10:39
  */
 
 namespace App\Entity;
@@ -21,12 +21,11 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PersonnelRepository")
- * @ORM\HasLifecycleCallbacks()
  * @Vich\Uploadable
  */
 class Personnel extends Utilisateur implements Serializable // implements SerializerInterface
 {
-    use LifeCycleTrait;
+
 
     public const PERMANENT = 'permanent';
     public const VACATAIRE = 'vacataire';
