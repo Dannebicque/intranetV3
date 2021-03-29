@@ -22,6 +22,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PersonnelRepository")
  * @Vich\Uploadable
+ * @ORM\HasLifecycleCallbacks()
  */
 class Personnel extends Utilisateur implements Serializable // implements SerializerInterface
 {
