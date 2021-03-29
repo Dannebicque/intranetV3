@@ -13,8 +13,7 @@
                     <div class="p-3 niveauliste niveau{{ niveau.ordre }}{{ competence.couleur }}">
                         <ul>
                             {% for ac in niveau.apcApprentissageCritiques %}
-                                <li>{{ ac.libelle }}</li>
-
+                                <li>{{ ac.code }} | {{ ac.libelle }}</li>
                             {% endfor %}
                         </ul>
                     </div>
