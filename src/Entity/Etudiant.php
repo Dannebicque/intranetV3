@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Etudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/03/2021 10:11
+ * @lastUpdate 29/03/2021 10:39
  */
 
 namespace App\Entity;
@@ -30,7 +30,6 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 class Etudiant extends Utilisateur
 {
     use UuidTrait;
-    use LifeCycleTrait;
 
     /**
      * @ORM\Id()
