@@ -2131,6 +2131,7 @@ ue.duplicate.success.flash: 'UE dupliquée avec succès'
 ue.edit.success.flash: 'UE modifiée avec succès'
 
 ufr:
+  menu: UFR
   heading: 'UFR / Composante'
   add.success.flash: 'UFR créée avec succès'
   delete.error.flash: 'Erreur lors de la suppression de l''UFR'
@@ -2146,7 +2147,7 @@ vacataires.heading: Vacataires
 Valeur: Valeur
 valider: Valider
 valider.stage.etranger: 'Valider stage étranger'
-variable.configuration: 'Variable de Configuration'
+variable.configuration: 'Variables de Configuration'
 verificiation: Vérificiation
 verouiller_deverouiller: Verrouiller/Déverrouiller
 verrouiller: Verrouiller
