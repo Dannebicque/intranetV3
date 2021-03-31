@@ -4,11 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Configuration.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/03/2021 17:13
- */
-
-/*
- * Pull your hearder here, for exemple, Licence header.
+ * @lastUpdate 31/03/2021 17:17
  */
 
 namespace App\Classes;
