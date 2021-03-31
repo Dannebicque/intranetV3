@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/CovidSubscriber.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/03/2021 16:59
+ * @lastUpdate 31/03/2021 17:13
  */
 
 namespace App\EventSubscriber;
@@ -18,6 +18,7 @@ use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\Mime\Address;
 
 class CovidSubscriber implements EventSubscriberInterface
 {
@@ -79,7 +80,7 @@ class CovidSubscriber implements EventSubscriberInterface
             'Nouvelle demande d\'autorisation de déplacement',
             [
                 'replyTo' => $covidAttestationPersonnel->getPersonnel()->getMailUniv(),
-                'from' => [$this->configuration->get('MAIL_FROM')],
+                'from' => [$this->configuration->getExpediteurIntranet()],
             ]
         );
     }

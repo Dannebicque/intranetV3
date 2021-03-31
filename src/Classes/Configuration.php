@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Configuration.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:10
+ * @lastUpdate 31/03/2021 17:13
  */
 
 /*
@@ -14,6 +14,7 @@
 namespace App\Classes;
 
 use App\Repository\ConfigurationRepository;
+use Symfony\Component\Mime\Address;
 
 class Configuration
 {
@@ -45,5 +46,10 @@ class Configuration
         foreach ($settings as $conf) {
             $this->settings[$conf->getCle()] = $conf->getValeur();
         }
+    }
+
+    public function getExpediteurIntranet()
+    {
+        return new Address($this->get('MAIL_FROM'), 'Intranet ' . $this->get('NOM_IUT'));
     }
 }
