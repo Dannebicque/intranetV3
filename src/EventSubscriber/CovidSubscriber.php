@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/CovidSubscriber.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 31/03/2021 16:59
  */
 
 namespace App\EventSubscriber;
 
+use App\Classes\Configuration;
 use App\Classes\Covid\MyExportPresence;
 use App\Classes\Mail\MailerFromTwig;
 use App\Entity\CovidAttestationPersonnel;
@@ -26,6 +27,10 @@ class CovidSubscriber implements EventSubscriberInterface
 
     private MyExportPresence $myExportPresence;
     private string $dir;
+    /**
+     * @var Configuration
+     */
+    private Configuration $configuration;
 
     /**
      * StageSubscriber constructor.
@@ -34,8 +39,10 @@ class CovidSubscriber implements EventSubscriberInterface
         EntityManagerInterface $entityManager,
         MailerFromTwig $myMailer,
         MyExportPresence $myExportPresence,
-        KernelInterface $kernel
+        KernelInterface $kernel,
+        Configuration $configuration
     ) {
+        $this->configuration = $configuration;
         $this->entityManager = $entityManager;
         $this->myMailer = $myMailer;
         $this->myExportPresence = $myExportPresence;
@@ -72,7 +79,7 @@ class CovidSubscriber implements EventSubscriberInterface
             'Nouvelle demande d\'autorisation de déplacement',
             [
                 'replyTo' => $covidAttestationPersonnel->getPersonnel()->getMailUniv(),
-                'from'    => [$covidAttestationPersonnel->getPersonnel()->getMailUniv()],
+                'from' => [$this->configuration->get('MAIL_FROM')],
             ]
         );
     }
