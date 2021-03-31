@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Mail/BaseMailer.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:10
+ * @lastUpdate 31/03/2021 17:21
  */
 
 /*
@@ -57,10 +57,14 @@ class BaseMailer
     private function getFrom(array $options): Address
     {
         if (\array_key_exists('from', $options) && \count($options['from']) > 0) {
+            if ($options['from'][0] instanceof Address) {
+                return $options['from'][0];
+            }
+
             return new Address($options['from'][0]);
         }
 
-        return new Address($this->configuration->get('MAIL_FROM'));
+        return $this->configuration->getExpediteurIntranet();
     }
 
     /**

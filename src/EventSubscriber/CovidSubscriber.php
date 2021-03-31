@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/CovidSubscriber.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/03/2021 17:18
+ * @lastUpdate 31/03/2021 17:19
  */
 
 namespace App\EventSubscriber;
@@ -80,7 +80,7 @@ class CovidSubscriber implements EventSubscriberInterface
             'Nouvelle demande d\'autorisation de déplacement',
             [
                 'replyTo' => $covidAttestationPersonnel->getPersonnel()->getMailUniv(),
-                'from' => [$this->configuration->getExpediteurIntranet()->toString()],
+                'from' => [$this->configuration->getExpediteurIntranet()],
             ]
         );
     }
