@@ -4,12 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/GroupesController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 02/04/2021 12:10
  */
 
 namespace App\Controller\superAdministration;
 
-use App\Classes\Apogee\MyApogee;
+use App\Classes\Apogee\ApogeeGroupe;
 use App\Classes\MyGroupes;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
@@ -50,19 +50,19 @@ class GroupesController extends BaseController
      * @Route("/synchronise/departement/{departement}", name="sa_groupes_departement_synchro_all")
      */
     public function synchroApogeeAll(
-        MyApogee $myApogee,
+        ApogeeGroupe $apogeeGroupe,
         SemestreRepository $semestreRepository,
         Departement $departement
     ): Response {
         $semestres = $semestreRepository->findByDepartement($departement);
         /** @var Semestre $semestre */
         foreach ($semestres as $semestre) {
-            $groupes = $myApogee->getHierarchieGroupesSemestre($semestre);
+            $groupes = $apogeeGroupe->getHierarchieGroupesSemestre($semestre);
             $nbgroupes = $groupes->rowCount();
             //todo: déplacer dans une classe si OK.
             if (0 === $nbgroupes) {
                 //pas de hierarchie
-                $groupes = $myApogee->getGroupesSemestre($semestre);
+                $groupes = $apogeeGroupe->getGroupesSemestre($semestre);
                 $i = 1;
                 if (\count($semestre->getTypeGroupes()) > 0) {
                     $tg = $semestre->getTypeGroupes()[0];
@@ -96,7 +96,7 @@ class GroupesController extends BaseController
      * @Route("/synchronise/semestre/{semestre}", name="sa_groupes_departement_synchro_semestre")
      */
     public function synchroApogeeSemestre(
-        MyApogee $myApogee,
+        ApogeeGroupe $apogeeGroupe,
         GroupeRepository $groupeRepository,
         Semestre $semestre
     ): Response {
@@ -104,7 +104,7 @@ class GroupesController extends BaseController
         //récupérer les gorupes
         //calcluler l'aroborescence
 
-        $groupes = $myApogee->getHierarchieGroupesSemestre($semestre);
+        $groupes = $apogeeGroupe->getHierarchieGroupesSemestre($semestre);
 
         while ($row = $groupes->fetch($groupes)) {
         }
@@ -114,7 +114,7 @@ class GroupesController extends BaseController
      * @Route("/synchronise/etudiant/semestre/{semestre}", name="sa_groupes_etudiant_synchro_semestre")
      */
     public function synchroApogeeEtudiantSemestre(
-        MyApogee $myApogee,
+        ApogeeGroupe $apogeeGroupe,
         EtudiantRepository $etudiantRepository,
         GroupeRepository $groupeRepository,
         Semestre $semestre
@@ -137,7 +137,7 @@ class GroupesController extends BaseController
             $tGroupes[$groupe->getCodeApogee()] = $groupe;
         }
         //récupération des groupes
-        $groupes = $myApogee->getEtudiantsGroupesSemestre($semestre);
+        $groupes = $apogeeGroupe->getEtudiantsGroupesSemestre($semestre);
 
         while ($groupe = $groupes->fetch()) {
             if (\array_key_exists($groupe['COD_ETU'], $tEtudiants) && \array_key_exists($groupe['COD_EXT_GPE'],
