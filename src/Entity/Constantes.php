@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Constantes.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 02/04/2021 11:51
  */
 
 namespace App\Entity;
@@ -226,4 +226,5 @@ class Constantes
         'Cyan'          => 'cyan',
     ];
     public const PAS_DE_SOUS_COMM = 'PAS_DE_SOUS_COMM';
+    public const MAJORATION_CM = 1.5;
 }
