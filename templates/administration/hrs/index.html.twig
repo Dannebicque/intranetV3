@@ -45,6 +45,7 @@
                     <th>{{ 'table.personnel'|trans }}</th>
                     <th>{{ 'table.semestre_ou_diplome'|trans }}</th>
                     <th>{{ 'table.nb_heures_td'|trans }}</th>
+                    <th>{{ 'table.commentaire'|trans }}</th>
                     <th>{{ 'table.actions'|trans }}</th>
                 </tr>
                 </thead>
@@ -56,6 +57,7 @@
                         <td>{{ hr.personnel ? hr.personnel.display : 'non.defini'|trans }}</td>
                         <td>{{ hr.diplome ? hr.diplome.libelle : (hr.semestre ? hr.semestre.libelle : 'non.defini'|trans) }}</td>
                         <td>{{ hr.nbHeuresTd }}</td>
+                        <td>{{ hr.commentaire }}</td>
                         <td>
                             {{ include('composants/adm-buttons-table-index.html.twig', {elt: 'hrs', id:hr.id, modal:true}) }}
                         </td>

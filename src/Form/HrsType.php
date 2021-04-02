@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/HrsType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 02/04/2021 11:50
  */
 
 namespace App\Form;
@@ -19,6 +19,7 @@ use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -60,17 +61,18 @@ class HrsType extends AbstractType
                 'query_builder' => function(SemestreRepository $semestreRepository) {
                     return $semestreRepository->findByDepartementBuilder($this->departement);
                 },
-                'label'         => 'label.semestre',
+                'label' => 'label.semestre',
             ])
             ->add('diplome', EntityType::class, [
-                'class'         => Diplome::class,
-                'required'      => false,
-                'choice_label'  => 'libelle',
+                'class' => Diplome::class,
+                'required' => false,
+                'choice_label' => 'libelle',
                 'query_builder' => function(DiplomeRepository $diplomeRepository) {
                     return $diplomeRepository->findByDepartementBuilder($this->departement);
                 },
-                'label'         => 'label.diplome',
-            ]);
+                'label' => 'label.diplome',
+            ])
+            ->add('commentaire', TextareaType::class, ['label' => 'label.commentaire', 'required' => false]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

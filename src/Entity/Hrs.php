@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Hrs.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:49
+ * @lastUpdate 01/04/2021 08:48
  */
 
 namespace App\Entity;
 
+use App\Entity\Traits\LifeCycleTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -17,6 +18,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  */
 class Hrs extends BaseEntity
 {
+    //todo: on pourrait ajouter l'horodatage?
     /**
      * @ORM\Column(type="float")
      * @Groups({"hrs_administration"})
@@ -61,6 +63,11 @@ class Hrs extends BaseEntity
      * @ORM\ManyToOne(targetEntity="App\Entity\Departement", inversedBy="hrs")
      */
     private $departement;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $commentaire;
 
     public function getNbHeuresTd(): ?float
     {
@@ -182,6 +189,18 @@ class Hrs extends BaseEntity
     public function setDepartement(?Departement $departement): self
     {
         $this->departement = $departement;
+
+        return $this;
+    }
+
+    public function getCommentaire(): ?string
+    {
+        return $this->commentaire;
+    }
+
+    public function setCommentaire(?string $commentaire): self
+    {
+        $this->commentaire = $commentaire;
 
         return $this;
     }
