@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Previsionnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 28/03/2021 13:23
  */
 
 namespace App\Entity;
@@ -288,7 +288,7 @@ class Previsionnel extends BaseEntity
      */
     public function getTotalEqTd()
     {
-        return $this->getTotalHCm() * 1.5 + $this->getTotalHTd() + $this->getTotalHTp();
+        return $this->getTotalHCm() * Constantes::MAJORATION_CM + $this->getTotalHTd() + $this->getTotalHTp();
     }
 
     public function getTotalEtudiant()
