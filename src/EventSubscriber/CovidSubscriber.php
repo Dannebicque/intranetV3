@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/CovidSubscriber.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/03/2021 17:19
+ * @lastUpdate 31/03/2021 17:32
  */
 
 namespace App\EventSubscriber;
@@ -138,7 +138,7 @@ class CovidSubscriber implements EventSubscriberInterface
                     'Demande d\'autorisation de déplacement refusée',
                     [
                         'replyTo' => 'direction.iut-troyes@univ-reims.fr',
-                        'from'    => ['direction.iut-troyes@univ-reims.fr'],
+                        'from'    => [new Address('direction.iut-troyes@univ-reims.fr', 'Direction IUT de Troyes')],
                     ]
                 );
                 break;
@@ -159,7 +159,7 @@ class CovidSubscriber implements EventSubscriberInterface
                     'Demande d\'autorisation de déplacement acceptée',
                     [
                         'replyTo' => 'direction.iut-troyes@univ-reims.fr',
-                        'from'    => ['direction.iut-troyes@univ-reims.fr'],
+                        'from'    => [new Address('direction.iut-troyes@univ-reims.fr', 'Direction IUT de Troyes')],
                     ]
                 );
                 break;
