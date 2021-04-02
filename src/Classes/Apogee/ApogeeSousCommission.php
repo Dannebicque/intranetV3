@@ -1,136 +1,23 @@
 <?php
 /*
  * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Apogee/MyApogee.php
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Apogee/ApogeeSousCommission.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/02/2021 12:06
- */
-
-/*
- * Pull your hearder here, for exemple, Licence header.
+ * @lastUpdate 02/04/2021 12:09
  */
 
 namespace App\Classes\Apogee;
 
-use App\Classes\Tools;
-use App\Entity\Annee;
-use App\Entity\Semestre;
-use PDO;
-use PDOException;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use PhpOffice\PhpSpreadsheet\Exception;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Protection;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
-class MyApogee
+class ApogeeSousCommission extends Apogee
 {
-    private PDO $conn;
-
-    private ParameterBagInterface $parameterBag;
-
-    /**
-     * MyApogee constructor.
-     */
-    public function __construct(ParameterBagInterface $parameterBag)
-    {
-        $this->parameterBag = $parameterBag;
-    }
-
-    private function connect(): ?PDO
-    {
-        try {
-            $this->conn = new PDO('oci:dbname=' . $this->parameterBag->get('APOGEE_STRING'),
-                $this->parameterBag->get('APOGEE_LOGIN'),
-                $this->parameterBag->get('APOGEE_PASSWORD'));
-
-            return $this->conn;
-        } catch (PDOException $e) {
-            trigger_error(htmlentities('Connexion échouée : ' . $e->getMessage()), \E_USER_ERROR);
-        }
-    }
-
-    public function getEtudiant($etudiant)
-    {
-        $this->connect();
-        $stid = $this->conn->prepare(
-            "SELECT INDIVIDU.COD_ETU, INDIVIDU.COD_NNE_IND, INDIVIDU.COD_CLE_NNE_IND, INDIVIDU.DATE_NAI_IND, DAA_ENT_ETB, LIB_NOM_PAT_IND, LIB_PR1_IND, NUM_TEL, COD_SEX_ETU, LIB_AD1, LIB_AD2, LIB_AD3, COD_BDI, COD_COM, COD_PAY, DAT_MOD_IND, DAA_ETB, IND_BAC.DAA_OBT_BAC_IBA, COD_BAC FROM  INDIVIDU INNER JOIN ADRESSE ON ADRESSE.COD_IND = INDIVIDU.COD_IND INNER JOIN IND_BAC ON INDIVIDU.COD_IND=IND_BAC.COD_IND WHERE INDIVIDU.COD_ETU=:etudiant AND (INDIVIDU.COD_ANU_SRT_IND IS NULL OR INDIVIDU.COD_ANU_SRT_IND='')");
-        $stid->execute([':etudiant' => $etudiant]);
-
-        return $stid;
-    }
-
-    public function getGroupesSemestre(Semestre $semestre)
-    {
-        $this->connect();
-        $stid = $this->conn->prepare(
-            'SELECT GROUPE.COD_GPE, GROUPE.LIB_GPE, GROUPE.COD_EXT_GPE FROM GROUPE INNER JOIN GPE_OBJ ON GROUPE.COD_GPE=GPE_OBJ.COD_GPE WHERE GPE_OBJ.COD_ELP=:semestre AND GROUPE.DAA_FIN_VAL_GPE IS NULL');
-        $stid->execute([':semestre' => $semestre->getCodeElement()]);
-
-        return $stid;
-    }
-
-    public function getHierarchieGroupesSemestre(Semestre $semestre)
-    {
-        $this->connect();
-        $stid = $this->conn->prepare(
-            'SELECT * FROM GPE_INCLUS_GPE INNER JOIN GPE_OBJ ON (GPE_INCLUS_GPE.COD_GPE_1=GPE_OBJ.COD_GPE OR GPE_INCLUS_GPE.COD_GPE_2=GPE_OBJ.COD_GPE) WHERE GPE_OBJ.COD_ELP=:semestre');
-        $stid->execute([':semestre' => $semestre->getCodeElement()]);
-
-        return $stid;
-    }
-
-    public function getEtudiantsGroupesSemestre(Semestre $semestre)
-    {
-        $this->connect();
-        $stid = $this->conn->prepare(
-            'SELECT INDIVIDU.COD_ETU, GROUPE.COD_EXT_GPE FROM IND_AFFECTE_GPE INNER JOIN GROUPE ON GROUPE.COD_GPE=IND_AFFECTE_GPE.COD_GPE INNER JOIN INDIVIDU ON INDIVIDU.COD_IND=IND_AFFECTE_GPE.COD_IND INNER JOIN GPE_OBJ ON GPE_OBJ.COD_GPE=IND_AFFECTE_GPE.COD_GPE WHERE GPE_OBJ.COD_ELP=:semestre');
-        $stid->execute([':semestre' => $semestre->getCodeElement()]);
-
-        return $stid;
-    }
-
-    /**
-     * @param $data
-     * @param $tBac
-     *
-     * @return array[]
-     * @throws \Exception
-     *
-     */
-    public function transformeApogeeToArray($data, $tBac): array
-    {
-        // COD_ETU, COD_NNE_IND, DATE_NAI_IND, DAA_ENT_ETB, LIB_NOM_PAT_IND, LIB_PR1_IND, COD_SEX_ETU
-        return [
-            'etudiant' => [
-                'setNumEtudiant'   => $data['COD_ETU'],
-                'setNumIne'        => $data['COD_NNE_IND'] . $data['COD_CLE_NNE_IND'],
-                'setDateNaissance' => Tools::convertDateToObject($data['DATE_NAI_IND']), //en fr?
-                'setPromotion'     => $data['DAA_ETB'],
-                'setNom'           => $data['LIB_NOM_PAT_IND'],
-                'setAnneeBac'      => $data['DAA_OBT_BAC_IBA'],
-                'setPrenom'        => $data['LIB_PR1_IND'],
-                'setTel1'          => $data['NUM_TEL'],
-                'setCivilite'      => 'M' === $data['COD_SEX_ETU'] ? 'M.' : 'Mme', //M ou F
-                'setTypeUser'      => 'etudiant',
-                'setBac'           => true === \array_key_exists($data['COD_BAC'],
-                    $tBac) ? $tBac[$data['COD_BAC']] : null,
-                'setRemarque'      => $data['COD_BAC'],
-            ],
-            'adresse'  => [
-                'setAdresse1'   => $data['LIB_AD1'],
-                'setAdresse2'   => $data['LIB_AD2'],
-                'setAdresse3'   => $data['LIB_AD3'],
-                'setCodePostal' => $data['COD_BDI'],
-                'setVille'      => $data['COD_COM'], //code commune INSEE
-                'setPays'       => $data['COD_PAY'], //code
-            ],
-        ];
-    }
-
     /**
      * @throws Exception
      */
@@ -342,9 +229,9 @@ class MyApogee
             },
             200,
             [
-                'Content-Type'        => 'text/plain',
+                'Content-Type' => 'text/plain',
                 'Content-Disposition' => 'attachment;filename="' . $nomfichier . '.txt"',
-                'Cache-Control'       => 'max-age=0',
+                'Cache-Control' => 'max-age=0',
             ]
         );
     }
@@ -371,36 +258,5 @@ class MyApogee
         }
 
         return $colonne . $ligne;
-    }
-
-    public function getEtudiantsAnnee(Annee $annee)
-    {
-        $this->connect();
-        $stid = $this->conn->prepare(
-            "SELECT INDIVIDU.COD_ETU, INDIVIDU.COD_NNE_IND, INDIVIDU.COD_CLE_NNE_IND, INDIVIDU.DATE_NAI_IND, DAA_ENT_ETB, LIB_NOM_PAT_IND, LIB_PR1_IND, NUM_TEL, COD_SEX_ETU, LIB_AD1, LIB_AD2, LIB_AD3, COD_BDI, COD_COM, COD_PAY, DAT_MOD_IND, DAA_ETB, IND_BAC.DAA_OBT_BAC_IBA, COD_BAC FROM INS_ADM_ETP INNER JOIN INDIVIDU ON INDIVIDU.COD_IND = INS_ADM_ETP.COD_IND INNER JOIN ADRESSE ON ADRESSE.COD_IND = INS_ADM_ETP.COD_IND INNER JOIN IND_BAC ON INDIVIDU.COD_IND=IND_BAC.COD_IND WHERE COD_ETP=:codeetape AND (INDIVIDU.COD_ANU_SRT_IND IS NULL OR INDIVIDU.COD_ANU_SRT_IND='')");
-        $stid->execute([':codeetape' => $annee->getCodeEtape()]);
-
-        return $stid;
-    }
-
-    public function testApogee()
-    {
-        $this->connect();
-        $stid = $this->conn->prepare(
-            'SELECT * FROM INDIVIDU WHERE CODE_ETU=:etudiant');
-        $stid->execute([':etudiant' => '21601195']);
-
-        return $stid;
-    }
-
-    public function testApogee2()
-    {
-        $this->connect();
-
-        $stid = $this->conn->prepare(
-            'SELECT * FROM INS_ADM_ETP WHERE CODE_IND=:etudiant');
-        $stid->execute([':etudiant' => '177441']);
-
-        return $stid;
     }
 }

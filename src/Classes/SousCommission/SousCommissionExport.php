@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/SousCommission/SousCommissionExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/02/2021 12:03
+ * @lastUpdate 02/04/2021 12:09
  */
 
 /*
@@ -13,7 +13,7 @@
 
 namespace App\Classes\SousCommission;
 
-use App\Classes\Apogee\MyApogee;
+use App\Classes\Apogee\ApogeeSousCommission;
 use App\Classes\Excel\MyExcelRead;
 use App\Classes\Excel\MyExcelWriter;
 use App\Classes\MyUpload;
@@ -36,7 +36,7 @@ class SousCommissionExport
     private MyExcelWriter $myExcelWriter;
     private MyExcelRead $myExcelRead;
     private MyUpload $myUpload;
-    private MyApogee $myApogee;
+    private ApogeeSousCommission $apogeeSousCommission;
     private string $dir;
     private MatiereRepository $matiereRepository;
 
@@ -46,7 +46,7 @@ class SousCommissionExport
     public function __construct(
         SousCommission $sousCommission,
         KernelInterface $kernel,
-        MyApogee $myApogee,
+        ApogeeSousCommission $apogeeSousCommission,
         MyExcelWriter $myExcelWriter,
         MyExcelRead $myExcelRead,
         MatiereRepository $matiereRepository,
@@ -56,7 +56,7 @@ class SousCommissionExport
         $this->myExcelWriter = $myExcelWriter;
         $this->myExcelRead = $myExcelRead;
         $this->myUpload = $myUpload;
-        $this->myApogee = $myApogee;
+        $this->apogeeSousCommission = $apogeeSousCommission;
         $this->matiereRepository = $matiereRepository;
         $this->dir = $kernel->getProjectDir() . '/public/upload/temp/';
     }
@@ -579,7 +579,7 @@ class SousCommissionExport
             $this->myExcelRead->sauvegarde($this->dir . 'temp.xls');
 
             $nom = explode('.', $file->getClientOriginalName());
-            $stream = $this->myApogee->transformeApogeeTexte($this->dir . 'temp.xls', $nom[0]);
+            $stream = $this->apogeeSousCommission->transformeApogeeTexte($this->dir . 'temp.xls', $nom[0]);
 
             unlink($this->dir . 'temp.xls');
 

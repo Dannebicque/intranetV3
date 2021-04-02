@@ -4,14 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/ApogeeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 02/04/2021 12:10
  */
 
 namespace App\Controller\superAdministration;
 
-use App\Classes\Apogee\MyApogee;
+use App\Classes\Apogee\ApogeeEtudiant;
 use App\Classes\Etudiant\EtudiantImport;
-use App\Classes\Tools;
 use App\Controller\BaseController;
 use App\Repository\AnneeUniversitaireRepository;
 use App\Repository\BacRepository;
@@ -56,7 +55,7 @@ class ApogeeController extends BaseController
      * @throws Exception
      */
     public function importMaj(
-        MyApogee $myApogee,
+        ApogeeEtudiant $apogeeEtudiant,
         EtudiantImport $etudiantImport,
         Request $request,
         SemestreRepository $semestreRepository,
@@ -71,11 +70,11 @@ class ApogeeController extends BaseController
             $this->etudiants = [];
             //requete pour récupérer les étudiants de la promo.
             //pour chaque étudiant, s'il existe, on update, sinon on ajoute (et si type=force).
-            $stid = $myApogee->getEtudiantsAnnee($semestre->getAnnee());
+            $stid = $apogeeEtudiant->getEtudiantsAnnee($semestre->getAnnee());
             while ($row = $stid->fetch()) {
                 if ((int)$row['DAA_ETB'] === $semestre->getAnneeUniversitaire()->getAnnee()) {
                     //if ((int)Tools::convertDateToObject($row['DAT_MOD_IND'])->format('Y') === $semestre->getAnneeUniversitaire()->getAnnee()) {
-                    $dataApogee = $myApogee->transformeApogeeToArray($row, $bacRepository->getApogeeArray());
+                    $dataApogee = $apogeeEtudiant->transformeApogeeToArray($row, $bacRepository->getApogeeArray());
                     $numEtudiant = $dataApogee['etudiant']['setNumEtudiant'];
                     $etudiant = $etudiantRepository->findOneBy(['numEtudiant' => $numEtudiant]);
                     if (null === $etudiant) {
@@ -112,7 +111,7 @@ class ApogeeController extends BaseController
      */
     public function importEtudiant(
         EtudiantImport $etudiantImport,
-        MyApogee $myApogee,
+        ApogeeEtudiant $apogeeEtudiant,
         Request $request,
         EtudiantRepository $etudiantRepository,
         SemestreRepository $semestreRepository,
@@ -123,10 +122,10 @@ class ApogeeController extends BaseController
 
         $this->etudiants = [];
         foreach ($listeetudiants as $numEtu) {
-            $stid = $myApogee->getEtudiant($numEtu);
+            $stid = $apogeeEtudiant->getEtudiant($numEtu);
             while ($row = $stid->fetch()) {
                 //requete pour récupérer les datas de l'étudiant et ajouter à la BDD.
-                $dataApogee = $myApogee->transformeApogeeToArray($row, $bacRepository->getApogeeArray());
+                $dataApogee = $apogeeEtudiant->transformeApogeeToArray($row, $bacRepository->getApogeeArray());
                 $numEtudiant = $dataApogee['etudiant']['setNumEtudiant'];
 
                 //Stocker réponse dans un tableau pour page confirmation
