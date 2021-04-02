@@ -7,8 +7,7 @@
   {{ table.line('table.type_hrs', hrs.typeHrs ? hrs.typeHrs.libelle : 'non.defini'|trans ) }}
   {{ table.line('table.semestre_ou_diplome', hrs.diplome ? hrs.diplome.libelle : (hrs.semestre ? hrs.semestre.libelle : 'non.defini'|trans)) }}
   {{ table.line('table.nb_heures_td', hrs.nbHeuresTd) }}
+  {{ table.line('table.commentaire', hrs.commentaire) }}
   {{ table.line('table.personnel', hrs.personnel ? hrs.personnel.display : 'non.defini'|trans) }}
-  {{ table.line('table.created', hrs.created ? hrs.created|format_datetime('long', 'short') : '') }}
-  {{ table.line('table.updated', hrs.updated ? hrs.updated|format_datetime('long', 'short') : '') }}
   </tbody>
 </table>
