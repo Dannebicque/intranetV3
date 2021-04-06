@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Matiere.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 28/03/2021 13:13
  */
 
 namespace App\Entity;
 
+use App\Interfaces\MatiereInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -18,7 +19,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ORM\Entity(repositoryClass="App\Repository\MatiereRepository")
  * @ORM\HasLifecycleCallbacks()
  */
-class Matiere extends BaseEntity
+class Matiere extends BaseEntity implements MatiereInterface
 {
     /**
      * @ORM\Column(type="string", length=255)
@@ -635,7 +636,7 @@ class Matiere extends BaseEntity
 
     public function getEqTdFormation(): float
     {
-        return $this->cmFormation * 1.5 + $this->tdFormation + $this->tpFormation;
+        return $this->cmFormation * Constantes::MAJORATION_CM + $this->tdFormation + $this->tpFormation;
     }
 
     public function getEtuFormation(): float

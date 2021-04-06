@@ -4,12 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcRessource.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/03/2021 16:18
+ * @lastUpdate 28/03/2021 13:13
  */
 
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
+use App\Interfaces\MatiereInterface;
 use App\Repository\ApcRessourceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -19,7 +20,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass=ApcRessourceRepository::class)
  * @ORM\HasLifecycleCallbacks()
  */
-class ApcRessource extends BaseEntity
+class ApcRessource extends BaseEntity implements MatiereInterface
 {
     use LifeCycleTrait;
 
@@ -366,4 +367,49 @@ class ApcRessource extends BaseEntity
         }
     }
 
+    public function getEqTdFormation(): float
+    {
+        return $this->heuresCM * Constantes::MAJORATION_CM + $this->heuresTD + $this->heuresTP;
+    }
+
+    public function getEtuFormation(): float
+    {
+        return $this->heuresCM + $this->heuresTD + $this->heuresTP;
+    }
+
+    public function getDisplay(): string
+    {
+        return $this->getCodeRessource() . ' | ' . $this->getLibelle();
+    }
+
+    public function getJson(): array
+    {
+        $t = [];
+        $t['id'] = $this->getId();
+        $t['libelle'] = $this->getLibelle();
+        $t['display'] = ''; //$this->getUe() ? $this->getUe()->getLibelle() : '-';
+        $t['cmFormation'] = $this->getCmFormation();
+        $t['tdFormation'] = $this->getTdFormation();
+        $t['tpFormation'] = $this->getTpFormation();
+        $t['cmPpn'] = $this->getCmFormation();
+        $t['tdPpn'] = $this->getTdFormation();
+        $t['tpPpn'] = $this->getTpFormation();
+
+        return $t;
+    }
+
+    public function getCmFormation(): float
+    {
+        return $this->heuresCM;
+    }
+
+    public function getTdFormation(): float
+    {
+        return $this->heuresTD;
+    }
+
+    public function getTpFormation(): float
+    {
+        return $this->heuresTP;
+    }
 }
