@@ -4,17 +4,17 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Personnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/03/2021 14:25
+ * @lastUpdate 06/04/2021 20:50
  */
 
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
+use App\Interfaces\UtilisateurInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JsonException;
-use Serializable;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -24,7 +24,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @Vich\Uploadable
  * @ORM\HasLifecycleCallbacks()
  */
-class Personnel extends Utilisateur
+class Personnel extends Utilisateur implements UtilisateurInterface
 {
     use LifeCycleTrait;
 
