@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyMessagerie.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 06/04/2021 20:53
  */
 
 /*
@@ -20,6 +20,7 @@ use App\Entity\MessageDestinataireEtudiant;
 use App\Entity\MessageDestinatairePersonnel;
 use App\Entity\MessagePieceJointe;
 use App\Entity\Personnel;
+use App\Interfaces\UtilisateurInterface;
 use App\Repository\EtudiantRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\PersonnelRepository;
@@ -36,12 +37,12 @@ class MyMessagerie
 
     private EntityManagerInterface $entityManager;
 
-    private $sujet;
+    private string $sujet;
 
-    private $message;
+    private string $message;
 
-    private $nbMessagesEnvoyes = 0;
-    private $nbEtudiants = 0;
+    private int $nbMessagesEnvoyes = 0;
+    private int $nbEtudiants = 0;
 
     private Personnel $expediteur;
 
@@ -54,11 +55,10 @@ class MyMessagerie
 
     private PersonnelRepository $personnelRepository;
 
-    private $typeDestinataires = '';
-    private $type;
+    private string $typeDestinataires = '';
+    private string $type;
     private $id;
     private $pjs = [];
-    private string $dir;
 
     /**
      * MyMessagerie constructor.
@@ -69,8 +69,7 @@ class MyMessagerie
         GroupeRepository $groupeRepository,
         EtudiantRepository $etudiantRepository,
         PersonnelRepository $personnelRepository,
-        Configuration $configuration,
-        ParameterBagInterface $parameterBag
+        Configuration $configuration
     ) {
         $this->myMailer = $mailer;
         $this->entityManager = $entityManager;
@@ -78,7 +77,6 @@ class MyMessagerie
         $this->etudiantRepository = $etudiantRepository;
         $this->personnelRepository = $personnelRepository;
         $this->configuration = $configuration;
-        $this->dir = $parameterBag->get('kernel.project_dir') . '/public/upload/pj/';
     }
 
     /**
@@ -114,20 +112,7 @@ class MyMessagerie
         foreach ($listeDestinataires as $destinataire) {
             //foreach ($tdestinataire as $destinataire) {
             if (null !== $destinataire) {
-                $message = (new TemplatedEmail())
-                    ->subject($this->sujet)
-                    ->from($this->expediteur->getMailuniv())
-                    ->htmlTemplate('mails/message.html.twig')
-                    ->context(['message' => $this->message, 'expediteur' => $this->expediteur]);
-
-                //récupération des fichiers uploadés
-                foreach ($this->pjs as $file) {
-                    $message->attachFromPath($file);
-                }
-
-                foreach ($destinataire->getMails() as $mail) {
-                    $message->addTo($mail);
-                }
+                $message = $this->sendMessage($destinataire);
 
                 $this->saveDestinatairePersonnelDatabase($mess, $destinataire);
                 ++$this->nbEtudiants;
@@ -149,20 +134,7 @@ class MyMessagerie
         $mess = $this->saveMessageDatabase('E');
 
         foreach ($this->etudiants as $etu) {
-            $message = (new TemplatedEmail())
-                ->subject($this->sujet)
-                ->from($this->expediteur->getMailuniv())
-                ->htmlTemplate('mails/message.html.twig')
-                ->context(['message' => $this->message, 'expediteur' => $this->expediteur]);
-
-            //récupération des fichiers uploadés
-            foreach ($this->pjs as $file) {
-                $message->attachFromPath($file);
-            }
-
-            foreach ($etu->getMails() as $mail) {
-                $message->addTo($mail);
-            }
+            $message = $this->sendMessage($etu);
 
             $this->saveDestinataireEtudiantDatabase($mess, $etu);
             ++$this->nbEtudiants;
@@ -197,7 +169,7 @@ class MyMessagerie
         //envoi de la synthèse à l'auteur
         $email = (new TemplatedEmail())
             ->subject('Votre message : ' . $this->sujet)
-            ->from($this->configuration->get('MAIL_FROM'))
+            ->from($this->configuration->getExpediteurIntranet())
             ->to($this->expediteur->getMailuniv())
             ->htmlTemplate('mails/messageSynthese.html.twig')
             ->context([
@@ -340,5 +312,31 @@ class MyMessagerie
     public function addPj($file)
     {
         $this->pjs[] = $file;
+    }
+
+    /**
+     * @param UtilisateurInterface $destinataire
+     *
+     * @return object|TemplatedEmail
+     */
+    public function sendMessage(UtilisateurInterface $destinataire)
+    {
+        $message = (new TemplatedEmail())
+            ->subject($this->sujet)
+            ->from($this->configuration->getExpediteurIntranet())
+            ->replyTo($this->expediteur->getMailuniv())
+            ->htmlTemplate('mails/message.html.twig')
+            ->context(['message' => $this->message, 'expediteur' => $this->expediteur]);
+
+        //récupération des fichiers uploadés
+        foreach ($this->pjs as $file) {
+            $message->attachFromPath($file);
+        }
+
+        foreach ($destinataire->getMails() as $mail) {
+            $message->addTo($mail);
+        }
+
+        return $message;
     }
 }
