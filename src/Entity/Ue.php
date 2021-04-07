@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Ue.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 19:14
+ * @lastUpdate 07/04/2021 08:55
  */
 
 namespace App\Entity;
@@ -73,6 +73,11 @@ class Ue extends BaseEntity
      * @ORM\Column(type="string", length=15)
      */
     private $codeElement;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=ApcCompetence::class, inversedBy="ue")
+     */
+    private $apcCompetence;
 
     /**
      * Ue constructor.
@@ -224,6 +229,18 @@ class Ue extends BaseEntity
     public function setCodeElement(string $codeElement): self
     {
         $this->codeElement = $codeElement;
+
+        return $this;
+    }
+
+    public function getApcCompetence(): ?ApcCompetence
+    {
+        return $this->apcCompetence;
+    }
+
+    public function setApcCompetence(?ApcCompetence $apcCompetence): self
+    {
+        $this->apcCompetence = $apcCompetence;
 
         return $this;
     }

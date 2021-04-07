@@ -122,6 +122,8 @@ initiales: Initiales
 j: Jour
 Jour: Jour
 label:
+  apc:
+    competence: Compétence
   apercu: 'Aperçu du fichier'
   codeRessource: 'Code Ressource'
   codeSae: 'Code SAÉ'

@@ -2042,6 +2042,7 @@ table:
   ville: Ville
   visible: Visible
   volume_horaire: 'Volume horaire'
+  competence: 'Compétence'
 
 taille: Taille
 td: TD
