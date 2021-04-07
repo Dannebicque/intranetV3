@@ -21,10 +21,6 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>{{ 'table.id'|trans }}</th>
-                <td>{{ ue.id }}</td>
-            </tr>
-            <tr>
                 <th>{{ 'table.libelle'|trans }}</th>
                 <td>{{ ue.libelle }}</td>
             </tr>
@@ -44,6 +40,12 @@
               <th>{{ 'table.nb_ects'|trans }}</th>
               <td>{{ ue.nbEcts }}</td>
             </tr>
+{% if ue.diplome != null and ue.diplome.typeDiplome != null and ue.diplome.typeDiplome.apc == true %}
+    <tr>
+        <th>{{ 'table.competence'|trans }}</th>
+        <td>{{ ue.apcCompetence != null ? ue.apcCompetence.nomCourt : 'non.defini'|trans }}</td>
+    </tr>
+{% endif %}
 
             <tr>
               <th>{{ 'table.code_element'|trans }}</th>

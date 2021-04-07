@@ -4,14 +4,16 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/UeType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/03/2021 17:33
+ * @lastUpdate 07/04/2021 09:00
  */
 
 namespace App\Form;
 
+use App\Entity\ApcCompetence;
 use App\Entity\Semestre;
 use App\Entity\Ue;
 use App\Form\Type\YesNoType;
+use App\Repository\ApcComptenceRepository;
 use App\Repository\SemestreRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -49,6 +51,20 @@ class UeType extends AbstractType
             ->add('bonification', YesNoType::class, ['label' => 'label.bonification', 'help' => 'help.bonification'])
             ->add('coefficient', TextType::class, ['label' => 'label.coefficient'])
             ->add('nbEcts', TextType::class, ['label' => 'label.nb_ects']);
+
+        if ($this->diplome->getTypeDiplome()->getApc() === true) {
+            $builder->add('apcCompetence', EntityType::class, [
+                'class' => ApcCompetence::class,
+                'required' => false,
+                'choice_label' => 'nomCourt',
+                'query_builder' => function(ApcComptenceRepository $apcComptenceRepository) {
+                    return $apcComptenceRepository->findByDiplomeBuilder($this->diplome);
+                },
+                'label' => 'label.apc.competence',
+                'expanded' => true,
+                'help' => 'Le diplôme étant au format APC, vous pouvez attacher une compétence à cette UE'
+            ]);
+        }
     }
 
     /**

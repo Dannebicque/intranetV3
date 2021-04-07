@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcCompetence.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 07/04/2021 08:55
  */
 
 namespace App\Entity;
@@ -69,6 +69,11 @@ class ApcCompetence extends BaseEntity
      */
     private $apcSituationProfessionnelles;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Ue::class, mappedBy="apcCompetence")
+     */
+    private $ue;
+
     public function __construct(Diplome $diplome)
     {
         $this->apcComposanteEssentielles = new ArrayCollection();
@@ -77,6 +82,7 @@ class ApcCompetence extends BaseEntity
         $this->apcRessourceCompetences = new ArrayCollection();
         $this->apcSaeCompetences = new ArrayCollection();
         $this->apcSituationProfessionnelles = new ArrayCollection();
+        $this->ue = new ArrayCollection();
     }
 
     public function getLibelle(): ?string
@@ -273,6 +279,36 @@ class ApcCompetence extends BaseEntity
             // set the owning side to null (unless already changed)
             if ($apcSituationProfessionnelle->getCompetence() === $this) {
                 $apcSituationProfessionnelle->setCompetence(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Ue[]
+     */
+    public function getUe(): Collection
+    {
+        return $this->ue;
+    }
+
+    public function addUe(Ue $ue): self
+    {
+        if (!$this->ue->contains($ue)) {
+            $this->ue[] = $ue;
+            $ue->setApcCompetence($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUe(Ue $ue): self
+    {
+        if ($this->ue->removeElement($ue)) {
+            // set the owning side to null (unless already changed)
+            if ($ue->getApcCompetence() === $this) {
+                $ue->setApcCompetence(null);
             }
         }
 
