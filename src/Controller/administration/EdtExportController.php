@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtExportController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 10/04/2021 11:55
  */
 
 namespace App\Controller\administration;
@@ -229,6 +229,8 @@ class EdtExportController extends BaseController
             'DIS4',
             'DIS5',
             'DIS6',
+            'DIS7',
+            'DIS',
             'H007+DIS1',
             'H006+DIS2',
             'H005+DIS3',
