@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Mail/BaseMailer.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/03/2021 17:21
+ * @lastUpdate 11/04/2021 18:55
  */
 
 /*
@@ -46,8 +46,9 @@ class BaseMailer
     public function baseSendMessage($mail, array $to, string $subject, array $options = []): void
     {
         $mail->from($this->getFrom($options))
-            ->subject($this->translator->trans($subject))
-            ->replyTo($this->getReplyTo($options));
+            ->subject($this->translator->trans($subject));
+
+        $this->getReplyTo($options, $mail);
 
         $this->checkTo($mail, $to);
         $this->checkCc($mail, $options);
@@ -70,13 +71,19 @@ class BaseMailer
     /**
      * @return array|string
      */
-    private function getReplyTo(array $options)
+    private function getReplyTo(array $options, &$mail)
     {
-        if (\array_key_exists('replyTofrom', $options) && '' !== $options['replyTo']) {
-            return new Address($options['replyTo']);
+        if (\array_key_exists('replyTo', $options) && '' !== $options['replyTo']) {
+            if (is_array($options['replyTo'])) {
+                foreach ($options['replyTo'] as $email) {
+                    $mail->addReplyTo(new Address($email));
+                }
+            } else {
+                $mail->replyTo(new Address($options['replyTo']));
+            }
+        } else {
+            $mail->replyTo(new Address($this->configuration->get('MAIL_FROM')));
         }
-
-        return new Address($this->configuration->get('MAIL_FROM'));
     }
 
     /**

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Stage/MailerStage.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:10
+ * @lastUpdate 11/04/2021 18:55
  */
 
 /*
@@ -37,11 +37,16 @@ class MailerStage
     /**
      * @throws TransportExceptionInterface
      */
-    public function setTemplate(string $template, array $donnees, ?array $destinataires, string $sujet)
-    {
+    public function setTemplate(
+        string $template,
+        array $donnees,
+        ?array $destinataires,
+        string $sujet,
+        array $options = []
+    ) {
         $this->mailerFromTwig->initEmail();
         $this->mailerFromTwig->setTemplate($template, $donnees);
-        $this->mailerFromTwig->sendMessage($destinataires, $sujet);
+        $this->mailerFromTwig->sendMessage($destinataires, $sujet, $options);
     }
 
     /**
@@ -53,10 +58,11 @@ class MailerStage
         TwigTemplate $template,
         array $donnees,
         ?array $destinataires,
-        string $sujet
+        string $sujet,
+        array $options = []
     ) {
         $this->mailerFromDatabase->initEmail();
         $this->mailerFromDatabase->setTemplate($template, $donnees);
-        $this->mailerFromDatabase->sendMessage($destinataires, $sujet);
+        $this->mailerFromDatabase->sendMessage($destinataires, $sujet, $options);
     }
 }

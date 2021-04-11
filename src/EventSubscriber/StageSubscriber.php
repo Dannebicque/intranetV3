@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/StageSubscriber.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 11/04/2021 18:46
  */
 
 namespace App\EventSubscriber;
@@ -31,6 +31,7 @@ class StageSubscriber implements EventSubscriberInterface
     private RouterInterface $router;
 
     private StageMailTemplateRepository $stageMailTemplateRepository;
+    private array $responsablesStagesMails = [];
 
     /**
      * StageSubscriber constructor.
@@ -201,6 +202,10 @@ class StageSubscriber implements EventSubscriberInterface
     {
         $stageEtudiant = $event->getStageEtudiant();
 
+        foreach ($stageEtudiant->getStagePeriode()->getResponsables() as $resp) {
+            $this->responsablesStagesMails[] = $resp->getMailUniv();
+        }
+
         //table avec les templates des mails et le sujet, a récupérer en fonction du codeEvent et de la période.
         /** @var StageMailTemplate $mailTemplate */
         $mailTemplate = $this->stageMailTemplateRepository->findEventPeriode(
@@ -213,13 +218,16 @@ class StageSubscriber implements EventSubscriberInterface
                 $mailTemplate->getTwigTemplate(),
                 ['stageEtudiant' => $stageEtudiant],
                 $stageEtudiant->getEtudiant()->getMails(),
-                $mailTemplate->getSubject());
+                $mailTemplate->getSubject(),
+                ['replyTo' => $this->responsablesStagesMails]);
         } else {
             //mail par défaut
             $this->myMailer->setTemplate('mails/stages/stage_' . $codeEvent . '.txt.twig',
                 ['stageEtudiant' => $stageEtudiant],
                 $stageEtudiant->getEtudiant()->getMails(),
-                $codeEvent);
+                $codeEvent,
+                ['replyTo' => $this->responsablesStagesMails]
+            );
         }
 
         //selon un modèle spécifique
@@ -238,7 +246,8 @@ class StageSubscriber implements EventSubscriberInterface
             $this->myMailer->setTemplateFromDatabase($mailTemplate->getTwigTemplate()->getName(),
                 ['stageEtudiant' => $stageEtudiant],
                 $destinataires,
-                $mailTemplate->getSubject()
+                $mailTemplate->getSubject(),
+                ['replyTo' => $this->responsablesStagesMails]
             );
 
             //copie à l'assistante
@@ -246,7 +255,8 @@ class StageSubscriber implements EventSubscriberInterface
                 $this->myMailer->setTemplateFromDatabase($mailTemplate->getTwigTemplate()->getName(),
                     ['stageEtudiant' => $stageEtudiant],
                     $stageEtudiant->getStagePeriode()->getMailAssistant(),
-                    $mailTemplate->getSubject()
+                    $mailTemplate->getSubject(),
+                    ['replyTo' => $this->responsablesStagesMails]
                 );
             }
         } else {
@@ -254,13 +264,15 @@ class StageSubscriber implements EventSubscriberInterface
             $this->myMailer->setTemplate('mails/stages/stage_assistant_' . $codeEvent . '.txt.twig',
                 ['stageEtudiant' => $stageEtudiant],
                 $destinataires,
-                'copie ' . $codeEvent);
+                'copie ' . $codeEvent,
+                ['replyTo' => $this->responsablesStagesMails]);
 
             if (null !== $stageEtudiant->getStagePeriode() && $stageEtudiant->getStagePeriode()->getCopieAssistant() && null !== $stageEtudiant->getStagePeriode()->getMailAssistant()) {
                 $this->myMailer->setTemplate('mails/stages/stage_assistant_' . $codeEvent . '.txt.twig',
                     ['stageEtudiant' => $stageEtudiant],
                     $stageEtudiant->getStagePeriode()->getMailAssistant(),
-                    'copie ' . $codeEvent);
+                    'copie ' . $codeEvent,
+                    ['replyTo' => $this->responsablesStagesMails]);
             }
         }
     }
