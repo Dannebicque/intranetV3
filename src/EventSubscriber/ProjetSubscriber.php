@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/ProjetSubscriber.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 11/04/2021 18:59
  */
 
 namespace App\EventSubscriber;
@@ -59,7 +59,10 @@ class ProjetSubscriber implements EventSubscriberInterface
     public function sendMail(ProjetEvent $event, $codeEvent): void
     {
         $projetEtudiant = $event->getProjetEtudiant();
-
+        $destinataires = [];
+        foreach ($projetEtudiant->getProjetPeriode()->getResponsables() as $destinataire) {
+            $destinataires[] = $destinataire->getMailUniv();
+        }
         //table avec les templates des mails et le sujet, a récupérer en fonction du codeEvent et de la période.
         $mailsEtudiants = [];
 
@@ -71,18 +74,17 @@ class ProjetSubscriber implements EventSubscriberInterface
         $this->myMailer->setTemplate('mails/projets/projet_' . $codeEvent . '.txt.twig',
             ['projetEtudiant' => $projetEtudiant],
             $mailsEtudiants,
-            $codeEvent);
+            $codeEvent,
+            ['replayTo' => $destinataires]);
 
-        $destinataires = [];
-        foreach ($projetEtudiant->getProjetPeriode()->getResponsables() as $destinataire) {
-            $destinataires[] = $destinataire->getMailUniv();
-        }
+
 
         //sinon mail par défaut
         $this->myMailer->setTemplate('mails/projets/projet_assistant_' . $codeEvent . '.txt.twig',
             ['projetEtudiant' => $projetEtudiant],
             $destinataires,
-            'copie ' . $codeEvent);
+            'copie ' . $codeEvent,
+            ['replayTo' => $destinataires]);
     }
 
     private function addNotification(ProjetEvent $event, $codeEvent): void
