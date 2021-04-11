@@ -398,8 +398,20 @@
                             {% if stageEtudiant.stage is defined %}
                                 {% if stageEtudiant.stage.etatStage == constant
                                     ('App\\Entity\\StageEtudiant::ETAT_STAGE_AUTORISE') %}
-                                    <td colspan="5">
+                                    <td colspan="4">
                                         <button class="btn btn-block btn-primary">{{ 'saisie.autorise.formulaire.non.completee'|trans }}</button>
+                                    </td>
+                                    <td>
+                                        <label for="tuteur_{{ stageEtudiant.etudiant.id }}" class="sr-only"></label>
+                                        <select name="tuteur_{{ stageEtudiant.etudiant.id }}" id="tuteur_{{ stageEtudiant.etudiant.id }}" data-stage="{{ stageEtudiant.stage.id }}"
+                                                class="changetuteur form-control">
+                                            <option>{{ 'table.tuteur_universitaire'|trans }}</option>
+                                            {% for personnel in user_data.personnels %}
+                                                <option value="{{ personnel.id }}" {% if stageEtudiant.stage
+                                                .tuteurUniversitaire != null and personnel.id ==
+                                                    stageEtudiant.stage.tuteurUniversitaire.id %}selected{% endif %}>{{ personnel.displayPr }}</option>
+                                            {% endfor %}
+                                        </select>
                                     </td>
                                     <td>
                                         <div class="dropdown table-action btn btn-primary btn-outline">
