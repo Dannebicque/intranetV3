@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/MailingSubscriber.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 13/04/2021 18:37
  */
 
 namespace App\EventSubscriber;
@@ -71,7 +71,7 @@ class MailingSubscriber implements EventSubscriberInterface
             $this->myMailer->initEmail();
             $this->myMailer->setTemplate('mails/absence_added.txt.twig', ['absence' => $absence]);
             $this->myMailer->sendMessage($absence->getEtudiant()->getMails(), 'Nouvelle absence enregistrée',
-                ['from' => [$absence->getPersonnel() ? $absence->getPersonnel()->getMailUniv() : null]]);
+                ['replyTo' => [$absence->getPersonnel() ? $absence->getPersonnel()->getMailUniv() : null]]);
         }
         $this->myMailer->initEmail();
         //envoi en copie au responsable si l'option est activée
@@ -152,7 +152,7 @@ class MailingSubscriber implements EventSubscriberInterface
             $this->myMailer->initEmail();
             $this->myMailer->setTemplate('mails/absence_removed.txt.twig', ['absence' => $absence]);
             $this->myMailer->sendMessage($absence->getEtudiant()->getMails(), 'Suppression d\'une absence enregistrée',
-                ['from' => [$absence->getPersonnel() ? $absence->getPersonnel()->getMailUniv() : null]]);
+                ['replyTo' => [$absence->getPersonnel() ? $absence->getPersonnel()->getMailUniv() : null]]);
         }
 
         if (null !== $absence->getMatiere() && null !== $absence->getMatiere()->getSemestre() && $absence->getMatiere()->getSemestre()->isOptMailAbsenceResp() && null !== $absence->getMatiere()->getSemestre()->getOptDestMailAbsenceResp()) {
