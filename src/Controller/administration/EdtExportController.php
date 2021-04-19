@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtExportController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 10/04/2021 11:55
+ * @lastUpdate 19/04/2021 12:19
  */
 
 namespace App\Controller\administration;
@@ -70,7 +70,7 @@ class EdtExportController extends BaseController
 
         return $this->render('administration/edtExport/exportScript.html.twig', [
             'semestres' => $semestres,
-            'groupes'   => $groupes,
+            'groupes' => $groupes,
         ]);
     }
 
@@ -92,6 +92,7 @@ class EdtExportController extends BaseController
             33407,
             34188,
             3601,
+            33736,
             33513,
             32822,
             3132,
@@ -99,6 +100,7 @@ class EdtExportController extends BaseController
             31405,
             3604,
             33740,
+            30990,
             25261,
             3680,
             3994,
@@ -113,8 +115,10 @@ class EdtExportController extends BaseController
             22615,
             2158,
             14478,
+            7679,
             34044,
             21399,
+            4954
         ];
         $tabProf = array_flip($tabProf);
 
@@ -246,6 +250,7 @@ class EdtExportController extends BaseController
 
         $pl = $edtPlanningRepository->findEdtSemestre($semestre, $semaine);
         $code = [];
+        $codeH018 = [];
         $codeGroupe = [];
 
         foreach ($semestre->getTypeGroupes() as $tg) {
@@ -253,6 +258,7 @@ class EdtExportController extends BaseController
             $groupes = $groupeRepository->findBy(['typeGroupe' => $tg->getId()], ['ordre' => 'ASC']);
             foreach ($groupes as $groupe) {
                 $code[mb_strtoupper($tg->getType())][$groupe->getOrdre()] = 'sleep 5' . "\n";
+                $codeH018[mb_strtoupper($tg->getType())][$groupe->getOrdre()] = 'sleep 5' . "\n";
                 $codeGroupe[mb_strtoupper($tg->getType()) . '_' . $groupe->getOrdre()] = $groupe->getLibelle();
             }
         }
@@ -274,6 +280,9 @@ class EdtExportController extends BaseController
                  */
                 $code[mb_strtoupper($p->getType())][$p->getGroupe()] .= './ajouter ' . $p->getJour() . ' ' . Constantes::TAB_HEURES[$p->getDebut()] . ' ' . Constantes::TAB_HEURES[$p->getFin()] . ' ' . $tabProf[$p->getIntervenant()->getNumeroHarpege()] . ' ' . $tabSalles[$p->getSalle()] . ' ' . $tabMatieres[$semestre->getLibelle()][$p->getMatiere()->getCodeElement()] . ' ' . $tabType[mb_strtoupper($p->getType())] . "\n";
             }
+            if ($p->getSalle() === 'H018') {
+                $codeH018[mb_strtoupper($p->getType())][$p->getGroupe()] .= './ajouterh018 ' . $p->getJour() . ' ' . Constantes::TAB_HEURES[$p->getDebut()] . ' ' . Constantes::TAB_HEURES[$p->getFin()] . ' ' . $tabProf[$p->getIntervenant()->getNumeroHarpege()] . ' 0 ' . $tabMatieres[$semestre->getLibelle()][$p->getMatiere()->getCodeElement()] . ' ' . $tabType[mb_strtoupper($p->getType())] . "\n";
+            }
         }
 
         $codeComplet = '';
@@ -286,13 +295,29 @@ class EdtExportController extends BaseController
         foreach ($code as $type => $value) {
             foreach ($value as $groupe => $c) {
                 $codeComplet .= './groupe ' . $i . "\n";
+
                 $n = $semestre->getLibelle() . '_S' . $semaine . '_' . $type . '_' . $codeGroupe[$type . '_' . $groupe] . '.sh';
+
                 $zip->addFromString($n, $c);
                 $codeComplet .= './' . $n . " \n";
                 $codeComplet .= './fingroupe ' . "\n";
                 ++$i;
             }
         }
+
+        foreach ($codeH018 as $type => $value) {
+            foreach ($value as $groupe => $c) {
+                $codeComplet .= './groupe ' . $i . "\n";
+
+                $n = $semestre->getLibelle() . '_H018_S' . $semaine . '_' . $type . '_' . $codeGroupe[$type . '_' . $groupe] . '.sh';
+
+                $zip->addFromString($n, $c);
+                $codeComplet .= './' . $n . " \n";
+                $codeComplet .= './fingroupe ' . "\n";
+                ++$i;
+            }
+        }
+
         $zip->addFromString('script' . $semaine . '.sh', $codeComplet);
         $zip->close();
 
