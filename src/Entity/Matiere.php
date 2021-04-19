@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Matiere.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/03/2021 13:13
+ * @lastUpdate 09/04/2021 15:28
  */
 
 namespace App\Entity;
@@ -21,6 +21,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
  */
 class Matiere extends BaseEntity implements MatiereInterface
 {
+    public const SOURCE = 'matiere';
+
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"matiere"})
@@ -831,5 +833,10 @@ class Matiere extends BaseEntity implements MatiereInterface
         }
 
         return $this;
+    }
+
+    public function getCode(): ?string
+    {
+        return $this->getCodeMatiere();
     }
 }
