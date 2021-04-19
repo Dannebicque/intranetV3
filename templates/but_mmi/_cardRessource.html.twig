@@ -34,15 +34,15 @@
                 <thead>
                 <tr>
                     <th width="33%">Ressources</th>
-                    <th width="33%">SAÉ</th>
+                    <th width="33%">SAÉ*</th>
                     <th width="33%">Total</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
-                    <td>15</td>
-                    <td>15</td>
-                    <td>30</td>
+                    <td>{{ ressource.heuresCM + ressource.heuresTD + ressource.heuresTP }}</td>
+                    <td>{{ ressource.heuresSAE + ressource.heuresSAEPtut }}</td>
+                    <td>{{ ressource.heuresCM + ressource.heuresTD + ressource.heuresTP + ressource.heuresSAE + ressource.heuresSAEPtut }}</td>
                 </tr>
                 </tbody>
             </table>

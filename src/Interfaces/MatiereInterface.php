@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Interfaces/MatiereInterface.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/04/2021 20:56
+ * @lastUpdate 19/04/2021 19:01
  */
 
 namespace App\Interfaces;
@@ -25,4 +25,6 @@ interface MatiereInterface
     public function getTdFormation(): float;
 
     public function getTpFormation(): float;
+
+    public function getCode(): ?string;
 }

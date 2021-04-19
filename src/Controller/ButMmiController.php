@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ButMmiController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/03/2021 09:51
+ * @lastUpdate 19/04/2021 18:24
  */
 
 namespace App\Controller;
@@ -124,6 +124,22 @@ class ButMmiController extends AbstractController
 
         return $this->render('but_mmi/ficheRessource.html.twig', [
             'apc_ressource' => $apcRessource,
+            'diplome' => $diplome
+        ]);
+    }
+
+    /**
+     * @Route("/{diplome}/repartition-horaire", name="but_repartition_horaire")
+     */
+    public function repartitionHoraire(
+        ApcRessourceRepository $apcRessourceRepository,
+        $diplome
+    ): Response {
+        $diplome = $this->diplomeRepository->findOneBy(['typeDiplome' => 4, 'sigle' => strtoupper($diplome)]);
+        $ressources = $apcRessourceRepository->findBySemestreArray($diplome);
+
+        return $this->render('but_mmi/preconisations.html.twig', [
+            'ressources' => $ressources,
             'diplome' => $diplome
         ]);
     }
