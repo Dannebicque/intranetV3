@@ -21,7 +21,9 @@
       {% for ressource in ressources[semestre.id] %}
         <tr>
           <td>{{ ressource.codeRessource }}</td>
-          <td><a href="#">{{ ressource.libelle }}</a></td>
+          <td>
+            <a href="{{ path('but_fiche_ressource', {'apcRessource': ressource.id, diplome:diplome.sigle|lower}) }}" target="_blank">{{ ressource.libelle }}</a>
+          </td>
           <td>{{ ressource.heuresCM + ressource.heuresTD + ressource.heuresTP }}</td>
           <td>{{ ressource.heuresSAE + ressource.heuresSAEPtut }}</td>
           <td>{{ ressource.heuresCM + ressource.heuresTD + ressource.heuresTP + ressource.heuresSAE + ressource.heuresSAEPtut }}</td>
