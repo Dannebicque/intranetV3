@@ -4,30 +4,45 @@
         <div class="card-body">
             <p>{{ ressource.motsCles|nl2br }}</p>
             <p>
-                <a data-provide="tooltip"
-                   href="{{ path('but_fiche_ressource',
+                <a href="{{ path('but_fiche_ressource',
                        {'apcRessource': ressource.id, diplome:diplome.sigle|lower}) }}"
-                   class="btn btn-info"
-                   data-placement="bottom"
-                   title="Voir la fiche ressource"
+                   class="btn btn-info stretched-link"
                    target="_blank"
                 >
                     Voir la fiche ressource
                 </a>
             </p>
-            <table class="table">
+            <h5>Heures ressources (prescriptives)</h5>
+            <table class="table table-bordered">
                 <thead>
                 <tr>
-                    <th>CM/TD</th>
-                    <th>TP</th>
-                    <th>Coeff.</th>
+                    <th width="33%">CM/TD</th>
+                    <th width="33%">TP</th>
+                    <th width="33%">Coeff.</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
-                    <td>{{ ressource.heuresCM + ressource.heuresTD }} heure(s)</td>
-                    <td>{{ ressource.heuresTP }} heure(s)</td>
+                    <td>{{ ressource.heuresCM + ressource.heuresTD }}</td>
+                    <td>{{ ressource.heuresTP }}</td>
                     <td>-</td>
+                </tr>
+                </tbody>
+            </table>
+            <h5>Heures totales (indicatives)</h5>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th width="33%">Ressources</th>
+                    <th width="33%">SAÉ</th>
+                    <th width="33%">Total</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>15</td>
+                    <td>15</td>
+                    <td>30</td>
                 </tr>
                 </tbody>
             </table>
