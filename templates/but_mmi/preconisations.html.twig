@@ -1,29 +1,48 @@
-<table class="table">
-  <thead>
-    <tr>
-      <th>Code</th>
-      <th>Nom</th>
-      <th>Heures en ressources</th>
-      <th>Heures en SAE</th>
-      <th>Heures totales</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>R102</td>
-      <td><a href="#">Anglais renforcé ou LV2</a></td>
-      <td>15</td>
-      <td>15</td>
-      <td>30</td>
-    </tr>
-  </tbody>
-  <tfoot>
-    <tr>
-      <th>Total</th>
-      <th></th>
-      <th>15</th>
-      <th>15</th>
-      <th>30</th>
-    </tr>
-  </tfoot>
-</table>
+{% extends 'base-but.html.twig' %}
+
+{% block header %}Répartition horaire - Préconnisation{% endblock %}
+
+{% block content %}
+  {% for semestre in diplome.semestres %}
+    {% set totalRessource = 0 %}
+    {% set totalSAE = 0 %}
+    <h2>Semestre : {{ semestre.libelle }}</h2>
+    <table class="table">
+      <thead>
+      <tr>
+        <th>Code</th>
+        <th>Nom</th>
+        <th>Heures en ressources</th>
+        <th>Heures en SAE*</th>
+        <th>Heures totales</th>
+      </tr>
+      </thead>
+      <tbody>
+      {% for ressource in ressources[semestre.id] %}
+        <tr>
+          <td>{{ ressource.codeRessource }}</td>
+          <td><a href="#">{{ ressource.libelle }}</a></td>
+          <td>{{ ressource.heuresCM + ressource.heuresTD + ressource.heuresTP }}</td>
+          <td>{{ ressource.heuresSAE + ressource.heuresSAEPtut }}</td>
+          <td>{{ ressource.heuresCM + ressource.heuresTD + ressource.heuresTP + ressource.heuresSAE + ressource.heuresSAEPtut }}</td>
+        </tr>
+        {% set totalRessource = totalRessource + ressource.heuresCM + ressource.heuresTD + ressource.heuresTP %}
+        {% set totalSAE = totalSAE + ressource.heuresSAE + ressource.heuresSAEPtut %}
+      {% endfor %}
+      </tbody>
+      <tfoot>
+      <tr>
+        <th>Total</th>
+        <th></th>
+        <th>{{ totalRessource }}</th>
+        <th>{{ totalSAE }}</th>
+        <th>{{ totalRessource + totalSAE }}</th>
+      </tr>
+      </tfoot>
+    </table>
+  {% endfor %}
+  <div class="alert alert-warning">
+    * Le volume horaire en lien avec la ressource dans les SAÉ est indicatif et peut être adapté dans chaque
+    département.
+  </div>
+{% endblock %}

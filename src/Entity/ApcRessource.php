@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcRessource.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/03/2021 13:13
+ * @lastUpdate 19/04/2021 18:09
  */
 
 namespace App\Entity;
@@ -23,6 +23,8 @@ use Doctrine\ORM\Mapping as ORM;
 class ApcRessource extends BaseEntity implements MatiereInterface
 {
     use LifeCycleTrait;
+
+    public const SOURCE = 'ressource';
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -88,6 +90,16 @@ class ApcRessource extends BaseEntity implements MatiereInterface
      * @ORM\Column(type="boolean")
      */
     private bool $suspendu = false;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $heuresSAE;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $heuresSAEPtut;
 
     public function __construct()
     {
@@ -411,5 +423,34 @@ class ApcRessource extends BaseEntity implements MatiereInterface
     public function getTpFormation(): float
     {
         return $this->heuresTP;
+    }
+
+    public function getCode(): ?string
+    {
+        return $this->getCodeRessource();
+    }
+
+    public function getHeuresSAE(): ?float
+    {
+        return $this->heuresSAE;
+    }
+
+    public function setHeuresSAE(?float $heuresSAE): self
+    {
+        $this->heuresSAE = $heuresSAE;
+
+        return $this;
+    }
+
+    public function getHeuresSAEPtut(): ?float
+    {
+        return $this->heuresSAEPtut;
+    }
+
+    public function setHeuresSAEPtut(?float $heuresSAEPtut): self
+    {
+        $this->heuresSAEPtut = $heuresSAEPtut;
+
+        return $this;
     }
 }
