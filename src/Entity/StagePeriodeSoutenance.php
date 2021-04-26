@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/StagePeriodeSoutenance.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 26/04/2021 15:30
  */
 
 namespace App\Entity;
@@ -24,22 +24,22 @@ class StagePeriodeSoutenance extends BaseEntity
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\StagePeriode", inversedBy="stagePeriodeSoutenances")
      */
-    private $stagePeriode;
+    private ?StagePeriode $stagePeriode;
 
     /**
      * @ORM\Column(type="date")
      */
-    private $dateDebut;
+    private ?DateTimeInterface $dateDebut;
 
     /**
      * @ORM\Column(type="date")
      */
-    private $dateFin;
+    private ?DateTimeInterface $dateFin;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
-    private $dateRenduRapport;
+    private ?DateTimeInterface $dateRenduRapport;
 
     public function getStagePeriode(): ?StagePeriode
     {
@@ -82,7 +82,7 @@ class StagePeriodeSoutenance extends BaseEntity
         return $this->dateRenduRapport;
     }
 
-    public function setDateRenduRapport(DateTimeInterface $dateRenduRapport): self
+    public function setDateRenduRapport(?DateTimeInterface $dateRenduRapport): self
     {
         $this->dateRenduRapport = $dateRenduRapport;
 

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/StagePeriodeSoutenanceType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 26/04/2021 15:30
  */
 
 namespace App\Form;
@@ -26,7 +26,7 @@ class StagePeriodeSoutenanceType extends AbstractType
             ->add('dateRange', DateRangeType::class,
                 ['label' => 'dateRange.soutenance', 'mapped' => false, 'required' => true])
             ->add('dateRenduRapport', DateTimeType::class,
-                ['widget' => 'single_text', 'label' => 'label.dateRenduRapport'])
+                ['widget' => 'single_text', 'label' => 'label.dateRenduRapport', 'required' => false])
             ->addEventListener(FormEvents::POST_SUBMIT, static function(FormEvent $event) {
                 $stagePeriodeSoutenance = $event->getData();
                 $form = $event->getForm();
