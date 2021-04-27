@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/EtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 26/04/2021 15:49
  */
 
 namespace App\Controller\superAdministration;
@@ -61,7 +61,11 @@ class EtudiantController extends BaseController
     /**
      * @Route("/recherche/{needle}", name="sa_etudiant_recherche", options={"expose"=true})
      *
-     * @param $needle
+     * @param \App\Repository\DepartementRepository $departementRepository
+     * @param \App\Repository\EtudiantRepository    $etudiantRepository
+     * @param                                       $needle
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function rechercheEtudiants(
         DepartementRepository $departementRepository,
