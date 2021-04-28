@@ -1,0 +1,13 @@
+Bonjour,<br><br>
+
+<p>Le mail de relance pour le questionnaire "{{ questionnaire.titre }}" a été envoyé aux {{ etudiants|length }}
+   étudiants
+   suivants :</p>
+
+<ul>
+    {% for etudiant in etudiants %}
+        <li>{{ etudiant.displayPr }}</li>
+    {% endfor %}
+</ul>
+
+Cordialement.

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/QuestionnaireEtudiantRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:08
+ * @lastUpdate 28/04/2021 09:18
  */
 
 namespace App\Repository;
@@ -100,4 +100,14 @@ class QuestionnaireEtudiantRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findByQuestionnaireQualite(QuestionnaireQualite $questionnaire)
+    {
+        return $this->createQueryBuilder('q')
+            ->where('q.questionnaireQualite = :questionnaire')
+            ->setParameter('questionnaire', $questionnaire->getId())
+            ->getQuery()
+            ->getResult();
+    }
+
 }

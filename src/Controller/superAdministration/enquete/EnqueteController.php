@@ -4,13 +4,15 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/enquete/EnqueteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 10/02/2021 17:59
+ * @lastUpdate 28/04/2021 10:04
  */
 
 namespace App\Controller\superAdministration\enquete;
 
+use App\Classes\Enquetes\EnqueteRelance;
 use App\Classes\Enquetes\MyEnquete;
 use App\Entity\Constantes;
+use App\Entity\Questionnaire;
 use App\Entity\QuestionnaireQualite;
 use App\Entity\QuestionnaireQuestionnaireSection;
 use App\Entity\Semestre;
@@ -25,6 +27,7 @@ use PhpOffice\PhpSpreadsheet\Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -70,10 +73,31 @@ class EnqueteController extends AbstractController
         }
 
         return $this->render('super-administration/enquete/semestre.html.twig', [
-            'semestre'      => $semestre,
-            'nbReponses'    => $stats,
+            'semestre' => $semestre,
+            'nbReponses' => $stats,
             'quizzEtudiant' => $quizzEtudiants,
         ]);
+    }
+
+    /**
+     * @Route("/questionnaire/relance/{questionnaire}", name="administratif_enquete_relance")
+     *
+     */
+    public function relance(
+        FlashBagInterface $flashBag,
+        EnqueteRelance $enqueteRelance,
+        EtudiantRepository $etudiantRepository,
+        QuestionnaireEtudiantRepository $quizzEtudiantRepository,
+        QuestionnaireQualite $questionnaire
+    ) {
+        $reponses = $quizzEtudiantRepository->findByQuestionnaireQualite($questionnaire);
+        $etudiants = $etudiantRepository->findBySemestre($questionnaire->getSemestre());
+
+        $enqueteRelance->envoyerRelance($questionnaire, $reponses, $etudiants);
+        $flashBag->add(Constantes::FLASHBAG_SUCCESS, 'Message de relance envoyé');
+
+        return $this->redirectToRoute('administratif_enquete_semestre',
+            ['semestre' => $questionnaire->getSemestre()->getId()]);
     }
 
     /**
