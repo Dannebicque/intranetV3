@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Rattrapage.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 28/04/2021 21:08
  */
 
 namespace App\Entity;
@@ -29,71 +29,75 @@ class Rattrapage extends BaseEntity
     public const DEMANDE_FAITE = 'f';
     public const DEMANDE_ACCEPTEE = 'a';
     public const DEMANDE_REFUSEE = 'r';
+    public const EtatLong = [
+        self::DEMANDE_FAITE => 'demande faite',
+        self::DEMANDE_ACCEPTEE => 'demande acceptée',
+        self::DEMANDE_REFUSEE => 'demande refusée'
+    ];
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Etudiant", inversedBy="rattrapages")
      * @Groups({"rattrapage_administration"})
      */
-    private $etudiant;
+    private ?Etudiant $etudiant;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Matiere")
      * @Groups({"rattrapage_administration"})
      */
-    private $matiere;
+    private ?Matiere $matiere;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Personnel")
      * @Groups({"rattrapage_administration"})
      */
-    private $personnel;
+    private ?Personnel $personnel;
 
     /**
      * @ORM\Column(type="date")
      * @Groups({"rattrapage_administration"})
      */
-    private $dateEval;
+    private ?DateTimeInterface $dateEval;
 
     /**
      * @ORM\Column(type="time")
      * @Groups({"rattrapage_administration"})
      */
-    private $heureEval;
+    private ?DateTimeInterface $heureEval;
 
     /**
      * @ORM\Column(type="string", length=20)
      * @Groups({"rattrapage_administration"})
      */
-    private $duree;
+    private ?string $duree;
 
     /**
      * @ORM\Column(type="date", nullable=true)
      * @Groups({"rattrapage_administration"})
      */
-    private $dateRattrapage;
+    private ?DateTimeInterface $dateRattrapage;
 
     /**
      * @ORM\Column(type="time", nullable=true)
      * @Groups({"rattrapage_administration"})
      */
-    private $heureRattrapage;
+    private ?DateTimeInterface $heureRattrapage;
 
     /**
      * @ORM\Column(type="string", length=10, nullable=true)
      * @Groups({"rattrapage_administration"})
      */
-    private $salle;
+    private ?string $salle;
 
     /**
      * @ORM\Column(type="string", length=1)
-     * @Groups({"rattrapage_administration"})
      */
-    private $etatDemande;
+    private string $etatDemande;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\AnneeUniversitaire")
      */
-    private $anneeUniversitaire;
+    private ?AnneeUniversitaire $anneeUniversitaire;
 
     /**
      * Rattrapage constructor.
@@ -105,7 +109,7 @@ class Rattrapage extends BaseEntity
         $this->setUuid(Uuid::uuid4());
         $this->etudiant = $etudiant;
         $this->etatDemande = self::DEMANDE_FAITE;
-        $this->anneeuniversitaire = null !== $etudiant ? $etudiant->getAnneeUniversitaire() : null;
+        $this->anneeUniversitaire = null !== $etudiant ? $etudiant->getAnneeUniversitaire() : null;
     }
 
     public function __clone()
@@ -119,9 +123,11 @@ class Rattrapage extends BaseEntity
     }
 
     /**
+     * @param \App\Entity\Etudiant $etudiant
+     *
      * @return Rattrapage
      */
-    public function setEtudiant(?Etudiant $etudiant): self
+    public function setEtudiant(Etudiant $etudiant): self
     {
         $this->etudiant = $etudiant;
 
@@ -134,6 +140,8 @@ class Rattrapage extends BaseEntity
     }
 
     /**
+     * @param \App\Entity\Matiere|null $matiere
+     *
      * @return Rattrapage
      */
     public function setMatiere(?Matiere $matiere): self
@@ -149,6 +157,8 @@ class Rattrapage extends BaseEntity
     }
 
     /**
+     * @param \App\Entity\Personnel|null $personnel
+     *
      * @return Rattrapage
      */
     public function setPersonnel(?Personnel $personnel): self
@@ -164,6 +174,8 @@ class Rattrapage extends BaseEntity
     }
 
     /**
+     * @param \DateTimeInterface $dateEval
+     *
      * @return Rattrapage
      */
     public function setDateEval(DateTimeInterface $dateEval): self
@@ -179,6 +191,8 @@ class Rattrapage extends BaseEntity
     }
 
     /**
+     * @param \DateTimeInterface $heureEval
+     *
      * @return Rattrapage
      */
     public function setHeureEval(DateTimeInterface $heureEval): self
@@ -194,6 +208,8 @@ class Rattrapage extends BaseEntity
     }
 
     /**
+     * @param string $duree
+     *
      * @return Rattrapage
      */
     public function setDuree(string $duree): self
@@ -209,6 +225,8 @@ class Rattrapage extends BaseEntity
     }
 
     /**
+     * @param \DateTimeInterface $dateRattrapage
+     *
      * @return Rattrapage
      */
     public function setDateRattrapage(DateTimeInterface $dateRattrapage): self
@@ -224,6 +242,8 @@ class Rattrapage extends BaseEntity
     }
 
     /**
+     * @param \DateTimeInterface|null $heureRattrapage
+     *
      * @return Rattrapage
      */
     public function setHeureRattrapage(?DateTimeInterface $heureRattrapage): self
@@ -239,6 +259,8 @@ class Rattrapage extends BaseEntity
     }
 
     /**
+     * @param string|null $salle
+     *
      * @return Rattrapage
      */
     public function setSalle(?string $salle): self
@@ -254,6 +276,8 @@ class Rattrapage extends BaseEntity
     }
 
     /**
+     * @param string $etatDemande
+     *
      * @return Rattrapage
      */
     public function setEtatDemande(string $etatDemande): self
@@ -285,5 +309,13 @@ class Rattrapage extends BaseEntity
         $this->uuid = $uuid;
 
         return $this;
+    }
+
+    /**
+     * @Groups({"rattrapage_administration"})
+     */
+    public function getEtatDemandeLong(): string
+    {
+        return self::EtatLong[$this->etatDemande];
     }
 }

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/RattrapageController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 28/04/2021 21:10
  */
 
 namespace App\Controller\administration;
@@ -51,7 +51,12 @@ class RattrapageController extends BaseController
      * @Route("/{semestre}/export.{_format}", name="administration_rattrapage_export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"})
      *
-     * @param $_format
+     * @param \App\Classes\MyExport                $myExport
+     * @param \App\Repository\RattrapageRepository $rattrapageRepository
+     * @param \App\Entity\Semestre                 $semestre
+     * @param                                      $_format
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function export(
         MyExport $myExport,
@@ -67,16 +72,16 @@ class RattrapageController extends BaseController
             'rattrapages_' . $semestre->getLibelle(),
             ['rattrapage_administration', 'utilisateur', 'matiere'],
             [
-                'etudiant'  => ['nom', 'prenom'],
+                'etudiant' => ['nom', 'prenom'],
                 'dateEval',
                 'heureEval',
                 'duree',
-                'matiere'   => ['libelle'],
+                'matiere' => ['libelle'],
                 'personnel' => ['nom', 'prenom'],
                 'dateRattrapage',
                 'heureRattrapage',
                 'salle',
-                'etatDemande',
+                'etatDemandeLong',
             ]
         );
     }
