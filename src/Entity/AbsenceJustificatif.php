@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/AbsenceJustificatif.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 28/04/2021 21:16
  */
 
 namespace App\Entity;
@@ -38,9 +38,9 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
     public const DEPOSE = 'D';
 
     public const ETATLONG = [
-        'A' => 'Accepté',
-        'R' => 'Refusé',
-        'D' => 'Déposé',
+        self::ACCEPTE => 'Accepté, absences justifiées',
+        self::REFUSE => 'Refusé',
+        self::DEPOSE => 'Déposé, en attente de validation',
     ];
 
     /**
@@ -209,15 +209,13 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
         $this->fichierName = $fichierName;
     }
 
+    /**
+     * @return string
+     * @Groups({"justificatif_administration"})
+     */
     public function getEtatLong(): string
     {
-        $tabEtat = [
-            'A' => 'Accepté, absences justifiées',
-            'R' => 'Refusé',
-            'D' => 'Déposé, en attente de validation',
-        ];
-
-        return $tabEtat[$this->etat];
+        return self::ETATLONG[$this->etat];
     }
 
     public function getAnneeUniversitaire(): ?AnneeUniversitaire

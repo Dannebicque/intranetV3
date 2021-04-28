@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/AbsenceJustificatifController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 28/04/2021 21:15
  */
 
 namespace App\Controller\administration;
@@ -62,7 +62,7 @@ class AbsenceJustificatifController extends BaseController
             $justificatifs,
             'justificatifs_' . $semestre->getLibelle(),
             ['justificatif_administration', 'utilisateur'],
-            ['dateDebut', 'heureDebut', 'dateFin', 'heureFin', 'motif', 'etat', 'etudiant' => ['prenom', 'nom']]
+            ['dateDebut', 'heureDebut', 'dateFin', 'heureFin', 'motif', 'etatLong', 'etudiant' => ['prenom', 'nom']]
         );
     }
 
