@@ -1,15 +1,15 @@
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.rattrapages.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/07/2020 11:18
+// @lastUpdate 29/04/2021 09:25
 import {addCallout} from '../util'
 
 $(document).on('click', '.rattrapage-accepte', function (e) {
   e.preventDefault()
   const rattrapage = $(this).data('rattrapage')
   $.ajax({
-    url: Routing.generate('administration_rattrapage_change_etat', {uuid: rattrapage, etat: 'A'}),
+    url: Routing.generate('administration_rattrapage_change_etat', {uuid: rattrapage, etat: 'a'}),
     success: function () {
       const bx = $('.bx_' + rattrapage)
       const parent = bx.parent()
@@ -27,7 +27,7 @@ $(document).on('click', '.rattrapage-refuse', function (e) {
   e.preventDefault()
   const rattrapage = $(this).data('rattrapage')
   $.ajax({
-    url: Routing.generate('administration_rattrapage_change_etat', {uuid: rattrapage, etat: 'R'}),
+    url: Routing.generate('administration_rattrapage_change_etat', {uuid: rattrapage, etat: 'r'}),
     success: function () {
       const bx = $('.bx_' + rattrapage)
       const parent = bx.parent()

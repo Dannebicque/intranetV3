@@ -63,7 +63,7 @@
                         <td>{{ rattrapage.created ? rattrapage.created|format_date('long') : 'non.defini'|trans }}</td>
                         <td>{% if absences[rattrapage.etudiant.id] is defined and absences[rattrapage.etudiant.id][rattrapage.dateEval|date('Ymd')] is defined and absences[rattrapage.etudiant.id][rattrapage.dateEval|date('Ymd')][rattrapage.heureEval|date('Hi')] is defined %}{{ absences[rattrapage.etudiant.id][rattrapage.dateEval|date('Ymd')][rattrapage.heureEval|date('Hi')] ? 'Yes'|trans : 'No'|trans }}{% else %}Pas d'absence saisie{% endif %}</td>
                         <td>
-                            {% if rattrapage.etatDemande == 'f' %}
+                            {% if rattrapage.etatDemande == constant('App\\Entity\\Rattrapage::DEMANDE_FAITE') %}
                                 <a href="#"
                                    data-rattrapage="{{ rattrapage.uuidString }}"
                                    class="btn btn-success btn-outline btn-square rattrapage-accepte bx_{{ rattrapage.uuidString }}"><i
@@ -78,11 +78,15 @@
                                             data-provide="tooltip"
                                             data-placement="bottom"
                                             title="{{ 'atitle.accepter.la.demande'|trans }}"></i></a>
-                            {% elseif rattrapage.etatDemande == 'A' %}
-                                <a href="#" class="btn btn-success btn-outline"><i class="fas fa-check"></i>
+                            {% elseif rattrapage.etatDemande == constant('App\\Entity\\Rattrapage::DEMANDE_ACCEPTEE') %}
+                                <a href="#" class="btn btn-success btn-outline" data-provide="tooltip"
+                                   data-placement="bottom" title="Demande acceptée"><i class="fas
+                                fa-check"></i>
                                     Acceptée</a>
-                            {% elseif rattrapage.etatDemande == 'R' %}
-                                <a href="#" class="btn btn-warning btn-outline"><i class="fas fa-ban"></i>
+                            {% elseif rattrapage.etatDemande == constant('App\\Entity\\Rattrapage::DEMANDE_REFUSEE') %}
+                                <a href="#" class="btn btn-warning btn-outline" data-provide="tooltip"
+                                   data-placement="bottom" title="Demande refusée"><i class="fas
+                                fa-ban"></i>
                                     Refusée</a>
                             {% else %}
                                 Erreur
