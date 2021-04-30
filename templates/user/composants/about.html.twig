@@ -102,8 +102,21 @@
                 </div>
                 <div>
                     {% for commentaire in user.commentaires %}
-                        <p>{{ commentaire.texte }}</p>
-                        <hr>
+                        <div>
+                            <p>{{ commentaire.texte }}</p>
+                            <div class="gap-items-4 mt-2">
+                                <a class="text-lighter hover-light" href="#">
+                                    <i class="{{ iconEdit }}"></i>
+                                </a>
+                                <a class="text-lighter hover-light" href="#">
+                                    <i class="{{ iconDuplicate }}"></i>
+                                </a>
+                                <a class="text-lighter hover-light" href="#">
+                                    <i class="{{ iconDelete }}"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <hr class="hr-lg w-300px border-primary">
                         {% if loop.last %}
                             <div id="listeCommentaire"></div>
                         {% endif %}
