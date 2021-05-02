@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyPrevisionnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 02/05/2021 18:44
  */
 
 /*
@@ -27,6 +27,7 @@ use App\Repository\EdtPlanningRepository;
 use App\Repository\HrsRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\PrevisionnelRepository;
+use App\Repository\PrevisionnelSaeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -98,6 +99,10 @@ class MyPrevisionnel
      * @var Personnel[]|mixed
      */
     private $personnels;
+    /**
+     * @var \App\Repository\PrevisionnelSaeRepository
+     */
+    private PrevisionnelSaeRepository $previsionnelSaeRepository;
 
     public function getAnneePrevi()
     {
@@ -124,6 +129,7 @@ class MyPrevisionnel
     public function __construct(
         EntityManagerInterface $entityManager,
         PrevisionnelRepository $previsionnelRepository,
+        PrevisionnelSaeRepository $previsionnelSaeRepository,
         PersonnelRepository $personnelRepository,
         HrsRepository $hrsRepository,
         MyExcelWriter $myExcelWriter,
@@ -132,6 +138,7 @@ class MyPrevisionnel
         MyUpload $myUpload
     ) {
         $this->previsionnelRepository = $previsionnelRepository;
+        $this->previsionnelSaeRepository = $previsionnelSaeRepository;
         $this->personnelRepository = $personnelRepository;
         $this->edtPlanningRepository = $edtPlanningRepository;
         $this->celcatEventsRepository = $celcatEventsRepository;
@@ -307,13 +314,24 @@ class MyPrevisionnel
         $this->servicePrevisionnelByDepartement = $tprev;
     }
 
+//    public function getAllPrevisionnel(Personnel $personnel, $annee)
+//    {
+//        //todo: il faudrait sortir cela pour que MyPrevsionnel ne soit pas dépendnat du type... Comment faire ?
+//        //$matieres = $this->matiereRepository->findByDepartement($departement);
+//        //$ressrouces = $this->apcRessourceRepository->findByDepartement($departement);
+//        $saes = $this->previsionnelSaeRepository->findPrevisionnelEnseignantComplet($personnel, $annee);
+//
+//        return array_merge($saes);
+//    }
+
     /**
      * @param $annee
      */
     public function getPrevisionnelEnseignantBySemestre($annee): void
     {
         $this->anneePrevi = $annee;
-        $previsionnels = $this->previsionnelRepository->findPrevisionnelEnseignantComplet($this->personnel, $annee);
+        $previsionnels = $this->getAllPrevisionnel($this->personnel,
+            $annee);   //$this->previsionnelRepository->findPrevisionnelEnseignantComplet($this->personnel, $annee);
 
         $tprev = [];
         /** @var Previsionnel $pr */
@@ -692,5 +710,25 @@ class MyPrevisionnel
         Personnel $personnel,
         AnneeUniversitaire $anneeUniversitaire
     ) {
+    }
+
+    public function getSynthese(array $previsionnels, $hrs)
+    {
+        $tprev = [];
+
+        foreach ($previsionnels as $pr) {
+            $sem = $pr->getSemestre() ? $pr->getSemestre()->getId() : null;
+
+            if (null !== $sem) {
+                if (!\array_key_exists($sem, $tprev)) {
+                    $tprev[$sem] = [];
+                    $this->semestres[] = $pr->getSemestre();
+                }
+                $tprev[$sem][] = $pr;
+                $this->totalCm += $pr->getTotalHCm();
+                $this->totalTd += $pr->getTotalHTd();
+                $this->totalTp += $pr->getTotalHTp();
+            }
+        }
     }
 }

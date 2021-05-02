@@ -1,13 +1,14 @@
 <div class="card">
     <header class="card-header">
         <h4 class="card-title"><strong>{{ 'synthese.previsionnel.heading'|trans }}</strong>
-            | {{ user_data.departement.libelle }} | {{ previsionnel.personnel.display }} |
+            | {{ user_data.departement.libelle }} | {{ personnel.display }} |
             ({{ 'periode'|trans }} : {{ user_data.departement.optAnneePrevisionnel }})</h4>
     </header>
 
     <div class="card-body">
         <table class="table table-bordered table-striped table-hover">
-            <tbody><tr>
+            <tbody>
+            <tr>
                 <th></th>
                 <th class="importantgros">{{ 'cm'|trans }}</th>
                 <th class="previtd">{{ 'td'|trans }}</th>
@@ -16,22 +17,22 @@
             </tr>
             <tr>
                 <td class="importantgros">Total général (h) (hors HRS)</td>
-                <td class="importantgros">{{ previsionnel.totalCm }} h</td>
-                <td class="previtd">{{ previsionnel.totalTd }} h</td>
-                <td class="previtp">{{ previsionnel.totalTp }} h</td>
-                <td class="importantgros">{{ previsionnel.totalService }} h</td>
+                <td class="importantgros">{{ synthsePrevisionnel.totalCm }} h</td>
+                <td class="previtd">{{ synthsePrevisionnel.totalTd }} h</td>
+                <td class="previtp">{{ synthsePrevisionnel.totalTp }} h</td>
+                <td class="importantgros">{{ synthsePrevisionnel.totalService }} h</td>
             </tr>
 
             <tr>
                 <td class="importantgros">{{ 'heures.complementaires'|trans }} </td>
                 <td class="importantgros" colspan="3"></td>
-                <td class="importantgros">{{ previsionnel.nbHeuresComplementaires }} h</td>
+                <td class="importantgros">{{ synthsePrevisionnel.nbHeuresComplementaires }} h</td>
             </tr>
 
             <tr>
-                <td class="importantgros">Service + Primes (HRS, PRP, ...) </td>
+                <td class="importantgros">Service + Primes (HRS, PRP, ...)</td>
                 <td class="importantgros" colspan="3">&nbsp;</td>
-                <td class="importantgros">{{ previsionnel.totalHrsService }} h (éq. TD)</td>
+                <td class="importantgros">{{ synthsePrevisionnel.totalHrsService }} h (éq. TD)</td>
             </tr>
             </tbody>
         </table>

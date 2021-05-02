@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcRessource.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/04/2021 18:09
+ * @lastUpdate 02/05/2021 18:44
  */
 
 namespace App\Entity;
@@ -394,22 +394,6 @@ class ApcRessource extends BaseEntity implements MatiereInterface
         return $this->getCodeRessource() . ' | ' . $this->getLibelle();
     }
 
-    public function getJson(): array
-    {
-        $t = [];
-        $t['id'] = $this->getId();
-        $t['libelle'] = $this->getLibelle();
-        $t['display'] = ''; //$this->getUe() ? $this->getUe()->getLibelle() : '-';
-        $t['cmFormation'] = $this->getCmFormation();
-        $t['tdFormation'] = $this->getTdFormation();
-        $t['tpFormation'] = $this->getTpFormation();
-        $t['cmPpn'] = $this->getCmFormation();
-        $t['tdPpn'] = $this->getTdFormation();
-        $t['tpPpn'] = $this->getTpFormation();
-
-        return $t;
-    }
-
     public function getCmFormation(): float
     {
         return $this->heuresCM;
@@ -452,5 +436,23 @@ class ApcRessource extends BaseEntity implements MatiereInterface
         $this->heuresSAEPtut = $heuresSAEPtut;
 
         return $this;
+    }
+
+    public function getJson(): array
+    {
+        $t = [];
+        $t['id'] = $this->getId();
+        $t['libelle'] = $this->getLibelle();
+        $t['display'] = '-';
+        $t['cmFormation'] = $this->getHeuresCM();
+        $t['tdFormation'] = $this->getHeuresTD();
+        $t['tpFormation'] = $this->getHeuresTP();
+        $t['ptutFormation'] = null;
+        $t['cmPpn'] = $this->getHeuresCM();
+        $t['tdPpn'] = $this->getHeuresTD();
+        $t['tpPpn'] = $this->getHeuresTP();
+        $t['ptutPpn'] = null;
+
+        return $t;
     }
 }

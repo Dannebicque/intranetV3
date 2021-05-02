@@ -1,7 +1,7 @@
 <div class="card">
     <header class="card-header">
         <h4 class="card-title"><strong>{{ 'hrs.suivis.responsabilite.heading'|trans }}</strong>
-            | {{ previsionnel.personnel.display }} |
+            | {{ personnel.display }} |
             ({{ 'periode'|trans }} : {{ user_data.departement.optAnneePrevisionnel }})</h4>
     </header>
 
@@ -16,7 +16,7 @@
             </tr>
             </thead>
             <tbody>
-            {% for hr in previsionnel.hrs %}
+            {% for hr in hrs %}
                 <tr>
                     <td>{{ hr.libelle }}</td>
                     <td>{{ hr.diplome ? hr.diplome.libelle : (hr.semestre ? hr.semestre.libelle : 'non.defini'|trans) }}</td>
@@ -26,7 +26,7 @@
                 {% if loop.last %}
                     <tr>
                         <td colspan="3" style="text-align: right;">{{ 'table.total_prime'|trans }} :</td>
-                        <td>{{ previsionnel.totalHrs }} h (éq. TD)</td>
+                        <td>{{ synthsePrevisionnel.totalHrs }} h (éq. TD)</td>
                     </tr>
                 {% endif %}
             {% else %}
