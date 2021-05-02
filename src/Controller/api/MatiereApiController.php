@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/api/MatiereApiController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 02/05/2021 18:53
  */
 
 namespace App\Controller\api;
 
+use App\Classes\Matieres\TypeMatiereHandler;
 use App\Controller\BaseController;
 use App\Entity\Matiere;
 use App\Entity\Parcour;
@@ -67,8 +68,11 @@ class MatiereApiController extends BaseController
     /**
      * @Route("/{matiere}", name="api_matiere", options={"expose":true})
      */
-    public function matiereAjax(Matiere $matiere): JsonResponse
+    public function matiereAjax(TypeMatiereHandler $typeMatiereHandler, $matiere): JsonResponse
     {
+        $typeHandler = $typeMatiereHandler->typeDeMatiereFromSelect($matiere);
+        $matiere = $typeHandler->findFromSelect($matiere);
+
         return new JsonResponse($matiere->getJson());
     }
 
