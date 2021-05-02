@@ -28,7 +28,7 @@
     "vue-template-compiler": "^2.6.12",
     "webpack-notifier": "^1.6.0"
   },
-  "license": "MIT",
+  "license": "MPL2.0",
   "private": true,
   "scripts": {
     "dev-server": "encore dev-server",
