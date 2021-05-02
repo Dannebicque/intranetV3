@@ -113,6 +113,14 @@
                                             class="{{ iconDelete }}" data-provide="tooltip" data-placement="bottom"
                                             title="{{ 'atitle.supprimer'|trans }}"></i></a>
                             {% endif %}
+                            <a href="{{ path(baseurl ~ 'diplome_import_index', {id: diplome.id}) }}"
+                               class="btn btn-info btn-outline btn-square btn-xs"><i
+                                        class="fas fa-upload" data-provide="tooltip" data-placement="bottom"
+                                        title="Importer une maquette"></i></a>
+                            <a href="{{ path(baseurl ~ 'diplome_delete', {id: diplome.id}) }}"
+                               class="btn btn-info btn-outline btn-square btn-xs"><i
+                                        class="fas fa-download" data-provide="tooltip" data-placement="bottom"
+                                        title="Exporter une maquette"></i></a>
                         {% endif %}
                     </div>
                 </div>
