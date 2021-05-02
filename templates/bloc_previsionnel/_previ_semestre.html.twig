@@ -22,17 +22,16 @@
     </tr>
     </thead>
     <tbody>
-    {% if previsionnel.servicePrevisionnelBySemestre[semestre.id] is defined %}
-        {% for previsionnel in previsionnel.servicePrevisionnelBySemestre[semestre.id] %}
+        {% for previsionnel in previsionnels|filter(previsionnel => previsionnel.semestre_id == semestre.id) %}
             <tr>
                 <td colspan="11">
-                    {{ previsionnel.matiere.codeMatiere }} | {{ previsionnel.matiere.libelle }}
-                                                           | {{ previsionnel.matiere.codeElement }}
+                    {{ previsionnel.matiere_code }} | {{ previsionnel.matiere_libelle }}
+                                                    | {{ previsionnel.matiere_code_element }}
                 </td>
 
                 <td colspan="2">
                     <button data-provide="modaler tooltip"
-                            data-url="{{ path('api_previsionnel_matiere', {'matiere': previsionnel.matiere.id}) }}"
+                            data-url="{{ path('api_previsionnel_matiere', {'matiere': previsionnel.matiere_id}) }}"
                             data-size="lg"
                             data-confirm-text="{{ 'fermer'|trans }}"
                             class="btn btn-block btn-cyan"
@@ -132,11 +131,10 @@
                     <td>{{ previsionnel.totalEtudiant }} h</td>
                 {% endif %}
             </tr>
-        {% endfor %}
     {% else %}
         <tr>
             <td colspan="14">Pas de sercice</td>
         </tr>
-    {% endif %}
+        {% endfor %}
     </tbody>
 </table>

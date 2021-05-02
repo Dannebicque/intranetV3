@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcSae.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/03/2021 21:14
+ * @lastUpdate 02/05/2021 18:44
  */
 
 namespace App\Entity;
@@ -23,6 +23,8 @@ use Doctrine\ORM\Mapping as ORM;
 class ApcSae extends BaseEntity
 {
     use LifeCycleTrait;
+
+    public const SOURCE = 'sae';
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -356,5 +358,28 @@ class ApcSae extends BaseEntity
         $this->exemples = $exemples;
 
         return $this;
+    }
+
+    public function getCode(): ?string
+    {
+        return $this->getCodeSae();
+    }
+
+    public function getJson(): array
+    {
+        $t = [];
+        $t['id'] = $this->getId();
+        $t['libelle'] = $this->getLibelle();
+        $t['display'] = '-';
+        $t['cmFormation'] = $this->getHeuresCM();
+        $t['tdFormation'] = $this->getHeuresTD();
+        $t['tpFormation'] = $this->getHeuresTP();
+        $t['ptutFormation'] = $this->getHeuresProjet();
+        $t['cmPpn'] = $this->getHeuresCM();
+        $t['tdPpn'] = $this->getHeuresTD();
+        $t['tpPpn'] = $this->getHeuresTP();
+        $t['ptutPpn'] = $this->getHeuresProjet();
+
+        return $t;
     }
 }

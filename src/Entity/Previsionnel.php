@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Previsionnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/03/2021 13:23
+ * @lastUpdate 02/05/2021 16:38
  */
 
 namespace App\Entity;
@@ -34,42 +34,52 @@ class Previsionnel extends BaseEntity
     /**
      * @ORM\Column(type="integer")
      */
-    private $annee;
+    private ?int $annee;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $referent = false;
+    private bool $referent = false;
 
     /**
      * @ORM\Column(type="float")
      */
-    private $nbHCm = 0;
+    private int $nbHCm = 0;
 
     /**
      * @ORM\Column(type="float")
      */
-    private $nbHTd = 0;
+    private int $nbHTd = 0;
 
     /**
      * @ORM\Column(type="float")
      */
-    private $nbHTp = 0;
+    private int $nbHTp = 0;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $nbGrCm = 0;
+    private int $nbGrCm = 0;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $nbGrTd = 0;
+    private int $nbGrTd = 0;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $nbGrTp = 0;
+    private int $nbGrTp = 0;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $id_matiere;
+
+    /**
+     * @ORM\Column(type="string", length=30, nullable=true)
+     */
+    private $typeMatiere;
 
     /**
      * Previsionnel constructor.
@@ -78,9 +88,8 @@ class Previsionnel extends BaseEntity
      * @param $personnel
      * @param $annee
      */
-    public function __construct(Matiere $matiere, $annee, ?Personnel $personnel = null)
+    public function __construct($annee, ?Personnel $personnel = null)
     {
-        $this->matiere = $matiere;
         $this->personnel = $personnel;
         $this->annee = $annee;
     }
@@ -235,67 +244,6 @@ class Previsionnel extends BaseEntity
         return $this;
     }
 
-    public function getSemestre(): ?Semestre
-    {
-        if (null !== $this->getMatiere()) {
-            return $this->getMatiere()->getSemestre();
-        }
-
-        return null;
-    }
-
-    public function getNbSeanceCm(): string
-    {
-        return number_format($this->nbHCm / self::DUREE_SEANCE, 2);
-    }
-
-    public function getNbSeanceTd(): string
-    {
-        return number_format($this->nbHTd / self::DUREE_SEANCE, 2);
-    }
-
-    public function getNbSeanceTp(): string
-    {
-        return number_format($this->nbHTp / self::DUREE_SEANCE, 2);
-    }
-
-    /**
-     * @return float|int
-     */
-    public function getTotalHCm()
-    {
-        return $this->nbHCm * $this->nbGrCm;
-    }
-
-    /**
-     * @return float|int
-     */
-    public function getTotalHTd()
-    {
-        return $this->nbHTd * $this->nbGrTd;
-    }
-
-    /**
-     * @return float|int
-     */
-    public function getTotalHTp()
-    {
-        return $this->nbHTp * $this->nbGrTp;
-    }
-
-    /**
-     * @return float|int
-     */
-    public function getTotalEqTd()
-    {
-        return $this->getTotalHCm() * Constantes::MAJORATION_CM + $this->getTotalHTd() + $this->getTotalHTp();
-    }
-
-    public function getTotalEtudiant()
-    {
-        return $this->nbHCm + $this->nbHTd + $this->nbHTp;
-    }
-
     public function getDepartement()
     {
         if (null !== $this->getSemestre() &&
@@ -305,5 +253,29 @@ class Previsionnel extends BaseEntity
         }
 
         return null;
+    }
+
+    public function getIdMatiere(): ?int
+    {
+        return $this->id_matiere;
+    }
+
+    public function setIdMatiere(?int $id_matiere): self
+    {
+        $this->id_matiere = $id_matiere;
+
+        return $this;
+    }
+
+    public function getTypeMatiere(): ?string
+    {
+        return $this->typeMatiere;
+    }
+
+    public function setTypeMatiere(?string $typeMatiere): self
+    {
+        $this->typeMatiere = $typeMatiere;
+
+        return $this;
     }
 }

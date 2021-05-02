@@ -28,9 +28,10 @@
                             <label class="form-control-label required" for="previsionnel_matiere">{{ 'choisir.matiere'|trans }}</label>
                             <select class="form-control selectpicker" id="previsionnel_matiere" name="previsionnel_matiere">
                                 <option value="">{{ 'choisir.matiere'|trans }}</option>
-                                {% for matiere in matieres %}
-                                    <option value="{{ matiere.id }}">{{ matiere.codeMatiere }}
-                                        | {{ matiere.libelle }}</option>
+                                {% for key, matiere in matieres %}
+                                    <option value="{{ constant('SOURCE', matieres[key]) }}_{{ matieres[key].id }}">{{ matieres[key]
+                                        .code }}
+                                        | {{ matieres[key].libelle }}</option>
                                 {% endfor %}
                             </select>
                         </div>

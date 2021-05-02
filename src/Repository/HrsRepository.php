@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/HrsRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:08
+ * @lastUpdate 02/05/2021 16:31
  */
 
 namespace App\Repository;
@@ -46,6 +46,26 @@ class HrsRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    /**
+     * @param $getUser
+     * @param $annee
+     */
+    public function getPersonnelDepartementAnnee($personnel, $departement, $annee)
+    {
+        //todo: gérer le département pour le filtre
+
+        return $this->createQueryBuilder('h')
+            ->where('h.personnel = :user')
+            ->andWhere('h.annee = :annee')
+            ->setParameter('user', $personnel)
+            ->setParameter('annee', $annee)
+            ->orderBy('h.typeHrs', 'ASC')
+            ->orderBy('h.semestre', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
 
     /**
      * @param $annee

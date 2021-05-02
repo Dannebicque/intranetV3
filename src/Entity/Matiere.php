@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Matiere.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/04/2021 15:28
+ * @lastUpdate 30/04/2021 16:41
  */
 
 namespace App\Entity;
@@ -764,9 +764,11 @@ class Matiere extends BaseEntity implements MatiereInterface
         $t['cmFormation'] = $this->getCmFormation();
         $t['tdFormation'] = $this->getTdFormation();
         $t['tpFormation'] = $this->getTpFormation();
+        $t['ptutFormation'] = null;
         $t['cmPpn'] = $this->getCmPpn();
         $t['tdPpn'] = $this->getTdPpn();
         $t['tpPpn'] = $this->getTpPpn();
+        $t['ptutPpn'] = null;
 
         return $t;
     }

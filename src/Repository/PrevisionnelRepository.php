@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/PrevisionnelRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 02/05/2021 16:55
  */
 
 namespace App\Repository;
@@ -37,38 +37,7 @@ class PrevisionnelRepository extends ServiceEntityRepository
         parent::__construct($registry, Previsionnel::class);
     }
 
-    public function findPrevisionnelEnseignantDepartement(Personnel $personnel, Departement $departement)
-    {
-        return $this->createQueryBuilder('p')
-            ->innerJoin(Matiere::class, 'm', 'WITH', 'p.matiere = m.id')
-            ->innerJoin(Ue::class, 'u', 'WITH', 'm.ue = u.id')
-            ->innerJoin(Semestre::class, 's', 'WITH', 'u.semestre = s.id')
-            ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
-            ->innerJoin(Diplome::class, 'd', 'WITH', 'a.diplome = d.id')
-            ->where('p.annee = :annee')
-            ->andWhere('p.personnel = :personnel')
-            ->andWhere('d.departement = :departement')
-            ->setParameter('annee', $departement->getOptAnneePrevisionnel())
-            ->setParameter('departement', $departement->getId())
-            ->setParameter('personnel', $personnel->getId())
-            ->getQuery()
-            ->getResult();
-    }
 
-    /**
-     * @param $annee
-     */
-    public function findPrevisionnelEnseignantComplet(Personnel $personnel, $annee): array
-    {
-        return $this->createQueryBuilder('p')
-            ->innerJoin(Matiere::class, 'e', 'WITH', 'p.matiere = e.id')
-            ->where('p.annee = :annee')
-            ->andWhere('p.personnel = :personnel')
-            ->setParameter('annee', $annee)
-            ->setParameter('personnel', $personnel->getId())
-            ->getQuery()
-            ->getResult();
-    }
 
     /**
      * @param $annee

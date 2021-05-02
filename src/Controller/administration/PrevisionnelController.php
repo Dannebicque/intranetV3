@@ -4,12 +4,17 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/PrevisionnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 02/05/2021 18:44
  */
 
 namespace App\Controller\administration;
 
+use App\Classes\Hrs\HrsManager;
+use App\Classes\Matieres\MyMatiere;
+use App\Classes\Matieres\TypeMatiereHandler;
 use App\Classes\MyPrevisionnel;
+use App\Classes\Previsionnel\PrevisionnelManager;
+use App\Classes\Previsionnel\PrevisionnelSynthese;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Matiere;
@@ -47,7 +52,7 @@ class PrevisionnelController extends BaseController
 
         return $this->render('administration/previsionnel/index.html.twig', [
             'matieres' => $matiereRepository->findByDepartement($this->dataUserSession->getDepartement()),
-            'annee'    => $annee,
+            'annee' => $annee,
         ]);
     }
 
@@ -66,7 +71,7 @@ class PrevisionnelController extends BaseController
 
         return $this->render('administration/previsionnel/_matiere.html.twig', [
             'previsionnel' => $myPrevisionnel,
-            'annee'        => $annee,
+            'annee' => $annee,
         ]);
     }
 
@@ -85,28 +90,42 @@ class PrevisionnelController extends BaseController
 
         return $this->render('administration/previsionnel/_semestre.html.twig', [
             'previsionnel' => $myPrevisionnel,
-            'annee'        => $annee,
+            'annee' => $annee,
         ]);
     }
 
     /**
      * @Route("/personnel/{personnel}/{annee}", name="administration_previsionnel_personnel", options={"expose":true})
      *
-     * @param int $annee
+     * @param \App\Classes\Previsionnel\PrevisionnelManager  $previsionnelManager
+     * @param \App\Classes\Hrs\HrsManager                    $hrsManager
+     * @param \App\Classes\Previsionnel\PrevisionnelSynthese $previsionnelSynthese
+     * @param \App\Entity\Personnel                          $personnel
+     * @param int                                            $annee
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function personnel(MyPrevisionnel $myPrevisionnel, Personnel $personnel, $annee = 0): Response
-    {
+    public function personnel(
+        PrevisionnelManager $previsionnelManager,
+        HrsManager $hrsManager,
+        PrevisionnelSynthese $previsionnelSynthese,
+        Personnel $personnel,
+        int $annee = 0
+    ): Response {
         if (0 === $annee && null !== $this->dataUserSession->getDepartement()) {
             $annee = $this->dataUserSession->getDepartement()->getOptAnneePrevisionnel();
         }
-
-        $myPrevisionnel->setPersonnel($personnel);
-        $myPrevisionnel->getPrevisionnelEnseignantBySemestre($annee);
-        $myPrevisionnel->getHrsEnseignant($annee);
+        $previsionnels = $previsionnelManager->getPrevisionnelPersonnelDepartementAnnee($personnel,
+            $this->getDepartement(), $annee);
+        $hrs = $hrsManager->getHrsPersonnelDepartementAnnee($personnel, $this->getDepartement(), $annee);
+        $synthsePrevisionnel = $previsionnelSynthese->getSynthese($previsionnels, $hrs, $personnel);
 
         return $this->render('administration/previsionnel/_personnel.html.twig', [
-            'previsionnel' => $myPrevisionnel,
-            'annee'        => $annee,
+            'synthsePrevisionnel' => $synthsePrevisionnel,
+            'previsionnels' => $previsionnels,
+            'personnel' => $personnel,
+            'hrs' => $hrs,
+            'annee' => $annee
         ]);
     }
 
@@ -130,13 +149,15 @@ class PrevisionnelController extends BaseController
      * @return RedirectResponse|Response
      */
     public function create(
+        MyMatiere $myMatiere,
         PersonnelRepository $personnelRepository,
-        MatiereRepository $matiereRepository,
+        TypeMatiereHandler $typeMatiereHandler,
         Request $request
     ) {
         //todo: faire une comparaison avec le prévisionnel max... et mettre des alertes.
         if ($request->isMethod('POST')) {
-            $matiere = $matiereRepository->find($request->request->get('previsionnel_matiere'));
+            $matiereHandler = $typeMatiereHandler->typeDeMatiereFromSelect($request->request->get('previsionnel_matiere'));
+            $matiere = $matiereHandler->findFromSelect($request->request->get('previsionnel_matiere'));
 
             $annee = '' !== $request->request->get('previsionnel_annee_previsionnel') ? $request->request->get('previsionnel_annee_previsionnel') : $this->dataUserSession->getAnneePrevisionnel();
 
@@ -145,13 +166,15 @@ class PrevisionnelController extends BaseController
                 for ($i = 1; $i <= $nbLignes; ++$i) {
                     $personnel = $personnelRepository->find($request->request->get('intervenant_' . $i));
                     if (null !== $personnel) {
-                        $previsionnel = new Previsionnel($matiere, $annee, $personnel);
+                        $previsionnel = new Previsionnel($annee, $personnel);
                         $previsionnel->setNbHCm($request->request->get('cm_' . $i));
                         $previsionnel->setNbHTd($request->request->get('td_' . $i));
                         $previsionnel->setNbHTp($request->request->get('tp_' . $i));
                         $previsionnel->setNbGrCm($request->request->get('gr_cm_' . $i));
                         $previsionnel->setNbGrTd($request->request->get('gr_td_' . $i));
                         $previsionnel->setNbGrTp($request->request->get('gr_tp_' . $i));
+                        $previsionnel->setIdMatiere($matiere->getId());
+                        $previsionnel->setTypeMatiere($matiere::SOURCE);
                         $this->entityManager->persist($previsionnel);
                     }
                 }
@@ -167,7 +190,7 @@ class PrevisionnelController extends BaseController
         }
 
         return $this->render('administration/previsionnel/new.html.twig', [
-            'matieres' => $matiereRepository->findByDepartement($this->dataUserSession->getDepartement()),
+            'matieres' => $myMatiere->getAllMatieres($this->dataUserSession->getDepartement()),
         ]);
     }
 
