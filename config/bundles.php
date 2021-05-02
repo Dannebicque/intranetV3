@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/config/bundles.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 21:49
+ * @lastUpdate 02/05/2021 18:47
  */
 
 return [
