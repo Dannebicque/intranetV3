@@ -4,13 +4,14 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/ApcSaeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/03/2021 19:20
+ * @lastUpdate 07/04/2021 10:08
  */
 
 namespace App\Repository;
 
 use App\Entity\Annee;
 use App\Entity\ApcSae;
+use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -64,6 +65,21 @@ class ApcSaeRepository extends ServiceEntityRepository
             ->orWhere('a.description LIKE :search')
             ->orWhere('a.libelle LIKE :search')
             ->setParameter('search', '%' . $search . '%')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByDepartement(Departement $departement)
+    {
+        return $this->createQueryBuilder('r')
+            ->innerJoin(Semestre::class, 's', 'WITH', 's.id = r.semestre')
+            ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
+            ->innerJoin(Diplome::class, 'd', 'WITH', 'd.id = a.diplome')
+            ->where('d.departement = :departement')
+            //->andWhere('s.ppn_actif = m.ppn')
+            ->setParameter('departement', $departement->getId())
+            ->orderBy('r.codeSae', 'ASC')
+            ->addOrderBy('r.libelle', 'ASC')
             ->getQuery()
             ->getResult();
     }
