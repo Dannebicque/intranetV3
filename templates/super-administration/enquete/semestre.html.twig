@@ -102,7 +102,10 @@
                 {% for questionnaire in  semestre.qualiteQuestionnaires %}
                     <div class="tab-pane {% if loop.first %}fade active show{% endif %}"
                          id="questionnaire{{ questionnaire.id }}">
-                        Bouton pour relancer, pour exporter.
+                        <a href="{{ path('administratif_enquete_relance',{questionnaire:questionnaire.id}) }}" class="btn btn-warning
+                        btn-block">
+                            Relancer les questionnaires non complétés
+                        </a><br>
                         <table class="table">
                             <thead>
                             <tr>
