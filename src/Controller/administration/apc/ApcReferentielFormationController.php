@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcReferentielFormationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/03/2021 18:49
+ * @lastUpdate 06/04/2021 21:34
  */
 
 namespace App\Controller\administration\apc;
@@ -54,7 +54,7 @@ class ApcReferentielFormationController extends BaseController
                 'semestre' => $semestre,
                 'niveaux' => $apcNiveauRepository->findBySemestre($semestre),
                 'saes' => $apcSaeRepository->findBySemestre($semestre),
-                'ressources' => $apcNiveauRepository->findBySemestre($semestre),
+                'ressources' => $apcRessourceRepository->findBySemestre($semestre),
             ]);
     }
 }

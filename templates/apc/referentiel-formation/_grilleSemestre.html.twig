@@ -2,54 +2,41 @@
     <thead>
     <tr>
         <th>Compétences</th>
-
         <th>AC</th>
         <th>&nbsp;</th>
         {% for sae in saes %}
-            <th>--</th>
-{#            <th>{{ sae.libelle }}</th>#}
+            <th>{{ sae.codeSae }}</th>
         {% endfor %}
-        <th>portfolio</th>{# todo: obligatoire mais présent en SAE ? #}
+        <th>portfolio</th>
         <th>stage</th>{# todo: dynamique? #}
         <th>&nbsp;</th>
         {% for ressource in ressources %}
-            <th>---</th>
-{#            <th>{{ ressources.libelle }}</th>#}
+            <th>{{ ressource.codeRessource }}</th>
         {% endfor %}
     </tr>
     </thead>
     <tbody>
 
     {% for niveau in niveaux %}
-    <tr>
-        <th rowspan="{{ niveau.apcApprentissageCritiques|length }}">{{ niveau.competence.nomCourt }}</th>
-        <th>AC</th>
-        <th>&nbsp;</th>
-        {% for sae in saes %}
-            <th>...</th>
+        <tr>
+            <th rowspan="{{ niveau.apcApprentissageCritiques|length + 1 }}">{{ niveau.competence.nomCourt }}</th>
+        </tr>
+
+        {% for ac in niveau.apcApprentissageCritiques %}
+            <tr>
+                <th>AC</th>
+                <th>&nbsp;</th>
+                {% for sae in saes %}
+                    <td>.S.</td>
+                {% endfor %}
+                <td>P.</td>{# todo: obligatoire mais présent en SAE ? #}
+                <td>S.</td>{# todo: dynamique? #}
+                <th>&nbsp;</th>
+                {% for ressource in ressources %}
+                    <td>.R.</td>
+                {% endfor %}
+            </tr>
         {% endfor %}
-        <th>Portfolio</th>{# todo: obligatoire mais présent en SAE ? #}
-        <th>Stage</th>{# todo: dynamique? #}
-        <th>&nbsp;</th>
-        {% for ressource in ressources %}
-            <th>...</th>
-        {% endfor %}
-    </tr>
-{#        {% for ac in ac %}#}{# AC - 1 #}
-{#            <tr>#}
-{#                <th>AC</th>#}
-{#                <th>&nbsp;</th>#}
-{#                {% for sae in saes %}#}
-{#                    <th>...</th>#}
-{#                {% endfor %}#}
-{#                <th>...</th>#}{# todo: obligatoire mais présent en SAE ? #}
-{#                <th>...</th>#}{# todo: dynamique? #}
-{#                <th>&nbsp;</th>#}
-{#                {% for ressource in ressources %}#}
-{#                    <th>...</th>#}
-{#                {% endfor %}#}
-{#            </tr>#}
-{#        {% endfor %}#}
     {% endfor %}
     </tbody>
 </table>
