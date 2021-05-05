@@ -4,12 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Event/SlugGenerator.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:51
+ * @lastUpdate 02/05/2021 19:35
  */
 
 namespace App\Event;
 
-use App\Classes\Tools;
+use App\Utils\Tools;
 use App\Entity\Article;
 use App\Entity\Utilisateur;
 use Doctrine\Common\EventSubscriber;

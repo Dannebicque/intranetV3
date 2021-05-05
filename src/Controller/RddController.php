@@ -4,12 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/RddController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 02/05/2021 19:35
  */
 
 namespace App\Controller;
 
-use App\Classes\Tools;
+use App\Utils\Tools;
 use App\Form\RddType;
 use App\Repository\EtudiantRepository;
 use App\Repository\RddDiplomeRepository;
