@@ -1,8 +1,8 @@
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.previsionnel.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/07/2020 11:18
+// @lastUpdate 03/05/2021 17:16
 import {addCallout} from '../util'
 
 let nbLignePrevisionnel = 1
@@ -45,10 +45,12 @@ $(document).on('click', '#reloadPreviSemestre', function (e) {
 })
 
 $(document).on('change', '#previMatiere', function (e) {
+  const s = $(this).val().split('_')
   e.preventDefault()
   e.stopPropagation()
   $('#blocPrevisionnel').empty().load(Routing.generate('administration_previsionnel_matiere', {
-    matiere: $(this).val(),
+    matiere: s[1],
+    type: s[0],
     annee: $(this).data('annee')
   }))
 })
@@ -58,6 +60,7 @@ $(document).on('click', '#reloadPreviMatiere', function (e) {
   e.stopPropagation()
   $('#blocPrevisionnel').empty().load(Routing.generate('administration_previsionnel_matiere', {
     matiere: $(this).data('matiere'),
+    type: $(this).data('type'),
     annee: $(this).data('annee')
   }))
 })

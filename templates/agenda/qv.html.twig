@@ -9,7 +9,8 @@
                     id="chronologiqueMatiere">
                 <option value="">Choisir une matière</option>
                 {% for previsionnel in previsionnels %}
-                    <option value="{{ previsionnel.id }}">{{ previsionnel.matiere.display }}</option>
+                    <option value="{{ previsionnel.id }}">{{ previsionnel.matiere_code }} | {{ previsionnel
+                        .matiere_libelle }}</option>
                 {% endfor %}
             </select>
         </div>
