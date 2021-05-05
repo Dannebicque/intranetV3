@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.edt.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 29/01/2021 21:30
+// @lastUpdate 05/05/2021 11:41
 
 import '../../vendor/jqueryui/jquery-ui.min'
 
@@ -196,31 +196,31 @@ $(document).on('change', '#selectpersonnel', function () {
 
 })
 
-$(document).on('change', '#edtSelectSemestre', function () {
-  $.ajax(
-    {
-      url: Routing.generate('api_matieres_semestre_personnel', {
-        semestre: $(this).val(),
-        personnel: $('#selectpersonnel').val()
-      }),
-      type: 'POST',
-      dataType: 'json', //Return data type (what we expect).
-      success: function (data) {
-        const selectMatiere = $('#selectmatiere')
-        selectMatiere.selectpicker('destroy')
-        selectMatiere.empty()
-        selectMatiere.append(new Option('Choisissez une matière !', ''))
-        for (let key in data) {
-          let value = data[key]
-          selectMatiere.append(new Option(value.libelle + ' (UE: ' + value.ue + ')', value.id))
-        }
-        selectMatiere.selectpicker()
-      },
-      error: function () {
-
-      }
-    })
-})
+// $(document).on('change', '#edtSelectSemestre', function () {
+//   $.ajax(
+//     {
+//       url: Routing.generate('api_matieres_semestre_personnel', {
+//         semestre: $(this).val(),
+//         personnel: $('#selectpersonnel').val()
+//       }),
+//       type: 'POST',
+//       dataType: 'json', //Return data type (what we expect).
+//       success: function (data) {
+//         const selectMatiere = $('#selectmatiere')
+//         selectMatiere.selectpicker('destroy')
+//         selectMatiere.empty()
+//         selectMatiere.append(new Option('Choisissez une matière !', ''))
+//         for (let key in data) {
+//           let value = data[key]
+//           selectMatiere.append(new Option(value.libelle + ' (UE: ' + value.ue + ')', value.id))
+//         }
+//         selectMatiere.selectpicker()
+//       },
+//       error: function () {
+//
+//       }
+//     })
+// })
 
 $(document).on('click', '#btnafficheRealise', function (e) {
   e.preventDefault()

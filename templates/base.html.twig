@@ -234,7 +234,7 @@
     </div>
 
     <div class="topbar-right">
-        <a class="topbar-btn" href="#qv-global" data-toggle="quickview"><i class="fas fa-align-right"></i></a>
+        <a class="topbar-btn" href="#qv-global" data-toggle="quickview" data-url="{% block quickViewUrl %}no-url{% endblock %}"><i class="fas fa-align-right"></i></a>
         <div class="topbar-divider"></div>
         <ul class="topbar-btns">
             <li class="dropdown">
@@ -471,7 +471,7 @@
 <!-- END Main container -->
 
 <!-- Global quickview -->
-<div id="qv-global" class="quickview {% block sizeQv %}quickview-lg{% endblock %}" data-url="{% block quickViewUrl %}no-url{% endblock %}">
+<div id="qv-global" class="quickview {% block sizeQv %}quickview-lg{% endblock %}">
     <div class="spinner-linear">
         <div class="line"></div>
     </div>
