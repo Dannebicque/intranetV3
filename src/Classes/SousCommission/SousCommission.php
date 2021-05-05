@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/SousCommission/SousCommission.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 02/05/2021 19:35
  */
 
 /*
@@ -15,7 +15,7 @@ namespace App\Classes\SousCommission;
 
 use App\Classes\Etudiant\EtudiantAbsences;
 use App\Classes\Etudiant\EtudiantNotes;
-use App\Classes\Tools;
+use App\Utils\Tools;
 use App\DTO\EtudiantSousCommission;
 use App\DTO\MoyenneMatiere;
 use App\DTO\MoyenneUe;
