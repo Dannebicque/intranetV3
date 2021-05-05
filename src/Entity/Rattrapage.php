@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Rattrapage.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/04/2021 21:08
+ * @lastUpdate 05/05/2021 14:39
  */
 
 namespace App\Entity;
@@ -29,10 +29,10 @@ class Rattrapage extends BaseEntity
     public const DEMANDE_FAITE = 'f';
     public const DEMANDE_ACCEPTEE = 'a';
     public const DEMANDE_REFUSEE = 'r';
-    public const EtatLong = [
+    public const ETATLONG = [
         self::DEMANDE_FAITE => 'demande faite',
         self::DEMANDE_ACCEPTEE => 'demande acceptée',
-        self::DEMANDE_REFUSEE => 'demande refusée'
+        self::DEMANDE_REFUSEE => 'demande refusée',
     ];
 
     /**
@@ -316,6 +316,6 @@ class Rattrapage extends BaseEntity
      */
     public function getEtatDemandeLong(): string
     {
-        return self::EtatLong[$this->etatDemande];
+        return self::ETATLONG[$this->etatDemande];
     }
 }
