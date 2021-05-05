@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Calendrier.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 05/05/2021 17:55
  */
 
 namespace App\Entity;
@@ -53,15 +53,9 @@ class Calendrier extends BaseEntity
      */
     private $creneauBloques;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\IndisponibilitePersonnel", mappedBy="semaine")
-     */
-    private $indisponibilitePersonnels;
-
     public function __construct()
     {
         $this->creneauBloques = new ArrayCollection();
-        $this->indisponibilitePersonnels = new ArrayCollection();
     }
 
     public function getSemaineFormation(): ?int
@@ -137,37 +131,6 @@ class Calendrier extends BaseEntity
             // set the owning side to null (unless already changed)
             if ($creneauBloque->getSemaine() === $this) {
                 $creneauBloque->setSemaine(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|IndisponibilitePersonnel[]
-     */
-    public function getIndisponibilitePersonnels(): Collection
-    {
-        return $this->indisponibilitePersonnels;
-    }
-
-    public function addIndisponibilitePersonnel(IndisponibilitePersonnel $indisponibilitePersonnel): self
-    {
-        if (!$this->indisponibilitePersonnels->contains($indisponibilitePersonnel)) {
-            $this->indisponibilitePersonnels[] = $indisponibilitePersonnel;
-            $indisponibilitePersonnel->setSemaine($this);
-        }
-
-        return $this;
-    }
-
-    public function removeIndisponibilitePersonnel(IndisponibilitePersonnel $indisponibilitePersonnel): self
-    {
-        if ($this->indisponibilitePersonnels->contains($indisponibilitePersonnel)) {
-            $this->indisponibilitePersonnels->removeElement($indisponibilitePersonnel);
-            // set the owning side to null (unless already changed)
-            if ($indisponibilitePersonnel->getSemaine() === $this) {
-                $indisponibilitePersonnel->setSemaine(null);
             }
         }
 
