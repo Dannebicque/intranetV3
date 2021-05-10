@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyAlternanceFicheSuivi.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 10/05/2021 14:29
  */
 
 /*
@@ -41,7 +41,7 @@ class MyAlternanceFicheSuivi
     {
         return $this->myPdf::generePdf('pdf/ficheSuiviAlternant.html.twig',
             ['alternance_fiche_suivi' => $alternanceFicheSuivi],
-            'Fiche-suivi-alternant-' . $alternanceFicheSuivi->getAlternance()->getEtudiant()->getNom() . '-' . $alternanceFicheSuivi->getDate()->format('dmY'),
+            'Suivi-en-entreprise-' . $alternanceFicheSuivi->getAlternance()->getEtudiant()->getNom() . '-' . $alternanceFicheSuivi->getDate()->format('dmY'),
             $alternanceFicheSuivi->getAlternance()->getAnnee()->getDiplome()->getDepartement()->getLibelle());
     }
 }
