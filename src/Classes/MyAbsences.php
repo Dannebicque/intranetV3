@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyAbsences.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 11/05/2021 21:29
  */
 
 namespace App\Classes;
@@ -68,7 +68,7 @@ class MyAbsences
         return $this->etudiants;
     }
 
-    public function getAbsencesMatiere(Matiere $matiere, AnneeUniversitaire $anneeCourante)
+    public function getAbsencesMatiere(\App\DTO\Matiere $matiere, AnneeUniversitaire $anneeCourante)
     {
         return $this->absenceRepository->getByMatiere($matiere, $anneeCourante);
     }

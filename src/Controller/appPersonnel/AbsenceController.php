@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/AbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2021 08:46
+ * @lastUpdate 11/05/2021 21:40
  */
 
 namespace App\Controller\appPersonnel;
@@ -72,7 +72,6 @@ class AbsenceController extends BaseController
     /**
      * @Route("/edt/{event}", name="application_personnel_absence_from_planning", requirements={"event"="\d+"},
      *                        methods={"GET"})
-     *
      */
     public function saisieFromEdt(
         TypeMatiereManager $typeMatiereManager,
@@ -105,17 +104,20 @@ class AbsenceController extends BaseController
     }
 
     /**
-     * @Route("/voir/{matiere}", name="application_personnel_absence_voir", requirements={"matiere"="\d+"})
+     * @Route("/voir/{matiere}", name="application_personnel_absence_voir")
      */
     public function voir(TypeMatiereManager $typeMatiereManager, string $matiere): Response
     {
         $mat = $typeMatiereManager->getMatiereFromSelect($matiere);
+        if (null === $mat) {
+            throw new MatiereNotFoundException();
+        }
 
         return $this->render('appPersonnel/absence/voir.html.twig', [
             'matiere' => $mat,
             'absences' => $this->myAbsences->getAbsencesMatiere(
-                $matiere,
-                (null !== $mat && null !== $mat->semestre) ? $mat->semestre->getAnneeUniversitaire() : 0
+                $mat,
+                (null !== $mat->semestre) ? $mat->semestre->getAnneeUniversitaire() : 0
             ),
         ]);
     }
@@ -123,17 +125,16 @@ class AbsenceController extends BaseController
     /**
      * @Route("/export/{matiere}/export.{_format}", name="application_personnel_absence_export", methods="GET")
      *
-     *
      * @return Response
      */
     public function export(TypeMatiereManager $typeMatiereManager, string $matiere, $_format): ?Response
     {
         $mat = $typeMatiereManager->getMatiereFromSelect($matiere);
-        if (null !== $mat) {
-            return $this->myAbsences->export($mat, $mat->semestre->getAnneeUniversitaire(), $_format);
+        if (null === $mat) {
+            throw new MatiereNotFoundException();
         }
 
-        return null; //todo: exception?
+        return $this->myAbsences->export($mat, $mat->semestre->getAnneeUniversitaire(), $_format);
     }
 
     /**
