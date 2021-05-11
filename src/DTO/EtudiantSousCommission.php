@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/EtudiantSousCommission.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:41
+ * @lastUpdate 09/05/2021 15:39
  */
 
 namespace App\DTO;
@@ -50,10 +50,10 @@ class EtudiantSousCommission
         $totalMatieresPenalise = 0;
         $this->calculBonficiation();
         foreach ($this->moyenneMatieres as $moyenneMatiere) {
-            if (true === $moyenneMatiere->optionFaite && false === $moyenneMatiere->matiere->isPac()) {
-                $totalMatieres += $moyenneMatiere->getMoyenne() * $moyenneMatiere->matiere->getCoefficient();
-                $totalMatieresPenalise += $moyenneMatiere->getMoyennePenalisee() * $moyenneMatiere->matiere->getCoefficient();
-                $totcoeff += $moyenneMatiere->matiere->getCoefficient();
+            if (true === $moyenneMatiere->optionFaite && false === $moyenneMatiere->matiere->pac) {
+                $totalMatieres += $moyenneMatiere->getMoyenne() * $moyenneMatiere->matiere->coefficient;
+                $totalMatieresPenalise += $moyenneMatiere->getMoyennePenalisee() * $moyenneMatiere->matiere->coefficient;
+                $totcoeff += $moyenneMatiere->matiere->coefficient;
             }
         }
         0 !== $totcoeff ? $this->moyenneSemestre = $totalMatieres / $totcoeff + $this->bonif : $this->moyenneSemestre = 0;
@@ -63,7 +63,7 @@ class EtudiantSousCommission
     private function calculBonficiation()
     {
         foreach ($this->moyenneMatieres as $moyenneMatiere) {
-            if (true === $moyenneMatiere->matiere->isPac()) {
+            if (true === $moyenneMatiere->matiere->pac) {
                 $this->bonif += $moyenneMatiere->getBonification();
             }
         }

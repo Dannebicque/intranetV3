@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Ufr.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 19:14
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Entity;
@@ -74,9 +74,6 @@ class Ufr extends BaseEntity
         return $this->sites;
     }
 
-    /**
-     * @return Ufr
-     */
     public function addSite(Site $site): self
     {
         if (!$this->sites->contains($site)) {
@@ -86,9 +83,6 @@ class Ufr extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return Ufr
-     */
     public function removeSite(Site $site): self
     {
         if ($this->sites->contains($site)) {
@@ -103,9 +97,6 @@ class Ufr extends BaseEntity
         return $this->responsable;
     }
 
-    /**
-     * @return Ufr
-     */
     public function setResponsable(?Personnel $responsable): self
     {
         $this->responsable = $responsable;

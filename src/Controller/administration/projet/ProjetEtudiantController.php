@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/projet/ProjetEtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Controller\administration\projet;
@@ -84,7 +84,6 @@ class ProjetEtudiantController extends BaseController
     }
 
     /**
-     * @param $etat
      *
      * @throws NonUniqueResultException
      * @Route("/change-etat/{projetPeriode}/{etudiant}/{etat}", name="administration_projet_etudiant_change_etat")

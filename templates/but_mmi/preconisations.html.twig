@@ -19,17 +19,18 @@
       </thead>
       <tbody>
       {% for ressource in ressources[semestre.id] %}
-        <tr>
-          <td>{{ ressource.codeRessource }}</td>
-          <td>
-            <a href="{{ path('but_fiche_ressource', {'apcRessource': ressource.id, diplome:diplome.sigle|lower}) }}" target="_blank">{{ ressource.libelle }}</a>
-          </td>
-          <td>{{ ressource.heuresCM + ressource.heuresTD + ressource.heuresTP }}</td>
-          <td>{{ ressource.heuresSAE + ressource.heuresSAEPtut }}</td>
-          <td>{{ ressource.heuresCM + ressource.heuresTD + ressource.heuresTP + ressource.heuresSAE + ressource.heuresSAEPtut }}</td>
-        </tr>
-        {% set totalRessource = totalRessource + ressource.heuresCM + ressource.heuresTD + ressource.heuresTP %}
-        {% set totalSAE = totalSAE + ressource.heuresSAE + ressource.heuresSAEPtut %}
+          <tr>
+              <td>{{ ressource.codeMatiere }}</td>
+              <td>
+                  <a href="{{ path('but_fiche_ressource', {'apcRessource': ressource.id, diplome:diplome.sigle|lower}) }}" target="_blank">{{ ressource.libelle }}</a>
+              </td>
+              <td>{{ ressource.cmPpn + ressource.tdPpn + ressource.tpPpn }}</td>
+              <td>{{ ressource.heuresSAE + ressource.heuresSAEPtut }}</td>
+              <td>{{ ressource.cmPpn + ressource.tdPpn + ressource.tpPpn + ressource.heuresSAE + ressource
+                  .heuresSAEPtut }}</td>
+          </tr>
+          {% set totalRessource = totalRessource + ressource.cmPpn + ressource.tdPpn + ressource.tpPpn %}
+          {% set totalSAE = totalSAE + ressource.heuresSAE + ressource.heuresSAEPtut %}
       {% endfor %}
       </tbody>
       <tfoot>

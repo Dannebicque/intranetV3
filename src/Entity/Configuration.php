@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Configuration.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 19:07
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Entity;
@@ -43,9 +43,6 @@ class Configuration extends BaseEntity
         return $this->cle;
     }
 
-    /**
-     * @return Configuration
-     */
     public function setCle(string $cle): self
     {
         $this->cle = $cle;
@@ -58,9 +55,6 @@ class Configuration extends BaseEntity
         return $this->valeur;
     }
 
-    /**
-     * @return Configuration
-     */
     public function setValeur(string $valeur): self
     {
         $this->valeur = $valeur;

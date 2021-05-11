@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Mail/BaseMailer.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/04/2021 18:55
+ * @lastUpdate 09/05/2021 14:41
  */
 
 /*
@@ -39,7 +39,6 @@ class BaseMailer
     }
 
     /**
-     * @param $mail
      *
      * @throws TransportExceptionInterface
      */
@@ -68,10 +67,7 @@ class BaseMailer
         return $this->configuration->getExpediteurIntranet();
     }
 
-    /**
-     * @return array|string
-     */
-    private function getReplyTo(array $options, &$mail)
+    private function getReplyTo(array $options, &$mail): void
     {
         if (\array_key_exists('replyTo', $options) && '' !== $options['replyTo']) {
             if (is_array($options['replyTo'])) {
@@ -86,9 +82,6 @@ class BaseMailer
         }
     }
 
-    /**
-     * @param $mail
-     */
     private function checkTo(&$mail, array $mails): void
     {
         foreach ($mails as $m) {

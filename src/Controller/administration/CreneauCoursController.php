@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/CreneauCoursController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/03/2021 22:47
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Controller\administration;
@@ -60,7 +60,6 @@ class CreneauCoursController extends BaseController
      * @Route("/export.{_format}", name="administration_creneau_cours_export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"})
      *
-     * @param $_format
      */
     public function export(MyExport $myExport, CreneauCoursRepository $creneauCoursRepository, $_format): Response
     {

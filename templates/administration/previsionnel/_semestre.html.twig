@@ -4,24 +4,24 @@
 
             <header class="card-header">
                 <h4 class="card-title"><strong>{{ 'service.previsionnel.semestre.heading'|trans }}</strong>
-                    | {{ previsionnel.semestre.libelle }} | {{ previsionnel.semestre.codeElement }} |
+                    | {{ semestre.libelle }} | {{ semestre.codeElement }} |
                     ({{ 'periode'|trans }}
                     : {{ annee }})</h4>
                 <ul class="card-controls">
                     <li class="dropdown">
                         <a data-toggle="dropdown" href="#"><i class="fas fa-ellipsis-h rotate-90"></i></a>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="{{ path('administration_previsionnel_export', {'annee': annee,
-                                '_format': 'csv', type:'semestre', data: previsionnel.semestre.id}) }}"><i
+                            <a class="dropdown-item" href="{{ path('administration_previsionnel_export', {'annee':
+                                annee, '_format': 'csv', type:'semestre', data: semestre.id}) }}"><i
                                         class="fas fa-file-export"></i> {{ 'exporter.csv'|trans }}</a>
-                            <a class="dropdown-item" href="{{ path('administration_previsionnel_export', {'annee': annee, '_format': 'pdf', type:'semestre', data: previsionnel.semestre.id}) }}"><i
+                            <a class="dropdown-item" href="{{ path('administration_previsionnel_export', {'annee': annee, '_format': 'pdf', type:'semestre', data: semestre.id}) }}"><i
                                         class="fas fa-file-export"></i> {{ 'exporter.pdf'|trans }}</a>
-                            <a class="dropdown-item" href="{{ path('administration_previsionnel_export', {'annee': annee, '_format': 'xlsx', type:'semestre', data: previsionnel.semestre.id}) }}"><i
+                            <a class="dropdown-item" href="{{ path('administration_previsionnel_export', {'annee': annee, '_format': 'xlsx', type:'semestre', data: semestre.id}) }}"><i
                                         class="fas fa-file-export"></i> {{ 'exporter.xlsx'|trans }}</a>
                         </div>
                     </li>
                     <li>
-                        <a class="card-btn-reload" href="#" id="reloadPreviSemestre" data-annee="{{ annee }}" data-semestre="{{ previsionnel.semestre.id }}" title="" data-provide="tooltip" data-original-title="{{ 'atitle.refresh'|trans }}"><i class="fa fa-refresh"></i></a>
+                        <a class="card-btn-reload" href="#" id="reloadPreviSemestre" data-annee="{{ annee }}" data-semestre="{{ semestre.id }}" title="" data-provide="tooltip" data-original-title="{{ 'atitle.refresh'|trans }}"><i class="fa fa-refresh"></i></a>
                     </li>
                 </ul>
             </header>
@@ -51,22 +51,22 @@
                     </tr>
                     </thead>
                     <tbody>
-                    {% for previ in previsionnel.previsionnels %}
+                    {% for previ in previsionnel %}
                         <tr>
                             <td colspan="3">
-                                {{ previ.matiere.codeMatiere }} | {{ previ.matiere.libelle }}
+                                {{ previ.matiere_code }} | {{ previ.matiere_libelle }}
                             </td>
                             <td colspan="3">
                                 <select
                                         class="form-control changeIntervenantPrevi selectpicker"
                                         data-previ="{{ previ.id }}"
                                 >
-                                    <option value="" {% if previ.personnel == null %}selected{% endif %}>
+                                    <option value="" {% if previ.personnel_id == 0 %}selected{% endif %}>
                                         Intervenant non défini
                                     </option>
                                     {% for personnel in user_data.personnels %}
                                         <option value="{{ personnel.id }}"
-                                                {% if previ.personnel != null and previ.personnel.id == personnel.id %}selected{% endif %}
+                                                {% if previ.personnel_id != 0 and previ.personnel_id == personnel.id %}selected{% endif %}
                                         >{{ personnel.displayPr }}</option>
                                     {% endfor %}
                                 </select>
@@ -74,24 +74,25 @@
                             <td colspan="3">
                                 <button data-provide="modaler"
                                         data-url="{{ path('administration_previsionnel_matiere', {matiere: previ
-                                            .matiere.id, annee: annee}) }}"
+                                        .matiere_id, annee: annee, type: previ.type_matiere}) }}"
                                         class="btn btn-primary btn-sm"
                                         data-size="lg"
-                                        data-title="Service de la matière {{ previ.matiere.codeMatiere }}"
+                                        data-title="Service de la matière {{ previ.matiere_code }}"
                                 >
-                                    Service de la matière {{ previ.matiere.codeMatiere }}
+                                    Service de la matière {{ previ.matiere_code }}
                                 </button>
                             </td>
                             <td>&nbsp;</td>
                             <td colspan="3">
-                                {% if previ.personnel != null %}
+                                {% if previ.personnel_id != 0 %}
                                     <button data-provide="modaler"
-                                            data-url="{{ path('administration_previsionnel_personnel', {personnel: previ.personnel.id, annee:annee}) }}"
+                                            data-url="{{ path('administration_previsionnel_personnel', {personnel:
+                                                previ.personnel_id, annee:annee}) }}"
                                             class="btn btn-primary btn-sm"
                                             data-size="lg"
-                                            data-title="Service complet de {{ previ.personnel.displayPr }}"
+                                            data-title="Service complet de {{ previ.personnel_prenom }} {{ previ.personnel_nom }}"
                                     >
-                                        Service complet de {{ previ.personnel.displayPr }}
+                                        Service complet de {{ previ.personnel_prenom }} {{ previ.personnel_nom }}
                                     </button>
                                 {% else %}
                                     {{ 'intervenant.non.defini'|trans }}
@@ -179,7 +180,7 @@
         <div class="card">
 
             <h4 class="card-title"><strong>{{ 'service.previsionnel.semestre.heading'|trans }}</strong>
-                | {{ previsionnel.semestre.libelle }} | {{ previsionnel.semestre.codeElement }} |
+                | {{ semestre.libelle }} | {{ semestre.codeElement }} |
                 ({{ 'periode'|trans }}
                 : {{ user_data.departement.optAnneePrevisionnel }})</h4>
 
@@ -196,17 +197,17 @@
                     </tr>
                     <tr>
                         <td class="importantgros">Total général (h)</td>
-                        <td class="importantgros text-center">{{ previsionnel.totalCm }}</td>
-                        <td class="previtd text-center">{{ previsionnel.totalTd }}</td>
-                        <td class="previtp text-center">{{ previsionnel.totalTp }}</td>
-                        <td class="importantgros text-center">{{ previsionnel.totalService }}</td>
+                        <td class="importantgros text-center">{{ synthese.totalCm }}</td>
+                        <td class="previtd text-center">{{ synthese.totalTd }}</td>
+                        <td class="previtp text-center">{{ synthese.totalTp }}</td>
+                        <td class="importantgros text-center">{{ synthese.totalService }}</td>
                     </tr>
                     <tr>
                         <td class="importantgros">Total Etudiant</td>
-                        <td class="importantgros text-center">{{ previsionnel.totalEtuCm }}</td>
-                        <td class="previtd text-center">{{ previsionnel.totalEtuTd }}</td>
-                        <td class="previtp text-center">{{ previsionnel.totalEtuTp }}</td>
-                        <td class="importantgros text-center">{{ previsionnel.totalEtu }}</td>
+                        <td class="importantgros text-center">{{ synthese.totalEtuCm }}</td>
+                        <td class="previtd text-center">{{ synthese.totalEtuTd }}</td>
+                        <td class="previtp text-center">{{ synthese.totalEtuTp }}</td>
+                        <td class="importantgros text-center">{{ synthese.totalEtu }}</td>
                     </tr>
 
                     </tbody>

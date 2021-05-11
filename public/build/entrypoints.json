@@ -131,7 +131,7 @@
         "/build/2109.835c58fd.js",
         "/build/6208.f09e8043.js",
         "/build/9904.020680d0.js",
-        "/build/applications.c94f56a7.js"
+        "/build/applications.17e0b3bc.js"
       ]
     },
     "documents": {
@@ -394,14 +394,6 @@
         "/build/6208.f09e8043.js",
         "/build/9904.020680d0.js",
         "/build/creneaux.b22b591f.js"
-      ]
-    },
-    "progression": {
-      "js": [
-        "/build/runtime.bfcabd3e.js",
-        "/build/9755.9258863f.js",
-        "/build/2109.835c58fd.js",
-        "/build/progression.661f4ae5.js"
       ]
     },
     "settings": {

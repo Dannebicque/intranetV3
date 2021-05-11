@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Utils/Tools.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/05/2021 09:05
+ * @lastUpdate 09/05/2021 14:41
  */
 
 /*
@@ -21,7 +21,6 @@ use RuntimeException;
 abstract class Tools
 {
     /**
-     * @param $date
      *
      * @throws Exception
      */
@@ -35,7 +34,6 @@ abstract class Tools
     }
 
     /**
-     * @param $heure
      *
      * @throws Exception
      */

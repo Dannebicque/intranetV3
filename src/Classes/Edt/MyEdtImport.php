@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/02/2021 20:35
+ * @lastUpdate 09/05/2021 14:41
  */
 
 /*
@@ -14,6 +14,7 @@
 namespace App\Classes\Edt;
 
 use App\Classes\DataUserSession;
+use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\MyUpload;
 use App\Entity\Calendrier;
 use App\Entity\EdtPlanning;
@@ -21,7 +22,6 @@ use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
 use App\Repository\CalendrierRepository;
 use App\Repository\EdtPlanningRepository;
-use App\Repository\MatiereRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -31,7 +31,7 @@ class MyEdtImport
 {
     private PersonnelRepository $personnelRepository;
 
-    private MatiereRepository $matiereRepository;
+    private TypeMatiereManager $typeMatiereManager;
 
     private SemestreRepository $semestreRepository;
 
@@ -60,7 +60,7 @@ class MyEdtImport
         EdtPlanningRepository $edtPlanningRepository,
         CalendrierRepository $calendrierRepository,
         PersonnelRepository $personnelRepository,
-        MatiereRepository $matiereRepository,
+        TypeMatiereManager $typeMatiereManager,
         SemestreRepository $semestreRepository,
         EntityManagerInterface $entityManager,
         MyUpload $myUpload
@@ -68,14 +68,13 @@ class MyEdtImport
         $this->edtPlanningRepository = $edtPlanningRepository;
         $this->calendrierRepository = $calendrierRepository;
         $this->personnelRepository = $personnelRepository;
-        $this->matiereRepository = $matiereRepository;
+        $this->typeMatiereManager = $typeMatiereManager;
         $this->semestreRepository = $semestreRepository;
         $this->entityManager = $entityManager;
         $this->myUpload = $myUpload;
     }
 
     /**
-     * @param $file
      *
      * @throws Exception
      */
@@ -92,7 +91,7 @@ class MyEdtImport
     {
         //Récupérer la liste des profs avec initiales
         $tabIntervenants = $this->personnelRepository->tableauIntervenants($this->dataUserSession->getDepartement());
-        $tabMatieres = $this->matiereRepository->tableauMatieres($this->dataUserSession->getDepartement());
+        $tabMatieres = $this->typeMatiereManager->tableauMatieres($this->dataUserSession->getDepartement());
         $tabSemestre = $this->semestreRepository->tableauSemestres($this->dataUserSession->getDepartement());
         $tabdebut = [1 => 1, 2 => 4, 3 => 7, 4 => 13, 5 => 16, 6 => 19, 7 => 22];
 
@@ -134,7 +133,7 @@ class MyEdtImport
 
                         $pl = new EdtPlanning();
                         $pl->setSemestre($tabSemestre[$semestre]);
-                        $pl->setMatiere(null);
+                        $pl->setIdMatiere(0);
                         $pl->setIntervenant(null);
                         $pl->setJour($jour);
                         $pl->setDate($date);
@@ -186,7 +185,8 @@ class MyEdtImport
                             $pl = new EdtPlanning();
                             $pl->setSemestre($tabMatieres[$matiere]->getUE()->getSemestre());
                             $this->semestre = $pl->getSemestre()->getId();
-                            $pl->setMatiere($tabMatieres[$matiere]);
+                            $pl->setIdMatiere($tabMatieres[$matiere]->id);
+                            $pl->setTypeMatiere($tabMatieres[$matiere]->typeMatiere);
                             $pl->setIntervenant($tabIntervenants[$prof]);
                             $pl->setJour($jour);
                             $pl->setSalle($salle);

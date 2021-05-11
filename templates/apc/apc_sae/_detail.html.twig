@@ -4,7 +4,7 @@
         <th style="width: 25%">Nom de la SAÉ</th>
         <td>{{ apc_sae.libelle }}</td>
         <th style="width: 25%">Code de la SAÉ</th>
-        <td>{{ apc_sae.codeSae }}</td>
+        <td>{{ apc_sae.codeMatiere }}</td>
     </tr>
 
     <tr>
@@ -45,22 +45,22 @@
         <th class="text-center" style="width:25%">TP</th>
     </tr>
     <tr>
-        <td class="text-center">{{ apc_sae.heuresCM }} heure(s)</td>
-        <td class="text-center">{{ apc_sae.heuresTD }} heure(s)</td>
-        <td class="text-center">{{ apc_sae.heuresTP }} heure(s)</td>
+        <td class="text-center">{{ apc_sae.cmPpn }} heure(s)</td>
+        <td class="text-center">{{ apc_sae.tdPpn }} heure(s)</td>
+        <td class="text-center">{{ apc_sae.tpPpn }} heure(s)</td>
     </tr>
     <tr>
         <th>Heures "projet tutoré"</th>
-        <td colspan="3">{{ apc_sae.heuresProjet }} heure(s)</td>
+        <td colspan="3">{{ apc_sae.projetPpn }} heure(s)</td>
     </tr>
     <tr>
         <th>Liste des ressources mobilisées et combinées</th>
         <td colspan="3">
-                {% for ressource in apc_sae.apcSaeRessources %}
-                    <span class="badge badge-primary"
-                          data-provide="tooltip"
-                          title="{{ ressource.ressource.libelle }}">
-                    {{ ressource.ressource.codeRessource }} | {{ ressource.ressource.libelle }}
+            {% for ressource in apc_sae.apcSaeRessources %}
+                <span class="badge badge-primary"
+                      data-provide="tooltip"
+                      title="{{ ressource.ressource.libelle }}">
+                    {{ ressource.ressource.display }}
                     </span>
                 {% endfor %}
         </td>

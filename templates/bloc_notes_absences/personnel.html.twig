@@ -24,53 +24,59 @@
                             <div class="col-notes-header">{{ 'table.absences'|trans }}</div>
                             <div class="col-notes-header">{{ 'table.notes'|trans }}</div>
                             <div class="col-notes-header">{{ 'table.exports'|trans }}</div>
-                            {% for matiere in previsionnel|filter(matiere => matiere.matiere.ue.semestre.id ==
+                            {% for matiere in previsionnel|filter(matiere => matiere.semestre_id ==
                                 semestre.id) %}
-                                    <div>{{ matiere.matiere.display }}</div>
-                                    <div>
-                                        <button data-provide="modaler tooltip"
-                                                data-url="{{ path('api_previsionnel_matiere', {'matiere': matiere.matiere.id}) }}"
-                                                data-size="lg"
-                                                data-confirm-text="{{ 'fermer'|trans }}"
-                                                class="btn btn-block btn-cyan"
-                                                data-placement="bottom"
-                                                title="{{ 'previsionnel.et.intervenants.matiere'|trans }}"
-                                                data-title="{{ 'previsionnel.et.intervenants.matiere'|trans }}"
-                                        >
-                                            {{ 'voir.previsionnel.et.intervenants.matiere'|trans }}
-                                        </button>
-                                    </div>
-                                    <div>
-                                        <a href="{{ path('application_personnel_absence_index',{'matiere':matiere.matiere.id}) }}"
-                                           class="btn btn-block btn-cyan"
-                                           title="{{ 'saisir.voir.modifier.absences'|trans }}"
-                                           data-provide="tooltip"
-                                           data-placement="bottom"
-                                        >
-                                            {{ 'saisir.voir.modifier.absences'|trans }}
-                                        </a></div>
-                                    <div>
-                                        <a href="{{ path('application_personnel_note_index',{'matiere':matiere.matiere.id}) }}"
-                                           class="btn btn-block btn-cyan"
-                                           title="{{ 'saisir.voir.modifier.notes'|trans }}"
-                                           data-provide="tooltip"
-                                           data-placement="bottom"
-                                        >
-                                            {{ 'saisir.voir.modifier.notes'|trans }}
-                                        </a></div>
-                                    <div>
-                                        <button data-provide="modaler tooltip"
-                                                data-url="{{ path('api_export_document_matiere', {'matiere': matiere.matiere.id}) }}"
-                                                data-size="lg"
-                                                data-confirm-text="{{ 'fermer'|trans }}"
-                                                class="btn btn-block btn-cyan"
-                                                data-placement="bottom"
-                                                title="{{ 'atitle.export'|trans }}"
-                                                data-title="{{ 'export.heading'|trans }}"
-                                        >
-                                            {{ 'choisir.export'|trans }}
-                                        </button>
-                                    </div>
+                                <div>{{ matiere.display }}</div>
+                                <div>
+                                    <button data-provide="modaler tooltip"
+                                            data-url="{{ path('api_previsionnel_matiere', {'matiere': matiere
+                                            .matiere_id, type: matiere.type_matiere}) }}"
+                                            data-size="lg"
+                                            data-confirm-text="{{ 'fermer'|trans }}"
+                                            class="btn btn-block btn-cyan"
+                                            data-placement="bottom"
+                                            title="{{ 'previsionnel.et.intervenants.matiere'|trans
+                                                ({'%matiere%':matiere.display}) }}"
+                                            data-title="{{ 'previsionnel.et.intervenants.matiere'|trans
+                                                ({'%matiere%':matiere.display}) }}"
+                                    >
+                                        {{ 'voir.previsionnel.et.intervenants.matiere'|trans }}
+                                    </button>
+                                </div>
+                                <div>
+                                    <a href="{{ path('application_personnel_absence_index',{'matiere': matiere
+                                    .typeIdMatiere}) }}"
+                                       class="btn btn-block btn-cyan"
+                                       title="{{ 'saisir.voir.modifier.absences'|trans }}"
+                                       data-provide="tooltip"
+                                       data-placement="bottom"
+                                    >
+                                        {{ 'saisir.voir.modifier.absences'|trans }}
+                                    </a></div>
+                                <div>
+                                    <a href="{{ path('application_personnel_note_index',{'matiere': matiere
+                                    .typeIdMatiere}) }}"
+                                       class="btn btn-block btn-cyan"
+                                       title="{{ 'saisir.voir.modifier.notes'|trans }}"
+                                       data-provide="tooltip"
+                                       data-placement="bottom"
+                                    >
+                                        {{ 'saisir.voir.modifier.notes'|trans }}
+                                    </a></div>
+                                <div>
+                                    <button data-provide="modaler tooltip"
+                                            data-url="{{ path('api_export_document_matiere', {'matiere': matiere
+                                            .matiere_id, typeMatiere:matiere.type_matiere}) }}"
+                                            data-size="lg"
+                                            data-confirm-text="{{ 'fermer'|trans }}"
+                                            class="btn btn-block btn-cyan"
+                                            data-placement="bottom"
+                                            title="{{ 'atitle.export'|trans }}"
+                                            data-title="{{ 'export.heading'|trans }}"
+                                    >
+                                        {{ 'choisir.export'|trans }}
+                                    </button>
+                                </div>
                             {% endfor %}
                         </div>
                     </div>

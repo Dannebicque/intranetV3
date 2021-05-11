@@ -1,6 +1,6 @@
 {% extends 'base-but.html.twig' %}
 
-{% block header %}Fiche de la SAÉ : {{ apc_sae.codeSae }} | {{ apc_sae.libelle }}{% endblock %}
+{% block header %}Fiche de la SAÉ : {{ apc_sae.display }}{% endblock %}
 
 {% block content %}
     {{ include('apc/apc_sae/_detail.html.twig') }}

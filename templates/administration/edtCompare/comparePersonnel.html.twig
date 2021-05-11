@@ -65,16 +65,16 @@
                             <td>
                                 <button data-provide="modaler tooltip"
                                         data-url="{{ path('administration_edt_compare_plus_info',
-                                            {'matiere': ed.matiere.id}) }}"
+                                            {'matiere': ed.matiere_id}) }}"
                                         class="btn btn-info"
                                         data-placement="bottom"
                                         data-size="lg"
                                         title="{{ 'compare.plusinfos.details'|trans }}"
                                         data-title="{{ 'compare.plusinfos.details.title'|trans }}"
                                 >
-                                    <i class="{{ iconShow }}"></i> {{ ed.matiere.display }}
+                                    <i class="{{ iconShow }}"></i> {{ ed.matiere_code }} | {{ ed.matiere_libelle }}
                                 </button>
-                            <td>{{ ed.matiere.ue.semestre.libelle }}</td>
+                            <td>{{ ed.semestre_libelle }}</td>
                             <td>
                                 <span class="badge badge-pill {% if ed.nbCMEDT > ed.nbCMPrevi %} badge-danger {% elseif ed.nbCMEDT == ed.nbCMPrevi %} badge-success {% else %} badge-warning {% endif %}">{{ ed.nbCMEDT }}</span>
                             </td><!--CM -->

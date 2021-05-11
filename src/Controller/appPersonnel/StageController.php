@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/StageController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Controller\appPersonnel;
@@ -53,8 +53,6 @@ class StageController extends BaseController
     /**
      * @Route("/stage/export/{periode}.{_format}", name="application_personnel_stage_export")
      *
-     * @param $periode
-     * @param $_format
      */
     public function exportStage(MyExport $myExport, StageEtudiantRepository $stageEtudiantRepository, $periode, $_format): Response
     {
@@ -87,8 +85,6 @@ class StageController extends BaseController
     /**
      * @Route("/alternance/export/{periode}.{_format}", name="application_personnel_alternance_export")
      *
-     * @param $periode
-     * @param $_format
      */
     public function exportAlternance(MyExport $myExport, AlternanceRepository $alternanceRepository, $periode, $_format): Response
     {

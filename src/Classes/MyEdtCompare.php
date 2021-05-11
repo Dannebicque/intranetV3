@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEdtCompare.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 11/05/2021 08:46
  */
 
 /*
@@ -13,6 +13,7 @@
 
 namespace App\Classes;
 
+use App\Classes\Previsionnel\PrevisionnelManager;
 use App\Entity\Matiere;
 use App\Entity\Personnel;
 use App\Entity\Previsionnel;
@@ -24,44 +25,45 @@ class MyEdtCompare
     /** @var EdtPlanningRepository */
     private $edtPlanningRepository;
 
-    /** @var PrevisionnelRepository */
-    private $previsionnelRepository;
     /**
      * @var Previsionnel[]
      */
     private $planning;
+
     /**
      * @var Previsionnel[]
      */
     private array $previsionnel;
+
+    private PrevisionnelManager $previsionnelManager;
 
     /**
      * MyEdtCompare constructor.
      */
     public function __construct(
         EdtPlanningRepository $edtPlanningRepository,
-        PrevisionnelRepository $previsionnelRepository
+        PrevisionnelManager $previsionnelManager
     ) {
         $this->edtPlanningRepository = $edtPlanningRepository;
-        $this->previsionnelRepository = $previsionnelRepository;
+        $this->previsionnelManager = $previsionnelManager;
     }
 
     public function realise(Matiere $matiere, Personnel $personnel, int $anneePrevi): array
-    {
+    {//todo: a généraliser avec SAE, Ressources
         $this->planning = $this->edtPlanningRepository->findBy([
-            'matiere'     => $matiere->getId(),
+            'matiere' => $matiere->getId(),
             'intervenant' => $personnel->getId(),
         ],
             [
                 'semaine' => 'ASC',
-                'jour'    => 'ASC',
-                'debut'   => 'ASC',
+                'jour' => 'ASC',
+                'debut' => 'ASC',
             ]);
 
-        $this->previsionnel = $this->previsionnelRepository->findBy([
+        $this->previsionnel = $this->previsionnelManager->findBy([
             'personnel' => $personnel->getId(),
-            'matiere'   => $matiere->getId(),
-            'annee'     => $anneePrevi,
+            'matiere' => $matiere->getId(),
+            'annee' => $anneePrevi,
         ]);
 
         $t = [];

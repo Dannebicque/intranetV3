@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Note.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Entity;
@@ -77,9 +77,6 @@ class Note extends BaseEntity
         return $this->evaluation;
     }
 
-    /**
-     * @return Note
-     */
     public function setEvaluation(?Evaluation $evaluation): self
     {
         $this->evaluation = $evaluation;
@@ -92,9 +89,6 @@ class Note extends BaseEntity
         return $this->etudiant;
     }
 
-    /**
-     * @return Note
-     */
     public function setEtudiant(?Etudiant $etudiant): self
     {
         $this->etudiant = $etudiant;
@@ -107,9 +101,6 @@ class Note extends BaseEntity
         return $this->note;
     }
 
-    /**
-     * @return Note
-     */
     public function setNote(float $note): self
     {
         $this->note = $note;
@@ -122,9 +113,6 @@ class Note extends BaseEntity
         return $this->commentaire;
     }
 
-    /**
-     * @return Note
-     */
     public function setCommentaire(?string $commentaire): self
     {
         $this->commentaire = $commentaire;
@@ -140,9 +128,6 @@ class Note extends BaseEntity
         return $this->modificationNotes;
     }
 
-    /**
-     * @return Note
-     */
     public function addModificationNote(ModificationNote $modificationNote): self
     {
         if (!$this->modificationNotes->contains($modificationNote)) {
@@ -153,9 +138,6 @@ class Note extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return Note
-     */
     public function removeModificationNote(ModificationNote $modificationNote): self
     {
         if ($this->modificationNotes->contains($modificationNote)) {

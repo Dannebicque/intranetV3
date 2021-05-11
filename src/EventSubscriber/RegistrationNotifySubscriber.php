@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/RegistrationNotifySubscriber.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\EventSubscriber;
@@ -151,9 +151,6 @@ class RegistrationNotifySubscriber implements EventSubscriberInterface
         $this->onAbsence($event->getAbsence(), AbsenceEvent::JUSTIFIED);
     }
 
-    /**
-     * @param $etat
-     */
     private function onAbsence(Absence $absence, $etat): void
     {
         $notif = new Notification();

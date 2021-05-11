@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MySalleExamen.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/02/2021 12:06
+ * @lastUpdate 09/05/2021 14:41
  */
 
 /*
@@ -13,16 +13,16 @@
 
 namespace App\Classes;
 
+use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\Pdf\MyPDF;
+use App\DTO\Matiere;
 use App\Entity\Departement;
 use App\Entity\Etudiant;
 use App\Entity\Groupe;
-use App\Entity\Matiere;
 use App\Entity\SalleExamen;
 use App\Entity\TypeGroupe;
 use App\Repository\EtudiantRepository;
 use App\Repository\GroupeRepository;
-use App\Repository\MatiereRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SalleExamenRepository;
 use App\Repository\TypeGroupeRepository;
@@ -34,7 +34,7 @@ use Twig\Error\SyntaxError;
 
 class MySalleExamen
 {
-    protected MatiereRepository $matiereRepository;
+    protected TypeMatiereManager $typeMatiereManager;
     protected TypeGroupeRepository $typeGroupeRepository;
     protected PersonnelRepository $personnelRepository;
     protected SalleExamenRepository $salleExamenRepository;
@@ -53,7 +53,7 @@ class MySalleExamen
      * MySalleExamen constructor.
      */
     public function __construct(
-        MatiereRepository $matiereRepository,
+        TypeMatiereManager $typeMatiereManager,
         TypeGroupeRepository $typeGroupeRepository,
         PersonnelRepository $personnelRepository,
         SalleExamenRepository $salleExamenRepository,
@@ -61,7 +61,7 @@ class MySalleExamen
         EtudiantRepository $etudiantRepository,
         MyPDF $myPdf
     ) {
-        $this->matiereRepository = $matiereRepository;
+        $this->typeMatiereManager = $typeMatiereManager;
         $this->typeGroupeRepository = $typeGroupeRepository;
         $this->personnelRepository = $personnelRepository;
         $this->salleExamenRepository = $salleExamenRepository;
@@ -71,10 +71,6 @@ class MySalleExamen
     }
 
     /**
-     * @param $requestdateeval
-     * @param $requestmatiere
-     * @param $requestenseignant1
-     * @param $requestenseignant2
      *
      * @return PdfResponse
      * @throws LoaderError
@@ -88,7 +84,7 @@ class MySalleExamen
         $requestenseignant2,
         Departement $departement
     ) {
-        $this->matiere = $this->matiereRepository->find($requestmatiere);
+        $this->matiere = $this->typeMatiereManager->getMatiereFromSelect($requestmatiere);
 
         if (null !== $this->salle && null !== $this->matiere) {
             $groupes = $this->typeGroupe->getGroupes();
@@ -106,9 +102,9 @@ class MySalleExamen
                 }
             }
         } else {
-            $grdetail = $this->groupeDefaut($this->matiere->getSemestre());
+            $grdetail = $this->groupeDefaut($this->matiere->semestre);
             $this->typeGroupe = $grdetail[0]->getTypeGroupe();
-            $etudiants = $this->etudiantRepository->findBySemestre($this->matiere->getSemestre());
+            $etudiants = $this->etudiantRepository->findBySemestre($this->matiere->semestre);
         }
 
         if (\count($etudiants) <= $this->salle->getCapacite()) {

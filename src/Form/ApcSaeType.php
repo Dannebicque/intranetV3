@@ -4,17 +4,15 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ApcSaeType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/03/2021 13:40
+ * @lastUpdate 11/05/2021 08:46
  */
 
 namespace App\Form;
 
 use App\Entity\ApcCompetence;
-use App\Entity\ApcRessource;
 use App\Entity\ApcSae;
 use App\Entity\Semestre;
 use App\Repository\ApcComptenceRepository;
-use App\Repository\ApcRessourceRepository;
 use App\Repository\SemestreRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -32,22 +30,26 @@ class ApcSaeType extends AbstractType
         $this->diplome = $options['diplome'];
 
         $builder
-            ->add('codeSae', TextType::class, ['label' => 'label.codeSae'])
+            ->add('codeMatiere', TextType::class, ['label' => 'label.codeSae'])
             ->add('libelle', TextType::class, ['label' => 'label.libelle'])
             ->add('description', TextareaType::class,
                 ['attr' => ['rows' => 20], 'label' => 'label.description', 'required' => false])
-            ->add('heuresCM', TextType::class, ['label' => 'label.heuresCM'])
-            ->add('heuresTD', TextType::class, ['label' => 'label.heuresTD'])
-            ->add('heuresTP', TextType::class, ['label' => 'label.heuresTP'])
-            ->add('heuresProjet', TextType::class, ['label' => 'label.heuresPtut'])
+            ->add('cmPpn', TextType::class, ['label' => 'label.heuresCM'])
+            ->add('tdPpn', TextType::class, ['label' => 'label.heuresTD'])
+            ->add('tpPpn', TextType::class, ['label' => 'label.heuresTP'])
+            ->add('projetPpn', TextType::class, ['label' => 'label.heuresTP'])
+            ->add('cmFormation', TextType::class, ['label' => 'label.cm_formation'])
+            ->add('tdFormation', TextType::class, ['label' => 'label.td_formation'])
+            ->add('tpFormation', TextType::class, ['label' => 'label.tp_formation'])
+            ->add('projetFormation', TextType::class, ['label' => 'label.projet_formation'])
             ->add('livrables', TextareaType::class,
                 ['label' => 'label.livrables', 'attr' => ['rows' => 20], 'required' => false])
             ->add('semestre', EntityType::class, [
                 'class' => Semestre::class,
-                'attr' => ['class'=> 'semestreSae'],
+                'attr' => ['class' => 'semestreSae'],
                 'required' => true,
                 'choice_label' => 'display',
-                'query_builder' => function (SemestreRepository $semestreRepository) {
+                'query_builder' => function(SemestreRepository $semestreRepository) {
                     return $semestreRepository->findByDiplomeBuilder($this->diplome);
                 },
                 'label' => 'label.semestre',

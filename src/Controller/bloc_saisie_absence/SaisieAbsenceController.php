@@ -4,22 +4,20 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/bloc_saisie_absence/SaisieAbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/02/2021 15:28
+ * @lastUpdate 08/05/2021 19:49
  */
 
 namespace App\Controller\bloc_saisie_absence;
 
 use App\Classes\Etudiant\EtudiantAbsences;
-use App\Classes\MyAbsences;
-use App\Classes\Tools;
+use App\Classes\Matieres\TypeMatiereManager;
 use App\Controller\BaseController;
 use App\Entity\EdtPlanning;
 use App\Entity\Etudiant;
-use App\Entity\Matiere;
 use App\Entity\Semestre;
 use App\Repository\AbsenceRepository;
-use App\Repository\MatiereRepository;
 use App\Repository\TypeGroupeRepository;
+use App\Utils\Tools;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Exception;
@@ -37,23 +35,14 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class SaisieAbsenceController extends BaseController
 {
-    private MyAbsences $myAbsences;
-
-    /**
-     * AbsenceController constructor.
-     */
-    public function __construct(MyAbsences $myAbsences)
-    {
-        $this->myAbsences = $myAbsences;
-    }
-
     public function index(
-        MatiereRepository $matiereRepository,
+        TypeMatiereManager $typeMatiereManager,
         TypeGroupeRepository $typeGroupeRepository,
         Semestre $semestre,
-        Matiere $matiere = null,
+        string $matiere = null,
         EdtPlanning $event = null
     ): Response {
+        $mat = $typeMatiereManager->getMatiereFromSelect($matiere);
         if (null !== $event) {
             $groupes = $typeGroupeRepository->findOneBy([
                 'semestre' => $semestre->getId(),
@@ -64,8 +53,8 @@ class SaisieAbsenceController extends BaseController
         }
 
         return $this->render('bloc_saisie_absence/_saisie_absence.html.twig', [
-            'matiere' => $matiere,
-            'matieres' => $matiereRepository->findBySemestre($semestre),
+            'matiere' => $mat,
+            'matieres' => $typeMatiereManager->findBySemestre($semestre),
             'typeGroupes' => $typeGroupeRepository->findBySemestre($semestre),
             'event' => $event,
             'groupes' => $groupes,
@@ -77,15 +66,21 @@ class SaisieAbsenceController extends BaseController
      *                                    options={"expose":true})
      */
     public function ajaxGetAbsencesMatiere(
+        TypeMatiereManager $typeMatiereManager,
         AbsenceRepository $absenceRepository,
-        Matiere $matiere
+        string $matiere
     ): JsonResponse {
-        $absences = $absenceRepository->getByMatiereArray(
-            $matiere,
-            $matiere->getSemestre() ? $matiere->getSemestre()->getAnneeUniversitaire() : null
-        );
+        $mat = $typeMatiereManager->getMatiereFromSelect($matiere);
+        if (null !== $mat) {
+            $absences = $absenceRepository->getByMatiereArray(
+                $mat,
+                $mat->semestre ? $mat->semestre->getAnneeUniversitaire() : null
+            );
 
-        return $this->json($absences);
+            return $this->json($absences);
+        }
+
+        return $this->json(null);
     }
 
     /**
@@ -97,61 +92,63 @@ class SaisieAbsenceController extends BaseController
      * @throws Exception
      */
     public function ajaxSaisie(
+        TypeMatiereManager $typeMatiereManager,
         EtudiantAbsences $etudiantAbsences,
         AbsenceRepository $absenceRepository,
         Request $request,
-        Matiere $matiere,
+        string $matiere,
         Etudiant $etudiant
     ) {
-        $dateHeure = Tools::convertDateHeureToObject($request->request->get('date'), $request->request->get('heure'));
-        $absence = $absenceRepository->findBy([
-            'matiere' => $matiere->getId(),
-            'etudiant' => $etudiant->getId(),
-            'dateHeure' => $dateHeure,
-            'anneeUniversitaire' => $etudiant->getSemestre() ? $etudiant->getSemestre()->getAnneeUniversitaire()->getId() : 0,
-        ]);
+        $mat = $typeMatiereManager->getMatiereFromSelect($matiere);
+        if (null !== $mat) {
+            $dateHeure = Tools::convertDateHeureToObject($request->request->get('date'),
+                $request->request->get('heure'));
+            $absence = $absenceRepository->findBy([
+                'idMatiere' => $mat->id,
+                'typeMatiere' => $mat->typeMatiere,
+                'etudiant' => $etudiant->getId(),
+                'dateHeure' => $dateHeure,
+                'anneeUniversitaire' => $etudiant->getSemestre() ? $etudiant->getSemestre()->getAnneeUniversitaire()->getId() : 0,
+            ]);
 
-        if ('saisie' === $request->get('action') && 0 === \count($absence)) {
-            if ($this->saisieAutorise($matiere->getSemestre()->getOptNbJoursSaisieAbsence(), $dateHeure)) {
-                $etudiantAbsences->setEtudiant($etudiant);
+            if ('saisie' === $request->get('action') && 0 === \count($absence)) {
+                if ($this->saisieAutorise($mat->semestre->getOptNbJoursSaisieAbsence(), $dateHeure)) {
+                    $etudiantAbsences->setEtudiant($etudiant);
+                    $etudiantAbsences->addAbsence(
+                        $dateHeure,
+                        $mat,
+                        $this->getConnectedUser()
+                    );
 
-                $etudiantAbsences->addAbsence(
-                    $dateHeure,
-                    $matiere,
-                    $this->getConnectedUser()
-                );
+                    $absences = $absenceRepository->getByMatiereArray(
+                        $mat,
+                        $mat->semestre ? $mat->semestre->getAnneeUniversitaire() : null
+                    );
+
+                    return $this->json($absences);
+                }
+
+                return new response('out', 500);
+            }
+
+            if (1 === \count($absence)) {
+                //un tableau, donc une absence ?
+                $etudiantAbsences->removeAbsence($absence[0]);
 
                 $absences = $absenceRepository->getByMatiereArray(
-                    $matiere,
-                    $matiere->getSemestre() ? $matiere->getSemestre()->getAnneeUniversitaire() : null
+                    $mat,
+                    $mat->semestre->getAnneeUniversitaire()
                 );
 
                 return $this->json($absences);
             }
-
-            return new response('out', 500);
-        }
-
-        if (1 === \count($absence)) {
-            //un tableau, donc une absence ?
-            $etudiantAbsences->removeAbsence($absence[0]);
-
-            $absences = $absenceRepository->getByMatiereArray(
-                $matiere,
-                $matiere->getSemestre()->getAnneeUniversitaire()
-            );
-
-            return $this->json($absences);
         }
 
         return new response('nok', 500);
     }
 
-    /**
-     * @param $nbjour
-     */
-    private function saisieAutorise($nbjour, CarbonInterface $datesymfony): bool
+    private function saisieAutorise(int $nbjour, CarbonInterface $datesymfony): bool
     {
-        return 0 === $nbjour ? true : ($datesymfony->diffInDays(Carbon::now()) <= $nbjour);
+        return 0 === $nbjour || $datesymfony->diffInDays(Carbon::now()) <= $nbjour;
     }
 }

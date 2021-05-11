@@ -4,12 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/MatiereController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/03/2021 15:42
+ * @lastUpdate 11/05/2021 08:46
  */
 
 namespace App\Controller\administration;
 
 use App\Classes\Configuration;
+use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\MyExport;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
@@ -36,7 +37,7 @@ class MatiereController extends BaseController
     {
         return $this->render('administration/matiere/index.html.twig',
             [
-                'diplomeSelect' => $diplome
+                'diplomeSelect' => $diplome,
             ]);
     }
 
@@ -49,11 +50,12 @@ class MatiereController extends BaseController
         ApcSaeRepository $apcSaeRepository,
         Diplome $diplome
     ): Response {
+        //feature: A optimiser pour pas dépendre des repository??
         if (null !== $diplome->getTypeDiplome() && true === $diplome->getTypeDiplome()->getApc()) {
             return $this->render('administration/matiere/_tableauApc.html.twig', [
                 'diplome' => $diplome,
                 'ressources' => $apcRessourceRepository->findByDiplome($diplome),
-                'saes' => $apcSaeRepository->findByDiplome($diplome)
+                'saes' => $apcSaeRepository->findByDiplome($diplome),
             ]);
         }
 
@@ -67,15 +69,14 @@ class MatiereController extends BaseController
      * @Route("/{diplome}/export.{_format}", name="administration_matiere_export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"}, options={"expose":true})
      *
-     * @param $_format
      */
     public function export(
         MyExport $myExport,
-        MatiereRepository $matiereRepository,
+        TypeMatiereManager $typeMatiereManager,
         Diplome $diplome,
-        $_format
+        string $_format
     ): Response {
-        $actualites = $matiereRepository->findByDiplome($diplome);
+        $actualites = $typeMatiereManager->findByDiplome($diplome);
 
         return $myExport->genereFichierGenerique(
             $_format,
@@ -93,8 +94,6 @@ class MatiereController extends BaseController
                 'tpFormation',
                 'nbNotes',
                 'coefficient',
-                'pac',
-                'nbEcts',
                 'suspendu',
             ]
         );

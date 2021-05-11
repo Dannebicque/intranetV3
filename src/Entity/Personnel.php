@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Personnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/04/2021 20:50
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Entity;
@@ -207,21 +207,6 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     private $couleur;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\IndisponibilitePersonnel", mappedBy="personnel")
-     */
-    private $indisponibilitePersonnels;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Disponibilite", mappedBy="personnel")
-     */
-    private $disponibilites;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ProgressionPedagogique", mappedBy="personnel")
-     */
-    private $progressionPedagogiques;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\EmpruntPersonnel", mappedBy="personnel")
      */
     private $emprunts;
@@ -293,9 +278,6 @@ class Personnel extends Utilisateur implements UtilisateurInterface
         $this->stagePeriodes = new ArrayCollection();
         $this->stageEtudiants = new ArrayCollection();
         $this->alternances = new ArrayCollection();
-        $this->indisponibilitePersonnels = new ArrayCollection();
-        $this->disponibilites = new ArrayCollection();
-        $this->progressionPedagogiques = new ArrayCollection();
         $this->departements = new ArrayCollection();
         $this->quizzQuestions = new ArrayCollection();
         $this->emprunts = new ArrayCollection();
@@ -459,9 +441,6 @@ class Personnel extends Utilisateur implements UtilisateurInterface
         return $this->hrs;
     }
 
-    /**
-     * @return Personnel
-     */
     public function addHr(Hrs $hr): self
     {
         if (!$this->hrs->contains($hr)) {
@@ -472,9 +451,6 @@ class Personnel extends Utilisateur implements UtilisateurInterface
         return $this;
     }
 
-    /**
-     * @return Personnel
-     */
     public function removeHr(Hrs $hr): self
     {
         if ($this->hrs->contains($hr)) {
@@ -496,9 +472,6 @@ class Personnel extends Utilisateur implements UtilisateurInterface
         return $this->previsionnels;
     }
 
-    /**
-     * @return Personnel
-     */
     public function addPrevisionnel(Previsionnel $previsionnel): self
     {
         if (!$this->previsionnels->contains($previsionnel)) {
@@ -509,9 +482,6 @@ class Personnel extends Utilisateur implements UtilisateurInterface
         return $this;
     }
 
-    /**
-     * @return Personnel
-     */
     public function removePrevisionnel(Previsionnel $previsionnel): self
     {
         if ($this->previsionnels->contains($previsionnel)) {
@@ -533,9 +503,6 @@ class Personnel extends Utilisateur implements UtilisateurInterface
         return $this->evaluationsAuteur;
     }
 
-    /**
-     * @return Personnel
-     */
     public function addEvaluationsAuteur(Evaluation $evaluationsAuteur): self
     {
         if (!$this->evaluationsAuteur->contains($evaluationsAuteur)) {
@@ -546,9 +513,6 @@ class Personnel extends Utilisateur implements UtilisateurInterface
         return $this;
     }
 
-    /**
-     * @return Personnel
-     */
     public function removeEvaluationsAuteur(Evaluation $evaluationsAuteur): self
     {
         if ($this->evaluationsAuteur->contains($evaluationsAuteur)) {
@@ -570,9 +534,6 @@ class Personnel extends Utilisateur implements UtilisateurInterface
         return $this->evaluationsAutorise;
     }
 
-    /**
-     * @return Personnel
-     */
     public function addEvaluationsAutorise(Evaluation $evaluationsAutorise): self
     {
         if (!$this->evaluationsAutorise->contains($evaluationsAutorise)) {
@@ -583,9 +544,6 @@ class Personnel extends Utilisateur implements UtilisateurInterface
         return $this;
     }
 
-    /**
-     * @return Personnel
-     */
     public function removeEvaluationsAutorise(Evaluation $evaluationsAutorise): self
     {
         if ($this->evaluationsAutorise->contains($evaluationsAutorise)) {
@@ -604,9 +562,6 @@ class Personnel extends Utilisateur implements UtilisateurInterface
         return $this->modificationNotes;
     }
 
-    /**
-     * @return Personnel
-     */
     public function addModificationNote(ModificationNote $modificationNote): self
     {
         if (!$this->modificationNotes->contains($modificationNote)) {
@@ -617,9 +572,6 @@ class Personnel extends Utilisateur implements UtilisateurInterface
         return $this;
     }
 
-    /**
-     * @return Personnel
-     */
     public function removeModificationNote(ModificationNote $modificationNote): self
     {
         if ($this->modificationNotes->contains($modificationNote)) {
@@ -638,9 +590,6 @@ class Personnel extends Utilisateur implements UtilisateurInterface
         return $this->nbHeuresService;
     }
 
-    /**
-     * @return Personnel
-     */
     public function setNbHeuresService(float $nbHeuresService = 192): self
     {
         $this->nbHeuresService = $nbHeuresService;
@@ -656,9 +605,6 @@ class Personnel extends Utilisateur implements UtilisateurInterface
         return $this->cahierTextes;
     }
 
-    /**
-     * @return Personnel
-     */
     public function addCahierTexte(CahierTexte $cahierTexte): self
     {
         if (!$this->cahierTextes->contains($cahierTexte)) {
@@ -669,9 +615,6 @@ class Personnel extends Utilisateur implements UtilisateurInterface
         return $this;
     }
 
-    /**
-     * @return Personnel
-     */
     public function removeCahierTexte(CahierTexte $cahierTexte): self
     {
         if ($this->cahierTextes->contains($cahierTexte)) {
@@ -693,9 +636,6 @@ class Personnel extends Utilisateur implements UtilisateurInterface
         return $this->notifications;
     }
 
-    /**
-     * @return Personnel
-     */
     public function addNotification(Notification $notification): self
     {
         if (!$this->notifications->contains($notification)) {
@@ -706,9 +646,6 @@ class Personnel extends Utilisateur implements UtilisateurInterface
         return $this;
     }
 
-    /**
-     * @return Personnel
-     */
     public function removeNotification(Notification $notification): self
     {
         if ($this->notifications->contains($notification)) {
@@ -770,9 +707,6 @@ class Personnel extends Utilisateur implements UtilisateurInterface
         return $this->personnelDepartements;
     }
 
-    /**
-     * @return Personnel
-     */
     public function addPersonnelDepartement(PersonnelDepartement $personnelDepartement): self
     {
         if (!$this->personnelDepartements->contains($personnelDepartement)) {
@@ -783,9 +717,6 @@ class Personnel extends Utilisateur implements UtilisateurInterface
         return $this;
     }
 
-    /**
-     * @return Personnel
-     */
     public function removePersonnelDepartement(PersonnelDepartement $personnelDepartement): self
     {
         if ($this->personnelDepartements->contains($personnelDepartement)) {
@@ -968,43 +899,9 @@ class Personnel extends Utilisateur implements UtilisateurInterface
         return $this->couleur;
     }
 
-    /**
-     * @return Personnel
-     */
     public function setCouleur(string $couleur): self
     {
         $this->couleur = $couleur;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|IndisponibilitePersonnel[]
-     */
-    public function getIndisponibilitePersonnels(): Collection
-    {
-        return $this->indisponibilitePersonnels;
-    }
-
-    public function addIndisponibilitePersonnel(IndisponibilitePersonnel $indisponibilitePersonnel): self
-    {
-        if (!$this->indisponibilitePersonnels->contains($indisponibilitePersonnel)) {
-            $this->indisponibilitePersonnels[] = $indisponibilitePersonnel;
-            $indisponibilitePersonnel->setPersonnel($this);
-        }
-
-        return $this;
-    }
-
-    public function removeIndisponibilitePersonnel(IndisponibilitePersonnel $indisponibilitePersonnel): self
-    {
-        if ($this->indisponibilitePersonnels->contains($indisponibilitePersonnel)) {
-            $this->indisponibilitePersonnels->removeElement($indisponibilitePersonnel);
-            // set the owning side to null (unless already changed)
-            if ($indisponibilitePersonnel->getPersonnel() === $this) {
-                $indisponibilitePersonnel->setPersonnel(null);
-            }
-        }
 
         return $this;
     }
@@ -1043,68 +940,6 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     public function setPhotoName(?string $photoName): void
     {
         $this->photoName = $photoName;
-    }
-
-    /**
-     * @return Collection|Disponibilite[]
-     */
-    public function getDisponibilites(): Collection
-    {
-        return $this->disponibilites;
-    }
-
-    public function addDisponibilite(Disponibilite $disponibilite): self
-    {
-        if (!$this->disponibilites->contains($disponibilite)) {
-            $this->disponibilites[] = $disponibilite;
-            $disponibilite->setPersonnel($this);
-        }
-
-        return $this;
-    }
-
-    public function removeDisponibilite(Disponibilite $disponibilite): self
-    {
-        if ($this->disponibilites->contains($disponibilite)) {
-            $this->disponibilites->removeElement($disponibilite);
-            // set the owning side to null (unless already changed)
-            if ($disponibilite->getPersonnel() === $this) {
-                $disponibilite->setPersonnel(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|ProgressionPedagogique[]
-     */
-    public function getProgressionPedagogiques(): Collection
-    {
-        return $this->progressionPedagogiques;
-    }
-
-    public function addProgressionPedagogique(ProgressionPedagogique $progressionPedagogique): self
-    {
-        if (!$this->progressionPedagogiques->contains($progressionPedagogique)) {
-            $this->progressionPedagogiques[] = $progressionPedagogique;
-            $progressionPedagogique->setPersonnel($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProgressionPedagogique(ProgressionPedagogique $progressionPedagogique): self
-    {
-        if ($this->progressionPedagogiques->contains($progressionPedagogique)) {
-            $this->progressionPedagogiques->removeElement($progressionPedagogique);
-            // set the owning side to null (unless already changed)
-            if ($progressionPedagogique->getPersonnel() === $this) {
-                $progressionPedagogique->setPersonnel(null);
-            }
-        }
-
-        return $this;
     }
 
     /**

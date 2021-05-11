@@ -4,18 +4,14 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/SousCommission/SousCommission.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/05/2021 19:35
- */
-
-/*
- * Pull your hearder here, for exemple, Licence header.
+ * @lastUpdate 08/05/2021 22:19
  */
 
 namespace App\Classes\SousCommission;
 
 use App\Classes\Etudiant\EtudiantAbsences;
 use App\Classes\Etudiant\EtudiantNotes;
-use App\Utils\Tools;
+use App\Classes\Matieres\TypeMatiereManager;
 use App\DTO\EtudiantSousCommission;
 use App\DTO\MoyenneMatiere;
 use App\DTO\MoyenneUe;
@@ -23,15 +19,15 @@ use App\DTO\StatitiquesBac;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
-use App\Entity\Matiere;
 use App\Entity\Scolarite;
 use App\Entity\ScolaritePromo;
 use App\Entity\Semestre;
 use App\Entity\Ue;
 use App\Repository\EtudiantRepository;
-use App\Repository\MatiereRepository;
 use App\Repository\UeRepository;
+use App\Utils\Tools;
 use Doctrine\ORM\EntityManagerInterface;
+use function array_key_exists;
 
 class SousCommission
 {
@@ -42,12 +38,9 @@ class SousCommission
 
     private Semestre $semestre;
 
-    private MatiereRepository $matiereRepository;
+    private TypeMatiereManager $typeMatiereManager;
 
-    /**
-     * @var Matiere[]|mixed
-     */
-    private $matieres;
+    private array $matieres;
 
     /**
      * @var Ue[]
@@ -76,13 +69,13 @@ class SousCommission
         EntityManagerInterface $entityManager,
         EtudiantRepository $etudiantRepository,
         UeRepository $ueRepository,
-        MatiereRepository $matiereRepository,
+        TypeMatiereManager $typeMatiereManager,
         EtudiantNotes $etudiantNotes,
         EtudiantAbsences $etudiantAbsences
     ) {
         $this->entityManager = $entityManager;
         $this->etudiantRepository = $etudiantRepository;
-        $this->matiereRepository = $matiereRepository;
+        $this->typeMatiereManager = $typeMatiereManager;
         $this->ueRepository = $ueRepository;
         $this->etudiantNotes = $etudiantNotes;
         $this->etudiantAbsences = $etudiantAbsences;
@@ -93,6 +86,7 @@ class SousCommission
         $this->semestre = $semestre;
         $this->anneeUniversitaire = $anneeUniversitaire;
         $this->initDataSousCommission();
+        $matieres = $this->typeMatiereManager->findBySemestre($semestre);
 
         $this->sousCommissionEtudiant = [];
 
@@ -101,11 +95,12 @@ class SousCommission
 
             //récupérer les notes et calculer la moyenne des matières (sans pénalité)
             $this->etudiantNotes->setEtudiant($etudiant);
-            $etudiantSousCommission->moyenneMatieres = $this->etudiantNotes->getMoyenneParMatiereParSemestresEtAnneeUniversitaire($semestre,
+            $etudiantSousCommission->moyenneMatieres = $this->etudiantNotes->getMoyenneParMatiereParSemestresEtAnneeUniversitaire($matieres,
+                $this->semestre,
                 $anneeUniversitaire);
             //récupérer les pénalités d'absence par matière
             $this->etudiantAbsences->setEtudiant($etudiant);
-            $this->etudiantAbsences->getPenalitesAbsencesParMatiere($semestre, $anneeUniversitaire,
+            $this->etudiantAbsences->getPenalitesAbsencesParMatiere($matieres, $anneeUniversitaire,
                 $etudiantSousCommission->moyenneMatieres);
 
             //calculer la moyenne des ues (avec et sans pénalité)
@@ -129,9 +124,9 @@ class SousCommission
         }
     }
 
-    public function initDataSousCommission()
+    public function initDataSousCommission(): void
     {
-        $this->matieres = $this->matiereRepository->findBySemestre($this->semestre);
+        $this->matieres = $this->typeMatiereManager->findBySemestre($this->semestre);
         $this->ues = $this->ueRepository->findBySemestre($this->semestre);
         $this->etudiants = $this->etudiantRepository->findBySemestre($this->semestre);
 
@@ -145,6 +140,8 @@ class SousCommission
 
     private function calculMoyenneUes(array $moyenneMatieres): array
     {
+        //todo: attention notion d'UE différente...
+
         $tabUes = [];
         foreach ($this->ues as $ue) {
             $tabUes[$ue->getNumeroUe()] = new MoyenneUe($ue, $this->semestre->getOptPointPenaliteAbsence());
@@ -152,8 +149,8 @@ class SousCommission
 
         /** @var MoyenneMatiere $matiere */
         foreach ($moyenneMatieres as $matiere) {
-            $idUe = $matiere->matiere->getUe()->getNumeroUe();
-            if (\array_key_exists($idUe, $tabUes)) {
+            $idUe = $matiere->matiere->ue_numero;
+            if (array_key_exists($idUe, $tabUes)) {
                 $tabUes[$idUe]->addMatiere($matiere);
             }
         }
@@ -161,10 +158,7 @@ class SousCommission
         return $tabUes;
     }
 
-    /**
-     * @return Matiere[]|mixed
-     */
-    public function getMatieres()
+    public function getMatieres(): array
     {
         return $this->matieres;
     }
@@ -180,7 +174,7 @@ class SousCommission
     /**
      * @return Etudiant[]|array
      */
-    public function getEtudiants()
+    public function getEtudiants(): array
     {
         return $this->etudiants;
     }
@@ -210,7 +204,7 @@ class SousCommission
         return $this->anneeUniversitaire;
     }
 
-    public function updateScolarite(Scolarite $scolarite, $type, $field, $value)
+    public function updateScolarite(Scolarite $scolarite, $type, $field, $value): void
     {
         switch ($type) {
             case 'semestre':
@@ -226,7 +220,7 @@ class SousCommission
         $this->entityManager->flush();
     }
 
-    private function updateScolariteSemestre(Scolarite $scolarite, $field, $value)
+    private function updateScolariteSemestre(Scolarite $scolarite, $field, $value): void
     {
         switch ($field) {
             case 'decision':
@@ -241,7 +235,7 @@ class SousCommission
         }
     }
 
-    private function updateScolariteUe(Scolarite $scolarite, $field, $value)
+    private function updateScolariteUe(Scolarite $scolarite, $field, $value): void
     {
         [$code, $idUe] = explode('_', $field);
         switch ($code) {
@@ -251,7 +245,7 @@ class SousCommission
         }
     }
 
-    private function updateScolariteMatiere(Scolarite $scolarite, $field, $value)
+    private function updateScolariteMatiere(Scolarite $scolarite, $field, $value): void
     {
         [$code, $idMatiere] = explode('_', $field);
         switch ($code) {
@@ -264,12 +258,12 @@ class SousCommission
     public function getBySemestreAnneeUniversitaire(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire)
     {
         return $this->entityManager->getRepository(ScolaritePromo::class)->findOneBy([
-            'semestre'           => $semestre->getId(),
+            'semestre' => $semestre->getId(),
             'anneeUniversitaire' => $anneeUniversitaire->getId(),
         ]);
     }
 
-    public function calculStats(array $bacs)
+    public function calculStats(array $bacs): array
     {
         $tStats = [];
         foreach ($bacs as $bac) {

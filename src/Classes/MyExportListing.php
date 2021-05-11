@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyExportListing.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 09/05/2021 14:41
  */
 
 /*
@@ -90,10 +90,6 @@ class MyExportListing
     }
 
     /**
-     * @param $exportTypeDocument
-     * @param $exportFormat
-     * @param $exportChamps
-     * @param $exportFiltre
      *
      * @throws Exception
      * @throws LoaderError
@@ -105,7 +101,7 @@ class MyExportListing
         $exportFormat,
         $exportChamps,
         $exportFiltre,
-        ?Matiere $matiere = null,
+        ?\App\DTO\Matiere $matiere = null,
         ?Personnel $personnel = null
     ) {
         $this->exportTypeDocument = $exportTypeDocument;

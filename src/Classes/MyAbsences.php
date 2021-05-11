@@ -4,11 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyAbsences.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
- */
-
-/*
- * Pull your hearder here, for exemple, Licence header.
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Classes;
@@ -38,7 +34,7 @@ class MyAbsences
     /**
      * @var Etudiant[]
      */
-    private $etudiants;
+    private array $etudiants;
 
     private MyExcelMultiExport $myExcelMultiExport;
 
@@ -72,10 +68,6 @@ class MyAbsences
         return $this->etudiants;
     }
 
-    /**
-     * @param $matiere
-     * @param $anneeCourante
-     */
     public function getAbsencesMatiere(Matiere $matiere, AnneeUniversitaire $anneeCourante)
     {
         return $this->absenceRepository->getByMatiere($matiere, $anneeCourante);
@@ -84,14 +76,14 @@ class MyAbsences
     /**
      * @throws Exception
      */
-    public function getAbsencesSemestre(Semestre $semestre): void
+    public function getAbsencesSemestre(array $matieres, Semestre $semestre): void
     {
         $this->etudiants = $this->etudiantRepository->findBySemestre($semestre->getId());
 
         /** @var Etudiant $etudiant */
         foreach ($this->etudiants as $etudiant) {
             $this->etudiantAbsences->setEtudiant($etudiant);
-            $absencesEtudiant = $this->etudiantAbsences->getAbsencesParSemestresEtAnneeUniversitaire($semestre,
+            $absencesEtudiant = $this->etudiantAbsences->getAbsencesParSemestresEtAnneeUniversitaire($matieres,
                 $semestre->getAnneeUniversitaire());
             $statistiques = new StatsAbsences();
             $this->statistiques[$etudiant->getId()] = $statistiques->calculStatistiquesAbsencesEtudiant($absencesEtudiant);

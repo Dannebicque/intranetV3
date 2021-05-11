@@ -1,6 +1,6 @@
 <dl class="row">
     <dt class="col-md-5 col-sm-12">{{ 'matiere'|trans }}:</dt>
-    <dd class="col-md-7 col-sm-12"> {{ absence.matiere.codeMatiere }} {{ absence.matiere.libelle }}</dd>
+    <dd class="col-md-7 col-sm-12"> {{ matiere.display }}</dd>
     <dt class="col-md-5 col-sm-12">{{ 'date'|trans }}:</dt>
     <dd class="col-md-7 col-sm-12"> {{ absence.dateHeure ? absence.dateHeure|format_date('long') : '' }} </dd>
     <dt class="col-md-5 col-sm-12">{{ 'heure'|trans }}:</dt>

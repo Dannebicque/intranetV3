@@ -1,12 +1,14 @@
 <dl class="row">
     <dt class="col-md-5 col-sm-12">{{ 'matiere'|trans }}:</dt>
-    <dd class="col-md-7 col-sm-12"> {{ note.evaluation.matiere.codeMatiere }} {{ note.evaluation.matiere.libelle }}</dd>
-    <dt class="col-md-5 col-sm-12">{{ 'ue'|trans }}:</dt>
-    <dd class="col-md-7 col-sm-12">{{ note.evaluation.matiere.ue.libelle }}</dd>
+    <dd class="col-md-7 col-sm-12"> {{ matiere.display }}</dd>
+    {% if matiere.ue_id != 0 %}
+        <dt class="col-md-5 col-sm-12">{{ 'ue'|trans }}:</dt>
+        <dd class="col-md-7 col-sm-12">{{ matiere.ue_display }}</dd>
+    {% endif %}
     <dt class="col-md-5 col-sm-12">{{ 'coefficient.de.matiere'|trans }}:</dt>
-    <dd class="col-md-7 col-sm-12">{{ note.evaluation.matiere.coefficient }}</dd>
+    <dd class="col-md-7 col-sm-12">{{ matiere.coefficient }}</dd>
     <dt class="col-md-5 col-sm-12">{{ 'nb.note.matiere'|trans }}:</dt>
-    <dd class="col-md-7 col-sm-12">{{ note.evaluation.matiere.nbnotes }}</dd>
+    <dd class="col-md-7 col-sm-12">{{ matiere.nbNotes }}</dd>
     <dt class="col-md-5 col-sm-12">{{ 'nb.saisie.par'|trans }}:</dt>
     <dd class="col-md-7 col-sm-12">{{ note.evaluation.personnelAuteur != null ? note.evaluation.personnelAuteur
         .displayPr : 'non.defini'|trans }}</dd>

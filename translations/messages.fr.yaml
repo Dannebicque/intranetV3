@@ -1472,8 +1472,10 @@ previsionnel:
   add.success.flash: 'Prévisionnel ajouté avec succès'
   duplicate_annee.success.flash: 'Prévisionnel complet dupliqué avec succès'
   duplicate.success.flash: 'Prévisionnel dupliqué avec succès'
-  et.intervenants.matiere: 'Prévisionnel et intervenants dans la matière'
+  et.intervenants.matiere: 'Prévisionnel et intervenants dans la matière : %matiere%'
   import.success.flash: 'Prévisionnel importé avec succès'
+  delete.success.flash: 'Prévisionnel supprimé avec succès'
+  delete.error.flash: 'Erreur lors de la suppression du prévisionnel'
 
 prochains.evenements.heading: 'Prochains événements'
 professionalisation: Professionalisation
@@ -2189,6 +2191,8 @@ motifTp: 'TP en présentiel'
 motifEval: 'Evaluation'
 
 questionnaire.duplicate.success.flashbag: 'Questionnaire dupliqué avec succès'
+questionnaire.delete.error.flashbag: 'Erreur lors de la suppression du questionnaire'
+questionnaire.delete.success.flashbag: 'Questionnaire supprimé avec succès'
 administratif:
   enquetes.heading: 'Gestion des enquêtes'
 changement.semestre.effectue: 'Changement de semestre effectué pour les étudiants'

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/EtudiantRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Repository;
@@ -41,12 +41,6 @@ class EtudiantRepository extends ServiceEntityRepository
         $this->router = $router;
     }
 
-    /**
-     * @param $getId
-     * @param $filters
-     * @param $start
-     * @param $length
-     */
     public function getArrayEtudiantsByDepartement($getId, $filters, $start, $length): array
     {
         $etudiants = $this->getByDepartement($getId, $filters, $start, $length);
@@ -147,9 +141,6 @@ class EtudiantRepository extends ServiceEntityRepository
         return $getResult ? $preparedQuery->getResult() : $preparedQuery;
     }
 
-    /**
-     * @param $semestre
-     */
     public function findBySemestreBuilder($semestre): QueryBuilder
     {
         return $this->createQueryBuilder('e')
@@ -160,9 +151,6 @@ class EtudiantRepository extends ServiceEntityRepository
             ->addOrderBy('e.prenom', 'ASC');
     }
 
-    /**
-     * @param $semestre
-     */
     public function findBySemestre($semestre): array
     {
         return $this->findBySemestreBuilder($semestre)
@@ -171,7 +159,6 @@ class EtudiantRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param $slug
      *
      * @throws NonUniqueResultException
      */
@@ -184,9 +171,6 @@ class EtudiantRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    /**
-     * @param $needle
-     */
     public function search($needle, Departement $departement): array
     {
         $query = $this->searchObject($needle, $departement);
@@ -269,7 +253,6 @@ class EtudiantRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param $code
      *
      * @throws NonUniqueResultException
      */

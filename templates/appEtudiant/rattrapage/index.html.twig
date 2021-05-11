@@ -38,7 +38,7 @@
             <tbody>
             {% for demande in rattrapages %}
                 <tr>
-                    <td>{{ demande.matiere ? demande.matiere.libelle : 'non.defini'|trans }}</td>
+                    <td>{{ matieres[demande.typeIdMatiere] is defined ? matieres[demande.typeIdMatiere].libelle : 'non.defini'|trans }}</td>
                     <td>{{ demande.dateEval ? demande.dateEval|format_date('long') : '' }}
                         à {{ demande.heureEval ? demande.heureEval|format_time('short') : '' }}</td>
                     <td>{{ demande.personnel ? demande.personnel.display : 'non.defini'|trans }}</td>

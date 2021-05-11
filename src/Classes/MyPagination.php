@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyPagination.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:26
+ * @lastUpdate 09/05/2021 14:41
  */
 
 /*
@@ -40,7 +40,6 @@ class MyPagination
     }
 
     /**
-     * @param     $link
      * @param int $page
      */
     public function calculPagination(QueryBuilder $queryBuilder, $link, $page = 1): void
@@ -105,9 +104,6 @@ class MyPagination
         return $this->router->generate($this->link['path'], $args);
     }
 
-    /**
-     * @param $page
-     */
     public function getLinkPage($page): string
     {
         $args = $this->link['args'];

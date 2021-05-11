@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/AnneeUniversitaire.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 05/05/2021 17:55
  */
 
 namespace App\Entity;
@@ -72,16 +72,6 @@ class AnneeUniversitaire extends BaseEntity
     private $diplomes;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Disponibilite", mappedBy="anneeUniversitaire")
-     */
-    private $disponibilites;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ProgressionPedagogique", mappedBy="anneeUniversitaire")
-     */
-    private $progressionPedagogiques;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\StagePeriode", mappedBy="anneeUniversitaire")
      */
     private $stagePeriodes;
@@ -110,8 +100,6 @@ class AnneeUniversitaire extends BaseEntity
         $this->scolarites = new ArrayCollection();
         $this->scolaritePromos = new ArrayCollection();
         $this->diplomes = new ArrayCollection();
-        $this->disponibilites = new ArrayCollection();
-        $this->progressionPedagogiques = new ArrayCollection();
         $this->stagePeriodes = new ArrayCollection();
         $this->evaluations = new ArrayCollection();
         $this->projetPeriodes = new ArrayCollection();
@@ -344,68 +332,6 @@ class AnneeUniversitaire extends BaseEntity
         $s = $this->getAnnee() + 1;
 
         return $this->getAnnee() . ' | ' . $s;
-    }
-
-    /**
-     * @return Collection|Disponibilite[]
-     */
-    public function getDisponibilites(): Collection
-    {
-        return $this->disponibilites;
-    }
-
-    public function addDisponibilite(Disponibilite $disponibilite): self
-    {
-        if (!$this->disponibilites->contains($disponibilite)) {
-            $this->disponibilites[] = $disponibilite;
-            $disponibilite->setAnneeUniversitaire($this);
-        }
-
-        return $this;
-    }
-
-    public function removeDisponibilite(Disponibilite $disponibilite): self
-    {
-        if ($this->disponibilites->contains($disponibilite)) {
-            $this->disponibilites->removeElement($disponibilite);
-            // set the owning side to null (unless already changed)
-            if ($disponibilite->getAnneeUniversitaire() === $this) {
-                $disponibilite->setAnneeUniversitaire(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|ProgressionPedagogique[]
-     */
-    public function getProgressionPedagogiques(): Collection
-    {
-        return $this->progressionPedagogiques;
-    }
-
-    public function addProgressionPedagogique(ProgressionPedagogique $progressionPedagogique): self
-    {
-        if (!$this->progressionPedagogiques->contains($progressionPedagogique)) {
-            $this->progressionPedagogiques[] = $progressionPedagogique;
-            $progressionPedagogique->setAnneeUniversitaire($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProgressionPedagogique(ProgressionPedagogique $progressionPedagogique): self
-    {
-        if ($this->progressionPedagogiques->contains($progressionPedagogique)) {
-            $this->progressionPedagogiques->removeElement($progressionPedagogique);
-            // set the owning side to null (unless already changed)
-            if ($progressionPedagogique->getAnneeUniversitaire() === $this) {
-                $progressionPedagogique->setAnneeUniversitaire(null);
-            }
-        }
-
-        return $this;
     }
 
     /**

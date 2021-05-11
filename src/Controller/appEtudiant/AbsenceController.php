@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appEtudiant/AbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:36
+ * @lastUpdate 11/05/2021 08:46
  */
 
 namespace App\Controller\appEtudiant;
 
+use App\Classes\Matieres\TypeMatiereManager;
 use App\Controller\BaseController;
 use App\Entity\Absence;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -26,10 +27,13 @@ class AbsenceController extends BaseController
      * @Route("/details/{uuid}", name="app_etudiant_absence_detail", options={"expose" = true})
      * @ParamConverter("absence", options={"mapping": {"uuid": "uuid"}})
      */
-    public function details(Absence $absence): Response
-    {
+    public function details(
+        TypeMatiereManager $typeMatiereManager,
+        Absence $absence
+    ): Response {
         return $this->render('appEtudiant/absence/_detail.html.twig', [
             'absence' => $absence,
+            'matiere' => $typeMatiereManager->getMatiere($absence->getIdMatiere(), $absence->getTypeMatiere()),
         ]);
     }
 }

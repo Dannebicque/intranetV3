@@ -4,12 +4,14 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/PrevisionnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 11/05/2021 08:46
  */
 
 namespace App\Controller\appPersonnel;
 
-use App\Classes\MyPrevisionnel;
+use App\Classes\Hrs\HrsManager;
+use App\Classes\Previsionnel\PrevisionnelManager;
+use App\Classes\Previsionnel\PrevisionnelSynthese;
 use App\Classes\ServiceRealise\ServiceRealiseCelcat;
 use App\Classes\ServiceRealise\ServiceRealiseIntranet;
 use App\Controller\BaseController;
@@ -28,18 +30,29 @@ class PrevisionnelController extends BaseController
     /**
      * @Route("/", name="previsionnel_index")
      */
-    public function index(MyPrevisionnel $myPrevisionnel): Response
-    {
-        //feature: afficher prévisionnel uniquement du département dans application, et prévisionnel global dans le profil (message pour expliquer)
-        $myPrevisionnel->setPersonnel($this->getConnectedUser());
-        $myPrevisionnel->getPrevisionnelEnseignantBySemestre($this->dataUserSession->getAnneePrevisionnel());
-        $myPrevisionnel->getHrsEnseignant($this->dataUserSession->getAnneePrevisionnel());
+    public function index(
+        PrevisionnelManager $myPrevisionnel,
+        PrevisionnelSynthese $previsionnelSynthese,
+        HrsManager $hrsManager
+    ): Response {
+        $anneePrevisionnel = $this->dataUserSession->getAnneePrevisionnel();
+        $personnel = $this->getConnectedUser();
+        $departement = $this->getDepartement();
+        $previsionnels = $myPrevisionnel->getPrevisionnelPersonnelDepartementAnnee($personnel, $departement,
+            $anneePrevisionnel);
+        $hrs = $hrsManager->getHrsPersonnelDepartementAnnee($personnel, $departement, $anneePrevisionnel);
+        $synthsePrevisionnel = $previsionnelSynthese->getSynthese($previsionnels, $hrs, $personnel);
 
         return $this->render('appPersonnel/previsionnel/index.html.twig', [
-            'previsionnel' => $myPrevisionnel,
-            'personnel'    => $this->getConnectedUser(),
+            'previsionnels' => $previsionnels,
+            'synthsePrevisionnel' => $synthsePrevisionnel,
+            'anneePrevisionnel' => $anneePrevisionnel,
+            'semestres' => $this->dataUserSession->getSemestres(),
+            'hrs' => $hrs,
+            'personnel' => $personnel,
         ]);
     }
+
 
     /**
      * @Route("/chronologique", name="previsionnel_chronologique")

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/EdtPlanningRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 17/02/2021 19:54
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Repository;
@@ -57,7 +57,6 @@ class EdtPlanningRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param     $semestre
      * @param int $semaine
      */
     public function findEdtSemestre($semestre, $semaine): array
@@ -138,10 +137,6 @@ class EdtPlanningRepository extends ServiceEntityRepository
         }
     }
 
-    /**
-     * @param $semaine
-     * @param $jour
-     */
     public function findEdtSalleJour($semaine, $jour): array
     {
         return $this->createQueryBuilder('p')

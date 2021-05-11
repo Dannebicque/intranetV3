@@ -4,12 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Evaluation.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
+use App\Entity\Traits\MatiereTrait;
 use App\Entity\Traits\UuidTrait;
 use DateTime;
 use DateTimeInterface;
@@ -27,6 +28,7 @@ class Evaluation extends BaseEntity
 {
     use UuidTrait;
     use LifeCycleTrait;
+    use MatiereTrait;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Matiere", inversedBy="evaluations")
@@ -103,16 +105,18 @@ class Evaluation extends BaseEntity
      *
      * @throws Exception
      */
-    public function __construct(Personnel $personnel, Matiere $matiere, Departement $departement)
+    public function __construct(Personnel $personnel, \App\DTO\Matiere $mat, Departement $departement)
     {
         $this->setUuid(Uuid::uuid4());
 
-        $this->matiere = $matiere;
+        $this->idMatiere = $mat->id;
+        $this->typeMatiere = $mat->typeMatiere;
         $this->personnelAuteur = $personnel;
-        $this->anneeUniversitaire = null !== $matiere->getSemestre() ? $matiere->getSemestre()->getAnneeUniversitaire() : null;
-        if (null !== $matiere->getUe() && null !== $matiere->getUe()->getSemestre()) {
-            $this->setModifiable($matiere->getUe()->getSemestre()->isOptEvaluationModifiable());
-            $this->setVisible($matiere->getUe()->getSemestre()->isOptEvaluationVisible());
+
+        if (null !== $mat->semestre) {
+            $this->anneeUniversitaire = $mat->semestre->getAnneeUniversitaire();
+            $this->setModifiable($mat->semestre->isOptEvaluationModifiable());
+            $this->setVisible($mat->semestre->isOptEvaluationVisible());
         }
 
         $this->dateEvaluation = new DateTime('now');
@@ -132,9 +136,6 @@ class Evaluation extends BaseEntity
         return $this->matiere;
     }
 
-    /**
-     * @return Evaluation
-     */
     public function setMatiere(?Matiere $matiere): self
     {
         $this->matiere = $matiere;
@@ -147,9 +148,6 @@ class Evaluation extends BaseEntity
         return $this->personnelAuteur;
     }
 
-    /**
-     * @return Evaluation
-     */
     public function setPersonnelAuteur(?Personnel $personnelAuteur): self
     {
         $this->personnelAuteur = $personnelAuteur;
@@ -165,9 +163,6 @@ class Evaluation extends BaseEntity
         return $this->personnelAutorise;
     }
 
-    /**
-     * @return Evaluation
-     */
     public function addPersonnelAutorise(Personnel $personnelAutorise): self
     {
         if (!$this->personnelAutorise->contains($personnelAutorise)) {
@@ -177,9 +172,6 @@ class Evaluation extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return Evaluation
-     */
     public function removePersonnelAutorise(Personnel $personnelAutorise): self
     {
         if ($this->personnelAutorise->contains($personnelAutorise)) {
@@ -194,9 +186,6 @@ class Evaluation extends BaseEntity
         return $this->dateEvaluation;
     }
 
-    /**
-     * @return Evaluation
-     */
     public function setDateEvaluation(DateTimeInterface $dateEvaluation): self
     {
         $this->dateEvaluation = $dateEvaluation;
@@ -209,9 +198,6 @@ class Evaluation extends BaseEntity
         return $this->visible;
     }
 
-    /**
-     * @return Evaluation
-     */
     public function setVisible(bool $visible): self
     {
         $this->visible = $visible;
@@ -224,9 +210,6 @@ class Evaluation extends BaseEntity
         return $this->modifiable;
     }
 
-    /**
-     * @return Evaluation
-     */
     public function setModifiable(bool $modifiable): self
     {
         $this->modifiable = $modifiable;
@@ -239,9 +222,6 @@ class Evaluation extends BaseEntity
         return $this->coefficient;
     }
 
-    /**
-     * @return Evaluation
-     */
     public function setCoefficient(float $coefficient): self
     {
         $this->coefficient = $coefficient;
@@ -254,9 +234,6 @@ class Evaluation extends BaseEntity
         return $this->commentaire;
     }
 
-    /**
-     * @return Evaluation
-     */
     public function setCommentaire(string $commentaire): self
     {
         $this->commentaire = $commentaire;
@@ -272,9 +249,6 @@ class Evaluation extends BaseEntity
         return $this->notes;
     }
 
-    /**
-     * @return Evaluation
-     */
     public function addNote(Note $note): self
     {
         if (!$this->notes->contains($note)) {
@@ -285,9 +259,6 @@ class Evaluation extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return Evaluation
-     */
     public function removeNote(Note $note): self
     {
         if ($this->notes->contains($note)) {
@@ -309,9 +280,6 @@ class Evaluation extends BaseEntity
         return $this->enfants;
     }
 
-    /**
-     * @return Evaluation
-     */
     public function addEnfant(self $enfant): self
     {
         if (!$this->enfants->contains($enfant)) {
@@ -322,9 +290,6 @@ class Evaluation extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return Evaluation
-     */
     public function removeEnfant(self $enfant): self
     {
         if ($this->enfants->contains($enfant)) {
@@ -343,9 +308,6 @@ class Evaluation extends BaseEntity
         return $this->parent;
     }
 
-    /**
-     * @return Evaluation
-     */
     public function setParent(?self $parent): self
     {
         $this->parent = $parent;
@@ -358,9 +320,6 @@ class Evaluation extends BaseEntity
         return $this->typeGroupe;
     }
 
-    /**
-     * @return Evaluation
-     */
     public function setTypeGroupe(?TypeGroupe $typeGroupe): self
     {
         $this->typeGroupe = $typeGroupe;

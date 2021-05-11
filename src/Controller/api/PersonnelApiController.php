@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/api/PersonnelApiController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Controller\api;
@@ -45,7 +45,6 @@ class PersonnelApiController extends BaseController
     /**
      * @Route("/enseignants/{type}", name="api_enseignants_type", options={"expose":true})
      *
-     * @param $type
      */
     public function getEnseignantsByType($type): Response
     {
@@ -98,7 +97,6 @@ class PersonnelApiController extends BaseController
     }
 
     /**
-     * @param $needle
      *
      * @Route("/personnel/recherche/{needle}", name="api_personnel_recherche", options={"expose":true})
      *
@@ -119,7 +117,6 @@ class PersonnelApiController extends BaseController
     }
 
     /**
-     * @param $slug
      *
      * @throws NonUniqueResultException
      * @Route("/personnel/departement/add/{slug}/{departement}", name="api_personnel_add_to_departement",

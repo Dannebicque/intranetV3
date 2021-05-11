@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Hrs/HrsManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/05/2021 16:31
+ * @lastUpdate 03/05/2021 09:28
  */
 
 namespace App\Classes\Hrs;
@@ -29,5 +29,10 @@ class HrsManager
         int $annee
     ) {
         return $this->hrsRepository->getPersonnelDepartementAnnee($personnel, $departement, $annee);
+    }
+
+    public function getPersonnelAnnee(Personnel $personnel, ?int $annee)
+    {
+        return $this->hrsRepository->getPersonnelAnnee($personnel, $annee);
     }
 }

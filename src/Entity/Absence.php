@@ -4,12 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Absence.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 19:01
+ * @lastUpdate 11/05/2021 08:46
  */
 
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
+use App\Entity\Traits\MatiereTrait;
 use App\Entity\Traits\UuidTrait;
 use Carbon\CarbonInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -27,6 +28,7 @@ class Absence extends BaseEntity implements Serializable
 {
     use UuidTrait;
     use LifeCycleTrait;
+    use MatiereTrait;
 
     /**
      * @ORM\Column(name="dateHeure", type="datetime")
@@ -58,7 +60,7 @@ class Absence extends BaseEntity implements Serializable
      * @MaxDepth(2)
      * @Groups({"absences_administration"})
      */
-    private Matiere $matiere;
+    private ?Matiere $matiere;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Etudiant", inversedBy="absences")
@@ -159,10 +161,7 @@ class Absence extends BaseEntity implements Serializable
         return $this->matiere;
     }
 
-    /**
-     * @return Absence
-     */
-    public function setMatiere(Matiere $matiere): self
+    public function setMatiere(?Matiere $matiere): self
     {
         $this->matiere = $matiere;
 
@@ -184,13 +183,14 @@ class Absence extends BaseEntity implements Serializable
     public function getJson(): array
     {
         return [
-            'id'          => $this->getId(),
-            'justifie'    => $this->isJustifie(),
-            'uuidString'  => $this->getUuidString(),
-            'date'        => null !== $this->getDateHeure() ? $this->getDateHeure()->format('d/m/Y') : '-',
-            'heure'       => null !== $this->getDateHeure() ? $this->getDateHeure()->format('H:i') : '-',
-            'personnel'   => null !== $this->getPersonnel() ? $this->getPersonnel()->getDisplay() : '-',
-            'codeMatiere' => null !== $this->getMatiere() ? $this->getMatiere()->getCodeMatiere() : '-',
+            'id' => $this->getId(),
+            'justifie' => $this->isJustifie(),
+            'uuidString' => $this->getUuidString(),
+            'date' => null !== $this->getDateHeure() ? $this->getDateHeure()->format('d/m/Y') : '-',
+            'heure' => null !== $this->getDateHeure() ? $this->getDateHeure()->format('H:i') : '-',
+            'personnel' => null !== $this->getPersonnel() ? $this->getPersonnel()->getDisplay() : '-',
+            'codeMatiere' => null !== $this->getIdMatiere()
+            // ? $this->getMatiere()->getCodeMatiere() : '-',//todo: récupérer la matière ?
         ];
     }
 

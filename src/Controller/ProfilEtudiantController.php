@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ProfilEtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/03/2021 12:43
+ * @lastUpdate 11/05/2021 08:46
  */
 
 namespace App\Controller;
@@ -12,13 +12,14 @@ namespace App\Controller;
 use App\Classes\Calendrier;
 use App\Classes\Etudiant\EtudiantAbsences;
 use App\Classes\Etudiant\EtudiantNotes;
+use App\Classes\Matieres\TypeMatiereManager;
+use App\Classes\NotesTri;
 use App\Classes\StatsAbsences;
 use App\Entity\Commentaire;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Repository\AlternanceRepository;
 use App\Repository\DepartementRepository;
-use App\Repository\MatiereRepository;
 use App\Repository\ScolariteRepository;
 use App\Repository\StageEtudiantRepository;
 use Exception;
@@ -57,7 +58,7 @@ class ProfilEtudiantController extends BaseController
         Etudiant $etudiant
     ): Response {
         return $this->render('user/composants/actions_etudiant.html.twig', [
-            'etudiant'     => $etudiant,
+            'etudiant' => $etudiant,
             'departements' => $departementRepository->findActifs(),
         ]);
     }
@@ -74,7 +75,7 @@ class ProfilEtudiantController extends BaseController
         $scolarite = $scolariteRepository->findByEtudiant($etudiant);
 
         return $this->render('user/composants/scolarite.html.twig', [
-            'etudiant'   => $etudiant,
+            'etudiant' => $etudiant,
             'scolarites' => $scolarite,
         ]);
     }
@@ -85,24 +86,30 @@ class ProfilEtudiantController extends BaseController
      * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
      */
     public function notes(
+        NotesTri $notesTri,
+        TypeMatiereManager $typeMatiereManager,
         ChartBuilderInterface $chartBuilder,
         EtudiantNotes $etudiantNotes,
         Etudiant $etudiant
     ): Response {
         $etudiantNotes->setEtudiant($etudiant);
-        $notes = $etudiantNotes->getNotesParSemestresEtAnneeUniversitaire($etudiant->getSemestre(),
+        $matieres = $typeMatiereManager->findBySemestreArray($etudiant->getSemestre());
+        $notes = $etudiantNotes->getNotesParSemestresEtAnneeUniversitaire($matieres,
             $etudiant->getAnneeUniversitaire());
         $etudiantNotes->calculGraphique();
 
+        $notes = $notesTri->tri($notes, $matieres);
+
+
         $chart = $chartBuilder->createChart(Chart::TYPE_RADAR);
         $chart->setData([
-            'labels'   => $etudiantNotes->getLabelsGraphique(),
+            'labels' => $etudiantNotes->getLabelsGraphique(),
             'datasets' => [
                 [//todo: intégrer l'historique des semestres
-                 'label'           => $etudiant->getSemestre()->getLibelle(),
-                 'data'            => $etudiantNotes->getDataGraphique(),
-                 'backgroundColor' => 'rgb(255, 99, 132)',
-                 'borderColor'     => 'rgb(255, 99, 132)',
+                    'label' => $etudiant->getSemestre()->getLibelle(),
+                    'data' => $etudiantNotes->getDataGraphique(),
+                    'backgroundColor' => 'rgb(255, 99, 132)',
+                    'borderColor' => 'rgb(255, 99, 132)',
                 ],
             ],
         ]);
@@ -112,11 +119,11 @@ class ProfilEtudiantController extends BaseController
                 'legend' => ['position' => 'top'],
                 'title' => [
                     'display' => true,
-                    'text'    => 'Chart.js Radar Chart',
+                    'text' => 'Chart.js Radar Chart',
                 ],
                 'scale' => [
                     'ticks' => [
-                        'beginAtZero'  => true,
+                        'beginAtZero' => true,
                         'suggestedMax' => 20,
                     ],
                 ],
@@ -124,9 +131,10 @@ class ProfilEtudiantController extends BaseController
         );
 
         return $this->render('user/composants/notes.html.twig', [
-            'notes'    => $notes,
+            'notes' => $notes,
             'etudiant' => $etudiant,
-            'chart'    => $chart,
+            'chart' => $chart,
+            'matieres' => $matieres,
         ]);
     }
 
@@ -137,29 +145,30 @@ class ProfilEtudiantController extends BaseController
      * @throws Exception
      */
     public function absences(
-        MatiereRepository $matiereRepository,
+        TypeMatiereManager $typeMatiereManager,
         EtudiantAbsences $etudiantAbsences,
         StatsAbsences $statsAbsences,
         Etudiant $etudiant
     ): Response {
         Calendrier::calculPlanning($etudiant->getAnneeUniversitaire()->getAnnee(), 2, Constantes::DUREE_SEMESTRE);
+        $matieres = $typeMatiereManager->findBySemestreArray($etudiant->getSemestre());
         $etudiantAbsences->setEtudiant($etudiant);
-        $absences = $etudiantAbsences->getAbsencesParSemestresEtAnneeUniversitaire($etudiant->getSemestre(),
+        $absences = $etudiantAbsences->getAbsencesParSemestresEtAnneeUniversitaire($matieres,
             $etudiant->getAnneeUniversitaire());
         $statistiquesAbsences = $statsAbsences->calculStatistiquesAbsencesEtudiant($absences);
 
         //todo: gérer les mois, selon le semestre ?
         return $this->render('user/composants/_absences.html.twig', [
-            'tabPlanning'          => Calendrier::getTabPlanning(), //objet...
-            'tabJour'              => ['', 'L', 'M', 'M', 'J', 'V', 'S', 'D'], //objet...
-            'tabFerie'             => Calendrier::getTabJoursFeries(), //objet Calendrier???...
-            'tabFinMois'           => Calendrier::getTabFinMois(), //objet...
-            'annee'                => $etudiant->getAnneeUniversitaire(),
-            'etudiant'             => $etudiant,
-            'absences'             => $absences,
+            'tabPlanning' => Calendrier::getTabPlanning(), //objet...
+            'tabJour' => ['', 'L', 'M', 'M', 'J', 'V', 'S', 'D'], //objet...
+            'tabFerie' => Calendrier::getTabJoursFeries(), //objet Calendrier???...
+            'tabFinMois' => Calendrier::getTabFinMois(), //objet...
+            'annee' => $etudiant->getAnneeUniversitaire(),
+            'etudiant' => $etudiant,
+            'absences' => $absences,
             'statistiquesAbsences' => $statistiquesAbsences,
-            'tabAbsence'           => [], //compte des absences par créneaux du planning.
-            'matieres'             => $matiereRepository->findBySemestre($etudiant->getSemestre()),
+            'tabAbsence' => [], //compte des absences par créneaux du planning.
+            'matieres' => $matieres,
         ]);
     }
 
@@ -174,7 +183,7 @@ class ProfilEtudiantController extends BaseController
     ): Response {
         return $this->render('user/composants/stages.html.twig', [
             //todo: si l'étudiant n'est plus dans un semestre, garder l'historique uniquemenent. Dans ce cas l'historique ne doit pas dépendre d'une année ?
-            'stagesEnCours'    => $stageEtudiantRepository->findByEtudiantAnnee($etudiant,
+            'stagesEnCours' => $stageEtudiantRepository->findByEtudiantAnnee($etudiant,
                 $etudiant->getAnneeUniversitaire()),
             'stagesHistorique' => $stageEtudiantRepository->findByEtudiantHistorique($etudiant,
                 $etudiant->getAnneeUniversitaire()),

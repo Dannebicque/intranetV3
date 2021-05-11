@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/RddController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/05/2021 19:35
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Controller;
@@ -65,8 +65,6 @@ class RddController extends AbstractController
      *
      * @Route("/inscription/{numetudiant}/{diplome}", name="inscription")
      *
-     * @param $numetudiant
-     * @param $diplome
      */
     public function inscription(
         EtudiantRepository $etudiantRepository,
@@ -117,8 +115,6 @@ class RddController extends AbstractController
      *
      * @Route("/enquete/{numetudiant}/{diplome}", name="enquete_diplome")
      *
-     * @param $numetudiant
-     * @param $diplome
      */
     public function enquete(
         EtudiantRepository $etudiantRepository,

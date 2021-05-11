@@ -2,7 +2,7 @@
     <header class="card-header">
         <h4 class="card-title"><strong>{{ 'service.previsionnel.heading'|trans }}</strong> | {{ personnel.display }}
                                                                                            | ({{ 'periode'|trans }}
-                                                                                           : {{ previsionnel.anneePrevi }}
+                                                                                           : {{ anneePrevisionnel }}
                                                                                            )</h4>
         <ul class="card-controls">
             <li class="dropdown">
@@ -27,7 +27,7 @@
     <div class="card-body">
         <!-- Nav tabs -->
         <ul class="nav nav-tabs">
-            {% for semestre in previsionnel.semestres %}
+            {% for semestre in semestres %}
                 <li class="nav-item">
                     <a class="nav-link {% if loop.first %} active{% endif %}" data-toggle="tab"
                        href="#semestre{{ semestre.id }}">{{ semestre.libelle }}</a>
@@ -39,7 +39,7 @@
 
         <!-- Tab panes -->
         <div class="tab-content">
-            {% for semestre in previsionnel.semestres %}
+            {% for semestre in semestres %}
                 <div class="tab-pane {% if loop.first %}fade active show{% endif %}" id="semestre{{ semestre.id }}">
                     {{ include('bloc_previsionnel/_previ_semestre.html.twig') }}
 

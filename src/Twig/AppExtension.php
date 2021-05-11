@@ -4,13 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Twig/AppExtension.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/03/2021 06:47
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Twig;
 
 use App\Classes\Configuration;
-use App\Classes\Tools;
+use App\Utils\Tools;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Entity\Personnel;
@@ -45,6 +45,7 @@ class AppExtension extends AbstractExtension
             new TwigFilter('border', [$this, 'border']),
             new TwigFilter('format_note', [$this, 'formatNote'], ['is_safe' => ['html']]),
             new TwigFilter('formatHeure', [$this, 'formatHeure']),
+            new TwigFilter('formatDifference', [$this, 'formatDifference'], ['is_safe' => ['html']]),
         ];
     }
 
@@ -60,6 +61,15 @@ class AppExtension extends AbstractExtension
         }
 
         return number_format($note, $nbdecimales);
+    }
+
+    public function formatDifference($valeur)
+    {
+        if ($valeur !== 0) {
+            return '<span class="badge badge-warning">' . $valeur . '</span>';
+        }
+
+        return '<span class="badge badge-success">' . $valeur . '</span>';
     }
 
     public function getFunctions(): array
@@ -125,25 +135,16 @@ class AppExtension extends AbstractExtension
         return '<a href="' . $link . '" target="_blank">' . $link . '</a>';
     }
 
-    /**
-     * @param $texte
-     */
     public function upper($texte): string
     {
         return mb_strtoupper($texte);
     }
 
-    /**
-     * @param $duree
-     */
     public function convertHeureEdt($duree): string
     {
         return Constantes::TAB_HEURES[$duree];
     }
 
-    /**
-     * @param $locale
-     */
     public function dateDuJourLong($locale): string
     {
         return Carbon::now()->locale($locale)->isoFormat('dddd Do MMMM YYYY');
@@ -159,9 +160,6 @@ class AppExtension extends AbstractExtension
         return $this->config->get($name);
     }
 
-    /**
-     * @param $var
-     */
     public function mychr($var): string
     {
         return \chr($var);
@@ -172,9 +170,6 @@ class AppExtension extends AbstractExtension
         return str_replace(['<strong>', '</strong>'], '', $texte);
     }
 
-    /**
-     * @param $number
-     */
     public function badge($number): ?string
     {
         if ($number >= 5 && $number < 10) {
@@ -203,20 +198,12 @@ class AppExtension extends AbstractExtension
         return $html;
     }
 
-    /**
-     * @param $number
-     */
     public function telFormat($number): ?string
     {
         return Tools::telFormat($number);
     }
 
-    /**
-     * @param $locale
-     *
-     * @return mixed|string
-     */
-    public function timeAgo(CarbonInterface $date, $locale)
+    public function timeAgo(CarbonInterface $date, string $locale = 'fr'): string
     {
         return $date->locale($locale)->diffForHumans(Carbon::now()->locale('fr'),
             CarbonInterface::DIFF_RELATIVE_TO_NOW);

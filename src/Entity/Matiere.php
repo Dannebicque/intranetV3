@@ -4,12 +4,11 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Matiere.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/04/2021 16:41
+ * @lastUpdate 11/05/2021 08:46
  */
 
 namespace App\Entity;
 
-use App\Interfaces\MatiereInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -19,124 +18,31 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ORM\Entity(repositoryClass="App\Repository\MatiereRepository")
  * @ORM\HasLifecycleCallbacks()
  */
-class Matiere extends BaseEntity implements MatiereInterface
+class Matiere extends AbstractMatiere
 {
     public const SOURCE = 'matiere';
 
     /**
-     * @ORM\Column(type="string", length=255)
-     * @Groups({"matiere"})
-     */
-    private $libelle;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=20)
-     * @Groups({"matiere"})
-     */
-    private $codeMatiere;
-
-    /**
-     * @var float
-     *
-     * @ORM\Column(type="float")
-     * @Groups({"matiere_administration"})
-     */
-    private $cmPpn = 0;
-
-    /**
-     * @var float
-     *
-     * @ORM\Column(type="float")
-     * @Groups({"matiere_administration"})
-     */
-    private $tdPpn = 0;
-
-    /**
-     * @var float
-     *
-     * @ORM\Column(type="float")
-     * @Groups({"matiere_administration"})
-     */
-    private $tpPpn = 0;
-
-    /**
-     * @var float
-     *
-     * @ORM\Column(type="float")
-     * @Groups({"matiere_administration"})
-     */
-    private $cmFormation = 0;
-
-    /**
-     * @var float
-     *
-     * @ORM\Column(type="float")
-     * @Groups({"matiere_administration"})
-     */
-    private $tdFormation = 0;
-
-    /**
-     * @var float
-     *
-     * @ORM\Column(type="float")
-     * @Groups({"matiere_administration"})
-     */
-    private $tpFormation = 0;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="text",nullable=true)
-     */
-    private $commentaire = '';
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(type="integer")
-     * @Groups({"matiere_administration"})
-     */
-    private $nbNotes = 2;
-
-    /**
-     * @var float
-     *
-     * @ORM\Column(type="float")
-     * @Groups({"matiere_administration"})
-     */
-    private $coefficient = 1;
-
-    /**
-     * @var bool
-     *
      * @ORM\Column(type="boolean")
      * @Groups({"matiere_administration"})
      */
-    private $pac = false;
+    private bool $pac = false;
 
     /**
-     * @var float
-     *
      * @ORM\Column(type="float")
      * @Groups({"matiere_administration"})
      */
-    private $nbEcts = 1;
+    private float $nbEcts = 1;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="text",nullable=true)
      */
-    private $objectifsModule;
+    private ?string $objectifsModule;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="text",nullable=true)
      */
-    private $competencesVisees;
+    private ?string $competencesVisees;
 
     /**
      * @var string
@@ -146,47 +52,39 @@ class Matiere extends BaseEntity implements MatiereInterface
     private $contenu;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="text",nullable=true)
      */
-    private $preRequis;
+    private ?string $preRequis;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="text",nullable=true)
      */
-    private $modalites;
+    private ?string $modalites;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="text",nullable=true)
      */
-    private $prolongements;
+    private ?string $prolongements;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="text",nullable=true)
      */
-    private $motsCles;
+    private ?string $motsCles;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Ue", inversedBy="matieres", fetch="EAGER")
      */
-    private $ue;
+    private ?Ue $ue;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Ppn", inversedBy="matieres")
      */
-    private $ppn;
+    private ?Ppn $ppn;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Parcour", inversedBy="matieres")
      */
-    private $parcours;
+    private ?Parcour $parcours;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Previsionnel", mappedBy="matiere")
@@ -204,12 +102,6 @@ class Matiere extends BaseEntity implements MatiereInterface
     private $evaluations;
 
     /**
-     * @ORM\Column(type="boolean")
-     * @Groups({"matiere_administration"})
-     */
-    private $suspendu = false;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Matiere", inversedBy="matiereEnfants")
      */
     private $matiereParent;
@@ -218,16 +110,6 @@ class Matiere extends BaseEntity implements MatiereInterface
      * @ORM\OneToMany(targetEntity="App\Entity\Matiere", mappedBy="matiereParent")
      */
     private $matiereEnfants;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ProgressionPedagogique", mappedBy="matiere")
-     */
-    private $progressionPedagogiques;
-
-    /**
-     * @ORM\Column(type="string", length=20)
-     */
-    private $codeElement;
 
     /**
      * @ORM\ManyToMany(targetEntity=CovidAttestationEtudiant::class, mappedBy="matieres")
@@ -240,124 +122,7 @@ class Matiere extends BaseEntity implements MatiereInterface
         $this->absences = new ArrayCollection();
         $this->evaluations = new ArrayCollection();
         $this->matiereEnfants = new ArrayCollection();
-        $this->progressionPedagogiques = new ArrayCollection();
         $this->covidAttestationEtudiants = new ArrayCollection();
-    }
-
-    public function getLibelle()
-    {
-        return $this->libelle;
-    }
-
-    public function setLibelle($libelle): void
-    {
-        $this->libelle = $libelle;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCodeMatiere(): ?string
-    {
-        return $this->codeMatiere;
-    }
-
-    public function setCodeMatiere(string $codeMatiere): void
-    {
-        $this->codeMatiere = $codeMatiere;
-    }
-
-    public function getCmPpn(): float
-    {
-        return $this->cmPpn;
-    }
-
-    public function setCmPpn(float $cmPpn): void
-    {
-        $this->cmPpn = $cmPpn;
-    }
-
-    public function getTdPpn(): float
-    {
-        return $this->tdPpn;
-    }
-
-    public function setTdPpn(float $tdPpn): void
-    {
-        $this->tdPpn = $tdPpn;
-    }
-
-    public function getTpPpn(): float
-    {
-        return $this->tpPpn;
-    }
-
-    public function setTpPpn(float $tpPpn): void
-    {
-        $this->tpPpn = $tpPpn;
-    }
-
-    public function getCmFormation(): float
-    {
-        return $this->cmFormation;
-    }
-
-    public function setCmFormation(float $cmFormation): void
-    {
-        $this->cmFormation = $cmFormation;
-    }
-
-    public function getTdFormation(): float
-    {
-        return $this->tdFormation;
-    }
-
-    public function setTdFormation(float $tdFormation): void
-    {
-        $this->tdFormation = $tdFormation;
-    }
-
-    public function getTpFormation(): float
-    {
-        return $this->tpFormation;
-    }
-
-    public function setTpFormation(float $tpFormation): void
-    {
-        $this->tpFormation = $tpFormation;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCommentaire(): ?string
-    {
-        return $this->commentaire;
-    }
-
-    public function setCommentaire(?string $commentaire): void
-    {
-        $this->commentaire = $commentaire;
-    }
-
-    public function getNbNotes(): int
-    {
-        return $this->nbNotes;
-    }
-
-    public function setNbNotes(int $nbNotes): void
-    {
-        $this->nbNotes = $nbNotes;
-    }
-
-    public function getCoefficient(): float
-    {
-        return $this->coefficient;
-    }
-
-    public function setCoefficient(float $coefficient): void
-    {
-        $this->coefficient = $coefficient;
     }
 
     public function isPac(): bool
@@ -380,9 +145,6 @@ class Matiere extends BaseEntity implements MatiereInterface
         $this->nbEcts = $nbEcts;
     }
 
-    /**
-     * @return string
-     */
     public function getObjectifsModule(): ?string
     {
         return $this->objectifsModule;
@@ -393,9 +155,6 @@ class Matiere extends BaseEntity implements MatiereInterface
         $this->objectifsModule = $objectifsModule;
     }
 
-    /**
-     * @return string
-     */
     public function getCompetencesVisees(): ?string
     {
         return $this->competencesVisees;
@@ -406,9 +165,6 @@ class Matiere extends BaseEntity implements MatiereInterface
         $this->competencesVisees = $competencesVisees;
     }
 
-    /**
-     * @return string
-     */
     public function getContenu(): ?string
     {
         return $this->contenu;
@@ -419,9 +175,6 @@ class Matiere extends BaseEntity implements MatiereInterface
         $this->contenu = $contenu;
     }
 
-    /**
-     * @return string
-     */
     public function getPreRequis(): ?string
     {
         return $this->preRequis;
@@ -432,9 +185,6 @@ class Matiere extends BaseEntity implements MatiereInterface
         $this->preRequis = $preRequis;
     }
 
-    /**
-     * @return string
-     */
     public function getModalites(): ?string
     {
         return $this->modalites;
@@ -445,9 +195,6 @@ class Matiere extends BaseEntity implements MatiereInterface
         $this->modalites = $modalites;
     }
 
-    /**
-     * @return string
-     */
     public function getProlongements(): ?string
     {
         return $this->prolongements;
@@ -458,9 +205,6 @@ class Matiere extends BaseEntity implements MatiereInterface
         $this->prolongements = $prolongements;
     }
 
-    /**
-     * @return string
-     */
     public function getMotsCles(): ?string
     {
         return $this->motsCles;
@@ -485,9 +229,6 @@ class Matiere extends BaseEntity implements MatiereInterface
         return $this->ue;
     }
 
-    /**
-     * @return Matiere
-     */
     public function setUe(?Ue $ue): self
     {
         $this->ue = $ue;
@@ -500,9 +241,6 @@ class Matiere extends BaseEntity implements MatiereInterface
         return $this->ppn;
     }
 
-    /**
-     * @return Matiere
-     */
     public function setPpn(?Ppn $ppn): self
     {
         $this->ppn = $ppn;
@@ -515,9 +253,6 @@ class Matiere extends BaseEntity implements MatiereInterface
         return $this->parcours;
     }
 
-    /**
-     * @return Matiere
-     */
     public function setParcours(?Parcour $parcours): self
     {
         $this->parcours = $parcours;
@@ -533,9 +268,6 @@ class Matiere extends BaseEntity implements MatiereInterface
         return $this->previsionnels;
     }
 
-    /**
-     * @return Matiere
-     */
     public function addPrevisionnel(Previsionnel $previsionnel): self
     {
         if (!$this->previsionnels->contains($previsionnel)) {
@@ -546,9 +278,6 @@ class Matiere extends BaseEntity implements MatiereInterface
         return $this;
     }
 
-    /**
-     * @return Matiere
-     */
     public function removePrevisionnel(Previsionnel $previsionnel): self
     {
         if ($this->previsionnels->contains($previsionnel)) {
@@ -570,9 +299,6 @@ class Matiere extends BaseEntity implements MatiereInterface
         return $this->absences;
     }
 
-    /**
-     * @return Matiere
-     */
     public function addAbsence(Absence $absence): self
     {
         if (!$this->absences->contains($absence)) {
@@ -583,9 +309,6 @@ class Matiere extends BaseEntity implements MatiereInterface
         return $this;
     }
 
-    /**
-     * @return Matiere
-     */
     public function removeAbsence(Absence $absence): self
     {
         if ($this->absences->contains($absence)) {
@@ -607,9 +330,6 @@ class Matiere extends BaseEntity implements MatiereInterface
         return $this->evaluations;
     }
 
-    /**
-     * @return Matiere
-     */
     public function addEvaluation(Evaluation $evaluation): self
     {
         if (!$this->evaluations->contains($evaluation)) {
@@ -620,9 +340,6 @@ class Matiere extends BaseEntity implements MatiereInterface
         return $this;
     }
 
-    /**
-     * @return Matiere
-     */
     public function removeEvaluation(Evaluation $evaluation): self
     {
         if ($this->evaluations->contains($evaluation)) {
@@ -634,36 +351,6 @@ class Matiere extends BaseEntity implements MatiereInterface
         }
 
         return $this;
-    }
-
-    public function getEqTdFormation(): float
-    {
-        return $this->cmFormation * Constantes::MAJORATION_CM + $this->tdFormation + $this->tpFormation;
-    }
-
-    public function getEtuFormation(): float
-    {
-        return $this->cmFormation + $this->tdFormation + $this->tpFormation;
-    }
-
-    public function isSuspendu(): ?bool
-    {
-        return $this->suspendu;
-    }
-
-    /**
-     * @return Matiere
-     */
-    public function setSuspendu(bool $suspendu): self
-    {
-        $this->suspendu = $suspendu;
-
-        return $this;
-    }
-
-    public function getDisplay(): string
-    {
-        return $this->getCodeMatiere() . ' | ' . $this->getLibelle();
     }
 
     /**
@@ -702,55 +389,9 @@ class Matiere extends BaseEntity implements MatiereInterface
         return $this->matiereParent;
     }
 
-    /**
-     * @return Matiere
-     */
     public function setMatiereParent(?self $matiereParent): self
     {
         $this->matiereParent = $matiereParent;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|ProgressionPedagogique[]
-     */
-    public function getProgressionPedagogiques(): Collection
-    {
-        return $this->progressionPedagogiques;
-    }
-
-    public function addProgressionPedagogique(ProgressionPedagogique $progressionPedagogique): self
-    {
-        if (!$this->progressionPedagogiques->contains($progressionPedagogique)) {
-            $this->progressionPedagogiques[] = $progressionPedagogique;
-            $progressionPedagogique->setMatiere($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProgressionPedagogique(ProgressionPedagogique $progressionPedagogique): self
-    {
-        if ($this->progressionPedagogiques->contains($progressionPedagogique)) {
-            $this->progressionPedagogiques->removeElement($progressionPedagogique);
-            // set the owning side to null (unless already changed)
-            if ($progressionPedagogique->getMatiere() === $this) {
-                $progressionPedagogique->setMatiere(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function getCodeElement(): ?string
-    {
-        return $this->codeElement;
-    }
-
-    public function setCodeElement(string $codeElement): self
-    {
-        $this->codeElement = $codeElement;
 
         return $this;
     }
@@ -773,7 +414,7 @@ class Matiere extends BaseEntity implements MatiereInterface
         return $t;
     }
 
-    public function getPac(): ?bool
+    public function getPac(): bool
     {
         return $this->pac;
     }

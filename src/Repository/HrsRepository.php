@@ -4,13 +4,14 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/HrsRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/05/2021 16:31
+ * @lastUpdate 11/05/2021 08:46
  */
 
 namespace App\Repository;
 
 use App\Entity\Departement;
 use App\Entity\Hrs;
+use App\Entity\Personnel;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -31,26 +32,28 @@ class HrsRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param $getUser
-     * @param $annee
+     * @param \App\Entity\Personnel $personnel
+     * @param int                   $annee
+     *
+     * @return int|mixed|string
      */
-    public function findByEnseignant($getUser, $annee)
+    public function getPersonnelAnnee(Personnel $personnel, int $annee = 0)
     {
-        return $this->createQueryBuilder('h')
+        $query = $this->createQueryBuilder('h')
             ->where('h.personnel = :user')
-            ->andWhere('h.annee = :annee')
-            ->setParameter('user', $getUser)
-            ->setParameter('annee', $annee)
+            ->setParameter('user', $personnel)
             ->orderBy('h.typeHrs', 'ASC')
-            ->orderBy('h.semestre', 'ASC')
-            ->getQuery()
+            ->orderBy('h.semestre', 'ASC');
+
+        if ($annee !== 0) {
+            $query->andWhere('h.annee = :annee')
+                ->setParameter('annee', $annee);
+        }
+
+        return $query->getQuery()
             ->getResult();
     }
 
-    /**
-     * @param $getUser
-     * @param $annee
-     */
     public function getPersonnelDepartementAnnee($personnel, $departement, $annee)
     {
         //todo: gérer le département pour le filtre
@@ -67,9 +70,6 @@ class HrsRepository extends ServiceEntityRepository
     }
 
 
-    /**
-     * @param $annee
-     */
     public function findByDepartement(Departement $departement, $annee)
     {
         return $this->createQueryBuilder('h')

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/AnneeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:08
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Repository;
@@ -32,9 +32,6 @@ class AnneeRepository extends ServiceEntityRepository
         parent::__construct($registry, Annee::class);
     }
 
-    /**
-     * @param $diplome
-     */
     public function findByDiplomeBuilder($diplome): QueryBuilder
     {
         return $this->createQueryBuilder('a')

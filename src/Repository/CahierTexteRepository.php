@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/CahierTexteRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:08
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Repository;
@@ -30,9 +30,6 @@ class CahierTexteRepository extends ServiceEntityRepository
         parent::__construct($registry, CahierTexte::class);
     }
 
-    /**
-     * @param $getId
-     */
     public function findByPersonnel($getId)
     {
         return $this->createQueryBuilder('c')

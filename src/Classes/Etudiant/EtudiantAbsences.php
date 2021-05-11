@@ -4,19 +4,15 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantAbsences.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:07
- */
-
-/*
- * Pull your hearder here, for exemple, Licence header.
+ * @lastUpdate 09/05/2021 15:36
  */
 
 namespace App\Classes\Etudiant;
 
+use App\DTO\Matiere;
 use App\Entity\Absence;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Etudiant;
-use App\Entity\Matiere;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
 use App\Event\AbsenceEvent;
@@ -59,14 +55,10 @@ class EtudiantAbsences
     }
 
     public function getAbsencesParSemestresEtAnneeUniversitaire(
-        Semestre $semestre,
+        $matieres,
         AnneeUniversitaire $anneeUniversitaire
     ) {
-        if (null === $semestre) {
-            $semestre = $this->etudiant->getSemestre();
-        }
-
-        $this->absences = $this->absenceRepository->getByEtudiantAndSemestre($this->etudiant, $semestre,
+        $this->absences = $this->absenceRepository->getByEtudiantAndSemestre($matieres, $this->etudiant,
             $anneeUniversitaire);
 
         return $this->absences;
@@ -82,9 +74,10 @@ class EtudiantAbsences
         $absence->setEtudiant($this->etudiant);
         $absence->setPersonnel($personnel);
         $absence->setDateHeure($dateHeure);
-        $absence->setAnneeUniversitaire($matiere->getSemestre() ? $matiere->getSemestre()->getAnneeUniversitaire() : null);
+        $absence->setAnneeUniversitaire($matiere->semestre ? $matiere->semestre->getAnneeUniversitaire() : null);
         $absence->setDuree(new Carbon('01:30'));
-        $absence->setMatiere($matiere);
+        $absence->setIdMatiere($matiere->id);
+        $absence->setTypeMatiere($matiere->typeMatiere);
         $absence->setJustifie($justifie);
 
         $this->entityManager->persist($absence);
@@ -108,11 +101,11 @@ class EtudiantAbsences
     }
 
     public function getPenalitesAbsencesParMatiere(
-        Semestre $semestre,
+        array $matieres,
         AnneeUniversitaire $anneeUniversitaire,
         &$tabMatiere
     ) {
-        $this->getAbsencesParSemestresEtAnneeUniversitaire($semestre, $anneeUniversitaire);
+        $this->getAbsencesParSemestresEtAnneeUniversitaire($matieres, $anneeUniversitaire);
 
         /** @var Absence $absence */
         foreach ($this->absences as $absence) {

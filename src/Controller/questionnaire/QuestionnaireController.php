@@ -4,18 +4,18 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/questionnaire/QuestionnaireController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Controller\questionnaire;
 
+use App\Classes\Previsionnel\PrevisionnelManager;
 use App\Entity\Etudiant;
 use App\Entity\QuestionnaireEtudiant;
 use App\Entity\QuestionnaireEtudiantReponse;
 use App\Entity\QuestionnaireQuestion;
 use App\Entity\QuestionnaireQuestionnaireSection;
 use App\Repository\EtudiantRepository;
-use App\Repository\PrevisionnelRepository;
 use App\Repository\QuestionnaireEtudiantReponseRepository;
 use App\Repository\QuestionnaireEtudiantRepository;
 use App\Repository\QuestionnaireQualiteRepository;
@@ -51,34 +51,29 @@ class QuestionnaireController extends AbstractController
         $this->entityManager = $entityManager;
     }
 
-    /**
-     * @param      $type
-     * @param int  $onglet
-     * @param bool $apercu
-     */
     public function section(
-        PrevisionnelRepository $previsionnelRepository,
+        PrevisionnelManager $previsionnelManager,
         QuestionnaireEtudiantRepository $quizzEtudiantRepository,
         QuestionnaireEtudiantReponseRepository $quizzEtudiantReponseRepository,
         QuestionnaireQuestionnaireSection $questionnaireSection,
         $type,
         Etudiant $etudiant,
-        $onglet = 1,
-        $apercu = false
+        int $onglet = 1,
+        bool $apercu = false
     ): Response {
         switch ($type) {
             case 'quizz':
                 $questionnaire = $questionnaireSection->getQuestionnaireQuizz()->getId();
                 $quizzEtudiant = $quizzEtudiantRepository->findOneBy([
                     'questionnaireQuizz' => $questionnaire,
-                    'etudiant'           => $etudiant->getId(),
+                    'etudiant' => $etudiant->getId(),
                 ]);
                 break;
             case 'qualite':
                 $questionnaire = $questionnaireSection->getQuestionnaireQualite()->getId();
                 $quizzEtudiant = $quizzEtudiantRepository->findOneBy([
                     'questionnaireQualite' => $questionnaire,
-                    'etudiant'             => $etudiant->getId(),
+                    'etudiant' => $etudiant->getId(),
                 ]);
                 break;
         }
@@ -90,16 +85,16 @@ class QuestionnaireController extends AbstractController
         }
 
         return $this->render('appEtudiant/qualite/section.html.twig', [
-            'ordre'             => $questionnaireSection->getOrdre(),
-            'config'            => $questionnaireSection,
-            'section'           => $questionnaireSection->getSection(),
-            'tPrevisionnel'     => $previsionnelRepository->findByDiplomeArray($etudiant->getDiplome(),
-                $etudiant->getAnneeUniversitaire()),
-            'reponses'          => $reponses,
-            'etudiant'          => $etudiant,
+            'ordre' => $questionnaireSection->getOrdre(),
+            'config' => $questionnaireSection,
+            'section' => $questionnaireSection->getSection(),
+            'tPrevisionnel' => $previsionnelManager->getPrevisionnelAnneeArray($etudiant->getSemestre()->getAnnee(),
+                $etudiant->getAnneeUniversitaire()->getAnnee()),
+            'reponses' => $reponses,
+            'etudiant' => $etudiant,
             'typeQuestionnaire' => $type,
-            'onglet'            => $onglet,
-            'apercu'            => $apercu,
+            'onglet' => $onglet,
+            'apercu' => $apercu,
         ]);
     }
 
@@ -107,8 +102,6 @@ class QuestionnaireController extends AbstractController
      * @Route("/api/ajax/reponse/{questionnaire}/{typeQuestionnaire}", name="app_etudiant_qualite_ajax_reponse",
      *                                                                 options={"expose"=true})
      *
-     * @param $questionnaire
-     * @param $typeQuestionnaire
      *
      * @throws NonUniqueResultException
      */
@@ -132,14 +125,14 @@ class QuestionnaireController extends AbstractController
                     $questionnaire = $this->questionnaireQuizzRepository->find($questionnaire);
                     $quizzEtudiant = $quizzEtudiantRepository->findOneBy([
                         'questionnaireQuizz' => $questionnaire->getId(),
-                        'etudiant'           => $etudiant,
+                        'etudiant' => $etudiant,
                     ]);
                     break;
                 case 'qualite':
                     $questionnaire = $this->questionnaireQualiteRepository->find($questionnaire);
                     $quizzEtudiant = $quizzEtudiantRepository->findOneBy([
                         'questionnaireQualite' => $questionnaire->getId(),
-                        'etudiant'             => $etudiant,
+                        'etudiant' => $etudiant,
                     ]);
                     break;
             }
@@ -211,8 +204,6 @@ class QuestionnaireController extends AbstractController
      * @Route("/api/ajax/reponse-txt/{questionnaire}/{typeQuestionnaire}", name="app_etudiant_qualite_ajax_reponse_txt",
      *                                             options={"expose"=true})
      *
-     * @param $questionnaire
-     * @param $typeQuestionnaire
      *
      * @throws NonUniqueResultException
      */
@@ -234,14 +225,14 @@ class QuestionnaireController extends AbstractController
                     $questionnaire = $this->questionnaireQuizzRepository->find($questionnaire);
                     $quizzEtudiant = $quizzEtudiantRepository->findOneBy([
                         'questionnaireQuizz' => $questionnaire->getId(),
-                        'etudiant'           => $etudiant,
+                        'etudiant' => $etudiant,
                     ]);
                     break;
                 case 'qualite':
                     $questionnaire = $this->questionnaireQualiteRepository->find($questionnaire);
                     $quizzEtudiant = $quizzEtudiantRepository->findOneBy([
                         'questionnaireQualite' => $questionnaire->getId(),
-                        'etudiant'             => $etudiant,
+                        'etudiant' => $etudiant,
                     ]);
                     break;
             }

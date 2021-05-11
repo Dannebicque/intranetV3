@@ -3,7 +3,7 @@
         <div class="card">
             <header class="card-header">
                 <h4 class="card-title"><strong>{{ 'service.previsionnel.matiere.heading'|trans }}</strong>
-                    | {{ previsionnel.matiere.codeMatiere }} | {{ previsionnel.matiere.libelle }} |
+                    | {{ matiere.display }} |
                     ({{ 'periode'|trans }}
                     : {{ user_data.departement.optAnneePrevisionnel }})</h4>
                 <ul class="card-controls">
@@ -11,16 +11,21 @@
                         <a data-toggle="dropdown" href="#"><i class="fas fa-ellipsis-h rotate-90"></i></a>
                         <div class="dropdown-menu dropdown-menu-right">
                             <a class="dropdown-item" href="{{ path('administration_previsionnel_export', {'annee': annee,
-                                '_format': 'csv', type:'matiere', data: previsionnel.matiere.id}) }}"><i
+                                '_format': 'csv',  data: matiere.typeIdMatiere, type:'semestre'}) }}"><i
                                         class="fas fa-file-export"></i> {{ 'exporter.csv'|trans }}</a>
-                            <a class="dropdown-item" href="{{ path('administration_previsionnel_export', {'annee': annee, '_format': 'pdf', type:'matiere', data: previsionnel.matiere.id}) }}"><i
+                            <a class="dropdown-item" href="{{ path('administration_previsionnel_export', {'annee':
+                                annee, '_format': 'pdf', data:matiere.typeIdMatiere, type:'semestre'}) }}"><i
                                         class="fas fa-file-export"></i> {{ 'exporter.pdf'|trans }}</a>
-                            <a class="dropdown-item" href="{{ path('administration_previsionnel_export', {'annee': annee, '_format': 'xlsx', type:'matiere', data: previsionnel.matiere.id}) }}"><i
+                            <a class="dropdown-item" href="{{ path('administration_previsionnel_export', {'annee':
+                                annee, '_format': 'xlsx', data: matiere.typeIdMatiere, type:'semestre'}) }}"><i
                                         class="fas fa-file-export"></i> {{ 'exporter.xlsx'|trans }}</a>
                         </div>
                     </li>
                     <li>
-                        <a class="card-btn-reload" href="#" id="reloadPreviMatiere" data-annee="{{ annee }}" data-matiere="{{ previsionnel.matiere.id }}" title="" data-provide="tooltip" data-original-title="{{ 'atitle.refresh'|trans }}"><i class="fa fa-refresh"></i></a>
+                        <a class="card-btn-reload" href="#" id="reloadPreviMatiere" data-annee="{{ annee }}"
+                           data-matiere="{{ matiere.id }}"
+                           data-type="{{ matiere.typeMatiere }}"
+                           title="" data-provide="tooltip" data-original-title="{{ 'atitle.refresh'|trans }}"><i class="fa fa-refresh"></i></a>
                     </li>
                 </ul>
             </header>
@@ -57,12 +62,13 @@
                                         class="form-control changeIntervenantPrevi selectpicker"
                                         data-previ="{{ previsionnel.id }}"
                                 >
-                                    <option value="" {% if previsionnel.personnel == null %}selected{% endif %}>
+                                    <option value="" {% if previsionnel.personnel_id == 0 %}selected{% endif %}>
                                         Intervenant non défini
                                     </option>
                                     {% for personnel in user_data.personnels %}
                                         <option value="{{ personnel.id }}"
-                                                {% if previsionnel.personnel != null and previsionnel.personnel.id == personnel.id %}selected{% endif %}
+                                                {% if previsionnel.personnel_id != 0 and previsionnel.personnel_id ==
+                                                    personnel.id %}selected{% endif %}
                                         >{{ personnel.displayPr }}</option>
                                     {% endfor %}
                                 </select>
@@ -153,7 +159,7 @@
         <div class="card">
 
             <h4 class="card-title"><strong>{{ 'service.previsionnel.matiere.heading'|trans }}</strong>
-                | {{ previsionnel.matiere.codeMatiere }} | {{ previsionnel.matiere.libelle }} |
+                | {{ matiere.display }} |
                 ({{ 'periode'|trans }}
                 : {{ user_data.departement.optAnneePrevisionnel }})</h4>
 
@@ -170,30 +176,33 @@
                     </tr>
                     <tr>
                         <td class="importantgros">Total général (h)</td>
-                        <td class="importantgros text-center">{{ previsionnel.totalCm }}</td>
-                        <td class="previtd text-center">{{ previsionnel.totalTd }}</td>
-                        <td class="previtp text-center">{{ previsionnel.totalTp }}</td>
-                        <td class="importantgros text-center">{{ previsionnel.totalService }}</td>
+                        <td class="importantgros text-center">{{ synthese.totalCm }}</td>
+                        <td class="previtd text-center">{{ synthese.totalTd }}</td>
+                        <td class="previtp text-center">{{ synthese.totalTp }}</td>
+                        <td class="importantgros text-center">{{ synthese.totalService }}</td>
                     </tr>
                     <tr>
                         <td class="importantgros">Total Etudiant</td>
-                        <td class="importantgros text-center">{{ previsionnel.totalEtuCm }}</td>
-                        <td class="previtd text-center">{{ previsionnel.totalEtuTd }}</td>
-                        <td class="previtp text-center">{{ previsionnel.totalEtuTp }}</td>
-                        <td class="importantgros text-center">{{ previsionnel.totalEtu }}</td>
+                        <td class="importantgros text-center">{{ synthese.totalEtuCm }}</td>
+                        <td class="previtd text-center">{{ synthese.totalEtuTd }}</td>
+                        <td class="previtp text-center">{{ synthese.totalEtuTp }}</td>
+                        <td class="importantgros text-center">{{ synthese.totalEtu }}</td>
                     </tr>
-                    <tr>
-                        <td class="importantgros"><a href="{{ path('administration_matiere_show', {id: previsionnel.matiere.id}) }}" target="_blank">Prévisionnel Matière</a></td>
-                        <td class="importantgros text-center">{{ previsionnel.matiere.cmFormation }}</td>
-                        <td class="previtd text-center">{{ previsionnel.matiere.tdFormation }}</td>
-                        <td class="previtp text-center">{{ previsionnel.matiere.tpFormation }}</td>
-                        <td class="importantgros text-center">{{ previsionnel.matiere.etuFormation }}</td>
+                    <tr>{# todo: les liens ne sont pas bon ? Mettre en modal ? #}
+                        <td class="importantgros">
+                            <a href="{{ path('administration_matiere_show', {id: matiere.typeIdMatiere}) }}" target="_blank">Prévisionnel
+                                                                                                                             Matière</a>
+                        </td>
+                        <td class="importantgros text-center">{{ matiere.cmFormation }}</td>
+                        <td class="previtd text-center">{{ matiere.tdFormation }}</td>
+                        <td class="previtp text-center">{{ matiere.tpFormation }}</td>
+                        <td class="importantgros text-center">{{ matiere.etuFormation }}</td>
                     </tr>
                     <tr>
                         <td class="importantgros">Différence</td>
-                        <td class="importantgros text-center">0</td>
-                        <td class="importantgros previtd text-center">0</td>
-                        <td class="importantgros previtp text-center">0</td>
+                        <td class="importantgros text-center">{{ (matiere.cmFormation - synthese.totalEtuCm)|formatDifference }}</td>
+                        <td class="importantgros previtd text-center">{{ (matiere.tdFormation - synthese.totalEtuTd)|formatDifference }}</td>
+                        <td class="importantgros previtp text-center">{{ (matiere.tpFormation - synthese.totalEtuTp)|formatDifference }}</td>
                         <td class="importantgros text-center">-</td>
                     </tr>
                     </tbody>

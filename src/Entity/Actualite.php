@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Actualite.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Entity;
@@ -54,9 +54,6 @@ class Actualite extends BaseEntity
         return $this->titre;
     }
 
-    /**
-     * @return Actualite
-     */
     public function setTitre(string $titre): self
     {
         $this->titre = $titre;
@@ -69,9 +66,6 @@ class Actualite extends BaseEntity
         return $this->texte;
     }
 
-    /**
-     * @return Actualite
-     */
     public function setTexte(string $texte): self
     {
         $this->texte = $texte;
@@ -84,9 +78,6 @@ class Actualite extends BaseEntity
         return $this->departement;
     }
 
-    /**
-     * @return Actualite
-     */
     public function setDepartement(?Departement $departement): self
     {
         $this->departement = $departement;

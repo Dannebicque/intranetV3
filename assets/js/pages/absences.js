@@ -1,8 +1,8 @@
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/absences.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 15/09/2020 06:17
+// @lastUpdate 08/05/2021 19:38
 import {addCallout} from '../util'
 import '../../vendor/datatables'
 import $ from 'jquery'
@@ -56,7 +56,7 @@ $(document).on('click', '.etudiant', function () {
 
     //supprimer absence
     $(this).removeClass('absent')
-
+    //todo: tester si heure n'est pas vide.
     $.ajax({
       type: 'POST',
       url: Routing.generate('application_personnel_absence_saisie_ajax', {

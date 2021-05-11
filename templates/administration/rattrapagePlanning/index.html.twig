@@ -85,7 +85,7 @@
                     <tr>
                         <td>{{ rattrapage.etudiant.display }}</td>
                         <td>{{ rattrapage.etudiant.semestre.libelle }}</td>
-                        <td>{{ rattrapage.matiere ? rattrapage.matiere.codeMatiere : 'non.defini'|trans }}</td>
+                        <td>{{ matieres[rattrapage.typeIdMatiere] is defined ? matieres[rattrapage.typeIdMatiere].codeMatiere : 'non.defini'|trans }}</td>
                         <td>{{ rattrapage.personnel ? rattrapage.personnel.display : 'non.defini'|trans }}</td>
                         <td>{{ rattrapage.dateEval ? rattrapage.dateEval|format_date('long') : 'non.defini'|trans }}</td>
                         <td><label for="salle_{{ rattrapage.uuidString }}" class="sr-only">Salle</label>

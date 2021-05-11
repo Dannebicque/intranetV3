@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEvaluation.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 09/05/2021 14:41
  */
 
 /*
@@ -227,8 +227,6 @@ class MyEvaluation
     }
 
     /**
-     * @param $_format
-     * @param $groupes
      *
      * @return PdfResponse|StreamedResponse|null
      * @throws SyntaxError
@@ -293,7 +291,6 @@ class MyEvaluation
     }
 
     /**
-     * @param $data
      *
      * @throws Exception
      */

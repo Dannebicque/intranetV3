@@ -4,12 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Rattrapage.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/05/2021 14:39
+ * @lastUpdate 08/05/2021 13:13
  */
 
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
+use App\Entity\Traits\MatiereTrait;
 use App\Entity\Traits\UuidTrait;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -25,6 +26,7 @@ class Rattrapage extends BaseEntity
 {
     use UuidTrait;
     use LifeCycleTrait;
+    use MatiereTrait;
 
     public const DEMANDE_FAITE = 'f';
     public const DEMANDE_ACCEPTEE = 'a';

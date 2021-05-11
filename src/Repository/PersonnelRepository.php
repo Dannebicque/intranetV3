@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/PersonnelRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Repository;
@@ -40,10 +40,6 @@ class PersonnelRepository extends ServiceEntityRepository
         $this->router = $router;
     }
 
-    /**
-     * @param $type
-     * @param $departement
-     */
     public function findByType($type, $departement)
     {
         return $this->createQueryBuilder('p')
@@ -58,9 +54,6 @@ class PersonnelRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    /**
-     * @param $needle
-     */
     public function search($needle): array
     {
         $query = $this->createQueryBuilder('p')
@@ -107,7 +100,6 @@ class PersonnelRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param $slug
      *
      * @throws NonUniqueResultException
      */
@@ -120,9 +112,6 @@ class PersonnelRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    /**
-     * @param $departement
-     */
     public function findByDepartement($departement)
     {
         return $this->findByDepartementBuilder($departement)
@@ -130,9 +119,6 @@ class PersonnelRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    /**
-     * @param $departement
-     */
     public function findByDepartementBuilder($departement): QueryBuilder
     {
         return $this->createQueryBuilder('p')
@@ -245,7 +231,6 @@ class PersonnelRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param $code
      *
      * @throws NonUniqueResultException
      */

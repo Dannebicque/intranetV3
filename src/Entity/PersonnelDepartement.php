@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/PersonnelDepartement.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Entity;
@@ -72,9 +72,6 @@ class PersonnelDepartement
         return $this->personnel;
     }
 
-    /**
-     * @return PersonnelDepartement
-     */
     public function setPersonnel(?Personnel $personnel): self
     {
         $this->personnel = $personnel;
@@ -87,9 +84,6 @@ class PersonnelDepartement
         return $this->departement;
     }
 
-    /**
-     * @return PersonnelDepartement
-     */
     public function setDepartement(?Departement $departement): self
     {
         $this->departement = $departement;
@@ -102,9 +96,6 @@ class PersonnelDepartement
         return $this->annee;
     }
 
-    /**
-     * @return PersonnelDepartement
-     */
     public function setAnnee(int $annee): self
     {
         $this->annee = $annee;
@@ -117,9 +108,6 @@ class PersonnelDepartement
         return json_decode($this->roles);
     }
 
-    /**
-     * @return PersonnelDepartement
-     */
     public function addRole(string $role): self
     {
         $roles = $this->getRoles();

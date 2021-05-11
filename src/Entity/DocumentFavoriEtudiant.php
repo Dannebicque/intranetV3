@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/DocumentFavoriEtudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Entity;
@@ -29,7 +29,6 @@ class DocumentFavoriEtudiant extends DocumentFavori
     /**
      * EmpruntEtudiant constructor.
      *
-     * @param $etudiant
      */
     public function __construct($etudiant, Document $document)
     {

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/NoteRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/03/2021 16:40
+ * @lastUpdate 11/05/2021 08:46
  */
 
 namespace App\Repository;
@@ -53,23 +53,26 @@ class NoteRepository extends ServiceEntityRepository
 
     public function findByEtudiantSemestre(
         Etudiant $etudiant,
-        Semestre $semestre,
+        array $matieres,
         AnneeUniversitaire $annee
     ) {
-        return $this->createQueryBuilder('n')
+        $query = $this->createQueryBuilder('n')
             ->innerJoin(Evaluation::class, 'e', 'WITH', 'n.evaluation = e.id')
-            ->innerJoin(Matiere::class, 'm', 'WITH', 'e.matiere = m.id')
-            ->innerJoin(Ue::class, 'u', 'WITH', 'm.ue = u.id')
             ->where('e.anneeUniversitaire = :annee')
             ->andWhere('n.etudiant = :etudiant')
-            ->andWhere('u.semestre = :semestre')
             ->setParameter('annee', $annee->getId())
             ->setParameter('etudiant', $etudiant->getId())
-            ->setParameter('semestre', $semestre->getId())
-            ->orderBy('m.codeMatiere', 'ASC')
-            ->addOrderBy('e.created', 'ASC')
+            ->addOrderBy('e.dateEvaluation', 'ASC');
+
+        $ors = [];
+        foreach ($matieres as $matiere) {
+            $ors[] = '(' . $query->expr()->orx('e.idMatiere = ' . $query->expr()->literal($matiere->id)) . ' AND ' . $query->expr()->andX('e.typeMatiere = ' . $query->expr()->literal($matiere->typeMatiere)) . ')';
+        }
+
+        return $query->andWhere(implode(' OR ', $ors))
             ->getQuery()
             ->getResult();
+
     }
 
     public function findByEtudiantSemestreArray(Semestre $semestre, AnneeUniversitaire $annee, $etudiants): array

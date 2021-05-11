@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Fichier.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:49
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Entity;
@@ -55,9 +55,6 @@ class Fichier
         return $this->libelle;
     }
 
-    /**
-     * @return Fichier
-     */
     public function setLibelle(string $libelle): self
     {
         $this->libelle = $libelle;
@@ -70,9 +67,6 @@ class Fichier
         return $this->taille;
     }
 
-    /**
-     * @return Fichier
-     */
     public function setTaille(float $taille): self
     {
         $this->taille = $taille;
@@ -88,9 +82,6 @@ class Fichier
         return $this->cahierTextes;
     }
 
-    /**
-     * @return Fichier
-     */
     public function addCahierTexte(CahierTexte $cahierTexte): self
     {
         if (!$this->cahierTextes->contains($cahierTexte)) {
@@ -101,9 +92,6 @@ class Fichier
         return $this;
     }
 
-    /**
-     * @return Fichier
-     */
     public function removeCahierTexte(CahierTexte $cahierTexte): self
     {
         if ($this->cahierTextes->contains($cahierTexte)) {

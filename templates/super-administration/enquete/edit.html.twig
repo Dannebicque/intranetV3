@@ -56,14 +56,14 @@
                         {% if section.config != null %}
                             <div class="row">
                                 {% for previsionnel in previsionnels %}
-                                    {% if previsionnel.matiere != null and previsionnel.personnel != null %}
+                                    {% if previsionnel.matiere_id != 0 and previsionnel.personnel_id != 0 %}
                                         <div class="col-sm-4">
                                             <div class="form-group">
                                                 <input type="checkbox" value="{{ previsionnel.id }}" name="config_{{ section.id }}[]" id="config_{{ section.id }}_{{ previsionnel.id }}" {% if
                                                     previsionnel.id in section.previs %} checked {% endif %}>
                                                 <label for="config_{{ section.id }}_{{ previsionnel.id }}">
-                                                    {{ previsionnel.matiere.display }} par {{ previsionnel
-                                                    .personnel.displayPr }}</label>
+                                                    {{ previsionnel.matiere_code }} | {{ previsionnel.matiere_libelle }}
+                                                                                    par {{ previsionnel.personnel_prenom }} {{ previsionnel.personnel_nom }}</label>
                                             </div>
                                         </div>
                                     {% endif %}

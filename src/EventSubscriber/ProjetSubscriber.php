@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/ProjetSubscriber.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/04/2021 18:59
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\EventSubscriber;
@@ -53,9 +53,6 @@ class ProjetSubscriber implements EventSubscriberInterface
         $this->addNotification($event, ProjetEvent::CHGT_ETAT_PROJET_AUTORISE);
     }
 
-    /**
-     * @param $codeEvent
-     */
     public function sendMail(ProjetEvent $event, $codeEvent): void
     {
         $projetEtudiant = $event->getProjetEtudiant();

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Parcour.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Entity;
@@ -61,9 +61,6 @@ class Parcour extends BaseEntity
         return $this->libelle;
     }
 
-    /**
-     * @return Parcour
-     */
     public function setLibelle(string $libelle): self
     {
         $this->libelle = $libelle;
@@ -79,9 +76,6 @@ class Parcour extends BaseEntity
         return $this->matieres;
     }
 
-    /**
-     * @return Parcour
-     */
     public function addMatiere(Matiere $matiere): self
     {
         if (!$this->matieres->contains($matiere)) {
@@ -92,9 +86,6 @@ class Parcour extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return Parcour
-     */
     public function removeMatiere(Matiere $matiere): self
     {
         if ($this->matieres->contains($matiere)) {
@@ -113,9 +104,6 @@ class Parcour extends BaseEntity
         return $this->semestre;
     }
 
-    /**
-     * @return Parcour
-     */
     public function setSemestre(Semestre $semestre): self
     {
         $this->semestre = $semestre;

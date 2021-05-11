@@ -16,10 +16,10 @@
     </thead>
     <tbody>
 
-    {% for previ in previsionnel %}
+    {% for previ in previsionnel.previsionnels %}
         <tr>
             <td colspan="9">
-                {{ previ.personnel ? previ.personnel.displayPr :'non.defini'|trans }}
+                {{ previ.personnel_prenom }} {{ previ.personnel_nom }}
             </td>
         </tr>
         <tr>

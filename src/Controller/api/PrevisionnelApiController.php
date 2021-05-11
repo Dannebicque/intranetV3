@@ -4,14 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/api/PrevisionnelApiController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:36
+ * @lastUpdate 11/05/2021 08:46
  */
 
 namespace App\Controller\api;
 
+use App\Classes\Previsionnel\PrevisionnelManager;
 use App\Controller\BaseController;
-use App\Entity\Matiere;
-use App\Repository\PrevisionnelRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,22 +23,24 @@ use Symfony\Component\Routing\Annotation\Route;
 class PrevisionnelApiController extends BaseController
 {
     /**
-     * @Route("/matiere/{matiere}", name="api_previsionnel_matiere", options={"expose":true})
+     * @Route("/matiere/{matiere}/{type}", name="api_previsionnel_matiere", options={"expose":true})
      *
      * @return JsonResponse
      */
     public function previsionnelMatiereAjax(
-        PrevisionnelRepository $previsionnelRepository,
-        Matiere $matiere
+        PrevisionnelManager $previsionnelManager,
+        int $matiere,
+        string $type
     ): Response {
-        $previsionnel = $previsionnelRepository->findPrevisionnelMatiere(
+        $previsionnel = $previsionnelManager->getPrevisionnelMatiere(
             $matiere,
+            $type,
             $this->dataUserSession->getAnneePrevisionnel()
         );
 
         return $this->render(
             'api/previsionnel/matiere.html.twig',
-            ['previsionnel' => $previsionnel, 'matiere' => $matiere]
+            ['previsionnel' => $previsionnel]
         );
     }
 }

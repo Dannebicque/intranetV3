@@ -1,7 +1,6 @@
 {% extends 'base-but.html.twig' %}
 
-{% block header %}Fiche de la ressource : {{ apc_ressource.codeRessource }} | {{ apc_ressource
-.libelle }}{% endblock %}
+{% block header %}Fiche de la ressource : {{ apc_ressource.display }}{% endblock %}
 
 {% block content %}
     {{ include('apc/apc_ressource/_detail.html.twig') }}

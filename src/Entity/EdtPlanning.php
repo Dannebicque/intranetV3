@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/EdtPlanning.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 17/02/2021 19:54
+ * @lastUpdate 11/05/2021 08:46
  */
 
 namespace App\Entity;
 
+use App\Entity\Traits\MatiereTrait;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -18,6 +19,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class EdtPlanning
 {
+    use MatiereTrait;
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -99,6 +102,7 @@ class EdtPlanning
      * @ORM\Column(type="datetime", nullable=true)
      */
     private ?CarbonInterface $date;
+
 
     public function getId(): ?int
     {
@@ -284,10 +288,10 @@ class EdtPlanning
             case 'td':
                 $tab = ['', 'AB', '', 'CD', '', 'EF', '', 'GH'];
 
-            return 'TD ' . $tab[$this->groupe];
+                return 'TD ' . $tab[$this->groupe];
             case 'TP':
             case 'tp':
-            return 'TP ' . \chr($this->groupe + 64);
+                return 'TP ' . \chr($this->groupe + 64);
             default:
                 return '';
         }
@@ -338,7 +342,7 @@ class EdtPlanning
         $d = $this->fin - $this->debut;
         $td = [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5];
 
-        return $td[$d];
+        return $td[$d] ?? 0;
     }
 
     public function getCommentaire(): ?string
@@ -390,4 +394,6 @@ class EdtPlanning
 
         return $this;
     }
+
+
 }

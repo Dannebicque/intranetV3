@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyConfiguration.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:10
+ * @lastUpdate 09/05/2021 14:41
  */
 
 /*
@@ -63,12 +63,6 @@ class MyConfiguration
         $this->entityManager = $entityManager;
     }
 
-    /**
-     * @param $type
-     * @param $id
-     * @param $name
-     * @param $value
-     */
     public function updateOption($type, $id, $name, $value): bool
     {
         switch ($type) {
@@ -85,11 +79,6 @@ class MyConfiguration
         return false;
     }
 
-    /**
-     * @param $id
-     * @param $name
-     * @param $value
-     */
     private function updateDepartement($id, $name, $value): bool
     {
         $departement = $this->departementRepository->find($id);
@@ -134,11 +123,6 @@ class MyConfiguration
         return $value;
     }
 
-    /**
-     * @param $id
-     * @param $name
-     * @param $value
-     */
     private function updateDiplome($id, $name, $value): bool
     {
         $diplome = $this->diplomeRepository->find($id);
@@ -152,11 +136,6 @@ class MyConfiguration
         return false;
     }
 
-    /**
-     * @param $id
-     * @param $name
-     * @param $value
-     */
     private function updateAnnee($id, $name, $value): bool
     {
         $annee = $this->anneeRepository->find($id);
@@ -170,11 +149,6 @@ class MyConfiguration
         return false;
     }
 
-    /**
-     * @param $id
-     * @param $name
-     * @param $value
-     */
     private function updateSemestre($id, $name, $value): bool
     {
         $semestre = $this->semestreRepository->find($id);

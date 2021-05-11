@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/RattrapageController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/04/2021 21:10
+ * @lastUpdate 11/05/2021 08:46
  */
 
 namespace App\Controller\administration;
 
+use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\MyExport;
 use App\Controller\BaseController;
 use App\Entity\Annee;
@@ -35,15 +36,17 @@ class RattrapageController extends BaseController
      * @Route("/semestre/{semestre}", name="administration_rattrapage_semestre_index")
      */
     public function index(
+        TypeMatiereManager $typeMatiereManager,
         AbsenceRepository $absenceRepository,
         RattrapageRepository $rattrapageRepository,
         Semestre $semestre
     ): Response {
         return $this->render('administration/rattrapage/index.html.twig', [
             'rattrapages' => $rattrapageRepository->findBySemestre($semestre, $semestre->getAnneeUniversitaire()),
-            'semestre'    => $semestre,
-            'absences'    => $absenceRepository->findBySemestreRattrapage($semestre,
+            'semestre' => $semestre,
+            'absences' => $absenceRepository->findBySemestreRattrapage($semestre,
                 $semestre->getAnneeUniversitaire()),
+            'matieres' => $typeMatiereManager->findBySemestreArray($semestre),
         ]);
     }
 
@@ -91,7 +94,6 @@ class RattrapageController extends BaseController
      *                                    requirements={"etat"="A|R"}, options={"expose":true})
      * @ParamConverter("rattrapage", options={"mapping": {"uuid": "uuid"}})
      *
-     * @param $etat
      */
     public function accepte(EventDispatcherInterface $eventDispatcher, Rattrapage $rattrapage, $etat): Response
     {

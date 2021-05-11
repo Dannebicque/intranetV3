@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Adresse.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 19:01
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Entity;
@@ -95,9 +95,6 @@ class Adresse extends BaseEntity
         return $this->adresse1;
     }
 
-    /**
-     * @return Adresse
-     */
     public function setAdresse1(?string $adresse1 = ''): self
     {
         $this->adresse1 = $adresse1;
@@ -144,9 +141,6 @@ class Adresse extends BaseEntity
         return $this->codePostal;
     }
 
-    /**
-     * @return Adresse
-     */
     public function setCodePostal(?string $codePostal = ''): self
     {
         $this->codePostal = $codePostal;
@@ -159,9 +153,6 @@ class Adresse extends BaseEntity
         return $this->ville;
     }
 
-    /**
-     * @return Adresse
-     */
     public function setVille(?string $ville = ''): self
     {
         $this->ville = $ville;
@@ -174,9 +165,6 @@ class Adresse extends BaseEntity
         return $this->pays;
     }
 
-    /**
-     * @return Adresse
-     */
     public function setPays(?string $pays = 'France'): self
     {
         $this->pays = $pays;

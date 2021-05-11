@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ModificationNote.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Entity;
@@ -45,9 +45,6 @@ class ModificationNote extends BaseEntity
         return $this->note;
     }
 
-    /**
-     * @return ModificationNote
-     */
     public function setNote(?Note $note): self
     {
         $this->note = $note;
@@ -60,9 +57,6 @@ class ModificationNote extends BaseEntity
         return $this->personnel;
     }
 
-    /**
-     * @return ModificationNote
-     */
     public function setPersonnel(?Personnel $personnel): self
     {
         $this->personnel = $personnel;
@@ -75,9 +69,6 @@ class ModificationNote extends BaseEntity
         return $this->ancienneNote;
     }
 
-    /**
-     * @return ModificationNote
-     */
     public function setAncienneNote(float $ancienneNote): self
     {
         $this->ancienneNote = $ancienneNote;
@@ -90,9 +81,6 @@ class ModificationNote extends BaseEntity
         return $this->nouvelleNote;
     }
 
-    /**
-     * @return ModificationNote
-     */
     public function setNouvelleNote(float $nouvelleNote): self
     {
         $this->nouvelleNote = $nouvelleNote;

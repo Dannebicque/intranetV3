@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/02/2021 09:08
+ * @lastUpdate 09/05/2021 14:41
  */
 
 /*
@@ -15,7 +15,7 @@ namespace App\Classes\Edt;
 
 use App\Classes\MyIcal;
 use App\Classes\Pdf\MyPDF;
-use App\Classes\Tools;
+use App\Utils\Tools;
 use App\Entity\Departement;
 use App\Entity\Etudiant;
 use App\Entity\Personnel;
@@ -23,6 +23,7 @@ use App\Entity\Semestre;
 use App\Repository\CalendrierRepository;
 use App\Repository\CelcatEventsRepository;
 use App\Repository\EdtPlanningRepository;
+use Knp\Snappy\Pdf;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Twig\Error\LoaderError;
@@ -176,7 +177,6 @@ class MyEdtExport
     }
 
     /**
-     * @param $source
      *
      * @throws LoaderError
      * @throws RuntimeError
@@ -197,7 +197,6 @@ class MyEdtExport
     }
 
     /**
-     * @param $semaine
      *
      * @throws LoaderError
      * @throws RuntimeError
@@ -212,7 +211,7 @@ class MyEdtExport
             $edt = $this->myEdtIntranet->initSemestre($semaine, $semestre, $semestre->getAnneeUniversitaire());
         }
 
-        $this->myPDF::addOptions(['orientation' => MyPDF::LANDSCAPE, 'fontHeightRatio' => 0.8]);
+        $this->myPDF::addOptions(['orientation' => 'Landscape', 'fontHeightRatio' => 0.8]);
         $this->myPDF::generePdf('pdf/edt/edtSemestre.html.twig',
             ['edt' => $edt, 'semestre' => $semestre, 'departement' => $departement], $semestre->getLibelle(),
             $departement->getLibelle());
@@ -232,7 +231,7 @@ class MyEdtExport
 
         //lecture du repertoire
         $repertoire = opendir($dir);
-        while ($file = @readdir($repertoire)) {
+        while ($file = readdir($repertoire)) {
             if ('.' !== $file && '..' !== $file) {
                 $tabFiles[] = $file;
                 $zip->addFile($file,

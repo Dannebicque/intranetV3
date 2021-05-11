@@ -63,14 +63,15 @@
                 <tbody>
                 {% for matiere in matieres %}
                     <tr>
-                        <td>{{ matiere.codeMatiere }} | {{ matiere.libelle }}</td>
+                        <td>{{ matiere.display }}</td>
                         <td>{{ matiere.coefficient }}</td>
                         <td>{{ matiere.nbNotes }}</td>
                         <td>
                             <button data-provide="modaler tooltip"
                                     data-size="lg"
                                     data-confirm-text="{{ 'fermer'|trans }}"
-                                    data-url="{{ path('api_previsionnel_matiere', {'matiere': matiere.id}) }}"
+                                    data-url="{{ path('api_previsionnel_matiere', {'matiere': matiere.id, type:
+                                        matiere.typeMatiere}) }}"
                                     class="btn btn-info btn-outline btn-square btn-xs"
                                     data-placement="bottom"
                                     title="{{ 'previsionnel.et.intervenants.matiere'|trans }}"
@@ -82,8 +83,8 @@
                         <td>
                             {% set nbEval = 0 %}
                             <div class="btn-toolbar">
-                                {% if evaluations[matiere.id] is defined %}
-                                    {% for evaluation in evaluations[matiere.id] %}
+                                {% if evaluations[matiere.typeIdMatiere] is defined %}
+                                    {% for evaluation in evaluations[matiere.typeIdMatiere] %}
                                         <div class="btn-group mt-2 mr-2">
                                             <a class="btn btn-success"
                                                href="{{ path('administration_evaluation_show', {uuid:evaluation.uuidString}) }}"
@@ -124,7 +125,8 @@
                                     {% for i in (nbEval+1)..matiere.nbNotes %}
                                         <div class="btn-group mt-2">
                                             <a class="btn btn-label btn-primary"
-                                               href="{{ path('administration_evaluation_create', {matiere:matiere.id}) }}"
+                                               href="{{ path('administration_evaluation_create', {matiere:matiere
+                                               .typeIdMatiere}) }}"
                                                data-provide="tooltip"
                                                data-placement="bottom"
                                                title="{{ 'atitle.saisir.evaluation'|trans }}">

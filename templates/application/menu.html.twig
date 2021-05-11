@@ -17,8 +17,6 @@
                        role="tab">{{ 'menu.stages'|trans }}</a>
                 </li>
             {% endif %}
-
-
             <li class="nav-item">
                 <a class="nav-link changeapplication {% if onglet == 'salle_examen' %}active{% endif %}"
                    href="{{ path('application_personnel_salle_examen_index') }}" role="tab">{{ 'menu.salle_examen'|trans }}</a>
@@ -33,19 +31,6 @@
                 <a class="nav-link changeapplication {% if onglet == 'quizz' %}active{% endif %}"
                    href="{{ path('application_personnel_quizz_index') }}" role="tab">{{ 'menu.quizz'|trans }}</a>
             </li>
-
-            {#             if user_data.departement.preparationAnnee == true %}#}
-            {#            <li class="nav-item">#}
-            {#                <a class="nav-link changeapplication {% if onglet == 'disponibilite' %}active{% endif %}"#}
-            {#                   href="{{ path('application_personnel_disponibilite_index') }}" role="tab">{{ 'menu.disponibilite'|trans#}
-            {#                    }}</a>#}
-            {#            </li>#}
-            {#                <li class="nav-item">#}
-            {#                    <a class="nav-link changeapplication {% if onglet == 'progression' %}active{% endif %}"#}
-            {#                       href="{{ path('application_personnel_progression_index') }}" role="tab">{{ 'menu.progression'|trans }}</a>#}
-            {#                </li>#}
-            {#                {% endif %}#}
-
         {% else %}
             <li class="nav-item ">
                 <a class="nav-link changeapplication {% if onglet == 'messagerie' %}active{% endif %}"

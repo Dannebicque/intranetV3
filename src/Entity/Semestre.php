@@ -4,12 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Semestre.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 19:14
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Entity;
 
-use App\Classes\Tools;
+use App\Utils\Tools;
 use App\Entity\Traits\LifeCycleTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -599,9 +599,6 @@ class Semestre extends BaseEntity
         return $this->articles;
     }
 
-    /**
-     * @return Semestre
-     */
     public function addArticle(Article $article): self
     {
         if (!$this->articles->contains($article)) {
@@ -612,9 +609,6 @@ class Semestre extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return Semestre
-     */
     public function removeArticle(Article $article): self
     {
         if ($this->articles->contains($article)) {
@@ -633,9 +627,6 @@ class Semestre extends BaseEntity
         return $this->documents;
     }
 
-    /**
-     * @return Semestre
-     */
     public function addDocument(Document $document): self
     {
         if (!$this->documents->contains($document)) {
@@ -646,9 +637,6 @@ class Semestre extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return Semestre
-     */
     public function removeDocument(Document $document): self
     {
         if ($this->documents->contains($document)) {
@@ -667,9 +655,6 @@ class Semestre extends BaseEntity
         return $this->dates;
     }
 
-    /**
-     * @return Semestre
-     */
     public function addDate(Date $date): self
     {
         if (!$this->dates->contains($date)) {
@@ -680,9 +665,6 @@ class Semestre extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return Semestre
-     */
     public function removeDate(Date $date): self
     {
         if ($this->dates->contains($date)) {
@@ -701,9 +683,6 @@ class Semestre extends BaseEntity
         return $this->hrs;
     }
 
-    /**
-     * @return Semestre
-     */
     public function addHrs(Hrs $hrs): self
     {
         if (!$this->hrs->contains($hrs)) {
@@ -714,9 +693,6 @@ class Semestre extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return Semestre
-     */
     public function removeHrs(Hrs $hrs): self
     {
         if ($this->hrs->contains($hrs)) {
@@ -738,9 +714,6 @@ class Semestre extends BaseEntity
         return $this->parcours;
     }
 
-    /**
-     * @return Semestre
-     */
     public function addParcour(Parcour $option): self
     {
         if (!$this->parcours->contains($option)) {
@@ -751,9 +724,6 @@ class Semestre extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return Semestre
-     */
     public function removeParcour(Parcour $option): self
     {
         if ($this->parcours->contains($option)) {
@@ -775,9 +745,6 @@ class Semestre extends BaseEntity
         return $this->bornes;
     }
 
-    /**
-     * @return Semestre
-     */
     public function addBorne(Borne $borne): self
     {
         if (!$this->bornes->contains($borne)) {
@@ -788,9 +755,6 @@ class Semestre extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return Semestre
-     */
     public function removeBorne(Borne $borne): self
     {
         if ($this->bornes->contains($borne)) {
@@ -818,9 +782,6 @@ class Semestre extends BaseEntity
         return $this->cahierTextes;
     }
 
-    /**
-     * @return Semestre
-     */
     public function addCahierTexte(CahierTexte $cahierTexte): self
     {
         if (!$this->cahierTextes->contains($cahierTexte)) {
@@ -831,9 +792,6 @@ class Semestre extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return Semestre
-     */
     public function removeCahierTexte(CahierTexte $cahierTexte): self
     {
         if ($this->cahierTextes->contains($cahierTexte)) {
@@ -852,9 +810,6 @@ class Semestre extends BaseEntity
         return $this->ues;
     }
 
-    /**
-     * @return Semestre
-     */
     public function addUe(Ue $ue): self
     {
         if (!$this->ues->contains($ue)) {
@@ -865,9 +820,6 @@ class Semestre extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return Semestre
-     */
     public function removeUe(Ue $ue): self
     {
         if ($this->ues->contains($ue)) {
@@ -889,9 +841,6 @@ class Semestre extends BaseEntity
         return $this->typeGroupes;
     }
 
-    /**
-     * @return Semestre
-     */
     public function addTypeGroupe(TypeGroupe $typeGroupe): self
     {
         if (!$this->typeGroupes->contains($typeGroupe)) {
@@ -902,9 +851,6 @@ class Semestre extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return Semestre
-     */
     public function removeTypeGroupe(TypeGroupe $typeGroupe): self
     {
         if ($this->typeGroupes->contains($typeGroupe)) {
@@ -923,9 +869,6 @@ class Semestre extends BaseEntity
         return $this->moisDebut;
     }
 
-    /**
-     * @return Semestre
-     */
     public function setMoisDebut(int $moisDebut): self
     {
         $this->moisDebut = $moisDebut;

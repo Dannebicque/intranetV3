@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/TrombinoscopeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/02/2021 08:56
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Controller;
@@ -48,7 +48,6 @@ class TrombinoscopeController extends BaseController
      * @Route("/etudiant/export/{typeGroupe<\d+>}.{_format}", name="trombinoscope_etudiant_export", methods="GET",
      *                                                   requirements={"_format"="csv|xlsx|pdf"})
      *
-     * @param $_format
      *
      * @throws Exception
      * @throws LoaderError
@@ -73,7 +72,6 @@ class TrombinoscopeController extends BaseController
      *                                                           methods="GET",
      *                                                           requirements={"_format"="csv|xlsx|pdf"})
      *
-     * @param $_format
      *
      * @throws Exception
      * @throws LoaderError
@@ -151,7 +149,6 @@ class TrombinoscopeController extends BaseController
     /**
      * @Route("/personnel/{type}", name="trombinoscope_personnel", options={"expose":true})
      *
-     * @param $type
      */
     public function trombiPersonnel(PersonnelRepository $personnelRepository, $type): Response
     {
@@ -170,8 +167,6 @@ class TrombinoscopeController extends BaseController
      * @Route("/{type}.{_format}", name="trombinoscope_personnel_export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"})
      *
-     * @param $type
-     * @param $_format
      */
     public function trombiPersonnelExport(
         MyExport $myExport,

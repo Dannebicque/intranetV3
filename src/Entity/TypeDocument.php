@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/TypeDocument.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 19:14
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Entity;
@@ -68,9 +68,6 @@ class TypeDocument extends BaseEntity
         return $this->departement;
     }
 
-    /**
-     * @return TypeDocument
-     */
     public function setDepartement(?Departement $departement): self
     {
         $this->departement = $departement;
@@ -86,9 +83,6 @@ class TypeDocument extends BaseEntity
         return $this->documents;
     }
 
-    /**
-     * @return TypeDocument
-     */
     public function addDocument(Document $document): self
     {
         if (!$this->documents->contains($document)) {
@@ -99,9 +93,6 @@ class TypeDocument extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return TypeDocument
-     */
     public function removeDocument(Document $document): self
     {
         if ($this->documents->contains($document)) {

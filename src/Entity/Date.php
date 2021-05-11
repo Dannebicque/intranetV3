@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Date.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 19:07
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Entity;
@@ -157,9 +157,6 @@ class Date extends BaseEntity
         return $this->libelle;
     }
 
-    /**
-     * @return Date
-     */
     public function setLibelle(string $libelle): self
     {
         $this->libelle = $libelle;
@@ -172,9 +169,6 @@ class Date extends BaseEntity
         return $this->texte;
     }
 
-    /**
-     * @return Date
-     */
     public function setTexte(string $texte): self
     {
         $this->texte = $texte;
@@ -291,9 +285,6 @@ class Date extends BaseEntity
         return $this->semestres;
     }
 
-    /**
-     * @return Date
-     */
     public function addSemestre(Semestre $semestre): self
     {
         if (!$this->semestres->contains($semestre)) {
@@ -303,9 +294,6 @@ class Date extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return Date
-     */
     public function removeSemestre(Semestre $semestre): self
     {
         if ($this->semestres->contains($semestre)) {
@@ -320,9 +308,6 @@ class Date extends BaseEntity
         return $this->type;
     }
 
-    /**
-     * @return Date
-     */
     public function setType(string $type): self
     {
         $this->type = $type;

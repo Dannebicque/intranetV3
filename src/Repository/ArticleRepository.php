@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/ArticleRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:08
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Repository;
@@ -32,10 +32,6 @@ class ArticleRepository extends ServiceEntityRepository
         parent::__construct($registry, Article::class);
     }
 
-    /**
-     * @param $type
-     * @param $departement
-     */
     public function findByTypeDepartement($type, $departement)
     {
         return $this->findByTypeDepartementBuilder($type, $departement)
@@ -44,7 +40,6 @@ class ArticleRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param $slug
      *
      * @throws NonUniqueResultException
      */
@@ -58,10 +53,6 @@ class ArticleRepository extends ServiceEntityRepository
             ;
     }
 
-    /**
-     * @param $type
-     * @param $departement
-     */
     public function findByTypeDepartementBuilder($type, $departement): QueryBuilder
     {
         return $this->createQueryBuilder('a')

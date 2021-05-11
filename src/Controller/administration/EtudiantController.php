@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Controller\administration;
@@ -122,7 +122,6 @@ class EtudiantController extends BaseController
      * @Route("/change-etat/{uuid}/{etat}", name="adm_etudiant_change_etat", methods="POST", options={"expose":true})
      * @ParamConverter("etudiant", options={"mapping": {"uuid": "uuid"}})
      *
-     * @param $etat
      */
     public function changeEtat(EtudiantScolarite $etudiantScolarite, Etudiant $etudiant, $etat): JsonResponse
     {
@@ -163,7 +162,6 @@ class EtudiantController extends BaseController
      * @Route("/export.{_format}", name="administration_all_etudiant_export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"})
      *
-     * @param $_format
      */
     public function export(MyExport $myExport, EtudiantRepository $etudiantRepository, $_format): Response
     {

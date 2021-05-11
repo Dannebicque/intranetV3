@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/StageSubscriber.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/04/2021 18:46
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\EventSubscriber;
@@ -65,7 +65,6 @@ class StageSubscriber implements EventSubscriberInterface
     /**
      * @throws LoaderError
      * @throws NonUniqueResultException
-     * @throws RuntimeError
      * @throws SyntaxError
      */
     public function onChgtEtatStageAutorise(StageEvent $event): void
@@ -94,7 +93,6 @@ class StageSubscriber implements EventSubscriberInterface
     /**
      * @throws LoaderError
      * @throws NonUniqueResultException
-     * @throws RuntimeError
      * @throws SyntaxError
      */
     public function onChgtEtatStageConventionEnvoyee(StageEvent $event): void
@@ -106,7 +104,6 @@ class StageSubscriber implements EventSubscriberInterface
     /**
      * @throws LoaderError
      * @throws NonUniqueResultException
-     * @throws RuntimeError
      * @throws SyntaxError
      */
     public function onChgtEtatStageConventionRecue(StageEvent $event): void
@@ -118,7 +115,6 @@ class StageSubscriber implements EventSubscriberInterface
     /**
      * @throws LoaderError
      * @throws NonUniqueResultException
-     * @throws RuntimeError
      * @throws SyntaxError
      */
     public function onChgtEtatStageDepose(StageEvent $event): void
@@ -145,7 +141,6 @@ class StageSubscriber implements EventSubscriberInterface
     /**
      * @throws LoaderError
      * @throws NonUniqueResultException
-     * @throws RuntimeError
      * @throws SyntaxError
      */
     public function onChgtEtatStageValide(StageEvent $event): void
@@ -157,7 +152,6 @@ class StageSubscriber implements EventSubscriberInterface
     /**
      * @throws LoaderError
      * @throws NonUniqueResultException
-     * @throws RuntimeError
      * @throws SyntaxError
      */
     public function onChgtEtatStageRefus(StageEvent $event): void
@@ -169,7 +163,6 @@ class StageSubscriber implements EventSubscriberInterface
     /**
      * @throws LoaderError
      * @throws NonUniqueResultException
-     * @throws RuntimeError
      * @throws SyntaxError
      */
     public function onChgtEtatStageIncomplet(StageEvent $event): void
@@ -181,7 +174,6 @@ class StageSubscriber implements EventSubscriberInterface
     /**
      * @throws LoaderError
      * @throws NonUniqueResultException
-     * @throws RuntimeError
      * @throws SyntaxError
      */
     public function onChgtEtatStageImprime(StageEvent $event): void
@@ -191,7 +183,6 @@ class StageSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param $codeEvent
      *
      * @throws LoaderError
      * @throws NonUniqueResultException

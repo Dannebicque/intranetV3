@@ -4,13 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcRessource.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/05/2021 18:44
+ * @lastUpdate 11/05/2021 08:46
  */
 
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
-use App\Interfaces\MatiereInterface;
 use App\Repository\ApcRessourceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -20,21 +19,16 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass=ApcRessourceRepository::class)
  * @ORM\HasLifecycleCallbacks()
  */
-class ApcRessource extends BaseEntity implements MatiereInterface
+class ApcRessource extends AbstractMatiere
 {
     use LifeCycleTrait;
 
     public const SOURCE = 'ressource';
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private ?string $libelle;
-
-    /**
      * @ORM\ManyToOne(targetEntity=Semestre::class, inversedBy="apcRessources")
      */
-    private $semestre;
+    private ?Semestre $semestre;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -44,27 +38,7 @@ class ApcRessource extends BaseEntity implements MatiereInterface
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private ?string $description;
-
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
     private ?string $motsCles;
-
-    /**
-     * @ORM\Column(type="float")
-     */
-    private float $heuresCM = 0;
-
-    /**
-     * @ORM\Column(type="float")
-     */
-    private float $heuresTD = 0;
-
-    /**
-     * @ORM\Column(type="float")
-     */
-    private float $heuresTP = 0;
 
     /**
      * @ORM\OneToMany(targetEntity=ApcRessourceCompetence::class, mappedBy="ressource", cascade={"persist","remove"} )
@@ -82,42 +56,20 @@ class ApcRessource extends BaseEntity implements MatiereInterface
     private $apcSaeRessources;
 
     /**
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="float", nullable=true)
      */
-    private ?string $codeRessource;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private bool $suspendu = false;
+    private ?float $heuresSAE;
 
     /**
      * @ORM\Column(type="float", nullable=true)
      */
-    private $heuresSAE;
-
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     */
-    private $heuresSAEPtut;
+    private ?float $heuresSAEPtut;
 
     public function __construct()
     {
         $this->apcRessourceCompetences = new ArrayCollection();
         $this->apcRessourceApprentissageCritiques = new ArrayCollection();
         $this->apcSaeRessources = new ArrayCollection();
-    }
-
-    public function getLibelle(): ?string
-    {
-        return $this->libelle;
-    }
-
-    public function setLibelle(string $libelle): self
-    {
-        $this->libelle = $libelle;
-
-        return $this;
     }
 
     public function getSemestre(): ?Semestre
@@ -144,18 +96,6 @@ class ApcRessource extends BaseEntity implements MatiereInterface
         return $this;
     }
 
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(?string $description): self
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
     public function getMotsCles(): ?string
     {
         return $this->motsCles;
@@ -164,42 +104,6 @@ class ApcRessource extends BaseEntity implements MatiereInterface
     public function setMotsCles(?string $motsCles): self
     {
         $this->motsCles = $motsCles;
-
-        return $this;
-    }
-
-    public function getHeuresCM(): ?float
-    {
-        return $this->heuresCM;
-    }
-
-    public function setHeuresCM(float $heuresCM): self
-    {
-        $this->heuresCM = $heuresCM;
-
-        return $this;
-    }
-
-    public function getHeuresTD(): ?float
-    {
-        return $this->heuresTD;
-    }
-
-    public function setHeuresTD(float $heuresTD): self
-    {
-        $this->heuresTD = $heuresTD;
-
-        return $this;
-    }
-
-    public function getHeuresTP(): ?float
-    {
-        return $this->heuresTP;
-    }
-
-    public function setHeuresTP(float $heuresTP): self
-    {
-        $this->heuresTP = $heuresTP;
 
         return $this;
     }
@@ -294,30 +198,6 @@ class ApcRessource extends BaseEntity implements MatiereInterface
         return $this;
     }
 
-    public function getCodeRessource(): ?string
-    {
-        return $this->codeRessource;
-    }
-
-    public function setCodeRessource(string $codeRessource): self
-    {
-        $this->codeRessource = $codeRessource;
-
-        return $this;
-    }
-
-    public function getSuspendu(): ?bool
-    {
-        return $this->suspendu;
-    }
-
-    public function setSuspendu(bool $suspendu): self
-    {
-        $this->suspendu = $suspendu;
-
-        return $this;
-    }
-
     public function getDiplome(): ?Diplome
     {
         if (null !== $this->getSemestre()) {
@@ -342,8 +222,6 @@ class ApcRessource extends BaseEntity implements MatiereInterface
     }
 
     /**
-     * @param ApcCompetence $competence
-     *
      * @return $this
      */
     public function addCompetence(ApcCompetence $competence): self
@@ -355,8 +233,6 @@ class ApcRessource extends BaseEntity implements MatiereInterface
     }
 
     /**
-     * @param ApcCompetence $competence
-     *
      * @return $this
      */
     public function removeCompetence(ApcCompetence $competence): self
@@ -375,43 +251,10 @@ class ApcRessource extends BaseEntity implements MatiereInterface
         if (count($this->apcRessourceApprentissageCritiques) > 0) {
             $ac = $this->apcRessourceApprentissageCritiques[0]->getApprentissageCritique();
 
-            return $ac !== null ? $ac->getNiveau()->getOrdre() : 0;
+            return null !== $ac ? $ac->getNiveau()->getOrdre() : 0;
         }
-    }
 
-    public function getEqTdFormation(): float
-    {
-        return $this->heuresCM * Constantes::MAJORATION_CM + $this->heuresTD + $this->heuresTP;
-    }
-
-    public function getEtuFormation(): float
-    {
-        return $this->heuresCM + $this->heuresTD + $this->heuresTP;
-    }
-
-    public function getDisplay(): string
-    {
-        return $this->getCodeRessource() . ' | ' . $this->getLibelle();
-    }
-
-    public function getCmFormation(): float
-    {
-        return $this->heuresCM;
-    }
-
-    public function getTdFormation(): float
-    {
-        return $this->heuresTD;
-    }
-
-    public function getTpFormation(): float
-    {
-        return $this->heuresTP;
-    }
-
-    public function getCode(): ?string
-    {
-        return $this->getCodeRessource();
+        return null;
     }
 
     public function getHeuresSAE(): ?float
@@ -444,13 +287,13 @@ class ApcRessource extends BaseEntity implements MatiereInterface
         $t['id'] = $this->getId();
         $t['libelle'] = $this->getLibelle();
         $t['display'] = '-';
-        $t['cmFormation'] = $this->getHeuresCM();
-        $t['tdFormation'] = $this->getHeuresTD();
-        $t['tpFormation'] = $this->getHeuresTP();
+        $t['cmFormation'] = $this->getCmFormation();
+        $t['tdFormation'] = $this->getTdFormation();
+        $t['tpFormation'] = $this->getTpFormation();
         $t['ptutFormation'] = null;
-        $t['cmPpn'] = $this->getHeuresCM();
-        $t['tdPpn'] = $this->getHeuresTD();
-        $t['tpPpn'] = $this->getHeuresTP();
+        $t['cmPpn'] = $this->getCmPpn();
+        $t['tdPpn'] = $this->getTdPpn();
+        $t['tpPpn'] = $this->getTpPpn();
         $t['ptutPpn'] = null;
 
         return $t;

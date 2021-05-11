@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Hrs.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/04/2021 08:48
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Entity;
@@ -74,9 +74,6 @@ class Hrs extends BaseEntity
         return $this->nbHeuresTd;
     }
 
-    /**
-     * @return Hrs
-     */
     public function setNbHeuresTd(float $nbHeuresTd): self
     {
         $this->nbHeuresTd = $nbHeuresTd;
@@ -89,9 +86,6 @@ class Hrs extends BaseEntity
         return $this->semestre;
     }
 
-    /**
-     * @return Hrs
-     */
     public function setSemestre(?Semestre $semestre): self
     {
         $this->semestre = $semestre;
@@ -104,9 +98,6 @@ class Hrs extends BaseEntity
         return $this->diplome;
     }
 
-    /**
-     * @return Hrs
-     */
     public function setDiplome(?Diplome $diplome): self
     {
         $this->diplome = $diplome;
@@ -119,9 +110,6 @@ class Hrs extends BaseEntity
         return $this->personnel;
     }
 
-    /**
-     * @return Hrs
-     */
     public function setPersonnel(?Personnel $personnel): self
     {
         $this->personnel = $personnel;
@@ -134,9 +122,6 @@ class Hrs extends BaseEntity
         return $this->typeHrs;
     }
 
-    /**
-     * @return Hrs
-     */
     public function setTypeHrs(?TypeHrs $typeHrs): self
     {
         $this->typeHrs = $typeHrs;
@@ -162,9 +147,6 @@ class Hrs extends BaseEntity
         return $this->annee;
     }
 
-    /**
-     * @return Hrs
-     */
     public function setAnnee(int $annee): self
     {
         $this->annee = $annee;

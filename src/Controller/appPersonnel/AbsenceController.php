@@ -4,26 +4,27 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/AbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 11/05/2021 08:46
  */
 
 namespace App\Controller\appPersonnel;
 
 use App\Classes\Etudiant\EtudiantAbsences;
+use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\MyAbsences;
 use App\Classes\MyGroupes;
-use App\Classes\Tools;
 use App\Controller\BaseController;
 use App\Entity\Absence;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
-use App\Entity\Matiere;
+use App\Exception\MatiereNotFoundException;
 use App\Repository\AbsenceRepository;
 use App\Repository\CelcatEventsRepository;
 use App\Repository\EdtPlanningRepository;
-use App\Repository\MatiereRepository;
+use App\Utils\Tools;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
+use function count;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -51,31 +52,30 @@ class AbsenceController extends BaseController
     }
 
     /**
-     * @Route("/{matiere}", name="application_personnel_absence_index", requirements={"matiere"="\d+"}, methods={"GET"})
+     * @Route("/{matiere}", name="application_personnel_absence_index", methods={"GET"})
      */
     public function index(
-        Matiere $matiere
+        TypeMatiereManager $typeMatiereManager,
+        string $matiere
     ): Response {
-        $semestre = $matiere->getSemestre();
-
-        if (null !== $semestre) {
+        $mat = $typeMatiereManager->getMatiereFromSelect($matiere);
+        if (null !== $mat && null !== $mat->semestre) {
             return $this->render('appPersonnel/absence/index.html.twig', [
-                'semestre' => $semestre,
-                'matiere'  => $matiere,
+                'semestre' => $mat->semestre,
+                'matiere' => $mat,
             ]);
         }
 
-        return $this->redirectToRoute('erreur_666');
+        throw new MatiereNotFoundException(); //todo: a tester
     }
 
     /**
      * @Route("/edt/{event}", name="application_personnel_absence_from_planning", requirements={"event"="\d+"},
      *                        methods={"GET"})
      *
-     * @param $event
      */
     public function saisieFromEdt(
-        MatiereRepository $matiereRepository,
+        TypeMatiereManager $typeMatiereManager,
         EdtPlanningRepository $edtPlanningRepository,
         CelcatEventsRepository $celcatEventsRepository,
         MyGroupes $myGroupes,
@@ -83,20 +83,21 @@ class AbsenceController extends BaseController
     ): Response {
         if (null !== $this->dataUserSession->getDepartement() && true === $this->dataUserSession->getDepartement()->isOptUpdateCelcat()) {
             $planning = $celcatEventsRepository->find($event);
-            $matiere = null !== $planning ? $matiereRepository->findOneBy(['codeElement' => $planning->getCodeModule()]) : null;
+            $matiere = null !== $planning ? $typeMatiereManager->findByCodeApogee($planning->getCodeModule()) : null;
         } else {
             $planning = $edtPlanningRepository->find($event);
-            $matiere = null !== $planning ? $planning->getMatiere() : null;
+            $matiere = null !== $planning ? $typeMatiereManager->getMatiere($planning->getIdMatiere(),
+                $planning->getTypeMatiere()) : null;
         }
 
         if (null !== $planning) {
             return $this->render('appPersonnel/absence/index.html.twig', [
-                'semestre' => null !== $matiere ? $matiere->getSemestre() : null,
-                'matiere'  => $matiere,
-                'event'    => $planning,
-                'groupes'  => $myGroupes->getGroupesPlanning($planning),
-                'heure'    => Constantes::TAB_HEURES[$planning->getDebut()],
-                'date'     => $planning->getDate(),
+                'semestre' => null !== $matiere ? $matiere->semestre : null,
+                'matiere' => $matiere,
+                'event' => $planning,
+                'groupes' => $myGroupes->getGroupesPlanning($planning),
+                'heure' => Constantes::TAB_HEURES[$planning->getDebut()],
+                'date' => $planning->getDate(),
             ]);
         }
 
@@ -106,13 +107,15 @@ class AbsenceController extends BaseController
     /**
      * @Route("/voir/{matiere}", name="application_personnel_absence_voir", requirements={"matiere"="\d+"})
      */
-    public function voir(Matiere $matiere): Response
+    public function voir(TypeMatiereManager $typeMatiereManager, string $matiere): Response
     {
+        $mat = $typeMatiereManager->getMatiereFromSelect($matiere);
+
         return $this->render('appPersonnel/absence/voir.html.twig', [
-            'matiere'  => $matiere,
+            'matiere' => $mat,
             'absences' => $this->myAbsences->getAbsencesMatiere(
                 $matiere,
-                $matiere->getSemestre() ? $matiere->getSemestre()->getAnneeUniversitaire() : 0
+                (null !== $mat && null !== $mat->semestre) ? $mat->semestre->getAnneeUniversitaire() : 0
             ),
         ]);
     }
@@ -120,13 +123,17 @@ class AbsenceController extends BaseController
     /**
      * @Route("/export/{matiere}/export.{_format}", name="application_personnel_absence_export", methods="GET")
      *
-     * @param $_format
      *
      * @return Response
      */
-    public function export(Matiere $matiere, $_format): ?Response
+    public function export(TypeMatiereManager $typeMatiereManager, string $matiere, $_format): ?Response
     {
-        return $this->myAbsences->export($matiere, $matiere->getSemestre()->getAnneeUniversitaire(), $_format);
+        $mat = $typeMatiereManager->getMatiereFromSelect($matiere);
+        if (null !== $mat) {
+            return $this->myAbsences->export($mat, $mat->semestre->getAnneeUniversitaire(), $_format);
+        }
+
+        return null; //todo: exception?
     }
 
     /**
@@ -154,15 +161,21 @@ class AbsenceController extends BaseController
      *                                    options={"expose":true})
      */
     public function ajaxGetAbsencesMatiere(
+        TypeMatiereManager $typeMatiereManager,
         AbsenceRepository $absenceRepository,
-        Matiere $matiere
+        string $matiere
     ): JsonResponse {
-        $absences = $absenceRepository->getByMatiereArray(
-            $matiere,
-            $matiere->getSemestre() ? $matiere->getSemestre()->getAnneeUniversitaire() : null
-        );
+        $mat = $typeMatiereManager->getMatiereFromSelect($matiere);
+        if (null !== $mat) {
+            $absences = $absenceRepository->getByMatiereArray(
+                $mat,
+                $mat->semestre ? $mat->semestre->getAnneeUniversitaire() : null
+            );
 
-        return $this->json($absences);
+            return $this->json($absences);
+        }
+
+        return $this->json(null);
     }
 
     /**
@@ -170,37 +183,39 @@ class AbsenceController extends BaseController
      *                                             options={"expose":true})
      *
      * @return JsonResponse|Response
-     * @throws Exception
      *
+     * @throws Exception
      */
     public function ajaxSaisie(
+        TypeMatiereManager $typeMatiereManager,
         EtudiantAbsences $etudiantAbsences,
         AbsenceRepository $absenceRepository,
         Request $request,
-        Matiere $matiere,
+        string $matiere,
         Etudiant $etudiant
     ) {
         $dateHeure = Tools::convertDateHeureToObject($request->request->get('date'), $request->request->get('heure'));
+        $mat = $typeMatiereManager->getMatiereFromSelect($matiere);
         $absence = $absenceRepository->findBy([
-            'matiere'            => $matiere->getId(),
-            'etudiant'           => $etudiant->getId(),
-            'dateHeure'          => $dateHeure,
+            'matiere' => $matiere,
+            'etudiant' => $etudiant->getId(),
+            'dateHeure' => $dateHeure,
             'anneeUniversitaire' => $etudiant->getSemestre() ? $etudiant->getSemestre()->getAnneeUniversitaire()->getId() : 0,
         ]);
 
-        if ('saisie' === $request->get('action') && 0 === \count($absence)) {
-            if ($this->saisieAutorise($matiere->getSemestre()->getOptNbJoursSaisieAbsence(), $dateHeure)) {
+        if (null !== $mat && 'saisie' === $request->get('action') && 0 === count($absence)) {
+            if ($this->saisieAutorise($mat->semestre->getOptNbJoursSaisieAbsence(), $dateHeure)) {
                 $etudiantAbsences->setEtudiant($etudiant);
 
                 $etudiantAbsences->addAbsence(
                     $dateHeure,
-                    $matiere,
+                    $mat,
                     $this->getConnectedUser()
                 );
 
                 $absences = $absenceRepository->getByMatiereArray(
-                    $matiere,
-                    $matiere->getSemestre() ? $matiere->getSemestre()->getAnneeUniversitaire() : null
+                    $mat,
+                    $mat->semestre ? $mat->semestre->getAnneeUniversitaire() : null
                 );
 
                 return $this->json($absences);
@@ -209,13 +224,13 @@ class AbsenceController extends BaseController
             return new response('out', 500);
         }
 
-        if (1 === \count($absence)) {
+        if (1 === count($absence)) {
             //un tableau, donc une absence ?
             $etudiantAbsences->removeAbsence($absence[0]);
 
             $absences = $absenceRepository->getByMatiereArray(
-                $matiere,
-                $matiere->getSemestre()->getAnneeUniversitaire()
+                $mat,
+                $mat->semestre->getAnneeUniversitaire()
             );
 
             return $this->json($absences);
@@ -224,10 +239,7 @@ class AbsenceController extends BaseController
         return new response('nok', 500);
     }
 
-    /**
-     * @param $nbjour
-     */
-    private function saisieAutorise($nbjour, CarbonInterface $datesymfony): bool
+    private function saisieAutorise(int $nbjour, CarbonInterface $datesymfony): bool
     {
         return 0 === $nbjour ? true : ($datesymfony->diffInDays(Carbon::now()) <= $nbjour);
     }

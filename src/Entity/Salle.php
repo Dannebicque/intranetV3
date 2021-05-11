@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Salle.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Entity;
@@ -67,9 +67,6 @@ class Salle extends BaseEntity
         return $this->libelle;
     }
 
-    /**
-     * @return Salle
-     */
     public function setLibelle(string $libelle): self
     {
         $this->libelle = $libelle;
@@ -82,9 +79,6 @@ class Salle extends BaseEntity
         return $this->capacite;
     }
 
-    /**
-     * @return Salle
-     */
     public function setCapacite(int $capacite): self
     {
         $this->capacite = $capacite;
@@ -97,9 +91,6 @@ class Salle extends BaseEntity
         return $this->type;
     }
 
-    /**
-     * @return Salle
-     */
     public function setType(string $type): self
     {
         $this->type = $type;
@@ -112,9 +103,6 @@ class Salle extends BaseEntity
         return $this->site;
     }
 
-    /**
-     * @return Salle
-     */
     public function setSite(?Site $site): self
     {
         $this->site = $site;

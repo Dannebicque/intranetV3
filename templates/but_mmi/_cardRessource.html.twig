@@ -1,11 +1,11 @@
 <div class="col-md-4 col-sm-12">
     <div class="card">
-        <h4 class="card-title">{{ ressource.codeRessource }} | {{ ressource.libelle }}</h4>
+        <h4 class="card-title">{{ ressource.display }}</h4>
         <div class="card-body">
             <p>{{ ressource.motsCles|nl2br }}</p>
             <p>
                 <a href="{{ path('but_fiche_ressource',
-                       {'apcRessource': ressource.id, diplome:diplome.sigle|lower}) }}"
+                    {'apcRessource': ressource.id, diplome:diplome.sigle|lower}) }}"
                    class="btn btn-info stretched-link"
                    target="_blank"
                 >
@@ -23,9 +23,9 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td>{{ ressource.heuresCM + ressource.heuresTD }}</td>
-                    <td>{{ ressource.heuresTP }}</td>
-                    <td>-</td>
+                    <td>{{ ressource.cmPpn + ressource.tdPpn }}</td>
+                    <td>{{ ressource.tpPpn }}</td>
+                    <td>{{ ressource.coefficient }}</td>
                 </tr>
                 </tbody>
             </table>
@@ -40,9 +40,10 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td>{{ ressource.heuresCM + ressource.heuresTD + ressource.heuresTP }}</td>
+                    <td>{{ ressource.cmPpn + ressource.tdPpn + ressource.tpPpn }}</td>
                     <td>{{ ressource.heuresSAE + ressource.heuresSAEPtut }}</td>
-                    <td>{{ ressource.heuresCM + ressource.heuresTD + ressource.heuresTP + ressource.heuresSAE + ressource.heuresSAEPtut }}</td>
+                    <td>{{ ressource.cmPpn + ressource.tdPpn + ressource.tpPpn + ressource.heuresSAE + ressource
+                        .heuresSAEPtut }}</td>
                 </tr>
                 </tbody>
             </table>

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/DocumentRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:08
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Repository;
@@ -31,9 +31,6 @@ class DocumentRepository extends ServiceEntityRepository
         parent::__construct($registry, Document::class);
     }
 
-    /**
-     * @param $type
-     */
     public function findByTypeDocument($type)
     {
         return $this->createQueryBuilder('d')

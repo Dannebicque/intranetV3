@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/EdtController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Controller;
@@ -141,7 +141,6 @@ class EdtController extends BaseController
     /**
      * @Route("/semestre/export/semaine/{semaine}/{semestre}", name="edt_semestre_export_semaine_courante")
      *
-     * @param $semaine
      *
      * @throws LoaderError
      * @throws RuntimeError
@@ -248,8 +247,6 @@ class EdtController extends BaseController
     /**
      * @Route("/etudiant/details/{event}/{type}", name="edt_etudiant_detail_event")
      *
-     * @param $event
-     * @param $type
      */
     public function detailEvent(
         MyEdtIntranet $myEdt,

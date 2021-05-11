@@ -50,7 +50,7 @@
                     <thead>
                     <tr>
                         <th colspan="4" style="text-align: right">Matière</th>
-                        {% for matiere in sousCommission.matieres|filter(matiere => matiere.nbnotes!=0 and matiere
+                        {% for matiere in sousCommission.matieres|filter(matiere => matiere.nbNotes!=0 and matiere
                         .suspendu == false) %}
                             <th {% if semestre.optPenaliteAbsence == true %}colspan="2"{% endif %} class="matiere">
                                 <abbr title="{{ matiere.libelle }}">
@@ -71,7 +71,7 @@
                         <th>Bac</th>
                         <th>Coeff.</th>
                         {% for matiere in sousCommission.matieres|filter(matiere => matiere.semestre.id ==
-                            semestre.id and matiere.nbnotes!=0 and matiere.suspendu == false) %}
+                            semestre.id and matiere.nbNotes!=0 and matiere.suspendu == false) %}
                             <th style="text-align: center" {% if semestre.optPenaliteAbsence == true %}colspan="2"{% endif %} class="matiere">{{ matiere.coefficient }}</th>
                         {% endfor %}
                         {# #}{# decision semestre #}
@@ -108,25 +108,28 @@
                             <td>{{ etudiant.numetudiant }}</td>
 
                             {# matieres #}
-                            {% for matiere in sousCommission.matieres|filter(matiere => matiere.nbnotes!=0 and matiere
+                            {% for matiere in sousCommission.matieres|filter(matiere => matiere.nbNotes!=0 and matiere
                             .suspendu == false) %}
                                 <td class="matiere">
-                                    {% if myEtudiant.moyenneMatieres[matiere.id].optionFaite == false %}
+                                    {% if myEtudiant.moyenneMatieres[matiere.typeIdMatiere].optionFaite == false %}
+
                                         <span class="badge badge-gray">N.C.</span>
                                     {% elseif matiere.pac == true %}
-                                        {% if myEtudiant.moyenneMatieres[matiere.id].moyenne != '-0.01'
-                                            and myEtudiant.moyenneMatieres[matiere.id]
+                                        {% if myEtudiant.moyenneMatieres[matiere.typeIdMatiere].moyenne != '-0.01'
+                                            and myEtudiant.moyenneMatieres[matiere.typeIdMatiere]
                                         .moyenne > 0 %}
-                                            <span class="{{ myEtudiant.moyenneMatieres[matiere.id].style }}">
-	                                        {{ myEtudiant.moyenneMatieres[matiere.id].moyenne|number_format(2) }}
+                                            <span class="{{ myEtudiant.moyenneMatieres[matiere.typeIdMatiere].style }}">
+	                                        {{ myEtudiant.moyenneMatieres[matiere.typeIdMatiere].moyenne|number_format
+                                                (2) }}
 	                                        </span>
                                         {% else %}
                                             <span class="badge badge-success">No PAC</span>
                                         {% endif %}
                                     {% else %}
-                                        <span class="{{ myEtudiant.moyenneMatieres[matiere.id].style }}">
+                                        <span class="{{ myEtudiant.moyenneMatieres[matiere.typeIdMatiere].style }}">
 	                                        <a href="#" rel="tooltip"
-                                               title="{{ matiere.codeMatiere }}">{{ myEtudiant.moyenneMatieres[matiere.id].moyenne|number_format(2) }}</a>
+                                               title="{{ matiere.codeMatiere }}">{{ myEtudiant
+                                                .moyenneMatieres[matiere.typeIdMatiere].moyenne|number_format(2) }}</a>
 	                                    </span>
                                     {% endif %}
                                 </td>
@@ -134,9 +137,11 @@
                                 {# Penalite #}
                                 {% if semestre.optPenaliteAbsence == true %}
                                     <td style="background-color: #00B7FC;" class="matiere">
-                                        {% if myEtudiant.moyenneMatieres[matiere.id].optionFaite == true %}
-                                            <span class="{{ myEtudiant.moyenneMatieres[matiere.id].stylePenalisee }}">
-                                                {{ myEtudiant.moyenneMatieres[matiere.id].moyennePenalisee|number_format(2) }}
+                                        {% if myEtudiant.moyenneMatieres[matiere.typeIdMatiere].optionFaite == true %}
+                                            <span class="{{ myEtudiant.moyenneMatieres[matiere.typeIdMatiere]
+                                            .stylePenalisee }}">
+                                                {{ myEtudiant.moyenneMatieres[matiere.typeIdMatiere]
+                                                .moyennePenalisee|number_format(2) }}
                                                 </span>
                                         {% else %}
                                             <span class="badge badge-gray">

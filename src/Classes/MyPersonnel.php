@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyPersonnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 09/05/2021 14:41
  */
 
 /*
@@ -32,11 +32,6 @@ class MyPersonnel
         $this->personnelRepository = $personnelRepository;
     }
 
-    /**
-     * @param $filters
-     * @param $start
-     * @param $length
-     */
     public function getArrayAllPersonnel($filters, $start, $length): array
     {
         $personnels = $this->personnelRepository->getAllPersonnel($filters, $start, $length);

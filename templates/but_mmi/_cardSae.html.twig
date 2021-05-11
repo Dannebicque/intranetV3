@@ -1,6 +1,6 @@
 <div class="col-md-4 col-sm-12">
     <div class="card">
-        <h4 class="card-title">{{ sae.codeSae }} | {{ sae.libelle }}
+        <h4 class="card-title">{{ sae.display }}
             <span class="badge badge-primary">{{ sae
                 .semestre.libelle }}</span></h4>
         <div class="card-body">
@@ -28,10 +28,10 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td>{{ sae.heuresCM + sae.heuresTD }} heure(s)</td>
-                    <td>{{ sae.heuresTP }} heure(s)</td>
-                    <td>{{ sae.heuresProjet }} heure(s)</td>
-                    <td>-</td>
+                    <td>{{ sae.cmPpn + sae.tdPpn }} heure(s)</td>
+                    <td>{{ sae.tpPpn }} heure(s)</td>
+                    <td>{{ sae.projetPpn }} heure(s)</td>
+                    <td>{{ sae.coefficient }}</td>
                 </tr>
                 </tbody>
             </table>

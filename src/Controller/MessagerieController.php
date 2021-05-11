@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/MessagerieController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/02/2021 11:06
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Controller;
@@ -94,7 +94,6 @@ class MessagerieController extends BaseController
     }
 
     /**
-     * @param $filtre
      *
      * @return JsonResponse
      * @Route("/filtre/{filtre}", name="messagerie_filtre", options={"expose"=true})

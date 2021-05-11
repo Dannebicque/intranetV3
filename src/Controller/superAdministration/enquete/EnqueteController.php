@@ -4,21 +4,21 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/enquete/EnqueteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/04/2021 10:04
+ * @lastUpdate 11/05/2021 08:46
  */
 
 namespace App\Controller\superAdministration\enquete;
 
 use App\Classes\Enquetes\EnqueteRelance;
 use App\Classes\Enquetes\MyEnquete;
+use App\Classes\Previsionnel\PrevisionnelManager;
 use App\Entity\Constantes;
-use App\Entity\Questionnaire;
 use App\Entity\QuestionnaireQualite;
 use App\Entity\QuestionnaireQuestionnaireSection;
 use App\Entity\Semestre;
 use App\Repository\DiplomeRepository;
 use App\Repository\EtudiantRepository;
-use App\Repository\PrevisionnelRepository;
+use App\Repository\QuestionnaireEtudiantReponseRepository;
 use App\Repository\QuestionnaireEtudiantRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
@@ -36,13 +36,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class EnqueteController extends AbstractController
 {
     private EntityManagerInterface $entityManager;
+    private FlashBagInterface $flashBag;
 
     /**
      * EnqueteController constructor.
      */
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, FlashBagInterface $flashBag)
     {
         $this->entityManager = $entityManager;
+        $this->flashBag = $flashBag;
     }
 
     /**
@@ -53,7 +55,7 @@ class EnqueteController extends AbstractController
         $effectifs = $etudiantRepository->statistiquesEtudiants();
 
         return $this->render('super-administration/enquete/index.html.twig', [
-            'diplomes'  => $diplomeRepository->findActifs(),
+            'diplomes' => $diplomeRepository->findActifs(),
             'effectifs' => $effectifs,
         ]);
     }
@@ -81,7 +83,6 @@ class EnqueteController extends AbstractController
 
     /**
      * @Route("/questionnaire/relance/{questionnaire}", name="administratif_enquete_relance")
-     *
      */
     public function relance(
         FlashBagInterface $flashBag,
@@ -102,31 +103,27 @@ class EnqueteController extends AbstractController
 
     /**
      * @Route("/questionnaire/create/{semestre}/{step}/{questionnaire}", name="administratif_enquete_semestre_new")
-     *
-     * @param int $step
      */
-    public function create(Semestre $semestre, $step = 1, QuestionnaireQualite $questionnaire = null): Response
+    public function create(Semestre $semestre, int $step = 1, QuestionnaireQualite $questionnaire = null): Response
     {
         return $this->render('super-administration/enquete/create.html.twig', [
             'questionnaire' => $questionnaire,
-            'semestre'      => $semestre,
-            'step'          => $step,
+            'semestre' => $semestre,
+            'step' => $step,
         ]);
     }
 
     /**
      * @Route("/questionnaire/edit/{questionnaire}/{step}", name="administratif_enquete_edit")
-     *
-     * @param int $step
      */
     public function edit(
-        PrevisionnelRepository $previsionnelRepository,
+        PrevisionnelManager $previsionnelManager,
         QuestionnaireQualite $questionnaire,
         int $step = 1
     ): Response {
         if (2 === $step) {
             //etape 2 on récupère le prévisionnel
-            $previsionnels = $previsionnelRepository->findPrevisionnelAnnee($questionnaire->getSemestre(),
+            $previsionnels = $previsionnelManager->getPrevisionnelAnnee($questionnaire->getSemestre()->getAnnee(),
                 $questionnaire->getSemestre()->getAnneeUniversitaire()->getAnnee());
         } else {
             $previsionnels = null;
@@ -134,8 +131,8 @@ class EnqueteController extends AbstractController
 
         return $this->render('super-administration/enquete/edit.html.twig', [
             'questionnaire' => $questionnaire,
-            'semestre'      => $questionnaire->getSemestre(),
-            'step'          => $step,
+            'semestre' => $questionnaire->getSemestre(),
+            'step' => $step,
             'previsionnels' => $previsionnels,
         ]);
     }
@@ -164,25 +161,23 @@ class EnqueteController extends AbstractController
             ['questionnaire' => $newQuestionnaireQualite->getId()]);
     }
 
-    /**
-     * @param int $onglet
-     */
     public function section(
-        PrevisionnelRepository $previsionnelRepository,
+        PrevisionnelManager $previsionnelManager,
         QuestionnaireQuestionnaireSection $qualiteQuestionnaireSection,
         Semestre $semestre,
-        $onglet = 1
+        int $onglet = 1
     ): Response {
+        //todo: a généraliser avec SAE, Ressources
         return $this->render('appEtudiant/qualite/section.html.twig', [
-            'ordre'             => $qualiteQuestionnaireSection->getOrdre(),
-            'config'            => $qualiteQuestionnaireSection,
-            'section'           => $qualiteQuestionnaireSection->getSection(),
-            'tPrevisionnel'     => $previsionnelRepository->findByDiplomeArray($semestre->getDiplome(),
-                $semestre->getAnneeUniversitaire()),
-            'reponses'          => [],
-            'onglet'            => $onglet,
+            'ordre' => $qualiteQuestionnaireSection->getOrdre(),
+            'config' => $qualiteQuestionnaireSection,
+            'section' => $qualiteQuestionnaireSection->getSection(),
+            'tPrevisionnel' => $previsionnelManager->getPrevisionnelAnneeArray($semestre->getAnnee(),
+                $semestre->getAnneeUniversitaire()->getAnnee()),
+            'reponses' => [],
+            'onglet' => $onglet,
             'typeQuestionnaire' => 'qualite',
-            'apercu'            => true,
+            'apercu' => true,
         ]);
     }
 
@@ -193,10 +188,10 @@ class EnqueteController extends AbstractController
     {
         return $this->render('super-administration/enquete/show.html.twig', [
             'questionnaireSections' => $questionnaire->getSections(),
-            'questionnaire'         => $questionnaire,
-            'typeQuestionnaire'     => 'qualite',
-            'semestre'              => $questionnaire->getSemestre(),
-            'apercu'                => true,
+            'questionnaire' => $questionnaire,
+            'typeQuestionnaire' => 'qualite',
+            'semestre' => $questionnaire->getSemestre(),
+            'apercu' => true,
         ]);
     }
 
@@ -209,7 +204,7 @@ class EnqueteController extends AbstractController
 
         return $this->render('super-administration/enquete/reponses.html.twig', [
             'questionnaire' => $questionnaire,
-            'reponses'      => $reponses = null,
+            'reponses' => $reponses = null,
         ]);
     }
 
@@ -220,11 +215,11 @@ class EnqueteController extends AbstractController
      */
     public function export(
         MyEnquete $myEnquete,
-        PrevisionnelRepository $previsionnelRepository,
+        PrevisionnelManager $previsionnelManager,
         QuestionnaireQualite $questionnaire
     ): Response {
-        $previsionnel = $previsionnelRepository->findByDiplomeArray($questionnaire->getSemestre()->getDiplome(),
-            $questionnaire->getSemestre()->getDiplome()->getAnneeUniversitaire());
+        $previsionnel = $previsionnelManager->getPrevisionnelAnneeArray($questionnaire->getSemestre()->getAnnee(),
+            $questionnaire->getSemestre()->getDiplome()->getAnneeUniversitaire()->getAnnee());
 
         return $myEnquete->exportExcel($questionnaire, $previsionnel);
     }
@@ -232,10 +227,30 @@ class EnqueteController extends AbstractController
     /**
      * @Route("/questionnaire/{questionnaire}", name="administratif_enquete_delete", methods={"DELETE"})
      */
-    public function delete(Request $request, QuestionnaireQualite $questionnaire): Response
-    {
-        //suppression de l'enquete
-        //suppression des liens enquetes sections
+    public function delete(
+        QuestionnaireEtudiantReponseRepository $quizzEtudiantReponseRepository,
+        Request $request,
+        QuestionnaireQualite $questionnaire
+    ): Response {
+        $id = $questionnaire->getId();
+        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+            //suppression des réponses
+            $reponses = $reponsesEtudiants = $quizzEtudiantReponseRepository->findByQuestionnaire($questionnaire);
+            foreach ($reponses as $reponse) {
+                $this->entityManager->remove($reponse);
+            }
+
+            //suppression de l'enquete
+            //suppression des liens enquetes sections
+            $this->entityManager->remove($questionnaire);
+            $this->entityManager->flush();
+            $this->flashBag->add(Constantes::FLASHBAG_SUCCESS, 'questionnaire.delete.success.flash');
+
+            return $this->json($id, Response::HTTP_OK);
+        }
+        $this->flashBag->add(Constantes::FLASHBAG_SUCCESS, 'questionnaire.delete.success.flash');
+
+        return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
     /**

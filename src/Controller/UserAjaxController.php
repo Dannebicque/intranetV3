@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/UserAjaxController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/03/2021 21:05
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Controller;
@@ -160,7 +160,6 @@ class UserAjaxController extends BaseController
     /**
      * @Route("/change-departement/{etudiant}/{departement}", name="user_change_departement", options={"expose":true})
      *
-     * @param $departement
      *
      * @return JsonResponse
      */
@@ -190,7 +189,6 @@ class UserAjaxController extends BaseController
     /**
      * @Route("/change-annee-sortie/{etudiant}/{annee}", name="user_change_annee_sortie", options={"expose":true})
      *
-     * @param $annee
      *
      * @return JsonResponse
      */

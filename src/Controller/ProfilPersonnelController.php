@@ -4,12 +4,14 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ProfilPersonnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 11/05/2021 08:46
  */
 
 namespace App\Controller;
 
-use App\Classes\MyPrevisionnel;
+use App\Classes\Hrs\HrsManager;
+use App\Classes\Previsionnel\PrevisionnelManager;
+use App\Classes\Previsionnel\PrevisionnelSynthese;
 use App\Entity\Personnel;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
@@ -48,15 +50,26 @@ class ProfilPersonnelController extends BaseController
      * @Route("/profil/{slug}/previsionnel", name="profil_personnel_previsionnel")
      * @ParamConverter("personnel", options={"mapping": {"slug": "slug"}})
      */
-    public function previsionnel(MyPrevisionnel $myPrevisionnel, Personnel $personnel): Response
-    {
-        $myPrevisionnel->setPersonnel($personnel);
-        $myPrevisionnel->getPrevisionnelEnseignantBySemestre($this->dataUserSession->getAnneePrevisionnel());
-        $myPrevisionnel->getHrsEnseignant($this->dataUserSession->getAnneePrevisionnel());
+    public function previsionnel(
+        PrevisionnelManager $myPrevisionnel,
+        PrevisionnelSynthese $previsionnelSynthese,
+        HrsManager $hrsManager,
+        Personnel $personnel
+    ): Response {
+        $anneePrevisionnel = $this->dataUserSession->getAnneePrevisionnel();
+        $previsionnels = $myPrevisionnel->getPrevisionnelEnseignantAnnee($personnel,
+            $anneePrevisionnel);
+        $hrs = $hrsManager->getPersonnelAnnee($personnel, $anneePrevisionnel);
+        $synthsePrevisionnel = $previsionnelSynthese->getSynthese($previsionnels, $hrs, $personnel);
 
         return $this->render('user/composants/previsionnel.html.twig', [
-            'previsionnel' => $myPrevisionnel,
-            'personnel'    => $personnel,
+            'previsionnels' => $previsionnels,
+            'synthsePrevisionnel' => $synthsePrevisionnel,
+            'anneePrevisionnel' => $anneePrevisionnel,
+            'semestres' => $this->dataUserSession->getSemestres(),
+            //todo: doit être tous les semestres dans lequel le personnel intervient. Sans nuance de département
+            'hrs' => $hrs,
+            'personnel' => $personnel,
         ]);
     }
 }
