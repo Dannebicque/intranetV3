@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ProfilEtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2021 21:39
+ * @lastUpdate 11/05/2021 21:48
  */
 
 namespace App\Controller;
@@ -92,49 +92,53 @@ class ProfilEtudiantController extends BaseController
         EtudiantNotes $etudiantNotes,
         Etudiant $etudiant
     ): Response {
-        $etudiantNotes->setEtudiant($etudiant);
-        $matieres = $typeMatiereManager->findBySemestreArray($etudiant->getSemestre());
-        $notes = $etudiantNotes->getNotesParSemestresEtAnneeUniversitaire($matieres,
-            $etudiant->getAnneeUniversitaire());
-        $etudiantNotes->calculGraphique();
+        if (null !== $etudiant->getSemestre()) {
+            $etudiantNotes->setEtudiant($etudiant);
+            $matieres = $typeMatiereManager->findBySemestreArray($etudiant->getSemestre());
+            $notes = $etudiantNotes->getNotesParSemestresEtAnneeUniversitaire($matieres,
+                $etudiant->getAnneeUniversitaire());
+            $etudiantNotes->calculGraphique();
 
-        $notes = $notesTri->tri($notes, $matieres);
+            $notes = $notesTri->tri($notes, $matieres);
 
-
-        $chart = $chartBuilder->createChart(Chart::TYPE_RADAR);
-        $chart->setData([
-            'labels' => $etudiantNotes->getLabelsGraphique(),
-            'datasets' => [
-                [//todo: intégrer l'historique des semestres
-                    'label' => $etudiant->getSemestre()->getLibelle(),
-                    'data' => $etudiantNotes->getDataGraphique(),
-                    'backgroundColor' => 'rgb(255, 99, 132)',
-                    'borderColor' => 'rgb(255, 99, 132)',
-                ],
-            ],
-        ]);
-
-        $chart->setOptions(
-            [
-                'legend' => ['position' => 'top'],
-                'title' => [
-                    'display' => true,
-                    'text' => 'Chart.js Radar Chart',
-                ],
-                'scale' => [
-                    'ticks' => [
-                        'beginAtZero' => true,
-                        'suggestedMax' => 20,
+            $chart = $chartBuilder->createChart(Chart::TYPE_RADAR);
+            $chart->setData([
+                'labels' => $etudiantNotes->getLabelsGraphique(),
+                'datasets' => [
+                    [//todo: intégrer l'historique des semestres
+                        'label' => $etudiant->getSemestre()->getLibelle(),
+                        'data' => $etudiantNotes->getDataGraphique(),
+                        'backgroundColor' => 'rgb(255, 99, 132)',
+                        'borderColor' => 'rgb(255, 99, 132)',
                     ],
                 ],
-            ]
-        );
+            ]);
 
-        return $this->render('user/composants/notes.html.twig', [
-            'notes' => $notes,
-            'etudiant' => $etudiant,
-            'chart' => $chart,
-            'matieres' => $matieres,
+            $chart->setOptions(
+                [
+                    'legend' => ['position' => 'top'],
+                    'title' => [
+                        'display' => true,
+                        'text' => 'Chart.js Radar Chart',
+                    ],
+                    'scale' => [
+                        'ticks' => [
+                            'beginAtZero' => true,
+                            'suggestedMax' => 20,
+                        ],
+                    ],
+                ]
+            );
+
+            return $this->render('user/composants/notes.html.twig', [
+                'notes' => $notes,
+                'etudiant' => $etudiant,
+                'chart' => $chart,
+                'matieres' => $matieres,
+            ]);
+        }
+
+        return $this->render('user/composants/_semestre_vide.html.twig', [
         ]);
     }
 
@@ -150,25 +154,31 @@ class ProfilEtudiantController extends BaseController
         StatsAbsences $statsAbsences,
         Etudiant $etudiant
     ): Response {
-        Calendrier::calculPlanning($etudiant->getAnneeUniversitaire()->getAnnee(), 2, Constantes::DUREE_SEMESTRE);
-        $matieres = $typeMatiereManager->findBySemestreArray($etudiant->getSemestre());
-        $etudiantAbsences->setEtudiant($etudiant);
-        $absences = $etudiantAbsences->getAbsencesParSemestresEtAnneeUniversitaire($matieres,
-            $etudiant->getAnneeUniversitaire());
-        $statistiquesAbsences = $statsAbsences->calculStatistiquesAbsencesEtudiant($absences);
+        if (null !== $etudiant->getSemestre()) {
+            Calendrier::calculPlanning($this->dataUserSession->getAnneeUniversitaire()->getAnnee(), 2,
+                Constantes::DUREE_SEMESTRE);
+            $matieres = $typeMatiereManager->findBySemestreArray($etudiant->getSemestre());
+            $etudiantAbsences->setEtudiant($etudiant);
+            $absences = $etudiantAbsences->getAbsencesParSemestresEtAnneeUniversitaire($matieres,
+                $this->dataUserSession->getAnneeUniversitaire());
+            $statistiquesAbsences = $statsAbsences->calculStatistiquesAbsencesEtudiant($absences);
 
-        //todo: gérer les mois, selon le semestre ?
-        return $this->render('user/composants/_absences.html.twig', [
-            'tabPlanning' => Calendrier::getTabPlanning(), //objet...
-            'tabJour' => ['', 'L', 'M', 'M', 'J', 'V', 'S', 'D'], //objet...
-            'tabFerie' => Calendrier::getTabJoursFeries(), //objet Calendrier???...
-            'tabFinMois' => Calendrier::getTabFinMois(), //objet...
-            'annee' => $etudiant->getAnneeUniversitaire(),
-            'etudiant' => $etudiant,
-            'absences' => $absences,
-            'statistiquesAbsences' => $statistiquesAbsences,
-            'tabAbsence' => [], //compte des absences par créneaux du planning.
-            'matieres' => $matieres,
+            //todo: gérer les mois, selon le semestre ?
+            return $this->render('user/composants/_absences.html.twig', [
+                'tabPlanning' => Calendrier::getTabPlanning(), //objet...
+                'tabJour' => ['', 'L', 'M', 'M', 'J', 'V', 'S', 'D'], //objet...
+                'tabFerie' => Calendrier::getTabJoursFeries(), //objet Calendrier???...
+                'tabFinMois' => Calendrier::getTabFinMois(), //objet...
+                'annee' => $etudiant->getAnneeUniversitaire(),
+                'etudiant' => $etudiant,
+                'absences' => $absences,
+                'statistiquesAbsences' => $statistiquesAbsences,
+                'tabAbsence' => [], //compte des absences par créneaux du planning.
+                'matieres' => $matieres,
+            ]);
+        }
+
+        return $this->render('user/composants/_semestre_vide.html.twig', [
         ]);
     }
 
