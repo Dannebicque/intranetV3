@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ProfilEtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2021 08:46
+ * @lastUpdate 11/05/2021 21:39
  */
 
 namespace App\Controller;
@@ -184,13 +184,13 @@ class ProfilEtudiantController extends BaseController
         return $this->render('user/composants/stages.html.twig', [
             //todo: si l'étudiant n'est plus dans un semestre, garder l'historique uniquemenent. Dans ce cas l'historique ne doit pas dépendre d'une année ?
             'stagesEnCours' => $stageEtudiantRepository->findByEtudiantAnnee($etudiant,
-                $etudiant->getAnneeUniversitaire()),
+                $this->dataUserSession->getAnneeUniversitaire()),
             'stagesHistorique' => $stageEtudiantRepository->findByEtudiantHistorique($etudiant,
-                $etudiant->getAnneeUniversitaire()),
+                $this->dataUserSession->getAnneeUniversitaire()),
             'alternancesEnCours' => $alternanceRepository->getByEtudiantAndAnneeUniversitaire($etudiant,
-                $etudiant->getAnneeUniversitaire()),
+                $this->dataUserSession->getAnneeUniversitaire()),
             'alternancesHistorique' => $alternanceRepository->getHistoriqueByEtudantAndAnneeUniversitaire($etudiant,
-                $etudiant->getAnneeUniversitaire()),
+                $this->dataUserSession->getAnneeUniversitaire()),
         ]);
     }
 
