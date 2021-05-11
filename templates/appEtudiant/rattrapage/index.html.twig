@@ -43,20 +43,21 @@
                         à {{ demande.heureEval ? demande.heureEval|format_time('short') : '' }}</td>
                     <td>{{ demande.personnel ? demande.personnel.display : 'non.defini'|trans }}</td>
                     <td>
-                        {% if demande.etatDemande =='f' or demande.dateRattrapage == null %}<a href="#"
-                                                                                               class="btn btn-info btn-outline">
+                        {% if demande.etatDemande == constant('DEMANDE_FAITE', demande) or demande.dateRattrapage == null %}
+                            <a href="#"
+                               class="btn btn-info btn-outline">
                             <i class="{{ iconShow }}"></i> {{ 'en.attente'|trans }}</a>{% else %}
                             {{ demande.dateRattrapage ? demande.dateRattrapage|format_date('long') : '' }}
                             à {{ demande.heureRattrapage ? demande.heureRattrapage|format_time('short') : '' }}
                         {% endif %}</td>
                     <td>
-                        {% if demande.etatDemande =='f' %}
+                        {% if demande.etatDemande == constant('DEMANDE_FAITE', demande) %}
                             <a href="#" class="btn btn-info btn-outline"><i
                                         class="{{ iconShow }}"></i> {{ 'en.attente'|trans }}</a>
-                        {% elseif demande.etatDemande =='A' %}
+                        {% elseif demande.etatDemande == constant('DEMANDE_ACCEPTEE', demande) %}
                             <a href="#" class="btn btn-success btn-outline"><i
                                         class="fas fa-check"></i> {{ 'acceptee'|trans }}</a>
-                        {% elseif demande.etatDemande=='R' %}
+                        {% elseif demande.etatDemande== constant('DEMANDE_REFUSEE', demande) %}
                             <a href="#" class="btn btn-warning btn-outline"><i class="fas fa-ban"></i> {{ 'refusee'|trans }}
                             </a>
                         {% else %}

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Rattrapage.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/05/2021 13:13
+ * @lastUpdate 11/05/2021 21:16
  */
 
 namespace App\Entity;
@@ -45,7 +45,6 @@ class Rattrapage extends BaseEntity
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Matiere")
-     * @Groups({"rattrapage_administration"})
      */
     private ?Matiere $matiere;
 
@@ -62,13 +61,13 @@ class Rattrapage extends BaseEntity
     private ?DateTimeInterface $dateEval;
 
     /**
-     * @ORM\Column(type="time")
+     * @ORM\Column(type="time", nullable=true)
      * @Groups({"rattrapage_administration"})
      */
     private ?DateTimeInterface $heureEval;
 
     /**
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="string", length=20, nullable=true)
      * @Groups({"rattrapage_administration"})
      */
     private ?string $duree;
@@ -100,6 +99,21 @@ class Rattrapage extends BaseEntity
      * @ORM\ManyToOne(targetEntity="App\Entity\AnneeUniversitaire")
      */
     private ?AnneeUniversitaire $anneeUniversitaire;
+
+    /**
+     * @Groups({"rattrapage_administration"})
+     */
+    private ?string $libelleMatiere;
+
+    public function getLibelleMatiere(): ?string
+    {
+        return $this->libelleMatiere;
+    }
+
+    public function setLibelleMatiere(?string $libelleMatiere): void
+    {
+        $this->libelleMatiere = $libelleMatiere;
+    }
 
     /**
      * Rattrapage constructor.
@@ -176,8 +190,6 @@ class Rattrapage extends BaseEntity
     }
 
     /**
-     * @param \DateTimeInterface $dateEval
-     *
      * @return Rattrapage
      */
     public function setDateEval(DateTimeInterface $dateEval): self
@@ -197,7 +209,7 @@ class Rattrapage extends BaseEntity
      *
      * @return Rattrapage
      */
-    public function setHeureEval(DateTimeInterface $heureEval): self
+    public function setHeureEval(?DateTimeInterface $heureEval): self
     {
         $this->heureEval = $heureEval;
 
@@ -214,7 +226,7 @@ class Rattrapage extends BaseEntity
      *
      * @return Rattrapage
      */
-    public function setDuree(string $duree): self
+    public function setDuree(?string $duree): self
     {
         $this->duree = $duree;
 
@@ -227,8 +239,6 @@ class Rattrapage extends BaseEntity
     }
 
     /**
-     * @param \DateTimeInterface $dateRattrapage
-     *
      * @return Rattrapage
      */
     public function setDateRattrapage(DateTimeInterface $dateRattrapage): self
@@ -244,8 +254,6 @@ class Rattrapage extends BaseEntity
     }
 
     /**
-     * @param \DateTimeInterface|null $heureRattrapage
-     *
      * @return Rattrapage
      */
     public function setHeureRattrapage(?DateTimeInterface $heureRattrapage): self
@@ -261,8 +269,6 @@ class Rattrapage extends BaseEntity
     }
 
     /**
-     * @param string|null $salle
-     *
      * @return Rattrapage
      */
     public function setSalle(?string $salle): self
@@ -278,8 +284,6 @@ class Rattrapage extends BaseEntity
     }
 
     /**
-     * @param string $etatDemande
-     *
      * @return Rattrapage
      */
     public function setEtatDemande(string $etatDemande): self
@@ -316,8 +320,8 @@ class Rattrapage extends BaseEntity
     /**
      * @Groups({"rattrapage_administration"})
      */
-    public function getEtatDemandeLong(): string
+    public function getEtatDemandeLong(): ?string
     {
-        return self::ETATLONG[$this->etatDemande];
+        return self::ETATLONG[$this->etatDemande] ?? '-erreur code-';
     }
 }

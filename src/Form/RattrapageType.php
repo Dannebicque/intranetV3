@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/RattrapageType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2021 08:46
+ * @lastUpdate 11/05/2021 18:51
  */
 
 namespace App\Form;
@@ -15,6 +15,7 @@ use App\Entity\Rattrapage;
 use App\Repository\PersonnelRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
@@ -51,12 +52,13 @@ class RattrapageType extends AbstractType
             ])
             ->add('heureEval', TimeType::class, ['label' => 'label.heure_evaluation', 'required' => false])
             ->add('duree', TextType::class, ['label' => 'label.duree_evaluation', 'required' => false])
-            ->add('matiere', EntityType::class, [
+            ->add('typeIdMatiere', ChoiceType::class, [
                 'choices' => $this->typeMatiereManager->findBySemestreChoiceType($this->semestre),
                 'label' => 'label.matiere',
                 'required' => true,
                 'expanded' => false,
                 'multiple' => false,
+                'mapped' => false,
                 'attr' => ['class' => 'form-control selectpicker'],
             ])
             ->add('personnel', EntityType::class, [

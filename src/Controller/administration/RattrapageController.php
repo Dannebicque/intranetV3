@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/RattrapageController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2021 08:46
+ * @lastUpdate 11/05/2021 21:21
  */
 
 namespace App\Controller\administration;
@@ -12,7 +12,6 @@ namespace App\Controller\administration;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\MyExport;
 use App\Controller\BaseController;
-use App\Entity\Annee;
 use App\Entity\Constantes;
 use App\Entity\Rattrapage;
 use App\Entity\Semestre;
@@ -53,25 +52,28 @@ class RattrapageController extends BaseController
     /**
      * @Route("/{semestre}/export.{_format}", name="administration_rattrapage_export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"})
-     *
-     * @param \App\Classes\MyExport                $myExport
-     * @param \App\Repository\RattrapageRepository $rattrapageRepository
-     * @param \App\Entity\Semestre                 $semestre
-     * @param                                      $_format
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function export(
+        TypeMatiereManager $typeMatiereManager,
         MyExport $myExport,
         RattrapageRepository $rattrapageRepository,
         Semestre $semestre,
-        $_format
+        string $_format
     ): Response {
         $rattrapages = $rattrapageRepository->findBySemestre($semestre, $semestre->getAnneeUniversitaire());
+        $matieres = $typeMatiereManager->findBySemestreArray($semestre);
+        $tab = [];
+        foreach ($rattrapages as $rattrapage) {
+            if (array_key_exists($rattrapage->getTypeIdMatiere(),
+                    $matieres) && $matieres[$rattrapage->getTypeIdMatiere()]->semestre->getId() === $semestre->getId()) {
+                $rattrapage->setLibelleMatiere($matieres[$rattrapage->getTypeIdMatiere()]->display);
+                $tab[] = $rattrapage;
+            }
+        }
 
         return $myExport->genereFichierGenerique(
             $_format,
-            $rattrapages,
+            $tab,
             'rattrapages_' . $semestre->getLibelle(),
             ['rattrapage_administration', 'utilisateur', 'matiere'],
             [
@@ -79,7 +81,7 @@ class RattrapageController extends BaseController
                 'dateEval',
                 'heureEval',
                 'duree',
-                'matiere' => ['libelle'],
+                'libelleMatiere',
                 'personnel' => ['nom', 'prenom'],
                 'dateRattrapage',
                 'heureRattrapage',
@@ -91,13 +93,12 @@ class RattrapageController extends BaseController
 
     /**
      * @Route("/change-etat/{uuid}/{etat}", name="administration_rattrapage_change_etat", methods="GET",
-     *                                    requirements={"etat"="A|R"}, options={"expose":true})
+     *                                     options={"expose":true})
      * @ParamConverter("rattrapage", options={"mapping": {"uuid": "uuid"}})
-     *
      */
     public function accepte(EventDispatcherInterface $eventDispatcher, Rattrapage $rattrapage, $etat): Response
     {
-        if ('A' === $etat || 'R' === $etat) {
+        if (Rattrapage::DEMANDE_ACCEPTEE === $etat || Rattrapage::DEMANDE_REFUSEE === $etat) {
             $rattrapage->setEtatDemande($etat);
             $this->entityManager->flush();
 

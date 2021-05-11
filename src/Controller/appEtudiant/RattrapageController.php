@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appEtudiant/RattrapageController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2021 08:46
+ * @lastUpdate 11/05/2021 18:57
  */
 
 namespace App\Controller\appEtudiant;
@@ -14,6 +14,7 @@ use App\Controller\BaseController;
 use App\Entity\Rattrapage;
 use App\Form\RattrapageType;
 use App\Repository\RattrapageRepository;
+use App\Utils\ToolsMatiere;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -57,6 +58,8 @@ class RattrapageController extends BaseController
 
         if ($form->isSubmitted()) {
             $rattrapage->setAnneeUniversitaire($this->getEtudiantAnneeUniversitaire());
+            $rattrapage->setTypeMatiere(ToolsMatiere::getType($request->request->get('rattrapage')['typeIdMatiere']));
+            $rattrapage->setIdMatiere(ToolsMatiere::getId($request->request->get('rattrapage')['typeIdMatiere']));
             $this->entityManager->persist($rattrapage);
             $this->entityManager->flush();
 
