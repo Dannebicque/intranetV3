@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/SousComissionController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 09/05/2021 16:07
  */
 
 namespace App\Controller\administration;
 
+use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\SousCommission\SousCommission;
 use App\Classes\SousCommission\SousCommissionExport;
 use App\Classes\SousCommission\SousCommissionSauvegarde;
@@ -54,12 +55,14 @@ class SousComissionController extends BaseController
      * @Route("/travail/{semestre}", name="administration_sous_commission_travail")
      */
     public function travail(
+        TypeMatiereManager $typeMatiereManager,
         SousCommission $sousCommission,
         SousCommissionSauvegarde $sousCommissionSauvegarde,
         Semestre $semestre
     ): Response {
+        $matieres = $typeMatiereManager->findBySemestre($semestre);
         $sousCommission->calcul($semestre, $this->dataUserSession->getAnneeUniversitaire());
-        $sousCommissionTravail = $sousCommissionSauvegarde->sauvegardeTravail($sousCommission);
+        $sousCommissionTravail = $sousCommissionSauvegarde->sauvegardeTravail($sousCommission, $matieres);
 
         return $this->render('administration/sous_commission/travail.html.twig', [
             'semestre' => $semestre,
@@ -159,7 +162,6 @@ class SousComissionController extends BaseController
     /**
      * @Route("/ajax/semestre/{id}/{type}", name="administration_ss_comm_ajax_edit", options={"expose"=true})
      *
-     * @param $type
      */
     public function ajaxEditSsComm(
         SousCommission $sousCommission,

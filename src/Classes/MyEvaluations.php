@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEvaluations.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:10
+ * @lastUpdate 11/05/2021 08:46
  */
 
 /*
@@ -13,66 +13,49 @@
 
 namespace App\Classes;
 
+use App\Classes\Matieres\TypeMatiereManager;
+use App\DTO\Matiere;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Evaluation;
-use App\Entity\Matiere;
 use App\Entity\Semestre;
 use App\Repository\EvaluationRepository;
-use App\Repository\MatiereRepository;
 
 /**
  * Class MyEvaluations.
  */
 class MyEvaluations
 {
-    /**
-     * @var Semestre
-     */
-    private $semestre;
+    private Semestre $semestre;
 
-    /** @var Matiere */
-    private $matiere;
+    private Matiere $matiere;
 
     /**
      * @var Evaluation[]
      */
-    private $evaluations = [];
+    private array $evaluations = [];
 
-    /**
-     * @var array
-     */
-    private $statistiques = [];
+    private array $statistiques = [];
 
-    /**
-     * @var MatiereRepository
-     */
-    private $matiereRepository;
+    private TypeMatiereManager $typeMatiereManager;
 
-    /** @var MyEvaluation */
-    private $myEvaluation;
+    private MyEvaluation $myEvaluation;
 
-    /**
-     * @var EvaluationRepository
-     */
-    private $evaluationRespository;
+    private EvaluationRepository $evaluationRespository;
 
     /**
      * MyEvaluations constructor.
      */
     public function __construct(
         MyEvaluation $myEvaluation,
-        MatiereRepository $matiereRepository,
+        TypeMatiereManager $typeMatiereManager,
         EvaluationRepository $evaluationRespository
     ) {
-        $this->matiereRepository = $matiereRepository;
+        $this->typeMatiereManager = $typeMatiereManager;
         $this->evaluationRespository = $evaluationRespository;
         $this->myEvaluation = $myEvaluation;
     }
 
-    /**
-     * @param $semestre
-     */
-    public function setSemestre($semestre): self
+    public function setSemestre(Semestre $semestre): self
     {
         $this->semestre = $semestre;
 
@@ -84,23 +67,21 @@ class MyEvaluations
         $this->matiere = $matiere;
     }
 
-    /**
-     * @return Matiere[]
-     */
     public function getMatieresSemestre(): array
     {
-        return $this->matiereRepository->findBySemestre($this->semestre);
+        return $this->typeMatiereManager->findBySemestre($this->semestre);
     }
 
     public function getEvaluationsSemestre(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): array
     {
-        $evaluations = $this->evaluationRespository->findBySemestre($semestre,
+        $matieres = $this->typeMatiereManager->findBySemestre($semestre);
+        $evaluations = $this->evaluationRespository->findBySemestre($matieres,
             $anneeUniversitaire);
         $tab = [];
         /** @var Evaluation $eval */
         foreach ($evaluations as $eval) {
-            if (null !== $eval->getMatiere()) {
-                $matiereId = $eval->getMatiere()->getId();
+            if (0 !== $eval->getIdMatiere()) {
+                $matiereId = $eval->getTypeIdMatiere();
                 if (!\array_key_exists($matiereId, $tab)) {
                     $tab[$matiereId] = [];
                 }
@@ -118,7 +99,8 @@ class MyEvaluations
      */
     public function getEvaluationsMatiere($annee): void
     {
-        $this->evaluations = $this->evaluationRespository->findByMatiere($this->matiere, $annee);
+        $this->evaluations = $this->evaluationRespository->findByMatiere($this->matiere->id,
+            $this->matiere->typeMatiere, $annee);
 
         foreach ($this->getEvaluations() as $evaluation) {
             $this->statistiques[$evaluation->getId()] = $this->myEvaluation->setEvaluation($evaluation)->calculStatistiquesGlobales()->getStatistiques();

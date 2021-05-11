@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/ServiceRealise/ServiceRealiseInterface.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:10
+ * @lastUpdate 05/05/2021 14:16
  */
 
 /*
@@ -19,9 +19,9 @@ use App\Entity\Personnel;
 
 interface ServiceRealiseInterface
 {
-    public function getServiceRealiseParMatiere(Matiere $matiere): array;
+    public function getServiceRealiseParMatiere(int $idMatiere, string $type): array;
 
-    public function getServiceRealiseParPersonnelMatiere(Personnel $personnel, Matiere $matiere): array;
+    public function getServiceRealiseParPersonnelMatiere(Personnel $personnel, int $idMatiere, string $type): array;
 
     public function getServiceRealiserParEnseignant(
         Personnel $personnel

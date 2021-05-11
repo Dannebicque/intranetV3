@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Site.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 19:14
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Entity;
@@ -72,9 +72,6 @@ class Site extends BaseEntity
         return $this->adresse;
     }
 
-    /**
-     * @return Site
-     */
     public function setAdresse(?Adresse $adresse): self
     {
         $this->adresse = $adresse;
@@ -90,9 +87,6 @@ class Site extends BaseEntity
         return $this->ufrs;
     }
 
-    /**
-     * @return Site
-     */
     public function addUfr(Ufr $ufr): self
     {
         if (!$this->ufrs->contains($ufr)) {
@@ -103,9 +97,6 @@ class Site extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return Site
-     */
     public function removeUfr(Ufr $ufr): self
     {
         if ($this->ufrs->contains($ufr)) {
@@ -124,9 +115,6 @@ class Site extends BaseEntity
         return $this->salles;
     }
 
-    /**
-     * @return Site
-     */
     public function addSalle(Salle $salle): self
     {
         if (!$this->salles->contains($salle)) {
@@ -137,9 +125,6 @@ class Site extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return Site
-     */
     public function removeSalle(Salle $salle): self
     {
         if ($this->salles->contains($salle)) {

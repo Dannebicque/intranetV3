@@ -124,7 +124,8 @@
                                     {% for matiere in sc.matieres %}
                                         {% if matiere.nbNotes > 0 and matiere.suspendu == false %}
                                             <td>
-                                                {% if sc.matiere(etudiant.id, matiere.id) != null %}
+                                                {% if sc.matiere(etudiant.id, matiere.id) != null %}{# todo:
+                                    devrait être TypeIdMatiere ? #}
                                                     {% if sc.matiere(etudiant.id, matiere.id).pasoption is defined %}
                                                         N.C.
                                                     {% else %}

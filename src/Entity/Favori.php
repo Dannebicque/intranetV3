@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Favori.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:49
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Entity;
@@ -66,9 +66,6 @@ class Favori
         return $this->etudiantDemandeur;
     }
 
-    /**
-     * @return Favori
-     */
     public function setEtudiantDemandeur(?Etudiant $etudiantDemandeur): self
     {
         $this->etudiantDemandeur = $etudiantDemandeur;
@@ -81,9 +78,6 @@ class Favori
         return $this->etudiantDemande;
     }
 
-    /**
-     * @return Favori
-     */
     public function setEtudiantDemande(?Etudiant $etudiantDemande): self
     {
         $this->etudiantDemande = $etudiantDemande;
@@ -96,9 +90,6 @@ class Favori
         return $this->dateAjout;
     }
 
-    /**
-     * @return Favori
-     */
     public function setDateAjout(DateTimeInterface $dateAjout): self
     {
         $this->dateAjout = $dateAjout;

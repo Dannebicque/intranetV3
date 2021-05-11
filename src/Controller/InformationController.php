@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/InformationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Controller;
@@ -40,7 +40,6 @@ class InformationController extends BaseController
     /**
      * @Route("/categorie/{categorie}/{page}", name="information_categorie", options={"expose":true})
      *
-     * @param     $categorie
      * @param int $page
      */
     public function categorie(

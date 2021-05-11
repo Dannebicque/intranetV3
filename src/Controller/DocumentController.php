@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/DocumentController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Controller;
@@ -60,7 +60,6 @@ class DocumentController extends BaseController
     }
 
     /**
-     * @param $typedocument
      *
      * @Route("/ajax/document/{typedocument}", name="document_ajax", options={"expose": true})
      */

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/ApcRessourceRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/04/2021 19:01
+ * @lastUpdate 07/05/2021 17:06
  */
 
 namespace App\Repository;
@@ -39,7 +39,7 @@ class ApcRessourceRepository extends ServiceEntityRepository
             ->where('a.diplome = :diplome')
             //->andWhere('s.ppn_actif = m.ppn')
             ->setParameter('diplome', $diplome->getId())
-            ->orderBy('r.codeRessource', 'ASC')
+            ->orderBy('r.codeMatiere', 'ASC')
             ->addOrderBy('r.libelle', 'ASC')
             ->getQuery()
             ->getResult();
@@ -51,7 +51,7 @@ class ApcRessourceRepository extends ServiceEntityRepository
             ->where('r.semestre = :semestre')
             //->andWhere('s.ppn_actif = m.ppn')
             ->setParameter('semestre', $semestre->getId())
-            ->orderBy('r.codeRessource', 'ASC')
+            ->orderBy('r.codeMatiere', 'ASC')
             ->addOrderBy('r.libelle', 'ASC')
             ->getQuery()
             ->getResult();
@@ -78,7 +78,7 @@ class ApcRessourceRepository extends ServiceEntityRepository
             ->where('d.departement = :departement')
             //->andWhere('s.ppn_actif = m.ppn')
             ->setParameter('departement', $departement->getId())
-            ->orderBy('r.codeRessource', 'ASC')
+            ->orderBy('r.codeMatiere', 'ASC')
             ->addOrderBy('r.libelle', 'ASC')
             ->getQuery()
             ->getResult();

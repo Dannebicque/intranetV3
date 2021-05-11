@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/DiplomeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:08
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Repository;
@@ -41,9 +41,6 @@ class DiplomeRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    /**
-     * @param $departement
-     */
     public function findByDepartement(Departement $departement)
     {
         return $this->findByDepartementBuilder($departement->getId())
@@ -51,9 +48,6 @@ class DiplomeRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    /**
-     * @param $departement
-     */
     public function findByDepartementBuilder($departement): QueryBuilder
     {
         return $this->createQueryBuilder('d')

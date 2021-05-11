@@ -4,11 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/SousCommission/SousCommissionExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/04/2021 12:09
- */
-
-/*
- * Pull your hearder here, for exemple, Licence header.
+ * @lastUpdate 11/05/2021 08:46
  */
 
 namespace App\Classes\SousCommission;
@@ -16,6 +12,7 @@ namespace App\Classes\SousCommission;
 use App\Classes\Apogee\ApogeeSousCommission;
 use App\Classes\Excel\MyExcelRead;
 use App\Classes\Excel\MyExcelWriter;
+use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\MyUpload;
 use App\DTO\SousCommissionTravail;
 use App\Entity\AnneeUniversitaire;
@@ -23,12 +20,12 @@ use App\Entity\Constantes;
 use App\Entity\ScolaritePromo;
 use App\Entity\Semestre;
 use App\Entity\Ue;
-use App\Repository\MatiereRepository;
 use DateTime;
 use PhpOffice\PhpSpreadsheet\Exception;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\HttpKernel\KernelInterface;
+use function array_key_exists;
 
 class SousCommissionExport
 {
@@ -38,7 +35,7 @@ class SousCommissionExport
     private MyUpload $myUpload;
     private ApogeeSousCommission $apogeeSousCommission;
     private string $dir;
-    private MatiereRepository $matiereRepository;
+    private TypeMatiereManager $typeMatiereManager;
 
     /**
      * SousCommissionExport constructor.
@@ -49,7 +46,7 @@ class SousCommissionExport
         ApogeeSousCommission $apogeeSousCommission,
         MyExcelWriter $myExcelWriter,
         MyExcelRead $myExcelRead,
-        MatiereRepository $matiereRepository,
+        TypeMatiereManager $typeMatiereManager,
         MyUpload $myUpload
     ) {
         $this->sousCommission = $sousCommission;
@@ -57,7 +54,7 @@ class SousCommissionExport
         $this->myExcelRead = $myExcelRead;
         $this->myUpload = $myUpload;
         $this->apogeeSousCommission = $apogeeSousCommission;
-        $this->matiereRepository = $matiereRepository;
+        $this->typeMatiereManager = $typeMatiereManager;
         $this->dir = $kernel->getProjectDir() . '/public/upload/temp/';
     }
 
@@ -72,13 +69,13 @@ class SousCommissionExport
         $this->myExcelWriter->setHeader();
 
         $tCouleur = [
-            'badge label-cool'     => 'ffa9a9a9',
-            'badge badge-danger'   => 'ffff0000',
-            'badge badge-warning'  => 'ffffcc00',
-            'notenormale'          => 'ffffffff',
-            'pasdenote'            => 'ffbbbbbb',
+            'badge label-cool' => 'ffa9a9a9',
+            'badge badge-danger' => 'ffff0000',
+            'badge badge-warning' => 'ffffcc00',
+            'notenormale' => 'ffffffff',
+            'pasdenote' => 'ffbbbbbb',
             Constantes::PAS_OPTION => 'ff000000',
-            ''                     => 'ffffff',
+            '' => 'ffffff',
         ];
 
         $ues = $this->sousCommission->getUes();
@@ -105,9 +102,9 @@ class SousCommissionExport
         $colonne = 9;
 
         foreach ($this->sousCommission->getMatieres() as $matiere) {
-            if (!$matiere->isSuspendu() && $matiere->getNbnotes() > 0) {
-                $this->myExcelWriter->writeCellXY($colonne, $ligne, $matiere->getCodeMatiere());
-                $this->myExcelWriter->writeCellXY($colonne, $ligne + 1, $matiere->getCoefficient());
+            if (!$matiere->isSuspendu() && $matiere->nbNotes > 0) {
+                $this->myExcelWriter->writeCellXY($colonne, $ligne, $matiere->codeMatiere);
+                $this->myExcelWriter->writeCellXY($colonne, $ligne + 1, $matiere->coefficient);
                 ++$colonne;
             }
         }
@@ -193,10 +190,10 @@ class SousCommissionExport
             ++$colonne;
 
             foreach ($matieres as $matiere) {
-                if ($matiere->getNbnotes() > 0 && false === $matiere->isSuspendu()) {
-                    if (\array_key_exists($matiere->getId(), $sousCommissionEtudiant->moyenneMatieres)) {
-                        $moyenneMatiere = $sousCommissionEtudiant->moyenneMatieres[$matiere->getId()];
-                        if (true === $matiere->isPac()) {
+                if ($matiere->nbNotes > 0 && false === $matiere->isSuspendu()) {
+                    if (array_key_exists($matiere->id, $sousCommissionEtudiant->moyenneMatieres)) {
+                        $moyenneMatiere = $sousCommissionEtudiant->moyenneMatieres[$matiere->id];
+                        if (true === $matiere->pac) {
                             if ($moyenneMatiere->getMoyenne() > 0) {
                                 if (true === $semestre->isOptPenaliteAbsence()) {
                                     $this->myExcelWriter->writeCellXY($colonne, $ligne,
@@ -288,7 +285,7 @@ class SousCommissionExport
             foreach ($this->sousCommission->getSemestresScolarite() as $s) {
                 foreach ($s->getUes() as $ue) {
                     if (isset($sousCommissionEtudiant->getScolarite()[$s->getOrdreLmd()]) &&
-                        \array_key_exists($ue->getNumeroUe(),
+                        array_key_exists($ue->getNumeroUe(),
                             $sousCommissionEtudiant->getScolarite()[$s->getOrdreLmd()]->parcoursUe)
                     ) {
                         $this->myExcelWriter->writeCellXY($colonne, $ligne,
@@ -335,19 +332,21 @@ class SousCommissionExport
             },
             200,
             [
-                'Content-Type'        => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                 'Content-Disposition' => 'attachment;filename="Sous Commission ' . $semestre->getLibelle() . '.xlsx"',
             ]
         );
     }
 
-    public function exportGrandJury(ScolaritePromo $scolaritePromo, AnneeUniversitaire $anneeUniversitaire)
-    {
+    public function exportGrandJury(
+        ScolaritePromo $scolaritePromo,
+        AnneeUniversitaire $anneeUniversitaire
+    ): StreamedResponse {
         $semestre = $scolaritePromo->getSemestre();
         if (null !== $semestre) {
             $ues = $semestre->getUes();
             $etudiants = $semestre->getEtudiants();
-            $matieres = $this->matiereRepository->findBySemestre($semestre);
+            $matieres = $this->typeMatiereManager->findBySemestre($semestre);
 
             $ssCommTravail = new SousCommissionTravail($semestre, $anneeUniversitaire,
                 $ues->getValues(), $matieres, $etudiants->getValues(), $scolaritePromo);
@@ -443,7 +442,7 @@ class SousCommissionExport
 
                     foreach ($matieres as $m) {
                         if (null !== $ssCommTravail->matiere($etu->getId(), $m->getId())) {
-                            if (\array_key_exists('pasoption', $ssCommTravail->matiere($etu->getId(), $m->getId()))) {
+                            if (array_key_exists('pasoption', $ssCommTravail->matiere($etu->getId(), $m->getId()))) {
                                 $this->myExcelWriter->writeCellXY($colonne, $ligne, 'N.C.');
                             } else {
                                 $this->myExcelWriter->writeCellXY($colonne, $ligne,
@@ -510,7 +509,7 @@ class SousCommissionExport
                 },
                 200,
                 [
-                    'Content-Type'        => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                    'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                     'Content-Disposition' => 'attachment;filename="Export Grand Jury ' . $semestre->getLibelle() . '.xlsx"',
                 ]
             );
@@ -542,10 +541,10 @@ class SousCommissionExport
 
         $etudiants = $semestre->getEtudiants();
         $ues = $semestre->getUes();
-        $matieres = $this->matiereRepository->findBySemestre($semestre);
+        $matieres = $this->typeMatiereManager->findBySemestre($semestre);
         $matApogee = [];
         foreach ($matieres as $matiere) {
-            $matApogee[$matiere->getCodeElement()] = $matiere->getId();
+            $matApogee[$matiere->codeElement] = $matiere->id;
         }
         $etuApogee = [];
         foreach ($etudiants as $etudiant) {
@@ -559,11 +558,11 @@ class SousCommissionExport
 
             foreach ($tEtudiant as $keyTe => $valueTe) {
                 foreach ($tModule as $keyTm => $valueTm) {
-                    if (\array_key_exists($valueTe, $etuApogee) &&
-                        \array_key_exists($valueTm, $matApogee)
+                    if (array_key_exists($valueTe, $etuApogee) &&
+                        array_key_exists($valueTm, $matApogee)
                     ) {
                         if (null !== $ssCommTravail->matiere($etuApogee[$valueTe],
-                                $matApogee[$valueTm]) && \array_key_exists('moyenne',
+                                $matApogee[$valueTm]) && array_key_exists('moyenne',
                                 $ssCommTravail->matiere($etuApogee[$valueTe], $matApogee[$valueTm]))) {
                             $moyenne = $ssCommTravail->matiere($etuApogee[$valueTe], $matApogee[$valueTm])['moyenne'];
                             $this->myExcelRead->writeCellColLigne($keyTm, $keyTe,

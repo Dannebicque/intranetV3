@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/MoyenneUe.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:41
+ * @lastUpdate 09/05/2021 15:38
  */
 
 namespace App\DTO;
@@ -23,7 +23,6 @@ class MoyenneUe
     /**
      * MoyenneUe constructor.
      *
-     * @param $penalite
      */
     public function __construct(Ue $ue, $penalite)
     {
@@ -33,10 +32,10 @@ class MoyenneUe
 
     public function addMatiere(MoyenneMatiere $moyenneMatiere)
     {
-        if ($moyenneMatiere->optionFaite && false === $moyenneMatiere->matiere->isPac()) {
-            $this->totalMatiere += $moyenneMatiere->getMoyenne() * $moyenneMatiere->matiere->getCoefficient();
-            $this->totalMatierePenalisee += $moyenneMatiere->getMoyennePenalisee() * $moyenneMatiere->matiere->getCoefficient();
-            $this->totalCoefficient += $moyenneMatiere->matiere->getCoefficient();
+        if ($moyenneMatiere->optionFaite && false === $moyenneMatiere->matiere->pac) {
+            $this->totalMatiere += $moyenneMatiere->getMoyenne() * $moyenneMatiere->matiere->coefficient;
+            $this->totalMatierePenalisee += $moyenneMatiere->getMoyennePenalisee() * $moyenneMatiere->matiere->coefficient;
+            $this->totalCoefficient += $moyenneMatiere->matiere->coefficient;
         }
     }
 

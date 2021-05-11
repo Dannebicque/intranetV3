@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/TypeGroupeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/02/2021 11:06
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Repository;
@@ -34,9 +34,6 @@ class TypeGroupeRepository extends ServiceEntityRepository
         parent::__construct($registry, TypeGroupe::class);
     }
 
-    /**
-     * @param $semestre
-     */
     public function findBySemestreBuilder(Semestre $semestre): QueryBuilder
     {
         return $this->createQueryBuilder('t')

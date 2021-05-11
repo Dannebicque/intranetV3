@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/QuestionnaireQualite.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 11/05/2021 08:46
  */
 
 namespace App\Entity;
@@ -28,7 +28,8 @@ class QuestionnaireQualite extends Questionnaire
     private $semestre;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\QuestionnaireQuestionnaireSection", mappedBy="questionnaireQualite")
+     * @ORM\OneToMany(targetEntity="App\Entity\QuestionnaireQuestionnaireSection", mappedBy="questionnaireQualite",
+     *                                                                             cascade={"persist", "remove"})
      */
     private $sections;
 

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/PersonnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Controller\administration;
@@ -45,7 +45,6 @@ class PersonnelController extends BaseController
      * @Route("/ajax/load-liste/{type}", name="administration_personnel_load_liste", options={"expose"=true},
      *                                   requirements={"type": "permanent|vacataire"})
      *
-     * @param $type
      */
     public function loadListe(PersonnelDepartementRepository $personnelRepository, $type): Response
     {
@@ -62,8 +61,6 @@ class PersonnelController extends BaseController
      * @Route("/export_{type}.{_format}", name="administration_personnel_export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"}, options={"expose":true})
      *
-     * @param $type
-     * @param $_format
      */
     public function export(MyExport $myExport, PersonnelRepository $personnelRepository, $type, $_format): Response
     {

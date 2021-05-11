@@ -34,7 +34,7 @@
                 </thead>
                 <tbody>
                 {% for questionnaire in  semestre.qualiteQuestionnaires %}
-                    <tr>
+                    <tr id="ligne_{{ questionnaire.id }}">
                         <td>{{ questionnaire.libelle }}</td>
                         <td>du {{ questionnaire.dateOuverture|format_datetime('long', 'short') }} au {{ questionnaire
                             .dateFermeture|format_datetime('long', 'short') }}</td>

@@ -4,14 +4,16 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/composants/NoteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 11/05/2021 08:46
  */
 
 namespace App\Controller\composants;
 
+use App\Classes\Matieres\TypeMatiereManager;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Evaluation;
+use App\Exception\MatiereNotFoundException;
 use App\Form\EvaluationType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,25 +29,34 @@ use Symfony\Component\Routing\Annotation\Route;
 class NoteController extends BaseController
 {
     /**
-     * @param $autorise
-     * @param $source
      *
      * @Route("/edit-form-evaluation/{evaluation}/{autorise}/{source}", name="composant_edit_form_evaluation")
      */
-    public function editFormEvaluation(Request $request, Evaluation $evaluation, $autorise, $source): Response
-    {
+    public function editFormEvaluation(
+        TypeMatiereManager $typeMatiereManager,
+        Request $request,
+        Evaluation $evaluation,
+        $autorise,
+        $source
+    ): Response {
+        $matiere = $typeMatiereManager->getMatiere($evaluation->getIdMatiere(), $evaluation->getTypeMatiere());
+
+        if (null === $matiere) {
+            throw new MatiereNotFoundException();
+        }
+
         $form = $this->createForm(
             EvaluationType::class,
             $evaluation,
             [
-                'action'          => $this->generateUrl('composant_edit_form_evaluation',
+                'action' => $this->generateUrl('composant_edit_form_evaluation',
                     ['evaluation' => $evaluation->getId(), 'source' => $source, 'autorise' => $autorise]),
-                'departement'     => $this->dataUserSession->getDepartement(),
-                'semestre'        => $evaluation->getSemestre(),
+                'departement' => $this->dataUserSession->getDepartement(),
+                'semestre' => $matiere->semestre,
                 'matiereDisabled' => !('app' === $source),
-                'autorise'        => $autorise,
-                'locale'          => $request->getLocale(),
-                'attr'            => [
+                'autorise' => $autorise,
+                'locale' => $request->getLocale(),
+                'attr' => [
                     'data-provide' => 'validation',
                 ],
             ]
@@ -66,9 +77,9 @@ class NoteController extends BaseController
 
         return $this->render('composants/_edit_eval.html.twig', [
             'evaluation' => $evaluation,
-            'form'       => $form->createView(),
-            'autorise'   => $autorise,
-            'source'     => $source,
+            'form' => $form->createView(),
+            'autorise' => $autorise,
+            'source' => $source,
         ]);
     }
 }

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EtudiantSemestreController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Controller\administration;
@@ -115,7 +115,6 @@ class EtudiantSemestreController extends BaseController
      *     "_format"="csv|xlsx|pdf"
      * })
      *
-     * @param $_format
      */
     public function exportAllAbsences(
         MyExport $myExport,

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/ApcSaeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/04/2021 10:08
+ * @lastUpdate 07/05/2021 17:06
  */
 
 namespace App\Repository;
@@ -39,7 +39,7 @@ class ApcSaeRepository extends ServiceEntityRepository
             //->andWhere('s.ppn_actif = m.ppn')
             ->setParameter('diplome', $diplome->getId())
             ->orderBy('s.ordreLmd', 'ASC')
-            ->addOrderBy('r.codeSae', 'ASC')
+            ->addOrderBy('r.codeMatiere', 'ASC')
             ->addOrderBy('r.libelle', 'ASC')
             ->getQuery()
             ->getResult();
@@ -51,7 +51,7 @@ class ApcSaeRepository extends ServiceEntityRepository
             ->where('r.semestre = :semestre')
             //->andWhere('s.ppn_actif = m.ppn')
             ->setParameter('semestre', $semestre->getId())
-            ->orderBy('r.codeSae', 'ASC')
+            ->orderBy('r.codeMatiere', 'ASC')
             ->addOrderBy('r.libelle', 'ASC')
             ->getQuery()
             ->getResult();
@@ -78,7 +78,7 @@ class ApcSaeRepository extends ServiceEntityRepository
             ->where('d.departement = :departement')
             //->andWhere('s.ppn_actif = m.ppn')
             ->setParameter('departement', $departement->getId())
-            ->orderBy('r.codeSae', 'ASC')
+            ->orderBy('r.codeMatiere', 'ASC')
             ->addOrderBy('r.libelle', 'ASC')
             ->getQuery()
             ->getResult();

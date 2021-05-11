@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Excel/MyExcelWriter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 09/05/2021 14:41
  */
 
 /*
@@ -172,10 +172,6 @@ class MyExcelWriter
         }
     }
 
-    /**
-     * @param $adresse
-     * @param $value
-     */
     public function writeCellName($adresse, $value, array $options = []): void
     {
         $this->sheet->setCellValue($adresse, $value);
@@ -301,12 +297,6 @@ class MyExcelWriter
         $this->sheet->mergeCells($cells);
     }
 
-    /**
-     * @param $col1
-     * @param $lig1
-     * @param $col2
-     * @param $lig2
-     */
     public function borderBottomCellsRange($col1, $lig1, $col2, $lig2, array $array)
     {
         $color = $array['color'];

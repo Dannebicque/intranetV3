@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/SemestreRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Repository;
@@ -33,9 +33,6 @@ class SemestreRepository extends ServiceEntityRepository
         parent::__construct($registry, Semestre::class);
     }
 
-    /**
-     * @param $departement
-     */
     public function findByDepartementBuilder($departement): QueryBuilder
     {
         return $this->createQueryBuilder('s')
@@ -47,9 +44,6 @@ class SemestreRepository extends ServiceEntityRepository
             ->addOrderBy('s.libelle', 'ASC');
     }
 
-    /**
-     * @param $departement
-     */
     public function findByDepartementActif($departement)
     {
         return $this->createQueryBuilder('s')
@@ -62,9 +56,6 @@ class SemestreRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    /**
-     * @param $diplome
-     */
     public function findByDiplomeBuilder($diplome): QueryBuilder
     {
         return $this->createQueryBuilder('s')
@@ -74,9 +65,6 @@ class SemestreRepository extends ServiceEntityRepository
             ->orderBy('s.ordreLmd', 'ASC');
     }
 
-    /**
-     * @param $diplome
-     */
     public function findByDiplome($diplome)
     {
         return $this->findByDiplomeBuilder($diplome)->getQuery()->getResult();

@@ -4,13 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ExportController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 08/05/2021 08:58
  */
 
 namespace App\Controller;
 
+use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\MyExportListing;
-use App\Repository\MatiereRepository;
 use PhpOffice\PhpSpreadsheet\Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,18 +30,19 @@ class ExportController extends AbstractController
     /**
      * @Route("/listing", name="export_listing")
      *
-     * @return bool|StreamedResponse|null
+     * @return StreamedResponse|null
+     *
      * @throws RuntimeError
      * @throws SyntaxError
      * @throws Exception
-     *
      * @throws LoaderError
      */
-    public function listing(MatiereRepository $matiereRepository, MyExportListing $myExport, Request $request)
+    public function listing(TypeMatiereManager $typeMatiereManager, MyExportListing $myExport, Request $request)
     {
         $matiere = $request->request->get('matiere');
+        $typeMatiere = $request->request->get('typeMatiere');
         if (0 !== $matiere) {
-            $matiere = $matiereRepository->find($matiere);
+            $mat = $typeMatiereManager->getMatiere($matiere, $typeMatiere);
         }
 
         $exportTypeDocument = $request->request->get('exportTypeDocument');
@@ -49,7 +50,7 @@ class ExportController extends AbstractController
         $exportFormat = $request->request->get('exportFormat');
         $exportFiltre = $request->request->get('exportFiltre');
 
-        return $myExport->genereFichier($exportTypeDocument, $exportFormat, $exportChamps, $exportFiltre, $matiere,
+        return $myExport->genereFichier($exportTypeDocument, $exportFormat, $exportChamps, $exportFiltre, $mat,
             $this->getUser());
     }
 }

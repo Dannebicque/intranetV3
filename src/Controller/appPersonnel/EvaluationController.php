@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/EvaluationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Controller\appPersonnel;
@@ -52,7 +52,6 @@ class EvaluationController extends BaseController
      *                                    requirements={"evaluation"="\d+"})
      * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
      *
-     * @param $etat
      */
     public function evaluationVisible(MyEvaluation $myEvaluation, Evaluation $evaluation, $etat): Response
     {
@@ -91,8 +90,6 @@ class EvaluationController extends BaseController
      *                                    requirements={"evaluation"="\d+","_format"="csv|xlsx|pdf"})
      * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
      *
-     * @param $type
-     * @param $_format
      *
      * @return Response|StreamedResponse|null
      * @throws SyntaxError

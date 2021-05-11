@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Ue.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/04/2021 08:55
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Entity;
@@ -25,59 +25,58 @@ class Ue extends BaseEntity
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $libelle;
+    private string $libelle;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $numeroUe = 1;
+    private int $numeroUe = 1;
 
     /**
      * @var float
      *
      * @ORM\Column(type="float")
      */
-    private $coefficient = 1;
+    private float $coefficient = 1;
 
     /**
      * @var float
      *
      * @ORM\Column(type="float")
      */
-    private $nbEcts = 1;
+    private float $nbEcts = 1;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Matiere", mappedBy="ue")
-     * @ORM\OrderBy({"codeMatiere"="ASC"})
      */
-    private $matieres;
+    private Collection $matieres;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Semestre", inversedBy="ues")
      */
-    private $semestre;
+    private ?Semestre $semestre;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $actif = true;
+    private bool $actif = true;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $bonification = false;
+    private bool $bonification = false;
 
     /**
      * @ORM\Column(type="string", length=15)
      */
-    private $codeElement;
+    private string $codeElement;
 
     /**
      * @ORM\ManyToOne(targetEntity=ApcCompetence::class, inversedBy="ue")
      */
-    private $apcCompetence;
+    private ?ApcCompetence $apcCompetence;
 
     /**
      * Ue constructor.
@@ -148,9 +147,6 @@ class Ue extends BaseEntity
         return $this->matieres;
     }
 
-    /**
-     * @return Ue
-     */
     public function addMatiere(Matiere $matiere): self
     {
         if (!$this->matieres->contains($matiere)) {
@@ -161,9 +157,6 @@ class Ue extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return Ue
-     */
     public function removeMatiere(Matiere $matiere): self
     {
         if ($this->matieres->contains($matiere)) {
@@ -182,9 +175,6 @@ class Ue extends BaseEntity
         return $this->semestre;
     }
 
-    /**
-     * @return Ue
-     */
     public function setSemestre(?Semestre $semestre): self
     {
         $this->semestre = $semestre;

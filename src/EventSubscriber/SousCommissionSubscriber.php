@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/SousCommissionSubscriber.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\EventSubscriber;
@@ -56,9 +56,6 @@ class SousCommissionSubscriber implements EventSubscriberInterface
         $this->entityManager->flush();
     }
 
-    /**
-     * @param $codeEvent
-     */
     private function addNotification(Scolarite $scolarite, $codeEvent): void
     {
         $notif = new Notification();
@@ -73,7 +70,6 @@ class SousCommissionSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param $codeEvent
      *
      * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
      */

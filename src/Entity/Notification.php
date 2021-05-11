@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Notification.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Entity;
@@ -118,9 +118,6 @@ class Notification extends BaseEntity
         return $this->etudiant;
     }
 
-    /**
-     * @return Notification
-     */
     public function setEtudiant(?Etudiant $etudiant): self
     {
         $this->etudiant = $etudiant;
@@ -133,9 +130,6 @@ class Notification extends BaseEntity
         return $this->type;
     }
 
-    /**
-     * @return Notification
-     */
     public function setType(string $type): self
     {
         $this->type = $type;
@@ -148,9 +142,6 @@ class Notification extends BaseEntity
         return $this->url;
     }
 
-    /**
-     * @return Notification
-     */
     public function setUrl(string $url): self
     {
         $this->url = $url;
@@ -163,9 +154,6 @@ class Notification extends BaseEntity
         return $this->lu;
     }
 
-    /**
-     * @return Notification
-     */
     public function setLu(bool $lu): self
     {
         $this->lu = $lu;
@@ -178,9 +166,6 @@ class Notification extends BaseEntity
         return $this->typeUser;
     }
 
-    /**
-     * @return Notification
-     */
     public function setTypeUser(string $typeUser): self
     {
         $this->typeUser = $typeUser;
@@ -193,9 +178,6 @@ class Notification extends BaseEntity
         return $this->personnel;
     }
 
-    /**
-     * @return Notification
-     */
     public function setPersonnel(?Personnel $personnel): self
     {
         $this->personnel = $personnel;

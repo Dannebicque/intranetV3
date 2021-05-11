@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/TypeHrs.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Entity;
@@ -64,9 +64,6 @@ class TypeHrs extends BaseEntity
         return $this->libelle;
     }
 
-    /**
-     * @return TypeHrs
-     */
     public function setLibelle(string $libelle): self
     {
         $this->libelle = $libelle;
@@ -82,9 +79,6 @@ class TypeHrs extends BaseEntity
         return $this->hrs;
     }
 
-    /**
-     * @return TypeHrs
-     */
     public function addHr(Hrs $hr): self
     {
         if (!$this->hrs->contains($hr)) {
@@ -95,9 +89,6 @@ class TypeHrs extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return TypeHrs
-     */
     public function removeHr(Hrs $hr): self
     {
         if ($this->hrs->contains($hr)) {
@@ -116,9 +107,6 @@ class TypeHrs extends BaseEntity
         return $this->incluService;
     }
 
-    /**
-     * @return TypeHrs
-     */
     public function setIncluService(bool $incluService): self
     {
         $this->incluService = $incluService;
@@ -131,9 +119,6 @@ class TypeHrs extends BaseEntity
         return $this->maximum;
     }
 
-    /**
-     * @return TypeHrs
-     */
     public function setMaximum(float $maximum): self
     {
         $this->maximum = $maximum;

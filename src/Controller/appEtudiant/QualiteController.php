@@ -4,15 +4,15 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appEtudiant/QualiteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 11/05/2021 08:46
  */
 
 namespace App\Controller\appEtudiant;
 
 use App\Classes\Mail\MailerFromTwig;
+use App\Classes\Previsionnel\PrevisionnelManager;
 use App\Controller\BaseController;
 use App\Entity\QuestionnaireQualite;
-use App\Repository\PrevisionnelRepository;
 use App\Repository\QuestionnaireEtudiantRepository;
 use App\Repository\QuestionnaireQualiteRepository;
 use DateTime;
@@ -40,7 +40,7 @@ class QualiteController extends BaseController
             $reponsesEtudiant = $questionnaireEtudiantRepository->findByEtudiantArray($this->getConnectedUser());
 
             return $this->render('appEtudiant/qualite/index.html.twig', [
-                'questionnaires'   => $questionnaires,
+                'questionnaires' => $questionnaires,
                 'reponsesEtudiant' => $reponsesEtudiant,
             ]);
         }
@@ -61,7 +61,7 @@ class QualiteController extends BaseController
     ): Response {
         $quizzEtudiant = $quizzEtudiantRepository->findOneBy([
             'questionnaireQualite' => $qualiteQuestionnaire->getId(),
-            'etudiant'             => $this->getConnectedUser()->getId(),
+            'etudiant' => $this->getConnectedUser()->getId(),
         ]);
         if (null !== $quizzEtudiant) {
             $quizzEtudiant->setDateTermine(new DateTime('now'));
@@ -92,16 +92,16 @@ class QualiteController extends BaseController
      * @Route("/{questionnaire}", name="app_etudiant_qualite_questionnaire")
      */
     public function questionnaire(
-        PrevisionnelRepository $previsionnelRepository,
+        PrevisionnelManager $previsionnelManager,
         QuestionnaireQualite $questionnaire
     ): Response {
         return $this->render('appEtudiant/qualite/questionnaire.html.twig', [
             'questionnaireSections' => $questionnaire->getSections(),
-            'questionnaire'         => $questionnaire,
-            'etudiant'              => $this->getConnectedUser(),
-            'typeQuestionnaire'     => 'qualite',
-            'tPrevisionnel'         => $previsionnelRepository->findByDiplomeArray($this->dataUserSession->getUser()->getDiplome(),
-                $this->dataUserSession->getAnneeUniversitaire()),
+            'questionnaire' => $questionnaire,
+            'etudiant' => $this->getConnectedUser(),
+            'typeQuestionnaire' => 'qualite',
+            'tPrevisionnel' => $previsionnelManager->getPrevisionnelAnneeArray($this->dataUserSession->getUser()->getSemestre()->getAnnee(),
+                $this->dataUserSession->getAnneeUniversitaire()->getAnnee()),
         ]);
     }
 }

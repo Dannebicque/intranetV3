@@ -4,12 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Apogee/ApogeeEtudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/04/2021 12:09
+ * @lastUpdate 02/05/2021 19:35
  */
 
 namespace App\Classes\Apogee;
 
-use App\Classes\Tools;
+use App\Utils\Tools;
 use App\Entity\Annee;
 
 class ApogeeEtudiant extends Apogee

@@ -15,7 +15,7 @@
                 {% for matiere in matieres %}
                     <tr>
                         <td>{{ matiere.display }}</td>
-                        <td class="hide">{{ matiere.ue ? matiere.ue.display : 'non.defini'|trans }}</td>
+                        <td class="hide">{{ matiere.ue_id != 0 ? matiere.ue_display : 'non.defini'|trans }}</td>
                         <td>{{ matiere.nbNotes }}</td>
                         <td>{{ matiere.coefficient }}</td>
                     </tr>

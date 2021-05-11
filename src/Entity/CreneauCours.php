@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/CreneauCours.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:49
+ * @lastUpdate 05/05/2021 17:55
  */
 
 namespace App\Entity;
@@ -56,15 +56,9 @@ class CreneauCours
      */
     private $creneauBloques;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\IndisponibilitePersonnel", mappedBy="creneau")
-     */
-    private $indisponibilitePersonnels;
-
     public function __construct()
     {
         $this->creneauBloques = new ArrayCollection();
-        $this->indisponibilitePersonnels = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -157,37 +151,6 @@ class CreneauCours
             // set the owning side to null (unless already changed)
             if ($creneauBloque->getCreneau() === $this) {
                 $creneauBloque->setCreneau(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|IndisponibilitePersonnel[]
-     */
-    public function getIndisponibilitePersonnels(): Collection
-    {
-        return $this->indisponibilitePersonnels;
-    }
-
-    public function addIndisponibilitePersonnel(IndisponibilitePersonnel $indisponibilitePersonnel): self
-    {
-        if (!$this->indisponibilitePersonnels->contains($indisponibilitePersonnel)) {
-            $this->indisponibilitePersonnels[] = $indisponibilitePersonnel;
-            $indisponibilitePersonnel->setCreneau($this);
-        }
-
-        return $this;
-    }
-
-    public function removeIndisponibilitePersonnel(IndisponibilitePersonnel $indisponibilitePersonnel): self
-    {
-        if ($this->indisponibilitePersonnels->contains($indisponibilitePersonnel)) {
-            $this->indisponibilitePersonnels->removeElement($indisponibilitePersonnel);
-            // set the owning side to null (unless already changed)
-            if ($indisponibilitePersonnel->getCreneau() === $this) {
-                $indisponibilitePersonnel->setCreneau(null);
             }
         }
 

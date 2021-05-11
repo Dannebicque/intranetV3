@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Groupe.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/02/2021 20:35
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Entity;
@@ -83,9 +83,6 @@ class Groupe extends BaseEntity
         return $this->libelle;
     }
 
-    /**
-     * @return Groupe
-     */
     public function setLibelle(string $libelle): self
     {
         $this->libelle = $libelle;
@@ -98,9 +95,6 @@ class Groupe extends BaseEntity
         return $this->typeGroupe;
     }
 
-    /**
-     * @return Groupe
-     */
     public function setTypeGroupe(?TypeGroupe $typeGroupe): self
     {
         $this->typeGroupe = $typeGroupe;
@@ -113,9 +107,6 @@ class Groupe extends BaseEntity
         return $this->codeApogee;
     }
 
-    /**
-     * @return Groupe
-     */
     public function setCodeApogee(string $codeApogee): self
     {
         $this->codeApogee = $codeApogee;
@@ -131,9 +122,6 @@ class Groupe extends BaseEntity
         return $this->etudiants;
     }
 
-    /**
-     * @return Groupe
-     */
     public function addEtudiant(Etudiant $etudiant): self
     {
         if (!$this->etudiants->contains($etudiant)) {
@@ -144,9 +132,6 @@ class Groupe extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return Groupe
-     */
     public function removeEtudiant(Etudiant $etudiant): self
     {
         if ($this->etudiants->contains($etudiant)) {
@@ -170,9 +155,6 @@ class Groupe extends BaseEntity
         return $this->parent;
     }
 
-    /**
-     * @return Groupe
-     */
     public function setParent(self $parent): self
     {
         $this->parent = $parent;
@@ -180,9 +162,6 @@ class Groupe extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return Groupe
-     */
     public function addGroupe(self $groupe): self
     {
         if (!$this->enfants->contains($groupe)) {
@@ -193,9 +172,6 @@ class Groupe extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return Groupe
-     */
     public function removeGroupe(self $groupe): self
     {
         if ($this->enfants->contains($groupe)) {

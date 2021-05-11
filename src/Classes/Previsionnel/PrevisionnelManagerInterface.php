@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Previsionnel/PrevisionnelManagerInterface.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/05/2021 18:44
+ * @lastUpdate 11/05/2021 08:46
  */
 
 namespace App\Classes\Previsionnel;
@@ -12,6 +12,7 @@ namespace App\Classes\Previsionnel;
 use App\DTO\PrevisionnelCollection;
 use App\Entity\Departement;
 use App\Entity\Personnel;
+use App\Entity\Semestre;
 
 interface PrevisionnelManagerInterface
 {
@@ -22,4 +23,8 @@ interface PrevisionnelManagerInterface
         Departement $departement,
         int $annee = 0
     ): PrevisionnelCollection;
+
+    public function findPrevisionnelMatiere($matiere, $anneePrevisionnel): PrevisionnelCollection;
+
+    public function getPrevisionnelSemestre(Semestre $semestre, $annee = 0): PrevisionnelCollection;
 }

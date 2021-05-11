@@ -4,27 +4,23 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/PrevisionnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/05/2021 18:44
+ * @lastUpdate 11/05/2021 08:46
  */
 
 namespace App\Controller\administration;
 
 use App\Classes\Hrs\HrsManager;
-use App\Classes\Matieres\MyMatiere;
-use App\Classes\Matieres\TypeMatiereHandler;
-use App\Classes\MyPrevisionnel;
+use App\Classes\Matieres\TypeMatiereManager;
+use App\Classes\Previsionnel\PrevisionnelImport;
 use App\Classes\Previsionnel\PrevisionnelManager;
 use App\Classes\Previsionnel\PrevisionnelSynthese;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
-use App\Entity\Matiere;
 use App\Entity\Personnel;
 use App\Entity\Previsionnel;
 use App\Entity\Semestre;
 use App\Form\ImportPrevisionnelType;
-use App\Repository\MatiereRepository;
 use App\Repository\PersonnelRepository;
-use App\Repository\PrevisionnelRepository;
 use Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -41,69 +37,71 @@ class PrevisionnelController extends BaseController
 {
     /**
      * @Route("/annee/{annee}", name="administration_previsionnel_index", options={"expose":true})
-     *
-     * @param int $annee
      */
-    public function index(MatiereRepository $matiereRepository, $annee = 0): Response
+    public function index(TypeMatiereManager $typeMatiereManager, int $annee = 0): Response
     {
         if (0 === $annee && null !== $this->dataUserSession->getDepartement()) {
             $annee = $this->dataUserSession->getDepartement()->getOptAnneePrevisionnel();
         }
 
         return $this->render('administration/previsionnel/index.html.twig', [
-            'matieres' => $matiereRepository->findByDepartement($this->dataUserSession->getDepartement()),
+            'matieres' => $typeMatiereManager->findByDepartement($this->dataUserSession->getDepartement()),
             'annee' => $annee,
         ]);
     }
 
     /**
-     * @Route("/matiere/{matiere}/{annee}", name="administration_previsionnel_matiere", options={"expose":true})
-     *
-     * @param int $annee
+     * @Route("/matiere/{matiere}/{type}/{annee}", name="administration_previsionnel_matiere", options={"expose":true})
      */
-    public function matiere(MyPrevisionnel $myPrevisionnel, Matiere $matiere, $annee = 0): Response
-    {
+    public function matiere(
+        PrevisionnelManager $previsionnelManager,
+        TypeMatiereManager $typeMatiereManager,
+        PrevisionnelSynthese $previsionnelSynthese,
+        int $matiere,
+        string $type,
+        int $annee = 0
+    ): Response {
         if (0 === $annee && null !== $this->dataUserSession->getDepartement()) {
             $annee = $this->dataUserSession->getDepartement()->getOptAnneePrevisionnel();
         }
-
-        $myPrevisionnel->getPrevisionnelMatiere($matiere, $annee);
+        $mat = $typeMatiereManager->getMatiere($matiere, $type);
+        $previsionnel = $previsionnelManager->getPrevisionnelMatiere($matiere, $type, $annee);
+        $synthese = $previsionnelSynthese->getSyntheseMatiere($previsionnel);
 
         return $this->render('administration/previsionnel/_matiere.html.twig', [
-            'previsionnel' => $myPrevisionnel,
+            'previsionnel' => $previsionnel,
+            'synthese' => $synthese,
             'annee' => $annee,
+            'matiere' => $mat,
         ]);
     }
 
     /**
      * @Route("/semestre/{semestre}/{annee}", name="administration_previsionnel_semestre", options={"expose":true})
-     *
-     * @param int $annee
      */
-    public function semestre(MyPrevisionnel $myPrevisionnel, Semestre $semestre, $annee = 0): Response
-    {
+    public function semestre(
+        PrevisionnelManager $previsionnelManager,
+        PrevisionnelSynthese $previsionnelSynthese,
+        Semestre $semestre,
+        int $annee = 0
+    ): Response {
         if (0 === $annee && null !== $this->dataUserSession->getDepartement()) {
             $annee = $this->dataUserSession->getDepartement()->getOptAnneePrevisionnel();
         }
 
-        $myPrevisionnel->getPrevisionnelSemestre($semestre, $annee);
+        $previsionnel = $previsionnelManager->getPrevisionnelSemestre($semestre, $annee);
+        $synthese = $previsionnelSynthese->getSyntheseSemestre($previsionnel);
 
         return $this->render('administration/previsionnel/_semestre.html.twig', [
-            'previsionnel' => $myPrevisionnel,
+            'previsionnel' => $previsionnel,
             'annee' => $annee,
+            'semestre' => $semestre,
+            'synthese' => $synthese,
         ]);
     }
 
     /**
      * @Route("/personnel/{personnel}/{annee}", name="administration_previsionnel_personnel", options={"expose":true})
-     *
-     * @param \App\Classes\Previsionnel\PrevisionnelManager  $previsionnelManager
-     * @param \App\Classes\Hrs\HrsManager                    $hrsManager
-     * @param \App\Classes\Previsionnel\PrevisionnelSynthese $previsionnelSynthese
-     * @param \App\Entity\Personnel                          $personnel
-     * @param int                                            $annee
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function personnel(
         PrevisionnelManager $previsionnelManager,
@@ -125,19 +123,22 @@ class PrevisionnelController extends BaseController
             'previsionnels' => $previsionnels,
             'personnel' => $personnel,
             'hrs' => $hrs,
-            'annee' => $annee
+            'annee' => $annee,
         ]);
     }
 
     /**
      * @Route("/ajax/edit/{id}", name="administration_previsionnel_ajax_edit", options={"expose":true})
      */
-    public function edit(MyPrevisionnel $myPrevisionnel, Request $request, Previsionnel $previsionnel): JsonResponse
-    {
+    public function edit(
+        PrevisionnelManager $previsionnelManager,
+        Request $request,
+        Previsionnel $previsionnel
+    ): JsonResponse {
         $name = $request->request->get('field');
         $value = $request->request->get('value');
 
-        $update = $myPrevisionnel->update($previsionnel, $name, $value);
+        $update = $previsionnelManager->update($previsionnel, $name, $value);
 
         return $update ? new JsonResponse('', Response::HTTP_OK) : new JsonResponse('erreur',
             Response::HTTP_INTERNAL_SERVER_ERROR);
@@ -149,15 +150,13 @@ class PrevisionnelController extends BaseController
      * @return RedirectResponse|Response
      */
     public function create(
-        MyMatiere $myMatiere,
         PersonnelRepository $personnelRepository,
-        TypeMatiereHandler $typeMatiereHandler,
+        TypeMatiereManager $typeMatiereManager,
         Request $request
     ) {
         //todo: faire une comparaison avec le prévisionnel max... et mettre des alertes.
         if ($request->isMethod('POST')) {
-            $matiereHandler = $typeMatiereHandler->typeDeMatiereFromSelect($request->request->get('previsionnel_matiere'));
-            $matiere = $matiereHandler->findFromSelect($request->request->get('previsionnel_matiere'));
+            $matiere = $typeMatiereManager->getMatiereFromSelect($request->request->get('previsionnel_matiere'));
 
             $annee = '' !== $request->request->get('previsionnel_annee_previsionnel') ? $request->request->get('previsionnel_annee_previsionnel') : $this->dataUserSession->getAnneePrevisionnel();
 
@@ -173,8 +172,8 @@ class PrevisionnelController extends BaseController
                         $previsionnel->setNbGrCm($request->request->get('gr_cm_' . $i));
                         $previsionnel->setNbGrTd($request->request->get('gr_td_' . $i));
                         $previsionnel->setNbGrTp($request->request->get('gr_tp_' . $i));
-                        $previsionnel->setIdMatiere($matiere->getId());
-                        $previsionnel->setTypeMatiere($matiere::SOURCE);
+                        $previsionnel->setIdMatiere($matiere->id);
+                        $previsionnel->setTypeMatiere($matiere->typeMatiere);
                         $this->entityManager->persist($previsionnel);
                     }
                 }
@@ -190,7 +189,7 @@ class PrevisionnelController extends BaseController
         }
 
         return $this->render('administration/previsionnel/new.html.twig', [
-            'matieres' => $myMatiere->getAllMatieres($this->dataUserSession->getDepartement()),
+            'matieres' => $typeMatiereManager->findByDepartement($this->dataUserSession->getDepartement()),
         ]);
     }
 
@@ -199,7 +198,7 @@ class PrevisionnelController extends BaseController
      *
      * @throws Exception
      */
-    public function import(MyPrevisionnel $myPrevisionnel, Request $request): Response
+    public function import(PrevisionnelImport $myPrevisionnel, Request $request): Response
     {
         $form = $this->createForm(
             ImportPrevisionnelType::class,
@@ -227,33 +226,13 @@ class PrevisionnelController extends BaseController
     /**
      * @Route("/dupliquer-annee-complete", name="administration_previsionnel_duplicate_annee", methods="POST")
      */
-    public function duplicateAnnee(PrevisionnelRepository $previsionnelRepository, Request $request): Response
+    public function duplicateAnnee(PrevisionnelManager $previsionnelManager, Request $request): Response
     {
         $anneeDepart = $request->request->get('annee_depart');
         $annee_destination = $request->request->get('annee_destination');
         $annee_concerver = $request->request->get('annee_concerver');
-
-        //on efface, sauf si la case est cochée.
-        if (null === $annee_concerver || 'true' !== $annee_concerver) {
-            $previsionnels = $previsionnelRepository->findByDepartement($this->dataUserSession->getDepartement(),
-                $annee_destination);
-            foreach ($previsionnels as $previsionnel) {
-                $this->entityManager->remove($previsionnel);
-            }
-            $this->entityManager->flush();
-        }
-
-        $previsionnels = $previsionnelRepository->findByDepartement($this->dataUserSession->getDepartement(),
-            $anneeDepart);
-
-        /** @var Previsionnel $previsionnel */
-        foreach ($previsionnels as $previsionnel) {
-            $newPrevisonnel = clone $previsionnel;
-            $newPrevisonnel->setAnnee($annee_destination);
-            $this->entityManager->persist($newPrevisonnel);
-        }
-        $this->entityManager->flush();
-
+        $previsionnelManager->dupliqueAnnee($this->dataUserSession->getDepartement(), $anneeDepart, $annee_destination,
+            $annee_concerver);
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'previsionnel.duplicate_annee.success.flash');
 
         return $this->redirectToRoute('administration_previsionnel_index', ['annee' => $annee_destination]);
@@ -292,17 +271,13 @@ class PrevisionnelController extends BaseController
     }
 
     /**
-     * @Route("/supprimer/annee", name="administration_previsionnel_supprimer_annee", methods="DELETE")
+     * @Route("/supprimer/annee", name="administration_previsionnel_supprimer_annee", methods="POST")
      */
-    public function supprimer(Request $request, PrevisionnelRepository $previsionnelRepository): Response
+    public function supprimer(Request $request, PrevisionnelManager $previsionnelManager): Response
     {
         if ($this->isCsrfTokenValid('supprimer', $request->request->get('_token'))) {
-            $hrs = $previsionnelRepository->findByDepartement($this->dataUserSession->getDepartement(),
+            $previsionnelManager->supprimeAnnee($this->dataUserSession->getDepartement(),
                 $request->request->get('annee_supprimer'));
-            foreach ($hrs as $hr) {
-                $this->entityManager->remove($hr);
-            }
-            $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'previsionnel.delete.success.flash');
         }
 

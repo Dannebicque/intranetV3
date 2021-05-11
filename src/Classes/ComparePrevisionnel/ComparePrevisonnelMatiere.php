@@ -4,57 +4,45 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/ComparePrevisionnel/ComparePrevisonnelMatiere.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:16
- */
-
-/*
- * Pull your hearder here, for exemple, Licence header.
+ * @lastUpdate 08/05/2021 08:58
  */
 
 namespace App\Classes\ComparePrevisionnel;
 
+use App\Classes\Matieres\TypeMatiereManager;
+use App\Classes\Previsionnel\PrevisionnelManager;
 use App\Entity\Departement;
-use App\Entity\Matiere;
-use App\Entity\Previsionnel;
 use App\Repository\CelcatEventsRepository;
 use App\Repository\EdtPlanningRepository;
-use App\Repository\MatiereRepository;
-use App\Repository\PrevisionnelRepository;
 
 class ComparePrevisonnelMatiere extends ComparePrevisionnel
 {
     private EdtPlanningRepository $edtPlanningRepository;
 
-    private MatiereRepository $matiereRepository;
+    private TypeMatiereManager $typeMatiereManager;
 
     private CelcatEventsRepository $celcatEventsRepository;
 
-    private PrevisionnelRepository $previsionnelRepository;
-    /**
-     * @var Matiere[]|int|mixed|string
-     */
-    private $matieres;
+    private PrevisionnelManager $previsionnelManager;
+
+    private array $matieres;
 
     public function __construct(
         EdtPlanningRepository $edtPlanningRepository,
         CelcatEventsRepository $celcatEventsRepository,
-        MatiereRepository $matiereRepository,
-        PrevisionnelRepository $previsionnelRepository
+        TypeMatiereManager $typeMatiereManager,
+        PrevisionnelManager $previsionnelManager
     ) {
         $this->edtPlanningRepository = $edtPlanningRepository;
         $this->celcatEventsRepository = $celcatEventsRepository;
-        $this->matiereRepository = $matiereRepository;
-        $this->previsionnelRepository = $previsionnelRepository;
+        $this->typeMatiereManager = $typeMatiereManager;
+        $this->previsionnelManager = $previsionnelManager;
     }
 
-    /**
-     * @param $annee
-     * @param $source
-     */
-    public function compareEdtPreviMatiere(Departement $departement, $annee, $source): array
+    public function compareEdtPreviMatiere(Departement $departement, int $annee, string $source): array
     {
-        $this->matieres = $this->matiereRepository->findByDepartement($departement);
-        $previsonnel = $this->previsionnelRepository->findByDepartement($departement, $annee);
+        $this->matieres = $this->typeMatiereManager->findByDepartement($departement);
+        $previsonnel = $this->previsionnelManager->findByDepartement($departement, $annee);
 
         if ('intranet' === $source) {
             $planning = $this->edtPlanningRepository->findByDepartement($departement);
@@ -62,57 +50,64 @@ class ComparePrevisonnelMatiere extends ComparePrevisionnel
 
         $t = [];
 
-        /* @var Matiere $module */
         foreach ($this->matieres as $matiere) {
-            $t[$matiere->getId()] = [];
+            $t[$matiere->id] = [];
         }
 
-        /** @var $p Previsionnel */
         foreach ($previsonnel as $p) {
-            if ((null !== $p && null !== $p->getMatiere() && null !== $p->getPersonnel()) &&
-                \array_key_exists($p->getMatiere()->getId(), $t)) {
-                if (!\array_key_exists($p->getPersonnel()->getId(), $t[$p->getMatiere()->getId()])) {
-                    $t[$p->getMatiere()->getId()][$p->getPersonnel()->getId()]['personnel'] = $p->getPersonnel();
-                    $t[$p->getMatiere()->getId()][$p->getPersonnel()->getId()]['nbCMPrevi'] = 0;
-                    $t[$p->getMatiere()->getId()][$p->getPersonnel()->getId()]['nbTDPrevi'] = 0;
-                    $t[$p->getMatiere()->getId()][$p->getPersonnel()->getId()]['nbTPPrevi'] = 0;
-                    $t[$p->getMatiere()->getId()][$p->getPersonnel()->getId()]['nbCMEDT'] = 0;
-                    $t[$p->getMatiere()->getId()][$p->getPersonnel()->getId()]['nbTDEDT'] = 0;
-                    $t[$p->getMatiere()->getId()][$p->getPersonnel()->getId()]['nbTPEDT'] = 0;
+            if ((null !== $p && 0 !== $p->matiere_id && 0 !== $p->personnel_id) &&
+                \array_key_exists($p->matiere_id, $t)) {
+                $ligne = $p->matiere_id;
+                $col = $p->personnel_id;
+
+                if (!\array_key_exists($col, $t[$ligne])) {
+                    $t[$ligne][$col]['personnel_id'] = $p->personnel_id;
+                    $t[$ligne][$col]['personnel_prenom'] = $p->personnel_prenom;
+                    $t[$ligne][$col]['personnel_nom'] = $p->personnel_nom;
+                    $t[$ligne][$col]['nbCMPrevi'] = 0;
+                    $t[$ligne][$col]['nbTDPrevi'] = 0;
+                    $t[$ligne][$col]['nbTPPrevi'] = 0;
+                    $t[$ligne][$col]['nbCMEDT'] = 0;
+                    $t[$ligne][$col]['nbTDEDT'] = 0;
+                    $t[$ligne][$col]['nbTPEDT'] = 0;
                 }
 
-                $t[$p->getMatiere()->getId()][$p->getPersonnel()->getId()]['nbCMPrevi'] += $p->getNbHCM();
-                $t[$p->getMatiere()->getId()][$p->getPersonnel()->getId()]['nbTDPrevi'] += $p->getNbHTD() * $p->getNbGrTD();
-                $t[$p->getMatiere()->getId()][$p->getPersonnel()->getId()]['nbTPPrevi'] += $p->getNbHTP() * $p->getNbGrTP();
+                $t[$ligne][$col]['nbCMPrevi'] += $p->nbHCm * $p->nbGrCm;
+                $t[$ligne][$col]['nbTDPrevi'] += $p->nbHTd * $p->nbGrTd;
+                $t[$ligne][$col]['nbTPPrevi'] += $p->nbHTp * $p->nbGrTp;
             }
         }
 
         foreach ($planning as $pl) {
             if (null !== $pl->getMatiere() &&
                 null !== $pl->getIntervenant() &&
-                \array_key_exists($pl->getMatiere()->getId(), $t)) {
-                if (!\array_key_exists($pl->getIntervenant()->getId(), $t[$pl->getMatiere()->getId()])) {
-                    $t[$pl->getMatiere()->getId()][$pl->getIntervenant()->getId()]['personnel'] = $pl->getIntervenant();
-                    $t[$pl->getMatiere()->getId()][$pl->getIntervenant()->getId()]['nbCMPrevi'] = 0;
-                    $t[$pl->getMatiere()->getId()][$pl->getIntervenant()->getId()]['nbTDPrevi'] = 0;
-                    $t[$pl->getMatiere()->getId()][$pl->getIntervenant()->getId()]['nbTPPrevi'] = 0;
-                    $t[$pl->getMatiere()->getId()][$pl->getIntervenant()->getId()]['nbCMEDT'] = 0;
-                    $t[$pl->getMatiere()->getId()][$pl->getIntervenant()->getId()]['nbTDEDT'] = 0;
-                    $t[$pl->getMatiere()->getId()][$pl->getIntervenant()->getId()]['nbTPEDT'] = 0;
+                \array_key_exists($ligne, $t)) {
+                $ligne = $pl->getIdMatiere();
+                $col = $pl->getIntervenant()->getId();
+                if (!\array_key_exists($col, $t[$ligne])) {
+                    $t[$ligne][$col]['personnel_id'] = $pl->getIntervenant()->getId();
+                    $t[$ligne][$col]['personnel_prenom'] = $pl->getIntervenant()->getPrenom();
+                    $t[$ligne][$col]['personnel_nom'] = $pl->getIntervenant()->getNom();
+                    $t[$ligne][$col]['nbCMPrevi'] = 0;
+                    $t[$ligne][$col]['nbTDPrevi'] = 0;
+                    $t[$ligne][$col]['nbTPPrevi'] = 0;
+                    $t[$ligne][$col]['nbCMEDT'] = 0;
+                    $t[$ligne][$col]['nbTDEDT'] = 0;
+                    $t[$ligne][$col]['nbTPEDT'] = 0;
                 }
 
                 switch ($pl->getType()) {
                     case 'cm':
                     case 'CM':
-                        $t[$pl->getMatiere()->getId()][$pl->getIntervenant()->getId()]['nbCMEDT'] += $pl->getDureeInt();
+                        $t[$ligne][$col]['nbCMEDT'] += $pl->getDureeInt();
                         break;
                     case 'td':
                     case 'TD':
-                        $t[$pl->getMatiere()->getId()][$pl->getIntervenant()->getId()]['nbTDEDT'] += $pl->getDureeInt();
+                        $t[$ligne][$col]['nbTDEDT'] += $pl->getDureeInt();
                         break;
                     case 'tp':
                     case 'TP':
-                        $t[$pl->getMatiere()->getId()][$pl->getIntervenant()->getId()]['nbTPEDT'] += $pl->getDureeInt();
+                        $t[$ligne][$col]['nbTPEDT'] += $pl->getDureeInt();
                         break;
                 }
             }
@@ -121,10 +116,7 @@ class ComparePrevisonnelMatiere extends ComparePrevisionnel
         return $t;
     }
 
-    /**
-     * @return Matiere[]|int|mixed|string
-     */
-    public function getMatieres()
+    public function getMatieres(): array
     {
         return $this->matieres;
     }

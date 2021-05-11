@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtExportController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/04/2021 21:43
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Controller\administration;
@@ -46,7 +46,6 @@ class EdtExportController extends BaseController
     /**
      * @Route("/{source}", name="administration_edt_export_index", requirements={"source"="intranet|celcat"})
      *
-     * @param $source
      */
     public function index($source): Response
     {
@@ -58,7 +57,6 @@ class EdtExportController extends BaseController
     /**
      * @Route("/script/{source}", name="administration_edt_export_script", requirements={"source"="intranet|celcat"})
      *
-     * @param $source
      */
     public function exportScript(
         SemestreRepository $semestreRepository,
@@ -319,8 +317,6 @@ class EdtExportController extends BaseController
      * @Route("/tous/{source}.{_format}", name="administration_edt_export_all",
      *                                    requirements={"source"="intranet|celcat"})
      *
-     * @param $source
-     * @param $_format
      */
     public function exportAll(MyEdtExport $myEdtExport, $source, $_format): Response
     {
@@ -333,7 +329,6 @@ class EdtExportController extends BaseController
      * @Route("/profs/{source}.pdf", name="administration_edt_export_profs",
      *                                    requirements={"source"="intranet|celcat"})
      *
-     * @param $source
      *
      * @throws LoaderError
      * @throws RuntimeError

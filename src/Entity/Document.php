@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Document.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Entity;
@@ -137,9 +137,6 @@ class Document extends BaseEntity
         return $this->taille;
     }
 
-    /**
-     * @return Document
-     */
     public function setTaille(?float $taille = 0.0): self
     {
         $this->taille = $taille;
@@ -152,9 +149,6 @@ class Document extends BaseEntity
         return $this->typeFichier;
     }
 
-    /**
-     * @return Document
-     */
     public function setTypeFichier(?string $typeFichier): self
     {
         $this->typeFichier = $typeFichier;
@@ -170,9 +164,6 @@ class Document extends BaseEntity
         return $this->typeDocument;
     }
 
-    /**
-     * @return Document
-     */
     public function setTypeDocument(TypeDocument $typeDocument): self
     {
         $this->typeDocument = $typeDocument;
@@ -188,9 +179,6 @@ class Document extends BaseEntity
         return $this->description;
     }
 
-    /**
-     * @return Document
-     */
     public function setDescription(string $description): self
     {
         $this->description = $description;
@@ -206,9 +194,6 @@ class Document extends BaseEntity
         return $this->libelle;
     }
 
-    /**
-     * @return Document
-     */
     public function setLibelle($libelle): self
     {
         $this->libelle = $libelle;
@@ -257,9 +242,6 @@ class Document extends BaseEntity
         return $this->semestres;
     }
 
-    /**
-     * @return Document
-     */
     public function addSemestre(Semestre $semestre): self
     {
         if (!$this->semestres->contains($semestre)) {
@@ -269,9 +251,6 @@ class Document extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return Document
-     */
     public function removeSemestre(Semestre $semestre): self
     {
         if ($this->semestres->contains($semestre)) {

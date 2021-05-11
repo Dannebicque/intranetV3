@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/NoteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 11/05/2021 08:46
  */
 
 namespace App\Controller\administration;
 
+use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\MyEvaluations;
 use App\Classes\Semestre\NotesExport;
 use App\Controller\BaseController;
@@ -26,13 +27,15 @@ class NoteController extends BaseController
     /**
      * @Route("/semestre/{semestre}", name="administration_notes_semestre_index")
      */
-    public function index(MyEvaluations $myEvaluations, Semestre $semestre): Response
-    {
+    public function index(
+        MyEvaluations $myEvaluations,
+        Semestre $semestre
+    ): Response {
         $myEvaluations->setSemestre($semestre);
 
         return $this->render('administration/notes/index.html.twig', [
-            'semestre'    => $semestre,
-            'matieres'    => $myEvaluations->getMatieresSemestre(),
+            'semestre' => $semestre,
+            'matieres' => $myEvaluations->getMatieresSemestre(),
             'evaluations' => $myEvaluations->getEvaluationsSemestre($semestre,
                 $this->dataUserSession->getAnneeUniversitaire()),
         ]);
@@ -42,7 +45,6 @@ class NoteController extends BaseController
      * @Route("/all/semestre/{semestre}/export.{_format}", name="administration_all_notes_export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"})
      *
-     * @param $_format
      *
      * @return Response
      */

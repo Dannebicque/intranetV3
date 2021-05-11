@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Twig/QuizzExtension.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/05/2021 19:35
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Twig;
@@ -35,9 +35,6 @@ class QuizzExtension extends AbstractExtension
         ];
     }
 
-    /**
-     * @param $type
-     */
     public function typeQuestion($type): ?string
     {
         switch ($type) {

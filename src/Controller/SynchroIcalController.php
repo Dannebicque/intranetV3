@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/SynchroIcalController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Controller;
@@ -28,8 +28,6 @@ class SynchroIcalController extends AbstractController
     /**
      * @Route("/intervenant/{code}.{_format}", name="edt_intervenant_synchro_ical")
      *
-     * @param $code
-     * @param $_format
      *
      * @throws NonUniqueResultException
      */
@@ -57,8 +55,6 @@ class SynchroIcalController extends AbstractController
     /**
      * @Route("/etudiant/{code}.{_format}", name="edt_etudiant_synchro_ical")
      *
-     * @param $code
-     * @param $_format
      *
      * @throws NonUniqueResultException
      */

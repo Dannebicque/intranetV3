@@ -49,7 +49,7 @@
                         {% if matiere.nbnotes>0 %}
                             {% set nbeval=1 %}
 
-                            {% for eval in evaluations|filter(eval =>  eval.matiere.id==matiere.id) %}
+                            {% for eval in evaluations|filter(eval =>  eval.idMatiere==matiere.id) %}
                                 <tr>
                                     <td>{{ matiere.display }}</td>
                                     <td colspan="4">Evaluation existante</td>
@@ -62,20 +62,21 @@
                                     <tr>
                                         <td>{{ matiere.display }}</td>
                                         <td>
-                                            <input type="text" class="form-control" name="commentaire_{{ matiere.id }}_{{ i }}">
+                                            <input type="text" class="form-control" name="commentaire_{{ matiere
+                                            .valueForSelect }}_{{ i }}">
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control" name="coefficient_{{ matiere.id }}_{{ i }}">
+                                            <input type="text" class="form-control" name="coefficient_{{ matiere.typeIdMatiere }}_{{ i }}">
                                         </td>
                                         <td>
-                                            <select class="form-control" name="typeGroupe_{{ matiere.id }}_{{ i }}">
+                                            <select class="form-control" name="typeGroupe_{{ matiere.typeIdMatiere }}_{{ i }}">
                                                 {% for tg in semestre.typeGroupes %}
                                                     <option value="{{ tg.id }}">{{ tg.libelle }}</option>
                                                 {% endfor %}
                                             </select>
                                         </td>
                                         <td>
-                                            <select class="form-control" multiple name="enseignant_{{ matiere.id }}_{{ i }}[]">
+                                            <select class="form-control" multiple name="enseignant_{{ matiere.typeIdMatiere }}_{{ i }}[]">
                                                 {% for enseignant in user_data.personnels %}
                                                     <option value="{{ enseignant.id }}">{{ enseignant.display }}</option>
                                                 {% endfor %}

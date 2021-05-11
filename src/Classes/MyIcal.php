@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyIcal.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 17/02/2021 08:59
+ * @lastUpdate 09/05/2021 14:41
  */
 
 /*
@@ -164,10 +164,6 @@ class MyIcal
         return $this->dateToCal($timestamp - $decalage_horaire);
     }
 
-    /**
-     * @param $mois
-     * @param $annee
-     */
     public function getDernierDimancheDuMois2($mois, $annee): int
     {
         // Fonction utilisée pour les mois de mars et octobre (31 jours)
@@ -191,9 +187,6 @@ class MyIcal
         return date('Ymd\THis\Z', $timestamp);
     }
 
-    /**
-     * @param $creneau
-     */
     public function setDtend(CarbonInterface $date, $creneau): void
     {
         $h = explode(':', $this->tabheure[$creneau]);

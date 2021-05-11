@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/RattrapagePlanningController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/05/2021 19:35
+ * @lastUpdate 11/05/2021 08:46
  */
 
 namespace App\Controller\administration;
 
+use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\MyExport;
 use App\Utils\Tools;
 use App\Controller\BaseController;
@@ -32,12 +33,14 @@ class RattrapagePlanningController extends BaseController
      * @Route("/{diplome}", name="administration_rattrapage_planning_index")
      */
     public function index(
+        TypeMatiereManager $typeMatiereManager,
         RattrapageRepository $rattrapageRepository,
         Diplome $diplome
     ): Response {
         return $this->render('administration/rattrapagePlanning/index.html.twig', [
             'rattrapages' => $rattrapageRepository->findValidByDiplome($diplome, $diplome->getAnneeUniversitaire()),
-            'diplome'     => $diplome,
+            'diplome' => $diplome,
+            'matieres' => $typeMatiereManager->findByDiplomeArray($diplome),
         ]);
     }
 
@@ -45,13 +48,12 @@ class RattrapagePlanningController extends BaseController
      * @Route("/{diplome}/export.{_format}", name="administration_rattrapage_planning_export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"})
      *
-     * @param $_format
      */
     public function export(
         MyExport $myExport,
         RattrapageRepository $rattrapageRepository,
         Diplome $diplome,
-        $_format
+        string $_format
     ): Response {
         $rattrapages = $rattrapageRepository->findValidByDiplome($diplome, $diplome->getAnneeUniversitaire());
 
@@ -80,7 +82,6 @@ class RattrapagePlanningController extends BaseController
      *                                    requirements={"type"="date|heure|salle"}, options={"expose":true})
      * @ParamConverter("rattrapage", options={"mapping": {"uuid": "uuid"}})
      *
-     * @param $type
      *
      * @throws \Exception
      */
@@ -109,7 +110,6 @@ class RattrapagePlanningController extends BaseController
      * @Route("/update_global/{type}/{diplome}", name="administration_rattrapage_update_global", methods="POST",
      *                                    requirements={"type"="salle|heure|date"}, options={"expose":true})
      *
-     * @param $type
      *
      * @throws \Exception
      */

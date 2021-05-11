@@ -4,15 +4,15 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/AgendaController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 11/05/2021 08:46
  */
 
 namespace App\Controller;
 
+use App\Classes\Previsionnel\PrevisionnelManager;
 use App\Classes\ServiceRealise\ServiceRealiseCelcat;
 use App\Classes\ServiceRealise\ServiceRealiseIntranet;
 use App\Entity\Previsionnel;
-use App\Repository\PrevisionnelRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -26,11 +26,13 @@ class AgendaController extends BaseController
     /**
      * @Route("/qv", name="agenda_qv", options={"expose"=true})
      */
-    public function qv(PrevisionnelRepository $previsionnelRepository): Response
+    public function qv(PrevisionnelManager $previsionnelManager): Response
     {
+        $previsionnel = $previsionnelManager->getPrevisionnelPersonnelDepartementAnnee($this->getConnectedUser(),
+            $this->dataUserSession->getDepartement(), $this->dataUserSession->getAnneePrevisionnel());
+
         return $this->render('agenda/qv.html.twig', [
-            'previsionnels' => $previsionnelRepository->findPrevisionnelEnseignantDepartement($this->getConnectedUser(),
-                $this->dataUserSession->getDepartement()),
+            'previsionnels' => $previsionnel,
         ]);
     }
 
@@ -42,20 +44,21 @@ class AgendaController extends BaseController
         ServiceRealiseCelcat $serviceRealiseCelcat,
         Previsionnel $previ
     ): Response {
+        //todo: a généraliser avec SAE, Ressources
         if (null !== $this->getDepartement() && true === $this->getDepartement()->getOptUpdateCelcat()) {
             $chronologique = $serviceRealiseCelcat->getServiceRealiseParPersonnelMatiere($this->getConnectedUser(),
-                $previ->getMatiere());
+                $previ->getIdMatiere(), $previ->getTypeMatiere());
             $statistiques = $serviceRealiseIntranet->statistiques($chronologique);
         } else {
             $chronologique = $serviceRealiseIntranet->getServiceRealiseParPersonnelMatiere($this->getConnectedUser(),
-                $previ->getMatiere());
+                $previ->getIdMatiere(), $previ->getTypeMatiere());
             $statistiques = $serviceRealiseIntranet->statistiques($chronologique);
         }
 
         return $this->render('agenda/qvTableau.html.twig', [
-            'previ'         => $previ,
+            'previ' => $previ,
             'chronologique' => $chronologique,
-            'statistiques'  => $statistiques,
+            'statistiques' => $statistiques,
         ]);
     }
 
@@ -77,8 +80,8 @@ class AgendaController extends BaseController
         }
 
         return $this->render('agenda/index.html.twig', [
-            'filtre'  => $filtre,
-            'valeur'  => $valeur,
+            'filtre' => $filtre,
+            'valeur' => $valeur,
             'semaine' => $semaine,
         ]);
     }

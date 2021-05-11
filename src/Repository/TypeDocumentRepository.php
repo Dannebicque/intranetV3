@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/TypeDocumentRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:08
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Repository;
@@ -30,9 +30,6 @@ class TypeDocumentRepository extends ServiceEntityRepository
         parent::__construct($registry, TypeDocument::class);
     }
 
-    /**
-     * @param $departement
-     */
     public function findByDepartement(Departement $departement)
     {
         return $this->findByDepartementBuilder($departement->getId())

@@ -4,15 +4,15 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtCompareController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 11/05/2021 08:46
  */
 
 namespace App\Controller\administration;
 
 use App\Classes\ComparePrevisionnel\ComparePrevisionnelPersonnel;
 use App\Classes\ComparePrevisionnel\ComparePrevisonnelMatiere;
+use App\Classes\Matieres\TypeMatiereManager;
 use App\Controller\BaseController;
-use App\Entity\Matiere;
 use App\Repository\CalendrierRepository;
 use App\Repository\EdtPlanningRepository;
 use Symfony\Component\HttpFoundation\Response;
@@ -41,53 +41,55 @@ class EdtCompareController extends BaseController
     }
 
     /**
-     * @param $source
-     *
      * @Route("/personnels/{source}", name="administration_edt_compare_personnels", methods={"GET"})
      */
-    public function comparePersonnel(ComparePrevisionnelPersonnel $myPrevisionnel, $source): Response
+    public function comparePersonnel(ComparePrevisionnelPersonnel $comparePrevisionnelPersonnel, $source): Response
     {
-        $comparatif = $myPrevisionnel->compareEdtPreviPersonnels($this->getDepartement(),
+        $comparatif = $comparePrevisionnelPersonnel->compareEdtPreviPersonnels($this->getDepartement(),
             $this->dataUserSession->getAnneePrevisionnel(), $source);
 
         return $this->render('administration/edtCompare/comparePersonnel.html.twig', [
             'comparatifs' => $comparatif,
-            'personnels'  => $myPrevisionnel->getPersonnels(),
-            'source'      => $source,
+            'personnels' => $comparePrevisionnelPersonnel->getPersonnels(),
+            'source' => $source,
         ]);
     }
 
     /**
-     * @param $source
-     *
      * @Route("/matieres/{source}", name="administration_edt_compare_matiere", methods={"GET"})
      */
-    public function compareMatiereAction(ComparePrevisonnelMatiere $myPrevisionnel, $source): Response
+    public function compareMatiereAction(ComparePrevisonnelMatiere $comparePrevisonnelMatiere, $source): Response
     {
-        $comparatif = $myPrevisionnel->compareEdtPreviMatiere($this->dataUserSession->getDepartement(),
+        $comparatif = $comparePrevisonnelMatiere->compareEdtPreviMatiere($this->dataUserSession->getDepartement(),
             $this->dataUserSession->getAnneePrevisionnel(), $source);
 
         return $this->render('administration/edtCompare/compareMatieres.html.twig', [
             'comparatifs' => $comparatif,
-            'matieres'    => $myPrevisionnel->getMatieres(),
-            'source'      => $source,
+            'matieres' => $comparePrevisonnelMatiere->getMatieres(),
+            'source' => $source,
         ]);
     }
 
     /**
      * @Route("/ajax/enseignants/plusinfo/{matiere}", name="administration_edt_compare_plus_info")
      */
-    public function comparePlusInfoAction(Matiere $matiere): Response
+    public function comparePlusInfoAction(TypeMatiereManager $typeMatiereManager, string $matiere): Response
     {
-        //tester si celcat ou intranet
-        $planning = $this->edtPlanningRepository->findBy(['matiere' => $matiere->getId()]);
+        $mat = $typeMatiereManager->getMatiereFromSelect($matiere);
+        if (null !== $mat) {
+            //tester si celcat ou intranet
+            $planning = $this->edtPlanningRepository->findBy(['matiere' => $mat->id]);
 
-        $calendrier = $this->calendrierRepository->findCalendrierArray();
+            $calendrier = $this->calendrierRepository->findCalendrierArray();
 
-        return $this->render('administration/edtCompare/_plusInfo.html.twig', [
-            'planning'   => $planning,
-            'matiere'    => $matiere,
-            'calendrier' => $calendrier,
-        ]);
+            return $this->render('administration/edtCompare/_plusInfo.html.twig', [
+                'planning' => $planning,
+                'matiere' => $matiere,
+                'calendrier' => $calendrier,
+            ]);
+        }
+
+        //todo: exception?
+        return $this->render(':bundles/TwigBundle/Exception:error666.html.twig');
     }
 }

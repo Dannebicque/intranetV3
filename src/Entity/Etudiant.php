@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Etudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/04/2021 20:50
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Entity;
@@ -302,9 +302,6 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
         return $this->notes;
     }
 
-    /**
-     * @return Etudiant
-     */
     public function addNote(Note $note): self
     {
         if (!$this->notes->contains($note)) {
@@ -315,9 +312,6 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
         return $this;
     }
 
-    /**
-     * @return Etudiant
-     */
     public function removeNote(Note $note): self
     {
         if ($this->notes->contains($note)) {
@@ -336,9 +330,6 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
         return $this->numEtudiant;
     }
 
-    /**
-     * @return Etudiant
-     */
     public function setNumEtudiant(string $numEtudiant): self
     {
         $this->numEtudiant = $numEtudiant;
@@ -351,9 +342,6 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
         return $this->numIne;
     }
 
-    /**
-     * @return Etudiant
-     */
     public function setNumIne(string $numIne): self
     {
         $this->numIne = $numIne;
@@ -366,9 +354,6 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
         return $this->anneeBac;
     }
 
-    /**
-     * @return Etudiant
-     */
     public function setAnneeBac(?int $anneeBac): self
     {
         $this->anneeBac = $anneeBac;
@@ -384,9 +369,6 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
         return $this->absences;
     }
 
-    /**
-     * @return Etudiant
-     */
     public function addAbsence(Absence $absence): self
     {
         if (!$this->absences->contains($absence)) {
@@ -397,9 +379,6 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
         return $this;
     }
 
-    /**
-     * @return Etudiant
-     */
     public function removeAbsence(Absence $absence): self
     {
         if ($this->absences->contains($absence)) {
@@ -418,9 +397,6 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
         return $this->adresseParentale;
     }
 
-    /**
-     * @return Etudiant
-     */
     public function setAdresseParentale(?Adresse $adresseParentale): self
     {
         $this->adresseParentale = $adresseParentale;
@@ -436,9 +412,6 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
         return $this->rattrapages;
     }
 
-    /**
-     * @return Etudiant
-     */
     public function addRattrapage(Rattrapage $rattrapage): self
     {
         if (!$this->rattrapages->contains($rattrapage)) {
@@ -449,9 +422,6 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
         return $this;
     }
 
-    /**
-     * @return Etudiant
-     */
     public function removeRattrapage(Rattrapage $rattrapage): self
     {
         if ($this->rattrapages->contains($rattrapage)) {
@@ -473,9 +443,6 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
         return $this->etudiantDemande;
     }
 
-    /**
-     * @return Etudiant
-     */
     public function addEtudiantDemande(Favori $etudiantDemande): self
     {
         if (!$this->etudiantDemande->contains($etudiantDemande)) {
@@ -486,9 +453,6 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
         return $this;
     }
 
-    /**
-     * @return Etudiant
-     */
     public function removeEtudiantDemande(Favori $etudiantDemande): self
     {
         if ($this->etudiantDemande->contains($etudiantDemande)) {
@@ -510,9 +474,6 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
         return $this->etudiantDemandeur;
     }
 
-    /**
-     * @return Etudiant
-     */
     public function addEtudiantDemandeur(Favori $etudiantDemandeur): self
     {
         if (!$this->etudiantDemandeur->contains($etudiantDemandeur)) {
@@ -523,9 +484,6 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
         return $this;
     }
 
-    /**
-     * @return Etudiant
-     */
     public function removeEtudiantDemandeur(Favori $etudiantDemandeur): self
     {
         if ($this->etudiantDemandeur->contains($etudiantDemandeur)) {
@@ -547,9 +505,6 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
         return $this->scolarites;
     }
 
-    /**
-     * @return Etudiant
-     */
     public function addScolarite(Scolarite $scolarite): self
     {
         if (!$this->scolarites->contains($scolarite)) {
@@ -560,9 +515,6 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
         return $this;
     }
 
-    /**
-     * @return Etudiant
-     */
     public function removeScolarite(Scolarite $scolarite): self
     {
         if ($this->scolarites->contains($scolarite)) {
@@ -584,9 +536,6 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
         return $this->notifications;
     }
 
-    /**
-     * @return Etudiant
-     */
     public function addNotification(Notification $notification): self
     {
         if (!$this->notifications->contains($notification)) {
@@ -597,9 +546,6 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
         return $this;
     }
 
-    /**
-     * @return Etudiant
-     */
     public function removeNotification(Notification $notification): self
     {
         if ($this->notifications->contains($notification)) {
@@ -658,9 +604,6 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
         return $this->boursier;
     }
 
-    /**
-     * @return Etudiant
-     */
     public function setBoursier(bool $boursier): self
     {
         $this->boursier = $boursier;
@@ -673,9 +616,6 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
         return $this->demandeurEmploi;
     }
 
-    /**
-     * @return Etudiant
-     */
     public function setDemandeurEmploi(bool $demandeurEmploi): self
     {
         $this->demandeurEmploi = $demandeurEmploi;
@@ -691,9 +631,6 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
         return $this->groupes;
     }
 
-    /**
-     * @return Etudiant
-     */
     public function addGroupe(Groupe $groupe): self
     {
         if (!$this->groupes->contains($groupe)) {
@@ -703,9 +640,6 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
         return $this;
     }
 
-    /**
-     * @return Etudiant
-     */
     public function removeGroupe(Groupe $groupe): self
     {
         if ($this->groupes->contains($groupe)) {

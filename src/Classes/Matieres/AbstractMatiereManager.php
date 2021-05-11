@@ -4,11 +4,10 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Matieres/AbstractMatiereManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/05/2021 18:44
+ * @lastUpdate 08/05/2021 08:57
  */
 
 namespace App\Classes\Matieres;
-
 
 abstract class AbstractMatiereManager
 {
@@ -16,13 +15,13 @@ abstract class AbstractMatiereManager
     {
         $id = $this->getIdFromString($data);
 
-        return $id !== null ? $this->find($id) : null;
+        return null !== $id ? $this->find($id) : null;
     }
 
     public function getIdFromString($data)
     {
         $d = explode('_', $data);
-        if (count($d) === 2) {
+        if (2 === count($d)) {
             return $d[1];
         }
 
@@ -33,5 +32,4 @@ abstract class AbstractMatiereManager
     {
         return null;
     }
-
 }

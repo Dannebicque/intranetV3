@@ -4,21 +4,21 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EvaluationInitialisationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 11/05/2021 08:46
  */
 
 namespace App\Controller\administration;
 
+use App\Classes\Matieres\TypeMatiereManager;
 use App\Controller\BaseController;
 use App\Entity\Evaluation;
-use App\Entity\Matiere;
 use App\Entity\Semestre;
 use App\Repository\EvaluationRepository;
-use App\Repository\MatiereRepository;
 use Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use function count;
 
 /**
  * Class EvaluationInitialisationController.
@@ -34,11 +34,11 @@ class EvaluationInitialisationController extends BaseController
      */
     public function index(
         Request $request,
-        MatiereRepository $matiereRepository,
+        TypeMatiereManager $typeMatiereManager,
         EvaluationRepository $evaluationRepository,
         Semestre $semestre
     ): Response {
-        $matieres = $matiereRepository->findBySemestre($semestre);
+        $matieres = $typeMatiereManager->findBySemestre($semestre);
         $evaluations = $evaluationRepository->findBySemestre($semestre,
             $this->dataUserSession->getAnneeUniversitaire());
 
@@ -53,24 +53,24 @@ class EvaluationInitialisationController extends BaseController
                 $tPersonnels[$tg->getId()] = $tg;
             }
 
-            /** @var Matiere $matiere */
+            /** @var \App\DTO\Matiere $matiere */
             foreach ($matieres as $matiere) {
-                $nbNotes = $matiere->getNbnotes();
+                $nbNotes = $matiere->nbNotes;
                 for ($i = 1; $i <= $nbNotes; ++$i) {
-                    if (!empty($request->request->get('commentaire_' . $matiere->getId() . '_' . $i))) {
-                        $nbEnseignant = \count($request->request->get('enseignant_' . $matiere->getId() . '_' . $i));
+                    if (!empty($request->request->get('commentaire_' . $matiere->getTypeIdMatiere() . '_' . $i))) {
+                        $nbEnseignant = count($request->request->get('enseignant_' . $matiere->getTypeIdMatiere() . '_' . $i));
                         if ($nbEnseignant > 0) {
-                            $pers = $tPersonnels[$request->request->get('enseignant_' . $matiere->getId() . '_' . $i)[0]];
+                            $pers = $tPersonnels[$request->request->get('enseignant_' . $matiere->getTypeIdMatiere() . '_' . $i)[0]];
                         } else {
                             $pers = $this->getConnectedUser();
                         }
                         $eval = new Evaluation($pers, $matiere, $this->dataUserSession->getDepartement());
-                        $eval->setCoefficient($request->request->get('coefficient_' . $matiere->getId() . '_' . $i));
-                        $eval->setLibelle($request->request->get('commentaire_' . $matiere->getId() . '_' . $i));
-                        $eval->setTypegroupe($tGroupes[$request->request->get('typeGroupe_' . $matiere->getId() . '_' . $i)]);
+                        $eval->setCoefficient($request->request->get('coefficient_' . $matiere->getTypeIdMatiere() . '_' . $i));
+                        $eval->setLibelle($request->request->get('commentaire_' . $matiere->getTypeIdMatiere() . '_' . $i));
+                        $eval->setTypegroupe($tGroupes[$request->request->get('typeGroupe_' . $matiere->getTypeIdMatiere() . '_' . $i)]);
 
                         for ($j = 1; $j < $nbEnseignant; ++$j) {
-                            $eval->addPersonnelAutorise($tPersonnels[$request->request->get('enseignant_' . $matiere->getId() . '_' . $i)[$j]]);
+                            $eval->addPersonnelAutorise($tPersonnels[$request->request->get('enseignant_' . $matiere->getTypeIdMatiere() . '_' . $i)[$j]]);
                         }
                         $this->entityManager->persist($eval);
                     }
@@ -83,8 +83,8 @@ class EvaluationInitialisationController extends BaseController
         }
 
         return $this->render('administration/evaluationInitialisation/index.html.twig', [
-            'semestre'    => $semestre,
-            'matieres'    => $matieres,
+            'semestre' => $semestre,
+            'matieres' => $matieres,
             'evaluations' => $evaluations,
         ]);
     }

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Diplome.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 19:07
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Entity;
@@ -363,9 +363,6 @@ class Diplome extends BaseEntity implements Serializable
         return $this->hrs;
     }
 
-    /**
-     * @return Diplome
-     */
     public function addHr(Hrs $hr): self
     {
         if (!$this->hrs->contains($hr)) {
@@ -376,9 +373,6 @@ class Diplome extends BaseEntity implements Serializable
         return $this;
     }
 
-    /**
-     * @return Diplome
-     */
     public function removeHr(Hrs $hr): self
     {
         if ($this->hrs->contains($hr)) {
@@ -400,9 +394,6 @@ class Diplome extends BaseEntity implements Serializable
         return $this->ppns;
     }
 
-    /**
-     * @return Diplome
-     */
     public function addPpn(Ppn $ppn): self
     {
         if (!$this->ppns->contains($ppn)) {
@@ -413,9 +404,6 @@ class Diplome extends BaseEntity implements Serializable
         return $this;
     }
 
-    /**
-     * @return Diplome
-     */
     public function removePpn(Ppn $ppn): self
     {
         if ($this->ppns->contains($ppn)) {
@@ -429,10 +417,6 @@ class Diplome extends BaseEntity implements Serializable
         return $this;
     }
 
-    /**
-     * @param $name
-     * @param $value
-     */
     public function update($name, $value): bool
     {
         $name[0] = \chr(\ord($name[0]) - 32);
@@ -451,9 +435,6 @@ class Diplome extends BaseEntity implements Serializable
         return $this->departement;
     }
 
-    /**
-     * @return Diplome
-     */
     public function setDepartement(?Departement $departement): self
     {
         $this->departement = $departement;
@@ -469,9 +450,6 @@ class Diplome extends BaseEntity implements Serializable
         return $this->annees;
     }
 
-    /**
-     * @return Diplome
-     */
     public function addAnnee(Annee $annee): self
     {
         if (!$this->annees->contains($annee)) {
@@ -482,9 +460,6 @@ class Diplome extends BaseEntity implements Serializable
         return $this;
     }
 
-    /**
-     * @return Diplome
-     */
     public function removeAnnee(Annee $annee): self
     {
         if ($this->annees->contains($annee)) {
@@ -503,9 +478,6 @@ class Diplome extends BaseEntity implements Serializable
         return $this->sigle;
     }
 
-    /**
-     * @return Diplome
-     */
     public function setSigle(string $sigle): self
     {
         $this->sigle = $sigle;

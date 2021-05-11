@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/GroupeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Controller\administration;
@@ -58,7 +58,6 @@ class GroupeController extends BaseController
      * @Route("/{semestre}/export.{_format}", name="administration_groupe_export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"}, options={"expose":true})
      *
-     * @param $_format
      */
     public function export(
         MyExport $myExport,

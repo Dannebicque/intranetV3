@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Excel/MyExcelMultiExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 09/05/2021 14:41
  */
 
 /*
@@ -45,9 +45,6 @@ class MyExcelMultiExport
         $this->myExcelWriter = $myExcelWriter;
     }
 
-    /**
-     * @param $name
-     */
     public function saveXlsx($name): StreamedResponse
     {
         $this->pageSetup($name);
@@ -85,9 +82,6 @@ class MyExcelMultiExport
             ->setOddFooter('&L&B' . $this->myExcelWriter->getSpreadsheet()->getProperties()->getTitle() . '&RPage &P of &N');
     }
 
-    /**
-     * @param $name
-     */
     public function saveCsv($name): StreamedResponse
     {
         $this->pageSetup($name);
@@ -105,9 +99,6 @@ class MyExcelMultiExport
         );
     }
 
-    /**
-     * @param $name
-     */
     public function savePdf($name): StreamedResponse
     {
         $this->pageSetup($name);
@@ -279,10 +270,6 @@ class MyExcelMultiExport
         }
     }
 
-    /**
-     * @param $groupes
-     * @param $notes
-     */
     public function genereReleveExcel(Evaluation $evaluation, $groupes, $notes): void
     {
         /** @var Groupe $groupe */

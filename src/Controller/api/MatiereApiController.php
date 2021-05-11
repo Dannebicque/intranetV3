@@ -4,25 +4,19 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/api/MatiereApiController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/05/2021 18:53
+ * @lastUpdate 08/05/2021 08:58
  */
 
 namespace App\Controller\api;
 
-use App\Classes\Matieres\TypeMatiereHandler;
+use App\Classes\Matieres\TypeMatiereManager;
 use App\Controller\BaseController;
-use App\Entity\Matiere;
 use App\Entity\Parcour;
-use App\Entity\Personnel;
-use App\Entity\Previsionnel;
 use App\Entity\Semestre;
-use App\Repository\MatiereRepository;
 use App\Repository\ParcourRepository;
-use App\Repository\PrevisionnelRepository;
 use App\Repository\SemestreRepository;
 use App\Repository\UeRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -34,15 +28,14 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class MatiereApiController extends BaseController
 {
-    /** @var MatiereRepository */
-    protected $matiereRepository;
+    protected TypeMatiereManager $typeMatiereManager;
 
     /**
      * MatiereApiController constructor.
      */
-    public function __construct(MatiereRepository $matiereRepository)
+    public function __construct(TypeMatiereManager $typeMatiereManager)
     {
-        $this->matiereRepository = $matiereRepository;
+        $this->typeMatiereManager = $typeMatiereManager;
     }
 
     /**
@@ -50,15 +43,15 @@ class MatiereApiController extends BaseController
      */
     public function matieresSemestreAjax(Semestre $semestre): JsonResponse
     {
-        $matieres = $this->matiereRepository->findBySemestre($semestre);
+        $matieres = $this->typeMatiereManager->findBySemestre($semestre);
 
         $tmatieres = [];
-        /** @var Matiere $m */
         foreach ($matieres as $m) {
             $t = [];
-            $t['id'] = $m->getId();
-            $t['libelle'] = $m->getLibelle();
-            $t['display'] = $m->getDisplay();
+            $t['id'] = $m->id;
+            $t['typeMatiere'] = $m->typeMatiere;
+            $t['libelle'] = $m->libelle;
+            $t['display'] = $m->display;
             $tmatieres[] = $t;
         }
 
@@ -68,22 +61,23 @@ class MatiereApiController extends BaseController
     /**
      * @Route("/{matiere}", name="api_matiere", options={"expose":true})
      */
-    public function matiereAjax(TypeMatiereHandler $typeMatiereHandler, $matiere): JsonResponse
+    public function matiereAjax(string $matiere): JsonResponse
     {
-        $typeHandler = $typeMatiereHandler->typeDeMatiereFromSelect($matiere);
-        $matiere = $typeHandler->findFromSelect($matiere);
+        $mat = $this->typeMatiereManager->getMatiereFromSelect($matiere);
 
-        return new JsonResponse($matiere->getJson());
+        return new JsonResponse($mat ? $mat->getJson() : false);
     }
 
     /**
-     * @Route("/document/export/{matiere}", name="api_export_document_matiere", options={"expose":true})
+     * @Route("/document/export/{matiere}/{typeMatiere}", name="api_export_document_matiere", options={"expose":true})
      */
-    public function exportDocument(Matiere $matiere): Response
+    public function exportDocument(int $matiere, string $typeMatiere): Response
     {
+        $mat = $this->typeMatiereManager->getMatiere($matiere, $typeMatiere);
+
         return $this->render('api/matiere/document/export.html.twig', [
-            'matiere'     => $matiere,
-            'typeGroupes' => $matiere->getUe()->getSemestre()->getTypeGroupes(),
+            'matiere' => $mat,
+            'typeGroupes' => $mat->semestre->getTypeGroupes(),
         ]);
     }
 
@@ -108,8 +102,8 @@ class MatiereApiController extends BaseController
 
             foreach ($ues as $ue) {
                 $responseArray[] = [
-                    'id'       => $ue->getId(),
-                    'libelle'  => $ue->getLibelle(),
+                    'id' => $ue->getId(),
+                    'libelle' => $ue->getLibelle(),
                     'numeroUe' => $ue->getNumeroUe(),
                 ];
             }
@@ -143,7 +137,7 @@ class MatiereApiController extends BaseController
             /** @var Parcour $parcour */
             foreach ($parcours as $parcour) {
                 $responseArray[] = [
-                    'id'      => $parcour->getId(),
+                    'id' => $parcour->getId(),
                     'libelle' => $parcour->getLibelle(),
                 ];
             }
@@ -153,41 +147,5 @@ class MatiereApiController extends BaseController
         }
 
         return new JsonResponse(false);
-    }
-
-    /**
-     * @return JsonResponse|RedirectResponse
-     * @Route("/matiere/semestre/personnel/{semestre}/{personnel}", name="api_matieres_semestre_personnel",
-     *                                                              options={"expose":true})
-     */
-    public function matiereSemestrePersonnel(
-        PrevisionnelRepository $previsionnelRepository,
-        Semestre $semestre,
-        Personnel $personnel
-    ) {
-        if (null !== $semestre && null !== $personnel) {
-            $matieres = $previsionnelRepository->findPrevisionnelSemestrePersonnel($semestre, $personnel,
-                $this->dataUserSession->getAnneePrevisionnel());
-
-            $array = [];
-            $i = 1;
-
-            /** @var Previsionnel $m */
-            foreach ($matieres as $m) {
-                if (null !== $m->getMatiere()) {
-                    $array['matiere' . $i]['id'] = $m->getMatiere()->getId();
-                    $array['matiere' . $i]['libelle'] = $m->getMatiere()->getDisplay();
-                    $array['matiere' . $i]['ue'] = $m->getMatiere()->getUE()->getNumeroUe();
-                    ++$i;
-                }
-            }
-
-            $response = new JsonResponse();
-            $response->setData($array);
-
-            return $response;
-        }
-
-        return $this->redirect($this->generateUrl('erreur_666'));
     }
 }

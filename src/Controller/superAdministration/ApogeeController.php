@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/ApogeeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/04/2021 12:10
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Controller\superAdministration;
@@ -50,7 +50,6 @@ class ApogeeController extends BaseController
      * @Route("/import/diplome/{type}", methods={"POST"}, name="sa_apogee_maj")
      * @IsGranted("ROLE_SUPER_ADMIN")
      *
-     * @param $type
      *
      * @throws Exception
      */

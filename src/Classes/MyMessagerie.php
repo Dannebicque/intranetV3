@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyMessagerie.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/04/2021 20:53
+ * @lastUpdate 09/05/2021 14:41
  */
 
 /*
@@ -80,7 +80,6 @@ class MyMessagerie
     }
 
     /**
-     * @param $destinataires
      *
      * @throws TransportExceptionInterface
      */
@@ -183,8 +182,6 @@ class MyMessagerie
     }
 
     /**
-     * @param $destinataires
-     * @param $typeDestinataire
      *
      * @throws TransportExceptionInterface
      */

@@ -4,15 +4,14 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/Previsionnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/05/2021 18:44
+ * @lastUpdate 11/05/2021 08:46
  */
 
 namespace App\DTO;
 
 
 use App\Entity\Constantes;
-use App\Entity\Personnel;
-use App\Entity\Semestre;
+
 
 class Previsionnel
 {
@@ -42,6 +41,8 @@ class Previsionnel
     public string $annee_libelle;
     public int $diplome_id;
     public string $diplome_libelle;
+    public string $annee_code_etape;
+    public string $annee_libelle_long;
 
     public function getNbSeanceCm(): string
     {
@@ -59,39 +60,49 @@ class Previsionnel
     }
 
     /**
-     * @return float|int
+     * @return float
      */
-    public function getTotalEqTd()
+    public function getTotalEqTd(): float
     {
         return $this->getTotalHCm() * Constantes::MAJORATION_CM + $this->getTotalHTd() + $this->getTotalHTp();
     }
 
     /**
-     * @return float|int
+     * @return float
      */
-    public function getTotalHCm()
+    public function getTotalHCm(): float
     {
         return $this->nbHCm * $this->nbGrCm;
     }
 
     /**
-     * @return float|int
+     * @return float
      */
-    public function getTotalHTd()
+    public function getTotalHTd(): float
     {
         return $this->nbHTd * $this->nbGrTd;
     }
 
     /**
-     * @return float|int
+     * @return float
      */
-    public function getTotalHTp()
+    public function getTotalHTp(): float
     {
         return $this->nbHTp * $this->nbGrTp;
     }
 
-    public function getTotalEtudiant()
+    public function getTotalEtudiant(): float
     {
         return $this->nbHCm + $this->nbHTd + $this->nbHTp;
+    }
+
+    public function getDisplay()
+    {
+        return $this->matiere_code . ' | ' . $this->matiere_libelle;
+    }
+
+    public function getTypeIdMatiere()
+    {
+        return $this->type_matiere . '_' . $this->matiere_id;
     }
 }

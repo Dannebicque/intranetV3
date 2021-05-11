@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Article.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Entity;
@@ -81,9 +81,6 @@ class Article extends BaseEntity
         return $this->titre;
     }
 
-    /**
-     * @return Article
-     */
     public function setTitre(string $titre): self
     {
         $this->titre = $titre;
@@ -96,9 +93,6 @@ class Article extends BaseEntity
         return $this->texte;
     }
 
-    /**
-     * @return Article
-     */
     public function setTexte(string $texte): self
     {
         $this->texte = $texte;
@@ -123,10 +117,7 @@ class Article extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return bool|string
-     */
-    public function getResume()
+    public function getResume(): string
     {
         $nbreCar = 100;
         $texte = trim(strip_tags($this->texte)); // suppression des balises HTML
@@ -160,9 +151,6 @@ class Article extends BaseEntity
         return $this->semestres;
     }
 
-    /**
-     * @return Article
-     */
     public function addSemestre(Semestre $semestre): self
     {
         if (!$this->semestres->contains($semestre)) {
@@ -172,9 +160,6 @@ class Article extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return Article
-     */
     public function removeSemestre(Semestre $semestre): self
     {
         if ($this->semestres->contains($semestre)) {
@@ -189,9 +174,6 @@ class Article extends BaseEntity
         return $this->personnel;
     }
 
-    /**
-     * @return Article
-     */
     public function setPersonnel(?Personnel $personnel): self
     {
         $this->personnel = $personnel;

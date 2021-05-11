@@ -1,8 +1,8 @@
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/applications.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/09/2020 16:14
+// @lastUpdate 11/05/2021 08:46
 import {addCallout} from '../util'
 import './messagerie'
 
@@ -31,7 +31,7 @@ $(document).on('change', '#selectsemestre', function () {
           .text('Choisir une matière'))
         jQuery.each(data, function (index, matiere) {
           selectMatiere.append($('<option></option>')
-            .attr('value', matiere.id)
+            .attr('value', matiere.typeMatiere + '_' + matiere.id)
             .text(matiere.display))
         })
         selectMatiere.attr('data-provide', 'selectpicker')

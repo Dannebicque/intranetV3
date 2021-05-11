@@ -4,12 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/NoteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/02/2021 16:38
+ * @lastUpdate 11/05/2021 08:46
  */
 
 namespace App\Controller\appPersonnel;
 
 use App\Classes\Etudiant\EtudiantNotes;
+use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\MyEvaluation;
 use App\Classes\MyEvaluations;
 use App\Classes\MyExport;
@@ -17,7 +18,8 @@ use App\Classes\MyUpload;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Evaluation;
-use App\Entity\Matiere;
+use App\Exception\MatiereNotFoundException;
+use App\Exception\SemestreNotFoundException;
 use App\Form\EvaluationType;
 use App\Repository\EtudiantRepository;
 use Exception;
@@ -38,24 +40,32 @@ use Symfony\Component\Routing\Annotation\Route;
 class NoteController extends BaseController
 {
     /**
-     * @Route("/{matiere}/{index}", name="application_personnel_note_index", requirements={"matiere"="\d+"})
-     *
-     * @param int $index
+     * @Route("/{matiere}/{index}", name="application_personnel_note_index")
      */
-    public function index(MyEvaluations $myEvaluations, Matiere $matiere, $index = 0): Response
-    {
-        if ($matiere->getSemestre()) {
-            $myEvaluations->setMatiere($matiere);
-            $myEvaluations->getEvaluationsMatiere($this->dataUserSession->getAnneeUniversitaire());
+    public function index(
+        TypeMatiereManager $typeMatiereManager,
+        MyEvaluations $myEvaluations,
+        string $matiere,
+        int $index = 0
+    ): Response {
+        $mat = $typeMatiereManager->getMatiereFromSelect($matiere);
 
-            return $this->render('appPersonnel/note/index.html.twig', [
-                'matiere' => $matiere,
-                'evaluations' => $myEvaluations,
-                'indexEval' => $index,
-            ]);
+        if (null === $mat) {
+            throw new MatiereNotFoundException();
         }
 
-        return $this->redirectToRoute('erreur_666');
+        if (null === $mat->semestre) {
+            throw new SemestreNotFoundException();
+        }
+
+        $myEvaluations->setMatiere($mat);
+        $myEvaluations->getEvaluationsMatiere($this->dataUserSession->getAnneeUniversitaire());
+
+        return $this->render('appPersonnel/note/index.html.twig', [
+            'matiere' => $mat,
+            'evaluations' => $myEvaluations,
+            'indexEval' => $index,
+        ]);
     }
 
     /**
@@ -65,48 +75,50 @@ class NoteController extends BaseController
      *
      * @throws Exception
      */
-    public function saisie(Request $request, Matiere $matiere)
+    public function saisie(TypeMatiereManager $typeMatiereManager, Request $request, string $matiere)
     {
+        $mat = $typeMatiereManager->getMatiereFromSelect($matiere);
+
+        if (null === $mat) {
+            throw new MatiereNotFoundException();
+        }
         //todo: vérifier les accès par des profs non autorisés ????
-        if (null !== $matiere && null !== $matiere->getUe()) {
-            $evaluation = new Evaluation($this->getConnectedUser(), $matiere, $this->dataUserSession->getDepartement());
-            $form = $this->createForm(
-                EvaluationType::class,
-                $evaluation,
-                [
-                    'departement' => $this->dataUserSession->getDepartement(),
-                    'semestre' => $matiere->getSemestre(),
-                    'matiereDisabled' => false,
-                    'personnelDisabled' => true,
-                    'autorise' => true,
-                    'locale' => $request->getLocale(),
-                    'attr' => [
-                        'data-provide' => 'validation',
-                    ],
-                ]
+
+        $evaluation = new Evaluation($this->getConnectedUser(), $matiere, $this->dataUserSession->getDepartement());
+        $form = $this->createForm(
+            EvaluationType::class,
+            $evaluation,
+            [
+                'departement' => $this->dataUserSession->getDepartement(),
+                'semestre' => $mat->semestre,
+                'matiereDisabled' => false,
+                'personnelDisabled' => true,
+                'autorise' => true,
+                'locale' => $request->getLocale(),
+                'attr' => [
+                    'data-provide' => 'validation',
+                ],
+            ]
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $evaluation->setAnneeUniversitaire($this->dataUserSession->getAnneeUniversitaire());
+            $this->entityManager->persist($evaluation);
+            $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'evaluation.add.success.flash');
+
+            return $this->redirectToRoute(
+                'application_personnel_note_saisie_2',
+                ['uuid' => $evaluation->getUuidString()]
             );
-
-            $form->handleRequest($request);
-
-            if ($form->isSubmitted() && $form->isValid()) {
-                $evaluation->setAnneeUniversitaire($this->dataUserSession->getAnneeUniversitaire());
-                $this->entityManager->persist($evaluation);
-                $this->entityManager->flush();
-                $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'evaluation.add.success.flash');
-
-                return $this->redirectToRoute(
-                    'application_personnel_note_saisie_2',
-                    ['uuid' => $evaluation->getUuidString()]
-                );
-            }
-
-            return $this->render('appPersonnel/note/saisie.html.twig', [
-                'matiere' => $matiere,
-                'form' => $form->createView(),
-            ]);
         }
 
-        return $this->redirectToRoute('erreur_666');
+        return $this->render('appPersonnel/note/saisie.html.twig', [
+            'matiere' => $matiere,
+            'form' => $form->createView(),
+        ]);
     }
 
     /**
@@ -115,7 +127,7 @@ class NoteController extends BaseController
      *
      * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
      */
-    public function saisieNotes(Request $request, MyEvaluation $myEvaluation, Evaluation $evaluation): Response
+    public function saisieNotes(MyEvaluation $myEvaluation, Evaluation $evaluation): Response
     {
         $notes = $myEvaluation->setEvaluation($evaluation)->getNotesTableau();
 
@@ -129,7 +141,6 @@ class NoteController extends BaseController
     /**
      * @throws Exception
      *
-     * @return RedirectResponse|Response
      * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
      *
      * @Route("/sauvegarde/{uuid}",
@@ -142,7 +153,7 @@ class NoteController extends BaseController
         EtudiantRepository $etudiantRepository,
         Request $request,
         Evaluation $evaluation
-    ) {
+    ): Response {
         $tnote = $request->request->get('notes')['notes'];
 
         foreach ($tnote as $iValue) {

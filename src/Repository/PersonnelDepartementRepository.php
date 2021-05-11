@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/PersonnelDepartementRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Repository;
@@ -36,10 +36,6 @@ class PersonnelDepartementRepository extends ServiceEntityRepository
         $this->router = $router;
     }
 
-    /**
-     * @param $type
-     * @param $departement
-     */
     public function findByType($type, $departement): array
     {
         return $this->createQueryBuilder('f')
@@ -115,9 +111,6 @@ class PersonnelDepartementRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    /**
-     * @param $needle
-     */
     public function search($needle, Departement $departement): array
     {
         $query = $this->createQueryBuilder('d')

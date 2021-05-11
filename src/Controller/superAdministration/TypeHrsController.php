@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/TypeHrsController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Controller\superAdministration;
@@ -36,7 +36,6 @@ class TypeHrsController extends BaseController
     /**
      * @Route("/export.{_format}", name="sa_type_hrs_export", methods="GET", requirements={"_format"="csv|xlsx|pdf"})
      *
-     * @param $_format
      */
     public function export(MyExport $myExport, TypeHrsRepository $typeHrsRepository, $_format): Response
     {

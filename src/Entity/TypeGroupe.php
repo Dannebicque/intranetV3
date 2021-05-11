@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/TypeGroupe.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Entity;
@@ -69,9 +69,6 @@ class TypeGroupe extends BaseEntity
         return $this->semestre;
     }
 
-    /**
-     * @return TypeGroupe
-     */
     public function setSemestre(?Semestre $semestre): self
     {
         $this->semestre = $semestre;
@@ -84,9 +81,6 @@ class TypeGroupe extends BaseEntity
         return $this->libelle;
     }
 
-    /**
-     * @return TypeGroupe
-     */
     public function setLibelle(string $libelle): self
     {
         $this->libelle = $libelle;
@@ -102,9 +96,6 @@ class TypeGroupe extends BaseEntity
         return $this->groupes;
     }
 
-    /**
-     * @return TypeGroupe
-     */
     public function addGroupe(Groupe $groupe): self
     {
         if (!$this->groupes->contains($groupe)) {
@@ -115,9 +106,6 @@ class TypeGroupe extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return TypeGroupe
-     */
     public function removeGroupe(Groupe $groupe): self
     {
         if ($this->groupes->contains($groupe)) {

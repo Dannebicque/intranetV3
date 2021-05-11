@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Ppn.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 19:14
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Entity;
@@ -89,9 +89,6 @@ class Ppn extends BaseEntity
         return $this->matieres;
     }
 
-    /**
-     * @return Ppn
-     */
     public function addMatiere(Matiere $matiere): self
     {
         if (!$this->matieres->contains($matiere)) {
@@ -102,9 +99,6 @@ class Ppn extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return Ppn
-     */
     public function removeMatiere(Matiere $matiere): self
     {
         if ($this->matieres->contains($matiere)) {
@@ -123,9 +117,6 @@ class Ppn extends BaseEntity
         return $this->diplome;
     }
 
-    /**
-     * @return Ppn
-     */
     public function setDiplome(?Diplome $diplome): self
     {
         $this->diplome = $diplome;

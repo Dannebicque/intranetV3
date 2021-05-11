@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appEtudiant/RattrapageController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 11/05/2021 08:46
  */
 
 namespace App\Controller\appEtudiant;
 
+use App\Classes\Matieres\TypeMatiereManager;
 use App\Controller\BaseController;
 use App\Entity\Rattrapage;
 use App\Form\RattrapageType;
@@ -35,6 +36,7 @@ class RattrapageController extends BaseController
      *
      */
     public function index(
+        TypeMatiereManager $typeMatiereManager,
         RattrapageRepository $rattrapageRepository,
         Request $request
     ) {
@@ -62,8 +64,9 @@ class RattrapageController extends BaseController
         }
 
         return $this->render('appEtudiant/rattrapage/index.html.twig', [
-            'form'        => $form->createView(),
+            'form' => $form->createView(),
             'rattrapages' => $rattrapageRepository->findByEtudiant($this->getConnectedUser()),
+            'matieres' => $typeMatiereManager->findBySemestreArray($this->getEtudiantSemestre()),
         ]);
     }
 }

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Scolarite.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Entity;
@@ -116,9 +116,6 @@ class Scolarite extends BaseEntity
         return $this->ordre;
     }
 
-    /**
-     * @return Scolarite
-     */
     public function setOrdre(int $ordre): self
     {
         $this->ordre = $ordre;
@@ -131,9 +128,6 @@ class Scolarite extends BaseEntity
         return $this->semestre;
     }
 
-    /**
-     * @return Scolarite
-     */
     public function setSemestre(?Semestre $semestre): self
     {
         $this->semestre = $semestre;
@@ -146,9 +140,6 @@ class Scolarite extends BaseEntity
         return $this->decision;
     }
 
-    /**
-     * @return Scolarite
-     */
     public function setDecision(string $decision): self
     {
         $this->decision = $decision;
@@ -161,9 +152,6 @@ class Scolarite extends BaseEntity
         return $this->proposition;
     }
 
-    /**
-     * @return Scolarite
-     */
     public function setProposition(string $proposition): self
     {
         $this->proposition = $proposition;
@@ -176,9 +164,6 @@ class Scolarite extends BaseEntity
         return $this->moyenne;
     }
 
-    /**
-     * @return Scolarite
-     */
     public function setMoyenne(float $moyenne): self
     {
         $this->moyenne = $moyenne;
@@ -191,9 +176,6 @@ class Scolarite extends BaseEntity
         return $this->etudiant;
     }
 
-    /**
-     * @return Scolarite
-     */
     public function setEtudiant(?Etudiant $etudiant): self
     {
         $this->etudiant = $etudiant;
@@ -206,9 +188,6 @@ class Scolarite extends BaseEntity
         return $this->nbAbsences;
     }
 
-    /**
-     * @return Scolarite
-     */
     public function setNbAbsences(int $nbAbsences): self
     {
         $this->nbAbsences = $nbAbsences;
@@ -221,9 +200,6 @@ class Scolarite extends BaseEntity
         return $this->commentaire;
     }
 
-    /**
-     * @return Scolarite
-     */
     public function setCommentaire(string $commentaire): self
     {
         $this->commentaire = $commentaire;

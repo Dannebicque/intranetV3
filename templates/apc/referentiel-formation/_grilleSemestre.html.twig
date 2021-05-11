@@ -5,13 +5,13 @@
         <th>AC</th>
         <th>&nbsp;</th>
         {% for sae in saes %}
-            <th>{{ sae.codeSae }}</th>
+            <th>{{ sae.codeMatiere }}</th>
         {% endfor %}
         <th>portfolio</th>
         <th>stage</th>{# todo: dynamique? #}
         <th>&nbsp;</th>
         {% for ressource in ressources %}
-            <th>{{ ressource.codeRessource }}</th>
+            <th>{{ ressource.codeMatiere }}</th>
         {% endfor %}
     </tr>
     </thead>

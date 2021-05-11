@@ -4,23 +4,20 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantExportReleve.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/02/2021 12:06
- */
-
-/*
- * Pull your hearder here, for exemple, Licence header.
+ * @lastUpdate 11/05/2021 08:46
  */
 
 namespace App\Classes\Etudiant;
 
+use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\MyEvaluations;
 use App\Classes\Pdf\MyPDF;
-use App\Classes\Tools;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Etudiant;
 use App\Entity\Scolarite;
 use App\Entity\Semestre;
 use App\Repository\NoteRepository;
+use App\Utils\Tools;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Twig\Error\LoaderError;
@@ -42,15 +39,19 @@ class EtudiantExportReleve
 
     private EtudiantNotes $etudiantNotes;
 
+    private TypeMatiereManager $typeMatiereManager;
+
     /**
      * EtudiantNotes constructor.
      */
     public function __construct(
+        TypeMatiereManager $typeMatiereManager,
         EtudiantNotes $etudiantNotes,
         MyPDF $myPdf,
         KernelInterface $kernel,
         MyEvaluations $myEvaluations
     ) {
+        $this->typeMatiereManager = $typeMatiereManager;
         $this->etudiantNotes = $etudiantNotes;
         $this->myEvaluations = $myEvaluations;
         $this->myPdf = $myPdf;
@@ -84,8 +85,9 @@ class EtudiantExportReleve
     public function getNotesEtudiantSemestre(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire)
     {
         $this->etudiantNotes->setEtudiant($this->etudiant);
+        $matieres = $this->typeMatiereManager->findBySemestre($semestre);
 
-        return $this->etudiantNotes->getNotesParSemestresEtAnneeUniversitaire($semestre, $anneeUniversitaire);
+        return $this->etudiantNotes->getNotesParSemestresEtAnneeUniversitaire($matieres, $anneeUniversitaire);
     }
 
     public function exportReleveDefinitif(Scolarite $scolarite)

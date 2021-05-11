@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/MatiereRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:08
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Repository;
@@ -42,9 +42,6 @@ class MatiereRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    /**
-     * @param $departement
-     */
     public function findByDepartementBuilder(Departement $departement): QueryBuilder
     {
         return $this->createQueryBuilder('m')
@@ -112,25 +109,25 @@ class MatiereRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function tableauMatieres(Departement $departement): array
-    {
-        $query = $this->createQueryBuilder('m')
-            ->innerJoin(Ue::class, 'u', 'with', 'u.id=m.ue')
-            ->innerJoin(Semestre::class, 's', 'with', 's.id=u.semestre')
-            ->innerJoin(Annee::class, 'a', 'with', 'a.id=s.annee')
-            ->innerJoin(Diplome::class, 'd', 'with', 'd.id=a.diplome')
-            ->where('d.departement= :departement')
-            ->setParameter('departement', $departement->getId())
-            ->getQuery()
-            ->getResult();
-
-        $t = [];
-
-        /** @var $q Matiere */
-        foreach ($query as $q) {
-            $t[$q->getCodeMatiere()] = $q;
-        }
-
-        return $t;
-    }
+//    public function tableauMatieres(Departement $departement): array
+//    {
+//        $query = $this->createQueryBuilder('m')
+//            ->innerJoin(Ue::class, 'u', 'with', 'u.id=m.ue')
+//            ->innerJoin(Semestre::class, 's', 'with', 's.id=u.semestre')
+//            ->innerJoin(Annee::class, 'a', 'with', 'a.id=s.annee')
+//            ->innerJoin(Diplome::class, 'd', 'with', 'd.id=a.diplome')
+//            ->where('d.departement= :departement')
+//            ->setParameter('departement', $departement->getId())
+//            ->getQuery()
+//            ->getResult();
+//
+//        $t = [];
+//
+//        /** @var $q Matiere */
+//        foreach ($query as $q) {
+//            $t[$q->getCodeMatiere()] = $q;
+//        }
+//
+//        return $t;
+//    }
 }

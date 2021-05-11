@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyStageEtudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 09/05/2021 14:41
  */
 
 /*
@@ -52,7 +52,6 @@ class MyStageEtudiant
     }
 
     /**
-     * @param $etat
      *
      * @throws NonUniqueResultException
      */
@@ -154,8 +153,6 @@ class MyStageEtudiant
     }
 
     /**
-     * @param        $name
-     * @param        $value
      * @param string $type
      *
      * @throws Exception

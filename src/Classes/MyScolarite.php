@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyScolarite.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:26
+ * @lastUpdate 09/05/2021 14:41
  */
 
 /*
@@ -46,7 +46,6 @@ class MyScolarite
     }
 
     /**
-     * @param $data
      *
      * @throws Exception
      */

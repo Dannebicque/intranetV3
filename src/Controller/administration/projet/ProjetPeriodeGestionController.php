@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/projet/ProjetPeriodeGestionController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Controller\administration\projet;
@@ -30,7 +30,6 @@ class ProjetPeriodeGestionController extends BaseController
      *                             requirements={"_format"="csv|xlsx|pdf"})
      * @ParamConverter("stagePeriode", options={"mapping": {"uuid": "uuid"}})
      *
-     * @param $_format
      */
     public function export(MyExport $myExport, ProjetPeriode $projetPeriode, $_format): Response
     {

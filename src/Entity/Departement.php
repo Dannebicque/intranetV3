@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Departement.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 19:01
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Entity;
@@ -434,9 +434,6 @@ class Departement extends BaseEntity
         return $this->typeDocuments;
     }
 
-    /**
-     * @return Departement
-     */
     public function addTypeDocument(TypeDocument $typeDocument): self
     {
         if (!$this->typeDocuments->contains($typeDocument)) {
@@ -447,9 +444,6 @@ class Departement extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return Departement
-     */
     public function removeTypeDocument(TypeDocument $typeDocument): self
     {
         if ($this->typeDocuments->contains($typeDocument)) {
@@ -503,9 +497,6 @@ class Departement extends BaseEntity
         return $this->personnelDepartements;
     }
 
-    /**
-     * @return Departement
-     */
     public function addPersonnelDepartement(PersonnelDepartement $personnelDepartement): self
     {
         if (!$this->personnelDepartements->contains($personnelDepartement)) {
@@ -516,9 +507,6 @@ class Departement extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return Departement
-     */
     public function removePersonnelDepartement(PersonnelDepartement $personnelDepartement): self
     {
         if ($this->personnelDepartements->contains($personnelDepartement)) {
@@ -540,9 +528,6 @@ class Departement extends BaseEntity
         return $this->actualites;
     }
 
-    /**
-     * @return Departement
-     */
     public function addActualite(Actualite $actualite): self
     {
         if (!$this->actualites->contains($actualite)) {
@@ -553,9 +538,6 @@ class Departement extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return Departement
-     */
     public function removeActualite(Actualite $actualite): self
     {
         if ($this->actualites->contains($actualite)) {
@@ -590,9 +572,6 @@ class Departement extends BaseEntity
         return $this->diplomes;
     }
 
-    /**
-     * @return Departement
-     */
     public function addDiplome(Diplome $diplome): self
     {
         if (!$this->diplomes->contains($diplome)) {
@@ -603,9 +582,6 @@ class Departement extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return Departement
-     */
     public function removeDiplome(Diplome $diplome): self
     {
         if ($this->diplomes->contains($diplome)) {

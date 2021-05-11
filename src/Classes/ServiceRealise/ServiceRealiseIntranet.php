@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/ServiceRealise/ServiceRealiseIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 11/05/2021 08:46
  */
 
 /*
@@ -16,7 +16,6 @@ namespace App\Classes\ServiceRealise;
 use App\DTO\EvenementEdt;
 use App\Entity\Constantes;
 use App\Entity\EdtPlanning;
-use App\Entity\Matiere;
 use App\Entity\Personnel;
 use App\Repository\EdtPlanningRepository;
 
@@ -29,9 +28,9 @@ class ServiceRealiseIntranet implements ServiceRealiseInterface
         $this->edtPlanningRepository = $edtPlanningRepository;
     }
 
-    public function getServiceRealiseParMatiere(Matiere $matiere): array
+    public function getServiceRealiseParMatiere(int $idMatiere, string $type): array
     {
-        $events = $this->edtPlanningRepository->findBy(['matiere' => $matiere->getId()],
+        $events = $this->edtPlanningRepository->findBy(['matiere' => $idMatiere, 'typeMatiere' => $type],
             ['semaine' => 'ASC', 'jour' => 'ASC', 'debut' => 'ASC']);
         $tabEvent = [];
         foreach ($events as $event) {
@@ -41,11 +40,12 @@ class ServiceRealiseIntranet implements ServiceRealiseInterface
         return $tabEvent;
     }
 
-    public function getServiceRealiseParPersonnelMatiere(Personnel $personnel, Matiere $matiere): array
+    public function getServiceRealiseParPersonnelMatiere(Personnel $personnel, int $idMatiere, string $type): array
     {
         $events = $this->edtPlanningRepository->findBy([
             'intervenant' => $personnel->getId(),
-            'matiere'     => $matiere->getId(),
+            'matiere' => $idMatiere,
+            'typeMatiere' => $type,
         ],
             ['semaine' => 'ASC', 'jour' => 'ASC', 'debut' => 'ASC']);
         $tabEvent = [];

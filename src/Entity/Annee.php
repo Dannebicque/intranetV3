@@ -4,12 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Annee.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 19:07
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Entity;
 
-use App\Classes\Tools;
+use App\Utils\Tools;
 use App\Entity\Traits\ApogeeTrait;
 use App\Entity\Traits\LifeCycleTrait;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -149,9 +149,6 @@ class Annee extends BaseEntity
         return $this->diplome;
     }
 
-    /**
-     * @return Annee
-     */
     public function setDiplome(?Diplome $diplome): self
     {
         $this->diplome = $diplome;
@@ -167,9 +164,6 @@ class Annee extends BaseEntity
         return $this->semestres;
     }
 
-    /**
-     * @return Annee
-     */
     public function addSemestre(Semestre $semestre): self
     {
         if (!$this->semestres->contains($semestre)) {
@@ -180,9 +174,6 @@ class Annee extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return Annee
-     */
     public function removeSemestre(Semestre $semestre): self
     {
         if ($this->semestres->contains($semestre)) {

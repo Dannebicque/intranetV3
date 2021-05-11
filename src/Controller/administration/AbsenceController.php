@@ -4,16 +4,16 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/AbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 11/05/2021 08:46
  */
 
 namespace App\Controller\administration;
 
 use App\Classes\Etudiant\EtudiantAbsences;
+use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\MyAbsences;
 use App\Classes\MyExport;
 use App\Classes\StatsAbsences;
-use App\Classes\Tools;
 use App\Controller\BaseController;
 use App\Entity\Absence;
 use App\Entity\Constantes;
@@ -23,7 +23,7 @@ use App\Event\AbsenceEvent;
 use App\Repository\AbsenceJustificatifRepository;
 use App\Repository\AbsenceRepository;
 use App\Repository\EtudiantRepository;
-use App\Repository\MatiereRepository;
+use App\Utils\Tools;
 use Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -45,20 +45,23 @@ class AbsenceController extends BaseController
      * @throws Exception
      */
     public function listeAbsenceEtudiant(
+        TypeMatiereManager $typeMatiereManager,
         EtudiantAbsences $etudiantAbsences,
         StatsAbsences $statsAbsences,
         Etudiant $etudiant
     ): Response {
+        $matieres = $typeMatiereManager->findBySemestreArray($etudiant->getSemestre());
         $etudiantAbsences->setEtudiant($etudiant);
 
-        $absences = $etudiantAbsences->getAbsencesParSemestresEtAnneeUniversitaire($etudiant->getSemestre(),
+        $absences = $etudiantAbsences->getAbsencesParSemestresEtAnneeUniversitaire($matieres,
             $this->dataUserSession->getAnneeUniversitaire());
         $statistiquesAbsences = $statsAbsences->calculStatistiquesAbsencesEtudiant($absences);
 
         return $this->render('administration/absence/_listeEtudiant.html.twig', [
-            'absences'             => $absences,
-            'etudiant'             => $etudiant,
+            'absences' => $absences,
+            'etudiant' => $etudiant,
             'statistiquesAbsences' => $statistiquesAbsences,
+            'matieres' => $matieres,
         ]);
     }
 
@@ -67,9 +70,13 @@ class AbsenceController extends BaseController
      *
      * @throws Exception
      */
-    public function liste(MyAbsences $myAbsences, Semestre $semestre): Response
-    {
-        $myAbsences->getAbsencesSemestre($semestre);
+    public function liste(
+        TypeMatiereManager $typeMatiereManager,
+        MyAbsences $myAbsences,
+        Semestre $semestre
+    ): Response {
+        $matieres = $typeMatiereManager->findBySemestre($semestre);
+        $myAbsences->getAbsencesSemestre($matieres, $semestre);
 
         return $this->render('administration/absence/liste.html.twig', [
             'semestre' => $semestre,
@@ -101,13 +108,12 @@ class AbsenceController extends BaseController
      * @Route("/semestre/{semestre}/justificatif/export.{_format}", name="administration_absences_semestre_justificatif_export",
      *                                                              requirements={"_format"="csv|xlsx|pdf"})
      *
-     * @param $_format
      */
     public function exportJustificatif(
         MyExport $myExport,
         AbsenceJustificatifRepository $absenceJustificatifRepository,
         Semestre $semestre,
-        $_format
+        string $_format
     ): Response {
         $justificatifs = $absenceJustificatifRepository->findBySemestre($semestre);
 
@@ -118,11 +124,10 @@ class AbsenceController extends BaseController
      * @Route("/semestre/{semestre}/export.{_format}", name="administration_absences_semestre_liste_export",
      *                                                 requirements={"_format"="csv|xlsx|pdf"})
      *
-     * @param $_format
      *
      * @throws Exception
      */
-    public function export(MyExport $myExport, MyAbsences $myAbsences, Semestre $semestre, $_format): Response
+    public function export(MyExport $myExport, MyAbsences $myAbsences, Semestre $semestre, string $_format): Response
     {
         $myAbsences->getAbsencesSemestre($semestre);
 
@@ -133,13 +138,12 @@ class AbsenceController extends BaseController
      * @Route("/all/semestre/{semestre}/export.{_format}", name="administration_all_absences_semestre_export",
      *                                                     requirements={"_format"="csv|xlsx|pdf"})
      *
-     * @param $_format
      */
     public function exportAllAbsences(
         MyExport $myExport,
         AbsenceRepository $absenceRepository,
         Semestre $semestre,
-        $_format
+        string $_format
     ): Response {
         $absences = $absenceRepository->getBySemestre($semestre, $semestre->getAnneeUniversitaire());
 
@@ -152,9 +156,9 @@ class AbsenceController extends BaseController
                 'date',
                 'heure',
                 'duree',
-                'etudiant'  => ['nom', 'prenom'],
+                'etudiant' => ['nom', 'prenom'],
                 'justifie',
-                'matiere'   => ['libelle'],
+                'matiere' => ['libelle'],
                 'personnel' => ['nom', 'prenom'],
             ]
         );
@@ -187,14 +191,14 @@ class AbsenceController extends BaseController
      *     options={"expose":true})
      */
     public function ajaxAddAbsence(
-        MatiereRepository $matiereRepository,
+        TypeMatiereManager $typeMatiereManager,
         Request $request,
         EtudiantRepository $etudiantRepository,
         EtudiantAbsences $etudiantAbsences
     ): JsonResponse {
         $etudiant = $etudiantRepository->find($request->request->get('etudiant'));
         if (null !== $etudiant) {
-            $matiere = $matiereRepository->find($request->request->get('matiere'));
+            $matiere = $typeMatiereManager->getMatiereFromSelect($request->request->get('matiere'));
             if (null !== $matiere) {
                 $etudiantAbsences->setEtudiant($etudiant);
                 $absence = $etudiantAbsences->addAbsence(

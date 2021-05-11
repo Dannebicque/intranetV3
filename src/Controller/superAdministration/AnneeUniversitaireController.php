@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/AnneeUniversitaireController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 09/05/2021 17:25
  */
 
 namespace App\Controller\superAdministration;
@@ -62,7 +62,6 @@ class AnneeUniversitaireController extends BaseController
      * @Route("/export.{_format}", name="sa_annee_universitaire_export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"})
      *
-     * @param $_format
      */
     public function export(
         MyExport $myExport,
@@ -163,12 +162,15 @@ class AnneeUniversitaireController extends BaseController
                 0 === \count($annee_universitaire->getEvaluations())) {
                 $this->entityManager->remove($annee_universitaire);
                 $this->entityManager->flush();
+                $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'annee_universitaire.delete.success.flash');
 
                 return $this->json($id, Response::HTTP_OK);
             }
+            $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'annee_universitaire.delete.error.flash');
 
             return $this->json('not_empty', Response::HTTP_INTERNAL_SERVER_ERROR);
         }
+        $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'annee_universitaire.delete.error.flash');
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }

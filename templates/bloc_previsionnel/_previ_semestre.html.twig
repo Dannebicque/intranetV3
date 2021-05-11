@@ -31,7 +31,7 @@
 
                 <td colspan="2">
                     <button data-provide="modaler tooltip"
-                            data-url="{{ path('api_previsionnel_matiere', {'matiere': previsionnel.matiere_id}) }}"
+                            data-url="{{ path('api_previsionnel_matiere', {'matiere': previsionnel.matiere_id, type: previsionnel.type_matiere}) }}"
                             data-size="lg"
                             data-confirm-text="{{ 'fermer'|trans }}"
                             class="btn btn-block btn-cyan"

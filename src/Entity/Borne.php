@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Borne.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:12
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Entity;
@@ -92,9 +92,6 @@ class Borne extends BaseEntity
         return $this->icone;
     }
 
-    /**
-     * @return Borne
-     */
     public function setIcone(string $icone): self
     {
         $this->icone = $icone;
@@ -107,9 +104,6 @@ class Borne extends BaseEntity
         return $this->couleur;
     }
 
-    /**
-     * @return Borne
-     */
     public function setCouleur(string $couleur): self
     {
         $this->couleur = $couleur;
@@ -122,9 +116,6 @@ class Borne extends BaseEntity
         return $this->message;
     }
 
-    /**
-     * @return Borne
-     */
     public function setMessage(string $message): self
     {
         $this->message = $message;
@@ -137,9 +128,6 @@ class Borne extends BaseEntity
         return $this->url;
     }
 
-    /**
-     * @return Borne
-     */
     public function setUrl(string $url): self
     {
         $this->url = $url;
@@ -152,9 +140,6 @@ class Borne extends BaseEntity
         return $this->dateDebutPublication;
     }
 
-    /**
-     * @return Borne
-     */
     public function setDateDebutPublication(DateTimeInterface $dateDebutPublication): self
     {
         $this->dateDebutPublication = $dateDebutPublication;
@@ -167,9 +152,6 @@ class Borne extends BaseEntity
         return $this->dateFinPublication;
     }
 
-    /**
-     * @return Borne
-     */
     public function setDateFinPublication(DateTimeInterface $dateFinPublication): self
     {
         $this->dateFinPublication = $dateFinPublication;
@@ -182,9 +164,6 @@ class Borne extends BaseEntity
         return $this->visible;
     }
 
-    /**
-     * @return Borne
-     */
     public function setVisible(bool $visible): self
     {
         $this->visible = $visible;
@@ -200,9 +179,6 @@ class Borne extends BaseEntity
         return $this->semestres;
     }
 
-    /**
-     * @return Borne
-     */
     public function addSemestre(Semestre $semestre): self
     {
         if (!$this->semestres->contains($semestre)) {
@@ -212,9 +188,6 @@ class Borne extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return Borne
-     */
     public function removeSemestre(Semestre $semestre): self
     {
         if ($this->semestres->contains($semestre)) {

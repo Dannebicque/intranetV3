@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Courrier.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Entity;
@@ -31,9 +31,6 @@ class Courrier extends BaseEntity
         return $this->texte;
     }
 
-    /**
-     * @return Courrier
-     */
     public function setTexte(string $texte): self
     {
         $this->texte = $texte;

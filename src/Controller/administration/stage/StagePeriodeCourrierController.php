@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StagePeriodeCourrierController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Controller\administration\stage;
@@ -89,7 +89,6 @@ class StagePeriodeCourrierController extends BaseController
     /**
      * @Route("/apercu-defaut/{mail}", name="administration_stage_periode_courrier_apercu_defaut")
      *
-     * @param $mail
      */
     public function apercuDefaut($mail): Response
     {
@@ -102,7 +101,6 @@ class StagePeriodeCourrierController extends BaseController
     /**
      * @Route("/apercu/{stagePeriode}/{mail}", name="administration_stage_periode_courrier_apercu_modele")
      *
-     * @param $mail
      *
      * @throws LoaderError
      * @throws NonUniqueResultException
@@ -138,7 +136,6 @@ class StagePeriodeCourrierController extends BaseController
      *                                            options={"expose"=true})
      * @ParamConverter("stagePeriode", options={"mapping": {"uuid": "uuid"}})
      *
-     * @param $mail
      *
      * @throws NonUniqueResultException
      */
@@ -160,7 +157,6 @@ class StagePeriodeCourrierController extends BaseController
     /**
      * @Route("/reset/{id}/{etat}", name="administration_stage_periode_courrier_reset", options={"expose"=true})
      *
-     * @param $etat
      */
     public function reset(
         StageMailTemplateRepository $stageMailTemplateRepository,

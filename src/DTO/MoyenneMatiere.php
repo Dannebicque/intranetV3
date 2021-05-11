@@ -4,13 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/MoyenneMatiere.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:41
+ * @lastUpdate 09/05/2021 15:35
  */
 
 namespace App\DTO;
 
 use App\Entity\Constantes;
-use App\Entity\Matiere;
 use App\Entity\Note;
 
 class MoyenneMatiere
@@ -25,14 +24,7 @@ class MoyenneMatiere
     private float $bonification = 0;
     private float $penalite;
 
-    /**
-     * MoyenneMatiere constructor.
-     *
-     * @param Matiere|mixed $matiere
-     * @param               $penalite
-     * @param               $groupes
-     */
-    public function __construct(Matiere $matiere, $penalite, $groupes)
+    public function __construct(Matiere $matiere, float $penalite, $groupes)
     {
         $this->matiere = $matiere;
         $this->penalite = $penalite;
@@ -62,7 +54,7 @@ class MoyenneMatiere
 
     public function addNote(Note $note): void
     {
-        if (false === $note->getAbsenceJustifie()) {
+        if (false === $note->getAbsenceJustifie() && null !== $note->getEvaluation()) {
             $this->notes[] = $note->getNote();
             $this->coefficients[] = $note->getEvaluation()->getCoefficient();
             $this->totalNotes += $note->getNote() * $note->getEvaluation()->getCoefficient();

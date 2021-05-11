@@ -64,9 +64,10 @@
                     <label class="sr-only" for="previMatiere">{{ 'choisir.matiere'|trans }}</label>
                     <select class="form-control selectpicker" id="previMatiere" data-annee="{{ annee }}">
                         <option value="">{{ 'choisir.matiere'|trans }}</option>
-                        {% for matiere in matieres %}
-                            <option value="{{ matiere.id }}">{{ matiere.codeMatiere }} | {{ matiere.libelle }}</option>
+                        {% for key, matiere in matieres %}
+                            <option value="{{ matieres[key].typeIdMatiere }}">{{ matieres[key].display }}</option>
                         {% endfor %}
+
                     </select>
                 </div>
             </div>
@@ -144,7 +145,8 @@
     <div class="card card-danger">
         <h4 class="card-title">{{ 'adm.previsionnel.supprimer.annee.heading'|trans }}</h4>
         <div class="card-body">
-            <form action="{{ path('administration_previsionnel_supprimer_annee') }}" method="DELETE" class="form">
+            <form action="{{ path('administration_previsionnel_supprimer_annee') }}" method="POST" class="form">
+                {# todo: petite confirmation avant la suppression... #}
                 <div class="row">
                     <div class="col-md-6 col-sm-12">
                         <div class="form-group">

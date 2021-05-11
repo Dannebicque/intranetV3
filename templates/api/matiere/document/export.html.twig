@@ -111,11 +111,12 @@
             </div>
         {% endfor %}
     </div>
-    <br/>
+        <br/>
         <input type="hidden" name="matiere" value="{{ matiere.id }}">
-    <div class="col-md-12 col-sm-12">
-        <button class="btn btn-block btn-primary" type="submit">{{ 'generer.fichier'|trans }}</button>
+        <input type="hidden" name="typeMatiere" value="{{ matiere.typeMatiere }}">
+        <div class="col-md-12 col-sm-12">
+            <button class="btn btn-block btn-primary" type="submit">{{ 'generer.fichier'|trans }}</button>
+        </div>
     </div>
-</div>
 </form>
 

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/ServiceRealise/ServiceRealiseCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:10
+ * @lastUpdate 05/05/2021 14:18
  */
 
 /*
@@ -28,7 +28,7 @@ class ServiceRealiseCelcat implements ServiceRealiseInterface
         $this->celcatEventsRepository = $celcatEventsRepository;
     }
 
-    public function getServiceRealiseParMatiere(Matiere $matiere): array
+    public function getServiceRealiseParMatiere(int $idMatiere, string $type): array
     {
         $events = $this->celcatEventsRepository->findBy(['codeModule' => $matiere->getCodeElement()],
             ['semaine' => 'ASC', 'jour' => 'ASC', 'debut' => 'ASC']);
@@ -70,7 +70,8 @@ class ServiceRealiseCelcat implements ServiceRealiseInterface
         return $ev;
     }
 
-    public function getServiceRealiseParPersonnelMatiere(Personnel $getConnectedUser, Matiere $getMatiere): array
+    public function getServiceRealiseParPersonnelMatiere(Personnel $personnel, int $idMatiere, string $type): array
     {
+        // TODO: Implement getServiceRealiseParPersonnelMatiere() method.
     }
 }

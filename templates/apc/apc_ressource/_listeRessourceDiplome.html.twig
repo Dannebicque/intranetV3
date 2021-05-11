@@ -11,25 +11,21 @@
         <th>{{ 'table.tp'|trans }}</th>
         <th>{{ 'table.nb_notes'|trans }}</th>
         <th>{{ 'table.coefficient'|trans }}.</th>
-        <th>{{ 'table.nb_ects'|trans }}</th>
         <th>{{ 'table.suspendu'|trans }}</th>
-        <th>{{ 'table.pac'|trans }}</th>
         <th>{{ 'table.actions'|trans }}</th>
     </tr>
     </thead>
     <tbody>
     {% for ressource in ressources|filter(ressource => ressource.semestre.id == semestre.id) %}
         <tr {% if ressource.suspendu == true %}class="bg-pale-warning"{% endif %}>
-            <td>{{ ressource.codeRessource }}</td>
+            <td>{{ ressource.codeMatiere }}</td>
             <td>{{ ressource.libelle }}</td>
-            <td>{{ ressource.heuresCM }}</td>
-            <td>{{ ressource.heuresTD }}</td>
-            <td>{{ ressource.heuresTP }}</td>
-            <td>nbNotes??</td>
-            <td>coefficient??</td>
-            <td>nbEcts??</td>
+            <td>{{ ressource.cmPpn }} | {{ ressource.cmFormation }}</td>
+            <td>{{ ressource.tdPpn }} | {{ ressource.tdFormation }}</td>
+            <td>{{ ressource.tpPpn }} | {{ ressource.tpFormation }}</td>
+            <td>{{ ressource.nbNotes }}</td>
+            <td>{{ ressource.coefficient }}</td>
             <td>{{ ressource.suspendu ? 'Yes'|trans : 'No'|trans }}</td>
-            <td>PAC??</td>
             <td>
                 {% if settings('MODIFICATION_PPN') == 1 %}
 

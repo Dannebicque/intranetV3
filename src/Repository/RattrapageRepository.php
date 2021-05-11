@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/RattrapageRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Repository;
@@ -36,9 +36,6 @@ class RattrapageRepository extends ServiceEntityRepository
         parent::__construct($registry, Rattrapage::class);
     }
 
-    /**
-     * @param $anneeUniversitaire
-     */
     public function findBySemestre(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire)
     {
         return $this->createQueryBuilder('r')

@@ -45,7 +45,7 @@
                             class="form-control selectpicker">
                         <option value="0">Choisissez une matière</option>
                         {% for matiere in matieres %}
-                            <option value="{{ matiere.id }}">{{ matiere.display }}</option>
+                            <option value="{{ matiere.typeIdMatiere }}">{{ matiere.display }}</option>
                         {% endfor %}
                     </select>
                 </div>

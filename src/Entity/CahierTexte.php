@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/CahierTexte.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Entity;
@@ -75,9 +75,6 @@ class CahierTexte extends BaseEntity
         return $this->libelle;
     }
 
-    /**
-     * @return CahierTexte
-     */
     public function setLibelle(string $libelle): self
     {
         $this->libelle = $libelle;
@@ -90,9 +87,6 @@ class CahierTexte extends BaseEntity
         return $this->description;
     }
 
-    /**
-     * @return CahierTexte
-     */
     public function setDescription(string $description): self
     {
         $this->description = $description;
@@ -105,9 +99,6 @@ class CahierTexte extends BaseEntity
         return $this->dateRetour;
     }
 
-    /**
-     * @return CahierTexte
-     */
     public function setDateRetour(DateTimeInterface $dateRetour): self
     {
         $this->dateRetour = $dateRetour;
@@ -120,9 +111,6 @@ class CahierTexte extends BaseEntity
         return $this->personnel;
     }
 
-    /**
-     * @return CahierTexte
-     */
     public function setPersonnel(?Personnel $personnel): self
     {
         $this->personnel = $personnel;
@@ -138,9 +126,6 @@ class CahierTexte extends BaseEntity
         return $this->fichiers;
     }
 
-    /**
-     * @return CahierTexte
-     */
     public function addFichier(Fichier $fichier): self
     {
         if (!$this->fichiers->contains($fichier)) {
@@ -150,9 +135,6 @@ class CahierTexte extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return CahierTexte
-     */
     public function removeFichier(Fichier $fichier): self
     {
         if ($this->fichiers->contains($fichier)) {
@@ -167,9 +149,6 @@ class CahierTexte extends BaseEntity
         return $this->semestre;
     }
 
-    /**
-     * @return CahierTexte
-     */
     public function setSemestre(?Semestre $semestre): self
     {
         $this->semestre = $semestre;
@@ -182,9 +161,6 @@ class CahierTexte extends BaseEntity
         return $this->matiere;
     }
 
-    /**
-     * @return CahierTexte
-     */
     public function setMatiere(?Matiere $matiere): self
     {
         $this->matiere = $matiere;

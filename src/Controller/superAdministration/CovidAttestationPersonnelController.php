@@ -4,13 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/CovidAttestationPersonnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Controller\superAdministration;
 
 use App\Classes\Covid\MyExportPresence;
-use App\Classes\Tools;
+use App\Utils\Tools;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\CovidAttestationPersonnel;
@@ -52,7 +52,6 @@ class CovidAttestationPersonnelController extends BaseController
     /**
      * @Route("/change-etat/{id}/{etat}", name="covid_attestation_personnel_change_etat", methods={"GET"})
      *
-     * @param $etat
      */
     public function changeEtat(
         EventDispatcherInterface $eventDispatcher,

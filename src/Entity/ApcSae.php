@@ -4,14 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcSae.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/05/2021 18:44
+ * @lastUpdate 07/05/2021 16:38
  */
 
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
 use App\Repository\ApcSaeRepository;
-use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -20,51 +19,31 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass=ApcSaeRepository::class)
  * @ORM\HasLifecycleCallbacks()
  */
-class ApcSae extends BaseEntity
+class ApcSae extends AbstractMatiere
 {
     use LifeCycleTrait;
 
     public const SOURCE = 'sae';
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $libelle;
-
-    /**
      * @ORM\ManyToOne(targetEntity=Semestre::class, inversedBy="apcSaes")
      */
-    private $semestre;
+    private ?Semestre $semestre;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private float $projetPpn = 0;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private float $projetFormation = 0;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $description;
-
-    /**
-     * @ORM\Column(type="float")
-     */
-    private $heuresCM = 0;
-
-    /**
-     * @ORM\Column(type="float")
-     */
-    private $heuresTD = 0;
-
-    /**
-     * @ORM\Column(type="float")
-     */
-    private $heuresTP = 0;
-
-    /**
-     * @ORM\Column(type="float")
-     */
-    private $heuresProjet = 0;
-
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $livrables;
+    private ?string $livrables;
 
     /**
      * @ORM\OneToMany(targetEntity=ApcSaeCompetence::class, mappedBy="sae", cascade={"persist","remove"})
@@ -77,11 +56,6 @@ class ApcSae extends BaseEntity
     private $apcSaeRessources;
 
     /**
-     * @ORM\Column(type="string", length=20)
-     */
-    private $codeSae;
-
-    /**
      * @ORM\OneToMany(targetEntity=ApcSaeApprentissageCritique::class, mappedBy="sae")
      */
     private $apcSaeApprentissageCritiques;
@@ -89,25 +63,13 @@ class ApcSae extends BaseEntity
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $exemples;
+    private ?string $exemples;
 
     public function __construct()
     {
         $this->apcSaeCompetences = new ArrayCollection();
         $this->apcSaeRessources = new ArrayCollection();
         $this->apcSaeApprentissageCritiques = new ArrayCollection();
-    }
-
-    public function getLibelle(): ?string
-    {
-        return $this->libelle;
-    }
-
-    public function setLibelle(string $libelle): self
-    {
-        $this->libelle = $libelle;
-
-        return $this;
     }
 
     public function getSemestre(): ?Semestre
@@ -118,66 +80,6 @@ class ApcSae extends BaseEntity
     public function setSemestre(?Semestre $semestre): self
     {
         $this->semestre = $semestre;
-
-        return $this;
-    }
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(?string $description): self
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    public function getHeuresCM(): ?float
-    {
-        return $this->heuresCM;
-    }
-
-    public function setHeuresCM(float $heuresCM): self
-    {
-        $this->heuresCM = $heuresCM;
-
-        return $this;
-    }
-
-    public function getHeuresTD(): ?float
-    {
-        return $this->heuresTD;
-    }
-
-    public function setHeuresTD(float $heuresTD): self
-    {
-        $this->heuresTD = $heuresTD;
-
-        return $this;
-    }
-
-    public function getHeuresTP(): ?float
-    {
-        return $this->heuresTP;
-    }
-
-    public function setHeuresTP(float $heuresTP): self
-    {
-        $this->heuresTP = $heuresTP;
-
-        return $this;
-    }
-
-    public function getHeuresProjet(): ?float
-    {
-        return $this->heuresProjet;
-    }
-
-    public function setHeuresProjet(float $heuresProjet): self
-    {
-        $this->heuresProjet = $heuresProjet;
 
         return $this;
     }
@@ -254,18 +156,6 @@ class ApcSae extends BaseEntity
         return $this;
     }
 
-    public function getCodeSae(): ?string
-    {
-        return $this->codeSae;
-    }
-
-    public function setCodeSae(string $codeSae): self
-    {
-        $this->codeSae = $codeSae;
-
-        return $this;
-    }
-
     public function getDiplome(): ?Diplome
     {
         if (null !== $this->getSemestre()) {
@@ -290,8 +180,6 @@ class ApcSae extends BaseEntity
     }
 
     /**
-     * @param ApcCompetence $competence
-     *
      * @return $this
      */
     public function addCompetence(ApcCompetence $competence): self
@@ -303,8 +191,6 @@ class ApcSae extends BaseEntity
     }
 
     /**
-     * @param ApcCompetence $competence
-     *
      * @return $this
      */
     public function removeCompetence(ApcCompetence $competence): self
@@ -360,26 +246,45 @@ class ApcSae extends BaseEntity
         return $this;
     }
 
-    public function getCode(): ?string
-    {
-        return $this->getCodeSae();
-    }
-
     public function getJson(): array
     {
         $t = [];
         $t['id'] = $this->getId();
         $t['libelle'] = $this->getLibelle();
         $t['display'] = '-';
-        $t['cmFormation'] = $this->getHeuresCM();
-        $t['tdFormation'] = $this->getHeuresTD();
-        $t['tpFormation'] = $this->getHeuresTP();
-        $t['ptutFormation'] = $this->getHeuresProjet();
-        $t['cmPpn'] = $this->getHeuresCM();
-        $t['tdPpn'] = $this->getHeuresTD();
-        $t['tpPpn'] = $this->getHeuresTP();
-        $t['ptutPpn'] = $this->getHeuresProjet();
+        $t['cmFormation'] = $this->getCmFormation();
+        $t['tdFormation'] = $this->getTdFormation();
+        $t['tpFormation'] = $this->getTpFormation();
+        $t['ptutFormation'] = $this->getProjetFormation();
+        $t['cmPpn'] = $this->getCmPpn();
+        $t['tdPpn'] = $this->getTdPpn();
+        $t['tpPpn'] = $this->getTpPpn();
+        $t['ptutPpn'] = $this->getProjetPpn();
 
         return $t;
+    }
+
+    public function getProjetPpn(): ?float
+    {
+        return $this->projetPpn;
+    }
+
+    public function setProjetPpn(float $projetPpn): self
+    {
+        $this->projetPpn = $projetPpn;
+
+        return $this;
+    }
+
+    public function getProjetFormation(): ?float
+    {
+        return $this->projetFormation;
+    }
+
+    public function setProjetFormation(float $projetFormation): self
+    {
+        $this->projetFormation = $projetFormation;
+
+        return $this;
     }
 }

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/UserController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Controller;
@@ -46,8 +46,6 @@ class UserController extends BaseController
     /**
      * @Route("/{type}/{slug}/{onglet}", name="user_profil", options={"expose": true})
      *
-     * @param        $type
-     * @param        $slug
      * @param string $onglet
      *
      * @return RedirectResponse|Response

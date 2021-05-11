@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Apogee/ApogeeSousCommission.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/04/2021 12:09
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Classes\Apogee;
@@ -239,7 +239,6 @@ class ApogeeSousCommission extends Apogee
     /**
      * Calcule les nouvelles coordonnées d'une cellule à partir des offsets x et y.
      *
-     * @param $cellCoordonate
      */
     public function getNewCoordinates($cellCoordonate, int $offsetX = 0, int $offsetY = 0): string
     {

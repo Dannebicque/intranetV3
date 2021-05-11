@@ -9,9 +9,9 @@
                             id="absence-matiere"
                     >
                         {% for mati in matieres %}
-                            <option value="{{ mati.id }}"
-                                    {% if matiere != null and mati.id == matiere.id %}selected{% endif %}>
-                                {{ mati.codeMatiere }} | {{ mati.libelle }}
+                            <option value="{{ mati.typeIdMatiere }}"
+                                    {% if matiere != null and mati.typeIdMatiere == matiere.typeIdMatiere %}selected{% endif %}>
+                                {{ mati.display }}
                             </option>
                         {% endfor %}
                     </select>

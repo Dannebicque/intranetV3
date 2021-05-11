@@ -9,7 +9,7 @@
     <div class="right gap-items-2">
         {% for sem in user_data.semestresActifs %}
             <a href="{{ path('administration_notes_semestre_index', {semestre:sem.id}) }}"
-               class="btn btn-round {% if sem.id == evaluation.semestre.id %}btn-primary{% endif %}"
+               class="btn btn-round {% if sem.id == matiere.semestre.id %}btn-primary{% endif %}"
                title="{{ 'atitle.changer.semestre'|trans }}"
                data-provide="tooltip"
                data-placement="bottom"
@@ -21,7 +21,7 @@
 {% block headeractions %}
     <div class="header-action">
         <div class="buttons">
-            <a href="{{ path('administration_notes_semestre_index', {semestre:evaluation.semestre.id}) }}"
+            <a href="{{ path('administration_notes_semestre_index', {semestre:matiere.semestre.id}) }}"
                class="btn btn-primary btn-float" data-provide="tooltip"
                data-placement="bottom" title="{{ 'atitle.retour_semestres'|trans }}"><i class="fas fa-arrow-left"></i></a>
             <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
@@ -34,8 +34,7 @@
 
     <div class="card card-slided-up">
         <header class="card-header">
-            <h4 class="card-title"><strong>Détails</strong> de l'évaluation | {{ evaluation.matiere.codeMatiere }}
-                                                            | {{ evaluation.matiere.libelle }}</h4>
+            <h4 class="card-title"><strong>Détails</strong> de l'évaluation | {{ matiere.display }}</h4>
             <ul class="card-controls">
                 <li><a class="card-btn-slide" href="#" title="Plus de détails et modifications" data-provide="tooltip">
                         Cliquez pour éditer l'évaluation <i class="fas fa-chevron-down"></i>
@@ -53,7 +52,7 @@
     </div>
 
     <div class="card">
-        <h4 class="card-title"><strong>Saisie</strong> des notes | {{ evaluation.matiere.display }}
+        <h4 class="card-title"><strong>Saisie</strong> des notes | {{ matiere.display }}
         </h4>
         <div class="card-body">
             {{ include('composants/_saisie_notes.html.twig') }}

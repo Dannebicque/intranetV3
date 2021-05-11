@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/DateRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/03/2021 10:15
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Repository;
@@ -36,10 +36,6 @@ class DateRepository extends ServiceEntityRepository
         parent::__construct($registry, Date::class);
     }
 
-    /**
-     * @param $departement
-     * @param $nbResult
-     */
     public function findByDepartement(Departement $departement, $nbResult = 0)
     {
         $query = $this->createQueryBuilder('d')
@@ -54,8 +50,6 @@ class DateRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param $departement
-     * @param $annee
      *
      * @throws Exception
      */

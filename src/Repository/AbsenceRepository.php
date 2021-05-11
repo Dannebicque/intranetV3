@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/AbsenceRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:08
+ * @lastUpdate 11/05/2021 08:46
  */
 
 namespace App\Repository;
@@ -13,9 +13,7 @@ use App\Entity\Absence;
 use App\Entity\AbsenceJustificatif;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Etudiant;
-use App\Entity\Matiere;
 use App\Entity\Semestre;
-use App\Entity\Ue;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -35,9 +33,6 @@ class AbsenceRepository extends ServiceEntityRepository
         parent::__construct($registry, Absence::class);
     }
 
-    /**
-     * @param $matiere
-     */
     public function getByMatiereArray($matiere, AnneeUniversitaire $anneeUniversitaire): array
     {
         $absences = $this->getByMatiere($matiere, $anneeUniversitaire);
@@ -62,13 +57,15 @@ class AbsenceRepository extends ServiceEntityRepository
         return $tab;
     }
 
-    public function getByMatiere(Matiere $matiere, AnneeUniversitaire $anneeUniversitaire)
+    public function getByMatiere(\App\DTO\Matiere $matiere, AnneeUniversitaire $anneeUniversitaire)
     {
         return $this->createQueryBuilder('m')
             ->innerJoin(AnneeUniversitaire::class, 'a', 'WITH', 'm.anneeUniversitaire = a.id')
-            ->where('m.matiere = :matiere')
+            ->where('m.idMatiere = :matiere')
+            ->andWhere('m.typeMatiere = :type')
             ->andWhere('a.annee = :annee')
-            ->setParameter('matiere', $matiere->getId())
+            ->setParameter('matiere', $matiere->id)
+            ->setParameter('type', $matiere->typeMatiere)
             ->setParameter('annee', $anneeUniversitaire->getAnnee())
             ->orderBy('m.dateHeure', 'DESC')
             ->getQuery()
@@ -103,9 +100,6 @@ class AbsenceRepository extends ServiceEntityRepository
         return $trattrapages;
     }
 
-    /**
-     * @param $anneeCourante
-     */
     public function getBySemestre(Semestre $semestre, AnneeUniversitaire $anneeCourante)
     {
         return $this->createQueryBuilder('a')
@@ -121,21 +115,25 @@ class AbsenceRepository extends ServiceEntityRepository
     }
 
     public function getByEtudiantAndSemestre(
+        $matieres,
         Etudiant $etudiant,
-        Semestre $semestre,
         AnneeUniversitaire $anneeUniversitaire
     ) {
-        return $this->createQueryBuilder('a')
-            ->innerJoin(Matiere::class, 'm', 'WITH', 'a.matiere = m.id')
-            ->innerJoin(Ue::class, 'u', 'WITH', 'm.ue = u.id')
+        $query = $this->createQueryBuilder('a')
             ->innerJoin(AnneeUniversitaire::class, 'e', 'WITH', 'a.anneeUniversitaire = e.id')
             ->where('e.id = :annee')
             ->andWhere('a.etudiant = :etudiant')
-            ->andWhere('u.semestre = :semestre')
             ->setParameter('annee', $anneeUniversitaire->getId())
             ->setParameter('etudiant', $etudiant->getId())
-            ->setParameter('semestre', $semestre->getId())
-            ->orderBy('a.dateHeure', 'DESC')
+            ->orderBy('a.dateHeure', 'DESC');
+
+
+        $ors = [];
+        foreach ($matieres as $matiere) {
+            $ors[] = '(' . $query->expr()->orx('a.idMatiere = ' . $query->expr()->literal($matiere->id)) . ' AND ' . $query->expr()->andX('a.typeMatiere = ' . $query->expr()->literal($matiere->typeMatiere)) . ')';
+        }
+
+        return $query->andWhere(implode(' OR ', $ors))
             ->getQuery()
             ->getResult();
     }

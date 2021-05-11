@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/DocumentController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/03/2021 16:02
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Controller\administration;
@@ -41,7 +41,6 @@ class DocumentController extends BaseController
      * @Route("/export.{_format}", name="administration_document_export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"})
      *
-     * @param $_format
      */
     public function export(MyExport $myExport, DocumentRepository $documentRepository, $_format): Response
     {

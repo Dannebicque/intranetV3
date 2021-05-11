@@ -4,19 +4,17 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Previsionnel/PrevisionnelRessourceManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/05/2021 18:44
+ * @lastUpdate 05/05/2021 18:54
  */
 
 namespace App\Classes\Previsionnel;
 
-
 use App\Adapter\PrevisionnelRessourceAdapter;
-use App\DTO\Previsionnel;
 use App\DTO\PrevisionnelCollection;
 use App\Entity\Departement;
 use App\Entity\Personnel;
+use App\Entity\Semestre;
 use App\Repository\PrevisionnelRessourceRepository;
-use App\Repository\PrevisionnelSaeRepository;
 
 class PrevisionnelRessourceManager extends AbstractPrevisionnelManager implements PrevisionnelManagerInterface
 {
@@ -36,7 +34,7 @@ class PrevisionnelRessourceManager extends AbstractPrevisionnelManager implement
     {
         $data = $this->previsionnelRepository->findPrevisionnelEnseignantComplet($personnel, $annee);
 
-        return $this->previsionnelRessourceAdapter->collection($data); //l'adapter peut prendre un objet unique ou une collection et retourner un objet touijours identique pour le traitement dans MyPrevisionnel.
+        return $this->previsionnelRessourceAdapter->collection($data);
     }
 
     public function getPrevisionnelPersonnelDepartementAnnee(
@@ -46,6 +44,34 @@ class PrevisionnelRessourceManager extends AbstractPrevisionnelManager implement
     ): PrevisionnelCollection {
         $data = $this->previsionnelRepository->findPrevisionnelEnseignantDepartementAnnee($personnel, $departement,
             $annee);
+
+        return $this->previsionnelRessourceAdapter->collection($data);
+    }
+
+    public function findPrevisionnelMatiere($matiere, $anneePrevisionnel): PrevisionnelCollection
+    {
+        $data = $this->previsionnelRepository->findPrevisionnelMatiere($matiere, $anneePrevisionnel);
+
+        return $this->previsionnelRessourceAdapter->collection($data);
+    }
+
+    public function getPrevisionnelMatiere($matiere, $annee): PrevisionnelCollection
+    {
+        $data = $this->previsionnelRepository->findPrevisionnelMatiere($matiere, $annee);
+
+        return $this->previsionnelRessourceAdapter->collection($data);
+    }
+
+    public function getPrevisionnelSemestre(Semestre $semestre, $annee = 0): PrevisionnelCollection
+    {
+        $data = $this->previsionnelRepository->findPrevisionnelSemestre($semestre, $annee);
+
+        return $this->previsionnelRessourceAdapter->collection($data);
+    }
+
+    public function findByDepartement(Departement $departement, $annee = 0): PrevisionnelCollection
+    {
+        $data = $this->previsionnelRepository->findByDepartement($departement, $annee);
 
         return $this->previsionnelRessourceAdapter->collection($data);
     }

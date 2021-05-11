@@ -15,7 +15,7 @@
     <tbody>
     {% for apc_sae in apc_saes %}
         <tr id="ligne_{{ apc_sae.id }}">
-            <td>{{ apc_sae.codeSae }}</td>
+            <td>{{ apc_sae.codeMatiere }}</td>
             <td>{{ apc_sae.libelle }}</td>
             <td>{{ apc_sae.semestre != null ? apc_sae.semestre.libelle : 'non.defini'|trans }}</td>
             <td>
@@ -24,10 +24,10 @@
                         {{ competence.competence.nomCourt }}
                     </span>
                 {% endfor %}</td>
-            <td>{{ apc_sae.heuresCM }}</td>
-            <td>{{ apc_sae.heuresTD }}</td>
-            <td>{{ apc_sae.heuresTP }}</td>
-            <td>{{ apc_sae.heuresProjet }}</td>
+            <td>{{ apc_sae.cmPpn }}</td>
+            <td>{{ apc_sae.tdPpn }}</td>
+            <td>{{ apc_sae.tpPpn }}</td>
+            <td>{{ apc_sae.projetPpn }}</td>
             <td>
                 {{ include('composants/adm-buttons-table-index.html.twig', {elt: 'apc_sae', id: apc_sae.id}) }}
             </td>

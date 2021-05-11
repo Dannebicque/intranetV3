@@ -1,21 +1,33 @@
 <div class="row">
     <div class="col-sm-3">
-        {{ form_row(form.codeSae) }}
+        {{ form_row(form.codeMatiere) }}
     </div>
     <div class="col-sm-9">
         {{ form_row(form.libelle) }}
     </div>
     <div class="col-sm-3">
-        {{ form_row(form.heuresCM) }}
+        {{ form_row(form.cmPpn) }}
     </div>
     <div class="col-sm-3">
-        {{ form_row(form.heuresTD) }}
+        {{ form_row(form.tdPpn) }}
     </div>
     <div class="col-sm-3">
-        {{ form_row(form.heuresTP) }}
+        {{ form_row(form.tpPpn) }}
     </div>
     <div class="col-sm-3">
-        {{ form_row(form.heuresProjet) }}
+        {{ form_row(form.projetPpn) }}
+    </div>
+    <div class="col-sm-3">
+        {{ form_row(form.cmFormation) }}
+    </div>
+    <div class="col-sm-3">
+        {{ form_row(form.tdFormation) }}
+    </div>
+    <div class="col-sm-3">
+        {{ form_row(form.tpFormation) }}
+    </div>
+    <div class="col-sm-3">
+        {{ form_row(form.projetFormation) }}
     </div>
     <div class="col-sm-12">
         {{ form_row(form.description) }}

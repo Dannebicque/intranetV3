@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEtudiants.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:10
+ * @lastUpdate 09/05/2021 14:41
  */
 
 /*
@@ -39,7 +39,6 @@ class MyEtudiants
     }
 
     /**
-     * @param $fichier
      *
      * @throws Exception
      */

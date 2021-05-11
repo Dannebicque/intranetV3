@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyStructure.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:26
+ * @lastUpdate 09/05/2021 14:41
  */
 
 /*
@@ -41,7 +41,6 @@ class MyStructure
     }
 
     /**
-     * @param $_format
      *
      * @throws LoaderError
      * @throws RuntimeError

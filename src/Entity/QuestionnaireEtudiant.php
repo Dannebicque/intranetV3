@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/QuestionnaireEtudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 11/05/2021 08:46
  */
 
 namespace App\Entity;
@@ -44,7 +44,8 @@ class QuestionnaireEtudiant extends BaseEntity
     private bool $termine = false;
 
     /**
-     * @ORM\OneToMany(targetEntity="QuestionnaireEtudiantReponse", mappedBy="questionnaireEtudiant")
+     * @ORM\OneToMany(targetEntity="QuestionnaireEtudiantReponse", mappedBy="questionnaireEtudiant",
+     *                                                             cascade={"persist", "remove"})
      */
     private $questionnaireEtudiantReponses;
 

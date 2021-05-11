@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/02/2021 08:18
+ * @lastUpdate 11/05/2021 08:46
  */
 
 /*
@@ -13,6 +13,7 @@
 
 namespace App\Classes\Edt;
 
+use App\Classes\Matieres\TypeMatiereManager;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Constantes;
 use App\Entity\EdtPlanning;
@@ -21,10 +22,10 @@ use App\Entity\Groupe;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
+use App\Exception\MatiereNotFoundException;
 use App\Repository\CalendrierRepository;
 use App\Repository\EdtPlanningRepository;
 use App\Repository\GroupeRepository;
-use App\Repository\MatiereRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -38,7 +39,7 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
 
     private GroupeRepository $groupeRepository;
 
-    private MatiereRepository $matiereRepository;
+    private TypeMatiereManager $typeMatiereManager;
     private PersonnelRepository $personnelRepository;
     private EntityManagerInterface $entityManager;
     private array $tab = [];
@@ -51,7 +52,7 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
         EdtPlanningRepository $edtPlanningRepository,
         SemestreRepository $semestreRepository,
         GroupeRepository $groupeRepository,
-        MatiereRepository $matiereRepository,
+        TypeMatiereManager $typeMatiereManager,
         PersonnelRepository $personnelRepository,
         EntityManagerInterface $entityManager
     ) {
@@ -59,18 +60,16 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
         $this->edtPlanningRepository = $edtPlanningRepository;
         $this->semestreRepository = $semestreRepository;
         $this->groupeRepository = $groupeRepository;
-        $this->matiereRepository = $matiereRepository;
+        $this->typeMatiereManager = $typeMatiereManager;
         $this->personnelRepository = $personnelRepository;
         $this->entityManager = $entityManager;
     }
 
-    /**
-     * @param int $semaine
-     */
+
     public function initPersonnel(
         Personnel $personnel,
         AnneeUniversitaire $anneeUniversitaire,
-        $semaine = 0
+        int $semaine = 0
     ): self {
         $this->user = $personnel;
         $this->init($anneeUniversitaire, 'prof', $personnel->getId(), $semaine);
@@ -80,13 +79,10 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
         return $this;
     }
 
-    /**
-     * @param int $semaine
-     */
     public function initEtudiant(
         Etudiant $etudiant,
         AnneeUniversitaire $anneeUniversitaire,
-        $semaine = 0
+        int $semaine = 0
     ): self {
         $this->user = $etudiant;
         $this->init($anneeUniversitaire, 'etudiant', $etudiant->getId(), $semaine);
@@ -120,7 +116,7 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
                     }
                     break;
                 case 'module':
-                    $this->module = $this->matiereRepository->find($this->valeur);
+                    $this->module = $this->typeMatiereManager->getMatiereFromSelect($this->valeur);
                     $this->semestre = $this->module->getSemestre();
                     $this->groupes = $this->groupeRepository->findAllGroupes($this->semestre);
 
@@ -168,9 +164,6 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
         return $this;
     }
 
-    /**
-     * @param $pl
-     */
     private function transformeProf($pl): array
     {
         $this->tab = [];
@@ -200,9 +193,6 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
         return $this->tab;
     }
 
-    /**
-     * @param $pl
-     */
     private function transformeEtudiant($pl): array
     {
         $this->tab = [];
@@ -238,9 +228,6 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
         return $this->tab;
     }
 
-    /**
-     * @param $pl
-     */
     private function transformePromo($pl): array
     {
         $tab = [];
@@ -307,15 +294,12 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
             case 'cm':
             case 'td':
             case 'tp':
-            return mb_strtolower($p->getType()) . '_' . $p->getSemestre()->getAnnee()->getCouleur();
+                return mb_strtolower($p->getType()) . '_' . $p->getSemestre()->getAnnee()->getCouleur();
             default:
                 return 'CCCCCC';
         }
     }
 
-    /**
-     * @param $p
-     */
     private function getCouleurTexte(EdtPlanning $p): string
     {
         switch ($p->getSemestre()->getAnnee()->getCouleur()) {
@@ -336,7 +320,7 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
         if ($p->getEvaluation()) {
             if (null !== $p->getMatiere()) {
                 if ('short' === $type) {
-                    return '** ' . $p->getMatiere()->getCodeMatiere() . ' **';
+                    return '** ' . $p->getMatiere()->getCodeMatiere() . ' **';//todo: ne marche pas... récupérer depuis les matières...
                 }
 
                 return '** ' . $p->getMatiere()->getLibelle() . ' (' . $p->getMatiere()->getCodeMatiere() . ') **';
@@ -356,9 +340,6 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
         return $p->getTexte();
     }
 
-    /**
-     * @param $p
-     */
     private function hasCommentaire(EdtPlanning $p): bool
     {
         return '' !== $p->getCommentaire() && null !== $p->getCommentaire();
@@ -396,9 +377,6 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
         }
     }
 
-    /**
-     * @param $pl
-     */
     private function transformeModule($pl): array
     {
         $tab = [];
@@ -454,9 +432,6 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
         return $tab;
     }
 
-    /**
-     * @param $pl
-     */
     private function transformeSalle($pl): array
     {
         $tab = [];
@@ -484,9 +459,6 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
         return $tab;
     }
 
-    /**
-     * @param $pl
-     */
     private function transformeJour($pl): array
     {
         $tab = [];
@@ -609,8 +581,12 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
         return $this->updatePl($request, $plann, $anneeUniversitaire);
     }
 
-    private function updatePl($request, EdtPlanning $plann, AnneeUniversitaire $anneeUniversitaire)
-    {
+    private function updatePl(
+        TypeMatiereManager $typeMatiereManager,
+        $request,
+        EdtPlanning $plann,
+        AnneeUniversitaire $anneeUniversitaire
+    ) {
         $this->calendrier = $this->calendrierRepository->findOneBy([
             'semaineFormation' => $plann->getSemaine(),
             'anneeUniversitaire' => $anneeUniversitaire->getId(),
@@ -620,8 +596,13 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
             $plann->setTexte($request->request->get('texte'));
             $plann->setMatiere(null);
         } else {
-            $module = $this->matiereRepository->find($request->request->get('selectmatiere'));
-            $plann->setMatiere($module);
+            $module = $typeMatiereManager->getMatiereFromSelect($request->request->get('selectmatiere'));
+            if (null === $module) {
+                throw new MatiereNotFoundException();
+            }
+
+            $plann->setIdMatiere($module->id);
+            $plann->setTypeMatiere($module->typeMatiere);
         }
 
         if ('' !== $request->request->get('selectenseignant') && null !== $request->request->get('selectenseignant')) {

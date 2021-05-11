@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/MatiereType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 11/05/2021 08:46
  */
 
 namespace App\Form;
@@ -38,21 +38,13 @@ class MatiereType extends AbstractType
 {
     protected $diplome;
 
-    /**
-     * @var SemestreRepository
-     */
-    private $semestreRepository;
+    private SemestreRepository $semestreRepository;
 
-    /**
-     * @var UeRepository
-     */
-    private $ueRepository;
+    private UeRepository $ueRepository;
 
-    /** @var ParcourRepository */
-    private $parcourRepository;
+    private ParcourRepository $parcourRepository;
 
-    /** @var MatiereRepository */
-    private $matiereRepository;
+    private MatiereRepository $matiereRepository;
 
     /**
      * MatiereType constructor.
@@ -104,9 +96,9 @@ class MatiereType extends AbstractType
             ->add('prolongements', TextareaType::class, ['label' => 'label.prolongements', 'required' => false])
             ->add('motsCles', TextareaType::class, ['label' => 'label.mots_cles', 'required' => false])
             ->add('Ppn', EntityType::class, [
-                'label'         => 'label.Ppn',
-                'class'         => Ppn::class,
-                'choice_label'  => 'libelle',
+                'label' => 'label.Ppn',
+                'class' => Ppn::class,
+                'choice_label' => 'libelle',
                 'query_builder' => function(PpnRepository $ppnRepository) {
                     return $ppnRepository->findByDiplomeBuilder($this->diplome);
                 },
@@ -119,12 +111,12 @@ class MatiereType extends AbstractType
     protected function addElements(FormInterface $form, Semestre $semestre = null): void
     {
         $form->add('semestre', EntityType::class, [
-            'required'     => true,
+            'required' => true,
             'choice_label' => 'display',
-            'data'         => $semestre,
-            'placeholder'  => 'Choisir un semestre ...',
-            'class'        => Semestre::class,
-            'mapped'       => false,
+            'data' => $semestre,
+            'placeholder' => 'Choisir un semestre ...',
+            'class' => Semestre::class,
+            'mapped' => false,
         ]);
 
         $ues = null;
@@ -138,27 +130,27 @@ class MatiereType extends AbstractType
         }
 
         $form->add('ue', EntityType::class, [
-            'required'      => true,
-            'placeholder'   => 'Choisir d\'abord un semestre ...',
-            'class'         => Ue::class,
-            'choice_label'  => 'display',
+            'required' => true,
+            'placeholder' => 'Choisir d\'abord un semestre ...',
+            'class' => Ue::class,
+            'choice_label' => 'display',
             'query_builder' => $ues,
         ]);
 
         $form->add('parcours', EntityType::class, [
-            'required'      => false,
-            'placeholder'   => 'Choisir d\'abord un semestre ...',
-            'class'         => Parcour::class,
-            'choice_label'  => 'libelle',
+            'required' => false,
+            'placeholder' => 'Choisir d\'abord un semestre ...',
+            'class' => Parcour::class,
+            'choice_label' => 'libelle',
             'query_builder' => $parcours,
         ]);
 
         $form->add('matiereParent', EntityType::class, [
-            'label'         => 'label.matiere.parent',
-            'required'      => false,
-            'placeholder'   => 'Choisir d\'abord un semestre ...',
-            'class'         => Matiere::class,
-            'choice_label'  => 'display',
+            'label' => 'label.matiere.parent',
+            'required' => false,
+            'placeholder' => 'Choisir d\'abord un semestre ...',
+            'class' => Matiere::class,
+            'choice_label' => 'display',
             'query_builder' => $matieres,
         ]);
     }
@@ -187,8 +179,8 @@ class MatiereType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class'         => Matiere::class,
-            'diplome'            => null,
+            'data_class' => Matiere::class,
+            'diplome' => null,
             'translation_domain' => 'form',
         ]);
     }

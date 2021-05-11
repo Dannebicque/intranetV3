@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/EvaluationRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:08
+ * @lastUpdate 11/05/2021 08:46
  */
 
 namespace App\Repository;
@@ -12,8 +12,6 @@ namespace App\Repository;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Evaluation;
 use App\Entity\Matiere;
-use App\Entity\Semestre;
-use App\Entity\Ue;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -33,32 +31,33 @@ class EvaluationRepository extends ServiceEntityRepository
         parent::__construct($registry, Evaluation::class);
     }
 
-    public function findBySemestre(Semestre $semestre, AnneeUniversitaire $annee)
+    public function findBySemestre(array $matieres, AnneeUniversitaire $annee)
     {
-        return $this->createQueryBuilder('e')
-            ->innerJoin(Matiere::class, 'm', 'WITH', 'm.id = e.matiere')
-            ->innerJoin(Ue::class, 'u', 'WITH', 'u.id = m.ue')
+        $query = $this->createQueryBuilder('e')
             ->innerJoin(AnneeUniversitaire::class, 'n', 'WITH', 'e.anneeUniversitaire = n.id')
-            ->where('u.semestre = :semestre')
-            ->andWhere('n.annee = :annee')
-            ->setParameter('semestre', $semestre->getId())
+            ->where('n.annee = :annee')
             ->setParameter('annee', $annee->getAnnee())
-            ->orderBy('e.dateEvaluation', 'ASC')
+            ->orderBy('e.dateEvaluation', 'ASC');
+
+        $ors = [];
+        foreach ($matieres as $matiere) {
+            $ors[] = '(' . $query->expr()->orx('e.idMatiere = ' . $query->expr()->literal($matiere->id)) . ' AND ' . $query->expr()->andX('e.typeMatiere = ' . $query->expr()->literal($matiere->typeMatiere)) . ')';
+        }
+
+        return $query->andWhere(implode(' OR ', $ors))
             ->getQuery()
             ->getResult();
     }
 
-    /**
-     * @param $annee
-     */
-    public function findByMatiere(Matiere $matiere, AnneeUniversitaire $annee)
+    public function findByMatiere(int $matiere, string $type, AnneeUniversitaire $annee)
     {
         return $this->createQueryBuilder('e')
-            ->innerJoin(Matiere::class, 'm', 'WITH', 'm.id = e.matiere')
             ->innerJoin(AnneeUniversitaire::class, 'u', 'WITH', 'e.anneeUniversitaire = u.id')
-            ->where('m.id = :matiere')
+            ->where('e.idMatiere = :matiere')
+            ->andWhere('e.typeMatiere = :type')
             ->andWhere('u.annee = :annee')
-            ->setParameter('matiere', $matiere->getId())
+            ->setParameter('matiere', $matiere)
+            ->setParameter('type', $type)
             ->setParameter('annee', $annee->getAnnee())
             ->orderBy('e.dateEvaluation', 'ASC')
             ->getQuery()

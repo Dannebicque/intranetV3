@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/StructureController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:36
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Controller\administration;
@@ -39,7 +39,6 @@ class StructureController extends BaseController
      * @Route("/{departement}/export.{_format}", name="administration_structure_export", methods="GET",
      *                                           requirements={"_format"="xlsx|pdf"})
      *
-     * @param $_format
      *
      * @throws LoaderError
      * @throws RuntimeError

@@ -33,7 +33,7 @@
     <select class="form-control selectpicker" name="affichematiere" id="affichematiere">
       <option value="">{{ 'edt.filtrer.matiere'|trans }}</option>
       {% for matiere in matieres %}
-        <option value="{{ matiere.id }}">{{ matiere.display }}</option>
+          <option value="{{ matiere.typeIdMatiere }}">{{ matiere.display }}</option>
       {% endfor %}
     </select>
   </div>

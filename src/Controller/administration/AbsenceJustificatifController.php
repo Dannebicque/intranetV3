@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/AbsenceJustificatifController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/04/2021 21:15
+ * @lastUpdate 09/05/2021 14:41
  */
 
 namespace App\Controller\administration;
@@ -46,7 +46,6 @@ class AbsenceJustificatifController extends BaseController
      * @Route("/semestre/{semestre}/export.{_format}", name="administration_absences_justificatif_semestre_export",
      *                                                 requirements={"_format"="csv|xlsx|pdf"})
      *
-     * @param $_format
      */
     public function exportJustificatif(
         MyExport $myExport,
@@ -125,7 +124,6 @@ class AbsenceJustificatifController extends BaseController
      *                                    requirements={"etat"="A|R|D"}, options={"expose":true})
      * @ParamConverter("absenceJustificatif", options={"mapping": {"uuid": "uuid"}})
      *
-     * @param $etat
      */
     public function accepte(
         EventDispatcherInterface $eventDispatcher,

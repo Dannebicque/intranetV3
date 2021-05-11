@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Enquetes/MyEnqueteDiplome.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 02/05/2021 19:35
  */
 
 /*
@@ -15,7 +15,7 @@ namespace App\Classes\Enquetes;
 
 use App\Classes\Configuration;
 use App\Classes\Excel\MyExcelWriter;
-use App\Classes\Tools;
+use App\Utils\Tools;
 use App\Entity\QuestionnaireQuestion;
 use App\Entity\QuestionnaireQuizz;
 use App\Repository\EtudiantRepository;

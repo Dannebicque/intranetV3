@@ -4,14 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/PrevisionnelRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/05/2021 16:55
+ * @lastUpdate 06/05/2021 14:41
  */
 
 namespace App\Repository;
 
 use App\Entity\Annee;
-use App\Entity\AnneeUniversitaire;
-use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Matiere;
 use App\Entity\Personnel;
@@ -37,63 +35,6 @@ class PrevisionnelRepository extends ServiceEntityRepository
         parent::__construct($registry, Previsionnel::class);
     }
 
-
-
-    /**
-     * @param $annee
-     */
-    public function findPrevisionnelMatiere(Matiere $matiere, $annee)
-    {
-        return $this->createQueryBuilder('p')
-            ->leftJoin(Personnel::class, 'e', 'WITH', 'p.personnel = e.id')
-            ->where('p.annee = :annee')
-            ->andWhere('p.matiere = :matiere')
-            ->setParameter('annee', $annee)
-            ->setParameter('matiere', $matiere->getId())
-            ->orderBy('e.nom', 'ASC')
-            ->orderBy('e.prenom', 'ASC')
-            ->getQuery()
-            ->getResult();
-    }
-
-    /**
-     * @param $annee
-     */
-    public function findPrevisionnelSemestre(Semestre $semestre, $annee)
-    {
-        return $this->createQueryBuilder('p')
-            ->leftJoin(Personnel::class, 'e', 'WITH', 'p.personnel = e.id')
-            ->innerJoin(Matiere::class, 'm', 'WITH', 'p.matiere = m.id')
-            ->innerJoin(Ue::class, 'u', 'WITH', 'm.ue = u.id')
-            ->where('p.annee = :annee')
-            ->andWhere('u.semestre = :semestre')
-            ->setParameter('annee', $annee)
-            ->setParameter('semestre', $semestre->getId())
-            ->orderBy('m.codeMatiere', 'ASC')
-            ->getQuery()
-            ->getResult();
-    }
-
-    public function findByDepartement(Departement $departement, $annee)
-    {
-        return $this->createQueryBuilder('p')
-            ->innerJoin(Matiere::class, 'm', 'WITH', 'p.matiere = m.id')
-            ->innerJoin(Ue::class, 'u', 'WITH', 'm.ue = u.id')
-            ->innerJoin(Semestre::class, 's', 'WITH', 'u.semestre = s.id')
-            ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
-            ->innerJoin(Diplome::class, 'd', 'WITH', 'a.diplome = d.id')
-            ->where('p.annee = :annee')
-            ->andWhere('d.departement = :departement')
-            ->setParameter('annee', $annee)
-            ->setParameter('departement', $departement->getId())
-            ->orderBy('d.libelle', 'ASC')
-            ->addOrderBy('a.ordre', 'ASC')
-            ->addOrderBy('s.ordreLmd', 'ASC')
-            ->addOrderBy('m.codeMatiere', 'ASC')
-            ->getQuery()
-            ->getResult();
-    }
-
     public function findByDiplome(Diplome $diplome, $annee)
     {
         return $this->createQueryBuilder('s')
@@ -106,74 +47,6 @@ class PrevisionnelRepository extends ServiceEntityRepository
             ->andWhere('s.annee = :annee')
             ->setParameter('diplome', $diplome->getId())
             ->setParameter('annee', $annee)
-            ->getQuery()
-            ->getResult();
-    }
-
-    public function findPrevisionnelSemestrePersonnel(Semestre $semestre, Personnel $personnel, ?int $annee)
-    {
-        return $this->createQueryBuilder('p')
-            ->innerJoin(Personnel::class, 'e', 'WITH', 'p.personnel = e.id')
-            ->innerJoin(Matiere::class, 'm', 'WITH', 'p.matiere = m.id')
-            ->innerJoin(Ue::class, 'u', 'WITH', 'm.ue = u.id')
-            ->where('p.annee = :annee')
-            ->andWhere('u.semestre = :semestre')
-            ->andWhere('p.personnel = :personnel')
-            ->setParameter('annee', $annee)
-            ->setParameter('personnel', $personnel->getId())
-            ->setParameter('semestre', $semestre->getId())
-            ->orderBy('m.codeMatiere', 'ASC')
-            ->getQuery()
-            ->getResult();
-    }
-
-    public function findServiceSemestre(Personnel $user, Semestre $semestre, $annePrevi)
-    {
-        return $this->createQueryBuilder('s')
-            ->innerJoin(Personnel::class, 'p', 'WITH', 's.personnel = p.id')
-            ->innerJoin(Matiere::class, 'm', 'WITH', 's.matiere = m.id')
-            ->innerJoin(Ue::class, 'u', 'WITH', 'm.UE = u.id')
-            ->where('p.id = :user')
-            ->andWhere('s.annee = :annee')
-            ->andWhere('u.semestre = :semestre')
-            ->setParameters(['user' => $user->getId(), 'annee' => $annePrevi, 'semestre' => $semestre->getId()])
-            ->groupBy('m.id')
-            ->orderBy('m.codeMatiere', 'ASC')
-            ->getQuery()
-            ->getResult();
-    }
-
-    public function findByDiplomeArray(Diplome $diplome, AnneeUniversitaire $anneeUniversitaire): array
-    {
-        $q = $this->findByDiplome($diplome, $anneeUniversitaire->getAnnee());
-        $tPrevisionnel = [];
-        /** @var Previsionnel $p */
-        foreach ($q as $p) {
-            $tPrevisionnel[$p->getId()]['matiere'] = $p->getMatiere()->getLibelle();
-            $tPrevisionnel[$p->getId()]['personnel'] = $p->getPersonnel()->getDisplayPr();
-        }
-
-        return $tPrevisionnel;
-    }
-
-    public function findPrevisionnelAnnee(Semestre $semestre, ?int $anneeUniversitaire)
-    {
-        $query = $this->createQueryBuilder('p')
-            ->leftJoin(Personnel::class, 'e', 'WITH', 'p.personnel = e.id')
-            ->innerJoin(Matiere::class, 'm', 'WITH', 'p.matiere = m.id')
-            ->innerJoin(Ue::class, 'u', 'WITH', 'm.ue = u.id')
-            ->where('p.annee = :annee')
-            ->setParameter('annee', $anneeUniversitaire);
-
-        $annee = $semestre->getAnnee();
-        $ors = [];
-        foreach ($annee->getSemestres() as $sem) {
-            $ors[] = $query->expr()->orx('u.semestre = ' . $query->expr()->literal($sem->getId()));
-        }
-
-        return $query->andWhere(implode(' OR ', $ors))
-            ->orderBy('u.semestre', 'ASC')
-            ->addOrderBy('m.codeMatiere', 'ASC')
             ->getQuery()
             ->getResult();
     }

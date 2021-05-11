@@ -57,12 +57,12 @@
                                         <th>&nbsp;</th>
                                     </tr>
                                     </thead>
-                            {% for matiere in matieres|filter(matiere => matiere.ue.semestre.id == semestre.id) %}
+                            {% for matiere in matieres|filter(matiere => matiere.semestre.id == semestre.id) %}
                                 <tr style="background-color:#cccccc;">
                                     <td colspan="10" style="text-align:center;">
                                         <button data-provide="modaler tooltip"
                                                 data-url="{{ path('administration_edt_compare_plus_info',
-                                                    {'matiere': matiere.id}) }}"
+                                                    {'matiere': matiere.typeIdMatiere}) }}"
                                                 class="btn btn-info"
                                                 data-size="lg"
                                                 data-placement="bottom"
@@ -84,7 +84,7 @@
                                             <td>EDT</td>
                                             <td>Prévi.</td>
                                         </tr>
-                                {% for ed in comparatifs[matiere.id] %}
+                                {% for ed in comparatifs[matiere.typeIdMatiere] %}
                                     <tr>
                                         <td>{{ ed.personnel.displayPr }}</td>
                                         <td>
