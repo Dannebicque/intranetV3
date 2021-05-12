@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcRessource.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2021 08:46
+ * @lastUpdate 12/05/2021 15:22
  */
 
 namespace App\Entity;
@@ -238,7 +238,7 @@ class ApcRessource extends AbstractMatiere
     public function removeCompetence(ApcCompetence $competence): self
     {
         foreach ($this->apcRessourceCompetences as $apcRessourceCompetence) {
-            if ($apcRessourceCompetence->getComparisonType() === $competence) {
+            if ($apcRessourceCompetence->getCompetence() === $competence) {
                 $this->apcRessourceCompetences->removeElement($apcRessourceCompetence);
             }
         }
