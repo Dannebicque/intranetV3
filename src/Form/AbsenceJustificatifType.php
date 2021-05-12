@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/AbsenceJustificatifType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 12/05/2021 14:39
  */
 
 namespace App\Form;
@@ -29,11 +29,11 @@ class AbsenceJustificatifType extends AbstractType
             ->add('heureFin', TimeType::class, ['label' => 'label.heure_fin'])
             ->add('motif', TextType::class, ['label' => 'label.motif'])
             ->add('fichierFile', VichFileType::class, [
-                'required'       => false,
-                'label'          => 'label.fichier',
+                'required' => false,
+                'label' => 'label.fichier',
                 'download_label' => 'label.apercu',
-                'allow_delete'   => false,
-                'help'           => 'Le justificitif ne peut être qu\'une convocation officielle ou un certificat médicale',
+                'allow_delete' => false,
+                'help' => 'Le justificatif ne peut être qu\'une convocation officielle ou un certificat médical',
             ]);
     }
 
