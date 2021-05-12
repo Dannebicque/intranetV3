@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcSae.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/05/2021 16:38
+ * @lastUpdate 12/05/2021 15:23
  */
 
 namespace App\Entity;
@@ -196,7 +196,7 @@ class ApcSae extends AbstractMatiere
     public function removeCompetence(ApcCompetence $competence): self
     {
         foreach ($this->apcSaeCompetences as $apcSaeCompetence) {
-            if ($apcSaeCompetence->getComparisonType() === $competence) {
+            if ($apcSaeCompetence->getCompetence() === $competence) {
                 $this->apcSaeCompetences->removeElement($apcSaeCompetence);
             }
         }
