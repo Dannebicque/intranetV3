@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/ImportDiplomeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/05/2021 12:31
+ * @lastUpdate 13/05/2021 17:04
  */
 
 namespace App\Controller\superAdministration;
@@ -12,6 +12,7 @@ namespace App\Controller\superAdministration;
 use App\Classes\MyUpload;
 use App\Classes\Structure\DiplomeImport;
 use App\Controller\BaseController;
+use App\Entity\Constantes;
 use App\Entity\Diplome;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -29,12 +30,14 @@ class ImportDiplomeController extends BaseController
         DiplomeImport $diplomeImport,
         Request $request,
         Diplome $diplome
-    ) {
-        //if ($request->isMethod('POST')) {
-        //$fichier = $myUpload->upload($request->files->get('fichier'), 'temp/', ['xml']);
-        $fichier = '/Users/davidannebicque/htdocs/intranetV3/demo/referentiels/competences/but-MMI.xml';
-        $diplomeImport->import($diplome, $fichier, 'competences'); //$request->request->get('typeFichier'));
-        // }
+    )
+    {
+        if ($request->isMethod('POST')) {
+            $fichier = $myUpload->upload($request->files->get('fichier'), 'temp/', ['xml']);
+            $diplomeImport->import($diplome, $fichier, $request->request->get('typeFichier'));
+            unlink($fichier);
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'Maquette importée avec succès');
+        }
 
         return $this->render('super-administration/import_diplome/index.html.twig', [
             'diplome' => $diplome,

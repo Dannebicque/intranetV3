@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/AbstractMatiere.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/05/2021 11:02
+ * @lastUpdate 13/05/2021 16:59
  */
 
 namespace App\Entity;
@@ -205,7 +205,7 @@ abstract class AbstractMatiere extends BaseEntity
 
     public function setCodeMatiere(string $codeMatiere): void
     {
-        $this->codeMatiere = $codeMatiere;
+        $this->codeMatiere = trim($codeMatiere);
     }
 
     public function getLibelle(): string
