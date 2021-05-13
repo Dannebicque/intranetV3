@@ -3,7 +3,7 @@
 <!-- @file /Users/davidannebicque/htdocs/intranetV3/demo/referentiels/competences/but-MMI.xml -->
 <!-- @author davidannebicque -->
 <!-- @project intranetV3 -->
-<!-- @lastUpdate 13/05/2021 11:10 -->
+<!-- @lastUpdate 13/05/2021 12:31 -->
 
 <referentiel_competence specialite="MMI" specialite_long="Métiers du Multimédia et de l&#039;Internet"
                         type="B.U.T.">
@@ -32,42 +32,47 @@
             </composantes_essentielles>
             <niveaux>
                 <niveau ordre="1" libelle="Comprend les éléments de communication et les attentes utilisateurs">
-                    <ac code="AC1101">Appréhender un contexte économique, sociologique, culturel, juridique,
-                        technologique, communicationnel et médiatique
-                    </ac>
-                    <ac code="AC1102">Évaluer un site web, un produit multimédia ou un dispositif interactif existant en
-                        s’appuyant sur des guides de bonnes pratiques
-                    </ac>
-                    <ac code="AC1103">Extraire et interpréter des indicateurs quantitatifs (métriques) et statistiques
-                        pour évaluer l’efficacité d’un service ou d’un site Web
-                    </ac>
-                    <ac code="AC1104">Interpréter les éléments sémiotiques (langage, ton de voix, logotype,
-                        typographies, couleurs, visuels...)
-                    </ac>
-                    <ac code="AC1105">Identifier les cibles (critères socio-économiques, démographiques, géographiques,
-                        culturels...)
-                    </ac>
-                    <ac code="AC1106">Réaliser des entretiens utilisateurs (sélection de la cible, écriture du guide
-                        d’entretien, organisation)
-                    </ac>
-                    <ac code="AC1107">Bâtir le modèle des attentes utilisateurs</ac>
+                    <acs>
+                        <ac code="AC1101">Appréhender un contexte économique, sociologique, culturel, juridique,
+                            technologique, communicationnel et médiatique
+                        </ac>
+                        <ac code="AC1102">Évaluer un site web, un produit multimédia ou un dispositif interactif
+                            existant en s’appuyant sur des guides de bonnes pratiques
+                        </ac>
+                        <ac code="AC1103">Extraire et interpréter des indicateurs quantitatifs (métriques) et
+                            statistiques pour évaluer l’efficacité d’un service ou d’un site Web
+                        </ac>
+                        <ac code="AC1104">Interpréter les éléments sémiotiques (langage, ton de voix, logotype,
+                            typographies, couleurs, visuels...)
+                        </ac>
+                        <ac code="AC1105">Identifier les cibles (critères socio-économiques, démographiques,
+                            géographiques, culturels...)
+                        </ac>
+                        <ac code="AC1106">Réaliser des entretiens utilisateurs (sélection de la cible, écriture du guide
+                            d’entretien, organisation)
+                        </ac>
+                        <ac code="AC1107">Bâtir le modèle des attentes utilisateurs</ac>
+                    </acs>
                 </niveau>
                 <niveau ordre="2" libelle="Comprend la stratégie de communication et l’expérience utilisateur">
-                    <ac code="AC1201">Analyser la stratégie de communication ou marketing d’un acteur, d’une
-                        organisation au regard d’un secteur ou d’un marché (stratégie, mission, valeurs...)
-                    </ac>
-                    <ac code="AC1202">Auditer un site web, une marque ou un service, en termes de trafic et de
-                        référencement
-                    </ac>
-                    <ac code="AC1203">Traiter des données avec des outils statistiques pour faciliter leur analyse et
-                        leur exploitation
-                    </ac>
-                    <ac code="AC1204">Mener des tests d’utilisabilité (hypothèses, protocole, indicateurs de succès)
-                    </ac>
-                    <ac code="AC1205">Identifier et décrire les parcours client à partir d’enquêtes de terrain</ac>
-                    <ac code="AC1206">Cartographier les expériences utilisateur : points de contact, points de friction
-                        et de satisfaction, carte d’empathie.
-                    </ac>
+                    <acs>
+                        <ac code="AC1201">Analyser la stratégie de communication ou marketing d’un acteur, d’une
+                            organisation au regard d’un secteur ou d’un marché (stratégie, mission, valeurs...)
+                        </ac>
+                        <ac code="AC1202">Auditer un site web, une marque ou un service, en termes de trafic et de
+                            référencement
+                        </ac>
+                        <ac code="AC1203">Traiter des données avec des outils statistiques pour faciliter leur analyse
+                            et leur exploitation
+                        </ac>
+                        <ac code="AC1204">Mener des tests d’utilisabilité (hypothèses, protocole, indicateurs de
+                            succès)
+                        </ac>
+                        <ac code="AC1205">Identifier et décrire les parcours client à partir d’enquêtes de terrain</ac>
+                        <ac code="AC1206">Cartographier les expériences utilisateur : points de contact, points de
+                            friction et de satisfaction, carte d’empathie.
+                        </ac>
+                    </acs>
                 </niveau>
             </niveaux>
         </competence>
@@ -98,47 +103,56 @@
             </composantes_essentielles>
             <niveaux>
                 <niveau ordre="1" libelle="Conçoit une réponse stratégique">
-                    <ac code="AC2101">Concevoir un produit ou un service en termes d’usage et de fonctionnalité</ac>
-                    <ac code="AC2102">Construire la proposition de valeur d’un produit ou d’un service</ac>
-                    <ac code="AC2103">Proposer une recommandation marketing (cibles, objectifs, points de contact)</ac>
-                    <ac code="AC2104">Mettre au point une stratégie de communication en adaptant le message aux
-                        objectifs
-                    </ac>
-                    <ac code="AC2105">Rédiger une charte éditoriale pour un site web, un blog, un réseau social
-                        (préconisation rédactionnelle, référencement naturel)
-                    </ac>
-                    <ac code="AC2106">Communiquer sur les réseaux sociaux (ligne éditoriale et calendrier de
-                        publication)
-                    </ac>
+                    <acs>
+                        <ac code="AC2101">Concevoir un produit ou un service en termes d’usage et de fonctionnalité</ac>
+                        <ac code="AC2102">Construire la proposition de valeur d’un produit ou d’un service</ac>
+                        <ac code="AC2103">Proposer une recommandation marketing (cibles, objectifs, points de contact)
+                        </ac>
+                        <ac code="AC2104">Mettre au point une stratégie de communication en adaptant le message aux
+                            objectifs
+                        </ac>
+                        <ac code="AC2105">Rédiger une charte éditoriale pour un site web, un blog, un réseau social
+                            (préconisation rédactionnelle, référencement naturel)
+                        </ac>
+                        <ac code="AC2106">Communiquer sur les réseaux sociaux (ligne éditoriale et calendrier de
+                            publication)
+                        </ac>
+                    </acs>
                 </niveau>
                 <niveau ordre="2" libelle="Co-conçoit une réponse stratégique">
-                    <ac code="AC2201">Co-concevoir un produit ou service (proposition de valeur, fonctionnalités...)
-                    </ac>
-                    <ac code="AC2202">Produire une recommandation ergonomique à partir des tests utilisateurs (sur
-                        système fonctionnel, prototype ou maquette interactive)
-                    </ac>
-                    <ac code="AC2203">Co-construire une recommandation stratégique (en interaction avec les équipes
-                        créatives et techniques)
-                    </ac>
-                    <ac code="AC2204">Structurer un plan d’action (spécifier les canaux de communication, leurs
-                        articulations et phaser la diffusion des messages)
-                    </ac>
-                    <ac code="AC2205">Optimiser le référencement d’un site web, d’un produit ou d’un service</ac>
-                    <ac code="AC2206">Mettre en place une présence sur les réseaux sociaux</ac>
+                    <acs>
+                        <ac code="AC2201">Co-concevoir un produit ou service (proposition de valeur,
+                            fonctionnalités...)
+                        </ac>
+                        <ac code="AC2202">Produire une recommandation ergonomique à partir des tests utilisateurs (sur
+                            système fonctionnel, prototype ou maquette interactive)
+                        </ac>
+                        <ac code="AC2203">Co-construire une recommandation stratégique (en interaction avec les équipes
+                            créatives et techniques)
+                        </ac>
+                        <ac code="AC2204">Structurer un plan d’action (spécifier les canaux de communication, leurs
+                            articulations et phaser la diffusion des messages)
+                        </ac>
+                        <ac code="AC2205">Optimiser le référencement d’un site web, d’un produit ou d’un service</ac>
+                        <ac code="AC2206">Mettre en place une présence sur les réseaux sociaux</ac>
+                    </acs>
                 </niveau>
                 <niveau ordre="3" libelle="Co-conçoit une réponse stratégique complexe et prospective">
-                    <ac code="AC2301">Projeter les futurs possibles d’une organisation, d’une marque, d’un service,
-                        produit ou secteur (tendances, évolutions, scénarios prospectifs)
-                    </ac>
-                    <ac code="AC2302">Co-construire un produit ou service de manière itérative (ateliers de créativité,
-                        idéation, définition de l’expérience utilisateur, exploitation des résultats de test)
-                    </ac>
-                    <ac code="AC2303">Etablir une communication 360, plurimédia ou transmédia</ac>
-                    <ac code="AC2304">Gérer une communauté (relais, ambassadeurs, création d’événements)</ac>
-                    <ac code="AC2305">Préconiser et budgétiser des solutions de visibilité</ac>
-                    <ac code="AC2306">Construire des outils de validation et de suivi (flux, indicateurs de
-                        performance****, tableaux de bord, référencement, engagement...)
-                    </ac>
+                    <acs>
+                        <ac code="AC2301">Projeter les futurs possibles d’une organisation, d’une marque, d’un service,
+                            produit ou secteur (tendances, évolutions, scénarios prospectifs)
+                        </ac>
+                        <ac code="AC2302">Co-construire un produit ou service de manière itérative (ateliers de
+                            créativité, idéation, définition de l’expérience utilisateur, exploitation des résultats de
+                            test)
+                        </ac>
+                        <ac code="AC2303">Etablir une communication 360, plurimédia ou transmédia</ac>
+                        <ac code="AC2304">Gérer une communauté (relais, ambassadeurs, création d’événements)</ac>
+                        <ac code="AC2305">Préconiser et budgétiser des solutions de visibilité</ac>
+                        <ac code="AC2306">Construire des outils de validation et de suivi (flux, indicateurs de
+                            performance****, tableaux de bord, référencement, engagement...)
+                        </ac>
+                    </acs>
                 </niveau>
             </niveaux>
         </competence>
@@ -171,39 +185,45 @@
             </composantes_essentielles>
             <niveaux>
                 <niveau ordre="1" libelle="Exprime un message par des productions simples">
-                    <ac code="AC3101">Produire un écrit communicationnel dans un style juste et pertinent, en phase avec
-                        la stratégie
-                    </ac>
-                    <ac code="AC3102">Produire des pistes graphiques et des planches d’inspiration</ac>
-                    <ac code="AC3103">Créer, composer et retoucher des visuels</ac>
-                    <ac code="AC3104">Tourner et monter une vidéo (scénario, captation image et son...)</ac>
-                    <ac code="AC3105">Designer une interface web (wireframes, UI)</ac>
-                    <ac code="AC3106">Optimiser les médias en fonction de leurs usages et supports de diffusion</ac>
+                    <acs>
+                        <ac code="AC3101">Produire un écrit communicationnel dans un style juste et pertinent, en phase
+                            avec la stratégie
+                        </ac>
+                        <ac code="AC3102">Produire des pistes graphiques et des planches d’inspiration</ac>
+                        <ac code="AC3103">Créer, composer et retoucher des visuels</ac>
+                        <ac code="AC3104">Tourner et monter une vidéo (scénario, captation image et son...)</ac>
+                        <ac code="AC3105">Designer une interface web (wireframes, UI)</ac>
+                        <ac code="AC3106">Optimiser les médias en fonction de leurs usages et supports de diffusion</ac>
+                    </acs>
                 </niveau>
                 <niveau ordre="2" libelle="Exprime une identité visuelle et éditoriale transmédia">
-                    <ac code="AC3201">Produire un écrit journalistique sourcé et documenté</ac>
-                    <ac code="AC3202">Définir une iconographie (illustrations, photographies, vidéos)</ac>
-                    <ac code="AC3203">Créer et décliner une identité visuelle (charte graphique)</ac>
-                    <ac code="AC3204">Imaginer, écrire et scénariser en vue d’une communication multimédia ou
-                        transmédia
-                    </ac>
-                    <ac code="AC3205">Réaliser, composer et produire pour une communication plurimédia</ac>
-                    <ac code="AC3206">Élaborer et produire des animations, des designs sonores, des effets spéciaux, de
-                        la visualisation de données ou de la 3D
-                    </ac>
+                    <acs>
+                        <ac code="AC3201">Produire un écrit journalistique sourcé et documenté</ac>
+                        <ac code="AC3202">Définir une iconographie (illustrations, photographies, vidéos)</ac>
+                        <ac code="AC3203">Créer et décliner une identité visuelle (charte graphique)</ac>
+                        <ac code="AC3204">Imaginer, écrire et scénariser en vue d’une communication multimédia ou
+                            transmédia
+                        </ac>
+                        <ac code="AC3205">Réaliser, composer et produire pour une communication plurimédia</ac>
+                        <ac code="AC3206">Élaborer et produire des animations, des designs sonores, des effets spéciaux,
+                            de la visualisation de données ou de la 3D
+                        </ac>
+                    </acs>
                 </niveau>
                 <niveau ordre="3" libelle="Exprime un récit interactif et une direction artistique">
-                    <ac code="AC3301">Produire un récit plurimédia en adoptant un point de vue d’auteur</ac>
-                    <ac code="AC3302">Concevoir un design system et en produire les éléments visuels, graphiques ou
-                        sonores
-                    </ac>
-                    <ac code="AC3303">Développer une narration interactive</ac>
-                    <ac code="AC3304">Réaliser une production avancée (audiovisuel, 3D, motion design, sound design,
-                        effets spéciaux, jeux vidéo...)
-                    </ac>
-                    <ac code="AC3305">Produire les éléments pour une expérience sophistiquée (notamment immersive, en
-                        réalité virtuelle, augmentée...)
-                    </ac>
+                    <acs>
+                        <ac code="AC3301">Produire un récit plurimédia en adoptant un point de vue d’auteur</ac>
+                        <ac code="AC3302">Concevoir un design system et en produire les éléments visuels, graphiques ou
+                            sonores
+                        </ac>
+                        <ac code="AC3303">Développer une narration interactive</ac>
+                        <ac code="AC3304">Réaliser une production avancée (audiovisuel, 3D, motion design, sound design,
+                            effets spéciaux, jeux vidéo...)
+                        </ac>
+                        <ac code="AC3305">Produire les éléments pour une expérience sophistiquée (notamment immersive,
+                            en réalité virtuelle, augmentée...)
+                        </ac>
+                    </acs>
                 </niveau>
             </niveaux>
         </competence>
@@ -231,45 +251,53 @@
             </composantes_essentielles>
             <niveaux>
                 <niveau ordre="1" libelle="Développe un site web simple et le met en ligne">
-                    <ac code="AC4101">Exploiter de manière autonome un environnement de développement efficace et
-                        productif
-                    </ac>
-                    <ac code="AC4102">Produire des pages Web statiques et fluides utilisant un balisage sémantique
-                        efficace
-                    </ac>
-                    <ac code="AC4103">Générer des pages Web ou vues à partir de données structurées incluant des
-                        interactions simples
-                    </ac>
-                    <ac code="AC4104">Mettre en ligne une application Web en utilisant une solution d’hébergement
-                        standard
-                    </ac>
-                    <ac code="AC4105">Modéliser les données et les traitements d’une application Web</ac>
-                    <ac code="AC4106">Utiliser et adapter un modèle d’accès aux données</ac>
-                    <ac code="AC4107">Déployer et personnaliser une application Web en utilisant un CMS ou un framework
-                        MVC
-                    </ac>
+                    <acs>
+                        <ac code="AC4101">Exploiter de manière autonome un environnement de développement efficace et
+                            productif
+                        </ac>
+                        <ac code="AC4102">Produire des pages Web statiques et fluides utilisant un balisage sémantique
+                            efficace
+                        </ac>
+                        <ac code="AC4103">Générer des pages Web ou vues à partir de données structurées incluant des
+                            interactions simples
+                        </ac>
+                        <ac code="AC4104">Mettre en ligne une application Web en utilisant une solution d’hébergement
+                            standard
+                        </ac>
+                        <ac code="AC4105">Modéliser les données et les traitements d’une application Web</ac>
+                        <ac code="AC4106">Utiliser et adapter un modèle d’accès aux données</ac>
+                        <ac code="AC4107">Déployer et personnaliser une application Web en utilisant un CMS ou un
+                            framework MVC
+                        </ac>
+                    </acs>
                 </niveau>
                 <niveau ordre="2" libelle="Développe une application Web interactive">
-                    <ac code="AC4201">Produire des pages et applications Web responsives avec des interactions riches
-                    </ac>
-                    <ac code="AC4202">Développer côté serveur en suivant un ou des patrons de conception</ac>
-                    <ac code="AC4203">Travailler en équipe, grâce aux outils de développements collaboratifs</ac>
-                    <ac code="AC4204">Coder des dispositifs interactifs (jeu, installation, scénographie…)</ac>
-                    <ac code="AC4205">Optimiser une application web en termes de référencement et de temps de
-                        chargement
-                    </ac>
-                    <ac code="AC4206">Configurer une solution d’hébergement adaptée aux besoins</ac>
+                    <acs>
+                        <ac code="AC4201">Produire des pages et applications Web responsives avec des interactions
+                            riches
+                        </ac>
+                        <ac code="AC4202">Développer côté serveur en suivant un ou des patrons de conception</ac>
+                        <ac code="AC4203">Travailler en équipe, grâce aux outils de développements collaboratifs</ac>
+                        <ac code="AC4204">Coder des dispositifs interactifs (jeu, installation, scénographie…)</ac>
+                        <ac code="AC4205">Optimiser une application web en termes de référencement et de temps de
+                            chargement
+                        </ac>
+                        <ac code="AC4206">Configurer une solution d’hébergement adaptée aux besoins</ac>
+                    </acs>
                 </niveau>
                 <niveau ordre="3" libelle="Développe un écosystème numérique complexe">
-                    <ac code="AC4301">Développer à l’aide d’un framework de développement côté client</ac>
-                    <ac code="AC4302">Développer à l’aide d’un framework de développement côté serveur</ac>
-                    <ac code="AC4303">Développer des dispositifs interactifs sophistiqués (jeux, réalité virtuelle,
-                        webGL, 3D…)
-                    </ac>
-                    <ac code="AC4304">Concevoir et développer des composants logiciels, plugins ou extension</ac>
-                    <ac code="AC4305">Maintenir et sécuriser un environnement numérique</ac>
-                    <ac code="AC4306">Mettre en place une chaîne d’intégration continue (test, recettage, déploiement)
-                    </ac>
+                    <acs>
+                        <ac code="AC4301">Développer à l’aide d’un framework de développement côté client</ac>
+                        <ac code="AC4302">Développer à l’aide d’un framework de développement côté serveur</ac>
+                        <ac code="AC4303">Développer des dispositifs interactifs sophistiqués (jeux, réalité virtuelle,
+                            webGL, 3D…)
+                        </ac>
+                        <ac code="AC4304">Concevoir et développer des composants logiciels, plugins ou extension</ac>
+                        <ac code="AC4305">Maintenir et sécuriser un environnement numérique</ac>
+                        <ac code="AC4306">Mettre en place une chaîne d’intégration continue (test, recettage,
+                            déploiement)
+                        </ac>
+                    </acs>
                 </niveau>
             </niveaux>
         </competence>
@@ -294,39 +322,45 @@
             </composantes_essentielles>
             <niveaux>
                 <niveau ordre="1" libelle="Entreprend un projet numérique">
-                    <ac code="AC5101">Gérer un projet avec une méthode classique</ac>
-                    <ac code="AC5102">Budgétiser un projet et suivre sa rentabilité</ac>
-                    <ac code="AC5103">Faire un appel d’offre (cahier des charges, brief, analyse des réponses, choix du
-                        prestataire, contractualisation)
-                    </ac>
-                    <ac code="AC5104">Découvrir les écosystèmes d’innovation numérique (fab labs, living labs,
-                        tiers-lieux, incubateurs…)
-                    </ac>
-                    <ac code="AC5105">Analyser un produit ou un service innovant en identifiant les propositions de
-                        valeurs et en évaluant les solutions proposées
-                    </ac>
-                    <ac code="AC5106">Construire une présence en ligne professionnelle (personal branding)</ac>
+                    <acs>
+                        <ac code="AC5101">Gérer un projet avec une méthode classique</ac>
+                        <ac code="AC5102">Budgétiser un projet et suivre sa rentabilité</ac>
+                        <ac code="AC5103">Faire un appel d’offre (cahier des charges, brief, analyse des réponses, choix
+                            du prestataire, contractualisation)
+                        </ac>
+                        <ac code="AC5104">Découvrir les écosystèmes d’innovation numérique (fab labs, living labs,
+                            tiers-lieux, incubateurs…)
+                        </ac>
+                        <ac code="AC5105">Analyser un produit ou un service innovant en identifiant les propositions de
+                            valeurs et en évaluant les solutions proposées
+                        </ac>
+                        <ac code="AC5106">Construire une présence en ligne professionnelle (personal branding)</ac>
+                    </acs>
                 </niveau>
                 <niveau ordre="2" libelle="Entreprend un projet au sein d’un écosystème numérique">
-                    <ac code="AC5201">Gérer un projet avec une méthode d’amélioration continue par exemple une méthode
-                        agile
-                    </ac>
-                    <ac code="AC5202">Concevoir un projet d’entreprise innovante en définissant le nom, l’identité et le
-                        ton de la marque et en faire une présentation convaincante
-                    </ac>
-                    <ac code="AC5203">Cartographier un écosystème (identification des acteurs, synthèse des propositions
-                        de valeur)
-                    </ac>
-                    <ac code="AC5204">Faire une veille efficace</ac>
-                    <ac code="AC5205">Initier la constitution d’un réseau professionnel</ac>
+                    <acs>
+                        <ac code="AC5201">Gérer un projet avec une méthode d’amélioration continue par exemple une
+                            méthode agile
+                        </ac>
+                        <ac code="AC5202">Concevoir un projet d’entreprise innovante en définissant le nom, l’identité
+                            et le ton de la marque et en faire une présentation convaincante
+                        </ac>
+                        <ac code="AC5203">Cartographier un écosystème (identification des acteurs, synthèse des
+                            propositions de valeur)
+                        </ac>
+                        <ac code="AC5204">Faire une veille efficace</ac>
+                        <ac code="AC5205">Initier la constitution d’un réseau professionnel</ac>
+                    </acs>
                 </niveau>
                 <niveau ordre="3" libelle="Entreprend dans le numérique">
-                    <ac code="AC5301">Piloter un produit ou service</ac>
-                    <ac code="AC5302">Maîtriser la qualité en projet Web ou multimédia</ac>
-                    <ac code="AC5303">Créer un projet d’entreprise (nom, valeurs, missions...)</ac>
-                    <ac code="AC5304">Ecrire un plan d’affaires</ac>
-                    <ac code="AC5305">Choisir une forme juridique</ac>
-                    <ac code="AC5306">Construire une présentation convaincante</ac>
+                    <acs>
+                        <ac code="AC5301">Piloter un produit ou service</ac>
+                        <ac code="AC5302">Maîtriser la qualité en projet Web ou multimédia</ac>
+                        <ac code="AC5303">Créer un projet d’entreprise (nom, valeurs, missions...)</ac>
+                        <ac code="AC5304">Ecrire un plan d’affaires</ac>
+                        <ac code="AC5305">Choisir une forme juridique</ac>
+                        <ac code="AC5306">Construire une présentation convaincante</ac>
+                    </acs>
                 </niveau>
             </niveaux>
         </competence>

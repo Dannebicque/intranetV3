@@ -18,9 +18,11 @@
                 <niveaux>
                     {% for niveau in competence.apcNiveaux %}
                         <niveau ordre="{{ niveau.ordre }}" libelle="{{ niveau.libelle }}">
-                            {% for apprentissage in niveau.apcApprentissageCritiques %}
-                                <ac code="{{ apprentissage.code }}">{{ apprentissage.libelle }}</ac>
-                            {% endfor %}
+                            <acs>
+                                {% for apprentissage in niveau.apcApprentissageCritiques %}
+                                    <ac code="{{ apprentissage.code }}">{{ apprentissage.libelle }}</ac>
+                                {% endfor %}
+                            </acs>
                         </niveau>
                     {% endfor %}
                 </niveaux>
