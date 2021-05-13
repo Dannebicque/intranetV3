@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Matiere.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2021 08:46
+ * @lastUpdate 13/05/2021 11:02
  */
 
 namespace App\Entity;
@@ -27,6 +27,12 @@ class Matiere extends AbstractMatiere
      * @Groups({"matiere_administration"})
      */
     private bool $pac = false;
+
+    /**
+     * @ORM\Column(type="float")
+     * @Groups({"matiere_administration"})
+     */
+    private float $coefficient = 1;
 
     /**
      * @ORM\Column(type="float")
@@ -481,5 +487,16 @@ class Matiere extends AbstractMatiere
     public function getCode(): ?string
     {
         return $this->getCodeMatiere();
+    }
+
+
+    public function getCoefficient(): float
+    {
+        return $this->coefficient;
+    }
+
+    public function setCoefficient(float $coefficient): void
+    {
+        $this->coefficient = $coefficient;
     }
 }

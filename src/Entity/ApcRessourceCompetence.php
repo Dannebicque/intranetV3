@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcRessourceCompetence.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 13/05/2021 11:02
  */
 
 namespace App\Entity;
@@ -30,6 +30,11 @@ class ApcRessourceCompetence extends BaseEntity
      * @ORM\ManyToOne(targetEntity=ApcCompetence::class, inversedBy="apcRessourceCompetences")
      */
     private $competence;
+
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $coefficient;
 
     /**
      * ApcRessourceCompetence constructor.
@@ -64,6 +69,18 @@ class ApcRessourceCompetence extends BaseEntity
     public function setCompetence(?ApcCompetence $competence): self
     {
         $this->competence = $competence;
+
+        return $this;
+    }
+
+    public function getCoefficient(): ?float
+    {
+        return $this->coefficient;
+    }
+
+    public function setCoefficient(float $coefficient): self
+    {
+        $this->coefficient = $coefficient;
 
         return $this;
     }

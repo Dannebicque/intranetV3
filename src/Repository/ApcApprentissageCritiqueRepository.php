@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/ApcApprentissageCritiqueRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/03/2021 21:24
+ * @lastUpdate 13/05/2021 17:04
  */
 
 namespace App\Repository;
@@ -30,10 +30,9 @@ class ApcApprentissageCritiqueRepository extends ServiceEntityRepository
         parent::__construct($registry, ApcApprentissageCritique::class);
     }
 
-
     public function findByDiplome(Diplome $diplome)
     {
-        return $this->findByDiplomeBuilder()
+        return $this->findByDiplomeBuilder($diplome)
             ->getQuery()
             ->getResult();
     }
@@ -64,5 +63,16 @@ class ApcApprentissageCritiqueRepository extends ServiceEntityRepository
         return $query->andWhere(implode(' OR ', $ors))
             ->getQuery()
             ->getResult();
+    }
+
+    public function findOneByDiplomeArray(Diplome $diplome): array
+    {
+        $comps = $this->findByDiplome($diplome);
+        $t = [];
+        foreach ($comps as $c) {
+            $t[$c->getCode()] = $c;
+        }
+
+        return $t;
     }
 }
