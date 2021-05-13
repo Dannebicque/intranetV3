@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Structure/DiplomeImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/05/2021 12:31
+ * @lastUpdate 13/05/2021 17:04
  */
 
 namespace App\Classes\Structure;
@@ -15,9 +15,18 @@ use App\Entity\ApcComposanteEssentielle;
 use App\Entity\ApcNiveau;
 use App\Entity\ApcParcours;
 use App\Entity\ApcParcoursNiveau;
+use App\Entity\ApcRessource;
+use App\Entity\ApcRessourceApprentissageCritique;
+use App\Entity\ApcRessourceCompetence;
+use App\Entity\ApcSae;
+use App\Entity\ApcSaeApprentissageCritique;
+use App\Entity\ApcSaeCompetence;
+use App\Entity\ApcSaeRessource;
 use App\Entity\ApcSituationProfessionnelle;
 use App\Entity\Diplome;
+use App\Entity\Semestre;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 
 class DiplomeImport
 {
@@ -100,7 +109,7 @@ class DiplomeImport
             $this->entityManager->persist($parc);
             foreach ($parcour->niveau as $parcNiveau) {
                 $pn = new ApcParcoursNiveau();
-                $pn->setNiveau($tCompetences[(string)$parcNiveau['competence']][(string)$parcNiveau['ordre']]);
+                $pn->setNiveau($tCompetences[trim((string)$parcNiveau['competence'])][trim((string)$parcNiveau['ordre'])]);
                 $pn->setParcours($parc);
                 $this->entityManager->persist($pn);
             }
@@ -111,13 +120,82 @@ class DiplomeImport
     private function openXmlFile()
     {
         if (file_exists($this->fichier)) {
-            return simplexml_load_file($this->fichier);
-        } else {
-            exit('Echec lors de l\'ouverture du fichier test.xml.');
+            return simplexml_load_string(file_get_contents($this->fichier));
         }
+
+        throw new FileNotFoundException();
     }
 
     private function importFormation()
     {
+        $xml = $this->openXmlFile();
+        $tAcs = $this->entityManager->getRepository(ApcApprentissageCritique::class)->findOneByDiplomeArray($this->diplome);
+        $tCompetences = $this->entityManager->getRepository(ApcCompetence::class)->findOneByDiplomeArray($this->diplome);
+        foreach ($xml->semestre as $sem) {
+            $semestre = $this->entityManager->getRepository(Semestre::class)->findOneByDiplomeEtNumero($this->diplome,
+                $sem['numero'], $sem['ordreAnnee']);
+
+            if (null !== $semestre) {
+                $tRessources = [];
+                foreach ($sem->ressources->ressource as $ressource) {
+                    $ar = new ApcRessource();
+                    $ar->setSemestre($semestre);
+                    $ar->setLibelle($ressource->titre);
+                    $ar->setCodeMatiere((string)$ressource['code']);
+                    $ar->setTdPpn((float)$ressource['heuresCMTD']);
+                    $ar->setTpPpn((float)$ressource['heuresTP']);
+                    $ar->setDescription((string)$ressource->description);
+                    $ar->setMotsCles((string)$ressource->motsCles);
+                    $this->entityManager->persist($ar);
+                    $tRessources[$ar->getCodeMatiere()] = $ar;
+
+                    //acs
+                    foreach ($ressource->acs->ac as $ac) {
+                        $rac = new ApcRessourceApprentissageCritique($ar, $tAcs[trim((string)$ac)]);
+                        $this->entityManager->persist($rac);
+                    }
+                    //competences
+                    foreach ($ressource->competences->competence as $comp) {
+                        $rac = new ApcRessourceCompetence($ar, $tCompetences[trim((string)$comp['nom'])]);
+                        $rac->setCoefficient((float)$comp['coefficient']);
+                        $this->entityManager->persist($rac);
+                    }
+                    //les saes seront ajoutée par les SAE
+                }
+
+                foreach ($sem->saes->sae as $sae) {
+                    $ar = new ApcSae();
+                    $ar->setSemestre($semestre);
+                    $ar->setLibelle($sae->titre);
+                    $ar->setCodeMatiere((string)$sae['code']);
+                    $ar->setTdPpn((float)$sae['heuresCMTD']);
+                    $ar->setTpPpn((float)$sae['heuresTP']);
+                    $ar->setProjetPpn((float)$sae['heuresProjet']);
+                    $ar->setDescription((string)$sae->description);
+                    $ar->setExemples((string)$sae->exemples);
+                    $ar->setLivrables((string)$sae->livrables);
+                    $this->entityManager->persist($ar);
+
+                    //acs
+                    foreach ($sae->acs->ac as $ac) {
+                        $rac = new ApcSaeApprentissageCritique($ar, $tAcs[trim((string)$ac)]);
+                        $this->entityManager->persist($rac);
+                    }
+
+                    //competences
+                    foreach ($sae->competences->competence as $comp) {
+                        $rac = new ApcSaeCompetence($ar, $tCompetences[trim((string)$comp['nom'])]);
+                        $rac->setCoefficient((float)$comp['coefficient']);
+                        $this->entityManager->persist($rac);
+                    }
+                    //Ressources
+                    foreach ($sae->ressources->ressource as $comp) {
+                        $rac = new ApcSaeRessource($ar, $tRessources[trim((string)$comp)]);
+                        $this->entityManager->persist($rac);
+                    }
+                }
+            }
+        }
+        $this->entityManager->flush();
     }
 }
