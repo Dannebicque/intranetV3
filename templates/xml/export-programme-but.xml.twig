@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<referentiel_formation>
+    {% for semestre in semestres %}
+        <semestre numero="{{ semestre.ordreLmd }}" libelle="{{ semestre.libelle }}" ordreAnnee="{{ semestre.ordreAnnee }}">
+            <saes>
+                {% for sae in semestre.apcSaes %}
+                    <sae code="{{ sae.codeMatiere }}" heuresCMTD="{{ sae.tdPpn }}" heuresTP="{{ sae.tpPpn }}" heuresPtut="{{ sae.projetPpn }}">
+                        <titre>{{ sae.libelle }}</titre>
+                        <description>{{ sae.description }}</description>
+                        <livrables>
+                            {{ sae.livrables|nl2br }}
+                        </livrables>
+                        <acs>
+                            {% for ac in sae.apcSaeApprentissageCritiques %}
+                                <ac>{{ ac.apprentissageCritique.code }}</ac>
+                            {% endfor %}
+                        </acs>
+                        <competences>
+                            {% for competence in sae.apcSaeCompetences %}
+                                <competence coefficient="{{ competence.coefficient }}" nom="{{ competence.competence.nomCourt }}"/>
+                            {% endfor %}
+                        </competences>
+                        <ressources>
+                            {% for ressource in sae.apcSaeRessources %}
+                                <ressource>{{ ressource.ressource.codeMatiere }}</ressource>
+                            {% endfor %}
+                        </ressources>
+                        <exemples>
+                            {{ sae.exemples|nl2br }}
+                        </exemples>
+                    </sae>
+                {% endfor %}
+            </saes>
+            <ressources>
+                {% for ressource in semestre.apcRessources %}
+                    <ressource code="{{ ressource.codeMatiere }}" heuresCMTD="{{ ressource.tdPpn }}" heuresTP="{{ ressource.tpPpn }}">
+                        <titre>{{ ressource.libelle }}</titre>
+                        <description>{{ ressource.description }}</description>
+                        <mots-cles>{{ ressource.motsCles }}</mots-cles>
+                        <acs>
+                            {% for ac in ressource.apcRessourceApprentissageCritiques %}
+                                <ac>{{ ac.apprentissageCritique.code }}</ac>
+                            {% endfor %}
+                        </acs>
+                        <saes>
+                            {% for ressource in ressource.apcSaeRessources %}
+                                <sae>{{ ressource.sae.codeMatiere }}</sae>
+                            {% endfor %}
+                        </saes>
+                        <competences>
+                            {% for competence in ressource.apcRessourceCompetences %}
+                                <competence coefficient="{{ competence.coefficient }}" nom="{{ competence.competence.nomCourt }}"/>
+                            {% endfor %}
+                        </competences>
+                    </ressource>
+                {% endfor %}
+            </ressources>
+        </semestre>
+    {% endfor %}
+</referentiel_formation>

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcCompetence.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/04/2021 08:55
+ * @lastUpdate 13/05/2021 17:00
  */
 
 namespace App\Entity;
@@ -104,7 +104,7 @@ class ApcCompetence extends BaseEntity
 
     public function setNomCourt(string $nom_court): self
     {
-        $this->nom_court = $nom_court;
+        $this->nom_court = trim($nom_court);
 
         return $this;
     }

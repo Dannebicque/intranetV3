@@ -4,13 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/ApcComptenceRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/03/2021 16:13
+ * @lastUpdate 13/05/2021 16:47
  */
 
 namespace App\Repository;
 
 use App\Entity\ApcCompetence;
-use App\Entity\ApcNiveau;
 use App\Entity\Diplome;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -40,5 +39,16 @@ class ApcComptenceRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('c')
             ->where('c.diplome = :diplome')
             ->setParameter('diplome', $diplome->getId());
+    }
+
+    public function findOneByDiplomeArray(Diplome $diplome): array
+    {
+        $comps = $this->findByDiplome($diplome);
+        $t = [];
+        foreach ($comps as $c) {
+            $t[$c->getNomCourt()] = $c;
+        }
+
+        return $t;
     }
 }

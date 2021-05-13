@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/SemestreRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 13/05/2021 16:35
  */
 
 namespace App\Repository;
@@ -113,5 +113,20 @@ class SemestreRepository extends ServiceEntityRepository
         }
 
         return $tabsemestre;
+    }
+
+    public function findOneByDiplomeEtNumero(Diplome $diplome, string $numero, string $ordreAnnee)
+    {
+        return $this->createQueryBuilder('s')
+            ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
+            ->where('a.diplome = :diplome')
+            ->andWhere('s.ordreAnnee = :ordreAnnee')
+            ->andWhere('s.ordreLmd = :numero')
+            ->setParameter('diplome', $diplome->getId())
+            ->setParameter('numero', $numero)
+            ->setParameter('ordreAnnee', $ordreAnnee)
+            ->orderBy('s.ordreLmd', 'ASC')
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 }
