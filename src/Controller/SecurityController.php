@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/SecurityController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 15/05/2021 08:54
  */
 
 namespace App\Controller;
@@ -173,30 +173,6 @@ class SecurityController extends AbstractController
         }
 
         return $this->render('security/reset_password.html.twig', ['token' => $token]);
-    }
-
-    /**
-     * @Route("/verouiller", name="security_lock")
-     */
-    public function lock(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
-    {
-        if ($request->isMethod('POST')) {
-            $credential = $request->request->get('password');
-            $isPasswordValid = $passwordEncoder->isPasswordValid($this->getUser(), $credential);
-
-            if ($isPasswordValid && null !== $this->getUser()) {
-                if (\in_array('ROLE_SUPER_ADMIN', $this->getUser()->getRoles(), true) || \in_array('ROLE_SCOLARITE',
-                        $this->getUser()->getRoles(), true)) {
-                    return new RedirectResponse($this->generateUrl('super_admin_homepage'));
-                }
-
-                return new RedirectResponse($this->generateUrl('default_homepage'));
-            }
-
-            throw new CustomUserMessageAuthenticationException('Invalid username or password');
-        }
-
-        return $this->render('security/lock.html.twig');
     }
 
     /**

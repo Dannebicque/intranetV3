@@ -4,49 +4,37 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyScolarite.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
- */
-
-/*
- * Pull your hearder here, for exemple, Licence header.
+ * @lastUpdate 15/05/2021 09:12
  */
 
 namespace App\Classes;
 
 use App\Entity\AnneeUniversitaire;
-use App\Entity\Constantes;
 use App\Entity\Departement;
 use App\Entity\Etudiant;
 use App\Entity\Scolarite;
 use App\Entity\Semestre;
 use App\Entity\Ue;
-use App\Repository\ScolariteRepository;
+use App\Utils\Tools;
+use function array_key_exists;
+use function count;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 
 class MyScolarite
 {
     public MyUpload $myUpload;
-
     public EntityManagerInterface $entityManager;
 
-    private ScolariteRepository $scolariteRepository;
-
-    /**
-     * MyPpn constructor.
-     */
     public function __construct(
         MyUpload $myUpload,
-        EntityManagerInterface $entityManager,
-        ScolariteRepository $scolariteRepository
+        EntityManagerInterface $entityManager
     ) {
         $this->myUpload = $myUpload;
         $this->entityManager = $entityManager;
-        $this->scolariteRepository = $scolariteRepository;
     }
 
     /**
-     *
      * @throws Exception
      */
     public function importCsv($data, Departement $departement, AnneeUniversitaire $anneeUniversitaire): bool
@@ -57,7 +45,7 @@ class MyScolarite
         $semestres = $this->entityManager->getRepository(Semestre::class)->tableauSemestresApogee($departement);
         $etudiants = $this->entityManager->getRepository(Etudiant::class)->findByDepartementArray($departement);
 
-        $handle = fopen($file, 'r');
+        $handle = fopen($file, 'rb');
 
         /*Si on a réussi à ouvrir le fichier*/
         if ($handle) {
@@ -67,8 +55,8 @@ class MyScolarite
             while (!feof($handle)) {
                 /*On lit la ligne courante*/
                 $ligne = fgetcsv($handle, 1024, ';');
-                if (false !== $ligne && \count($ligne) > 1) {
-                    if (\array_key_exists($ligne[1], $semestres) && \array_key_exists($ligne[0], $etudiants)) {
+                if (false !== $ligne && count($ligne) > 1) {
+                    if (array_key_exists($ligne[1], $semestres) && array_key_exists($ligne[0], $etudiants)) {
                         //numetudiant	codesemestre	semestre	ordre	moyenne	nbabsences	decision	suite ues
                         $scol = new Scolarite($etudiants[$ligne[0]], $semestres[$ligne[1]]);
                         $scol->setAnneeUniversitaire($anneeUniversitaire);
@@ -83,7 +71,7 @@ class MyScolarite
                         $tUe = [];
                         foreach ($tues as $tue) {
                             $ue = explode(':', $tue);
-                            if (\array_key_exists($ue[0], $ues)) {
+                            if (array_key_exists($ue[0], $ues)) {
                                 $tUe[$ues[$ue[0]]->getId()]['moyenne'] = Tools::convertToFloat($ue[1]);
                                 $tUe[$ues[$ue[0]]->getId()]['rang'] = -1;
                             }

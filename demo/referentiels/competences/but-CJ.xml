@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved -->
+<!-- @file /Users/davidannebicque/htdocs/intranetV3/demo/referentiels/competences/but-CJ.xml -->
+<!-- @author davidannebicque -->
+<!-- @project intranetV3 -->
+<!-- @lastUpdate 15/05/2021 07:33 -->
+
+<referentiel_competence specialite="CJ" specialite_long="Carrière Juridique"
+                        type="B.U.T.">
+    <competences>
+        <competence name="Piloter" numero="1"
+                    libelle_long="Piloter des tâches et activités d'ordre juridique, comptable, financier, organisationnel."
+                    couleur="c1">
+            <situations>
+                <situation>Assistance aux fonctions support dans une structure privée ou publique ;</situation>
+                <situation>Traitement de dossiers contentieux</situation>
+                <situation>Traitement de dossiers non contentieux Piloter les activités</situation>
+            </situations>
+            <composantes_essentielles>
+                <composante>En appliquant avec rigueur les procédures existantes</composante>
+                <composante>En organisant ses actions de façon optimale</composante>
+                <composante>En recourant aux ressources et moyens adaptés à l’environnement professionnel</composante>
+                <composante>En sélectionnant les informations pertinentes à des fins d’analyse</composante>
+            </composantes_essentielles>
+            <niveaux>
+                <niveau ordre="1" libelle="Piloter les activités élémentaires sous contrôle">
+                    <acs>
+                        <ac code="AC1101">Se projeter dans un planning intégrant plusieurs facteurs
+                        </ac>
+                        <ac code="AC1102">Sélectionner les informations et ressources pertinentes
+                        </ac>
+                        <ac code="AC1103">Respecter les procédures prédéfinies.
+                        </ac>
+                    </acs>
+                </niveau>
+                <niveau ordre="2" libelle="Piloter les activités essentielles en soutien">
+                    <acs>
+                        <ac code="AC1201">Hiérarchiser les étapes de réalisation d’une tâche</ac>
+                        <ac code="AC1202">Interpréter les directives de réalisation d’une mission</ac>
+                        <ac code="AC1203">Interroger ses méthodes pour les rendre plus efficaces.</ac>
+                    </acs>
+                </niveau>
+                <niveau ordre="3" libelle="Piloter les activités complexes en autonomie">
+                    <acs>
+                        <ac code="AC1301">Choisir la procédure la plus efficiente</ac>
+                        <ac code="AC1302">Conduire une mission dans son intégralité</ac>
+                        <ac code="AC1303">Prévoir les besoins liés à l’activité.</ac>
+                    </acs>
+                </niveau>
+            </niveaux>
+        </competence>
+        <competence name="Conseiller" numero="2"
+                    libelle_long="Conseiller sur des questions d'ordre juridique, comptable, financier, organisationnel."
+                    couleur="c2">
+            <situations>
+                <situation>Assistance aux fonctions support dans une structure privée ou publique</situation>
+                <situation>Accueil et orientation dans un contexte amiable</situation>
+                <situation>Réponse à une question contentieuse</situation>
+            </situations>
+            <composantes_essentielles>
+                <composante>En adaptant la réponse à l’interlocuteur et au contexte dans lequel la question est posée
+                </composante>
+                <composante>En apportant une réponse précise, rigoureuse et à jour à la question posée</composante>
+                <composante>En assurant une communication fluide en interne comme vers l’extérieur</composante>
+                <composante>En recourant à bon escient aux personnes ressources</composante>
+            </composantes_essentielles>
+            <niveaux>
+                <niveau ordre="1" libelle="Conseiller en tant que contributeur à la mission de conseil">
+                    <acs>
+                        <ac code="AC2101">Prendre conscience des enjeux de communication dans les relations
+                            interpersonnelles (communication écrite et orale)
+                        </ac>
+                        <ac code="AC2102">Interpréter en droit le discours d’un client ou usager</ac>
+                        <ac code="AC2103">S’engager dans l’interaction professionnelle</ac>
+                        <ac code="AC2104">Mobiliser les personnes-ressources en fonction des besoins.</ac>
+                    </acs>
+                </niveau>
+                <niveau ordre="2" libelle="Conseiller en tant qu’acteur de la mission de conseil">
+                    <acs>
+                        <ac code="AC2201">Faire entendre ses idées au sein d’une équipe</ac>
+                        <ac code="AC2202">Accepter la critique de façon constructive</ac>
+                        <ac code="AC2203">Proposer des solutions et les défendre</ac>
+                        <ac code="AC2204">Reformuler en droit le discours d’un client ou usager</ac>
+                    </acs>
+                </niveau>
+                <niveau ordre="3" libelle="Conseiller en tant que responsable de la mission de conseil ">
+                    <acs>
+                        <ac code="AC2301">Assumer la responsabilité d'une prise de position</ac>
+                        <ac code="AC2302">Construire un discours structuré et finalisé</ac>
+                        <ac code="AC2303">Animer un travail collectif</ac>
+                        <ac code="AC2304">Intégrer les règles déontologiques dans la communication professionnelle.</ac>
+                    </acs>
+                </niveau>
+            </niveaux>
+        </competence>
+        <competence name="Sécuriser" numero="3"
+                    libelle_long="Sécuriser les relations et les données d'ordre juridique, comptable, financier, organisationnel."
+                    couleur="c3">
+            <situations>
+                <situation>Assistance à la prise de décision publique (institutions administratives et judiciaires)
+                </situation>
+                <situation>Traitement des données au sein de structures privées ou publiques (RGPD)
+                </situation>
+                <situation>Mise en conformité de décisions privées (entreprises et associations)
+                </situation>
+            </situations>
+            <composantes_essentielles>
+                <composante>En respectant les règles de déontologie et d’éthique
+                </composante>
+                <composante>En s’assurant de la régularité des documents
+                </composante>
+                <composante>En utilisant les technologies appropriées</composante>
+                <composante>En exploitant une veille juridique pertinente
+                </composante>
+            </composantes_essentielles>
+            <niveaux>
+                <niveau ordre="1" libelle="Exercer une sécurisation ponctuelle">
+                    <acs>
+                        <ac code="AC3101">Adopter les exigences de discrétion et confidentialité des échanges
+                        </ac>
+                        <ac code="AC3102">Se documenter pour progresser</ac>
+                        <ac code="AC3103">Intégrer les enjeux liés à la protection des données</ac>
+                    </acs>
+                </niveau>
+                <niveau ordre="2" libelle="Réaliser une sécurisation sectorielle">
+                    <acs>
+                        <ac code="AC3201">Sélectionner les informations à transmettre en fonction de l’interlocuteur
+                        </ac>
+                        <ac code="AC3202">Alerter à bon escient en cas de risque pour la sécurité juridique</ac>
+                        <ac code="AC3203">Cibler les éléments essentiels à la régularité des actes accomplis.</ac>
+                    </acs>
+                </niveau>
+                <niveau ordre="3" libelle="Assurer une sécurisation systémique">
+                    <acs>
+                        <ac code="AC3301">Anticiper les risques pesant sur la régularité d’un acte</ac>
+                        <ac code="AC3302">Faire respecter les règles de sécurisation des données</ac>
+                        <ac code="AC3303">Contextualiser une problématique de sécurité.</ac>
+                    </acs>
+                </niveau>
+            </niveaux>
+        </competence>
+        <competence name="Rédiger" numero="4"
+                    libelle_long="Rédiger des actes et documents d'ordre juridique, comptable, financier, organisationnel"
+                    couleur="c4">
+            <situations>
+                <situation>Rédaction d’actes juridiques dans une structure privée ou publique.
+                </situation>
+                <situation>Rédaction de documents extrajuridiques dans une structure privée ou publique.
+                </situation>
+            </situations>
+            <composantes_essentielles>
+                <composante>En utilisant de façon rigoureuse la terminologie appropriée</composante>
+                <composante>En intégrant systématiquement le formalisme adéquat aux productions écrites
+                </composante>
+                <composante>En synthétisant utilement les ressources disponibles pour établir des documents</composante>
+                <composante>En optimisant les relations avec les acteurs impliqués</composante>
+            </composantes_essentielles>
+            <niveaux>
+                <niveau ordre="1" libelle="Exprimer un raisonnement simple à l'écrit ">
+                    <acs>
+                        <ac code="AC4101">Utiliser un langage professionnel adapté
+                        </ac>
+                        <ac code="AC4102">Attribuer utilement un écrit à un contexte prédéfini
+                        </ac>
+                        <ac code="AC4103">Intégrer les modes de communication en vigueur au sein d’une structure.
+                        </ac>
+                    </acs>
+                </niveau>
+                <niveau ordre="2" libelle="Formuler un raisonnement composite à l'écrit">
+                    <acs>
+                        <ac code="AC4201">Construire des écrits accessibles à différents publics
+                        </ac>
+                        <ac code="AC4202">Articuler le fond et la forme</ac>
+                        <ac code="AC4203">Adapter son mode d’expression suivant le contexte</ac>
+                    </acs>
+                </niveau>
+                <niveau ordre="3" libelle="Élaborer un raisonnement complexe à l'écrit">
+                    <acs>
+                        <ac code="AC4301">Choisir de façon sûre un acte en fonction du contexte</ac>
+                        <ac code="AC4302">Assumer une prise de position écrite</ac>
+                        <ac code="AC4303">Planifier la rédaction d’un document</ac>
+                    </acs>
+                </niveau>
+            </niveaux>
+        </competence>
+    </competences>
+    <parcours>
+        <parcour numero="1" libelle="Patrimoine et Finance" code="PaFi">
+            <annee ordre="1">
+                <competence nom="Piloter" niveau="1"/>
+                <competence nom="Conseiller" niveau="1"/>
+                <competence nom="Sécuriser" niveau="1"/>
+                <competence nom="Rédiger" niveau="1"/>
+            </annee>
+            <annee ordre="2">
+                <competence nom="Piloter" niveau="2"/>
+                <competence nom="Conseiller" niveau="2"/>
+                <competence nom="Sécuriser" niveau="2"/>
+                <competence nom="Rédiger" niveau="2"/>
+            </annee>
+            <annee ordre="3">
+                <competence nom="Conseiller" niveau="3"/>
+                <competence nom="Sécuriser" niveau="3"/>
+                <competence nom="Rédiger" niveau="3"/>
+            </annee>
+        </parcour>
+        <parcour numero="2" libelle="Entreprise et Association" code="EnAs">
+            <annee ordre="1">
+                <competence nom="Piloter" niveau="1"/>
+                <competence nom="Conseiller" niveau="1"/>
+                <competence nom="Sécuriser" niveau="1"/>
+                <competence nom="Rédiger" niveau="1"/>
+            </annee>
+            <annee ordre="2">
+                <competence nom="Piloter" niveau="2"/>
+                <competence nom="Conseiller" niveau="2"/>
+                <competence nom="Sécuriser" niveau="2"/>
+                <competence nom="Rédiger" niveau="2"/>
+            </annee>
+            <annee ordre="3">
+                <competence nom="Piloter" niveau="3"/>
+                <competence nom="Conseiller" niveau="3"/>
+                <competence nom="Rédiger" niveau="3"/>
+            </annee>
+        </parcour>
+        <parcour numero="3" libelle="Administration et Justice" code="AdJu">
+            <annee ordre="1">
+                <competence nom="Piloter" niveau="1"/>
+                <competence nom="Conseiller" niveau="1"/>
+                <competence nom="Sécuriser" niveau="1"/>
+                <competence nom="Rédiger" niveau="1"/>
+            </annee>
+            <annee ordre="2">
+                <competence nom="Piloter" niveau="2"/>
+                <competence nom="Conseiller" niveau="2"/>
+                <competence nom="Sécuriser" niveau="2"/>
+                <competence nom="Rédiger" niveau="2"/>
+            </annee>
+            <annee ordre="3">
+                <competence nom="Piloter" niveau="3"/>
+                <competence nom="Sécuriser" niveau="3"/>
+                <competence nom="Rédiger" niveau="3"/>
+            </annee>
+        </parcour>
+    </parcours>
+</referentiel_competence>

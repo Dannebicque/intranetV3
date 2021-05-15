@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcRessourceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/03/2021 18:52
+ * @lastUpdate 15/05/2021 08:23
  */
 
 namespace App\Controller\administration\apc;
 
+use App\Classes\Matieres\RessourceManager;
 use App\Classes\Pdf\MyPDF;
 use App\Classes\Word\MyWord;
 use App\Controller\BaseController;
@@ -23,6 +24,7 @@ use App\Repository\ApcRessourceApprentissageCritiqueRepository;
 use App\Repository\ApcSaeRepository;
 use App\Repository\ApcSaeRessourceRepository;
 use App\Repository\SemestreRepository;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -34,7 +36,6 @@ class ApcRessourceController extends BaseController
 {
     /**
      * @Route("/imprime/{id}.docx", name="apc_ressource_export_one_word", methods="GET")
-     *
      */
     public function exportWordOne(MyWord $myWord, ApcRessource $apcRessource)
     {
@@ -43,7 +44,6 @@ class ApcRessourceController extends BaseController
 
     /**
      * @Route("/imprime/{id}.pdf", name="apc_ressource_export_one", methods="GET")
-     *
      */
     public function exportOne(MyPDF $myPDF, ApcRessource $apcRessource)
     {
@@ -75,6 +75,23 @@ class ApcRessourceController extends BaseController
 //    }
 
     /**
+     * @Route("/ajax-edit/{id}", name="apc_ressources_ajax_edit", methods={"POST"}, options={"expose":true})
+     */
+    public function ajaxEdit(
+        RessourceManager $ressourceManager,
+        Request $request,
+        ApcRessource $apcRessource
+    ): Response {
+        $name = $request->request->get('field');
+        $value = $request->request->get('value');
+
+        $update = $ressourceManager->update($name, $value, $apcRessource);
+
+        return $update ? new JsonResponse('', Response::HTTP_OK) : new JsonResponse('erreur',
+            Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
+
+    /**
      * @Route("/ajax-ac", name="apc_ressources_ajax_ac", methods={"POST"}, options={"expose":true})
      */
     public function ajaxAc(
@@ -85,8 +102,8 @@ class ApcRessourceController extends BaseController
     ): Response {
         $semestre = $semestreRepository->find($request->request->get('semestre'));
         $competences = $request->request->get('competences');
-        if ($semestre !== null && count($competences) > 0) {
-            if ($request->request->get('ressource') !== null) {
+        if (null !== $semestre && count($competences) > 0) {
+            if (null !== $request->request->get('ressource')) {
                 $tabAcSae = $apcRessourceApprentissageCritiqueRepository->findArrayIdAc($request->request->get('ressource'));
             } else {
                 $tabAcSae = [];
@@ -102,8 +119,8 @@ class ApcRessourceController extends BaseController
                 $b['id'] = $d->getId();
                 $b['libelle'] = $d->getLibelle();
                 $b['code'] = $d->getCode();
-                $b['checked'] = in_array($d->getId(), $tabAcSae) === true ? 'checked="checked"' : '';
-                if ($d->getNiveau() !== null && $d->getNiveau()->getCompetence() !== null && !array_key_exists($d->getNiveau()->getCompetence()->getNomCourt(),
+                $b['checked'] = true === in_array($d->getId(), $tabAcSae) ? 'checked="checked"' : '';
+                if (null !== $d->getNiveau() && null !== $d->getNiveau()->getCompetence() && !array_key_exists($d->getNiveau()->getCompetence()->getNomCourt(),
                         $t)) {
                     $t[$d->getNiveau()->getCompetence()->getNomCourt()] = [];
                 }
@@ -126,8 +143,8 @@ class ApcRessourceController extends BaseController
         Request $request
     ): Response {
         $semestre = $semestreRepository->find($request->request->get('semestre'));
-        if ($semestre !== null) {
-            if ($request->request->get('ressource') !== null) {
+        if (null !== $semestre) {
+            if (null !== $request->request->get('ressource')) {
                 $tabAcSae = $apcSaeRessourceRepository->findArrayIdSae($request->request->get('ressource'));
             } else {
                 $tabAcSae = [];
@@ -142,7 +159,7 @@ class ApcRessourceController extends BaseController
                 $b['id'] = $d->getId();
                 $b['libelle'] = $d->getLibelle();
                 $b['code'] = $d->getCodeSae();
-                $b['checked'] = in_array($d->getId(), $tabAcSae) === true ? 'checked="checked"' : '';
+                $b['checked'] = true === in_array($d->getId(), $tabAcSae) ? 'checked="checked"' : '';
                 $t[] = $b;
             }
 
@@ -163,7 +180,7 @@ class ApcRessourceController extends BaseController
     ): Response {
         $apcRessource = new ApcRessource();
         $form = $this->createForm(ApcRessourceType::class, $apcRessource, [
-            'diplome' => $diplome
+            'diplome' => $diplome,
         ]);
         $form->handleRequest($request);
 
@@ -200,7 +217,7 @@ class ApcRessourceController extends BaseController
         return $this->render('apc/apc_ressource/new.html.twig', [
             'apc_ressource' => $apcRessource,
             'diplome' => $diplome,
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ]);
     }
 
@@ -224,7 +241,7 @@ class ApcRessourceController extends BaseController
         ApcRessource $apcRessource
     ): Response {
         $form = $this->createForm(ApcRessourceType::class, $apcRessource, [
-            'diplome' => $apcRessource->getDiplome()
+            'diplome' => $apcRessource->getDiplome(),
         ]);
         $form->handleRequest($request);
 
@@ -273,7 +290,7 @@ class ApcRessourceController extends BaseController
         return $this->render('apc/apc_ressource/edit.html.twig', [
             'apc_ressource' => $apcRessource,
             'form' => $form->createView(),
-            'diplome' => $apcRessource->getDiplome()
+            'diplome' => $apcRessource->getDiplome(),
         ]);
     }
 
