@@ -176,11 +176,6 @@
             <i class="fas fa-compress fullscreen-active"></i>
             <span class="sr-only">Fullscreen</span>
         </a>
-        {# <a class="topbar-btn d-none d-md-block" href="{{ path('security_lock') }}" data-provide="tooltip" #}
-        {# title="{{ 'lock'|trans }}"> #}
-        {# <i class="fas fa-lock"></i> #}
-        {# <span class="sr-only">Vérouiller</span> #}
-        {# </a> #}
 
         <div class="dropdown d-none d-md-block">
             <span class="topbar-btn" data-toggle="dropdown"><i class="fas fa-th-large"></i></span>
@@ -255,8 +250,6 @@
                     </a>
                     <a class="dropdown-item" href="#" id="darkMode"><i class="fas fa-adjust"></i> Dark Mode On</a>
                     <div class="dropdown-divider"></div>
-                    {# <a class="dropdown-item" href="{{ path('security_lock') }}"><i class="fas fa-user-lock"></i> {{ 'verrouiller'|trans }} #}
-                    {# </a> #}
                     <a class="dropdown-item" href="{{ path('security_logout') }}"><i class="fas fa-sign-out-alt"></i>
                         {{ 'déconnexion'|trans }}</a>
                 </div>
