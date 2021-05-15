@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/DiplomeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 13/05/2021 11:08
  */
 
 namespace App\Controller\superAdministration;
 
+use App\Classes\Structure\DiplomeExport;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Departement;
@@ -50,10 +51,26 @@ class DiplomeController extends BaseController
         }
 
         return $this->render('structure/diplome/new.html.twig', [
-            'diplome'     => $diplome,
+            'diplome' => $diplome,
             'departement' => $departement,
-            'form'        => $form->createView(),
+            'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/export-referentiel/{id}", name="sa_diplome_export_referentiel", methods="GET")
+     */
+    public function exportReferentiel(DiplomeExport $diplomeExport, Diplome $diplome): Response
+    {
+        return $diplomeExport->exportRefentiel($diplome);
+    }
+
+    /**
+     * @Route("/export-programme/{id}", name="sa_diplome_export_programme", methods="GET")
+     */
+    public function exportProgramme(DiplomeExport $diplomeExport, Diplome $diplome): Response
+    {
+        return $diplomeExport->exportProgramme($diplome);
     }
 
     /**
@@ -63,6 +80,7 @@ class DiplomeController extends BaseController
     {
         return $this->render('structure/diplome/show.html.twig', ['diplome' => $diplome]);
     }
+
 
     /**
      * @Route("/{id}/edit", name="sa_diplome_edit", methods="GET|POST")

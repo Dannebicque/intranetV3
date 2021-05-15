@@ -113,14 +113,25 @@
                                             class="{{ iconDelete }}" data-provide="tooltip" data-placement="bottom"
                                             title="{{ 'atitle.supprimer'|trans }}"></i></a>
                             {% endif %}
-                            <a href="{{ path(baseurl ~ 'diplome_import_index', {id: diplome.id}) }}"
-                               class="btn btn-info btn-outline btn-square btn-xs"><i
-                                        class="fas fa-upload" data-provide="tooltip" data-placement="bottom"
-                                        title="Importer une maquette"></i></a>
-                            <a href="{{ path(baseurl ~ 'diplome_delete', {id: diplome.id}) }}"
-                               class="btn btn-info btn-outline btn-square btn-xs"><i
-                                        class="fas fa-download" data-provide="tooltip" data-placement="bottom"
-                                        title="Exporter une maquette"></i></a>
+                            <span class="dropdown">
+                                <a data-toggle="dropdown" href="#">
+                                    <i class="fas fa-ellipsis-h rotate-90"
+                                       data-provide="tooltip"
+                                       title="Options d'export ou d'import"></i>
+                                    <span class="sr-only">
+                                        Options  d'export  ou d'import</span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a class="dropdown-item" href="{{ path(baseurl ~ 'diplome_import_index', {id:
+                                        diplome.id}) }}"><i class="fas fa-upload"></i> Importer une maquette</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="{{ path(baseurl ~ 'diplome_export_referentiel', {id:
+                                        diplome
+                                        .id}) }}"><i class="fas fa-download"></i> Exporter Référentiel</a>
+                                    <a class="dropdown-item" href="{{ path(baseurl ~ 'diplome_export_programme', {id:
+                                        diplome.id}) }}"><i class="fas fa-download"></i> Exporter Programme</a>
+                                </div>
+                            </span>
                         {% endif %}
                     </div>
                 </div>

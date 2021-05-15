@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyUpload.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 13/05/2021 12:31
  */
 
 /*
@@ -13,6 +13,7 @@
 
 namespace App\Classes;
 
+use App\Exception\ExtensionInterditeException;
 use Exception;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -28,20 +29,16 @@ class MyUpload
     }
 
     /**
-     * @param array $extensions
-     *
-     * @return bool|string
      * @throws Exception
-     *
      */
-    public function upload(UploadedFile $fichier, $destination, $extensions = [])
+    public function upload(UploadedFile $fichier, string $destination, array $extensions = []): ?string
     {
         $extension = $this->getExtension($fichier);
         $dir = $this->valideDir($destination);
 
         if (null !== $fichier) {
             if ((\count($extensions) > 0) && !\in_array($extension, $extensions, true)) {
-                return false; //extension interdite
+                throw new ExtensionInterditeException();
             }
 
             $nomfile = random_int(1, 99999) . '_' . date('YmdHis') . '.' . $extension;

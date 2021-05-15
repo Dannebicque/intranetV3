@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcApprentissageCritique.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 13/05/2021 17:00
  */
 
 namespace App\Entity;
@@ -91,7 +91,7 @@ class ApcApprentissageCritique extends BaseEntity
 
     public function setCode(string $code): self
     {
-        $this->code = $code;
+        $this->code = trim($code);
 
         return $this;
     }

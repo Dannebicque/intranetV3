@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcSaeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/03/2021 18:59
+ * @lastUpdate 15/05/2021 08:23
  */
 
 namespace App\Controller\administration\apc;
 
+use App\Classes\Matieres\SaeManager;
 use App\Classes\Pdf\MyPDF;
 use App\Classes\Word\MyWord;
 use App\Controller\BaseController;
@@ -23,6 +24,7 @@ use App\Repository\ApcRessourceRepository;
 use App\Repository\ApcSaeApprentissageCritiqueRepository;
 use App\Repository\ApcSaeRessourceRepository;
 use App\Repository\SemestreRepository;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -34,7 +36,6 @@ class ApcSaeController extends BaseController
 {
     /**
      * @Route("/imprime/{id}.docx", name="apc_sae_export_one_word", methods="GET")
-     *
      */
     public function exportWordOne(MyWord $myWord, ApcSae $apcSae)
     {
@@ -43,7 +44,6 @@ class ApcSaeController extends BaseController
 
     /**
      * @Route("/imprime/{id}.pdf", name="apc_sae_export_one", methods="GET")
-     *
      */
     public function exportOne(MyPDF $myPDF, ApcSae $apcSae)
     {
@@ -75,6 +75,23 @@ class ApcSaeController extends BaseController
 //    }
 
     /**
+     * @Route("/ajax-edit/{id}", name="apc_sae_ajax_edit", methods={"POST"}, options={"expose":true})
+     */
+    public function ajaxEdit(
+        SaeManager $saeManager,
+        Request $request,
+        ApcSae $acpSae
+    ): Response {
+        $name = $request->request->get('field');
+        $value = $request->request->get('value');
+
+        $update = $saeManager->update($name, $value, $acpSae);
+
+        return $update ? new JsonResponse('', Response::HTTP_OK) : new JsonResponse('erreur',
+            Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
+
+    /**
      * @Route("/ajax-ac", name="apc_sae_ajax_ac", methods={"POST"}, options={"expose":true})
      */
     public function ajaxAc(
@@ -85,8 +102,8 @@ class ApcSaeController extends BaseController
     ): Response {
         $semestre = $semestreRepository->find($request->request->get('semestre'));
         $competences = $request->request->get('competences');
-        if ($semestre !== null && count($competences) > 0) {
-            if ($request->request->get('sae') !== null) {
+        if (null !== $semestre && count($competences) > 0) {
+            if (null !== $request->request->get('sae')) {
                 $tabAcSae = $apcSaeApprentissageCritiqueRepository->findArrayIdAc($request->request->get('sae'));
             } else {
                 $tabAcSae = [];
@@ -102,8 +119,8 @@ class ApcSaeController extends BaseController
                 $b['id'] = $d->getId();
                 $b['libelle'] = $d->getLibelle();
                 $b['code'] = $d->getCode();
-                $b['checked'] = in_array($d->getId(), $tabAcSae) === true ? 'checked="checked"' : '';
-                if ($d->getNiveau() !== null && $d->getNiveau()->getCompetence() !== null && !array_key_exists($d->getNiveau()->getCompetence()->getNomCourt(),
+                $b['checked'] = true === in_array($d->getId(), $tabAcSae) ? 'checked="checked"' : '';
+                if (null !== $d->getNiveau() && null !== $d->getNiveau()->getCompetence() && !array_key_exists($d->getNiveau()->getCompetence()->getNomCourt(),
                         $t)) {
                     $t[$d->getNiveau()->getCompetence()->getNomCourt()] = [];
                 }
@@ -126,8 +143,8 @@ class ApcSaeController extends BaseController
         Request $request
     ): Response {
         $semestre = $semestreRepository->find($request->request->get('semestre'));
-        if ($semestre !== null) {
-            if ($request->request->get('sae') !== null) {
+        if (null !== $semestre) {
+            if (null !== $request->request->get('sae')) {
                 $tabAcSae = $apcSaeRessourceRepository->findArrayIdRessources($request->request->get('sae'));
             } else {
                 $tabAcSae = [];
@@ -142,7 +159,7 @@ class ApcSaeController extends BaseController
                 $b['id'] = $d->getId();
                 $b['libelle'] = $d->getLibelle();
                 $b['code'] = $d->getCodeRessource();
-                $b['checked'] = in_array($d->getId(), $tabAcSae) === true ? 'checked="checked"' : '';
+                $b['checked'] = true === in_array($d->getId(), $tabAcSae) ? 'checked="checked"' : '';
                 $t[] = $b;
             }
 
@@ -151,7 +168,6 @@ class ApcSaeController extends BaseController
 
         return $this->json(false);
     }
-
 
     /**
      * @Route("/new/{diplome}", name="apc_sae_new", methods={"GET","POST"})
@@ -167,7 +183,6 @@ class ApcSaeController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $this->entityManager->persist($apcSae);
             //sauvegarde des AC
             $acs = $request->request->get('ac');
@@ -261,7 +276,6 @@ class ApcSaeController extends BaseController
                 'apc.sae.edit.success.flash'
             );
 
-
             if (null !== $request->request->get('btn_update')) {
                 return $this->redirectToRoute('administration_matiere_index',
                     ['diplome' => $apcSae->getDiplome()->getId()]);
@@ -274,7 +288,7 @@ class ApcSaeController extends BaseController
         return $this->render('apc/apc_sae/edit.html.twig', [
             'apc_sae' => $apcSae,
             'form' => $form->createView(),
-            'diplome' => $apcSae->getDiplome()
+            'diplome' => $apcSae->getDiplome(),
         ]);
     }
 
