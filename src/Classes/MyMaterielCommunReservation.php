@@ -4,11 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyMaterielCommunReservation.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
- */
-
-/*
- * Pull your hearder here, for exemple, Licence header.
+ * @lastUpdate 15/05/2021 09:11
  */
 
 namespace App\Classes;
@@ -18,6 +14,7 @@ use App\Entity\Personnel;
 use App\Event\MaterielCommunReservationEvent;
 use App\Repository\MaterielCommunPretRepository;
 use App\Repository\MaterielCommunRepository;
+use App\Utils\Tools;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
@@ -71,7 +68,7 @@ class MyMaterielCommunReservation
         return false;
     }
 
-    public function supprReservation(int $id)
+    public function supprReservation(int $id): bool
     {
         $pret = $this->materielCommunPretRepository->find(trim($id));
         if (null !== $pret) {

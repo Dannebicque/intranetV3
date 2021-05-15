@@ -4,11 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyStageEtudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
- */
-
-/*
- * Pull your hearder here, for exemple, Licence header.
+ * @lastUpdate 15/05/2021 09:16
  */
 
 namespace App\Classes;
@@ -18,6 +14,7 @@ use App\Entity\StageEtudiant;
 use App\Entity\StagePeriode;
 use App\Event\StageEvent;
 use App\Repository\StageEtudiantRepository;
+use App\Utils\Tools;
 use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
@@ -27,13 +24,9 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 class MyStageEtudiant
 {
     protected EntityManagerInterface $entityManager;
-
     protected EventDispatcherInterface $eventDispatcher;
-
     protected StageEtudiantRepository $stageEtudiantRepository;
-
     protected StageEtudiant $stageEtudiant;
-
     private Configuration $configuration;
 
     /**
@@ -52,7 +45,6 @@ class MyStageEtudiant
     }
 
     /**
-     *
      * @throws NonUniqueResultException
      */
     public function changeEtat(StagePeriode $stagePeriode, Etudiant $etudiant, $etat): void
@@ -123,8 +115,8 @@ class MyStageEtudiant
 
     /**
      * @return StageEtudiant|mixed
-     * @throws NonUniqueResultException
      *
+     * @throws NonUniqueResultException
      * @throws Exception
      */
     private function checkStageEtudiantExist(StagePeriode $stagePeriode, Etudiant $etudiant)
