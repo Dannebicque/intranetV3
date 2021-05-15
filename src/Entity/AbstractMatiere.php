@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/AbstractMatiere.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2021 08:46
+ * @lastUpdate 13/05/2021 16:59
  */
 
 namespace App\Entity;
@@ -82,12 +82,6 @@ abstract class AbstractMatiere extends BaseEntity
      * @Groups({"matiere_administration"})
      */
     private int $nbNotes = 2;
-
-    /**
-     * @ORM\Column(type="float")
-     * @Groups({"matiere_administration"})
-     */
-    private float $coefficient = 1;
 
     /**
      * @ORM\Column(type="string", length=20)
@@ -183,15 +177,6 @@ abstract class AbstractMatiere extends BaseEntity
         $this->nbNotes = $nbNotes;
     }
 
-    public function getCoefficient(): float
-    {
-        return $this->coefficient;
-    }
-
-    public function setCoefficient(float $coefficient): void
-    {
-        $this->coefficient = $coefficient;
-    }
 
     public function isSuspendu(): bool
     {
@@ -220,7 +205,7 @@ abstract class AbstractMatiere extends BaseEntity
 
     public function setCodeMatiere(string $codeMatiere): void
     {
-        $this->codeMatiere = $codeMatiere;
+        $this->codeMatiere = trim($codeMatiere);
     }
 
     public function getLibelle(): string

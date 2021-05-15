@@ -493,6 +493,8 @@ adm:
   ressources.et.sae.index.heading: 'Ressources et SAÉ'
   apc_parcours_niveau:
     heading: 'Configuration du parcours : %parcours%'
+  import_diplome:
+    index.heading: 'Import d''une maquette pour le diplôme "%diplome%"'
 
 administratif_homepage.heading: 'Tableau de bord administratif'
 administratif.qualite.questionnaire.show.heading: 'Détails d''un questionnaire qualité'

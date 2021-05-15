@@ -1,0 +1,673 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved -->
+<!-- @file /Users/davidannebicque/htdocs/intranetV3/demo/referentiels/competences/but-GMP.xml -->
+<!-- @author davidannebicque -->
+<!-- @project intranetV3 -->
+<!-- @lastUpdate 15/05/2021 07:33 -->
+
+<referentiel_competence specialite="GMP" specialite_long="Génie Mécanique et Productique"
+                        type="B.U.T.">
+    <competences>
+        <competence name="Spécifier" numero="1"
+                    libelle_long="Spécifier les exigences technico-économiques industrielles"
+                    couleur="c1">
+            <situations>
+                <situation>Conception du produit : identifier les besoins des utilisateurs finaux et définir le cahier
+                    des charges du produit (définir les caractéristiques attendues du produit)
+                </situation>
+                <situation>Industrialisation du produit : identifier les paramètres d’élaboration, contraintes du
+                    produit (géométrie, matériaux, etc) pour chaque pièce et assemblage, contraintes clients (quantité,
+                    qualité, coût, délai, etc) et moyens à disposition
+                </situation>
+                <situation>Organisation industrielle : identifier les contraintes de production (capacité de production,
+                    moyens disponibles, etc)
+                </situation>
+            </situations>
+            <composantes_essentielles>
+                <composante>En répondant au besoin d'un client national et/ou international</composante>
+                <composante>En déterminant les paramètres caractéristiques correspondant au besoin</composante>
+                <composante>En traduisant de façon pertinente et exhaustive les caractéristiques attendues en exigences
+                    techniques
+                </composante>
+                <composante>En mettant en oeuvre une méthodologie adaptée</composante>
+                <composante>En situant la valeur ajoutée des exigences par rapport à l'existant</composante>
+            </composantes_essentielles>
+            <niveaux>
+                <niveau ordre="1" libelle="Déterminer le besoin d’un client dans un cas simple">
+                    <acs>
+                        <ac code="AC1101">Formuler l'ensemble des attentes du client
+                        </ac>
+                        <ac code="AC1102">Exprimer les exigences techniques d'un produit système existant
+                        </ac>
+                        <ac code="AC1103">Vérifier la conformité d'un produit grand public par rapport à l'usage auquel
+                            il est destiné
+                        </ac>
+                    </acs>
+                </niveau>
+                <niveau ordre="2" libelle="Déterminer le besoin d’un client dans un cas industriel en collaboration">
+                    <acs>
+                        <ac code="AC1201">Traduire les besoins clients en exigences techniques
+                        </ac>
+                        <ac code="AC1202">Elaborer un document de spécifications pour un process ou un produit
+                            industriel en étant guidé
+                        </ac>
+                        <ac code="AC1203">Réviser les exigences techniques en mode partagé/collaboratif dématérialisé
+                            avec le client
+                        </ac>
+                        <ac code="AC1204">Initier le projet de développement en définissant les principaux jalons
+                        </ac>
+                    </acs>
+                </niveau>
+                <niveau ordre="3" libelle="Déterminer le besoin d'un client dans un cas industriel">
+                    <acs>
+                        <ac code="AC1101">Identifier les contraintes réglementaires et budgétaires du système/produit
+                        </ac>
+                        <ac code="AC1102">Identifier les spécificités rencontrées tout au long du cycle de vie du
+                            produit/système
+                        </ac>
+                        <ac code="AC1103">Structurer un cahier des charges contractuel d'un système complexe en
+                            autonomie
+                        </ac>
+                    </acs>
+                </niveau>
+            </niveaux>
+        </competence>
+        <competence name="Développer" numero="2"
+                    libelle_long="Déterminer la solution conceptuelle"
+                    couleur="c2">
+            <situations>
+                <situation>Conception du produit : Proposer des solutions préliminaires, réaliser des études de
+                    pré-dimensionnement au sens cinématique, statique, dynamique, y-compris les énergies ; Identifier
+                    des solutions technologiques
+                </situation>
+                <situation>Industrialisation du produit : Élaborer et valider l’APEF (Avant Projet d’Étude de
+                    Fabrication), la gamme de fabrication et d’assemblage...
+                </situation>
+                <situation>Organisation industrielle : Définir l’implantation d’une ligne de production avec les
+                    contraintes (cadence, procédés de fabrication, hygiène et sécurité, ergonomie, humain...)
+                </situation>
+            </situations>
+            <composantes_essentielles>
+                <composante>En respectant les exigences d’un cahier des charges</composante>
+                <composante>En identifiant des solutions techniquement viables, économiquement conformes au CdC
+                </composante>
+                <composante>En validant chaque solution de façon pertinente</composante>
+                <composante>En classifiant les solutions selon des critères justifiés et chiffrés</composante>
+                <composante>En formalisant la démarche à accomplir avec des outils pertinents</composante>
+                <composante>En adoptant une démarche collaborative</composante>
+            </composantes_essentielles>
+            <niveaux>
+                <niveau ordre="1" libelle="Proposer des solutions dans un cas simple">
+                    <acs>
+                        <ac code="AC2101">Situer les éléments d'un système simple et leurs interactions, dans l’espace,
+                            dans le temps.
+                        </ac>
+                        <ac code="AC2102">Interpréter les spécifications en fonction de leur représentation pour un
+                            système simple
+                        </ac>
+                        <ac code="AC2103">Choisir des solutions appropriées pour des cas simples en étant
+                            accompagné/guidé. Proposer des solutions
+                        </ac>
+                    </acs>
+                </niveau>
+                <niveau ordre="2" libelle="Proposer des solutions dans un cas complexe">
+                    <acs>
+                        <ac code="AC2201">Situer les éléments d'un système complexe et leurs interactions, dans
+                            l’espace, dans le temps.
+                        </ac>
+                        <ac code="AC2202">Proposer des solutions pertinentes au regard de la taille des séries et de
+                            l’aspect économique.
+                        </ac>
+                        <ac code="AC2203">Combiner des solutions élémentaires avec un encadrement limité.
+                        </ac>
+                        <ac code="AC2204">Classifier les solutions selon les critères du cahier des charges.</ac>
+                    </acs>
+                </niveau>
+                <niveau ordre="3" libelle="Proposer des solutions validées">
+                    <acs>
+                        <ac code="AC2301">Analyser les caractéristiques d’un système complexe en détectant les
+                            incohérences/manques.
+                        </ac>
+                        <ac code="AC2302">Simplifier les solutions les plus pertinentes pour améliorer leurs
+                            performances.
+                        </ac>
+                        <ac code="AC2303">Optimiser les solutions les plus pertinentes au regard de l’ensemble des
+                            critères technico-économiques.
+                        </ac>
+                    </acs>
+                </niveau>
+            </niveaux>
+        </competence>
+        <competence name="Réaliser" numero="3"
+                    libelle_long="Concrétiser la solution technique retenue"
+                    couleur="c3">
+            <situations>
+                <situation>Conception du produit : réaliser une conception détaillée (maquette numérique du produit,
+                    cotation, dimensionnement, ...) pour une pièce ou un système mécanique
+                </situation>
+                <situation>Industrialisation du produit : élaborer un dossier de production (contrat de phase, modèle de
+                    montage, programme), mettre en oeuvre des postes
+                    ou îlots de production (fabrication, montage, contrôle, conditionnement, ...)
+                </situation>
+                <situation>Organisation industrielle : définir les indicateurs de qualité, élaborer les documents de
+                    suivi et de contrôle (carte de contrôle, capabilité, ...), définir l'implantation
+                </situation>
+            </situations>
+            <composantes_essentielles>
+                <composante>En définissant totalement une solution fonctionnelle et opérationnelle</composante>
+                <composante>En transformant la solution préliminaire en une solution industrielle optimale respectant
+                    l’ensemble des contraintes technico-économiques
+                </composante>
+                <composante>En élaborant des documents métiers caractérisant la solution</composante>
+                <composante>En s’appuyant sur les normes pour respecter la réglementation</composante>
+            </composantes_essentielles>
+            <niveaux>
+                <niveau ordre="1" libelle="Concrétiser une solution simple ">
+                    <acs>
+                        <ac code="AC3101">Identifier les contraintes de réalisation à partir d’une pré-étude
+                        </ac>
+                        <ac code="AC3102">Choisir des solutions techniques adaptées aux contraintes de réalisation</ac>
+                        <ac code="AC3103">Mettre en oeuvre les outils métiers pour produire une solution simple, réelle
+                            ou numérique, qui répond aux spécifications et à la
+                            pré-étude
+                        </ac>
+                        <ac code="AC3104">Elaborer des documents métiers pour des pièces/systèmes simples en mettant en
+                            oeuvre les outils ad hoc
+                        </ac>
+                    </acs>
+                </niveau>
+                <niveau ordre="2" libelle="Concrétiser une solution complexe en collaboration">
+                    <acs>
+                        <ac code="AC3201">Choisir les solutions techniques les plus adaptées aux contraintes de
+                            réalisation en intégrant l’influence des contraintes externes
+                        </ac>
+                        <ac code="AC3202">Mettre en oeuvre les outils métiers adaptés pour produire une solution
+                            complexe, réelle ou numérique, qui répond aux spécifications et
+                            à la pré-étude
+                        </ac>
+                        <ac code="AC3203">Elaborer des documents métiers pour des pièces/systèmes complexes en mettant
+                            en oeuvre les outils ad hoc
+                        </ac>
+                    </acs>
+                </niveau>
+                <niveau ordre="3" libelle="Concrétiser une solution complexe">
+                    <acs>
+                        <ac code="AC3301">Choisir l’ensemble des solutions techniques les mieux adaptées aux contraintes
+                            de réalisation
+                        </ac>
+                        <ac code="AC3302">Mettre en oeuvre les outils métiers adaptés pour produire une solution
+                            complexe optimale au regard du cahier des charges initial
+                        </ac>
+                        <ac code="AC3303">Elaborer un dossier technique exhaustif pour des pièces/systèmes complexes en
+                            mettant en oeuvre les outils métiers
+                        </ac>
+                    </acs>
+                </niveau>
+            </niveaux>
+        </competence>
+        <competence name="Exploiter" numero="4"
+                    libelle_long="Gérer le cycle de vie du produit et du système de production"
+                    couleur="c4">
+            <situations>
+                <situation>Conception du produit (suivre la vie du produit) : gérer le cycle de vie du produit (Product
+                    Lifecycle Management), intégrer retour clients issus du marketing
+                </situation>
+                <situation>Industrialisation du produit (suivre les procédés de fabrication) : mettre en oeuvre une
+                    amélioration continue, analyser des indicateurs de production
+                    et retours clients et proposer des actions correctives (manuelles ou automatiques), maintenir un
+                    procédé de fabrication, mesurer les performances
+                </situation>
+                <situation>Organisation industrielle (exploiter le système de production) : gérer une ligne de
+                    production (planification et ordonnancement), mettre en oeuvre une
+                    amélioration continue, instrumenter en vue de l’automatisation de la remontée de données
+                </situation>
+            </situations>
+            <composantes_essentielles>
+                <composante>En assurant la gestion et la traçabilité des flux physiques et de données</composante>
+                <composante>En valorisant les données collectées pour les traduire en consignes de pilotage cohérentes
+                </composante>
+                <composante>En appliquant une démarche performante d’amélioration continue</composante>
+                <composante>En vérifiant et maintenant une qualité optimale d’un point de vue économique et technique
+                </composante>
+                <composante>En s’appuyant sur des procédures et des standards</composante>
+            </composantes_essentielles>
+            <niveaux>
+                <niveau ordre="1" libelle="Déterminer les sources d’information en entreprise">
+                    <acs>
+                        <ac code="AC4101">Décrire le fonctionnement du monde de l’entreprise et de ses services
+                        </ac>
+                        <ac code="AC4102">Déterminer les objectifs de performance, les composants et les indicateurs de
+                            performance propres à chaque étape du cycle de vie d’un
+                            produit et du système de production
+                        </ac>
+                    </acs>
+                </niveau>
+                <niveau ordre="2" libelle="Utiliser les outils permettant d’évaluer les performances">
+                    <acs>
+                        <ac code="AC4201">Mesurer les performances d’un système/produit/ procédé en suivant les
+                            procédures (normes, protocoles, recommandations,...)
+                        </ac>
+                        <ac code="AC4202">Structurer les données existantes associées au système/produit/procédé en
+                            suivant les procédures (normes, modèles, standards...)
+                        </ac>
+                        <ac code="AC4203">Analyser les performances d’un système/produit/procédé en vue de son
+                            amélioration
+                        </ac>
+                    </acs>
+                </niveau>
+                <niveau ordre="3" libelle="Mettre en oeuvre une
+amélioration suivant
+une démarche structurée">
+                    <acs>
+                        <ac code="AC4301">Définir, sélectionner les données pertinentes</ac>
+                        <ac code="AC4302">Collecter les données en autonomie et mettre en oeuvre la mesure des données
+                            en vue de leur analyse
+                        </ac>
+                        <ac code="AC4303">Diagnostiquer les facteurs qui impactent la performance d’un
+                            système/produit/procédé
+                        </ac>
+                        <ac code="AC4304">Engager des actions pertinentes par rapport à l’objectif de performance</ac>
+                        <ac code="AC4305">Gérer le cycle de vie les données techniques en assurant leur traçabilité
+                        </ac>
+                    </acs>
+                </niveau>
+            </niveaux>
+        </competence>
+        <competence name="Virtualiser" numero="5"
+                    libelle_long="Virtualiser un produit mécanique ou un process du concept au jumeau numérique selon les besoins de l’usine du futur"
+                    couleur="c5">
+            <situations>
+                <situation>Conception du produit ou industrialisation du produit ou organisation industrielle :
+                    Utiliser les outils de simulation les plus performants en fonction du problème à résoudre, anticiper
+                    les conséquences à
+                    l’aide de l’immersion à l’échelle 1 (réalité virtuelle, réalité augmentée), appréhender les
+                    possibilités et limites du jumeau
+                    numérique.
+                </situation>
+            </situations>
+            <composantes_essentielles>
+                <composante>En concevant un modèle idéalisé de la réalité</composante>
+                <composante>En choisissant une modélisation adaptée au besoin</composante>
+                <composante>En validant le modèle par une approche expérimentale vs théorique</composante>
+                <composante>En effectuant une optimisation pertinente</composante>
+            </composantes_essentielles>
+            <niveaux>
+                <niveau ordre="1" annee="2" libelle="Virtualiser dans un
+contexte
+monodisciplinaire">
+                    <acs>
+                        <ac code="AC5101">Comprendre les incidences du paramétrage des produits, de la production et des
+                            services
+                        </ac>
+                        <ac code="AC5102">Définir les possibilités offertes par les nouvelles technologies numériques
+                            par leurs manipulation et analyse (simulation avancée, réalité
+                            virtuelle et augmentée, internet des objets, IA...)
+                        </ac>
+                    </acs>
+                </niveau>
+                <niveau ordre="2" annee="3" libelle="Virtualiser dans le
+contexte de l’usine du
+futur">
+                    <acs>
+                        <ac code="AC5201">Déduire pour des cas simples, les limites de la simulation par une
+                            confrontation au réel
+                        </ac>
+                        <ac code="AC5202">Interpréter les résultats de la simulation mise en oeuvre
+                        </ac>
+                        <ac code="AC5203">Echanger des données entre différents systèmes numériques
+                        </ac>
+                        <ac code="AC5204">Comprendre les couplages réel/virtuel, virtuel/réel (calibration, ajustement
+                            physique et virtuel... ) et les jumeaux numériques
+                        </ac>
+                    </acs>
+                </niveau>
+            </niveaux>
+        </competence>
+
+        <competence name="Manager" numero="5" libelle_long="Piloter un projet industriel
+dans un contexte de
+responsabilité"
+                    couleur="c5">
+            <situations>
+                <situation>Conception de produit ou industrialisation de produit ou organisation industrielle :
+                    Renseigner et exploiter les outils de suivi de projet, organiser la communication entre les acteurs
+                    du u projet, consolider la
+                    documentation, participer à l'exploitation des données projet pour capitaliser l'expérience acquise.
+                </situation>
+            </situations>
+            <composantes_essentielles>
+                <composante>En intégrant les ressources humaines, matérielles et financières</composante>
+                <composante>En intégrant via l’écoute et le dialogue les informations formulées par les acteurs du
+                    projet
+                </composante>
+                <composante>En identifiant la criticité des activités</composante>
+                <composante>En respectant des délais raisonnables</composante>
+                <composante>En complétant les bases de données des logiciels partagés avec les indicateurs nécessaires
+                    au suivi et à la progression du projet
+                </composante>
+                <composante>En intégrant les indicateurs de performance</composante>
+            </composantes_essentielles>
+            <niveaux>
+                <niveau ordre="1" annee="2" libelle="Participer au pilotage
+industriel">
+                    <acs>
+                        <ac code="AC5101">Identifier les exigences spécifiques nécessaires à l’aboutissement du projet
+                            ainsi que leurs interactions
+                        </ac>
+                        <ac code="AC5102">Analyser les différents flux et les ressources associées au sein de
+                            l’entreprise
+                        </ac>
+                        <ac code="AC5103">Organiser un projet multitâches et multi-ressources avec des outils dédiés
+                            Piloter un projet
+                        </ac>
+                    </acs>
+                </niveau>
+                <niveau ordre="2" annee="3" libelle="Piloter un projet
+simple dans un
+contexte industriel">
+                    <acs>
+                        <ac code="AC5201">Planifier et suivre un projet dans un contexte industriel avec la mise en
+                            oeuvre de logiciels métiers et à partir d’indicateurs adaptés
+                        </ac>
+                        <ac code="AC5202">Communiquer aux parties intéressées (internes et externes) sur le suivi et
+                            l’avancement du projet à partir des indicateurs retenus
+                        </ac>
+                        <ac code="AC5203">Constituer et piloter efficacement l’équipe projet par des actions de
+                            management
+                        </ac>
+                        <ac code="AC5204">Capitaliser le retour d’expérience du projet</ac>
+                    </acs>
+                </niveau>
+            </niveaux>
+        </competence>
+
+        <competence name="Innover" numero="5" libelle_long="Proposer des solutions
+innovantes pour répondre à
+une problématique
+industrielle"
+                    couleur="c5">
+            <situations>
+                <situation>Conception de produit ou Industrialisation de produit ou organisation industrielle :
+                    Intégrer des outils liés à la nouveauté aboutissant à de nouvelles méthodes de conception,
+                    identifier des spécificités liées aux nouveaux
+                    usages, procédés, matériaux, mettre en oeuvre une démarche de créativité collaborative et mobiliser
+                    des compétences pluridisciplinaires.
+                </situation>
+            </situations>
+            <composantes_essentielles>
+                <composante>En réalisant une veille technologique et en intégrant notamment les outils de la propriété
+                    intellectuelle et de l'innovation ouverte
+                </composante>
+                <composante>En adoptant une démarche efficiente soutenant la créativité et l’innovation de manière
+                    individuelle et collaborative
+                </composante>
+                <composante>En utilisant des outils pertinents au regard de la démarche</composante>
+                <composante>En intégrant convenablement les exigences conceptuelles pluridisciplinaires</composante>
+                <composante>En répondant correctement aux besoins fonctionnels du produit/process</composante>
+                <composante>En adoptant une posture propice à l’innovation</composante>
+            </composantes_essentielles>
+            <niveaux>
+                <niveau ordre="1" annee="2" libelle="Expérimenter la démarche d’innovation">
+                    <acs>
+                        <ac code="AC5101">Identifier, sélectionner, organiser l’information provenant d’une veille
+                            globale (concurrentielle, technique, sociétale, scientifique...)
+                        </ac>
+                        <ac code="AC5102">Prendre conscience de l’efficacité d’une démarche de recherche créative
+                            ouverte pour proposer des solutions nouvelles
+                        </ac>
+                        <ac code="AC5103">Réaliser une analyse critique des solutions innovantes vis-à-vis de la cible,
+                            du besoin et de l’usage
+                        </ac>
+                        <ac code="AC5104">Communiquer efficacement sur l’innovation</ac>
+                    </acs>
+                </niveau>
+                <niveau ordre="2" annee="3" libelle="Participer activement à une démarche d’innovation">
+                    <acs>
+                        <ac code="AC5201">Analyser, exploiter et capitaliser l’information provenant d’une veille
+                            globale (concurrentielle, technique, sociétale, scientifique...)
+                        </ac>
+                        <ac code="AC5202">Oser s’engager avec une posture adaptée dans une démarche de recherche
+                            créative ouverte afin de proposer des solutions nouvelles
+                        </ac>
+                        <ac code="AC5203">Suivre une approche par les usages pour augmenter la valeur perçue de la
+                            solution
+                        </ac>
+                        <ac code="AC5204">Valoriser les bénéfices/risques attendus par la solution innovante proposée
+                            afin de convaincre les décideurs
+                        </ac>
+                        <ac code="AC5205">Contribuer à un projet innovant pouvant mobiliser des compétences
+                            pluridisciplinaires dans un cadre collaboratif
+                        </ac>
+                    </acs>
+                </niveau>
+            </niveaux>
+        </competence>
+
+        <competence name="Développer durablement" numero="5"
+                    libelle_long="Intégrer le développement durable dans une démarche de développement industriel"
+                    couleur="c5">
+            <situations>
+                <situation>Conception de produit ou industrialisation de produit ou organisation industrielle :
+                    Outre les critères et réglementations habituels, intégrer la pensée cycle de vie dans un contexte de
+                    conception et de production durable.
+                </situation>
+            </situations>
+            <composantes_essentielles>
+                <composante>En intégrant une stratégie d'entreprise pertinente</composante>
+                <composante>En scénarisant correctement le cycle de vie du produit et du système de production
+                </composante>
+                <composante>En analysant qualitativement et/ou quantitativement les impacts environnementaux
+                </composante>
+                <composante>En évaluant des solutions à partir d'indicateurs adaptés et quantifiables</composante>
+                <composante>En valorisant la démarche et ses résultats</composante>
+            </composantes_essentielles>
+            <niveaux>
+                <niveau ordre="1" annee="2" libelle="Participer à une démarche de développement durable">
+                    <acs>
+                        <ac code="AC5101">Identifier les concepts et les enjeux techniques, environnementaux,
+                            économiques, et sociétaux du développement durable
+                        </ac>
+                        <ac code="AC5102">Prendre en compte les exigences légales environnementales et sociétales
+                            applicables aux activités de l’entreprise
+                        </ac>
+                        <ac code="AC5103">Comparer les solutions en utilisant un outil d'analyse dans un contexte
+                            d'écoconception (produit et site de production)
+                        </ac>
+                        <ac code="AC5104">Acquérir la dimension multicritère, multicomposant, multi-indicateur de
+                            l'écoconception d'un produit en lien avec son cycle de vie
+                        </ac>
+                    </acs>
+                </niveau>
+                <niveau ordre="2" annee="3" libelle="Mettre en oeuvre une démarche de développement durable">
+                    <acs>
+                        <ac code="AC5201">Collecter avec un regard critique des données nécessaires à une démarche de
+                            conception et/ou de production durable
+                        </ac>
+                        <ac code="AC5202">Mettre en oeuvre une démarche d'écoconception intégrant toutes les étapes du
+                            cycle de vie d'un produit (de la ressource à la fin de vie)
+                        </ac>
+                        <ac code="AC5203">Traduire les indicateurs technico-économico-environnementaux en critères de
+                            conception et d'industrialisation avancés en respectant
+                            la réglementation
+                        </ac>
+                        <ac code="AC5204">Participer à la mise en place et l’animation d'un système de management de
+                            l’environnement
+                        </ac>
+                    </acs>
+                </niveau>
+            </niveaux>
+        </competence>
+
+        <competence name="Commercialiser" numero="5" libelle_long="Commercialiser des produits
+et services industriels sur
+mesure et à dominante
+mécanique"
+                    couleur="c5">
+            <situations>
+                <situation>Conception du produit ou industrialisation du produit ou organisation industrielle :
+                    Acheter et vendre des produits ou des services entre acteurs économiques pour apporter une réponse
+                    sur mesure à un appel d’offre en
+                    intégrant l’impact des contraintes du client sur la conception du produit et l’impact des
+                    contraintes du fournisseur (industrialisation et
+                    organisation industrielle).
+                </situation>
+            </situations>
+            <composantes_essentielles>
+                <composante>En intégrant avec pertinence une stratégie commerciale d’entreprise</composante>
+                <composante>En accompagnant un client dans l’expression de son besoin</composante>
+                <composante>En considérant la relation client-fournisseur sur le cycle de vie du produit</composante>
+                <composante>En apportant des conseils techniques adaptés au besoin du client</composante>
+                <composante>En utilisant des outils marketing ad hoc</composante>
+                <composante>En adoptant une communication adaptée à sa clientèle</composante>
+            </composantes_essentielles>
+            <niveaux>
+                <niveau ordre="1" annee="2" libelle="Commercialiser une
+solution industrielle
+simple">
+                    <acs>
+                        <ac code="AC5101">Elaborer une solution chiffrée économiquement rentable pour l’entreprise</ac>
+                        <ac code="AC5102">Mener une prospection commerciale ciblée en France et/ou à l’étranger</ac>
+                        <ac code="AC5103">Définir sa propre stratégie de vente au regard d’un plan d’actions
+                            commerciales d’une entreprise
+                        </ac>
+                    </acs>
+                </niveau>
+                <niveau ordre="2" annee="3" libelle="Commercialiser dans
+un contexte industrie">
+                    <acs>
+                        <ac code="AC5201">Formaliser une offre commerciale pour un produit/service industriel sur mesure
+                        </ac>
+                        <ac code="AC5202">Assurer un suivi client à long terme à l’aide d’un outil de gestion de la
+                            relation clients
+                        </ac>
+                        <ac code="AC5203">Construire un argumentaire de vente à partir d’une veille technologique et
+                            concurrentielle de l’entreprise
+                        </ac>
+                    </acs>
+                </niveau>
+            </niveaux>
+        </competence>
+    </competences>
+    <parcours>
+        <parcour numero="1" libelle="Simulation numérique et réalité virtuelle" code="SNRV">
+            <annee ordre="1">
+                <competence nom="Spécifier" niveau="1"/>
+                <competence nom="Développer" niveau="1"/>
+                <competence nom="Réaliser" niveau="1"/>
+                <competence nom="Exploiter" niveau="1"/>
+            </annee>
+            <annee ordre="2">
+                <competence nom="Spécifier" niveau="2"/>
+                <competence nom="Développer" niveau="2"/>
+                <competence nom="Réaliser" niveau="2"/>
+                <competence nom="Exploiter" niveau="2"/>
+
+                <competence nom="Virtualiser" niveau="1"/>
+            </annee>
+            <annee ordre="3">
+                <competence nom="Spécifier" niveau="3"/>
+                <competence nom="Développer" niveau="3"/>
+                <competence nom="Réaliser" niveau="3"/>
+                <competence nom="Exploiter" niveau="3"/>
+
+                <competence nom="Virtualiser" niveau="2"/>
+            </annee>
+        </parcour>
+        <parcour numero="2" libelle="Management de process industriel" code="MPI">
+            <annee ordre="1">
+                <competence nom="Spécifier" niveau="1"/>
+                <competence nom="Développer" niveau="1"/>
+                <competence nom="Réaliser" niveau="1"/>
+                <competence nom="Exploiter" niveau="1"/>
+            </annee>
+            <annee ordre="2">
+                <competence nom="Spécifier" niveau="2"/>
+                <competence nom="Développer" niveau="2"/>
+                <competence nom="Réaliser" niveau="2"/>
+                <competence nom="Exploiter" niveau="2"/>
+
+                <competence nom="Manager" niveau="1"/>
+            </annee>
+            <annee ordre="3">
+                <competence nom="Spécifier" niveau="3"/>
+                <competence nom="Développer" niveau="3"/>
+                <competence nom="Réaliser" niveau="3"/>
+                <competence nom="Exploiter" niveau="3"/>
+
+                <competence nom="Manager" niveau="2"/>
+            </annee>
+        </parcour>
+        <parcour numero="3" libelle="Innovation pour l'industrie" code="II">
+            <annee ordre="1">
+                <competence nom="Spécifier" niveau="1"/>
+                <competence nom="Développer" niveau="1"/>
+                <competence nom="Réaliser" niveau="1"/>
+                <competence nom="Exploiter" niveau="1"/>
+            </annee>
+            <annee ordre="2">
+                <competence nom="Spécifier" niveau="2"/>
+                <competence nom="Développer" niveau="2"/>
+                <competence nom="Réaliser" niveau="2"/>
+                <competence nom="Exploiter" niveau="2"/>
+
+                <competence nom="Innover" niveau="1"/>
+            </annee>
+            <annee ordre="3">
+                <competence nom="Spécifier" niveau="3"/>
+                <competence nom="Développer" niveau="3"/>
+                <competence nom="Réaliser" niveau="3"/>
+                <competence nom="Exploiter" niveau="3"/>
+
+                <competence nom="Innover" niveau="2"/>
+            </annee>
+        </parcour>
+        <parcour numero="4" libelle="Conception et production durables" code="CPD">
+            <annee ordre="1">
+                <competence nom="Spécifier" niveau="1"/>
+                <competence nom="Développer" niveau="1"/>
+                <competence nom="Réaliser" niveau="1"/>
+                <competence nom="Exploiter" niveau="1"/>
+            </annee>
+            <annee ordre="2">
+                <competence nom="Spécifier" niveau="2"/>
+                <competence nom="Développer" niveau="2"/>
+                <competence nom="Réaliser" niveau="2"/>
+                <competence nom="Exploiter" niveau="2"/>
+
+                <competence nom="Développer durablement" niveau="1"/>
+            </annee>
+            <annee ordre="3">
+                <competence nom="Spécifier" niveau="3"/>
+                <competence nom="Développer" niveau="3"/>
+                <competence nom="Réaliser" niveau="3"/>
+                <competence nom="Exploiter" niveau="3"/>
+
+                <competence nom="Développer durablement" niveau="2"/>
+            </annee>
+        </parcour>
+        <parcour numero="5" libelle="Chargé d’affaires industrielles" code="CAI">
+            <annee ordre="1">
+                <competence nom="Spécifier" niveau="1"/>
+                <competence nom="Développer" niveau="1"/>
+                <competence nom="Réaliser" niveau="1"/>
+                <competence nom="Exploiter" niveau="1"/>
+            </annee>
+            <annee ordre="2">
+                <competence nom="Spécifier" niveau="2"/>
+                <competence nom="Développer" niveau="2"/>
+                <competence nom="Réaliser" niveau="2"/>
+                <competence nom="Exploiter" niveau="2"/>
+
+                <competence nom="Commercialiser" niveau="1"/>
+            </annee>
+            <annee ordre="3">
+                <competence nom="Spécifier" niveau="3"/>
+                <competence nom="Développer" niveau="3"/>
+                <competence nom="Réaliser" niveau="3"/>
+                <competence nom="Exploiter" niveau="3"/>
+
+                <competence nom="Commercialiser" niveau="2"/>
+            </annee>
+        </parcour>
+    </parcours>
+</referentiel_competence>

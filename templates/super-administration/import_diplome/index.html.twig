@@ -1,7 +1,7 @@
 {% extends 'base-super_admin.html.twig' %}
 
 {% block header %}
-    {{ 'adm.import_diplome.index.heading'|trans }}
+    {{ 'adm.import_diplome.index.heading'|trans({'%diplome%': diplome.libelle}) }}
 {% endblock %}
 
 {% block headeractions %}
@@ -17,9 +17,37 @@
 
 {% block content %}
     <div class="card">
-        <h4 class="card-title">{{ 'adm.import_diplome.index.heading'|trans }}</h4>
-
+        <h4 class="card-title">{{ 'adm.import_diplome.index.heading'|trans({'%diplome%': diplome.libelle}) }}</h4>
         <div class="card-body">
+            <form enctype="multipart/form-data" method="post">
+                <div class="form-group">
+                    <label for="fichier">Fichier</label>
+                    <input type="file" class="form-control" name="fichier" id="fichier">
+                </div>
+                {% if diplome.typeDiplome.apc == true %}
+                    <div class="form-group">
+                        <label for="fichier">Type de fichier</label>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="typeFichier" id="typeFichier1"
+                                   value="competences">
+                            <label class="form-check-label" for="typeFichier1">Référentiel de compétences</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="typeFichier" id="typeFichier2"
+                                   value="formation">
+                            <label class="form-check-label" for="typeFichier2">Référentiel de formation (PN)</label>
+                        </div>
+                    </div>
+                {% else %}
+                    {# todo: a faire #}
+                    Coming Soon...
+                {% endif %}
+                <div class="alert alert-danger">
+                    L'import d'une nouvelle maquette effacera les données déjà présentes dans la structure du diplome
+                    "{{ diplome.libelle }}"
+                </div>
+                <button type="submit" class="btn btn-success">Importer</button>
+            </form>
         </div>
     </div>
 {% endblock %}

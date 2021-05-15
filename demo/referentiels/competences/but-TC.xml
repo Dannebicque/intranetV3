@@ -1,0 +1,843 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved -->
+<!-- @file /Users/davidannebicque/htdocs/intranetV3/demo/referentiels/competences/but-TC.xml -->
+<!-- @author davidannebicque -->
+<!-- @project intranetV3 -->
+<!-- @lastUpdate 15/05/2021 07:33 -->
+
+<referentiel_competence specialite="TC" specialite_long="Techniques de Commercialisation"
+                        type="B.U.T.">
+    <competences>
+        <competence name="Marketing" numero="1"
+                    libelle_long="Conduire les actions marketing"
+                    couleur="c1">
+            <situations>
+                <situation>en situation de développement d'un produit</situation>
+                <situation>en situation de développement d'un service</situation>
+                <situation>en situation de développement d'une activité non marchande</situation>
+            </situations>
+            <composantes_essentielles>
+                <composante>en analysant avec des outils pertinents les contextes économiques, juridiques, commerciaux
+                    et financiers
+                </composante>
+                <composante>en évaluant de manière adaptée les principaux acteurs de l’offre sur le marché
+                </composante>
+                <composante>en quantifiant la demande et en appréciant le comportement du consommateur
+                </composante>
+                <composante>en analysant avec les outils appropriés les compétences et les ressources de l'entreprise
+                </composante>
+                <composante>en élaborant un mix adapté à la cible et positionné par rapport aux concurrents</composante>
+                <composante>en adoptant une posture citoyenne, éthique et écologique</composante>
+            </composantes_essentielles>
+            <niveaux>
+                <niveau ordre="1" libelle="Pour construire une
+offre commerciale
+simple">
+                    <acs>
+                        <ac code="AC1101">Analyser l'environnement d'une entreprise en repérant et appréciant les
+                            sources d'informations (fiabilité et pertinence)
+                        </ac>
+                        <ac code="AC1102">Mettre en oeuvre une étude de marché dans un environnement simple
+                        </ac>
+                        <ac code="AC1103">Choisir une cible et un positionnement en fonction de la segmentation du
+                            marché
+                        </ac>
+                        <ac code="AC1104">Concevoir une offre cohérente et éthique en termes de produits, de prix, de
+                            distribution et de communication
+                        </ac>
+                    </acs>
+                </niveau>
+                <niveau ordre="2" libelle="Pour construire une
+offre commerciale
+complexe ou innovante">
+                    <acs>
+                        <ac code="AC1201">Diagnostiquer l'environnement en appréhendant les enjeux sociaux et
+                            écologiques
+                        </ac>
+                        <ac code="AC1202">Mettre en œuvre une étude de marché dans un environnement complexe</ac>
+                        <ac code="AC1203">Mettre en place une stratégie marketing dans un environnement complexe</ac>
+                        <ac code="AC1204">Concevoir un mix étendu pour une offre complexe</ac>
+                    </acs>
+                </niveau>
+                <niveau ordre="3"
+                        libelle="Pour construire une
+solution client
+étendue à tous les
+secteurs d'activités">
+                    <acs>
+                        <ac code="AC1301">Mettre en place des outils de veille pour anticiper les évolutions de
+                            l'environnement
+                        </ac>
+                        <ac code="AC1302">Elaborer une stratégie marketing dans un environnement instable (sanitaire,
+                            économique ou interne)
+                        </ac>
+                        <ac code="AC1303">Faire évoluer l'offre à l'aide de leviers de création de valeur</ac>
+                        <ac code="AC1304">Intégrer la RSE dans la stratégie de l'offre</ac>
+                    </acs>
+                </niveau>
+            </niveaux>
+        </competence>
+        <competence name="Vente" numero="2"
+                    libelle_long="Vendre une offre commerciale"
+                    couleur="c2">
+            <situations>
+                <situation>en situation de vente en B to C
+                </situation>
+                <situation>en situation de vente en B to B</situation>
+            </situations>
+            <composantes_essentielles>
+                <composante>en respectant l’ordre des étapes de la négociation commerciale et une démarche éthique
+                </composante>
+                <composante>en élaborant les documents commerciaux adaptés à la situation commerciale et dans le respect
+                    de la réglementation
+                </composante>
+                <composante>en utilisant de façon efficace des indicateurs de performance fixés par l’organisation
+                </composante>
+                <composante>en prospectant à l'aide d'outils adaptés</composante>
+                <composante>en adaptant sa communication verbale et non verbale à la situation commerciale</composante>
+            </composantes_essentielles>
+            <niveaux>
+                <niveau ordre="1" libelle="Pour préparer
+l'entretien de vente">
+                    <acs>
+                        <ac code="AC2101">Préparer un plan de découverte qui permette de profiler le client et découvir
+                            ses besoins
+                        </ac>
+                        <ac code="AC2102">Concevoir un argumentaire de vente qui permette de proposer une solution
+                            adaptée aux besoins du client
+                        </ac>
+                        <ac code="AC2103">Concevoir des OAV efficaces</ac>
+                        <ac code="AC2104">Evaluer la performance commerciale au moyen d'indicateurs</ac>
+                        <ac code="AC2105">Recourir aux techniques adaptées à la démarche de prospection</ac>
+                        <ac code="AC2106">Recourir aux codes d'expression spécifiques et professionnels</ac>
+                    </acs>
+                </niveau>
+                <niveau ordre="2"
+                        libelle="Pour mener un
+entretien de vente
+simple">
+                    <acs>
+                        <ac code="AC2201">Convaincre en exprimant avec empathie l’offre en termes d’avantages
+                            personnalisés
+                        </ac>
+                        <ac code="AC2202">Négocier le prix : défendre, valoriser l'offre en percevant les stratégies
+                            d’achat
+                        </ac>
+                        <ac code="AC2203">Maîtriser les éléments juridiques et comptables de l'offre</ac>
+                        <ac code="AC2204">Utiliser les OAV (feuille de calcul, supports d’argumentation...) à bon
+                            escient pour convaincre
+                        </ac>
+                        <ac code="AC2205">Organiser le suivi de ses résultats pour gagner en performance au sein de
+                            l'équipe commerciale
+                        </ac>
+                        <ac code="AC2206">Prendre en compte les enjeux de la fonction achat pour la performance
+                            économique de l’entreprise
+                        </ac>
+                    </acs>
+                </niveau>
+                <niveau ordre="3"
+                        libelle="Pour mener une vente
+complexe">
+                    <acs>
+                        <ac code="AC2301">Identifier les techniques d’achat employées par un acheteur professionnel</ac>
+                        <ac code="AC2302">Elaborer des outils de gestion et de calcul efficaces (facture,
+                            échéancier,devis) pour la vente complexe
+                        </ac>
+                        <ac code="AC2303">Maîtriser les codes propres à l'univers spécifique rencontré : achat, finance,
+                            industrie, international, etc
+                        </ac>
+                    </acs>
+                </niveau>
+            </niveaux>
+        </competence>
+        <competence name="Communication commerciale" numero="3"
+                    libelle_long="Communiquer l'offre commerciale"
+                    couleur="c3">
+            <situations>
+                <situation>en situation de communication de l'offre en tant qu'annonceur
+                </situation>
+                <situation>en situation de communication de l'offre en tant qu'agence de communication
+                </situation>
+            </situations>
+
+            <composantes_essentielles>
+                <composante>en élaborant une stratégie de communication en cohérence avec le mix</composante>
+                <composante>en utilisant les outils de la communication commerciale adaptés à la demande et aux
+                    contraintes de l'organisation
+                </composante>
+                <composante>en produisant des supports de communication efficaces et qualitatifs</composante>
+                <composante>en respectant la réglementation en vigueur</composante>
+            </composantes_essentielles>
+            <niveaux>
+                <niveau ordre="1"
+                        libelle="Pour structurer un
+plan de
+communication">
+                    <acs>
+                        <ac code="AC3101">Identifier les cibles et objectifs de communication en tenant compte de la
+                            cohérence du mix
+                        </ac>
+                        <ac code="AC3102">Analyser de manière pertinente les moyens de communication commerciale
+                            (médias, hors médias, médias sociaux)
+                        </ac>
+                        <ac code="AC3103">Elaborer des supports simples (Imprimé Sans Adresse, affiches, dossier de
+                            sponsoring, ...)
+                        </ac>
+                        <ac code="AC3104">Analyser les indicateurs post campagne (impact, efficacité)</ac>
+                    </acs>
+                </niveau>
+                <niveau ordre="2"
+                        libelle="Pour élaborer un plan
+de communication">
+                    <acs>
+                        <ac code="AC3201">Elaborer une stratégie de communication adaptée au brief agence</ac>
+                        <ac code="AC3202">Etablir une stratégie de moyens en utilisant les indicateurs de choix des
+                            supports
+                        </ac>
+                        <ac code="AC3203">Proposer un plan de com 360° en élaborant les supports et en veillant à leur
+                            efficacité
+                        </ac>
+                        <ac code="AC3203">Mettre en œuvre une stratégie digitale : blog, réseaux sociaux, influenceurs,
+                            en mesurant leurs performances et en veillant à l'e-reputation.
+                        </ac>
+                    </acs>
+                </niveau>
+            </niveaux>
+        </competence>
+
+
+        <competence name="Branding" numero="4" libelle_long="Elaborer l'identité d'une marque"
+                    couleur="c4">
+            <situations>
+                <situation>en situation de promotion de l’identité de marque B to C
+                </situation>
+                <situation>en situation d'animation de l’identité de marque B to B
+                </situation>
+                <situation>en situation de réalisation d'un audit de marque interne et externe Pour déployer</situation>
+            </situations>
+            <composantes_essentielles>
+                <composante>en analysant de manière pertinente l'image et les territoires de la marque</composante>
+                <composante>en déterminant judicieusement les valeurs et composantes essentielles de la marque
+                </composante>
+                <composante>en mettant en place des actions pour valoriser l'image de marque</composante>
+                <composante>en mesurant correctement l'efficacité de la stratégie de marque (image voulue, image
+                    perçue)
+                </composante>
+            </composantes_essentielles>
+            <niveaux>
+                <niveau ordre="1" annee="2" libelle="Pour déployer
+l'image de marque">
+                    <acs>
+                        <ac code="AC4101">Identifier les valeurs et territoires de la marque</ac>
+                        <ac code="AC4102">Mesurer la visibilité de la marque et sa notoriété</ac>
+                        <ac code="AC4103">Développer la communication de marque et le marketing de contenu
+                            (storytelling/disruption/teasing/brand
+                            content)
+                        </ac>
+                        <ac code="AC4104">Piloter les Relations publiques et les relations presse en veillant aux
+                            différentes parutions de la marque
+                        </ac>
+                    </acs>
+                </niveau>
+                <niveau ordre="2" annee="3" libelle="Pour construire la
+stratégie de
+marque">
+                    <acs>
+                        <ac code="AC4201">Déterminer les attributs et territoires de la marque
+                        </ac>
+                        <ac code="AC4202">Elaborer une idéologie (ADN /valeurs défendues) de marque et ses composantes
+                        </ac>
+                        <ac code="AC4203">Construire l'identité de la marque</ac>
+                        <ac code="AC4204">Développer la communauté de marque et l'adhésion (community management, veille
+                            image de marque et e-réputation)
+                        </ac>
+                    </acs>
+                </niveau>
+            </niveaux>
+        </competence>
+        <competence name="Evénementiel" numero="5" libelle_long="Manager un projet événementiel"
+                    couleur="c5">
+            <situations>
+                <situation>en situation de développement d'un projet évènementiel accueillant du public
+                </situation>
+                <situation>en situation de développement d'un projet évènementiel interne
+                </situation>
+                <situation>en situation de développement d'un projet évènementiel piloté en tant que prestataire
+                </situation>
+            </situations>
+            <composantes_essentielles>
+                <composante>en s'adaptant aux besoins du commanditaire de manière optimale</composante>
+                <composante>en utilisant efficacement les outils de gestion de projet et de management d'équipe
+                </composante>
+                <composante>en mettant en oeuvre des outils de communication et de commercialisation adaptés
+                </composante>
+                <composante>en respectant les contraintes juridiques, budgétaires et logistiques</composante>
+            </composantes_essentielles>
+            <niveaux>
+                <niveau ordre="1" annee="2" libelle="Pour élaborer un
+événement simple">
+                    <acs>
+                        <ac code="AC5101">Elaborer un projet événementiel simple répondant à la demande</ac>
+                        <ac code="AC5102">Intégrer les contraintes financières, juridiques et logistiques</ac>
+                        <ac code="AC5103">Gérer la communication et la commercialisation de l'événement</ac>
+                        <ac code="AC5104">Piloter le projet</ac>
+                        <ac code="AC5105">Mesurer l'impact de l'événement</ac>
+                    </acs>
+                </niveau>
+                <niveau ordre="2" annee="3" libelle="Pour élaborer un
+évènement complexe">
+                    <acs>
+                        <ac code="AC5201">Créer un événement complexe adapté aux attentes du commanditaires</ac>
+                        <ac code="AC5202">Intégrer les enjeux sécuritaires et reglementaires des événements de grande
+                            ampleur
+                        </ac>
+                        <ac code="AC5203">Rechercher des partenaires et des subventions</ac>
+                        <ac code="AC5204">Gérer des prestataires</ac>
+                        <ac code="AC5205">Manager un évènement complexe</ac>
+                    </acs>
+                </niveau>
+            </niveaux>
+        </competence>
+
+        <competence name="Management" numero="4" libelle_long="Manager une équipe commerciale sur un espace de vente"
+                    couleur="c4">
+            <situations>
+                <situation>en situation de commerce intégré</situation>
+                <situation>en situation de commerce indépendant</situation>
+                <situation>en situation de distribution de services</situation>
+                <situation>en situation de distribution de produits</situation>
+            </situations>
+            <composantes_essentielles>
+                <composante>en veillant à l'atteinte des objectifs commerciaux par l'équipe</composante>
+                <composante>en animant l'équipe commerciale par la valorisation des compétences
+                </composante>
+                <composante>en favorisant l'adhésion à la culture d'entreprise par la transmission des valeurs et des
+                    pratiques de l'organisation
+                </composante>
+            </composantes_essentielles>
+            <niveaux>
+                <niveau ordre="1" annee="2" libelle="Pour gérer l'équipe
+au niveau
+opérationnel">
+                    <acs>
+                        <ac code="AC4101">Analyser les indicateurs de performances commerciales</ac>
+                        <ac code="AC4102">Communiquer sur les objectifs et les résultats efficacement et
+                            professionnellement
+                        </ac>
+                        <ac code="AC4103">Planifier les missions de l'équipe en accord avec la stratégie de l'espace de
+                            vente
+                        </ac>
+                    </acs>
+                </niveau>
+                <niveau ordre="2" annee="3" libelle="Pour mobiliser
+l'équipe au niveau
+stratégique">
+                    <acs>
+                        <ac code="AC4201">Fixer les objectifs en accord avec la méthode SMART
+                        </ac>
+                        <ac code="AC4202">Fédérer les équipes autour de l'atteinte des objectifs
+                        </ac>
+                        <ac code="AC4203">Sélectionner des collaborateurs en considérant les besoins de l'équipe</ac>
+                        <ac code="AC4204">Intégrer des collaborateurs à l'équipe
+                        </ac>
+                        <ac code="AC4205">Valoriser les compétences des membres de l'équipe
+                        </ac>
+                    </acs>
+                </niveau>
+            </niveaux>
+        </competence>
+        <competence name="Retail marketing" numero="5" libelle_long="Piloter un espace de vente"
+                    couleur="c5">
+            <situations>
+                <situation>en situation de commerce intégré
+                </situation>
+                <situation>en situation de commerce indépendant
+                </situation>
+                <situation>en situation de déploiement de l'activité d'un rayon ou d'un corner
+                </situation>
+                <situation>en situation de déploiement de l'activité d'un magasin
+                </situation>
+            </situations>
+            <composantes_essentielles>
+                <composante>en appréhendant l'environnement commercial pour en dégager les spécificités</composante>
+                <composante>en pilotant la relation avec les fournisseurs et le réseau dans le respect des directives et
+                    des accords
+                </composante>
+                <composante>en développant l'attractivité commerciale de l'espace de vente pour optimiser les
+                    indicateurs commerciaux
+                </composante>
+                <composante>en enrichissant l'expérience client par la mesure de la satisfaction client</composante>
+            </composantes_essentielles>
+            <niveaux>
+                <niveau ordre="1" annee="2" libelle="Pour contribuer à la
+dynamique de l'espace
+de vente en tant que
+membre de l'équipe">
+                    <acs>
+                        <ac code="AC5101">Analyser le secteur et l'environnement concurrentiel</ac>
+                        <ac code="AC5102">S'approprier la chaîne d'approvisionnement de l'espace de vente</ac>
+                        <ac code="AC5103">Agencer l'offre sur l'espace de vente en utilisant les techniques de
+                            merchandising, en particulier la théâtralisation
+                        </ac>
+                        <ac code="AC5104">Personnaliser la relation client en appliquant les principes de base de la
+                            GRC
+                        </ac>
+                        <ac code="AC5105">Gérer la diversité des points de contact avec le client</ac>
+                    </acs>
+                </niveau>
+                <niveau ordre="2" annee="3" libelle="Pour manager la
+dynamique de
+l'espace de vente">
+                    <acs>
+                        <ac code="AC5201">Comprendre les enjeux de la distribution et les évolutions du secteur</ac>
+                        <ac code="AC5202">Elaborer une stratégie commerciale en cohérence avec l'environnement
+                            concurrentiel
+                        </ac>
+                        <ac code="AC5203">Gérer la relation avec les fournisseurs ou le réseau</ac>
+                        <ac code="AC5204">Implanter un plan de merchandising, défini par le réseau ou par l'équipe de
+                            vente
+                        </ac>
+                        <ac code="AC5205">Optimiser les outils de GRC</ac>
+                        <ac code="AC5206">Optimiser le parcours client dans une perspective omnicanale par l'intégration
+                            des différents points de contact
+                        </ac>
+                    </acs>
+                </niveau>
+            </niveaux>
+        </competence>
+
+        <competence name="Marketing digital" numero="4" libelle_long="Gérer une activité digitale"
+                    couleur="c4">
+            <situations>
+                <situation>en situation de déploiement d'une activité digitale en B to C
+                </situation>
+                <situation>en situation de déploiement d'une activité digitale en B to B
+                </situation>
+                <situation>en situation de déploiement d'une activité digitale tournée vers un bien</situation>
+                <situation>en situation de déploiement d'une activité digitale tournée vers un service</situation>
+            </situations>
+            <composantes_essentielles>
+                <composante>en sélectionnant les outils pertinents de recueil, traitement et analyse des données de
+                    masse
+                </composante>
+                <composante>en développant une stratégie marketing digitale performamnte
+                </composante>
+                <composante>en pilotant efficacement une offre digitale</composante>
+                <composante>en optimisant la relation client digitalisée</composante>
+                <composante>en assurant une logistique performante du e-commerce
+                </composante>
+            </composantes_essentielles>
+            <niveaux>
+                <niveau ordre="1" annee="2" libelle="Pour participer
+activement au projet
+digital">
+                    <acs>
+                        <ac code="AC4101">Mobiliser des indicateurs de performance en fonction du volume et de la
+                            variété des données
+                        </ac>
+                        <ac code="AC4102">Identifier les spécifités du marketing digital</ac>
+                        <ac code="AC4103">Utiliser un cahier des charges e-business
+                        </ac>
+                        <ac code="AC4104">Intégrer les spécificités du e-commerce</ac>
+                        <ac code="AC4104">Respecter le processus logistique
+                        </ac>
+                    </acs>
+                </niveau>
+                <niveau ordre="2" annee="3" libelle="Pour développer le
+projet digital en tant
+qu'initiateur">
+                    <acs>
+                        <ac code="AC4201">Exploiter les données de masse en mobilisant les bons outils de traitement de
+                            l'information
+                        </ac>
+                        <ac code="AC4202">Mettre en oeuvre des spécifités du marketing digital
+                        </ac>
+                        <ac code="AC4203">Elaborer un cahier des charges e-business</ac>
+                        <ac code="AC4204">S'appuyer sur les indicateurs de performances pour améliorer la relation
+                            client
+                        </ac>
+                        <ac code="AC4205">Proposer des solutions adaptées aux spécificités de la chaine logistique du
+                            e-commerce
+                        </ac>
+                    </acs>
+                </niveau>
+            </niveaux>
+        </competence>
+        <competence name="E-business et entrepreneuriat" numero="5" libelle_long="Développer un projet e-business"
+                    couleur="c5">
+            <situations>
+                <situation>en situation de création d'entreprise
+                </situation>
+                <situation>en situation de développement d'un projet au sein d'une organisation
+                </situation>
+            </situations>
+            <composantes_essentielles>
+                <composante>en élaborant le document du modèle d'affaires décrivant la création et le partage de la
+                    valeur
+                </composante>
+                <composante>en développant une vision stratégique partagée e
+                </composante>
+                <composante>en analysant de façon pertinente des documents et indicateurs financiers
+                </composante>
+                <composante>en analysant d'un point de vue quantitatif et qualitatif les environnements spécifiques pour
+                    réussir un projet digital
+                </composante>
+                <composante>en mobilisant des techniques adéquates pour passer de la créativité à l'innovation
+                </composante>
+                <composante>en s'intégrant activement dans un projet collectif</composante>
+            </composantes_essentielles>
+            <niveaux>
+                <niveau ordre="1" annee="2" libelle="Pour construire un
+projet e-business en
+tant que partie
+prenante active">
+                    <acs>
+                        <ac code="AC5101">Concevoir un modèle d'affaires simplifié</ac>
+                        <ac code="AC5102">Analyser de façon pertinente la situation marché-entreprise grâce aux outils
+                            de diagnostic stratégique
+                        </ac>
+                        <ac code="AC5103">Analyser la situation financière d'une entreprise à partir des éléments de la
+                            comptabillité générale
+                        </ac>
+                        <ac code="AC5104">Identifier les éléments pertinents nécessaires à la réalisation du projet</ac>
+                        <ac code="AC5105">Utiliser les techniques de créativité individuelle et collective</ac>
+                        <ac code="AC5105">Contribuer à l'enrichissement d'un projet collectif</ac>
+                    </acs>
+                </niveau>
+                <niveau ordre="2" annee="3" libelle="Pour construire un
+projet e-business en
+tant que responsable de
+projet ou d'entreprise">
+                    <acs>
+                        <ac code="AC5201">Concevoir un modèle d'affaires complet incluant les sources de valeur, les
+                            parties prenantes et les externalités
+                        </ac>
+                        <ac code="AC5202">Faire des préconisations grâce aux outils du diagnostic stratégique
+                        </ac>
+                        <ac code="AC5203">Elaborer les documents financiers nécessaires en tant que concepteur du
+                            business model
+                        </ac>
+                        <ac code="AC5204">Contrôler la conformité et la pertinence du modèle</ac>
+                        <ac code="AC5205">Choisir les techniques de créativité indivuelle et collective adaptées</ac>
+                        <ac code="AC5206">Développer un projet de façon proactive</ac>
+                    </acs>
+                </niveau>
+            </niveaux>
+        </competence>
+
+        <competence name="Stratégie à l'international" numero="4" libelle_long="Formuler une stratégie de
+commerce à l'international"
+                    couleur="c4">
+            <situations>
+                <situation>en situation de mise en oeuvre d'une stratégie dans une entreprise de taille PME/PMI
+                </situation>
+                <situation>en situation de mise en oeuvre d'une stratégie dans une grande entreprise
+                </situation>
+                <situation>en situation d'import/export sur la zone Europe</situation>
+                <situation>en situation d'import/export sur la zone Grand-Export</situation>
+            </situations>
+            <composantes_essentielles>
+                <composante>en analysant la capacité de l'entreprise à s'internationaliser en vue de développer son
+                    activité d'import/export
+                </composante>
+                <composante>en évaluant l'environnement international afin d'identifier des opportunités à l'import et à
+                    l'export
+                </composante>
+                <composante>en sélectionnant le ou les marchés les plus performants pour l'entreprise</composante>
+            </composantes_essentielles>
+            <niveaux>
+                <niveau ordre="1" annee="2" libelle="Pour agir en tant
+qu'assistant
+développement
+import/export">
+                    <acs>
+                        <ac code="AC4101">Réaliser de manière structurée un diagnostic export/import à l'aide d'outils
+                            stratégiques (collecte des informations en interne)
+                        </ac>
+                        <ac code="AC4102">Collecter les informations de l'environnement international (identifier les
+                            sources pertinentes de données, identifier les outils de collecte
+                            de données, s'assurer de la fiabilité des données)
+                        </ac>
+                        <ac code="AC4103">Sélectionner les marchés opportuns, à l'export et à l'import à l'aide
+                            d'indicateurs
+                        </ac>
+                    </acs>
+                </niveau>
+                <niveau ordre="2" annee="3" libelle="Pour agir en tant que
+chargé du
+développement
+import/export">
+                    <acs>
+                        <ac code="AC4201">Evaluer le diagnostic export/import et faire des préconisations
+                        </ac>
+                        <ac code="AC4202">Evaluer les marchés internationaux en prenant en compte le contexte
+                            géo-éco-politique, les particularités culturelles et les enjeux
+                            éthiques
+                        </ac>
+                        <ac code="AC4203">Proposer le mode d'entrée (filiale, joint venture, etc.) le plus adéquate</ac>
+                    </acs>
+                </niveau>
+            </niveaux>
+        </competence>
+        <competence name="Opérations à l'international" numero="5" libelle_long="Piloter les opérations à
+l'international"
+                    couleur="c5">
+            <situations>
+                <situation>en situation de pilotage des opérations à l'international pour un bien de grande consommation
+                </situation>
+                <situation>en situation de pilotage des opérations à l'international pour un bien de grande industrie
+                </situation>
+                <situation>en situation de pilotage des opérations à l'international pour une activité de services
+                </situation>
+            </situations>
+            <composantes_essentielles>
+                <composante>en utilisant les outils adaptés aux achats à l'international</composante>
+                <composante>en adaptant la chaîne logistique à la stratégie commerciale à l'international
+                </composante>
+                <composante>en pilotant des opérations d'import-export de façon performante
+                </composante>
+                <composante>en développant une politique marketing adaptée au contexte international</composante>
+            </composantes_essentielles>
+            <niveaux>
+                <niveau ordre="1" annee="2" libelle="Pour commercialiser à
+l'international une
+offre simple">
+                    <acs>
+                        <ac code="AC5101">Gérer les processus de vente et d'achat à l'international ; identifier et
+                            sélectionner les fournisseurs
+                        </ac>
+                        <ac code="AC5102">Suivre les opérations logistiques à l'international grâce à l'appréhension des
+                            enjeux de la chaîne logistique
+                        </ac>
+                        <ac code="AC5103">Sélectionner le mode de transport, l'incoterm, l'assurance et les modalités de
+                            paiement dans une logique d'optimisation des coûts
+                        </ac>
+                        <ac code="AC5104">Positionner l'offre en fonction des spécificités culturelles identifiées sur
+                            le(s) marché(s) ciblé(s)
+                        </ac>
+                    </acs>
+                </niveau>
+                <niveau ordre="2" annee="3" libelle="Pour commercialiser à
+l'international une
+offre complexe">
+                    <acs>
+                        <ac code="AC5201">Mobiliser ses connaissances en processus de vente et d'achat dans des
+                            situations interculturelles
+                        </ac>
+                        <ac code="AC5202">Optimiser la chaîne logistique à l'international en intégrant les enjeux
+                            environnementaux et éthiques
+                        </ac>
+                        <ac code="AC5203">Gérer l'administration des ventes/achats à l'international notamment grâce à
+                            l'évaluation des modalités de financement de l'opération
+                            d'import ou d'export
+                        </ac>
+                        <ac code="AC5204">Proposer l'offre marketing adaptée au(x) marché(s) ciblé(s)</ac>
+                    </acs>
+                </niveau>
+            </niveaux>
+        </competence>
+
+        <competence name="Business Développement" numero="4" libelle_long="Participer à la stratégie
+marketing et commerciale de l'organisation"
+                    couleur="c4">
+            <situations>
+                <situation>en situation d'activité commerciale en B to B</situation>
+                <situation>en situation d'activité commerciale en B to C</situation>
+            </situations>
+            <composantes_essentielles>
+                <composante>en identifiant les opportunités de développement les plus porteuses</composante>
+                <composante>en manageant efficacement les équipes commerciales</composante>
+                <composante>en élaborant une offre adaptée au contexte sectoriel du client</composante>
+            </composantes_essentielles>
+            <niveaux>
+                <niveau ordre="1" annee="2" libelle="Pour agir en tant que
+membre de l'équipe
+commerciale">
+                    <acs>
+                        <ac code="AC4101">Réaliser un diagnostic avant la mise en place d'actions commerciales</ac>
+                        <ac code="AC4102">Mesurer l'importance du choix des cibles commerciales</ac>
+                        <ac code="AC4103">Travailler en équipe tout en respectant le rôle de chacun</ac>
+                        <ac code="AC4104">Adapter l'offre à une demande client</ac>
+                    </acs>
+                </niveau>
+                <niveau ordre="2" annee="3" libelle="Pour agir en tant que
+responsable
+de l'équipe
+commerciale">
+                    <acs>
+                        <ac code="AC4201">Mettre en oeuvre la stratégie marketing et commerciale au sein de l'équipe
+                        </ac>
+                        <ac code="AC4202">Fédérer les équipes autour de la réussite des objectifs marketing et
+                            commerciaux
+                        </ac>
+                        <ac code="AC4203">Co-construire une offre en collaboration avec les parties prenantes concernées
+                            (externes et internes)
+                        </ac>
+                    </acs>
+                </niveau>
+            </niveaux>
+        </competence>
+        <competence name="Relation Client" numero="5" libelle_long="Manager la relation client"
+                    couleur="c5">
+            <situations>
+                <situation>en situation d'activité commerciale en B to B</situation>
+                <situation>en situation d'activité commerciale en B to C</situation>
+            </situations>
+            <composantes_essentielles>
+                <composante>Manager la relation client en développant une culture partagée de service client
+                </composante>
+                <composante>en pilotant la satisfaction et l'expérience client tout au long du parcours dans une
+                    perspective durable
+                </composante>
+                <composante>en valorisant le portefeuille client par l'exploitation des données client dans le respect
+                    de la réglementation
+                </composante>
+            </composantes_essentielles>
+            <niveaux>
+                <niveau ordre="1" annee="2" libelle="Pour agir en tant que
+membre de l'équipe
+relation client">
+                    <acs>
+                        <ac code="AC5101">Intégrer la satisfaction client dans la réussite de la relation commerciale et
+                            la réputation de l'entreprise
+                        </ac>
+                        <ac code="AC5102">Piloter sa relation client au moyen d'indicateurs
+                        </ac>
+                        <ac code="AC5103">Traiter les réclamations client pour optimiser l'activité</ac>
+                        <ac code="AC5104">Exploiter de façon pertinente les outils de la relation client</ac>
+                    </acs>
+                </niveau>
+                <niveau ordre="2" annee="3" libelle="Pour agir en tant que
+responsable
+de l'équipe relation
+client">
+                    <acs>
+                        <ac code="AC5201">Asseoir la réussite de la relation client sur la cohérence globale de
+                            l'organisation (outils , processus, communication, structure
+                            organisationnelle...)
+                        </ac>
+                        <ac code="AC5202">Optimiser l'expérience client par la mise en place d'un processus
+                            d'amélioration continue
+                        </ac>
+                        <ac code="AC5203">Contribuer à la diffusion de la culture client au sein de l'organisation</ac>
+                        <ac code="AC5204">Faire évoluer les outils de la relation client</ac>
+                    </acs>
+                </niveau>
+            </niveaux>
+        </competence>
+
+    </competences>
+    <parcours>
+        <parcour numero="1" libelle="Stratégie de marque et événementiel" code="SME">
+            <annee ordre="1">
+                <competence nom="Marketing" niveau="1"/>
+                <competence nom="Vente" niveau="1"/>
+                <competence nom="Communication commerciale" niveau="1"/>
+            </annee>
+            <annee ordre="2">
+                <competence nom="Marketing" niveau="2"/>
+                <competence nom="Vente" niveau="2"/>
+                <competence nom="Communication commerciale" niveau="2"/>
+
+                <competence nom="Branding" niveau="1"/>
+                <competence nom="Evénementiel" niveau="1"/>
+            </annee>
+            <annee ordre="3">
+                <competence nom="Marketing" niveau="3"/>
+                <competence nom="Vente" niveau="3"/>
+
+                <competence nom="Branding" niveau="2"/>
+                <competence nom="Evénementiel" niveau="2"/>
+            </annee>
+        </parcour>
+        <parcour numero="2" libelle="Marketing et Management du point de vente" code="MMPV">
+            <annee ordre="1">
+                <competence nom="Marketing" niveau="1"/>
+                <competence nom="Vente" niveau="1"/>
+                <competence nom="Communication commerciale" niveau="1"/>
+            </annee>
+            <annee ordre="2">
+                <competence nom="Marketing" niveau="2"/>
+                <competence nom="Vente" niveau="2"/>
+                <competence nom="Communication commerciale" niveau="2"/>
+
+                <competence nom="Management" niveau="1"/>
+                <competence nom="Retail marketing" niveau="1"/>
+            </annee>
+            <annee ordre="3">
+                <competence nom="Marketing" niveau="3"/>
+                <competence nom="Vente" niveau="3"/>
+
+                <competence nom="Management" niveau="2"/>
+                <competence nom="Retail marketing" niveau="2"/>
+            </annee>
+        </parcour>
+        <parcour numero="3" libelle="Marketing digital, e‐business et entrepreneuriat" code="MD">
+            <annee ordre="1">
+                <competence nom="Marketing" niveau="1"/>
+                <competence nom="Vente" niveau="1"/>
+                <competence nom="Communication commerciale" niveau="1"/>
+            </annee>
+            <annee ordre="2">
+                <competence nom="Marketing" niveau="2"/>
+                <competence nom="Vente" niveau="2"/>
+                <competence nom="Communication commerciale" niveau="2"/>
+
+                <competence nom="Marketing digital" niveau="1"/>
+                <competence nom="E-business et entrepreneuriat" niveau="1"/>
+            </annee>
+            <annee ordre="3">
+                <competence nom="Marketing" niveau="3"/>
+                <competence nom="Vente" niveau="3"/>
+
+                <competence nom="Marketing digital" niveau="2"/>
+                <competence nom="E-business et entrepreneuriat" niveau="2"/>
+            </annee>
+        </parcour>
+        <parcour numero="4" libelle="Business international : achat et vente" code="MI">
+            <annee ordre="1">
+                <competence nom="Marketing" niveau="1"/>
+                <competence nom="Vente" niveau="1"/>
+                <competence nom="Communication commerciale" niveau="1"/>
+            </annee>
+            <annee ordre="2">
+                <competence nom="Marketing" niveau="2"/>
+                <competence nom="Vente" niveau="2"/>
+                <competence nom="Communication commerciale" niveau="2"/>
+
+                <competence nom="Stratégie à l'international" niveau="1"/>
+                <competence nom="Opérations à l'international" niveau="1"/>
+            </annee>
+            <annee ordre="3">
+                <competence nom="Marketing" niveau="3"/>
+                <competence nom="Vente" niveau="3"/>
+
+                <competence nom="Stratégie à l'international" niveau="2"/>
+                <competence nom="Opérations à l'international" niveau="2"/>
+            </annee>
+        </parcour>
+
+        <parcour numero="4" libelle="Business développement et management de la relation client" code="BDMRC">
+            <annee ordre="1">
+                <competence nom="Marketing" niveau="1"/>
+                <competence nom="Vente" niveau="1"/>
+                <competence nom="Communication commerciale" niveau="1"/>
+            </annee>
+            <annee ordre="2">
+                <competence nom="Marketing" niveau="2"/>
+                <competence nom="Vente" niveau="2"/>
+                <competence nom="Communication commerciale" niveau="2"/>
+
+                <competence nom="Business Développement" niveau="1"/>
+                <competence nom="Relation Client" niveau="1"/>
+            </annee>
+            <annee ordre="3">
+                <competence nom="Marketing" niveau="3"/>
+                <competence nom="Vente" niveau="3"/>
+
+                <competence nom="Business Développement" niveau="2"/>
+                <competence nom="Relation Client" niveau="2"/>
+            </annee>
+        </parcour>
+    </parcours>
+</referentiel_competence>
