@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEvaluation.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 15/05/2021 09:16
  */
 
 /*
@@ -20,6 +20,7 @@ use App\Entity\Departement;
 use App\Entity\Etudiant;
 use App\Entity\Evaluation;
 use App\Entity\Note;
+use App\Utils\Tools;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
@@ -28,6 +29,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
+use function count;
 
 /**
  * Class MyEvaluation.
@@ -107,16 +109,16 @@ class MyEvaluation
 
         foreach ($this->evaluation->getTypeGroupe()->getGroupes() as $groupe) {
             $grid = $groupe->getId();
-            $this->statistiques[$grid]['min'] = \count($tgroupes[$grid]) > 0 ? min($tgroupes[$grid]) : -0.01;
-            $this->statistiques[$grid]['max'] = \count($tgroupes[$grid]) > 0 ? max($tgroupes[$grid]) : -0.01;
-            $this->statistiques[$grid]['moyenne'] = \count($tgroupes[$grid]) > 0 ? array_sum($tgroupes[$grid]) / \count($tgroupes[$grid]) : -0.01;
-            $this->statistiques[$grid]['ecart_type'] = \count($tgroupes[$grid]) > 0 ? $this->ecartType($tgroupes[$grid]) : -0.01;
+            $this->statistiques[$grid]['min'] = count($tgroupes[$grid]) > 0 ? min($tgroupes[$grid]) : -0.01;
+            $this->statistiques[$grid]['max'] = count($tgroupes[$grid]) > 0 ? max($tgroupes[$grid]) : -0.01;
+            $this->statistiques[$grid]['moyenne'] = count($tgroupes[$grid]) > 0 ? array_sum($tgroupes[$grid]) / count($tgroupes[$grid]) : -0.01;
+            $this->statistiques[$grid]['ecart_type'] = count($tgroupes[$grid]) > 0 ? $this->ecartType($tgroupes[$grid]) : -0.01;
         }
 
-        $this->statistiques['promo']['min'] = \count($t) > 0 ? min($t) : -0.01;
-        $this->statistiques['promo']['max'] = \count($t) > 0 ? max($t) : -0.01;
-        $this->statistiques['promo']['moyenne'] = \count($t) > 0 ? array_sum($t) / \count($t) : -0.01;
-        $this->statistiques['promo']['ecart_type'] = \count($t) > 0 ? $this->ecartType($t) : -0.01;
+        $this->statistiques['promo']['min'] = count($t) > 0 ? min($t) : -0.01;
+        $this->statistiques['promo']['max'] = count($t) > 0 ? max($t) : -0.01;
+        $this->statistiques['promo']['moyenne'] = count($t) > 0 ? array_sum($t) / count($t) : -0.01;
+        $this->statistiques['promo']['ecart_type'] = count($t) > 0 ? $this->ecartType($t) : -0.01;
         $this->statistiques['promo']['rang'] = $this->classement;
         $this->statistiques['repartition'] = $repartition;
 
@@ -131,7 +133,7 @@ class MyEvaluation
     private function ecartType($donnees)
     {
         //0 - Nombre d’éléments dans le tableau
-        $population = \count($donnees);
+        $population = count($donnees);
         if (0 !== $population) {
             //1 - somme du tableau
             $somme_tableau = array_sum($donnees);
@@ -140,7 +142,7 @@ class MyEvaluation
             $moyenne = $somme_tableau / $population;
             //3 - écart pour chaque valeur
             $ecart = [];
-            foreach ($donnees as $key => $value) {
+            foreach ($donnees as $value) {
                 //écart entre la valeur et la moyenne
                 $ecart_donnee = $value - $moyenne;
                 //carré de l'écart
@@ -227,11 +229,10 @@ class MyEvaluation
     }
 
     /**
-     *
      * @return PdfResponse|StreamedResponse|null
+     *
      * @throws SyntaxError
      * @throws LoaderError
-     *
      * @throws RuntimeError
      */
     public function exportReleve($_format, $groupes, Departement $departement)
@@ -242,8 +243,8 @@ class MyEvaluation
             case Constantes::FORMAT_PDF:
                 return $this->myPdf::generePdf('pdf/releveEvaluation.html.twig', [
                     'evaluation' => $this->evaluation,
-                    'groupes'    => $groupes,
-                    'notes'      => $notes,
+                    'groupes' => $groupes,
+                    'notes' => $notes,
                 ], $name, $departement->getLibelle());
             case Constantes::FORMAT_EXCEL:
                 $this->myExcelMultiExport->genereReleveExcel(
@@ -272,7 +273,7 @@ class MyEvaluation
     public function importEvaluation(Evaluation $evaluation, string $fichier): ?array
     {
         $t = explode('.', $fichier);
-        $extension = $t[\count($t) - 1];
+        $extension = $t[count($t) - 1];
 
         switch ($extension) {
             case 'xlsx':
@@ -291,7 +292,6 @@ class MyEvaluation
     }
 
     /**
-     *
      * @throws Exception
      */
     private function insertNotes(Evaluation $evaluation, $data): array
@@ -356,9 +356,9 @@ class MyEvaluation
             $ordre[] = mb_strtolower($key);
         }
 
-        $nblignes = \count($sheetData);
+        $nblignes = count($sheetData);
         for ($i = 2; $i <= $nblignes; ++$i) {
-            $nb = \count($sheetData[$i]);
+            $nb = count($sheetData[$i]);
             for ($j = 1; $j <= $nb; ++$j) {
                 $t[$ordre[$j - 1]] = $sheetData[$i][\chr($j + 64)];
             }
@@ -394,7 +394,7 @@ class MyEvaluation
             while (!feof($handle)) {
                 /*On lit la ligne courante*/
                 $phrase = fgetcsv($handle, 1024, ';');
-                $nb = \count($phrase);
+                $nb = count($phrase);
                 for ($i = 0; $i < $nb; ++$i) {
                     $t[$ordre[$i]] = $phrase[$i];
                 }

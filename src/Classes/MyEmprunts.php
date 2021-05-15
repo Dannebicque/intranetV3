@@ -4,11 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEmprunts.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
- */
-
-/*
- * Pull your hearder here, for exemple, Licence header.
+ * @lastUpdate 15/05/2021 09:08
  */
 
 namespace App\Classes;
@@ -24,6 +20,7 @@ use App\Entity\Materiel;
 use App\Event\EmpruntEvent;
 use App\Repository\EmpruntRepository;
 use App\Repository\MaterielRepository;
+use App\Utils\Tools;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
