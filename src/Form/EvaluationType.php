@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/EvaluationType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2021 08:46
+ * @lastUpdate 15/05/2021 16:01
  */
 
 namespace App\Form;
@@ -12,7 +12,6 @@ namespace App\Form;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Entity\Departement;
 use App\Entity\Evaluation;
-use App\Entity\Matiere;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
@@ -90,6 +89,7 @@ class EvaluationType extends AbstractType
                 'choices' => $this->typeMatiereManager->findBySemestreChoiceType($this->semestre),
                 'label' => 'label.evaluation_matiere',
                 'required' => true,
+                'data' => $options['data']->getTypeIdMatiere(),
                 'expanded' => false,
                 'multiple' => false,
                 'disabled' => !($matiereDisabled && $autorise),

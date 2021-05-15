@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/NoteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2021 08:46
+ * @lastUpdate 15/05/2021 16:01
  */
 
 namespace App\Controller\appPersonnel;
@@ -69,7 +69,7 @@ class NoteController extends BaseController
     }
 
     /**
-     * @Route("/saisie/etape-1/{matiere}", name="application_personnel_note_saisie", requirements={"matiere"="\d+"})
+     * @Route("/saisie/etape-1/{matiere}", name="application_personnel_note_saisie")
      *
      * @return RedirectResponse|Response
      *
@@ -84,7 +84,7 @@ class NoteController extends BaseController
         }
         //todo: vérifier les accès par des profs non autorisés ????
 
-        $evaluation = new Evaluation($this->getConnectedUser(), $matiere, $this->dataUserSession->getDepartement());
+        $evaluation = new Evaluation($this->getConnectedUser(), $mat, $this->dataUserSession->getDepartement());
         $form = $this->createForm(
             EvaluationType::class,
             $evaluation,
@@ -116,7 +116,7 @@ class NoteController extends BaseController
         }
 
         return $this->render('appPersonnel/note/saisie.html.twig', [
-            'matiere' => $matiere,
+            'matiere' => $mat,
             'form' => $form->createView(),
         ]);
     }
@@ -127,12 +127,17 @@ class NoteController extends BaseController
      *
      * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
      */
-    public function saisieNotes(MyEvaluation $myEvaluation, Evaluation $evaluation): Response
-    {
+    public function saisieNotes(
+        TypeMatiereManager $typeMatiereManager,
+        MyEvaluation $myEvaluation,
+        Evaluation $evaluation
+    ): Response {
+        $matiere = $typeMatiereManager->getMatiere($evaluation->getIdMatiere(), $evaluation->getTypeMatiere());
         $notes = $myEvaluation->setEvaluation($evaluation)->getNotesTableau();
 
         return $this->render('appPersonnel/note/saisie_2.html.twig', [
             'evaluation' => $evaluation,
+            'matiere' => $matiere,
             'notes' => $notes,
             'autorise' => true,
         ]);
