@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
 {% block header %}
-    <strong>Saisie</strong> des notes | {{ evaluation.matiere.display }}
+    <strong>Saisie</strong> des notes | {{ matiere.display }}
 {% endblock %}
 
 {% block headeractions %}
     <div class="header-action">
         <div class="buttons">
-            <a href="{{ path('application_personnel_note_index', {matiere: evaluation.matiere.id, index: evaluation.id}) }}"
+            <a href="{{ path('application_personnel_note_index', {matiere: matiere.typeIdMatiere, index: evaluation.id}) }}"
                class="btn btn-primary btn-float"
                data-provide="tooltip"
                data-placement="bottom" title="{{ 'atitle.retour_synthese'|trans }}"><i class="fas fa-arrow-left"></i></a>
@@ -19,7 +19,7 @@
 
     <div class="card card-slided-up">
         <header class="card-header">
-            <h4 class="card-title"><strong>Détails</strong> de l'évaluation | {{ evaluation.matiere.display }}</h4>
+            <h4 class="card-title"><strong>Détails</strong> de l'évaluation | {{ matiere.display }}</h4>
             <ul class="card-controls">
                 <li>
                     <a class="card-btn-slide" href="#" title="Plus de détails et modifications" data-provide="tooltip">
@@ -39,7 +39,7 @@
     </div>
 
     <div class="card">
-        <h4 class="card-title"><strong>Saisie</strong> des notes | {{ evaluation.matiere.display }}
+        <h4 class="card-title"><strong>Saisie</strong> des notes | {{ matiere.display }}
         </h4>
         <div class="card-body">
             {{ include('composants/_saisie_notes.html.twig') }}
