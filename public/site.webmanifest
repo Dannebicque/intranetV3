@@ -15,7 +15,7 @@
 
     // the preferred URL to be loaded when the user launches the web app
     // (this is just a hint, so user agents can ignore this value)
-    "start_url": "https://intranet.iut-troyes.univ)reims.fr",
+    "start_url": "https://intranet.iut-troyes.univ-reims.fr",
 
     // a relative path (/app/), a host name (https://example.com/) or a subdirectory
     // (https://example.com/app/) where the manifest is applied to. Any URL outside
