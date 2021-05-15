@@ -4,19 +4,21 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Adapter/AbstractMatiereAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2021 08:46
+ * @lastUpdate 15/05/2021 09:15
  */
 
 namespace App\Adapter;
-
 
 use App\DTO\Matiere;
 
 abstract class AbstractMatiereAdapter
 {
-    public function single($matiere)
+    /**
+     * @param \App\Entity\Matiere|\App\Entity\ApcRessource|\App\Entity\ApcSae $matiere
+     */
+    public function single($matiere): ?Matiere
     {
-        if ($matiere === null) {
+        if (null === $matiere) {
             return null;
         }
 

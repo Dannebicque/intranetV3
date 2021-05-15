@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<referentiel_competence specialite="{{ diplome.sigle }}" specialite_long="{{ diplome.libelle }}"
+                        type="{{ diplome.typeDiplome.sigle }}">
+    <competences>
+        {% for competence in competences %}
+            <competence name="{{ competence.nomCourt }}" numero="{{ loop.index }}" libelle_long="{{ competence.libelle }}"
+                        couleur="{{ competence.couleur }}">
+                <situations>
+                    {% for situation in competence.apcSituationProfessionnelles %}
+                        <situation>{{ situation.libelle }}</situation>
+                    {% endfor %}
+                </situations>
+                <composantes_essentielles>
+                    {% for composante in competence.apcComposanteEssentielles %}
+                        <composante>{{ composante.libelle }}</composante>
+                    {% endfor %}
+                </composantes_essentielles>
+                <niveaux>
+                    {% for niveau in competence.apcNiveaux %}
+                        <niveau ordre="{{ niveau.ordre }}" libelle="{{ niveau.libelle }}">
+                            <acs>
+                                {% for apprentissage in niveau.apcApprentissageCritiques %}
+                                    <ac code="{{ apprentissage.code }}">{{ apprentissage.libelle }}</ac>
+                                {% endfor %}
+                            </acs>
+                        </niveau>
+                    {% endfor %}
+                </niveaux>
+            </competence>
+        {% endfor %}
+    </competences>
+    <parcours>
+        {% for parcour in parcours %}
+            <parcour numero="{{ loop.index }}" libelle="{{ parcour.libelle }}" code="{{ parcour.code }}">
+                {% for annee in 1..3 %}
+                    <annee ordre="{{ annee }}">
+                        {% for niveau in parcour.apcParcoursNiveaux|filter(niveau => ((not (niveau.niveau.annee is
+                            defined) and (niveau.niveau.ordre == annee)) or ( (niveau.niveau.annee is
+                            defined) and (niveau.niveau.annee != null and niveau.niveau.annee.ordre == annee)))) %}
+                            <competence nom="{{ niveau.niveau.competence.nomCourt }}" niveau="{{ niveau.niveau.ordre }}"/>
+                        {% endfor %}
+                    </annee>
+                {% endfor %}
+            </parcour>
+        {% endfor %}
+    </parcours>
+</referentiel_competence>
