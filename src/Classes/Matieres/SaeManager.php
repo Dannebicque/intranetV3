@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Matieres/SaeManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2021 08:46
+ * @lastUpdate 15/05/2021 08:23
  */
 
 namespace App\Classes\Matieres;
@@ -12,18 +12,26 @@ namespace App\Classes\Matieres;
 use App\Adapter\MatiereSaeAdapter;
 use App\DTO\Matiere;
 use App\DTO\MatiereCollection;
+use App\Entity\ApcSae;
 use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Semestre;
 use App\Repository\ApcSaeRepository;
+use App\Utils\Tools;
+use Doctrine\ORM\EntityManagerInterface;
 
 class SaeManager extends AbstractMatiereManager implements MatiereInterface
 {
     private ApcSaeRepository $apcSaeRepository;
     private MatiereSaeAdapter $saeAdapter;
+    private EntityManagerInterface $entityManager;
 
-    public function __construct(ApcSaeRepository $apcSaeRepository, MatiereSaeAdapter $saeAdapter)
-    {
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        ApcSaeRepository $apcSaeRepository,
+        MatiereSaeAdapter $saeAdapter
+    ) {
+        $this->entityManager = $entityManager;
         $this->apcSaeRepository = $apcSaeRepository;
         $this->saeAdapter = $saeAdapter;
     }
@@ -49,7 +57,6 @@ class SaeManager extends AbstractMatiereManager implements MatiereInterface
         return $this->saeAdapter->collection($data);
     }
 
-
     public function findByDiplome(Diplome $diplome): MatiereCollection
     {
         $data = $this->apcSaeRepository->findByDiplome($diplome);
@@ -62,5 +69,18 @@ class SaeManager extends AbstractMatiereManager implements MatiereInterface
         $matiere = $this->apcSaeRepository->findBy(['codeElement' => $code]);
 
         return $this->saeAdapter->single($matiere);
+    }
+
+    public function update($name, $value, ApcSae $apcSae): bool
+    {
+        $method = 'set' . $name;
+        if (method_exists($apcSae, $method)) {
+            $apcSae->$method(Tools::convertToFloat($value));
+            $this->entityManager->flush();
+
+            return true;
+        }
+
+        return false;
     }
 }
