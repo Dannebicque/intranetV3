@@ -1,0 +1,692 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved -->
+<!-- @file /Users/davidannebicque/htdocs/intranetV3/demo/referentiels/competences/but-GEA.xml -->
+<!-- @author davidannebicque -->
+<!-- @project intranetV3 -->
+<!-- @lastUpdate 15/05/2021 07:33 -->
+
+<referentiel_competence specialite="GEA" specialite_long="Gestion des Entreprises et des Administrations"
+                        type="B.U.T.">
+    <competences>
+        <competence name="Analyser" numero="1"
+                    libelle_long="Analyser les processus de l’organisation dans son environnement"
+                    couleur="c1">
+            <situations>
+                <situation>Dans des organisations de tailles et d'espaces géographiques différents</situation>
+                <situation>Dans des organisations marchandes ou non marchandes</situation>
+            </situations>
+            <composantes_essentielles>
+                <composante>En déterminant ses enjeux sociaux économiques et juridiques</composante>
+                <composante>En identifiant rigoureusement les différentes dimensions de l’identité et des
+                    caractéristiques internes et externes des organisations selon des critères pertinents
+                </composante>
+                <composante>En présentant de manière détaillée les attentes de chacun des acteurs et partenaires de
+                    l’organisation
+                </composante>
+            </composantes_essentielles>
+            <niveaux>
+                <niveau ordre="1" libelle="Identifier les processus de l&#039;organisation">
+                    <acs>
+                        <ac code="AC1101">Identifier les différents types d&#039;enjeux</ac>
+                        <ac code="AC1102">Qualifier les différents types d&#039;organisations</ac>
+                        <ac code="AC1103">Identifier les parties prenantes et leurs relations au sein d&#039;un
+                            processus
+                        </ac>
+                    </acs>
+                </niveau>
+                <niveau ordre="2" libelle="Evaluer les processus de l&#039;organisation">
+                    <acs>
+                        <ac code="AC1201">Analyser les différents types d&#039;enjeux</ac>
+                        <ac code="AC1202">Analyser les dimensions identitaires (juridiques, managériales,…) de l&#039;organisation</ac>
+                        <ac code="AC1203">Evaluer le niveau de performance des processus</ac>
+                    </acs>
+                </niveau>
+                <niveau ordre="3" libelle="Conseiller pour l&#039;amélioration des processus de l&#039;organisation">
+                    <acs>
+                        <ac code="AC1301">Intégrer l&#039;impact des enjeux sur l&#039;organisation</ac>
+                        <ac code="AC1302">Conseiller un type d&#039;organisation</ac>
+                        <ac code="AC1303">Proposer des améliorations des processus</ac>
+                    </acs>
+                </niveau>
+            </niveaux>
+        </competence>
+        <competence name="Décider" numero="2" libelle_long="Aider à la prise de décision"
+                    couleur="c2">
+            <situations>
+                <situation>Dans des organisations de tailles et d&#039;espaces géographiques différents</situation>
+                <situation>Dans des organisations marchandes ou non marchandes</situation>
+            </situations>
+            <composantes_essentielles>
+                <composante>En utilisant efficacement un système d’information de gestion adapté</composante>
+                <composante>En utilisant des outils notamment numériques pertinents</composante>
+                <composante>En interprétant pertinemment les données qualitatives et quantitatives</composante>
+                <composante>En respectant rigoureusement les contraintes et les procédures de l’organisation
+                </composante>
+            </composantes_essentielles>
+            <niveaux>
+                <niveau ordre="1" libelle="Identifier les éléments d&#039;aide à la prise de décision">
+                    <acs>
+                        <ac code="AC2101">Identifier les composantes du Système d&#039;Information de gestion</ac>
+                        <ac code="AC2102">Rechercher, collecter et traiter les données brutes afin de produire et de
+                            diffuser une information structurée
+                        </ac>
+                        <ac code="AC2103">Identifier les contraintes qui s&#039;imposent à l&#039;organisation</ac>
+                        <ac code="AC2104">Identifier les risques</ac>
+                    </acs>
+                </niveau>
+                <niveau ordre="2" libelle="Evaluer les éléments d&#039;aide à la prise de décision">
+                    <acs>
+                        <ac code="AC2201">Analyser les enjeux du Système d&#039;Information et leur impact sur le
+                            fonctionnement de l&#039;organisation
+                        </ac>
+                        <ac code="AC2202">Exploiter un ERP/PGI et ses fonctionnalités de base</ac>
+                        <ac code="AC2203">Traiter les données pertinentes pour répondre à une problématique</ac>
+                        <ac code="AC2204">Analyser les contraintes et leur impact sur le fonctionnement et sur la
+                            performance de l&#039;organisation
+                        </ac>
+                        <ac code="AC2205">Evaluer les risques</ac>
+                    </acs>
+                </niveau>
+                <niveau ordre="3" libelle="Concourir à la prise de décision">
+                    <acs>
+                        <ac code="AC2301">Collaborer au processus d&#039;amélioration continue du Système d&#039;Information</ac>
+                        <ac code="AC2302">Exploiter les données pour accompagner la prise de décision</ac>
+                        <ac code="AC2303">Participer à la prise de décision en fonction des contraintes identifiées
+                        </ac>
+                        <ac code="AC2304">Elaborer des mesures préventives de minimisation des risques</ac>
+                    </acs>
+                </niveau>
+            </niveaux>
+        </competence>
+        <competence name="Piloter" numero="3"
+                    libelle_long="Piloter les relations avec les acteurs internes ou externes de l’organisation"
+                    couleur="c3">
+            <situations>
+                <situation>Dans des organisations de tailles et d&#039;espaces géographiques différents</situation>
+                <situation>Dans des organisations marchandes ou non marchandes</situation>
+            </situations>
+            <composantes_essentielles>
+                <composante>En mettant en œuvre une démarche favorisant la cohésion de groupe</composante>
+                <composante>En participant efficacement à des travaux collectifs ou des projets collaboratifs
+                </composante>
+                <composante>En mobilisant des outils et techniques de communication adaptés aux enjeux de
+                    l’organisation
+                </composante>
+                <composante>En contribuant efficacement à la gestion individuelle et collective des parties prenantes de
+                    l’organisation
+                </composante>
+                <composante>En appréciant la cohérence de la stratégie de l’organisation à l’aide d’outils de diagnostic
+                    interne et externe pertinents
+                </composante>
+            </composantes_essentielles>
+            <niveaux>
+                <niveau ordre="1" libelle="Identifier les relations entre les parties prenantes">
+                    <acs>
+                        <ac code="AC3101">Identifier ses qualités individuelles</ac>
+                        <ac code="AC3102">Identifier les relations inter-personnelles et collectives</ac>
+                        <ac code="AC3103">Travailler en équipe avec méthodes</ac>
+                        <ac code="AC3104">Utiliser de façon pertinente les techniques de communication</ac>
+                    </acs>
+                </niveau>
+                <niveau ordre="2" libelle="Coordonner les relations entre les parties prenantes">
+                    <acs>
+                        <ac code="AC3201">Mobiliser ses qualités individuelles au service de l&#039;intelligence
+                            collective
+                        </ac>
+                        <ac code="AC3202">Analyser les relations inter-personnelles et collectives dans la stratégie de
+                            l&#039;organisation
+                        </ac>
+                        <ac code="AC3203">Utiliser les outils d&#039;organisation et méthodes dédiés au travail
+                            collaboratif
+                        </ac>
+                        <ac code="AC3204">Combiner les méthodes de communication en lien avec la stratégie</ac>
+                    </acs>
+                </niveau>
+                <niveau ordre="3" libelle="Améliorer les relations entre les parties prenantes">
+                    <acs>
+                        <ac code="AC3301">Animer une équipe</ac>
+                        <ac code="AC3302">Mener un projet collaboratif</ac>
+                        <ac code="AC3303">Participer à l&#039;amélioration de la politique de communication en lien
+                            avec la stratégie
+                        </ac>
+                    </acs>
+                </niveau>
+            </niveaux>
+        </competence>
+
+        <competence name="Administrer" numero="4"
+                    libelle_long="Gérer l'administration du
+personnel"
+                    couleur="c4">
+            <situations>
+                <situation>Gestion individuelle et collective des salariés</situation>
+                <situation>Mise en oeuvre de la politique de rémunération des salariés</situation>
+                <situation>Mise en oeuvre de la représentation des salariés et du dialogue social</situation>
+            </situations>
+            <composantes_essentielles>
+                <composante>en appliquant rigoureusement le cadre juridique en matière de RH</composante>
+                <composante>en établissant la paie conformément à la réglementation en vigueur et à la politique de
+                    rémunération
+                </composante>
+                <composante>en produisant des documents administratifs et juridiques adaptés</composante>
+            </composantes_essentielles>
+            <niveaux>
+                <niveau ordre="1" annee="2" libelle="Conduire les activités
+administratives des RH">
+                    <acs>
+                        <ac code="AC4101">Établir un bulletin de paie en intégrant les éléments fixes et variables de la
+                            rémunération
+                        </ac>
+                        <ac code="AC4102">Appliquer rigoureusement les procédures, du recrutement à la fin du contrat de
+                            travail
+                        </ac>
+                        <ac code="AC4103">Administrer les dossiers personnels des salariés y compris dans le domaine de
+                            la santé et de la sécurité au travail
+                        </ac>
+                        <ac code="AC4104">Produire des déclarations sociales fiables</ac>
+                        <ac code="AC4105">Restituer les résultats des tableaux de bord sociaux</ac>
+                        <ac code="AC4106">Organiser les élections, le renouvellement et le fonctionnement des instances
+                            représentatives du personnel
+                        </ac>
+                    </acs>
+                </niveau>
+                <niveau ordre="2" annee="3" libelle="Optimiser les
+processus
+administratifs RH">
+                    <acs>
+                        <ac code="AC4201">Rendre compte des évolutions des obligations sociales et juridiques qui
+                            impactent l'organisation
+                        </ac>
+                        <ac code="AC4202">Optimiser la procédure de gestion de la paie et la politique de rémunération
+                        </ac>
+                        <ac code="AC4203">Proposer, après analyse, des indicateurs pertinents du dialogue social</ac>
+                        <ac code="AC4204">Réaliser un reporting RH adapté pour les parties prenantes internes</ac>
+                        <ac code="AC4205">Proposer des solutions d’optimisation de la performance sociale en fonction
+                            des choix stratégiques
+                        </ac>
+                    </acs>
+                </niveau>
+            </niveaux>
+        </competence>
+        <competence name="Développer" numero="5"
+                    libelle_long="Gérer le développement des
+ressources humaines"
+                    couleur="c5">
+            <situations>
+                <situation>Collaboration à la politique de formation</situation>
+                <situation>Participation à la politique de recrutement</situation>
+                <situation>Participation à la politique QHSE</situation>
+                <situation>Contribution à la politique RSE</situation>
+            </situations>
+            <composantes_essentielles>
+                <composante>en mobilisant les dispositifs adaptés de formation, d’évaluation et de développement des
+                    compétences et de mobilité
+                </composante>
+                <composante>en contribuant efficacement au processus de recrutement externe</composante>
+                <composante>en assurant une communication RH interne et externe pertinente</composante>
+                <composante>en contribuant à l’élaboration et la diffusion des dispositifs de lutte contre les
+                    discriminations dans le respect de la loi et des politiques de RSE
+                </composante>
+                <composante>en contribuant efficacement à la mise en place et au suivi des dispositifs de protection de
+                    la santé - sécurité et de la qualité de vie au travail
+                </composante>
+            </composantes_essentielles>
+            <niveaux>
+                <niveau ordre="1" annee="2" libelle="Mettre en oeuvre
+les politiques RH">
+                    <acs>
+                        <ac code="AC5101">Mettre en oeuvre les outils et les dispositifs de développement des emplois,
+                            des compétences et des carrières selon la stratégie de
+                            l’organisation
+                        </ac>
+                        <ac code="AC5102">Mettre en oeuvre des outils et des techniques adaptés du processus de
+                            recrutement
+                        </ac>
+                        <ac code="AC5103">Mettre en oeuvre la communication RH</ac>
+                        <ac code="AC5104">Identifier les enjeux et les outils d’une démarche de Qualité de Vie au
+                            Travail
+                        </ac>
+                        <ac code="AC5105">Définir les enjeux et les dispositifs adaptés de RSE</ac>
+                    </acs>
+                </niveau>
+                <niveau ordre="2" annee="3" libelle="Optimiser
+les politiques RH">
+                    <acs>
+                        <ac code="AC5201">Optimiser les dispositifs de développement RH</ac>
+                        <ac code="AC5202">Optimiser les outils et techniques du processus de recrutement</ac>
+                        <ac code="AC5203">Optimiser la communication RH en interne et en externe</ac>
+                        <ac code="AC5204">Analyser la pertinence des outils de la digitalisation de la gestion RH</ac>
+                        <ac code="AC5205">Optimiser les dispositifs de gestion de la diversité et de la Qualité de Vie
+                            au Travail
+                        </ac>
+                        <ac code="AC5206">Optimiser les différentes politiques RH grâce à l'analyse des résultats des
+                            indicateurs de performance RH
+                        </ac>
+                    </acs>
+                </niveau>
+            </niveaux>
+        </competence>
+
+        <competence name="Entreprendre" numero="4"
+                    libelle_long="Concevoir la stratégie de
+création de valeur"
+                    couleur="c4">
+            <situations>
+                <situation>Choix d'une structure juridique, financière et fiscale adaptée</situation>
+                <situation>Élaboration du business model et du business plan</situation>
+                <situation>Définition et mise en oeuvre d'un projet entrepreneurial</situation>
+            </situations>
+            <composantes_essentielles>
+                <composante>en étudiant les marchés actuels et futurs dans un environnement sectoriel spécifique
+                </composante>
+                <composante>en élaborant un business model adapté</composante>
+                <composante>en réalisant un business plan réaliste dans sa dimension financière</composante>
+                <composante>en choisissant une structure juridique pertinente</composante>
+            </composantes_essentielles>
+            <niveaux>
+                <niveau ordre="1" annee="2" libelle="Modéliser la
+proposition de valeur">
+                    <acs>
+                        <ac code="AC4101">S'adapter aux évolutions induites par le contexte d'incertitude</ac>
+                        <ac code="AC4102">Évaluer le potentiel d'un marché à partir d'une collecte d'informations
+                            pertinentes
+                        </ac>
+                        <ac code="AC4103">Modéliser les composantes d'un business model d'une entité existante</ac>
+                        <ac code="AC4104">Apprécier la cohérence d'un business model et de son business plan</ac>
+                    </acs>
+                </niveau>
+                <niveau ordre="2" annee="3" libelle="Sécuriser la
+proposition de valeur">
+                    <acs>
+                        <ac code="AC4201">Tester la viabilité financière d’un business model</ac>
+                        <ac code="AC4202">Apprécier les risques financiers, fiscaux et juridiques de l’entité ou de
+                            l’entrepreneur
+                        </ac>
+                        <ac code="AC4203">Préconiser les mesures de protection contre les risques</ac>
+                        <ac code="AC4204">Persuader une partie prenante de la viabilité du business plan</ac>
+                        <ac code="AC4205">Confronter son projet à son expérience de terrain</ac>
+                    </acs>
+                </niveau>
+            </niveaux>
+        </competence>
+        <competence name="Développer b" numero="5"
+                    libelle_long="Assurer la gestion et le
+développement de la chaîne
+de valeur"
+                    couleur="c5">
+            <situations>
+                <situation>Pilotage de projets</situation>
+                <situation>Mise en oeuvre de qualités de leadership</situation>
+                <situation>Utilisation des fonctions support dans l’organisation</situation>
+                <situation>Identification et gestion des risques</situation>
+                <situation>Utilisation des outils du marketing, notamment numériques, pour promouvoir la création de
+                    valeur
+                </situation>
+            </situations>
+            <composantes_essentielles>
+                <composante>en gérant avec les outils adaptés les activités de production</composante>
+                <composante>en gérant les activités de développement marketing en mobilisant les techniques
+                    pertinentes
+                </composante>
+                <composante>en gérant opérationnellement les ressources humaines</composante>
+                <composante>en gérant la supply-chain avec les techniques adéquates</composante>
+                <composante>en maîtrisant le risque financier à l'aide des outils adaptés</composante>
+            </composantes_essentielles>
+            <niveaux>
+                <niveau ordre="1" annee="2" libelle="Développer la chaîne
+de valeur">
+                    <acs>
+                        <ac code="AC5101">Promouvoir un projet, un événement ou une organisation par des actions de
+                            communication adaptées
+                        </ac>
+                        <ac code="AC5102">Identifier la variété et la complexité des processus de production et de
+                            supply chain
+                        </ac>
+                        <ac code="AC5103">Utiliser les techniques de négociation avec les partenaires commerciaux</ac>
+                        <ac code="AC5104">Évaluer les axes d’une démarche de marketing opérationnel y compris digitale
+                        </ac>
+                        <ac code="AC5105">Évaluer le risque de trésorerie</ac>
+                        <ac code="AC5106">Contribuer à la gestion opérationnelle des ressources humaines</ac>
+                    </acs>
+                </niveau>
+                <niveau ordre="2" annee="3" libelle="Optimiser la chaîne
+de valeur">
+                    <acs>
+                        <ac code="AC5201">Concevoir une stratégie de communication en utilisant les outils adaptés y
+                            compris digitaux
+                        </ac>
+                        <ac code="AC5202">Mettre en oeuvre des processus de production et de supply chain adaptés à la
+                            situation de l’entité
+                        </ac>
+                        <ac code="AC5203">Concevoir une démarche de marketing opérationnel adaptée à l’entité</ac>
+                        <ac code="AC5204">Prévenir les risques de défaillance avec les outils adaptés</ac>
+                        <ac code="AC5205">Déterminer les axes principaux d’une politique de ressources humaines dans
+                            l’entité
+                        </ac>
+                    </acs>
+                </niveau>
+
+            </niveaux>
+        </competence>
+
+        <competence name="Concevoir" numero="4"
+                    libelle_long="Concevoir des outils de
+contrôle de gestion"
+                    couleur="c4">
+            <situations>
+                <situation>Réalisation d'études de coûts et de diagnostics d'une activité</situation>
+                <situation>Participation à la définition des objectifs opérationnels et à leur traduction en termes de
+                    budget
+                </situation>
+                <situation>Contribution à l'élaboration de plans prévisionnels d'activité à court et moyen termes
+                </situation>
+                <situation>Contrôle des investissements et du retour sur investissement</situation>
+            </situations>
+            <composantes_essentielles>
+                <composante>en choisissant une méthode de calcul des coûts pertinente</composante>
+                <composante>en solutionnant des problèmes de gestion en avenir certain et aléatoire</composante>
+                <composante>en maîtrisant la démarche budgétaire avec ses enjeux et ses limites</composante>
+                <composante>en proposant des améliorations en fonction d'écarts budgétaires constatés</composante>
+                <composante>en élaborant des outils de gestion adaptés autour de l'entreprise étendue et de son
+                    environnement
+                </composante>
+            </composantes_essentielles>
+            <niveaux>
+                <niveau ordre="1" annee="2" libelle="Analyser le système
+de contrôle de gestion">
+                    <acs>
+                        <ac code="AC4101">Identifier les intérêts et les limites des méthodes de calcul de coûts</ac>
+                        <ac code="AC4102">Mettre en oeuvre les démarches et pratiques budgétaires en lien avec les choix
+                            managériaux
+                        </ac>
+                        <ac code="AC4103">Analyser la rentabilité et le risque financier</ac>
+                        <ac code="AC4104">Analyser les relations des parties prenantes liées à la complexité du système
+                            de l’organisation
+                        </ac>
+                        <ac code="AC4105">Analyser la valeur dans une approche systémique</ac>
+                    </acs>
+                </niveau>
+                <niveau ordre="2" annee="3" libelle="Améliorer le système
+de contrôle de gestion">
+                    <acs>
+                        <ac code="AC4201">Rédiger un diagnostic approfondi en lien avec les choix managériaux et la
+                            gestion des risques
+                        </ac>
+                        <ac code="AC4202">Conseiller le décideur sur des actions correctives et préventives</ac>
+                        <ac code="AC4203">Mettre en oeuvre un système de management intégré dans une démarche qualité et
+                            d'amélioration continue de la performance globale
+                            de l’entreprise
+                        </ac>
+                        <ac code="AC4204">Prendre en compte les coûts environnementaux, sociaux et sociétaux dans une
+                            approche systémique
+                        </ac>
+                    </acs>
+                </niveau>
+            </niveaux>
+        </competence>
+        <competence name="Améliorer" numero="5"
+                    libelle_long="Mettre en oeuvre des leviers
+d’amélioration continue des
+performances de
+l’organisation"
+                    couleur="c5">
+            <situations>
+                <situation>Mise en oeuvre des indicateurs financiers et non financiers nécessaires à la mesure de la
+                    performance et du pilotage de l'activité
+                </situation>
+                <situation>Production de tableaux de bord et de synthèses chiffrées, commentées</situation>
+                <situation>Remontée des informations (reporting) et adaptation du SI aux besoins applicatifs et
+                    réglementaires de l’organisation
+                </situation>
+                <situation>Accompagnement des utilisateurs aux programmes d'amélioration continue par la formation et la
+                    conduite du changement
+                </situation>
+            </situations>
+            <composantes_essentielles>
+                <composante>en utilisant efficacement le processus de contrôle de gestion dans la conduite du
+                    changement
+                </composante>
+                <composante>en optimisant les flux grâce au Système d'information</composante>
+                <composante>en concevant des tableaux de bord adaptés à la prise de décision</composante>
+                <composante>en optimisant la performance (Reporting et Indicateurs Clés de Performance)</composante>
+            </composantes_essentielles>
+            <niveaux>
+                <niveau ordre="1" annee="2" libelle="Analyser les outils de
+la performance">
+                    <acs>
+                        <ac code="AC5101">Critiquer le fonctionnement d'une organisation</ac>
+                        <ac code="AC5102">Définir les indicateurs clés de performances</ac>
+                        <ac code="AC5103">Mettre en oeuvre des outils de suivi et de pilotage</ac>
+                        <ac code="AC5104">Exploiter des outils de visualisation des données</ac>
+                    </acs>
+                </niveau>
+                <niveau ordre="2" annee="3" libelle="Améliorer les outils de
+la performance">
+                    <acs>
+                        <ac code="AC5201">Exploiter les fonctionnalités avancées et adaptées d'un ERP / PGI</ac>
+                        <ac code="AC5202">Confronter différentes sources de données hétérogènes</ac>
+                        <ac code="AC5203">Proposer des plans d'action et des indicateurs cibles</ac>
+                        <ac code="AC5204">Analyser les enjeux de la RSE dans une approche globale de la performance</ac>
+                    </acs>
+                </niveau>
+
+            </niveaux>
+        </competence>
+
+        <competence name="Produire" numero="4"
+                    libelle_long="Produire l’information
+comptable, fiscale et sociale
+de l'organisation"
+                    couleur="c4">
+            <situations>
+                <situation>Contrôle et révision des comptes annuels</situation>
+                <situation>Présentation des indicateurs de gestion</situation>
+                <situation>Accompagnement et conseil des dirigeants dans la gestion et le suivi de leur activité
+                </situation>
+                <situation>Adaptation de la comptabilité d’une organisation dans le respect des normes internationales
+                </situation>
+            </situations>
+            <composantes_essentielles>
+                <composante>en repérant précisément le fonctionnement juridique et comptable des différents types
+                    d'organisation
+                </composante>
+                <composante>en respectant les règles comptables et de révision comptable applicables</composante>
+                <composante>en respectant les règles de droit fiscal et de droit social applicables</composante>
+                <composante>en s'adaptant efficacement à l’environnement numérique et à la digitalisation des activités
+                    comptables, sociales et fiscales
+                </composante>
+            </composantes_essentielles>
+            <niveaux>
+                <niveau ordre="1" annee="2" libelle="Contrôler l'information
+comptable, fiscale et
+sociale produite">
+                    <acs>
+                        <ac code="AC4101">Traiter et contrôler l’ensemble des opérations de comptabilité générale et de
+                            comptabilité approfondie en conformité avec les règles
+                        </ac>
+                        <ac code="AC4102">comptables, fiscales et sociales et dans le respect des normes
+                            professionnelles
+                        </ac>
+                        <ac code="AC4103">Distinguer les différents acteurs de la comptabilité et leur environnement
+                            réglementaire
+                        </ac>
+                        <ac code="AC4104">Prendre en charge la révision comptable en contrôlant les différents cycles de
+                            l'organisation
+                        </ac>
+                        <ac code="AC4105">Établir les comptes annuels à l'aide des outils de digitalisation</ac>
+                    </acs>
+                </niveau>
+                <niveau ordre="2" annee="3" libelle="Optimiser l'information
+comptable, fiscale et
+sociale produite">
+                    <acs>
+                        <ac code="AC4201">Résoudre les problèmes comptables spécifiques à l'évaluation des actifs et
+                            passifs et à la détermination des charges et produits dans une
+                            organisation
+                        </ac>
+                        <ac code="AC4202">Appliquer les règles comptables, fiscales et sociales adaptées à
+                            l’organisation
+                        </ac>
+                        <ac code="AC4203">Réaliser un diagnostic et/ou un audit pour apporter des conseils</ac>
+                        <ac code="AC4204">Sécuriser l'information comptable, fiscale et sociale produite</ac>
+                    </acs>
+                </niveau>
+            </niveaux>
+        </competence>
+        <competence name="Evaluer" numero="5"
+                    libelle_long="Évaluer l'activité de
+l'organisation"
+                    couleur="c5">
+            <situations>
+                <situation>Construction d'un tableau de bord et analyse des indicateurs financiers</situation>
+                <situation>Mise en oeuvre d'outils d’évaluation de la performance économique et financière de
+                    l’organisation
+                </situation>
+                <situation>Appréciation de la pertinence d’un investissement</situation>
+                <situation>Exploitation des opportunités des différents modes de financement</situation>
+            </situations>
+            <composantes_essentielles>
+                <composante>en identifiant rigoureusement l'activité et la structure financière en fonction des
+                    différents types d'organisation
+                </composante>
+                <composante>en proposant des solutions d'amélioration à partir de l'identification des éventuels
+                    problèmes
+                </composante>
+                <composante>en développant la politique financière d’une organisation de façon pertinente et adaptée
+                </composante>
+                <composante>en mobilisant des outils pertinents de contrôle de gestion propres à l'organisation
+                </composante>
+                <composante>en développant un système d’information numérique d’analyse et de prévision de l’activité
+                    adapté au type d'organisation
+                </composante>
+            </composantes_essentielles>
+            <niveaux>
+                <niveau ordre="1" annee="2" libelle="Élaborer des outils
+d'analyse et de
+prévision de l'activité">
+                    <acs>
+                        <ac code="AC5101">Identifier les points forts et les points faibles de l'organisation aussi bien
+                            en terme d'activité que de structure financière
+                        </ac>
+                        <ac code="AC5102">Mesurer la rentabilité d'un investissement</ac>
+                        <ac code="AC5103">Réaliser des prévisions au niveau de l'activité, de la trésorerie et du
+                            patrimoine dans une optique de financement de l'organisation
+                        </ac>
+                        <ac code="AC5104">Mettre en place une comptabilité analytique et une gestion budgétaire</ac>
+                    </acs>
+                </niveau>
+                <niveau ordre="2" annee="3" libelle="Optimiser les outils
+d'analyse et de
+prévision de l'activité">
+                    <acs>
+                        <ac code="AC5201">Mettre en place une politique d'investissement cohérente</ac>
+                        <ac code="AC5202">Mettre en place les sources de financement nécessaires</ac>
+                        <ac code="AC5203">Établir un plan de financement équilibré</ac>
+                        <ac code="AC5204">Réaliser la gestion de trésorerie sur le court terme</ac>
+                        <ac code="AC5205">Réaliser à moyen et long terme des budgets d’exploitation et de trésorerie,
+                            des comptes de résultat et des bilans prévisionnels
+                        </ac>
+                        <ac code="AC5206">Évaluer les résultats et les performances de l’organisation par le contrôle
+                            budgétaire
+                        </ac>
+                    </acs>
+                </niveau>
+
+            </niveaux>
+        </competence>
+    </competences>
+    <parcours>
+        <parcour numero="1" libelle="Gestion et pilotage des ressources humaines" code="GPRH">
+            <annee ordre="1">
+                <competence nom="Analyser" niveau="1"/>
+                <competence nom="Décider" niveau="1"/>
+                <competence nom="Piloter" niveau="1"/>
+            </annee>
+            <annee ordre="2">
+                <competence nom="Analyser" niveau="2"/>
+                <competence nom="Décider" niveau="2"/>
+                <competence nom="Piloter" niveau="2"/>
+
+                <competence nom="Administrer" niveau="1"/>
+                <competence nom="Développer" niveau="1"/>
+            </annee>
+            <annee ordre="3">
+                <competence nom="Analyser" niveau="3"/>
+                <competence nom="Décider" niveau="3"/>
+                <competence nom="Piloter" niveau="3"/>
+
+                <competence nom="Administrer" niveau="2"/>
+                <competence nom="Développer" niveau="2"/>
+            </annee>
+        </parcour>
+        <parcour numero="2" libelle="Gestion  Entrepreneuriat et Management d&#039;Activités" code="GEMA">
+            <annee ordre="1">
+                <competence nom="Analyser" niveau="1"/>
+                <competence nom="Décider" niveau="1"/>
+                <competence nom="Piloter" niveau="1"/>
+            </annee>
+            <annee ordre="2">
+                <competence nom="Analyser" niveau="2"/>
+                <competence nom="Décider" niveau="2"/>
+                <competence nom="Piloter" niveau="2"/>
+
+                <competence nom="Entreprendre" niveau="1"/>
+                <competence nom="Développer b" niveau="1"/>
+            </annee>
+            <annee ordre="3">
+                <competence nom="Analyser" niveau="3"/>
+                <competence nom="Décider" niveau="3"/>
+                <competence nom="Piloter" niveau="3"/>
+
+                <competence nom="Entreprendre" niveau="2"/>
+                <competence nom="Développer b" niveau="2"/>
+            </annee>
+        </parcour>
+        <parcour numero="3" libelle="Contrôle de gestion et pilotage de la performance" code="CGPP">
+            <annee ordre="1">
+                <competence nom="Analyser" niveau="1"/>
+                <competence nom="Décider" niveau="1"/>
+                <competence nom="Piloter" niveau="1"/>
+            </annee>
+            <annee ordre="2">
+                <competence nom="Analyser" niveau="2"/>
+                <competence nom="Décider" niveau="2"/>
+                <competence nom="Piloter" niveau="2"/>
+
+                <competence nom="Concevoir" niveau="1"/>
+                <competence nom="Améliorer" niveau="1"/>
+            </annee>
+            <annee ordre="3">
+                <competence nom="Analyser" niveau="3"/>
+                <competence nom="Décider" niveau="3"/>
+                <competence nom="Piloter" niveau="3"/>
+
+                <competence nom="Concevoir" niveau="2"/>
+                <competence nom="Améliorer" niveau="2"/>
+            </annee>
+        </parcour>
+        <parcour numero="4" libelle="Gestion comptable, fiscale et financière" code="GCFF">
+            <annee ordre="1">
+                <competence nom="Analyser" niveau="1"/>
+                <competence nom="Décider" niveau="1"/>
+                <competence nom="Piloter" niveau="1"/>
+            </annee>
+            <annee ordre="2">
+                <competence nom="Analyser" niveau="2"/>
+                <competence nom="Décider" niveau="2"/>
+                <competence nom="Piloter" niveau="2"/>
+
+                <competence nom="Produire" niveau="1"/>
+                <competence nom="Evaluer" niveau="1"/>
+            </annee>
+            <annee ordre="3">
+                <competence nom="Analyser" niveau="3"/>
+                <competence nom="Décider" niveau="3"/>
+                <competence nom="Piloter" niveau="3"/>
+
+                <competence nom="Produire" niveau="2"/>
+                <competence nom="Evaluer" niveau="2"/>
+            </annee>
+        </parcour>
+    </parcours>
+</referentiel_competence>

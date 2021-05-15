@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved -->
+<!-- @file /Users/davidannebicque/htdocs/intranetV3/demo/referentiels/competences/but-GEII.xml -->
+<!-- @author davidannebicque -->
+<!-- @project intranetV3 -->
+<!-- @lastUpdate 15/05/2021 07:33 -->
+
+<referentiel_competence specialite="GEII" specialite_long="Génie Electrique et Informatique Industrielle"
+                        type="B.U.T.">
+    <competences>
+        <competence name="Concevoir" numero="1"
+                    libelle_long="Concevoir la partie GEII d’un système"
+                    couleur="c1">
+            <situations>
+                <situation>Conseil au client en menant une étude de faisabilité à partir d'un cahier des charges
+                </situation>
+                <situation>Chiffrage pour la réalisation d'un prototype ou d’un système industriel en GEII</situation>
+                <situation>Conception d’un prototype ou d’un sous système à partir d'un cahier des charges partiel
+                </situation>
+            </situations>
+            <composantes_essentielles>
+                <composante>En adoptant une approche holistique intégrant les innovations technologiques en lien avec la
+                    stratégie de l’entreprise pour répondre un besoin client.
+                </composante>
+                <composante>En produisant l’ensemble des documents nécessaires pour le client et les différents
+                    prestataires
+                </composante>
+                <composante>En communiquant de façon adaptée avec les différents acteurs avant et pendant la phase de
+                    conception.
+                </composante>
+            </composantes_essentielles>
+            <niveaux>
+                <niveau ordre="1" libelle="Mener une conception partielle intégrant une démarche projet ">
+                    <acs>
+                        <ac code="AC1101">Produire une analyse fonctionnelle d’un système simple
+                        </ac>
+                        <ac code="AC1102">Réaliser un prototype pour des solutions techniques matériel et/ou logiciel
+                        </ac>
+                        <ac code="AC1103">Rédiger un dossier de fabrication à partir d'un dossier de conception
+                        </ac>
+                    </acs>
+                </niveau>
+                <niveau ordre="2" libelle="Concevoir un système en fiabilisant les solutions propoées">
+                    <acs>
+                        <ac code="AC1201">Proposer des solutions techniques liées à l'analyse fonctionnelle</ac>
+                        <ac code="AC1202">Dérisquer les solutions techniques retenues</ac>
+                    </acs>
+                </niveau>
+                <niveau ordre="3"
+                        libelle="Concevoir un système en adoptant une approche sélective dans ses choix technologiques">
+                    <acs>
+                        <ac code="AC1301">Contribuer à la rédaction d'un cahier des charges</ac>
+                        <ac code="AC1302">Prouver la pertinence de ses choix technologiques</ac>
+                        <ac code="AC1303">Rédiger un dossier de conception</ac>
+                    </acs>
+                </niveau>
+            </niveaux>
+        </competence>
+        <competence name="Vérifier" numero="2"
+                    libelle_long="Vérifier la partie GEII d’un système"
+                    couleur="c2">
+            <situations>
+                <situation>Mise en place d'un protocole de tests et de mesures dans les domaines de la gestion,
+                    production et maîtrise de l’énergie
+                </situation>
+                <situation>Mise en place d'un protocole de tests et de mesures dans les process industriels</situation>
+                <situation>Mise en place d'un protocole de tests et de mesures dans les systèmes embarqués</situation>
+            </situations>
+            <composantes_essentielles>
+                <composante>En tenant compte des spécificités matérielles, réglementaires et contextuelles</composante>
+                <composante>En mettant en oeuvre un plan d’essais et d’évaluations, dans une visée d'analyse qualitative
+                    et corrective
+                </composante>
+                <composante>En tenant compte des enjeux économiques, environnementaux et réglementaires de la société
+                </composante>
+            </composantes_essentielles>
+            <niveaux>
+                <niveau ordre="1" libelle="Effectuer les tests et mesures nécessaires à une vérification d’un système">
+                    <acs>
+                        <ac code="AC2101">Appliquer une procédure d’essais</ac>
+                        <ac code="AC2102">Identifier un dysfonctionnement</ac>
+                        <ac code="AC2103">Décrire les effets d’un dysfonctionnement</ac>
+                    </acs>
+                </niveau>
+                <niveau ordre="2"
+                        libelle="Mettre en place un protocole de tests pour valider le fonctionnement d’un système">
+                    <acs>
+                        <ac code="AC2201">Identifier les tests et mesures à mettre en place pour valider le
+                            fonctionnement d’un système
+                        </ac>
+                        <ac code="AC2202">Certifier le fonctionnement d’un nouvel équipement industriel</ac>
+                    </acs>
+                </niveau>
+                <niveau ordre="3"
+                        libelle="Élaborer une procédure intégrant une démarche qualité pour valider le fonctionnement d’un système">
+                    <acs>
+                        <ac code="AC2301">Evaluer la cause racine d’un dysfonctionnement</ac>
+                        <ac code="AC2302">Proposer une solution corrective à un dysfonctionnement</ac>
+                        <ac code="AC2303">Produire une procédure d’essais pour valider la conformité d’un système</ac>
+                    </acs>
+                </niveau>
+            </niveaux>
+        </competence>
+        <competence name="Maintenir" numero="3"
+                    libelle_long="Assurer le maintien en condition opérationnelle d'un système"
+                    couleur="c3">
+            <situations>
+                <situation>Maintenance corrective, préventive et améliorative dans les domaines de la gestion,
+                    production et maîtrise de l’énergie
+                </situation>
+                <situation>Maintenance corrective, préventive et améliorative dans les process industriels
+                </situation>
+                <situation>Maintenance corrective, préventive et améliorative dans les systèmes embarqués
+                </situation>
+            </situations>
+
+            <composantes_essentielles>
+                <composante>En adoptant une communication proactive avec les différents acteurs</composante>
+                <composante>En adoptant une approche holistique intégrant les nouvelles technologies et la
+                    transformation digitale
+                </composante>
+            </composantes_essentielles>
+            <niveaux>
+                <niveau ordre="1" annee="2"
+                        libelle="Intervenir sur un système pour effectuer une opération de maintenance">
+                    <acs>
+                        <ac code="AC3101">Exécuter l’entretien et le contrôle d’un système en respectant une procédure
+                        </ac>
+                        <ac code="AC3102">Exécuter une opération de maintenance (corrective, préventive, améliorative)
+                        </ac>
+                        <ac code="AC3103">Diagnostiquer un dysfonctionnement dans un système</ac>
+                        <ac code="AC3104">Identifier la cause racine du dysfonctionnement</ac>
+                    </acs>
+                </niveau>
+                <niveau ordre="2" annee="3"
+                        libelle="Mettre en place une stratégie de maintenance pour garantir un fonctionnement optimal">
+                    <acs>
+                        <ac code="AC3201">Proposer une solution de maintenance</ac>
+                        <ac code="AC3202">Évaluer les coûts d’indisponibilité et de maintenance d’un système</ac>
+                        <ac code="AC3203">Produire une procédure de maintenance</ac>
+                        <ac code="AC3203">Proposer un appui technique aux différents acteurs à l'échelle nationale et
+                            internationale
+                        </ac>
+                    </acs>
+                </niveau>
+            </niveaux>
+        </competence>
+        <competence name="Implanter" numero="4" libelle_long="Implanter un système matériel ou logiciel"
+                    couleur="c4">
+            <situations>
+                <situation>Homologation d’un protocole de réalisation pour un nouvel équipement industriel
+                </situation>
+                <situation>Intervention chez un client pour la mise en place d’un système
+                </situation>
+                <situation>Implantation d’une solution matérielle ou logicielle dans une partie ou sous partie d’un
+                    système
+                </situation>
+            </situations>
+            <composantes_essentielles>
+                <composante>En tenant compte des aspects organisationnels liés aux contextes industriels, humains et
+                    environnementaux
+                </composante>
+                <composante>En garantissant un livrable conforme aux dossiers de conception, de fabrication et des
+                    normes
+                </composante>
+                <composante>En garantissant un accompagnement client amont, aval et transverse dans une démarche
+                    qualité
+                </composante>
+            </composantes_essentielles>
+            <niveaux>
+                <niveau ordre="1" annee="2"
+                        libelle="Réaliser un système en mettant en place une démarche qualité en conformité avec le dossier de fabrication">
+                    <acs>
+                        <ac code="AC4101">Appliquer une procédure de fabrication pour implanter les composants matériels
+                            et/ou logiciels dans un système
+                        </ac>
+                        <ac code="AC4102">Évaluer la conformité du système</ac>
+                    </acs>
+                </niveau>
+                <niveau ordre="2" annee="3"
+                        libelle="Interagir avec les différents acteurs, lors de l’installation et de la mise en service d’un système, dans une démarche qualité">
+                    <acs>
+                        <ac code="AC4201">Produire une procédure d’installation et de mise en service d’un système
+                        </ac>
+                        <ac code="AC4202">Exécuter la mise en service d’un système en respectant la procédure</ac>
+                        <ac code="AC4203">Produire le dossier de conformité du système en gérant le versionnage</ac>
+                    </acs>
+                </niveau>
+            </niveaux>
+        </competence>
+        <competence name="Installer" numero="4"
+                    libelle_long="Installer tout ou partie d’un système de production, de conversion et de gestion d’énergie sur site"
+                    couleur="c4">
+            <situations>
+                <situation>Planification d’opérations d’installation d’équipements industriels dans les domaines de
+                    courants forts
+                </situation>
+                <situation>Montage et installation d’éléments ou sous-ensembles d’un équipement industriel en
+                    production, distribution, gestion ou conversion d’énergie
+                </situation>
+                <situation>Mise en service d’un nouvel équipement industriel en production, distribution , gestion ou
+                    conversion d’énergie
+                </situation>
+                <situation>Étude de l’implantation d’un équipements de production, distribution , de gestion ou de
+                    conversion d’énergie
+                </situation>
+            </situations>
+            <composantes_essentielles>
+                <composante>En garantissant un accompagnement client amont, aval et transverse dans une démarche
+                    qualité
+                </composante>
+                <composante>En respectant les normes et les contraintes réglementaires liées aux courants forts, y
+                    compris dans un contexte international
+                </composante>
+            </composantes_essentielles>
+            <niveaux>
+                <niveau ordre="1" annee="2"
+                        libelle="Procéder à une installation ou à une mise en service en suivant un protocole">
+                    <acs>
+                        <ac code="AC4101">Appliquer la procédure d’installation d’un système</ac>
+                        <ac code="AC4102">Exécuter la mise en service d’un système en respectant la procédure</ac>
+                    </acs>
+                </niveau>
+                <niveau ordre="2" annee="3"
+                        libelle="Interagir avec les différents acteurs, depuis l’élaboration du protocole jusqu’à l’installation, dans une visée de démarche qualité">
+                    <acs>
+                        <ac code="AC4201">Planifier l’installation et la mise en service d’un nouvel équipement</ac>
+                        <ac code="AC4202">Produire une procédure d’installation et de mise en service d’un système</ac>
+                        <ac code="AC4203">Produire le dossier de conformité du système en gérant le versionnage</ac>
+                    </acs>
+                </niveau>
+            </niveaux>
+        </competence>
+        <competence name="Intégrer" numero="4"
+                    libelle_long="Intégrer un système de commande et de contrôle dans un procédé industriel"
+                    couleur="c4">
+            <situations>
+                <situation>Planification d’opérations d’installation d’un système automatisé et/ou d’une architecture
+                    réseau
+                </situation>
+                <situation>Montage et installation d’éléments ou sous-ensembles d’un système automatisé et/ou d’une
+                    architecture réseau
+                </situation>
+                <situation>Mise en service d’un système automatisé et/ou d’une architecture réseau</situation>
+                <situation>Étude d’implantation d’un système automatisé et/ou d’une architecture réseau dans un contexte
+                    industriel
+                </situation>
+            </situations>
+            <composantes_essentielles>
+                <composante>En garantissant un accompagnement client amont, aval et transverse dans une démarche
+                    qualité
+                </composante>
+                <composante>En respectant les normes et les contraintes réglementaires y compris dans un contexte
+                    international
+                </composante>
+                <composante>En gérant les réseaux industriels de communication pour une meilleure disponibilité et
+                    sécurité
+                </composante>
+            </composantes_essentielles>
+            <niveaux>
+                <niveau ordre="1" annee="2"
+                        libelle="Procéder à une installation ou à une mise en service en suivant un protocole">
+                    <acs>
+                        <ac code="AC4101">Appliquer la procédure d’installation d’un système</ac>
+                        <ac code="AC4102">Exécuter la mise en service d’un système en respectant la procédure</ac>
+                    </acs>
+                </niveau>
+                <niveau ordre="2" annee="3"
+                        libelle="Interagir avec les différents acteurs, depuis l’élaboration du protocole jusqu’à l’installation, dans une visée de démarche qualité">
+                    <acs>
+                        <ac code="AC4201">Planifier l’installation et la mise en service d’un nouvel équipement</ac>
+                        <ac code="AC4202">Produire une procédure d’installation et de mise en service d’un système</ac>
+                        <ac code="AC4203">Produire le dossier de conformité du système en gérant le versionnage</ac>
+                    </acs>
+                </niveau>
+            </niveaux>
+        </competence>
+
+    </competences>
+    <parcours>
+        <parcour numero="1" libelle="Électronique et systèmes embarqués" code="ESE">
+            <annee ordre="1">
+                <competence nom="Concevoir" niveau="1"/>
+                <competence nom="Vérifier" niveau="1"/>
+                <competence nom="Maintenir" niveau="1"/>
+            </annee>
+            <annee ordre="2">
+                <competence nom="Concevoir" niveau="2"/>
+                <competence nom="Vérifier" niveau="2"/>
+                <competence nom="Maintenir" niveau="2"/>
+                <competence nom="Implanter" niveau="1"/>
+            </annee>
+            <annee ordre="3">
+                <competence nom="Concevoir" niveau="3"/>
+                <competence nom="Vérifier" niveau="3"/>
+                <competence nom="Implanter" niveau="2"/>
+            </annee>
+        </parcour>
+        <parcour numero="2" libelle="Électricité et maîtrise de l'énergie" code="EME">
+            <annee ordre="1">
+                <competence nom="Concevoir" niveau="1"/>
+                <competence nom="Vérifier" niveau="1"/>
+                <competence nom="Maintenir" niveau="1"/>
+            </annee>
+            <annee ordre="2">
+                <competence nom="Concevoir" niveau="2"/>
+                <competence nom="Vérifier" niveau="2"/>
+                <competence nom="Maintenir" niveau="2"/>
+                <competence nom="Installer" niveau="1"/>
+            </annee>
+            <annee ordre="3">
+                <competence nom="Concevoir" niveau="3"/>
+                <competence nom="Vérifier" niveau="3"/>
+                <competence nom="Installer" niveau="2"/>
+            </annee>
+        </parcour>
+        <parcour numero="3" libelle="Automatisme et informatique industrielle" code="AII">
+            <annee ordre="1">
+                <competence nom="Concevoir" niveau="1"/>
+                <competence nom="Vérifier" niveau="1"/>
+                <competence nom="Maintenir" niveau="1"/>
+            </annee>
+            <annee ordre="2">
+                <competence nom="Concevoir" niveau="2"/>
+                <competence nom="Vérifier" niveau="2"/>
+                <competence nom="Maintenir" niveau="2"/>
+                <competence nom="Intégrer" niveau="1"/>
+            </annee>
+            <annee ordre="3">
+                <competence nom="Concevoir" niveau="3"/>
+                <competence nom="Vérifier" niveau="3"/>
+                <competence nom="Intégrer" niveau="2"/>
+            </annee>
+        </parcour>
+    </parcours>
+</referentiel_competence>
