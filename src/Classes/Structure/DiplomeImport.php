@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Structure/DiplomeImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/05/2021 17:04
+ * @lastUpdate 15/05/2021 07:34
  */
 
 namespace App\Classes\Structure;
@@ -86,6 +86,7 @@ class DiplomeImport
 
             foreach ($competence->niveaux->niveau as $niveau) {
                 $niv = new ApcNiveau();
+                //todo: ajouter l'année
                 $niv->setLibelle($niveau['libelle']);
                 $niv->setOrdre((int)$niveau['ordre']);
                 $niv->setCompetence($comp);
@@ -102,16 +103,19 @@ class DiplomeImport
                 }
             }
         }
+
         foreach ($xml->parcours->parcour as $parcour) {
             $parc = new ApcParcours($this->diplome);
             $parc->setCode($parcour['code']);
             $parc->setLibelle($parcour['libelle']);
             $this->entityManager->persist($parc);
-            foreach ($parcour->niveau as $parcNiveau) {
-                $pn = new ApcParcoursNiveau();
-                $pn->setNiveau($tCompetences[trim((string)$parcNiveau['competence'])][trim((string)$parcNiveau['ordre'])]);
-                $pn->setParcours($parc);
-                $this->entityManager->persist($pn);
+            foreach ($parcour->annee as $annee) {
+                foreach ($annee->competence as $parcNiveau) {
+                    $pn = new ApcParcoursNiveau();
+                    $pn->setNiveau($tCompetences[trim((string)$parcNiveau['nom'])][trim((string)$parcNiveau['niveau'])]);
+                    $pn->setParcours($parc);
+                    $this->entityManager->persist($pn);
+                }
             }
         }
         $this->entityManager->flush();

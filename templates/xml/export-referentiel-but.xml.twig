@@ -32,8 +32,14 @@
     <parcours>
         {% for parcour in parcours %}
             <parcour numero="{{ loop.index }}" libelle="{{ parcour.libelle }}" code="{{ parcour.code }}">
-                {% for niveau in parcour.apcParcoursNiveaux %}
-                    <niveau competence="{{ niveau.niveau.competence.nomCourt }}" ordre="{{ niveau.niveau.ordre }}"/>
+                {% for annee in 1..3 %}
+                    <annee ordre="{{ annee }}">
+                        {% for niveau in parcour.apcParcoursNiveaux|filter(niveau => ((not (niveau.niveau.annee is
+                            defined) and (niveau.niveau.ordre == annee)) or ( (niveau.niveau.annee is
+                            defined) and (niveau.niveau.annee != null and niveau.niveau.annee.ordre == annee)))) %}
+                            <competence nom="{{ niveau.niveau.competence.nomCourt }}" niveau="{{ niveau.niveau.ordre }}"/>
+                        {% endfor %}
+                    </annee>
                 {% endfor %}
             </parcour>
         {% endfor %}
