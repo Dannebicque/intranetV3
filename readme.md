@@ -1,4 +1,4 @@
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Dannebicque/intranetV3/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Dannebicque/intranetV3/?branch=master) [![SymfonyInsight](https://insight.symfony.com/projects/34e4f6d3-1531-45ba-bb3f-187e4fa054e1/mini.svg)](https://insight.symfony.com/projects/34e4f6d3-1531-45ba-bb3f-187e4fa054e1) [![Maintainability](https://api.codeclimate.com/v1/badges/78fd8b8fb668f9887a71/maintainability)](https://codeclimate.com/github/Dannebicque/intranetV3/maintainability)
+[![SymfonyInsight](https://insight.symfony.com/projects/34e4f6d3-1531-45ba-bb3f-187e4fa054e1/mini.svg)](https://insight.symfony.com/projects/34e4f6d3-1531-45ba-bb3f-187e4fa054e1) [![Maintainability](https://api.codeclimate.com/v1/badges/78fd8b8fb668f9887a71/maintainability)](https://codeclimate.com/github/Dannebicque/intranetV3/maintainability)
 
 
 # IntranetV3

@@ -4,7 +4,7 @@
   "type": "project",
   "license": "MPL2.0",
   "require": {
-    "php": "^7.4.2",
+    "php": "^8.0.0",
     "ext-json": "*",
     "ext-zip": "*",
     "bugsnag/bugsnag-symfony": "^1.5",
@@ -17,7 +17,7 @@
     "liip/imagine-bundle": "^2.3",
     "nesbot/carbon": "^2.37",
     "ninsuo/symfony-collection": "^2.1",
-    "phpoffice/phpspreadsheet": "^1.12",
+    "phpoffice/phpspreadsheet": "^1.17",
     "phpoffice/phpword": "^0.18.1",
     "ramsey/uuid-doctrine": "^1.6",
     "sensio/framework-extra-bundle": "^5.5",
