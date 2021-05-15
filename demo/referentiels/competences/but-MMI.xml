@@ -3,7 +3,7 @@
 <!-- @file /Users/davidannebicque/htdocs/intranetV3/demo/referentiels/competences/but-MMI.xml -->
 <!-- @author davidannebicque -->
 <!-- @project intranetV3 -->
-<!-- @lastUpdate 13/05/2021 12:31 -->
+<!-- @lastUpdate 15/05/2021 07:33 -->
 
 <referentiel_competence specialite="MMI" specialite_long="Métiers du Multimédia et de l&#039;Internet"
                         type="B.U.T.">
@@ -367,46 +367,64 @@
     </competences>
     <parcours>
         <parcour numero="1" libelle="Création Numérique" code="CN">
-            <niveau competence="Comprendre" ordre="1"/>
-            <niveau competence="Comprendre" ordre="2"/>
-            <niveau competence="Concevoir" ordre="2"/>
-            <niveau competence="Concevoir" ordre="1"/>
-            <niveau competence="Exprimer" ordre="3"/>
-            <niveau competence="Exprimer" ordre="2"/>
-            <niveau competence="Exprimer" ordre="1"/>
-            <niveau competence="Développer" ordre="1"/>
-            <niveau competence="Développer" ordre="2"/>
-            <niveau competence="Entreprendre" ordre="2"/>
-            <niveau competence="Entreprendre" ordre="1"/>
-            <niveau competence="Entreprendre" ordre="3"/>
+            <annee ordre="1">
+                <competence nom="Comprendre" niveau="1"/>
+                <competence nom="Concevoir" niveau="1"/>
+                <competence nom="Exprimer" niveau="1"/>
+                <competence nom="Développer" niveau="1"/>
+                <competence nom="Entreprendre" niveau="1"/>
+            </annee>
+            <annee ordre="2">
+                <competence nom="Comprendre" niveau="2"/>
+                <competence nom="Concevoir" niveau="2"/>
+                <competence nom="Exprimer" niveau="2"/>
+                <competence nom="Développer" niveau="2"/>
+                <competence nom="Entreprendre" niveau="2"/>
+            </annee>
+            <annee ordre="3">
+                <competence nom="Exprimer" niveau="3"/>
+                <competence nom="Entreprendre" niveau="3"/>
+            </annee>
         </parcour>
         <parcour numero="2" libelle="Stratégie de communication numérique et design d’expérience" code="SCNDE">
-            <niveau competence="Comprendre" ordre="1"/>
-            <niveau competence="Concevoir" ordre="1"/>
-            <niveau competence="Comprendre" ordre="2"/>
-            <niveau competence="Concevoir" ordre="2"/>
-            <niveau competence="Concevoir" ordre="3"/>
-            <niveau competence="Exprimer" ordre="2"/>
-            <niveau competence="Développer" ordre="2"/>
-            <niveau competence="Entreprendre" ordre="2"/>
-            <niveau competence="Entreprendre" ordre="3"/>
-            <niveau competence="Entreprendre" ordre="1"/>
-            <niveau competence="Développer" ordre="1"/>
-            <niveau competence="Exprimer" ordre="1"/>
+            <annee ordre="1">
+                <niveau nom="Comprendre" niveau="1"/>
+                <niveau nom="Concevoir" niveau="1"/>
+                <niveau nom="Exprimer" niveau="1"/>
+                <niveau nom="Développer" niveau="1"/>
+                <niveau nom="Entreprendre" niveau="1"/>
+            </annee>
+            <annee ordre="2">
+                <competence nom="Comprendre" niveau="2"/>
+                <competence nom="Concevoir" niveau="2"/>
+                <competence nom="Exprimer" niveau="2"/>
+                <competence nom="Développer" niveau="2"/>
+                <competence nom="Entreprendre" niveau="2"/>
+            </annee>
+            <annee ordre="3">
+                <competence nom="Concevoir" niveau="3"/>
+                <competence nom="Entreprendre" niveau="3"/>
+            </annee>
         </parcour>
         <parcour numero="3" libelle="Développement web et dispositifs interactifs" code="DWDI">
-            <niveau competence="Comprendre" ordre="1"/>
-            <niveau competence="Concevoir" ordre="1"/>
-            <niveau competence="Exprimer" ordre="1"/>
-            <niveau competence="Développer" ordre="1"/>
-            <niveau competence="Entreprendre" ordre="1"/>
-            <niveau competence="Entreprendre" ordre="2"/>
-            <niveau competence="Développer" ordre="2"/>
-            <niveau competence="Exprimer" ordre="2"/>
-            <niveau competence="Concevoir" ordre="2"/>
-            <niveau competence="Comprendre" ordre="2"/>
-            <niveau competence="Développer" ordre="3"/>
-            <niveau competence="Entreprendre" ordre="3"/>
+            <annee ordre="1">
+                <competence nom="Comprendre" niveau="1"/>
+                <competence nom="Concevoir" niveau="1"/>
+                <competence nom="Exprimer" niveau="1"/>
+                <competence nom="Développer" niveau="1"/>
+                <competence nom="Entreprendre" niveau="1"/>
+            </annee>
+            <annee ordre="2">
+                <competence nom="Comprendre" niveau="2"/>
+                <competence nom="Concevoir" niveau="2"/>
+                <competence nom="Exprimer" niveau="2"/>
+                <competence nom="Développer" niveau="2"/>
+                <competence nom="Entreprendre" niveau="2"/>
+            </annee>
+            <annee ordre="3">
+                <competence nom="Développer" niveau="3"/>
+                <competence nom="Entreprendre" niveau="3"/>
+            </annee>
         </parcour>
     </parcours>
 </referentiel_competence>
