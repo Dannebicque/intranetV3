@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/NoteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 15/05/2021 16:01
+ * @lastUpdate 16/05/2021 11:39
  */
 
 namespace App\Controller\appPersonnel;
@@ -39,35 +39,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class NoteController extends BaseController
 {
-    /**
-     * @Route("/{matiere}/{index}", name="application_personnel_note_index")
-     */
-    public function index(
-        TypeMatiereManager $typeMatiereManager,
-        MyEvaluations $myEvaluations,
-        string $matiere,
-        int $index = 0
-    ): Response {
-        $mat = $typeMatiereManager->getMatiereFromSelect($matiere);
-
-        if (null === $mat) {
-            throw new MatiereNotFoundException();
-        }
-
-        if (null === $mat->semestre) {
-            throw new SemestreNotFoundException();
-        }
-
-        $myEvaluations->setMatiere($mat);
-        $myEvaluations->getEvaluationsMatiere($this->dataUserSession->getAnneeUniversitaire());
-
-        return $this->render('appPersonnel/note/index.html.twig', [
-            'matiere' => $mat,
-            'evaluations' => $myEvaluations,
-            'indexEval' => $index,
-        ]);
-    }
-
     /**
      * @Route("/saisie/etape-1/{matiere}", name="application_personnel_note_saisie")
      *
@@ -204,5 +175,34 @@ class NoteController extends BaseController
     public function modeleImport(MyExport $myExport, Evaluation $evaluation): ?Response
     {
         return $myExport->genereModeleImportNote($evaluation);
+    }
+
+    /**
+     * @Route("/{matiere}/{index}", name="application_personnel_note_index")
+     */
+    public function index(
+        TypeMatiereManager $typeMatiereManager,
+        MyEvaluations $myEvaluations,
+        string $matiere,
+        int $index = 0
+    ): Response {
+        $mat = $typeMatiereManager->getMatiereFromSelect($matiere);
+
+        if (null === $mat) {
+            throw new MatiereNotFoundException();
+        }
+
+        if (null === $mat->semestre) {
+            throw new SemestreNotFoundException();
+        }
+
+        $myEvaluations->setMatiere($mat);
+        $myEvaluations->getEvaluationsMatiere($this->dataUserSession->getAnneeUniversitaire());
+
+        return $this->render('appPersonnel/note/index.html.twig', [
+            'matiere' => $mat,
+            'evaluations' => $myEvaluations,
+            'indexEval' => $index,
+        ]);
     }
 }
