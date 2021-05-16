@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/app.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 28/03/2021 05:38
+// @lastUpdate 16/05/2021 12:13
 
 import '@fortawesome/fontawesome-free/scss/fontawesome.scss'
 import '@fortawesome/fontawesome-free/scss/solid.scss'
@@ -132,6 +132,10 @@ $(document).on('click', '.card-btn-fullscreen', function () {
 // Slide up/down
 $(document).on('click', '.card-btn-slide', function () {
   $(this).toggleClass('rotate-180').closest('.card').find('.card-content').slideToggle()
+})
+
+$(document).on('click', '.card-btn-slide-text', function () {
+  $(this).closest('.card').find('.card-content').slideToggle()
 })
 
 //modaler
