@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyExportListing.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 16/05/2021 19:14
  */
 
 /*
@@ -51,7 +51,6 @@ class MyExportListing
 
     private $exportTypeDocument;
     private $exportChamps;
-    /** @var Matiere */
     private $matiere;
 
     /** @var DataUserSession */
@@ -290,7 +289,7 @@ class MyExportListing
                 if (null !== $this->matiere) {
                     $this->myExcelWriter->writeCellName(
                         'A10',
-                        'MATIERE ENSEIGNEE :' . $this->matiere->getDisplay()
+                        'MATIERE ENSEIGNEE :' . $this->matiere->display
                     );
                 } else {
                     $this->myExcelWriter->writeCellName(
