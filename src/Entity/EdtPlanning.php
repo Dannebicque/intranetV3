@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/EdtPlanning.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2021 08:46
+ * @lastUpdate 17/05/2021 18:44
  */
 
 namespace App\Entity;
@@ -385,6 +385,7 @@ class EdtPlanning
             'personnelId' => null !== $this->getIntervenant() ? $this->getIntervenant()->getId() : null,
             'groupe' => $this->getGroupe(),
             'groupeId' => $this->getGroupe(),
+            'typeIdMatiere' => $this->getTypeMatiere() . '_' . $this->getIdMatiere()
         ];
     }
 
