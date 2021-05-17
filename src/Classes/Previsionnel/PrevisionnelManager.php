@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Previsionnel/PrevisionnelManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 15/05/2021 08:23
+ * @lastUpdate 17/05/2021 18:48
  */
 
 namespace App\Classes\Previsionnel;
@@ -104,8 +104,8 @@ class PrevisionnelManager
         $previsionnels = $this->getPrevisionnelAnnee($annee, $anneeUniversitaire);
         $tPrevisionnel = [];
         foreach ($previsionnels as $p) {
-            $tPrevisionnel[$p->getId()]['matiere'] = $p->matiere_libelle;
-            $tPrevisionnel[$p->getId()]['personnel'] = $p->personnel_prenom . ' ' . $p->personnel_nom;
+            $tPrevisionnel[$p->id]['matiere'] = $p->matiere_libelle;
+            $tPrevisionnel[$p->id]['personnel'] = $p->personnel_prenom . ' ' . $p->personnel_nom;
         }
 
         return $tPrevisionnel;
