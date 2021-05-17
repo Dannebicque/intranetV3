@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2021 08:46
+ * @lastUpdate 17/05/2021 18:44
  */
 
 /*
@@ -64,7 +64,6 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
         $this->personnelRepository = $personnelRepository;
         $this->entityManager = $entityManager;
     }
-
 
     public function initPersonnel(
         Personnel $personnel,
@@ -206,7 +205,7 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
                     array_key_exists($p->getJour(), $this->tab) &&
                     array_key_exists($dbtEdt, $this->tab[$p->getJour()])) {
                     //le créneau est déjà utilisé on utilise le suivant
-                    $dbtEdt++;
+                    ++$dbtEdt;
                 }
 
                 $debut = $p->getDebut();
@@ -294,7 +293,7 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
             case 'cm':
             case 'td':
             case 'tp':
-                return mb_strtolower($p->getType()) . '_' . $p->getSemestre()->getAnnee()->getCouleur();
+            return mb_strtolower($p->getType()) . '_' . $p->getSemestre()->getAnnee()->getCouleur();
             default:
                 return 'CCCCCC';
         }
@@ -317,27 +316,20 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
      */
     private function isEvaluation(EdtPlanning $p, $type = 'short'): string
     {
-        if ($p->getEvaluation()) {
-            if (null !== $p->getMatiere()) {
+        if (0 !== $p->getIdMatiere()) {
+            $matiere = $this->typeMatiereManager->getMatiere($p->getIdMatiere(), $p->getTypeMatiere());
+            if (null !== $matiere) {
                 if ('short' === $type) {
-                    return '** ' . $p->getMatiere()->getCodeMatiere() . ' **';//todo: ne marche pas... récupérer depuis les matières...
+                    return $p->getEvaluation() ? '** ' . $matiere->codeMatiere . ' **' : $matiere->codeMatiere;
                 }
 
-                return '** ' . $p->getMatiere()->getLibelle() . ' (' . $p->getMatiere()->getCodeMatiere() . ') **';
+                return $p->getEvaluation() ? '** ' . $matiere->libelle . ' (' . $matiere->codeMatiere . ') **' : $matiere->libelle . ' (' . $matiere->codeMatiere . ')';
             }
 
-            return '** ' . $p->getTexte() . ' **';
+            return 'err...';
         }
 
-        if (null !== $p->getMatiere()) {
-            if ('short' === $type) {
-                return $p->getMatiere()->getCodeMatiere();
-            }
-
-            return $p->getMatiere()->getLibelle() . ' (' . $p->getMatiere()->getCodeMatiere() . ')';
-        }
-
-        return $p->getTexte();
+        return $p->getEvaluation() ? '** ' . $p->getTexte() . ' **' : $p->getTexte();
     }
 
     private function hasCommentaire(EdtPlanning $p): bool
@@ -582,7 +574,6 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
     }
 
     private function updatePl(
-        TypeMatiereManager $typeMatiereManager,
         $request,
         EdtPlanning $plann,
         AnneeUniversitaire $anneeUniversitaire
@@ -596,7 +587,7 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
             $plann->setTexte($request->request->get('texte'));
             $plann->setMatiere(null);
         } else {
-            $module = $typeMatiereManager->getMatiereFromSelect($request->request->get('selectmatiere'));
+            $module = $this->typeMatiereManager->getMatiereFromSelect($request->request->get('selectmatiere'));
             if (null === $module) {
                 throw new MatiereNotFoundException();
             }

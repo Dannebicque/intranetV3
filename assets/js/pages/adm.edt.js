@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.edt.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/05/2021 11:41
+// @lastUpdate 17/05/2021 18:41
 
 import '../../vendor/jqueryui/jquery-ui.min'
 
@@ -22,7 +22,7 @@ function updateBloc (id) {
       $('#typecours').selectpicker('val', data.typecours + '-' + data.groupe)
       $('#salle').val(data.salle)
       $('#texte').val(data.texte)
-      $('#selectmatiere').selectpicker('val', data.matiereId)
+      $('#selectmatiere').selectpicker('val', data.typeIdMatiere)
       $('#selectenseignant').selectpicker('val', data.personnelId)
       $('#idEdtUpdate').val(data.id)
       $('#btnAddEDT').empty().append('Modifier le créneau')
