@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Apc/ApcStructure.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:16
+ * @lastUpdate 18/05/2021 21:13
  */
 
 /*
@@ -29,7 +29,9 @@ class ApcStructure
                             $tParcours[$parcours->getId()])) {
                         $tParcours[$parcours->getId()][$niv->getCompetence()->getId()] = [];
                     }
-                    $tParcours[$parcours->getId()][$niv->getCompetence()->getId()][$niv->getOrdre()] = $niv;
+                    if ($niv->getAnnee() !== null) {
+                        $tParcours[$parcours->getId()][$niv->getCompetence()->getId()][$niv->getAnnee()->getOrdre()] = $niv;
+                    }
                 }
             }
         }

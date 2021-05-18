@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ButMmiController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/04/2021 18:24
+ * @lastUpdate 18/05/2021 20:49
  */
 
 namespace App\Controller;
@@ -36,20 +36,19 @@ class ButMmiController extends AbstractController
     }
 
     /**
-     * @Route("/{diplome}", name="but_homepage")
+     * @Route("/", name="but_homepage")
      */
-    public function homePage($diplome = 'mmi'): Response
+    public function homePage(): Response
     {
-
         return $this->render('but_mmi/index.html.twig', [
-            'diplome' => $this->diplomeRepository->findOneBy(['typeDiplome' => 4, 'sigle' => strtoupper($diplome)])
+            'diplomes' => $this->diplomeRepository->findBy(['typeDiplome' => 4])
         ]);
     }
 
     /**
      * @Route("/{diplome}/referentiel-comptences", name="but_referentiel_competences")
      */
-    public function referentielCompetences(ApcStructure $apcStructure, $diplome = 'mmi'): Response
+    public function referentielCompetences(ApcStructure $apcStructure, $diplome): Response
     {
         $diplome = $this->diplomeRepository->findOneBy(['typeDiplome' => 4, 'sigle' => strtoupper($diplome)]);
         $tParcours = $apcStructure->parcoursNiveaux($diplome);
