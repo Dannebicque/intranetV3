@@ -1,10 +1,30 @@
 {% extends 'base-but.html.twig' %}
 
 {% block content %}
-    Référentiel
+    <h1>Référentiels de formation de l'IUT de Troyes</h1>
+    <div class="row">
+        {% for diplome in diplomes %}
+            <div class="col-md-6 col-sm-12">
+                <div class="card">
+                    <div class="card-title">
+                        <h4>{{ diplome.sigle }}</h4>
+                    </div>
+                    <div class="card-body">
+                        <p>
+                            {{ diplome.libelle }}
+                        </p>
+                        <a href="{{ path('but_referentiel_competences', { diplome:diplome.sigle|lower}) }}">
+                            Voir les référentiels
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}
 
 {% block header %}
-    Référentiel de formation
+    Référentiels de formation de l'IUT de Troyes
 {% endblock %}
 

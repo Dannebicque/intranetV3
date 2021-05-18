@@ -31,7 +31,7 @@
             {% for ac in apc_sae.apcSaeApprentissageCritiques %}
                 <span class="badge badge-{{ ac.apprentissageCritique.competence.couleur }}"
                       data-provide="tooltip"
-                title="{{ ac.apprentissageCritique.libelle }}">
+                      title="{{ ac.apprentissageCritique.libelle }}">
                     {{ ac.apprentissageCritique.code }}
                 </span>
             {% endfor %}
@@ -39,19 +39,31 @@
     </tr>
 
     <tr>
-        <th rowspan="2" style="width:25%">Heures de formation</th>
+        <th rowspan="2" style="width:25%">Heures Programme National</th>
+        <th class="text-center" style="width:25%">CM/TD</th>
+        <th class="text-center" style="width:25%">TP</th>
+        <th class="text-center" style="width:25%">Projet Tutoré</th>
+    </tr>
+    <tr>
+        <td class="text-center">{{ apc_sae.cmPpn + apc_sae.tdPpn }} heure(s)</td>
+        <td class="text-center">{{ apc_sae.tpFormation }} heure(s)</td>
+        <td class="text-center">{{ apc_sae.projetFormation }} heure(s)</td>
+    </tr>
+
+    <tr>
+        <th rowspan="2" style="width:25%">Heures de formation (IUT)</th>
         <th class="text-center" style="width:25%">CM</th>
         <th class="text-center" style="width:25%">TD</th>
         <th class="text-center" style="width:25%">TP</th>
     </tr>
     <tr>
-        <td class="text-center">{{ apc_sae.cmPpn }} heure(s)</td>
-        <td class="text-center">{{ apc_sae.tdPpn }} heure(s)</td>
-        <td class="text-center">{{ apc_sae.tpPpn }} heure(s)</td>
+        <td class="text-center">{{ apc_sae.cmFormation }} heure(s)</td>
+        <td class="text-center">{{ apc_sae.tdFormation }} heure(s)</td>
+        <td class="text-center">{{ apc_sae.tpFormation }} heure(s)</td>
     </tr>
     <tr>
         <th>Heures "projet tutoré"</th>
-        <td colspan="3">{{ apc_sae.projetPpn }} heure(s)</td>
+        <td colspan="3">{{ apc_sae.projetFormation }} heure(s)</td>
     </tr>
     <tr>
         <th>Liste des ressources mobilisées et combinées</th>
