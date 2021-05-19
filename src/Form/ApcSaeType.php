@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ApcSaeType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2021 08:46
+ * @lastUpdate 19/05/2021 15:29
  */
 
 namespace App\Form;
@@ -30,14 +30,14 @@ class ApcSaeType extends AbstractType
         $this->diplome = $options['diplome'];
 
         $builder
+            ->add('codeElement', TextType::class, ['label' => 'label.code_element'])
             ->add('codeMatiere', TextType::class, ['label' => 'label.codeSae'])
             ->add('libelle', TextType::class, ['label' => 'label.libelle'])
             ->add('description', TextareaType::class,
                 ['attr' => ['rows' => 20], 'label' => 'label.description', 'required' => false])
-            ->add('cmPpn', TextType::class, ['label' => 'label.heuresCM'])
-            ->add('tdPpn', TextType::class, ['label' => 'label.heuresTD'])
-            ->add('tpPpn', TextType::class, ['label' => 'label.heuresTP'])
-            ->add('projetPpn', TextType::class, ['label' => 'label.heuresTP'])
+            ->add('tdPpn', TextType::class, ['label' => 'label.cmtd_ppn'])
+            ->add('tpPpn', TextType::class, ['label' => 'label.tp_ppn'])
+            ->add('projetPpn', TextType::class, ['label' => 'label.projet_ppn'])
             ->add('cmFormation', TextType::class, ['label' => 'label.cm_formation'])
             ->add('tdFormation', TextType::class, ['label' => 'label.td_formation'])
             ->add('tpFormation', TextType::class, ['label' => 'label.tp_formation'])
