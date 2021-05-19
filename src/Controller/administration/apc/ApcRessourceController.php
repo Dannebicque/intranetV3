@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcRessourceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 15/05/2021 08:23
+ * @lastUpdate 19/05/2021 16:40
  */
 
 namespace App\Controller\administration\apc;
@@ -24,9 +24,11 @@ use App\Repository\ApcRessourceApprentissageCritiqueRepository;
 use App\Repository\ApcSaeRepository;
 use App\Repository\ApcSaeRessourceRepository;
 use App\Repository\SemestreRepository;
+use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -37,7 +39,7 @@ class ApcRessourceController extends BaseController
     /**
      * @Route("/imprime/{id}.docx", name="apc_ressource_export_one_word", methods="GET")
      */
-    public function exportWordOne(MyWord $myWord, ApcRessource $apcRessource)
+    public function exportWordOne(MyWord $myWord, ApcRessource $apcRessource): StreamedResponse
     {
         return $myWord->exportRessource($apcRessource);
     }
@@ -45,7 +47,7 @@ class ApcRessourceController extends BaseController
     /**
      * @Route("/imprime/{id}.pdf", name="apc_ressource_export_one", methods="GET")
      */
-    public function exportOne(MyPDF $myPDF, ApcRessource $apcRessource)
+    public function exportOne(MyPDF $myPDF, ApcRessource $apcRessource): PdfResponse
     {
         return $myPDF::generePdf(
             'pdf/apc/fiche_ressource.html.twig',
@@ -54,25 +56,6 @@ class ApcRessourceController extends BaseController
             $this->getDepartement()
         );
     }
-
-//    /**
-//     * @Route("/export.{_format}", name="administration_apc_sae_export", methods="GET",
-//     *                             requirements={"_format"="csv|xlsx|pdf"})
-//     *
-//     * @param $_format
-//     */
-//    public function export(MyExport $myExport, ApcSaeRepository $apcSaeRepository, $_format): Response
-//    {
-//        $actualites = $apcSaeRepository->getByDiplome($this->getDepartement());
-//
-//        return $myExport->genereFichierGenerique(
-//            $_format,
-//            $actualites,
-//            'actualites',
-//            ['actualite_administration', 'utilisateur'],
-//            ['titre', 'texte', 'departement' => ['libelle']]
-//        );
-//    }
 
     /**
      * @Route("/ajax-edit/{id}", name="apc_ressources_ajax_edit", methods={"POST"}, options={"expose":true})
@@ -158,7 +141,7 @@ class ApcRessourceController extends BaseController
 
                 $b['id'] = $d->getId();
                 $b['libelle'] = $d->getLibelle();
-                $b['code'] = $d->getCodeSae();
+                $b['code'] = $d->getCodeMatiere();
                 $b['checked'] = true === in_array($d->getId(), $tabAcSae) ? 'checked="checked"' : '';
                 $t[] = $b;
             }
@@ -278,7 +261,7 @@ class ApcRessourceController extends BaseController
                 'apc.ressource.edit.success.flash'
             );
 
-            if (null !== $request->request->get('btn_update')) {
+            if (null !== $request->request->get('btn_update') && null !== $apcRessource->getDiplome()) {
                 return $this->redirectToRoute('administration_matiere_index',
                     ['diplome' => $apcRessource->getDiplome()->getId()]);
             }
