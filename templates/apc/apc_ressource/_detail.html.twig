@@ -1,21 +1,19 @@
-<div id="appVue"></div>
-
 <table class="table table-bordered">
     <tr>
         <th style="width: 25%">Nom de la ressource</th>
-        <td style="width: 25%">{{ apc_ressource.libelle }}</td>
+        <td style="width: 25%" colspan="2">{{ apc_ressource.libelle }}</td>
         <th style="width: 25%">Code</th>
         <td style="width: 25%">{{ apc_ressource.codeMatiere }}</td>
     </tr>
     <tr>
         <th>Semestre</th>
-        <td colspan="3">{{ apc_ressource.semestre != null ? apc_ressource.semestre.display : 'non.defini'|trans }}</td>
+        <td colspan="4">{{ apc_ressource.semestre != null ? apc_ressource.semestre.display : 'non.defini'|trans }}</td>
     </tr>
     <tr>
         <th>
             Compétence(s) ciblée(s)
         </th>
-        <td colspan="3">
+        <td colspan="4">
             {% for competence in apc_ressource.apcRessourceCompetences|filter(competence => competence.competence !=
                 null) %}
                 <span class="badge badge-lg badge-{{ competence.competence.couleur }}"
@@ -30,7 +28,7 @@
         <th>
             Apprentissages critiques
         </th>
-        <td colspan="3">
+        <td colspan="4">
             {% for ac in apc_ressource.apcRessourceApprentissageCritiques|filter(ac => ac.apprentissageCritique !=
                 null) %}
                 <span class="badge badge-lg badge-{{ ac.apprentissageCritique.niveau.competence.couleur }}"
@@ -43,7 +41,7 @@
 
     <tr>
         <th>SAÉ concernée(s)</th>
-        <td colspan="3">
+        <td colspan="4">
             {% for sae in apc_ressource.apcSaeRessources|filter(sae => sae.sae !=
                 null) %}
                 <span class="badge badge-lg badge-primary"
@@ -55,41 +53,38 @@
     </tr>
     <tr>
         <th>Prérequis</th>
-        <td colspan="3">{{ apc_ressource.preRequis|nl2br }}</td>
+        <td colspan="4">{{ apc_ressource.preRequis|nl2br }}</td>
     </tr>
     <tr>
         <th>Description</th>
-        <td colspan="3">{{ apc_ressource.description|nl2br }}</td>
+        <td colspan="4">{{ apc_ressource.description|nl2br }}</td>
     </tr>
     <tr>
         <th>Mots clés</th>
-        <td colspan="3">{{ apc_ressource.motsCles|keyWords }}</td>
+        <td colspan="4">{{ apc_ressource.motsCles|keyWords }}</td>
     </tr>
     <tr>
-        <th rowspan="2">Heures de formation ressources (prescriptives)</th>
-        <th class="text-center">Heures CM ou TD**</th>
+        <th rowspan="2">Heures Programme National</th>
+        <th class="text-center" colspan="2">Heures CM/TD**</th>
         <th class="text-center">Heures TP</th>
         <th class="text-center">Total</th>
     </tr>
     <tr>
-        <th class="text-center">{{ apc_ressource.cmPpn + apc_ressource.tdPpn }}</th>
+        <th class="text-center" colspan="2">{{ apc_ressource.cmPpn + apc_ressource.tdPpn }}</th>
         <th class="text-center">{{ apc_ressource.tpPpn }}</th>
         <th class="text-center">{{ apc_ressource.cmPpn + apc_ressource.tdPpn + apc_ressource.tpPpn }}</th>
     </tr>
     <tr>
-        <th rowspan="2">Heures de formation SAE* (non prescriptives, à adapter localement)</th>
-        <th class="text-center">Heures CM ou TD ou TP**</th>
-        <th class="text-center">Heures tutorées**</th>
+        <th rowspan="2">Heures de formation (IUT)</th>
+        <th class="text-center">Heures CM</th>
+        <th class="text-center">Heures TD</th>
+        <th class="text-center">Heures TP</th>
         <th class="text-center">Total</th>
     </tr>
     <tr>
-        <th class="text-center">{{ apc_ressource.heuresSAE }}</th>
-        <th class="text-center">{{ apc_ressource.heuresSAEPtut }}</th>
-        <th class="text-center">{{ apc_ressource.heuresSAE + apc_ressource.heuresSAEPtut }}</th>
-    </tr>
-    <tr>
-        <th colspan="3" class="text-right">Heures de formation (total ressources + SAE)</th>
-        <th class="text-center">{{ apc_ressource.cmPpn + apc_ressource.tdPpn + apc_ressource.tpPpn + apc_ressource
-            .heuresSAE + apc_ressource.heuresSAEPtut }}</th>
+        <th class="text-center">{{ apc_ressource.cmFormation }}</th>
+        <th class="text-center">{{ apc_ressource.tdFormation }}</th>
+        <th class="text-center">{{ apc_ressource.tpFormation }}</th>
+        <th class="text-center">{{ apc_ressource.cmFormation + apc_ressource.tdFormation + apc_ressource.tpFormation }}</th>
     </tr>
 </table>
