@@ -16,34 +16,15 @@
             <table class="table table-bordered">
                 <thead>
                 <tr>
-                    <th width="33%">CM/TD</th>
-                    <th width="33%">TP</th>
-                    <th width="33%">Coeff.</th>
+                    <th width="50%">CM/TD</th>
+                    <th width="50%">TP</th>
+
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
                     <td>{{ ressource.cmPpn + ressource.tdPpn }}</td>
                     <td>{{ ressource.tpPpn }}</td>
-                    <td>{{ ressource.coefficient }}</td>
-                </tr>
-                </tbody>
-            </table>
-            <h5>Heures totales (indicatives)</h5>
-            <table class="table table-bordered">
-                <thead>
-                <tr>
-                    <th width="33%">Ressources</th>
-                    <th width="33%">SAÉ*</th>
-                    <th width="33%">Total</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>{{ ressource.cmPpn + ressource.tdPpn + ressource.tpPpn }}</td>
-                    <td>{{ ressource.heuresSAE + ressource.heuresSAEPtut }}</td>
-                    <td>{{ ressource.cmPpn + ressource.tdPpn + ressource.tpPpn + ressource.heuresSAE + ressource
-                        .heuresSAEPtut }}</td>
                 </tr>
                 </tbody>
             </table>

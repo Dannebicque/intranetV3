@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ButMmiController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/05/2021 20:49
+ * @lastUpdate 19/05/2021 18:02
  */
 
 namespace App\Controller;
@@ -22,8 +22,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class ButMmiController
- * @package App\Controller
+ * Class ButMmiController.
+ *
  * @Route("/but")
  */
 class ButMmiController extends AbstractController
@@ -41,7 +41,7 @@ class ButMmiController extends AbstractController
     public function homePage(): Response
     {
         return $this->render('but_mmi/index.html.twig', [
-            'diplomes' => $this->diplomeRepository->findBy(['typeDiplome' => 4])
+            'diplomes' => $this->diplomeRepository->findBy(['typeDiplome' => 4]),
         ]);
     }
 
@@ -78,7 +78,7 @@ class ButMmiController extends AbstractController
         return $this->render('but_mmi/resultats.html.twig', [
             'saes' => $saes,
             'ressources' => $ressources,
-            'diplome' => $diplome
+            'diplome' => $diplome,
         ]);
     }
 
@@ -93,7 +93,7 @@ class ButMmiController extends AbstractController
 
         return $this->render('but_mmi/ficheSae.html.twig', [
             'apc_sae' => $apcSae,
-            'diplome' => $diplome
+            'diplome' => $diplome,
         ]);
     }
 
@@ -107,8 +107,8 @@ class ButMmiController extends AbstractController
         $diplome = $this->diplomeRepository->findOneBy(['typeDiplome' => 4, 'sigle' => strtoupper($diplome)]);
 
         return $this->render('but_mmi/sae.html.twig', [
-            'saes' => $apcSaeRepository->findAll(),
-            'diplome' => $diplome
+            'saes' => $apcSaeRepository->findByDiplome($diplome),
+            'diplome' => $diplome,
         ]);
     }
 
@@ -123,7 +123,7 @@ class ButMmiController extends AbstractController
 
         return $this->render('but_mmi/ficheRessource.html.twig', [
             'apc_ressource' => $apcRessource,
-            'diplome' => $diplome
+            'diplome' => $diplome,
         ]);
     }
 
@@ -139,7 +139,7 @@ class ButMmiController extends AbstractController
 
         return $this->render('but_mmi/preconisations.html.twig', [
             'ressources' => $ressources,
-            'diplome' => $diplome
+            'diplome' => $diplome,
         ]);
     }
 
@@ -156,9 +156,7 @@ class ButMmiController extends AbstractController
         return $this->render('but_mmi/ressources.html.twig', [
             'ressources' => $apcRessourceRepository->findBySemestre($semestre),
             'semestre' => $semestre,
-            'diplome' => $diplome
+            'diplome' => $diplome,
         ]);
     }
-
-
 }
