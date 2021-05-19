@@ -29,9 +29,9 @@
                             <select class="form-control selectpicker" id="previsionnel_matiere" name="previsionnel_matiere">
                                 <option value="">{{ 'choisir.matiere'|trans }}</option>
                                 {% for key, matiere in matieres %}
-                                    <option value="{{ constant('SOURCE', matieres[key]) }}_{{ matieres[key].id }}">{{ matieres[key]
-                                        .code }}
-                                        | {{ matieres[key].libelle }}</option>
+                                    <option value="{{ matieres[key].typeIdMatiere }}">
+                                        {{ matieres[key].display }}
+                                    </option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -137,7 +137,7 @@
                     <tr>
                         <td rowspan="2">{{ 'synthese'|trans }}</td>
                         <td colspan="2">{{ 'total.cm'|trans }}</td>
-                        <td id="totalCm">O</td>
+                        <td id="totalCm">0</td>
                         <td style="background-color: #68C39F" colspan="2">{{ 'total.td'|trans }}</td>
                         <td style="background-color: #68C39F" id="totalTd">0</td>
                         <td style="background-color: #FFC052" colspan="2">{{ 'total.tp'|trans }}</td>
@@ -146,7 +146,7 @@
                     <tr>
 
                         <td colspan="2">{{ 'total.eq.td'|trans }}</td>
-                        <td id="totalEqTd">O</td>
+                        <td id="totalEqTd">0</td>
                         <td colspan="2">{{ 'total.etudiant'|trans }}</td>
                         <td id="totalEtu">0</td>
                         <td colspan="3">&nbsp;</td>
