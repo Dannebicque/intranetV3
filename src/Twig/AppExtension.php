@@ -4,16 +4,16 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Twig/AppExtension.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 19/05/2021 15:43
  */
 
 namespace App\Twig;
 
 use App\Classes\Configuration;
-use App\Utils\Tools;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Entity\Personnel;
+use App\Utils\Tools;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Twig\Extension\AbstractExtension;
@@ -65,7 +65,7 @@ class AppExtension extends AbstractExtension
 
     public function formatDifference($valeur)
     {
-        if ($valeur !== 0) {
+        if (0 !== $valeur) {
             return '<span class="badge badge-warning">' . $valeur . '</span>';
         }
 
@@ -189,10 +189,12 @@ class AppExtension extends AbstractExtension
 
     public function keyWords($text)
     {
-        $t = explode(';', $text);
+        $t = explode(',', $text);
         $html = '';
         foreach ($t as $word) {
-            $html .= '<span class="badge badge-primary">' . $word . '</span>';
+            if ('' !== trim($word)) {
+                $html .= '<span class="badge badge-primary">' . $word . '</span>';
+            }
         }
 
         return $html;

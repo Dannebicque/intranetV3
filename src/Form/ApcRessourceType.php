@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ApcRessourceType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/05/2021 17:06
+ * @lastUpdate 19/05/2021 15:41
  */
 
 namespace App\Form;
@@ -31,6 +31,7 @@ class ApcRessourceType extends AbstractType
 
         $builder
             ->add('codeMatiere', TextType::class, ['label' => 'label.codeRessource'])
+            ->add('codeElement', TextType::class, ['label' => 'label.code_element'])
             ->add('libelle', TextType::class, ['label' => 'label.libelle'])
             ->add('preRequis', TextareaType::class,
                 ['label' => 'label.preRequis', 'attr' => ['rows' => 5], 'required' => false])
@@ -39,12 +40,11 @@ class ApcRessourceType extends AbstractType
             ->add('motsCles', TextType::class,
                 [
                     'label' => 'label.motsCles',
-                    'help' => 'Utilisez le ";" pour séparer les mots clés.',
+                    'help' => 'Utilisez le "," pour séparer les mots clés.',
                     'required' => false
                 ])
-            ->add('cmPpn', TextType::class, ['label' => 'label.heuresCM'])
-            ->add('tdPpn', TextType::class, ['label' => 'label.heuresTD'])
-            ->add('tpPpn', TextType::class, ['label' => 'label.heuresTP'])
+            ->add('tdPpn', TextType::class, ['label' => 'label.cmtd_ppn'])
+            ->add('tpPpn', TextType::class, ['label' => 'label.tp_ppn'])
             ->add('cmFormation', TextType::class, ['label' => 'label.cm_formation'])
             ->add('tdFormation', TextType::class, ['label' => 'label.td_formation'])
             ->add('tpFormation', TextType::class, ['label' => 'label.tp_formation'])
