@@ -1,6 +1,7 @@
 {
   "devDependencies": {
     "@babel/core": "^7.12.3",
+    "@babel/preset-env": "^7.14.2",
     "@fortawesome/fontawesome-free": "^5.13.1",
     "@symfony/stimulus-bridge": "^2.0.0",
     "@symfony/ux-chartjs": "file:vendor/symfony/ux-chartjs/Resources/assets",
