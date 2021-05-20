@@ -53,7 +53,7 @@
     {% endif %}
 </head>
 
-<body {% block body %}{% endblock %}>
+<body class="{{ settings('CODE_IUT') }} {% block body %}{% endblock %}">
 <header class="topbar">
     <div class="topbar-left">
         <a class="topbar-btn d-none d-md-block"
