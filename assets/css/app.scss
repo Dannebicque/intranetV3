@@ -2,75 +2,12 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/css/app.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/03/2021 14:32
+// @lastUpdate 20/05/2021 10:25
 
 @import "core.min.css";
 
-body {
-  --colorIUT: #F7B000;
-  --colorIUTComplementaire: #4D3677;
-
-  --colorTextA: #4D3677;
-  --policeDark: #313944;
-  --body: #f5f6fa;
-  --header: #fff;
-  --footer: #fff;
-  --card: #fff;
-  --borderCard: rgba(77, 82, 89, 0.07);
-  --police: #4d5259;
-  --policeH: #313944;
-  --colorHoverBtnTopBar: #4d5259;
-
-  --colorPrimaryHover: #4D3677;
-  --colorTextPrimaryHover: #F7B000;
-
-  --colorSuccess: #15c377;
-  --colorSecondary: #e4e7ea;
-  --colorPrimary: #F7B000;
-  --colorInfo: #48b0f7;
-  --colorWarning: #faa64b;
-  --colorDanger: #f96868;
-  --colorPink: #f96197;
-  --colorPurple: #926dde;
-  --colorBrown: #8d6658;
-  --colorCyan: #57c7d4;
-  --colorYellow: #fcc525;
-  --colorGray: #868e96;
-  --colorDark: #465161;
-}
-
-body.dark-theme {
-  --colorIUT: #F7B000;
-  --colorIUTComplementaire: #4D3677;
-  --colorTextA: #F7B000;
-  --policeDark: #202945;
-
-  --body: #202945;
-  --header: #152028;
-  --footer: #152028;
-  --card: #152028;
-  --police: #eaeaea;
-  --borderCard: #F7B000;
-  --colorHoverBtnTopBar: #F7B000;
-  --policeH: #eaeaea;
-
-  --colorPrimaryHover: #4D3677;
-  --colorTextPrimaryHover: #F7B000;
-
-  --colorSuccess: #008A00;
-  --colorPrimary: #F7B000;
-  --colorInfo: #238CF2;
-  --colorSecondary: #e4e7ea;
-  --colorWarning: #F0730B;
-  --colorDanger: #BF0000;
-  --colorPink: #f96197;
-  --colorPurple: #926dde;
-  --colorBrown: #8d6658;
-  --colorCyan: #1890A7;
-  --colorYellow: #fcc525;
-  --colorGray: #868e96;
-  --colorDark: #465161;
-}
+@import "./theme-troyes.scss";
+@import "./theme-rcc.scss";
 
 @import "./theme.scss";
 @import "./color.scss";
