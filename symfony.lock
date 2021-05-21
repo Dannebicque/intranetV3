@@ -765,6 +765,9 @@
     "twig/intl-extra": {
         "version": "v3.1.1"
     },
+    "twig/markdown-extra": {
+        "version": "v3.3.1"
+    },
     "twig/twig": {
         "version": "v3.1.1"
     },
