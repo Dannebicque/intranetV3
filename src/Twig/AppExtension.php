@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Twig/AppExtension.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/05/2021 15:43
+ * @lastUpdate 21/05/2021 20:28
  */
 
 namespace App\Twig;
@@ -193,7 +193,7 @@ class AppExtension extends AbstractExtension
         $html = '';
         foreach ($t as $word) {
             if ('' !== trim($word)) {
-                $html .= '<span class="badge badge-primary">' . $word . '</span>';
+                $html .= '<span class="badge badge-primary">' . $word . '</span>&nbsp;';
             }
         }
 
