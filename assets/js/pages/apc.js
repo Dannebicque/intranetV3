@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/apc.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 21/05/2021 20:00
+// @lastUpdate 21/05/2021 20:48
 import '../../vendor/jquery.collection'
 import '../../vendor/bootstrap-datepicker/locales/bootstrap-datepicker.fr.min'
 import $ from 'jquery'
@@ -50,7 +50,6 @@ function updateSaeRessources () {
       success: function (data) {
         let html = '<div class="row">'
         if (data !== false) {
-
           for (var ressource in data) {
             html = html + '<div class="col-md-6">' +
               '<div class="form-check">' +
