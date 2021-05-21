@@ -57,7 +57,7 @@
     </tr>
     <tr>
         <th>Description</th>
-        <td colspan="4">{{ apc_ressource.description|markdown_to_html }}</td>
+        <td colspan="4">{{ apc_ressource.description != null ? apc_ressource.description|markdown_to_html : '' }}</td>
     </tr>
     <tr>
         <th>Mots clés</th>
