@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ApcRessourceType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/05/2021 15:41
+ * @lastUpdate 21/05/2021 20:00
  */
 
 namespace App\Form;
@@ -36,12 +36,17 @@ class ApcRessourceType extends AbstractType
             ->add('preRequis', TextareaType::class,
                 ['label' => 'label.preRequis', 'attr' => ['rows' => 5], 'required' => false])
             ->add('description', TextareaType::class,
-                ['attr' => ['rows' => 20], 'label' => 'label.description', 'required' => false])
+                [
+                    'attr' => ['rows' => 20],
+                    'label' => 'label.description',
+                    'required' => false,
+                    'help' => 'Il est possible d\'utiliser la syntaxe Markdown dans ce bloc de texte'
+                ])
             ->add('motsCles', TextType::class,
                 [
                     'label' => 'label.motsCles',
                     'help' => 'Utilisez le "," pour séparer les mots clés.',
-                    'required' => false
+                    'required' => false,
                 ])
             ->add('tdPpn', TextType::class, ['label' => 'label.cmtd_ppn'])
             ->add('tpPpn', TextType::class, ['label' => 'label.tp_ppn'])
@@ -77,7 +82,7 @@ class ApcRessourceType extends AbstractType
         $resolver->setDefaults([
             'data_class' => ApcRessource::class,
             'diplome' => null,
-            'translation_domain' => 'form'
+            'translation_domain' => 'form',
         ]);
     }
 }

@@ -2,7 +2,7 @@
     <div class="card">
         <h4 class="card-title">{{ ressource.display }}</h4>
         <div class="card-body">
-            <p>{{ ressource.motsCles|nl2br }}</p>
+            <p>{{ ressource.motsCles|keyWords }}</p>
             <p>
                 <a href="{{ path('but_fiche_ressource',
                     {'apcRessource': ressource.id, diplome:diplome.sigle|lower}) }}"
