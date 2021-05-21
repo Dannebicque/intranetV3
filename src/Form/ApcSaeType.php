@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ApcSaeType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/05/2021 15:29
+ * @lastUpdate 21/05/2021 20:00
  */
 
 namespace App\Form;
@@ -34,7 +34,12 @@ class ApcSaeType extends AbstractType
             ->add('codeMatiere', TextType::class, ['label' => 'label.codeSae'])
             ->add('libelle', TextType::class, ['label' => 'label.libelle'])
             ->add('description', TextareaType::class,
-                ['attr' => ['rows' => 20], 'label' => 'label.description', 'required' => false])
+                [
+                    'attr' => ['rows' => 20],
+                    'label' => 'label.description',
+                    'required' => false,
+                    'help' => 'Il est possible d\'utiliser la syntaxe Markdown dans ce bloc de texte'
+                ])
             ->add('tdPpn', TextType::class, ['label' => 'label.cmtd_ppn'])
             ->add('tpPpn', TextType::class, ['label' => 'label.tp_ppn'])
             ->add('projetPpn', TextType::class, ['label' => 'label.projet_ppn'])
@@ -43,7 +48,12 @@ class ApcSaeType extends AbstractType
             ->add('tpFormation', TextType::class, ['label' => 'label.tp_formation'])
             ->add('projetFormation', TextType::class, ['label' => 'label.projet_formation'])
             ->add('livrables', TextareaType::class,
-                ['label' => 'label.livrables', 'attr' => ['rows' => 20], 'required' => false])
+                [
+                    'label' => 'label.livrables',
+                    'attr' => ['rows' => 20],
+                    'required' => false,
+                    'help' => 'Il est possible d\'utiliser la syntaxe Markdown dans ce bloc de texte'
+                ])
             ->add('semestre', EntityType::class, [
                 'class' => Semestre::class,
                 'attr' => ['class' => 'semestreSae'],
@@ -68,7 +78,12 @@ class ApcSaeType extends AbstractType
                 'help' => 'Ajoutez les compétences couvertes par la SAÉ.',
             ])
             ->add('exemples', TextareaType::class,
-                ['label' => 'label.exemples', 'required' => false])
+                [
+                    'label' => 'label.exemples',
+                    'attr' => ['rows' => 20],
+                    'required' => false,
+                    'help' => 'Il est possible d\'utiliser la syntaxe Markdown dans ce bloc de texte'
+                ])
         ;
     }
 

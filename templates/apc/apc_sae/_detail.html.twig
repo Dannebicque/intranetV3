@@ -9,7 +9,7 @@
 
     <tr>
         <th>Description des objectifs de la SAÉ et de la problèmatique professionnelle associée</th>
-        <td colspan="3">{{ apc_sae.description|nl2br }}</td>
+        <td colspan="3">{{ apc_sae.description|markdown_to_html }}</td>
     </tr>
     <tr>
         <th>Compétence(s) ciblée(s)</th>
@@ -74,16 +74,16 @@
                       title="{{ ressource.ressource.libelle }}">
                     {{ ressource.ressource.display }}
                     </span>
-                {% endfor %}
+            {% endfor %}
         </td>
     </tr>
     <tr>
         <th>Type de livrable ou de production</th>
-        <td colspan="3">{{ apc_sae.livrables|nl2br }}</td>
+        <td colspan="3">{{ apc_sae.livrables|markdown_to_html }}</td>
     </tr>
     <tr>
         <th>Exemples</th>
-        <td colspan="3">{{ apc_sae.exemples|nl2br }}</td>
+        <td colspan="3">{{ apc_sae.exemples|markdown_to_html }}</td>
     </tr>
     </tbody>
 </table>
