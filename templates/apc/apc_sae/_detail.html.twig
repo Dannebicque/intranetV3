@@ -9,7 +9,7 @@
 
     <tr>
         <th>Description des objectifs de la SAÉ et de la problèmatique professionnelle associée</th>
-        <td colspan="3">{{ apc_sae.description|markdown_to_html }}</td>
+        <td colspan="3">{{ apc_sae.description != null ? apc_sae.description|markdown_to_html : '' }}</td>
     </tr>
     <tr>
         <th>Compétence(s) ciblée(s)</th>
@@ -79,11 +79,11 @@
     </tr>
     <tr>
         <th>Type de livrable ou de production</th>
-        <td colspan="3">{{ apc_sae.livrables|markdown_to_html }}</td>
+        <td colspan="3">{{ apc_sae.livrables != null ? apc_sae.livrables|markdown_to_html : '' }}</td>
     </tr>
     <tr>
         <th>Exemples</th>
-        <td colspan="3">{{ apc_sae.exemples|markdown_to_html }}</td>
+        <td colspan="3">{{ apc_sae.exemples != null ? apc_sae.exemples|markdown_to_html : '' }}</td>
     </tr>
     </tbody>
 </table>
