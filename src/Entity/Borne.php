@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Borne.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/05/2021 19:29
+ * @lastUpdate 23/05/2021 15:09
  */
 
 namespace App\Entity;
@@ -39,7 +39,7 @@ class Borne extends BaseEntity
     public const COULEURS = ['Rouge' => '#FF0000', 'Vert' => '#00FF00', 'Bleu' => '#0000FF'];
 
     /**
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="string", length=40)
      * @Groups({"bornes_administration"})
      */
     private $icone;

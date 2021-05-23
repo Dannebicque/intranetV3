@@ -1252,6 +1252,8 @@ label:
   capacite: Capacité
   codeApogee: 'Code Apogée'
   cv: 'Votre CV'
+  dateDebutPublication: 'Début de publication'
+  dateFinPublication: 'Fin de publication'
   date_evaluation: 'Date de l''évaluation'
   dateLundi: 'Date du lundi'
   duree_evaluation: 'Durée de l''évaluation'
@@ -1262,6 +1264,9 @@ label:
   groupe: Groupe(s)
   heure_evaluation: 'Heure du début de l''évaluation'
   import: Import
+  icone_couleur: Icône/couleur
+  icone: Icône
+  message: Message
   importer.les.notes: 'Importer le fichier de notes'
   libelle: Libellé
   logoFile: 'Logo du département'
@@ -1275,6 +1280,7 @@ label:
   semaineFormation: 'Numéro Semaine Département'
   semaineReelle: 'Numéro Semaine Réelle'
   semestre: Semestre
+  semestres: Semestres
   site: Site
   titre: Titre
   texte: Texte
@@ -1282,6 +1288,7 @@ label:
   typesalle: 'Type de salle'
   update: 'Mise à jour'
   updated: 'Mise à jour'
+  visible: 'Visible?'
 
 les.dates.de.la.periode.sont: 'Les dates de cette période de stage sont'
 les.responsables.sont: 'Les responsables de cette période sont'
@@ -1877,9 +1884,8 @@ table:
   heure_rattrapage: 'Heure rattrapage'
   heure: Heure
   heureDebut: 'Heure de début'
-  icone_couleur: Icône/couleur
-  icone: Icône
   id: Id
+  icone: Icône
   infos: Informations
   intervenants: Intervenants
   jour: Jour
