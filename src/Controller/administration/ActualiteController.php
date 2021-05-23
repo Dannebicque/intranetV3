@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/ActualiteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/05/2021 14:50
+ * @lastUpdate 23/05/2021 16:07
  */
 
 namespace App\Controller\administration;
@@ -21,12 +21,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/administration/actualites")
+ * @Route("/administration/actualites", name="administration_actualite_")
  */
 class ActualiteController extends BaseController
 {
     /**
-     * @Route("/", name="administration_actualite_index", methods="GET")
+     * @Route("/", name="index", methods="GET")
      */
     public function index(
         Request $request
@@ -49,7 +49,7 @@ class ActualiteController extends BaseController
     }
 
     /**
-     * @Route("/export.{_format}", name="administration_actualite_export", methods="GET",
+     * @Route("/export.{_format}", name="export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"})
      */
     public function export(MyExport $myExport, ActualiteRepository $actualiteRepository, $_format): Response
@@ -66,7 +66,7 @@ class ActualiteController extends BaseController
     }
 
     /**
-     * @Route("/new", name="administration_actualite_new", methods="GET|POST")
+     * @Route("/new", name="new", methods="GET|POST")
      */
     public function create(Request $request): Response
     {
@@ -94,7 +94,7 @@ class ActualiteController extends BaseController
     }
 
     /**
-     * @Route("/{id}", name="administration_actualite_show", methods="GET")
+     * @Route("/{id}", name="show", methods="GET")
      */
     public function show(Actualite $actualite): Response
     {
@@ -102,7 +102,7 @@ class ActualiteController extends BaseController
     }
 
     /**
-     * @Route("/{id}/edit", name="administration_actualite_edit", methods="GET|POST")
+     * @Route("/{id}/edit", name="edit", methods="GET|POST")
      */
     public function edit(Request $request, Actualite $actualite): Response
     {
@@ -131,7 +131,7 @@ class ActualiteController extends BaseController
     }
 
     /**
-     * @Route("/{id}", name="administration_actualite_delete", methods="DELETE")
+     * @Route("/{id}", name="delete", methods="DELETE")
      */
     public function delete(Request $request, Actualite $actualite): Response
     {
@@ -153,7 +153,7 @@ class ActualiteController extends BaseController
     }
 
     /**
-     * @Route("/{id}/duplicate", name="administration_actualite_duplicate", methods="GET|POST")
+     * @Route("/{id}/duplicate", name="duplicate", methods="GET|POST")
      */
     public function duplicate(Actualite $actualite): Response
     {
