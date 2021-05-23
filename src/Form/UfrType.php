@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/UfrType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 23/05/2021 14:21
  */
 
 namespace App\Form;
@@ -19,6 +19,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\Exception\AccessException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Umbrella\CoreBundle\Form\Entity2Type;
 
 /**
  * Class UfrType.
@@ -28,31 +29,30 @@ class UfrType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('libelle', TextType::class, ['label' => 'label.libelle'])
-            ->add('responsable', EntityType::class, [
-                'class'         => Personnel::class,
-                'label'         => 'label.responsable_site',
-                'choice_label'  => 'displayPr',
-                'expanded'      => false,
-                'multiple'      => false,
+            ->add('libelle', TextType::class, ['label' => 'libelle'])
+            ->add('responsable', Entity2Type::class, [
+                'class' => Personnel::class,
+                'label' => 'responsable_site',
+                'choice_label' => 'displayPr',
+                'expanded' => false,
+                'multiple' => false,
                 'query_builder' => static function(PersonnelRepository $personnelRepository) {
                     return $personnelRepository->findAllOrder();
                 },
-                'attr'          => ['class' => 'form-control selectpicker'],
             ])
             ->add('sitePrincipal', EntityType::class, [
-                'class'        => Site::class,
-                'label'        => 'label.site_principal',
+                'class' => Site::class,
+                'label' => 'site_principal',
                 'choice_label' => 'libelle',
-                'expanded'     => true,
-                'multiple'     => false,
+                'expanded' => true,
+                'multiple' => false,
             ])
             ->add('sites', EntityType::class, [
-                'class'        => Site::class,
-                'label'        => 'label.sites',
+                'class' => Site::class,
+                'label' => 'sites',
                 'choice_label' => 'libelle',
-                'expanded'     => true,
-                'multiple'     => true,
+                'expanded' => true,
+                'multiple' => true,
             ]);
     }
 
@@ -62,7 +62,7 @@ class UfrType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class'         => Ufr::class,
+            'data_class' => Ufr::class,
             'translation_domain' => 'form',
         ]);
     }

@@ -39,94 +39,13 @@
 {% block content %}
     <div class="card">
         <div class="card-body">
-            <table class="table table-striped table-bordered" data-provide="datatables">
-                <thead>
-                <tr>
-                    <th>{{ 'table.etudiant'|trans }}</th>
-                    <th>{{ 'table.groupes'|trans }}</th>
-                    <th>{{ 'table.matiere'|trans }}</th>
-                    <th>{{ 'table.personnel'|trans }}</th>
-                    <th>{{ 'table.date_evaluation'|trans }}</th>
-                    <th>{{ 'table.date_demande'|trans }}</th>
-                    <th>{{ 'table.absence_justifiee'|trans }}</th>
-                    <th>{{ 'table.actions'|trans }}</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for rattrapage in rattrapages|filter(rattrapage => (matieres[rattrapage.typeIdMatiere] is defined
-                    and matieres[rattrapage.typeIdMatiere].semestre.id == semestre.id)) %}
-                    <tr>
-                        <td>{{ rattrapage.etudiant.display }}</td>
-                        <td>{{ rattrapage.etudiant|displayGroupes }}</td>
-                        <td>{{ matieres[rattrapage.typeIdMatiere] is defined ?
-                            matieres[rattrapage.typeIdMatiere].codeMatiere : 'non.defini'|trans }}</td>
-                        <td>{{ rattrapage.personnel ? rattrapage.personnel.display : 'non.defini'|trans }}</td>
-                        <td>{{ rattrapage.dateEval ? rattrapage.dateEval|format_date('long') : 'non.defini'|trans }}</td>
-                        <td>{{ rattrapage.created ? rattrapage.created|format_date('long') : 'non.defini'|trans }}</td>
-                        <td>{% if absences[rattrapage.etudiant.id] is defined and absences[rattrapage.etudiant.id][rattrapage.dateEval|date('Ymd')] is defined and absences[rattrapage.etudiant.id][rattrapage.dateEval|date('Ymd')][rattrapage.heureEval|date('Hi')] is defined %}{{ absences[rattrapage.etudiant.id][rattrapage.dateEval|date('Ymd')][rattrapage.heureEval|date('Hi')] ? 'Yes'|trans : 'No'|trans }}{% else %}Pas d'absence saisie{% endif %}</td>
-                        <td>
-                            {% if rattrapage.etatDemande == constant('App\\Entity\\Rattrapage::DEMANDE_FAITE') %}
-                                <a href="#"
-                                   data-rattrapage="{{ rattrapage.uuidString }}"
-                                   class="btn btn-success btn-outline btn-square rattrapage-accepte bx_{{ rattrapage.uuidString }}"><i
-                                            class="fas fa-check"
-                                            data-provide="tooltip"
-                                            data-placement="bottom"
-                                            title="{{ 'atitle.accepter.la.demande'|trans }}"></i></a>
-                                <a href="#"
-                                   data-rattrapage="{{ rattrapage.uuidString }}"
-                                   class="btn btn-warning btn-outline btn-square rattrapage-refuse bx_{{ rattrapage.uuidString }}"><i
-                                            class="fas fa-ban"
-                                            data-provide="tooltip"
-                                            data-placement="bottom"
-                                            title="{{ 'atitle.accepter.la.demande'|trans }}"></i></a>
-                            {% elseif rattrapage.etatDemande == constant('App\\Entity\\Rattrapage::DEMANDE_ACCEPTEE') %}
-                                <a href="#" class="btn btn-success btn-outline" data-provide="tooltip"
-                                   data-placement="bottom" title="Demande acceptée"><i class="fas
-                                fa-check"></i>
-                                    Acceptée</a>
-                            {% elseif rattrapage.etatDemande == constant('App\\Entity\\Rattrapage::DEMANDE_REFUSEE') %}
-                                <a href="#" class="btn btn-warning btn-outline" data-provide="tooltip"
-                                   data-placement="bottom" title="Demande refusée"><i class="fas
-                                fa-ban"></i>
-                                    Refusée</a>
-                            {% else %}
-                                Erreur
-                            {% endif %}
-                            <a href="{{ path('administration_rattrapage_delete', {uuid: rattrapage.uuidString}) }}"
-                               data-csrf="{{ csrf_token('delete' ~ rattrapage.uuidString) }}"
-                               class="btn btn-danger btn-outline btn-square supprimer"><i
-                                        class="{{ iconDelete }}" data-provide="tooltip" data-placement="bottom"
-                                        title="{{ 'atitle.supprimer'|trans }}"></i></a>
-
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+            {{ render_table(table) }}
         </div>
     </div>
 {% endblock %}
 
 {% block fabactions %}
     {{ include('composants/fab-buttons.html.twig', {boutons:[
-        {type: 'info',
-            href: path('administration_rattrapage_export', {semestre:semestre.id,_format:'pdf'}),
-            title: 'exporter.pdf'|trans,
-            icone : "fa fa-file-pdf"
-        },
-        {
-            type:'info',
-            href:path('administration_rattrapage_export', {semestre:semestre.id,_format:'csv'}),
-            title: 'exporter.csv'|trans,
-            icone: 'fa fa-file-csv'
-        },
-        {
-            type:'info',
-            href:path('administration_rattrapage_export', {semestre:semestre.id,_format:'xlsx'}),
-            title: 'exporter.xls'|trans,
-            icone: 'fa fa-file-excel'
-        },
         {
             type:'info',
             href:path('help_article', {sujet: 'administration-etudiants-rattrapage'}),
@@ -138,13 +57,10 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    {{ encore_entry_link_tags('datatable') }}
     {{ encore_entry_link_tags('adm.rattrapages') }}
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-
-    {{ encore_entry_script_tags('datatable') }}
     {{ encore_entry_script_tags('adm.rattrapages') }}
 {% endblock %}

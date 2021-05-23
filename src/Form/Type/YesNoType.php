@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/Type/YesNoType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 22/05/2021 18:32
  */
 
 namespace App\Form\Type;
@@ -19,25 +19,15 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class YesNoType extends AbstractType
 {
-    private $translator;
-
-    /**
-     * YesNoType constructor.
-     */
-    public function __construct(TranslatorInterface $translator)
-    {
-        $this->translator = $translator;
-    }
-
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'choices'            => [
-                $this->translator->trans('choice.oui') => true,
-                $this->translator->trans('choice.non') => false,
+            'choices' => [
+                'choice.oui' => true,
+                'choice.non' => false,
             ],
-            'multiple'           => false,
-            'expanded'           => true,
+            'multiple' => false,
+            'expanded' => true,
             'translation_domain' => 'form',
         ]);
     }

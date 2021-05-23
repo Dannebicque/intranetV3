@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ScolariteType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 23/05/2021 14:21
  */
 
 namespace App\Form;
@@ -35,58 +35,58 @@ class ScolariteType extends AbstractType
             ->add('ordre', ChoiceType::class, [
                 'choices' => [
                     1  => 1,
-                    2  => 2,
-                    3  => 3,
-                    4  => 4,
-                    5  => 5,
-                    6  => 6,
-                    7  => 7,
-                    8  => 8,
-                    9  => 9,
+                    2 => 2,
+                    3 => 3,
+                    4 => 4,
+                    5 => 5,
+                    6 => 6,
+                    7 => 7,
+                    8 => 8,
+                    9 => 9,
                     10 => 10,
                 ],
-                'label'   => 'label.ordre',
+                'label' => 'ordre',
             ])
             ->add('semestre', EntityType::class, [
-                'label'         => 'label.semestre',
-                'placeholder'   => 'Choisir le semestre',
-                'class'         => Semestre::class,
+                'label' => 'semestre',
+                'placeholder' => 'Choisir le semestre',
+                'class' => Semestre::class,
                 'query_builder' => function(SemestreRepository $semestreRepository) {
                     return $semestreRepository->findByDepartementBuilder($this->departement);
                 },
-                'choice_label'  => 'libelle',
+                'choice_label' => 'libelle',
             ])
             ->add('anneeUniversitaire', EntityType::class, [
-                'label'        => 'label.anneeUniversitaire',
-                'class'        => AnneeUniversitaire::class,
+                'label' => 'anneeUniversitaire',
+                'class' => AnneeUniversitaire::class,
                 'choice_label' => 'libelle',
             ])
             ->add('decision', ChoiceType::class, [
                 'choices' => [
-                    'En cours'      => Constantes::SEMESTRE_EN_COURS,
-                    'Validé'        => Constantes::SEMESTRE_VALIDE,
-                    'Non Validé'    => Constantes::SEMESTRE_NON_VALIDE,
-                    'Démission'     => Constantes::SEMESTRE_DEMISSIONNAIRE,
+                    'En cours' => Constantes::SEMESTRE_EN_COURS,
+                    'Validé' => Constantes::SEMESTRE_VALIDE,
+                    'Non Validé' => Constantes::SEMESTRE_NON_VALIDE,
+                    'Démission' => Constantes::SEMESTRE_DEMISSIONNAIRE,
                     'Réorientation' => Constantes::SEMESTRE_REORIENTE,
-                    'VCJ'           => Constantes::SEMESTRE_VCJ,
-                    'VCA'           => Constantes::SEMESTRE_VCA,
+                    'VCJ' => Constantes::SEMESTRE_VCJ,
+                    'VCA' => Constantes::SEMESTRE_VCA,
                     'Blanchimenent' => Constantes::SEMESTRE_BLANCHIMENT,
                 ],
-                'label'   => 'label.decision',
+                'label' => 'decision',
             ])
             ->add('proposition', TextType::class, [
-                'label'    => 'label.proposition',
+                'label' => 'proposition',
                 'required' => false,
-                'help'     => 'Sn+1, DUT, ...',
+                'help' => 'Sn+1, DUT, ...',
             ])
             ->add('moyenne', TextType::class, [
-                'label' => 'label.moyenne',
+                'label' => 'moyenne',
             ])
             ->add('nbAbsences', TextType::class, [
-                'label' => 'label.nbAbsences',
+                'label' => 'nbAbsences',
             ])
             ->add('commentaire', TextareaType::class, [
-                'label'    => 'label.commentaire',
+                'label' => 'commentaire',
                 'required' => false,
             ])
            ;

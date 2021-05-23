@@ -21,8 +21,10 @@
                 <div class="form-group">
                     <label for="absence-date">{{ 'date'|trans }}</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" data-provide="datepicker"
-                               data-language="{{ app.request.getLocale() }}" id="absence-date"
+                        <input type="text" class="form-control"
+                                {{ options | html_attr }}
+                               is="date-picker"
+                               id="absence-date"
                                value="{% if event != null %}{{ event.date|date('d/m/Y') }} {% else %} {{ date("now")
                                |date('d/m/Y') }}{% endif %}">
                         <div class="input-group-append">

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/EtudiantProfilType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 22/05/2021 18:31
  */
 
 namespace App\Form;
@@ -26,13 +26,13 @@ class EtudiantProfilType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('mail_perso', EmailType::class, ['required' => false, 'label' => 'label.mail_perso'])
-            ->add('site_perso', UrlType::class, ['required' => false, 'label' => 'label.site_perso'])
-            ->add('tel1', TextType::class, ['label' => 'label.tel1'])
-            ->add('tel2', TextType::class, ['required' => false, 'label' => 'label.tel2'])
-            ->add('signature', TextType::class, ['required' => false, 'label' => 'label.signature'])
-            ->add('adresse', AdresseType::class, ['label' => 'label.adresse'])
-            ->add('adresseParentale', AdresseType::class, ['label' => 'label.adresseParentale']);
+            ->add('mail_perso', EmailType::class, ['required' => false, 'label' => 'mail_perso'])
+            ->add('site_perso', UrlType::class, ['required' => false, 'label' => 'site_perso'])
+            ->add('tel1', TextType::class, ['label' => 'tel1'])
+            ->add('tel2', TextType::class, ['required' => false, 'label' => 'tel2'])
+            ->add('signature', TextType::class, ['required' => false, 'label' => 'signature'])
+            ->add('adresse', AdresseType::class, ['label' => 'adresse'])
+            ->add('adresseParentale', AdresseType::class, ['label' => 'adresseParentale']);
     }
 
     /**

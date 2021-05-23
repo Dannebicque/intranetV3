@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ImportPrevisionnelType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 23/05/2021 14:21
  */
 
 namespace App\Form;
@@ -34,24 +34,24 @@ class ImportPrevisionnelType extends AbstractType
                 'diplome',
                 EntityType::class,
                 [
-                    'class'         => Diplome::class,
-                    'choice_label'  => 'display',
+                    'class' => Diplome::class,
+                    'choice_label' => 'display',
                     'query_builder' => function(DiplomeRepository $diplomeRepository) {
                         return $diplomeRepository->findByDepartementBuilder($this->departement);
                     },
-                    'label'         => 'label.diplome',
+                    'label' => 'diplome',
                 ]
             )
             ->add('annee', ChoiceType::class, [
-                'label'   => 'label.opt_annee_previsionnel',
+                'label' => 'opt_annee_previsionnel',
                 'choices' => array_combine(
                     range(date('Y') - 2, date('Y') + 4),
                     range(date('Y') - 2, date('Y') + 4)
                 ),
-                'data'    => date('Y'),
+                'data' => date('Y'),
             ])
             ->add('fichier', FileType::class, [
-                'label' => 'label.fichier',
+                'label' => 'fichier',
             ]);
     }
 

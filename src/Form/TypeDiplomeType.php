@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/TypeDiplomeType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 22/05/2021 18:37
  */
 
 namespace App\Form;
@@ -24,11 +24,11 @@ class TypeDiplomeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('libelle', TextType::class, ['label' => 'label.libelle'])
-            ->add('sigle', TextType::class, ['label' => 'label.sigle'])
-            ->add('nb_semestres', TextType::class, ['label' => 'label.nb_semestres'])
-            ->add('niveau_entree', TextType::class, ['label' => 'label.niveau_entree'])
-            ->add('niveau_sortie', TextType::class, ['label' => 'label.niveau_sortie']);
+            ->add('libelle', TextType::class, ['label' => 'libelle'])
+            ->add('sigle', TextType::class, ['label' => 'sigle'])
+            ->add('nb_semestres', TextType::class, ['label' => 'nb_semestres'])
+            ->add('niveau_entree', TextType::class, ['label' => 'niveau_entree'])
+            ->add('niveau_sortie', TextType::class, ['label' => 'niveau_sortie']);
     }
 
     /**

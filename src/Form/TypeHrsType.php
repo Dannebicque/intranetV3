@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/TypeHrsType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 22/05/2021 18:37
  */
 
 namespace App\Form;
@@ -26,13 +26,13 @@ class TypeHrsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('libelle', TextType::class, ['label' => 'label.libelle'])
+            ->add('libelle', TextType::class, ['label' => 'libelle'])
             ->add('incluService', YesNoType::class, [
-                'label' => 'label.incluService',
+                'label' => 'incluService',
             ])
             ->add('type', ChoiceType::class, [
-                'label' => 'label.typehrs',
-                'choices' => [
+                'label' => 'typehrs',
+                'choices' => [//todo: constantes
                     'choice.hrs' => 'HRS',
                     'choice.pca' => 'PCA',
                     'choice.prp' => 'PRP',
@@ -42,7 +42,7 @@ class TypeHrsType extends AbstractType
                 'choice_translation_domain' => 'form',
                 'expanded' => true,
             ])
-            ->add('maximum', TextType::class, ['label' => 'label.maximum']);
+            ->add('maximum', TextType::class, ['label' => 'maximum']);
     }
 
     /**

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/TypeMaterielType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:23
+ * @lastUpdate 22/05/2021 18:37
  */
 
 namespace App\Form;
@@ -20,7 +20,7 @@ class TypeMaterielType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('libelle', TextType::class, ['label' => 'label.type_materiel.libelle']);
+            ->add('libelle', TextType::class, ['label' => 'type_materiel.libelle']);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
