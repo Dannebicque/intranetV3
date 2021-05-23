@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/DataTable/ArticleTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/05/2021 15:58
+ * @lastUpdate 23/05/2021 16:03
  */
 
 namespace App\DataTable;
@@ -15,7 +15,6 @@ use App\DataTable\Widget\RowDeleteLinkType;
 use App\DataTable\Widget\RowDuplicateLinkType;
 use App\DataTable\Widget\RowEditLinkType;
 use App\DataTable\Widget\RowShowLinkType;
-use App\Entity\Actualite;
 use App\Entity\Annee;
 use App\Entity\Article;
 use App\Entity\Departement;
@@ -47,7 +46,7 @@ class ArticleTableType extends DataTableType
         $this->csrfToken = $csrfToken;
     }
 
-    public function buildToolbar(ToolbarBuilder $builder, array $options)
+    public function buildToolbar(ToolbarBuilder $builder, array $options): void
     {
         $builder->addFilter('search', SearchType::class);
         $builder->addFilter('from', DatepickerType::class, [
@@ -78,7 +77,7 @@ class ArticleTableType extends DataTableType
         ]);
     }
 
-    public function buildTable(DataTableBuilder $builder, array $options)
+    public function buildTable(DataTableBuilder $builder, array $options): void
     {
         $this->departement = $options['departement'];
 
@@ -153,7 +152,7 @@ class ArticleTableType extends DataTableType
         ]);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'orderable' => true,

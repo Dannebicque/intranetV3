@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/ArticleController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/05/2021 15:48
+ * @lastUpdate 23/05/2021 16:03
  */
 
 namespace App\Controller\administration;
@@ -12,7 +12,6 @@ namespace App\Controller\administration;
 use App\Classes\MyExport;
 use App\Controller\BaseController;
 use App\DataTable\ArticleTableType;
-use App\DataTable\BorneTableType;
 use App\Entity\Article;
 use App\Entity\ArticleCategorie;
 use App\Entity\Constantes;
@@ -50,7 +49,6 @@ class ArticleController extends BaseController
     /**
      * @Route("/export.{_format}", name="administration_article_export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"})
-     *
      */
     public function export(MyExport $myExport, ArticleRepository $articleRepository, $_format): Response
     {
@@ -93,7 +91,7 @@ class ArticleController extends BaseController
 
         return $this->render('administration/article/new.html.twig', [
             'article' => $article,
-            'form'    => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 
@@ -135,7 +133,7 @@ class ArticleController extends BaseController
 
         return $this->render('administration/article/edit.html.twig', [
             'article' => $article,
-            'form'    => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 
