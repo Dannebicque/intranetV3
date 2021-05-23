@@ -508,6 +508,9 @@ adm:
   import_diplome:
     index.heading: 'Import d''une maquette pour le diplôme "%diplome%"'
   apc.annee.heading: 'Compétences par année'
+  categories:
+    articles:
+      index.heading: 'Gérer les catégories d''articles'
 
 administratif_homepage.heading: 'Tableau de bord administratif'
 administratif.qualite.questionnaire.show.heading: 'Détails d''un questionnaire qualité'
