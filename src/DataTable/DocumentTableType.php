@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/DataTable/DocumentTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/05/2021 16:25
+ * @lastUpdate 23/05/2021 16:26
  */
 
 namespace App\DataTable;
