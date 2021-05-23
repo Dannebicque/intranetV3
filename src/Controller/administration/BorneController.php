@@ -4,13 +4,14 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/BorneController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 23/05/2021 15:20
  */
 
 namespace App\Controller\administration;
 
 use App\Classes\MyExport;
 use App\Controller\BaseController;
+use App\DataTable\BorneTableType;
 use App\Entity\Borne;
 use App\Entity\Constantes;
 use App\Form\BorneType;
@@ -28,15 +29,25 @@ class BorneController extends BaseController
     /**
      * @Route("/", name="administration_borne_index", methods="GET")
      */
-    public function index(BorneRepository $borneRepository): Response
+    public function index(Request $request): Response
     {
-        return $this->render('administration/borne/index.html.twig', ['bornes' => $borneRepository->findAll()]);
+        $table = $this->createTable(BorneTableType::class, [
+            'departement' => $this->getDepartement(),
+        ]);
+        $table->handleRequest($request);
+
+        if ($table->isCallback()) {
+            return $table->getCallbackResponse();
+        }
+
+        return $this->render('administration/borne/index.html.twig', [
+            'table' => $table,
+        ]);
     }
 
     /**
      * @Route("/export.{_format}", name="administration_borne_export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"})
-     *
      */
     public function export(MyExport $myExport, BorneRepository $borneRepository, $_format): Response
     {
@@ -92,7 +103,7 @@ class BorneController extends BaseController
 
         return $this->render('administration/borne/new.html.twig', [
             'borne' => $borne,
-            'form'  => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 
@@ -133,7 +144,7 @@ class BorneController extends BaseController
 
         return $this->render('administration/borne/edit.html.twig', [
             'borne' => $borne,
-            'form'  => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 
