@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/DataTable/ColumnType/CategorieArticleColumnType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/05/2021 15:56
+ * @lastUpdate 23/05/2021 16:03
  */
 
 namespace App\DataTable\ColumnType;
@@ -23,7 +23,7 @@ class CategorieArticleColumnType extends PropertyColumnType
         return '<span class="badge badge-info mr-2">' . $value->getLibelle() . '</span>';
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
         $resolver->setDefault('is_safe_html', true);

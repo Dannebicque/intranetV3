@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/DataTable/BorneTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/05/2021 15:20
+ * @lastUpdate 23/05/2021 16:03
  */
 
 namespace App\DataTable;
@@ -47,7 +47,7 @@ class BorneTableType extends DataTableType
         $this->csrfToken = $csrfToken;
     }
 
-    public function buildToolbar(ToolbarBuilder $builder, array $options)
+    public function buildToolbar(ToolbarBuilder $builder, array $options): void
     {
         $builder->addFilter('search', SearchType::class);
         $builder->addFilter('from', DatepickerType::class, [
@@ -57,7 +57,6 @@ class BorneTableType extends DataTableType
             'input_prefix_text' => 'Au',
         ]);
 
-//        // Export button (use to export data)
         $builder->addWidget('export', ButtonDropdownType::class, [
             'icon' => 'mdi mdi-download',
             'attr' => ['data-toggle' => 'dropdown'],
@@ -78,7 +77,7 @@ class BorneTableType extends DataTableType
         ]);
     }
 
-    public function buildTable(DataTableBuilder $builder, array $options)
+    public function buildTable(DataTableBuilder $builder, array $options): void
     {
         $this->departement = $options['departement'];
 
@@ -161,7 +160,7 @@ class BorneTableType extends DataTableType
         ]);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'orderable' => true,

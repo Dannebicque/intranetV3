@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/DataTable/ColumnType/PersonnelColumnType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/05/2021 08:10
+ * @lastUpdate 23/05/2021 16:03
  */
 
 namespace App\DataTable\ColumnType;
@@ -19,7 +19,7 @@ class PersonnelColumnType extends PropertyColumnType
         return null !== $value ? $value->getDisplayPr() : 'erreur';
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
         $resolver->setDefault('is_safe_html', true);

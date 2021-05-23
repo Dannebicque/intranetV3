@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/DataTable/ColumnType/GroupeEtudiantColumnType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/05/2021 15:14
+ * @lastUpdate 23/05/2021 16:03
  */
 
 namespace App\DataTable\ColumnType;
@@ -27,7 +27,7 @@ class GroupeEtudiantColumnType extends PropertyColumnType
         return $html;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
         $resolver->setDefault('is_safe_html', true);
