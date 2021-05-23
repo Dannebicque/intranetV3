@@ -6,6 +6,10 @@
     min-h-fullscreen bg-img center-vh" style="background-image: url({{ asset('assets/bg/2.jpg') }});
 {% endblock %}
 
+{% block body_complement %}
+    data-overlay="7"
+{% endblock %}
+
 {% block content %}
     <div class="card card-round card-shadowed px-50 py-30 w-400px mb-0 text-center" style="max-width: 100%">
         <div class="header-special" style="background-color: {{ settings('COLOR_IUT') }}">

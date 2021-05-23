@@ -52,7 +52,7 @@
     {% endif %}
 </head>
 
-<body class="{{ settings('CODE_IUT') }} {% block body %}{% endblock %}" data-overlay="7">
+<body class="{{ settings('CODE_IUT') }} {% block body %}{% endblock %}" {% block body_complement %}{% endblock %}>
 
 {% block content %}
 
