@@ -117,7 +117,7 @@ action:
   duplicate: 'Dupliquer'
   pdf: PDF
   csv: CSV
-  xlsx: XLSX
+  excel: XLSX
 
 actualite:
   add.success.flash: 'Actualité ajoutée avec succès'
@@ -1252,6 +1252,7 @@ label:
   annee_previsionnel: 'Année du prévisionnel'
   annee_universitaire: 'Année universitaire'
   absence_justifiee: 'Absence justifée ?'
+  categorie: Catégorie
   capacite: Capacité
   codeApogee: 'Code Apogée'
   cv: 'Votre CV'
