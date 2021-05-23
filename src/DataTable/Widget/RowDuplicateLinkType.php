@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/DataTable/Widget/RowDuplicateLinkType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/05/2021 08:50
+ * @lastUpdate 23/05/2021 14:46
  */
 
 namespace App\DataTable\Widget;
@@ -20,7 +20,7 @@ class RowDuplicateLinkType extends RowLinkType
         parent::configureOptions($resolver);
 
         $resolver
-            ->setDefault('title', 'action.show')
+            ->setDefault('title', 'action.duplicate')
             ->setDefault('icon', 'mdi mdi-content-copy')
             ->setDefault('class', 'table-link text-success');
     }

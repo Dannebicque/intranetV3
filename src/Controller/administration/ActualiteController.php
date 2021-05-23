@@ -4,13 +4,14 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/ActualiteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 23/05/2021 14:50
  */
 
 namespace App\Controller\administration;
 
 use App\Classes\MyExport;
 use App\Controller\BaseController;
+use App\DataTable\ActualiteTableType;
 use App\Entity\Actualite;
 use App\Entity\Constantes;
 use App\Form\ActualiteType;
@@ -27,18 +28,29 @@ class ActualiteController extends BaseController
     /**
      * @Route("/", name="administration_actualite_index", methods="GET")
      */
-    public function index(ActualiteRepository $actualiteRepository): Response
-    {
+    public function index(
+        Request $request
+    ): Response {
+        $table = $this->createTable(ActualiteTableType::class, [
+            'departement' => $this->getDepartement(),
+        ]);
+        $table->handleRequest($request);
+
+        if ($table->isCallback()) {
+            return $table->getCallbackResponse();
+        }
+
         return $this->render(
             'administration/actualite/index.html.twig',
-            ['actualites' => $actualiteRepository->getByDepartement($this->getDepartement())]
+            [
+                'table' => $table,
+            ]
         );
     }
 
     /**
      * @Route("/export.{_format}", name="administration_actualite_export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"})
-     *
      */
     public function export(MyExport $myExport, ActualiteRepository $actualiteRepository, $_format): Response
     {
@@ -62,7 +74,7 @@ class ActualiteController extends BaseController
         $form = $this->createForm(ActualiteType::class, $actualite, [
             'attr' => [
                 'data-provide' => 'validation',
-                'novalidate'   => true,
+                'novalidate' => true,
             ],
         ]);
         $form->handleRequest($request);
@@ -77,7 +89,7 @@ class ActualiteController extends BaseController
 
         return $this->render('administration/actualite/new.html.twig', [
             'actualite' => $actualite,
-            'form'      => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 
@@ -114,7 +126,7 @@ class ActualiteController extends BaseController
 
         return $this->render('administration/actualite/edit.html.twig', [
             'actualite' => $actualite,
-            'form'      => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 

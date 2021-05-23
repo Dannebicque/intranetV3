@@ -114,6 +114,11 @@ action:
   accepter: Accepter
   refuser: Refuser
   export: 'Télécharger'
+  duplicate: 'Dupliquer'
+  pdf: PDF
+  csv: CSV
+  xlsx: XLSX
+
 actualite:
   add.success.flash: 'Actualité ajoutée avec succès'
   duplicate.success.flash: 'Actualité dupliquée avec succès'
@@ -1271,9 +1276,12 @@ label:
   semaineReelle: 'Numéro Semaine Réelle'
   semestre: Semestre
   site: Site
+  titre: Titre
+  texte: Texte
   typeGroupe: 'Type de groupe'
   typesalle: 'Type de salle'
   update: 'Mise à jour'
+  updated: 'Mise à jour'
 
 les.dates.de.la.periode.sont: 'Les dates de cette période de stage sont'
 les.responsables.sont: 'Les responsables de cette période sont'
