@@ -118,6 +118,9 @@ action:
   pdf: PDF
   csv: CSV
   excel: XLSX
+  lieu: Lieu
+  heureDebut: Heure début
+  dateDebut: Date
 
 actualite:
   add.success.flash: 'Actualité ajoutée avec succès'
