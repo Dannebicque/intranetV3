@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/RattrapageController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/05/2021 14:21
+ * @lastUpdate 23/05/2021 14:32
  */
 
 namespace App\Controller\administration;
@@ -37,9 +37,7 @@ class RattrapageController extends BaseController
      */
     public function index(
         Request $request,
-        TypeMatiereManager $typeMatiereManager,
         AbsenceRepository $absenceRepository,
-        RattrapageRepository $rattrapageRepository,
         Semestre $semestre
     ): Response {
         $table = $this->createTable(RattrapageTableType::class, [

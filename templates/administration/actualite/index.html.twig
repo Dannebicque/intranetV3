@@ -14,36 +14,7 @@
     <div class="card">
         <h4 class="card-title">{{ 'adm.actualite.index.heading'|trans }}</h4>
         <div class="card-body">
-            <table class="table table-striped table-bordered" data-provide="datatables" data-checkbox="true">
-                <thead>
-                <tr>
-                    <th>
-                        <label class="sr-only" for="select_all">Tout selectionner</label>
-                        <input name="select_all" value="1" id="select_all" type="checkbox"/></th>
-                    <th>{{ 'table.titre'|trans }}</th>
-                    <th>{{ 'table.texte'|trans }}</th>
-                    <th>{{ 'table.updated'|trans }}</th>
-                    <th>{{ 'table.actions'|trans }}</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for actualite in actualites %}
-                    <tr id="ligne_{{ actualite.id }}">
-                        <td></td>
-                        <td>{{ actualite.titre }}</td>
-                        <td>{{ actualite.texte }}</td>
-                        <td>{{ actualite.updated ? actualite.updated|format_datetime('long', 'short') : '' }}</td>
-                        <td>
-                            {{ include('composants/adm-buttons-table-index.html.twig', {elt: 'actualite', id: actualite.id}) }}
-                        </td>
-                    </tr>
-                {% else %}
-                    <tr>
-                        <td colspan="4">{{ 'no.record.found'|trans }}</td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+            {{ render_table(table) }}
         </div>
     </div>
 {% endblock %}
@@ -51,29 +22,6 @@
 
 {% block fabactions %}
     {{ include('composants/fab-buttons.html.twig', {boutons:[
-        {type: 'info',
-            href: path('administration_actualite_export', {_format:'pdf'}),
-            title: 'exporter.pdf'|trans,
-            icone : "fa fa-file-pdf"
-        },
-        {
-            type:'info',
-            href:path('administration_actualite_export', {_format:'csv'}),
-            title: 'exporter.csv'|trans,
-            icone: 'fa fa-file-csv'
-        },
-        {
-            type:'info',
-            href:path('administration_actualite_export', {_format:'xlsx'}),
-            title: 'exporter.xls'|trans,
-            icone: 'fa fa-file-excel'
-        },
-        {
-            type:'info',
-            href:path('administration_actualite_new'),
-            title: 'ajouter'|trans,
-            icone: 'fas fa-plus'
-        },
         {
             type:'info',
             href:path('help_article', {sujet: 'administration-actualite'}),
@@ -83,12 +31,3 @@
     ]}) }}
 {% endblock %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    {{ encore_entry_link_tags('datatable') }}
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    {{ encore_entry_script_tags('datatable') }}
-{% endblock %}
