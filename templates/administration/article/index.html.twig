@@ -14,66 +14,13 @@
     <div class="card">
         <h4 class="card-title">{{ 'adm.article.index.heading'|trans }}</h4>
         <div class="card-body">
-            <table class="table table-striped table-bordered"
-                    {% if articles|length >0 %}
-                data-provide="datatables"
-                data-checkbox="true"
-                    {% endif %}>
-                <thead>
-                <tr>
-                    <th><label class="sr-only" for="select_all">Tout selectionner</label>
-                        <input name="select_all" value="1" id="select_all" type="checkbox"/></th>
-                    <th>{{ 'table.titre'|trans }}</th>
-                    <th>{{ 'table.texte'|trans }}</th>
-                    <th>{{ 'table.categorie'|trans }}</th>
-                    <th>{{ 'table.updated'|trans }}</th>
-                    <th>{{ 'table.actions'|trans }}</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for article in articles %}
-                    <tr id="ligne_{{ article.id }}">
-                        <td></td>
-                        <td>{{ article.titre }}</td>
-                        <td>{{ article.texte|slice(0, 50) }}</td>
-                        <td>{{ article.categorie ? article.categorie.libelle : 'non.defini'|trans }}</td>
-                        <td>{{ article.updated ? article.updated|format_datetime('long', 'short') : '' }}</td>
-                        <td>
-                            {{ include('composants/adm-buttons-table-index.html.twig', {elt: 'article', id: article.id}) }}
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+            {{ render_table(table) }}
         </div>
     </div>
 {% endblock %}
 
 {% block fabactions %}
     {{ include('composants/fab-buttons.html.twig', {boutons:[
-        {type: 'info',
-            href: path('administration_article_export', {_format:'pdf'}),
-            title: 'exporter.pdf'|trans,
-            icone : "fas fa-file-pdf"
-        },
-        {
-            type:'info',
-            href:path('administration_article_export', {_format:'csv'}),
-            title: 'exporter.csv'|trans,
-            icone: 'fas fa-file-csv'
-        },
-        {
-            type:'info',
-            href:path('administration_article_export', {_format:'xlsx'}),
-            title: 'exporter.xls'|trans,
-            icone: 'fas fa-file-excel'
-        },
-        {
-            type:'info',
-            href:path('administration_article_new'),
-            title: 'ajouter'|trans,
-            icone: 'fas fa-plus'
-        },
         {
             type:'success',
             href:path('administration_article_categories'),
@@ -89,13 +36,4 @@
     ]}) }}
 {% endblock %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    {{ encore_entry_link_tags('datatable') }}
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    {{ encore_entry_script_tags('datatable') }}
-{% endblock %}
 
