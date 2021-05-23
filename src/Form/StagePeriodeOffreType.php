@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/StagePeriodeOffreType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 23/05/2021 14:21
  */
 
 namespace App\Form;
@@ -32,26 +32,26 @@ class StagePeriodeOffreType extends AbstractType
         $this->annee = $options['annee'];
 
         $builder
-            ->add('libelle', TextType::class, ['label' => 'label.libelle'])
-            ->add('entreprise', TextType::class, ['label' => 'label.entreprise'])
-            ->add('ville', TextType::class, ['label' => 'label.ville'])
+            ->add('libelle', TextType::class, ['label' => 'libelle'])
+            ->add('entreprise', TextType::class, ['label' => 'entreprise'])
+            ->add('ville', TextType::class, ['label' => 'ville'])
             ->add('documentFile', VichFileType::class, [
-                'required'       => false,
-                'label'          => 'label.fichier',
-                'download_label' => 'label.apercu',
-                'allow_delete'   => false,
+                'required' => false,
+                'label' => 'fichier',
+                'download_label' => 'apercu',
+                'allow_delete' => false,
             ])
             ->add('stagePeriodes', EntityType::class, [
-                'class'         => StagePeriode::class,
-                'label'         => 'label.stagePeriodes',
-                'choice_label'  => 'libelle',
+                'class' => StagePeriode::class,
+                'label' => 'stagePeriodes',
+                'choice_label' => 'libelle',
                 'query_builder' => function(StagePeriodeRepository $stagePeriodeRepository) {
                     return $stagePeriodeRepository->findByDepartementBuilder($this->departement,
                         $this->annee);
                 },
-                'required'      => true,
-                'expanded'      => true,
-                'multiple'      => true,
+                'required' => true,
+                'expanded' => true,
+                'multiple' => true,
             ]);
     }
 

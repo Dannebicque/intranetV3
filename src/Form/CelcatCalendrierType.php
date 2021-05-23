@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/CelcatCalendrierType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 23/05/2021 14:21
  */
 
 namespace App\Form;
@@ -17,6 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Umbrella\CoreBundle\Form\DatepickerType;
 
 class CelcatCalendrierType extends AbstractType
 {
@@ -24,22 +25,18 @@ class CelcatCalendrierType extends AbstractType
     {
         $builder
             ->add('anneeUniversitaire', EntityType::class, [
-                'label'        => 'label.annee_universitaire',
-                'class'        => AnneeUniversitaire::class,
+                'label' => 'annee_universitaire',
+                'class' => AnneeUniversitaire::class,
                 'choice_label' => 'displayAnneeUniversitaire',
             ])
             ->add('semaineFormation', TextType::class, [
-                'label' => 'label.semaineFormation',
+                'label' => 'semaineFormation',
             ])
             ->add('semaineReelle', TextType::class, [
-                'label' => 'label.semaineReelle',
+                'label' => 'semaineReelle',
             ])
-            ->add('dateLundi', DateType::class, [
-                'label'  => 'label.dateLundi',
-                'format' => 'dd/MM/yyyy',
-                'widget' => 'single_text',
-                'html5'  => false,
-                'attr'   => ['data-provide' => 'datepicker', 'data-language' => 'fr'],
+            ->add('dateLundi', DatepickerType::class, [
+                'label' => 'dateLundi',
             ]);
     }
 

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/StagePeriodeInterruptionType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 22/05/2021 18:37
  */
 
 namespace App\Form;
@@ -25,7 +25,7 @@ class StagePeriodeInterruptionType extends AbstractType
         $builder
             ->add('dateRange', DateRangeType::class,
                 ['label' => 'dateRange.interruption', 'mapped' => false, 'required' => true])
-            ->add('motif', TextType::class, ['label' => 'label.motif'])
+            ->add('motif', TextType::class, ['label' => 'motif'])
             ->addEventListener(FormEvents::POST_SUBMIT, static function(FormEvent $event) {
                 $stagePeriodeInterruption = $event->getData();
                 $form = $event->getForm();

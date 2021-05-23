@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/EvaluationsPersonnelsType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 23/05/2021 14:21
  */
 
 namespace App\Form;
@@ -17,6 +17,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Umbrella\CoreBundle\Form\Entity2Type;
 
 /**
  * Class EvaluationsType.
@@ -31,15 +32,14 @@ class EvaluationsPersonnelsType extends AbstractType
         $this->semestre = $options['semestre'];
 
         $builder
-            ->add('personnelAutorise', EntityType::class, [
-                'class'         => Personnel::class,
-                'choice_label'  => 'display',
-                'multiple'      => true,
-                'expanded'      => true,
+            ->add('personnelAutorise', Entity2Type::class, [
+                'class' => Personnel::class,
+                'choice_label' => 'display',
+                'multiple' => true,
+                'expanded' => true,
                 'query_builder' => function(PersonnelRepository $repo) {
                     return $repo->findBySemestreBuilder($this->semestre);
                 },
-                'attr'          => ['class' => 'form-control selectpicker'],
             ]);
     }
 

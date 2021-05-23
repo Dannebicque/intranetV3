@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Borne.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 22/05/2021 19:29
  */
 
 namespace App\Entity;
@@ -29,6 +29,12 @@ class Borne extends BaseEntity
         'information' => 'fas fa-info-circle',
         'danger' => 'fas fa-exclamation-circle',
         'demande' => 'fas fa-question-circle',
+    ];
+
+    public const ICONES_CHOICE = [
+        'fas fa-info-circle' => 'fas fa-info-circle',
+        'fas fa-exclamation-circle' => 'fas fa-exclamation-circle',
+        'fas fa-question-circle' => 'fas fa-question-circle',
     ];
     public const COULEURS = ['Rouge' => '#FF0000', 'Vert' => '#00FF00', 'Bleu' => '#0000FF'];
 

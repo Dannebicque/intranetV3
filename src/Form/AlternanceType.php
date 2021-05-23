@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/AlternanceType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 23/05/2021 14:21
  */
 
 namespace App\Form;
@@ -21,6 +21,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Umbrella\CoreBundle\Form\Entity2Type;
 
 class AlternanceType extends AbstractType
 {
@@ -32,40 +33,40 @@ class AlternanceType extends AbstractType
 
         $builder
             ->add('typeContrat', ChoiceType::class, [
-                'choices'  => [
-                    Alternance::ALTERNANCE_APPRENTISSAGE       => Alternance::ALTERNANCE_APPRENTISSAGE,
+                'choices' => [
+                    Alternance::ALTERNANCE_APPRENTISSAGE => Alternance::ALTERNANCE_APPRENTISSAGE,
                     Alternance::ALTERNANCE_PROFESSIONALISATION => Alternance::ALTERNANCE_PROFESSIONALISATION,
                 ],
                 'expanded' => true,
-                'label'    => 'label.contrat_alternance',
+                'label' => 'contrat_alternance',
             ])
             ->add('etat', ChoiceType::class, [
-                'choices'  => [
+                'choices' => [
                     Alternance::ALTERNANCE_ETAT_INITIALISE => Alternance::ALTERNANCE_ETAT_INITIALISE,
-                    Alternance::ALTERNANCE_ETAT_COMPLETE   => Alternance::ALTERNANCE_ETAT_COMPLETE,
-                    Alternance::ALTERNANCE_ETAT_VALIDE     => Alternance::ALTERNANCE_ETAT_VALIDE,
+                    Alternance::ALTERNANCE_ETAT_COMPLETE => Alternance::ALTERNANCE_ETAT_COMPLETE,
+                    Alternance::ALTERNANCE_ETAT_VALIDE => Alternance::ALTERNANCE_ETAT_VALIDE,
                 ],
                 'expanded' => true,
-                'label'    => 'label.etat_alternance',
+                'label' => 'etat_alternance',
             ])
-            ->add('dateRange', DateRangeType::class, ['label' => 'dateRange.periode.alternance', 'mapped' => false, 'required' => true])
-            ->add('entreprise', EntrepriseType::class, ['label' => 'label.entreprise'])
-            ->add('tuteur', ContactType::class, ['label' => 'label.tuteur'])
-            ->add('tuteurUniversitaire', EntityType::class, [
-                'label'         => 'label.tuteur_universitaire',
-                'expanded'      => false,
-                'multiple'      => false,
-                'class'         => Personnel::class,
-                'help'          => 'help.tuteur_universitaire',
-                'choice_label'  => 'display',
+            ->add('dateRange', DateRangeType::class,
+                ['label' => 'dateRange.periode.alternance', 'mapped' => false, 'required' => true])
+            ->add('entreprise', EntrepriseType::class, ['label' => 'entreprise'])
+            ->add('tuteur', ContactType::class, ['label' => 'tuteur'])
+            ->add('tuteurUniversitaire', Entity2Type::class, [
+                'label' => 'tuteur_universitaire',
+                'expanded' => false,
+                'multiple' => false,
+                'class' => Personnel::class,
+                'help' => 'help.tuteur_universitaire',
+                'choice_label' => 'display',
                 'query_builder' => function(PersonnelRepository $personnelRepository) {
                     return $personnelRepository->findByDepartementBuilder($this->departement);
                 },
-                'attr'          => ['class' => 'form-control selectpicker'],
             ])
-            ->add('sujet', TextareaType::class, ['label' => 'label.sujet_altenance'])
+            ->add('sujet', TextareaType::class, ['label' => 'sujet_altenance'])
             ->add('adresseAlternance', AdresseType::class,
-                ['label' => 'label.adresse_lieu_alternance', 'help' => 'help.complete.meme.si.identique'])
+                ['label' => 'adresse_lieu_alternance', 'help' => 'help.complete.meme.si.identique'])
             ->addEventListener(FormEvents::POST_SUBMIT, static function(FormEvent $event) {
                 $alternance = $event->getData();
                 $form = $event->getForm();

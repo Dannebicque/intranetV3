@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/EvaluationType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 15/05/2021 16:01
+ * @lastUpdate 23/05/2021 14:21
  */
 
 namespace App\Form;
@@ -21,11 +21,11 @@ use App\Repository\TypeGroupeRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Umbrella\CoreBundle\Form\DatepickerType;
 
 /**
  * Class EvaluationType.
@@ -54,7 +54,7 @@ class EvaluationType extends AbstractType
         $builder
             ->add('personnelAuteur', EntityType::class,
                 [
-                    'label' => 'label.personnelAuteur',
+                    'label' => 'personnelAuteur',
                     'help' => 'help.personnelAuteur',
                     'required' => true,
                     'disabled' => $personnelDisabled,
@@ -66,28 +66,25 @@ class EvaluationType extends AbstractType
                 ])
             ->add('libelle', TextType::class,
                 [
-                    'label' => 'label.libelle_evaluation',
+                    'label' => 'libelle_evaluation',
                     'help' => 'help.libelle_evaluation',
                     'required' => false,
                     'disabled' => $autorise,
                 ])
-            ->add('dateEvaluation', DateType::class, [
-                'label' => 'label.date_evaluation',
-                'format' => 'dd/MM/yyyy',
-                'widget' => 'single_text',
-                'html5' => false,
+            ->add('dateEvaluation', DatepickerType::class, [
+                'label' => 'date_evaluation',
                 'disabled' => $autorise,
-                'attr' => ['data-provide' => 'datepicker', 'data-language' => $locale],
+                'attr' => ['data-options' => ['locale' => $locale]],
             ])
             ->add('coefficient', TextType::class,
-                ['label' => 'label.coefficient', 'help' => 'help.coefficient', 'disabled' => $autorise])
+                ['label' => 'coefficient', 'help' => 'help.coefficient', 'disabled' => $autorise])
             ->add('commentaire', TextType::class,
-                ['label' => 'label.commentaire', 'help' => 'help.commentaire_evaluation', 'disabled' => $autorise])
+                ['label' => 'commentaire', 'help' => 'help.commentaire_evaluation', 'disabled' => $autorise])
             ->add('visible', YesNoType::class,
-                ['label' => 'label.evaluation.visible', 'help' => 'help.evaluation.visible'])
+                ['label' => 'evaluation.visible', 'help' => 'help.evaluation.visible'])
             ->add('matiere', ChoiceType::class, [
                 'choices' => $this->typeMatiereManager->findBySemestreChoiceType($this->semestre),
-                'label' => 'label.evaluation_matiere',
+                'label' => 'evaluation_matiere',
                 'required' => true,
                 'data' => $options['data']->getTypeIdMatiere(),
                 'expanded' => false,
@@ -96,7 +93,7 @@ class EvaluationType extends AbstractType
             ])
             ->add('typeGroupe', EntityType::class, [
                 'class' => TypeGroupe::class,
-                'label' => 'label.evaluation_type_groupe',
+                'label' => 'evaluation_type_groupe',
                 'choice_label' => 'libelle',
                 'disabled' => $autorise,
                 'query_builder' => function(TypeGroupeRepository $typeGroupeRepository) {
@@ -109,7 +106,7 @@ class EvaluationType extends AbstractType
             ->add('personnelAutorise', EntityType::class, [
                 'class' => Personnel::class,
                 'help' => 'help.personnelAutorise',
-                'label' => 'label.evaluation_personnelAutorise',
+                'label' => 'evaluation_personnelAutorise',
                 'disabled' => $autorise,
                 'choice_label' => 'display',
                 'attr' => ['class' => ''],

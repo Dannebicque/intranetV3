@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Matieres/TypeMatiereManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2021 08:46
+ * @lastUpdate 23/05/2021 08:07
  */
 
 namespace App\Classes\Matieres;
@@ -30,11 +30,18 @@ class TypeMatiereManager
         $this->managers[ApcRessource::SOURCE] = $ressourceManager;
     }
 
+    public function getLibelleMatiere($value)
+    {
+        $mat = $this->getMatiereFromSelect($value);
+
+        return $mat !== null ? $mat->display : 'err';
+    }
+
     public function getMatiereFromSelect($data): ?\App\DTO\Matiere
     {
         $d = explode('_', $data);
 
-        if (2 === count($d)) {
+        if (2 === count($d) && $d[0] !== '') {
             return $this->typeDeMatiere($d[0])->find($d[1]);
         }
 

@@ -45,9 +45,11 @@
                 </div>
                 <div class="col-sm-6 col-md-2"><label for="date" class="sr-only">Date</label>
                     <input type="text"
+
                            name="date"
                            id="date"
-                           data-provide="datepicker" data-language="{{ app.request.locale }}"
+                            {{ options | html_attr }}
+                           is="date-picker"
                            class="form-control"
                            placeholder="Date">
                 </div>
@@ -99,13 +101,15 @@
                         </td>
                         <td><label for="date_{{ rattrapage.uuidString }}" class="sr-only">Date</label>
                             <input type="text"
+                                   is="date-picker"
                                    name="date_{{ rattrapage.uuidString }}"
                                    id="date_{{ rattrapage.uuidString }}"
                                    class="form-control dateChange"
                                    placeholder="Date"
-                                   data-provide="datepicker" data-language="{{ app.request.locale }}"
                                    value="{{ rattrapage.dateRattrapage|date('d/m/Y') }}"
-                                   data-rattrapage="{{ rattrapage.uuidString }}">
+                                   data-rattrapage="{{ rattrapage.uuidString }}"
+                                    {{ options | html_attr }}
+                            />
                         </td>
                         <td><label for="heure_{{ rattrapage.uuidString }}" class="sr-only">Salle</label>
                             <input type="text"
@@ -129,13 +133,6 @@
             </table>
         </div>
     </div>
-{% endblock %}
-
-{% block javascripts %}
-<script>
-let diplome = {{ diplome.id }}
-</script>
-    {{ parent() }}
 {% endblock %}
 
 {% block fabactions %}
@@ -172,6 +169,9 @@ let diplome = {{ diplome.id }}
 {% endblock %}
 
 {% block javascripts %}
+    <script>
+      let diplome = {{ diplome.id }}
+    </script>
     {{ parent() }}
     {{ encore_entry_script_tags('adm.rattrapages') }}
 {% endblock %}

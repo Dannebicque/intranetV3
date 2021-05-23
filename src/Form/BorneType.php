@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/BorneType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 23/05/2021 14:21
  */
 
 namespace App\Form;
@@ -16,13 +16,13 @@ use App\Form\Type\YesNoType;
 use App\Repository\SemestreRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Umbrella\CoreBundle\Form\Choice2Type;
 
 /**
  * Class BorneType.
@@ -36,44 +36,47 @@ class BorneType extends AbstractType
         $this->departement = $options['departement'];
 
         $builder
-            ->add('icone', ChoiceType::class, [
-                'attr'        => ['class' => 'form-control selectpicker'],
-                'label'       => 'label.icone',
-                'choices'     => Borne::ICONES,
-                'choice_attr' => static function($choiceValue, $key, $value) {
-                    return ['data-icon' => Borne::ICONES[$key] . ' mr-2'];
+            ->add('icone', Choice2Type::class, [
+                'label' => 'icone',
+                'choices' => Borne::ICONES,
+                'template_html' => '<span><i class="[[icone]] mr-2"></i> [[text]]</span>',
+                'expose' => function($icone) {
+                    return [
+                        'icone' => Borne::ICONES_CHOICE[$icone],
+                    ];
                 },
             ])
-            ->add('couleur', ChoiceType::class, [
-                'label'   => 'label.couleur',
-                'attr'    => ['class' => 'form-control selectpicker'],
+            ->add('couleur', Choice2Type::class, [
+                'label' => 'couleur',
                 'choices' => Borne::COULEURS,
             ])
             ->add('message', TextareaType::class, [
-                'label' => 'label.message',
+                'label' => 'message',
             ])
             ->add('url', TextType::class, [
-                'label'    => 'label.url',
+                'label' => 'url',
                 'required' => false,
+                'input_prefix' => '<div class="input-group-text">HTTPS://</div>',
             ])
+            //->add('dateRange', DateRangeType::class, ['label' => 'dateRange', 'mapped' => false, 'required' => true])
             ->add('dateRange', DateRangeType::class, ['label' => 'dateRange', 'mapped' => false, 'required' => true])
             ->add(
                 'visible',
                 YesNoType::class,
                 [
-                    'label' => 'label.visible',
+                    'label' => 'visible',
                 ]
             )
             ->add('semestres', EntityType::class, [
-                'class'         => Semestre::class,
-                'label'         => 'label.semestres_date',
-                'choice_label'  => 'libelle',
+                'class' => Semestre::class,
+                'label' => 'semestres_date',
+                'choice_label' => 'libelle',
                 'query_builder' => function(SemestreRepository $semestreRepository) {
                     return $semestreRepository->findByDepartementBuilder($this->departement);
                 },
-                'required'      => true,
-                'expanded'      => true,
-                'multiple'      => true,
+                'required' => true,
+                'expanded' => true,
+                'multiple' => true,
             ])
             ->addEventListener(FormEvents::POST_SUBMIT, static function(FormEvent $event) {
                 $borne = $event->getData();
@@ -86,11 +89,11 @@ class BorneType extends AbstractType
                 $borne = $event->getData();
                 $form = $event->getForm();
                 $form->add('dateRange', DateRangeType::class, [
-                    'label'     => 'dateRange',
-                    'mapped'    => false,
+                    'label' => 'dateRange',
+                    'mapped' => false,
                     'date_data' => [
                         'from' => $borne->getDateDebutPublication(),
-                        'to'   => $borne->getDateFinPublication(),
+                        'to' => $borne->getDateFinPublication(),
                     ],
                 ]);
             });
@@ -99,8 +102,8 @@ class BorneType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class'         => Borne::class,
-            'departement'        => null,
+            'data_class' => Borne::class,
+            'departement' => null,
             'translation_domain' => 'form',
         ]);
     }

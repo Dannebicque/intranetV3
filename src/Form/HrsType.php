@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/HrsType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/04/2021 11:50
+ * @lastUpdate 23/05/2021 14:21
  */
 
 namespace App\Form;
@@ -23,6 +23,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Umbrella\CoreBundle\Form\Entity2Type;
 
 /**
  * Class HrsType.
@@ -36,32 +37,31 @@ class HrsType extends AbstractType
         $this->departement = $options['departement'];
 
         $builder
-            ->add('personnel', EntityType::class, [
-                'class'         => Personnel::class,
-                'required'      => true,
-                'choice_label'  => 'display',
+            ->add('personnel', Entity2Type::class, [
+                'class' => Personnel::class,
+                'required' => true,
+                'choice_label' => 'display',
                 'query_builder' => function(PersonnelRepository $personnelRepository) {
                     return $personnelRepository->findByDepartementBuilder($this->departement);
                 },
-                'attr'          => ['class' => 'form-control selectpicker'],
-                'label'         => 'label.personnel',
+                'label' => 'personnel',
             ])
-            ->add('typeHrs', EntityType::class, [
-                'class'        => TypeHrs::class,
-                'required'     => true,
+            ->add('typeHrs', Entity2Type::class, [
+                'class' => TypeHrs::class,
+                'required' => true,
                 'choice_label' => 'libelle',
-                'label'        => 'label.typehrs',
+                'label' => 'typehrs',
             ])
-            ->add('libelle', TextType::class, ['label' => 'label.libelle'])
-            ->add('nbHeuresTd', TextType::class, ['label' => 'label.nbHeuresTd'])
+            ->add('libelle', TextType::class, ['label' => 'libelle'])
+            ->add('nbHeuresTd', TextType::class, ['label' => 'nbHeuresTd'])
             ->add('semestre', EntityType::class, [
-                'class'         => Semestre::class,
-                'required'      => false,
-                'choice_label'  => 'display',
+                'class' => Semestre::class,
+                'required' => false,
+                'choice_label' => 'display',
                 'query_builder' => function(SemestreRepository $semestreRepository) {
                     return $semestreRepository->findByDepartementBuilder($this->departement);
                 },
-                'label' => 'label.semestre',
+                'label' => 'semestre',
             ])
             ->add('diplome', EntityType::class, [
                 'class' => Diplome::class,
@@ -70,9 +70,9 @@ class HrsType extends AbstractType
                 'query_builder' => function(DiplomeRepository $diplomeRepository) {
                     return $diplomeRepository->findByDepartementBuilder($this->departement);
                 },
-                'label' => 'label.diplome',
+                'label' => 'diplome',
             ])
-            ->add('commentaire', TextareaType::class, ['label' => 'label.commentaire', 'required' => false]);
+            ->add('commentaire', TextareaType::class, ['label' => 'commentaire', 'required' => false]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

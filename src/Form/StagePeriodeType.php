@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/StagePeriodeType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 23/05/2021 14:21
  */
 
 namespace App\Form;
@@ -37,45 +37,45 @@ class StagePeriodeType extends AbstractType
     {
         $this->departement = $options['departement'];
         $builder
-            ->add('libelle', TextType::class, ['label' => 'label.libelle', 'help' => 'help.libelleStagePeriode'])
+            ->add('libelle', TextType::class, ['label' => 'libelle', 'help' => 'help.libelleStagePeriode'])
             ->add('numeroPeriode', ChoiceType::class, [
-                'label'              => 'label.ordre_annee',
-                'choices'            => [1 => 1, 2 => 2, 3 => 3, 4 => 4, 5 => 5, 6 => 6],
+                'label' => 'ordre_annee',
+                'choices' => [1 => 1, 2 => 2, 3 => 3, 4 => 4, 5 => 5, 6 => 6],
                 'translation_domain' => 'form',
             ])
             ->add('semestre', EntityType::class, [
-                'class'         => Semestre::class,
-                'label'         => 'label.semestre_stage_periode',
-                'choice_label'  => 'libelle',
+                'class' => Semestre::class,
+                'label' => 'semestre_stage_periode',
+                'choice_label' => 'libelle',
                 'query_builder' => function(SemestreRepository $semestreRepository) {
                     return $semestreRepository->findByDepartementBuilder($this->departement);
                 },
-                'required'      => true,
-                'expanded'      => true,
-                'multiple'      => false,
+                'required' => true,
+                'expanded' => true,
+                'multiple' => false,
             ])
             ->add('responsables', EntityType::class, [
-                'label'         => 'label.responsables',
-                'expanded'      => true,
-                'multiple'      => true,
-                'class'         => Personnel::class,
-                'help'          => 'help.responsables',
-                'choice_label'  => 'display',
+                'label' => 'responsables',
+                'expanded' => true,
+                'multiple' => true,
+                'class' => Personnel::class,
+                'help' => 'help.responsables',
+                'choice_label' => 'display',
                 'query_builder' => function(PersonnelRepository $personnelRepository) {
                     return $personnelRepository->findByDepartementBuilder($this->departement);
                 },
             ])
             ->add('anneeUniversitaire', EntityType::class, [
-                'label'        => 'label.anneeUniversitaire',
+                'label' => 'anneeUniversitaire',
                 'choice_label' => 'displayAnneeUniversitaire',
-                'class'        => AnneeUniversitaire::class,
+                'class' => AnneeUniversitaire::class,
             ])
             ->add('dateRange', DateRangeType::class,
                 ['label' => 'dateRange.periode', 'mapped' => false, 'required' => true])
-            ->add('nbSemaines', TextType::class, ['label' => 'label.nbSemaines', 'help' => 'help.nbSemaines'])
-            ->add('nbJours', TextType::class, ['label' => 'label.nbJours', 'help' => 'help.nbJours'])
+            ->add('nbSemaines', TextType::class, ['label' => 'nbSemaines', 'help' => 'help.nbSemaines'])
+            ->add('nbJours', TextType::class, ['label' => 'nbJours', 'help' => 'help.nbJours'])
             ->add('datesFlexibles', YesNoType::class,
-                ['label' => 'label.datesFlexibles', 'help' => 'help.datesFlexibles'])
+                ['label' => 'datesFlexibles', 'help' => 'help.datesFlexibles'])
             ->add('stagePeriodeInterruptions', CollectionType::class, [
                 'entry_type'    => StagePeriodeInterruptionType::class,
                 'entry_options' => ['label' => false],
@@ -90,35 +90,35 @@ class StagePeriodeType extends AbstractType
             ->add('stagePeriodeSoutenances', CollectionType::class, [
                 'entry_type'    => StagePeriodeSoutenanceType::class,
                 'entry_options' => ['label' => false],
-                'allow_add'     => true,
-                'prototype'     => true,
-                'allow_delete'  => true,
-                'by_reference'  => false,
-                'attr'          => [
+                'allow_add' => true,
+                'prototype' => true,
+                'allow_delete' => true,
+                'by_reference' => false,
+                'attr' => [
                     'class' => 'selector-stagePeriodeSoutenances',
                 ],
             ])
             ->add('copieAssistant', YesNoType::class,
-                ['label' => 'label.copieAssistant', 'help' => 'help.copieAssistant'])
+                ['label' => 'copieAssistant', 'help' => 'help.copieAssistant'])
             ->add('documentFile', VichFileType::class, [
-                'required'       => true,
-                'label'          => 'label.fichier',
-                'download_label' => 'label.apercu',
-                'allow_delete'   => true,
-                'help'           => 'help.ficheRenseignement',
+                'required' => true,
+                'label' => 'fichier',
+                'download_label' => 'apercu',
+                'allow_delete' => true,
+                'help' => 'help.ficheRenseignement',
             ])
-            ->add('texteLibre', TextareaType::class, ['label' => 'label.texteLibre', 'help' => 'help.texteLibre'])
+            ->add('texteLibre', TextareaType::class, ['label' => 'texteLibre', 'help' => 'help.texteLibre'])
             ->add('competencesVisees', TextareaType::class,
-                ['label' => 'label.competencesVisees', 'help' => 'help.competencesVisees'])
+                ['label' => 'competencesVisees', 'help' => 'help.competencesVisees'])
             ->add('modaliteEvaluation', TextareaType::class,
-                ['label' => 'label.modaliteEvaluation', 'help' => 'help.modaliteEvaluation'])
+                ['label' => 'modaliteEvaluation', 'help' => 'help.modaliteEvaluation'])
             ->add('modaliteEvaluationPedagogique', TextareaType::class,
-                ['label' => 'label.modaliteEvaluationPedagogique', 'help' => 'help.modaliteEvaluationPedagogique'])
+                ['label' => 'modaliteEvaluationPedagogique', 'help' => 'help.modaliteEvaluationPedagogique'])
             ->add('modaliteEncadrement', TextareaType::class,
-                ['label' => 'label.modaliteEncadrement', 'help' => 'help.modaliteEncadrement'])
+                ['label' => 'modaliteEncadrement', 'help' => 'help.modaliteEncadrement'])
             ->add('documentRendre', TextareaType::class,
-                ['label' => 'label.documentRendre', 'help' => 'help.documentRendre'])
-            ->add('nbEcts', TextType::class, ['label' => 'label.nbEcts', 'help' => 'help.nbEcts'])
+                ['label' => 'documentRendre', 'help' => 'help.documentRendre'])
+            ->add('nbEcts', TextType::class, ['label' => 'nbEcts', 'help' => 'help.nbEcts'])
             ->addEventListener(FormEvents::POST_SUBMIT, static function(FormEvent $event) {
                 $stagePeriode = $event->getData();
                 $form = $event->getForm();

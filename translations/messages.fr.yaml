@@ -107,6 +107,13 @@ ACCEPTE: ACCEPTE
 acceptee: Acceptée
 actions: Actions
 
+action:
+  demande:
+    acceptee: 'Demande acceptée'
+    refusee: 'Demande refusée'
+  accepter: Accepter
+  refuser: Refuser
+  export: 'Télécharger'
 actualite:
   add.success.flash: 'Actualité ajoutée avec succès'
   duplicate.success.flash: 'Actualité dupliquée avec succès'
@@ -1236,14 +1243,18 @@ l.assistant.e: 'L''assistant(e)'
 label:
   annee_previsionnel: 'Année du prévisionnel'
   annee_universitaire: 'Année universitaire'
+  absence_justifiee: 'Absence justifée ?'
   capacite: Capacité
   codeApogee: 'Code Apogée'
   cv: 'Votre CV'
   date_evaluation: 'Date de l''évaluation'
   dateLundi: 'Date du lundi'
   duree_evaluation: 'Durée de l''évaluation'
+  date_demande: 'Date demande'
   envoyer.demande: 'Envoyer la demande'
+  etudiant: Etudiant
   fichier: Fichier
+  groupe: Groupe(s)
   heure_evaluation: 'Heure du début de l''évaluation'
   import: Import
   importer.les.notes: 'Importer le fichier de notes'

@@ -2,7 +2,13 @@
   "name": "da/intranetv3",
   "description": "Intranet, Version 3 de l'IUT de Troyes et de Reims Châlons Charleville.",
   "type": "project",
-  "license": "MPL2.0",
+  "license": "MPL-2.0",
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/Dannebicque/umbrella-corebundle"
+    }
+  ],
   "require": {
     "php": "^8.0.0",
     "ext-json": "*",
@@ -39,6 +45,7 @@
     "symfony/twig-bridge": "^5.1",
     "symfony/twig-bundle": "^5.1",
     "symfony/validator": "^5.1",
+    "symfony/expression-language": "^5.1",
     "symfony/webpack-encore-bundle": "^1.7",
     "symfony/ux-chartjs": "^1.2",
     "symfony/yaml": "^5.1",
@@ -47,6 +54,7 @@
     "twig/intl-extra": "^3.0",
     "erusev/parsedown": "^1.7",
     "vich/uploader-bundle": "^1.8",
+    "umbrella/corebundle": "dev-master",
     "ext-bcmath": "*"
   },
   "config": {
