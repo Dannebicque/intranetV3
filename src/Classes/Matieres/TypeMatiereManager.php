@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Matieres/TypeMatiereManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/05/2021 08:07
+ * @lastUpdate 23/05/2021 22:04
  */
 
 namespace App\Classes\Matieres;
@@ -84,10 +84,10 @@ class TypeMatiereManager
         $t = [];
         foreach ($this->managers as $manager) {
             $matieres = $manager->findByDepartement($departement);
-            $t = array_merge($t, $matieres->toArray());
+            $t[] = $matieres->toArray();
         }
 
-        return $t;
+        return array_merge(...$t);
     }
 
     public function findBySemestreChoiceType(Semestre $semestre): array
@@ -106,10 +106,10 @@ class TypeMatiereManager
         $t = [];
         foreach ($this->managers as $manager) {
             $matieres = $manager->findBySemestre($semestre);
-            $t = array_merge($t, $matieres->toArray());
+            $t[] = $matieres->toArray();
         }
 
-        return $t;
+        return array_merge(...$t);
     }
 
     public function findBySemestreArray(Semestre $semestre)
@@ -139,9 +139,9 @@ class TypeMatiereManager
         $t = [];
         foreach ($this->managers as $manager) {
             $matieres = $manager->findByDiplome($diplome);
-            $t = array_merge($t, $matieres->toArray());
+            $t[] = $matieres->toArray();
         }
 
-        return $t;
+        return array_merge(...$t);
     }
 }
