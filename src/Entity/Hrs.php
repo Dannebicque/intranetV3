@@ -4,12 +4,11 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Hrs.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 24/05/2021 16:35
  */
 
 namespace App\Entity;
 
-use App\Entity\Traits\LifeCycleTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 

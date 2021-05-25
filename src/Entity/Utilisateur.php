@@ -4,13 +4,11 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Utilisateur.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/03/2021 12:00
+ * @lastUpdate 24/05/2021 16:35
  */
 
 namespace App\Entity;
 
-use App\Entity\Traits\LifeCycleTrait;
-use DateTime;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use JsonException;

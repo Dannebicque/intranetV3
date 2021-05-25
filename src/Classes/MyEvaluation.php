@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEvaluation.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 15/05/2021 09:16
+ * @lastUpdate 25/05/2021 18:52
  */
 
 /*
@@ -14,22 +14,27 @@
 namespace App\Classes;
 
 use App\Classes\Excel\MyExcelMultiExport;
+use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\Pdf\MyPDF;
 use App\Entity\Constantes;
 use App\Entity\Departement;
 use App\Entity\Etudiant;
 use App\Entity\Evaluation;
 use App\Entity\Note;
+use App\Entity\Semestre;
+use App\Exception\MatiereNotFoundException;
 use App\Utils\Tools;
+use function array_key_exists;
+use function count;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
+use function in_array;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
-use function count;
 
 /**
  * Class MyEvaluation.
@@ -51,10 +56,13 @@ class MyEvaluation
 
     private MyExcelMultiExport $myExcelMultiExport;
 
+    private TypeMatiereManager $typeMatiereManager;
+
     /**
      * MyEvaluation constructor.
      */
     public function __construct(
+        TypeMatiereManager $typeMatiereManager,
         EntityManagerInterface $entityManager,
         MyPDF $myPdf,
         MyExcelMultiExport $myExcelMultiExport
@@ -62,6 +70,7 @@ class MyEvaluation
         $this->entityManager = $entityManager;
         $this->myPdf = $myPdf;
         $this->myExcelMultiExport = $myExcelMultiExport;
+        $this->typeMatiereManager = $typeMatiereManager;
     }
 
     public function setEvaluation(Evaluation $evaluation): self
@@ -98,7 +107,7 @@ class MyEvaluation
             foreach ($this->evaluation->getTypeGroupe()->getGroupes() as $groupe) {
                 $tgroupes[$groupe->getId()] = [];
                 foreach ($groupe->getEtudiants() as $etu) {
-                    if (\array_key_exists($etu->getId(), $t)) {
+                    if (array_key_exists($etu->getId(), $t)) {
                         $tgroupes[$groupe->getId()][$etu->getId()] = $t[$etu->getId()];
                     }
                 }
@@ -146,7 +155,7 @@ class MyEvaluation
                 //écart entre la valeur et la moyenne
                 $ecart_donnee = $value - $moyenne;
                 //carré de l'écart
-                $ecart_donnee_carre = bcpow($ecart_donnee, 2, 2);
+                $ecart_donnee_carre = bcpow((string)$ecart_donnee, '2', 2);
                 //Insertion dans le tableau
                 $ecart[] = $ecart_donnee_carre;
             }
@@ -155,7 +164,7 @@ class MyEvaluation
             //5 - division de la somme des écarts par la population
             $division = $somme_ecart / $population;
             //6 - racine carrée de la division
-            $ecart_type = bcsqrt($division, 2);
+            $ecart_type = bcsqrt((string)$division, 2);
         } else {
             $ecart_type = 0;
         }
@@ -238,7 +247,14 @@ class MyEvaluation
     public function exportReleve($_format, $groupes, Departement $departement)
     {
         $notes = $this->getNotesTableau();
-        $name = 'releve-' . $this->evaluation->getMatiere()->getCodeMatiere();
+        $matiere = $this->typeMatiereManager->getMatiere($this->evaluation->getIdMatiere(),
+            $this->evaluation->getTypeMatiere());
+
+        if (null === $matiere) {
+            throw new MatiereNotFoundException();
+        }
+
+        $name = 'releve-' . $matiere->codeMatiere;
         switch ($_format) {
             case Constantes::FORMAT_PDF:
                 return $this->myPdf::generePdf('pdf/releveEvaluation.html.twig', [
@@ -270,7 +286,7 @@ class MyEvaluation
     /**
      * @throws Exception
      */
-    public function importEvaluation(Evaluation $evaluation, string $fichier): ?array
+    public function importEvaluation(Evaluation $evaluation, string $fichier, Semestre $semestre): ?array
     {
         $t = explode('.', $fichier);
         $extension = $t[count($t) - 1];
@@ -278,11 +294,11 @@ class MyEvaluation
         switch ($extension) {
             case 'xlsx':
                 $data = $this->importXlsx($fichier);
-                $notes = $this->insertNotes($evaluation, $data);
+                $notes = $this->insertNotes($evaluation, $data, $semestre);
                 break;
             case 'csv':
                 $data = $this->importCsv($fichier);
-                $notes = $this->insertNotes($evaluation, $data);
+                $notes = $this->insertNotes($evaluation, $data, $semestre);
                 break;
             default:
                 return []; //erreur
@@ -294,11 +310,11 @@ class MyEvaluation
     /**
      * @throws Exception
      */
-    private function insertNotes(Evaluation $evaluation, $data): array
+    private function insertNotes(Evaluation $evaluation, $data, Semestre $semestre): array
     {
         $evaluation->setVisible(false); //on masque l'évaluation le temps de l'import et de la vérification
         $notes = [];
-        $req = $this->entityManager->getRepository(Etudiant::class)->findBySemestre($evaluation->getSemestre());
+        $req = $this->entityManager->getRepository(Etudiant::class)->findBySemestre($semestre);
         $etudiants = [];
         /** @var Etudiant $etu */
         foreach ($req as $etu) {
@@ -310,9 +326,9 @@ class MyEvaluation
         }
 
         foreach ($data as $note) {
-            if (\array_key_exists((string)$note['num_etudiant'], $etudiants)) {
-                if (\array_key_exists((string)$note['num_etudiant'],
-                        $notes) && '-0.01' !== $notes[$note['num_etudiant']]) {
+            if (array_key_exists((string)$note['num_etudiant'], $etudiants)) {
+                if (array_key_exists((string)$note['num_etudiant'],
+                        $notes) && -0.01 !== $notes[$note['num_etudiant']]) {
                     //déjà une note, on ne remplace pas. On récupère les éléments pour alimenter le tableau
                     $newnote = [];
                     $newnote['idetudiant'] = $notes[$note['num_etudiant']]->getEtudiant()->getId();
@@ -337,7 +353,7 @@ class MyEvaluation
                     $newnote['commentaire'] = $note['commentaire'];
                     $newnote['absenceJustifie'] = false;
                     $newnote['dejapresente'] = false; //on indique qu'on remplace  car pas de notes
-                    $notes[$etudiants[$note['num_etudiant']]->getId()] = $newnote;
+                    $notes[$etudiants[$note['num_etudiant']]->getNumEtudiant()] = $newnote;
                 }
             }
         }
@@ -355,14 +371,17 @@ class MyEvaluation
         foreach ($sheetData[1] as $key) {
             $ordre[] = mb_strtolower($key);
         }
-
-        $nblignes = count($sheetData);
-        for ($i = 2; $i <= $nblignes; ++$i) {
-            $nb = count($sheetData[$i]);
-            for ($j = 1; $j <= $nb; ++$j) {
-                $t[$ordre[$j - 1]] = $sheetData[$i][\chr($j + 64)];
+        if (is_array($sheetData)) {
+            $nblignes = count($sheetData);
+            for ($i = 2; $i <= $nblignes; ++$i) {
+                if (is_array($sheetData[$i])) {
+                    $nb = count($sheetData[$i]);
+                    for ($j = 1; $j <= $nb; ++$j) {
+                        $t[$ordre[$j - 1]] = $sheetData[$i][\chr($j + 64)];
+                    }
+                    $data[] = $t;
+                }
             }
-            $data[] = $t;
         }
 
         return $data;
@@ -370,7 +389,7 @@ class MyEvaluation
 
     private function importCsv(string $fichier): array
     {
-        $handle = fopen($fichier, 'r');
+        $handle = fopen($fichier, 'rb');
         $data = [];
         $ordre = [];
 
@@ -379,14 +398,16 @@ class MyEvaluation
             //on récupère l'en-tête
             $phrase = fgetcsv($handle, 1024, ';');
 
-            if (\in_array('num_etudiant', $phrase, true) && \in_array('commentaire',
-                    $phrase, true) && \in_array('note', $phrase, true)) {
+            if (in_array('num_etudiant', $phrase, false) && in_array('note', $phrase, false)) {
                 //on vérifie que les clés existent.
-                //todo: commentaire ne devrais pas être obligatoire ? Supprimer l'option avec , dans le texte
                 foreach ($phrase as $key) {
                     $ordre[] = $key;
                 }
+            } else {
+                //ordre par défaut attendu
+                $ordre = ['num_etudiant', 'note', 'commentaire'];
             }
+
             //pas de clé en en-tête
             //s'assurer que c'est les bonnes données ?
 
@@ -394,11 +415,13 @@ class MyEvaluation
             while (!feof($handle)) {
                 /*On lit la ligne courante*/
                 $phrase = fgetcsv($handle, 1024, ';');
-                $nb = count($phrase);
-                for ($i = 0; $i < $nb; ++$i) {
-                    $t[$ordre[$i]] = $phrase[$i];
+                if (is_array($phrase)) {
+                    $nb = count($phrase);
+                    for ($i = 0; $i < $nb; ++$i) {
+                        $t[$ordre[$i]] = $phrase[$i];
+                    }
+                    $data[] = $t;
                 }
-                $data[] = $t;
             }
         }
 

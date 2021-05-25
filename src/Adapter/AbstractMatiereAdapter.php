@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Adapter/AbstractMatiereAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 15/05/2021 09:15
+ * @lastUpdate 16/05/2021 15:25
  */
 
 namespace App\Adapter;
@@ -35,7 +35,6 @@ abstract class AbstractMatiereAdapter
         $m->tpPpn = $matiere->getTpPpn();
 
         $m->nbNotes = $matiere->getNbNotes();
-        $m->coefficient = $matiere->getCoefficient();
 
         $m->cmFormation = $matiere->getCmFormation();
         $m->tdFormation = $matiere->getTdFormation();

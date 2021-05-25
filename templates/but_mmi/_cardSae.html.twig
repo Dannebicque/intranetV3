@@ -4,7 +4,7 @@
             <span class="badge badge-primary">{{ sae
                 .semestre.libelle }}</span></h4>
         <div class="card-body">
-            <p>{{ sae.description|nl2br }}</p>
+            <p>{{ sae.description|markdown_to_html }}</p>
             <p>
                 <a data-provide="tooltip"
                    href="{{ path('but_fiche_sae',
@@ -23,7 +23,6 @@
                     <th>CM/TD</th>
                     <th>TP</th>
                     <th>Projet</th>
-                    <th>Coeff.</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -31,7 +30,6 @@
                     <td>{{ sae.cmPpn + sae.tdPpn }} heure(s)</td>
                     <td>{{ sae.tpPpn }} heure(s)</td>
                     <td>{{ sae.projetPpn }} heure(s)</td>
-                    <td>{{ sae.coefficient }}</td>
                 </tr>
                 </tbody>
             </table>

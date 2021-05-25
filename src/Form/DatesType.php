@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/DatesType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 23/05/2021 14:21
  */
 
 namespace App\Form;
@@ -38,51 +38,51 @@ class DatesType extends AbstractType
 
         $builder
             ->add('libelle', TextType::class, [
-                'label' => 'label.titre_date',
+                'label' => 'titre_date',
             ])
             ->add('texte', TextType::class, [
-                'label'    => 'label.texte_date',
+                'label' => 'texte_date',
                 'required' => false,
             ])
             ->add('dateRange', DateRangeType::class, ['label' => 'dateRange', 'mapped' => false, 'required' => true])
-            ->add('heureDebut', TimeType::class, ['widget' => 'single_text', 'label' => 'label.heure_debut'])
-            ->add('heureFin', TimeType::class, ['widget' => 'single_text', 'label' => 'label.heure_fin'])
+            ->add('heureDebut', TimeType::class, ['widget' => 'single_text', 'label' => 'heure_debut'])
+            ->add('heureFin', TimeType::class, ['widget' => 'single_text', 'label' => 'heure_fin'])
             ->add('lieu', TextType::class, [
-                'label' => 'label.lieu_date',
+                'label' => 'lieu_date',
             ])
             ->add('allday', YesNoType::class, [
-                'label' => 'label.allday',
+                'label' => 'allday',
             ])
             ->add('qui', ChoiceType::class, [
-                'label'    => 'label.qui_concerne',
+                'label' => 'qui_concerne',
                 'expanded' => true,
                 'multiple' => false,
-                'choices'  => [Date::QUI_ETUDIANT => Date::QUI_ETUDIANT, Date::QUI_PERSONNEL => Date::QUI_PERSONNEL],
+                'choices' => [Date::QUI_ETUDIANT => Date::QUI_ETUDIANT, Date::QUI_PERSONNEL => Date::QUI_PERSONNEL],
             ])
             ->add('type', ChoiceType::class, [
-                'label'    => 'label.typedate',
+                'label' => 'typedate',
                 'expanded' => true,
                 'multiple' => false,
-                'choices'  => [
-                    Date::TYPE_STAGE      => Date::TYPE_STAGE,
+                'choices' => [
+                    Date::TYPE_STAGE => Date::TYPE_STAGE,
                     Date::TYPE_SOUTENANCE => Date::TYPE_SOUTENANCE,
-                    Date::TYPE_REUNION    => Date::TYPE_REUNION,
-                    Date::TYPE_PROJET     => Date::TYPE_PROJET,
+                    Date::TYPE_REUNION => Date::TYPE_REUNION,
+                    Date::TYPE_PROJET => Date::TYPE_PROJET,
                     Date::TYPE_COMMISSION => Date::TYPE_COMMISSION,
-                    Date::TYPE_AUTRE      => Date::TYPE_AUTRE,
-                    Date::TYPE_RENTREE    => Date::TYPE_RENTREE,
+                    Date::TYPE_AUTRE => Date::TYPE_AUTRE,
+                    Date::TYPE_RENTREE => Date::TYPE_RENTREE,
                 ],
             ])
             ->add('semestres', EntityType::class, [
-                'class'         => Semestre::class,
-                'label'         => 'label.semestres_date',
-                'choice_label'  => 'libelle',
+                'class' => Semestre::class,
+                'label' => 'semestres_date',
+                'choice_label' => 'libelle',
                 'query_builder' => function(SemestreRepository $semestreRepository) {
                     return $semestreRepository->findByDepartementBuilder($this->departement);
                 },
-                'required'      => true,
-                'expanded'      => true,
-                'multiple'      => true,
+                'required' => true,
+                'expanded' => true,
+                'multiple' => true,
             ])
             ->addEventListener(FormEvents::POST_SUBMIT, static function(FormEvent $event) {
                 $date = $event->getData();

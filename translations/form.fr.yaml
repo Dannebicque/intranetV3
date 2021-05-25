@@ -122,6 +122,9 @@ initiales: Initiales
 j: Jour
 Jour: Jour
 label:
+  choice:
+    non: Non
+    oui: Oui
   apc:
     competence: Compétence
   apercu: 'Aperçu du fichier'
@@ -133,6 +136,7 @@ label:
   heuresTP: 'Heures TP'
   preRequis: 'Pré-requis'
   livrables: 'Livrables'
+  exemples: 'Exemple(s)'
   motsCles: 'Mots clés'
   nomCourt.competence: 'Compétence'
   lieu_naissance: 'Lieu de naissance'
@@ -168,8 +172,9 @@ label:
   bureau1: Bureau
   bureau2: 'Autre bureau'
   civilite: Civilité
-  cm_formation: 'Nb. Heures CM (80%)'
+  cm_formation: 'Nb. Heures CM (IUT)'
   cm_ppn: 'Nb. Heures CM (PPN)'
+  cmtd_ppn: 'Nb. Heures CM/TD (PPN)'
   code_apogee: 'Code Apogée'
   code_celcat_departement: 'Code Celcat du diplôme'
   code_departement: 'Code département'
@@ -360,7 +365,7 @@ label:
   sujet: Sujet
   sujetStage: 'Mission principale'
   suspendu: Suspendu
-  td_formation: 'Nb. Heures TD (80%)'
+  td_formation: 'Nb. Heures TD (IUT)'
   td_ppn: 'Nb. Heures CM (PPN)'
   tel_bureau: 'Téléphone Bureau'
   tel_contact: 'Téléphone de la formation'
@@ -373,8 +378,10 @@ label:
   texteLibre: 'Commentaire libre'
   titre: 'Titre'
   titre_date: 'Titre de l''événement'
-  tp_formation: 'Nb. Heures TP (80%)'
+  tp_formation: 'Nb. Heures TP (IUT)'
   tp_ppn: 'Nb. Heures TP (PPN)'
+  projet_formation: 'Nb. Heures Projet (IUT)'
+  projet_ppn: 'Nb. Heures Projet (PPN)'
   tuteur_universitaire: 'Tuteur universitaire'
   tuteur: 'Tuteur entreprise'
   tuteurEntreprise: 'Tuteur entreprise'

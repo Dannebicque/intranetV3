@@ -4,13 +4,14 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/DateController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 23/05/2021 16:49
  */
 
 namespace App\Controller\administration;
 
 use App\Classes\MyExport;
 use App\Controller\BaseController;
+use App\DataTable\DateTableType;
 use App\Entity\Constantes;
 use App\Entity\Date;
 use App\Form\DatesType;
@@ -27,17 +28,23 @@ class DateController extends BaseController
     /**
      * @Route("/", name="administration_date_index", methods="GET")
      */
-    public function index(DateRepository $dateRepository): Response
+    public function index(Request $request): Response
     {
-        $dates = $dateRepository->findByDepartement($this->getDepartement());
+        $table = $this->createTable(DateTableType::class, [
+            'departement' => $this->getDepartement(),
+        ]);
+        $table->handleRequest($request);
 
-        return $this->render('administration/date/index.html.twig', ['dates' => $dates]);
+        if ($table->isCallback()) {
+            return $table->getCallbackResponse();
+        }
+
+        return $this->render('administration/date/index.html.twig', ['table' => $table]);
     }
 
     /**
      * @Route("/export.{_format}", name="administration_date_export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"})
-     *
      */
     public function export(MyExport $myExport, DateRepository $dateRepository, $_format): Response
     {

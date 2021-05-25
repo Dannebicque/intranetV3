@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/RattrapageController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2021 21:21
+ * @lastUpdate 23/05/2021 14:32
  */
 
 namespace App\Controller\administration;
@@ -12,6 +12,7 @@ namespace App\Controller\administration;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\MyExport;
 use App\Controller\BaseController;
+use App\DataTable\RattrapageTableType;
 use App\Entity\Constantes;
 use App\Entity\Rattrapage;
 use App\Entity\Semestre;
@@ -35,17 +36,25 @@ class RattrapageController extends BaseController
      * @Route("/semestre/{semestre}", name="administration_rattrapage_semestre_index")
      */
     public function index(
-        TypeMatiereManager $typeMatiereManager,
+        Request $request,
         AbsenceRepository $absenceRepository,
-        RattrapageRepository $rattrapageRepository,
         Semestre $semestre
     ): Response {
-        return $this->render('administration/rattrapage/index.html.twig', [
-            'rattrapages' => $rattrapageRepository->findBySemestre($semestre, $semestre->getAnneeUniversitaire()),
+        $table = $this->createTable(RattrapageTableType::class, [
             'semestre' => $semestre,
+            'anneeUniversitaire' => $semestre->getAnneeUniversitaire(),
             'absences' => $absenceRepository->findBySemestreRattrapage($semestre,
-                $semestre->getAnneeUniversitaire()),
-            'matieres' => $typeMatiereManager->findBySemestreArray($semestre),
+                $semestre->getAnneeUniversitaire())
+        ]);
+        $table->handleRequest($request);
+
+        if ($table->isCallback()) {
+            return $table->getCallbackResponse();
+        }
+
+        return $this->render('administration/rattrapage/index.html.twig', [
+            'semestre' => $semestre,
+            'table' => $table,
         ]);
     }
 
@@ -131,7 +140,7 @@ class RattrapageController extends BaseController
     }
 
     /**
-     * @Route("/{uuid}", name="administration_rattrapage_delete", methods="DELETE")
+     * @Route("/{uuid}", name="administration_rattrapage_delete", methods="DELETE", options={"expose"=true})
      * @ParamConverter("rattrapage", options={"mapping": {"uuid": "uuid"}})
      */
     public function delete(Request $request, Rattrapage $rattrapage): Response

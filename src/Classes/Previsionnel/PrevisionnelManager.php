@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Previsionnel/PrevisionnelManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 15/05/2021 08:23
+ * @lastUpdate 24/05/2021 09:44
  */
 
 namespace App\Classes\Previsionnel;
@@ -48,10 +48,10 @@ class PrevisionnelManager
         $t = [];
         foreach ($this->managers as $manager) {
             $previs = $manager->getPrevisionnelPersonnelDepartementAnnee($personnel, $departement, $annee);
-            $t = array_merge($t, $previs->toArray());
+            $t[] = $previs->toArray();
         }
 
-        return $t;
+        return array_merge(...$t);
     }
 
     public function getPrevisionnelEnseignantAnnee(Personnel $personnel, int $annee = 0): array
@@ -59,10 +59,10 @@ class PrevisionnelManager
         $t = [];
         foreach ($this->managers as $manager) {
             $previs = $manager->getPrevisionnelPersonnelAnnee($personnel, $annee);
-            $t = array_merge($t, $previs->toArray());
+            $t[] = $previs->toArray();
         }
 
-        return $t;
+        return array_merge(...$t);
     }
 
     private function getManager($type)
@@ -80,10 +80,10 @@ class PrevisionnelManager
         $t = [];
         foreach ($this->managers as $manager) {
             $previs = $manager->getPrevisionnelSemestre($semestre, $annee);
-            $t = array_merge($t, $previs->toArray());
+            $t[] = $previs->toArray();
         }
 
-        return $t;
+        return array_merge(...$t);
     }
 
     public function getPrevisionnelAnnee(Annee $annee, int $anneeUniversitaire = 0): array
@@ -92,11 +92,11 @@ class PrevisionnelManager
         foreach ($this->managers as $manager) {
             foreach ($annee->getSemestres() as $semestre) {
                 $previs = $manager->getPrevisionnelSemestre($semestre, $anneeUniversitaire);
-                $t = array_merge($t, $previs->toArray());
+                $t[] = $previs->toArray();
             }
         }
 
-        return $t;
+        return array_merge(...$t);
     }
 
     public function getPrevisionnelAnneeArray(Annee $annee, int $anneeUniversitaire = 0)
@@ -104,8 +104,8 @@ class PrevisionnelManager
         $previsionnels = $this->getPrevisionnelAnnee($annee, $anneeUniversitaire);
         $tPrevisionnel = [];
         foreach ($previsionnels as $p) {
-            $tPrevisionnel[$p->getId()]['matiere'] = $p->matiere_libelle;
-            $tPrevisionnel[$p->getId()]['personnel'] = $p->personnel_prenom . ' ' . $p->personnel_nom;
+            $tPrevisionnel[$p->id]['matiere'] = $p->matiere_libelle;
+            $tPrevisionnel[$p->id]['personnel'] = $p->personnel_prenom . ' ' . $p->personnel_nom;
         }
 
         return $tPrevisionnel;
@@ -116,10 +116,10 @@ class PrevisionnelManager
         $t = [];
         foreach ($this->managers as $manager) {
             $previs = $manager->findByDepartement($departement, $annee);
-            $t = array_merge($t, $previs->toArray());
+            $t[] = $previs->toArray();
         }
 
-        return $t;
+        return array_merge(...$t);
     }
 
 //    public function getPrevisionnelSemestrePersonnel(Semestre $semestre, Personnel $personnel, int $annee): array

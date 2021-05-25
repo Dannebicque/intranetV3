@@ -89,9 +89,12 @@
             <h5>4. Choix de la date de l'évaluation</h5>
             <div class="form-group">
                 <label class="control-label" for="dateeval">Date de l'évaluation</label>
-                    <div>
-                        <input type="text" name="dateeval" id="dateeval" class="form-control" data-provide="datepicker"
-                               data-language="{{ app.request.locale }}">
+                <div>
+                    <input type="text"
+                           name="dateeval" id="dateeval" class="form-control"
+                            {{ options | html_attr }}
+                           is="date-picker"
+                    >
                 </div>
             </div>
 

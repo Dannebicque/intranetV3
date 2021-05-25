@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/app.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 28/03/2021 05:38
+// @lastUpdate 23/05/2021 14:21
 
 import '@fortawesome/fontawesome-free/scss/fontawesome.scss'
 import '@fortawesome/fontawesome-free/scss/solid.scss'
@@ -11,9 +11,10 @@ import '../vendor/bootstrap-datepicker/css/bootstrap-datepicker3.min.css'
 import '../vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js'
 import '../vendor/bootstrap-datepicker/locales/bootstrap-datepicker.fr.min'
 
-import '../css/app.scss'
 
 import $ from 'jquery'
+import 'umbrella_core/Core'
+
 import PerfectScrollbar from 'perfect-scrollbar'
 import './validator-bs4'
 import {getDataOptions} from './util'
@@ -27,17 +28,12 @@ import 'tinymce/icons/default'
 // A theme is also required
 import 'tinymce/themes/silver'
 import '../vendor/tinyMceLang/fr_FR'
-require('bootstrap')
+
+import '../css/app.scss'
 
 let lookup = {}
 
 require('bootstrap-select')
-
-
-// import Vue from 'vue'
-// import App from '../components/App.vue'
-//
-// new Vue({ render: h => h(App) }).$mount('#appVue')
 
 
 $('input[type="file"]').on('change', function (e) {
@@ -134,6 +130,10 @@ $(document).on('click', '.card-btn-slide', function () {
   $(this).toggleClass('rotate-180').closest('.card').find('.card-content').slideToggle()
 })
 
+$(document).on('click', '.card-btn-slide-text', function () {
+  $(this).closest('.card').find('.card-content').slideToggle()
+})
+
 //modaler
 $(document).on('click', '[data-provide~="modaler"]', function () {
   modaler(getDataOptions($(this)))
@@ -142,17 +142,27 @@ $(document).on('click', '[data-provide~="modaler"]', function () {
 function updateInterface () {
   $('.callout').delay(5000).slideUp('slow')
 
-  tinymce.init({
-    selector: '.tinyMce',
-    height: 300,
-    menubar: false,
-    plugins: 'lists',
-    entity_encoding: 'raw',
-    encoding: 'UTF-8',
-    language: 'fr_FR',
-    content_css: 'default',
-    toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat'
-  })
+  if (document.getElementsByClassName('datepicker-range').length > 0) {
+    $('.datepicker-range').flatpickr({
+      mode: 'range',
+      'locale': 'fr',
+      format: 'd/M/Y'
+    })
+  }
+
+  if (document.getElementsByClassName('tinyMce').length > 0) {
+    tinymce.init({
+      selector: '.tinyMce',
+      height: 300,
+      menubar: false,
+      plugins: 'lists',
+      entity_encoding: 'raw',
+      encoding: 'UTF-8',
+      language: 'fr_FR',
+      content_css: 'default',
+      toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat'
+    })
+  }
 
   //selectpicker
   $('.selectpicker').selectpicker({

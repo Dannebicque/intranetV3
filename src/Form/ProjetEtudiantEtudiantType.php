@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ProjetEtudiantEtudiantType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 23/05/2021 14:21
  */
 
 namespace App\Form;
@@ -31,28 +31,28 @@ class ProjetEtudiantEtudiantType extends AbstractType
 
         $builder
             ->add('organisme', EntrepriseType::class)
-            ->add('sujet', TextareaType::class, ['label' => 'label.sujet'])
-            ->add('activitesConfiees', TextareaType::class, ['label' => 'label.activitesConfiees'])
+            ->add('sujet', TextareaType::class, ['label' => 'sujet'])
+            ->add('activitesConfiees', TextareaType::class, ['label' => 'activitesConfiees'])
             ->add('etudiants', EntityType::class, [
-                'class'         => Etudiant::class,
-                'choice_label'  => 'displayPr',
+                'class' => Etudiant::class,
+                'choice_label' => 'displayPr',
                 'query_builder' => function(EtudiantRepository $etudiantRepository) {
                     return $etudiantRepository->findBySemestreBuilder($this->semestre);
                 },
-                'multiple'      => true,
-                'expanded'      => true,
+                'multiple' => true,
+                'expanded' => true,
             ])
             ->add('tempComplet', YesNoType::class)
             ->add('duree', TextType::class,
-                ['label' => 'label.duree', 'help' => 'durée du projet en jour ou en semaine sur la période'])
+                ['label' => 'duree', 'help' => 'durée du projet en jour ou en semaine sur la période'])
             ->add('uniteDuree', ChoiceType::class, [
-                'choices'  => [
+                'choices' => [
                     ProjetEtudiant::DUREE_HEURE => ProjetEtudiant::DUREE_HEURE,
-                    ProjetEtudiant::DUREE_JOUR  => ProjetEtudiant::DUREE_JOUR,
+                    ProjetEtudiant::DUREE_JOUR => ProjetEtudiant::DUREE_JOUR,
                 ],
                 'expanded' => true,
-                'label'    => 'label.uniteduree',
-                'help'     => 'Choisir si la durée est exprimée en nombre de jour ou en heure par semaine',
+                'label' => 'uniteduree',
+                'help' => 'Choisir si la durée est exprimée en nombre de jour ou en heure par semaine',
             ]);
     }
 

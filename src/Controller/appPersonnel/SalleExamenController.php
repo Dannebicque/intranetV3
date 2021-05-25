@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/SalleExamenController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/02/2021 10:49
+ * @lastUpdate 22/05/2021 21:03
  */
 
 namespace App\Controller\appPersonnel;
@@ -15,7 +15,6 @@ use App\Entity\Constantes;
 use App\Repository\PersonnelRepository;
 use App\Repository\SalleExamenRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -39,8 +38,13 @@ class SalleExamenController extends BaseController
         PersonnelRepository $personnelRepository
     ): Response {
         return $this->render('appPersonnel/salle_examen/index.html.twig', [
-            'salles'     => $salleExamenRepository->findByDepartement($this->dataUserSession->getDepartement()),
+            'salles' => $salleExamenRepository->findByDepartement($this->dataUserSession->getDepartement()),
             'personnels' => $personnelRepository->findByDepartement($this->dataUserSession->getDepartement()),
+            'options' => [
+                'data-options' => [
+                    'dateFormat' => 'd/m/Y'
+                ]
+            ]
         ]);
     }
 

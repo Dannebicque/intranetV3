@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/AnneeType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/03/2021 17:33
+ * @lastUpdate 22/05/2021 18:27
  */
 
 namespace App\Form;
@@ -35,10 +35,10 @@ class AnneeType extends AbstractType
 
         $builder
             ->add('libelle', TextType::class, [
-                'label' => 'label.libelle'
+                'label' => 'libelle'
             ])
             ->add('libelle_long', TextType::class, [
-                'label' => 'label.libelle_long'
+                'label' => 'libelle_long'
             ])
             ->add('diplome', EntityType::class, [
                 'class' => Diplome::class,
@@ -48,27 +48,27 @@ class AnneeType extends AbstractType
                 'query_builder' => function(DiplomeRepository $diplomeRepository) {
                     return $diplomeRepository->findByDepartementBuilder($this->departement);
                 },
-                'label' => 'label.diplome'
+                'label' => 'diplome'
             ])
             ->add('codeEtape', TextType::class, [
-                'label' => 'label.code_etape'
+                'label' => 'code_etape'
             ])
             ->add('codeVersion', TextType::class, [
-                'label' => 'label.code_version'
+                'label' => 'code_version'
             ])
             ->add('codeDepartement', TextType::class, [
-                'label' => 'label.code_departement'
+                'label' => 'code_departement'
             ])
             ->add('ordre', TextType::class, [
-                'label' => 'label.ordre'
+                'label' => 'ordre'
             ])
             ->add('couleur', ChoiceType::class, [
-                'label' => 'label.couleur',
+                'label' => 'couleur',
                 'required' => true,
                 'choices' => Constantes::COULEURS
             ])
             ->add('optAlternance', YesNoType::class, [
-                'label' => 'label.opt_alternance'
+                'label' => 'opt_alternance'
             ]);
     }
 

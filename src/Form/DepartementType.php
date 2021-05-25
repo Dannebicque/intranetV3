@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/DepartementType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 23/05/2021 14:21
  */
 
 namespace App\Form;
@@ -23,6 +23,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\Exception\AccessException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Umbrella\CoreBundle\Form\Entity2Type;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 
 /**
@@ -34,12 +35,12 @@ class DepartementType extends AbstractType
     {
         $builder
             ->add('libelle', TextType::class, [
-                'label' => 'label.libelle',
+                'label' => 'libelle',
             ])
             ->add('logoFile', VichFileType::class, [
-                'label'          => 'label.logoFile',
-                'download_label' => 'label.apercu',
-                'allow_delete'   => false,
+                'label' => 'logoFile',
+                'download_label' => 'apercu',
+                'allow_delete' => false,
             ])
 
             ->add(
@@ -50,91 +51,90 @@ class DepartementType extends AbstractType
                         range(date('Y') - 2, date('Y') + 4),
                         range(date('Y') - 2, date('Y') + 4)
                     ),
-                    'label'   => 'label.opt_annee_previsionnel',
+                    'label' => 'opt_annee_previsionnel',
                 ]
             )
             ->add('tel_contact', TextType::class, [
-                'label'    => 'label.tel_contact',
+                'label' => 'tel_contact',
                 'required' => false,
             ])
             ->add('fax', TextType::class, [
-                'label'    => 'label.fax',
+                'label' => 'fax',
                 'required' => false,
             ])
             ->add('couleur', ColorType::class, [
-                'label'    => 'label.couleur',
+                'label' => 'couleur',
                 'required' => false,
             ])
             ->add('site_web', TextType::class, [
-                'label'    => 'label.site_web',
+                'label' => 'site_web',
                 'required' => false,
             ])
             ->add('description', TextareaType::class, [
-                'label' => 'label.description',
+                'label' => 'description',
             ])
             ->add(
                 'opt_update_celcat',
                 YesNoType::class,
                 [
-                    'label' => 'label.opt_update_celcat',
+                    'label' => 'opt_update_celcat',
                 ]
             )
             ->add(
                 'opt_agence',
                 YesNoType::class,
                 [
-                    'label' => 'label.opt_agence',
+                    'label' => 'opt_agence',
                 ]
             )
             ->add(
                 'opt_materiel',
                 YesNoType::class,
                 [
-                    'label' => 'label.opt_materiel',
+                    'label' => 'opt_materiel',
                 ]
             )
             ->add(
                 'opt_edt',
                 YesNoType::class,
                 [
-                    'label' => 'label.opt_edt',
+                    'label' => 'opt_edt',
                 ]
             )
             ->add(
                 'opt_stage',
                 YesNoType::class,
                 [
-                    'label' => 'label.opt_stage',
+                    'label' => 'opt_stage',
                 ]
             )
             ->add(
                 'opt_synthese',
                 YesNoType::class,
                 [
-                    'label' => 'label.opt_synthese',
+                    'label' => 'opt_synthese',
                 ]
             )
             ->add(
                 'opt_messagerie',
                 YesNoType::class,
                 [
-                    'label' => 'label.opt_messagerie',
+                    'label' => 'opt_messagerie',
                 ]
             )
-            ->add('respri', EntityType::class, [
-                'class'         => Personnel::class,
-                'choice_label'  => 'display',
+            ->add('respri', Entity2Type::class, [
+                'class' => Personnel::class,
+                'choice_label' => 'display',
                 'query_builder' => static function(PersonnelRepository $personnelRepository) {
                     return $personnelRepository->findAllOrder();
                 },
-                'attr'          => ['class' => 'form-control selectpicker'],
-                'label'         => 'label.respri',
-                'required'      => false,
+                'label' => 'respri',
+                'required' => false,
             ])
             ->add('ufr', EntityType::class, [
-                'class'        => Ufr::class,
+                'class' => Ufr::class,
                 'choice_label' => 'libelle',
-                'label'        => 'label.ufr',
+                'label' => 'ufr',
             ]);
     }
 

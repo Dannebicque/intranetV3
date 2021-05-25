@@ -53,53 +53,54 @@
     {% endif %}
 </head>
 
-<body {% block body %}{% endblock %}>
+<body class="{{ settings('CODE_IUT') }} {% block body %}{% endblock %}">
 <header class="topbar">
     <div class="topbar-left">
         <a class="topbar-btn d-none d-md-block"
            href="{{ path('but_homepage') }}"
         >
-            Référentiel de formation
+            B.U.T.
         </a>
-        <a class="topbar-btn d-none d-md-block" href="{{ path('but_referentiel_competences', {diplome:diplome.sigle|lower }) }}">Référentiel
-                                                                                                                                 Compétences</a>
-        <a class="topbar-btn d-none d-md-block" href="{{ path('but_sae', {diplome:diplome.sigle|lower}) }}"
-           data-provide="tooltip"
-           title="SAÉ">
-            SAÉ
-        </a>
-        {% for semestre in diplome.semestres %}
-            <a class="topbar-btn d-none d-md-block" href="{{ path('but_ressource', { diplome:diplome.sigle|lower,
-                semestre:semestre.id}) }}"
+        {% if diplome is defined %}
+            <a class="topbar-btn d-none d-md-block" href="{{ path('but_referentiel_competences', {diplome:diplome.sigle|lower }) }}">Référentiel
+                                                                                                                                     Compétences</a>
+            <a class="topbar-btn d-none d-md-block" href="{{ path('but_sae', {diplome:diplome.sigle|lower}) }}"
                data-provide="tooltip"
-               title="Ressources du S1">
-                Ressources {{ semestre.libelle }}
+               title="SAÉ">
+                SAÉ
             </a>
-        {% endfor %}
-        <a class="topbar-btn d-none d-md-block" href="{{ path('but_repartition_horaire', {diplome:diplome.sigle|lower}) }}">
-            Répartition horaire
-        </a>
-        <div class="dropdown d-sm-block d-md-none">
-            <span class="topbar-btn dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Menu</span>
-            <div class="dropdown-menu" x-placement="bottom-start">
-                <a class="dropdown-item" href="{{ path('but_homepage') }}">Référentiel</a>
-                <a class="dropdown-item" href="{{ path('but_referentiel_competences', {diplome:diplome.sigle|lower }) }}">Référentiel
-                                                                                                                          Compétences</a>
-                <a class="dropdown-item" href="{{ path('but_sae', {diplome:diplome.sigle|lower}) }}">SAE</a>
-                {% for semestre in diplome.semestres %}
-                    <a class="dropdown-item" href="{{ path('but_ressource', { diplome:diplome.sigle|lower,
-                        semestre:semestre.id}) }}">Ressources {{ semestre.libelle }}</a>
-                {% endfor %}
-                <a class="dropdown-item" href="{{ path('but_repartition_horaire', {diplome:diplome.sigle|lower}) }}">
-                    Répartition horaire
+            {% for semestre in diplome.semestres %}
+                <a class="topbar-btn d-none d-md-block" href="{{ path('but_ressource', { diplome:diplome.sigle|lower,
+                    semestre:semestre.id}) }}"
+                   data-provide="tooltip"
+                   title="Ressources du S1">
+                    Ressources {{ semestre.libelle }}
                 </a>
+            {% endfor %}
+            <a class="topbar-btn d-none d-md-block" href="{{ path('but_repartition_horaire', {diplome:diplome.sigle|lower}) }}">
+                Répartition horaire
+            </a>
+            <div class="dropdown d-sm-block d-md-none">
+                <span class="topbar-btn dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Menu</span>
+                <div class="dropdown-menu" x-placement="bottom-start">
+                    <a class="dropdown-item" href="{{ path('but_homepage') }}">Référentiel</a>
+                    <a class="dropdown-item" href="{{ path('but_referentiel_competences', {diplome:diplome.sigle|lower }) }}">Référentiel
+                                                                                                                              Compétences</a>
+                    <a class="dropdown-item" href="{{ path('but_sae', {diplome:diplome.sigle|lower}) }}">SAE</a>
+                    {% for semestre in diplome.semestres %}
+                        <a class="dropdown-item" href="{{ path('but_ressource', { diplome:diplome.sigle|lower,
+                            semestre:semestre.id}) }}">Ressources {{ semestre.libelle }}</a>
+                    {% endfor %}
+                    {# <a class="dropdown-item" href="{{ path('but_repartition_horaire', {diplome:diplome.sigle|lower}) }}"> #}
+                    {# Répartition horaire #}
+                    {# </a> #}
+                </div>
             </div>
-        </div>
-        <div class="topbar-divider"></div>
-        <form class="lookup lookup-circle" action="{{ path('but_recherche',{diplome:diplome.sigle|lower}) }}">
-            <input type="text" name="s">
-        </form>
-
+            <div class="topbar-divider"></div>
+            <form class="lookup lookup-circle" action="{{ path('but_recherche',{diplome:diplome.sigle|lower}) }}">
+                <input type="text" name="s">
+            </form>
+        {% endif %}
     </div>
     <div class="topbar-right">
         <a class="dropdown-item" href="#" id="darkMode"><i class="fas fa-adjust"></i> Dark Mode On</a>
@@ -107,10 +108,6 @@
 </header>
 <main class="main-container">
     <div class="main-content" id="mainContent">
-        <div class="alert alert-warning">Travail en cours de rédaction par l'ACD MMI. Les données présentées ne sont
-                                         pas encore validées ou officialisées. Publication prévue fin avril
-        </div>
-        <br>
         {% block content %}
 
         {% endblock %}

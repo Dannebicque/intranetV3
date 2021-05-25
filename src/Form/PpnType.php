@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/PpnType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 23/05/2021 14:21
  */
 
 namespace App\Form;
@@ -31,18 +31,18 @@ class PpnType extends AbstractType
         $this->departement = $options['departement'];
 
         $builder
-            ->add('libelle', TextType::class, ['label' => 'label.libelle'])
-            ->add('annee', TextType::class, ['label' => 'label.annee_sortie'])
+            ->add('libelle', TextType::class, ['label' => 'libelle'])
+            ->add('annee', TextType::class, ['label' => 'annee_sortie'])
             ->add(
                 'diplome',
                 EntityType::class,
                 [
-                    'class'         => Diplome::class,
-                    'choice_label'  => 'display',
+                    'class' => Diplome::class,
+                    'choice_label' => 'display',
                     'query_builder' => function(DiplomeRepository $diplomeRepository) {
                         return $diplomeRepository->findByDepartementBuilder($this->departement);
                     },
-                    'label'         => 'label.diplome',
+                    'label' => 'diplome',
                 ]
             );
     }

@@ -433,6 +433,9 @@
     "symfony/event-dispatcher-contracts": {
         "version": "v2.2.0"
     },
+    "symfony/expression-language": {
+        "version": "v5.2.7"
+    },
     "symfony/filesystem": {
         "version": "v5.2.0"
     },
@@ -765,8 +768,14 @@
     "twig/intl-extra": {
         "version": "v3.1.1"
     },
+    "twig/markdown-extra": {
+        "version": "v3.3.1"
+    },
     "twig/twig": {
         "version": "v3.1.1"
+    },
+    "umbrella/corebundle": {
+        "version": "v1.2"
     },
     "vich/uploader-bundle": {
         "version": "1.5",

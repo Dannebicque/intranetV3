@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/CovidPersonnelType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 23/05/2021 14:21
  */
 
 namespace App\Form;
@@ -25,17 +25,17 @@ class CovidPersonnelType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nom', TextType::class, ['label' => 'label.nom', 'attr' => ['readonly' => true]])
-            ->add('prenom', TextType::class, ['label' => 'label.prenom', 'attr' => ['readonly' => true]])
-            ->add('date_naissance', BirthdayType::class, ['label' => 'label.date_naissance'])
-            ->add('lieuNaissance', TextType::class, ['label' => 'label.lieu_naissance'])
-            ->add('mail_univ', TextType::class, ['label' => 'label.mail_univ', 'attr' => ['readonly' => true]])
+            ->add('nom', TextType::class, ['label' => 'nom', 'attr' => ['readonly' => true]])
+            ->add('prenom', TextType::class, ['label' => 'prenom', 'attr' => ['readonly' => true]])
+            ->add('date_naissance', BirthdayType::class, ['label' => 'date_naissance'])
+            ->add('lieuNaissance', TextType::class, ['label' => 'lieu_naissance'])
+            ->add('mail_univ', TextType::class, ['label' => 'mail_univ', 'attr' => ['readonly' => true]])
             ->add('mail_perso', TextType::class, [
-                'label'    => 'label.mail_perso',
+                'label' => 'mail_perso',
                 'required' => false,
-                'help'     => 'Indiquer votre mail personnel permettra de faire suivre l\'attestation en PDF sur vos deux adresses. Sans obligation.',
+                'help' => 'Indiquer votre mail personnel permettra de faire suivre l\'attestation en PDF sur vos deux adresses. Sans obligation.',
             ])
-            ->add('adresse', AdresseType::class, ['label' => 'label.adresse']);
+            ->add('adresse', AdresseType::class, ['label' => 'adresse']);
     }
 
     /**

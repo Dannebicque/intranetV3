@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/webpack.config.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/05/2021 17:51
+// @lastUpdate 22/05/2021 15:57
 
 var Encore = require('@symfony/webpack-encore')
 var path = require('path')
@@ -76,8 +76,9 @@ Encore
   .addEntry('sadm.anneeuniversitaire', './assets/js/pages/sadm.anneeuniversitaire.js')
   .addEntry('adm.reservation.materiel_commun', './assets/js/pages/adm.reservation.materiel_commun.js')
 
+
   //VueJs
-  .enableVueLoader()
+  //.enableVueLoader()
   .enableStimulusBridge('./assets/controllers.json')
 
   // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
@@ -105,6 +106,13 @@ Encore
     config.useBuiltIns = 'usage'
     config.corejs = 3
   })
+
+  .copyFiles([
+    {
+      from: './vendor/umbrella/corebundle/assets/images',
+      to: 'images/[path][name].[ext]'
+    }
+  ])
 
   // enables Sass/SCSS support
   .enableSassLoader()
@@ -158,6 +166,7 @@ Encore
   })
   .addAliases({
     'parchment': path.resolve(__dirname, 'node_modules/parchment/src/parchment.ts'),
+    'umbrella_core': path.join(__dirname, '/vendor/umbrella/corebundle/assets/')
     //'quill$': path.resolve(__dirname, 'node_modules/quill/quill.js')
   })
 

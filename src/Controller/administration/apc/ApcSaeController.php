@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcSaeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 15/05/2021 08:23
+ * @lastUpdate 19/05/2021 15:55
  */
 
 namespace App\Controller\administration\apc;
@@ -158,7 +158,7 @@ class ApcSaeController extends BaseController
 
                 $b['id'] = $d->getId();
                 $b['libelle'] = $d->getLibelle();
-                $b['code'] = $d->getCodeRessource();
+                $b['code'] = $d->getCodeMatiere();
                 $b['checked'] = true === in_array($d->getId(), $tabAcSae) ? 'checked="checked"' : '';
                 $t[] = $b;
             }

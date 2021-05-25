@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 24/05/2021 16:35
  */
 
 /*
@@ -23,7 +23,6 @@ use App\Entity\Semestre;
 use App\Repository\CalendrierRepository;
 use App\Repository\CelcatEventsRepository;
 use App\Repository\EdtPlanningRepository;
-use Knp\Snappy\Pdf;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Twig\Error\LoaderError;

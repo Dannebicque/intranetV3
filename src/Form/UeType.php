@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/UeType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/04/2021 09:00
+ * @lastUpdate 22/05/2021 18:37
  */
 
 namespace App\Form;
@@ -35,8 +35,8 @@ class UeType extends AbstractType
         $this->diplome = $options['diplome'];
 
         $builder
-            ->add('libelle', TextType::class, ['label' => 'label.libelle'])
-            ->add('codeElement', TextType::class, ['label' => 'label.code_element'])
+            ->add('libelle', TextType::class, ['label' => 'libelle'])
+            ->add('codeElement', TextType::class, ['label' => 'code_element'])
             ->add('semestre', EntityType::class, [
                 'class' => Semestre::class,
                 'required' => true,
@@ -44,13 +44,13 @@ class UeType extends AbstractType
                 'query_builder' => function(SemestreRepository $semestreRepository) {
                     return $semestreRepository->findByDiplomeBuilder($this->diplome);
                 },
-                'label' => 'label.semestre',
+                'label' => 'semestre',
                 'expanded' => true,
             ])
-            ->add('numero_ue', ChoiceType::class, ['choices' => range(0, 20), 'label' => 'label.numero_ue'])
-            ->add('bonification', YesNoType::class, ['label' => 'label.bonification', 'help' => 'help.bonification'])
-            ->add('coefficient', TextType::class, ['label' => 'label.coefficient'])
-            ->add('nbEcts', TextType::class, ['label' => 'label.nb_ects']);
+            ->add('numero_ue', ChoiceType::class, ['choices' => range(0, 20), 'label' => 'numero_ue'])
+            ->add('bonification', YesNoType::class, ['label' => 'bonification', 'help' => 'help.bonification'])
+            ->add('coefficient', TextType::class, ['label' => 'coefficient'])
+            ->add('nbEcts', TextType::class, ['label' => 'nb_ects']);
 
         if ($this->diplome->getTypeDiplome()->getApc() === true) {
             $builder->add('apcCompetence', EntityType::class, [
@@ -60,7 +60,7 @@ class UeType extends AbstractType
                 'query_builder' => function(ApcComptenceRepository $apcComptenceRepository) {
                     return $apcComptenceRepository->findByDiplomeBuilder($this->diplome);
                 },
-                'label' => 'label.apc.competence',
+                'label' => 'apc.competence',
                 'expanded' => true,
                 'help' => 'Le diplôme étant au format APC, vous pouvez attacher une compétence à cette UE'
             ]);

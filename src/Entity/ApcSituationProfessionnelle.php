@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcSituationProfessionnelle.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 18/05/2021 16:58
  */
 
 namespace App\Entity;
@@ -22,14 +22,14 @@ class ApcSituationProfessionnelle extends BaseEntity
     use LifeCycleTrait;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="text")
      */
-    private $libelle;
+    private ?string $libelle;
 
     /**
      * @ORM\ManyToOne(targetEntity=ApcCompetence::class, inversedBy="apcSituationProfessionnelles")
      */
-    private $competence;
+    private ?ApcCompetence $competence;
 
     public function getLibelle(): ?string
     {

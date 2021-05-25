@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/apc.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 22/03/2021 13:28
+// @lastUpdate 21/05/2021 20:48
 import '../../vendor/jquery.collection'
 import '../../vendor/bootstrap-datepicker/locales/bootstrap-datepicker.fr.min'
 import $ from 'jquery'
@@ -50,12 +50,11 @@ function updateSaeRessources () {
       success: function (data) {
         let html = '<div class="row">'
         if (data !== false) {
-
           for (var ressource in data) {
             html = html + '<div class="col-md-6">' +
               '<div class="form-check">' +
               '<input type="checkbox" id="ressource_' + data[ressource].id + '" name="ressources[]" class="form-check-input" value="' + data[ressource].id + '" ' + data[ressource].checked + '>\n' +
-              '<label class="form-check-label" for="ressource_' + data[ressource].id + '">' + data[ressource].libelle + '</label></div>' +
+              '<label class="form-check-label" for="ressource_' + data[ressource].id + '">' + data[ressource].code + ' ' + data[ressource].libelle + '</label></div>' +
               '</div>'
           }
           html = html + '</div>'
@@ -95,8 +94,8 @@ function updateSaeApprentisagesCritiques () {
             for (let ac in data[comp]) {
               html = html + '<div class="col-md-6">' +
                 '<div class="form-check">' +
-                '<input type="checkbox" id="ac_' + data[comp][ac].id + '" name="ac[]" class="form-check-input" value="' + data[comp][ac].id + '" '+data[comp][ac].checked+'>\n' +
-                '<label class="form-check-label" for="ac_' + data[comp][ac].id + '">' + data[comp][ac].libelle + '</label></div>' +
+                '<input type="checkbox" id="ac_' + data[comp][ac].id + '" name="ac[]" class="form-check-input" value="' + data[comp][ac].id + '" ' + data[comp][ac].checked + '>\n' +
+                '<label class="form-check-label" for="ac_' + data[comp][ac].id + '">' + data[comp][ac].code + ' : ' + data[comp][ac].libelle + '</label></div>' +
                 '</div>'
             }
             html = html + '</div>'
@@ -134,7 +133,7 @@ function updateRessourceSae () {
             html = html + '<div class="col-md-6">' +
               '<div class="form-check">' +
               '<input type="checkbox" id="sae_' + data[ressource].id + '" name="saes[]" class="form-check-input" value="' + data[ressource].id + '" ' + data[ressource].checked + '>\n' +
-              '<label class="form-check-label" for="sae_' + data[ressource].id + '">' + data[ressource].libelle + '</label></div>' +
+              '<label class="form-check-label" for="sae_' + data[ressource].id + '">' + data[ressource].code + ' : ' + data[ressource].libelle + '</label></div>' +
               '</div>'
           }
           html = html + '</div>'
@@ -174,7 +173,7 @@ function updateRessourcesApprentisagesCritiques () {
               html = html + '<div class="col-md-6">' +
                 '<div class="form-check">' +
                 '<input type="checkbox" id="ac_' + data[comp][ac].id + '" name="ac[]" class="form-check-input" value="' + data[comp][ac].id + '" ' + data[comp][ac].checked + '>\n' +
-                '<label class="form-check-label" for="ac_' + data[comp][ac].id + '">' + data[comp][ac].libelle + '</label></div>' +
+                '<label class="form-check-label" for="ac_' + data[comp][ac].id + '">' + data[comp][ac].code + ' : ' + data[comp][ac].libelle + '</label></div>' +
                 '</div>'
             }
             html = html + '</div>'

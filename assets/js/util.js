@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/util.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/03/2021 14:37
+// @lastUpdate 23/05/2021 11:10
 
 import $ from 'jquery'
 import Swal from 'sweetalert2'
@@ -122,23 +122,119 @@ $(document).on('click', '.supprimer', function (e) {
   })
 })
 
+
+$(document).on('click', '.confirm-delete', function (e) {
+  e.preventDefault()
+  const url = $(this).data('href')
+  const params = $(this).data('uuid')
+  const csrf = $(this).data('csrf')
+  console.log(params)
+  console.log(csrf)
+  Swal.fire({
+    title: 'Confirmer la suppression ?',
+    text: 'L\'opération ne pourra pas être annulée.',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Oui, je confirme',
+    cancelButtonText: 'Non, Annuler',
+    customClass: {
+      confirmButton: 'btn btn-primary',
+      cancelButton: 'btn btn-secondary'
+    },
+    buttonsStyling: false
+  }).then(function (result) {
+    if (result.value) {
+      $.ajax({
+        url: Routing.generate(url, {uuid: params}),
+        type: 'DELETE',
+        data: {
+          _token: csrf
+        },
+        success: function (id) {
+          if (id.hasOwnProperty('redirect') && id.hasOwnProperty('url')) {
+            document.location.href = id.url
+          } else {
+            //t.row("#ligne_"+id).remove().draw(); =< datattable todo: remove ligne si datatable ?? problème dans adm>personnel
+            $('#ligne_' + id).closest('tr').remove()
+            addCallout('Suppression effectuée avec succès', 'success')
+            Swal.fire({
+              title: 'Supprimé!',
+              text: 'L\'enregistrement a été supprimé.',
+              icon: 'success',
+              confirmButtonText: 'OK',
+              customClass: {
+                confirmButton: 'btn btn-primary',
+                cancelButton: 'btn btn-secondary'
+              },
+              buttonsStyling: false
+            })
+          }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+          Swal.fire({
+            title: 'Erreur lors de la suppression!',
+            text: 'Merci de renouveler l\'opération',
+            icon: 'error',
+            confirmButtonText: 'OK',
+            customClass: {
+              confirmButton: 'btn btn-primary',
+              cancelButton: 'btn btn-secondary'
+            },
+            buttonsStyling: false
+          })
+          addCallout('Erreur lors de la tentative de suppression', 'danger')
+        }
+      })
+
+    } else if (
+      // Read more about handling dismissals
+      result.dismiss === 'cancel'
+    ) {
+      Swal.fire({
+        title: 'Cancelled',
+        text: 'OK! Tout est comme avant !',
+        icon: 'error',
+        confirmButtonText: 'OK',
+        customClass: {
+          confirmButton: 'btn btn-primary',
+          cancelButton: 'btn btn-secondary'
+        },
+        buttonsStyling: false
+      })
+    }
+  })
+})
+
 export function addCallout (message, label) {
-  console.log('callout')
-  var translate = new Array()
-  translate['success'] = 'Succès'
-  translate['danger'] = 'Erreur'
-  translate['warning'] = 'Attention'
+  // var translate = new Array()
+  // translate['success'] = 'Succès'
+  // translate['danger'] = 'Erreur'
+  // translate['warning'] = 'Attention'
+  //
+  // const html = '<div class="callout callout-' + label + '" role="alert">\n' +
+  //   '                    <button type="button" class="close" data-dismiss="callout" aria-label="Close">\n' +
+  //   '                        <span>&times;</span>\n' +
+  //   '                    </button>\n' +
+  //   '                    <h5>' + translate[label] + '</h5>\n' +
+  //   '                    <p>' + message + '</p>\n' +
+  //   '                </div>'
+  //
+  // $('#mainContent').prepend(html).slideDown('slow')
+  // $('.callout').delay(5000).slideUp('slow')
 
-  const html = '<div class="callout callout-' + label + '" role="alert">\n' +
-    '                    <button type="button" class="close" data-dismiss="callout" aria-label="Close">\n' +
-    '                        <span>&times;</span>\n' +
-    '                    </button>\n' +
-    '                    <h5>' + translate[label] + '</h5>\n' +
-    '                    <p>' + message + '</p>\n' +
-    '                </div>'
-
-  $('#mainContent').prepend(html).slideDown('slow')
-  $('.callout').delay(5000).slideUp('slow')
+  switch (label) {
+    case 'success':
+      $.toast.success(message)
+      break
+    case 'danger':
+      $.toast.error(message)
+      break
+    case 'warning':
+      $.toast.warning(message)
+      break
+  }
 }
 
 //Editable
