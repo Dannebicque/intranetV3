@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantAbsences.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 15:36
+ * @lastUpdate 24/05/2021 16:35
  */
 
 namespace App\Classes\Etudiant;
@@ -14,7 +14,6 @@ use App\Entity\Absence;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Etudiant;
 use App\Entity\Personnel;
-use App\Entity\Semestre;
 use App\Event\AbsenceEvent;
 use App\Repository\AbsenceRepository;
 use Carbon\Carbon;

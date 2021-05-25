@@ -122,6 +122,9 @@ initiales: Initiales
 j: Jour
 Jour: Jour
 label:
+  choice:
+    non: Non
+    oui: Oui
   apc:
     competence: Compétence
   apercu: 'Aperçu du fichier'

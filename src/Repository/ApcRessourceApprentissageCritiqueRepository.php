@@ -4,12 +4,11 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/ApcRessourceApprentissageCritiqueRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/03/2021 17:50
+ * @lastUpdate 24/05/2021 16:35
  */
 
 namespace App\Repository;
 
-use App\Entity\ApcRessource;
 use App\Entity\ApcRessourceApprentissageCritique;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;

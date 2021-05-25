@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/BacType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 22/05/2021 18:29
  */
 
 namespace App\Form;
@@ -20,9 +20,9 @@ class BacType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('libelle', TextType::class, ['label' => 'label.libelle'])
-            ->add('libelleLong', TextType::class, ['label' => 'label.libelle_long'])
-            ->add('codeApogee', TextType::class, ['label' => 'label.codeApogee'])
+            ->add('libelle', TextType::class, ['label' => 'libelle'])
+            ->add('libelleLong', TextType::class, ['label' => 'libelle_long'])
+            ->add('codeApogee', TextType::class, ['label' => 'codeApogee'])
         ;
     }
 

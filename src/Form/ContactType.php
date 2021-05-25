@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ContactType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 22/05/2021 18:29
  */
 
 namespace App\Form;
@@ -22,14 +22,14 @@ class ContactType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('civilite', CiviliteType::class, ['label' => 'label.civilite'])
-            ->add('nom', TextType::class, ['label' => 'label.nom'])
-            ->add('prenom', TextType::class, ['label' => 'label.prenom'])
-            ->add('fonction', TextType::class, ['label' => 'label.fonction'])
-            ->add('email', EmailType::class, ['label' => 'label.email', 'required' => false])
-            ->add('telephone', TextType::class, ['label' => 'label.telephone', 'required' => false])
-            ->add('portable', TextType::class, ['label' => 'label.portable', 'required' => false])
-            ->add('fax', TextType::class, ['label' => 'label.fax', 'required' => false])
+            ->add('civilite', CiviliteType::class, ['label' => 'civilite'])
+            ->add('nom', TextType::class, ['label' => 'nom'])
+            ->add('prenom', TextType::class, ['label' => 'prenom'])
+            ->add('fonction', TextType::class, ['label' => 'fonction'])
+            ->add('email', EmailType::class, ['label' => 'email', 'required' => false])
+            ->add('telephone', TextType::class, ['label' => 'telephone', 'required' => false])
+            ->add('portable', TextType::class, ['label' => 'portable', 'required' => false])
+            ->add('fax', TextType::class, ['label' => 'fax', 'required' => false])
 
         ;
     }

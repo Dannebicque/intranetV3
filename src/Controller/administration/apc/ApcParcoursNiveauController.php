@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcParcoursNiveauController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/03/2021 17:33
+ * @lastUpdate 24/05/2021 16:35
  */
 
 namespace App\Controller\administration\apc;
@@ -13,11 +13,8 @@ use App\Controller\BaseController;
 use App\Entity\ApcNiveau;
 use App\Entity\ApcParcours;
 use App\Entity\ApcParcoursNiveau;
-use App\Entity\Constantes;
-use App\Form\ApcParcoursNiveauType;
 use App\Repository\ApcComptenceRepository;
 use App\Repository\ApcParcoursNiveauRepository;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 

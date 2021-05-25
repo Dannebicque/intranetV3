@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/ServiceRealise/ServiceRealiseCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/05/2021 14:18
+ * @lastUpdate 24/05/2021 16:35
  */
 
 /*
@@ -15,7 +15,6 @@ namespace App\Classes\ServiceRealise;
 
 use App\DTO\EvenementEdt;
 use App\Entity\CelcatEvent;
-use App\Entity\Matiere;
 use App\Entity\Personnel;
 use App\Repository\CelcatEventsRepository;
 

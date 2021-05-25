@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/MaterielType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 23/05/2021 14:21
  */
 
 namespace App\Form;
@@ -29,25 +29,25 @@ class MaterielType extends AbstractType
         $this->departement = $options['departement'];
 
         $builder
-            ->add('libelle', TextType::class, ['label' => 'label.libelle'])
-            ->add('description', TextType::class, ['label' => 'label.description'])
-            ->add('codebarre', TextType::class, ['label' => 'label.codebarre', 'required' => false])
-            ->add('empruntable', YesNoType::class, ['label' => 'label.empruntable'])
+            ->add('libelle', TextType::class, ['label' => 'libelle'])
+            ->add('description', TextType::class, ['label' => 'description'])
+            ->add('codebarre', TextType::class, ['label' => 'codebarre', 'required' => false])
+            ->add('empruntable', YesNoType::class, ['label' => 'empruntable'])
             ->add('photoFile', VichFileType::class, [
-                'required'       => false,
-                'label'          => 'label.photo',
-                'download_label' => 'label.apercu',
-                'allow_delete'   => false,
+                'required' => false,
+                'label' => 'photo',
+                'download_label' => 'apercu',
+                'allow_delete' => false,
             ])
             ->add('typeMateriel', EntityType::class, [
-                'class'         => TypeMateriel::class,
-                'required'      => true,
-                'choice_label'  => 'libelle',
+                'class' => TypeMateriel::class,
+                'required' => true,
+                'choice_label' => 'libelle',
                 'query_builder' => function(TypeMaterielRepository $typeMaterielRepository) {
                     return $typeMaterielRepository->findByDepartementBuider($this->departement);
                 },
-                'label'         => 'label.type_materiel',
-                'expanded'      => false,
+                'label' => 'type_materiel',
+                'expanded' => false,
             ])
         ;
     }

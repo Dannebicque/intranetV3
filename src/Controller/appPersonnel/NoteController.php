@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/NoteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/05/2021 11:39
+ * @lastUpdate 25/05/2021 16:12
  */
 
 namespace App\Controller\appPersonnel;
@@ -149,6 +149,7 @@ class NoteController extends BaseController
      * @throws Exception
      */
     public function import(
+        TypeMatiereManager $typeMatiereManager,
         Request $request,
         MyUpload $myUpload,
         MyEvaluation $myEvaluation,
@@ -156,9 +157,13 @@ class NoteController extends BaseController
     ): Response {
         //upload
         $fichier = $myUpload->upload($request->files->get('fichier_import'), 'temp/');
+        $matiere = $typeMatiereManager->getMatiere($evaluation->getIdMatiere(), $evaluation->getTypeMatiere());
+        if (null === $matiere) {
+            throw new MatiereNotFoundException();
+        }
 
         //traitement de l'import des notes.
-        $notes = $myEvaluation->importEvaluation($evaluation, $fichier);
+        $notes = $myEvaluation->importEvaluation($evaluation, $fichier, $matiere->semestre);
         $this->addFlashBag('success', 'import_note_a_verifier');
 
         return $this->render('appPersonnel/note/saisie_2.html.twig', [
@@ -166,15 +171,24 @@ class NoteController extends BaseController
             'notes' => $notes,
             'import' => true,
             'autorise' => true,
+            'matiere' => $matiere,
         ]);
     }
 
     /**
      * @Route("/modele-import/{evaluation}", name="application_personnel_note_import_modele", methods="GET")
      */
-    public function modeleImport(MyExport $myExport, Evaluation $evaluation): ?Response
-    {
-        return $myExport->genereModeleImportNote($evaluation);
+    public function modeleImport(
+        TypeMatiereManager $typeMatiereManager,
+        MyExport $myExport,
+        Evaluation $evaluation
+    ): ?Response {
+        $matiere = $typeMatiereManager->getMatiere($evaluation->getIdMatiere(), $evaluation->getTypeMatiere());
+        if (null === $matiere) {
+            throw new MatiereNotFoundException();
+        }
+
+        return $myExport->genereModeleImportNote($matiere->semestre);
     }
 
     /**

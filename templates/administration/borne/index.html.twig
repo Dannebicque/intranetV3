@@ -14,50 +14,7 @@
   <div class="card">
     <h4 class="card-title">{{ 'adm.borne.index.heading'|trans }}</h4>
     <div class="card-body">
-      <table class="table table-striped table-bordered" {% if bornes|length > 0 %}data-provide="datatables"
-             data-checkbox="true"{% endif %}>
-        <thead>
-        <tr>
-          <th><label class="sr-only" for="select_all">Tout selectionner</label>
-            <input name="select_all" value="1" id="select_all" type="checkbox"/></th>
-          <th>{{ 'table.icone_couleur'|trans }}</th>
-          <th>{{ 'table.message'|trans }}</th>
-          <th>{{ 'table.dateDebutPublication'|trans }}</th>
-          <th>{{ 'table.dateFinPublication'|trans }}</th>
-          <th>{{ 'table.visible'|trans }}</th>
-          <th>{{ 'table.semestres'|trans }}</th>
-                    <th>{{ 'table.actions'|trans }}</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for borne in bornes %}
-                  <tr id="ligne_{{ borne.id }}">
-                    <td></td>
-                    <td style="background-color: {{ borne.couleur }}"><i class="{{ borne.icone }}"></i></td>
-                    <td>{{ borne.message }}</td>
-                    <td>{{ borne.dateDebutPublication ? borne.dateDebutPublication|format_date('long') : '' }}</td>
-                    <td>{{ borne.dateFinPublication ? borne.dateFinPublication|format_date('long') : '' }}</td>
-                    <td>{{ borne.visible ? 'Yes'|trans : 'No'|trans }}</td>
-                    <td>{% for semestre in borne.semestres %}{{ semestre.libelle }}, {% endfor %}</td>
-                    <td>
-                      <a href="#" class="btn {% if borne.visible %}btn-success{% else %}btn-danger{% endif %}
-                            btn-outline btn-square visibiliteBorne"
-                         data-provide="tooltip"
-                         data-placement="bottom"
-                         title="{% if borne.visible %}{{ 'atitle.afficher.visibile'|trans }}{% else %}{{ 'atitle.afficher.invisibile'|trans }}{% endif %}"
-                         data-id="{{ borne.id }}"><i class="fa {% if borne.visible %}fa-eye{% else
-                                %}fa-eye-slash{% endif %}"></i></a>
-                            {{ include('composants/adm-buttons-table-index.html.twig', {elt: 'borne', id: borne.id}) }}
-
-                        </td>
-                    </tr>
-                {% else %}
-                  <tr>
-                    <td colspan="8">{{ 'no.record.found'|trans }}</td>
-                  </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+        {{ render_table(table) }}
         </div>
     </div>
 {% endblock %}
@@ -65,29 +22,6 @@
 
 {% block fabactions %}
     {{ include('composants/fab-buttons.html.twig', {boutons:[
-        {type: 'info',
-            href: path('administration_borne_export', {_format:'pdf'}),
-            title: 'exporter.pdf'|trans,
-            icone : "fa fa-file-pdf"
-        },
-        {
-            type:'info',
-            href:path('administration_borne_export', {_format:'csv'}),
-            title: 'exporter.csv'|trans,
-            icone: 'fa fa-file-csv'
-        },
-        {
-            type:'info',
-            href:path('administration_borne_export', {_format:'xlsx'}),
-            title: 'exporter.xls'|trans,
-            icone: 'fa fa-file-excel'
-        },
-        {
-            type:'info',
-            href:path('administration_borne_new'),
-            title: 'ajouter'|trans,
-            icone: 'fas fa-plus'
-        },
         {
             type:'info',
             href:path('help_article', {sujet: 'administration-borne'}),

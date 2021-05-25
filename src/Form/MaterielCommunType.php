@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/MaterielCommunType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 24/05/2021 16:35
  */
 
 namespace App\Form;
@@ -12,12 +12,12 @@ namespace App\Form;
 use App\Entity\MaterielCommun;
 use App\Entity\Personnel;
 use App\Repository\PersonnelRepository;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Umbrella\CoreBundle\Form\Entity2Type;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class MaterielCommunType extends AbstractType
@@ -25,22 +25,21 @@ class MaterielCommunType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('designation', TextType::class, ['label' => 'label.designation'])
-            ->add('description', TextareaType::class, ['label' => 'label.description'])
+            ->add('designation', TextType::class, ['label' => 'designation'])
+            ->add('description', TextareaType::class, ['label' => 'description'])
             ->add('photoFile', VichFileType::class, [
-                'required'       => false,
-                'label'          => 'label.fichier',
-                'download_label' => 'label.apercu',
-                'allow_delete'   => false,
+                'required' => false,
+                'label' => 'fichier',
+                'download_label' => 'apercu',
+                'allow_delete' => false,
             ])
-            ->add('contact', EntityType::class, [
-                'class'         => Personnel::class,
+            ->add('contact', Entity2Type::class, [
+                'class' => Personnel::class,
                 'query_builder' => static function(PersonnelRepository $personnelRepository) {
                     return $personnelRepository->findAllOrder();
                 },
-                'attr'          => ['class' => 'form-control selectpicker'],
-                'choice_label'  => 'display',
-                'label'         => 'label.contact_materiel_commun',
+                'choice_label' => 'display',
+                'label' => 'contact_materiel_commun',
             ]);
     }
 

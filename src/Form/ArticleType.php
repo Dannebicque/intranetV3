@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ArticleType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 23/05/2021 14:21
  */
 
 namespace App\Form;
@@ -35,33 +35,33 @@ class ArticleType extends AbstractType
 
         $builder
             ->add('titre', TextType::class, [
-                'label' => 'label.titre',
+                'label' => 'titre',
             ])
             ->add('texte', TextareaType::class, [
-                'label' => 'label.texte',
-                'attr'  => ['data-provide' => 'quill', 'rows' => 20],
+                'label' => 'texte',
+                'attr' => ['data-provide' => 'quill', 'rows' => 20],
             ])
             ->add('categorie', EntityType::class, [
-                'class'         => ArticleCategorie::class,
-                'label'         => 'label.article_categorie',
-                'choice_label'  => 'libelle',
+                'class' => ArticleCategorie::class,
+                'label' => 'article_categorie',
+                'choice_label' => 'libelle',
                 'query_builder' => function(ArticleCategorieRepository $articleCategorieRepository) {
                     return $articleCategorieRepository->findByDepartementBuilder($this->departement);
                 },
-                'required'      => true,
-                'expanded'      => false,
-                'multiple'      => false,
+                'required' => true,
+                'expanded' => false,
+                'multiple' => false,
             ])
             ->add('semestres', EntityType::class, [
-                'class'         => Semestre::class,
-                'label'         => 'label.semestres_article',
-                'choice_label'  => 'libelle',
+                'class' => Semestre::class,
+                'label' => 'semestres_article',
+                'choice_label' => 'libelle',
                 'query_builder' => function(SemestreRepository $semestreRepository) {
                     return $semestreRepository->findByDepartementBuilder($this->departement);
                 },
-                'required'      => true,
-                'expanded'      => true,
-                'multiple'      => true,
+                'required' => true,
+                'expanded' => true,
+                'multiple' => true,
             ]);
     }
 

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Csv/Csv.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:06
+ * @lastUpdate 24/05/2021 16:35
  */
 
 /*
@@ -13,7 +13,7 @@
 
 namespace App\Classes\Csv;
 
-use DateTime;
+use DateTimeInterface;
 use Doctrine\Common\Annotations\AnnotationReader;
 use InvalidArgumentException;
 use Symfony\Component\HttpFoundation\Response;
@@ -47,7 +47,7 @@ class Csv
         $normalizer = new ObjectNormalizer($classMetaDataFactory);
 
         $serializer = new Serializer([
-            new DateTimeNormalizer([DateTime::ATOM]),
+            new DateTimeNormalizer([DateTimeInterface::ATOM]),
             new DataUriNormalizer(),
             $normalizer,
         ], [$encoder]);

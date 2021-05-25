@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/CovidAttestationPersonnelType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/02/2021 11:06
+ * @lastUpdate 22/05/2021 18:29
  */
 
 namespace App\Form;
@@ -47,7 +47,7 @@ class CovidAttestationPersonnelType extends AbstractType
                     'Transports en commun (bus, train, ...)' => 'transport',
                 ],
                 'expanded' => true,
-                'label' => 'label.moyenDeplacement',
+                'label' => 'moyenDeplacement',
             ])
             ->add('covidCreneauPresences', CollectionType::class, [
                 'entry_type' => CovidCreneauPresenceType::class,
@@ -69,7 +69,7 @@ class CovidAttestationPersonnelType extends AbstractType
                     'Demandes ponctuelles (récupérer dossiers, BU)' => 'motif3',
                     'Encadrement doctorant sur site' => 'motif4',
                 ],
-                'label' => 'label.motifDeplacement',
+                'label' => 'motifDeplacement',
             ]);
     }
 

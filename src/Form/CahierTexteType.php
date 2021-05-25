@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/CahierTexteType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 23/05/2021 14:21
  */
 
 namespace App\Form;
@@ -33,24 +33,24 @@ class CahierTexteType extends AbstractType
 
         $builder
             ->add('libelle', TextType::class, [
-                'label' => 'label.libelle',
+                'label' => 'libelle',
             ])
             ->add('description', TextareaType::class, [
-                'label' => 'label.description',
+                'label' => 'description',
             ])
             ->add('dateRetour', DateTimeType::class, [
-                'label' => 'label.dateRetour',
+                'label' => 'dateRetour',
             ])
             ->add('semestre', EntityType::class, [
-                'class'         => Semestre::class,
-                'label'         => 'label.semestre',
-                'choice_label'  => 'libelle',
+                'class' => Semestre::class,
+                'label' => 'semestre',
+                'choice_label' => 'libelle',
                 'query_builder' => function(SemestreRepository $semestreRepository) {
                     return $semestreRepository->findByDepartementBuilder($this->departement);
                 },
-                'required'      => true,
-                'expanded'      => true,
-                'multiple'      => false,
+                'required' => true,
+                'expanded' => true,
+                'multiple' => false,
             ]);
     }
 

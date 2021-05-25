@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/Type/DateRangeType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 22/05/2021 20:11
  */
 
 namespace App\Form\Type;
@@ -20,6 +20,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class DateRangeType extends AbstractType
 {
+    //todo: a faire avec la librairie de Umlbrella ?
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('from_date', DateType::class,
