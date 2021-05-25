@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEvaluation.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/05/2021 12:00
+ * @lastUpdate 25/05/2021 16:10
  */
 
 /*
@@ -20,6 +20,7 @@ use App\Entity\Departement;
 use App\Entity\Etudiant;
 use App\Entity\Evaluation;
 use App\Entity\Note;
+use App\Entity\Semestre;
 use App\Utils\Tools;
 use function array_key_exists;
 use function count;
@@ -31,6 +32,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
+use function in_array;
 
 /**
  * Class MyEvaluation.
@@ -42,7 +44,7 @@ class MyEvaluation
     protected array $statistiques = [];
 
     /** @var Note[] */
-    protected array $notes = [];
+    protected $notes = [];
 
     protected array $classement = [];
 
@@ -271,7 +273,7 @@ class MyEvaluation
     /**
      * @throws Exception
      */
-    public function importEvaluation(Evaluation $evaluation, string $fichier): ?array
+    public function importEvaluation(Evaluation $evaluation, string $fichier, Semestre $semestre): ?array
     {
         $t = explode('.', $fichier);
         $extension = $t[count($t) - 1];
@@ -279,11 +281,11 @@ class MyEvaluation
         switch ($extension) {
             case 'xlsx':
                 $data = $this->importXlsx($fichier);
-                $notes = $this->insertNotes($evaluation, $data);
+                $notes = $this->insertNotes($evaluation, $data, $semestre);
                 break;
             case 'csv':
                 $data = $this->importCsv($fichier);
-                $notes = $this->insertNotes($evaluation, $data);
+                $notes = $this->insertNotes($evaluation, $data, $semestre);
                 break;
             default:
                 return []; //erreur
@@ -295,11 +297,11 @@ class MyEvaluation
     /**
      * @throws Exception
      */
-    private function insertNotes(Evaluation $evaluation, $data): array
+    private function insertNotes(Evaluation $evaluation, $data, Semestre $semestre): array
     {
         $evaluation->setVisible(false); //on masque l'évaluation le temps de l'import et de la vérification
         $notes = [];
-        $req = $this->entityManager->getRepository(Etudiant::class)->findBySemestre($evaluation->getSemestre());
+        $req = $this->entityManager->getRepository(Etudiant::class)->findBySemestre($semestre);
         $etudiants = [];
         /** @var Etudiant $etu */
         foreach ($req as $etu) {
@@ -309,6 +311,7 @@ class MyEvaluation
         foreach ($evaluation->getNotes() as $note) {
             $notes[$note->getEtudiant()->getNumEtudiant()] = $note;
         }
+
 
         foreach ($data as $note) {
             if (array_key_exists((string)$note['num_etudiant'], $etudiants)) {
@@ -338,12 +341,11 @@ class MyEvaluation
                     $newnote['commentaire'] = $note['commentaire'];
                     $newnote['absenceJustifie'] = false;
                     $newnote['dejapresente'] = false; //on indique qu'on remplace  car pas de notes
-                    $notes[$etudiants[$note['num_etudiant']]->getId()] = $newnote;
+                    $notes[$etudiants[$note['num_etudiant']]->getNumEtudiant()] = $newnote;
                 }
             }
         }
         $this->entityManager->flush();
-
         return $notes;
     }
 
@@ -383,14 +385,16 @@ class MyEvaluation
             //on récupère l'en-tête
             $phrase = fgetcsv($handle, 1024, ';');
 
-            if (\in_array('num_etudiant', $phrase, true) && \in_array('commentaire',
-                    $phrase, true) && \in_array('note', $phrase, true)) {
+            if (in_array('num_etudiant', $phrase, false) && in_array('note', $phrase, false)) {
                 //on vérifie que les clés existent.
-                //todo: commentaire ne devrais pas être obligatoire ? Supprimer l'option avec , dans le texte
                 foreach ($phrase as $key) {
                     $ordre[] = $key;
                 }
+            } else {
+                //ordre par défaut attendu
+                $ordre = ['num_etudiant', 'note', 'commentaire'];
             }
+
             //pas de clé en en-tête
             //s'assurer que c'est les bonnes données ?
 

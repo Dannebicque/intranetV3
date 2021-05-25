@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 25/05/2021 16:12
  */
 
 /*
@@ -14,18 +14,15 @@
 namespace App\Classes;
 
 use App\Classes\Excel\MyExcelMultiExport;
-use App\Entity\Evaluation;
+use App\Entity\Semestre;
+use App\Exception\SemestreNotFoundException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class MyExport
 {
-    /** @var MyExcelMultiExport */
-    protected $excel;
+    protected MyExcelMultiExport $excel;
 
-    /**
-     * MyExport constructor.
-     */
     public function __construct(MyExcelMultiExport $excel)
     {
         $this->excel = $excel;
@@ -36,10 +33,6 @@ class MyExport
         return $this->excel;
     }
 
-    /**
-     *
-     * @return Response|bool
-     */
     public function genereFichierGenerique($format, $data, $nomFichier, array $groups, array $colonne): ?Response
     {
         $this->excel->genereExcelFromSerialization($data, $groups, $colonne);
@@ -53,7 +46,7 @@ class MyExport
                 return $this->excel->saveXlsx($nomFichier);
         }
 
-        return false;
+        return null;
     }
 
     /**
@@ -79,15 +72,17 @@ class MyExport
         return false;
     }
 
-    public function genereModeleImportNote(Evaluation $evaluation): ?Response
+    /**
+     * @throws \App\Exception\SemestreNotFoundException
+     */
+    public function genereModeleImportNote(?Semestre $semestre): ?Response
     {
-        $semestre = $evaluation->getSemestre();
-        if (null !== $semestre) {
-            $this->excel->genereModeleExcel($semestre);
-
-            return $this->excel->saveXlsx('modele-import-note-' . $semestre->getLibelle());
+        if (null === $semestre) {
+            throw new SemestreNotFoundException();
         }
 
-        return null;
+        $this->excel->genereModeleExcel($semestre);
+
+        return $this->excel->saveXlsx('modele-import-note-' . $semestre->getLibelle());
     }
 }
