@@ -4,12 +4,11 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Questionnaire.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 19:15
+ * @lastUpdate 24/05/2021 16:35
  */
 
 namespace App\Entity;
 
-use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\UuidTrait;
 use DateTime;
 use DateTimeInterface;

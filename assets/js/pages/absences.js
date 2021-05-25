@@ -2,9 +2,9 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/absences.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/05/2021 19:38
+// @lastUpdate 23/05/2021 14:06
 import {addCallout} from '../util'
-import '../../vendor/datatables'
+// import '../../vendor/datatables'
 import $ from 'jquery'
 import {dataTableLangueFr} from '../lang/fr'
 

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ParcourType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 23/05/2021 14:21
  */
 
 namespace App\Form;
@@ -27,17 +27,17 @@ class ParcourType extends AbstractType
         $this->diplome = $options['diplome'];
 
         $builder
-            ->add('libelle', TextType::class, ['label' => 'label.libelle'])
-            ->add('codeElement', TextType::class, ['label' => 'label.code_apogee'])
+            ->add('libelle', TextType::class, ['label' => 'libelle'])
+            ->add('codeElement', TextType::class, ['label' => 'code_apogee'])
             ->add('semestre', EntityType::class, [
-                'class'         => Semestre::class,
-                'required'      => true,
-                'choice_label'  => 'display',
+                'class' => Semestre::class,
+                'required' => true,
+                'choice_label' => 'display',
                 'query_builder' => function(SemestreRepository $semestreRepository) {
                     return $semestreRepository->findByDiplomeBuilder($this->diplome);
                 },
-                'label'         => 'label.semestre',
-                'expanded'      => true,
+                'label' => 'semestre',
+                'expanded' => true,
             ])
         ;
     }

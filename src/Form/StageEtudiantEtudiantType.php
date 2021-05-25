@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/StageEtudiantEtudiantType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 23/05/2021 14:21
  */
 
 namespace App\Form;
@@ -44,54 +44,59 @@ class StageEtudiantEtudiantType extends AbstractType
                 'serviceStageEntreprise',
                 TextType::class,
                 [
-                    'label'    => 'label.serviceStageEntreprise',
-                    'help'     => 'help.serviceStageEntreprise',
+                    'label' => 'serviceStageEntreprise',
+                    'help' => 'help.serviceStageEntreprise',
                     'required' => false,
                 ]
             )
             ->add('sujetStage', TextareaType::class,
-                ['label' => 'label.sujetStage', 'help' => 'help.sujetStage', 'attr' => ['rows' => 8]])
-            ->add('activites', TextareaType::class, ['label' => 'label.activites', 'help' => 'help.activites'])
+                ['label' => 'sujetStage', 'help' => 'help.sujetStage', 'attr' => ['rows' => 8]])
+            ->add('activites', TextareaType::class, ['label' => 'activites', 'help' => 'help.activites'])
             ->add(
                 'dureeHebdomadaire',
                 TextType::class,
-                ['label' => 'label.dureeHebdomadaire', 'help' => 'help.dureeHebdomadaire']
+                ['label' => 'dureeHebdomadaire', 'help' => 'help.dureeHebdomadaire']
             )
             ->add(
                 'commentaireDureeHebdomadaire',
                 TextareaType::class,
-                ['label' => 'label.commentaireDureeHebdomadaire', 'help' => 'help.commentaireDureeHebdomadaire', 'required' => false]
+                [
+                    'label' => 'commentaireDureeHebdomadaire',
+                    'help' => 'help.commentaireDureeHebdomadaire',
+                    'required' => false
+                ]
             )
             ->add(
                 'periodesInterruptions',
                 TextareaType::class,
-                ['label' => 'label.periodesInterruptions', 'help' => 'help.periodesInterruptions', 'required' => false]
+                ['label' => 'periodesInterruptions', 'help' => 'help.periodesInterruptions', 'required' => false]
             )
             ->add(
                 'amenagementStage',
                 TextareaType::class,
-                ['label' => 'label.amenagementStage', 'help' => 'help.amenagementStage', 'required' => false]
+                ['label' => 'amenagementStage', 'help' => 'help.amenagementStage', 'required' => false]
             )
-            ->add('gratification', YesNoType::class, ['label' => 'label.gratification', 'help' => 'help.gratification'])
+            ->add('gratification', YesNoType::class, ['label' => 'gratification', 'help' => 'help.gratification'])
             ->add(
                 'gratificationMontant',
                 TextType::class,
-                ['label' => 'label.gratificationMontant', 'help' => 'help.gratificationMontant']
+                ['label' => 'gratificationMontant', 'help' => 'help.gratificationMontant']
             )
             ->add(
                 'gratificationPeriode',
                 ChoiceType::class,
                 [
-                    'label'   => 'label.gratificationPeriode',
-                    'help'    => 'help.gratificationPeriode',
+                    'label' => 'gratificationPeriode',
+                    'help' => 'help.gratificationPeriode',
                     'choices' => [
                         'Heure' => StageEtudiant::PERIODE_GRATIFICATION_HEURE,
-                        'Jour'  => StageEtudiant::PERIODE_GRATIFICATION_JOUR,
-                        'Mois'  => StageEtudiant::PERIODE_GRATIFICATION_MOIS,
+                        'Jour' => StageEtudiant::PERIODE_GRATIFICATION_JOUR,
+                        'Mois' => StageEtudiant::PERIODE_GRATIFICATION_MOIS,
                     ],
                 ]
             )
-            ->add('avantages', TextareaType::class, ['label' => 'label.avantages', 'help' => 'help.avantages', 'required' => false]);
+            ->add('avantages', TextareaType::class,
+                ['label' => 'avantages', 'help' => 'help.avantages', 'required' => false]);
 
         if (true === $this->flexible) {
             $builder
@@ -100,7 +105,7 @@ class StageEtudiantEtudiantType extends AbstractType
                 ->add(
                     'dureeJoursStage',
                     TextType::class,
-                    ['label' => 'label.dureeJoursStage', 'help' => 'help.dureeJoursStage']
+                    ['label' => 'dureeJoursStage', 'help' => 'help.dureeJoursStage']
                 )
                 ->addEventListener(FormEvents::POST_SUBMIT, static function(FormEvent $event) {
                     /** @var StageEtudiant $stageEtudiant */

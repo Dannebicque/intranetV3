@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/MailingSubscriber.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2021 08:46
+ * @lastUpdate 23/05/2021 13:46
  */
 
 namespace App\EventSubscriber;
@@ -102,7 +102,7 @@ class MailingSubscriber implements EventSubscriberInterface
     {
         $rattrapage = $event->getRattrapage();
         $matiere = $this->typeMatiereManager->getMatiere($rattrapage->getIdMatiere(), $rattrapage->getTypeMatiere());
-        if (null !== $rattrapage->getEtudiant()) {
+        if (null !== $rattrapage->getEtudiant() && null !== $matiere) {
             if ('A' === $rattrapage->getEtatDemande()) {
                 $this->myMailer->initEmail();
                 $this->myMailer->setTemplate('mails/rattrapage_accepted.txt.twig',

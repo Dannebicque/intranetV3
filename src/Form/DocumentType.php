@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/DocumentType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 23/05/2021 14:21
  */
 
 namespace App\Form;
@@ -35,36 +35,36 @@ class DocumentType extends AbstractType
         $this->departement = $options['departement'];
 
         $builder
-            ->add('libelle', TextType::class, ['label' => 'label.libelle', 'help' => '100 caractères maximum'])
-            ->add('description', TextareaType::class, ['label' => 'label.description', 'required' => false])
+            ->add('libelle', TextType::class, ['label' => 'libelle', 'help' => '100 caractères maximum'])
+            ->add('description', TextareaType::class, ['label' => 'description', 'required' => false])
             ->add('documentFile', VichFileType::class, [
-                'required'       => false,
-                'label'          => 'label.fichier',
-                'download_label' => 'label.apercu',
-                'allow_delete'   => false,
+                'required' => false,
+                'label' => 'fichier',
+                'download_label' => 'apercu',
+                'allow_delete' => false,
             ])
             ->add(
                 'type_document',
                 EntityType::class,
                 [
-                    'class'         => TypeDocument::class,
-                    'choice_label'  => 'libelle',
-                    'label'         => 'label.type_document',
+                    'class' => TypeDocument::class,
+                    'choice_label' => 'libelle',
+                    'label' => 'type_document',
                     'query_builder' => function(TypeDocumentRepository $typeDocumentRepository) {
                         return $typeDocumentRepository->findByDepartementBuilder($this->departement);
                     },
                 ]
             )
             ->add('semestres', EntityType::class, [
-                'class'         => Semestre::class,
-                'label'         => 'label.semestres_document',
-                'choice_label'  => 'libelle',
+                'class' => Semestre::class,
+                'label' => 'semestres_document',
+                'choice_label' => 'libelle',
                 'query_builder' => function(SemestreRepository $semestreRepository) {
                     return $semestreRepository->findByDepartementBuilder($this->departement);
                 },
-                'required'      => true,
-                'expanded'      => true,
-                'multiple'      => true,
+                'required' => true,
+                'expanded' => true,
+                'multiple' => true,
             ]);
     }
 

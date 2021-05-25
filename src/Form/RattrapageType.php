@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/RattrapageType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2021 18:51
+ * @lastUpdate 24/05/2021 16:35
  */
 
 namespace App\Form;
@@ -13,14 +13,14 @@ use App\Classes\Matieres\TypeMatiereManager;
 use App\Entity\Personnel;
 use App\Entity\Rattrapage;
 use App\Repository\PersonnelRepository;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Umbrella\CoreBundle\Form\Choice2Type;
+use Umbrella\CoreBundle\Form\DatepickerType;
+use Umbrella\CoreBundle\Form\Entity2Type;
 
 /**
  * Class RattrapageType.
@@ -42,28 +42,24 @@ class RattrapageType extends AbstractType
         $locale = $options['locale'];
 
         $builder
-            ->add('dateEval', DateType::class, [
-                'label' => 'label.date_evaluation',
+            ->add('dateEval', DatepickerType::class, [
+                'label' => 'date_evaluation',
                 'required' => true,
-                'format' => 'dd/MM/yyyy',
-                'widget' => 'single_text',
-                'html5' => false,
-                'attr' => ['data-provide' => 'datepicker', 'data-language' => $locale],
+                'attr' => ['data-options' => ['locale' => $locale]],
             ])
-            ->add('heureEval', TimeType::class, ['label' => 'label.heure_evaluation', 'required' => false])
-            ->add('duree', TextType::class, ['label' => 'label.duree_evaluation', 'required' => false])
-            ->add('typeIdMatiere', ChoiceType::class, [
+            ->add('heureEval', TimeType::class, ['label' => 'heure_evaluation', 'required' => false])
+            ->add('duree', TextType::class, ['label' => 'duree_evaluation', 'required' => false])
+            ->add('typeIdMatiere', Choice2Type::class, [
                 'choices' => $this->typeMatiereManager->findBySemestreChoiceType($this->semestre),
-                'label' => 'label.matiere',
+                'label' => 'matiere',
                 'required' => true,
                 'expanded' => false,
                 'multiple' => false,
                 'mapped' => false,
-                'attr' => ['class' => 'form-control selectpicker'],
             ])
-            ->add('personnel', EntityType::class, [
+            ->add('personnel', Entity2Type::class, [
                 'class' => Personnel::class,
-                'label' => 'label.personnel',
+                'label' => 'personnel',
                 'choice_label' => 'displayPr',
                 'query_builder' => function(PersonnelRepository $personnelRepository) {
                     return $personnelRepository->findBySemestreBuilder($this->semestre);
@@ -71,7 +67,6 @@ class RattrapageType extends AbstractType
                 'required' => true,
                 'expanded' => false,
                 'multiple' => false,
-                'attr' => ['class' => 'form-control selectpicker'],
             ]);
     }
 

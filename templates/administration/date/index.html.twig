@@ -14,38 +14,7 @@
     <div class="card">
         <h4 class="card-title">{{ 'adm.date.index.heading'|trans }}</h4>
         <div class="card-body">
-            <table class="table table-striped table-bordered" data-provide="datatables"
-                   data-checkbox="true">
-                <thead>
-                <tr>
-                    <th><label class="sr-only" for="select_all">Tout selectionner</label>
-                        <input name="select_all" value="1" id="select_all" type="checkbox"/>
-                    </th>
-                    <th>{{ 'table.titre'|trans }}</th>
-                    <th>{{ 'table.dateDebut'|trans }}</th>
-                    <th>{{ 'table.heureDebut'|trans }}</th>
-                    <th>{{ 'table.lieu'|trans }}</th>
-                    <th>{{ 'table.semestres'|trans }}</th>
-                    <th>{{ 'table.actions'|trans }}</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for date in dates %}
-                    <tr id="ligne_{{ date.id }}">
-                        <td></td>
-                        <td>{{ date.libelle }}</td>
-                        <td>{{ date.dateDebut ? date.dateDebut|format_date('long') : 'non.defini'|trans }}</td>
-                        <td>{% if date.allday %}{{ 'toute.la.journee'|trans }}{% else %}{{ date.heureDebut ? date.heureDebut|format_time
-                                ('short') : 'non.defini'|trans }} à {{ date.heureFin ? date.heureFin|format_time('short') : 'non.defini'|trans }}{% endif %}</td>
-                        <td>{{ date.lieu }}</td>
-                        <td>{% for semestre in date.semestres %}{{ semestre.libelle }} {% endfor %}</td>
-                        <td>
-                            {{ include('composants/adm-buttons-table-index.html.twig', {elt:'date', id:date.id}) }}
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+            {{ render_table(table) }}
         </div>
     </div>
 {% endblock %}

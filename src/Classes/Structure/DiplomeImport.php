@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Structure/DiplomeImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 15/05/2021 07:34
+ * @lastUpdate 23/05/2021 14:21
  */
 
 namespace App\Classes\Structure;
@@ -146,6 +146,7 @@ class DiplomeImport
                     $ar->setSemestre($semestre);
                     $ar->setLibelle($ressource->titre);
                     $ar->setCodeMatiere((string)$ressource['code']);
+                    $ar->setCodeElement($this->diplome->getSigle() . (string)$ressource['code']);
                     $ar->setTdPpn((float)$ressource['heuresCMTD']);
                     $ar->setTpPpn((float)$ressource['heuresTP']);
                     $ar->setDescription((string)$ressource->description);
@@ -172,6 +173,7 @@ class DiplomeImport
                     $ar->setSemestre($semestre);
                     $ar->setLibelle($sae->titre);
                     $ar->setCodeMatiere((string)$sae['code']);
+                    $ar->setCodeElement($this->diplome->getSigle() . (string)$sae['code']);
                     $ar->setTdPpn((float)$sae['heuresCMTD']);
                     $ar->setTpPpn((float)$sae['heuresTP']);
                     $ar->setProjetPpn((float)$sae['heuresProjet']);

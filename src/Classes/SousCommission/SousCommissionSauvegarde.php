@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/SousCommission/SousCommissionSauvegarde.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2021 08:46
+ * @lastUpdate 24/05/2021 16:35
  */
 
 /*
@@ -15,7 +15,6 @@ namespace App\Classes\SousCommission;
 
 use App\DTO\SousCommissionTravail;
 use App\Entity\AnneeUniversitaire;
-use App\Entity\Matiere;
 use App\Entity\Scolarite;
 use App\Entity\ScolaritePromo;
 use App\Entity\Semestre;

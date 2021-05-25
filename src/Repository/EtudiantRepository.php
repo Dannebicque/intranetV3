@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/EtudiantRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 16/05/2021 16:12
  */
 
 namespace App\Repository;
@@ -39,6 +39,25 @@ class EtudiantRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Etudiant::class);
         $this->router = $router;
+    }
+
+    public function getData($getId): array
+    {
+        $etudiants = $this->findBySemestre($getId);
+        $tab = [];
+        /** @var Etudiant $etudiant */
+        foreach ($etudiants as $etudiant) {
+            $t = [];
+
+            $t['id'] = $etudiant->getId();
+            $t['numetudiant'] = $etudiant->getNumEtudiant();
+            $t['nom'] = $etudiant->getNom();
+            $t['prenom'] = $etudiant->getPrenom();
+            $t['semestre'] = $etudiant->getSemestre() ? $etudiant->getSemestre()->getLibelle() : '-';
+            $tab[] = $t;
+        }
+
+        return $tab;
     }
 
     public function getArrayEtudiantsByDepartement($getId, $filters, $start, $length): array

@@ -2,10 +2,11 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/css/app.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/05/2021 10:25
+// @lastUpdate 22/05/2021 19:09
 
 @import "core.min.css";
-
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/bootstrap";
 @import "./theme-troyes.scss";
 @import "./theme-rcc.scss";
 
@@ -13,6 +14,10 @@
 @import "./color.scss";
 @import "./apc.scss";
 @import "perfect-scrollbar.css";
+// CSS Umbrella...
+@import './umbrella.scss';
+@import './_select2.scss';
+
 
 #planning thead {
   height: 30px;

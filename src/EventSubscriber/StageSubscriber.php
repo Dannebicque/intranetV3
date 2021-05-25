@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/StageSubscriber.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 24/05/2021 16:35
  */
 
 namespace App\EventSubscriber;
@@ -19,7 +19,6 @@ use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Error\LoaderError;
-use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
 class StageSubscriber implements EventSubscriberInterface

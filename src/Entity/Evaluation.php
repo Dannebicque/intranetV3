@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Evaluation.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 25/05/2021 16:04
  */
 
 namespace App\Entity;
@@ -332,14 +332,14 @@ class Evaluation extends BaseEntity
         return (string)$this->getUuid();
     }
 
-    public function getSemestre(): ?Semestre
-    {
-        if (null !== $this->matiere && null !== $this->matiere->getUe()) {
-            return $this->matiere->getUe()->getSemestre();
-        }
-
-        return null;
-    }
+//    public function getSemestre(): ?Semestre
+//    {
+//        if (null !== $this->matiere && null !== $this->matiere->getUe()) {
+//            return $this->matiere->getUe()->getSemestre();
+//        }
+//
+//        return null;
+//    }
 
     public function getLibelle(): ?string
     {
