@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/Type/YesNoType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/05/2021 18:32
+ * @lastUpdate 24/05/2021 16:35
  */
 
 namespace App\Form\Type;
@@ -12,7 +12,6 @@ namespace App\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Class YesNoType.

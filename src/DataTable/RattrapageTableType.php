@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/DataTable/RattrapageTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/05/2021 14:21
+ * @lastUpdate 24/05/2021 16:35
  */
 
 namespace App\DataTable;
@@ -21,7 +21,6 @@ use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Umbrella\CoreBundle\Component\DataTable\Adapter\EntityAdapter;
-use Umbrella\CoreBundle\Component\DataTable\Column\CheckBoxColumnType;
 use Umbrella\CoreBundle\Component\DataTable\Column\DateColumnType;
 use Umbrella\CoreBundle\Component\DataTable\Column\WidgetColumnType;
 use Umbrella\CoreBundle\Component\DataTable\DataTableBuilder;

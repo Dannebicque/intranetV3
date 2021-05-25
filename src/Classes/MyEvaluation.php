@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEvaluation.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/05/2021 16:10
+ * @lastUpdate 25/05/2021 18:52
  */
 
 /*
@@ -14,6 +14,7 @@
 namespace App\Classes;
 
 use App\Classes\Excel\MyExcelMultiExport;
+use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\Pdf\MyPDF;
 use App\Entity\Constantes;
 use App\Entity\Departement;
@@ -21,18 +22,19 @@ use App\Entity\Etudiant;
 use App\Entity\Evaluation;
 use App\Entity\Note;
 use App\Entity\Semestre;
+use App\Exception\MatiereNotFoundException;
 use App\Utils\Tools;
 use function array_key_exists;
 use function count;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
+use function in_array;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
-use function in_array;
 
 /**
  * Class MyEvaluation.
@@ -54,10 +56,13 @@ class MyEvaluation
 
     private MyExcelMultiExport $myExcelMultiExport;
 
+    private TypeMatiereManager $typeMatiereManager;
+
     /**
      * MyEvaluation constructor.
      */
     public function __construct(
+        TypeMatiereManager $typeMatiereManager,
         EntityManagerInterface $entityManager,
         MyPDF $myPdf,
         MyExcelMultiExport $myExcelMultiExport
@@ -65,6 +70,7 @@ class MyEvaluation
         $this->entityManager = $entityManager;
         $this->myPdf = $myPdf;
         $this->myExcelMultiExport = $myExcelMultiExport;
+        $this->typeMatiereManager = $typeMatiereManager;
     }
 
     public function setEvaluation(Evaluation $evaluation): self
@@ -241,7 +247,14 @@ class MyEvaluation
     public function exportReleve($_format, $groupes, Departement $departement)
     {
         $notes = $this->getNotesTableau();
-        $name = 'releve-' . $this->evaluation->getMatiere()->getCodeMatiere();
+        $matiere = $this->typeMatiereManager->getMatiere($this->evaluation->getIdMatiere(),
+            $this->evaluation->getTypeMatiere());
+
+        if (null === $matiere) {
+            throw new MatiereNotFoundException();
+        }
+
+        $name = 'releve-' . $matiere->codeMatiere;
         switch ($_format) {
             case Constantes::FORMAT_PDF:
                 return $this->myPdf::generePdf('pdf/releveEvaluation.html.twig', [
@@ -312,7 +325,6 @@ class MyEvaluation
             $notes[$note->getEtudiant()->getNumEtudiant()] = $note;
         }
 
-
         foreach ($data as $note) {
             if (array_key_exists((string)$note['num_etudiant'], $etudiants)) {
                 if (array_key_exists((string)$note['num_etudiant'],
@@ -346,6 +358,7 @@ class MyEvaluation
             }
         }
         $this->entityManager->flush();
+
         return $notes;
     }
 

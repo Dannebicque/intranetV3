@@ -4,14 +4,11 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/PrevisionnelCollection.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/05/2021 18:44
+ * @lastUpdate 24/05/2021 16:35
  */
 
 namespace App\DTO;
 
-
-use App\Entity\Personnel;
-use App\Entity\Semestre;
 
 class PrevisionnelCollection
 {

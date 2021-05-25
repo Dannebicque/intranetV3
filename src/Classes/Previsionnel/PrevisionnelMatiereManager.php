@@ -4,14 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Previsionnel/PrevisionnelMatiereManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2021 08:46
+ * @lastUpdate 24/05/2021 16:35
  */
 
 namespace App\Classes\Previsionnel;
 
 
 use App\Adapter\PrevisionnelMatiereAdapter;
-use App\DTO\Previsionnel;
 use App\DTO\PrevisionnelCollection;
 use App\Entity\Departement;
 use App\Entity\Personnel;
