@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEvaluation.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 15/05/2021 09:16
+ * @lastUpdate 25/05/2021 12:00
  */
 
 /*
@@ -21,6 +21,8 @@ use App\Entity\Etudiant;
 use App\Entity\Evaluation;
 use App\Entity\Note;
 use App\Utils\Tools;
+use function array_key_exists;
+use function count;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
@@ -29,7 +31,6 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
-use function count;
 
 /**
  * Class MyEvaluation.
@@ -41,7 +42,7 @@ class MyEvaluation
     protected array $statistiques = [];
 
     /** @var Note[] */
-    protected $notes = [];
+    protected array $notes = [];
 
     protected array $classement = [];
 
@@ -98,7 +99,7 @@ class MyEvaluation
             foreach ($this->evaluation->getTypeGroupe()->getGroupes() as $groupe) {
                 $tgroupes[$groupe->getId()] = [];
                 foreach ($groupe->getEtudiants() as $etu) {
-                    if (\array_key_exists($etu->getId(), $t)) {
+                    if (array_key_exists($etu->getId(), $t)) {
                         $tgroupes[$groupe->getId()][$etu->getId()] = $t[$etu->getId()];
                     }
                 }
@@ -146,7 +147,7 @@ class MyEvaluation
                 //écart entre la valeur et la moyenne
                 $ecart_donnee = $value - $moyenne;
                 //carré de l'écart
-                $ecart_donnee_carre = bcpow($ecart_donnee, 2, 2);
+                $ecart_donnee_carre = bcpow((string)$ecart_donnee, '2', 2);
                 //Insertion dans le tableau
                 $ecart[] = $ecart_donnee_carre;
             }
@@ -155,7 +156,7 @@ class MyEvaluation
             //5 - division de la somme des écarts par la population
             $division = $somme_ecart / $population;
             //6 - racine carrée de la division
-            $ecart_type = bcsqrt($division, 2);
+            $ecart_type = bcsqrt((string)$division, 2);
         } else {
             $ecart_type = 0;
         }
@@ -310,9 +311,9 @@ class MyEvaluation
         }
 
         foreach ($data as $note) {
-            if (\array_key_exists((string)$note['num_etudiant'], $etudiants)) {
-                if (\array_key_exists((string)$note['num_etudiant'],
-                        $notes) && '-0.01' !== $notes[$note['num_etudiant']]) {
+            if (array_key_exists((string)$note['num_etudiant'], $etudiants)) {
+                if (array_key_exists((string)$note['num_etudiant'],
+                        $notes) && -0.01 !== $notes[$note['num_etudiant']]) {
                     //déjà une note, on ne remplace pas. On récupère les éléments pour alimenter le tableau
                     $newnote = [];
                     $newnote['idetudiant'] = $notes[$note['num_etudiant']]->getEtudiant()->getId();
@@ -355,14 +356,17 @@ class MyEvaluation
         foreach ($sheetData[1] as $key) {
             $ordre[] = mb_strtolower($key);
         }
-
-        $nblignes = count($sheetData);
-        for ($i = 2; $i <= $nblignes; ++$i) {
-            $nb = count($sheetData[$i]);
-            for ($j = 1; $j <= $nb; ++$j) {
-                $t[$ordre[$j - 1]] = $sheetData[$i][\chr($j + 64)];
+        if (is_array($sheetData)) {
+            $nblignes = count($sheetData);
+            for ($i = 2; $i <= $nblignes; ++$i) {
+                if (is_array($sheetData[$i])) {
+                    $nb = count($sheetData[$i]);
+                    for ($j = 1; $j <= $nb; ++$j) {
+                        $t[$ordre[$j - 1]] = $sheetData[$i][\chr($j + 64)];
+                    }
+                    $data[] = $t;
+                }
             }
-            $data[] = $t;
         }
 
         return $data;
@@ -370,7 +374,7 @@ class MyEvaluation
 
     private function importCsv(string $fichier): array
     {
-        $handle = fopen($fichier, 'r');
+        $handle = fopen($fichier, 'rb');
         $data = [];
         $ordre = [];
 
@@ -394,11 +398,13 @@ class MyEvaluation
             while (!feof($handle)) {
                 /*On lit la ligne courante*/
                 $phrase = fgetcsv($handle, 1024, ';');
-                $nb = count($phrase);
-                for ($i = 0; $i < $nb; ++$i) {
-                    $t[$ordre[$i]] = $phrase[$i];
+                if (is_array($phrase)) {
+                    $nb = count($phrase);
+                    for ($i = 0; $i < $nb; ++$i) {
+                        $t[$ordre[$i]] = $phrase[$i];
+                    }
+                    $data[] = $t;
                 }
-                $data[] = $t;
             }
         }
 
