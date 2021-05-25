@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Utils/Tools.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/05/2021 22:05
+ * @lastUpdate 25/05/2021 11:05
  */
 
 /*
@@ -49,7 +49,7 @@ abstract class Tools
             $note = 0;
         }
 
-        return str_replace(',', '.', $note);
+        return str_replace([',', '.'], '.', $note);
     }
 
     public static function convertToBool($texte): bool

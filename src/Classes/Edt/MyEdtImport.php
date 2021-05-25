@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 24/05/2021 16:35
  */
 
 /*
@@ -37,7 +37,6 @@ class MyEdtImport
 
     private EntityManagerInterface $entityManager;
 
-    private ?string $dir;
     private ?string $nomfile;
 
     private $semaine;

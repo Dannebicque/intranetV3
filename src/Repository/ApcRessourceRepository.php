@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/ApcRessourceRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/05/2021 17:06
+ * @lastUpdate 24/05/2021 16:35
  */
 
 namespace App\Repository;
@@ -14,7 +14,6 @@ use App\Entity\ApcRessource;
 use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Semestre;
-use App\Entity\Ue;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

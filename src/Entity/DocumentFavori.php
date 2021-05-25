@@ -4,12 +4,11 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/DocumentFavori.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 24/05/2021 16:35
  */
 
 namespace App\Entity;
 
-use App\Entity\Traits\LifeCycleTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

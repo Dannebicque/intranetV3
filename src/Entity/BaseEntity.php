@@ -4,12 +4,11 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/BaseEntity.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 24/05/2021 16:35
  */
 
 namespace App\Entity;
 
-use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 

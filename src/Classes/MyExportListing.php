@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyExportListing.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/05/2021 19:14
+ * @lastUpdate 25/05/2021 18:52
  */
 
 /*
@@ -15,10 +15,10 @@ namespace App\Classes;
 
 use App\Classes\Excel\MyExcelWriter;
 use App\Classes\Pdf\MyPDF;
+use App\DTO\Matiere;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Entity\Groupe;
-use App\Entity\Matiere;
 use App\Entity\Personnel;
 use App\Entity\TypeGroupe;
 use App\Repository\GroupeRepository;
@@ -35,37 +35,31 @@ use Twig\Error\SyntaxError;
 
 class MyExportListing
 {
-    private $colonnesEnTete = [];
+    private array $colonnesEnTete = [];
 
-    /** @var TypeGroupeRepository */
-    protected $typeGroupeRepository;
+    protected TypeGroupeRepository $typeGroupeRepository;
 
-    /** @var GroupeRepository */
-    protected $groupeRepository;
+    protected GroupeRepository $groupeRepository;
 
     protected $groupes;
     private $name = '';
-    private $ligne = 1;
+    private int $ligne = 1;
 
-    private $colonne = 1;
+    private int $colonne = 1;
 
     private $exportTypeDocument;
     private $exportChamps;
     private $matiere;
 
-    /** @var DataUserSession */
-    private $dataUserSession;
+    private DataUserSession $dataUserSession;
     private $base;
 
-    /** @var TypeGroupe */
-    private $typeGroupe;
+    private TypeGroupe $typeGroupe;
 
-    /** @var MyExcelWriter */
-    private $myExcelWriter;
+    private MyExcelWriter $myExcelWriter;
 
-    /** @var MyPDF */
-    private $myPdf;
-    private $titre = '';
+    private MyPDF $myPdf;
+    private string $titre = '';
 
     private ?Personnel $personnel;
 
@@ -89,7 +83,6 @@ class MyExportListing
     }
 
     /**
-     *
      * @throws Exception
      * @throws LoaderError
      * @throws RuntimeError
@@ -100,7 +93,7 @@ class MyExportListing
         $exportFormat,
         $exportChamps,
         $exportFiltre,
-        ?\App\DTO\Matiere $matiere = null,
+        ?Matiere $matiere = null,
         ?Personnel $personnel = null
     ) {
         $this->exportTypeDocument = $exportTypeDocument;
@@ -203,7 +196,7 @@ class MyExportListing
             },
             200,
             [
-                'Content-Type'        => 'application/csv',
+                'Content-Type' => 'application/csv',
                 'Content-Disposition' => 'attachment;filename="' . $this->name . '.csv"',
             ]
         );
@@ -254,7 +247,7 @@ class MyExportListing
             },
             200,
             [
-                'Content-Type'        => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                 'Content-Disposition' => 'attachment;filename="' . $this->name . '.xlsx"',
             ]
         );
@@ -375,7 +368,7 @@ class MyExportListing
                 $this->myExcelWriter->mergeCells('A9:C9');
 
                 $this->myExcelWriter->writeCellName('A10', 'MATIERE EVALUEE :');
-                $this->myExcelWriter->writeCellName('D10', $this->matiere->getLibelle());
+                $this->myExcelWriter->writeCellName('D10', $this->matiere->display);
 
                 $this->myExcelWriter->mergeCells('A10:C10');
 
@@ -415,9 +408,9 @@ class MyExportListing
         return $this->myPdf::generePdf('pdf/listing.html.twig',
             [
                 'typeGroupe' => $this->typeGroupe,
-                'matiere'    => $this->matiere,
-                'personnel'  => $this->personnel,
-                'groupes'    => $this->groupes,
+                'matiere' => $this->matiere,
+                'personnel' => $this->personnel,
+                'groupes' => $this->groupes,
             ],
             $this->name . '.pdf',
             $this->dataUserSession->getDepartement()->getLibelle());
