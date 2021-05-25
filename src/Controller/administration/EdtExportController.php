@@ -4,12 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtExportController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 25/05/2021 21:49
  */
 
 namespace App\Controller\administration;
 
 use App\Classes\Edt\MyEdtExport;
+use App\Classes\Matieres\TypeMatiereManager;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Repository\EdtPlanningRepository;
@@ -76,6 +77,7 @@ class EdtExportController extends BaseController
      * @Route("/script-ajax", name="administration_edt_export_script_ajax")
      */
     public function exportScriptAjax(
+        TypeMatiereManager $typeMatiereManager,
         KernelInterface $kernel,
         Request $request,
         GroupeRepository $groupeRepository,
@@ -247,6 +249,8 @@ class EdtExportController extends BaseController
         $tabSalles = array_flip($tabSalles);
 
         $pl = $edtPlanningRepository->findEdtSemestre($semestre, $semaine);
+        $matieres = $typeMatiereManager->findBySemestre($semestre);
+
         $code = [];
         $codeGroupe = [];
 
@@ -274,10 +278,11 @@ class EdtExportController extends BaseController
 # 6= indice de la matiere (ex:1 premiere matiere de la liste des matieres)
 # 7= type de cours (CM=1, TD=4, TP=6)
                  */
-                $code[mb_strtoupper($p->getType())][$p->getGroupe()] .= './ajouter ' . $p->getJour() . ' ' . Constantes::TAB_HEURES[$p->getDebut()] . ' ' . Constantes::TAB_HEURES[$p->getFin()] . ' ' . $tabProf[$p->getIntervenant()->getNumeroHarpege()] . ' ' . $tabSalles[$p->getSalle()] . ' ' . $tabMatieres[$semestre->getLibelle()][$p->getMatiere()->getCodeElement()] . ' ' . $tabType[mb_strtoupper($p->getType())] . "\n";
+                $codeMatiere = $matieres[$p->getTypeIdMatiere()]->codeElement;
+                $code[mb_strtoupper($p->getType())][$p->getGroupe()] .= './ajouter ' . $p->getJour() . ' ' . Constantes::TAB_HEURES[$p->getDebut()] . ' ' . Constantes::TAB_HEURES[$p->getFin()] . ' ' . $tabProf[$p->getIntervenant()->getNumeroHarpege()] . ' ' . $tabSalles[$p->getSalle()] . ' ' . $tabMatieres[$semestre->getLibelle()][$codeMatiere] . ' ' . $tabType[mb_strtoupper($p->getType())] . "\n";
             }
             if ($p->getSalle() === 'H018') {
-                $code[mb_strtoupper($p->getType())][$p->getGroupe()] .= './ajouterh018 ' . $p->getJour() . ' ' . Constantes::TAB_HEURES[$p->getDebut()] . ' ' . Constantes::TAB_HEURES[$p->getFin()] . ' ' . $tabProf[$p->getIntervenant()->getNumeroHarpege()] . ' 0 ' . $tabMatieres[$semestre->getLibelle()][$p->getMatiere()->getCodeElement()] . ' ' . $tabType[mb_strtoupper($p->getType())] . "\n";
+                $code[mb_strtoupper($p->getType())][$p->getGroupe()] .= './ajouterh018 ' . $p->getJour() . ' ' . Constantes::TAB_HEURES[$p->getDebut()] . ' ' . Constantes::TAB_HEURES[$p->getFin()] . ' ' . $tabProf[$p->getIntervenant()->getNumeroHarpege()] . ' 0 ' . $tabMatieres[$semestre->getLibelle()][$codeMatiere] . ' ' . $tabType[mb_strtoupper($p->getType())] . "\n";
             }
         }
 
