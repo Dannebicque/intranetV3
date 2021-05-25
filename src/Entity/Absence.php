@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Absence.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2021 08:46
+ * @lastUpdate 23/05/2021 07:36
  */
 
 namespace App\Entity;
@@ -29,6 +29,16 @@ class Absence extends BaseEntity implements Serializable
     use UuidTrait;
     use LifeCycleTrait;
     use MatiereTrait;
+
+    public const STATUS_COLORS = [
+        self::ABSENCE_JUSTIFIE => 'success',
+        self::ABSENCE_INJUSTIFIEE => 'danger',
+        self::ABSENCE_EN_ATTENTE => 'warning',
+    ];
+
+    const ABSENCE_JUSTIFIE = 'justifie';
+    const ABSENCE_INJUSTIFIEE = 'injustifie';
+    const ABSENCE_EN_ATTENTE = '-';
 
     /**
      * @ORM\Column(name="dateHeure", type="datetime")
@@ -87,6 +97,13 @@ class Absence extends BaseEntity implements Serializable
     public function __construct()
     {
         $this->setUuid(Uuid::uuid4());
+    }
+
+    public static function getIconStatus(string $status)
+    {
+        return isset(self::STATUS_COLORS[$status])
+            ? sprintf('<i class="fas fa-circle text-%s mr-1"></i> %s', self::STATUS_COLORS[$status], $status)
+            : $status;
     }
 
     public function __clone()

@@ -4,16 +4,14 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ApcRessourceApprentissageCritiqueType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/03/2021 18:49
+ * @lastUpdate 24/05/2021 16:35
  */
 
 namespace App\Form;
 
 use App\Entity\ApcApprentissageCritique;
-use App\Entity\ApcCompetence;
 use App\Entity\ApcRessourceApprentissageCritique;
 use App\Repository\ApcApprentissageCritiqueRepository;
-use App\Repository\ApcComptenceRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;

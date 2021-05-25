@@ -1,0 +1,1423 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved -->
+<!-- @file /Users/davidannebicque/htdocs/intranetV3/demo/referentiels/formation/but-pn-CJ.xml -->
+<!-- @author davidannebicque -->
+<!-- @project intranetV3 -->
+<!-- @lastUpdate 21/05/2021 20:00 -->
+
+<referentiel_formation>
+    <semestre numero="1" libelle="S1" ordreAnnee="1">
+        <saes>
+            <sae code="SAE101" heuresCMTD="12" heuresTP="8" heuresPtut="25">
+                <titre>Fonctions et activités au sein d’une organisation</titre>
+                <description>
+                    Analyser les tâches et activités liées à une fonction par rapport au contexte et
+                    à l’environnement de l’organisation (entreprise, association, collectivité ou
+                    administration publique) où elle se situe.
+                    <br/>
+                    Apporter une ou plusieurs réponses en veillant à la clarté et à la précision des
+                    termes employés pour la ou les rendre compréhensible(s). Utiliser, si besoin,
+                    les outils numériques et les compétences linguistiques adaptés.
+                    <br/>
+                    Problématique professionnelle
+                    <br/>
+                    Choisir et utiliser des informations et des ressources pertinentes afin de
+                    réaliser des tâches/activités liées à une fonction au sein d’une structure.
+                </description>
+                <livrables>
+                    Dossiers, présentations orales, notes d’information, notes de synthèse,
+                    simulations, cas pratiques, investigations, projets, ...
+                </livrables>
+                <acs>
+                    <ac>AC1101</ac>
+                    <ac>AC1102</ac>
+                    <ac>AC1103</ac>
+                </acs>
+                <competences>
+                    <competence coefficient="0" nom="Piloter"/>
+                </competences>
+                <ressources>
+                    <ressource>R101</ressource>
+                    <ressource>R102</ressource>
+                    <ressource>R103</ressource>
+                    <ressource>R109</ressource>
+                    <ressource>R110</ressource>
+                    <ressource>R111</ressource>
+                    <ressource>R112</ressource>
+                    <ressource>R113</ressource>
+                </ressources>
+                <exemples>
+                </exemples>
+            </sae>
+            <sae code="SAE102" heuresCMTD="12" heuresTP="8" heuresPtut="25">
+                <titre>Fonctions de support au sein d’une organisation</titre>
+                <description>
+                    Analyser la demande de conseil en interprétant en droit la requête
+                    formulée par un client, un usager ou un collaborateur et apporter une ou
+                    plusieurs réponses à la question posée en fonction du contexte de
+                    l’organisation après recherche et collecte d’informations et/ou recours à
+                    des personnes ressources.
+                    <br/>
+                    Apporter une ou plusieurs réponses en veillant à la clarté et à la
+                    précision des termes employés pour la ou les rendre compréhensible(s).
+                    Utiliser, si besoin, les outils numériques et les compétences
+                    linguistiques adaptés.
+                    <br/>
+                    Problématique professionnelle associée
+                    <br/>
+                    Comment recenser, collecter et choisir des informations juridiques,
+                    comptables, financières, organisationnelle et des ressources
+                    pertinentes afin de contribuer à la mission de conseil à l’égard d’un
+                    client, d’un usager ou d’un collaborateur dans un contexte donné.
+                </description>
+                <livrables>
+                    Dossiers, présentations orales, notes d’informations, notes de
+                    synthèse, simulations, cas pratiques, investigations, projets, ...
+                </livrables>
+                <acs>
+                    <ac>AC2101</ac>
+                    <ac>AC2102</ac>
+                    <ac>AC2103</ac>
+                    <ac>AC2104</ac>
+                </acs>
+                <competences>
+                    <competence coefficient="0" nom="Conseiller"/>
+                </competences>
+                <ressources>
+                    <ressource>R104</ressource>
+                    <ressource>R105</ressource>
+                    <ressource>R106</ressource>
+                    <ressource>R109</ressource>
+                    <ressource>R110</ressource>
+                    <ressource>R111</ressource>
+                    <ressource>R112</ressource>
+                    <ressource>R113</ressource>
+                </ressources>
+                <exemples>
+                </exemples>
+            </sae>
+            <sae code="SAE103" heuresCMTD="12" heuresTP="8" heuresPtut="25">
+                <titre>Sécurisation des activités d’une organisation</titre>
+                <description>
+                    Identifier l’organisation et son environnement.
+                    <br/>
+                    Déterminer les institutions judiciaires ou publiques compétentes.
+                    Rechercher les informations pertinentes pour limiter les risques
+                    encourus par l’organisation.
+                    <br/>
+                    Apporter une ou plusieurs réponses en veillant à la clarté et à la
+                    précision des termes employés pour la ou les rendre compréhensible(s).
+                    Utiliser, si besoin, les outils numériques et les compétences
+                    linguistiques adaptés.
+                    <br/>
+                    Problématique professionnelle
+                    <br/>
+                    Interagir entre plusieurs environnements complexes au moyen d’une
+                    stratégie fondée sur l’information et la veille juridiques, la connaissance
+                    des institutions judiciaires et publiques ainsi que les notions
+                    fondamentales de l’État et de la démocratie.
+                </description>
+                <livrables>
+                    Dossiers, présentations orales, notes d’information, notes de
+                    synthèse, simulations, cas pratiques, investigations, projets, ...
+                </livrables>
+                <acs>
+                    <ac>AC3101</ac>
+                    <ac>AC3102</ac>
+                    <ac>AC3103</ac>
+                </acs>
+                <competences>
+                    <competence coefficient="0" nom="Sécuriser"/>
+                </competences>
+                <ressources>
+                    <ressource>R104</ressource>
+                    <ressource>R107</ressource>
+                    <ressource>R108</ressource>
+                    <ressource>R109</ressource>
+                    <ressource>R110</ressource>
+                    <ressource>R111</ressource>
+                    <ressource>R112</ressource>
+                    <ressource>R113</ressource>
+                </ressources>
+                <exemples>
+                </exemples>
+            </sae>
+            <sae code="SAE104" heuresCMTD="10" heuresTP="10" heuresPtut="25">
+                <titre>Rédaction professionnelle au sein d’une organisation</titre>
+                <description>
+                    Développer des qualités rédactionnelles et les employer dans une
+                    situation et un environnement professionnel donnés (entreprise,
+                    association, collectivité ou administration publique).
+                    <br/>
+                    Apporter une ou plusieurs réponses en veillant à la clarté et à la
+                    précision des termes employés pour la ou les rendre compréhensible(s).
+                    <br/>
+                    Utiliser, si besoin, les outils numériques et les compétences
+                    linguistiques adaptés.
+                    <br/>
+                    Problématique professionnelle
+                    <br/>
+                    Adopter un formalisme conforme à l’environnement et au contexte
+                    professionnel
+                </description>
+                <livrables>
+                    Dossiers, présentations orales, notes d’information, notes de
+                    synthèse, simulations, cas pratiques, investigations, projets, ...
+                </livrables>
+                <acs>
+                    <ac>AC4101</ac>
+                    <ac>AC4102</ac>
+                    <ac>AC4103</ac>
+                </acs>
+                <competences>
+                    <competence coefficient="0" nom="Rédiger"/>
+                </competences>
+
+                <ressources>
+                    <ressource>R103</ressource>
+                    <ressource>R105</ressource>
+                    <ressource>R106</ressource>
+                    <ressource>R109</ressource>
+                    <ressource>R110</ressource>
+                    <ressource>R111</ressource>
+                    <ressource>R112</ressource>
+                    <ressource>R113</ressource>
+                </ressources>
+                <exemples>
+                </exemples>
+            </sae>
+        </saes>
+        <ressources>
+            <ressource code="R101" heuresCMTD="0" heuresTP="0">
+                <titre>Anglais</titre>
+                <description>Prolonger les acquis de l’enseignement secondaire par l’élargissement des connaissances
+                    culturelles du monde anglo-saxon, particulièrement en ce qui concerne les TIC et le monde de
+                    l’entreprise, favoriser l’autonomie de l’étudiant en matière d’apprentissage de la langue.
+                    Comprendre un langage clair et standard, connaître les possibilités des outils de recherche, et
+                    savoir s’en servir pour assurer son autonomie.
+                </description>
+                <mots-cles>Anglais</mots-cles>
+                <acs>
+                    <ac>AC1102</ac>
+                    <ac>AC1104</ac>
+                    <ac>AC1105</ac>
+                    <ac>AC2105</ac>
+                    <ac>AC2106</ac>
+                    <ac>AC3101</ac>
+                </acs>
+                <saes>
+                    <sae>SAE101</sae>
+                    <sae>SAE104</sae>
+                    <sae>SAE102</sae>
+                </saes>
+                <competences>
+                    <competence coefficient="0" nom="Concevoir"/>
+                    <competence coefficient="0" nom="Comprendre"/>
+                    <competence coefficient="0" nom="Exprimer"/>
+                </competences>
+            </ressource>
+            <ressource code="R102" heuresCMTD="0" heuresTP="0">
+                <titre>Anglais Renforcé ou LV2</titre>
+                <description>LV2:
+                    Prolonger les acquis précédents dans la langue concernée et développer l’aisance dans la langue,
+                    tout en intégrant la dimension interculturelle. Avoir des notions de base de la communication
+                    interculturelle.
+
+                    Anglais renforcé :
+                    Il s’agira soit de consolider les acquis par de la remédiation soit d’approfondir les apprentissages
+                    dans les 5 compétences langagières (expression orale, expression écrite, compréhension orale,
+                    compréhension écrite et expression orale en interaction) et en ciblant les spécificités de la
+                    formation.
+                </description>
+                <mots-cles>Anglais Renforcé; LV2</mots-cles>
+                <acs>
+                    <ac>AC2105</ac>
+                    <ac>AC2106</ac>
+                </acs>
+                <saes>
+                    <sae>SAE102</sae>
+                </saes>
+                <competences>
+                    <competence coefficient="0" nom="Concevoir"/>
+                </competences>
+            </ressource>
+            <ressource code="R103" heuresCMTD="0" heuresTP="0">
+                <titre>Ergonomie et Accessibilité</titre>
+                <description>Objectif : Présenter les fondamentaux de l’ergonomie des interfaces et les appliquer dans
+                    une démarche d’évaluation d’un produit existant
+                    - Architecture de l’information
+                    - Fondamentaux de l’ergonomie des interfaces (origine, enjeux, principes de psychologie cognitive
+                    appliqués aux interfaces…)
+                    - Démarche centrée utilisateur (bonnes pratiques, critères)
+                    - Panorama des méthodes d’évaluation qualitatives et quantitatives, présentation des livrables
+                    possibles
+                    - Introduction à des référentiels de qualité pour les sites Web
+                </description>
+                <mots-cles>Ergonomie, Utilisateur, Evaluation, Qualité, UX, Design d’expérience, Design de service
+                </mots-cles>
+                <acs>
+                    <ac>AC1102</ac>
+                </acs>
+                <saes>
+                    <sae>SAE101</sae>
+                </saes>
+                <competences>
+                    <competence coefficient="0" nom="Comprendre"/>
+                </competences>
+            </ressource>
+            <ressource code="R104" heuresCMTD="0" heuresTP="0">
+                <titre>Culture numérique</titre>
+                <description>Objectif : Cette ressource permet de comprendre les transformations sociales, économiques,
+                    politiques, voire anthropologiques provoquées par l&#039;émergence des technologies numériques. Elle
+                    vise à donner des clés pour concevoir des produits numériques prenant en compte leurs enjeux et
+                    impacts sociaux. Elle doit permettre de comprendre les débats actuels et de se projeter dans les
+                    évolutions possibles du numérique en y contribuant positivement.
+                    - Généalogie d’internet : ARPANET, rôle de la cybernétique, rôle des hackers et de la
+                    contre-culture, diffusion grand public
+                    - Gouvernance d’Internet : instances, enjeux juridiques, techniques, économiques, géopolitiques
+                    - Enjeux sociaux et politiques du numérique : protection de la vie privée et société de
+                    surveillance, dépendance aux nouvelles technologies, cyberharcèlement, expression de soi et
+                    inclusion, IA et transhumanisme, big data et gouvernance algorithmique, éthique hacker et digital
+                    labor, sobriété numérique et enjeux écologiques...
+                </description>
+                <mots-cles>Culture numérique, Internet, Vie privée</mots-cles>
+                <acs>
+                    <ac>AC1101</ac>
+                    <ac>AC1105</ac>
+                </acs>
+                <saes>
+                    <sae>SAE101</sae>
+                </saes>
+                <competences>
+                    <competence coefficient="0" nom="Comprendre"/>
+                </competences>
+            </ressource>
+            <ressource code="R105" heuresCMTD="0" heuresTP="0">
+                <titre>Stratégie de communication</titre>
+                <description>Objectifs : Comprendre les enjeux d&#039;une stratégie de communication
+                    - Introduction à la démarche marketing et à ses différents leviers d’action : les techniques d&#039;enquêtes,
+                    l’analyse du marché, la compréhension des comportements d’achat des consommateurs, sources
+                    d’acquisition de trafic
+                    - Introduction aux principaux modèles de la théorie info-communicationnelle
+                    Introduction à la stratégie de communication (problématique, objectifs, plan de communication…)
+                    - Introduction à l’analyse sémiotique
+
+                    Préconisation : 5h marketing, 5h stratégie de communication, 5h sémiotique
+                </description>
+                <mots-cles>Marketing, Sémiotique, Stratégie de communication</mots-cles>
+                <acs>
+                    <ac>AC1104</ac>
+                    <ac>AC1105</ac>
+                    <ac>AC2103</ac>
+                    <ac>AC2104</ac>
+                </acs>
+                <saes>
+                    <sae>SAE101</sae>
+                    <sae>SAE102</sae>
+                </saes>
+                <competences>
+                    <competence coefficient="0" nom="Comprendre"/>
+                    <competence coefficient="0" nom="Concevoir"/>
+                </competences>
+            </ressource>
+            <ressource code="R106" heuresCMTD="0" heuresTP="0">
+                <titre>Expression, communication et rhétorique</titre>
+                <description>Compréhension et adaptation à la situation de communication (la communication verbale et
+                    non-verbale) + orthographe/syntaxe/vocabulaire + travail sur la formulation d’une problématique +
+                    travail sur la figure de l’expert
+                    Travail sur la situation d’énonciation, les contrats de lecture, la posture énonciative, la
+                    construction et la réception du discours, la structuration du propos, la formulation et la diffusion
+                    des messages, les processus inférentiels (implicatures)
+                    Problématique, plan, résumé, synthèse
+                    Fonctions du langage, dénotation/connotation, explicite/implicite, objectivité/subjectivité…
+                    Sensibilisation aux phénomènes de plagiat (pourrait éventuellement trouver plus de pertinence en
+                    droit du numérique…)
+
+                    Recherche documentaire: utiliser les méthodes, les techniques et les outils de recherche
+                    documentaire sur le web (moteurs de recherche, mots clés, opérateurs booléens, différence entre web
+                    visible et web invisible, traitement des données, etc.)
+                    Mettre en oeuvre une veille documentaire/informationnelle
+                </description>
+                <mots-cles>Expression-Communication, Ligne éditoriale, Structuration du discours, Réseaux sociaux
+                </mots-cles>
+                <acs>
+                    <ac>AC2105</ac>
+                    <ac>AC2106</ac>
+                    <ac>AC3101</ac>
+                </acs>
+                <saes>
+                    <sae>SAE104</sae>
+                    <sae>SAE102</sae>
+                </saes>
+                <competences>
+                    <competence coefficient="0" nom="Concevoir"/>
+                    <competence coefficient="0" nom="Exprimer"/>
+                </competences>
+            </ressource>
+            <ressource code="R107" heuresCMTD="0" heuresTP="0">
+                <titre>Ecriture Multimédia et Narration</titre>
+                <description>Objectifs : donner aux étudiants les outils de base pour la conception de scénario
+                    multimédia
+                    - Écriture d’un concept du produit multimédia, d’un scénario ou d’une note d’intentions
+                    - Découpage technique et storyboard
+                    - Méthodes d’interview (argumentations, script, rôle)
+                    - Éléments de narratologie: techniques narratives, instance, perspective…
+                    - L’écriture de script (phase/acte, idée, animation, texte à l’écran, contenu voix off…)
+                </description>
+                <mots-cles>Écriture et narration, Storyboard, Script, Interview</mots-cles>
+                <acs>
+                    <ac>AC3101</ac>
+                </acs>
+                <saes>
+                    <sae>SAE104</sae>
+                </saes>
+                <competences>
+                    <competence coefficient="0" nom="Exprimer"/>
+                </competences>
+            </ressource>
+            <ressource code="R108" heuresCMTD="0" heuresTP="0">
+                <titre>Production graphique</titre>
+                <description>Objectifs : Découvrir les aspects techniques de la production d’images et de la retouche de
+                    photos. Savoir réaliser des compositions complexes en justifiant ses choix :
+
+                    - Découverte des logiciels de création graphique (matriciels et vectoriels)
+                    - Passer de la recherche graphique (cf. R110 - Culture artistique) à sa mise en oeuvre avec des
+                    outils numériques
+                    - Compositions graphiques complexes : détourage, colorimétrie, retouche, équilibre et sens de
+                    lecture.
+                    - Conception et réalisation d’éléments graphiques cohérents, répondant à une commande
+                    - Traitement typographique
+                    - Gestion du processus de création
+                </description>
+                <mots-cles>Production graphique</mots-cles>
+                <acs>
+                    <ac>AC3103</ac>
+                </acs>
+                <saes>
+                    <sae>SAE103</sae>
+                    <sae>SAE104</sae>
+                </saes>
+                <competences>
+                    <competence coefficient="0" nom="Exprimer"/>
+                </competences>
+            </ressource>
+            <ressource code="R109" heuresCMTD="0" heuresTP="0">
+                <titre>Culture artistique</titre>
+                <description>Objectifs : cette ressource vise à fournir aux étudiants les bases de la culture artistique
+                    pour développer leur créativité et les amener à faire des propositions graphiques réfléchies et
+                    justifiées
+                    - Culture artistique générale : appréhender le langage visuel et développer la créativité.
+                    - Arts graphiques : approche historique (les grands courants artistiques, les genres, les styles...)
+                    et introduction à l’art contemporain et aux tendances actuelles.
+                    - Les éléments graphiques (point, ligne, surface) et les constituants de l’image (couleur, lumière,
+                    matière, espace, composition, lignes directrices, rapport entre textes et images, entre fond et
+                    forme)
+                    - La théorie de la Gestalt, représentation et perception des formes
+                    - La hiérarchie de l&#039;information par la composition (sens de lecture, rythmes, typographie,
+                    couleur...).
+
+                    Préconisation : les TP peuvent inclure des cours de dessins et de toute technique permettant de
+                    développer la créativité et le sens
+                </description>
+                <mots-cles>Culture artistique</mots-cles>
+                <acs>
+                    <ac>AC1104</ac>
+                    <ac>AC3102</ac>
+                </acs>
+                <saes>
+                    <sae>SAE101</sae>
+                    <sae>SAE103</sae>
+                </saes>
+                <competences>
+                    <competence coefficient="0" nom="Exprimer"/>
+                    <competence coefficient="0" nom="Comprendre"/>
+                </competences>
+            </ressource>
+            <ressource code="R110" heuresCMTD="0" heuresTP="0">
+                <titre>Production audio et vidéo</titre>
+                <description>Objectif : Découvrir la culture cinématographique, comment un réalisateur s’y prend pour
+                    toucher le spectateur et lui faire vivre tout un panel d’émotions. S’initier à la prise de vue et au
+                    montage audiovisuel. En terme de production, elle vise à la réalisation de capsules vidéos courtes
+                    telles que des interviews ou de courts tutoriels à destination des réseaux sociaux
+                    - Introduction à la photographie, à la culture cinématographique et à la grammaire de l’audiovisuel
+                    - Prise en main, réglage et utilisation du matériel audiovisuel (photo, vidéo, son, lumière…)
+                    - Captation : prise de vue, cadrage, techniques d’éclairage et de prise de son
+                    - Montage : prise en main des logiciels, agencement des plans, rythme
+                    - Gestion d’un projet audiovisuel : story board, choix des images et des plans, exportation dans un
+                    format adapté
+                </description>
+                <mots-cles>Prise de vues, prise de son, montage, cadrage, photographie</mots-cles>
+                <acs>
+                    <ac>AC3104</ac>
+                </acs>
+                <saes>
+                    <sae>SAE104</sae>
+                </saes>
+                <competences>
+                    <competence coefficient="0" nom="Exprimer"/>
+                </competences>
+            </ressource>
+            <ressource code="R112" heuresCMTD="0" heuresTP="0">
+                <titre>Intégration</titre>
+                <description>Objectif : savoir intégrer des pages Web efficacement et dans le respect des normes
+                    - Le langage HTML : structuration du contenu, sémantique des balises, norme W3C
+                    - Les bases du langage CSS : mise en forme, unités, sélecteurs, styles en cascade, éléments
+                    flexibles...
+                    - Les bases de l’accessibilité : une partie de la norme WCAG
+                    - La structuration du contenu textuel : paragraphe, titre, liste, tableau...
+                    - La gestion des formulaires (champs de saisie, label, nommage de champs, validation côté client)
+                    - L’intégration de contenus multimédia (image, audio, vidéo…)
+                    - Les outils de développement et de validation HTML / CSS
+                    - Les bonnes pratiques (organisation des ressources, conventions d’écriture, comptabilité avec les
+                    principaux navigateurs...)
+                </description>
+                <mots-cles>Intégration, sémantique, structuration de contenus, accessibilité, mise en forme,
+                    normalisation
+                </mots-cles>
+                <acs>
+                    <ac>AC4101</ac>
+                    <ac>AC4102</ac>
+                </acs>
+                <saes>
+                    <sae>SAE105</sae>
+                </saes>
+                <competences>
+                    <competence coefficient="0" nom="Développer"/>
+                </competences>
+            </ressource>
+            <ressource code="R113" heuresCMTD="0" heuresTP="0">
+                <titre>Développement Web</titre>
+                <description>Objectif : Initier les étudiants aux bases de l’algorithmique et de la programmation en les
+                    illustrant avec la génération de pages HTML :
+                    - Représentation des données (types, variables, tableaux, objets...)
+                    - Base de l’algorithmique (boucles, conditionnelles, structures de contrôles et fonctions)
+                    - Découverte d’un langage de développement Web
+                    - Introduction aux bonnes pratiques (organisation du code et des fichiers, approche MVC avec focus
+                    sur les vues)
+                    - Présentation et configuration des outils de développement, méthodes de débogage et de travail à
+                    distance
+                    - Présentation et utilisation des outils de débogage
+                    - Introduction à l’utilisation d’un moteur de template pour le travail en SAE
+
+                </description>
+                <mots-cles>Développement Web, Algorithmique, IDE, Vues
+
+                </mots-cles>
+                <acs>
+                    <ac>AC4101</ac>
+                    <ac>AC4103</ac>
+                </acs>
+                <saes>
+                    <sae>SAE105</sae>
+                </saes>
+                <competences>
+                    <competence coefficient="0" nom="Développer"/>
+                </competences>
+            </ressource>
+            <ressource code="R115" heuresCMTD="0" heuresTP="0">
+                <titre>Hébergement</titre>
+                <description>Objectif : Comprendre le fonctionnement général d’internet et initier à l’administration de
+                    serveurs en gérant son poste de travail :
+                    - Présentation de l’architecture (processeur, mémoire, entrées/sorties) de différents matériels
+                    (ordinateurs, tablettes, téléphones, objets connectés…) et découverte de ces éléments au travers des
+                    outils et interfaces des différents OS
+                    - Découverte des systèmes d’exploitation (processus, système de fichiers, comptes et permissions,
+                    lignes de commande)
+                    - Présentation d’Internet (historique, acteurs, normalisation) et de son fonctionnement (adressage
+                    géographique, routage)
+                    - Les applications sur Internet : modèle client/serveur, notion de ports (DNS, HTTP),
+                    expérimentation et visualisation des échanges via les outils de développements des navigateurs
+                    - Installation et configuration d’un serveur Web local (gestion du service, fichiers de traces,
+                    permissions, alias...)
+                    - Utilisation de serveurs distants : client FTP, client SSH, partage de fichiers, authentification
+                    - Déploiement d’un site Web sur un serveur Web préconfiguré
+                </description>
+                <mots-cles>Hébergement, environnement de travail connecté</mots-cles>
+                <acs>
+                    <ac>AC4101</ac>
+                    <ac>AC4104</ac>
+                </acs>
+                <saes>
+                    <sae>SAE105</sae>
+                </saes>
+                <competences>
+                    <competence coefficient="0" nom="Développer"/>
+                </competences>
+            </ressource>
+            <ressource code="R116" heuresCMTD="0" heuresTP="0">
+                <titre>Représentation et traitement de l&#039;information</titre>
+                <description>AC1306 :
+                    - Définition (dimension, nature, propriété, etc.) et représentation (temporelle, fréquentielle) des
+                    signaux
+                    - Caractéristiques de la vision et de l’audition humaine (couleur, espace couleur, acoustique,
+                    échelle en dB, fréquences…)
+                    - Numérisation de l’information : numération, échantillonnage, quantification, codage, débit, …
+                    - Sobriété numérique et codage du son et des images : définition, résolution, poids, débit…
+                    AC1103 :
+                    - Statistiques descriptives : moyenne, écart-type, intervalle de confiance…
+                    - Analyse de données : covariance, droite de régression, analyse des correspondances
+                    - Visualisation de données : différentes représentations, fonctions de répartition (déciles,
+                    quartiles…)
+
+
+                    Préconnisation AC1306 : 15h, AC1103 : 5h
+                </description>
+                <mots-cles>Statistiques, Numérisation, Encodage, Compression</mots-cles>
+                <acs>
+                    <ac>AC1103</ac>
+                    <ac>AC3106</ac>
+                    <ac>AC4103</ac>
+                </acs>
+                <saes>
+                    <sae>SAE105</sae>
+                    <sae>SAE101</sae>
+                    <sae>SAE103</sae>
+                    <sae>SAE104</sae>
+                </saes>
+                <competences>
+                    <competence coefficient="0" nom="Comprendre"/>
+                    <competence coefficient="0" nom="Exprimer"/>
+                    <competence coefficient="0" nom="Développer"/>
+                </competences>
+            </ressource>
+            <ressource code="R117" heuresCMTD="0" heuresTP="0">
+                <titre>Gestion de projet</titre>
+                <description>Objectif : Comprendre et mettre en place une démarche de gestion de projet classique.
+                    - Bases de la bureautique (tableur, traitement de texte, présentation)
+                    - Définition d’un projet (appel d’offres, cahier des charges)
+                    - La démarche de gestion de projet : philosophie, structure et outils
+                    - Planning, macro-planning, rétro-planning, outils d’ordonnancement (type GANTT)
+                    - Ordre du jour et compte-rendu de réunion
+                </description>
+                <mots-cles>Maître d’œuvre, Maître d’ouvrage, cahier des charges, dossier de conception, tests, Gantt,
+                    Pert, gestion d’équipe, cycle de développement, budget.
+                </mots-cles>
+                <acs>
+                    <ac>AC5101</ac>
+                    <ac>AC5102</ac>
+                    <ac>AC5103</ac>
+                </acs>
+                <saes>
+                    <sae>SAE106</sae>
+                </saes>
+                <competences>
+                    <competence coefficient="0" nom="Entreprendre"/>
+                </competences>
+            </ressource>
+            <ressource code="R118" heuresCMTD="0" heuresTP="0">
+                <titre>Economie et droit du numérique</titre>
+                <description>Objectif : appréhender le contexte économique des entreprises du numérique et des agences
+                    de communication
+                    - Les différents types d’organisations (entreprises, administrations, organisations à but non
+                    lucratif, coopératives)
+                    - Les caractéristiques des organisations (finalité, missions, objectifs, ressources…)
+                    - Les différentes fonctions de l’entreprise et leur missions
+                    - Les principaux indicateurs des organisations : indicateur de performance, d’activité, de
+                    rentabilité, de productivité…
+                    - Les écosystèmes et les nouveaux modèles économiques (plateformes, réseaux, modèles GAFAM ,
+                    référencement)
+
+                    Préconisation : aborder la question de l’efficacité d’un service ou d’un site Web (AC 1103) en SAE
+                </description>
+                <mots-cles>Economie numérique</mots-cles>
+                <acs>
+                    <ac>AC1101</ac>
+                    <ac>AC1103</ac>
+                    <ac>AC5103</ac>
+                </acs>
+                <saes>
+                    <sae>SAE101</sae>
+                </saes>
+                <competences>
+                    <competence coefficient="0" nom="Entreprendre"/>
+                    <competence coefficient="0" nom="Comprendre"/>
+                </competences>
+            </ressource>
+            <ressource code="R119" heuresCMTD="0" heuresTP="0">
+                <titre>PPP</titre>
+                <description>Objectif : découverte des domaines du MMI et les métiers associés
+                    - recherches documentaires
+                    - interview de professionnels (possibilité de la filmer en lien avec la Prod Audio) ce qui implique
+                    : méthodologie de l&#039;interview en lien avec l&#039;Expression communication (écoute active :
+                    questionnement, reformulation / communication non-verbale)
+                    - restitution orale d&#039;une synthèse des recherches et entretiens en lien avec l&#039;Expression
+                    communication (savoir produire un diaporama professionnel / rédiger une synthèse / les spécificités
+                    d&#039;une présentation orale)
+                    - Sensibilisation aux discriminations et violences dans le cadre professionnel
+                    - Découverte de soi via des outils tels que le blason, l&#039;ennéagramme, le MBTI, etc ...
+
+                    Le PPP de la première année est essentiel en deux points :
+                    - Sensibiliser les étudiants à l’approche par compétences, et la démarche portfolio, pour les mettre
+                    dans une dynamique de justification de leurs connaissances/compétences (portfolio de trace,
+                    séminaires traces)
+                    - Préparer les étudiants dans leur choix de parcours du S3, ce que ça implique, les pré-requis, la
+                    compréhension des débouchés et des enjeux, le marché du travail.
+                </description>
+                <mots-cles>PPP</mots-cles>
+                <acs>
+                    <ac>AC5104</ac>
+                    <ac>AC5106</ac>
+                </acs>
+                <saes>
+                    <sae>SAE110</sae>
+                </saes>
+                <competences>
+                    <competence coefficient="0" nom="Entreprendre"/>
+                </competences>
+            </ressource>
+        </ressources>
+    </semestre>
+    <semestre numero="2" libelle="S2" ordreAnnee="2">
+        <saes>
+            <sae code="SAE201" heuresCMTD="0" heuresTP="0" heuresPtut="0">
+                <titre>Exploration des usages</titre>
+                <description>Concevoir, organiser et réaliser des entretiens utilisateur pour comprendre et mesurer les
+                    attentes des utilisateurs d’un site web, d’un service en ligne ou d’un produit multimédia.
+                </description>
+                <livrables>
+                    Construire un dossier d’analyse des attentes incluant :
+                    <br/>
+                    - Analyse des contextes d’usages
+                    <br/>
+                    - Guide d’entretien
+                    <br/>
+                    - Entretiens utilisateurs
+                    <br/>
+                    - Le modèle des attentes
+                    <br/>
+                    Présentation du dossier au commanditaire
+                </livrables>
+                <acs>
+                    <ac>AC1101</ac>
+                    <ac>AC1106</ac>
+                    <ac>AC1107</ac>
+                </acs>
+                <competences>
+                    <competence coefficient="0" nom="Comprendre"/>
+                </competences>
+                <ressources>
+                    <ressource>R203</ressource>
+                    <ressource>R204</ressource>
+                    <ressource>R216</ressource>
+                </ressources>
+                <exemples>
+                    Concevoir, organiser et réaliser des entretiens utilisateur pour comprendre et mesurer les attentes
+                    des utilisateurs d’un site web, d’un service en ligne ou d’un produit multimédia.
+                    <br/>
+                    <br/>
+                    Note : cette SAÉ peut précéder la SAÉ 202
+                </exemples>
+            </sae>
+            <sae code="SAE202" heuresCMTD="0" heuresTP="0" heuresPtut="0">
+                <titre>Concevoir un service ou un produit et sa communication</titre>
+                <description>Projet intégrateur de fin de première année : Concevoir un produit ou un service et
+                    déployer sa communication pour sa promotion. Cette communication peut inclure par exemple : un site
+                    Web de présentation du produit, une campagne de communication sur les réseaux sociaux, un événement,
+                    un site d’agence.
+                </description>
+                <livrables>
+                    - Concept d’un produit ou d’un service innovant (dossier de conception, proposition de valeur,
+                    ciblage marketing)
+                    <br/>
+                    - Campagne de communication 360 (stratégie, plan de communication, présence sur les réseaux sociaux)
+                    <br/>
+                    - Un site web basé sur un CMS
+                    <br/>
+                    - Un audit juridique pour le projet (CGU, droit d’auteur, droit à l’image)
+                    <br/>
+                    - Les média à réaliser (textes, images, éléments graphiques ou audiovisuel)
+                    <br/>
+                    - Gestion de projet (appel d’offre, budget, document de suivi et de planification)
+                    <br/>
+                    - Présentations (pitch) intermédiaires pour le suivi ou le recettage du projet
+                    <br/>
+                    <br/>
+                    Une partie significative des contenus est en langue étrangère
+                </livrables>
+                <acs>
+                    <ac>AC2101</ac>
+                    <ac>AC2102</ac>
+                    <ac>AC2104</ac>
+                    <ac>AC2105</ac>
+                    <ac>AC2106</ac>
+                    <ac>AC3101</ac>
+                    <ac>AC3102</ac>
+                    <ac>AC3104</ac>
+                    <ac>AC3105</ac>
+                    <ac>AC3106</ac>
+                    <ac>AC4107</ac>
+                    <ac>AC5101</ac>
+                    <ac>AC5102</ac>
+                    <ac>AC5103</ac>
+                    <ac>AC5104</ac>
+                    <ac>AC5105</ac>
+                </acs>
+                <competences>
+                    <competence coefficient="0" nom="Concevoir"/>
+                    <competence coefficient="0" nom="Exprimer"/>
+                    <competence coefficient="0" nom="Développer"/>
+                    <competence coefficient="0" nom="Entreprendre"/>
+                </competences>
+                <ressources>
+                    <ressource>R202</ressource>
+                    <ressource>R205</ressource>
+                    <ressource>R207</ressource>
+                    <ressource>R208</ressource>
+                    <ressource>R209</ressource>
+                    <ressource>R210</ressource>
+                    <ressource>R216</ressource>
+                    <ressource>R217</ressource>
+                    <ressource>R218</ressource>
+                    <ressource>R219</ressource>
+                    <ressource>R201</ressource>
+                    <ressource>R206</ressource>
+                    <ressource>R211</ressource>
+                </ressources>
+                <exemples>
+                    Il est possible de repartir du projet de conception du S1 (SAE 102) ou de travailler sur un autre
+                    produit ou service :
+                    <br/>
+                    - Lancement d’un produit imaginaire (fairphone, trottinette volante…)
+                    <br/>
+                    - Ajout d’un service “Conférences” à un complexe hôtelier
+                    <br/>
+                    - Communication d’une collectivité territoriale
+                    <br/>
+                    - Projet de crowdfunding pour une jeune pousse, un projet collaboratif…
+                    <br/>
+                    <br/>
+                    Le site Web peut concerner le produit en lui-même ou correspondre à un site d’agence.
+                    <br/>
+                    Le produit ou le service en lui-même peut ne pas être réalisé.
+                </exemples>
+            </sae>
+            <sae code="SAE203" heuresCMTD="0" heuresTP="0" heuresPtut="0">
+                <titre>Site Web et BDD</titre>
+                <description>Développer un site Web exploitant une base de données et quelques éléments interactifs sur
+                    ce site Web. Le site doit être déployé sur au moins deux hébergements.
+                </description>
+                <livrables>
+                    - La modélisation des données
+                    <br/>
+                    - Une base de données contenant les données exploitées
+                    <br/>
+                    - Une liste de requêtes SQL permettant au site de fonctionner
+                    <br/>
+                    - La modélisation des traitements (enchaînement des pages et actions/requêtes)
+                    <br/>
+                    - Les fonctions permettant d&#039;accéder aux données (PDO...)
+                    <br/>
+                    - Des formulaires pour l’ajout de données (POST, INSERT) et le code de contrôle, filtrage et
+                    validation des données
+                    <br/>
+                    - Les feuilles de style CSS
+                    <br/>
+                    - Quelques scripts côté client pour rendre le site interactif
+                    <br/>
+                    - Le site Web complet en ligne (hébergement avec BDD)
+                    <br/>
+                    - Un plan de migration / sauvegarde du site (passage d’un hébergement à l’autre)
+                </livrables>
+                <acs>
+                    <ac>AC4102</ac>
+                    <ac>AC4103</ac>
+                    <ac>AC4104</ac>
+                    <ac>AC4105</ac>
+                    <ac>AC4106</ac>
+                </acs>
+                <competences>
+                    <competence coefficient="0" nom="Développer"/>
+                </competences>
+                <ressources>
+                    <ressource>R212</ressource>
+                    <ressource>R213</ressource>
+                    <ressource>R214</ressource>
+                    <ressource>R215</ressource>
+                    <ressource>R216</ressource>
+                </ressources>
+                <exemples>
+                    Préconisation : un squelette d’application est fourni aux étudiants qui ne partent pas d’une feuille
+                    blanche. Les étudiants doivent comprendre le code fourni, puis l’adapter à leur besoin (en modifiant
+                    les données, en ajoutant des tables, des relations ou des pages). Le site Web devrait être hébergé
+                    sur au moins deux serveurs (local, développement, production) pour aborder les questions de
+                    migration.
+                    <br/>
+                    <br/>
+                    Reprise de la première SAE avec
+                    <br/>
+                    - Ajout d’une base de données
+                    <br/>
+                    - Un travail plus précis / pointu sur l’intégration (mise en page, positionnement)
+                    <br/>
+                    - Ajout d’éléments interactifs
+                    <br/>
+                    - Travail sur différents serveurs ou hébergement
+                    <br/>
+                    <br/>
+                    Ouverture au niveau de la mise en œuvre : usage d’un framework ou d’un CMS
+                </exemples>
+            </sae>
+            <sae code="SAE204" heuresCMTD="0" heuresTP="0" heuresPtut="0">
+                <titre>Construire sa présence en ligne</titre>
+                <description>Étudier, analyser et construire sa présence professionnelle en ligne. Mettre en ligne ses
+                    productions personnelles, sur des sites dédiés ou en développant son site personnel.
+                </description>
+                <livrables>
+                    - Mise en ligne de ses productions personnels
+                    <br/>
+                    - Présence sur les réseaux sociaux professionnels
+                    <br/>
+                    - CV interactif
+                </livrables>
+                <acs>
+                    <ac>AC5104</ac>
+                    <ac>AC5106</ac>
+                </acs>
+                <competences>
+                    <competence coefficient="0" nom="Entreprendre"/>
+                </competences>
+                <ressources>
+                    <ressource>R219</ressource>
+                    <ressource>R201</ressource>
+                    <ressource>R206</ressource>
+                    <ressource>R211</ressource>
+                </ressources>
+                <exemples>
+                    - Site personnel
+                    <br/>
+                    - Pages sur les sites dédiés aux partage de production multimédia
+                    <br/>
+                    - Création d’un compte (personnel) sur un média social professionnel
+                </exemples>
+            </sae>
+            <sae code="SAE210" heuresCMTD="0" heuresTP="0" heuresPtut="0">
+                <titre>Portfolio S2</titre>
+                <description>Construire son portfolio de trace sur les SAE du S2 et en vue de préparer le choix du
+                    parcours du S3
+                </description>
+                <livrables>
+
+                </livrables>
+                <acs>
+                    <ac>AC1101</ac>
+                    <ac>AC1106</ac>
+                    <ac>AC1107</ac>
+                    <ac>AC2101</ac>
+                    <ac>AC2102</ac>
+                    <ac>AC2104</ac>
+                    <ac>AC2105</ac>
+                    <ac>AC2106</ac>
+                    <ac>AC3101</ac>
+                    <ac>AC3102</ac>
+                    <ac>AC3104</ac>
+                    <ac>AC3105</ac>
+                    <ac>AC3106</ac>
+                    <ac>AC4102</ac>
+                    <ac>AC4103</ac>
+                    <ac>AC4104</ac>
+                    <ac>AC4105</ac>
+                    <ac>AC4106</ac>
+                    <ac>AC4107</ac>
+                    <ac>AC5102</ac>
+                    <ac>AC5103</ac>
+                    <ac>AC5104</ac>
+                    <ac>AC5105</ac>
+                    <ac>AC5106</ac>
+                </acs>
+                <competences>
+                    <competence coefficient="0" nom="Comprendre"/>
+                    <competence coefficient="0" nom="Concevoir"/>
+                    <competence coefficient="0" nom="Exprimer"/>
+                    <competence coefficient="0" nom="Développer"/>
+                    <competence coefficient="0" nom="Entreprendre"/>
+                </competences>
+                <ressources>
+                    <ressource>R219</ressource>
+                </ressources>
+                <exemples>
+
+                </exemples>
+            </sae>
+        </saes>
+        <ressources>
+            <ressource code="R201" heuresCMTD="0" heuresTP="0">
+                <titre>Anglais</titre>
+                <description>Objectif : Développer l’aisance de l’expression orale tant spontanée que continue,
+                    accroître l’autonomie dans l’apprentissage par des pratiques spécifiques, favoriser la connaissance
+                    des médias de pays anglophones.
+                </description>
+                <mots-cles>Anglais</mots-cles>
+                <acs>
+                    <ac>AC2101</ac>
+                    <ac>AC2102</ac>
+                    <ac>AC2104</ac>
+                    <ac>AC2105</ac>
+                    <ac>AC2106</ac>
+                    <ac>AC3101</ac>
+                    <ac>AC5106</ac>
+                </acs>
+                <saes>
+                    <sae>SAE202</sae>
+                    <sae>SAE204</sae>
+                </saes>
+                <competences>
+                    <competence coefficient="0" nom="Concevoir"/>
+                    <competence coefficient="0" nom="Exprimer"/>
+                    <competence coefficient="0" nom="Entreprendre"/>
+                </competences>
+            </ressource>
+            <ressource code="R202" heuresCMTD="0" heuresTP="0">
+                <titre>Anglais Renforcé ou LV2</titre>
+                <description>LV2
+                    En se basant sur les acquis du module R102 développer l’aisance dans les compétences orales et
+                    initier à la langue professionnelle.
+                    S’approprier les techniques de présentation tant orales qu’écrites.
+
+
+                    Anglais renforcé
+                    il s’agira soit de continuer à consolider les acquis par de la remédiation soit à approfondir les
+                    apprentissages dans les 5 compétences langagières (expression orale, expression écrite,
+                    compréhension orale, compréhension écrite et expression orale en interaction) tout en ciblant les
+                    spécificités de la formation.
+                </description>
+                <mots-cles>Anglais Renforcé; LV2</mots-cles>
+                <acs>
+                    <ac>AC2106</ac>
+                </acs>
+                <saes>
+                    <sae>SAE202</sae>
+                </saes>
+                <competences>
+                    <competence coefficient="0" nom="Concevoir"/>
+                </competences>
+            </ressource>
+            <ressource code="R203" heuresCMTD="0" heuresTP="0">
+                <titre>Ergonomie et Accessibilité</titre>
+                <description>Objectif : Découvrir les fondamentaux du design d’expérience et de l’accessibilité
+                    numérique
+
+                    - Le modèle des attentes utilisateurs
+                    * Introduction aux Modèles cognitifs de la recherche d’information
+                    * Guide et technique d’entretiens semi-directifs, recueil et analyse des besoins
+                    - Introduction à l’accessibilité numérique (enjeux humains, juridiques et techniques, à quelles
+                    étapes d’un projet... )
+                    * Introduction à des référentiels de qualité, comprendre la norme internationale WCAG
+                    * Méthodes d’audit de l’accessibilité d’un site ou d’un service (sur les plans fonctionnel,
+                    graphique et multimédia)
+                </description>
+                <mots-cles>Ergonomie, Accessibilité, Design inclusif, UX, Design d’expérience, Design de service
+                </mots-cles>
+                <acs>
+                    <ac>AC1106</ac>
+                    <ac>AC1107</ac>
+                </acs>
+                <saes>
+                    <sae>SAE201</sae>
+                </saes>
+                <competences>
+                    <competence coefficient="0" nom="Comprendre"/>
+                </competences>
+            </ressource>
+            <ressource code="R204" heuresCMTD="0" heuresTP="0">
+                <titre>Culture numérique</titre>
+                <description>Objectif : la ressource permet de comprendre les usages du numérique, afin d’analyser de
+                    façon pertinente l’expérience de l’utilisateur à partir des différentes approches théoriques
+                    existantes. Elle vise également à faire comprendre les logiques de l’innovation technologique, en
+                    montrant dans quelle mesure celles-ci s’articulent avec les attentes et usages sociaux.
+                    - Usages des technologies numériques : critique des déterminismes technologique et social, du
+                    solutionnisme technique ; les différentes approches théoriques des usages ; usages et non usages des
+                    technologies numériques, fracture numérique ; l’usage comme expérience.
+                    - Logiques de l’innovation : conception et utilisation, diffusion et adoption, usages et
+                    appropriation, progrès versus innovation
+                </description>
+                <mots-cles>Culture numérique, Usages, Innovation</mots-cles>
+                <acs>
+                    <ac>AC1101</ac>
+                </acs>
+                <saes>
+                    <sae>SAE201</sae>
+                </saes>
+                <competences>
+                    <competence coefficient="0" nom="Comprendre"/>
+                </competences>
+            </ressource>
+            <ressource code="R205" heuresCMTD="0" heuresTP="0">
+                <titre>Stratégie de communication</titre>
+                <description>Objectif : ...
+                    - Introduction au marketing digital et à ses différents leviers d’action
+                    - Définition d’une stratégie de communication digitale (objectifs, plan de communication, mix de
+                    communication, média planning)
+                    - Sensibilisation aux théories des sciences de l’information et de la communication (comme
+                    l’approche systémique, des éléments de sémiotique…)
+                    - Éléments de communication stratégique crossmédia (print, internet et médias sociaux)
+                    - Savoir décrypter et interpréter des consignes, des directives, des orientations stratégiques (de
+                    type brief) en vue de la conception, de la mise en forme d’un message en tenant compte du contexte
+                    de réception
+
+                </description>
+                <mots-cles>Communication;</mots-cles>
+                <acs>
+                    <ac>AC2101</ac>
+                    <ac>AC2102</ac>
+                    <ac>AC2104</ac>
+                </acs>
+                <saes>
+                    <sae>SAE202</sae>
+                </saes>
+                <competences>
+                    <competence coefficient="0" nom="Concevoir"/>
+                </competences>
+            </ressource>
+            <ressource code="R206" heuresCMTD="0" heuresTP="0">
+                <titre>Expression, communication et rhétorique</titre>
+                <description>Prise de parole, argumentation, présentation orale
+                    Travail sur la présentation de soi
+                    Dynamique de groupe, les outils de l’intelligence collective (SAE202)
+                    Se connaître et parler de soi (SAE204)
+                    S’exprimer devant une caméra
+                    Les écrits professionnels courants
+                    Structurer une réflexion, formuler une problématique, construire une argumentation, développer
+                    l’esprit critique,
+                    Travail sur la reformulation, la vulgarisation
+                    La communication en situation de groupe (organisation de réunion, prise de décision, gestion de
+                    conflits…)
+                    Savoir décrypter et interpréter des consignes, des directives, des orientations stratégiques (de
+                    type brief) en vue de la conception, de la mise en forme d’un message en tenant compte du contexte
+                    de réception
+                    Créer des contenus rédactionnels adaptés à la situation de communication et au support utilisé
+                    Développer ses compétences en expression orale, réaliser une présentation, un exposé, une
+                    performance (par ex. tutoriel)
+                    Utiliser un logiciel de présentation
+                </description>
+                <mots-cles>Expression; Communication</mots-cles>
+                <acs>
+                    <ac>AC2105</ac>
+                    <ac>AC2106</ac>
+                    <ac>AC5106</ac>
+                </acs>
+                <saes>
+                    <sae>SAE202</sae>
+                    <sae>SAE204</sae>
+                </saes>
+                <competences>
+                    <competence coefficient="0" nom="Concevoir"/>
+                    <competence coefficient="0" nom="Entreprendre"/>
+                </competences>
+            </ressource>
+            <ressource code="R207" heuresCMTD="0" heuresTP="0">
+                <titre>Ecriture Multimédia et Narration</titre>
+                <description>Écriture pour le web
+                    Introduction au storytelling
+                    Narration fictionnelle, narration documentaire
+                    Scénario multimédia
+                </description>
+                <mots-cles>Écriture et narration</mots-cles>
+                <acs>
+                    <ac>AC3101</ac>
+                </acs>
+                <saes>
+                    <sae>SAE202</sae>
+                </saes>
+                <competences>
+                    <competence coefficient="0" nom="Exprimer"/>
+                </competences>
+            </ressource>
+            <ressource code="R208" heuresCMTD="0" heuresTP="0">
+                <titre>Production graphique</titre>
+                <description>Objectif : Produire des contenus, des maquettes graphiques pour le web et/ou le print
+                    - Approfondissement des logiciels de création graphique
+                    - Designer et prototyper une maquette graphique interactive (figma, XD, Sketch, Indesign)
+                    - Produire des contenus graphiques pour une intégration Web (images vectorielles et matricielles)
+                    - Prise de vues photographiques
+                    - Optimiser les médias en fonction de leurs usages et des supports de diffusion
+
+                </description>
+                <mots-cles>Production graphique</mots-cles>
+                <acs>
+                    <ac>AC3102</ac>
+                    <ac>AC3105</ac>
+                    <ac>AC3106</ac>
+                </acs>
+                <saes>
+                    <sae>SAE202</sae>
+                </saes>
+                <competences>
+                    <competence coefficient="0" nom="Exprimer"/>
+                </competences>
+            </ressource>
+            <ressource code="R209" heuresCMTD="0" heuresTP="0">
+                <titre>Culture artistique</titre>
+                <description>Objectif : Mise en application des fondamentaux travaillés en R110, et découverte des
+                    règles de conceptions pour le print et le web
+                    - Histoire de l’art
+                    - Culture typographique
+                    - Culture graphique
+                    - Culture du design numérique
+                    - Analyse d’identité visuelle et sonore
+                    - Création de pistes graphiques et de planche d’inspiration
+                    - Création de logo et d’identité visuelle et sonore
+                    - Composition de charte (visuelle, sonore, éditoriale….)
+                    - Principe et utilisation d’une grille (print et web )
+                </description>
+                <mots-cles>Culture artistique; sémiologie</mots-cles>
+                <acs>
+                    <ac>AC3102</ac>
+                </acs>
+                <saes>
+                    <sae>SAE202</sae>
+                </saes>
+                <competences>
+                    <competence coefficient="0" nom="Exprimer"/>
+                </competences>
+            </ressource>
+            <ressource code="R210" heuresCMTD="0" heuresTP="0">
+                <titre>Production audio et vidéo</titre>
+                <description>Objectif : Approfondir les techniques abordées au S1 en réalisant une courte production
+                    audiovisuelle répondant à un cahier des charges défini dans le cadre de la SAÉ 202. Les grands
+                    thèmes abordés, pour mener à bien cette réalisation, seront :
+                    - Écriture d’un scénario, développement d&#039;une narration qui répond à la commande.
+                    - Conception d’un storyboard (dessin / photographie) pour appréhender le tournage du film.
+                    - Choix motivé des équipements de tournage.
+                    - Paramétrage du matériel de captation en vue d’une optimisation de l’enregistrement.
+                    - Réalisation des prises de vue et de son.
+                    - Préparation des média et dérushage pour une optimisation avant montage.
+                    - Montage une vidéo post-produite et optimisation du rendu (Montage, Étalonnage, Mixage).
+                    - Intégration d’éléments additionnels (son, image, commentaires, sous-titres).
+                    - Exportation du montage en respectant les normes techniques image / son en fonction de sa
+                    diffusion.
+                </description>
+                <mots-cles>Production audio et vidéo</mots-cles>
+                <acs>
+                    <ac>AC3104</ac>
+                    <ac>AC3106</ac>
+                </acs>
+                <saes>
+                    <sae>SAE202</sae>
+                </saes>
+                <competences>
+                    <competence coefficient="0" nom="Exprimer"/>
+                </competences>
+            </ressource>
+            <ressource code="R211" heuresCMTD="0" heuresTP="0">
+                <titre>Gestion de contenus</titre>
+                <description>Objectif : Savoir déployer et personnaliser une application Web en utilisant un CMS
+                    - Découverte d’un système de gestion de contenus (installation, configuration, définition des rôles)
+                    - Utilisation : ajout et édition de contenus, importation et gestion des médias, permaliens
+                    - Personnalisation : installation de plugin, de thèmes et thèmes enfants et configuration
+                    - Maintenance de niveau 1 : mises à jour, sauvegardes et restaurations
+                </description>
+                <mots-cles>CMS, Gestion de contenus, personnalisation</mots-cles>
+                <acs>
+                    <ac>AC4107</ac>
+                    <ac>AC5106</ac>
+                </acs>
+                <saes>
+                    <sae>SAE202</sae>
+                    <sae>SAE204</sae>
+                </saes>
+                <competences>
+                    <competence coefficient="0" nom="Développer"/>
+                    <competence coefficient="0" nom="Entreprendre"/>
+                </competences>
+            </ressource>
+            <ressource code="R212" heuresCMTD="0" heuresTP="0">
+                <titre>Intégration</titre>
+                <description>Objectif : Maîtriser l&#039;intégration Web et le positionnement précis des éléments
+                    - Langage CSS : mise en page avancée (positionnement, éléments flexibles, grilles...)
+                    - Langage CSS : transitions, transformation, effets de survol, menus déroulants
+                    - Accessibilité : une partie de la norme WCAG
+                    - Découverte de la programmation événementielle : gestion des interactions simples
+                    - Découverte de plugins JS (carrousel, fenêtre modale, zoom, défilement...)
+                    - Introduction à l’usage d’un framework CSS
+                </description>
+                <mots-cles>Intégration, mise en page, transitions, interaction, accessibilité</mots-cles>
+                <acs>
+                    <ac>AC4102</ac>
+                </acs>
+                <saes>
+                    <sae>SAE203</sae>
+                </saes>
+                <competences>
+                    <competence coefficient="0" nom="Développer"/>
+                </competences>
+            </ressource>
+            <ressource code="R213" heuresCMTD="0" heuresTP="0">
+                <titre>Développement Web</titre>
+                <description>Objectif : Découvrir la programmation Web côté serveur et les interactions avec une base de
+                    données
+                    - Introduction au modèle de conception MVC (focus sur les modèles et l’accès aux données)
+                    - Modélisation des traitements et transmission de données d’une page à l’autre (méthode GET)
+                    - Découverte d’une librairie permettant l&#039;accès à une base de données (PDO, mysqli…)
+                    - Gestion des échanges de données client/serveur (méthode POST, gestion des formulaires et
+                    validation des données)
+                    - Outils et méthodes de débogage
+                </description>
+                <mots-cles>Développement Web, Client/Serveur, déboggage, accès aux données</mots-cles>
+                <acs>
+                    <ac>AC4103</ac>
+                    <ac>AC4105</ac>
+                    <ac>AC4106</ac>
+                </acs>
+                <saes>
+                    <sae>SAE203</sae>
+                </saes>
+                <competences>
+                    <competence coefficient="0" nom="Développer"/>
+                </competences>
+            </ressource>
+            <ressource code="R215" heuresCMTD="0" heuresTP="0">
+                <titre>Hébergement</titre>
+                <description>Objectif : Approfondissement des connaissances réseaux et initiation à l’administration
+                    d’hébergements Web :
+                    - Réseaux : adressage IP, masque, passerelle, DHCP, NAT, proxy, cache Web
+                    - Présentation des principales technologies d’accès au réseau (Ethernet, Wifi, 4G...), de leurs
+                    caractéristiques, de leurs limites et des évolutions à venir : IPV6...
+                    - Installation et exploitation d’un hébergement Web : serveur Web, bases de données, serveur FTP,
+                    études des fichiers de log, outils de statistiques, configuration, hôtes virtuels
+                    - Présentation des différents types d’hébergement : machines virtuelles, serveurs dédiés, offres
+                    cloud, CDN
+                    - Introduction à la sécurité : notions de chiffrement, certificats et leurs mise en oeuvre pour
+                    HTTPS, utilisation de clés (SSH, SFTP)
+                </description>
+                <mots-cles>Hébergement, réseaux, sécurité</mots-cles>
+                <acs>
+                    <ac>AC4104</ac>
+                </acs>
+                <saes>
+                    <sae>SAE203</sae>
+                </saes>
+                <competences>
+                    <competence coefficient="0" nom="Développer"/>
+                </competences>
+            </ressource>
+            <ressource code="R216" heuresCMTD="0" heuresTP="0">
+                <titre>Représentation et traitement de l&#039;information</titre>
+                <description>AC1306 :
+                    - Théorie de l’information : information, entropie, contenu informatif, codage associé (Huffman,
+                    Fano-Shannon, …), …
+                    - Base de la compression : objectifs, types de redondances, taux de compression, qualité et vitesse
+                    de restitution, méthodes à base de dictionnaire…
+                    - Le son numérique : formats non compressés et compressés, optimisation…
+                    - L’image numérique : bitmap, vectorielle, palettes couleur, transparence, mode de transmission,
+                    entrelacement, formats non compressés et compressés, optimisation…
+
+                    AC1106 :
+                    - Statistiques : Intervalles de confiances, tests de student
+                    - Visualisation de données : lissage de données temporelles (moyennes glissantes, régression,
+                    Algorithme de Savitzky-Golay...)
+
+                    Préconisation AC1306 : 10h, AC1106 : 5h
+                </description>
+                <mots-cles>Statistiques, Visualisation de données, Théorie de l’information, Compression, Son et Image
+                    numériques
+                </mots-cles>
+                <acs>
+                    <ac>AC1106</ac>
+                    <ac>AC3106</ac>
+                    <ac>AC4105</ac>
+                </acs>
+                <saes>
+                    <sae>SAE203</sae>
+                    <sae>SAE201</sae>
+                    <sae>SAE202</sae>
+                </saes>
+                <competences>
+                    <competence coefficient="0" nom="Comprendre"/>
+                    <competence coefficient="0" nom="Exprimer"/>
+                    <competence coefficient="0" nom="Développer"/>
+                </competences>
+            </ressource>
+            <ressource code="R217" heuresCMTD="0" heuresTP="0">
+                <titre>Gestion de projet</titre>
+                <description>Objectif : ...
+                    - Principes théoriques du pilotage de projet
+                    - Cahier des charges (fonctionnel, technique)
+                    - Gestion des délais
+                    - Gestion des coûts et retour sur investissement (ROI)
+                    - Gestion des parties prenantes (collaborateurs, prestataires, partenaires...)
+                </description>
+                <mots-cles>Proposition de valeur, Délais, Coûts, Risques, Equipes, Contrats
+
+                </mots-cles>
+                <acs>
+                    <ac>AC5101</ac>
+                    <ac>AC5102</ac>
+                    <ac>AC5103</ac>
+                </acs>
+                <saes>
+                    <sae>SAE202</sae>
+                </saes>
+                <competences>
+                    <competence coefficient="0" nom="Entreprendre"/>
+                </competences>
+            </ressource>
+            <ressource code="R218" heuresCMTD="0" heuresTP="0">
+                <titre>Economie et droit du numérique</titre>
+                <description>Objectif : cette ressource constitue une introduction au droit du numérique et aux enjeux
+                    sociétaux qui y sont lié :
+                    - L’organisation de la justice et les grands principes du droits
+                    - La responsabilité éditoriale,
+                    - La propriété intellectuelle
+                    - Le droit à l’image
+                    - Le règlement général sur la protection des données (RGPD)
+
+                </description>
+                <mots-cles>Droit, propriété intellectuelle, droit à l’image, RGPD</mots-cles>
+                <acs>
+                    <ac>AC5103</ac>
+                </acs>
+                <saes>
+                    <sae>SAE202</sae>
+                </saes>
+                <competences>
+                    <competence coefficient="0" nom="Entreprendre"/>
+                </competences>
+            </ressource>
+            <ressource code="R219" heuresCMTD="0" heuresTP="0">
+                <titre>PPP</titre>
+                <description>Objectif : Préparer les outils de professionnalisation et travailler ses supports de
+                    communication
+                    - Création d’outils de communication (CV, carte de visite, présentation formelle et informelle,
+                    début e-portfolio, utilisation des réseaux sociaux professionnels, lettre de motivation) +
+                    développement du réseau (création d’une carte réseau)
+                    - Visites (+interview) dans fab labs, incubateurs… et les dispositifs universitaires propres à
+                    l’innovation et à l’entrepreneuriat
+                </description>
+                <mots-cles>PPP</mots-cles>
+                <acs>
+                    <ac>AC5104</ac>
+                    <ac>AC5106</ac>
+                </acs>
+                <saes>
+                    <sae>SAE210</sae>
+                    <sae>SAE202</sae>
+                    <sae>SAE204</sae>
+                </saes>
+                <competences>
+                    <competence coefficient="0" nom="Entreprendre"/>
+                </competences>
+            </ressource>
+            <ressource code="R214" heuresCMTD="0" heuresTP="0">
+                <titre>Système d&#039;information</titre>
+                <description>Objectif : Savoir modéliser les données d’un système d’information et utiliser un système
+                    de gestion de base de données standard :
+                    - Analyse et modélisation des données : modèle relationnel, schéma entité / relation.
+                    - Langage de définition et de manipulation de données (SQL)
+                    - Exploitation de systèmes de gestion de base de données relationnelles et des outils liés (console,
+                    logiciel client, interfaces Web…)
+                    - Introduction aux formats d’échange (CSV, XML, JSON…) et sauvegarde / migration de bases de données
+                </description>
+                <mots-cles>Base de données, modélisation, langage de requête, SQL, entité/relation</mots-cles>
+                <acs>
+                    <ac>AC4105</ac>
+                </acs>
+                <saes>
+                    <sae>SAE203</sae>
+                </saes>
+                <competences>
+                    <competence coefficient="0" nom="Développer"/>
+                </competences>
+            </ressource>
+        </ressources>
+    </semestre>
+</referentiel_formation>

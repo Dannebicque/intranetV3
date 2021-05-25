@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Rattrapage.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2021 21:16
+ * @lastUpdate 23/05/2021 14:21
  */
 
 namespace App\Entity;
@@ -189,9 +189,6 @@ class Rattrapage extends BaseEntity
         return $this->dateEval;
     }
 
-    /**
-     * @return Rattrapage
-     */
     public function setDateEval(DateTimeInterface $dateEval): self
     {
         $this->dateEval = $dateEval;
@@ -204,11 +201,6 @@ class Rattrapage extends BaseEntity
         return $this->heureEval;
     }
 
-    /**
-     * @param \DateTimeInterface $heureEval
-     *
-     * @return Rattrapage
-     */
     public function setHeureEval(?DateTimeInterface $heureEval): self
     {
         $this->heureEval = $heureEval;
@@ -221,11 +213,6 @@ class Rattrapage extends BaseEntity
         return $this->duree;
     }
 
-    /**
-     * @param string $duree
-     *
-     * @return Rattrapage
-     */
     public function setDuree(?string $duree): self
     {
         $this->duree = $duree;
@@ -238,9 +225,6 @@ class Rattrapage extends BaseEntity
         return $this->dateRattrapage;
     }
 
-    /**
-     * @return Rattrapage
-     */
     public function setDateRattrapage(DateTimeInterface $dateRattrapage): self
     {
         $this->dateRattrapage = $dateRattrapage;
@@ -253,9 +237,6 @@ class Rattrapage extends BaseEntity
         return $this->heureRattrapage;
     }
 
-    /**
-     * @return Rattrapage
-     */
     public function setHeureRattrapage(?DateTimeInterface $heureRattrapage): self
     {
         $this->heureRattrapage = $heureRattrapage;
@@ -268,9 +249,6 @@ class Rattrapage extends BaseEntity
         return $this->salle;
     }
 
-    /**
-     * @return Rattrapage
-     */
     public function setSalle(?string $salle): self
     {
         $this->salle = $salle;
@@ -283,9 +261,6 @@ class Rattrapage extends BaseEntity
         return $this->etatDemande;
     }
 
-    /**
-     * @return Rattrapage
-     */
     public function setEtatDemande(string $etatDemande): self
     {
         $this->etatDemande = $etatDemande;
@@ -323,5 +298,15 @@ class Rattrapage extends BaseEntity
     public function getEtatDemandeLong(): ?string
     {
         return self::ETATLONG[$this->etatDemande] ?? '-erreur code-';
+    }
+
+    public function groupes()
+    {
+        return null !== $this->getEtudiant() ? $this->getEtudiant()->getGroupes() : null;
+    }
+
+    public function absenceJustifiee()
+    {
+        return $this->getEtudiant()->getId() . '_' . $this->getDateEval()->format('Ymd') . '_' . $this->getHeureEval()->format('Hi');
     }
 }

@@ -3,7 +3,10 @@
 {% block header %}{{ 'security.login.heading'|trans }}{% endblock %}
 
 {% block body %}
-    class="min-h-fullscreen bg-img center-vh" style="background-image: url({{ asset('assets/bg/home_troyes.jpg') }});"
+    min-h-fullscreen bg-img center-vh" style="background-image: url({{ asset('assets/bg/home_troyes.jpg') }});
+{% endblock %}
+
+{% block body_complement %}
     data-overlay="7"
 {% endblock %}
 

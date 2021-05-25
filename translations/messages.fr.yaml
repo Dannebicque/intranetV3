@@ -107,6 +107,21 @@ ACCEPTE: ACCEPTE
 acceptee: Acceptée
 actions: Actions
 
+action:
+  demande:
+    acceptee: 'Demande acceptée'
+    refusee: 'Demande refusée'
+  accepter: Accepter
+  refuser: Refuser
+  export: 'Télécharger'
+  duplicate: 'Dupliquer'
+  pdf: PDF
+  csv: CSV
+  excel: XLSX
+  lieu: Lieu
+  heureDebut: Heure début
+  dateDebut: Date
+
 actualite:
   add.success.flash: 'Actualité ajoutée avec succès'
   duplicate.success.flash: 'Actualité dupliquée avec succès'
@@ -495,6 +510,10 @@ adm:
     heading: 'Configuration du parcours : %parcours%'
   import_diplome:
     index.heading: 'Import d''une maquette pour le diplôme "%diplome%"'
+  apc.annee.heading: 'Compétences par année'
+  categories:
+    articles:
+      index.heading: 'Gérer les catégories d''articles'
 
 administratif_homepage.heading: 'Tableau de bord administratif'
 administratif.qualite.questionnaire.show.heading: 'Détails d''un questionnaire qualité'
@@ -1235,16 +1254,26 @@ l.assistant.e: 'L''assistant(e)'
 label:
   annee_previsionnel: 'Année du prévisionnel'
   annee_universitaire: 'Année universitaire'
+  absence_justifiee: 'Absence justifée ?'
+  categorie: Catégorie
   capacite: Capacité
   codeApogee: 'Code Apogée'
   cv: 'Votre CV'
+  dateDebutPublication: 'Début de publication'
+  dateFinPublication: 'Fin de publication'
   date_evaluation: 'Date de l''évaluation'
   dateLundi: 'Date du lundi'
   duree_evaluation: 'Durée de l''évaluation'
+  date_demande: 'Date demande'
   envoyer.demande: 'Envoyer la demande'
+  etudiant: Etudiant
   fichier: Fichier
+  groupe: Groupe(s)
   heure_evaluation: 'Heure du début de l''évaluation'
   import: Import
+  icone_couleur: Icône/couleur
+  icone: Icône
+  message: Message
   importer.les.notes: 'Importer le fichier de notes'
   libelle: Libellé
   logoFile: 'Logo du département'
@@ -1258,10 +1287,15 @@ label:
   semaineFormation: 'Numéro Semaine Département'
   semaineReelle: 'Numéro Semaine Réelle'
   semestre: Semestre
+  semestres: Semestres
   site: Site
+  titre: Titre
+  texte: Texte
   typeGroupe: 'Type de groupe'
   typesalle: 'Type de salle'
   update: 'Mise à jour'
+  updated: 'Mise à jour'
+  visible: 'Visible?'
 
 les.dates.de.la.periode.sont: 'Les dates de cette période de stage sont'
 les.responsables.sont: 'Les responsables de cette période sont'
@@ -1857,9 +1891,8 @@ table:
   heure_rattrapage: 'Heure rattrapage'
   heure: Heure
   heureDebut: 'Heure de début'
-  icone_couleur: Icône/couleur
-  icone: Icône
   id: Id
+  icone: Icône
   infos: Informations
   intervenants: Intervenants
   jour: Jour

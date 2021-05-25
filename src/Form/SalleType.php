@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/SalleType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 23/05/2021 14:21
  */
 
 namespace App\Form;
@@ -26,21 +26,21 @@ class SalleType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('libelle', TextType::class, ['label' => 'label.libelle'])
-            ->add('capacite', TextType::class, ['label' => 'label.capacite'])
+            ->add('libelle', TextType::class, ['label' => 'libelle'])
+            ->add('capacite', TextType::class, ['label' => 'capacite'])
             ->add('type', ChoiceType::class, [
                 'choices' => [
-                    Salle::SALLE_AMPHI        => Salle::SALLE_AMPHI,
+                    Salle::SALLE_AMPHI => Salle::SALLE_AMPHI,
                     Salle::SALLE_INFORMATIQUE => Salle::SALLE_INFORMATIQUE,
-                    Salle::SALLE_TD           => Salle::SALLE_TD,
-                    Salle::SALLE_TP           => Salle::SALLE_TP,
+                    Salle::SALLE_TD => Salle::SALLE_TD,
+                    Salle::SALLE_TP => Salle::SALLE_TP,
                 ],
-                'label'   => 'label.typesalle',
+                'label' => 'typesalle',
             ])
             ->add('site', EntityType::class, [
-                'class'        => Site::class,
+                'class' => Site::class,
                 'choice_label' => 'libelle',
-                'label'        => 'label.site',
+                'label' => 'site',
             ]);
     }
 

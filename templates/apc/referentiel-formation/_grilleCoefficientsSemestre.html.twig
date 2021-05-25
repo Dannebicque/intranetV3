@@ -1,0 +1,47 @@
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th></th>
+        {% for niveau in niveaux %}
+            <th>{{ niveau.competence.nomCourt }}</th>
+        {% endfor %}
+    </tr>
+    </thead>
+    <tbody>
+    {% for sae in saes %}
+        <tr>
+            <td><a href="#" title="{{ sae.display }}" data-provde="tooltip">{{ sae.codeMatiere }}</a></td>
+            {% for niveau in niveaux %}
+                <td>
+                    <a class="myedit"
+                       data-field="coefficient"
+                       href="{{ path('administration_apc_ressources_ajax_edit', {id:sae.id, competence: niveau
+                       .competence.id, type:'sae'}) }}"
+                       data-title="Corriger le coefficient">
+                        {{ coefficients.saes[sae.id][niveau.competence.id] is defined ? coefficients
+                        .saes[sae.id][niveau.competence.id] : 0 }}
+                    </a>
+                </td>
+            {% endfor %}
+        </tr>
+    {% endfor %}
+    {% for ressource in ressources %}
+        <tr>
+            <td><a href="#" title="{{ ressource.display }}" data-provde="tooltip">{{ ressource.codeMatiere }}</a></td>
+            {% for niveau in niveaux %}
+                <td>
+                    <a class="myedit"
+                       data-field="coefficient"
+                       href="{{ path('administration_apc_ressources_ajax_edit', {id:ressource.id, competence: niveau
+                       .competence.id, type:'ressource'}) }}"
+                       data-title="Corriger le coefficient">
+                        {{ coefficients.ressources[ressource.id][niveau.competence.id] is defined ? coefficients
+                        .ressources[ressource.id][niveau.competence.id] : 0 }}
+                    </a>
+                </td>
+            {% endfor %}
+        </tr>
+    {% endfor %}
+    </tbody>
+
+</table>

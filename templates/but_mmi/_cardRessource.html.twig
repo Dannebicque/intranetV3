@@ -2,7 +2,7 @@
     <div class="card">
         <h4 class="card-title">{{ ressource.display }}</h4>
         <div class="card-body">
-            <p>{{ ressource.motsCles|nl2br }}</p>
+            <p>{{ ressource.motsCles|keyWords }}</p>
             <p>
                 <a href="{{ path('but_fiche_ressource',
                     {'apcRessource': ressource.id, diplome:diplome.sigle|lower}) }}"
@@ -12,38 +12,19 @@
                     Voir la fiche ressource
                 </a>
             </p>
-            <h5>Heures ressources (prescriptives)</h5>
+            <h5>Heures ressources (Référentiel national)</h5>
             <table class="table table-bordered">
                 <thead>
                 <tr>
-                    <th width="33%">CM/TD</th>
-                    <th width="33%">TP</th>
-                    <th width="33%">Coeff.</th>
+                    <th style="width:50%">CM/TD</th>
+                    <th style="width:50%">TP</th>
+
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
                     <td>{{ ressource.cmPpn + ressource.tdPpn }}</td>
                     <td>{{ ressource.tpPpn }}</td>
-                    <td>{{ ressource.coefficient }}</td>
-                </tr>
-                </tbody>
-            </table>
-            <h5>Heures totales (indicatives)</h5>
-            <table class="table table-bordered">
-                <thead>
-                <tr>
-                    <th width="33%">Ressources</th>
-                    <th width="33%">SAÉ*</th>
-                    <th width="33%">Total</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>{{ ressource.cmPpn + ressource.tdPpn + ressource.tpPpn }}</td>
-                    <td>{{ ressource.heuresSAE + ressource.heuresSAEPtut }}</td>
-                    <td>{{ ressource.cmPpn + ressource.tdPpn + ressource.tpPpn + ressource.heuresSAE + ressource
-                        .heuresSAEPtut }}</td>
                 </tr>
                 </tbody>
             </table>

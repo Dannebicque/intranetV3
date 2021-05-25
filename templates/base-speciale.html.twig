@@ -52,7 +52,7 @@
     {% endif %}
 </head>
 
-<body {% block body %}{% endblock %}>
+<body class="{{ settings('CODE_IUT') }} {% block body %}{% endblock %}" {% block body_complement %}{% endblock %}>
 
 {% block content %}
 

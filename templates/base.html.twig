@@ -49,11 +49,11 @@
         s.parentNode.insertBefore(g, s)
       })()
     </script>
-    <!-- End Matomo Code -->
+        <!-- End Matomo Code -->
     {% endif %}
 </head>
 
-<body>
+<body class="{{ settings('CODE_IUT') }}">
 <!-- Preloader -->
 <div class="preloader">
     <div class="spinner-dots">
@@ -404,17 +404,23 @@
 
     <div class="main-content" id="mainContent">
 
-        {% for label, messages in app.flashes %}
-            {% for message in messages %}
-                <div class="callout callout-{{ label }}" role="alert">
-                    <button type="button" class="close" data-dismiss="callout" aria-label="Close">
-                        <span>&times;</span>
-                    </button>
-                    <h5>{{ label|trans }}</h5>
-                    <p>{{ message }}</p>
-                </div>
+        <div hidden="hidden">
+            {% for toast in app.session.flashbag.get('toast') %}
+                <div data-toggle="toast" data-text="{{ toast.text }}" data-title="{{ toast.title }}" data-type="{{ toast.type }}"></div>
             {% endfor %}
-        {% endfor %}
+        </div>
+
+        {# {% for label, messages in app.flashes %} #}
+        {# {% for message in messages %} #}
+        {# <div class="callout callout-{{ label }}" role="alert"> #}
+        {# <button type="button" class="close" data-dismiss="callout" aria-label="Close"> #}
+        {# <span>&times;</span> #}
+        {# </button> #}
+        {# <h5>{{ label|trans }}</h5> #}
+        {# <p>{{ message }}</p> #}
+        {# </div> #}
+        {# {% endfor %} #}
+        {# {% endfor %} #}
 
 
         {% block content %}

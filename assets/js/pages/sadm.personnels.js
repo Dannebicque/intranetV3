@@ -1,9 +1,8 @@
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/sadm.personnels.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 04/12/2020 17:34
-import '../../vendor/datatables'
+// @lastUpdate 23/05/2021 14:06
 import {dataTableLangueFr} from '../lang/fr'
 
 $(document).on('keyup', '#sa_login_urca', function () {

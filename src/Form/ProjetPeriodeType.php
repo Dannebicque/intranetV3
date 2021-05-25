@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ProjetPeriodeType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 23/05/2021 14:21
  */
 
 namespace App\Form;
@@ -35,31 +35,31 @@ class ProjetPeriodeType extends AbstractType
             ->add('dateRange', DateRangeType::class,
                 ['label' => 'dateRange.periode', 'mapped' => false, 'required' => true])
             ->add('semestre', EntityType::class, [
-                'class'         => Semestre::class,
-                'label'         => 'label.semestre_stage_periode',
-                'choice_label'  => 'libelle',
+                'class' => Semestre::class,
+                'label' => 'semestre_stage_periode',
+                'choice_label' => 'libelle',
                 'query_builder' => function(SemestreRepository $semestreRepository) {
                     return $semestreRepository->findByDepartementBuilder($this->departement);
                 },
-                'required'      => true,
-                'expanded'      => true,
-                'multiple'      => false,
+                'required' => true,
+                'expanded' => true,
+                'multiple' => false,
             ])
             ->add('responsables', EntityType::class, [
-                'label'         => 'label.responsables',
-                'expanded'      => true,
-                'multiple'      => true,
-                'class'         => Personnel::class,
-                'help'          => 'help.responsables',
-                'choice_label'  => 'display',
+                'label' => 'responsables',
+                'expanded' => true,
+                'multiple' => true,
+                'class' => Personnel::class,
+                'help' => 'help.responsables',
+                'choice_label' => 'display',
                 'query_builder' => function(PersonnelRepository $personnelRepository) {
                     return $personnelRepository->findByDepartementBuilder($this->departement);
                 },
             ])
             ->add('anneeUniversitaire', EntityType::class, [
-                'label'        => 'label.anneeUniversitaire',
+                'label' => 'anneeUniversitaire',
                 'choice_label' => 'displayAnneeUniversitaire',
-                'class'        => AnneeUniversitaire::class,
+                'class' => AnneeUniversitaire::class,
             ])
             ->addEventListener(FormEvents::POST_SUBMIT, static function(FormEvent $event) {
                 $stagePeriode = $event->getData();

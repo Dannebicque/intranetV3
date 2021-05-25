@@ -1,18 +1,18 @@
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.articles.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 14/10/2020 12:02
+// @lastUpdate 23/05/2021 15:34
 
 import {dataTableLangueFr} from '../lang/fr'
 
 
 $(document).on('click', '#addCategorie', function () {
-  if ($('#listeCategories').hasDataAttr('data-checkbox')) {
-    const table = $('#listeCategories').DataTable()
-    table.clear() //effacer le datatable
-    table.destroy() //supprimer le datatable
-  }
+  // if ($('#listeCategories').hasDataAttr('data-checkbox')) {
+  //   const table = $('#listeCategories').DataTable()
+  //   table.clear() //effacer le datatable
+  //   table.destroy() //supprimer le datatable
+  // }
 
 
   $.ajax({
@@ -43,7 +43,7 @@ $(document).on('click', '#addCategorie', function () {
           '                               data-provide="tooltip"\n' +
           '                               data-placement="bottom"\n' +
           '                               title="Supprimer la catégorie">\n' +
-          '                                <i class="' + iconDelete + '"></i>\n' +
+          '                                <i class="mdi mdi-delete"></i>\n' +
           '                                <span class="sr-only">Supprimer la catégorie</span>\n' +
           '                            </a></td>\n' +
           '                    </tr>'

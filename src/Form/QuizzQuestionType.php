@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/QuizzQuestionType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 22/05/2021 18:35
  */
 
 namespace App\Form;
@@ -21,8 +21,8 @@ class QuizzQuestionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('libelle', TextType::class, ['label' => 'label.libelle'])
-            ->add('help', TextType::class, ['label' => 'label.question.help', 'required' => false])
+            ->add('libelle', TextType::class, ['label' => 'libelle'])
+            ->add('help', TextType::class, ['label' => 'question.help', 'required' => false])
             ->add('type', ChoiceType::class,
                 [
                     'expanded' => true,

@@ -4,12 +4,11 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/NoteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2021 08:46
+ * @lastUpdate 24/05/2021 16:35
  */
 
 namespace App\Controller\administration;
 
-use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\MyEvaluations;
 use App\Classes\Semestre\NotesExport;
 use App\Controller\BaseController;

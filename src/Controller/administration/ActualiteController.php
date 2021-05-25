@@ -4,13 +4,14 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/ActualiteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 23/05/2021 16:07
  */
 
 namespace App\Controller\administration;
 
 use App\Classes\MyExport;
 use App\Controller\BaseController;
+use App\DataTable\ActualiteTableType;
 use App\Entity\Actualite;
 use App\Entity\Constantes;
 use App\Form\ActualiteType;
@@ -20,25 +21,36 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/administration/actualites")
+ * @Route("/administration/actualites", name="administration_actualite_")
  */
 class ActualiteController extends BaseController
 {
     /**
-     * @Route("/", name="administration_actualite_index", methods="GET")
+     * @Route("/", name="index", methods="GET")
      */
-    public function index(ActualiteRepository $actualiteRepository): Response
-    {
+    public function index(
+        Request $request
+    ): Response {
+        $table = $this->createTable(ActualiteTableType::class, [
+            'departement' => $this->getDepartement(),
+        ]);
+        $table->handleRequest($request);
+
+        if ($table->isCallback()) {
+            return $table->getCallbackResponse();
+        }
+
         return $this->render(
             'administration/actualite/index.html.twig',
-            ['actualites' => $actualiteRepository->getByDepartement($this->getDepartement())]
+            [
+                'table' => $table,
+            ]
         );
     }
 
     /**
-     * @Route("/export.{_format}", name="administration_actualite_export", methods="GET",
+     * @Route("/export.{_format}", name="export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"})
-     *
      */
     public function export(MyExport $myExport, ActualiteRepository $actualiteRepository, $_format): Response
     {
@@ -54,7 +66,7 @@ class ActualiteController extends BaseController
     }
 
     /**
-     * @Route("/new", name="administration_actualite_new", methods="GET|POST")
+     * @Route("/new", name="new", methods="GET|POST")
      */
     public function create(Request $request): Response
     {
@@ -62,7 +74,7 @@ class ActualiteController extends BaseController
         $form = $this->createForm(ActualiteType::class, $actualite, [
             'attr' => [
                 'data-provide' => 'validation',
-                'novalidate'   => true,
+                'novalidate' => true,
             ],
         ]);
         $form->handleRequest($request);
@@ -77,12 +89,12 @@ class ActualiteController extends BaseController
 
         return $this->render('administration/actualite/new.html.twig', [
             'actualite' => $actualite,
-            'form'      => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/{id}", name="administration_actualite_show", methods="GET")
+     * @Route("/{id}", name="show", methods="GET")
      */
     public function show(Actualite $actualite): Response
     {
@@ -90,7 +102,7 @@ class ActualiteController extends BaseController
     }
 
     /**
-     * @Route("/{id}/edit", name="administration_actualite_edit", methods="GET|POST")
+     * @Route("/{id}/edit", name="edit", methods="GET|POST")
      */
     public function edit(Request $request, Actualite $actualite): Response
     {
@@ -114,12 +126,12 @@ class ActualiteController extends BaseController
 
         return $this->render('administration/actualite/edit.html.twig', [
             'actualite' => $actualite,
-            'form'      => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/{id}", name="administration_actualite_delete", methods="DELETE")
+     * @Route("/{id}", name="delete", methods="DELETE")
      */
     public function delete(Request $request, Actualite $actualite): Response
     {
@@ -141,7 +153,7 @@ class ActualiteController extends BaseController
     }
 
     /**
-     * @Route("/{id}/duplicate", name="administration_actualite_duplicate", methods="GET|POST")
+     * @Route("/{id}/duplicate", name="duplicate", methods="GET|POST")
      */
     public function duplicate(Actualite $actualite): Response
     {

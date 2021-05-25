@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/RattrapagePlanningController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2021 08:46
+ * @lastUpdate 23/05/2021 14:21
  */
 
 namespace App\Controller\administration;
@@ -41,6 +41,11 @@ class RattrapagePlanningController extends BaseController
             'rattrapages' => $rattrapageRepository->findValidByDiplome($diplome, $diplome->getAnneeUniversitaire()),
             'diplome' => $diplome,
             'matieres' => $typeMatiereManager->findByDiplomeArray($diplome),
+            'options' => [
+                'data-options' => [
+                    'dateFormat' => 'd/m/Y'
+                ]
+            ]
         ]);
     }
 

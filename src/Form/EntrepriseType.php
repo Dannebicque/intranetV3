@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/EntrepriseType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 23/05/2021 14:21
  */
 
 namespace App\Form;
@@ -21,14 +21,14 @@ class EntrepriseType extends AbstractType
     {
         $builder
             ->add('raisonSociale', TextType::class,
-                ['label' => 'label.raisonSociale', 'help' => 'La raison sociale est le nom de l\'entreprise'])
+                ['label' => 'raisonSociale', 'help' => 'La raison sociale est le nom de l\'entreprise'])
             ->add('siret', TextType::class, [
-                'label'    => 'label.siret',
+                'label' => 'siret',
                 'required' => false,
-                'help'     => 'Le siret est obligatoire pour toutes les entreprise, sauf pour les organismes public.',
+                'help' => 'Le siret est obligatoire pour toutes les entreprise, sauf pour les organismes public.',
             ])
-            ->add('adresse', AdresseType::class, ['label' => 'label.adresse'])
-            ->add('responsable', ContactType::class, ['label' => 'label.responsable'])
+            ->add('adresse', AdresseType::class, ['label' => 'adresse'])
+            ->add('responsable', ContactType::class, ['label' => 'responsable'])
         ;
     }
 

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/bloc_saisie_absence/SaisieAbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/05/2021 19:49
+ * @lastUpdate 22/05/2021 21:04
  */
 
 namespace App\Controller\bloc_saisie_absence;
@@ -58,6 +58,11 @@ class SaisieAbsenceController extends BaseController
             'typeGroupes' => $typeGroupeRepository->findBySemestre($semestre),
             'event' => $event,
             'groupes' => $groupes,
+            'options' => [
+                'data-options' => [
+                    'dateFormat' => 'd/m/Y'
+                ]
+            ]
         ]);
     }
 

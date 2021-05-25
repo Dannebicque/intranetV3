@@ -1,9 +1,8 @@
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.etudiants.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 27/08/2020 15:59
-import '../../vendor/datatables'
+// @lastUpdate 23/05/2021 14:06
 import {dataTableLangueFr} from '../lang/fr'
 
 const table = $('#datatableEtudiants').DataTable({})

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEdtCompare.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2021 08:46
+ * @lastUpdate 24/05/2021 16:35
  */
 
 /*
@@ -18,7 +18,6 @@ use App\Entity\Matiere;
 use App\Entity\Personnel;
 use App\Entity\Previsionnel;
 use App\Repository\EdtPlanningRepository;
-use App\Repository\PrevisionnelRepository;
 
 class MyEdtCompare
 {

@@ -23,11 +23,11 @@
                 </tr>
                 <tr>
                     <th>{{ 'table.icone'|trans }}</th>
-                    <td>{{ borne.icone }}</td>
+                    <td><i class="{{ borne.icone }}"></i></td>
                 </tr>
                 <tr>
                     <th>{{ 'table.couleur'|trans }}</th>
-                    <td>{{ borne.couleur }}</td>
+                    <td><span class="badge" style="background-color:{{ borne.couleur }}">{{ borne.couleur }}</span></td>
                 </tr>
                 <tr>
                     <th>{{ 'table.message'|trans }}</th>
@@ -35,7 +35,9 @@
                 </tr>
                 <tr>
                     <th>{{ 'table.semestres'|trans }}</th>
-                    <td>{% for semestre in borne.semestres %}{{ semestre.display }}{% if not loop.last %}, {% endif %}{% endfor %}</td>
+                    <td>{% for semestre in borne.semestres %}
+                            <span class="badge badge-success mr-2">{{ semestre.display }}</span>
+                        {% endfor %}</td>
                 </tr>
 
                 <tr>
