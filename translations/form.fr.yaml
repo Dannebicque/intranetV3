@@ -122,6 +122,11 @@ initiales: Initiales
 j: Jour
 Jour: Jour
 label:
+  serviceStatus: Heures dans le statut
+  tauxTd: Taux TD
+  tauxTp: Taux TP
+  tauxTdHC: Taux TD en HC
+  tauxTpHC: Taux TP en HC
   choice:
     non: Non
     oui: Oui

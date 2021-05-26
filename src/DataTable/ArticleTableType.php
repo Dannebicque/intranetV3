@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/DataTable/ArticleTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/05/2021 16:03
+ * @lastUpdate 26/05/2021 23:16
  */
 
 namespace App\DataTable;
@@ -15,11 +15,9 @@ use App\DataTable\Widget\RowDeleteLinkType;
 use App\DataTable\Widget\RowDuplicateLinkType;
 use App\DataTable\Widget\RowEditLinkType;
 use App\DataTable\Widget\RowShowLinkType;
-use App\Entity\Annee;
 use App\Entity\Article;
+use App\Entity\ArticleCategorie;
 use App\Entity\Departement;
-use App\Entity\Diplome;
-use App\Entity\Semestre;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
@@ -126,10 +124,8 @@ class ArticleTableType extends DataTableType
             'class' => Article::class,
             'fetch_join_collection' => false,
             'query' => function(QueryBuilder $qb, array $formData) {
-                $qb->innerJoin('e.semestres', 'c')//récupération de la jointure dans la table dédiée
-                ->innerJoin(Semestre::class, 's', 'WITH', 'c.id = s.id')
-                    ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
-                    ->innerJoin(Diplome::class, 'd', 'WITH', 'a.diplome = d.id')
+                $qb
+                    ->innerJoin(ArticleCategorie::class, 'c', 'WITH', 'c.id = e.categorie')
                     ->where('d.departement = :departement')
                     ->setParameter('departement', $this->departement->getId());
 

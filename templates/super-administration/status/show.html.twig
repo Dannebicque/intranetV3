@@ -1,0 +1,53 @@
+{% extends 'base-super_admin.html.twig' %}
+
+{% block header %}
+    {{ 'adm.statut.show.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        {{ include('composants/sadm-buttons-show.html.twig', {elt: 'statuts', id: statut.id}) }}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.statut.show.heading'|trans }}</h4>
+        <div class="card-body">
+
+            <table class="table table-bordered">
+                <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td colspan="3">{{ statut.id }}</td>
+                </tr>
+                <tr>
+                    <th>Libelle</th>
+                    <td colspan="3">>{{ statut.libelle }}</td>
+                </tr>
+                <tr>
+                    <th>Sigle</th>
+                    <td>{{ statut.sigle }}</td>
+
+                    <th>Service Statut</th>
+                    <td>{{ statut.serviceStatus }}</td>
+                </tr>
+                <tr>
+                    <th>Taux TD</th>
+                    <td>{{ statut.tauxTd }}</td>
+
+                    <th>Taux TP</th>
+                    <td>{{ statut.tauxTp }}</td>
+                </tr>
+                <tr>
+                    <th>Taux TD HC</th>
+                    <td>{{ statut.tauxTdHC }}</td>
+
+                    <th>Taux TP HC</th>
+                    <td>{{ statut.tauxTpHC }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
