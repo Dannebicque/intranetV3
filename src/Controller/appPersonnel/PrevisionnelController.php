@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/PrevisionnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2021 08:46
+ * @lastUpdate 26/05/2021 21:52
  */
 
 namespace App\Controller\appPersonnel;
@@ -41,7 +41,8 @@ class PrevisionnelController extends BaseController
         $previsionnels = $myPrevisionnel->getPrevisionnelPersonnelDepartementAnnee($personnel, $departement,
             $anneePrevisionnel);
         $hrs = $hrsManager->getHrsPersonnelDepartementAnnee($personnel, $departement, $anneePrevisionnel);
-        $synthsePrevisionnel = $previsionnelSynthese->getSynthese($previsionnels, $hrs, $personnel);
+        $synthsePrevisionnel = $previsionnelSynthese->getSynthese($previsionnels, $personnel)
+            ->getHrsEnseignant($hrs);
 
         return $this->render('appPersonnel/previsionnel/index.html.twig', [
             'previsionnels' => $previsionnels,
