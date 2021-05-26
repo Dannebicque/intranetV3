@@ -4,14 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Previsionnel/PrevisionnelSynthese.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/05/2021 09:13
+ * @lastUpdate 26/05/2021 21:52
  */
-
 
 namespace App\Classes\Previsionnel;
 
 use App\Entity\Personnel;
-
 
 /**
  * Class PrevisionnelSynthese.
@@ -26,9 +24,6 @@ class PrevisionnelSynthese
     private float $totalEtuTp = 0.0;
     private float $totalHrs = 0.0;
 
-    /**
-     * @var \App\Entity\Personnel
-     */
     private Personnel $personnel;
 
     public function getTotalCm(): float
@@ -91,15 +86,16 @@ class PrevisionnelSynthese
     /**
      * @param $annee
      */
-    public function getHrsEnseignant(array $hrs): void
+    public function getHrsEnseignant(array $hrs): PrevisionnelSynthese
     {
-
         foreach ($hrs as $hr) {
             $this->totalHrs += $hr->getNbHeuresTd();
         }
+
+        return $this;
     }
 
-    public function getSynthese(array $previsionnels, $hrs, Personnel $personnel): PrevisionnelSynthese
+    public function getSynthese(array $previsionnels, Personnel $personnel): PrevisionnelSynthese
     {
         $this->personnel = $personnel;
 
@@ -108,6 +104,7 @@ class PrevisionnelSynthese
             $this->totalTd += $pr->getTotalHTd();
             $this->totalTp += $pr->getTotalHTp();
         }
+
 
         return $this;
     }
