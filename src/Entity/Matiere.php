@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Matiere.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/05/2021 11:02
+ * @lastUpdate 25/05/2021 22:18
  */
 
 namespace App\Entity;
@@ -80,7 +80,7 @@ class Matiere extends AbstractMatiere
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Ue", inversedBy="matieres", fetch="EAGER")
      */
-    private ?Ue $ue;
+    private ?Ue $ue = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Ppn", inversedBy="matieres")

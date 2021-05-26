@@ -270,6 +270,7 @@ label:
   nb_semestres: 'Nombre de semestres'
   nbAbsences: 'Nb Absences'
   nbEcts: 'Nombre d''ECTS'
+  nbGroupesCm: 'Nb. Groupes de CM'
   nbGroupesTd: 'Nb. Groupes de TD'
   nbGroupesTP: 'Nb. Groupes de TP'
   nbHeuresService: 'Nb. Heures dans service'

@@ -11,10 +11,15 @@
 {% endblock %}
 
 {% block content %}
-<div class="card">
-    <h4 class="card-title">{{ 'adm.matiere.new.heading'|trans }}</h4>
-    <div class="card-body">
-        {{ include('composants/adm-form.html.twig') }}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.matiere.new.heading'|trans }}</h4>
+        <div class="card-body">
+            {{ include('composants/adm-form.html.twig') }}
+        </div>
     </div>
-</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('adm.matieres') }}
 {% endblock %}

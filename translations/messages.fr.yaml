@@ -233,7 +233,7 @@ adm:
     show.heading: 'Détails de l''emprunt'
   emprunts:
     menu: Emprunts
-    historique.heading: Historique des emprints
+    historique.heading: Historique des emprunts
     index.heading: 'Gestion des emprunts'
   etudiant:
     add.heading: 'Ajout d''étudiants'

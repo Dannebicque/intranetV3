@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Rattrapage.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/05/2021 14:21
+ * @lastUpdate 26/05/2021 09:01
  */
 
 namespace App\Entity;
@@ -307,6 +307,10 @@ class Rattrapage extends BaseEntity
 
     public function absenceJustifiee()
     {
-        return $this->getEtudiant()->getId() . '_' . $this->getDateEval()->format('Ymd') . '_' . $this->getHeureEval()->format('Hi');
+        if (null !== $this->getDateEval() && null !== $this->getHeureEval()) {
+            return $this->getEtudiant()->getId() . '_' . $this->getDateEval()->format('Ymd') . '_' . $this->getHeureEval()->format('Hi');
+        }
+
+        return null;
     }
 }
