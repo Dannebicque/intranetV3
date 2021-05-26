@@ -36,7 +36,7 @@
     <tbody>
     {% for n in notes %}
         {% if semestre.diplome.optCommentairesReleve == true %}
-            {% if matprec is defined and matprec != n.evaluation.matiere.id %}
+            {% if matprec is defined and matprec != n.evaluation.typeIdMatiere %}
                 <tr style="height: 50px">
                     <td colspan="2">Commentaires :</td>
                     <td colspan="6">&nbsp;</td>
@@ -81,7 +81,7 @@
                 <td style="text-align: center">{{ syntheses[n.evaluation.id]['promo'].max|number_format(2,'.') }}</td>
             </tr>
         {% endif %}
-        {% set matprec = n.evaluation.matiere.id %}
+        {% set matprec = n.evaluation.typeIdMatiere %}
     {% endfor %}
 
     </tbody>
