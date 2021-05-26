@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/DataTable/ArticleTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2021 23:16
+ * @lastUpdate 26/05/2021 23:19
  */
 
 namespace App\DataTable;
@@ -126,7 +126,7 @@ class ArticleTableType extends DataTableType
             'query' => function(QueryBuilder $qb, array $formData) {
                 $qb
                     ->innerJoin(ArticleCategorie::class, 'c', 'WITH', 'c.id = e.categorie')
-                    ->where('d.departement = :departement')
+                    ->where('c.departement = :departement')
                     ->setParameter('departement', $this->departement->getId());
 
                 if (isset($formData['search'])) {
