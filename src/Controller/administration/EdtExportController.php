@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtExportController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/05/2021 21:49
+ * @lastUpdate 26/05/2021 15:21
  */
 
 namespace App\Controller\administration;
@@ -46,7 +46,6 @@ class EdtExportController extends BaseController
 
     /**
      * @Route("/{source}", name="administration_edt_export_index", requirements={"source"="intranet|celcat"})
-     *
      */
     public function index($source): Response
     {
@@ -57,7 +56,6 @@ class EdtExportController extends BaseController
 
     /**
      * @Route("/script/{source}", name="administration_edt_export_script", requirements={"source"="intranet|celcat"})
-     *
      */
     public function exportScript(
         SemestreRepository $semestreRepository,
@@ -118,7 +116,7 @@ class EdtExportController extends BaseController
             7679,
             34044,
             21399,
-            4954
+            4954,
         ];
         $tabProf = array_flip($tabProf);
 
@@ -249,7 +247,7 @@ class EdtExportController extends BaseController
         $tabSalles = array_flip($tabSalles);
 
         $pl = $edtPlanningRepository->findEdtSemestre($semestre, $semaine);
-        $matieres = $typeMatiereManager->findBySemestre($semestre);
+        $matieres = $typeMatiereManager->findBySemestreArray($semestre);
 
         $code = [];
         $codeGroupe = [];
@@ -281,7 +279,7 @@ class EdtExportController extends BaseController
                 $codeMatiere = $matieres[$p->getTypeIdMatiere()]->codeElement;
                 $code[mb_strtoupper($p->getType())][$p->getGroupe()] .= './ajouter ' . $p->getJour() . ' ' . Constantes::TAB_HEURES[$p->getDebut()] . ' ' . Constantes::TAB_HEURES[$p->getFin()] . ' ' . $tabProf[$p->getIntervenant()->getNumeroHarpege()] . ' ' . $tabSalles[$p->getSalle()] . ' ' . $tabMatieres[$semestre->getLibelle()][$codeMatiere] . ' ' . $tabType[mb_strtoupper($p->getType())] . "\n";
             }
-            if ($p->getSalle() === 'H018') {
+            if ('H018' === $p->getSalle()) {
                 $code[mb_strtoupper($p->getType())][$p->getGroupe()] .= './ajouterh018 ' . $p->getJour() . ' ' . Constantes::TAB_HEURES[$p->getDebut()] . ' ' . Constantes::TAB_HEURES[$p->getFin()] . ' ' . $tabProf[$p->getIntervenant()->getNumeroHarpege()] . ' 0 ' . $tabMatieres[$semestre->getLibelle()][$codeMatiere] . ' ' . $tabType[mb_strtoupper($p->getType())] . "\n";
             }
         }
@@ -321,7 +319,6 @@ class EdtExportController extends BaseController
     /**
      * @Route("/tous/{source}.{_format}", name="administration_edt_export_all",
      *                                    requirements={"source"="intranet|celcat"})
-     *
      */
     public function exportAll(MyEdtExport $myEdtExport, $source, $_format): Response
     {
@@ -333,7 +330,6 @@ class EdtExportController extends BaseController
     /**
      * @Route("/profs/{source}.pdf", name="administration_edt_export_profs",
      *                                    requirements={"source"="intranet|celcat"})
-     *
      *
      * @throws LoaderError
      * @throws RuntimeError

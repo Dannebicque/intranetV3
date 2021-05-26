@@ -2,6 +2,7 @@
     <thead>
     <tr>
         <th>{{ 'table.code_sae'|trans }}</th>
+        <th>{{ 'table.code_element'|trans }}</th>
         <th>{{ 'table.libelle'|trans }}</th>
         <th>{{ 'table.semestre'|trans }}</th>
         <th>Compétences</th>
@@ -16,6 +17,7 @@
     {% for apc_sae in apc_saes %}
         <tr id="ligne_{{ apc_sae.id }}">
             <td>{{ apc_sae.codeMatiere }}</td>
+            <td>{{ apc_sae.codeElement }}</td>
             <td>{{ apc_sae.libelle }}</td>
             <td>{{ apc_sae.semestre != null ? apc_sae.semestre.libelle : 'non.defini'|trans }}</td>
             <td>
