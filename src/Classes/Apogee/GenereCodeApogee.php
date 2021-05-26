@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Apogee/GenereCodeApogee.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2021 15:21
+ * @lastUpdate 26/05/2021 18:22
  */
 
 namespace App\Classes\Apogee;
@@ -16,9 +16,6 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class GenereCodeApogee
 {
-
-    const DEBUT_CODE = '5T'; //BUT à Troyes
-
     protected EntityManagerInterface $entityManager;
     private ?Diplome $diplome;
 
@@ -31,7 +28,7 @@ class GenereCodeApogee
     {
         $this->diplome = $this->entityManager->getRepository(Diplome::class)->findOneBy([
             'sigle' => $arg1,
-            'typeDiplome' => 4
+            'typeDiplome' => 4,
         ]);
 
         if (null === $this->diplome) {
@@ -41,18 +38,18 @@ class GenereCodeApogee
 
     public function genereCodes($lettrediplome, $lettredomaine)
     {
-        $debut = self::DEBUT_CODE . strtoupper($lettredomaine . $lettrediplome . 'X');
+        $debut = 'T' . strtoupper($lettredomaine . $lettrediplome . 'X');
         //Diplôme
-        $this->diplome->setCodeDiplome($debut);
+        $this->diplome->setCodeDiplome('5' . $debut);
         $this->diplome->setCodeEtape('');
-        $this->diplome->setCodeVersion('101');
+        $this->diplome->setCodeVersion('111');
         $this->diplome->setCodeDepartement('985');
 
         //annees
         $annees = $this->diplome->getAnnees();
         foreach ($annees as $annee) {
-            $annee->setCodeEtape($debut . $annee->getOrdre());
-            $annee->setCodeVersion('101');
+            $annee->setCodeEtape('5' . $debut . $annee->getOrdre());
+            $annee->setCodeVersion('111');
             $annee->setCodeDepartement('985');
 
             $semestres = $annee->getSemestres();
@@ -76,7 +73,6 @@ class GenereCodeApogee
                                 -2) + 50));
                 }
             }
-
         }
         $this->entityManager->flush();
 
