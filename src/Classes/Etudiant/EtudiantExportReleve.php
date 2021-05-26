@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantExportReleve.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2021 14:13
+ * @lastUpdate 26/05/2021 15:29
  */
 
 namespace App\Classes\Etudiant;
@@ -125,7 +125,7 @@ class EtudiantExportReleve
                     'syntheses' => $statistiques,
                     'anneeUniversitaire' => $anneeUniversitaire,
                     'semestre' => $semestre,
-                    'matieres' => $matieres
+                    'matieres' => $matieres,
                 ], $nomFichier,
                     $this->dir,
                     $libelleDepartement);
