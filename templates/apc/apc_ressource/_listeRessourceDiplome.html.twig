@@ -5,6 +5,7 @@
     <thead>
     <tr>
         <th>{{ 'table.code_ressource'|trans }}</th>
+        <th>{{ 'table.code_element'|trans }}</th>
         <th>{{ 'table.libelle'|trans }}</th>
         <th>{{ 'table.cm'|trans }}</th>
         <th>{{ 'table.td'|trans }}</th>
@@ -18,6 +19,7 @@
     {% for ressource in ressources|filter(ressource => ressource.semestre.id == semestre.id) %}
         <tr {% if ressource.suspendu == true %}class="bg-pale-warning"{% endif %}>
             <td>{{ ressource.codeMatiere }}</td>
+            <td>{{ ressource.codeElement }}</td>
             <td>{{ ressource.libelle }}</td>
             <td>
                 <a class="myedit"

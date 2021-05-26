@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantExportReleve.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2021 08:46
+ * @lastUpdate 26/05/2021 14:13
  */
 
 namespace App\Classes\Etudiant;
@@ -102,7 +102,7 @@ class EtudiantExportReleve
     {
         $this->myEvaluations->getEvaluationsSemestre($semestre, $anneeUniversitaire);
         $statistiques = $this->myEvaluations->getStatistiques();
-
+        $matieres = $this->typeMatiereManager->findBySemestreArray($semestre);
         $libelleDepartement = $semestre->getDiplome()->getDepartement()->getLibelle();
 
         // Create new Zip Archive.
@@ -125,6 +125,7 @@ class EtudiantExportReleve
                     'syntheses' => $statistiques,
                     'anneeUniversitaire' => $anneeUniversitaire,
                     'semestre' => $semestre,
+                    'matieres' => $matieres
                 ], $nomFichier,
                     $this->dir,
                     $libelleDepartement);
