@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantExportReleve.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2021 15:29
+ * @lastUpdate 26/05/2021 16:12
  */
 
 namespace App\Classes\Etudiant;
@@ -71,13 +71,14 @@ class EtudiantExportReleve
     public function exportReleveProvisoire(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire)
     {
         $this->myEvaluations->getEvaluationsSemestre($semestre, $anneeUniversitaire);
-
+        $matieres = $this->typeMatiereManager->findBySemestreArray($semestre);
         return $this->myPdf::generePdf('pdf/releveProvisoire.html.twig', [
             'etudiant' => $this->etudiant,
             'notes' => $this->getNotesEtudiantSemestre($semestre, $anneeUniversitaire),
             'syntheses' => $this->myEvaluations->getStatistiques(),
             'anneeUniversitaire' => $semestre->getAnneeUniversitaire(),
             'semestre' => $semestre,
+            'matieres' => $matieres
         ], 'releveNoteProvisoire-' . Tools::slug($this->etudiant->getNom()) . '.pdf',
             $this->etudiant->getDepartement()->getLibelle());
     }

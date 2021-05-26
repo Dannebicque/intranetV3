@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEvaluation.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/05/2021 18:52
+ * @lastUpdate 26/05/2021 16:43
  */
 
 /*
@@ -155,7 +155,7 @@ class MyEvaluation
                 //écart entre la valeur et la moyenne
                 $ecart_donnee = $value - $moyenne;
                 //carré de l'écart
-                $ecart_donnee_carre = bcpow((string)$ecart_donnee, '2', 2);
+                $ecart_donnee_carre = $ecart_donnee ** 2;
                 //Insertion dans le tableau
                 $ecart[] = $ecart_donnee_carre;
             }
@@ -164,7 +164,7 @@ class MyEvaluation
             //5 - division de la somme des écarts par la population
             $division = $somme_ecart / $population;
             //6 - racine carrée de la division
-            $ecart_type = bcsqrt((string)$division, 2);
+            $ecart_type = sqrt($division);
         } else {
             $ecart_type = 0;
         }
