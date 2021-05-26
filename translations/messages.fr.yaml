@@ -514,6 +514,10 @@ adm:
   categories:
     articles:
       index.heading: 'Gérer les catégories d''articles'
+  statut.index.heading: 'Liste des statuts des personnels'
+  statut.new.heading: 'Créer un statut de personnel'
+  statut.show.heading: 'Détail d''un statut de personnel'
+  statut.modification.heading: 'Modifier un statut de personnel'
 
 administratif_homepage.heading: 'Tableau de bord administratif'
 administratif.qualite.questionnaire.show.heading: 'Détails d''un questionnaire qualité'
@@ -1731,6 +1735,13 @@ stage_avenant:
   new.success.flash: 'L''avenant de stage a été créé avec succès'
   delete.success.flash: 'L''avenant de stage a été supprimé avec succès'
   delete.error.flash: 'Erreur lors de la suppression de L''avenant de stage'
+
+status:
+  edit.success.flash: 'Le statut a été modifié avec succès'
+  new.success.flash: 'Le statut a été créé avec succès'
+  delete.success.flash: 'Le statut a été supprimé avec succès'
+  duplicate.success.flash: 'Le statut a été dupliqué avec succès'
+  delete.error.flash: 'Erreur lors de la suppression du statut'
 
 
 stage_etudiant:
