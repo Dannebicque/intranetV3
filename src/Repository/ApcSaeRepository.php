@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/ApcSaeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/05/2021 17:06
+ * @lastUpdate 27/05/2021 06:38
  */
 
 namespace App\Repository;
@@ -82,5 +82,15 @@ class ApcSaeRepository extends ServiceEntityRepository
             ->addOrderBy('r.libelle', 'ASC')
             ->getQuery()
             ->getResult();
+    }
+
+    public function findByDiplomeToSemestreArray(?Diplome $diplome)
+    {
+        $tab = [];
+        foreach ($diplome->getSemestres() as $semestre) {
+            $tab[$semestre->getId()] = $this->findBySemestre($semestre);
+        }
+
+        return $tab;
     }
 }
