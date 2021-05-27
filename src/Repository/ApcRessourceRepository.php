@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/ApcRessourceRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/05/2021 16:35
+ * @lastUpdate 27/05/2021 06:38
  */
 
 namespace App\Repository;
@@ -83,7 +83,7 @@ class ApcRessourceRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findBySemestreArray(Diplome $diplome)
+    public function findByDiplomeToSemestreArray(Diplome $diplome)
     {
         $tab = [];
         foreach ($diplome->getSemestres() as $semestre) {

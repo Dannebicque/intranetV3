@@ -3,48 +3,152 @@
 {% block header %}Répartition horaire - Préconnisation{% endblock %}
 
 {% block content %}
-  {% for semestre in diplome.semestres %}
-    {% set totalRessource = 0 %}
-    {% set totalSAE = 0 %}
-    <h2>Semestre : {{ semestre.libelle }}</h2>
-    <table class="table">
-      <thead>
-      <tr>
-        <th>Code</th>
-        <th>Nom</th>
-        <th>Heures en ressources</th>
-        <th>Heures totales</th>
-      </tr>
-      </thead>
-      <tbody>
-      {% for ressource in ressources[semestre.id] %}
-          <tr>
-              <td>{{ ressource.codeMatiere }}</td>
-              <td>
-                  <a href="{{ path('but_fiche_ressource', {'apcRessource': ressource.id, diplome:diplome.sigle|lower}) }}" target="_blank">{{ ressource.libelle }}</a>
-              </td>
-              <td>{{ ressource.cmPpn + ressource.tdPpn + ressource.tpPpn }}</td>
-              <td>{{ ressource.heuresSAE + ressource.heuresSAEPtut }}</td>
-              <td>{{ ressource.cmPpn + ressource.tdPpn + ressource.tpPpn + ressource.heuresSAE + ressource
-                  .heuresSAEPtut }}</td>
-          </tr>
-          {% set totalRessource = totalRessource + ressource.cmPpn + ressource.tdPpn + ressource.tpPpn %}
-          {% set totalSAE = totalSAE + ressource.heuresSAE + ressource.heuresSAEPtut %}
-      {% endfor %}
-      </tbody>
-      <tfoot>
-      <tr>
-        <th>Total</th>
-        <th></th>
-        <th>{{ totalRessource }}</th>
-        <th>{{ totalSAE }}</th>
-        <th>{{ totalRessource + totalSAE }}</th>
-      </tr>
-      </tfoot>
-    </table>
-  {% endfor %}
-  <div class="alert alert-warning">
-    * Le volume horaire en lien avec la ressource dans les SAÉ est indicatif et peut être adapté dans chaque
-    département.
-  </div>
+    <div class="card">
+        <div class="card-body">
+            <ul class="nav nav-tabs" role="tablist">
+                {% for semestre in diplome.semestres %}
+                    <li class="nav-item">
+                        <a class="nav-link {% if loop.first %}active{% endif %}" data-toggle="tab" href="#semestre_{{ semestre.id }}">{{ semestre
+                            .display }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+            <div class="tab-content">
+                {% for semestre in diplome.semestres %}
+                    <div class="tab-pane {% if loop.first %}active{% endif %}" id="semestre_{{ semestre.id }}" role="tabpanel">
+                        {% set totalRessource = 0 %}
+                        {% set totalRessourceCM = 0 %}
+                        {% set totalRessourceTP = 0 %}
+                        {% set totalSAE = 0 %}
+                        {% set totalSAECM = 0 %}
+                        {% set totalSAETP = 0 %}
+                        {% set totalSAEProjet = 0 %}
+                        <h2>Semestre : {{ semestre.libelle }}</h2>
+                        <h3>Ressources</h3>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Code</th>
+                                <th>Nom</th>
+                                <th>Heures CM/TD</th>
+                                <th>Heures TP</th>
+                                <th>Heures totales</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for ressource in ressources[semestre.id] %}
+                                <tr>
+                                    <td>{{ ressource.codeMatiere }}</td>
+                                    <td>
+                                        <a href="{{ path('but_fiche_ressource', {'apcRessource': ressource.id, diplome:diplome.sigle|lower}) }}" target="_blank">{{ ressource.libelle }}</a>
+                                    </td>
+                                    <td>{{ ressource.cmPpn + ressource.tdPpn }}</td>
+                                    <td>{{ ressource.tpPpn }}</td>
+                                    <td>{{ ressource.cmPpn + ressource.tdPpn + ressource.tpPpn }}</td>
+
+                                </tr>
+                                {% set totalRessourceCM = totalRessourceCM + ressource.cmPpn + ressource.tdPpn %}
+                                {% set totalRessourceTP = totalRessourceTP + ressource.tpPpn %}
+                                {% set totalRessource = totalRessource + ressource.cmPpn + ressource.tdPpn + ressource.tpPpn %}
+                            {% endfor %}
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <th>Total</th>
+                                <th></th>
+                                <th>{{ totalRessourceCM }}</th>
+                                <th>{{ totalRessourceTP }}</th>
+                                <th>{{ totalRessource }}</th>
+                            </tr>
+                            </tfoot>
+                        </table>
+
+                        <h3>SAÉ</h3>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Code</th>
+                                <th>Nom</th>
+                                <th>Heures CM/TD</th>
+                                <th>Heures TP</th>
+                                <th>Heures HPTUT</th>
+                                <th>Heures totales</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for sae in saes[semestre.id] %}
+                                <tr>
+                                    <td>{{ sae.codeMatiere }}</td>
+                                    <td>
+                                        <a href="{{ path('but_fiche_sae', {'apcSae': sae.id, diplome:diplome
+                                        .sigle|lower}) }}" target="_blank">{{ sae.libelle }}</a>
+                                    </td>
+                                    <td>{{ sae.cmPpn + sae.tdPpn }}</td>
+                                    <td>{{ sae.tpPpn }}</td>
+                                    <td>{{ sae.projetPpn }}</td>
+                                    <td>{{ sae.cmPpn + sae.tdPpn + sae.tpPpn + sae.projetPpn }}</td>
+
+                                </tr>
+                                {% set totalSAECM = totalSAECM + sae.cmPpn + sae.tdPpn %}
+                                {% set totalSAETP = totalSAETP + sae.tpPpn %}
+                                {% set totalSAEProjet = totalSAEProjet + sae.projetPpn %}
+                                {% set totalSAE = totalSAE + sae.cmPpn + sae.tdPpn + sae.tpPpn+ sae.projetPpn %}
+                            {% endfor %}
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <th>Total</th>
+                                <th></th>
+                                <th>{{ totalSAECM }}</th>
+                                <th>{{ totalSAETP }}</th>
+                                <th>{{ totalSAEProjet }}</th>
+                                <th>{{ totalSAE }}</th>
+                            </tr>
+                            </tfoot>
+                        </table>
+
+
+                        <h3>Synthèse du semestre {{ semestre.libelle }}</h3>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>&nbsp;</th>
+                                <th>Heures CM/TD</th>
+                                <th>Heures TP</th>
+                                <th>Heures HPTUT</th>
+                                <th>Heures totales</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>Ressources</td>
+                                <th>{{ totalRessourceCM }}</th>
+                                <th>{{ totalRessourceTP }}</th>
+                                <th></th>
+                                <th>{{ totalRessource }}</th>
+                            </tr>
+                            <tr>
+                                <th>SAÉ</th>
+                                <th>{{ totalSAECM }}</th>
+                                <th>{{ totalSAETP }}</th>
+                                <th>{{ totalSAEProjet }}</th>
+                                <th>{{ totalSAE }}</th>
+                            </tr>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <th>Total</th>
+                                <th>{{ totalSAECM+ totalRessourceCM }}</th>
+                                <th>{{ totalSAETP+totalRessourceTP }}</th>
+                                <th>{{ totalSAEProjet }}</th>
+                                <th>{{ totalSAE +totalRessource }}</th>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
 {% endblock %}
