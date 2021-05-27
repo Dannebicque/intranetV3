@@ -4,17 +4,29 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcReferentielFormationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/05/2021 18:52
+ * @lastUpdate 27/05/2021 09:58
  */
 
 namespace App\Controller\administration\apc;
 
+use App\Classes\Apc\ApcCoefficient;
 use App\Controller\BaseController;
+use App\Entity\ApcCompetence;
+use App\Entity\ApcRessourceCompetence;
+use App\Entity\ApcSae;
+use App\Entity\ApcSaeCompetence;
+use App\Entity\Constantes;
 use App\Entity\Diplome;
 use App\Entity\Semestre;
 use App\Repository\ApcNiveauRepository;
+use App\Repository\ApcRessourceCompetenceRepository;
 use App\Repository\ApcRessourceRepository;
+use App\Repository\ApcSaeCompetenceRepository;
 use App\Repository\ApcSaeRepository;
+use App\Utils\Tools;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -37,8 +49,8 @@ class ApcReferentielFormationController extends BaseController
         ApcNiveauRepository $apcNiveauRepository,
         ApcSaeRepository $apcSaeRepository,
         ApcRessourceRepository $apcRessourceRepository,
-        Semestre $semestre)
-    {
+        Semestre $semestre
+    ) {
         //todo: pour le moment pas utilisé...
         return $this->render('apc/referentiel-formation/_grilleSemestre.html.twig',
             [
@@ -50,6 +62,7 @@ class ApcReferentielFormationController extends BaseController
     }
 
     public function grilleCoefficientsSemestre(
+        ApcCoefficient $apcCoefficient,
         ApcNiveauRepository $apcNiveauRepository,
         ApcSaeRepository $apcSaeRepository,
         ApcRessourceRepository $apcRessourceRepository,
@@ -64,31 +77,79 @@ class ApcReferentielFormationController extends BaseController
                 'niveaux' => $apcNiveauRepository->findBySemestre($semestre),
                 'saes' => $saes,
                 'ressources' => $ressources,
-                'coefficients' => $this->calculsCoefficients($saes, $ressources),
+                'coefficients' => $apcCoefficient->calculsCoefficients($saes, $ressources),
             ]);
     }
 
-    private function calculsCoefficients(mixed $saes, mixed $ressources)
-    {
-        $tabs = [];
-        $tabs['saes'] = [];
-        /** @var ApcSae $sae */
-        foreach ($saes as $sae) {
-            $tabs['saes'][$sae->getid()] = [];
-            foreach ($sae->getApcSaeCompetences() as $competence) {
-                $tabs['saes'][$sae->getid()][$competence->getCompetence()->getId()] = $competence->getCoefficient();
+
+    /**
+     * @Route("/ajax-edit/{id}/{competence}/{type}", name="apc_referentiel_formation_ajax", methods={"POST"},
+     *                                               options={"expose":true})
+     */
+    public function ajaxEdit(
+        ApcSaeCompetenceRepository $apcSaeCompetenceRepository,
+        ApcSaeRepository $apcSaeRepository,
+        ApcRessourceRepository $apcRessourceRepository,
+        ApcRessourceCompetenceRepository $apcRessourceCompetenceRepository,
+        Request $request,
+        int $id,
+        ApcCompetence $competence,
+        string $type
+    ): Response {
+        $value = $request->request->get('value');
+
+        if ('ressource' === $type) {
+            $ressource = $apcRessourceRepository->find($id);
+            if (null !== $ressource) {
+                $obj = $apcRessourceCompetenceRepository->findOneBy([
+                    'ressource' => $id,
+                    'competence' => $competence->getId(),
+                ]);
+                if (null === $obj) {
+                    $obj = new ApcRessourceCompetence();
+                    $obj->setCoefficient(Tools::convertToFloat($value));
+                    $obj->setCompetence($competence);
+                    $obj->setRessource($ressource);
+                    $this->entityManager->persist($obj);
+                } else {
+                    $obj->setCoefficient(Tools::convertToFloat($value));
+                }
+                $this->entityManager->flush();
+            } else {
+                $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'Erreur lors de la modification du coefficient');
+
+                return new JsonResponse(false, Response::HTTP_INTERNAL_SERVER_ERROR);
             }
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'Coefficient modifié');
+
+            return new JsonResponse(true, Response::HTTP_OK);
         }
 
-        $tabs['ressources'] = [];
-        /** @var \App\Entity\ApcRessource $ressource */
-        foreach ($ressources as $ressource) {
-            $tabs['ressources'][$ressource->getid()] = [];
-            foreach ($ressource->getApcRessourceCompetences() as $competence) {
-                $tabs['ressources'][$ressource->getid()][$competence->getCompetence()->getId()] = $competence->getCoefficient();
-            }
-        }
+        if ('sae' === $type) {
+            $sae = $apcSaeRepository->find($id);
+            if (null !== $sae) {
+                $obj = $apcSaeCompetenceRepository->findOneBy(['sae' => $id, 'competence' => $competence->getId()]);
+                if (null === $obj) {
+                    $obj = new ApcSaeCompetence();
+                    $obj->setCoefficient(Tools::convertToFloat($value));
+                    $obj->setCompetence($competence);
+                    $obj->setSae($sae);
+                    $this->entityManager->persist($obj);
+                } else {
+                    $obj->setCoefficient(Tools::convertToFloat($value));
+                }
+                $this->entityManager->flush();
+            } else {
+                $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'Erreur lors de la modification du coefficient');
 
-        return $tabs;
+                return new JsonResponse(false, Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'Coefficient modifié');
+
+            return new JsonResponse(true, Response::HTTP_OK);
+        }
+        $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'Type inexistant');
+
+        return new JsonResponse(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }

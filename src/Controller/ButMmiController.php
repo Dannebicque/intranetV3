@@ -4,15 +4,17 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ButMmiController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 27/05/2021 06:38
+ * @lastUpdate 27/05/2021 09:58
  */
 
 namespace App\Controller;
 
+use App\Classes\Apc\ApcCoefficient;
 use App\Classes\Apc\ApcStructure;
 use App\Entity\ApcRessource;
 use App\Entity\ApcSae;
 use App\Entity\Semestre;
+use App\Repository\ApcNiveauRepository;
 use App\Repository\ApcRessourceRepository;
 use App\Repository\ApcSaeRepository;
 use App\Repository\DiplomeRepository;
@@ -142,6 +144,38 @@ class ButMmiController extends AbstractController
         return $this->render('but_mmi/preconisations.html.twig', [
             'ressources' => $ressources,
             'saes' => $saes,
+            'diplome' => $diplome,
+        ]);
+    }
+
+    /**
+     * @Route("/{diplome}/coefficients", name="but_coefficients")
+     */
+    public function coefficients(
+        ApcCoefficient $apcCoefficient,
+        ApcRessourceRepository $apcRessourceRepository,
+        ApcSaeRepository $apcSaeRepository,
+        ApcNiveauRepository $apcNiveauRepository,
+        $diplome
+    ): Response {
+        $diplome = $this->diplomeRepository->findOneBy(['typeDiplome' => 4, 'sigle' => strtoupper($diplome)]);
+        $ressources = $apcRessourceRepository->findByDiplomeToSemestreArray($diplome);
+        $saes = $apcSaeRepository->findByDiplomeToSemestreArray($diplome);
+
+        $tab = [];
+        foreach ($diplome->getSemestres() as $semestre) {
+            $tab[$semestre->getId()] = [];
+            $tab[$semestre->getId()]['niveaux'] = $apcNiveauRepository->findBySemestre($semestre);
+            $tab[$semestre->getId()]['ressources'] = $ressources[$semestre->getId()];
+            $tab[$semestre->getId()]['saes'] = $saes[$semestre->getId()];
+            $tab[$semestre->getId()]['coefficients'] = $apcCoefficient->calculsCoefficients($tab[$semestre->getId()]['saes'],
+                $tab[$semestre->getId()]['ressources']);
+
+        }
+        dump($tab);
+
+        return $this->render('but_mmi/coefficients.html.twig', [
+            'tab' => $tab,
             'diplome' => $diplome,
         ]);
     }
