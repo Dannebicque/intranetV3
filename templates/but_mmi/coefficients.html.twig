@@ -1,0 +1,150 @@
+{% extends 'base-but.html.twig' %}
+
+{% block header %}Répartition horaire - Préconnisation{% endblock %}
+
+{% block content %}
+    <div class="alert alert-warning">
+        Les coefficients présentés ici peuvent différer des préconnisations, en lien avec l'adaptation locale.
+    </div><br>
+
+    <div class="card">
+        <div class="card-body">
+            <ul class="nav nav-tabs" role="tablist">
+                {% for semestre in diplome.semestres %}
+                    <li class="nav-item">
+                        <a class="nav-link {% if loop.first %}active{% endif %}" data-toggle="tab" href="#semestre_{{ semestre.id }}">{{ semestre
+                            .display }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+            <div class="tab-content">
+                {% for semestre in diplome.semestres %}
+                    <div class="tab-pane {% if loop.first %}active{% endif %}" id="semestre_{{ semestre.id }}" role="tabpanel">
+
+                        <h2>Semestre : {{ semestre.libelle }}</h2>
+                        <h3>Ressources</h3>
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th></th>
+                                {% for niveau in tab[semestre.id].niveaux %}
+                                    <th>{{ niveau.competence.nomCourt }}</th>
+                                {% endfor %}
+                                <th>Total</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for ressource in tab[semestre.id].ressources %}
+                                <tr>
+                                    <td>
+                                        <a href="#" title="{{ ressource.display }}" data-provde="tooltip">{{ ressource.codeMatiere }}</a>
+                                    </td>
+                                    {% for niveau in tab[semestre.id].niveaux %}
+                                        <td>
+                                            {{ tab[semestre.id].coefficients.ressources[ressource.id][niveau.competence.id] is defined ? tab[semestre.id].coefficients
+                                            .ressources[ressource.id][niveau.competence.id] : 0 }}
+                                        </td>
+                                    {% endfor %}
+                                    <th>{{ tab[semestre.id].coefficients.ressources[ressource.id].total is defined ? tab[semestre.id].coefficients.ressources[ressource.id].total : 0 }}</th>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+
+                        </table>
+
+
+                        <h3>SAÉ</h3>
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th></th>
+                                {% for niveau in tab[semestre.id].niveaux %}
+                                    <th>{{ niveau.competence.nomCourt }}</th>
+                                {% endfor %}
+                                <th>Total</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for sae in tab[semestre.id].saes %}
+                                <tr>
+                                    <td>
+                                        <a href="#" title="{{ sae.display }}" data-provde="tooltip">{{ sae.codeMatiere }}</a>
+                                    </td>
+                                    {% for niveau in tab[semestre.id].niveaux %}
+                                        <td>
+                                            {{ tab[semestre.id].coefficients.saes[sae.id][niveau.competence.id] is
+                                            defined ? tab[semestre.id].coefficients
+                                            .saes[sae.id][niveau.competence.id] : 0 }}
+                                        </td>
+                                    {% endfor %}
+                                    <th>{{ tab[semestre.id].coefficients.saes[sae.id].total is defined ? tab[semestre.id].coefficients
+                                        .saes[sae.id].total : 0 }}</th>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+
+                        </table>
+
+
+                        <h3>Synthèse du semestre {{ semestre.libelle }}</h3>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th></th>
+                                {% for niveau in tab[semestre.id].niveaux %}
+                                    <th>{{ niveau.competence.nomCourt }}</th>
+                                {% endfor %}
+                                <th>Total</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>Ressources</td>
+                                {% set tot = 0 %}
+                                {% for niveau in tab[semestre.id].niveaux %}
+                                    {% if tab[semestre.id].coefficients.competences[niveau.competence.id] is defined %}
+                                        <th>{{ tab[semestre.id].coefficients.competences[niveau.competence.id]
+                                            .totalRessources }}</th>
+                                        {% set tot = tot + tab[semestre.id].coefficients.competences[niveau.competence.id].totalRessources %}
+                                    {% else %}
+                                        <th>0</th>
+                                    {% endif %}
+                                {% endfor %}
+                                <th>{{ tot }}</th>
+                            </tr>
+                            <tr>
+                                <th>SAÉ</th>
+                                {% set tot = 0 %}
+                                {% for niveau in tab[semestre.id].niveaux %}
+                                    {% if tab[semestre.id].coefficients.competences[niveau.competence.id] is defined %}
+                                        <th>{{ tab[semestre.id].coefficients.competences[niveau.competence.id].totalSaes }}</th>
+                                        {% set tot = tot + tab[semestre.id].coefficients.competences[niveau.competence.id].totalSaes %}
+                                    {% else %}
+                                        <th>0</th>
+                                    {% endif %}
+                                {% endfor %}
+                                <th>{{ tot }}</th>
+                            </tr>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <th>Total</th>
+                                {% set tot = 0 %}
+                                {% for niveau in tab[semestre.id].niveaux %}
+                                    {% if tab[semestre.id].coefficients.competences[niveau.competence.id] is defined %}
+                                        <th>{{ tab[semestre.id].coefficients.competences[niveau.competence.id].total }}</th>
+                                        {% set tot = tot + tab[semestre.id].coefficients.competences[niveau.competence.id].total %}
+                                    {% else %}
+                                        <th>0</th>
+                                    {% endif %}
+                                {% endfor %}
+                                <th>{{ tot }}</th>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -15,7 +15,7 @@
                 <td>
                     <a class="myedit"
                        data-field="coefficient"
-                       href="{{ path('administration_apc_ressources_ajax_edit', {id:sae.id, competence: niveau
+                       href="{{ path('administration_apc_referentiel_formation_ajax', {id:sae.id, competence: niveau
                        .competence.id, type:'sae'}) }}"
                        data-title="Corriger le coefficient">
                         {{ coefficients.saes[sae.id][niveau.competence.id] is defined ? coefficients
@@ -32,8 +32,8 @@
                 <td>
                     <a class="myedit"
                        data-field="coefficient"
-                       href="{{ path('administration_apc_ressources_ajax_edit', {id:ressource.id, competence: niveau
-                       .competence.id, type:'ressource'}) }}"
+                       href="{{ path('administration_apc_referentiel_formation_ajax', {id:ressource.id, competence:
+                           niveau.competence.id, type:'ressource'}) }}"
                        data-title="Corriger le coefficient">
                         {{ coefficients.ressources[ressource.id][niveau.competence.id] is defined ? coefficients
                         .ressources[ressource.id][niveau.competence.id] : 0 }}
