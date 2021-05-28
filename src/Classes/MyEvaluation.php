@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEvaluation.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2021 16:43
+ * @lastUpdate 28/05/2021 15:30
  */
 
 /*
@@ -247,8 +247,7 @@ class MyEvaluation
     public function exportReleve($_format, $groupes, Departement $departement)
     {
         $notes = $this->getNotesTableau();
-        $matiere = $this->typeMatiereManager->getMatiere($this->evaluation->getIdMatiere(),
-            $this->evaluation->getTypeMatiere());
+        $matiere = $this->typeMatiereManager->getMatiereFromSelect($this->evaluation->getTypeIdMatiere());
 
         if (null === $matiere) {
             throw new MatiereNotFoundException();
@@ -266,7 +265,8 @@ class MyEvaluation
                 $this->myExcelMultiExport->genereReleveExcel(
                     $this->evaluation,
                     $groupes,
-                    $notes
+                    $notes,
+                    $matiere
                 );
 
                 return $this->myExcelMultiExport->saveXlsx($name);
@@ -274,7 +274,8 @@ class MyEvaluation
                 $this->myExcelMultiExport->genereReleveExcel(
                     $this->evaluation,
                     $groupes,
-                    $notes
+                    $notes,
+                    $matiere
                 );
 
                 return $this->myExcelMultiExport->saveCsv($name);

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Excel/MyExcelMultiExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 28/05/2021 15:30
  */
 
 /*
@@ -15,6 +15,7 @@ namespace App\Classes\Excel;
 
 use App\Classes\MyAbsences;
 use App\Classes\MySerializer;
+use App\DTO\Matiere;
 use App\Entity\Absence;
 use App\Entity\Etudiant;
 use App\Entity\Evaluation;
@@ -270,13 +271,13 @@ class MyExcelMultiExport
         }
     }
 
-    public function genereReleveExcel(Evaluation $evaluation, $groupes, $notes): void
+    public function genereReleveExcel(Evaluation $evaluation, $groupes, $notes, Matiere $matiere): void
     {
         /** @var Groupe $groupe */
         foreach ($groupes as $groupe) {
             $this->myExcelWriter->createSheet($groupe->getLibelle());
             //todo: modifier en-tete pour ajouter les infos de l'évaluation. modele PDF. Sauf si CSV?
-            if (true === $evaluation->getSemestre()->getAnnee()->getDiplome()->isOptAnonymat()) {
+            if (true === $matiere->semestre->getAnnee()->getDiplome()->isOptAnonymat()) {
                 $this->myExcelWriter->writeHeader(['num_etudiant', 'note', 'remise copie', 'commentaire']);
             } else {
                 $this->myExcelWriter->writeHeader([
@@ -295,7 +296,7 @@ class MyExcelMultiExport
             foreach ($groupe->getEtudiants() as $etudiant) {
                 $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getNumEtudiant());
                 ++$colonne;
-                if (false === $evaluation->getSemestre()->getAnnee()->getDiplome()->isOptAnonymat()) {
+                if (false === $matiere->semestre->getAnnee()->getDiplome()->isOptAnonymat()) {
                     $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getNom());
                     ++$colonne;
                     $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getPrenom());
