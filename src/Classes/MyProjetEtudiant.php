@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyProjetEtudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 28/05/2021 19:37
  */
 
 /*
@@ -47,7 +47,6 @@ class MyProjetEtudiant
     }
 
     /**
-     *
      * @throws NonUniqueResultException
      */
     public function changeEtat(ProjetPeriode $projetPeriode, Etudiant $etudiant, $etat): void
@@ -91,8 +90,8 @@ class MyProjetEtudiant
 
     /**
      * @return ProjetEtudiant|mixed
-     * @throws NonUniqueResultException
      *
+     * @throws NonUniqueResultException
      */
     private function checkProjetEtudiantExist(ProjetPeriode $projetPeriode, Etudiant $etudiant)
     {
