@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/ProjetSubscriber.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 28/05/2021 16:57
  */
 
 namespace App\EventSubscriber;
@@ -41,9 +41,9 @@ class ProjetSubscriber implements EventSubscriberInterface
     {
         return [
             ProjetEvent::CHGT_ETAT_PROJET_AUTORISE => 'onChgtEtatProjetAutorise',
-            ProjetEvent::CHGT_ETAT_PROJET_DEPOSE   => 'onChgtEtatProjetDepose',
-            ProjetEvent::CHGT_ETAT_PROJET_VALIDE   => 'onChgtEtatProjetValide',
-            ProjetEvent::CHGT_ETAT_PROJET_IMPRIME  => 'onChgtEtatProjetImprime',
+            ProjetEvent::CHGT_ETAT_PROJET_DEPOSE => 'onChgtEtatProjetDepose',
+            ProjetEvent::CHGT_ETAT_PROJET_VALIDE => 'onChgtEtatProjetValide',
+            ProjetEvent::CHGT_ETAT_PROJET_IMPRIME => 'onChgtEtatProjetImprime',
         ];
     }
 
@@ -74,9 +74,6 @@ class ProjetSubscriber implements EventSubscriberInterface
             $codeEvent,
             ['replayTo' => $destinataires]);
 
-
-
-        //sinon mail par défaut
         $this->myMailer->setTemplate('mails/projets/projet_assistant_' . $codeEvent . '.txt.twig',
             ['projetEtudiant' => $projetEtudiant],
             $destinataires,
