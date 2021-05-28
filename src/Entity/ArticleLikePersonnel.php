@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ArticleLikePersonnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 28/05/2021 19:55
  */
 
 namespace App\Entity;
@@ -18,12 +18,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class ArticleLikePersonnel extends ArticleLike
 {
-    use LifeCycleTrait;
-
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Personnel", inversedBy="articlesLike")
      */
-    private $personnel;
+    private Personnel $personnel;
 
     public function __construct(Personnel $personnel, Article $article)
     {
