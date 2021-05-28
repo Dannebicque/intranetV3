@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/MatiereType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/05/2021 22:22
+ * @lastUpdate 27/05/2021 20:52
  */
 
 namespace App\Form;
@@ -110,7 +110,6 @@ class MatiereType extends AbstractType
 
     protected function addElements(FormInterface $form, Semestre $semestre = null): void
     {
-        dump($semestre);
         $form->add('semestre', EntityType::class, [
             'required' => true,
             'choice_label' => 'display',

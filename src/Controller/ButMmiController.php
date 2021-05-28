@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ButMmiController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 27/05/2021 09:58
+ * @lastUpdate 27/05/2021 20:52
  */
 
 namespace App\Controller;
@@ -30,7 +30,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ButMmiController extends AbstractController
 {
-    private $diplomeRepository;
+    private DiplomeRepository $diplomeRepository;
 
     public function __construct(DiplomeRepository $diplomeRepository)
     {
@@ -172,7 +172,6 @@ class ButMmiController extends AbstractController
                 $tab[$semestre->getId()]['ressources']);
 
         }
-        dump($tab);
 
         return $this->render('but_mmi/coefficients.html.twig', [
             'tab' => $tab,

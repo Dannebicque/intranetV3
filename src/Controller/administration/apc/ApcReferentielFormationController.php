@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcReferentielFormationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 27/05/2021 09:58
+ * @lastUpdate 27/05/2021 20:54
  */
 
 namespace App\Controller\administration\apc;
@@ -106,10 +106,8 @@ class ApcReferentielFormationController extends BaseController
                     'competence' => $competence->getId(),
                 ]);
                 if (null === $obj) {
-                    $obj = new ApcRessourceCompetence();
+                    $obj = new ApcRessourceCompetence($ressource, $competence);
                     $obj->setCoefficient(Tools::convertToFloat($value));
-                    $obj->setCompetence($competence);
-                    $obj->setRessource($ressource);
                     $this->entityManager->persist($obj);
                 } else {
                     $obj->setCoefficient(Tools::convertToFloat($value));
@@ -130,10 +128,8 @@ class ApcReferentielFormationController extends BaseController
             if (null !== $sae) {
                 $obj = $apcSaeCompetenceRepository->findOneBy(['sae' => $id, 'competence' => $competence->getId()]);
                 if (null === $obj) {
-                    $obj = new ApcSaeCompetence();
+                    $obj = new ApcSaeCompetence($sae, $competence);
                     $obj->setCoefficient(Tools::convertToFloat($value));
-                    $obj->setCompetence($competence);
-                    $obj->setSae($sae);
                     $this->entityManager->persist($obj);
                 } else {
                     $obj->setCoefficient(Tools::convertToFloat($value));
