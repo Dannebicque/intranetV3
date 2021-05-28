@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ArticleLikeEtudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 28/05/2021 19:56
  */
 
 namespace App\Entity;
@@ -18,18 +18,16 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class ArticleLikeEtudiant extends ArticleLike
 {
-    use LifeCycleTrait;
-
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Etudiant", inversedBy="articlesLike")
      */
-    private $etudiant;
+    private Etudiant $etudiant;
 
     /**
      * EmpruntEtudiant constructor.
      *
      */
-    public function __construct($etudiant, Article $article)
+    public function __construct(Etudiant $etudiant, Article $article)
     {
         $this->etudiant = $etudiant;
         $this->setArticle($article);
@@ -40,7 +38,7 @@ class ArticleLikeEtudiant extends ArticleLike
         return $this->etudiant;
     }
 
-    public function setEtudiant(?Etudiant $etudiant): self
+    public function setEtudiant(Etudiant $etudiant): self
     {
         $this->etudiant = $etudiant;
 
