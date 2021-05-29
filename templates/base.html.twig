@@ -6,7 +6,7 @@
     <meta name="description" content="Responsive admin dashboard and web application ui kit. ">
     <meta name="keywords" content="blank, starter">
 
-    <title>Intranet - {{ block('header')|escapetitle|raw }}</title>
+    <title>{{ block('header')|escapetitle|raw }} - Intranet {{ settings('NOM_IUT') }}</title>
 
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}

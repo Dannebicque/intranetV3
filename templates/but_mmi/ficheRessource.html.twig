@@ -1,13 +1,21 @@
 {% extends 'base-but.html.twig' %}
 
-{% block header %}Fiche de la ressource : {{ apc_ressource.display }}{% endblock %}
+{% block header %}{{ apc_ressource.display }} - Fiche ressource {% endblock %}
 
 {% block content %}
-    {{ include('apc/apc_ressource/_detail.html.twig') }}
+    <div class="card">
+        <div class="card-header">
+            <h3>
+                {{ apc_ressource.display }}
+            </h3>
+        </div>
+        <div class="card-body">
+            {{ include('apc/apc_ressource/_detail.html.twig') }}
+        </div>
+    </div>
+
     <br>
     <div class="alert alert-warning">
-        * Le volume horaire en lien avec la ressource dans les SAÉ est indicatif et peut être adapté dans chaque
-        département.<br>
         ** La répartition CM/TD (ressource) ou CM/TD/TP et Projet Tutoré est libre dans chaque département.
     </div>
 {% endblock %}
