@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/EdtPlanningRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 29/05/2021 08:45
  */
 
 namespace App\Repository;
@@ -76,12 +76,13 @@ class EdtPlanningRepository extends ServiceEntityRepository
      * @param int $module
      * @param int $semaine
      */
-    public function findEdtModule($module, $semaine): array
+    public function findEdtModule(int $idModule, string $typeModule, $semaine): array
     {
         return $this->createQueryBuilder('p')
             ->where('p.semaine = :semaine')
-            ->andWhere('p.matiere = :matiere')
-            ->setParameters(['semaine' => $semaine, 'matiere' => $module])
+            ->andWhere('p.idMatiere = :idMatiere')
+            ->andWhere('p.typeMatiere = :typeMatiere')
+            ->setParameters(['semaine' => $semaine, 'idMatiere' => $idModule, 'typeMatiere' => $typeModule])
             ->orderBy('p.jour', 'ASC')
             ->addOrderBy('p.debut', 'ASC')
             ->addOrderBy('p.groupe', 'ASC')

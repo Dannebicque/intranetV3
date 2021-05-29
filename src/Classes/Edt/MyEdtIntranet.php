@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 17/05/2021 18:44
+ * @lastUpdate 29/05/2021 08:47
  */
 
 /*
@@ -116,10 +116,11 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
                     break;
                 case 'module':
                     $this->module = $this->typeMatiereManager->getMatiereFromSelect($this->valeur);
-                    $this->semestre = $this->module->getSemestre();
+                    $this->semestre = $this->module->semestre;
                     $this->groupes = $this->groupeRepository->findAllGroupes($this->semestre);
 
-                    $pl = $this->edtPlanningRepository->findEdtModule($this->valeur, $this->semaineFormationIUT);
+                    $pl = $this->edtPlanningRepository->findEdtModule($this->module->id, $this->module->typeMatiere,
+                        $this->semaineFormationIUT);
                     $this->planning = $this->transformeModule($pl);
                     break;
                 case 'salle':

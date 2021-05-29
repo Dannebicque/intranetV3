@@ -4,19 +4,15 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/BaseEdt.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 17/02/2021 19:54
- */
-
-/*
- * Pull your hearder here, for exemple, Licence header.
+ * @lastUpdate 29/05/2021 08:43
  */
 
 namespace App\Classes\Edt;
 
+use App\DTO\Matiere;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Calendrier;
 use App\Entity\Etudiant;
-use App\Entity\Matiere;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
 use App\Repository\CalendrierRepository;

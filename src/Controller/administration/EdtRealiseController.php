@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtRealiseController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/05/2021 10:37
+ * @lastUpdate 29/05/2021 08:21
  */
 
 namespace App\Controller\administration;
@@ -13,6 +13,7 @@ use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\MyEdtCompare;
 use App\Controller\BaseController;
 use App\Entity\Personnel;
+use App\Exception\MatiereNotFoundException;
 use App\Repository\CalendrierRepository;
 use App\Repository\EdtPlanningRepository;
 use App\Repository\PersonnelRepository;
@@ -56,16 +57,23 @@ class EdtRealiseController extends BaseController
      *                                                             options={"expose"=true}, methods={"POST","GET"})
      */
     public function serviceRealisePersonnelMatiere(
+        TypeMatiereManager $typeMatiereManager,
         MyEdtCompare $myEdtCompare,
         $matiere,
         Personnel $personnel
     ): Response {
-        if ($matiere && $personnel) {
-            $t = $myEdtCompare->realise($matiere, $personnel, $this->dataUserSession->getAnneePrevisionnel());
+        $mat = $typeMatiereManager->getMatiereFromSelect($matiere);
+
+        if (null === $mat) {
+            throw new MatiereNotFoundException();
+        }
+
+        if ($personnel) {
+            $t = $myEdtCompare->realise($mat, $personnel, $this->dataUserSession->getAnneePrevisionnel());
 
             return $this->render('administration/edtRealise/_detailPersonnelMatiere.html.twig', [
                 'planning' => $myEdtCompare->getPlanning(),
-                'matiere' => $matiere,
+                'matiere' => $mat,
                 'calendrier' => $this->calendrierRepository->findByAnneeUniversitaire($this->dataUserSession->getAnneeUniversitaire()),
                 'personnel' => $personnel,
                 't' => $t,
