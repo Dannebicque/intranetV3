@@ -1,0 +1,125 @@
+name: Intranet V3
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+#env:
+#ES_HTTP_PORT: 9209
+jobs:
+  symfony:
+    name: Symfony 5.2 (PHP ${{ matrix.php-versions }})
+    # https://hub.docker.com/_/ubuntu/
+    runs-on: ubuntu-latest
+    services:
+      # https://docs.docker.com/samples/library/mysql/
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ROOT_PASSWORD: root
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+      # https://hub.docker.com/_/elasticsearch/
+    #      elasticsearch:
+    #        image: elasticsearch:6.8.10
+    #        ports:
+    #          - 9209:9200
+    #        options: -e="discovery.type=single-node" --health-cmd="curl http://localhost:9200/_cluster/health" --health-interval=10s --health-timeout=5s --health-retries=10
+    strategy:
+      fail-fast: true
+      matrix:
+        php-versions: [ '8.0' ]
+    steps:
+      # —— Check Elasticsearch 🔎 ——————————————————————————————————————————————
+      #      - name: Check the Elasticsearch connection from runner host
+      #        run: |
+      #          curl -fsSL "http://localhost:$ES_HTTP_PORT"
+      #          curl -fsSL "http://localhost:$ES_HTTP_PORT/_cluster/health?pretty"
+
+      # —— Setup Github actions 🐙 —————————————————————————————————————————————
+      # https://github.com/actions/checkout (official)
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # https://github.com/shivammathur/setup-php (community)
+      - name: Setup PHP, extensions and composer with shivammathur/setup-php
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+          extensions: mbstring, xml, ctype, iconv, intl, pdo, pdo_mysql, dom, filter, gd, iconv, json, mbstring, pdo
+        env:
+          update: true
+
+      - name: Check PHP Version
+        run: php -v
+
+      # https://github.com/zhulik/redis-action (community)
+      #      - name: Setup Redis with zhulik/redis-action
+      #        uses: zhulik/redis-action@1.1.0
+      #        with:
+      #          redis version: '5'
+
+      ## —— Yarn 🐱 ————————————————————————————————————————————————————————————
+      - name: Yarn install
+        uses: actions/setup-node@v2
+        with:
+          node-version: '12'
+          registry-url: npm.fontawesome.com
+      - run: yarn install
+      #        env:
+      #          NODE_AUTH_TOKEN: ${{ secrets.FONTAWESOME_NPM_AUTH_TOKEN }}
+
+      - name: Yarn build
+        run: yarn run encore production
+
+      # —— Composer 🧙‍️ —————————————————————————————————————————————————————————
+      - name: Validate composer.json and composer.lock
+        run: composer validate
+
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - name: Cache composer dependencies
+        uses: actions/cache@v1
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: Install Composer dependencies
+        run: make install
+
+      # —— Symfony 🎵 ——————————————————————————————————————————————————————————
+      - name: Check Symfony requirements
+        run: vendor/bin/requirements-checker
+
+      - name: Check the Symfony console
+        run: |
+          bin/console about
+          bin/console strangebuzz:version
+
+      ## —— Coding standards ✨ ————————————————————————————————————————————————
+      # Can't handle PHP8 for now
+      - name: Coding standards checks (php_codesniffer + php-cs-fixer)
+        run: make cs
+      # if: matrix.php-versions == '7.4'
+
+      ## —— Static analysis ✨ —————————————————————————————————————————————————
+      #      - name: Static analysis of PHP code (PHPStan)
+      #        run: make static-analysis
+      #        if: matrix.php-versions == '7.4'
+
+      ## —— Tests ✅ ———————————————————————————————————————————————————————————
+#      - name: Load Doctrine fixtures and populate the Elasticsearch indexes
+#        run: |
+#          make load-fixtures
+#          make populate
+#
+#      - name: Run functionnal and unit tests
+#        run: |
+#          cp phpunit.xml.ci phpunit.xml
+#          ./vendor/bin/phpunit --testsuite='main'
