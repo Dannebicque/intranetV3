@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEdtCompare.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/05/2021 16:35
+ * @lastUpdate 29/05/2021 08:40
  */
 
 /*
@@ -14,7 +14,8 @@
 namespace App\Classes;
 
 use App\Classes\Previsionnel\PrevisionnelManager;
-use App\Entity\Matiere;
+use App\DTO\Matiere;
+use App\DTO\PrevisionnelCollection;
 use App\Entity\Personnel;
 use App\Entity\Previsionnel;
 use App\Repository\EdtPlanningRepository;
@@ -29,10 +30,7 @@ class MyEdtCompare
      */
     private $planning;
 
-    /**
-     * @var Previsionnel[]
-     */
-    private array $previsionnel;
+    private PrevisionnelCollection $previsionnel;
 
     private PrevisionnelManager $previsionnelManager;
 
@@ -48,9 +46,10 @@ class MyEdtCompare
     }
 
     public function realise(Matiere $matiere, Personnel $personnel, int $anneePrevi): array
-    {//todo: a généraliser avec SAE, Ressources
+    {
         $this->planning = $this->edtPlanningRepository->findBy([
-            'matiere' => $matiere->getId(),
+            'typeMatiere' => $matiere->typeMatiere,
+            'idMatiere' => $matiere->id,
             'intervenant' => $personnel->getId(),
         ],
             [
@@ -59,11 +58,11 @@ class MyEdtCompare
                 'debut' => 'ASC',
             ]);
 
-        $this->previsionnel = $this->previsionnelManager->findBy([
-            'personnel' => $personnel->getId(),
-            'matiere' => $matiere->getId(),
-            'annee' => $anneePrevi,
-        ]);
+        $this->previsionnel = $this->previsionnelManager->getPrevisionnelMatierePersonnel(
+            $personnel,
+            $matiere->id,
+            $matiere->typeMatiere, $anneePrevi
+        );
 
         $t = [];
         $t['cm']['previ'] = 0;
@@ -73,10 +72,12 @@ class MyEdtCompare
         $t['td']['real'] = 0;
         $t['tp']['real'] = 0;
 
-        foreach ($this->previsionnel as $pr) {
-            $t['cm']['previ'] += $pr->getNbHCM();
-            $t['td']['previ'] += $pr->getNbHTD() * $pr->getNbGrTD();
-            $t['tp']['previ'] += $pr->getNbHTP() * $pr->getNbGrTP();
+        foreach ($this->previsionnel as $ppr) {
+            foreach ($ppr as $pr) {
+                $t['cm']['previ'] += $pr->getTotalHCm();
+                $t['td']['previ'] += $pr->getTotalHTd();
+                $t['tp']['previ'] += $pr->getTotalHTp();
+            }
         }
 
         foreach ($this->planning as $ma) {

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Previsionnel/PrevisionnelManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/05/2021 09:44
+ * @lastUpdate 29/05/2021 08:47
  */
 
 namespace App\Classes\Previsionnel;
@@ -72,7 +72,12 @@ class PrevisionnelManager
 
     public function getPrevisionnelMatiere(int $matiere, $type, int $annee)
     {
-        return $this->getManager($type)->getPrevisionnelMatiere($matiere, $annee);
+        return $this->getManager($type)->findPrevisionnelMatiere($matiere, $annee);
+    }
+
+    public function getPrevisionnelMatierePersonnel(Personnel $personnel, int $matiere, string $type, int $annee)
+    {
+        return $this->getManager($type)->findPrevisionnelMatierePersonnelAnnee($matiere, $personnel, $annee);
     }
 
     public function getPrevisionnelSemestre(Semestre $semestre, int $annee): array

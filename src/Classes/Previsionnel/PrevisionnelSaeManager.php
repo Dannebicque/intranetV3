@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Previsionnel/PrevisionnelSaeManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2021 08:46
+ * @lastUpdate 29/05/2021 08:47
  */
 
 namespace App\Classes\Previsionnel;
@@ -55,9 +55,13 @@ class PrevisionnelSaeManager extends AbstractPrevisionnelManager implements Prev
         return $this->previsionnelSaeAdapter->collection($data);
     }
 
-    public function getPrevisionnelMatiere($matiere, $annee): PrevisionnelCollection
-    {
-        $data = $this->previsionnelRepository->findPrevisionnelMatiere($matiere, $annee);
+    public function findPrevisionnelMatierePersonnelAnnee(
+        $matiere,
+        $personnel,
+        $anneePrevisionnel
+    ): PrevisionnelCollection {
+        $data = $this->previsionnelRepository->findPrevisionnelMatierePersonnelAnnee($matiere, $personnel,
+            $anneePrevisionnel);
 
         return $this->previsionnelSaeAdapter->collection($data);
     }

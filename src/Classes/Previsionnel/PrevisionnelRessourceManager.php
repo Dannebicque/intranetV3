@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Previsionnel/PrevisionnelRessourceManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/05/2021 18:54
+ * @lastUpdate 29/05/2021 08:47
  */
 
 namespace App\Classes\Previsionnel;
@@ -55,9 +55,13 @@ class PrevisionnelRessourceManager extends AbstractPrevisionnelManager implement
         return $this->previsionnelRessourceAdapter->collection($data);
     }
 
-    public function getPrevisionnelMatiere($matiere, $annee): PrevisionnelCollection
-    {
-        $data = $this->previsionnelRepository->findPrevisionnelMatiere($matiere, $annee);
+    public function findPrevisionnelMatierePersonnelAnnee(
+        $matiere,
+        $personnel,
+        $anneePrevisionnel
+    ): PrevisionnelCollection {
+        $data = $this->previsionnelRepository->findPrevisionnelMatierePersonnelAnnee($matiere, $personnel,
+            $anneePrevisionnel);
 
         return $this->previsionnelRessourceAdapter->collection($data);
     }

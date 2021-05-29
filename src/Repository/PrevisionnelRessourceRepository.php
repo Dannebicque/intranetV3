@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/PrevisionnelRessourceRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2021 08:46
+ * @lastUpdate 29/05/2021 08:31
  */
 
 namespace App\Repository;
@@ -127,6 +127,27 @@ class PrevisionnelRessourceRepository extends PrevisionnelRepository
             ->setParameter('annee', $annee)
             ->setParameter('semestre', $semestre->getId())
             ->orderBy('m.codeMatiere', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findPrevisionnelMatierePersonnelAnnee($matiere, $personnel, $annee)
+    {
+        return $this->createQueryBuilder('p')
+            ->leftJoin(Personnel::class, 'pers', 'WITH', 'p.personnel = pers.id')
+            ->innerJoin(ApcRessource::class, 'm', 'WITH', 'p.idMatiere = m.id')
+            ->innerJoin(Semestre::class, 's', 'WITH', 'm.semestre = s.id')
+            ->select('p.id as id_previsionnel, p.annee, p.referent, p.nbHCm, p.nbHTd, p.nbHTp, p.nbGrCm, p.nbGrTd, p.nbGrTp, m.id as id_ressource, m.libelle, m.codeMatiere, pers.id as id_personnel, pers.nom, pers.prenom, pers.numeroHarpege, pers.mailUniv, pers.nbHeuresService, s.id as id_semestre, s.libelle as libelle_semestre')
+            ->where('p.annee = :annee')
+            ->andWhere('p.personnel = :personnel')
+            ->andWhere('p.idMatiere = :matiere')
+            ->andWhere('p.typeMatiere = :type')
+            ->setParameter('personnel', $personnel->getId())
+            ->setParameter('annee', $annee)
+            ->setParameter('type', self::TYPE)
+            ->setParameter('matiere', $matiere)
+            ->orderBy('pers.nom', 'ASC')
+            ->orderBy('pers.prenom', 'ASC')
             ->getQuery()
             ->getResult();
     }
