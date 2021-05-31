@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/DiplomeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/05/2021 11:08
+ * @lastUpdate 31/05/2021 09:04
  */
 
 namespace App\Controller\superAdministration;
@@ -63,6 +63,14 @@ class DiplomeController extends BaseController
     public function exportReferentiel(DiplomeExport $diplomeExport, Diplome $diplome): Response
     {
         return $diplomeExport->exportRefentiel($diplome);
+    }
+
+    /**
+     * @Route("/export-maquette-apogee/{id}", name="sa_diplome_export_maquette_apogee", methods="GET")
+     */
+    public function exportMaquetteApogee(DiplomeExport $diplomeExport, Diplome $diplome): Response
+    {
+        return $diplomeExport->exportMaquetteApogee($diplome);
     }
 
     /**

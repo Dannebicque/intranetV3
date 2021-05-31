@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Pdf/MyPDF.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 31/05/2021 20:35
  */
 
 /*
@@ -36,6 +36,12 @@ class MyPDF
     {
         self::$templating = $templating;
         self::$pdf = $pdf;
+        $date = new DateTime('now');
+        self::setFooter([
+            'footer-left' => 'Document généré depuis l\'intranet le ' . $date->format('d/m/Y H:i') . '.',
+            'footer-right' => '[page] / [topage]',
+            'footer-center' => '',
+        ]);
     }
 
     /**
@@ -44,11 +50,11 @@ class MyPDF
      */
     public static function addOptions($key, $value): void
     {
+        //options disponibles : https://wkhtmltopdf.org/usage/wkhtmltopdf.txt
         self::$options[$key] = $value;
     }
 
     /**
-     *
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -76,7 +82,6 @@ class MyPDF
     }
 
     /**
-     *
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -84,14 +89,6 @@ class MyPDF
     private static function genereOutputPdf($template, $data, $name, $departement = null): PdfResponse
     {
         $html = self::$templating->render($template, $data);
-
-        if (null !== $departement) {
-            $date = new DateTime('now');
-//            $canvas = self::$domPdf->getCanvas();
-//            $canvas->page_text(500, 800, 'Page {PAGE_NUM} sur {PAGE_COUNT}', 'Arial', 10, [0, 0, 0]);
-//            $canvas->page_text(43, 800, $departement . ' | ' . $date->format('d/m/Y') . '. Généré depuis l\'intranet',
-//                'Arial', 10, [0, 0, 0]);
-        }
 
         if ('.pdf' !== mb_substr($name, -4)) {
             $name .= '.pdf';
@@ -101,5 +98,17 @@ class MyPDF
             self::$pdf->getOutputFromHtml($html, self::$options),
             $name
         );
+    }
+
+    public static function setFooter(array $data = [])
+    {
+        foreach ($data as $key => $d) {
+            self::addOptions($key, $d);
+        }
+    }
+
+    public static function setFooterHtml(string $template, array $data = [])
+    {
+        self::addOptions('footer-html', self::$templating->render($template, $data));
     }
 }

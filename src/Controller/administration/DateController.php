@@ -4,12 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/DateController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/05/2021 16:49
+ * @lastUpdate 31/05/2021 20:35
  */
 
 namespace App\Controller\administration;
 
-use App\Classes\MyExport;
+use App\Classes\Exporter\ExporterManager;
+use App\Classes\Exporter\SourceIterator\DoctrineSourceIterator;
 use App\Controller\BaseController;
 use App\DataTable\DateTableType;
 use App\Entity\Constantes;
@@ -46,29 +47,12 @@ class DateController extends BaseController
      * @Route("/export.{_format}", name="administration_date_export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"})
      */
-    public function export(MyExport $myExport, DateRepository $dateRepository, $_format): Response
+    public function export(ExporterManager $exporter, DateRepository $dateRepository, $_format): Response
     {
-        $dates = $dateRepository->findByDepartement($this->getDepartement());
+        $dates = $dateRepository->findByDepartementArray($this->getDepartement());
+        $datas = new DoctrineSourceIterator($dates, $this->entityManager, Date::class);
 
-        return $myExport->genereFichierGenerique(
-            $_format,
-            $dates,
-            'dates',
-            ['date_administration', 'semestre'],
-            [
-                'libelle',
-                'texte',
-                'dateDebut',
-                'heureDebut',
-                'dateFin',
-                'heureFin',
-                'lieu',
-                'allday',
-                'qui',
-                'type',
-                'semestre' => ['libelle'],
-            ]
-        );
+        return $exporter->export($datas, $_format, 'dates');
     }
 
     /**
