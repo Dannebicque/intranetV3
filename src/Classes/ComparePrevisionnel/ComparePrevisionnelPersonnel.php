@@ -4,40 +4,34 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/ComparePrevisionnel/ComparePrevisionnelPersonnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2021 08:46
+ * @lastUpdate 29/05/2021 16:14
  */
 
 namespace App\Classes\ComparePrevisionnel;
 
+use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\Previsionnel\PrevisionnelManager;
 use App\Entity\Departement;
 use App\Entity\Personnel;
-use App\Repository\CelcatEventsRepository;
 use App\Repository\EdtPlanningRepository;
 use App\Repository\PersonnelRepository;
 
 class ComparePrevisionnelPersonnel extends ComparePrevisionnel
 {
     private EdtPlanningRepository $edtPlanningRepository;
-
-    private CelcatEventsRepository $celcatEventsRepository;
-
     private PrevisionnelManager $previsionnelManager;
-
+    private TypeMatiereManager $typeMatiereManager;
     private PersonnelRepository $personnelRepository;
-    /**
-     * @var Personnel[]|mixed
-     */
-    private $personnels;
+    private mixed $personnels;
 
     public function __construct(
         EdtPlanningRepository $edtPlanningRepository,
-        CelcatEventsRepository $celcatEventsRepository,
         PrevisionnelManager $previsionnelManager,
-        PersonnelRepository $personnelRepository
+        PersonnelRepository $personnelRepository,
+        TypeMatiereManager $typeMatiereManager
     ) {
         $this->edtPlanningRepository = $edtPlanningRepository;
-        $this->celcatEventsRepository = $celcatEventsRepository;
+        $this->typeMatiereManager = $typeMatiereManager;
         $this->previsionnelManager = $previsionnelManager;
         $this->personnelRepository = $personnelRepository;
     }
@@ -56,15 +50,16 @@ class ComparePrevisionnelPersonnel extends ComparePrevisionnel
             $t[$ens->getId()] = [];
         }
 
+        /** @var \App\DTO\Previsionnel $p */
         foreach ($previsionnels as $p) {
             if (null !== $p &&
                 0 !== $p->personnel_id &&
                 0 !== $p->matiere_id &&
                 \array_key_exists($p->personnel_id, $t)) {
-                $colonne = $p->type_matiere . '-' . $p->matiere_id;
+                $colonne = $p->getTypeIdMatiere();
                 $ligne = $p->personnel_id;
-                if (!\array_key_exists($p->matiere_id, $t[$p->personnel_id])) {
-                    $t[$ligne][$colonne]['matiere_id'] = $p->matiere_id;
+                if (!\array_key_exists($p->getTypeIdMatiere(), $t[$p->personnel_id])) {
+                    $t[$ligne][$colonne]['matiere_id'] = $p->getTypeIdMatiere();
                     $t[$ligne][$colonne]['matiere_code'] = $p->matiere_code;
                     $t[$ligne][$colonne]['matiere_code_element'] = $p->matiere_code_element;
                     $t[$ligne][$colonne]['matiere_libelle'] = $p->matiere_libelle;
@@ -77,27 +72,25 @@ class ComparePrevisionnelPersonnel extends ComparePrevisionnel
                     $t[$ligne][$colonne]['nbTPEDT'] = 0;
                 }
 
-                $t[$ligne][$colonne]['nbCMPrevi'] += $p->nbHCm * $p->nbGrCm;
-                $t[$ligne][$colonne]['nbTDPrevi'] += $p->nbHTd * $p->nbGrTd;
-                $t[$ligne][$colonne]['nbTPPrevi'] += $p->nbHTp * $p->nbGrTp;
+                $t[$ligne][$colonne]['nbCMPrevi'] += $p->getTotalHCm();
+                $t[$ligne][$colonne]['nbTDPrevi'] += $p->getTotalHTd();
+                $t[$ligne][$colonne]['nbTPPrevi'] += $p->getTotalHTp();
             }
         }
 
-        //todo: adapter Matiere ne sera pas un objet mais un ID. Mettre à jour l'entité comme pour prévisionnel
         foreach ($planning as $pl) {
-            if (null !== $pl->getMatiere() &&
+            if (0 !== $pl->getIdMatiere() &&
                 null !== $pl->getIntervenant() &&
                 \array_key_exists($pl->getIntervenant()->getId(), $t)) {
-                $col = $pl->getTypeMatiere() . '_' . $pl->getMatiere()->getId();
+                $col = $pl->getTypeIdMatiere();
                 $ligne = $pl->getIntervenant()->getId();
-                if (!\array_key_exists($pl->getMatiere()->getId(), $t[$pl->getIntervenant()->getId()])) {
-
-
-                    $t[$ligne][$col]['matiere_id'] = $pl->getMatiere()->getId();
-                    $t[$ligne][$col]['matiere_code'] = $pl->getMatiere()->getCodeMatiere();
-                    $t[$ligne][$col]['matiere_code_element'] = $pl->getMatiere()->getCodeElement();
-                    $t[$ligne][$col]['matiere_libelle'] = $pl->getMatiere()->getLibelle();
-                    $t[$ligne][$col]['semestre_libelle'] = $pl->getMatiere()->getSemestre()->getLibelle();
+                if (!\array_key_exists($pl->getTypeIdMatiere(), $t[$pl->getIntervenant()->getId()])) {
+                    $matiere = $this->typeMatiereManager->getMatiereFromSelect($pl->getTypeIdMatiere());
+                    $t[$ligne][$col]['matiere_id'] = $pl->getTypeIdMatiere();
+                    $t[$ligne][$col]['matiere_code'] = $matiere?->codeMatiere;
+                    $t[$ligne][$col]['matiere_code_element'] = $matiere?->codeElement;
+                    $t[$ligne][$col]['matiere_libelle'] = $matiere?->libelle;
+                    $t[$ligne][$col]['semestre_libelle'] = $matiere?->semestre->getLibelle();
                     $t[$ligne][$col]['nbCMPrevi'] = 0;
                     $t[$ligne][$col]['nbTDPrevi'] = 0;
                     $t[$ligne][$col]['nbTPPrevi'] = 0;

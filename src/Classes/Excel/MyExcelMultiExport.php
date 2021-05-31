@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Excel/MyExcelMultiExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/05/2021 15:30
+ * @lastUpdate 30/05/2021 13:16
  */
 
 /*
@@ -32,11 +32,9 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
  */
 class MyExcelMultiExport
 {
-    /** @var MySerializer */
-    private $serializer;
+    private MySerializer $serializer;
 
-    /** @var MyExcelWriter */
-    private $myExcelWriter;
+    private MyExcelWriter $myExcelWriter;
 
     public function __construct(
         MySerializer $mySerializer,

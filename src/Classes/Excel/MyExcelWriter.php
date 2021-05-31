@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Excel/MyExcelWriter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 31/05/2021 20:35
  */
 
 /*
@@ -204,6 +204,14 @@ class MyExcelWriter
     {
         $cell = Coordinate::stringFromColumnIndex($col) . $lig;
         $this->colorCells($cell, $couleur);
+    }
+
+    public function setCellEnteteStyle($col, $lig): void
+    {
+        $this->colorCellRange($col, $lig, 'ffC4C6C6');
+        $this->sheet->getStyle(Coordinate::stringFromColumnIndex($col) . $lig)->getFont()->setBold(true);
+        $this->sheet->getStyle(Coordinate::stringFromColumnIndex($col) . $lig)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $this->sheet->getStyle(Coordinate::stringFromColumnIndex($col) . $lig)->getBorders()->getAllBorders()->setBorderStyle(Border::BORDER_THIN);
     }
 
     /**

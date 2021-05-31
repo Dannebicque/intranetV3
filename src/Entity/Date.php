@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Date.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 30/05/2021 09:51
  */
 
 namespace App\Entity;
@@ -51,13 +51,13 @@ class Date extends BaseEntity
      * @ORM\Column(type="string", length=255)
      * @Groups({"date_administration"})
      */
-    private $libelle;
+    private ?string $libelle;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      * @Groups({"date_administration"})
      */
-    private $texte;
+    private ?string $texte;
 
     /**
      * @var DateTime

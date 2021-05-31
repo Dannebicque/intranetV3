@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ApcSaeType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/05/2021 18:27
+ * @lastUpdate 31/05/2021 20:35
  */
 
 namespace App\Form;
@@ -33,12 +33,14 @@ class ApcSaeType extends AbstractType
             ->add('codeElement', TextType::class, ['label' => 'code_element'])
             ->add('codeMatiere', TextType::class, ['label' => 'codeSae'])
             ->add('libelle', TextType::class, ['label' => 'libelle'])
+            ->add('libelleCourt', TextType::class,
+                ['label' => 'libelle.court', 'required' => false, 'attr' => ['maxlength' => 25]])
             ->add('description', TextareaType::class,
                 [
                     'attr' => ['rows' => 20],
                     'label' => 'description',
                     'required' => false,
-                    'help' => 'Il est possible d\'utiliser la syntaxe Markdown dans ce bloc de texte'
+                    'help' => 'Il est possible d\'utiliser la syntaxe Markdown dans ce bloc de texte',
                 ])
             ->add('tdPpn', TextType::class, ['label' => 'cmtd_ppn'])
             ->add('tpPpn', TextType::class, ['label' => 'tp_ppn'])
@@ -52,7 +54,7 @@ class ApcSaeType extends AbstractType
                     'label' => 'livrables',
                     'attr' => ['rows' => 20],
                     'required' => false,
-                    'help' => 'Il est possible d\'utiliser la syntaxe Markdown dans ce bloc de texte'
+                    'help' => 'Il est possible d\'utiliser la syntaxe Markdown dans ce bloc de texte',
                 ])
             ->add('semestre', EntityType::class, [
                 'class' => Semestre::class,
@@ -82,7 +84,7 @@ class ApcSaeType extends AbstractType
                     'label' => 'exemples',
                     'attr' => ['rows' => 20],
                     'required' => false,
-                    'help' => 'Il est possible d\'utiliser la syntaxe Markdown dans ce bloc de texte'
+                    'help' => 'Il est possible d\'utiliser la syntaxe Markdown dans ce bloc de texte',
                 ])
         ;
     }

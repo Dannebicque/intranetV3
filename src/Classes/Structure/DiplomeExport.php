@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Structure/DiplomeExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/05/2021 11:08
+ * @lastUpdate 31/05/2021 20:35
  */
 
 namespace App\Classes\Structure;
@@ -16,10 +16,12 @@ use Twig\Environment;
 class DiplomeExport
 {
     private Environment $twig;
+    private ApogeeExport $apogeeExport;
 
-    public function __construct(Environment $twig)
+    public function __construct(Environment $twig, ApogeeExport $apogeeExport)
     {
         $this->twig = $twig;
+        $this->apogeeExport = $apogeeExport;
     }
 
     public function exportRefentiel(Diplome $diplome): Response
@@ -28,7 +30,7 @@ class DiplomeExport
             $xmlContent = $this->twig->render('xml/export-referentiel-but.xml.twig', [
                 'diplome' => $diplome,
                 'competences' => $diplome->getApcComptences(),
-                'parcours' => $diplome->getApcParcours()
+                'parcours' => $diplome->getApcParcours(),
             ]);
             $name = 'but-' . $diplome->getSigle();
         } else {
@@ -53,7 +55,7 @@ class DiplomeExport
     {
         if (true === $diplome->getTypeDiplome()->getApc()) {
             $xmlContent = $this->twig->render('xml/export-programme-but.xml.twig', [
-                'semestres' => $diplome->getSemestres()
+                'semestres' => $diplome->getSemestres(),
             ]);
             $name = 'but-pn-' . $diplome->getSigle();
         } else {
@@ -63,5 +65,17 @@ class DiplomeExport
         }
 
         return $this->exportFichier($xmlContent, $name);
+    }
+
+    public function exportMaquetteApogee(Diplome $diplome)
+    {
+        if (true === $diplome->getTypeDiplome()->getApc()) {
+            $this->apogeeExport->setDiplome($diplome);
+            $name = 'but-maquette-' . $diplome->getSigle() . '.xlsx';
+
+            return $this->apogeeExport->export($name);
+        }
+
+        return null;
     }
 }

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ApcRessourceType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/05/2021 18:27
+ * @lastUpdate 31/05/2021 12:34
  */
 
 namespace App\Form;
@@ -33,6 +33,7 @@ class ApcRessourceType extends AbstractType
             ->add('codeMatiere', TextType::class, ['label' => 'codeRessource'])
             ->add('codeElement', TextType::class, ['label' => 'code_element'])
             ->add('libelle', TextType::class, ['label' => 'libelle'])
+            ->add('libelleCourt', TextType::class, ['label' => 'libelle.court', 'attr' => ['maxlength' => 25]])
             ->add('preRequis', TextareaType::class,
                 ['label' => 'preRequis', 'attr' => ['rows' => 5], 'required' => false])
             ->add('description', TextareaType::class,

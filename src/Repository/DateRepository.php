@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/DateRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/05/2021 16:35
+ * @lastUpdate 31/05/2021 20:35
  */
 
 namespace App\Repository;
@@ -16,6 +16,7 @@ use App\Entity\Diplome;
 use App\Entity\Etudiant;
 use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\AbstractQuery;
 use Doctrine\Persistence\ManagerRegistry;
 use Exception;
 
@@ -35,7 +36,7 @@ class DateRepository extends ServiceEntityRepository
         parent::__construct($registry, Date::class);
     }
 
-    public function findByDepartement(Departement $departement, $nbResult = 0)
+    public function findByDepartementBuilder(Departement $departement, $nbResult = 0)
     {
         $query = $this->createQueryBuilder('d')
             ->where('d.departement = :departement')
@@ -45,7 +46,18 @@ class DateRepository extends ServiceEntityRepository
             $query->setMaxResults($nbResult);
         }
 
-        return $query->getQuery()->getResult();
+        return $query;
+    }
+
+    public function findByDepartement(Departement $departement, $nbResult = 0)
+    {
+        return $this->findByDepartementBuilder($departement, $nbResult)->getQuery()->getResult();
+    }
+
+    public function findByDepartementArray(Departement $departement, $nbResult = 0)
+    {
+        return $this->findByDepartementBuilder($departement,
+            $nbResult)->getQuery()->getResult(AbstractQuery::HYDRATE_ARRAY);
     }
 
     /**

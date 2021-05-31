@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/AbstractMatiere.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/05/2021 16:59
+ * @lastUpdate 31/05/2021 10:45
  */
 
 namespace App\Entity;
@@ -93,6 +93,11 @@ abstract class AbstractMatiere extends BaseEntity
      * @Groups({"matiere_administration"})
      */
     private bool $suspendu = false;
+
+    /**
+     * @ORM\Column(type="string", length=25, nullable=true)
+     */
+    private $libelleCourt;
 
     public function getCmPpn(): float
     {
@@ -238,6 +243,18 @@ abstract class AbstractMatiere extends BaseEntity
     public function setDescription(?string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getLibelleCourt(): ?string
+    {
+        return $this->libelleCourt;
+    }
+
+    public function setLibelleCourt(?string $libelleCourt): self
+    {
+        $this->libelleCourt = $libelleCourt;
 
         return $this;
     }
