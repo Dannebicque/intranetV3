@@ -1,15 +1,18 @@
 name: Intranet V3
 on:
   push:
-    branches:
-      - master
-env:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+#env:
 #ES_HTTP_PORT: 9209
 jobs:
   symfony:
     name: Symfony 5.2 (PHP ${{ matrix.php-versions }})
     # https://hub.docker.com/_/ubuntu/
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     services:
       # https://docs.docker.com/samples/library/mysql/
       mysql:
@@ -60,17 +63,17 @@ jobs:
       #          redis version: '5'
 
       ## —— Yarn 🐱 ————————————————————————————————————————————————————————————
-      - name: Yarn install
-        uses: actions/setup-node@v2
-        with:
-          node-version: '12'
-          registry-url: npm.fontawesome.com
-      - run: yarn install
+      #- name: Yarn install
+      #  uses: actions/setup-node@v2
+      #  with:
+      #    node-version: '12'
+          #registry-url: npm.fontawesome.com
+      #- run: yarn install
       #        env:
       #          NODE_AUTH_TOKEN: ${{ secrets.FONTAWESOME_NPM_AUTH_TOKEN }}
 
-      - name: Yarn build
-        run: yarn run encore production
+      #- name: Yarn build
+      #  run: yarn run encore production
 
       # —— Composer 🧙‍️ —————————————————————————————————————————————————————————
       - name: Validate composer.json and composer.lock
