@@ -1,0 +1,84 @@
+{% trans_default_domain 'export' %}
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        /*https://www.smashingmagazine.com/2015/01/designing-for-print-with-css/*/
+        body {
+            font-family: "DejaVu Sans", serif;
+            font-size: 12px;
+        }
+
+        thead {
+            display: table-header-group
+        }
+
+        tfoot {
+            display: table-row-group
+        }
+
+        tr {
+            page-break-inside: avoid
+        }
+
+        .table {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        .table td {
+            border: 1px solid black;
+        }
+
+        .table tr {
+            border: 1px solid black;
+        }
+
+        .table th {
+            font-weight: bold;
+            border: 1px solid black;
+            background-color: darkgray;
+        }
+
+        footer {
+            position: fixed;
+            bottom: -80px;
+            left: 0px;
+            right: 0px;
+            border-top: 1px solid black;
+            height: 80px;
+            padding: 5px
+        }
+    </style>
+
+    <title>Export PDF - Intranet</title>
+</head>
+
+<body>
+
+<!--Conteneur principal -->
+<div class="container-fluid" id="content">
+    <table class="table">
+        <thead>
+        <tr>
+            {% for label, field in fields %}
+                <th>{{ label|trans }}</th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+        {% for data in datas %}
+            <tr>
+                {% for label, field in fields %}
+                    <td>{{ data[label] is defined ? data[label] : '-' }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div><!-- fin conteneur principal-->
+
+</body>
+</html>
+

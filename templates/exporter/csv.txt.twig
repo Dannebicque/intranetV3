@@ -1,0 +1,9 @@
+{% trans_default_domain 'export' %}
+{{ triche }}{% for label, field in fields %}{{ label|trans }}{% if not loop.last %}{{ delimiter }}{% endif %}{%
+endfor %}
+
+{% for data in datas %}
+{% for label, field in fields %}{{ data[label] is defined ? data[label] : '-' }}{% if not loop.last %}{{
+delimiter }}{% endif %}{% endfor %}
+
+{% endfor %}
