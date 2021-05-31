@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Structure/ApogeeExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/05/2021 20:35
+ * @lastUpdate 31/05/2021 22:26
  */
 
 namespace App\Classes\Structure;
@@ -135,6 +135,8 @@ class ApogeeExport
                 $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(2, $ligne, $ressource->getLibelle());
                 $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(3, $ligne, $ressource->getLibelleCourt());
                 $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(4, $ligne, $ressource->getCodeElement());
+                $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(5, $ligne,
+                    $ressource->getCodeElement()[5] === 'M' ? 'Mutualisée' : 'UE ' . $ressource->getCodeElement()[5]);
                 ++$ligne;
             }
 
@@ -151,6 +153,8 @@ class ApogeeExport
                 $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(2, $ligne, $sae->getLibelle());
                 $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(3, $ligne, $sae->getLibelleCourt());
                 $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(4, $ligne, $sae->getCodeElement());
+                $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(5, $ligne,
+                    $sae->getCodeElement()[5] === 'M' ? 'Mutualisée' : 'UE ' . $sae->getCodeElement()[5]);
                 ++$ligne;
             }
         }
