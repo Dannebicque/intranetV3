@@ -19,6 +19,13 @@
                    data-provide="tooltip"
                    data-placement="bottom" title="{{ 'atitle.import_ppn'|trans }}"><i class="fas fa-file-import"></i><span
                             class="sr-only">importer</span></a>
+
+                <a href="{{ path('sa_diplome_new_wizard_index', {departement:departement.id}) }}" class="btn btn-info
+                btn-sm
+                btn-float"
+                   data-provide="tooltip"
+                   data-placement="bottom" title="{{ 'assistant.creation.diplome'|trans }}"><i class="fas fa-magic"></i><span
+                            class="sr-only">{{ 'assistant.creation.diplome'|trans }}</span></a>
                 <a href="{{ path('super_admin_homepage') }}" class="btn btn-primary btn-float" data-provide="tooltip"
                    data-placement="bottom" title="{{ 'atitle.retour_super_administration'|trans }}">
                     <i class="{{ iconDashboard }}"><span class="sr-only">dashboard</span></i>
@@ -79,7 +86,7 @@
                 <div class="row gap-y lignehover">
                     <div class="col-md-1">&nbsp;</div>
                     <div class="col-md-9" id="diplome_{{ diplome.id }}">{{ diplome.typediplome.sigle }}
-                        | {{ diplome.libelle }} | {{ diplome.codeDiplome }} | {{ diplome.codeEtape }}</div>
+                        | {{ diplome.libelle }} | {{ diplome.codeDiplome }} | {{ diplome.codeVersion }}</div>
                     <div class="col-md-2">
 
                         <a href="{{ path(baseurl ~ 'diplome_duplicate', {'id': diplome.id}) }}"
@@ -398,73 +405,6 @@
                                                                            semestre {{ semestre.libelle }}</a>
                             </div>
                         </div>
-
-
-
-                        {# #}
-                        {# {% for opt in t.options if opt.semestre==semestre %} #}
-
-                        {# <tr class="UE_{{ semestre.id }} deroulant"> #}
-                        {# <td>&nbsp;</td> #}
-                        {# <td>&nbsp;</td> #}
-                        {# <td>&nbsp;</td> #}
-                        {# <td>&nbsp;</td> #}
-                        {# <td colspan="2">{{ opt.nomoption }}</td> #}
-                        {# <td> #}
-                        {# <a href="{{ path('da_kernel_administration_modif_option',{id:opt.id}) }}" #}
-                        {# class="btn btn-warning" rel="tooltip" #}
-                        {# data-placement="left" title=" Modifier "><i #}
-                        {# class="{{ iconEdit }}"></i></a> #}
-
-                        {# <a href="#modalConfirm" data-toggle="modal" id="OPT-{{ opt.id }}" #}
-                        {# class="btn  btn-danger supprimer" rel="tooltip" #}
-                        {# data-placement="right" title="Supprimer l'option"><i #}
-                        {# class="fa fa-times"></i></a> #}
-                        {# </td> #}
-                        {# </tr> #}
-                        {# {% for u in t.ue if u.option==opt %} #}
-
-                        {# <tr class="UE_{{ semestre.id }} deroulant"> #}
-                        {# <td>&nbsp;</td> #}
-                        {# <td>&nbsp;</td> #}
-                        {# <td>&nbsp;</td> #}
-                        {# <td>&nbsp;</td> #}
-                        {# <td colspan="2">{{ u.numeroue }} | {{ u.nomue }} #}
-                        {# | {{ u.codeetape }}</td> #}
-                        {# <td> #}
-                        {# <a href="{{ path('da_kernel_administration_modif_ue',{id:u.id}) }}" #}
-                        {# class="btn btn-warning" rel="tooltip" data-placement="left" #}
-                        {# title=" Modifier "><i class="{{ iconEdit }}"></i></a> #}
-
-                        {# <a href="#modalConfirm" data-toggle="modal" id="UE-{{ u.id }}" #}
-                        {# class="btn btn-danger supprimer" rel="tooltip" #}
-                        {# data-placement="right" title="Supprimer l'UE"><i #}
-                        {# class="fa fa-times"></i></a> #}
-                        {# </td> #}
-                        {# </tr> #}
-                        {# {% endfor %} #}
-                        {# {% endfor %} #}
-
-                        {# <tr class="deroulant" id="option_new_{{ semestre.id }}"> #}
-                        {# <td colspan="4" class="ligneajouter">Ajouter un parcours</td> #}
-                        {# <td> #}
-                        {# <input type="text" class="form-control" placeholder="Code Apogée" #}
-                        {# id="codeApogeeOption-{{ semestre.id }}"/> #}
-                        {# #}
-                        {# <a href="{{ path('da_kernel_administration_add_option',{semestre:semestre.id}) }}" class="btn btn-block btn-large btn-primary">Ajouter un parcours au semestre</a> #}
-                        {# </td> #}
-                        {# <td> #}
-                        {# <input type="text" class="form-control" #}
-                        {# placeholder="Libellé du parcours" #}
-                        {# id="libelleOption-{{ semestre.id }}"/> #}
-                        {# </td> #}
-                        {# <td> #}
-                        {# <button class="btn btn-success addParcours" title="Ajouter un parcours" #}
-                        {# data-semestre="{{ semestre.id }}"><i #}
-                        {# class="fa fa-plus-circle"></i></button> #}
-                        {# </td> #}
-
-                        {# </tr> #}
                     {% endfor %}
 
                     <div class="row gap-y lignehover" id="semestre_new_{{ annee.id }}">

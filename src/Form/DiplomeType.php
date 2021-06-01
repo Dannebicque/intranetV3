@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/DiplomeType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/05/2021 14:21
+ * @lastUpdate 01/06/2021 08:08
  */
 
 namespace App\Form;
@@ -66,9 +66,6 @@ class DiplomeType extends AbstractType
             ])
             ->add('code_diplome', TextType::class, [
                 'label' => 'code_diplome',
-            ])
-            ->add('code_etape', TextType::class, [
-                'label' => 'code_etape',
             ])
             ->add('code_version', TextType::class, [
                 'label' => 'code_version',

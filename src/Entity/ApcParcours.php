@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcParcours.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/05/2021 17:00
+ * @lastUpdate 01/06/2021 08:08
  */
 
 namespace App\Entity;
 
+use App\Entity\Traits\ApogeeTrait;
 use App\Entity\Traits\LifeCycleTrait;
 use App\Repository\ApcParcoursRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -22,7 +23,9 @@ use Doctrine\ORM\Mapping as ORM;
 class ApcParcours extends BaseEntity
 {
     use LifeCycleTrait;
+    use ApogeeTrait;
 
+    //todo: ajouter code Diplome (année 2 et 3 ?)
     /**
      * @ORM\Column(type="string", length=255)
      */
@@ -128,6 +131,30 @@ class ApcParcours extends BaseEntity
     public function setActif(bool $actif): self
     {
         $this->actif = $actif;
+
+        return $this;
+    }
+
+    public function getCodeDiplome(): ?string
+    {
+        return $this->codeDiplome;
+    }
+
+    public function setCodeDiplome(string $codeDiplome): self
+    {
+        $this->codeDiplome = $codeDiplome;
+
+        return $this;
+    }
+
+    public function getVersionDiplome(): ?string
+    {
+        return $this->versionDiplome;
+    }
+
+    public function setVersionDiplome(string $versionDiplome): self
+    {
+        $this->versionDiplome = $versionDiplome;
 
         return $this;
     }

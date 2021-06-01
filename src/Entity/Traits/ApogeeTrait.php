@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Traits/ApogeeTrait.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:49
+ * @lastUpdate 01/06/2021 08:08
  */
 
 namespace App\Entity\Traits;
@@ -13,10 +13,10 @@ use Doctrine\ORM\Mapping as ORM;
 
 trait ApogeeTrait
 {
-    /**
-     * @ORM\Column(type="string", length=20)
-     */
-    private $codeEtape; //code etape ou code diplome
+//    /**
+//     * @ORM\Column(type="string", length=20)
+//     */
+//    private $codeEtape; //code etape ou code diplome
 
     /**
      * @ORM\Column(type="string", length=20, nullable=true)
@@ -43,15 +43,15 @@ trait ApogeeTrait
         $this->codeDiplome = $codeDiplome;
     }
 
-    public function getCodeEtape()
-    {
-        return $this->codeEtape;
-    }
-
-    public function setCodeEtape($codeEtape): void
-    {
-        $this->codeEtape = $codeEtape;
-    }
+//    public function getCodeEtape()
+//    {
+//        return $this->codeEtape;
+//    }
+//
+//    public function setCodeEtape($codeEtape): void
+//    {
+//        $this->codeEtape = $codeEtape;
+//    }
 
     public function getCodeVersion()
     {

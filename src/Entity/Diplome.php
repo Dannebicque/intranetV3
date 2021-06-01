@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Diplome.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 31/05/2021 22:31
  */
 
 namespace App\Entity;
@@ -24,7 +24,7 @@ class Diplome extends BaseEntity implements Serializable
 {
     use ApogeeTrait;
     use LifeCycleTrait;
-
+//todo: supprimer code étape, n'existe pas dans un diplome.
     /**
      * @ORM\Column(type="string", length=255)
      */

@@ -4,14 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Annee.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 01/06/2021 08:08
  */
 
 namespace App\Entity;
 
-use App\Utils\Tools;
-use App\Entity\Traits\ApogeeTrait;
 use App\Entity\Traits\LifeCycleTrait;
+use App\Utils\Tools;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -23,8 +22,17 @@ use Symfony\Component\Serializer\Annotation\Groups;
  */
 class Annee extends BaseEntity
 {
-    use ApogeeTrait;
     use LifeCycleTrait;
+
+    /**
+     * @ORM\Column(type="string", length=20)
+     */
+    private $codeEtape;
+
+    /**
+     * @ORM\Column(type="string", length=10)
+     */
+    private $codeVersion;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -285,5 +293,25 @@ class Annee extends BaseEntity
         }
 
         return $this;
+    }
+
+    public function getCodeEtape()
+    {
+        return $this->codeEtape;
+    }
+
+    public function setCodeEtape($codeEtape): void
+    {
+        $this->codeEtape = $codeEtape;
+    }
+
+    public function getCodeVersion()
+    {
+        return $this->codeVersion;
+    }
+
+    public function setCodeVersion($codeVersion): void
+    {
+        $this->codeVersion = $codeVersion;
     }
 }
