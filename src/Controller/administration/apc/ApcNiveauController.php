@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcNiveauController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 01/06/2021 19:12
  */
 
 namespace App\Controller\administration\apc;
@@ -13,7 +13,9 @@ use App\Controller\BaseController;
 use App\Entity\ApcCompetence;
 use App\Entity\ApcNiveau;
 use App\Entity\Constantes;
+use App\Entity\Diplome;
 use App\Form\ApcNiveauType;
+use App\Repository\ApcNiveauRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,6 +25,34 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ApcNiveauController extends BaseController
 {
+    /**
+     * @Route("/{diplome}/synchro-niveau-annee", name="administration_apc_niveau_annee_synchro", methods="GET")
+     */
+    public function synchroNiveauAnnee(
+        ApcNiveauRepository $apcNiveauRepository,
+        Diplome $diplome,
+    ): Response {
+        $annees = $diplome->getAnnees();
+        $t = [];
+        foreach ($annees as $annee) {
+            $t[$annee->getOrdre()] = $annee;
+        }
+
+        $niveaux = $apcNiveauRepository->findByDiplome($diplome);
+        foreach ($niveaux as $niveau) {
+            if (array_key_exists($niveau->getOrdre(), $t)) {
+                $niveau->setAnnee($t[$niveau->getOrdre()]);
+            }
+        }
+
+        $this->entityManager->flush();
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'Synchronisation effectuée');
+
+        return $this->redirectToRoute('administration_apc_referentiel_index', [
+            'diplome' => $diplome->getId(),
+        ]);
+    }
+
     /**
      * @Route("/{competence}/new", name="administration_apc_niveau_new", methods={"GET","POST"})
      */
@@ -42,7 +72,7 @@ class ApcNiveauController extends BaseController
 
         return $this->render('apc/apc_niveau/new.html.twig', [
             'apc_niveau' => $apcNiveau,
-            'form'       => $form->createView(),
+            'form' => $form->createView(),
             'competence' => $competence,
         ]);
     }
@@ -65,7 +95,7 @@ class ApcNiveauController extends BaseController
 
         return $this->render('apc/apc_niveau/edit.html.twig', [
             'apc_niveau' => $apcNiveau,
-            'form'       => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 

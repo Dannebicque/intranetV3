@@ -47,6 +47,11 @@
                     <h4 class="card-title">{{ 'adm.referentiel.de.competence.heading'|trans({ '%diplome%': diplome.libelle}) }}</h4>
                     <div class="card-header-actions" style="">
                 <span>
+                    <a href="{{ path('administration_apc_niveau_annee_synchro', {diplome:diplome.id}) }}" class="btn
+                    btn-sm btn btn-info"
+                       data-provide="tooltip"
+                       data-placement="bottom" title="Synchroniser les niveaux et les années"><i
+                                class="fas fa-sync"></i></a>
                     <a href="{{ path('administration_apc_competence_new', {diplome:diplome.id}) }}" class="btn
                     btn-sm btn btn-info"
                        data-provide="tooltip"
