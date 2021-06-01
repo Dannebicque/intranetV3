@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/AnneeType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/05/2021 18:27
+ * @lastUpdate 01/06/2021 08:08
  */
 
 namespace App\Form;
@@ -55,9 +55,6 @@ class AnneeType extends AbstractType
             ])
             ->add('codeVersion', TextType::class, [
                 'label' => 'code_version'
-            ])
-            ->add('codeDepartement', TextType::class, [
-                'label' => 'code_departement'
             ])
             ->add('ordre', TextType::class, [
                 'label' => 'ordre'

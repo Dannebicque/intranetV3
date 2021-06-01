@@ -2243,3 +2243,6 @@ administratif:
   enquetes.heading: 'Gestion des enquêtes'
 changement.semestre.effectue: 'Changement de semestre effectué pour les étudiants'
 nb.saisie.par: 'Evaluation saisie par '
+assistant:
+  creation:
+    diplome: 'Assistant de création d''un diplôme'

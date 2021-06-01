@@ -32,15 +32,16 @@
     "regenerator-runtime": "^0.13.2",
     "sass-loader": "^9.0.3",
     "select2": "^4.0.13",
+    "semantic-release": "^17.4.3",
     "simplebar": "^5.3.0",
     "stimulus": "^2.0.0",
     "stimulus-clipboard": "^1.0.0",
     "sweetalert2": "^9.17.0",
     "tinymce": "^5.7.0",
+    "toastify-js": "^1.11.0",
     "ts-loader": "^8.0.15",
     "typescript": "^4.0.2",
-    "webpack-notifier": "^1.6.0",
-    "toastify-js": "^1.11.0"
+    "webpack-notifier": "^1.6.0"
   },
   "license": "MPL2.0",
   "private": true,
@@ -49,7 +50,8 @@
     "dev": "encore dev",
     "watch": "encore dev --watch",
     "build": "encore production --progress",
-    "version": "auto-changelog -p && git add CHANGELOG.md"
+    "version": "auto-changelog -p && git add CHANGELOG.md",
+    "semantic-release": "semantic-release"
   },
   "dependencies": {
     "babel-core": "^6.26.3",
@@ -63,5 +65,11 @@
     "unreleased": true,
     "commitLimit": false
   },
-  "version": "3.0.7"
+  "version": "0.0.0-development",
+  "author": "David Annebicque",
+  "name": "intranetv3",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Dannebicque/intranetV3.git"
+  }
 }
