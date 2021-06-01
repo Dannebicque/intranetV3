@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/util.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 23/05/2021 11:10
+// @lastUpdate 01/06/2021 19:09
 
 import $ from 'jquery'
 import Swal from 'sweetalert2'
@@ -208,31 +208,18 @@ $(document).on('click', '.confirm-delete', function (e) {
 })
 
 export function addCallout (message, label) {
-  // var translate = new Array()
-  // translate['success'] = 'Succès'
-  // translate['danger'] = 'Erreur'
-  // translate['warning'] = 'Attention'
-  //
-  // const html = '<div class="callout callout-' + label + '" role="alert">\n' +
-  //   '                    <button type="button" class="close" data-dismiss="callout" aria-label="Close">\n' +
-  //   '                        <span>&times;</span>\n' +
-  //   '                    </button>\n' +
-  //   '                    <h5>' + translate[label] + '</h5>\n' +
-  //   '                    <p>' + message + '</p>\n' +
-  //   '                </div>'
-  //
-  // $('#mainContent').prepend(html).slideDown('slow')
-  // $('.callout').delay(5000).slideUp('slow')
-
   switch (label) {
     case 'success':
-      $.toast.success(message)
+      window.umbrella.Toast.success(message)
       break
     case 'danger':
-      $.toast.error(message)
+      window.umbrella.Toast.error(message)
       break
     case 'warning':
-      $.toast.warning(message)
+      window.umbrella.Toast.warning(message)
+      break
+    case 'info':
+      window.umbrella.Toast.info(message)
       break
   }
 }
