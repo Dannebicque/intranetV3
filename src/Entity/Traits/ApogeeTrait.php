@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Traits/ApogeeTrait.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/06/2021 08:08
+ * @lastUpdate 01/06/2021 16:21
  */
 
 namespace App\Entity\Traits;
@@ -24,12 +24,12 @@ trait ApogeeTrait
     private $codeDiplome; //code etape ou code diplome
 
     /**
-     * @ORM\Column(type="string", length=10)
+     * @ORM\Column(type="string", length=10, nullable=true)
      */
     private $codeVersion;
 
     /**
-     * @ORM\Column(type="string", length=10)
+     * @ORM\Column(type="string", length=10, nullable=true)
      */
     private $codeDepartement;
 
