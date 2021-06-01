@@ -23,7 +23,6 @@
             {% endfor %}
             {% if is_granted('ROLE_PERMANENT') %}
                 <li>
-
                     <a href="{{ path('administration_apc_composante_essentielle_new', {competence:competence.id}) }}"><i class="fas fa-plus-circle"></i>
                         Ajouter une composante essentielle</a></li>
             {% endif %}

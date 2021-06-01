@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcCompetenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 01/06/2021 19:12
  */
 
 namespace App\Controller\administration\apc;
@@ -28,7 +28,6 @@ class ApcCompetenceController extends BaseController
     /**
      * @Route("/{diplome}/export.{_format}", name="administration_apc_competence_export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"})
-     *
      */
     public function export(
         MyExport $myExport,
@@ -66,8 +65,8 @@ class ApcCompetenceController extends BaseController
 
         return $this->render('apc/apc_competence/new.html.twig', [
             'apc_competence' => $apcComptence,
-            'form'           => $form->createView(),
-            'diplome'        => $diplome,
+            'form' => $form->createView(),
+            'diplome' => $diplome,
         ]);
     }
 
@@ -99,7 +98,7 @@ class ApcCompetenceController extends BaseController
 
         return $this->render('apc/apc_competence/edit.html.twig', [
             'apc_competence' => $apcCompetence,
-            'form'           => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 
