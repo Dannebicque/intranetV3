@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EtudiantSemestreController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 02/06/2021 13:13
  */
 
 namespace App\Controller\administration;
@@ -37,7 +37,7 @@ class EtudiantSemestreController extends BaseController
         $etudiants = $etudiantRepository->findBySemestre($semestre);
 
         return $this->render('administration/etudiant/parcours.html.twig', [
-            'semestre'  => $semestre,
+            'semestre' => $semestre,
             'etudiants' => $etudiants,
         ]);
     }
@@ -100,9 +100,9 @@ class EtudiantSemestreController extends BaseController
         Semestre $semestre
     ): Response {
         return $this->render('administration/etudiant/semestre.html.twig', [
-            'semestre'     => $semestre,
+            'semestre' => $semestre,
             'departements' => $departementRepository->findActifs(),
-            'bacs'         => $bacRepository->findAll(),
+            'bacs' => $bacRepository->findAll(),
         ]);
     }
 
@@ -114,7 +114,6 @@ class EtudiantSemestreController extends BaseController
      *     "semestre"="\d+",
      *     "_format"="csv|xlsx|pdf"
      * })
-     *
      */
     public function exportAllAbsences(
         MyExport $myExport,
