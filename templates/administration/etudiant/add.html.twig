@@ -32,6 +32,10 @@
                 <a class="nav-link" data-toggle="tab"
                    href="#autresFichiers">{{ 'importer.photo'|trans }}</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab"
+                   href="#importListe">{{ 'importer.liste.etudiant'|trans }}</a>
+            </li>
         </ul>
         <div class="buttons">
             <a href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}"
@@ -93,6 +97,41 @@
                             <div class="alert alert-warning">
                                 Les fichiers doivent se nommer : "numero_etudiant.jpg"
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane" id="importListe">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card">
+                        <h4 class="card-title">Import depuis une liste</h4>
+                        <div class="card-body">
+                            <div class="alert alert-warning">
+                                Fichier csv (séparateur ";"). Télécharger un modèle ici :
+                                <a href="{{ asset('exemples/import_etudiant.csv') }}" target="_blank">Modèle d'import
+                                                                                                      d'une liste
+                                                                                                      d'étudiant</a>.<br>
+                                Les codes semestres de votre département sont :
+                                <ul>
+                                    {% for semestre in user_data.semestres %}
+                                        <li>{{ semestre.display }} : {{ semestre.codeElement }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            <form action="{{ path('administration_etudiant_import_liste_csv') }}" method="post"
+                                  enctype="multipart/form-data">
+                                <div class="form-group">
+                                    <label class="control-label" for="fichierimportcsv">Fichier CSV</label>
+                                    <div class="input-append">
+                                        <input type="file" class="form-control fileinput" id="fichierimportcsv" name="fichierimportcsv"/>
+                                    </div>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-primary btn-large">Importer</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
