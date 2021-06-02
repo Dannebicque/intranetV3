@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved -->
+<!-- @file /Users/davidannebicque/htdocs/intranetV3/demo/diplome/but-GCCD.xml -->
+<!-- @author davidannebicque -->
+<!-- @project intranetV3 -->
+<!-- @lastUpdate 02/06/2021 13:13 -->
+
+<diplome specialite="GCCD"
+         specialite_long="Génie Civile et Construction durable"
+         type="B.U.T."
+         responsable="annebi01"
+         assistant="annebi01"
+         codeDiplome="5TS1Z"
+         codeVersion="180"
+         codeDepartement="980"
+         type-but="2"
+>
+    <annee ordre="1" codeEtape="" codeVersion="" type="commun" diplome="5TS1Z">
+        <semestre ordre="1" codeElement="">
+            <ue numero="1" nom="1.1" ects="" codeElement=""/>
+            <ue numero="2" nom="2.1" ects="" codeElement=""/>
+            <ue numero="3" nom="3.1" ects="" codeElement=""/>
+            <ue numero="4" nom="4.1" ects="" codeElement=""/>
+        </semestre>
+        <semestre ordre="2" codeElement="">
+            <ue numero="1" nom="1.2" ects="" codeElement=""/>
+            <ue numero="2" nom="2.2" ects="" codeElement=""/>
+            <ue numero="3" nom="3.2" ects="" codeElement=""/>
+            <ue numero="4" nom="4.2" ects="" codeElement=""/>
+        </semestre>
+    </annee>
+    <annee ordre="2" codeEtape="" codeVersion="" type="parcours" diplome="5TS10">
+        <semestre ordre="1" codeElement="">
+            <ue numero="1" nom="1.1" ects="" codeElement=""/>
+            <ue numero="2" nom="2.1" ects="" codeElement=""/>
+            <ue numero="3" nom="3.1" ects="" codeElement=""/>
+            <ue numero="4" nom="4.1" ects="" codeElement=""/>
+        </semestre>
+        <semestre ordre="2" codeElement="">
+            <ue numero="1" nom="1.2" ects="" codeElement=""/>
+            <ue numero="2" nom="2.2" ects="" codeElement=""/>
+            <ue numero="3" nom="3.2" ects="" codeElement=""/>
+            <ue numero="4" nom="4.2" ects="" codeElement=""/>
+        </semestre>
+    </annee>
+
+</diplome>

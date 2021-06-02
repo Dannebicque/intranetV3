@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEvaluation.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/05/2021 15:30
+ * @lastUpdate 02/06/2021 13:21
  */
 
 /*
@@ -260,6 +260,7 @@ class MyEvaluation
                     'evaluation' => $this->evaluation,
                     'groupes' => $groupes,
                     'notes' => $notes,
+                    'matiere' => $matiere,
                 ], $name, $departement->getLibelle());
             case Constantes::FORMAT_EXCEL:
                 $this->myExcelMultiExport->genereReleveExcel(
