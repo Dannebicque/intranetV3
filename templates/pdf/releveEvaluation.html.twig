@@ -5,9 +5,11 @@
 
         <table style="width: 100%; border:0;">
             <tr>
-                <td style="text-align: center; width:20%"><img src="{{ settings('BASE_PATH') }}{{ 'logo/'~user_data.departement.logoName }}" alt="logo" height="75px"/></td>
+                <td style="text-align: center; width:20%">
+                    <img src="{{ settings('BASE_PATH') }}{{ 'logo/'~user_data.departement.logoName }}" alt="logo" height="75px"/>
+                </td>
                 <td style="text-align: center; width:60%"><h1>{{ user_data.departement.libelle }}</h1>
-                    <h2>{{ evaluation.semestre.libelle }}</h2>
+                    <h2>{{ matiere.semestre.libelle }}</h2>
                     <h2>{{ user_data.displayAnneeUniversitaire }}</h2></td>
                 <td style="text-align: center; width:20%"><img
                             src="{{ settings('BASE_PATH') }}{{ 'logo/' }}{{ settings('LOGO_IUT') }}"
@@ -16,7 +18,7 @@
             </tr>
         </table>
 
-        <h3>Rélévé de note pour le module {{ evaluation.matiere.display }} | Evaluation
+        <h3>Rélévé de note pour le module {{ matiere.display }} | Evaluation
             du {{ evaluation.dateEvaluation|format_date('long') }}</h3>
         <h4>{{ groupe.libelle }}</h4>
         <h4>Saisi par : {{ evaluation.personnelAuteur.displayPr }}. Modification autorisées pour
@@ -29,7 +31,7 @@
         <table style="clear:both;width:100%" class="table">
             <thead>
             <tr>
-                {% if evaluation.semestre.annee.diplome.optAnonymat == false %}
+                {% if matiere.semestre.annee.diplome.optAnonymat == false %}
                     <th style="width: 15%">N°</th>
                     <th style="width: 30%">Nom - Prénom</th>
                     <th style="width: 20%; text-align: center">Note</th>
@@ -48,7 +50,7 @@
                 <tr>
                     <td style="text-align: center; height: 20px">{{ etudiant.numEtudiant }}</td>
 
-                    {% if evaluation.semestre.annee.diplome.optAnonymat == false %}
+                    {% if matiere.semestre.annee.diplome.optAnonymat == false %}
                         <td>&nbsp; {{ etudiant.display }} </td>
                     {% endif %}
 
