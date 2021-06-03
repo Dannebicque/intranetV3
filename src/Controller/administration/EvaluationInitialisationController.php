@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EvaluationInitialisationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2021 08:46
+ * @lastUpdate 03/06/2021 15:01
  */
 
 namespace App\Controller\administration;
@@ -14,11 +14,11 @@ use App\Controller\BaseController;
 use App\Entity\Evaluation;
 use App\Entity\Semestre;
 use App\Repository\EvaluationRepository;
+use function count;
 use Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use function count;
 
 /**
  * Class EvaluationInitialisationController.
@@ -39,7 +39,7 @@ class EvaluationInitialisationController extends BaseController
         Semestre $semestre
     ): Response {
         $matieres = $typeMatiereManager->findBySemestre($semestre);
-        $evaluations = $evaluationRepository->findBySemestre($semestre,
+        $evaluations = $evaluationRepository->findBySemestre($matieres,
             $this->dataUserSession->getAnneeUniversitaire());
 
         if ('POST' === $request->getMethod()) {
