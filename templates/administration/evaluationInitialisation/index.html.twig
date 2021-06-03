@@ -46,7 +46,7 @@
                     </thead>
                     <tbody>
                     {% for matiere in matieres %}
-                        {% if matiere.nbnotes>0 %}
+                        {% if matiere.nbNotes>0 %}
                             {% set nbeval=1 %}
 
                             {% for eval in evaluations|filter(eval =>  eval.idMatiere==matiere.id) %}
@@ -57,13 +57,13 @@
                                 {% set nbeval=nbeval+1 %}
                             {% endfor %}
 
-                            {% if nbeval!=matiere.nbnotes+1 %}
-                                {% for i in nbeval..matiere.nbnotes %}
+                            {% if nbeval!=matiere.nbNotes+1 %}
+                                {% for i in nbeval..matiere.nbNotes %}
                                     <tr>
                                         <td>{{ matiere.display }}</td>
                                         <td>
                                             <input type="text" class="form-control" name="commentaire_{{ matiere
-                                            .valueForSelect }}_{{ i }}">
+                                            .typeIdMatiere }}_{{ i }}">
                                         </td>
                                         <td>
                                             <input type="text" class="form-control" name="coefficient_{{ matiere.typeIdMatiere }}_{{ i }}">
