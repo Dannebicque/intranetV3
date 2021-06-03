@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Command/GenereCodeApogeeCommand.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2021 15:21
+ * @lastUpdate 03/06/2021 12:06
  */
 
 namespace App\Command;
@@ -14,20 +14,17 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 class GenereCodeApogeeCommand extends Command
 {
     protected static $defaultName = 'app:genere-code-apogee';
-    protected static $defaultDescription = 'Génére les codes Apogées pour les nouveaux diplôme du B.U.T.';
+    protected static string $defaultDescription = 'Génére les codes Apogées pour les nouveaux diplôme du B.U.T.';
     protected EntityManagerInterface $entityManager;
 
     /**
      * GenereCodeApogeeCommand constructor.
-     *
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
      */
     public function __construct(EntityManagerInterface $entityManager)
     {
@@ -36,15 +33,11 @@ class GenereCodeApogeeCommand extends Command
         parent::__construct();
     }
 
-
     protected function configure(): void
     {
         $this
             ->setDescription(self::$defaultDescription)
             ->addArgument('departement', InputArgument::REQUIRED, 'Sigle du diplôme')
-            ->addArgument('lettrediplome', InputArgument::REQUIRED, 'Lettre du diplôme')
-            ->addArgument('lettredomaine', InputArgument::REQUIRED,
-                'Lettre du domaine')//->addOption('option1', null, InputOption::VALUE_NONE, 'Option description')
         ;
     }
 
@@ -52,19 +45,17 @@ class GenereCodeApogeeCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
         $arg1 = $input->getArgument('departement');
-        $lettrediplome = $input->getArgument('lettrediplome');
-        $lettredomaine = $input->getArgument('lettredomaine');
 
         if ($arg1) {
             $maquette = new GenereCodeApogee($this->entityManager);
 
-            if ($maquette->checkDiplome($arg1) === false) {
+            if (false === $maquette->checkDiplome($arg1)) {
                 $io->error('Le diplôme n\'existe pas');
             }
 
-            $value = $maquette->genereCodes($lettrediplome, $lettredomaine);
+            $value = $maquette->genereCodes();
 
-            if ($value === true) {
+            if (true === $value) {
                 $io->success('Codes générés avec succès');
 
                 return Command::SUCCESS;
