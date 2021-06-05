@@ -86,13 +86,6 @@
     {{ block('form_widget') }}
 {% endblock collection_widget %}
 
-{% block quill_js_row %}
-    {{ form_label(form) }}
-    <div id="{{ id }}" name="{{ name }}" data-provide="quill">
-        {{ value }}
-    </div>
-{% endblock %}
-
 {%- block form_widget_simple -%}
     {% if input_prefix or input_suffix %}
         <div class="input-group">

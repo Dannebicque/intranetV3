@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block header %}
-    {{ 'adm.apc_referentiel_formation.grille.heading'|trans }}
+    {{ 'adm.apc_referentiel_formation.grille.heading'|trans({%diplome%:diplome.display}) }}
 {% endblock %}
 
 {% block headeractions %}
@@ -22,15 +22,15 @@
 
 {% block content %}
     <div class="card">
-        <h4 class="card-title">{{ 'adm.apc_referentiel_formation.grille.heading'|trans }}</h4>
+        <h4 class="card-title">{{ 'adm.apc_referentiel_formation.grille.heading'|trans({%diplome%:diplome.display}) }}</h4>
         <div class="card-body">
             <ul class="nav nav-tabs">
-            {% for semestre in user_data.semestresByDiplome(diplome.id) %}
-                <li class="nav-item">
-                    <a class="nav-link {% if loop.first %}active{% endif%} " data-toggle="tab"
-                       href="#semestre{{ semestre.id }}">{{ semestre.libelle }}</a>
-                </li>
-            {% endfor %}
+                {% for semestre in user_data.semestresByDiplome(diplome.id) %}
+                    <li class="nav-item">
+                        <a class="nav-link {% if loop.first %}active{% endif %} " data-toggle="tab"
+                           href="#semestre{{ semestre.id }}">{{ semestre.libelle }}</a>
+                    </li>
+                {% endfor %}
             </ul>
             <!-- Tab panes -->
             <div class="tab-content">

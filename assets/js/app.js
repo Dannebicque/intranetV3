@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/app.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 23/05/2021 14:21
+// @lastUpdate 05/06/2021 09:50
 
 import '@fortawesome/fontawesome-free/scss/fontawesome.scss'
 import '@fortawesome/fontawesome-free/scss/solid.scss'
@@ -41,38 +41,39 @@ $('input[type="file"]').on('change', function (e) {
   $('.custom-file-label').html(filename)
 })
 
-$(document).ready(function () {
-  //dark mode
+window.addEventListener('load', function () { //le dom est chargé
   const currentTheme = localStorage.getItem('theme')
+  const menuDarkTheme = document.getElementById('darkMode')
 
-  // If the current theme in localStorage is "dark"...
-  if (currentTheme === 'dark') {
-    // ...then use the .dark-theme class
-    document.body.classList.add('dark-theme')
-    $(this).html('<i class="fas fa-adjust"></i> Dark Mode Off')
-  } else {
-    $(this).html('<i class="fas fa-adjust"></i> Dark Mode On')
-  }
-
-  $(document).on('click', '#darkMode', function () {
-    // Toggle the .dark-theme class on each click
+  menuDarkTheme.addEventListener('click', function () {
     document.body.classList.toggle('dark-theme')
-
     // Let's say the theme is equal to light
     let theme = 'light'
     // If the body contains the .dark-theme class...
     if (document.body.classList.contains('dark-theme')) {
       // ...then let's make the theme dark
       theme = 'dark'
-      $(this).html('<i class="fas fa-adjust"></i> Dark Mode Off')
+      menuDarkTheme.innerHTML = '<i class="fas fa-adjust"></i> Dark Mode Off'
     } else {
-      $(this).html('<i class="fas fa-adjust"></i> Dark Mode On')
+      menuDarkTheme.innerHTML = '<i class="fas fa-adjust"></i> Dark Mode On'
     }
     // Then save the choice in localStorage
     localStorage.setItem('theme', theme)
   })
 
+  // If the current theme in localStorage is "dark"...
+  if (currentTheme === 'dark') {
+    // ...then use the .dark-theme class
+    document.body.classList.add('dark-theme')
+    menuDarkTheme.innerHTML = '<i class="fas fa-adjust"></i> Dark Mode Off'
+  } else {
+    menuDarkTheme.innerHTML = '<i class="fas fa-adjust"></i> Dark Mode On'
+  }
 
+
+}, false)
+
+$(document).ready(function () {
   // script pour afficher le fichier selectionné avec bootstrap4
   $('.custom-file input').change(function (e) {
     const files = []
@@ -140,7 +141,7 @@ $(document).on('click', '[data-provide~="modaler"]', function () {
 })
 
 function updateInterface () {
-  $('.callout').delay(5000).slideUp('slow')
+  // $('.callout').delay(5000).slideUp('slow')
 
   if (document.getElementsByClassName('datepicker-range').length > 0) {
     $('.datepicker-range').flatpickr({

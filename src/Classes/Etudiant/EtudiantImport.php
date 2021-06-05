@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 02/06/2021 15:59
  */
 
 /*
@@ -17,6 +17,7 @@ use App\Classes\LDAP\MyLdap;
 use App\Entity\Adresse;
 use App\Entity\Etudiant;
 use App\Entity\Semestre;
+use App\Utils\Tools;
 use Doctrine\ORM\EntityManagerInterface;
 
 class EtudiantImport
@@ -102,5 +103,58 @@ class EtudiantImport
         $this->entity->clear($etudiant);
 
         return null;
+    }
+
+    public function importFomCsv(?string $fichier, array $tabSemestres)
+    {
+        $handle = fopen($fichier, 'rb');
+
+        /*Si on a réussi à ouvrir le fichier*/
+        if ($handle) {
+            /* supprime la première ligne */
+            fgetcsv($handle, 1024, ';');
+            /*Tant que l'on est pas à la fin du fichier*/
+            while (!feof($handle)) {
+                /*On lit la ligne courante*/
+                $ligne = fgetcsv($handle, 1024, ';');
+                if (array_key_exists($ligne[10], $tabSemestres)) {
+                    $this->createEtudiantFromCsv($tabSemestres[$ligne[10]], $ligne);
+                }
+            }
+            $this->entity->flush();
+            fclose($handle);
+            unlink($fichier); //suppression du fichier
+        }
+    }
+
+    private function createEtudiantFromCsv(bool|array $ligne, Semestre $semestre)
+    {
+        $adresse = new Adresse();
+        $adresse->setAdresse1($ligne[10]);
+        $adresse->setAdresse2($ligne[11]);
+        $adresse->setAdresse3($ligne[12]);
+        $adresse->setCodePostal($ligne[13]);
+        $adresse->setVille($ligne[14]);
+        $this->entity->persist($adresse);
+
+        $etudiant = new Etudiant();
+        $etudiant->setAdresse($adresse);
+        $etudiant->setNumEtudiant($ligne[0]);
+        $etudiant->setNumIne($ligne[1]);
+        $etudiant->setNom($ligne[2]);
+        $etudiant->setPrenom($ligne[3]);
+        $etudiant->setDateNaissance(Tools::convertDateToObject($ligne[4])); //en fr?
+        $etudiant->setPromotion($ligne[5]);
+
+        $etudiant->setAnneeBac($ligne[6]);
+        $etudiant->setBac(true === \array_key_exists($ligne[7], $tBac) ? $tBac[$data[7]] : null);
+        $etudiant->setCivilite('M' === $ligne[8] ? 'M.' : 'Mme'); //M ou F
+
+        $etudiant->setTel1($ligne[9]);
+        $etudiant->setTypeUser('etudiant');
+        $etudiant->setSemestre($semestre);
+
+        $this->entity->persist($etudiant);
+
     }
 }

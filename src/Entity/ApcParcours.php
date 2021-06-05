@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcParcours.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/06/2021 08:08
+ * @lastUpdate 02/06/2021 14:02
  */
 
 namespace App\Entity;
@@ -25,7 +25,6 @@ class ApcParcours extends BaseEntity
     use LifeCycleTrait;
     use ApogeeTrait;
 
-    //todo: ajouter code Diplome (année 2 et 3 ?)
     /**
      * @ORM\Column(type="string", length=255)
      */

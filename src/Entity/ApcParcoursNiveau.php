@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcParcoursNiveau.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/06/2021 07:06
+ * @lastUpdate 02/06/2021 14:02
  */
 
 namespace App\Entity;
@@ -20,7 +20,7 @@ use Doctrine\ORM\Mapping as ORM;
 class ApcParcoursNiveau extends BaseEntity
 {
     use LifeCycleTrait;
-//Todo: ajouter code étape année. Le parcours ne devrait pas prendre en compte la preière année lors d'un type 1 ou 2 ???
+
     /**
      * @ORM\ManyToOne(targetEntity=ApcNiveau::class, inversedBy="apcParcoursNiveaux")
      */

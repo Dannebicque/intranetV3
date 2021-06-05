@@ -477,7 +477,7 @@ adm:
       heading: 'Création d''un niveau pour la compétence %competence%'
   apc_referentiel_formation:
     grille:
-      heading: 'Référentiel de formation Ressources / SAÉ / Compétences'
+      heading: 'Référentiel de formation Ressources / SAÉ / Compétences du diplôme : %diplome%'
   projet_etudiant:
     modification:
       heading: 'Modification d''un projet étudiant'

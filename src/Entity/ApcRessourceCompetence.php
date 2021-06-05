@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcRessourceCompetence.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/05/2021 16:40
+ * @lastUpdate 04/06/2021 11:51
  */
 
 namespace App\Entity;
@@ -34,7 +34,7 @@ class ApcRessourceCompetence extends BaseEntity
     /**
      * @ORM\Column(type="float")
      */
-    private float $coefficient = 1;
+    private float $coefficient = 0;
 
     /**
      * ApcRessourceCompetence constructor.
