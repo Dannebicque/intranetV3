@@ -4,14 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Departement.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 05/06/2021 12:02
  */
 
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\UuidTrait;
-use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -38,6 +37,7 @@ class Departement extends BaseEntity
      * @Groups({"actualite_administration"})
      */
     private ?string $libelle;
+
     /**
      * @var Ufr
      * @ORM\ManyToOne(targetEntity="App\Entity\Ufr", inversedBy="departements")
@@ -472,7 +472,7 @@ class Departement extends BaseEntity
         if (null !== $logo) {
             // It is required that at least one field changes if you are using doctrine
             // otherwise the event listeners won't be called and the file is lost
-            $this->setUpdated(new DateTime());
+            $this->setUpdatedValue();
         }
     }
 

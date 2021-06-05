@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Absence.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/05/2021 07:36
+ * @lastUpdate 05/06/2021 11:19
  */
 
 namespace App\Entity;
@@ -36,9 +36,9 @@ class Absence extends BaseEntity implements Serializable
         self::ABSENCE_EN_ATTENTE => 'warning',
     ];
 
-    const ABSENCE_JUSTIFIE = 'justifie';
-    const ABSENCE_INJUSTIFIEE = 'injustifie';
-    const ABSENCE_EN_ATTENTE = '-';
+    public const ABSENCE_JUSTIFIE = 'justifie';
+    public const ABSENCE_INJUSTIFIEE = 'injustifie';
+    public const ABSENCE_EN_ATTENTE = '-';
 
     /**
      * @ORM\Column(name="dateHeure", type="datetime")
@@ -206,8 +206,8 @@ class Absence extends BaseEntity implements Serializable
             'date' => null !== $this->getDateHeure() ? $this->getDateHeure()->format('d/m/Y') : '-',
             'heure' => null !== $this->getDateHeure() ? $this->getDateHeure()->format('H:i') : '-',
             'personnel' => null !== $this->getPersonnel() ? $this->getPersonnel()->getDisplay() : '-',
-            'codeMatiere' => null !== $this->getIdMatiere()
-            // ? $this->getMatiere()->getCodeMatiere() : '-',//todo: récupérer la matière ?
+            'codeMatiere' => null !== $this->getIdMatiere(),
+            'typeIdMatiere' => null !== $this->getTypeIdMatiere()
         ];
     }
 

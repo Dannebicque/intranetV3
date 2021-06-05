@@ -4,13 +4,14 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/CovidAttestationPersonnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 05/06/2021 11:26
  */
 
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
 use App\Repository\CovidAttestationPersonnelRepository;
+use Carbon\Carbon;
 use DateTime;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -190,8 +191,8 @@ class CovidAttestationPersonnel extends BaseEntity
         $this->setDateValidationDirection(null);
         $this->setValidationDepartement(null);
         $this->setValidationDirection(null);
-        $this->setCreated(new DateTime());
-        $this->setUpdated(new DateTime());
+        $this->setCreatedValue();
+        $this->setUpdatedValue();
     }
 
     public function getDiplome(): ?Diplome

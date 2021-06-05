@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/StagePeriode.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 05/06/2021 11:26
  */
 
 namespace App\Entity;
@@ -485,7 +485,7 @@ class StagePeriode extends BaseEntity implements Serializable
         if (null !== $document) {
             // It is required that at least one field changes if you are using doctrine
             // otherwise the event listeners won't be called and the file is lost
-            $this->setUpdated(new DateTime());
+            $this->setUpdatedValue();
         }
     }
 

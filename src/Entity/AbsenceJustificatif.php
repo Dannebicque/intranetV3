@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/AbsenceJustificatif.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/04/2021 21:16
+ * @lastUpdate 05/06/2021 11:26
  */
 
 namespace App\Entity;
@@ -187,7 +187,7 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
         $this->fichierFile = $document;
 
         if (null !== $document) {
-            $this->setUpdated(new DateTime());
+            $this->setUpdated(Carbon::now());
         }
     }
 
