@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/TypeHrsType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/05/2021 18:37
+ * @lastUpdate 05/06/2021 10:56
  */
 
 namespace App\Form;
@@ -32,13 +32,7 @@ class TypeHrsType extends AbstractType
             ])
             ->add('type', ChoiceType::class, [
                 'label' => 'typehrs',
-                'choices' => [//todo: constantes
-                    'choice.hrs' => 'HRS',
-                    'choice.pca' => 'PCA',
-                    'choice.prp' => 'PRP',
-                    'choice.suivi' => 'Suivi',
-                    'choice.autre' => 'Autre',
-                ],
+                'choices' => TypeHrs::TAB_TYPE_HRS,
                 'choice_translation_domain' => 'form',
                 'expanded' => true,
             ])
