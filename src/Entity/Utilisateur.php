@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Utilisateur.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/05/2021 16:35
+ * @lastUpdate 05/06/2021 11:12
  */
 
 namespace App\Entity;
@@ -90,7 +90,7 @@ abstract class Utilisateur implements UserInterface, Serializable
     /**
      * @ORM\Column(type="date", nullable=true)
      */
-    protected $dateNaissance;
+    protected DateTimeInterface $dateNaissance;
 
     /**
      * @ORM\Column(type="string", length=20,nullable=true)

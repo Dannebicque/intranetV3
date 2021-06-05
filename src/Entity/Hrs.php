@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Hrs.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/05/2021 16:35
+ * @lastUpdate 05/06/2021 11:10
  */
 
 namespace App\Entity;
 
+use App\Entity\Traits\LifeCycleTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -17,56 +18,57 @@ use Symfony\Component\Serializer\Annotation\Groups;
  */
 class Hrs extends BaseEntity
 {
-    //todo: on pourrait ajouter l'horodatage?
+    use LifeCycleTrait;
+
     /**
      * @ORM\Column(type="float")
      * @Groups({"hrs_administration"})
      */
-    private $nbHeuresTd;
+    private ?float $nbHeuresTd;
 
     /**
      * @ORM\Column(type="string", length=150)
      * @Groups({"hrs_administration"})
      */
-    private $libelle;
+    private ?string $libelle;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Semestre", inversedBy="hrs")
      * @Groups({"hrs_administration"})
      */
-    private $semestre;
+    private ?Semestre $semestre;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Diplome", inversedBy="hrs")
      */
-    private $diplome;
+    private ?Diplome $diplome;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Personnel", inversedBy="hrs")
      * @Groups({"hrs_administration"})
      */
-    private $personnel;
+    private ?Personnel $personnel;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\TypeHrs", inversedBy="hrs")
      * @Groups({"hrs_administration"})
      */
-    private $typeHrs;
+    private ?TypeHrs $typeHrs;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $annee;
+    private int $annee;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Departement", inversedBy="hrs")
      */
-    private $departement;
+    private ?Departement $departement;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $commentaire;
+    private ?string $commentaire;
 
     public function getNbHeuresTd(): ?float
     {

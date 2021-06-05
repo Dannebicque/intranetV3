@@ -4,54 +4,47 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Traits/LifeCycleTrait.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/03/2021 16:27
+ * @lastUpdate 05/06/2021 11:21
  */
 
 namespace App\Entity\Traits;
 
-use Doctrine\ORM\Mapping as ORM;
+use Carbon\Carbon;
+use Carbon\CarbonInterface;
 use DateTime;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Trait LifeCycleTrait
- * @package App\Entity\Traits
+ * Trait LifeCycleTrait.
  */
 trait LifeCycleTrait
 {
     /**
-     * @var DateTime
      * @ORM\Column(type="datetime")
      */
-    private $created;
+    private ?CarbonInterface $created;
 
     /**
-     * @var DateTime
      * @ORM\Column(type="datetime")
      */
-    private $updated;
+    private ?CarbonInterface $updated;
 
-    /**
-     * @return DateTime
-     */
-    public function getCreated(): ?DateTime
+    public function getCreated(): ?CarbonInterface
     {
-        return $this->created ?? new DateTime();
+        return $this->created ?? Carbon::now();
     }
 
-    public function setCreated(?DateTime $created): void
+    public function setCreated(?CarbonInterface $created): void
     {
         $this->created = $created;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getUpdated(): ?DateTime
+    public function getUpdated(): ?CarbonInterface
     {
-        return $this->updated ?? new DateTime();
+        return $this->updated ?? Carbon::now();
     }
 
-    public function setUpdated(?DateTime $updated): void
+    public function setUpdated(?CarbonInterface $updated): void
     {
         $this->updated = $updated;
     }
@@ -62,7 +55,7 @@ trait LifeCycleTrait
      */
     public function setUpdatedValue(): void
     {
-        $this->updated = new DateTime();
+        $this->updated = Carbon::now();
     }
 
     /**
@@ -70,6 +63,6 @@ trait LifeCycleTrait
      */
     public function setCreatedValue(): void
     {
-        $this->created = new DateTime();
+        $this->created = Carbon::now();
     }
 }

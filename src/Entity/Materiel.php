@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Materiel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:49
+ * @lastUpdate 05/06/2021 11:26
  */
 
 namespace App\Entity;
@@ -119,7 +119,7 @@ class Materiel extends BaseEntity
         if (null !== $document) {
             // It is required that at least one field changes if you are using doctrine
             // otherwise the event listeners won't be called and the file is lost
-            $this->setUpdated(new DateTime());
+            $this->setUpdatedValue();
         }
     }
 
