@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcSaeCompetence.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/05/2021 11:03
+ * @lastUpdate 04/06/2021 11:51
  */
 
 namespace App\Entity;
@@ -34,7 +34,7 @@ class ApcSaeCompetence extends BaseEntity
     /**
      * @ORM\Column(type="float")
      */
-    private $coefficient = 1;
+    private $coefficient = 0;
 
     /**
      * ApcSaeCompetence constructor.

@@ -410,19 +410,6 @@
             {% endfor %}
         </div>
 
-        {# {% for label, messages in app.flashes %} #}
-        {# {% for message in messages %} #}
-        {# <div class="callout callout-{{ label }}" role="alert"> #}
-        {# <button type="button" class="close" data-dismiss="callout" aria-label="Close"> #}
-        {# <span>&times;</span> #}
-        {# </button> #}
-        {# <h5>{{ label|trans }}</h5> #}
-        {# <p>{{ message }}</p> #}
-        {# </div> #}
-        {# {% endfor %} #}
-        {# {% endfor %} #}
-
-
         {% block content %}
 
 
@@ -487,6 +474,6 @@
 {% block javascripts %}
     {{ encore_entry_script_tags('app') }}
 {% endblock %}
-{# <script data-provide="sweetalert"></script> #}
+<script data-provide="sweetalert"></script>
 </body>
 </html>
