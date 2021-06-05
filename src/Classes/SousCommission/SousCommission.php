@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/SousCommission/SousCommission.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/05/2021 22:19
+ * @lastUpdate 05/06/2021 11:08
  */
 
 namespace App\Classes\SousCommission;
@@ -108,9 +108,9 @@ class SousCommission
 
             //calculer la moyenne générale selon l'option séléctionnée (avec et sans pénalité)
             if (null !== $semestre->getDiplome()) {
-                if (Constantes::MOYENNE_MODULES === $semestre->getDiplome()->getOptMethodeCalcul()) {
+                if (Constantes::METHODE_CALCUL_MOY_MODULE === $semestre->getDiplome()->getOptMethodeCalcul()) {
                     $etudiantSousCommission->calculMoyenneSemestreMatiere();
-                } elseif (Constantes::MOYENNE_UES === $semestre->getDiplome()->getOptMethodeCalcul()) {
+                } elseif (Constantes::METHODE_CALCUL_MOY_UE === $semestre->getDiplome()->getOptMethodeCalcul()) {
                     $etudiantSousCommission->calculMoyenneSemestreUes();
                 }
             }

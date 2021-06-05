@@ -4,12 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/DiplomeType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/06/2021 08:08
+ * @lastUpdate 05/06/2021 11:08
  */
 
 namespace App\Form;
 
 use App\Entity\AnneeUniversitaire;
+use App\Entity\Constantes;
 use App\Entity\Diplome;
 use App\Entity\Personnel;
 use App\Entity\TypeDiplome;
@@ -94,7 +95,7 @@ class DiplomeType extends AbstractType
                 'opt_methode_calcul',
                 ChoiceType::class,
                 [
-                    'choices' => ['choice.moymodules' => 'moymodules', 'choice.moyues' => 'moyues'],
+                    'choices' => Constantes::TAB_METHODE_CALCUL,
                     'expanded' => true,
                     'label' => 'opt_methode_calcul',
                     'choice_translation_domain' => 'form',

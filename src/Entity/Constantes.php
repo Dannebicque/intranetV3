@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Constantes.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/04/2021 11:51
+ * @lastUpdate 05/06/2021 11:08
  */
 
 namespace App\Entity;
@@ -131,18 +131,23 @@ class Constantes
         '20:30:00' => 26,
     ];
 
-    public const MOYENNE_MODULES = 'moymodules';
-    public const MOYENNE_UES = 'moyues';
+    public const METHODE_CALCUL_MOY_MODULE = 'moymodules';
+    public const METHODE_CALCUL_MOY_UE = 'moyues';
+
+    public const TAB_METHODE_CALCUL = [
+        'choice.moymodules' => Constantes::METHODE_CALCUL_MOY_MODULE,
+        'choice.moyues' => Constantes::METHODE_CALCUL_MOY_UE
+    ];
 
     public const TAB_GROUPES_INDEX = [
         'S1 DEC TP11' => 1,
         'S1 DEC TP12' => 2,
-        'S1 DEC TD1'  => 1,
-        'S2 CM'       => 1,
-        'S2 TD1'      => 1,
-        'S2 TD2'      => 2,
-        'S2 TD3'      => 3,
-        'S2 TP11'     => 1,
+        'S1 DEC TD1' => 1,
+        'S2 CM' => 1,
+        'S2 TD1' => 1,
+        'S2 TD2' => 2,
+        'S2 TD3' => 3,
+        'S2 TP11' => 1,
         'S2 TP12'     => 2,
         'S2 TP21'     => 3,
         'S2 TP22'     => 4,
