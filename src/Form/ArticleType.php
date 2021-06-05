@@ -4,13 +4,14 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ArticleType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/06/2021 15:05
+ * @lastUpdate 05/06/2021 10:56
  */
 
 namespace App\Form;
 
 use App\Entity\Article;
 use App\Entity\ArticleCategorie;
+use App\Entity\Departement;
 use App\Entity\Semestre;
 use App\Repository\ArticleCategorieRepository;
 use App\Repository\SemestreRepository;
@@ -27,7 +28,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ArticleType extends AbstractType
 {
-    private $departement;
+    private ?Departement $departement;
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -39,8 +40,7 @@ class ArticleType extends AbstractType
             ])
             ->add('texte', TextareaType::class, [
                 'label' => 'texte',
-                //todo: ajouter tinyMce
-                'attr' => ['rows' => 20],
+                'attr' => ['rows' => 20, 'class' => 'tinyMce'],
             ])
             ->add('categorie', EntityType::class, [
                 'class' => ArticleCategorie::class,
@@ -72,8 +72,8 @@ class ArticleType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class'         => Article::class,
-            'departement'        => null,
+            'data_class' => Article::class,
+            'departement' => null,
             'translation_domain' => 'form',
         ]);
     }
