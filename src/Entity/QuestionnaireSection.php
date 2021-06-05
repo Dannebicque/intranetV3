@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/QuestionnaireSection.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 05/06/2021 12:03
  */
 
 namespace App\Entity;
@@ -148,30 +148,6 @@ class QuestionnaireSection extends BaseEntity
 
         return $this;
     }
-
-//    public function previs($onglet = 0)
-//    {
-//        //todo: a supprimer déplacé sur la liaison
-//        $t = explode('-', $this->getConfig());
-//        if (count($t) === 2) {
-//            if ($onglet === 0) {
-//                return explode(',', $t[1]);
-//            }
-//            $pre = explode(',', $t[1]);
-//            $tPre = [];
-//            for ($i = 0; $i < 3; $i++) {
-//                $key = (int)$onglet * 3 - (3 - $i);
-//                if (array_key_exists($key, $pre)) {
-//                    $tPre[] = $pre[$key];
-//                }
-//            }
-//
-//            return $tPre;
-//
-//        }
-//
-//        return [];
-//    }
 
     public function getConfig(): ?string
     {
