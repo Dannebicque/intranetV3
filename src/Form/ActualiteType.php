@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ActualiteType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/06/2021 15:07
+ * @lastUpdate 05/06/2021 10:56
  */
 
 namespace App\Form;
@@ -30,8 +30,8 @@ class ActualiteType extends AbstractType
             ])
             ->add('texte', TextareaType::class, [
                 'label' => 'texte',
-                'required' => true, //todo: ajouter tinyMce
-                'attr' => ['rows' => 10],
+                'required' => true,
+                'attr' => ['rows' => 10, 'class' => 'tinyMce'],
             ]);
     }
 
