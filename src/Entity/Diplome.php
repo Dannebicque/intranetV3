@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Diplome.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/05/2021 22:31
+ * @lastUpdate 05/06/2021 11:08
  */
 
 namespace App\Entity;
@@ -24,93 +24,76 @@ class Diplome extends BaseEntity implements Serializable
 {
     use ApogeeTrait;
     use LifeCycleTrait;
-//todo: supprimer code étape, n'existe pas dans un diplome.
+
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $libelle;
+    private ?string $libelle;
 
     /**
-     * @var Personnel
-     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Personnel")
      */
-    private $responsableDiplome;
+    private ?Personnel $responsableDiplome;
 
     /**
-     * @var Personnel
-     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Personnel")
      */
-    private $assistantDiplome;
+    private ?Personnel $assistantDiplome;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\TypeDiplome", inversedBy="diplomes")
      */
-    private $typeDiplome;
+    private ?TypeDiplome $typeDiplome;
 
     /**
-     * @var int
-     *
      * @ORM\Column(type="integer")
      */
-    private $optNbJoursSaisie = 15;
+    private int $optNbJoursSaisie = 15;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
-    private $optDilpomeDecale = false; //existance du diplôme en décalé
+    private bool $optDilpomeDecale = false; //existance du diplôme en décalé
 
     /**
-     * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
-    private $optSupprAbsence = false;
+    private bool $optSupprAbsence = false;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", length=10)
      */
-    private $optMethodeCalcul = 'moymodules'; //ou moyues
+    private string $optMethodeCalcul = Constantes::METHODE_CALCUL_MOY_MODULE;
 
     /**
-     * @var bool
      *
      * @ORM\Column(type="boolean")
      */
-    private $optAnonymat = false;
+    private bool $optAnonymat = false;
 
     /**
-     * @var bool
      *
      * @ORM\Column( type="boolean")
      */
-    private $optCommentairesReleve = false;
+    private bool $optCommentairesReleve = false;
 
     /**
-     * @var bool
      *
      * @ORM\Column(type="boolean")
      */
-    private $optEspacePersoVisible = true;
+    private bool $optEspacePersoVisible = true;
 
     /**
-     * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $volumeHoraire = 0;
+    private int $volumeHoraire = 0;
 
     /**
-     * @var int
      *
      * @ORM\Column(type="integer")
      */
-    private $codeCelcatDepartement = 0;
+    private int $codeCelcatDepartement = 0;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Hrs", mappedBy="diplome")
@@ -125,7 +108,7 @@ class Diplome extends BaseEntity implements Serializable
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Departement", inversedBy="diplomes")
      */
-    private $departement;
+    private ?Departement $departement;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Annee", mappedBy="diplome")
@@ -136,12 +119,12 @@ class Diplome extends BaseEntity implements Serializable
     /**
      * @ORM\Column(type="string", length=40)
      */
-    private $sigle;
+    private ?string $sigle;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $actif = true;
+    private bool $actif = true;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\AnneeUniversitaire", inversedBy="diplomes")
@@ -151,17 +134,17 @@ class Diplome extends BaseEntity implements Serializable
     /**
      * @ORM\Column(type="integer")
      */
-    private $optSemainesVisibles = 2;
+    private int $optSemainesVisibles = 2;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $optCertifieQualite = false;
+    private bool $optCertifieQualite = false;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Personnel")
      */
-    private $optResponsableQualite;
+    private ?Personnel $optResponsableQualite;
 
     /**
      * @ORM\OneToMany(targetEntity=ApcCompetence::class, mappedBy="diplome")
