@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ArticleType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/05/2021 14:21
+ * @lastUpdate 04/06/2021 15:05
  */
 
 namespace App\Form;
@@ -39,7 +39,8 @@ class ArticleType extends AbstractType
             ])
             ->add('texte', TextareaType::class, [
                 'label' => 'texte',
-                'attr' => ['data-provide' => 'quill', 'rows' => 20],
+                //todo: ajouter tinyMce
+                'attr' => ['rows' => 20],
             ])
             ->add('categorie', EntityType::class, [
                 'class' => ArticleCategorie::class,

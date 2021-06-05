@@ -61,32 +61,32 @@
                                value="courrier"
                                name="sujet_courrier"
                                id="sujet_courrier"/>
-                        <div id="toolbar_courrier" class="mt-10">
-                                <span class="ql-formats">
-                                    <button class="ql-bold"></button>
-                                    <button class="ql-italic"></button>
-                                    <button class="ql-underline"></button>
-                                </span>
-                            <span class="ql-formats">
-                                    <button class="ql-list" value="ordered" type="button"></button>
-                                    <button class="ql-list" value="bullet" type="button"></button>
+                        {# <div id="toolbar_courrier" class="mt-10"> #}
+                        {# <span class="ql-formats"> #}
+                        {# <button class="ql-bold"></button> #}
+                        {# <button class="ql-italic"></button> #}
+                        {# <button class="ql-underline"></button> #}
+                        {# </span> #}
+                        {# <span class="ql-formats"> #}
+                        {# <button class="ql-list" value="ordered" type="button"></button> #}
+                        {# <button class="ql-list" value="bullet" type="button"></button> #}
 
-                                    <button class="ql-align" type="button"></button>
-                                    <button class="ql-align" value="center" type="button"></button>
-                                    <button class="ql-align" value="right" type="button"></button>
-                                    <button class="ql-align" value="justify" type="button"></button>
-                                </span>
-                            <span>
-                                    <label for="custom-fields_courrier" class="sr-only">custom-fields_courrier</label>
-                                    <select id="custom-fields_courrier" class="ql-customsfields">
-                                        <option selected>Choisir</option>
-                                        {% for field in constant
-                                            ('App\\Entity\\StageMailTemplate::CHAMPS_PUBLIPOSTAGE')|keys %}
-                                            <option value="{{ field }}"></option>
-                                        {% endfor %}
-                                    </select>
-                                </span>
-                        </div>
+                        {# <button class="ql-align" type="button"></button> #}
+                        {# <button class="ql-align" value="center" type="button"></button> #}
+                        {# <button class="ql-align" value="right" type="button"></button> #}
+                        {# <button class="ql-align" value="justify" type="button"></button> #}
+                        {# </span> #}
+                        {# <span> #}
+                        {# <label for="custom-fields_courrier" class="sr-only">custom-fields_courrier</label> #}
+                        {# <select id="custom-fields_courrier" class="ql-customsfields"> #}
+                        {# <option selected>Choisir</option> #}
+                        {# {% for field in constant #}
+                        {# ('App\\Entity\\StageMailTemplate::CHAMPS_PUBLIPOSTAGE')|keys %} #}
+                        {# <option value="{{ field }}"></option> #}
+                        {# {% endfor %} #}
+                        {# </select> #}
+                        {# </span> #}
+                        {# </div> #}
                         <div class="editCourrier" id="text_courrier">
                             {% if courriers['courrier'] is defined %}
                                 {{ courriers['courrier'].twigTemplate.source|transformeFromTwig|raw }}
@@ -158,32 +158,32 @@
                                        name="sujet_{{ etat }}"
                                        id="sujet_{{ etat }}"/>
                             </div>
-                            <div id="toolbar_{{ etat }}" class="mt-10">
-                                <span class="ql-formats">
-                                    <button class="ql-bold"></button>
-                                    <button class="ql-italic"></button>
-                                    <button class="ql-underline"></button>
-                                </span>
-                                <span class="ql-formats">
-                                    <button class="ql-list" value="ordered" type="button"></button>
-                                    <button class="ql-list" value="bullet" type="button"></button>
+                            {# <div id="toolbar_{{ etat }}" class="mt-10"> #}
+                            {# <span class="ql-formats"> #}
+                            {# <button class="ql-bold"></button> #}
+                            {# <button class="ql-italic"></button> #}
+                            {# <button class="ql-underline"></button> #}
+                            {# </span> #}
+                            {# <span class="ql-formats"> #}
+                            {# <button class="ql-list" value="ordered" type="button"></button> #}
+                            {# <button class="ql-list" value="bullet" type="button"></button> #}
 
-                                    <button class="ql-align" type="button"></button>
-                                    <button class="ql-align" value="center" type="button"></button>
-                                    <button class="ql-align" value="right" type="button"></button>
-                                    <button class="ql-align" value="justify" type="button"></button>
-                                </span>
-                                <span>
-                                    <label for="custom-fields_{{ etat }}" class="sr-only">custom-fields_{{ etat }}</label>
-                                    <select id="custom-fields_{{ etat }}" class="ql-customsfields">
-                                        <option selected>Choisir</option>
-                                        {% for field in constant
-                                            ('App\\Entity\\StageMailTemplate::CHAMPS_PUBLIPOSTAGE')|keys %}
-                                            <option value="{{ field }}"></option>
-                                        {% endfor %}
-                                    </select>
-                                </span>
-                            </div>
+                            {# <button class="ql-align" type="button"></button> #}
+                            {# <button class="ql-align" value="center" type="button"></button> #}
+                            {# <button class="ql-align" value="right" type="button"></button> #}
+                            {# <button class="ql-align" value="justify" type="button"></button> #}
+                            {# </span> #}
+                            {# <span> #}
+                            {# <label for="custom-fields_{{ etat }}" class="sr-only">custom-fields_{{ etat }}</label> #}
+                            {# <select id="custom-fields_{{ etat }}" class="ql-customsfields"> #}
+                            {# <option selected>Choisir</option> #}
+                            {# {% for field in constant #}
+                            {# ('App\\Entity\\StageMailTemplate::CHAMPS_PUBLIPOSTAGE')|keys %} #}
+                            {# <option value="{{ field }}"></option> #}
+                            {# {% endfor %} #}
+                            {# </select> #}
+                            {# </span> #}
+                            {# </div> #}
                             <div class="editCourrier" id="text_{{ etat }}">
                                 {% if courriers[etat] is defined %}
                                     {{ courriers[etat].twigTemplate.source|transformeFromTwig }}

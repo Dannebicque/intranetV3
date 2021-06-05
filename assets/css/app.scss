@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/css/app.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 22/05/2021 19:09
+// @lastUpdate 04/06/2021 15:05
 
 @import "core.min.css";
 @import "~bootstrap/scss/functions";
@@ -267,39 +267,6 @@ thead {
   .wrapper-notes-absences {
     grid-template-columns: repeat(1, 1fr);
   }
-}
-
-/* QuillJs */
-.ql-editor {
-  min-height: 200px;
-}
-
-.ql-snow .ql-picker.customsfields .ql-picker-label::before {
-  content: 'Choisir'
-}
-
-/*.ql-snow .ql-picker.customsfields::before,*/
-.ql-snow .ql-picker.ql-customsfields .ql-picker-item::before {
-  content: attr(data-value);
-}
-
-
-/*
-.ql-snow .ql-picker.customsfields .ql-picker-label[data-value="[prenom]"]::before,
-.ql-snow .ql-picker.customsfields .ql-picker-item[data-value="[prenom]"]::before {
-  content: "[prenom]";
-}
-.ql-snow .ql-picker.customsfields .ql-picker-label[data-value="[nom]"]::before,
-.ql-snow .ql-picker.customsfields .ql-picker-item[data-value="[nom]"]::before {
-  content: "[nom]";
-}
-.ql-snow .ql-picker.customsfields .ql-picker-label[data-value="[entreprise]"]::before,
-.ql-snow .ql-picker.customsfields .ql-picker-item[data-value="[entreprise]"]::before {
-  content: "[entreprise]";
-}
-*/
-.ql-snow span.ql-picker.ql-customsfields {
-  width: 8em;
 }
 
 .erreurPrevi {

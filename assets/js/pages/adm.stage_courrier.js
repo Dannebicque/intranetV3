@@ -1,10 +1,9 @@
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.stage_courrier.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/10/2020 18:03
+// @lastUpdate 05/06/2021 09:50
 
-import Quill from '../quill'
 import {addCallout} from '../util'
 import $ from 'jquery'
 import Swal from 'sweetalert2'
@@ -13,58 +12,88 @@ let ed_courrier, ed_ETAT_STAGE_AUTORISE, ed_ETAT_STAGE_DEPOSE, ed_ETAT_STAGE_VAL
   ed_ETAT_STAGE_INCOMPLET,
   ed_ETAT_STAGE_CONVENTION_IMPRIMEE, ed_ETAT_STAGE_CONVENTION_ENVOYEE, ed_ETAT_STAGE_CONVENTION_RECUE
 
-let tabEd = {}
+// let tabEd = {}
 
-function loadQuill ($id) {
-  const options = {
-    modules: {
-      toolbar: {
-        container: '#toolbar_' + $id,
-        handlers: {
-          'customsfields': function (value) {
-            if (value) {
-              const cursorPosition = this.quill.getSelection().index
-              this.quill.insertText(cursorPosition, value)
-              this.quill.setSelection(cursorPosition + value.length)
-            }
-          }
-        }
-      }
+let fields = [
+
+  '{{civilite_court_etudiant}}',
+  '{{civilite_etudiant}}',
+  '{{prenom_etudiant}}',
+  '{{nom_etudiant}}',
+  '{{entreprise}}',
+  '{{civilite_court_responsable}}',
+  '{{civilite_responsable}}',
+  '{{prenom_reponsable}}',
+  '{{nom_responsable}}',
+  '{{civilite_court_tuteur}}',
+  '{{civilite_tuteur}}',
+  '{{prenom_tuteur}}',
+  '{{nom_tuteur}}',
+  '{{civilite_court_tuteur_univ}}',
+  '{{civilite_tuteur_univ}}',
+  '{{prenom_tuteur_univ}}',
+  '{{nom_tuteur_univ}}',
+  '{{date_debut_stage}}',
+  '{{date_fin_stage}}',
+  '{{nom_periode_stage}}'
+]
+const nbfields = fields.length
+let text = ''
+for (let i = 0; i < nbfields; i++) {
+  text = text + ' ' + fields[i]
+}
+
+function loadTinyMce ($id) {
+  return tinymce.init({
+    selector: '#text_' + $id,
+    height: 300,
+    menubar: 'publipostage',
+    language: 'fr_FR',
+    content_css: 'default',
+    toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent',
+    menu: {
+      publipostage: {title: 'Champs de publipostage', items: text}
     },
-    placeholder: 'Composez le corps du message... Laisser vide pour utiliser le mail par défaut.',
-    theme: 'snow'
-  }
-  return new Quill('#text_' + $id, options)
+    setup: function (editor) {
+      for (let i = 0; i < nbfields; i++) {
+        editor.ui.registry.addMenuItem(fields[i], {
+          text: fields[i],
+          onAction: function () {
+            editor.insertContent(fields[i])
+          }
+        })
+      }
+    }
+  })
 }
 
 $(document).ready(function () {
-  ed_ETAT_STAGE_AUTORISE = loadQuill('ETAT_STAGE_AUTORISE')
-  ed_ETAT_STAGE_DEPOSE = loadQuill('ETAT_STAGE_DEPOSE')
-  ed_ETAT_STAGE_VALIDE = loadQuill('ETAT_STAGE_VALIDE')
-  ed_ETAT_STAGE_REFUS = loadQuill('ETAT_STAGE_REFUS')
-  ed_ETAT_STAGE_INCOMPLET = loadQuill('ETAT_STAGE_INCOMPLET')
-  ed_ETAT_STAGE_CONVENTION_IMPRIMEE = loadQuill('ETAT_STAGE_CONVENTION_IMPRIMEE')
-  ed_ETAT_STAGE_CONVENTION_ENVOYEE = loadQuill('ETAT_STAGE_CONVENTION_ENVOYEE')
-  ed_ETAT_STAGE_CONVENTION_RECUE = loadQuill('ETAT_STAGE_CONVENTION_RECUE')
-  ed_courrier = loadQuill('courrier')
+  ed_ETAT_STAGE_AUTORISE = loadTinyMce('ETAT_STAGE_AUTORISE')
+  ed_ETAT_STAGE_DEPOSE = loadTinyMce('ETAT_STAGE_DEPOSE')
+  ed_ETAT_STAGE_VALIDE = loadTinyMce('ETAT_STAGE_VALIDE')
+  ed_ETAT_STAGE_REFUS = loadTinyMce('ETAT_STAGE_REFUS')
+  ed_ETAT_STAGE_INCOMPLET = loadTinyMce('ETAT_STAGE_INCOMPLET')
+  ed_ETAT_STAGE_CONVENTION_IMPRIMEE = loadTinyMce('ETAT_STAGE_CONVENTION_IMPRIMEE')
+  ed_ETAT_STAGE_CONVENTION_ENVOYEE = loadTinyMce('ETAT_STAGE_CONVENTION_ENVOYEE')
+  ed_ETAT_STAGE_CONVENTION_RECUE = loadTinyMce('ETAT_STAGE_CONVENTION_RECUE')
+  ed_courrier = loadTinyMce('courrier')
 
-  tabEd = {
-    'ed_ETAT_STAGE_AUTORISE': ed_ETAT_STAGE_AUTORISE,
-    'ed_ETAT_STAGE_DEPOSE': ed_ETAT_STAGE_DEPOSE,
-    'ed_ETAT_STAGE_VALIDE': ed_ETAT_STAGE_VALIDE,
-    'ed_ETAT_STAGE_REFUS': ed_ETAT_STAGE_REFUS,
-    'ed_ETAT_STAGE_INCOMPLET': ed_ETAT_STAGE_INCOMPLET,
-    'ed_ETAT_STAGE_CONVENTION_IMPRIMEE': ed_ETAT_STAGE_CONVENTION_IMPRIMEE,
-    'ed_ETAT_STAGE_CONVENTION_ENVOYEE': ed_ETAT_STAGE_CONVENTION_ENVOYEE,
-    'ed_ETAT_STAGE_CONVENTION_RECUE': ed_ETAT_STAGE_CONVENTION_RECUE,
-    'ed_courrier': ed_courrier
-  }
+  // tabEd = {
+  //   'ed_ETAT_STAGE_AUTORISE': ed_ETAT_STAGE_AUTORISE,
+  //   'ed_ETAT_STAGE_DEPOSE': ed_ETAT_STAGE_DEPOSE,
+  //   'ed_ETAT_STAGE_VALIDE': ed_ETAT_STAGE_VALIDE,
+  //   'ed_ETAT_STAGE_REFUS': ed_ETAT_STAGE_REFUS,
+  //   'ed_ETAT_STAGE_INCOMPLET': ed_ETAT_STAGE_INCOMPLET,
+  //   'ed_ETAT_STAGE_CONVENTION_IMPRIMEE': ed_ETAT_STAGE_CONVENTION_IMPRIMEE,
+  //   'ed_ETAT_STAGE_CONVENTION_ENVOYEE': ed_ETAT_STAGE_CONVENTION_ENVOYEE,
+  //   'ed_ETAT_STAGE_CONVENTION_RECUE': ed_ETAT_STAGE_CONVENTION_RECUE,
+  //   'ed_courrier': ed_courrier
+  // }
 })
 
 $(document).on('click', '.enregistreModeleMail', function () {
   const etat = $(this).data('type')
   const onglet = $(this).data('ed')
-
   $.ajax({
     url: Routing.generate('administration_stage_periode_courrier_sauvegarde_modele', {
       uuid: $(this).data('periode'),
@@ -72,7 +101,7 @@ $(document).on('click', '.enregistreModeleMail', function () {
     }),
     method: 'POST',
     data: {
-      message: tabEd['ed_' + onglet].root.innerHTML,
+      message: tinymce.get('text_' + onglet).getContent(),
       sujet: $('#sujet_' + etat).val()
     },
     success: function () {
@@ -106,7 +135,7 @@ $(document).on('click', '.resetDefaut', function (e) {
         url: Routing.generate('administration_stage_periode_courrier_reset', {id: periode, etat: etat}),
         type: 'POST',
         success: function () {
-          tabEd['ed_' + etat].setText('')
+          tinymce.get('text_' + etat).setContent('')
           addCallout('Suppression effectuée avec succès, retour au message par défaut', 'success')
           Swal.fire({
             title: 'Message réinitialisé!',

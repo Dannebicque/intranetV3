@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/webpack.config.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 22/05/2021 15:57
+// @lastUpdate 04/06/2021 15:05
 
 var Encore = require('@symfony/webpack-encore')
 var path = require('path')
@@ -38,7 +38,6 @@ Encore
   .addEntry('sadmCovid', './assets/js/pages/sadmCovid.js')
   .addEntry('agenda', './assets/js/pages/agenda.js')
   .addEntry('datatable', './assets/js/datatable.js')
-  .addEntry('quill', './assets/js/quill.js')
   .addEntry('trombinoscope', './assets/js/pages/trombinoscope.js')
   .addEntry('absences', './assets/js/pages/absences.js')
   .addEntry('applications', './assets/js/pages/applications.js')
@@ -88,13 +87,6 @@ Encore
   // but, you probably want this, unless you're building a single-page app
   .enableSingleRuntimeChunk()
 
-  /*
-   * FEATURE CONFIG
-   *
-   * Enable & configure other features below. For a full
-   * list of features, see:
-   * https://symfony.com/doc/current/frontend.html#adding-more-features
-   */
   .cleanupOutputBeforeBuild()
   .enableBuildNotifications()
   .enableSourceMaps(!Encore.isProduction())
@@ -113,61 +105,14 @@ Encore
       to: 'images/[path][name].[ext]'
     }
   ])
-
-  // enables Sass/SCSS support
   .enableSassLoader()
 
-
-  // uncomment if you're having problems with a jQuery plugin
   .autoProvidejQuery()
   .configureBabel(function (babelConfig) {
-    // add additional presets
-    //babelConfig.presets.push('@babel/preset-es2015');
-
-    // no plugins are added by default, but you can add some
-    //babelConfig.plugins.push('styled-jsx/babel');
   }, {})
-  //.disableImagesLoader()
-  // .addRule({
-  //   test: /\.(svg|png|jpg|jpeg|gif|ico)/,
-  //   exclude: /node_modules\/quill\/assets\/icons\/(.*)\.svg$/,
-  //   use: [{
-  //     loader: 'file-loader',
-  //     options: {
-  //       filename: 'images/[name].[hash:8].[ext]',
-  //       publicPath: '/build/'
-  //     }
-  //   }]
-  // })
-  // .addLoader(
-  //   {
-  //     test: /node_modules\/quill\/assets\/icons\/(.*)\.svg$/,
-  //     use: [{
-  //       loader: 'html-loader',
-  //       options: {
-  //         minimize: true
-  //       }
-  //     }]
-  //   }
-  // )
-  .addLoader({
-    test: /\.ts$/,
-    use: [{
-      loader: 'ts-loader',
-      options: {
-        compilerOptions: {
-          declaration: false,
-          target: 'es5',
-          module: 'commonjs'
-        },
-        transpileOnly: true
-      }
-    }]
-  })
+
   .addAliases({
-    'parchment': path.resolve(__dirname, 'node_modules/parchment/src/parchment.ts'),
     'umbrella_core': path.join(__dirname, '/vendor/umbrella/corebundle/assets/')
-    //'quill$': path.resolve(__dirname, 'node_modules/quill/quill.js')
   })
 
 config = Encore.getWebpackConfig()
