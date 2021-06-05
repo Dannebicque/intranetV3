@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/TypeHrs.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 05/06/2021 10:56
  */
 
 namespace App\Entity;
@@ -22,6 +22,20 @@ use Symfony\Component\Serializer\Annotation\Groups;
 class TypeHrs extends BaseEntity
 {
     use LifeCycleTrait;
+
+    public const TYPE_HRS_HRS = 'HRS';
+    public const TYPE_HRS_PCA = 'PCA';
+    public const TYPE_HRS_PRP = 'PRP';
+    public const TYPE_HRS_SUIVI = 'Suivi';
+    public const TYPE_HRS_AUTRE = 'Autre';
+
+    public const TAB_TYPE_HRS = [
+        'choice.' . self::TYPE_HRS_HRS => self::TYPE_HRS_HRS,
+        'choice.' . self::TYPE_HRS_PCA => self::TYPE_HRS_PCA,
+        'choice.' . self::TYPE_HRS_PRP => self::TYPE_HRS_PRP,
+        'choice.' . self::TYPE_HRS_SUIVI => self::TYPE_HRS_SUIVI,
+        'choice.' . self::TYPE_HRS_AUTRE => self::TYPE_HRS_AUTRE,
+    ];
 
     //STAGE, PRP, PCA, HRS
 

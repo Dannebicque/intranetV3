@@ -130,6 +130,11 @@ label:
   choice:
     non: Non
     oui: Oui
+    PRP: PRP
+    Suivi: Suivi
+    PCA: PCA
+    HRS: HRS
+    Autre: Autre
   apc:
     competence: Compétence
   apercu: 'Aperçu du fichier'
