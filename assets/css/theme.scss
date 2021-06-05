@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/css/theme.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 23/05/2021 14:21
+// @lastUpdate 04/06/2021 15:30
 /* @file /Users/davidannebicque/htdocs/intranetV3/assets/css/theme.css */
 /* @author davidannebicque */
 /* @project intranetV3 */
@@ -1819,114 +1819,114 @@ table tbody tr {
     background-color: #f7fafc;
 }
 
-.callout {
-    padding: 15px 20px;
-    margin-bottom: 20px;
-    border-left: 3px solid transparent;
-    color: var(--policeDark);
-}
-
-.callout-success {
-    border-left-color: var(--colorSuccess);
-    background-color: #fcfdfe;
-}
-
-.callout-success h3,
-.callout-success h4,
-.callout-success h5,
-.callout-success h6,
-.callout-success a {
-    color: var(--colorSuccess);
-}
-
-.callout-success h3,
-.callout-success h4,
-.callout-success h5,
-.callout-success h6 {
-    text-transform: uppercase;
-}
-
-.callout-success > *:last-child {
-    margin-bottom: 0;
-}
-
-.callout-info {
-    border-left-color: var(--colorInfo);
-    background-color: #fcfdfe;
-}
-
-.callout-info h3,
-.callout-info h4,
-.callout-info h5,
-.callout-info h6,
-.callout-info a {
-    color: var(--colorInfo);
-}
-
-.callout-info h3,
-.callout-info h4,
-.callout-info h5,
-.callout-info h6 {
-    text-transform: uppercase;
-}
-
-.callout-info > *:last-child {
-    margin-bottom: 0;
-}
-
-.callout-warning {
-    border-left-color: var(--colorWarning);
-    background-color: #fcfdfe;
-}
-
-.callout-warning h3,
-.callout-warning h4,
-.callout-warning h5,
-.callout-warning h6,
-.callout-warning a {
-    color: var(--colorWarning);
-}
-
-.callout-warning h3,
-.callout-warning h4,
-.callout-warning h5,
-.callout-warning h6 {
-    text-transform: uppercase;
-}
-
-.callout-warning > *:last-child {
-    margin-bottom: 0;
-}
-
-.callout-danger {
-    border-left-color: var(--colorDanger);
-    background-color: #fcfdfe;
-}
-
-.callout-danger h3,
-.callout-danger h4,
-.callout-danger h5,
-.callout-danger h6,
-.callout-danger a {
-    color: var(--colorDanger);
-}
-
-.callout-danger h3,
-.callout-danger h4,
-.callout-danger h5,
-.callout-danger h6 {
-    text-transform: uppercase;
-}
-
-.callout-danger > *:last-child {
-    margin-bottom: 0;
-}
-
-@media (max-width: 767px) {
-    .callout {
-        padding: 10px;
-    }
-}
+//.callout {
+//    padding: 15px 20px;
+//    margin-bottom: 20px;
+//    border-left: 3px solid transparent;
+//    color: var(--policeDark);
+//}
+//
+//.callout-success {
+//    border-left-color: var(--colorSuccess);
+//    background-color: #fcfdfe;
+//}
+//
+//.callout-success h3,
+//.callout-success h4,
+//.callout-success h5,
+//.callout-success h6,
+//.callout-success a {
+//    color: var(--colorSuccess);
+//}
+//
+//.callout-success h3,
+//.callout-success h4,
+//.callout-success h5,
+//.callout-success h6 {
+//    text-transform: uppercase;
+//}
+//
+//.callout-success > *:last-child {
+//    margin-bottom: 0;
+//}
+//
+//.callout-info {
+//    border-left-color: var(--colorInfo);
+//    background-color: #fcfdfe;
+//}
+//
+//.callout-info h3,
+//.callout-info h4,
+//.callout-info h5,
+//.callout-info h6,
+//.callout-info a {
+//    color: var(--colorInfo);
+//}
+//
+//.callout-info h3,
+//.callout-info h4,
+//.callout-info h5,
+//.callout-info h6 {
+//    text-transform: uppercase;
+//}
+//
+//.callout-info > *:last-child {
+//    margin-bottom: 0;
+//}
+//
+//.callout-warning {
+//    border-left-color: var(--colorWarning);
+//    background-color: #fcfdfe;
+//}
+//
+//.callout-warning h3,
+//.callout-warning h4,
+//.callout-warning h5,
+//.callout-warning h6,
+//.callout-warning a {
+//    color: var(--colorWarning);
+//}
+//
+//.callout-warning h3,
+//.callout-warning h4,
+//.callout-warning h5,
+//.callout-warning h6 {
+//    text-transform: uppercase;
+//}
+//
+//.callout-warning > *:last-child {
+//    margin-bottom: 0;
+//}
+//
+//.callout-danger {
+//    border-left-color: var(--colorDanger);
+//    background-color: #fcfdfe;
+//}
+//
+//.callout-danger h3,
+//.callout-danger h4,
+//.callout-danger h5,
+//.callout-danger h6,
+//.callout-danger a {
+//    color: var(--colorDanger);
+//}
+//
+//.callout-danger h3,
+//.callout-danger h4,
+//.callout-danger h5,
+//.callout-danger h6 {
+//    text-transform: uppercase;
+//}
+//
+//.callout-danger > *:last-child {
+//    margin-bottom: 0;
+//}
+//
+//@media (max-width: 767px) {
+//    .callout {
+//        padding: 10px;
+//    }
+//}
 
 .tooltip-inner {
     background-color: #323232;
@@ -13460,48 +13460,39 @@ select.form-control-lg:not([size]):not([multiple]) {
     flex-direction: column;
 }
 
-.ql-bubble .ql-out-bottom,
-.ql-bubble .ql-out-top {
-    visibility: visible;
-}
-
-.ql-toolbar.ql-snow {
-    font-family: Roboto, sans-serif;
-    border-color: #ebebeb;
-    border-bottom-color: #f1f2f3;
-    background-color: #fcfdfe;
-}
-
-.ql-container.ql-snow {
-    border-color: #ebebeb;
-}
-
-.ql-toolbar.ql-snow .ql-picker-label {
-    font-weight: 300;
-}
-
-.ql-editor.ql-blank::before {
-    color: #c9ccce;
-    font-style: normal;
-}
-
-.ql-container {
-    font-family: Roboto, sans-serif;
-    height: auto;
-}
-
-.ql-editor {
-    line-height: 24px;
-}
-
-.quill-no-border .ql-container.ql-snow {
-    border: none;
-}
-
-.quill-no-border .ql-toolbar.ql-snow {
-    border: none;
-    border-bottom: 1px solid #f1f2f3;
-}
+//.ql-bubble .ql-out-bottom,
+//.ql-bubble .ql-out-top {
+//    visibility: visible;
+//}
+//
+//.ql-toolbar.ql-snow {
+//    font-family: Roboto, sans-serif;
+//    border-color: #ebebeb;
+//    border-bottom-color: #f1f2f3;
+//    background-color: #fcfdfe;
+//}
+//
+//.ql-container.ql-snow {
+//    border-color: #ebebeb;
+//}
+//
+//.ql-toolbar.ql-snow .ql-picker-label {
+//    font-weight: 300;
+//}
+//
+//.ql-editor.ql-blank::before {
+//    color: #c9ccce;
+//    font-style: normal;
+//}
+//
+//.ql-container {
+//    font-family: Roboto, sans-serif;
+//    height: auto;
+//}
+//
+//.ql-editor {
+//    line-height: 24px;
+//}
 
 .lookup {
     position: relative;
@@ -18688,10 +18679,10 @@ ul.flexbox {
     margin-bottom: 0;
 }
 
-.card > .callout,
-.card-content > .callout {
-    margin-bottom: 0;
-}
+//.card > .callout,
+//.card-content > .callout {
+//    margin-bottom: 0;
+//}
 
 .card > .nav-tabs,
 .card-content > .nav-tabs {

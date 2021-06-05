@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyPpn.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 02/06/2021 15:33
  */
 
 /*
@@ -51,7 +51,7 @@ class MyPpn
             $ues = $this->entityManager->getRepository(Ue::class)->tableauUeApogee($departement);
             $parcours = $this->entityManager->getRepository(Parcour::class)->tableauParcourApogee($departement);
 
-            $handle = fopen($file, 'r');
+            $handle = fopen($file, 'rb');
 
             /*Si on a réussi à ouvrir le fichier*/
             if ($handle) {

@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/messagerie.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/03/2021 10:35
+// @lastUpdate 03/06/2021 16:27
 
 
 $(document).on('click', '.messagerie-filtre', function (e) {
@@ -85,9 +85,6 @@ $(document).on('click', '.message-read-auteur', function (e) {
 $(document).on('click', '#new-message', function (e) {
   e.preventDefault()
   e.stopPropagation()
-
-  console.log('toto')
-
 
   $('#messages-liste').empty().load(Routing.generate('messagerie_nouveau'), {}, (function () {
       tinymce.init({

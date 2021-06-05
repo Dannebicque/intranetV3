@@ -3,421 +3,404 @@
     "app": {
       "js": [
         "/build/runtime.e815f202.js",
-        "/build/9755.5e3d6b4e.js",
-        "/build/2109.e26953ee.js",
-        "/build/6208.2feae87d.js",
-        "/build/9904.50827445.js",
-        "/build/6850.8fe9e2cb.js",
-        "/build/3369.072dc17b.js",
-        "/build/8859.14aff162.js",
-        "/build/1423.c974ac43.js",
-        "/build/4446.b93104eb.js",
-        "/build/app.b61aa077.js"
+        "/build/9755.cbb1b4d2.js",
+        "/build/2109.674e7787.js",
+        "/build/6208.fc3b740f.js",
+        "/build/9904.c566ff18.js",
+        "/build/6850.06ed88d0.js",
+        "/build/3369.b9e3550e.js",
+        "/build/8859.a7c44169.js",
+        "/build/1423.07ac3424.js",
+        "/build/4446.f6ac5cf4.js",
+        "/build/app.5a061d8f.js"
       ],
       "css": [
         "/build/8859.0fe71f82.css",
-        "/build/4446.ce81fdd1.css"
+        "/build/4446.e766346e.css"
       ]
     },
     "covid": {
       "js": [
         "/build/runtime.e815f202.js",
-        "/build/9755.5e3d6b4e.js",
-        "/build/2109.e26953ee.js",
-        "/build/6208.2feae87d.js",
-        "/build/6850.8fe9e2cb.js",
-        "/build/1953.41f3e14c.js",
-        "/build/covid.acb7c182.js"
+        "/build/9755.cbb1b4d2.js",
+        "/build/2109.674e7787.js",
+        "/build/6208.fc3b740f.js",
+        "/build/6850.06ed88d0.js",
+        "/build/1953.64a2fb39.js",
+        "/build/covid.365a7ccf.js"
       ]
     },
     "apc": {
       "js": [
         "/build/runtime.e815f202.js",
-        "/build/9755.5e3d6b4e.js",
-        "/build/2109.e26953ee.js",
-        "/build/6208.2feae87d.js",
-        "/build/6850.8fe9e2cb.js",
-        "/build/apc.003dddc5.js"
+        "/build/9755.cbb1b4d2.js",
+        "/build/2109.674e7787.js",
+        "/build/6208.fc3b740f.js",
+        "/build/6850.06ed88d0.js",
+        "/build/apc.ba5a0750.js"
       ]
     },
     "sadmCovid": {
       "js": [
         "/build/runtime.e815f202.js",
-        "/build/9755.5e3d6b4e.js",
-        "/build/sadmCovid.1ce5ddf2.js"
+        "/build/9755.cbb1b4d2.js",
+        "/build/sadmCovid.6c929b2c.js"
       ]
     },
     "agenda": {
       "js": [
         "/build/runtime.e815f202.js",
-        "/build/9755.5e3d6b4e.js",
-        "/build/2109.e26953ee.js",
-        "/build/6208.2feae87d.js",
-        "/build/9904.50827445.js",
-        "/build/6850.8fe9e2cb.js",
-        "/build/3369.072dc17b.js",
-        "/build/8859.14aff162.js",
-        "/build/4446.b93104eb.js",
-        "/build/agenda.27a23673.js"
+        "/build/9755.cbb1b4d2.js",
+        "/build/2109.674e7787.js",
+        "/build/6208.fc3b740f.js",
+        "/build/9904.c566ff18.js",
+        "/build/6850.06ed88d0.js",
+        "/build/3369.b9e3550e.js",
+        "/build/8859.a7c44169.js",
+        "/build/4446.f6ac5cf4.js",
+        "/build/agenda.3ecfdfb9.js"
       ],
       "css": [
         "/build/8859.0fe71f82.css",
-        "/build/4446.ce81fdd1.css"
+        "/build/4446.e766346e.css"
       ]
     },
     "datatable": {
       "js": [
         "/build/runtime.e815f202.js",
-        "/build/9755.5e3d6b4e.js",
-        "/build/datatable.c2f90dab.js"
-      ]
-    },
-    "quill": {
-      "js": [
-        "/build/runtime.e815f202.js",
-        "/build/9755.5e3d6b4e.js",
-        "/build/9876.b4523e14.js",
-        "/build/quill.c14d6dc4.js"
-      ],
-      "css": [
-        "/build/9876.edcc33ac.css",
-        "/build/quill.31d6cfe0.css"
+        "/build/9755.cbb1b4d2.js",
+        "/build/datatable.913e7e60.js"
       ]
     },
     "trombinoscope": {
       "js": [
         "/build/runtime.e815f202.js",
-        "/build/9755.5e3d6b4e.js",
-        "/build/trombinoscope.ff45b781.js"
+        "/build/9755.cbb1b4d2.js",
+        "/build/trombinoscope.162ef4ad.js"
       ]
     },
     "absences": {
       "js": [
         "/build/runtime.e815f202.js",
-        "/build/9755.5e3d6b4e.js",
-        "/build/2109.e26953ee.js",
-        "/build/6208.2feae87d.js",
-        "/build/9904.50827445.js",
-        "/build/absences.827fc313.js"
+        "/build/9755.cbb1b4d2.js",
+        "/build/2109.674e7787.js",
+        "/build/6208.fc3b740f.js",
+        "/build/9904.c566ff18.js",
+        "/build/absences.a340e477.js"
       ]
     },
     "applications": {
       "js": [
         "/build/runtime.e815f202.js",
-        "/build/9755.5e3d6b4e.js",
-        "/build/2109.e26953ee.js",
-        "/build/6208.2feae87d.js",
-        "/build/9904.50827445.js",
-        "/build/applications.d5120c7b.js"
+        "/build/9755.cbb1b4d2.js",
+        "/build/2109.674e7787.js",
+        "/build/6208.fc3b740f.js",
+        "/build/9904.c566ff18.js",
+        "/build/applications.f25ab975.js"
       ]
     },
     "documents": {
       "js": [
         "/build/runtime.e815f202.js",
-        "/build/9755.5e3d6b4e.js",
-        "/build/documents.511e06da.js"
+        "/build/9755.cbb1b4d2.js",
+        "/build/documents.0f78938e.js"
       ]
     },
     "profil": {
       "js": [
         "/build/runtime.e815f202.js",
-        "/build/9755.5e3d6b4e.js",
-        "/build/2109.e26953ee.js",
-        "/build/6208.2feae87d.js",
-        "/build/9904.50827445.js",
-        "/build/3369.072dc17b.js",
-        "/build/2715.a0518c26.js",
-        "/build/profil.bcc4a73f.js"
+        "/build/9755.cbb1b4d2.js",
+        "/build/2109.674e7787.js",
+        "/build/6208.fc3b740f.js",
+        "/build/9904.c566ff18.js",
+        "/build/3369.b9e3550e.js",
+        "/build/2715.04072204.js",
+        "/build/profil.4a44ce71.js"
       ]
     },
     "planning": {
       "js": [
         "/build/runtime.e815f202.js",
-        "/build/9755.5e3d6b4e.js",
-        "/build/2109.e26953ee.js",
-        "/build/planning.ad3d1155.js"
+        "/build/9755.cbb1b4d2.js",
+        "/build/2109.674e7787.js",
+        "/build/planning.39b05599.js"
       ]
     },
     "quizzQualite": {
       "js": [
         "/build/runtime.e815f202.js",
-        "/build/9755.5e3d6b4e.js",
-        "/build/2109.e26953ee.js",
-        "/build/quizzQualite.4b43023f.js"
+        "/build/9755.cbb1b4d2.js",
+        "/build/2109.674e7787.js",
+        "/build/quizzQualite.d8bbd883.js"
       ]
     },
     "adm.configuration": {
       "js": [
         "/build/runtime.e815f202.js",
-        "/build/9755.5e3d6b4e.js",
-        "/build/2109.e26953ee.js",
-        "/build/6208.2feae87d.js",
-        "/build/9904.50827445.js",
-        "/build/adm.configuration.6caed11b.js"
+        "/build/9755.cbb1b4d2.js",
+        "/build/2109.674e7787.js",
+        "/build/6208.fc3b740f.js",
+        "/build/9904.c566ff18.js",
+        "/build/adm.configuration.03e761b2.js"
       ]
     },
     "adm.articles": {
       "js": [
         "/build/runtime.e815f202.js",
-        "/build/9755.5e3d6b4e.js",
-        "/build/adm.articles.94eb2775.js"
+        "/build/9755.cbb1b4d2.js",
+        "/build/adm.articles.44d05fd5.js"
       ]
     },
     "adm.quizz": {
       "js": [
         "/build/runtime.e815f202.js",
-        "/build/9755.5e3d6b4e.js",
-        "/build/2109.e26953ee.js",
-        "/build/adm.quizz.c57388c4.js"
+        "/build/9755.cbb1b4d2.js",
+        "/build/2109.674e7787.js",
+        "/build/adm.quizz.bd75128d.js"
       ]
     },
     "adm.groupe": {
       "js": [
         "/build/runtime.e815f202.js",
-        "/build/9755.5e3d6b4e.js",
-        "/build/2109.e26953ee.js",
-        "/build/6208.2feae87d.js",
-        "/build/9904.50827445.js",
-        "/build/adm.groupe.b8d44980.js"
+        "/build/9755.cbb1b4d2.js",
+        "/build/2109.674e7787.js",
+        "/build/6208.fc3b740f.js",
+        "/build/9904.c566ff18.js",
+        "/build/adm.groupe.59975e0e.js"
       ]
     },
     "adm.edt": {
       "js": [
         "/build/runtime.e815f202.js",
-        "/build/9755.5e3d6b4e.js",
-        "/build/2109.e26953ee.js",
-        "/build/6208.2feae87d.js",
-        "/build/6850.8fe9e2cb.js",
-        "/build/adm.edt.4ad987e1.js"
+        "/build/9755.cbb1b4d2.js",
+        "/build/2109.674e7787.js",
+        "/build/6208.fc3b740f.js",
+        "/build/6850.06ed88d0.js",
+        "/build/adm.edt.4c0f73ba.js"
       ]
     },
     "adm.etudiants": {
       "js": [
         "/build/runtime.e815f202.js",
-        "/build/9755.5e3d6b4e.js",
-        "/build/adm.etudiants.387fe3f1.js"
+        "/build/9755.cbb1b4d2.js",
+        "/build/adm.etudiants.14cba4a1.js"
       ]
     },
     "adm.personnels": {
       "js": [
         "/build/runtime.e815f202.js",
-        "/build/9755.5e3d6b4e.js",
-        "/build/adm.personnels.bd307663.js"
+        "/build/9755.cbb1b4d2.js",
+        "/build/adm.personnels.45da9dda.js"
       ]
     },
     "sadm.personnels": {
       "js": [
         "/build/runtime.e815f202.js",
-        "/build/9755.5e3d6b4e.js",
-        "/build/sadm.personnels.19847e81.js"
+        "/build/9755.cbb1b4d2.js",
+        "/build/sadm.personnels.3e5c8b76.js"
       ]
     },
     "adm.rattrapages": {
       "js": [
         "/build/runtime.e815f202.js",
-        "/build/9755.5e3d6b4e.js",
-        "/build/2109.e26953ee.js",
-        "/build/6208.2feae87d.js",
-        "/build/9904.50827445.js",
-        "/build/adm.rattrapages.fb8cadcf.js"
+        "/build/9755.cbb1b4d2.js",
+        "/build/2109.674e7787.js",
+        "/build/6208.fc3b740f.js",
+        "/build/9904.c566ff18.js",
+        "/build/adm.rattrapages.7ef765cb.js"
       ]
     },
     "adm.previsionnel": {
       "js": [
         "/build/runtime.e815f202.js",
-        "/build/9755.5e3d6b4e.js",
-        "/build/2109.e26953ee.js",
-        "/build/6208.2feae87d.js",
-        "/build/9904.50827445.js",
-        "/build/adm.previsionnel.7216de5e.js"
+        "/build/9755.cbb1b4d2.js",
+        "/build/2109.674e7787.js",
+        "/build/6208.fc3b740f.js",
+        "/build/9904.c566ff18.js",
+        "/build/adm.previsionnel.bc89e722.js"
       ]
     },
     "adm.notes": {
       "js": [
         "/build/runtime.e815f202.js",
-        "/build/9755.5e3d6b4e.js",
-        "/build/2109.e26953ee.js",
-        "/build/6208.2feae87d.js",
-        "/build/9904.50827445.js",
-        "/build/adm.notes.b2c8d7be.js"
+        "/build/9755.cbb1b4d2.js",
+        "/build/2109.674e7787.js",
+        "/build/6208.fc3b740f.js",
+        "/build/9904.c566ff18.js",
+        "/build/adm.notes.b1a1cdf4.js"
       ]
     },
     "adm.bornes": {
       "js": [
         "/build/runtime.e815f202.js",
-        "/build/9755.5e3d6b4e.js",
-        "/build/2109.e26953ee.js",
-        "/build/6208.2feae87d.js",
-        "/build/9904.50827445.js",
-        "/build/adm.bornes.7df21ed4.js"
+        "/build/9755.cbb1b4d2.js",
+        "/build/2109.674e7787.js",
+        "/build/6208.fc3b740f.js",
+        "/build/9904.c566ff18.js",
+        "/build/adm.bornes.ad797140.js"
       ]
     },
     "adm.alternances": {
       "js": [
         "/build/runtime.e815f202.js",
-        "/build/9755.5e3d6b4e.js",
-        "/build/2109.e26953ee.js",
-        "/build/6208.2feae87d.js",
-        "/build/9904.50827445.js",
-        "/build/adm.alternances.aaa69d9d.js"
+        "/build/9755.cbb1b4d2.js",
+        "/build/2109.674e7787.js",
+        "/build/6208.fc3b740f.js",
+        "/build/9904.c566ff18.js",
+        "/build/adm.alternances.b2fadcc6.js"
       ]
     },
     "adm.stage_courrier": {
       "js": [
         "/build/runtime.e815f202.js",
-        "/build/9755.5e3d6b4e.js",
-        "/build/2109.e26953ee.js",
-        "/build/6208.2feae87d.js",
-        "/build/9904.50827445.js",
-        "/build/9876.b4523e14.js",
-        "/build/adm.stage_courrier.ea69c8ca.js"
-      ],
-      "css": [
-        "/build/9876.edcc33ac.css",
-        "/build/adm.stage_courrier.31d6cfe0.css"
+        "/build/9755.cbb1b4d2.js",
+        "/build/2109.674e7787.js",
+        "/build/6208.fc3b740f.js",
+        "/build/9904.c566ff18.js",
+        "/build/adm.stage_courrier.5b58eeda.js"
       ]
     },
     "adm.etudiant_groupe": {
       "js": [
         "/build/runtime.e815f202.js",
-        "/build/9755.5e3d6b4e.js",
-        "/build/adm.etudiant_groupe.ed7e5cc0.js"
+        "/build/9755.cbb1b4d2.js",
+        "/build/adm.etudiant_groupe.17347731.js"
       ]
     },
     "adm.justificatifs": {
       "js": [
         "/build/runtime.e815f202.js",
-        "/build/9755.5e3d6b4e.js",
-        "/build/2109.e26953ee.js",
-        "/build/6208.2feae87d.js",
-        "/build/9904.50827445.js",
-        "/build/adm.justificatifs.b8b873f1.js"
+        "/build/9755.cbb1b4d2.js",
+        "/build/2109.674e7787.js",
+        "/build/6208.fc3b740f.js",
+        "/build/9904.c566ff18.js",
+        "/build/adm.justificatifs.2e5c9dbc.js"
       ]
     },
     "adm.absences": {
       "js": [
         "/build/runtime.e815f202.js",
-        "/build/9755.5e3d6b4e.js",
-        "/build/2109.e26953ee.js",
-        "/build/6208.2feae87d.js",
-        "/build/9904.50827445.js",
-        "/build/adm.absences.b81c3ca1.js"
+        "/build/9755.cbb1b4d2.js",
+        "/build/2109.674e7787.js",
+        "/build/6208.fc3b740f.js",
+        "/build/9904.c566ff18.js",
+        "/build/adm.absences.335809d2.js"
       ]
     },
     "adm.matieres": {
       "js": [
         "/build/runtime.e815f202.js",
-        "/build/9755.5e3d6b4e.js",
-        "/build/2109.e26953ee.js",
-        "/build/adm.matieres.aee6b3db.js"
+        "/build/9755.cbb1b4d2.js",
+        "/build/2109.674e7787.js",
+        "/build/adm.matieres.07abea7c.js"
       ]
     },
     "adm.scolarite": {
       "js": [
         "/build/runtime.e815f202.js",
-        "/build/9755.5e3d6b4e.js",
-        "/build/2109.e26953ee.js",
-        "/build/6208.2feae87d.js",
-        "/build/9904.50827445.js",
-        "/build/adm.scolarite.d78ac431.js"
+        "/build/9755.cbb1b4d2.js",
+        "/build/2109.674e7787.js",
+        "/build/6208.fc3b740f.js",
+        "/build/9904.c566ff18.js",
+        "/build/adm.scolarite.96f4d67d.js"
       ]
     },
     "adm.stage": {
       "js": [
         "/build/runtime.e815f202.js",
-        "/build/9755.5e3d6b4e.js",
-        "/build/2109.e26953ee.js",
-        "/build/6208.2feae87d.js",
-        "/build/9904.50827445.js",
-        "/build/6850.8fe9e2cb.js",
-        "/build/1953.41f3e14c.js",
-        "/build/adm.stage.af0b0397.js"
+        "/build/9755.cbb1b4d2.js",
+        "/build/2109.674e7787.js",
+        "/build/6208.fc3b740f.js",
+        "/build/9904.c566ff18.js",
+        "/build/6850.06ed88d0.js",
+        "/build/1953.64a2fb39.js",
+        "/build/adm.stage.fbe2aef7.js"
       ]
     },
     "creneaux": {
       "js": [
         "/build/runtime.e815f202.js",
-        "/build/9755.5e3d6b4e.js",
-        "/build/2109.e26953ee.js",
-        "/build/6208.2feae87d.js",
-        "/build/9904.50827445.js",
-        "/build/creneaux.0967ced1.js"
+        "/build/9755.cbb1b4d2.js",
+        "/build/2109.674e7787.js",
+        "/build/6208.fc3b740f.js",
+        "/build/9904.c566ff18.js",
+        "/build/creneaux.850f9fef.js"
       ]
     },
     "settings": {
       "js": [
         "/build/runtime.e815f202.js",
-        "/build/9755.5e3d6b4e.js",
-        "/build/2109.e26953ee.js",
-        "/build/6208.2feae87d.js",
-        "/build/9904.50827445.js",
-        "/build/settings.2c321621.js"
+        "/build/9755.cbb1b4d2.js",
+        "/build/2109.674e7787.js",
+        "/build/6208.fc3b740f.js",
+        "/build/9904.c566ff18.js",
+        "/build/settings.70b3ecf2.js"
       ]
     },
     "notes": {
       "js": [
         "/build/runtime.e815f202.js",
-        "/build/9755.5e3d6b4e.js",
-        "/build/2109.e26953ee.js",
-        "/build/6208.2feae87d.js",
-        "/build/9904.50827445.js",
-        "/build/notes.e842f823.js"
+        "/build/9755.cbb1b4d2.js",
+        "/build/2109.674e7787.js",
+        "/build/6208.fc3b740f.js",
+        "/build/9904.c566ff18.js",
+        "/build/notes.a8974dc1.js"
       ]
     },
     "informations": {
       "js": [
         "/build/runtime.e815f202.js",
-        "/build/9755.5e3d6b4e.js",
-        "/build/2109.e26953ee.js",
-        "/build/informations.75a99aff.js"
+        "/build/9755.cbb1b4d2.js",
+        "/build/2109.674e7787.js",
+        "/build/informations.122c8e37.js"
       ]
     },
     "scolarite": {
       "js": [
         "/build/runtime.e815f202.js",
-        "/build/9755.5e3d6b4e.js",
-        "/build/2109.e26953ee.js",
-        "/build/6208.2feae87d.js",
-        "/build/9904.50827445.js",
-        "/build/scolarite.b78f46c4.js"
+        "/build/9755.cbb1b4d2.js",
+        "/build/2109.674e7787.js",
+        "/build/6208.fc3b740f.js",
+        "/build/9904.c566ff18.js",
+        "/build/scolarite.d9f8ac66.js"
       ]
     },
     "sadm.scolarite": {
       "js": [
         "/build/runtime.e815f202.js",
-        "/build/9755.5e3d6b4e.js",
-        "/build/2109.e26953ee.js",
-        "/build/6208.2feae87d.js",
-        "/build/9904.50827445.js",
-        "/build/sadm.scolarite.27ad7eb6.js"
+        "/build/9755.cbb1b4d2.js",
+        "/build/2109.674e7787.js",
+        "/build/6208.fc3b740f.js",
+        "/build/9904.c566ff18.js",
+        "/build/sadm.scolarite.d8c3e12c.js"
       ]
     },
     "sadm.enquete": {
       "js": [
         "/build/runtime.e815f202.js",
-        "/build/9755.5e3d6b4e.js",
-        "/build/2109.e26953ee.js",
-        "/build/sadm.enquete.b242fb4d.js"
+        "/build/9755.cbb1b4d2.js",
+        "/build/2109.674e7787.js",
+        "/build/sadm.enquete.7589adef.js"
       ]
     },
     "sadm.anneeuniversitaire": {
       "js": [
         "/build/runtime.e815f202.js",
-        "/build/9755.5e3d6b4e.js",
-        "/build/2109.e26953ee.js",
-        "/build/6208.2feae87d.js",
-        "/build/9904.50827445.js",
-        "/build/sadm.anneeuniversitaire.f6456506.js"
+        "/build/9755.cbb1b4d2.js",
+        "/build/2109.674e7787.js",
+        "/build/6208.fc3b740f.js",
+        "/build/9904.c566ff18.js",
+        "/build/sadm.anneeuniversitaire.5cf7aa5f.js"
       ]
     },
     "adm.reservation.materiel_commun": {
       "js": [
         "/build/runtime.e815f202.js",
-        "/build/9755.5e3d6b4e.js",
-        "/build/2109.e26953ee.js",
-        "/build/6208.2feae87d.js",
-        "/build/9904.50827445.js",
-        "/build/adm.reservation.materiel_commun.9ce1d6b8.js"
+        "/build/9755.cbb1b4d2.js",
+        "/build/2109.674e7787.js",
+        "/build/6208.fc3b740f.js",
+        "/build/9904.c566ff18.js",
+        "/build/adm.reservation.materiel_commun.89e0df0f.js"
       ]
     }
   }

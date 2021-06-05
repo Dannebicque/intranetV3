@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Structure/ApogeeExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/05/2021 22:26
+ * @lastUpdate 03/06/2021 12:02
  */
 
 namespace App\Classes\Structure;
@@ -110,14 +110,14 @@ class ApogeeExport
                 $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(2, $ligne,
                     'UE' . $ue->getNumeroUe() . 'Ressource');
                 $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(3, $ligne,
-                    $ue->getCodeElement() . 'OrgaR');
+                    $ue->getCodeElement() . 'R');
                 $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(4, $ligne, '');
                 $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(5, $ligne,
                     'UE' . $ue->getNumeroUe() . 'SAE');
                 $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(6, $ligne,
                     'UE' . $ue->getNumeroUe() . 'SAE');
                 $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(7, $ligne,
-                    $ue->getCodeElement() . 'OrgaS');
+                    $ue->getCodeElement() . 'S');
                 $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(8, $ligne, '');
                 ++$ligne;
             }
