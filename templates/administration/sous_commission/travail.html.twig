@@ -124,16 +124,16 @@
                                     {% for matiere in sc.matieres %}
                                         {% if matiere.nbNotes > 0 and matiere.suspendu == false %}
                                             <td>
-                                                {% if sc.matiere(etudiant.id, matiere.id) != null %}{# todo:
+                                                {% if sc.matiere(etudiant.id, matiere.typeIdMatiere) != null %}{# todo:
                                     devrait être TypeIdMatiere ? #}
-                                                    {% if sc.matiere(etudiant.id, matiere.id).pasoption is defined %}
+                                                    {% if sc.matiere(etudiant.id, matiere.typeIdMatiere).pasoption is defined %}
                                                         N.C.
                                                     {% else %}
                                                         <a class="myedit"
                                                            data-field="moyenne_{{ matiere.id }}"
                                                            href="{{ path('administration_ss_comm_ajax_edit', {id:sc.etudiant(etudiant.id).id, type:'matiere'}) }}"
                                                            data-title="Modifier la moyenne du module">
-                                                            {{ sc.matiere(etudiant.id, matiere.id).moyenne|number_format(2) }}
+                                                            {{ sc.matiere(etudiant.id, matiere.typeIdMatiere).moyenne|number_format(2) }}
                                                         </a>
                                                     {% endif %}
                                                 {% else %}
@@ -156,11 +156,11 @@
                                 <td>{{ sc.etudiant(etudiant.id).proposition }}</td>
                                 <td>{{ sc.etudiant(etudiant.id).nbAbsences }}</td>
                                 {% for matiere in sc.matieres %}
-                                    {% if sc.matiere(etudiant.id, matiere.id) != null %}
-                                        {% if sc.matiere(etudiant.id, matiere.id).pasoption is defined %}
+                                    {% if sc.matiere(etudiant.id, matiere.typeIdMatiere) != null %}
+                                        {% if sc.matiere(etudiant.id, matiere.typeIdMatiere).pasoption is defined %}
                                             <td>N.C.</td>
                                         {% else %}
-                                            <td>{{ sc.matiere(etudiant.id, matiere.id).moyenne|number_format(2) }}</td>
+                                            <td>{{ sc.matiere(etudiant.id, matiere.typeIdMatiere).moyenne|number_format(2) }}</td>
                                         {% endif %}
                                     {% endif %}
                                 {% endfor %}
