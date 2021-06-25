@@ -122,6 +122,24 @@ initiales: Initiales
 j: Jour
 Jour: Jour
 label:
+  year: Année
+  month: Mois
+  day: Jour
+  niveau_performance: Niveau de performances
+  capacite_adaptation: 'Capacité d''adaptation'
+  date_entretien: 'Date de l''entretien'
+  methode_entretien: 'Méthode de l''entretien'
+  integration_entreprise: 'Intégration dans l''entreprise'
+  prise_initiative: 'Prise d''initiative'
+  respect_delais: 'Respect des délais'
+  comportement_maniere_globale: 'Comportement de manière globale'
+  commentaire_libre: 'Commentaire libre'
+  visite: 'Visite'
+  missions: 'Missions'
+  bonne: Bonne
+  faible: Faible
+  tres_bonne: Très Bonne
+  excellente: Excellente
   serviceStatus: Heures dans le statut
   tauxTd: Taux TD
   tauxTp: Taux TP
