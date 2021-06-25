@@ -17,6 +17,7 @@ __name__label__: __name__label__
 'CODE HARPEGE*': 'CODE HARPEGE*'
 'CODE VET': 'CODE VET'
 'Commentaire libre': 'Commentaire libre'
+commentaires.libres: 'Commentaires libre'
 'Comportement de manière globale': 'Comportement de manière globale'
 'Cookie has already been used by someone else.': 'Le cookie a déjà été utilisé par quelqu''un d''autre.'
 'copie mail.chgt.etat_stage_autorise': '[COPIE] Saisie des informations du stage autorisée'
@@ -616,9 +617,9 @@ apc:
     duplicate.success.flash: 'Ressource dupliquée avec succès'
     edit.success.flash: 'Ressource modifiée avec succès'
 app:
-  alternance_fiche_suivi:
-    new.heading: 'Création d''une fiche de suivi d''alternance'
-    show.heading: 'Détail de la fiche de suivi d''alternance de %etudiant%'
+  #  alternance_fiche_suivi:
+  #    new.heading: 'Création d''une fiche de suivi d''alternance'
+  #    show.heading: 'Détail de la fiche de suivi d''alternance de %etudiant%'
   etudiant:
     absence:
       justificatif:
@@ -632,6 +633,10 @@ app:
       show:
         heading: 'Détail des informations de votre stage'
   personnel:
+    alternance_fiche_suivi:
+      new.heading: 'Création d''une fiche de suivi d''alternance'
+      edit.heading: 'Modification d''une fiche de suivi d''alternance'
+      show.heading: 'Détail de la fiche de suivi d''alternance de %etudiant%'
     absence:
       date: 'Date de l''absence'
       dateHeure: Date/Heure
@@ -2192,6 +2197,7 @@ Updated: 'Mise à jour'
 username.import: username.import
 vacataire: Vacataire
 vacataires.heading: Vacataires
+administratifs.et.techniques.heading: 'Administratifs et Techniciens'
 Valeur: Valeur
 valider: Valider
 valider.stage.etranger: 'Valider stage étranger'
