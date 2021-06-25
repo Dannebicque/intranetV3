@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Groupe.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 25/06/2021 10:28
  */
 
 namespace App\Entity;
@@ -47,12 +47,12 @@ class Groupe extends BaseEntity
      * @ORM\ManyToMany(targetEntity="App\Entity\Etudiant", mappedBy="groupes")
      * @ORM\OrderBy({"nom"="asc", "prenom"="asc"})
      */
-    private $etudiants;
+    private Collection $etudiants;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Groupe", mappedBy="parent", cascade={"remove"})
      */
-    private $enfants;
+    private Collection $enfants;
 
     /**
      * @ORM\Column(type="integer")
@@ -69,7 +69,7 @@ class Groupe extends BaseEntity
     /**
      * @ORM\ManyToMany(targetEntity=CovidAttestationEtudiant::class, mappedBy="groupes")
      */
-    private $covidAttestationEtudiants;
+    private Collection $covidAttestationEtudiants;
 
     public function __construct()
     {
@@ -260,7 +260,7 @@ class Groupe extends BaseEntity
         return $this;
     }
 
-    public function getDisplaySemestre()
+    public function getDisplaySemestre(): string
     {
         if (null !== $this->getTypeGroupe() && null !== $this->getTypeGroupe()->getSemestre()) {
             return $this->getTypeGroupe()->getSemestre()->display() . ' | ' . $this->getLibelle();

@@ -4,13 +4,15 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/QuestionnaireQuestionnaireSection.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 25/06/2021 10:28
  */
 
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
 use Doctrine\ORM\Mapping as ORM;
+use function array_key_exists;
+use function count;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\QuestionnaireQuestionnaireSectionRepository")
@@ -23,27 +25,27 @@ class QuestionnaireQuestionnaireSection extends BaseEntity
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\QuestionnaireQualite", inversedBy="sections")
      */
-    private $questionnaireQualite;
+    private ?QuestionnaireQualite $questionnaireQualite;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\QuestionnaireQuizz", inversedBy="sections")
      */
-    private $questionnaireQuizz;
+    private ?QuestionnaireQuizz $questionnaireQuizz;
 
     /**
      * @ORM\ManyToOne(targetEntity="QuestionnaireSection", inversedBy="qualiteQuestionnaireSections")
      */
-    private $section;
+    private ?QuestionnaireSection $section;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $ordre;
+    private ?int $ordre;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $config;
+    private ?string $config;
 
     public function getSection(): ?QuestionnaireSection
     {
@@ -105,10 +107,10 @@ class QuestionnaireQuestionnaireSection extends BaseEntity
         return $this;
     }
 
-    public function previs($onglet = 0)
+    public function previs($onglet = 0): array
     {
         $t = explode('-', $this->getConfig());
-        if (2 === \count($t)) {
+        if (2 === count($t)) {
             if (0 === $onglet) {
                 return explode(',', $t[1]);
             }
@@ -116,7 +118,7 @@ class QuestionnaireQuestionnaireSection extends BaseEntity
             $tPre = [];
             for ($i = 0; $i < 3; ++$i) {
                 $key = (int)$onglet * 3 - (3 - $i);
-                if (\array_key_exists($key, $pre)) {
+                if (array_key_exists($key, $pre)) {
                     $tPre[] = $pre[$key];
                 }
             }

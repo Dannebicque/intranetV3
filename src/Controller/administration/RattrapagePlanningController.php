@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/RattrapagePlanningController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/05/2021 14:21
+ * @lastUpdate 06/06/2021 09:57
  */
 
 namespace App\Controller\administration;
@@ -16,6 +16,7 @@ use App\Controller\BaseController;
 use App\Entity\Diplome;
 use App\Entity\Rattrapage;
 use App\Repository\RattrapageRepository;
+use Carbon\Carbon;
 use DateTime;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
@@ -98,7 +99,7 @@ class RattrapagePlanningController extends BaseController
                 $rattrapage->setDateRattrapage(Tools::convertDateToObject($data));
                 break;
             case 'heure':
-                $rattrapage->setHeureRattrapage(new DateTime($data));
+                $rattrapage->setHeureRattrapage(Tools::convertTimeToObject($data));
                 break;
             case 'salle':
                 $rattrapage->setSalle($data);
@@ -135,7 +136,7 @@ class RattrapagePlanningController extends BaseController
                     $rattrapage->setSalle($valeur);
                     break;
                 case 'heure':
-                    $rattrapage->setHeureRattrapage(new DateTime($valeur));
+                    $rattrapage->setHeureRattrapage(Tools::convertTimeToObject($valeur));
                     break;
                 case 'date':
                     $rattrapage->setDateRattrapage(Tools::convertDateToObject($valeur));

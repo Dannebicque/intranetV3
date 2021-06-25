@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/GroupeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 25/06/2021 10:28
  */
 
 namespace App\Controller\administration;
 
+use App\Classes\Groupes\GenereGroupes;
 use App\Classes\MyExport;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
@@ -33,6 +34,34 @@ class GroupeController extends BaseController
     {
         return $this->render('administration/groupe/index.html.twig', [
             'afficheSemestre' => null !== $semestre ? $semestre->getId() : null,
+        ]);
+    }
+
+    /**
+     * @Route("/generation-automatique/{semestre}", name="administration_groupe_semestre_generation_auto",
+     *                                              methods={"GET"}, requirements={"semestre":"\d+"})
+     */
+    public function generationAutomatique(Semestre $semestre): Response
+    {
+        return $this->render('administration/groupe/generation-automatique.html.twig', [
+            'semestre' => $semestre,
+        ]);
+    }
+
+    /**
+     * @Route("/genere-groupes/{semestre}", name="administration_groupe_semestre_genere", methods={"POST"},
+     *                                      requirements={"semestre":"\d+"})
+     */
+    public function genereGroupes(Request $request, Semestre $semestre): Response
+    {
+        //sauvegarde du nombre de groupe de semestre ?
+
+        //génére les groupes
+        $genereGroupes = new GenereGroupes($this->entityManager);
+        $genereGroupes->genereGroupesSemestre($semestre, $request->request->get('appelation'));
+
+        return $this->redirectToRoute('administration_groupe_index', [
+            'semestre' => $semestre->getId(),
         ]);
     }
 

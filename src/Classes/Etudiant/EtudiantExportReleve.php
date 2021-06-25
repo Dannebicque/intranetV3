@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantExportReleve.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2021 16:12
+ * @lastUpdate 25/06/2021 10:28
  */
 
 namespace App\Classes\Etudiant;
@@ -119,7 +119,7 @@ class EtudiantExportReleve
         foreach ($etudiants as $etudiant) {
             if (0 === $etudiant->getAnneeSortie()) {
                 $this->etudiant = $etudiant;
-                $nomFichier = 'releveNoteProvisoire-' . Tools::slug($this->etudiant->getNom());
+                $nomFichier = 'releveNoteProvisoire-' . Tools::slug($this->etudiant->getNom()) . '-' . $this->etudiant->getNumEtudiant();
                 $this->myPdf::genereAndSavePdf('pdf/releveProvisoire.html.twig', [
                     'etudiant' => $this->etudiant,
                     'notes' => $this->getNotesEtudiantSemestre($semestre, $anneeUniversitaire),

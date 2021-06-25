@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/SousCommission/SousCommissionExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2021 08:46
+ * @lastUpdate 25/06/2021 10:28
  */
 
 namespace App\Classes\SousCommission;
@@ -20,6 +20,7 @@ use App\Entity\Constantes;
 use App\Entity\ScolaritePromo;
 use App\Entity\Semestre;
 use App\Entity\Ue;
+use Carbon\Carbon;
 use DateTime;
 use PhpOffice\PhpSpreadsheet\Exception;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -86,7 +87,7 @@ class SousCommissionExport
         $this->myExcelWriter->writeCellName('C1', $semestre->display());
         $this->myExcelWriter->writeCellName('B2', 'Année universitaire');
         $this->myExcelWriter->writeCellName('C2', $anneeUniversitaire->displayAnneeUniversitaire());
-        $now = new DateTime('now');
+        $now = Carbon::now();
         $this->myExcelWriter->writeCellName('B3', 'Version du ');
         $this->myExcelWriter->writeCellName('C3', $now->format('d/m/Y H:i:s'));
 
@@ -191,8 +192,8 @@ class SousCommissionExport
 
             foreach ($matieres as $matiere) {
                 if ($matiere->nbNotes > 0 && false === $matiere->isSuspendu()) {
-                    if (array_key_exists($matiere->id, $sousCommissionEtudiant->moyenneMatieres)) {
-                        $moyenneMatiere = $sousCommissionEtudiant->moyenneMatieres[$matiere->id];
+                    if (array_key_exists($matiere->getTypeIdMatiere(), $sousCommissionEtudiant->moyenneMatieres)) {
+                        $moyenneMatiere = $sousCommissionEtudiant->moyenneMatieres[$matiere->getTypeIdMatiere()];
                         if (true === $matiere->pac) {
                             if ($moyenneMatiere->getMoyenne() > 0) {
                                 if (true === $semestre->isOptPenaliteAbsence()) {
@@ -351,7 +352,7 @@ class SousCommissionExport
             $ssCommTravail = new SousCommissionTravail($semestre, $anneeUniversitaire,
                 $ues->getValues(), $matieres, $etudiants->getValues(), $scolaritePromo);
 
-            $this->myExcelWriter->createSheet('Grand Jury ' . $semestre->display());
+            $this->myExcelWriter->createSheet('Grand Jury ' . $semestre->getLibelle());
 
             $colonne = 1;
             $ligne = 4;
@@ -380,7 +381,7 @@ class SousCommissionExport
             $colonne = 15;
 
             foreach ($matieres as $m) {
-                $this->myExcelWriter->writeCellXY($colonne, $ligne, $m->getCodeMatiere());
+                $this->myExcelWriter->writeCellXY($colonne, $ligne, $m->codeMatiere);
                 ++$colonne;
             }
 
@@ -441,12 +442,14 @@ class SousCommissionExport
                     $colonne = 15;
 
                     foreach ($matieres as $m) {
-                        if (null !== $ssCommTravail->matiere($etu->getId(), $m->getId())) {
-                            if (array_key_exists('pasoption', $ssCommTravail->matiere($etu->getId(), $m->getId()))) {
+                        if (null !== $ssCommTravail->matiere($etu->getId(), $m->getTypeIdMatiere())) {
+                            if (array_key_exists('pasoption',
+                                $ssCommTravail->matiere($etu->getId(), $m->getTypeIdMatiere()))) {
                                 $this->myExcelWriter->writeCellXY($colonne, $ligne, 'N.C.');
                             } else {
                                 $this->myExcelWriter->writeCellXY($colonne, $ligne,
-                                    number_format($ssCommTravail->matiere($etu->getId(), $m->getId())['moyenne'], 2),
+                                    number_format($ssCommTravail->matiere($etu->getId(),
+                                        $m->getTypeIdMatiere())['moyenne'], 2),
                                     'numerique');
                             }
                         }

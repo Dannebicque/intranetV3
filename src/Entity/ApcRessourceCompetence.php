@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcRessourceCompetence.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/06/2021 11:51
+ * @lastUpdate 05/06/2021 18:40
  */
 
 namespace App\Entity;
@@ -36,13 +36,7 @@ class ApcRessourceCompetence extends BaseEntity
      */
     private float $coefficient = 0;
 
-    /**
-     * ApcRessourceCompetence constructor.
-     *
-     * @param $ressource
-     * @param $competence
-     */
-    public function __construct($ressource, $competence)
+    public function __construct(ApcRessource $ressource, ApcCompetence $competence)
     {
         $this->ressource = $ressource;
         $this->competence = $competence;

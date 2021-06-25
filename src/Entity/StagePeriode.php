@@ -4,15 +4,14 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/StagePeriode.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/06/2021 11:26
+ * @lastUpdate 06/06/2021 12:28
  */
 
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\UuidTrait;
-use DateTime;
-use DateTimeInterface;
+use Carbon\CarbonInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -20,7 +19,6 @@ use Exception;
 use Ramsey\Uuid\Uuid;
 use Serializable;
 use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
@@ -35,15 +33,11 @@ class StagePeriode extends BaseEntity implements Serializable
     use LifeCycleTrait;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", length=50)
      */
-    private $documentName;
+    private ?string $documentName = '';
 
     /**
-     * @var UploadedFile
-     *
      * @Vich\UploadableField(mapping="ficheRenseignement", fileNameProperty="documentName")
      */
     private $documentFile;
@@ -52,128 +46,123 @@ class StagePeriode extends BaseEntity implements Serializable
      * @ORM\Column(type="integer")
      * @Groups({"stage_periode_administration"})
      */
-    private $numeroPeriode = 1;
+    private int $numeroPeriode = 1;
 
     /**
      * @ORM\Column(type="string", length=100)
      * @Groups({"stage_periode_administration"})
      */
-    private $libelle = 'stage';
+    private string $libelle = 'stage';
 
     /**
      * @ORM\Column(type="integer")
      * @Groups({"stage_periode_administration"})
      */
-    private $nbSemaines = 10;
+    private int $nbSemaines = 10;
 
     /**
      * @ORM\Column(type="integer")
      * @Groups({"stage_periode_administration"})
      */
-    private $nbJours = 40;
+    private int $nbJours = 40;
 
     /**
      * @ORM\Column(type="date")
      * @Groups({"stage_periode_administration"})
      */
-    private $dateDebut;
+    private ?CarbonInterface $dateDebut;
 
     /**
      * @ORM\Column(type="date")
      * @Groups({"stage_periode_administration"})
      */
-    private $dateFin;
+    private ?CarbonInterface $dateFin;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $competencesVisees;
+    private ?string $competencesVisees;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $modaliteEvaluation;
+    private ?string $modaliteEvaluation;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $modaliteEvaluationPedagogique;
+    private ?string $modaliteEvaluationPedagogique;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $modaliteEncadrement;
+    private ?string $modaliteEncadrement;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $documentRendre;
+    private ?string $documentRendre;
     /**
      * @ORM\Column(type="float")
      * @Groups({"stage_periode_administration"})
      */
-    private $nbEcts = 12;
+    private float $nbEcts = 12;
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Semestre", inversedBy="stagePeriodes")
      */
-    private $semestre;
+    private ?Semestre $semestre;
     /**
      * @ORM\Column(type="boolean")
      */
-    private $datesFlexibles = false;
+    private bool $datesFlexibles = false;
     /**
      * @ORM\Column(type="boolean")
      */
-    private $copieAssistant = true;
+    private bool $copieAssistant = true;
 
     /**
      * @ORM\OneToMany(targetEntity="StagePeriodeInterruption", mappedBy="stagePeriode", cascade={"persist", "remove"})
      */
-    private $stagePeriodeInterruptions;
+    private Collection $stagePeriodeInterruptions;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\StagePeriodeSoutenance", mappedBy="stagePeriode", cascade={"persist",
      *                                                                  "remove"})
      */
-    private $stagePeriodeSoutenances;
+    private Collection $stagePeriodeSoutenances;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Personnel", inversedBy="stagePeriodes")
      * @Groups({"stage_periode_administration"})
      */
-    private $responsables;
+    private Collection $responsables;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $texteLibre;
+    private ?string $texteLibre;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\StagePeriodeOffre", mappedBy="stagePeriodes")
      */
-    private $stagePeriodeOffres;
+    private Collection $stagePeriodeOffres;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\StageEtudiant", mappedBy="stagePeriode", cascade={"persist", "remove"})
      */
-    private $stageEtudiants;
+    private Collection $stageEtudiants;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\StageMailTemplate", mappedBy="stagePeriode", cascade={"persist",
      *                                                             "remove"})
      */
-    private $stageMailTemplates;
+    private Collection $stageMailTemplates;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\AnneeUniversitaire", inversedBy="stagePeriodes")
      */
-    private $anneeUniversitaire;
+    private ?AnneeUniversitaire $anneeUniversitaire;
 
-    /**
-     * StagePeriode constructor.
-     *
-     * @throws Exception
-     */
     public function __construct()
     {
         $this->stagePeriodeInterruptions = new ArrayCollection();
@@ -238,24 +227,24 @@ class StagePeriode extends BaseEntity implements Serializable
         return $this;
     }
 
-    public function getDateDebut(): ?DateTimeInterface
+    public function getDateDebut(): ?CarbonInterface
     {
         return $this->dateDebut;
     }
 
-    public function setDateDebut(DateTimeInterface $dateDebut): self
+    public function setDateDebut(CarbonInterface $dateDebut): self
     {
         $this->dateDebut = $dateDebut;
 
         return $this;
     }
 
-    public function getDateFin(): ?DateTimeInterface
+    public function getDateFin(): ?CarbonInterface
     {
         return $this->dateFin;
     }
 
-    public function setDateFin(DateTimeInterface $dateFin): self
+    public function setDateFin(CarbonInterface $dateFin): self
     {
         $this->dateFin = $dateFin;
 
@@ -592,9 +581,9 @@ class StagePeriode extends BaseEntity implements Serializable
         return $this;
     }
 
-    public function getMailAssistant()
+    public function getMailAssistant(): ?array
     {
-        if (null !== $this->getSemestre() && null !== $this->getSemestre()->getDiplome() && null !== $this->getSemestre()->getDiplome()->getAssistantDiplome() && null !== $this->getSemestre()->getDiplome()->getAssistantDiplome()->getMailUniv() && '' !== $this->getSemestre()->getDiplome()->getAssistantDiplome()->getMailUniv()) {
+        if (null !== $this->getSemestre() && null !== $this->getSemestre()->getDiplome() && null !== $this->getSemestre()->getDiplome()->getAssistantDiplome() && null !== $this->getSemestre()->getDiplome()->getAssistantDiplome()->getMailUniv()) {
             return [$this->getSemestre()->getDiplome()->getAssistantDiplome()->getMailUniv()];
         }
 
@@ -620,13 +609,13 @@ class StagePeriode extends BaseEntity implements Serializable
         return $this;
     }
 
-    public function serialize()
+    public function serialize(): ?string
     {
         return serialize($this->getId());
     }
 
-    public function unserialize($serialized)
+    public function unserialize($data): void
     {
-        $this->uuid = unserialize($serialized);
+        $this->uuid = unserialize($data);
     }
 }

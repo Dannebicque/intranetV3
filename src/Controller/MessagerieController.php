@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/MessagerieController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 25/06/2021 10:28
  */
 
 namespace App\Controller;
@@ -13,11 +13,13 @@ use App\Classes\MyMessagerie;
 use App\Classes\MyUpload;
 use App\Entity\Etudiant;
 use App\Entity\Message;
+use App\Entity\MessageDestinataire;
 use App\Entity\Personnel;
 use App\Repository\MessageDestinataireEtudiantRepository;
 use App\Repository\MessageDestinatairePersonnelRepository;
 use App\Repository\MessageRepository;
 use App\Repository\TypeGroupeRepository;
+use Carbon\Carbon;
 use DateTime;
 use Doctrine\ORM\NonUniqueResultException;
 use Exception;
@@ -245,7 +247,8 @@ class MessagerieController extends BaseController
         MessageDestinatairePersonnelRepository $messagePersonnelRepository,
         MessageDestinataireEtudiantRepository $messageEtudiantRepository,
         Message $message
-    ): Response {
+    ): Response
+    {
         if ($this->getConnectedUser() instanceof Etudiant) {
             $messaged = $messageEtudiantRepository->findDest($this->getConnectedUser(), $message);
         } elseif ($this->getConnectedUser() instanceof Personnel) {
@@ -254,9 +257,9 @@ class MessagerieController extends BaseController
             return $this->redirectToRoute('erreur_666');
         }
 
-        if ('U' === $messaged->getEtat()) {
-            $messaged->setEtat('R');
-            $messaged->setDateLu(new DateTime('now'));
+        if (MessageDestinataire::UNREAD === $messaged->getEtat()) {
+            $messaged->setEtat(MessageDestinataire::READ);
+            $messaged->setDateLu(Carbon::now());
             $this->entityManager->persist($messaged);
             $this->entityManager->flush();
         }

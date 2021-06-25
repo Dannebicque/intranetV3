@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEtudiants.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 06/06/2021 10:01
  */
 
 /*
@@ -17,6 +17,7 @@ use App\Entity\Adresse;
 use App\Entity\Bac;
 use App\Entity\Etudiant;
 use App\Entity\Semestre;
+use App\Utils\Tools;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
@@ -76,7 +77,7 @@ class MyEtudiants
                         $etudiant->setCivilite($ligne[11]);
                         $etudiant->setPromotion($ligne[12]);
                         $etudiant->setAnneeSortie($ligne[13]);
-                        $etudiant->setDateNaissance(new DateTime($ligne[14]));
+                        $etudiant->setDateNaissance(Tools::convertDateToObject($ligne[14]));
                         if (\array_key_exists($ligne[15], $bacs)) {
                             $etudiant->setBac($bacs[$ligne[15]]);
                         } else {

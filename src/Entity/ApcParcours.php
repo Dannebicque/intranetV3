@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcParcours.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/06/2021 14:02
+ * @lastUpdate 05/06/2021 17:46
  */
 
 namespace App\Entity;
@@ -28,27 +28,27 @@ class ApcParcours extends BaseEntity
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $libelle;
+    private ?string $libelle;
 
     /**
      * @ORM\Column(type="string", length=10)
      */
-    private $code;
+    private ?string $code;
 
     /**
      * @ORM\OneToMany(targetEntity=ApcParcoursNiveau::class, mappedBy="parcours")
      */
-    private $apcParcoursNiveaux;
+    private Collection $apcParcoursNiveaux;
 
     /**
      * @ORM\ManyToOne(targetEntity=Diplome::class, inversedBy="apcParcours")
      */
-    private $diplome;
+    private ?Diplome $diplome;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $actif = true;
+    private bool $actif = true;
 
     public function __construct(Diplome $diplome)
     {
@@ -130,30 +130,6 @@ class ApcParcours extends BaseEntity
     public function setActif(bool $actif): self
     {
         $this->actif = $actif;
-
-        return $this;
-    }
-
-    public function getCodeDiplome(): ?string
-    {
-        return $this->codeDiplome;
-    }
-
-    public function setCodeDiplome(string $codeDiplome): self
-    {
-        $this->codeDiplome = $codeDiplome;
-
-        return $this;
-    }
-
-    public function getVersionDiplome(): ?string
-    {
-        return $this->versionDiplome;
-    }
-
-    public function setVersionDiplome(string $versionDiplome): self
-    {
-        $this->versionDiplome = $versionDiplome;
 
         return $this;
     }

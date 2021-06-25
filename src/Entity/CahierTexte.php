@@ -4,13 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/CahierTexte.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 05/06/2021 19:05
  */
 
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
-use DateTimeInterface;
+use Carbon\CarbonInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -28,42 +28,42 @@ class CahierTexte extends BaseEntity
      * @ORM\Column(type="string", length=150)
      * @Groups({"carnet_personnel"})
      */
-    private $libelle;
+    private ?string $libelle;
 
     /**
      * @ORM\Column(type="text")
      * @Groups({"carnet_personnel"})
      */
-    private $description;
+    private ?string $description;
 
     /**
      * @ORM\Column(type="datetime")
      * @Groups({"carnet_personnel"})
      */
-    private $dateRetour;
+    private ?CarbonInterface $dateRetour;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Personnel", inversedBy="cahierTextes")
      * @Groups({"carnet_personnel"})
      */
-    private $personnel;
+    private ?Personnel $personnel;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Fichier", inversedBy="cahierTextes")
      */
-    private $fichiers;
+    private Collection $fichiers;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Semestre", inversedBy="cahierTextes")
      * @Groups({"carnet_personnel"})
      */
-    private $semestre;
+    private ?Semestre $semestre;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Matiere")
      * @Groups({"carnet_personnel"})
      */
-    private $matiere;
+    private ?Matiere $matiere;
 
     public function __construct()
     {
@@ -94,12 +94,12 @@ class CahierTexte extends BaseEntity
         return $this;
     }
 
-    public function getDateRetour(): ?DateTimeInterface
+    public function getDateRetour(): ?CarbonInterface
     {
         return $this->dateRetour;
     }
 
-    public function setDateRetour(DateTimeInterface $dateRetour): self
+    public function setDateRetour(CarbonInterface $dateRetour): self
     {
         $this->dateRetour = $dateRetour;
 

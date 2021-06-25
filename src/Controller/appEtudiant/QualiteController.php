@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appEtudiant/QualiteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2021 08:46
+ * @lastUpdate 06/06/2021 09:55
  */
 
 namespace App\Controller\appEtudiant;
@@ -15,6 +15,7 @@ use App\Controller\BaseController;
 use App\Entity\QuestionnaireQualite;
 use App\Repository\QuestionnaireEtudiantRepository;
 use App\Repository\QuestionnaireQualiteRepository;
+use Carbon\Carbon;
 use DateTime;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
@@ -64,7 +65,7 @@ class QualiteController extends BaseController
             'etudiant' => $this->getConnectedUser()->getId(),
         ]);
         if (null !== $quizzEtudiant) {
-            $quizzEtudiant->setDateTermine(new DateTime('now'));
+            $quizzEtudiant->setDateTermine(Carbon::now());
             $quizzEtudiant->setTermine(true);
             $this->entityManager->flush();
 

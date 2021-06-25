@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/QuestionnaireReponse.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 06/06/2021 08:58
  */
 
 namespace App\Entity;
@@ -23,27 +23,27 @@ class QuestionnaireReponse extends BaseEntity
     /**
      * @ORM\ManyToOne(targetEntity="QuestionnaireQuestion", inversedBy="quizzReponses")
      */
-    private $question;
+    private ?QuestionnaireQuestion $question;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $libelle;
+    private ?string $libelle;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $valeur;
+    private ?string $valeur;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $ordre;
+    private ?int $ordre;
 
     /**
      * @ORM\Column(type="string", length=30)
      */
-    private $alignement = 'HORIZONTAL_CENTER';
+    private string $alignement = 'HORIZONTAL_CENTER';
 
     public function getQuestion(): ?QuestionnaireQuestion
     {

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/StageMailTemplate.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 25/06/2021 10:28
  */
 
 namespace App\Entity;
@@ -14,17 +14,17 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\StageMailTemplateRepository")
  */
-class StageMailTemplate
+class StageMailTemplate extends BaseEntity
 {
     public const CHAMPS_PUBLIPOSTAGE = [
-        '{{civilite_court_etudiant}}'    => '{{stageEtudiant.etudiant.civilite}}',
-        '{{civilite_etudiant}}'          => '{{stageEtudiant.etudiant.civiliteLong}}',
-        '{{prenom_etudiant}}'            => '{{stageEtudiant.etudiant.prenom}}',
-        '{{nom_etudiant}}'               => '{{stageEtudiant.etudiant.nom}}',
-        '{{entreprise}}'                 => '{{stageEtudiant.entreprise.raisonSociale}}',
+        '{{civilite_court_etudiant}}' => '{{stageEtudiant.etudiant.civilite}}',
+        '{{civilite_etudiant}}' => '{{stageEtudiant.etudiant.civiliteLong}}',
+        '{{prenom_etudiant}}' => '{{stageEtudiant.etudiant.prenom}}',
+        '{{nom_etudiant}}' => '{{stageEtudiant.etudiant.nom}}',
+        '{{entreprise}}' => '{{stageEtudiant.entreprise.raisonSociale}}',
         '{{civilite_court_responsable}}' => '{{stageEtudiant.entreprise.responsable.civilite}}',
-        '{{civilite_responsable}}'       => '{{stageEtudiant.entreprise.responsable.civiliteLong}}',
-        '{{prenom_reponsable}}'          => '{{stageEtudiant.entreprise.responsable.prenom}}',
+        '{{civilite_responsable}}' => '{{stageEtudiant.entreprise.responsable.civiliteLong}}',
+        '{{prenom_reponsable}}' => '{{stageEtudiant.entreprise.responsable.prenom}}',
         '{{nom_responsable}}'            => '{{stageEtudiant.entreprise.responsable.nom}}',
         '{{civilite_court_tuteur}}'      => '{{stageEtudiant.tuteur.civilite}}',
         '{{civilite_tuteur}}'            => '{{stageEtudiant.tuteur.civiliteLong}}',
@@ -40,36 +40,24 @@ class StageMailTemplate
     ];
 
     /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\StagePeriode", inversedBy="stageMailTemplates")
      */
-    private $stagePeriode;
+    private ?StagePeriode $stagePeriode;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $subject;
+    private ?string $subject;
 
     /**
      * @ORM\Column(type="string", length=50)
      */
-    private $event;
+    private ?string $event;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\TwigTemplate", cascade={"persist", "remove"})
      */
-    private $twigTemplate;
-
-    public function getId()
-    {
-        return $this->id;
-    }
+    private ?TwigTemplate $twigTemplate;
 
     public function getStagePeriode(): ?StagePeriode
     {

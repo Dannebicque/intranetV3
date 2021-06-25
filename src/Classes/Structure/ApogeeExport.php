@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Structure/ApogeeExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/06/2021 12:02
+ * @lastUpdate 25/06/2021 10:28
  */
 
 namespace App\Classes\Structure;
@@ -52,78 +52,91 @@ class ApogeeExport
         /** @var \App\Entity\Semestre $semestre */
         foreach ($this->diplome->getSemestres() as $semestre) {
             $this->myExcelWriter->createSheet($semestre->getLibelle());
+            $this->myExcelWriter->writeCellXY(1, 1, 'B.U.T. : ', [
+                'color' => 'bb1e10',
+                'font-size' => 12,
+                'font-weight' => 'bold',
+                'style' => 'HORIZONTAL_CENTER',
+            ]);
+            $this->myExcelWriter->writeCellXY(2, 1, $this->diplome->getSigle(), [
+                'color' => 'bb1e10',
+                'font-size' => 12,
+                'font-weight' => 'bold',
+                'style' => 'HORIZONTAL_CENTER',
+            ]);
 
-            $this->myExcelWriter->getSheet()->setCellValue('A1', 'Diplôme : ');
-            $this->myExcelWriter->getSheet()->setCellValue('B1', $this->diplome->getDisplay());
-            $this->myExcelWriter->getSheet()->setCellValue('C1', $this->diplome->getCodeDiplome());
-            $this->myExcelWriter->getSheet()->setCellValue('D1', $this->diplome->getCodeEtape());
-            $this->myExcelWriter->getSheet()->setCellValue('E1', $this->diplome->getCodeVersion());
-            $this->myExcelWriter->getSheet()->setCellValue('F1', $this->diplome->getCodeDepartement());
+            $this->myExcelWriter->writeCellName('A2', $semestre->getAnnee()->getLibelle());
+            $this->myExcelWriter->writeCellName('A3', 'IUT de Troyes');
+            $this->myExcelWriter->writeCellXY(1, 4, 'Code diplôme', [
+                'color' => 'bb1e10',
+                'font-size' => 12,
+                'font-weight' => 'bold',
+                'style' => 'HORIZONTAL_CENTER',
+            ]);
 
-            $this->myExcelWriter->getSheet()->setCellValue('A2', 'Année : ');
-            $this->myExcelWriter->getSheet()->setCellValue('B2', $semestre->getAnnee()->getLibelle());
-            $this->myExcelWriter->getSheet()->setCellValue('C2', $semestre->getAnnee()->getCodeEtape());
+            $this->myExcelWriter->writeCellName('A5',
+                $this->diplome->getCodeDiplome() . ' ' . $this->diplome->getCodeVersion());
 
-            $this->myExcelWriter->getSheet()->setCellValue('A3', 'Semestre : ');
-            $this->myExcelWriter->getSheet()->setCellValue('B3', $semestre->getLibelle());
-            $this->myExcelWriter->getSheet()->setCellValue('C3', $semestre->getCodeElement());
+            $this->myExcelWriter->writeCellXY(1, 6, 'Code étape', [
+                'color' => 'bb1e10',
+                'font-size' => 12,
+                'font-weight' => 'bold',
+                'style' => 'HORIZONTAL_CENTER',
+            ]);
 
-            $this->myExcelWriter->getSheet()->setCellValue('A5', 'UE : ');
+            $this->myExcelWriter->writeCellName('A7',
+                $semestre->getAnnee()->getCodeEtape() . ' ' . $semestre->getAnnee()->getCodeVersion());
 
-            $ligne = 5;
-            $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(1, $ligne, 'Numéro UE');
-            $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(2, $ligne, 'Libellé');
-            $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(3, $ligne, 'Code élément');
-            $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(4, $ligne, 'ECTS');
-            $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(5, $ligne, 'Libellé Compétence Court');
-            $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(5, $ligne, 'Libellé Compétence Long');
+            $this->myExcelWriter->writeCellXY(1, 9, 'Niveau 1', [
+                'color' => 'bb1e10',
+                'font-size' => 12,
+                'font-weight' => 'bold',
+                'style' => 'HORIZONTAL_CENTER',
+            ]);
+            $this->myExcelWriter->writeCellName('A10', 'SEMESTRE');
 
-            ++$ligne;
+            $this->myExcelWriter->writeCellName('B9', 'SEMESTRE :');
+            $this->myExcelWriter->writeCellName('B10', $semestre->getOrdreLmd());
+            $this->myExcelWriter->writeCellName('C9', 'Code Apogée');
+            $this->myExcelWriter->writeCellName('C10', $semestre->getCodeElement());
+
+            $this->myExcelWriter->writeCellXY(1, 12, 'Niveau 2', [
+                'color' => 'bb1e10',
+                'font-size' => 12,
+                'font-weight' => 'bold',
+                'style' => 'HORIZONTAL_CENTER',
+            ]);
+            $this->myExcelWriter->writeCellName('A13', 'UE');
+
+            $colonne = 2;
+            $this->myExcelWriter->writeCellName('B12', 'Libellé UE');
+            $this->myExcelWriter->writeCellName('C12', 'UE');
+            $this->myExcelWriter->writeCellName('D12', 'Code Apogée');
+            $this->myExcelWriter->writeCellName('E12', 'ECTS');
+
+            $ligne = 13;
             /** @var \App\Entity\Ue $ue */
             foreach ($semestre->getUes() as $ue) {
-                $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(1, $ligne, $ue->getNumeroUe());
-                $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(2, $ligne, $ue->getLibelle());
-                $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(3, $ligne, $ue->getCodeElement());
-                $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(4, $ligne, $ue->getNbEcts());
-                $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(5, $ligne,
-                    $ue->getApcCompetence()->getNomCourt());
-                $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(6, $ligne,
-                    $ue->getApcCompetence()->getLibelle());
+                $this->myExcelWriter->writeCellXY($colonne, $ligne, $ue->getApcCompetence()->getNomCourt());
+                ++$colonne;
+                $this->myExcelWriter->writeCellXY($colonne, $ligne, $ue->getNumeroUe());
+                ++$colonne;
+                $this->myExcelWriter->writeCellXY($colonne, $ligne, $ue->getCodeElement());
+                ++$colonne;
+                $this->myExcelWriter->writeCellXY($colonne, $ligne, $ue->getNbEcts());
+                $colonne = 2;
                 ++$ligne;
             }
             ++$ligne;
             ++$ligne;
-            $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(1, $ligne, 'UE "organisation Ressource"');
-            $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(2, $ligne, 'Libellé');
-            $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(3, $ligne, 'Code élément');
-            $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(4, $ligne, '');
-            $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(5, $ligne, 'UE "organisation SAE"');
-            $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(6, $ligne, 'Libellé');
-            $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(7, $ligne, 'Code élément');
-            $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(8, $ligne, '');
+            $this->myExcelWriter->writeCellXY(1, $ligne, 'Niveau 3', [
+                'color' => 'bb1e10',
+                'font-size' => 12,
+                'font-weight' => 'bold',
+                'style' => 'HORIZONTAL_CENTER',
+            ]);
+            ++$ligne;
 
-            ++$ligne;
-            /** @var \App\Entity\Ue $ue */
-            foreach ($semestre->getUes() as $ue) {
-                $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(1, $ligne,
-                    'UE' . $ue->getNumeroUe() . 'Ressource');
-                $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(2, $ligne,
-                    'UE' . $ue->getNumeroUe() . 'Ressource');
-                $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(3, $ligne,
-                    $ue->getCodeElement() . 'R');
-                $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(4, $ligne, '');
-                $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(5, $ligne,
-                    'UE' . $ue->getNumeroUe() . 'SAE');
-                $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(6, $ligne,
-                    'UE' . $ue->getNumeroUe() . 'SAE');
-                $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(7, $ligne,
-                    $ue->getCodeElement() . 'S');
-                $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(8, $ligne, '');
-                ++$ligne;
-            }
-
-            ++$ligne;
-            ++$ligne;
             $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(1, $ligne, 'Ressource');
             $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(2, $ligne, 'Libellé');
             $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(3, $ligne, 'Libellé Court');
@@ -136,7 +149,7 @@ class ApogeeExport
                 $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(3, $ligne, $ressource->getLibelleCourt());
                 $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(4, $ligne, $ressource->getCodeElement());
                 $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(5, $ligne,
-                    $ressource->getCodeElement()[5] === 'M' ? 'Mutualisée' : 'UE ' . $ressource->getCodeElement()[5]);
+                    'M' === $ressource->getCodeElement()[5] ? 'Mutualisée' : 'UE ' . $ressource->getCodeElement()[5]);
                 ++$ligne;
             }
 
@@ -154,9 +167,10 @@ class ApogeeExport
                 $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(3, $ligne, $sae->getLibelleCourt());
                 $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(4, $ligne, $sae->getCodeElement());
                 $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(5, $ligne,
-                    $sae->getCodeElement()[5] === 'M' ? 'Mutualisée' : 'UE ' . $sae->getCodeElement()[5]);
+                    'M' === $sae->getCodeElement()[5] ? 'Mutualisée' : 'UE ' . $sae->getCodeElement()[5]);
                 ++$ligne;
             }
+            $this->myExcelWriter->getColumnsAutoSize('A', 'I');
         }
     }
 }

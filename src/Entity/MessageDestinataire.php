@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/MessageDestinataire.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:49
+ * @lastUpdate 06/06/2021 08:22
  */
 
 namespace App\Entity;
 
+use Carbon\CarbonInterface;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -32,29 +33,29 @@ abstract class MessageDestinataire extends BaseEntity
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $dateLu;
+    private ?CarbonInterface $dateLu;
 
     /**
      * @ORM\Column(type="string", length=1)
      */
-    private $etat = 'U';
+    private string $etat = self::UNREAD;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Message", inversedBy="messageDestinataires")
      */
-    private $message;
+    private ?Message $message;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $starred = false;
+    private bool $starred = false;
 
-    public function getDateLu(): ?DateTimeInterface
+    public function getDateLu(): ?CarbonInterface
     {
         return $this->dateLu;
     }
 
-    public function setDateLu(DateTimeInterface $dateLu): self
+    public function setDateLu(CarbonInterface $dateLu): self
     {
         $this->dateLu = $dateLu;
 

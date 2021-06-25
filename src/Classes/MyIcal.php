@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyIcal.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/05/2021 09:44
+ * @lastUpdate 06/06/2021 10:01
  */
 
 /*
@@ -13,6 +13,7 @@
 
 namespace App\Classes;
 
+use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use DateTime;
 use DateTimeInterface;
@@ -100,7 +101,7 @@ class MyIcal
      */
     public function addEvent($id): void
     {
-        $d = new DateTime('now');
+        $d = Carbon::now();
         $d = $d->format(DateTimeInterface::ATOM);
         $uid = $d . '-' . mb_substr(md5($d . $id), 0, 12) . '-@IUT3Cours';
         $this->filevt .= 'BEGIN:VEVENT' . \chr(13) . \chr(10);

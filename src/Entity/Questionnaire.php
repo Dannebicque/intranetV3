@@ -4,12 +4,14 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Questionnaire.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/05/2021 16:35
+ * @lastUpdate 06/06/2021 08:48
  */
 
 namespace App\Entity;
 
 use App\Entity\Traits\UuidTrait;
+use Carbon\Carbon;
+use Carbon\CarbonInterface;
 use DateTime;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -31,12 +33,12 @@ abstract class Questionnaire extends BaseEntity
     /**
      * @ORM\Column(type="datetime")
      */
-    private ?DateTimeInterface $dateOuverture;
+    private ?CarbonInterface $dateOuverture;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private ?DateTimeInterface $dateFermeture;
+    private ?CarbonInterface $dateFermeture;
 
     /**
      * @ORM\Column(type="string", length=150)
@@ -80,24 +82,24 @@ abstract class Questionnaire extends BaseEntity
         return $this;
     }
 
-    public function getDateOuverture(): ?DateTimeInterface
+    public function getDateOuverture(): ?CarbonInterface
     {
         return $this->dateOuverture;
     }
 
-    public function setDateOuverture(DateTimeInterface $dateOuverture): self
+    public function setDateOuverture(CarbonInterface $dateOuverture): self
     {
         $this->dateOuverture = $dateOuverture;
 
         return $this;
     }
 
-    public function getDateFermeture(): ?DateTimeInterface
+    public function getDateFermeture(): ?CarbonInterface
     {
         return $this->dateFermeture;
     }
 
-    public function setDateFermeture(DateTimeInterface $dateFermeture): self
+    public function setDateFermeture(CarbonInterface $dateFermeture): self
     {
         $this->dateFermeture = $dateFermeture;
 
@@ -154,7 +156,7 @@ abstract class Questionnaire extends BaseEntity
 
     public function isOuvert(): bool
     {
-        $today = new DateTime('now');
+        $today = Carbon::now();
 
         return $today >= $this->getDateOuverture() && $today <= $this->getDateFermeture();
     }

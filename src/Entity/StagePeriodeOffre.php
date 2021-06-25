@@ -4,19 +4,17 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/StagePeriodeOffre.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/06/2021 11:26
+ * @lastUpdate 06/06/2021 12:28
  */
 
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
-use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
@@ -32,36 +30,32 @@ class StagePeriodeOffre extends BaseEntity
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\StagePeriode", inversedBy="stagePeriodeOffres")
      */
-    private $stagePeriodes;
+    private Collection $stagePeriodes;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"stage_offre_administration"})
      */
-    private $libelle;
+    private ?string $libelle;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"stage_offre_administration"})
      */
-    private $entreprise;
+    private ?string $entreprise;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"stage_offre_administration"})
      */
-    private $ville;
+    private ?string $ville;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", length=50)
      */
-    private $documentName;
+    private ?string $documentName = '';
 
     /**
-     * @var UploadedFile
-     *
      * @Vich\UploadableField(mapping="offreStage", fileNameProperty="documentName")
      */
     private $documentFile;

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/QuestionnaireQuizz.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 06/06/2021 08:58
  */
 
 namespace App\Entity;
@@ -25,7 +25,7 @@ class QuestionnaireQuizz extends Questionnaire
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\QuestionnaireQuestionnaireSection", mappedBy="questionnaireQuizz")
      */
-    private $sections;
+    private Collection $sections;
 
     public function __construct()
     {

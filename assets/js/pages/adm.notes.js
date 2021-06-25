@@ -1,8 +1,8 @@
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.notes.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/07/2020 11:18
+// @lastUpdate 25/06/2021 10:28
 import {addCallout} from '../util'
 
 $(document).on('click', '.optAfficher', function () {
@@ -62,3 +62,48 @@ $(document).on('click', '.optVerrouiller', function () {
     }
   })
 })
+
+$(document).on('click', '#voirDetailAbsent', function (e) {
+  e.preventDefault()
+  $('#detailIncoherent').hide()
+  $('#detailAbsent').toggle()
+})
+
+$(document).on('click', '#voirDetailIncoherent', function (e) {
+  e.preventDefault()
+  $('#detailIncoherent').toggle()
+  $('#detailAbsent').hide()
+})
+
+$(document).on('click', '#remplacerParZero', function (e) {
+  e.preventDefault()
+  updateNote($(this).data('note'), 'zero').then(
+    data => {
+      $('#note_' + data).text(0)
+    }
+  )
+})
+
+$(document).on('click', '#marquerAbsent', function (e) {
+  e.preventDefault()
+  updateNote($(this).data('note'), 'absent').then(
+    data => {
+      $('#note_' + data).text('Absence justifiée')
+    }
+  )
+})
+
+$(document).on('click', '#supprAbsent', function (e) {
+  e.preventDefault()
+  updateNote($(this).data('note'), 'suppr-absence')
+})
+
+function updateNote (id, action) {
+  return $.ajax({
+    url: Routing.generate('administration_note_corrige_ajax', {note: id, action: action}),
+    method: 'POST',
+    success: function (data) {
+      return data
+    }
+  })
+}

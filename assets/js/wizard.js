@@ -1,11 +1,11 @@
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/wizard.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 23/11/2020 17:55
+// @lastUpdate 08/06/2021 08:24
 
 import '../vendor/bootstrap-wizard/bootstrap-wizard.min'
-import $ from 'jquery'
+// import $ from 'jquery'
 
 $('[data-provide~="wizard"]').each(function () {
   initWizard($(this))

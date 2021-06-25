@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/AnneeUniversitaire.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/05/2021 17:55
+ * @lastUpdate 25/06/2021 10:28
  */
 
 namespace App\Entity;
@@ -27,69 +27,69 @@ class AnneeUniversitaire extends BaseEntity
      * @ORM\Column(type="string", length=30)
      * @Groups({"annee_universitaire"})
      */
-    private $libelle;
+    private ?string $libelle;
 
     /**
      * @ORM\Column(type="integer")
      * @Groups({"annee_universitaire"})
      */
-    private $annee;
+    private ?int $annee;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      * @Groups({"annee_universitaire"})
      */
-    private $commentaire;
+    private ?string $commentaire;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Departement", mappedBy="anneeUniversitairePrepare")
      */
-    private $departements;
+    private Collection $departements;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Calendrier", mappedBy="anneeUniversitaire")
      */
-    private $calendriers;
+    private Collection $calendriers;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\CreneauCours", mappedBy="anneeUniversitaire")
      */
-    private $creneauCours;
+    private Collection $creneauCours;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Scolarite", mappedBy="anneeUniversitaire")
      */
-    private $scolarites;
+    private Collection $scolarites;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\ScolaritePromo", mappedBy="anneeUniversitaire")
      */
-    private $scolaritePromos;
+    private Collection $scolaritePromos;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Diplome", mappedBy="anneeUniversitaire")
      */
-    private $diplomes;
+    private Collection $diplomes;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\StagePeriode", mappedBy="anneeUniversitaire")
      */
-    private $stagePeriodes;
+    private Collection $stagePeriodes;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Evaluation", mappedBy="anneeUniversitaire")
      */
-    private $evaluations;
+    private Collection $evaluations;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $active;
+    private bool $active = false;
 
     /**
      * @ORM\OneToMany(targetEntity=ProjetPeriode::class, mappedBy="anneeUniversitaire")
      */
-    private $projetPeriodes;
+    private Collection $projetPeriodes;
 
     public function __construct()
     {

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/MessageDestinatairePersonnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 06/06/2021 08:24
  */
 
 namespace App\Entity;
@@ -23,7 +23,7 @@ class MessageDestinatairePersonnel extends MessageDestinataire
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Personnel", inversedBy="messageDestinatairePersonnels")
      */
-    private $personnel;
+    private ?Personnel $personnel;
 
     public function getPersonnel(): ?Personnel
     {

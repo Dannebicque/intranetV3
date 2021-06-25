@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/DocumentFavori.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/05/2021 16:35
+ * @lastUpdate 05/06/2021 19:10
  */
 
 namespace App\Entity;
@@ -25,7 +25,7 @@ abstract class DocumentFavori extends BaseEntity
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Document", inversedBy="documentsFavoris")
      */
-    private $document;
+    private ?Document $document;
 
     public function getDocument(): ?Document
     {

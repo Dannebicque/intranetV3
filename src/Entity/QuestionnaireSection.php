@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/QuestionnaireSection.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/06/2021 12:03
+ * @lastUpdate 06/06/2021 08:59
  */
 
 namespace App\Entity;
@@ -28,33 +28,33 @@ class QuestionnaireSection extends BaseEntity
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $titre;
+    private ?string $titre;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $textExplicatif;
+    private ?string $textExplicatif;
 
     /**
      * @ORM\OneToMany(targetEntity="QuestionnaireSectionQuestion", mappedBy="section", fetch="EAGER")
      * @ORM\OrderBy({"ordre"="ASC"})
      */
-    private $qualiteSectionQuestions;
+    private Collection $qualiteSectionQuestions;
 
     /**
      * @ORM\OneToMany(targetEntity="QuestionnaireQuestionnaireSection", mappedBy="section")
      */
-    private $qualiteQuestionnaireSections;
+    private Collection $qualiteQuestionnaireSections;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $config;
+    private ?string $config;
 
     /**
      * @ORM\Column(type="string", length=10, nullable=true)
      */
-    private $typeCalcul;
+    private string $typeCalcul;
 
     public function __construct()
     {
@@ -166,7 +166,7 @@ class QuestionnaireSection extends BaseEntity
         return $this->typeCalcul;
     }
 
-    public function setTypeCalcul(?string $typeCalcul): self
+    public function setTypeCalcul(string $typeCalcul): self
     {
         $this->typeCalcul = $typeCalcul;
 

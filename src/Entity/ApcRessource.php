@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcRessource.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/05/2021 15:22
+ * @lastUpdate 05/06/2021 17:46
  */
 
 namespace App\Entity;
@@ -43,27 +43,17 @@ class ApcRessource extends AbstractMatiere
     /**
      * @ORM\OneToMany(targetEntity=ApcRessourceCompetence::class, mappedBy="ressource", cascade={"persist","remove"} )
      */
-    private $apcRessourceCompetences;
+    private Collection $apcRessourceCompetences;
 
     /**
      * @ORM\OneToMany(targetEntity=ApcRessourceApprentissageCritique::class, mappedBy="ressource")
      */
-    private $apcRessourceApprentissageCritiques;
+    private Collection $apcRessourceApprentissageCritiques;
 
     /**
      * @ORM\OneToMany(targetEntity=ApcSaeRessource::class, mappedBy="ressource")
      */
-    private $apcSaeRessources;
-
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     */
-    private ?float $heuresSAE;
-
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     */
-    private ?float $heuresSAEPtut;
+    private Collection $apcSaeRessources;
 
     public function __construct()
     {
@@ -246,7 +236,7 @@ class ApcRessource extends AbstractMatiere
         return $this;
     }
 
-    public function getNiveau()
+    public function getNiveau(): ?int
     {
         if (count($this->apcRessourceApprentissageCritiques) > 0) {
             $ac = $this->apcRessourceApprentissageCritiques[0]->getApprentissageCritique();
@@ -255,30 +245,6 @@ class ApcRessource extends AbstractMatiere
         }
 
         return null;
-    }
-
-    public function getHeuresSAE(): ?float
-    {
-        return $this->heuresSAE;
-    }
-
-    public function setHeuresSAE(?float $heuresSAE): self
-    {
-        $this->heuresSAE = $heuresSAE;
-
-        return $this;
-    }
-
-    public function getHeuresSAEPtut(): ?float
-    {
-        return $this->heuresSAEPtut;
-    }
-
-    public function setHeuresSAEPtut(?float $heuresSAEPtut): self
-    {
-        $this->heuresSAEPtut = $heuresSAEPtut;
-
-        return $this;
     }
 
     public function getJson(): array

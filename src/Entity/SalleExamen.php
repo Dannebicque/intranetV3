@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/SalleExamen.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 06/06/2021 09:06
  */
 
 namespace App\Entity;
@@ -25,36 +25,36 @@ class SalleExamen extends BaseEntity
      * @ORM\ManyToOne(targetEntity="App\Entity\Salle", inversedBy="salleExamens")
      * @Groups({"salle_examen_administration"})
      */
-    private $salle;
+    private ?Salle $salle;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Departement", inversedBy="salleExamens")
      */
-    private $departement;
+    private Departement $departement;
 
     /**
      * @ORM\Column(type="integer")
      * @Groups({"salle_examen_administration"})
      */
-    private $nbColonnes;
+    private ?int $nbColonnes;
 
     /**
      * @ORM\Column(type="integer")
      * @Groups({"salle_examen_administration"})
      */
-    private $nbRangs;
+    private ?int $nbRangs;
 
     /**
      * @ORM\Column(type="integer")
      * @Groups({"salle_examen_administration"})
      */
-    private $capacite;
+    private ?int $capacite;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"salle_examen_administration"})
      */
-    private $placesInterdites;
+    private ?string $placesInterdites;
 
     public function __construct(Departement $departement)
     {
@@ -78,7 +78,7 @@ class SalleExamen extends BaseEntity
         return $this->departement;
     }
 
-    public function setDepartement(?Departement $departement): self
+    public function setDepartement(Departement $departement): self
     {
         $this->departement = $departement;
 

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Enquetes/MyEnqueteDiplome.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/05/2021 19:35
+ * @lastUpdate 06/06/2021 10:01
  */
 
 /*
@@ -23,6 +23,7 @@ use App\Repository\QuestionnaireEtudiantReponseRepository;
 use App\Repository\QuestionnaireEtudiantRepository;
 use App\Repository\QuestionnaireQuizzRepository;
 use App\Repository\QuestionnaireReponseRepository;
+use Carbon\Carbon;
 use DateTime;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -110,7 +111,7 @@ class MyEnqueteDiplome
         }
         $this->myExcelWriter->getColumnsAutoSize('A', 'Z');
         $writer = new Xlsx($this->myExcelWriter->getSpreadsheet());
-        $date = new DateTime('now');
+        $date = Carbon::now();
 
         return new StreamedResponse(
             static function() use ($writer) {
@@ -184,7 +185,7 @@ class MyEnqueteDiplome
         }
         $this->myExcelWriter->getColumnsAutoSize('A', 'I');
         $writer = new Xlsx($this->myExcelWriter->getSpreadsheet());
-        $date = new DateTime('now');
+        $date = Carbon::now();
 
         return new StreamedResponse(
             static function() use ($writer) {

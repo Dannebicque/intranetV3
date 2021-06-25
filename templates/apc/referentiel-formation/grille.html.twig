@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block header %}
-    {{ 'adm.apc_referentiel_formation.grille.heading'|trans({%diplome%:diplome.display}) }}
+    {{ 'adm.apc_referentiel_formation.grille.heading'|trans({'%diplome%':diplome.display}) }}
 {% endblock %}
 
 {% block headeractions %}
@@ -22,7 +22,7 @@
 
 {% block content %}
     <div class="card">
-        <h4 class="card-title">{{ 'adm.apc_referentiel_formation.grille.heading'|trans({%diplome%:diplome.display}) }}</h4>
+        <h4 class="card-title">{{ 'adm.apc_referentiel_formation.grille.heading'|trans({'%diplome%':diplome.display}) }}</h4>
         <div class="card-body">
             <ul class="nav nav-tabs">
                 {% for semestre in user_data.semestresByDiplome(diplome.id) %}

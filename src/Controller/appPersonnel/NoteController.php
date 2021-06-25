@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/NoteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/05/2021 16:12
+ * @lastUpdate 10/06/2021 11:38
  */
 
 namespace App\Controller\appPersonnel;
@@ -55,7 +55,7 @@ class NoteController extends BaseController
         }
         //todo: vérifier les accès par des profs non autorisés ????
 
-        $evaluation = new Evaluation($this->getConnectedUser(), $mat, $this->dataUserSession->getDepartement());
+        $evaluation = new Evaluation($this->getConnectedUser(), $mat);
         $form = $this->createForm(
             EvaluationType::class,
             $evaluation,
@@ -66,9 +66,9 @@ class NoteController extends BaseController
                 'personnelDisabled' => true,
                 'autorise' => true,
                 'locale' => $request->getLocale(),
-                'attr' => [
-                    'data-provide' => 'validation',
-                ],
+//                'attr' => [
+//                    'data-provide' => 'validation',
+//                ],
             ]
         );
 

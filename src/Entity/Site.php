@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Site.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 06/06/2021 09:18
  */
 
 namespace App\Entity;
@@ -27,28 +27,28 @@ class Site extends BaseEntity
      * @ORM\Column(type="string", length=255)
      * @Groups({"sites_administration"})
      */
-    private $libelle;
+    private ?string $libelle;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Adresse", cascade={"persist", "remove"})
      * @Groups({"sites_administration"})
      */
-    private $adresse;
+    private ?Adresse $adresse;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Ufr", mappedBy="sites")
      */
-    private $ufrs;
+    private Collection $ufrs;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Salle", mappedBy="site")
      */
-    private $salles;
+    private Collection $salles;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Ufr", mappedBy="sitePrincipal")
      */
-    private $ufrPrincipales;
+    private Collection $ufrPrincipales;
 
     public function __construct()
     {
@@ -57,7 +57,7 @@ class Site extends BaseEntity
         $this->ufrPrincipales = new ArrayCollection();
     }
 
-    public function getLibelle()
+    public function getLibelle(): ?string
     {
         return $this->libelle;
     }

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Event/SlugGenerator.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/05/2021 19:35
+ * @lastUpdate 06/06/2021 09:46
  */
 
 namespace App\Event;
@@ -20,7 +20,7 @@ class SlugGenerator implements EventSubscriber
 {
     // this method can only return the event names; you cannot define a
     // custom method name to execute when each event triggers
-    public function getSubscribedEvents()
+    public function getSubscribedEvents(): array
     {
         return [
             Events::prePersist,
@@ -31,31 +31,35 @@ class SlugGenerator implements EventSubscriber
     // callback methods must be called exactly like the events they listen to;
     // they receive an argument of type LifecycleEventArgs, which gives you access
     // to both the entity object of the event and the entity manager itself
-    public function prePersist(LifecycleEventArgs $args)
+    public function prePersist(LifecycleEventArgs $args): void
     {
         $this->slug('persist', $args);
     }
 
-    private function slug(string $action, LifecycleEventArgs $args)
+    private function slug(string $action, LifecycleEventArgs $args): void
     {
         $entity = $args->getObject();
 
         // if this subscriber only applies to certain entity types,
         // add some code to check the entity type as early as possible
         if ($entity instanceof Article) {
-            return $entity->setSlug(Tools::slug($entity->getTitre()));
+            $entity->setSlug(Tools::slug($entity->getTitre()));
+
+            return;
         } elseif ($entity instanceof Utilisateur) {
             if ('' !== $entity->getMailUniv() && null !== $entity->getMailUniv()) {
                 $tabSlug = explode('@', $entity->getMailUniv());
 
-                return $entity->setSlug($tabSlug[0]);
+                $entity->setSlug($tabSlug[0]);
+
+                return;
             }
         }
 
         // ... get the entity information and log it somehow
     }
 
-    public function preUpdate(LifecycleEventArgs $args)
+    public function preUpdate(LifecycleEventArgs $args): void
     {
         $this->slug('update', $args);
     }

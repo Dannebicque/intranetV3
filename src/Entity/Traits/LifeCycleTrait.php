@@ -4,14 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Traits/LifeCycleTrait.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/06/2021 11:21
+ * @lastUpdate 05/06/2021 13:04
  */
 
 namespace App\Entity\Traits;
 
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
-use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

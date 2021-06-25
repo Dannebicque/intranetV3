@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/AbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2021 08:46
+ * @lastUpdate 25/06/2021 10:28
  */
 
 namespace App\Controller\administration;
@@ -75,7 +75,7 @@ class AbsenceController extends BaseController
         MyAbsences $myAbsences,
         Semestre $semestre
     ): Response {
-        $matieres = $typeMatiereManager->findBySemestre($semestre);
+        $matieres = $typeMatiereManager->findBySemestreArray($semestre);
         $myAbsences->getAbsencesSemestre($matieres, $semestre);
 
         return $this->render('administration/absence/liste.html.twig', [
@@ -127,9 +127,15 @@ class AbsenceController extends BaseController
      *
      * @throws Exception
      */
-    public function export(MyExport $myExport, MyAbsences $myAbsences, Semestre $semestre, string $_format): Response
-    {
-        $myAbsences->getAbsencesSemestre($semestre);
+    public function export(
+        TypeMatiereManager $typeMatiereManager,
+        MyExport $myExport,
+        MyAbsences $myAbsences,
+        Semestre $semestre,
+        string $_format
+    ): Response {
+        $matieres = $typeMatiereManager->findBySemestreArray($semestre);
+        $myAbsences->getAbsencesSemestre($matieres, $semestre);
 
         return $myExport->genereFichierAbsence($_format, $myAbsences, 'absences_' . $semestre->getLibelle());
     }

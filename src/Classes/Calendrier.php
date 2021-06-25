@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Calendrier.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 06/06/2021 10:01
  */
 
 /*
@@ -13,6 +13,7 @@
 
 namespace App\Classes;
 
+use App\Utils\Tools;
 use DateTime;
 use Exception;
 
@@ -50,7 +51,7 @@ abstract class Calendrier
             self::$tabFinMois[$mois] = date('t', mktime(0, 0, 0, $bonMois, 1, $year));
 
             for ($jour = 1; $jour <= self::$tabFinMois[$mois]; ++$jour) {
-                self::$tabPlanning[$mois][$jour] = new DateTime($year . '-' . $bonMois . '-' . $jour);
+                self::$tabPlanning[$mois][$jour] = Tools::convertDateToObject($year . '-' . $bonMois . '-' . $jour);
             }
             ++$bonMois;
         }

@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/css/app.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 04/06/2021 15:05
+// @lastUpdate 10/06/2021 17:18
 
 @import "core.min.css";
 @import "~bootstrap/scss/functions";
@@ -310,6 +310,10 @@ thead {
   margin-bottom: 10px;
   margin-top: -20px;
   //  background-color: #F9B000;
+}
+
+.header-action .nav-link {
+  color: var(--police);
 }
 
 .reserve {
@@ -625,4 +629,19 @@ td.td-edt.col-new-day {
 .myClose:hover {
   text-shadow: none;
   color: var(--colorIUT)
+}
+
+.bouncing-loader.bg-primary {
+  background-color: var(--colorPrimary) !important;
+  color: #fff;
+}
+
+.bouncing-loader.bd-danger {
+  background-color: var(--colorDanger) !important;
+  color: #fff;
+}
+
+.bouncing-loader.bg-success {
+  background-color: var(--colorSuccess) !important;
+  color: #fff;
 }

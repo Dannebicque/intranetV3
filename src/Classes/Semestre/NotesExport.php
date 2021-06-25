@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Semestre/NotesExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 25/06/2021 10:28
  */
 
 /*
@@ -14,6 +14,7 @@
 namespace App\Classes\Semestre;
 
 use App\Classes\Excel\MyExcelWriter;
+use App\Classes\Matieres\TypeMatiereManager;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Semestre;
 use App\Repository\EvaluationRepository;
@@ -26,6 +27,7 @@ class NotesExport
     private MyExcelWriter $myExcel;
     private NoteRepository $noteRepository;
     private EvaluationRepository $evaluationRepository;
+    private TypeMatiereManager $typeMatiereManager;
 
     /**
      * NotesExport constructor.
@@ -33,11 +35,13 @@ class NotesExport
     public function __construct(
         MyExcelWriter $myExcel,
         NoteRepository $noteRepository,
-        EvaluationRepository $evaluationRepository
+        EvaluationRepository $evaluationRepository,
+        TypeMatiereManager $typeMatiereManager
     ) {
         $this->myExcel = $myExcel;
         $this->noteRepository = $noteRepository;
         $this->evaluationRepository = $evaluationRepository;
+        $this->typeMatiereManager = $typeMatiereManager;
     }
 
     /**
@@ -47,10 +51,11 @@ class NotesExport
     public function exportXlsToutesLesNotes(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire)
     {
         $this->myExcel->createSheet('semestre ' . $semestre->getLibelle());
+        $matieres = $this->typeMatiereManager->findBySemestreArray($semestre);
         //todo: filtrer si option faite ou pas
         $etudiants = $semestre->getEtudiants();
-        $evaluations = $this->evaluationRepository->findBySemestre($semestre, $anneeUniversitaire);
-        $notes = $this->noteRepository->findByEtudiantSemestreArray($semestre, $anneeUniversitaire, $etudiants);
+        $evaluations = $this->evaluationRepository->findBySemestre($matieres, $anneeUniversitaire);
+        $notes = $this->noteRepository->findByEtudiantSemestreArray($matieres, $anneeUniversitaire, $etudiants);
 
         $ligne = 2;
         $colonne = 4;
@@ -59,14 +64,17 @@ class NotesExport
         $this->myExcel->writeCellName('C4', 'Libellé');
 
         foreach ($evaluations as $eval) {
-            if (null !== $eval->getMatiere()) {
-                $this->myExcel->writeCellXY($colonne, $ligne, $eval->getMatiere()->getCodeMatiere());
-                ++$ligne;
-                $this->myExcel->writeCellXY($colonne, $ligne, $eval->getMatiere()->getCodeElement());
-                ++$ligne;
-                $this->myExcel->writeCellXY($colonne, $ligne, $eval->getMatiere()->getLibelle());
-                $ligne = 2;
-                ++$colonne;
+            if (0 !== $eval->getIdMatiere()) {
+                $matiere = $matieres[$eval->getTypeIdMatiere()];
+                if (null !== $matiere) {
+                    $this->myExcel->writeCellXY($colonne, $ligne, $matiere->codeMatiere);
+                    ++$ligne;
+                    $this->myExcel->writeCellXY($colonne, $ligne, $matiere->codeElement);
+                    ++$ligne;
+                    $this->myExcel->writeCellXY($colonne, $ligne, $matiere->libelle);
+                    $ligne = 2;
+                    ++$colonne;
+                }
             }
         }
         $ligne = 5;
@@ -103,7 +111,7 @@ class NotesExport
             },
             200,
             [
-                'Content-Type'        => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                 'Content-Disposition' => 'attachment;filename="Export des notes du semestre ' . $semestre->getLibelle() . '.xlsx"',
             ]
         );

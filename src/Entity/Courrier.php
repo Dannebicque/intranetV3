@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Courrier.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 05/06/2021 18:56
  */
 
 namespace App\Entity;
@@ -20,11 +20,10 @@ class Courrier extends BaseEntity
 {
     use LifeCycleTrait;
 
-
     /**
      * @ORM\Column(type="text")
      */
-    private $texte;
+    private ?string $texte;
 
     public function getTexte(): ?string
     {

@@ -39,7 +39,7 @@
                     <div class="col-md-6 col-sm-12">
                         <label class="form-control-label required"
                                for="previsionnel_annee_previsionnel">{{ 'label.annee_previsionnel'|trans }}</label>
-                        <select class="form-control" id="previsionnel_annee_previsionnel"
+                        <select class="form-control selectpicker" id="previsionnel_annee_previsionnel"
                                 name="previsionnel_annee_previsionnel">
                             {% for annee in 'now'|date('Y')-5..'now'|date('Y')+5 %}
                                 <option value="{{ annee }}"
@@ -181,9 +181,7 @@
                               id="previsionnel_commentaire"
                               class="form-control"
                               rows="4"
-                              placeholder="Indiquez vos commentaires ici... Uniquement les contraintes d'organisation du module, le déroulement des évaluations, ...">
-
-                    </textarea>
+                              placeholder="Indiquez vos commentaires ici... Uniquement les contraintes d'organisation du module, le déroulement des évaluations, ..."></textarea>
                 </div>
 
                 <button class="btn btn-success">{{ 'sauvegarder'|trans }}</button>

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/PersonnelRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 25/06/2021 10:28
  */
 
 namespace App\Repository;
@@ -40,15 +40,27 @@ class PersonnelRepository extends ServiceEntityRepository
         $this->router = $router;
     }
 
-    public function findByType($type, $departement)
+    public function findByType($type, $departement, $filtreAdm = 'commun')
     {
-        return $this->createQueryBuilder('p')
+        $query = $this->createQueryBuilder('p')
             ->innerJoin(PersonnelDepartement::class, 'f', 'WITH', 'f.personnel = p.id')
             ->where('p.typeUser = :type')
             ->andWhere('f.departement = :departement')
-            ->setParameter('type', $type)
-            ->setParameter('departement', $departement)
-            ->orderBy('p.nom', 'ASC')
+            ->setParameter('departement', $departement);
+
+        if ('separation' === $filtreAdm) {
+            if ('administratif' === $type) {
+                $query->andWhere('(' . $query->expr()->orX('p.statut = ' . $query->expr()->literal('TEC')) . ' OR ' . $query->expr()->orX('p.statut = ' . $query->expr()->literal('ASS')) . ')')
+                    ->setParameter('type', 'permanent');
+            } else {
+                $query->andWhere('(' . $query->expr()->andX('p.statut <> ' . $query->expr()->literal('TEC')) . ' AND ' . $query->expr()->andX('p.statut <> ' . $query->expr()->literal('ASS')) . ')')
+                    ->setParameter('type', $type);
+            }
+        } else {
+            $query->setParameter('type', $type);
+        }
+
+        return $query->orderBy('p.nom', 'ASC')
             ->addOrderBy('p.prenom', 'ASC')
             ->getQuery()
             ->getResult();
@@ -100,7 +112,6 @@ class PersonnelRepository extends ServiceEntityRepository
     }
 
     /**
-     *
      * @throws NonUniqueResultException
      */
     public function findOneBySlug($slug)
@@ -231,7 +242,6 @@ class PersonnelRepository extends ServiceEntityRepository
     }
 
     /**
-     *
      * @throws NonUniqueResultException
      */
     public function findByCode($code)

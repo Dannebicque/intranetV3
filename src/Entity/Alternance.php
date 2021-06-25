@@ -4,13 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Alternance.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 05/06/2021 16:45
  */
 
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
-use DateTimeInterface;
+use Carbon\CarbonInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -35,76 +35,76 @@ class Alternance extends BaseEntity
      * @ORM\OneToOne(targetEntity="App\Entity\Entreprise", cascade={"persist", "remove"})
      * @Groups({"alternance_administration"})
      */
-    private $entreprise;
+    private ?Entreprise $entreprise;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Contact", cascade={"persist", "remove"})
      * @MaxDepth(2)
      * @Groups({"alternance_administration"})
      */
-    private $tuteur;
+    private ?Contact $tuteur;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Etudiant", inversedBy="alternances")
      * @MaxDepth(2)
      * @Groups({"alternance_administration"})
      */
-    private $etudiant;
+    private ?Etudiant $etudiant;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Personnel", inversedBy="alternances")
      * @MaxDepth(2)
      * @Groups({"alternance_administration"})
      */
-    private $tuteurUniversitaire;
+    private ?Personnel $tuteurUniversitaire;
 
     /**
      * @ORM\Column(type="string", length=20)
      * @Groups({"alternance_administration"})
      */
-    private $typeContrat;
+    private ?string $typeContrat;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Annee", inversedBy="alternances")
      */
-    private $annee;
+    private ?Annee $annee;
 
     /**
      * @ORM\Column(type="string", length=10)
      */
-    private $etat;
+    private ?string $etat;
 
     /**
      * @ORM\Column(type="date", nullable=true)
      * @Groups({"alternance_administration"})
      */
-    private $dateDebut;
+    private ?CarbonInterface $dateDebut;
 
     /**
      * @ORM\Column(type="date", nullable=true)
      * @Groups({"alternance_administration"})
      */
-    private $dateFin;
+    private ?CarbonInterface $dateFin;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\AlternanceFicheSuivi", mappedBy="alternance")
      */
-    private $alternanceFicheSuivis;
+    private Collection $alternanceFicheSuivis;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\AnneeUniversitaire")
      */
-    private $anneeUniversitaire;
+    private ?AnneeUniversitaire $anneeUniversitaire;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Adresse", inversedBy="alternance", cascade={"persist", "remove"})
      */
-    private $adresseAlternance;
+    private ?Adresse $adresseAlternance;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $sujet;
+    private ?string $sujet;
 
     public function __construct()
     {
@@ -196,33 +196,30 @@ class Alternance extends BaseEntity
         return $this;
     }
 
-    public function getDateDebut(): ?DateTimeInterface
+    public function getDateDebut(): ?CarbonInterface
     {
         return $this->dateDebut;
     }
 
-    public function setDateDebut(DateTimeInterface $dateDebut): self
+    public function setDateDebut(CarbonInterface $dateDebut): self
     {
         $this->dateDebut = $dateDebut;
 
         return $this;
     }
 
-    public function getDateFin(): ?DateTimeInterface
+    public function getDateFin(): ?CarbonInterface
     {
         return $this->dateFin;
     }
 
-    public function setDateFin(DateTimeInterface $dateFin): self
+    public function setDateFin(CarbonInterface $dateFin): self
     {
         $this->dateFin = $dateFin;
 
         return $this;
     }
 
-    /**
-     * @return Collection|AlternanceFicheSuivi[]
-     */
     public function getAlternanceFicheSuivis(): Collection
     {
         return $this->alternanceFicheSuivis;

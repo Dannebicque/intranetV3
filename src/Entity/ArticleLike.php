@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ArticleLike.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 05/06/2021 18:44
  */
 
 namespace App\Entity;
@@ -28,7 +28,7 @@ abstract class ArticleLike extends BaseEntity
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Article", inversedBy="articleLikes")
      */
-    private $article;
+    private ?Article $article;
 
     public function getArticle(): ?Article
     {

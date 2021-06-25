@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Fichier.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 25/06/2021 10:28
  */
 
 namespace App\Entity;
@@ -16,38 +16,26 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\FichierRepository")
  */
-class Fichier
+class Fichier extends BaseEntity
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
-
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $libelle;
+    private ?string $libelle;
 
     /**
      * @ORM\Column(type="float")
      */
-    private $taille;
+    private ?float $taille;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\CahierTexte", mappedBy="fichiers")
      */
-    private $cahierTextes;
+    private Collection $cahierTextes;
 
     public function __construct()
     {
         $this->cahierTextes = new ArrayCollection();
-    }
-
-    public function getId()
-    {
-        return $this->id;
     }
 
     public function getLibelle(): ?string

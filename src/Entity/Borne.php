@@ -4,14 +4,14 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Borne.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/05/2021 15:09
+ * @lastUpdate 25/06/2021 10:28
  */
 
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
-use DateTime;
-use DateTimeInterface;
+use Carbon\Carbon;
+use Carbon\CarbonInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -42,19 +42,19 @@ class Borne extends BaseEntity
      * @ORM\Column(type="string", length=40)
      * @Groups({"bornes_administration"})
      */
-    private $icone;
+    private ?string $icone;
 
     /**
      * @ORM\Column(type="string", length=20)
      * @Groups({"bornes_administration"})
      */
-    private $couleur;
+    private ?string $couleur;
 
     /**
      * @ORM\Column(type="text")
      * @Groups({"bornes_administration"})
      */
-    private $message;
+    private ?string $message;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -66,31 +66,31 @@ class Borne extends BaseEntity
      * @ORM\Column(type="datetime")
      * @Groups({"bornes_administration"})
      */
-    private $dateDebutPublication;
+    private ?CarbonInterface $dateDebutPublication;
 
     /**
      * @ORM\Column(type="datetime")
      * @Groups({"bornes_administration"})
      */
-    private $dateFinPublication;
+    private ?CarbonInterface $dateFinPublication;
 
     /**
      * @ORM\Column(type="boolean")
      * @Groups({"bornes_administration"})
      */
-    private $visible;
+    private ?bool $visible = true;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Semestre", inversedBy="bornes")
      * @Groups({"bornes_administration"})
      */
-    private $semestres;
+    private Collection $semestres;
 
     public function __construct()
     {
         $this->semestres = new ArrayCollection();
-        $this->dateDebutPublication = new DateTime();
-        $this->dateFinPublication = new DateTime();
+        $this->dateDebutPublication = Carbon::now();
+        $this->dateFinPublication = Carbon::now();
     }
 
     public function getIcone(): ?string
@@ -141,24 +141,24 @@ class Borne extends BaseEntity
         return $this;
     }
 
-    public function getDateDebutPublication(): ?DateTimeInterface
+    public function getDateDebutPublication(): ?CarbonInterface
     {
         return $this->dateDebutPublication;
     }
 
-    public function setDateDebutPublication(DateTimeInterface $dateDebutPublication): self
+    public function setDateDebutPublication(CarbonInterface $dateDebutPublication): self
     {
         $this->dateDebutPublication = $dateDebutPublication;
 
         return $this;
     }
 
-    public function getDateFinPublication(): ?DateTimeInterface
+    public function getDateFinPublication(): ?CarbonInterface
     {
         return $this->dateFinPublication;
     }
 
-    public function setDateFinPublication(DateTimeInterface $dateFinPublication): self
+    public function setDateFinPublication(CarbonInterface $dateFinPublication): self
     {
         $this->dateFinPublication = $dateFinPublication;
 

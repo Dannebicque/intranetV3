@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/MaterielCommun.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:49
+ * @lastUpdate 25/06/2021 10:28
  */
 
 namespace App\Entity;
 
+use App\Entity\Traits\LifeCycleTrait;
 use App\Repository\MaterielCommunRepository;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -16,7 +17,6 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
@@ -25,30 +25,29 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  */
 class MaterielCommun extends BaseEntity
 {
+    use LifeCycleTrait;
+
     /**
      * @ORM\Column(type="string", length=150)
      */
-    private $designation;
+    private ?string $designation;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $description;
+    private ?string $description;
 
     /**
      * @ORM\ManyToOne(targetEntity=Personnel::class, inversedBy="materielCommuns")
      */
-    private $contact;
+    private ?Personnel $contact;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", length=50, nullable=true)
      */
-    private $photoName = 'noimage.png';
+    private ?string $photoName = 'noimage.png';
 
     /**
-     * @var UploadedFile
      *
      * @Vich\UploadableField(mapping="materiel_commun", fileNameProperty="photoName")
      */
@@ -57,7 +56,7 @@ class MaterielCommun extends BaseEntity
     /**
      * @ORM\OneToMany(targetEntity=MaterielCommunPret::class, mappedBy="materielCommun")
      */
-    private $materielCommunPrets;
+    private Collection $materielCommunPrets;
 
     public function __construct()
     {
@@ -115,7 +114,7 @@ class MaterielCommun extends BaseEntity
         if (null !== $document) {
             // It is required that at least one field changes if you are using doctrine
             // otherwise the event listeners won't be called and the file is lost
-            $this->setUpdated(new DateTime());
+            $this->setUpdatedValue();
         }
     }
 

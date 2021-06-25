@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcCompetence.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/05/2021 17:00
+ * @lastUpdate 05/06/2021 17:46
  */
 
 namespace App\Entity;
@@ -26,53 +26,53 @@ class ApcCompetence extends BaseEntity
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $libelle;
+    private ?string $libelle;
 
     /**
      * @ORM\Column(type="string", length=50)
      */
-    private $nom_court;
+    private ?string $nom_court;
 
     /**
      * @ORM\Column(type="string", length=20)
      */
-    private $couleur;
+    private ?string $couleur;
 
     /**
      * @ORM\ManyToOne(targetEntity=Diplome::class, inversedBy="apcComptences")
      */
-    private $diplome;
+    private ?Diplome $diplome;
 
     /**
      * @ORM\OneToMany(targetEntity=ApcComposanteEssentielle::class, mappedBy="competence", cascade={"persist","remove"})
      */
-    private $apcComposanteEssentielles;
+    private Collection $apcComposanteEssentielles;
 
     /**
      * @ORM\OneToMany(targetEntity=ApcNiveau::class, mappedBy="competence", cascade={"persist","remove"})
      */
-    private $apcNiveaux;
+    private Collection $apcNiveaux;
 
     /**
      * @ORM\OneToMany(targetEntity=ApcRessourceCompetence::class, mappedBy="competence")
      */
-    private $apcRessourceCompetences;
+    private Collection $apcRessourceCompetences;
 
     /**
      * @ORM\OneToMany(targetEntity=ApcSaeCompetence::class, mappedBy="competence")
      */
-    private $apcSaeCompetences;
+    private Collection $apcSaeCompetences;
 
     /**
      * @ORM\OneToMany(targetEntity=ApcSituationProfessionnelle::class, mappedBy="competence",
      *                                                                 cascade={"persist","remove"})
      */
-    private $apcSituationProfessionnelles;
+    private Collection $apcSituationProfessionnelles;
 
     /**
      * @ORM\OneToMany(targetEntity=Ue::class, mappedBy="apcCompetence")
      */
-    private $ue;
+    private Collection $ue;
 
     public function __construct(Diplome $diplome)
     {

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Ufr.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 06/06/2021 09:36
  */
 
 namespace App\Entity;
@@ -26,29 +26,29 @@ class Ufr extends BaseEntity
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Departement", mappedBy="ufr")
      */
-    private $departements;
+    private Collection $departements;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"ufr_administration"})
      */
-    private $libelle;
+    private ?string $libelle;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Site", inversedBy="ufrs")
      */
-    private $sites;
+    private Collection $sites;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Personnel")
      * @Groups({"ufr_administration"})
      */
-    private $responsable;
+    private ?Personnel $responsable;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Site", inversedBy="ufrPrincipales")
      */
-    private $sitePrincipal;
+    private ?Site $sitePrincipal;
 
     public function __construct()
     {
@@ -56,7 +56,7 @@ class Ufr extends BaseEntity
         $this->departements = new ArrayCollection();
     }
 
-    public function getLibelle()
+    public function getLibelle(): ?string
     {
         return $this->libelle;
     }

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Hrs.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/06/2021 11:10
+ * @lastUpdate 06/06/2021 10:41
  */
 
 namespace App\Entity;
@@ -36,12 +36,12 @@ class Hrs extends BaseEntity
      * @ORM\ManyToOne(targetEntity="App\Entity\Semestre", inversedBy="hrs")
      * @Groups({"hrs_administration"})
      */
-    private ?Semestre $semestre;
+    private ?Semestre $semestre = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Diplome", inversedBy="hrs")
      */
-    private ?Diplome $diplome;
+    private ?Diplome $diplome = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Personnel", inversedBy="hrs")
@@ -130,9 +130,6 @@ class Hrs extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
     public function getLibelle(): ?string
     {
         return $this->libelle;
@@ -155,9 +152,6 @@ class Hrs extends BaseEntity
         return $this;
     }
 
-    /**
-     * Hrs constructor.
-     */
     public function __construct(Departement $departement)
     {
         $this->annee = $departement->getOptAnneePrevisionnel();

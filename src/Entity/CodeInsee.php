@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/CodeInsee.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:49
+ * @lastUpdate 06/06/2021 11:05
  */
 
 namespace App\Entity;
@@ -15,34 +15,22 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=CodeInseeRepository::class)
  */
-class CodeInsee
+class CodeInsee extends BaseEntity
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
-
     /**
      * @ORM\Column(type="string", length=6)
      */
-    private $code_insee;
+    private ?string $code_insee;
 
     /**
      * @ORM\Column(type="string", length=60)
      */
-    private $code_postal;
+    private ?string $code_postal;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $ville;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+    private ?string $ville;
 
     public function getCodeInsee(): ?string
     {

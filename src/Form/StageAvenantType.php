@@ -4,24 +4,24 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/StageAvenantType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/05/2021 18:24
+ * @lastUpdate 06/06/2021 11:45
  */
 
 namespace App\Form;
 
 use App\Entity\StageAvenant;
+use App\Form\Type\CarbonDateTimePickerType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Umbrella\CoreBundle\Form\DatepickerType;
 
 class StageAvenantType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nouvelleDateFin', DatepickerType::class, [
+            ->add('nouvelleDateFin', CarbonDateTimePickerType::class, [
                 'required' => false,
                 'label' => 'nouvelleDateFin',
                 'attr' => [
@@ -36,7 +36,7 @@ class StageAvenantType extends AbstractType
 
                 'attr' => ['placeholder' => 'Saisir un nombre de jour...', 'class' => 'col-sm-3'],
             ])
-            ->add('dateDebutAbsence', DatepickerType::class, [
+            ->add('dateDebutAbsence', CarbonDateTimePickerType::class, [
                 'required' => false,
                 'label' => 'dateDebutAbsence',
                 'attr' => [
@@ -45,7 +45,7 @@ class StageAvenantType extends AbstractType
                     'class' => 'col-sm-3',
                 ],
             ])
-            ->add('dateDebutSuspension', DatepickerType::class, [
+            ->add('dateDebutSuspension', CarbonDateTimePickerType::class, [
                 'required' => false,
                 'label' => 'dateDebutSuspension',
                 'attr' => [
@@ -54,7 +54,7 @@ class StageAvenantType extends AbstractType
                     'class' => 'col-sm-3',
                 ],
             ])
-            ->add('dateFinAbsence', DatepickerType::class, [
+            ->add('dateFinAbsence', CarbonDateTimePickerType::class, [
                 'required' => false,
                 'label' => 'dateFinAbsence',
                 'attr' => [
@@ -63,7 +63,7 @@ class StageAvenantType extends AbstractType
                     'class' => 'col-sm-3',
                 ],
             ])
-            ->add('dateFinSuspension', DatepickerType::class, [
+            ->add('dateFinSuspension', CarbonDateTimePickerType::class, [
                 'required' => false,
                 'label' => 'dateFinSuspension',
                 'attr' => [
@@ -72,7 +72,7 @@ class StageAvenantType extends AbstractType
                     'class' => 'col-sm-3',
                 ],
             ])
-            ->add('dateRepriseStage', DatepickerType::class, [
+            ->add('dateRepriseStage', CarbonDateTimePickerType::class, [
                 'required' => false,
                 'label' => 'dateRepriseStage',
                 'attr' => [
@@ -81,7 +81,7 @@ class StageAvenantType extends AbstractType
                     'class' => 'col-sm-3',
                 ],
             ])
-            ->add('dateInterruption', DatepickerType::class, [
+            ->add('dateInterruption', CarbonDateTimePickerType::class, [
                 'required' => false,
                 'label' => 'dateInterruption',
                 'attr' => [

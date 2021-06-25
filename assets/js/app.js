@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/app.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/06/2021 09:50
+// @lastUpdate 08/06/2021 11:43
 
 import '@fortawesome/fontawesome-free/scss/fontawesome.scss'
 import '@fortawesome/fontawesome-free/scss/solid.scss'
@@ -12,7 +12,7 @@ import '../vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js'
 import '../vendor/bootstrap-datepicker/locales/bootstrap-datepicker.fr.min'
 
 
-import $ from 'jquery'
+// import $ from 'jquery' //todo: nécessaire si déj dans Umbrella?
 import 'umbrella_core/Core'
 
 import PerfectScrollbar from 'perfect-scrollbar'
@@ -22,7 +22,7 @@ import './material'
 import './search'
 import './modaler'
 
-import tinymce from 'tinymce/tinymce'
+import tinymce from 'tinymce/tinymce.min'
 import 'tinymce/plugins/lists/plugin.min'
 import 'tinymce/icons/default'
 // A theme is also required
@@ -347,7 +347,7 @@ sidebar.close = function () {
 // =====================
 // Quickview
 // =====================
-//
+// todo: déplacer dans une classe seule... pour l'import.
 
 let quickview = {}
 let qps = null

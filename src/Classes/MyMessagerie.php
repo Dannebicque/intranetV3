@@ -4,12 +4,9 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyMessagerie.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/05/2021 16:35
+ * @lastUpdate 06/06/2021 08:20
  */
 
-/*
- * Pull your hearder here, for exemple, Licence header.
- */
 
 namespace App\Classes;
 
@@ -86,7 +83,7 @@ class MyMessagerie
     {
         //mail réel + notification (utiliser le busMessage ?
         //sauvegarde en BDD
-        $mess = $this->saveMessageDatabase('E');
+        $mess = $this->saveMessageDatabase(Message::ETAT_MESSAGE_ENVOYE);
         $listeDestinataires = [];
         $this->typeDestinataires = '';
 
@@ -129,7 +126,7 @@ class MyMessagerie
     public function sendToEtudiants(): void
     {
         //sauvegarde en BDD
-        $mess = $this->saveMessageDatabase('E');
+        $mess = $this->saveMessageDatabase(Message::ETAT_MESSAGE_ENVOYE);
 
         foreach ($this->etudiants as $etu) {
             $message = $this->sendMessage($etu);
@@ -190,33 +187,33 @@ class MyMessagerie
         $this->nbMessagesEnvoyes = 0;
         $this->nbEtudiants = 0;
         switch ($typeDestinataire) {
-            case 'p':
+            case Message::MESSAGE_TYPE_PERMANENT:
                 if (null !== $departement) {
                     $this->sendToPersonnels($destinataires, $departement);
                 }
                 break;
-            case 's':
+            case Message::MESSAGE_TYPE_SEMESTRE:
                 foreach ($destinataires as $destinataire) {
                     $this->typeDestinataires .= $destinataire . ', ';
                     $this->getEtudiantsSemestre($destinataire);
                     $this->sendToEtudiants();
                 }
                 break;
-            case 'g':
+            case Message::MESSAGE_TYPE_GROUPE:
                 foreach ($destinataires as $destinataire) {
                     $this->typeDestinataires .= $destinataire . ', ';
                     $this->getEtudiantsGroupe($destinataire);
                     $this->sendToEtudiants();
                 }
                 break;
-            case 'e':
+            case Message::MESSAGE_TYPE_ETUDIANT:
                 $this->prepareEtudiants($destinataires);
                 $this->sendToEtudiants();
                 break;
         }
     }
 
-    private function saveMessageDatabase($etat = 'D'): Message
+    private function saveMessageDatabase($etat = Message::ETAT_MESSAGE_DRAFT): Message
     {
         $mess = new Message();
         $mess->setMessage($this->message);

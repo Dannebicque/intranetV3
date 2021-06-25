@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Event/JustificatifEvent.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:51
+ * @lastUpdate 06/06/2021 09:46
  */
 
 namespace App\Event;
@@ -19,8 +19,7 @@ class JustificatifEvent extends Event
     public const DECISION_JUSTIFICATIF_ACCEPTEE = 'decision.justificatif.acceptee';
     public const DECISION_JUSTIFICATIF_REFUSEE = 'decision.justificatif.refusee';
 
-    /** @var AbsenceJustificatif */
-    protected $absenceJustificatif;
+    protected AbsenceJustificatif $absenceJustificatif;
 
     public function __construct(AbsenceJustificatif $absenceJustificatif)
     {

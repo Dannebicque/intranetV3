@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Status.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/05/2021 10:59
+ * @lastUpdate 06/06/2021 09:30
  */
 
 namespace App\Entity;
@@ -15,54 +15,43 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=StatusRepository::class)
  */
-class Status
+class Status extends BaseEntity
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
-
     /**
      * @ORM\Column(type="string", length=50)
      */
-    private $libelle;
+    private ?string $libelle;
 
     /**
      * @ORM\Column(type="string", length=10)
      */
-    private $sigle;
+    private ?string $sigle;
 
     /**
      * @ORM\Column(type="float")
      */
-    private $serviceStatus;
+    private float $serviceStatus = 192;
 
     /**
      * @ORM\Column(type="float")
      */
-    private $tauxTd;
+    private ?float $tauxTd = 1;
 
     /**
      * @ORM\Column(type="float")
      */
-    private $tauxTp;
+    private ?float $tauxTp = 1;
 
     /**
      * @ORM\Column(type="float")
      */
-    private $tauxTdHC;
+    private ?float $tauxTdHC = 1;
 
     /**
      * @ORM\Column(type="float")
      */
-    private $tauxTpHC;
+    private ?float $tauxTpHC = 0.66;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getLibelle(): ?string
     {

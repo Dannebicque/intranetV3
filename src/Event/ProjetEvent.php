@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Event/ProjetEvent.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 06/06/2021 09:46
  */
 
 namespace App\Event;
@@ -26,8 +26,7 @@ class ProjetEvent extends Event
         self::CHGT_ETAT_PROJET_IMPRIME  => ProjetEtudiant::ETAT_PROJET_IMPRIME,
     ];
 
-    /** @var ProjetEtudiant */
-    protected $projetEtudiant;
+    protected ProjetEtudiant $projetEtudiant;
 
     public function __construct(ProjetEtudiant $projetEtudiant)
     {

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/TypeGroupe.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 25/06/2021 10:28
  */
 
 namespace App\Entity;
@@ -46,7 +46,7 @@ class TypeGroupe extends BaseEntity
      * @ORM\OneToMany(targetEntity="App\Entity\Groupe", mappedBy="typeGroupe", fetch="EAGER", orphanRemoval=true)
      * @ORM\OrderBy({"ordre" = "ASC"})
      */
-    private $groupes;
+    private Collection $groupes;
 
     /**
      * @ORM\Column(type="boolean")
@@ -69,7 +69,7 @@ class TypeGroupe extends BaseEntity
         return $this->semestre;
     }
 
-    public function setSemestre(?Semestre $semestre): self
+    public function setSemestre(Semestre $semestre): self
     {
         $this->semestre = $semestre;
 
@@ -134,9 +134,9 @@ class TypeGroupe extends BaseEntity
     public function getArray(): array
     {
         return [
-            'id'      => $this->getId(),
+            'id' => $this->getId(),
             'libelle' => $this->getLibelle(),
-            'defaut'  => $this->getDefaut(),
+            'defaut' => $this->getDefaut(),
         ];
     }
 
@@ -167,7 +167,7 @@ class TypeGroupe extends BaseEntity
         return $this;
     }
 
-    public function getDisplay()
+    public function getDisplay(): string
     {
         return null !== $this->getSemestre() ? $this->getSemestre()->getLibelle() . ' | ' . $this->getLibelle() : $this->getLibelle();
     }

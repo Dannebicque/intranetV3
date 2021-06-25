@@ -49,6 +49,8 @@
                    class="btn btn-danger"><i class="fa fa-lock"></i> Interdire la modification</a>
             </div>
             <br>
+            {{ render(controller('App\\Controller\\administration\\NoteController::analyse', {semestre:semestre
+            .id})) }}
             <br>
             <table class="table table-striped table-bordered">
                 <thead>

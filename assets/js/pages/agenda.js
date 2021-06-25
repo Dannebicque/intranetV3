@@ -2,9 +2,9 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/agenda.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 23/05/2021 14:06
+// @lastUpdate 08/06/2021 08:28
 
-import reloadQv from '../app'
+import reloadQv from '../app' //todo: a modifier, pour n'importer que la classe
 // import '../../vendor/datatables'
 import {dataTableLangueFr} from '../lang/fr'
 

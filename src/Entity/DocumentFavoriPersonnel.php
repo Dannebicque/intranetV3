@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/DocumentFavoriPersonnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 05/06/2021 19:10
  */
 
 namespace App\Entity;
@@ -23,13 +23,13 @@ class DocumentFavoriPersonnel extends DocumentFavori
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Personnel", inversedBy="documentsFavoris")
      */
-    private $personnel;
+    private ?Personnel $personnel;
 
     /**
      * EmpruntEtudiant constructor.
      *
      */
-    public function __construct($personnel, Document $document)
+    public function __construct(Personnel $personnel, Document $document)
     {
         $this->personnel = $personnel;
         $this->setDocument($document);

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/SynchroIcalController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 06/06/2021 09:53
  */
 
 namespace App\Controller;
@@ -12,6 +12,7 @@ namespace App\Controller;
 use App\Classes\Edt\MyEdtExport;
 use App\Repository\EtudiantRepository;
 use App\Repository\PersonnelRepository;
+use Carbon\Carbon;
 use DateTime;
 use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -41,7 +42,7 @@ class SynchroIcalController extends AbstractController
         $personnel = $personnelRepository->findByCode($code);
         if (null !== $personnel) {
             $ical = $myEdtExport->export($personnel, $_format, 'Personnel');
-            $timestamp = new DateTime('now');
+            $timestamp = Carbon::now();
 
             return new Response($ical, 200, [
                 'Content-Type'        => 'text/calendar; charset=utf-8',
@@ -67,7 +68,7 @@ class SynchroIcalController extends AbstractController
         $etudiant = $etudiantRepository->findByCode($code);
         if (null !== $etudiant) {
             $ical = $myEdtExport->export($etudiant, $_format, 'Etudiant');
-            $timestamp = new DateTime('now');
+            $timestamp = Carbon::now();
 
             return new Response($ical, 200, [
                 'Content-Type'        => 'text/calendar; charset=utf-8',

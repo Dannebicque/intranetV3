@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Adresse.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 25/06/2021 10:28
  */
 
 namespace App\Entity;
@@ -25,42 +25,42 @@ class Adresse extends BaseEntity
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"adresse"})
      */
-    private $adresse1;
+    private ?string $adresse1;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"adresse"})
      */
-    private $adresse2;
+    private ?string $adresse2;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"adresse"})
      */
-    private $adresse3;
+    private ?string $adresse3;
 
     /**
      * @ORM\Column(type="string", length=10, nullable=true)
      * @Groups({"adresse"})
      */
-    private $codePostal;
+    private ?string $codePostal;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
      * @Groups({"adresse"})
      */
-    private $ville;
+    private ?string $ville;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
      * @Groups({"adresse"})
      */
-    private $pays = 'France';
+    private ?string $pays = 'France';
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Alternance", mappedBy="adresseAlternance", cascade={"persist", "remove"})
      */
-    private $alternance;
+    private ?Alternance $alternance;
 
     /**
      * Adresse constructor.
@@ -107,11 +107,6 @@ class Adresse extends BaseEntity
         return trim($this->adresse2);
     }
 
-    /**
-     * @param $adresse2
-     *
-     * @return Adresse
-     */
     public function setAdresse2(?string $adresse2 = ''): self
     {
         $this->adresse2 = $adresse2;
@@ -124,11 +119,6 @@ class Adresse extends BaseEntity
         return trim($this->adresse3);
     }
 
-    /**
-     * @param $adresse3
-     *
-     * @return Adresse
-     */
     public function setAdresse3(?string $adresse3 = ''): self
     {
         $this->adresse3 = $adresse3;

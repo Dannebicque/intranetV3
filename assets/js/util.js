@@ -2,9 +2,9 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/util.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 01/06/2021 19:09
+// @lastUpdate 08/06/2021 08:21
 
-import $ from 'jquery'
+// import $ from 'jquery'
 import Swal from 'sweetalert2'
 
 let $stopCatchEnter = false

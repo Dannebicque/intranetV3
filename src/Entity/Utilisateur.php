@@ -4,13 +4,14 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Utilisateur.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/06/2021 11:12
+ * @lastUpdate 25/06/2021 10:28
  */
 
 namespace App\Entity;
 
-use DateTimeInterface;
+use Carbon\CarbonInterface;
 use Doctrine\ORM\Mapping as ORM;
+use const JSON_THROW_ON_ERROR;
 use JsonException;
 use Serializable;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -24,14 +25,13 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  */
 abstract class Utilisateur implements UserInterface, Serializable
 {
-
     public const HOMME = 'M.';
     public const FEMME = 'Mme';
 
     /**
      * @ORM\Column(type="string", length=75)
      */
-    protected $username;
+    protected ?string $username;
 
     /**
      * @ORM\Column(type="string", nullable=true)
@@ -41,76 +41,76 @@ abstract class Utilisateur implements UserInterface, Serializable
     /**
      * @ORM\Column(type="string", length=255, unique=true)
      */
-    protected $slug;
+    protected ?string $slug;
 
     /**
      * @ORM\Column(type="string", length=75)
      */
-    protected $typeUser;
-
-    /**
-     * @ORM\Column(type="string", length=75)
-     * @Groups({"utilisateur","etudiants_administration"})
-     */
-    protected $nom;
+    protected ?string $typeUser;
 
     /**
      * @ORM\Column(type="string", length=75)
      * @Groups({"utilisateur","etudiants_administration"})
      */
-    protected $prenom;
+    protected ?string $nom;
+
+    /**
+     * @ORM\Column(type="string", length=75)
+     * @Groups({"utilisateur","etudiants_administration"})
+     */
+    protected ?string $prenom;
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)
      * @Groups({"etudiants_administration", "utilisateur"})
      */
-    protected $mailUniv;
+    protected ?string $mailUniv;
 
     /**
      * @ORM\Column(type="string", length=255,nullable=true)
      */
-    protected $siteUniv;
+    protected ?string $siteUniv;
 
     /**
      * @ORM\Column( type="string", length=255,nullable=true)
      */
-    protected $mailPerso;
+    protected ?string $mailPerso;
 
     /**
      * @ORM\Column(type="string", length=255,nullable=true)
      */
-    protected $sitePerso;
+    protected ?string $sitePerso;
 
     /**
      * @ORM\Column(name="civilite", type="string", length=3, options={"default":"M."})
      * @Groups({"etudiants_administration"})
      */
-    protected string $civilite = 'M.'; //M. ou Mme
+    protected string $civilite = Constantes::CIVILITE_HOMME;
 
     /**
      * @ORM\Column(type="date", nullable=true)
      */
-    protected DateTimeInterface $dateNaissance;
+    protected ?CarbonInterface $dateNaissance;
 
     /**
      * @ORM\Column(type="string", length=20,nullable=true)
      */
-    protected $tel1;
+    protected ?string $tel1;
 
     /**
      * @ORM\Column(type="string", length=20,nullable=true)
      */
-    protected $tel2;
+    protected ?string $tel2;
 
     /**
      * @ORM\Column(type="text",nullable=true)
      */
-    protected $remarque;
+    protected ?string $remarque;
 
     /**
      * @ORM\Column(type="text",nullable=true)
      */
-    protected $signature;
+    protected ?string $signature;
 
     /**
      * @ORM\Column(type="boolean")
@@ -135,13 +135,13 @@ abstract class Utilisateur implements UserInterface, Serializable
     /**
      * @ORM\Column(type="string", length=150, nullable=true)
      */
-    private $lieuNaissance;
+    private ?string $lieuNaissance;
 
     public function __construct()
     {
     }
 
-    public function getSlug()
+    public function getSlug(): ?string
     {
         return $this->slug;
     }
@@ -151,7 +151,7 @@ abstract class Utilisateur implements UserInterface, Serializable
         $this->slug = $slug;
     }
 
-    public function getTypeUser()
+    public function getTypeUser(): ?string
     {
         return $this->typeUser;
     }
@@ -161,7 +161,7 @@ abstract class Utilisateur implements UserInterface, Serializable
         $this->typeUser = $typeUser;
     }
 
-    public function getNom()
+    public function getNom(): ?string
     {
         return $this->nom;
     }
@@ -171,7 +171,7 @@ abstract class Utilisateur implements UserInterface, Serializable
         $this->nom = $nom;
     }
 
-    public function getPrenom()
+    public function getPrenom(): ?string
     {
         return $this->prenom;
     }
@@ -181,10 +181,10 @@ abstract class Utilisateur implements UserInterface, Serializable
         $this->prenom = $prenom;
     }
 
-    public function getSiteUniv()
+    public function getSiteUniv(): ?string
     {
         if ('' !== $this->siteUniv && null !== $this->siteUniv) {
-            if (0 === mb_strpos($this->siteUniv, 'http')) {
+            if (str_starts_with($this->siteUniv, 'http')) {
                 return $this->siteUniv;
             }
 
@@ -199,10 +199,10 @@ abstract class Utilisateur implements UserInterface, Serializable
         $this->siteUniv = $siteUniv;
     }
 
-    public function getSitePerso()
+    public function getSitePerso(): ?string
     {
         if ('' !== $this->sitePerso && null !== $this->sitePerso) {
-            if (0 === mb_strpos($this->sitePerso, 'http')) {
+            if (str_starts_with($this->sitePerso, 'http')) {
                 return $this->sitePerso;
             }
 
@@ -235,65 +235,62 @@ abstract class Utilisateur implements UserInterface, Serializable
         $this->civilite = $civilite;
     }
 
-    public function getDateNaissance()
+    public function getDateNaissance(): ?CarbonInterface
     {
         return $this->dateNaissance;
     }
 
-    /**
-     * @param mixed $dateNaissance
-     */
-    public function setDateNaissance(?DateTimeInterface $dateNaissance): void
+    public function setDateNaissance(?CarbonInterface $dateNaissance): void
     {
         $this->dateNaissance = $dateNaissance;
     }
 
-    public function getTel1()
+    public function getTel1(): ?string
     {
         return $this->tel1;
     }
 
-    public function setTel1($tel1): void
+    public function setTel1(?string $tel1): void
     {
         $this->tel1 = $tel1;
     }
 
-    public function getTel2()
+    public function getTel2(): ?string
     {
         return $this->tel2;
     }
 
-    public function setTel2($tel2): void
+    public function setTel2(?string $tel2): void
     {
         $this->tel2 = $tel2;
     }
 
-    public function getRemarque()
+    public function getRemarque(): ?string
     {
         return $this->remarque;
     }
 
-    public function setRemarque($remarque): void
+    public function setRemarque(?string $remarque): void
     {
         $this->remarque = $remarque;
     }
 
-    public function getSignature()
+    public function getSignature(): ?string
     {
         return $this->signature;
     }
 
-    public function setSignature($signature): void
+    public function setSignature(?string $signature): void
     {
         $this->signature = $signature;
     }
 
-    public function getVisible()
+    public function getVisible(): bool
     {
         return $this->visible;
     }
 
-    public function setVisible($visible): void
+    public function setVisible(bool $visible = true): void
     {
         $this->visible = $visible;
     }
@@ -318,35 +315,22 @@ abstract class Utilisateur implements UserInterface, Serializable
         $this->password = $password;
     }
 
-    /**
-     * Removes sensitive data from the user.
-     *
-     * {@inheritdoc}
-     */
     public function eraseCredentials(): void
     {
         // Nous n'avons pas besoin de cette methode car nous n'utilions pas de plainPassword
         // Mais elle est obligatoire car comprise dans l'interface UserInterface
     }
 
-    /**
-     * @return mixed
-     */
     public function getUsername(): ?string
     {
         return $this->username;
     }
 
-    public function setUsername($username): void
+    public function setUsername(?string $username): void
     {
         $this->username = $username;
     }
 
-    /**
-     * Retour le salt qui a servi à coder le mot de passe.
-     *
-     * {@inheritdoc}
-     */
     public function getSalt(): ?string
     {
         // See "Do you need to use a Salt?" at https://symfony.com/doc/current/cookbook/security/entity_provider.html
@@ -363,7 +347,7 @@ abstract class Utilisateur implements UserInterface, Serializable
      */
     public function getRoles(): array
     {
-        $roles = json_decode($this->roles, true, 2, \JSON_THROW_ON_ERROR);
+        $roles = json_decode($this->roles, true, 2, JSON_THROW_ON_ERROR);
 
         // Afin d'être sûr qu'un user a toujours au moins 1 rôle
         if (empty($roles)) {
@@ -378,7 +362,7 @@ abstract class Utilisateur implements UserInterface, Serializable
      */
     public function setRoles(array $roles): void
     {
-        $this->roles = json_encode($roles, \JSON_THROW_ON_ERROR);
+        $this->roles = json_encode($roles, JSON_THROW_ON_ERROR);
     }
 
     public function getDisplayPr(): string
@@ -405,22 +389,22 @@ abstract class Utilisateur implements UserInterface, Serializable
         return $mails;
     }
 
-    public function getMailUniv()
+    public function getMailUniv(): ?string
     {
         return $this->mailUniv;
     }
 
-    public function setMailUniv($mailUniv): void
+    public function setMailUniv(?string $mailUniv): void
     {
         $this->mailUniv = $mailUniv;
     }
 
-    public function getMailPerso()
+    public function getMailPerso(): ?string
     {
         return $this->mailPerso;
     }
 
-    public function setMailPerso($mailPerso): void
+    public function setMailPerso(?string $mailPerso): void
     {
         $this->mailPerso = $mailPerso;
     }
@@ -437,19 +421,19 @@ abstract class Utilisateur implements UserInterface, Serializable
         return $this;
     }
 
-    public function getAvatarInitiales()
+    public function getAvatarInitiales(): ?string
     {
         return mb_strtoupper(mb_substr(trim($this->getPrenom()), 0, 1) . '' . mb_substr(trim($this->getNom()), 0, 1));
     }
 
-    public function serialize()
+    public function serialize(): ?string
     {
         return serialize($this->getId());
     }
 
-    public function unserialize($serialized)
+    public function unserialize($data): void
     {
-        $this->uuid = unserialize($serialized);
+        $this->id = unserialize($data);
     }
 
     public function getLieuNaissance(): ?string

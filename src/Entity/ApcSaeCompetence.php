@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcSaeCompetence.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/06/2021 11:51
+ * @lastUpdate 05/06/2021 18:41
  */
 
 namespace App\Entity;
@@ -24,17 +24,17 @@ class ApcSaeCompetence extends BaseEntity
     /**
      * @ORM\ManyToOne(targetEntity=ApcSae::class, inversedBy="apcSaeCompetences")
      */
-    private $sae;
+    private ?ApcSae $sae;
 
     /**
      * @ORM\ManyToOne(targetEntity=ApcCompetence::class, inversedBy="apcSaeCompetences")
      */
-    private $competence;
+    private ?ApcCompetence $competence;
 
     /**
      * @ORM\Column(type="float")
      */
-    private $coefficient = 0;
+    private float $coefficient = 0;
 
     /**
      * ApcSaeCompetence constructor.
@@ -42,7 +42,7 @@ class ApcSaeCompetence extends BaseEntity
      * @param $sae
      * @param $competence
      */
-    public function __construct($sae, $competence)
+    public function __construct(ApcSae $sae, ApcCompetence $competence)
     {
         $this->sae = $sae;
         $this->competence = $competence;

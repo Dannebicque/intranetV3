@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Word/MyWord.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/03/2021 18:45
+ * @lastUpdate 25/06/2021 10:28
  */
 
 namespace App\Classes\Word;
@@ -27,47 +27,46 @@ class MyWord
     }
 
     /**
-     * @param ApcSae $apcSae
-     *
      * @return StreamedResponse
+     *
      * @throws CopyFileException
      * @throws CreateTemporaryFileException
      */
     public function exportSae(ApcSae $apcSae)
     {
         $templateProcessor = new TemplateProcessor($this->dir . 'template/sae.docx');
-        $templateProcessor->setValue('nomsae', $apcSae->getCodeSae() . ' - ' . $apcSae->getLibelle());
+        $templateProcessor->setValue('nomsae', $apcSae->getCodeMatiere() . ' - ' . $apcSae->getLibelle());
         $competences = '';
         foreach ($apcSae->getCompetences() as $competence) {
-            $competences .= '- ' . $competence->getNomCourt() . "</w:t><w:br/><w:t>";
+            $competences .= '- ' . $competence->getNomCourt() . '</w:t><w:br/><w:t>';
         }
 
         $acs = '';
         foreach ($apcSae->getApcSaeApprentissageCritiques() as $ac) {
-            if ($ac->getApprentissageCritique() !== null) {
-                $acs .= '- ' . $ac->getApprentissageCritique()->getCode() . ' : ' . $ac->getApprentissageCritique()->getLibelle() . "</w:t><w:br/><w:t>";
+            if (null !== $ac->getApprentissageCritique()) {
+                $acs .= '- ' . $ac->getApprentissageCritique()->getCode() . ' : ' . $ac->getApprentissageCritique()->getLibelle() . '</w:t><w:br/><w:t>';
             }
         }
 
         $ressources = '';
         foreach ($apcSae->getApcSaeRessources() as $ac) {
-            if ($ac->getRessource() !== null) {
-                $ressources .= '- ' . $ac->getRessource()->getCodeRessource() . ' : ' . $ac->getRessource()->getLibelle() . "</w:t><w:br/><w:t>";
+            if (null !== $ac->getRessource()) {
+                $ressources .= '- ' . $ac->getRessource()->getCodeMatiere() . ' : ' . $ac->getRessource()->getLibelle() . '</w:t><w:br/><w:t>';
             }
         }
 
         $templateProcessor->setValue('competences', $competences);
         $templateProcessor->setValue('description', $this->prepareTexte($apcSae->getDescription()));
         $templateProcessor->setValue('acs', $acs);
-        $templateProcessor->setValue('heures', $apcSae->getHeuresCM() + $apcSae->getHeuresTD());
-        $templateProcessor->setValue('heuresTP', $apcSae->getHeuresTP());
-        $templateProcessor->setValue('heuresPtut', $apcSae->getHeuresProjet());
+        $templateProcessor->setValue('heures', $apcSae->getCmPpn() + $apcSae->getTdPpn());
+        $templateProcessor->setValue('heuresTP', $apcSae->getTpPpn());
+        $templateProcessor->setValue('heuresPtut', $apcSae->getProjetPpn());
         $templateProcessor->setValue('ressources', $ressources);
         $templateProcessor->setValue('livrables', $this->prepareTexte($apcSae->getLivrables()));
         $templateProcessor->setValue('semestre', 'Semestre ' . $apcSae->getSemestre()->getOrdreLmd());
         $templateProcessor->setValue('exemples', $this->prepareTexte($apcSae->getExemples()));
 
-        $filename = 'sae_' . $apcSae->getCodeSae() . ' ' . $apcSae->getLibelle() . '.docx';
+        $filename = 'sae_' . $apcSae->getCodeMatiere() . ' ' . $apcSae->getLibelle() . '.docx';
 
         return new StreamedResponse(
             static function() use ($templateProcessor) {
@@ -82,8 +81,6 @@ class MyWord
                 'Content-Disposition' => 'attachment;filename="' . $filename . '"',
             ]
         );
-
-
     }
 
     private function prepareTexte($text)
@@ -95,9 +92,8 @@ class MyWord
     }
 
     /**
-     * @param ApcRessource $apcRessource
-     *
      * @return StreamedResponse
+     *
      * @throws CopyFileException
      * @throws CreateTemporaryFileException
      */
@@ -105,7 +101,7 @@ class MyWord
     {
         $templateProcessor = new TemplateProcessor($this->dir . 'template/ressource.docx');
         $templateProcessor->setValue('nomressource',
-            $apcRessource->getCodeRessource() . ' - ' . $apcRessource->getLibelle());
+            $apcRessource->getCodeMatiere() . ' - ' . $apcRessource->getLibelle());
         $comp1 = 'NON';
         $comp2 = 'NON';
         $comp3 = 'NON';
@@ -138,8 +134,8 @@ class MyWord
         $accomp5 = '';
 
         foreach ($apcRessource->getApcRessourceApprentissageCritiques() as $ac) {
-            if ($ac->getApprentissageCritique() !== null) {
-                $txt = '- ' . $ac->getApprentissageCritique()->getCode() . ' : ' . $ac->getApprentissageCritique()->getLibelle() . "</w:t><w:br/><w:t>";
+            if (null !== $ac->getApprentissageCritique()) {
+                $txt = '- ' . $ac->getApprentissageCritique()->getCode() . ' : ' . $ac->getApprentissageCritique()->getLibelle() . '</w:t><w:br/><w:t>';
                 switch ($ac->getApprentissageCritique()->getCompetence()->getNomCourt()) {
                     case 'Comprendre':
                         $accomp1 .= $txt;
@@ -157,14 +153,13 @@ class MyWord
                         $accomp5 .= $txt;
                         break;
                 }
-
             }
         }
 
         $ressources = '';
         foreach ($apcRessource->getApcSaeRessources() as $ac) {
-            if ($ac->getRessource() !== null) {
-                $ressources .= '- ' . $ac->getSae()->getCodeSae() . ' : ' . $ac->getSae()->getLibelle() . "</w:t><w:br/><w:t>";
+            if (null !== $ac->getRessource()) {
+                $ressources .= '- ' . $ac->getSae()->getCodeMatiere() . ' : ' . $ac->getSae()->getLibelle() . '</w:t><w:br/><w:t>';
             }
         }
 
@@ -182,14 +177,14 @@ class MyWord
         $templateProcessor->setValue('accomp4', $accomp4);
         $templateProcessor->setValue('accomp5', $accomp5);
 
-        $templateProcessor->setValue('heures', $apcRessource->getHeuresCM() + $apcRessource->getHeuresTD());
-        $templateProcessor->setValue('heuresTP', $apcRessource->getHeuresTP());
+        $templateProcessor->setValue('heures', $apcRessource->getCmPpn() + $apcRessource->getTdPpn());
+        $templateProcessor->setValue('heuresTP', $apcRessource->getTpPpn());
         $templateProcessor->setValue('saes', $ressources);
         $templateProcessor->setValue('prerequis', $this->prepareTexte($apcRessource->getPreRequis()));
         $templateProcessor->setValue('motscles', $this->prepareTexte($apcRessource->getMotsCles()));
         $templateProcessor->setValue('semestre', 'Semestre ' . $apcRessource->getSemestre()->getOrdreLmd());
 
-        $filename = 'ressource_' . $apcRessource->getCodeRessource() . ' ' . $apcRessource->getLibelle() . '.docx';
+        $filename = 'ressource_' . $apcRessource->getCodeMatiere() . ' ' . $apcRessource->getLibelle() . '.docx';
 
         return new StreamedResponse(
             static function() use ($templateProcessor) {

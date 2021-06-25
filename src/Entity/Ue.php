@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Ue.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 06/06/2021 09:36
  */
 
 namespace App\Entity;
@@ -28,21 +28,18 @@ class Ue extends BaseEntity
     private string $libelle;
 
     /**
-     * @var int
      *
      * @ORM\Column(type="integer")
      */
     private int $numeroUe = 1;
 
     /**
-     * @var float
      *
      * @ORM\Column(type="float")
      */
     private float $coefficient = 1;
 
     /**
-     * @var float
      *
      * @ORM\Column(type="float")
      */
@@ -87,9 +84,6 @@ class Ue extends BaseEntity
         $this->semestre = $semestre;
     }
 
-    /**
-     * @return mixed
-     */
     public function getLibelle(): ?string
     {
         return $this->libelle;

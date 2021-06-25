@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcApprentissageCritique.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/05/2021 17:00
+ * @lastUpdate 05/06/2021 17:31
  */
 
 namespace App\Entity;
@@ -26,27 +26,27 @@ class ApcApprentissageCritique extends BaseEntity
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $libelle;
+    private ?string $libelle;
 
     /**
      * @ORM\ManyToOne(targetEntity=ApcNiveau::class, inversedBy="apcApprentissageCritiques")
      */
-    private $niveau;
+    private ?ApcNiveau $niveau;
 
     /**
      * @ORM\Column(type="string", length=20)
      */
-    private $code;
+    private ?string $code;
 
     /**
      * @ORM\OneToMany(targetEntity=ApcRessourceApprentissageCritique::class, mappedBy="apprentissageCritique")
      */
-    private $apcRessourceApprentissageCritiques;
+    private Collection $apcRessourceApprentissageCritiques;
 
     /**
      * @ORM\OneToMany(targetEntity=ApcSaeApprentissageCritique::class, mappedBy="apprentissageCritique")
      */
-    private $apcSaeApprentissageCritiques;
+    private Collection $apcSaeApprentissageCritiques;
 
     /**
      * ApcApprentissageCritique constructor.
@@ -160,7 +160,7 @@ class ApcApprentissageCritique extends BaseEntity
 
     public function getCompetence(): ?ApcCompetence
     {
-        if ($this->getNiveau() !== null) {
+        if (null !== $this->getNiveau()) {
             return $this->getNiveau()->getCompetence();
         }
 

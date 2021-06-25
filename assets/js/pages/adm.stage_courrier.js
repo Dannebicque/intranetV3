@@ -2,10 +2,10 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.stage_courrier.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/06/2021 09:50
+// @lastUpdate 08/06/2021 08:24
 
 import {addCallout} from '../util'
-import $ from 'jquery'
+// import $ from 'jquery'
 import Swal from 'sweetalert2'
 
 let ed_courrier, ed_ETAT_STAGE_AUTORISE, ed_ETAT_STAGE_DEPOSE, ed_ETAT_STAGE_VALIDE, ed_ETAT_STAGE_REFUS,

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Configuration.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 05/06/2021 19:05
  */
 
 namespace App\Entity;
@@ -25,18 +25,18 @@ class Configuration extends BaseEntity
      * @ORM\Column(type="string", length=50)
      * @Groups({"configuration_administration"})
      */
-    private $cle;
+    private ?string $cle;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"configuration_administration"})
      */
-    private $valeur;
+    private ?string $valeur;
 
     /**
      * @ORM\Column(type="string", length=1)
      */
-    private $type = 'T';
+    private string $type = 'T';
 
     public function getCle(): ?string
     {

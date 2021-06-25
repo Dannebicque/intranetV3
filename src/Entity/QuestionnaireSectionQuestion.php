@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/QuestionnaireSectionQuestion.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 06/06/2021 09:04
  */
 
 namespace App\Entity;
@@ -23,17 +23,17 @@ class QuestionnaireSectionQuestion extends BaseEntity
     /**
      * @ORM\ManyToOne(targetEntity="QuestionnaireSection", inversedBy="qualiteSectionQuestions")
      */
-    private $section;
+    private ?QuestionnaireSection $section;
 
     /**
      * @ORM\ManyToOne(targetEntity="QuestionnaireQuestion", inversedBy="qualiteSectionQuestions")
      */
-    private $question;
+    private ?QuestionnaireQuestion $question;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $ordre;
+    private ?int $ordre;
 
     public function getSection(): ?QuestionnaireSection
     {

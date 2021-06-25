@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Evaluation.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/05/2021 16:04
+ * @lastUpdate 25/06/2021 10:28
  */
 
 namespace App\Entity;
@@ -12,13 +12,16 @@ namespace App\Entity;
 use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\MatiereTrait;
 use App\Entity\Traits\UuidTrait;
-use DateTime;
-use DateTimeInterface;
+use App\Utils\Tools;
+use Carbon\Carbon;
+use Carbon\CarbonInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use Ramsey\Uuid\Uuid;
+use Symfony\Component\Validator\Constraints as Assert;
+use function in_array;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EvaluationRepository")
@@ -31,81 +34,80 @@ class Evaluation extends BaseEntity
     use MatiereTrait;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Matiere", inversedBy="evaluations")
-     */
-    private $matiere;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Personnel", inversedBy="evaluationsAuteur")
      */
-    private $personnelAuteur;
+    private ?Personnel $personnelAuteur;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Personnel", inversedBy="evaluationsAutorise")
      */
-    private $personnelAutorise;
+    private Collection $personnelAutorise;
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\Date()
      */
-    private $dateEvaluation;
+    private ?CarbonInterface $dateEvaluation;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $visible = false;
+    private bool $visible = false;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $modifiable = false;
+    private bool $modifiable = false;
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\NotBlank
+     * @Assert\Positive()
      */
-    private $coefficient;
+    private ?float $coefficient = 1;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\NotBlank
      */
-    private $commentaire;
+    private ?string $commentaire;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Note", mappedBy="evaluation")
      */
-    private $notes;
+    private Collection $notes;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Evaluation", inversedBy="enfants")
      */
-    private $parent;
+    private ?Evaluation $parent;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Evaluation", mappedBy="parent")
      */
-    private $enfants;
+    private Collection $enfants;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\TypeGroupe")
      */
-    private $typeGroupe;
+    private ?TypeGroupe $typeGroupe;
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
      */
-    private $libelle;
+    private ?string $libelle;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\AnneeUniversitaire", inversedBy="evaluations")
      */
-    private $anneeUniversitaire;
+    private ?AnneeUniversitaire $anneeUniversitaire;
 
     /**
      * Evaluation constructor.
      *
      * @throws Exception
      */
-    public function __construct(Personnel $personnel, \App\DTO\Matiere $mat, Departement $departement)
+    public function __construct(Personnel $personnel, \App\DTO\Matiere $mat)
     {
         $this->setUuid(Uuid::uuid4());
 
@@ -119,7 +121,7 @@ class Evaluation extends BaseEntity
             $this->setVisible($mat->semestre->isOptEvaluationVisible());
         }
 
-        $this->dateEvaluation = new DateTime('now');
+        $this->dateEvaluation = Carbon::now();
 
         $this->personnelAutorise = new ArrayCollection();
         $this->notes = new ArrayCollection();
@@ -129,18 +131,6 @@ class Evaluation extends BaseEntity
     public function __clone()
     {
         $this->setUuid(Uuid::uuid4());
-    }
-
-    public function getMatiere(): ?Matiere
-    {
-        return $this->matiere;
-    }
-
-    public function setMatiere(?Matiere $matiere): self
-    {
-        $this->matiere = $matiere;
-
-        return $this;
     }
 
     public function getPersonnelAuteur(): ?Personnel
@@ -181,12 +171,12 @@ class Evaluation extends BaseEntity
         return $this;
     }
 
-    public function getDateEvaluation(): ?DateTimeInterface
+    public function getDateEvaluation(): ?CarbonInterface
     {
         return $this->dateEvaluation;
     }
 
-    public function setDateEvaluation(DateTimeInterface $dateEvaluation): self
+    public function setDateEvaluation(?CarbonInterface $dateEvaluation): self
     {
         $this->dateEvaluation = $dateEvaluation;
 
@@ -222,9 +212,9 @@ class Evaluation extends BaseEntity
         return $this->coefficient;
     }
 
-    public function setCoefficient(float $coefficient): self
+    public function setCoefficient(mixed $coefficient): self
     {
-        $this->coefficient = $coefficient;
+        $this->coefficient = Tools::convertToFloat($coefficient);
 
         return $this;
     }
@@ -244,7 +234,7 @@ class Evaluation extends BaseEntity
     /**
      * @return Collection|Note[]
      */
-    public function getNotes()
+    public function getNotes(): Collection
     {
         return $this->notes;
     }
@@ -332,15 +322,6 @@ class Evaluation extends BaseEntity
         return (string)$this->getUuid();
     }
 
-//    public function getSemestre(): ?Semestre
-//    {
-//        if (null !== $this->matiere && null !== $this->matiere->getUe()) {
-//            return $this->matiere->getUe()->getSemestre();
-//        }
-//
-//        return null;
-//    }
-
     public function getLibelle(): ?string
     {
         return $this->libelle;
@@ -373,6 +354,6 @@ class Evaluation extends BaseEntity
             $personnels[] = $autorise->getId();
         }
 
-        return \in_array($personnelId, $personnels, true);
+        return in_array($personnelId, $personnels, true);
     }
 }

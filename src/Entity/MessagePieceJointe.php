@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/MessagePieceJointe.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:49
+ * @lastUpdate 06/06/2021 11:05
  */
 
 namespace App\Entity;
@@ -14,34 +14,22 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\MessagePieceJointeRepository")
  */
-class MessagePieceJointe
+class MessagePieceJointe extends BaseEntity
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
-
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Message", inversedBy="messagePieceJointes")
      */
-    private $message;
+    private ?Message $message;
 
     /**
      * @ORM\Column(type="string", length=50)
      */
-    private $fichier;
+    private ?string $fichier;
 
     /**
      * @ORM\Column(type="string", length=5)
      */
-    private $extension;
-
-    public function getId()
-    {
-        return $this->id;
-    }
+    private ?string $extension;
 
     public function getMessage(): ?Message
     {

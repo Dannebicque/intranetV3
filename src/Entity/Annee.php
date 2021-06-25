@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Annee.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/06/2021 08:08
+ * @lastUpdate 25/06/2021 10:28
  */
 
 namespace App\Entity;
@@ -27,12 +27,12 @@ class Annee extends BaseEntity
     /**
      * @ORM\Column(type="string", length=20)
      */
-    private $codeEtape;
+    private ?string $codeEtape;
 
     /**
      * @ORM\Column(type="string", length=10)
      */
-    private $codeVersion;
+    private ?string $codeVersion;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -65,7 +65,7 @@ class Annee extends BaseEntity
      * @ORM\OneToMany(targetEntity="App\Entity\Semestre", mappedBy="annee")
      * @ORM\OrderBy({"ordreLmd"="ASC"})
      */
-    private $semestres;
+    private Collection $semestres;
 
     /**
      * @ORM\Column(type="boolean")
@@ -75,7 +75,7 @@ class Annee extends BaseEntity
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Alternance", mappedBy="annee")
      */
-    private $alternances;
+    private Collection $alternances;
 
     /**
      * @ORM\Column(type="string", length=30)
@@ -85,7 +85,7 @@ class Annee extends BaseEntity
     /**
      * @ORM\OneToMany(targetEntity=ApcNiveau::class, mappedBy="annee")
      */
-    private $apcNiveaux;
+    private Collection $apcNiveaux;
 
     public function __construct()
     {
@@ -94,9 +94,6 @@ class Annee extends BaseEntity
         $this->apcNiveaux = new ArrayCollection();
     }
 
-    /**
-     * @return string
-     */
     public function getLibelle(): ?string
     {
         return $this->libelle;
@@ -107,9 +104,6 @@ class Annee extends BaseEntity
         $this->libelle = $libelle;
     }
 
-    /**
-     * @return int
-     */
     public function getOrdre(): ?int
     {
         return $this->ordre;
@@ -120,9 +114,6 @@ class Annee extends BaseEntity
         $this->ordre = $ordre;
     }
 
-    /**
-     * @return string
-     */
     public function getLibelleLong(): ?string
     {
         return $this->libelleLong;
@@ -143,11 +134,7 @@ class Annee extends BaseEntity
         $this->optAlternance = $optAlternance;
     }
 
-    /**
-     * @param $name
-     * @param $value
-     */
-    public function update($name, $value): void
+    public function update(string $name, mixed $value): void
     {
         Tools::updateFields($name, $value, $this);
     }
@@ -238,7 +225,7 @@ class Annee extends BaseEntity
         return $this;
     }
 
-    public function getAnneeUniversitaire()
+    public function getAnneeUniversitaire(): ?int
     {
         if (null !== $this->getDiplome() && null !== $this->getDiplome()->getAnneeUniversitaire()) {
             return $this->getDiplome()->getAnneeUniversitaire()->getAnnee();
@@ -295,7 +282,7 @@ class Annee extends BaseEntity
         return $this;
     }
 
-    public function getCodeEtape()
+    public function getCodeEtape(): ?string
     {
         return $this->codeEtape;
     }
@@ -305,7 +292,7 @@ class Annee extends BaseEntity
         $this->codeEtape = $codeEtape;
     }
 
-    public function getCodeVersion()
+    public function getCodeVersion(): ?string
     {
         return $this->codeVersion;
     }

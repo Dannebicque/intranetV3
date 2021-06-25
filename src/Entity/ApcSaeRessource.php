@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcSaeRessource.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 05/06/2021 18:44
  */
 
 namespace App\Entity;
@@ -24,20 +24,14 @@ class ApcSaeRessource extends BaseEntity
     /**
      * @ORM\ManyToOne(targetEntity=ApcSae::class, inversedBy="apcSaeRessources")
      */
-    private $sae;
+    private ?ApcSae $sae;
 
     /**
      * @ORM\ManyToOne(targetEntity=ApcRessource::class, inversedBy="apcSaeRessources")
      */
-    private $ressource;
+    private ?ApcRessource $ressource;
 
-    /**
-     * ApcSaeRessource constructor.
-     *
-     * @param $sae
-     * @param $ressource
-     */
-    public function __construct($sae, $ressource)
+    public function __construct(ApcSae $sae, ApcRessource $ressource)
     {
         $this->sae = $sae;
         $this->ressource = $ressource;

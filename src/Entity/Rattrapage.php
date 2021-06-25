@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Rattrapage.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2021 09:01
+ * @lastUpdate 25/06/2021 10:28
  */
 
 namespace App\Entity;
@@ -12,9 +12,9 @@ namespace App\Entity;
 use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\MatiereTrait;
 use App\Entity\Traits\UuidTrait;
-use DateTimeInterface;
+use Carbon\CarbonInterface;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Exception;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -44,11 +44,6 @@ class Rattrapage extends BaseEntity
     private ?Etudiant $etudiant;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Matiere")
-     */
-    private ?Matiere $matiere;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Personnel")
      * @Groups({"rattrapage_administration"})
      */
@@ -58,13 +53,13 @@ class Rattrapage extends BaseEntity
      * @ORM\Column(type="date")
      * @Groups({"rattrapage_administration"})
      */
-    private ?DateTimeInterface $dateEval;
+    private ?CarbonInterface $dateEval;
 
     /**
      * @ORM\Column(type="time", nullable=true)
      * @Groups({"rattrapage_administration"})
      */
-    private ?DateTimeInterface $heureEval;
+    private ?CarbonInterface $heureEval;
 
     /**
      * @ORM\Column(type="string", length=20, nullable=true)
@@ -76,13 +71,13 @@ class Rattrapage extends BaseEntity
      * @ORM\Column(type="date", nullable=true)
      * @Groups({"rattrapage_administration"})
      */
-    private ?DateTimeInterface $dateRattrapage;
+    private ?CarbonInterface $dateRattrapage;
 
     /**
      * @ORM\Column(type="time", nullable=true)
      * @Groups({"rattrapage_administration"})
      */
-    private ?DateTimeInterface $heureRattrapage;
+    private ?CarbonInterface $heureRattrapage;
 
     /**
      * @ORM\Column(type="string", length=10, nullable=true)
@@ -115,11 +110,6 @@ class Rattrapage extends BaseEntity
         $this->libelleMatiere = $libelleMatiere;
     }
 
-    /**
-     * Rattrapage constructor.
-     *
-     * @throws Exception
-     */
     public function __construct(Etudiant $etudiant)
     {
         $this->setUuid(Uuid::uuid4());
@@ -138,31 +128,9 @@ class Rattrapage extends BaseEntity
         return $this->etudiant;
     }
 
-    /**
-     * @param \App\Entity\Etudiant $etudiant
-     *
-     * @return Rattrapage
-     */
     public function setEtudiant(Etudiant $etudiant): self
     {
         $this->etudiant = $etudiant;
-
-        return $this;
-    }
-
-    public function getMatiere(): ?Matiere
-    {
-        return $this->matiere;
-    }
-
-    /**
-     * @param \App\Entity\Matiere|null $matiere
-     *
-     * @return Rattrapage
-     */
-    public function setMatiere(?Matiere $matiere): self
-    {
-        $this->matiere = $matiere;
 
         return $this;
     }
@@ -172,11 +140,6 @@ class Rattrapage extends BaseEntity
         return $this->personnel;
     }
 
-    /**
-     * @param \App\Entity\Personnel|null $personnel
-     *
-     * @return Rattrapage
-     */
     public function setPersonnel(?Personnel $personnel): self
     {
         $this->personnel = $personnel;
@@ -184,24 +147,24 @@ class Rattrapage extends BaseEntity
         return $this;
     }
 
-    public function getDateEval(): ?DateTimeInterface
+    public function getDateEval(): ?CarbonInterface
     {
         return $this->dateEval;
     }
 
-    public function setDateEval(DateTimeInterface $dateEval): self
+    public function setDateEval(CarbonInterface $dateEval): self
     {
         $this->dateEval = $dateEval;
 
         return $this;
     }
 
-    public function getHeureEval(): ?DateTimeInterface
+    public function getHeureEval(): ?CarbonInterface
     {
         return $this->heureEval;
     }
 
-    public function setHeureEval(?DateTimeInterface $heureEval): self
+    public function setHeureEval(?CarbonInterface $heureEval): self
     {
         $this->heureEval = $heureEval;
 
@@ -220,24 +183,24 @@ class Rattrapage extends BaseEntity
         return $this;
     }
 
-    public function getDateRattrapage(): ?DateTimeInterface
+    public function getDateRattrapage(): ?CarbonInterface
     {
         return $this->dateRattrapage;
     }
 
-    public function setDateRattrapage(DateTimeInterface $dateRattrapage): self
+    public function setDateRattrapage(CarbonInterface $dateRattrapage): self
     {
         $this->dateRattrapage = $dateRattrapage;
 
         return $this;
     }
 
-    public function getHeureRattrapage(): ?DateTimeInterface
+    public function getHeureRattrapage(): ?CarbonInterface
     {
         return $this->heureRattrapage;
     }
 
-    public function setHeureRattrapage(?DateTimeInterface $heureRattrapage): self
+    public function setHeureRattrapage(?CarbonInterface $heureRattrapage): self
     {
         $this->heureRattrapage = $heureRattrapage;
 
@@ -300,12 +263,12 @@ class Rattrapage extends BaseEntity
         return self::ETATLONG[$this->etatDemande] ?? '-erreur code-';
     }
 
-    public function groupes()
+    public function groupes(): Collection|array|null
     {
         return null !== $this->getEtudiant() ? $this->getEtudiant()->getGroupes() : null;
     }
 
-    public function absenceJustifiee()
+    public function absenceJustifiee(): ?string
     {
         if (null !== $this->getDateEval() && null !== $this->getHeureEval()) {
             return $this->getEtudiant()->getId() . '_' . $this->getDateEval()->format('Ymd') . '_' . $this->getHeureEval()->format('Hi');

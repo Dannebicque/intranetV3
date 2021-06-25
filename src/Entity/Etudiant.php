@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Etudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 06/06/2021 10:40
  */
 
 namespace App\Entity;
@@ -19,7 +19,6 @@ use Exception;
 use JsonException;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
@@ -38,205 +37,201 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id;
 
     /**
-     * @var string
      *
      * @ORM\Column(type="string", length=50)
      */
-    private $photoName = 'noimage.png';
+    private ?string $photoName = 'noimage.png';
 
     /**
-     * @var UploadedFile
-     *
      * @Vich\UploadableField(mapping="etudiant", fileNameProperty="photoName")
      * @
      */
     private $photoFile;
 
     /**
-     * @var Semestre
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Semestre", inversedBy="etudiants")
      * @Groups({"etudiants_administration"})
      */
-    private $semestre;
+    private ?Semestre $semestre;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Note", mappedBy="etudiant")
      */
-    private $notes;
+    private Collection $notes;
 
     /**
      * @ORM\Column(type="string", length=20)
      * @Groups({"etudiants_administration"})
      */
-    private $numEtudiant;
+    private ?string $numEtudiant;
 
     /**
      * @ORM\Column(type="string", length=20, nullable=true)
      */
-    private $numIne;
+    private ?string $numIne;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $anneeBac;
+    private ?int $anneeBac;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Absence", mappedBy="etudiant")
      * @ORM\OrderBy({"dateHeure" = "desc"})
      */
-    private $absences;
+    private Collection $absences;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Adresse", cascade={"persist", "remove"})
      */
-    private $adresseParentale;
+    private ?Adresse $adresseParentale;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Rattrapage", mappedBy="etudiant")
      */
-    private $rattrapages;
+    private Collection $rattrapages;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Favori", mappedBy="etudiantDemandeur")
      */
-    private $etudiantDemande;
+    private Collection $etudiantDemande;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Favori", mappedBy="etudiantDemande")
      */
-    private $etudiantDemandeur;
+    private Collection $etudiantDemandeur;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Scolarite", mappedBy="etudiant")
      * @ORM\OrderBy({"ordre" = "ASC"})
      */
-    private $scolarites;
+    private Collection $scolarites;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Notification", mappedBy="etudiant")
      * @ORM\OrderBy({"created":"desc"})
      */
-    private $notifications;
+    private Collection $notifications;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $boursier = false;
+    private bool $boursier = false;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $demandeurEmploi = false;
+    private bool $demandeurEmploi = false;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Groupe", inversedBy="etudiants", fetch="LAZY")
      */
-    private $groupes;
+    private Collection $groupes;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\MessageDestinataireEtudiant", mappedBy="etudiant")
      */
-    private $messageDestinataireEtudiants;
+    private Collection $messageDestinataireEtudiants;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\AbsenceJustificatif", mappedBy="etudiant")
      */
-    private $absenceJustificatifs;
+    private Collection $absenceJustificatifs;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\StageEtudiant", mappedBy="etudiant")
      */
-    private $stageEtudiants;
+    private Collection $stageEtudiants;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Alternance", mappedBy="etudiant")
      */
-    private $alternances;
+    private Collection $alternances;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $deleted = false;
+    private bool $deleted = false;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $amenagementsParticuliers;
+    private ?string $amenagementsParticuliers;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $promotion;
+    private ?int $promotion;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Bac")
      */
-    private $bac;
+    private ?Bac $bac;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $intituleSecuriteSociale;
+    private ?string $intituleSecuriteSociale;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $adresseSecuriteSociale;
+    private ?string $adresseSecuriteSociale;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $anneeSortie = 0;
+    private int $anneeSortie = 0;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\EmpruntEtudiant", mappedBy="etudiant")
      * @ORM\OrderBy({"created":"DESC"})
      */
-    private $emprunts;
+    private Collection $emprunts;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\ArticleLikeEtudiant", mappedBy="etudiant")
      */
-    private $articlesLike;
+    private Collection $articlesLike;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Departement", inversedBy="etudiants")
      */
-    private $departement;
+    private ?Departement $departement;
 
     /**
      * @ORM\OneToMany(targetEntity="QuestionnaireEtudiant", mappedBy="etudiant")
      */
-    private $quizzEtudiants;
+    private Collection $quizzEtudiants;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
      */
-    private $loginSpecifique;
+    private ?string $loginSpecifique;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $formationContinue = false;
+    private bool $formationContinue = false;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\DocumentFavoriEtudiant", mappedBy="etudiant")
      */
-    private $documentsFavoris;
+    private Collection $documentsFavoris;
 
     /**
      * @ORM\ManyToMany(targetEntity=ProjetEtudiant::class, mappedBy="etudiants")
      */
-    private $projetEtudiants;
+    private Collection $projetEtudiants;
 
     /**
      * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="etudiant")
      */
-    private $commentaires;
+    private Collection $commentaires;
 
     /**
      * Etudiant constructor.
@@ -276,14 +271,12 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
         $this->setUuid(Uuid::uuid4());
     }
 
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return Semestre
-     */
+
     public function getSemestre(): ?Semestre
     {
         return $this->semestre;
@@ -935,7 +928,7 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
         }
     }
 
-    public function updateFromLdap($ldap)
+    public function updateFromLdap($ldap): void
     {
         $this->setMailUniv($ldap['mail']);
         $this->setUsername($ldap['login']);
@@ -1187,11 +1180,9 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
 
     public function removeCommentaire(Commentaire $commentaire): self
     {
-        if ($this->commentaires->removeElement($commentaire)) {
-            // set the owning side to null (unless already changed)
-            if ($commentaire->getEtudiant() === $this) {
-                $commentaire->setEtudiant(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->commentaires->removeElement($commentaire) && $commentaire->getEtudiant() === $this) {
+            $commentaire->setEtudiant(null);
         }
 
         return $this;

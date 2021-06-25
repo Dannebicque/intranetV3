@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Pdf/MyPDF.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/05/2021 20:35
+ * @lastUpdate 06/06/2021 10:02
  */
 
 /*
@@ -13,6 +13,7 @@
 
 namespace App\Classes\Pdf;
 
+use Carbon\Carbon;
 use DateTime;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Knp\Snappy\Pdf;
@@ -36,7 +37,7 @@ class MyPDF
     {
         self::$templating = $templating;
         self::$pdf = $pdf;
-        $date = new DateTime('now');
+        $date = Carbon::now();
         self::setFooter([
             'footer-left' => 'Document généré depuis l\'intranet le ' . $date->format('d/m/Y H:i') . '.',
             'footer-right' => '[page] / [topage]',

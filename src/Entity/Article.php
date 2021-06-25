@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Article.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 05/06/2021 18:44
  */
 
 namespace App\Entity;
@@ -28,43 +28,43 @@ class Article extends BaseEntity
      * @ORM\Column(type="string", length=255)
      * @Groups({"article_administration"})
      */
-    private $titre;
+    private ?string $titre;
 
     /**
      * @ORM\Column(type="text")
      * @Groups({"article_administration"})
      */
-    private $texte;
+    private ?string $texte;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $slug;
+    private ?string $slug;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Semestre", inversedBy="articles")
      * @MaxDepth(2)
      * @Groups({"article_administration"})
      */
-    private $semestres;
+    private Collection $semestres;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Personnel")
      * @MaxDepth(2)
      * @Groups({"article_administration"})
      */
-    private $personnel;
+    private ?Personnel $personnel;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\ArticleCategorie", inversedBy="articles")
      * @Groups({"article_administration"})
      */
-    private $categorie;
+    private ?ArticleCategorie $categorie;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\ArticleLike", mappedBy="article")
      */
-    private $articleLikes;
+    private Collection $articleLikes;
 
     /**
      * Article constructor.

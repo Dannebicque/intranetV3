@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ProjetEtudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 06/06/2021 08:43
  */
 
 namespace App\Entity;
@@ -12,6 +12,7 @@ namespace App\Entity;
 use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\UuidTrait;
 use App\Repository\ProjetEtudiantRepository;
+use Carbon\CarbonInterface;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -38,67 +39,67 @@ class ProjetEtudiant extends BaseEntity
     /**
      * @ORM\ManyToOne(targetEntity=ProjetPeriode::class, inversedBy="projetEtudiants")
      */
-    private $projetPeriode;
+    private ?ProjetPeriode $projetPeriode;
 
     /**
      * @ORM\ManyToOne(targetEntity=Entreprise::class, inversedBy="projetEtudiants", cascade={"persist", "remove"})
      */
-    private $organisme;
+    private ?Entreprise $organisme;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $tempComplet = true;
+    private bool $tempComplet = true;
 
     /**
      * @ORM\Column(type="float")
      */
-    private $duree = 8;
+    private float $duree = 8;
 
     /**
      * @ORM\Column(type="string", length=10)
      */
-    private $uniteDuree = self::DUREE_HEURE;
+    private string $uniteDuree = self::DUREE_HEURE;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $sujet;
+    private ?string $sujet;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $activitesConfiees;
+    private ?string $activitesConfiees;
 
     /**
      * @ORM\ManyToMany(targetEntity=Etudiant::class, inversedBy="projetEtudiants")
      */
-    private $etudiants;
+    private Collection $etudiants;
 
     /**
      * @ORM\Column(type="string", length=30)
      */
-    private $etatProjet = self::ETAT_PROJET_ATTENTE;
+    private string $etatProjet = self::ETAT_PROJET_ATTENTE;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $dateAutorise;
+    private ?CarbonInterface $dateAutorise;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $dateDepose;
+    private ?CarbonInterface $dateDepose;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $dateValidation;
+    private ?CarbonInterface $dateValidation;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $dateImprime;
+    private ?CarbonInterface $dateImprime;
 
     public function __construct()
     {

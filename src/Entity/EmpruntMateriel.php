@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/EmpruntMateriel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:49
+ * @lastUpdate 06/06/2021 11:05
  */
 
 namespace App\Entity;
@@ -15,18 +15,11 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EmpruntMaterielRepository")
  */
-class EmpruntMateriel
+class EmpruntMateriel extends BaseEntity
 {
     public const ETAT_MATERIEL_DISPO = 'DISPO';
     public const ETAT_MATERIEL_SORTI = 'SORTI';
     public const ETAT_MATERIEL_RESERVE = 'RESER';
-
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Emprunt", inversedBy="empruntMateriels")
@@ -52,11 +45,6 @@ class EmpruntMateriel
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $daterentree;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getEmprunt(): ?Emprunt
     {

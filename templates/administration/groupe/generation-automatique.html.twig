@@ -1,0 +1,102 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'generation.groupes.automatique.semestre.heading'|trans({'%semestre%':semestre.libelle})|raw }}
+{% endblock %}
+
+{% block headerright %}
+    <div class="right gap-items-2">
+        {% for sem in user_data.semestresActifs %}
+            <a href="{{ path('administration_groupe_semestre_generation_auto', {semestre:sem.id}) }}"
+               class="btn btn-round {% if sem.id == semestre.id %}btn-primary{% endif %}"
+               title="{{ 'atitle.changer.semestre'|trans }}"
+               data-provide="tooltip"
+               data-placement="bottom"
+            >{{ sem.libelle }}</a>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+
+            <a href="{{ path('administration_groupe_index', {semestre:semestre.id}) }}"
+               class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_semestres'|trans }}"><i class="fas fa-arrow-left"></i></a>
+            <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="{{ iconAdmin }}"><span class="sr-only">Administration</span></i></a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-header">{{ 'generation.groupes.automatique.semestre.heading'|trans({'%semestre%':semestre.libelle})|raw }}</h4>
+        <div class="card-body">
+            <form action="{{ path('administration_groupe_semestre_genere', {semestre:semestre.id, action:'genere'}) }}" method="post">
+                <div class="row">
+                    <div class="col-sm-12 col-md-4">
+                        <label for="groupe_cm" class="form-label">Nb groupes CM</label>
+                        <input type="text" class="form-control" id="groupe_cm" value="{{ semestre.nbGroupesCm }}"></div>
+                    <div class="col-sm-12 col-md-4">
+                        <label for="groupe_td" class="form-label">Nb groupes TD</label>
+                        <input type="text" class="form-control" id="groupe_td" value="{{ semestre.nbGroupesTd }}"></div>
+                    <div class="col-sm-12 col-md-4">
+                        <label for="groupe_tp" class="form-label">Nb groupes TP</label>
+                        <input type="text" class="form-control" id="groupe_tp" value="{{ semestre.nbGroupesTp }}"></div>
+                    <div class="col-sm-12 col-md-4">
+                        <fieldset>
+                            <legend>Appelation de vos groupes</legend>
+                            <label class="radio-inline" for="appelation1">
+                                <input type="radio" id="appelation1" name="appelation" value="numerique">
+                                Numéro (TD1, TP11, TP12 ...)
+                            </label>
+                            <label class="radio-inline" for="appelationA">
+                                <input type="radio" id="appelationA" name="appelation" value="alpha">
+                                Alphabétique (TDAB, TPA, TPB ...)
+                            </label>
+                        </fieldset>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-sm-12 col-md-4">
+                        <button
+                                class="btn
+                    btn-success btn-block">Sauvegerder et générer les groupes
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block fabactions %}
+    {{ include('composants/fab-buttons.html.twig', {boutons:[
+        {type: 'info',
+            href: path('administration_absences_justificatif_semestre_export', {semestre:semestre.id, _format: 'pdf'}),
+            title: 'exporter.pdf'|trans,
+            icone : "fa fa-file-pdf"},
+        {
+            type:'info',
+            href:path('administration_absences_justificatif_semestre_export', {semestre:semestre.id, _format: 'csv'}),
+            title: 'exporter.csv'|trans,
+            icone: 'fa fa-file-csv'
+        },
+        {
+            type:'info',
+            href:path('administration_absences_justificatif_semestre_export', {semestre:semestre.id, _format: 'xlsx'}),
+            title: 'exporter.xls'|trans,
+            icone: 'fa fa-file-excel'
+        },
+        {
+            type:'info',
+            href:path('help_article', {sujet: 'administration-absence-justificatif'}),
+            title: 'aide'|trans,
+            icone: 'fa fa-question'
+        }
+    ]}) }}
+{% endblock %}
+

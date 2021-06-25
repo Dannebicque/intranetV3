@@ -4,13 +4,14 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/QuestionnaireEtudiantReponse.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 06/06/2021 08:50
  */
 
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
 use Doctrine\ORM\Mapping as ORM;
+use function count;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\QuestionnaireEtudiantReponseRepository")
@@ -93,10 +94,10 @@ class QuestionnaireEtudiantReponse extends BaseEntity
         return $this;
     }
 
-    public function getIdReponse()
+    public function getIdReponse(): string
     {
         $t = explode('_', $this->cleReponse);
 
-        return $t[\count($t) - 1];
+        return $t[count($t) - 1];
     }
 }

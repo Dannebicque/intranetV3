@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EvaluationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2021 08:46
+ * @lastUpdate 06/06/2021 07:59
  */
 
 namespace App\Controller\administration;
@@ -85,7 +85,7 @@ class EvaluationController extends BaseController
     {
         $mat = $typeMatiereManager->getMatiereFromSelect($matiere);
         if (null !== $mat) {
-            $evaluation = new Evaluation($this->getConnectedUser(), $mat, $this->dataUserSession->getDepartement());
+            $evaluation = new Evaluation($this->getConnectedUser(), $mat);
             $form = $this->createForm(
                 EvaluationType::class,
                 $evaluation,
