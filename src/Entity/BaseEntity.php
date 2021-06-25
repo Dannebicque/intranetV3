@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/BaseEntity.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/05/2021 16:35
+ * @lastUpdate 25/06/2021 10:28
  */
 
 namespace App\Entity;
@@ -23,9 +23,9 @@ abstract class BaseEntity
      * @ORM\Column(type="integer")
      * @Groups({"acutalite_administration"})
      */
-    private $id;
+    private ?int $id;
 
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -34,7 +34,7 @@ abstract class BaseEntity
      * @param $name
      * @param $value
      */
-    public function updateData($name, $value): void
+    public function updateData(string $name, mixed $value): void
     {
         $field = 'set' . ucfirst($name);
         if (method_exists($this, $field)) {

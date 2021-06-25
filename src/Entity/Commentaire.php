@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Commentaire.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/03/2021 12:43
+ * @lastUpdate 05/06/2021 13:04
  */
 
 namespace App\Entity;
@@ -24,12 +24,12 @@ class Commentaire extends BaseEntity
     /**
      * @ORM\ManyToOne(targetEntity=Etudiant::class, inversedBy="commentaires")
      */
-    private $etudiant;
+    private Etudiant $etudiant;
 
     /**
      * @ORM\Column(type="text")
      */
-    private $texte;
+    private ?string $texte;
 
     public function __construct(Etudiant $etudiant)
     {
@@ -41,21 +41,21 @@ class Commentaire extends BaseEntity
         return $this->etudiant;
     }
 
-    public function setEtudiant(?Etudiant $etudiant): self
+    public function setEtudiant(Etudiant $etudiant): self
     {
         $this->etudiant = $etudiant;
 
         return $this;
     }
 
-    public function getJson()
+    public function getJson(): array
     {
         return [
             'id' => $this->getId(),
             'commentaire' => $this->getTexte(),
             'created' => $this->getCreated(),
             'updated' => $this->getUpdated(),
-            'etudiant' => $this->etudiant->getId()
+            'etudiant' => $this->etudiant->getId(),
         ];
     }
 

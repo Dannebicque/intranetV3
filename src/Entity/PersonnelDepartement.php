@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/PersonnelDepartement.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 25/06/2021 10:28
  */
 
 namespace App\Entity;
@@ -14,42 +14,33 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PersonnelDepartementRepository")
  */
-class PersonnelDepartement
+class PersonnelDepartement extends BaseEntity
 {
     /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
-
-    /**
-     * @var Personnel
      * @ORM\ManyToOne(targetEntity="App\Entity\Personnel", inversedBy="personnelDepartements", fetch="EAGER")
      * @ORM\OrderBy({"nom" = "asc", "prenom" = "asc"})
      */
-    private $personnel;
+    private Personnel $personnel;
 
     /**
-     * @var Departement
      * @ORM\ManyToOne(targetEntity="Departement", inversedBy="personnelDepartements", fetch="EAGER")
      */
-    private $departement;
+    private Departement $departement;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $annee;
+    private int $annee;
 
     /**
      * @ORM\Column(type="string", length=250)
      */
-    private $roles;
+    private ?string $roles;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $defaut = false;
+    private bool $defaut = false;
 
     /**
      * PersonnelDepartement constructor.
@@ -62,17 +53,12 @@ class PersonnelDepartement
         $this->annee = (int)date('Y');
     }
 
-    public function getId()
-    {
-        return $this->id;
-    }
-
     public function getPersonnel(): ?Personnel
     {
         return $this->personnel;
     }
 
-    public function setPersonnel(?Personnel $personnel): self
+    public function setPersonnel(Personnel $personnel): self
     {
         $this->personnel = $personnel;
 
@@ -84,7 +70,7 @@ class PersonnelDepartement
         return $this->departement;
     }
 
-    public function setDepartement(?Departement $departement): self
+    public function setDepartement(Departement $departement): self
     {
         $this->departement = $departement;
 
@@ -117,22 +103,14 @@ class PersonnelDepartement
         return $this;
     }
 
-    /**
-     * @return PersonnelDepartement
-     */
     public function clearRole(): self
     {
-        $this->roles = json_encode([]);
+        $this->roles = json_encode([], JSON_THROW_ON_ERROR);
 
         return $this;
     }
 
-    /**
-     * @param $role
-     *
-     * @return PersonnelDepartement
-     */
-    public function removeRole($role): self
+    public function removeRole(string $role): self
     {
         $roles = $this->getRoles();
         $key = array_search($role, $roles, true);

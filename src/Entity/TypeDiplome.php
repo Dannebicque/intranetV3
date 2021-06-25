@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/TypeDiplome.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 19:14
+ * @lastUpdate 06/06/2021 09:32
  */
 
 namespace App\Entity;
@@ -26,57 +26,53 @@ class TypeDiplome extends BaseEntity
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Diplome", mappedBy="typeDiplome")
      */
-    private $diplomes;
+    private Collection $diplomes;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"type_diplome_administration"})
      */
-    private $libelle;
+    private ?string $libelle;
 
     /**
-     * @var string
      *
      * @ORM\Column(type="string", length=20)
      * @Groups({"type_diplome_administration"})
      */
-    private $sigle;
+    private ?string $sigle;
 
     /**
-     * @var int
      *
      * @ORM\Column(type="integer")
      * @Groups({"type_diplome_administration"})
      */
-    private $nbSemestres = 2;
+    private int $nbSemestres = 2;
 
     /**
-     * @var int
      *
      * @ORM\Column(type="integer")
      * @Groups({"type_diplome_administration"})
      */
-    private $niveauEntree = 0;
+    private int $niveauEntree = 0;
 
     /**
-     * @var int
      *
      * @ORM\Column(type="integer")
      * @Groups({"type_diplome_administration"})
      */
-    private $niveauSortie = 2;
+    private int $niveauSortie = 3;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $apc = false;
+    private bool $apc = false;
 
     public function __construct()
     {
         $this->diplomes = new ArrayCollection();
     }
 
-    public function getLibelle()
+    public function getLibelle(): ?string
     {
         return $this->libelle;
     }
@@ -86,9 +82,6 @@ class TypeDiplome extends BaseEntity
         $this->libelle = $libelle;
     }
 
-    /**
-     * @return string
-     */
     public function getSigle(): ?string
     {
         return $this->sigle;

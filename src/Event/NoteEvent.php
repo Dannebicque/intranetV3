@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Event/NoteEvent.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:51
+ * @lastUpdate 05/06/2021 13:04
  */
 
 namespace App\Event;
@@ -17,8 +17,7 @@ class NoteEvent extends Event
     public const ADDED = 'note.added';
     public const UPDATED = 'note.updated';
 
-    /** @var Note */
-    protected $note;
+    protected Note $note;
 
     public function __construct(Note $note)
     {

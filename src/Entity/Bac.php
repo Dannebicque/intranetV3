@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Bac.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 05/06/2021 18:48
  */
 
 namespace App\Entity;
@@ -21,22 +21,33 @@ class Bac extends BaseEntity
 {
     use LifeCycleTrait;
 
+    public const SERIE_BAC_GENERAL = 'g';
+    public const SERIE_BAC_TECHNO = 't';
+    public const SERIE_BAC_PRO = 'p';
+    public const SERIE_BAC_ETRANGER = 'e';
+    public const SERIE_BAC_AUTRE = 'a';
+
     /**
      * @ORM\Column(type="string", length=30)
      * @Groups({"bac_administration"})
      */
-    private $libelle;
+    private ?string $libelle;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"bac_administration"})
      */
-    private $libelleLong;
+    private ?string $libelleLong;
 
     /**
      * @ORM\Column(type="string", length=10, nullable=true)
      */
-    private $code_apogee;
+    private ?string $code_apogee;
+
+    /**
+     * @ORM\Column(type="string", length=1, nullable=true)
+     */
+    private ?string $typeBac;
 
     public function getLibelle(): ?string
     {
@@ -70,6 +81,18 @@ class Bac extends BaseEntity
     public function setCodeApogee(?string $code_apogee): self
     {
         $this->code_apogee = $code_apogee;
+
+        return $this;
+    }
+
+    public function getTypeBac(): ?string
+    {
+        return $this->typeBac;
+    }
+
+    public function setTypeBac(?string $typeBac): self
+    {
+        $this->typeBac = $typeBac;
 
         return $this;
     }

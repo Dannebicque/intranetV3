@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Contact.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/03/2021 19:26
+ * @lastUpdate 05/06/2021 19:05
  */
 
 namespace App\Entity;
@@ -25,48 +25,48 @@ class Contact extends BaseEntity
      * @ORM\Column(type="string", length=50, nullable=true)
      * @Groups({"alternance_administration", "stage_entreprise_administration"})
      */
-    private $nom;
+    private ?string $nom;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
      * @Groups({"alternance_administration", "stage_entreprise_administration"})
      */
-    private $prenom;
+    private ?string $prenom;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"alternance_administration", "stage_entreprise_administration"})
      */
-    private $fonction;
+    private ?string $fonction;
 
     /**
      * @ORM\Column(type="string", length=25, nullable=true)
      * @Groups({"alternance_administration", "stage_entreprise_administration"})
      */
-    private $telephone;
+    private ?string $telephone;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"alternance_administration", "stage_entreprise_administration"})
      */
-    private $email;
+    private ?string $email;
 
     /**
      * @ORM\Column(type="string", length=25, nullable=true)
      * @Groups({"alternance_administration"})
      */
-    private $portable;
+    private ?string $portable;
 
     /**
      * @ORM\Column(type="string", length=3)
      * @Groups({"alternance_administration"})
      */
-    private $civilite;
+    private ?string $civilite;
 
     /**
      * @ORM\Column(type="string", length=25, nullable=true)
      */
-    private $fax;
+    private ?string $fax;
 
     public function __construct()
     {
@@ -176,6 +176,6 @@ class Contact extends BaseEntity
 
     public function getCiviliteLong(): ?string
     {
-        return 'M.' === $this->civilite ? 'Monsieur' : 'Madame';
+        return Constantes::CIVILITE_HOMME === $this->civilite ? 'Monsieur' : 'Madame';
     }
 }

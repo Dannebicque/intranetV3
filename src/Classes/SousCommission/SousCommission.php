@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/SousCommission/SousCommission.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/06/2021 11:08
+ * @lastUpdate 21/06/2021 18:28
  */
 
 namespace App\Classes\SousCommission;
@@ -102,7 +102,6 @@ class SousCommission
             $this->etudiantAbsences->setEtudiant($etudiant);
             $this->etudiantAbsences->getPenalitesAbsencesParMatiere($matieres, $anneeUniversitaire,
                 $etudiantSousCommission->moyenneMatieres);
-
             //calculer la moyenne des ues (avec et sans pénalité)
             $etudiantSousCommission->moyenneUes = $this->calculMoyenneUes($etudiantSousCommission->moyenneMatieres);
 

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Actualite.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 05/06/2021 15:51
  */
 
 namespace App\Entity;
@@ -26,20 +26,20 @@ class Actualite extends BaseEntity
      * @ORM\Column(type="string", length=150)
      * @Groups({"actualite_administration"})
      */
-    private $titre;
+    private ?string $titre;
 
     /**
      * @ORM\Column(type="text")
      * @Groups({"actualite_administration"})
      */
-    private $texte;
+    private ?string $texte;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Departement", inversedBy="actualites")
      * @MaxDepth(2)
      * @Groups({"actualite_administration"})
      */
-    private $departement;
+    private Departement $departement;
 
     /**
      * Actualite constructor.
@@ -78,7 +78,7 @@ class Actualite extends BaseEntity
         return $this->departement;
     }
 
-    public function setDepartement(?Departement $departement): self
+    public function setDepartement(Departement $departement): self
     {
         $this->departement = $departement;
 

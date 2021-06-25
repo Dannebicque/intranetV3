@@ -4,12 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/AlternanceType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/05/2021 16:35
+ * @lastUpdate 25/06/2021 10:28
  */
 
 namespace App\Form;
 
 use App\Entity\Alternance;
+use App\Entity\Departement;
 use App\Entity\Personnel;
 use App\Form\Type\DateRangeType;
 use App\Repository\PersonnelRepository;
@@ -24,7 +25,7 @@ use Umbrella\CoreBundle\Form\Entity2Type;
 
 class AlternanceType extends AbstractType
 {
-    private $departement;
+    private ?Departement $departement;
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -70,18 +71,19 @@ class AlternanceType extends AbstractType
                 $alternance = $event->getData();
                 $form = $event->getForm();
                 $dateRange = $form->get('dateRange')->getData();
-                $alternance->setDateDebut($dateRange['from_date']);
-                $alternance->setDateFin($dateRange['to_date']);
+//                dump($dateRange);
+//                $alternance->setDateDebut($dateRange['from_date']);
+//                $alternance->setDateFin($dateRange['to_date']);
             })
             ->addEventListener(FormEvents::PRE_SET_DATA, static function(FormEvent $event) {
                 $alternance = $event->getData();
                 $form = $event->getForm();
                 $form->add('dateRange', DateRangeType::class, [
-                    'label'     => 'dateRange',
-                    'mapped'    => false,
+                    'label' => 'dateRange',
+                    'mapped' => false,
                     'date_data' => [
                         'from' => $alternance->getDateDebut(),
-                        'to'   => $alternance->getDateFin(),
+                        'to' => $alternance->getDateFin(),
                     ],
                 ]);
             });
@@ -90,9 +92,9 @@ class AlternanceType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class'         => Alternance::class,
+            'data_class' => Alternance::class,
             'translation_domain' => 'form',
-            'departement'        => null,
+            'departement' => null,
         ]);
     }
 }

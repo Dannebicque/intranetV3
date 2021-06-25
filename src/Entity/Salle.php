@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Salle.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 06/06/2021 09:05
  */
 
 namespace App\Entity;
@@ -32,30 +32,30 @@ class Salle extends BaseEntity
      * @ORM\Column(type="string", length=30)
      * @Groups({"salle_administration"})
      */
-    private $libelle;
+    private ?string $libelle;
 
     /**
      * @ORM\Column(type="integer")
      * @Groups({"salle_administration"})
      */
-    private $capacite = 0;
+    private int $capacite = 0;
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"salle_administration"})
      */
-    private $type;
+    private ?string $type;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Site", inversedBy="salles")
      * @Groups({"salle_administration"})
      */
-    private $site;
+    private ?Site $site;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\SalleExamen", mappedBy="salle")
      */
-    private $salleExamens;
+    private Collection $salleExamens;
 
     public function __construct()
     {

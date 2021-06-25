@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Notification.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 06/06/2021 08:28
  */
 
 namespace App\Entity;
@@ -48,61 +48,56 @@ class Notification extends BaseEntity
         'decision.justificatif.refuse' => 'fas fa-ban',
     ];
     public const TABCOLOR = [
-        'carnet.added'                       => 'info',
-        'absence.removed'                    => 'success',
-        'absence.added'                      => 'danger',
-        'absence.justified'                  => 'success',
-        'decision.rattrapage.acceptee'       => 'success',
-        'decision.rattrapage.refusee'        => 'warning',
-        'chgt.etat_stage_autorise'           => 'info',
-        'chgt.etat_stage_depose'             => 'info',
-        'chgt.etat_stage_valide'             => 'info',
+        'carnet.added' => 'info',
+        'absence.removed' => 'success',
+        'absence.added' => 'danger',
+        'absence.justified' => 'success',
+        'decision.rattrapage.acceptee' => 'success',
+        'decision.rattrapage.refusee' => 'warning',
+        'chgt.etat_stage_autorise' => 'info',
+        'chgt.etat_stage_depose' => 'info',
+        'chgt.etat_stage_valide' => 'info',
         'chgt.etat_stage_convention_envoyee' => 'info',
-        'chgt.etat_stage_convention_recue'   => 'info',
-        'chgt.etat_stage_refuse'             => 'danger',
-        'chgt.etat_stage_incomplet'          => 'danger',
-        'chgt.emprunt.demande'               => 'info',
-        'chgt.emprunt.accepte'               => 'success',
-        'chgt.emprunt.refus'                 => 'danger',
-        'decision.justificatif.acceptee'     => 'success',
-        'decision.justificatif.refuse'       => 'danger',
+        'chgt.etat_stage_convention_recue' => 'info',
+        'chgt.etat_stage_refuse' => 'danger',
+        'chgt.etat_stage_incomplet' => 'danger',
+        'chgt.emprunt.demande' => 'info',
+        'chgt.emprunt.accepte' => 'success',
+        'chgt.emprunt.refus' => 'danger',
+        'decision.justificatif.acceptee' => 'success',
+        'decision.justificatif.refuse' => 'danger',
     ];
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Etudiant", inversedBy="notifications")
      */
-    private $etudiant;
+    private ?Etudiant $etudiant;
 
     /**
      * @ORM\Column(type="string", length=100)
      */
-    private $type;
+    private ?string $type;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $url;
+    private ?string $url;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $lu = false;
+    private bool $lu = false;
 
     /**
      * @ORM\Column(type="string", length=1)
      */
-    private $typeUser;
+    private ?string $typeUser;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Personnel", inversedBy="notifications")
      */
-    private $personnel;
+    private ?Personnel $personnel;
 
-    /**
-     * Absence constructor.
-     *
-     * @throws Exception
-     */
     public function __construct()
     {
         $this->setUuid(Uuid::uuid4());
@@ -185,13 +180,13 @@ class Notification extends BaseEntity
         return $this;
     }
 
-    public function icone()
+    public function icone(): string
     {
-        return self::TABICONE[$this->type];
+        return array_key_exists($this->type, self::TABICONE) ? self::TABICONE[$this->type] : 'err';
     }
 
-    public function color()
+    public function color(): string
     {
-        return self::TABCOLOR[$this->type];
+        return array_key_exists($this->type, self::TABCOLOR) ? self::TABCOLOR[$this->type] : 'err';
     }
 }

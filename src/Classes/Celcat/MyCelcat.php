@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Celcat/MyCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 06/06/2021 10:01
  */
 
 /*
@@ -17,6 +17,7 @@ use App\Entity\AnneeUniversitaire;
 use App\Entity\Calendrier;
 use App\Entity\CelcatEvent;
 use App\Entity\Semestre;
+use App\Utils\Tools;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
@@ -63,7 +64,7 @@ class MyCelcat
             $cal->setAnneeUniversitaire($anneeUniversitaire);
             $cal->setSemaineFormation(odbc_result($result, 'week_no'));
             $cal->setSemaineReelle((int)date('W', strtotime($date)));
-            $cal->setDateLundi(new DateTime($date));
+            $cal->setDateLundi(Tools::convertDateToObject($date));
             $this->entityManger->persist($cal);
         }
         $this->entityManger->flush();
@@ -117,8 +118,8 @@ class MyCelcat
                         $event->setAnneeUniversitaire($anneeUniversitaire);
                         $event->setEventId($eventId);
                         $event->setJour(odbc_result($result, 2));
-                        $event->setDebut(new DateTime($debut[1]));
-                        $event->setFin(new DateTime($fin[1]));
+                        $event->setDebut(Tools::convertDateHeureToObject($debut[1]));
+                        $event->setFin(Tools::convertDateHeureToObject($fin[1]));
                         $event->setSemaineFormation($semaine);
                         $event->setType($type);
                         $event->setCodeModule(odbc_result($result, 7));
@@ -130,7 +131,7 @@ class MyCelcat
                         $event->setLibGroupe(utf8_encode(odbc_result($result, 14)));
                         $event->setCodeSalle(odbc_result($result, 11));
                         $event->setLibSalle(utf8_encode(odbc_result($result, 12)));
-                        $event->setUpdateEvent(new DateTime(odbc_result($result, 15)));
+                        $event->setUpdateEvent(Tools::convertDateHeureToObject(odbc_result($result, 15)));
 
                         $this->entityManger->persist($event);
                     } //endif

@@ -2,10 +2,10 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/absences.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 23/05/2021 14:06
+// @lastUpdate 08/06/2021 08:18
 import {addCallout} from '../util'
 // import '../../vendor/datatables'
-import $ from 'jquery'
+// import $ from 'jquery'
 import {dataTableLangueFr} from '../lang/fr'
 
 let tabsences = []

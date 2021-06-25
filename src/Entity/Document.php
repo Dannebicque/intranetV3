@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Document.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 06/06/2021 12:26
  */
 
 namespace App\Entity;
@@ -18,7 +18,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -33,7 +32,7 @@ class Document extends BaseEntity
     use UuidTrait;
     use LifeCycleTrait;
 
-    const TYPE_DOCUMENT = [
+    public const TYPE_DOCUMENT = [
         'application/vnd.openxmlformats-officedocument.presentationml.presentation' => 'Prés. PPT',
         'application/pdf' => 'PDF',
         'application/vnd.ms-excel' => 'Tabl. Excel',
@@ -43,38 +42,28 @@ class Document extends BaseEntity
     ];
 
     /**
-     * @var float
-     *
      * @ORM\Column(type="float")
      */
-    private $taille;
+    private ?float $taille;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", length=100)
      */
-    private $typeFichier;
+    private ?string $typeFichier;
 
     /**
-     * @var TypeDocument
-     *
      * @ORM\ManyToOne(targetEntity="App\Entity\TypeDocument", inversedBy="documents")
      * @Groups({"document_administration"})
      */
-    private $typeDocument;
+    private ?TypeDocument $typeDocument;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="text", nullable=true)
      * @Groups({"document_administration"})
      */
-    private $description;
+    private ?string $description;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", length=100)
      * @Groups({"document_administration"})
      * @Assert\Length(
@@ -85,18 +74,14 @@ class Document extends BaseEntity
      *      allowEmptyString = false
      * )
      */
-    private $libelle;
+    private mixed $libelle;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", length=50)
      */
-    private $documentName;
+    private ?string $documentName = '';
 
     /**
-     * @var UploadedFile
-     *
      * @Vich\UploadableField(mapping="documentFile", fileNameProperty="documentName", size="taille",
      *                                               mimeType="typeFichier")
      */
@@ -106,14 +91,12 @@ class Document extends BaseEntity
      * @ORM\ManyToMany(targetEntity="App\Entity\Semestre", inversedBy="documents")
      * @Groups({"document_administration"})
      */
-    private $semestres;
+    private Collection $semestres;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\DocumentFavori", mappedBy="document")
      */
-    private $documentsFavoris;
-
-    private $updatedDate = null;
+    private Collection $documentsFavoris;
 
     /**
      * Document constructor.
@@ -207,12 +190,11 @@ class Document extends BaseEntity
     public function setDocumentFile(?File $documentFile = null): void
     {
         $this->documentFile = $documentFile;
-        $this->updatedDate = $this->updated;
 
         if (null !== $documentFile) {
             // It is required that at least one field changes if you are using doctrine
             // otherwise the event listeners won't be called and the file is lost
-            $this->updated = new \DateTime();
+            $this->setUpdatedValue();
         }
     }
 
@@ -260,7 +242,7 @@ class Document extends BaseEntity
         return $this;
     }
 
-    public function typeFichierTraduit()
+    public function typeFichierTraduit(): ?string
     {
         if (array_key_exists($this->typeFichier, self::TYPE_DOCUMENT)) {
             return self::TYPE_DOCUMENT[$this->typeFichier];
@@ -269,13 +251,8 @@ class Document extends BaseEntity
         return $this->typeFichier;
     }
 
-    public function tailleKo()
+    public function tailleKo(): float
     {
         return $this->taille / 1024;
-    }
-
-    public function getUpdatedDate()
-    {
-        return $this->updatedDate ?? $this->getUpdated();
     }
 }

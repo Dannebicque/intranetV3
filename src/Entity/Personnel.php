@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Personnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 25/06/2021 10:28
  */
 
 namespace App\Entity;
@@ -44,217 +44,213 @@ class Personnel extends Utilisateur implements UtilisateurInterface
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id;
 
     /**
      * @ORM\Column(type="string", length=15)
      */
-    protected $statut;
+    protected ?string $statut;
 
     /**
      * @ORM\Column(type="string", length=10,nullable=true)
      */
-    protected $posteInterne;
+    protected ?string $posteInterne;
 
     /**
      * @ORM\Column(type="string", length=20,nullable=true)
      */
-    protected $telBureau;
+    protected ?string $telBureau;
 
     /**
      * @ORM\Column(type="text",nullable=true)
      */
-    protected $responsabilites;
+    protected ?string $responsabilites;
 
     /**
      * @ORM\Column(type="text",nullable=true)
      */
-    protected $domaines;
+    protected ?string $domaines;
 
     /**
      * @ORM\Column(type="string", length=255,nullable=true)
      */
-    protected $entreprise;
+    protected ?string $entreprise;
 
     /**
      * @ORM\Column(type="string", length=20,nullable=true)
      */
-    protected $bureau1;
+    protected ?string $bureau1;
 
     /**
      * @ORM\Column(type="string", length=20,nullable=true)
      */
-    protected $bureau2;
+    protected ?string $bureau2;
 
     /**
      * @ORM\Column(type="integer",nullable=true)
      */
-    protected $numeroHarpege;
+    protected ?string $numeroHarpege;
 
     /**
      * @ORM\Column(type="string",length=10,nullable=true)
      */
-    protected $initiales;
+    protected ?string $initiales;
 
     /**
-     * @var string
      *
      * @ORM\Column(type="string", length=50, nullable=true)
      */
-    private $cvName;
+    private ?string $cvName = '';
 
     /**
-     * @var UploadedFile
      *
      * @Vich\UploadableField(mapping="cv", fileNameProperty="cvName")
      */
     private $cvFile;
 
     /**
-     * @var string
      *
      * @ORM\Column(type="string", length=50)
      */
-    private $photoName = 'noimage.png';
+    private ?string $photoName = 'noimage.png';
 
     /**
-     * @var UploadedFile
      *
      * @Vich\UploadableField(mapping="personnel", fileNameProperty="photoName")
-     * @
+     *
      */
     private $photoFile;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Hrs", mappedBy="personnel")
      */
-    private $hrs;
+    private Collection $hrs;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Previsionnel", mappedBy="personnel")
      */
-    private $previsionnels;
+    private Collection $previsionnels;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Evaluation", mappedBy="personnelAuteur")
      */
-    private $evaluationsAuteur;
+    private Collection $evaluationsAuteur;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Evaluation", mappedBy="personnelAutorise")
      */
-    private $evaluationsAutorise;
+    private Collection $evaluationsAutorise;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\ModificationNote", mappedBy="personnel")
      */
-    private $modificationNotes;
+    private Collection $modificationNotes;
 
     /**
      * @ORM\OneToMany(targetEntity="PersonnelDepartement", mappedBy="personnel")
      */
-    private $personnelDepartements;
+    private Collection $personnelDepartements;
 
     /**
      * @ORM\Column(type="float")
      */
-    private $nbHeuresService = 192;
+    private float $nbHeuresService = 192;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\CahierTexte", mappedBy="personnel")
      */
-    private $cahierTextes;
+    private Collection $cahierTextes;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Notification", mappedBy="personnel")
      * @ORM\OrderBy({"created" = "DESC"})
      */
-    private $notifications;
+    private Collection $notifications;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Message", mappedBy="expediteur")
      */
-    private $messages;
+    private Collection $messages;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\MessageDestinatairePersonnel", mappedBy="personnel")
      */
-    private $messageDestinatairePersonnels;
+    private Collection $messageDestinatairePersonnels;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\StagePeriode", mappedBy="responsables")
      */
-    private $stagePeriodes;
+    private Collection $stagePeriodes;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\StageEtudiant", mappedBy="tuteurUniversitaire")
      */
-    private $stageEtudiants;
+    private Collection $stageEtudiants;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Alternance", mappedBy="tuteurUniversitaire")
      */
-    private $alternances;
+    private Collection $alternances;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $deleted = false;
+    private bool $deleted = false;
 
     /**
      * @ORM\Column(type="string", length=20, nullable=true)
      */
-    private $couleur;
+    private ?string $couleur;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\EmpruntPersonnel", mappedBy="personnel")
      */
-    private $emprunts;
+    private Collection $emprunts;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Departement", mappedBy="respMateriel")
      */
-    private $departements;
+    private Collection $departements;
 
     /**
      * @ORM\OneToMany(targetEntity="QuestionnaireQuestion", mappedBy="auteur")
      */
-    private $quizzQuestions;
+    private Collection $quizzQuestions;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\ArticleLikePersonnel", mappedBy="personnel")
      */
-    private $articlesLike;
+    private Collection $articlesLike;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\DocumentFavoriPersonnel", mappedBy="personnel")
      */
-    private $documentsFavoris;
+    private Collection $documentsFavoris;
 
     /**
      * @ORM\ManyToMany(targetEntity=ProjetPeriode::class, mappedBy="responsables")
      */
-    private $projetPeriodes;
+    private Collection $projetPeriodes;
 
     /**
      * @ORM\OneToMany(targetEntity=MaterielCommun::class, mappedBy="contact")
      */
-    private $materielCommuns;
+    private Collection $materielCommuns;
 
     /**
      * @ORM\OneToMany(targetEntity=MaterielCommunPret::class, mappedBy="personnel")
      */
-    private $materielCommunPrets;
+    private Collection $materielCommunPrets;
 
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
      */
-    private $signatureElectronique;
+    private ?string $signatureElectronique;
 
     /**
      * @ORM\OneToMany(targetEntity=CovidAttestationPersonnel::class, mappedBy="personnel")
      */
-    private $covidAttestationPersonnels;
+    private Collection $covidAttestationPersonnels;
 
     /**
      * Personnel constructor.
@@ -407,7 +403,7 @@ class Personnel extends Utilisateur implements UtilisateurInterface
      * must be able to accept an instance of 'File' as the bundle will inject one here
      * during Doctrine hydration.
      */
-    public function setCvFile(?File $cv = null): void
+    public function setCvFile(?UploadedFile $cv = null): void
     {
         $this->cvFile = $cv;
 

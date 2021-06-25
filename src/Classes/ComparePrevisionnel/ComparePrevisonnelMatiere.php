@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/ComparePrevisionnel/ComparePrevisonnelMatiere.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/05/2021 08:58
+ * @lastUpdate 06/06/2021 11:29
  */
 
 namespace App\Classes\ComparePrevisionnel;
@@ -79,7 +79,7 @@ class ComparePrevisonnelMatiere extends ComparePrevisionnel
         }
 
         foreach ($planning as $pl) {
-            if (null !== $pl->getMatiere() &&
+            if (0 !== $pl->getIdMatiere() &&
                 null !== $pl->getIntervenant() &&
                 \array_key_exists($ligne, $t)) {
                 $ligne = $pl->getIdMatiere();

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Events.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:10
+ * @lastUpdate 06/06/2021 09:49
  */
 
 namespace App;
@@ -14,9 +14,6 @@ namespace App;
  */
 class Events
 {
-    /* ABSENCES */
-    public const JUSTIFIE_ABSENCES = 'justifie.absences';
-
     public const REDIRECT_TO_LOGIN = 'redirect.to.login';
     public const CHOISIR_DEPARTEMENT_DEFAUT = 'choisir.departement.par.defaut';
 }

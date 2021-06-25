@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Event/QualiteRelanceEvent.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/04/2021 10:04
+ * @lastUpdate 06/06/2021 09:46
  */
 
 namespace App\Event;
@@ -27,15 +27,13 @@ class QualiteRelanceEvent extends Event
         $this->questionnaireQualite = $questionnaireQualite;
     }
 
-    /**
-     * @return \App\Entity\Etudiant
-     */
+
     public function getEtudiant(): ?Etudiant
     {
         return $this->etudiant;
     }
 
-    public function setEtudiant($etudiant)
+    public function setEtudiant(Etudiant $etudiant): void
     {
         $this->etudiant = $etudiant;
     }

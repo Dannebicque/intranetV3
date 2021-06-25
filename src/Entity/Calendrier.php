@@ -4,14 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Calendrier.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/05/2021 17:55
+ * @lastUpdate 05/06/2021 19:05
  */
 
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
 use Carbon\CarbonImmutable;
-use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -29,29 +28,29 @@ class Calendrier extends BaseEntity
      * @ORM\Column(type="integer")
      * @Groups({"celcat_administration"})
      */
-    private $semaineFormation;
+    private ?int $semaineFormation;
 
     /**
      * @ORM\Column(type="integer")
      * @Groups({"celcat_administration"})
      */
-    private $semaineReelle;
+    private ?int $semaineReelle;
 
     /**
      * @ORM\Column(type="datetime_immutable")
      * @Groups({"celcat_administration"})
      */
-    private $dateLundi;
+    private ?CarbonImmutable $dateLundi;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\AnneeUniversitaire", inversedBy="calendriers")
      */
-    private $anneeUniversitaire;
+    private ?AnneeUniversitaire $anneeUniversitaire;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\CreneauBloque", mappedBy="semaine")
      */
-    private $creneauBloques;
+    private Collection $creneauBloques;
 
     public function __construct()
     {
@@ -87,7 +86,7 @@ class Calendrier extends BaseEntity
         return $this->dateLundi;
     }
 
-    public function setDateLundi(DateTimeInterface $dateLundi): self
+    public function setDateLundi(CarbonImmutable $dateLundi): self
     {
         $this->dateLundi = $dateLundi;
 

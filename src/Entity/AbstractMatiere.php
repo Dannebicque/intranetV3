@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/AbstractMatiere.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/05/2021 10:45
+ * @lastUpdate 25/06/2021 10:28
  */
 
 namespace App\Entity;
 
+use App\Utils\Tools;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -97,16 +98,16 @@ abstract class AbstractMatiere extends BaseEntity
     /**
      * @ORM\Column(type="string", length=25, nullable=true)
      */
-    private $libelleCourt;
+    private ?string $libelleCourt;
 
     public function getCmPpn(): float
     {
         return $this->cmPpn;
     }
 
-    public function setCmPpn(float $cmPpn): void
+    public function setCmPpn(mixed $cmPpn): void
     {
-        $this->cmPpn = $cmPpn;
+        $this->cmPpn = Tools::convertToFloat($cmPpn);
     }
 
     public function getTdPpn(): float
@@ -114,9 +115,9 @@ abstract class AbstractMatiere extends BaseEntity
         return $this->tdPpn;
     }
 
-    public function setTdPpn(float $tdPpn): void
+    public function setTdPpn(mixed $tdPpn): void
     {
-        $this->tdPpn = $tdPpn;
+        $this->tdPpn = Tools::convertToFloat($tdPpn);
     }
 
     public function getTpPpn(): float
@@ -124,9 +125,9 @@ abstract class AbstractMatiere extends BaseEntity
         return $this->tpPpn;
     }
 
-    public function setTpPpn(float $tpPpn): void
+    public function setTpPpn(mixed $tpPpn): void
     {
-        $this->tpPpn = $tpPpn;
+        $this->tpPpn = Tools::convertToFloat($tpPpn);
     }
 
     public function getCmFormation(): float
@@ -134,9 +135,9 @@ abstract class AbstractMatiere extends BaseEntity
         return $this->cmFormation;
     }
 
-    public function setCmFormation(float $cmFormation): void
+    public function setCmFormation(mixed $cmFormation): void
     {
-        $this->cmFormation = $cmFormation;
+        $this->cmFormation = Tools::convertToFloat($cmFormation);
     }
 
     public function getTdFormation(): float
@@ -144,9 +145,9 @@ abstract class AbstractMatiere extends BaseEntity
         return $this->tdFormation;
     }
 
-    public function setTdFormation(float $tdFormation): void
+    public function setTdFormation(mixed $tdFormation): void
     {
-        $this->tdFormation = $tdFormation;
+        $this->tdFormation = Tools::convertToFloat($tdFormation);
     }
 
     public function getTpFormation(): float
@@ -154,9 +155,9 @@ abstract class AbstractMatiere extends BaseEntity
         return $this->tpFormation;
     }
 
-    public function setTpFormation(float $tpFormation): void
+    public function setTpFormation(mixed $tpFormation): void
     {
-        $this->tpFormation = $tpFormation;
+        $this->tpFormation = Tools::convertToFloat($tpFormation);
     }
 
     /**
@@ -182,7 +183,6 @@ abstract class AbstractMatiere extends BaseEntity
         $this->nbNotes = $nbNotes;
     }
 
-
     public function isSuspendu(): bool
     {
         return $this->suspendu;
@@ -200,9 +200,6 @@ abstract class AbstractMatiere extends BaseEntity
         return $this->getCodeMatiere() . ' | ' . $this->getLibelle();
     }
 
-    /**
-     * @return string
-     */
     public function getCodeMatiere(): ?string
     {
         return $this->codeMatiere;

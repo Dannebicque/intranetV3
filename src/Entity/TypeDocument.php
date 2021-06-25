@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/TypeDocument.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 06/06/2021 09:34
  */
 
 namespace App\Entity;
@@ -24,22 +24,21 @@ class TypeDocument extends BaseEntity
     use LifeCycleTrait;
 
     /**
-     * @var string
      *
      * @ORM\Column(type="string", length=75)
      * @Groups({"typedocument_administration","document_administration"})
      */
-    private $libelle;
+    private ?string $libelle;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Departement", inversedBy="typeDocuments")
      */
-    private $departement;
+    private ?Departement $departement;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Document", mappedBy="typeDocument")
      */
-    private $documents;
+    private Collection $documents;
 
     /**
      * TypeDocument constructor.
@@ -50,9 +49,6 @@ class TypeDocument extends BaseEntity
         $this->documents = new ArrayCollection();
     }
 
-    /**
-     * @return string
-     */
     public function getLibelle(): ?string
     {
         return $this->libelle;

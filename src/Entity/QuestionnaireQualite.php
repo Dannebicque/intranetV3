@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/QuestionnaireQualite.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2021 08:46
+ * @lastUpdate 06/06/2021 08:52
  */
 
 namespace App\Entity;
@@ -25,13 +25,13 @@ class QuestionnaireQualite extends Questionnaire
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Semestre", inversedBy="qualiteQuestionnaires")
      */
-    private $semestre;
+    private Semestre $semestre;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\QuestionnaireQuestionnaireSection", mappedBy="questionnaireQualite",
      *                                                                             cascade={"persist", "remove"})
      */
-    private $sections;
+    private Collection $sections;
 
     public function __construct(Semestre $semestre)
     {
@@ -45,7 +45,7 @@ class QuestionnaireQualite extends Questionnaire
         return $this->semestre;
     }
 
-    public function setSemestre(?Semestre $semestre): self
+    public function setSemestre(Semestre $semestre): self
     {
         $this->semestre = $semestre;
 

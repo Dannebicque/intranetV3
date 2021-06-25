@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ModificationNote.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 06/06/2021 08:26
  */
 
 namespace App\Entity;
@@ -23,22 +23,22 @@ class ModificationNote extends BaseEntity
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Note", inversedBy="modificationNotes")
      */
-    private $note;
+    private ?Note $note;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Personnel", inversedBy="modificationNotes")
      */
-    private $personnel;
+    private ?Personnel $personnel;
 
     /**
      * @ORM\Column(type="float")
      */
-    private $ancienneNote;
+    private ?float $ancienneNote;
 
     /**
      * @ORM\Column(type="float")
      */
-    private $nouvelleNote;
+    private ?float $nouvelleNote;
 
     public function getNote(): ?Note
     {

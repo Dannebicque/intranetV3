@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/AlternanceFicheSuiviController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 08/06/2021 14:53
  */
 
 namespace App\Controller\administration;
@@ -16,6 +16,7 @@ use App\Entity\AlternanceFicheSuivi;
 use App\Entity\Constantes;
 use App\Form\AlternanceFicheSuiviType;
 use Exception;
+use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -60,8 +61,8 @@ class AlternanceFicheSuiviController extends BaseController
     public function print(
         MyAlternanceFicheSuivi $myAlternanceFicheSuivi,
         AlternanceFicheSuivi $alternanceFicheSuivi
-    ): void {
-        $myAlternanceFicheSuivi->print($alternanceFicheSuivi);
+    ): PdfResponse {
+        return $myAlternanceFicheSuivi->print($alternanceFicheSuivi);
     }
 
     /**

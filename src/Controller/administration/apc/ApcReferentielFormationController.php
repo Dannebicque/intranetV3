@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcReferentielFormationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 27/05/2021 20:54
+ * @lastUpdate 06/06/2021 12:39
  */
 
 namespace App\Controller\administration\apc;
@@ -42,22 +42,6 @@ class ApcReferentielFormationController extends BaseController
         return $this->render('apc/referentiel-formation/grille.html.twig',
             [
                 'diplome' => $diplome,
-            ]);
-    }
-
-    public function grilleSemestre(
-        ApcNiveauRepository $apcNiveauRepository,
-        ApcSaeRepository $apcSaeRepository,
-        ApcRessourceRepository $apcRessourceRepository,
-        Semestre $semestre
-    ) {
-        //todo: pour le moment pas utilisé...
-        return $this->render('apc/referentiel-formation/_grilleSemestre.html.twig',
-            [
-                'semestre' => $semestre,
-                'niveaux' => $apcNiveauRepository->findBySemestre($semestre),
-                'saes' => $apcSaeRepository->findBySemestre($semestre),
-                'ressources' => $apcRessourceRepository->findBySemestre($semestre),
             ]);
     }
 

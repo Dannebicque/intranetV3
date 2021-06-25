@@ -4,16 +4,18 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Diplome.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/06/2021 11:08
+ * @lastUpdate 25/06/2021 10:28
  */
 
 namespace App\Entity;
 
 use App\Entity\Traits\ApogeeTrait;
 use App\Entity\Traits\LifeCycleTrait;
+use function chr;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use function ord;
 use Serializable;
 
 /**
@@ -66,31 +68,26 @@ class Diplome extends BaseEntity implements Serializable
     private string $optMethodeCalcul = Constantes::METHODE_CALCUL_MOY_MODULE;
 
     /**
-     *
      * @ORM\Column(type="boolean")
      */
     private bool $optAnonymat = false;
 
     /**
-     *
      * @ORM\Column( type="boolean")
      */
     private bool $optCommentairesReleve = false;
 
     /**
-     *
      * @ORM\Column(type="boolean")
      */
     private bool $optEspacePersoVisible = true;
 
     /**
-     *
      * @ORM\Column(type="integer")
      */
     private int $volumeHoraire = 0;
 
     /**
-     *
      * @ORM\Column(type="integer")
      */
     private int $codeCelcatDepartement = 0;
@@ -98,12 +95,12 @@ class Diplome extends BaseEntity implements Serializable
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Hrs", mappedBy="diplome")
      */
-    private $hrs;
+    private Collection $hrs;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Ppn", mappedBy="diplome")
      */
-    private $ppns;
+    private Collection $ppns;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Departement", inversedBy="diplomes")
@@ -114,7 +111,7 @@ class Diplome extends BaseEntity implements Serializable
      * @ORM\OneToMany(targetEntity="App\Entity\Annee", mappedBy="diplome")
      * @ORM\OrderBy({"libelle"="ASC"})
      */
-    private $annees;
+    private Collection $annees;
 
     /**
      * @ORM\Column(type="string", length=40)
@@ -129,7 +126,7 @@ class Diplome extends BaseEntity implements Serializable
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\AnneeUniversitaire", inversedBy="diplomes")
      */
-    private $anneeUniversitaire;
+    private ?AnneeUniversitaire $anneeUniversitaire;
 
     /**
      * @ORM\Column(type="integer")
@@ -149,22 +146,22 @@ class Diplome extends BaseEntity implements Serializable
     /**
      * @ORM\OneToMany(targetEntity=ApcCompetence::class, mappedBy="diplome")
      */
-    private $apcComptences;
+    private Collection $apcComptences;
 
     /**
      * @ORM\OneToMany(targetEntity=CovidAttestationPersonnel::class, mappedBy="diplome")
      */
-    private $covidAttestationPersonnels;
+    private Collection $covidAttestationPersonnels;
 
     /**
      * @ORM\OneToMany(targetEntity=CovidAttestationEtudiant::class, mappedBy="diplome")
      */
-    private $covidAttestationEtudiants;
+    private Collection $covidAttestationEtudiants;
 
     /**
      * @ORM\OneToMany(targetEntity=ApcParcours::class, mappedBy="diplome")
      */
-    private $apcParcours;
+    private Collection $apcParcours;
 
     public function __construct(Departement $departement)
     {
@@ -196,7 +193,7 @@ class Diplome extends BaseEntity implements Serializable
         return $this->sigle;
     }
 
-    public function getLibelle()
+    public function getLibelle(): ?string
     {
         return $this->libelle;
     }
@@ -330,10 +327,7 @@ class Diplome extends BaseEntity implements Serializable
         return $this->codeCelcatDepartement;
     }
 
-    /**
-     * @param int $codeCelcatDepartement
-     */
-    public function setCodeCelcatDepartement($codeCelcatDepartement): void
+    public function setCodeCelcatDepartement(int $codeCelcatDepartement = 0): void
     {
         $this->codeCelcatDepartement = $codeCelcatDepartement;
     }
@@ -402,7 +396,7 @@ class Diplome extends BaseEntity implements Serializable
 
     public function update($name, $value): bool
     {
-        $name[0] = \chr(\ord($name[0]) - 32);
+        $name[0] = chr(ord($name[0]) - 32);
         $method = 'set' . $name;
         if (method_exists($this, $method)) {
             $this->$method($value);
@@ -681,7 +675,7 @@ class Diplome extends BaseEntity implements Serializable
         ]);
     }
 
-    public function unserialize($serialized)
+    public function unserialize($serialized): ?bool
     {
         return null;
     }
@@ -706,11 +700,9 @@ class Diplome extends BaseEntity implements Serializable
 
     public function removeApcParcour(ApcParcours $apcParcour): self
     {
-        if ($this->apcParcours->removeElement($apcParcour)) {
-            // set the owning side to null (unless already changed)
-            if ($apcParcour->getDiplome() === $this) {
-                $apcParcour->setDiplome(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->apcParcours->removeElement($apcParcour) && $apcParcour->getDiplome() === $this) {
+            $apcParcour->setDiplome(null);
         }
 
         return $this;

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Event/EvaluationEvent.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:51
+ * @lastUpdate 06/06/2021 09:46
  */
 
 namespace App\Event;
@@ -15,9 +15,7 @@ use Symfony\Contracts\EventDispatcher\Event;
 class EvaluationEvent extends Event
 {
     public const ADDED = 'evaluation.added';
-
-    /** @var Evaluation */
-    protected $evaluation;
+    protected Evaluation $evaluation;
 
     public function __construct(Evaluation $evaluation)
     {

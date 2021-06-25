@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EvaluationInitialisationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/06/2021 15:01
+ * @lastUpdate 06/06/2021 07:59
  */
 
 namespace App\Controller\administration;
@@ -64,7 +64,7 @@ class EvaluationInitialisationController extends BaseController
                         } else {
                             $pers = $this->getConnectedUser();
                         }
-                        $eval = new Evaluation($pers, $matiere, $this->dataUserSession->getDepartement());
+                        $eval = new Evaluation($pers, $matiere);
                         $eval->setCoefficient($request->request->get('coefficient_' . $matiere->getTypeIdMatiere() . '_' . $i));
                         $eval->setLibelle($request->request->get('commentaire_' . $matiere->getTypeIdMatiere() . '_' . $i));
                         $eval->setTypegroupe($tGroupes[$request->request->get('typeGroupe_' . $matiere->getTypeIdMatiere() . '_' . $i)]);

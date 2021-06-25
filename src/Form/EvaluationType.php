@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/EvaluationType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/05/2021 14:21
+ * @lastUpdate 25/06/2021 10:28
  */
 
 namespace App\Form;
@@ -15,6 +15,8 @@ use App\Entity\Evaluation;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
+use App\Form\Type\CarbonDateTimePickerType;
+use App\Form\Type\FloatType;
 use App\Form\Type\YesNoType;
 use App\Repository\PersonnelRepository;
 use App\Repository\TypeGroupeRepository;
@@ -25,7 +27,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Umbrella\CoreBundle\Form\DatepickerType;
+use Symfony\Component\Validator\Constraints\Positive;
 
 /**
  * Class EvaluationType.
@@ -71,13 +73,18 @@ class EvaluationType extends AbstractType
                     'required' => false,
                     'disabled' => $autorise,
                 ])
-            ->add('dateEvaluation', DatepickerType::class, [
+            ->add('dateEvaluation', CarbonDateTimePickerType::class, [
                 'label' => 'date_evaluation',
                 'disabled' => $autorise,
                 'attr' => ['data-options' => ['locale' => $locale]],
             ])
-            ->add('coefficient', TextType::class,
-                ['label' => 'coefficient', 'help' => 'help.coefficient', 'disabled' => $autorise])
+            ->add('coefficient', FloatType::class,
+                [
+                    'label' => 'coefficient',
+                    'help' => 'help.coefficient',
+                    'disabled' => $autorise,
+                    'constraints' => new Positive()
+                ])
             ->add('commentaire', TextType::class,
                 ['label' => 'commentaire', 'help' => 'help.commentaire_evaluation', 'disabled' => $autorise])
             ->add('visible', YesNoType::class,
@@ -89,6 +96,7 @@ class EvaluationType extends AbstractType
                 'data' => $options['data']->getTypeIdMatiere(),
                 'expanded' => false,
                 'multiple' => false,
+                'mapped' => false,
                 'disabled' => !($matiereDisabled && $autorise),
             ])
             ->add('typeGroupe', EntityType::class, [

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Departement.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/06/2021 12:02
+ * @lastUpdate 25/06/2021 10:28
  */
 
 namespace App\Entity;
@@ -17,10 +17,11 @@ use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use function chr;
+use function ord;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\DepartementRepository")
@@ -39,176 +40,145 @@ class Departement extends BaseEntity
     private ?string $libelle;
 
     /**
-     * @var Ufr
      * @ORM\ManyToOne(targetEntity="App\Entity\Ufr", inversedBy="departements")
      */
-    private $ufr;
+    private ?Ufr $ufr;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", length=50)
      */
-    private $logoName;
+    private ?string $logoName = '';
 
     /**
-     * @var UploadedFile
-     *
      * @Vich\UploadableField(mapping="logo", fileNameProperty="logoName")
      */
     private $logoFile;
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=16, nullable=true)
-     */
-    private $telContact;
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="fax", type="string", length=16, nullable=true)
-     */
-    private $fax;
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="couleur", type="string", length=16, nullable=true)
-     */
-    private $couleur;
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $siteWeb;
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $description;
-    /**
-     * @var bool
-     *
-     * @ORM\Column(type="boolean")
-     */
-    private $optUpdateCelcat = false;
-    /**
-     * @var bool
-     *
-     * @ORM\Column(type="boolean")
-     */
-    private $optAgence = false;
-    /**
-     * @var bool
-     *
-     * @ORM\Column(type="boolean")
-     */
-    private $optMateriel = false;
-    /**
-     * @var bool
-     *
-     * @ORM\Column(type="boolean")
-     */
-    private $optEdt = true;
-    /**
-     * @var bool
-     *
-     * @ORM\Column(type="boolean")
-     */
-    private $optStage = true;
-    /**
-     * @var bool
-     *
-     * @ORM\Column(type="boolean")
-     */
-    private $optSynthese = true;
-    /**
-     * @var bool
-     *
-     * @ORM\Column(type="boolean")
-     */
-    private $optMessagerie = true;
 
     /**
-     * @var Personnel
+     * @ORM\Column(type="string", length=16, nullable=true)
+     */
+    private ?string $telContact;
+    /**
+     * @ORM\Column(name="fax", type="string", length=16, nullable=true)
+     */
+    private ?string $fax;
+    /**
+     * @ORM\Column(name="couleur", type="string", length=16, nullable=true)
+     */
+    private ?string $couleur;
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private ?string $siteWeb;
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private ?string $description;
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private bool $optUpdateCelcat = false;
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private bool $optAgence = false;
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private bool $optMateriel = false;
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private bool $optEdt = true;
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private bool $optStage = true;
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private bool $optSynthese = true;
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private bool $optMessagerie = true;
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Personnel")
      */
-    private $respri;
+    private ?Personnel $respri;
     /**
-     * @var int
-     *
      * @ORM\Column(type="integer")
      */
-    private $optAnneePrevisionnel;
+    private int $optAnneePrevisionnel;
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\TypeDocument", mappedBy="departement")
      * @MaxDepth(1)
      */
-    private $typeDocuments;
+    private Collection $typeDocuments;
     /**
      * @ORM\OneToMany(targetEntity="PersonnelDepartement", mappedBy="departement")
      */
-    private $personnelDepartements;
+    private Collection $personnelDepartements;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Actualite", mappedBy="departement")
      */
-    private $actualites;
+    private Collection $actualites;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Diplome", mappedBy="departement")
      * @ORM\OrderBy({"libelle"="ASC"})
      */
-    private $diplomes;
+    private Collection $diplomes;
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\SalleExamen", mappedBy="departement")
      */
-    private $salleExamens;
+    private Collection $salleExamens;
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Hrs", mappedBy="departement")
      */
-    private $hrs;
+    private Collection $hrs;
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\TypeMateriel", mappedBy="departement")
      */
-    private $typeMateriels;
+    private Collection $typeMateriels;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $actif = true;
+    private bool $actif = true;
     /**
      * @ORM\Column(type="boolean")
      */
-    private $preparationAnnee = false;
+    private bool $preparationAnnee = false;
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\AnneeUniversitaire", inversedBy="departements")
      */
-    private $anneeUniversitairePrepare;
+    private ?AnneeUniversitaire $anneeUniversitairePrepare;
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\CreneauCours", mappedBy="departement")
      */
-    private $creneauCours;
+    private Collection $creneauCours;
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\ArticleCategorie", mappedBy="departement")
      */
-    private $articleCategories;
+    private Collection $articleCategories;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Emprunt", mappedBy="departement")
      */
-    private $emprunts;
+    private Collection $emprunts;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Personnel", inversedBy="departements")
      */
-    private $respMateriel;
+    private ?Personnel $respMateriel;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Etudiant", mappedBy="departement")
      */
-    private $etudiants;
+    private Collection $etudiants;
 
     /**
      * Departement constructor.
@@ -222,12 +192,10 @@ class Departement extends BaseEntity
         $this->typeDocuments = new ArrayCollection();
         $this->personnelDepartements = new ArrayCollection();
         $this->actualites = new ArrayCollection();
-        $this->trelloTaches = new ArrayCollection();
         $this->diplomes = new ArrayCollection();
         $this->salleExamens = new ArrayCollection();
         $this->hrs = new ArrayCollection();
         $this->typeMateriels = new ArrayCollection();
-        $this->materielPrets = new ArrayCollection();
         $this->creneauCours = new ArrayCollection();
         $this->articleCategories = new ArrayCollection();
         $this->emprunts = new ArrayCollection();
@@ -265,9 +233,6 @@ class Departement extends BaseEntity
         $this->libelle = $libelle;
     }
 
-    /**
-     * @return string
-     */
     public function getTelContact(): ?string
     {
         return $this->telContact;
@@ -278,9 +243,6 @@ class Departement extends BaseEntity
         $this->telContact = $telContact;
     }
 
-    /**
-     * @return string
-     */
     public function getFax(): ?string
     {
         return $this->fax;
@@ -291,9 +253,6 @@ class Departement extends BaseEntity
         $this->fax = $fax;
     }
 
-    /**
-     * @return string
-     */
     public function getCouleur(): ?string
     {
         return $this->couleur;
@@ -304,9 +263,6 @@ class Departement extends BaseEntity
         $this->couleur = $couleur;
     }
 
-    /**
-     * @return string
-     */
     public function getSiteWeb(): ?string
     {
         return $this->siteWeb;
@@ -317,9 +273,6 @@ class Departement extends BaseEntity
         $this->siteWeb = $siteWeb;
     }
 
-    /**
-     * @return string
-     */
     public function getDescription(): ?string
     {
         return $this->description;
@@ -400,17 +353,11 @@ class Departement extends BaseEntity
         $this->optMessagerie = $optMessagerie;
     }
 
-    /**
-     * @return Personnel
-     */
     public function getRespri(): ?Personnel
     {
         return $this->respri;
     }
 
-    /**
-     * @param Personnel|null $respri
-     */
     public function setRespri($respri): void
     {
         $this->respri = $respri;
@@ -476,9 +423,6 @@ class Departement extends BaseEntity
         }
     }
 
-    /**
-     * @return string
-     */
     public function getLogoName(): ?string
     {
         return $this->logoName;
@@ -551,13 +495,9 @@ class Departement extends BaseEntity
         return $this;
     }
 
-    /**
-     * @param $name
-     * @param $value
-     */
-    public function update($name, $value): void
+    public function update(string $name, mixed $value): void
     {
-        $name[0] = \chr(\ord($name[0]) - 32);
+        $name[0] = chr(ord($name[0]) - 32);
         $method = 'set' . $name;
         if (method_exists($this, $method)) {
             $this->$method($value);
@@ -902,7 +842,7 @@ class Departement extends BaseEntity
         return $this;
     }
 
-    public function libelleInitiales()
+    public function libelleInitiales(): array|string|null
     {
         return str_replace(' ', '<br>', $this->libelle);
     }

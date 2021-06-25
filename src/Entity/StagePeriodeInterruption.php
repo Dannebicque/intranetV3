@@ -4,12 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/StagePeriodeInterruption.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 06/06/2021 09:28
  */
 
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
+use Carbon\CarbonInterface;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -24,22 +25,22 @@ class StagePeriodeInterruption extends BaseEntity
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\StagePeriode", inversedBy="stagePeriodeInterruptions")
      */
-    private $stagePeriode;
+    private ?StagePeriode $stagePeriode;
 
     /**
      * @ORM\Column(type="date")
      */
-    private $dateDebut;
+    private ?CarbonInterface $dateDebut;
 
     /**
      * @ORM\Column(type="date")
      */
-    private $dateFin;
+    private ?CarbonInterface $dateFin;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $motif;
+    private ?string $motif;
 
     public function getStagePeriode(): ?StagePeriode
     {
@@ -53,24 +54,24 @@ class StagePeriodeInterruption extends BaseEntity
         return $this;
     }
 
-    public function getDateDebut(): ?DateTimeInterface
+    public function getDateDebut(): ?CarbonInterface
     {
         return $this->dateDebut;
     }
 
-    public function setDateDebut(DateTimeInterface $dateDebut): self
+    public function setDateDebut(CarbonInterface $dateDebut): self
     {
         $this->dateDebut = $dateDebut;
 
         return $this;
     }
 
-    public function getDateFin(): ?DateTimeInterface
+    public function getDateFin(): ?CarbonInterface
     {
         return $this->dateFin;
     }
 
-    public function setDateFin(DateTimeInterface $dateFin): self
+    public function setDateFin(CarbonInterface $dateFin): self
     {
         $this->dateFin = $dateFin;
 

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantAbsences.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/05/2021 16:35
+ * @lastUpdate 21/06/2021 18:30
  */
 
 namespace App\Classes\Etudiant;
@@ -108,8 +108,8 @@ class EtudiantAbsences
 
         /** @var Absence $absence */
         foreach ($this->absences as $absence) {
-            if (false === $absence->getJustifie() && null !== $absence->getMatiere()) {
-                $idMatiere = $absence->getMatiere()->getId();
+            if (false === $absence->getJustifie() && 0 !== $absence->getIdMatiere()) {
+                $idMatiere = $absence->getTypeIdMatiere();
                 if (\array_key_exists($idMatiere, $tabMatiere)) {
                     ++$tabMatiere[$idMatiere]->absences;
                 }

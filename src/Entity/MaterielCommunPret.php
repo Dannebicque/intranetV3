@@ -4,12 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/MaterielCommunPret.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:49
+ * @lastUpdate 06/06/2021 08:12
  */
 
 namespace App\Entity;
 
 use App\Repository\MaterielCommunPretRepository;
+use Carbon\CarbonInterface;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -21,29 +22,29 @@ class MaterielCommunPret extends BaseEntity
     /**
      * @ORM\Column(type="datetime")
      */
-    private $dateEmprunt;
+    private ?CarbonInterface $dateEmprunt;
 
     /**
      * @ORM\ManyToOne(targetEntity=Personnel::class, inversedBy="materielCommunPrets")
      */
-    private $personnel;
+    private ?Personnel $personnel;
 
     /**
      * @ORM\ManyToOne(targetEntity=MaterielCommun::class, inversedBy="materielCommunPrets")
      */
-    private $materielCommun;
+    private ?MaterielCommun $materielCommun;
 
     /**
      * @ORM\Column(type="string", length=100)
      */
-    private $creneau;
+    private ?string $creneau;
 
-    public function getDateEmprunt(): ?DateTimeInterface
+    public function getDateEmprunt(): ?CarbonInterface
     {
         return $this->dateEmprunt;
     }
 
-    public function setDateEmprunt(DateTimeInterface $dateEmprunt): self
+    public function setDateEmprunt(CarbonInterface $dateEmprunt): self
     {
         $this->dateEmprunt = $dateEmprunt;
 

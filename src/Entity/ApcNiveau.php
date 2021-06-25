@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcNiveau.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2021 19:17
+ * @lastUpdate 25/06/2021 10:28
  */
 
 namespace App\Entity;
@@ -46,12 +46,12 @@ class ApcNiveau extends BaseEntity
     /**
      * @ORM\OneToMany(targetEntity=ApcApprentissageCritique::class, mappedBy="niveau", cascade={"persist","remove"})
      */
-    private $apcApprentissageCritiques;
+    private Collection $apcApprentissageCritiques;
 
     /**
      * @ORM\OneToMany(targetEntity=ApcParcoursNiveau::class, mappedBy="niveau")
      */
-    private $apcParcoursNiveaux;
+    private Collection $apcParcoursNiveaux;
 
     public function __construct(ApcCompetence $competence = null)
     {

@@ -4,15 +4,15 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/StagePeriodeSoutenanceType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/05/2021 18:37
+ * @lastUpdate 06/06/2021 11:02
  */
 
 namespace App\Form;
 
 use App\Entity\StagePeriodeSoutenance;
+use App\Form\Type\CarbonDateTimeType;
 use App\Form\Type\DateRangeType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -25,7 +25,7 @@ class StagePeriodeSoutenanceType extends AbstractType
         $builder
             ->add('dateRange', DateRangeType::class,
                 ['label' => 'dateRange.soutenance', 'mapped' => false, 'required' => true])
-            ->add('dateRenduRapport', DateTimeType::class,
+            ->add('dateRenduRapport', CarbonDateTimeType::class,
                 ['widget' => 'single_text', 'label' => 'dateRenduRapport', 'required' => false])
             ->addEventListener(FormEvents::POST_SUBMIT, static function(FormEvent $event) {
                 $stagePeriodeSoutenance = $event->getData();

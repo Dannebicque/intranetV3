@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appEtudiant/StageController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 06/06/2021 09:55
  */
 
 namespace App\Controller\appEtudiant;
@@ -16,6 +16,7 @@ use App\Entity\StageEtudiant;
 use App\Event\StageEvent;
 use App\Form\StageEtudiantEtudiantType;
 use App\Repository\StagePeriodeRepository;
+use Carbon\Carbon;
 use DateTime;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -83,7 +84,7 @@ class StageController extends BaseController
 
             if ($form->isSubmitted() && $form->isValid()) {
                 $stageEtudiant->setEtatStage(StageEtudiant::ETAT_STAGE_DEPOSE);
-                $stageEtudiant->setDateDepotFormulaire(new DateTime('now'));
+                $stageEtudiant->setDateDepotFormulaire(Carbon::now());
                 $this->entityManager->flush();
 
                 $event = new StageEvent($stageEtudiant);

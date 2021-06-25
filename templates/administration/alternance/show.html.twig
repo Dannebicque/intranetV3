@@ -31,13 +31,18 @@
                 <tr>
                     <th>{{ 'table.fiche_suivi'|trans }}</th>
                     <td>
-                        <ul>
-                        {% for fiche in alternance.alternanceFicheSuivis %}
-                          <li><a href="{{ path('administration_alternance_fiche_suivi_show', {id:fiche.id}) }}">Fiche du
-                                  {{ fiche
-                                  .created|format_datetime('long', 'short') }}</a></li>
-                        {% endfor %}
-                        </ul>
+                        <table class="table">
+                            {% for fiche in alternance.alternanceFicheSuivis %}
+                                <tr>
+                                    <td>Fiche du
+                                        {{ fiche.created|format_datetime('long', 'short') }}</td>
+                                    <td>
+                                        <a href="{{ path('administration_alternance_fiche_suivi_show', {id:fiche.id}) }}" class="btn btn-info"><i class="{{ iconShow }}"></i></a>
+                                        <a href="{{ path('administration_alternance_fiche_suivi_export', {id:fiche.id}) }}" class="btn btn-default"><i class="{{ iconPrint }}"></i></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
                     </td>
                 </tr>
                 {{ include('composants/entreprise_array.html.twig', {entreprise: alternance.entreprise}) }}

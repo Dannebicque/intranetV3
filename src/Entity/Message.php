@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Message.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/03/2021 17:11
+ * @lastUpdate 06/06/2021 08:20
  */
 
 namespace App\Entity;
@@ -22,50 +22,58 @@ class Message extends BaseEntity
 {
     use LifeCycleTrait;
 
+    public const ETAT_MESSAGE_DRAFT = 'D';
+    public const ETAT_MESSAGE_ENVOYE = 'E';
+
+    public const MESSAGE_TYPE_ETUDIANT = 'e';
+    public const MESSAGE_TYPE_SEMESTRE = 's';
+    public const MESSAGE_TYPE_GROUPE = 'g';
+    public const MESSAGE_TYPE_PERMANENT = 'p';
+
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $sujet;
+    private ?string $sujet;
 
     /**
      * @ORM\Column(type="text")
      */
-    private $message;
+    private ?string $message;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $important;
+    private ?bool $important;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Personnel", inversedBy="messages")
      */
-    private $expediteur;
+    private ?Personnel $expediteur;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\MessageDestinataire", mappedBy="message")
      */
-    private $messageDestinataires;
+    private Collection $messageDestinataires;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\MessagePieceJointe", mappedBy="message")
      */
-    private $messagePieceJointes;
+    private Collection $messagePieceJointes;
 
     /**
      * @ORM\Column(type="string", length=1)
      */
-    private $etat = 'D';
+    private string $etat = self::ETAT_MESSAGE_DRAFT;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $typeDestinataires;
+    private ?string $typeDestinataires;
 
     /**
      * @ORM\Column(type="string", length=1)
      */
-    private $type;
+    private ?string $type;
 
     public function __construct()
     {

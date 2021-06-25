@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/EvaluationRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/05/2021 16:35
+ * @lastUpdate 25/06/2021 10:28
  */
 
 namespace App\Repository;
@@ -32,6 +32,10 @@ class EvaluationRepository extends ServiceEntityRepository
 
     public function findBySemestre(array $matieres, AnneeUniversitaire $annee)
     {
+        if (count($matieres) <= 0) {
+            return null;
+        }
+
         $query = $this->createQueryBuilder('e')
             ->innerJoin(AnneeUniversitaire::class, 'n', 'WITH', 'e.anneeUniversitaire = n.id')
             ->where('n.annee = :annee')

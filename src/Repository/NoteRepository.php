@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/NoteRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2021 08:46
+ * @lastUpdate 25/06/2021 10:28
  */
 
 namespace App\Repository;
@@ -12,10 +12,7 @@ namespace App\Repository;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Etudiant;
 use App\Entity\Evaluation;
-use App\Entity\Matiere;
 use App\Entity\Note;
-use App\Entity\Semestre;
-use App\Entity\Ue;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -35,18 +32,24 @@ class NoteRepository extends ServiceEntityRepository
         parent::__construct($registry, Note::class);
     }
 
-    public function findBySemestre(Semestre $semestre, AnneeUniversitaire $annee)
+    public function findBySemestre(array $matieres, AnneeUniversitaire $annee)
     {
-        return $this->createQueryBuilder('n')
+        if (count($matieres) <= 0) {
+            return null;
+        }
+        $query = $this->createQueryBuilder('n')
             ->innerJoin(Evaluation::class, 'e', 'WITH', 'n.evaluation=e.id')
-            ->innerJoin(Matiere::class, 'm', 'WITH', 'e.matiere=m.id')
-            ->innerJoin(Ue::class, 'u', 'WITH', 'm.ue = u.id')
             ->innerJoin(AnneeUniversitaire::class, 'j', 'WITH', 'e.anneeUniversitaire = j.id')
-            ->where('u.semestre= :semestre')
-            ->andWhere('j.annee = :annee')
-            ->setParameter('semestre', $semestre)
+            ->where('j.annee = :annee')
             ->setParameter('annee', $annee->getAnnee())
-            ->orderBy('e.id')
+            ->orderBy('e.id');
+
+        $ors = [];
+        foreach ($matieres as $matiere) {
+            $ors[] = '(' . $query->expr()->orx('e.idMatiere = ' . $query->expr()->literal($matiere->id)) . ' AND ' . $query->expr()->andX('e.typeMatiere = ' . $query->expr()->literal($matiere->typeMatiere)) . ')';
+        }
+
+        return $query->andWhere(implode(' OR ', $ors))
             ->getQuery()
             ->getResult();
     }
@@ -55,7 +58,12 @@ class NoteRepository extends ServiceEntityRepository
         Etudiant $etudiant,
         array $matieres,
         AnneeUniversitaire $annee
-    ) {
+    )
+    {
+        if (count($matieres) <= 0) {
+            return null;
+        }
+
         $query = $this->createQueryBuilder('n')
             ->innerJoin(Evaluation::class, 'e', 'WITH', 'n.evaluation = e.id')
             ->where('e.anneeUniversitaire = :annee')
@@ -72,12 +80,11 @@ class NoteRepository extends ServiceEntityRepository
         return $query->andWhere(implode(' OR ', $ors))
             ->getQuery()
             ->getResult();
-
     }
 
-    public function findByEtudiantSemestreArray(Semestre $semestre, AnneeUniversitaire $annee, $etudiants): array
+    public function findByEtudiantSemestreArray(array $matieres, AnneeUniversitaire $annee, $etudiants): array
     {
-        $notes = $this->findBySemestre($semestre, $annee);
+        $notes = $this->findBySemestre($matieres, $annee);
 
         $t = [];
 
@@ -87,7 +94,7 @@ class NoteRepository extends ServiceEntityRepository
 
             /** @var Note $note */
             foreach ($notes as $note) {
-                if (null !== $note->getEtudiant() && null !== $note->getEvaluation() && null !== $note->getEvaluation()->getMatiere() && $note->getEtudiant()->getId() === $etu->getId()) {
+                if (null !== $note->getEtudiant() && null !== $note->getEvaluation() && $note->getEtudiant()->getId() === $etu->getId()) {
                     $t[$etu->getId()][$note->getEvaluation()->getId()]['eval'] = $note->getEvaluation();
                     $t[$etu->getId()][$note->getEvaluation()->getId()]['note'] = $note->getNote();
                 }
@@ -97,17 +104,51 @@ class NoteRepository extends ServiceEntityRepository
         return $t;
     }
 
-    public function findAllNotesSemestre(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire)
+    public function findBySemestreNoteAvecAbsence(array $matieres, AnneeUniversitaire $annee)
     {
-        return $this->createQueryBuilder('p')
-            ->innerJoin(Evaluation::class, 'e', 'WITH', 'p.evaluation=e.id')
-            ->innerJoin(Matiere::class, 'm', 'WITH', 'e.matiere=m.id')
-            ->innerJoin(Ue::class, 'u', 'WITH', 'm.ue = u.id')
-            ->where('u.semestre= :semestre')
-            ->andWhere('e.anneeUniversitaire = :anneeUniversitaire')
-            ->setParameter('semestre', $semestre->getId())
-            ->setParameter('anneeUniversitaire', $anneeUniversitaire->getId())
-            ->orderBy('e.id')
+        if (count($matieres) <= 0) {
+            return null;
+        }
+
+        $query = $this->createQueryBuilder('n')
+            ->innerJoin(Evaluation::class, 'e', 'WITH', 'n.evaluation=e.id')
+            ->innerJoin(AnneeUniversitaire::class, 'j', 'WITH', 'e.anneeUniversitaire = j.id')
+            ->where('j.annee = :annee')
+            ->andWhere('n.absenceJustifie = 1')
+            ->andWhere('n.note > 0')
+            ->setParameter('annee', $annee->getAnnee())
+            ->orderBy('e.id');
+
+        $ors = [];
+        foreach ($matieres as $matiere) {
+            $ors[] = '(' . $query->expr()->orx('e.idMatiere = ' . $query->expr()->literal($matiere->id)) . ' AND ' . $query->expr()->andX('e.typeMatiere = ' . $query->expr()->literal($matiere->typeMatiere)) . ')';
+        }
+
+        return $query->andWhere(implode(' OR ', $ors))
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findBySemestreErreur(array $matieres, AnneeUniversitaire $annee)
+    {
+        if (count($matieres) <= 0) {
+            return null;
+        }
+
+        $query = $this->createQueryBuilder('n')
+            ->innerJoin(Evaluation::class, 'e', 'WITH', 'n.evaluation=e.id')
+            ->innerJoin(AnneeUniversitaire::class, 'j', 'WITH', 'e.anneeUniversitaire = j.id')
+            ->where('j.annee = :annee')
+            ->andWhere('n.note < 0')->orWhere('n.note > 20')
+            ->setParameter('annee', $annee->getAnnee())
+            ->orderBy('e.id');
+
+        $ors = [];
+        foreach ($matieres as $matiere) {
+            $ors[] = '(' . $query->expr()->orx('e.idMatiere = ' . $query->expr()->literal($matiere->id)) . ' AND ' . $query->expr()->andX('e.typeMatiere = ' . $query->expr()->literal($matiere->typeMatiere)) . ')';
+        }
+
+        return $query->andWhere(implode(' OR ', $ors))
             ->getQuery()
             ->getResult();
     }

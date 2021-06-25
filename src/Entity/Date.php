@@ -4,13 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Date.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/05/2021 09:51
+ * @lastUpdate 05/06/2021 18:58
  */
 
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
-use DateTime;
+use Carbon\CarbonInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -34,14 +34,14 @@ class Date extends BaseEntity
     public const TYPE_VACANCES = 'type.vacances';
 
     public const COULEUR_BADGE = [
-        self::TYPE_STAGE      => 'badge-primary',
+        self::TYPE_STAGE => 'badge-primary',
         self::TYPE_SOUTENANCE => 'badge-danger',
-        self::TYPE_PROJET     => 'badge-purple',
-        self::TYPE_AUTRE      => 'badge-pink',
+        self::TYPE_PROJET => 'badge-purple',
+        self::TYPE_AUTRE => 'badge-pink',
         self::TYPE_COMMISSION => 'badge-warning',
-        self::TYPE_REUNION    => 'badge-yellow',
-        self::TYPE_RENTREE    => 'badge-success',
-        self::TYPE_VACANCES   => 'badge-info',
+        self::TYPE_REUNION => 'badge-yellow',
+        self::TYPE_RENTREE => 'badge-success',
+        self::TYPE_VACANCES => 'badge-info',
     ];
 
     public const QUI_ETUDIANT = 'E';
@@ -60,79 +60,63 @@ class Date extends BaseEntity
     private ?string $texte;
 
     /**
-     * @var DateTime
-     *
      * @ORM\Column(type="date")
      * @Groups({"date_administration"})
      */
-    private $dateDebut;
+    private ?CarbonInterface $dateDebut;
 
     /**
-     * @var DateTime
-     *
      * @ORM\Column(type="time", nullable=true)
      * @Groups({"date_administration"})
      */
-    private $heureDebut;
+    private ?CarbonInterface $heureDebut;
 
     /**
-     * @var DateTime
-     *
      * @ORM\Column(type="date")
      * @Groups({"date_administration"})
      */
-    private $dateFin;
+    private ?CarbonInterface $dateFin;
 
     /**
-     * @var DateTime
-     *
      * @ORM\Column(type="time", nullable=true)
      * @Groups({"date_administration"})
      */
-    private $heureFin;
+    private ?CarbonInterface $heureFin;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="lieu", type="string", length=150)
      * @Groups({"date_administration"})
      */
-    private $lieu;
+    private ?string $lieu;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(type="boolean")
      * @Groups({"date_administration"})
      */
-    private $allday = false;
+    private bool $allday = false;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", length=1)
      * @Groups({"date_administration"})
      */
-    private $qui;
+    private string $qui;
 
     /**
-     * @var Departement
-     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Departement")
      */
-    private $departement;
+    private Departement $departement;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Semestre", inversedBy="dates")
      * @Groups({"date_administration"})
      */
-    private $semestres;
+    private Collection $semestres;
 
     /**
      * @ORM\Column(type="string", length=30)
      * @Groups({"date_administration"})
      */
-    private $type;
+    private ?string $type;
 
     public function __construct()
     {
@@ -176,61 +160,46 @@ class Date extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getDateDebut(): ?DateTime
+    public function getDateDebut(): ?CarbonInterface
     {
         return $this->dateDebut;
     }
 
-    public function setDateDebut(DateTime $dateDebut): void
+    public function setDateDebut(CarbonInterface $dateDebut): void
     {
         $this->dateDebut = $dateDebut;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getHeureDebut(): ?DateTime
+    public function getHeureDebut(): ?CarbonInterface
     {
         return $this->heureDebut;
     }
 
-    public function setHeureDebut(DateTime $heureDebut): void
+    public function setHeureDebut(CarbonInterface $heureDebut): void
     {
         $this->heureDebut = $heureDebut;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getDateFin(): ?DateTime
+    public function getDateFin(): ?CarbonInterface
     {
         return $this->dateFin;
     }
 
-    public function setDateFin(DateTime $dateFin): void
+    public function setDateFin(CarbonInterface $dateFin): void
     {
         $this->dateFin = $dateFin;
     }
 
-    /**
-     * @return DateTime
-     */
-    public function getHeureFin(): ?DateTime
+    public function getHeureFin(): ?CarbonInterface
     {
         return $this->heureFin;
     }
 
-    public function setHeureFin(DateTime $heureFin): void
+    public function setHeureFin(CarbonInterface $heureFin): void
     {
         $this->heureFin = $heureFin;
     }
 
-    /**
-     * @return string
-     */
     public function getLieu(): ?string
     {
         return $this->lieu;
@@ -251,9 +220,6 @@ class Date extends BaseEntity
         $this->allday = $allday;
     }
 
-    /**
-     * @return string
-     */
     public function getQui(): ?string
     {
         return $this->qui;
@@ -264,9 +230,6 @@ class Date extends BaseEntity
         $this->qui = $qui;
     }
 
-    /**
-     * @return Departement
-     */
     public function getDepartement(): ?Departement
     {
         return $this->departement;

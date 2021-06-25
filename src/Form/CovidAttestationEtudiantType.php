@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/CovidAttestationEtudiantType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/05/2021 16:35
+ * @lastUpdate 06/06/2021 11:45
  */
 
 namespace App\Form;
@@ -13,6 +13,7 @@ use App\Entity\CovidAttestationEtudiant;
 use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Groupe;
+use App\Form\Type\CarbonDateTimePickerType;
 use App\Repository\DiplomeRepository;
 use App\Repository\GroupeRepository;
 use Carbon\Carbon;
@@ -20,7 +21,6 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Umbrella\CoreBundle\Form\DatepickerType;
 use Umbrella\CoreBundle\Form\Entity2Type;
 
 class CovidAttestationEtudiantType extends AbstractType
@@ -43,12 +43,12 @@ class CovidAttestationEtudiantType extends AbstractType
                 },
                 'label' => 'Diplôme concerné par votre demande',
             ])
-            ->add('dateDebut', DatepickerType::class, [
+            ->add('dateDebut', CarbonDateTimePickerType::class, [
                 'label' => 'Date du début de la période',
                 'data' => $date->addDays(2),
 
             ])
-            ->add('dateFin', DatepickerType::class, [
+            ->add('dateFin', CarbonDateTimePickerType::class, [
                 'label' => 'Date de fin de la période',
                 'data' => $date->addDays(2),
                 'help' => 'Merci de ne pas dépasser un délai d\'une semaine',

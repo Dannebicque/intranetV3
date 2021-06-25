@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Utils/Tools.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/05/2021 11:05
+ * @lastUpdate 25/06/2021 10:28
  */
 
 /*
@@ -17,11 +17,11 @@ use Carbon\Carbon;
 use DateTime;
 use Exception;
 use RuntimeException;
+use Symfony\Component\Form\Exception\UnexpectedTypeException;
 
 abstract class Tools
 {
     /**
-     *
      * @throws Exception
      */
     public static function convertDateToObject($date): DateTime
@@ -34,7 +34,6 @@ abstract class Tools
     }
 
     /**
-     *
      * @throws Exception
      */
     public static function convertTimeToObject($heure): DateTime
@@ -42,14 +41,19 @@ abstract class Tools
         return Carbon::createFromTimeString($heure);
     }
 
-    public static function convertToFloat($note)
+    public static function convertToFloat(mixed $value): ?float
     {
-        $note = trim($note);
-        if ('' === $note || null === $note) {
-            $note = 0;
+        $value = trim($value);
+        str_replace([',', '.'], '.', $value);
+        if ('' === $value || null === $value) {
+            return 0;
         }
 
-        return str_replace([',', '.'], '.', $note);
+        if (is_float($value) || is_int($value)) {
+            return (float)$value;
+        }
+
+        return null;
     }
 
     public static function convertToBool($texte): bool

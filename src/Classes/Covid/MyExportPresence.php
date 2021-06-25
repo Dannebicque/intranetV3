@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Covid/MyExportPresence.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 06/06/2021 10:01
  */
 
 /*
@@ -19,6 +19,7 @@ use App\Classes\Pdf\MyPDF;
 use App\Entity\CovidAttestationEtudiant;
 use App\Entity\CovidAttestationPersonnel;
 use App\Entity\Etudiant;
+use Carbon\Carbon;
 use DateTime;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -109,7 +110,7 @@ class MyExportPresence
         }
         $this->myExcelWriter->getColumnsAutoSize('A', 'Z');
         $writer = new Xlsx($this->myExcelWriter->getSpreadsheet());
-        $date = new DateTime('now');
+        $date = Carbon::now();
 
         return new StreamedResponse(
             static function() use ($writer) {
@@ -171,7 +172,7 @@ class MyExportPresence
             if (null !== $covidAttestationEtudiant->getDateDebut()) {
                 $date = $covidAttestationEtudiant->getDateDebut();
             } else {
-                $date = 'err-' . md5((new DateTime('now'))->format('dmYHis'));
+                $date = 'err-' . md5((Carbon::now())->format('dmYHis'));
             }
         }
         $this->myPdf::generePdf(
@@ -280,7 +281,7 @@ class MyExportPresence
         }
         $this->myExcelWriter->getColumnsAutoSize('A', 'J');
         $writer = new Xlsx($this->myExcelWriter->getSpreadsheet());
-        $date = new DateTime('now');
+        $date = Carbon::now();
 
         return new StreamedResponse(
             static function() use ($writer) {

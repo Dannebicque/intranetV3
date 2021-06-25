@@ -4,18 +4,18 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/AbsenceJustificatifType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/05/2021 16:35
+ * @lastUpdate 06/06/2021 11:45
  */
 
 namespace App\Form;
 
 use App\Entity\AbsenceJustificatif;
+use App\Form\Type\CarbonDateTimePickerType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Umbrella\CoreBundle\Form\DatepickerType;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class AbsenceJustificatifType extends AbstractType
@@ -23,9 +23,9 @@ class AbsenceJustificatifType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('dateDebut', DatepickerType::class, ['label' => 'date_debut'])
+            ->add('dateDebut', CarbonDateTimePickerType::class, ['label' => 'date_debut'])
             ->add('heureDebut', TimeType::class, ['label' => 'heure_debut'])
-            ->add('dateFin', DatepickerType::class, ['label' => 'date_fin'])
+            ->add('dateFin', CarbonDateTimePickerType::class, ['label' => 'date_fin'])
             ->add('heureFin', TimeType::class, ['label' => 'heure_fin'])
             ->add('motif', TextType::class, ['label' => 'motif'])
             ->add('fichierFile', VichFileType::class, [

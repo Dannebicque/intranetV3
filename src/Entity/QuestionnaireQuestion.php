@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/QuestionnaireQuestion.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:12
+ * @lastUpdate 25/06/2021 10:28
  */
 
 namespace App\Entity;
@@ -31,72 +31,71 @@ class QuestionnaireQuestion extends BaseEntity
     public const LISTE_TYPE_QUESTION = [
         self::QUESTION_TYPE_QCU => self::QUESTION_TYPE_QCU,
         self::QUESTION_TYPE_QCM => self::QUESTION_TYPE_QCM,
-        self::QUESTION_TYPE_YESNO   => self::QUESTION_TYPE_YESNO,
+        self::QUESTION_TYPE_YESNO => self::QUESTION_TYPE_YESNO,
         self::QUESTION_TYPE_ECHELLE => self::QUESTION_TYPE_ECHELLE,
-        self::QUESTION_TYPE_LIBRE   => self::QUESTION_TYPE_LIBRE,
+        self::QUESTION_TYPE_LIBRE => self::QUESTION_TYPE_LIBRE,
     ];
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $libelle;
+    private ?string $libelle;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $help;
+    private ?string $help;
 
     /**
      * @ORM\Column(type="string", length=10)
      */
-    private $type;
+    private ?string $type;
 
     /**
      * @ORM\OneToMany(targetEntity="QuestionnaireReponse", mappedBy="question", cascade={"persist", "remove"},
      *                                                        fetch="EAGER")
      * @ORM\OrderBy({"ordre"="ASC"})
      */
-    private $quizzReponses;
+    private Collection $quizzReponses;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Personnel", inversedBy="quizzQuestions")
      */
-    private $auteur;
+    private ?Personnel $auteur;
 
     /**
      * @ORM\OneToMany(targetEntity="QuestionnaireSectionQuestion", mappedBy="question")
      */
-    private $qualiteSectionQuestions;
+    private Collection $qualiteSectionQuestions;
 
     /**
      * @ORM\ManyToOne(targetEntity="QuestionnaireQuestion", inversedBy="questionsEnfants")
      */
-    private $questionParent;
+    private ?QuestionnaireQuestion $questionParent;
 
     /**
      * @ORM\OneToMany(targetEntity="QuestionnaireQuestion", mappedBy="questionParent")
      */
-    private $questionsEnfants;
+    private Collection $questionsEnfants;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $obligatoire = true;
+    private bool $obligatoire = true;
 
     /**
      * @ORM\Column(type="string", length=30)
      */
-    private $alignement = 'HORIZONTAL_CENTER';
+    private string $alignement = 'HORIZONTAL_CENTER';
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $parametre;
+    private ?string $parametre;
 
     public function __construct(Personnel $personnel)
     {
         $this->quizzReponses = new ArrayCollection();
-        $this->quizzQuestionnaires = new ArrayCollection();
         $this->setAuteur($personnel);
         $this->qualiteSectionQuestions = new ArrayCollection();
         $this->questionsEnfants = new ArrayCollection();
@@ -267,12 +266,13 @@ class QuestionnaireQuestion extends BaseEntity
         return $this;
     }
 
-    public function getCle($config = '')
+    public function getCle($config = ''): string
     {
-        if ('' !== $config && null !== $config) {
-        } else {
+        if (!('' !== $config && null !== $config)) {
             return 'quizz_question_reponses_q' . $this->getId();
         }
+
+        return '';
     }
 
     public function getAlignement(): ?string

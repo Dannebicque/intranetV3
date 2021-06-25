@@ -1,4 +1,4 @@
-{% extends 'base-administratif.html.twig' %}
+{% extends 'base-super_admin.html.twig' %}
 
 {% block header %}
     {{ 'scolarite.semestre.heading'|trans }}
@@ -7,7 +7,7 @@
 {% block headeractions %}
     <div class="header-action">
         <div class="buttons">
-            <a href="{{ path('administratif_scolarite_diplome', {diplome:semestre.diplome.id}) }}"
+            <a href="{{ path('sa_scolarite_diplome', {diplome:semestre.diplome.id}) }}"
                class="btn btn-primary btn-float"
                title="{{ 'atitle.retour_diplome'|trans }}"
                data-provide="tooltip"

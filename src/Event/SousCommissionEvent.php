@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Event/SousCommissionEvent.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:51
+ * @lastUpdate 06/06/2021 09:46
  */
 
 namespace App\Event;
@@ -16,8 +16,7 @@ class SousCommissionEvent extends Event
 {
     public const PUBLISHED = 'sooscommission.publiee';
 
-    /** @var ScolaritePromo */
-    protected $scolaritePromo;
+    protected ScolaritePromo $scolaritePromo;
 
     public function __construct(ScolaritePromo $scolaritePromo)
     {

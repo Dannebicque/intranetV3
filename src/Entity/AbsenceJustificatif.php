@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/AbsenceJustificatif.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/06/2021 11:26
+ * @lastUpdate 25/06/2021 10:28
  */
 
 namespace App\Entity;
@@ -12,6 +12,7 @@ namespace App\Entity;
 use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\UuidTrait;
 use Carbon\Carbon;
+use Carbon\CarbonInterface;
 use DateTime;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -47,42 +48,38 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
      * @ORM\Column(type="datetime")
      * @Groups({"justificatif_administration"})
      */
-    private $dateHeureDebut;
+    private ?CarbonInterface $dateHeureDebut;
 
     /**
      * @ORM\Column(type="datetime")
      * @Groups({"justificatif_administration"})
      */
-    private $dateHeureFin;
+    private ?CarbonInterface $dateHeureFin;
 
     /**
      * @ORM\Column(type="text")
      * @Groups({"justificatif_administration"})
      */
-    private $motif;
+    private ?string $motif;
 
     /**
      * @ORM\Column(type="string", length=1)
      * @Groups({"justificatif_administration"})
      */
-    private $etat;
+    private string $etat;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Etudiant", inversedBy="absenceJustificatifs")
      * @Groups({"justificatif_administration"})
      */
-    private $etudiant;
+    private ?Etudiant $etudiant;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", length=50, nullable=true)
      */
-    private $fichierName;
+    private ?string $fichierName = '';
 
     /**
-     * @var UploadedFile
-     *
      * @Vich\UploadableField(mapping="justificatif", fileNameProperty="fichierName")
      */
     private $fichierFile;
@@ -90,12 +87,12 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\AnneeUniversitaire")
      */
-    private $anneeUniversitaire;
+    private ?AnneeUniversitaire $anneeUniversitaire;
 
-    private $dateDebut;
-    private $heureDebut;
-    private $dateFin;
-    private $heureFin;
+    private ?CarbonInterface $dateDebut;
+    private ?CarbonInterface $heureDebut;
+    private ?CarbonInterface $dateFin;
+    private ?CarbonInterface $heureFin;
 
     /**
      * AbsenceJustificatif constructor.
@@ -104,11 +101,11 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
      */
     public function __construct(Etudiant $etudiant)
     {
-        $this->dateDebut = new DateTime('now');
-        $this->dateFin = new DateTime('now');
-        $this->heureDebut = new DateTime('08:00');
-        $this->heureFin = new DateTime('18:30');
-        $this->etat = 'D';
+        $this->dateDebut = Carbon::today();
+        $this->dateFin = Carbon::today();
+        $this->heureDebut = Carbon::createFromTime(8, 00, 00);
+        $this->heureFin = Carbon::createFromTime(18, 30, 00);
+        $this->etat = self::DEPOSE;
         $this->setUuid(Uuid::uuid4());
         $this->anneeUniversitaire = null !== $etudiant ? $etudiant->getAnneeUniversitaire() : null;
         $this->setEtudiant($etudiant);
@@ -124,19 +121,19 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
         return $this->dateHeureDebut;
     }
 
-    public function setDateHeureDebut(DateTimeInterface $dateHeureDebut): self
+    public function setDateHeureDebut(CarbonInterface $dateHeureDebut): self
     {
         $this->dateHeureDebut = $dateHeureDebut;
 
         return $this;
     }
 
-    public function getDateHeureFin(): ?DateTimeInterface
+    public function getDateHeureFin(): ?CarbonInterface
     {
         return $this->dateHeureFin;
     }
 
-    public function setDateHeureFin(DateTimeInterface $dateHeureFin): self
+    public function setDateHeureFin(CarbonInterface $dateHeureFin): self
     {
         $this->dateHeureFin = $dateHeureFin;
 
@@ -196,9 +193,6 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
         return $this->fichierFile;
     }
 
-    /**
-     * @return string
-     */
     public function getFichierName(): ?string
     {
         return $this->fichierName;
@@ -210,7 +204,6 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
     }
 
     /**
-     * @return string
      * @Groups({"justificatif_administration"})
      */
     public function getEtatLong(): string
@@ -237,12 +230,12 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
         return $this;
     }
 
-    public function etatLong()
+    public function etatLong(): string
     {
         return self::ETATLONG[$this->etat];
     }
 
-    public function serialize()
+    public function serialize(): ?string
     {
         return serialize($this->getId());
     }
@@ -252,22 +245,22 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
         $this->uuid = unserialize($serialized, ['allowed_classes' => false]);
     }
 
-    public function getDateDebut()
+    public function getDateDebut(): Carbon|CarbonInterface|null
     {
         return $this->dateDebut;
     }
 
-    public function getHeureDebut()
+    public function getHeureDebut(): Carbon|CarbonInterface|null
     {
         return $this->heureDebut;
     }
 
-    public function getDateFin()
+    public function getDateFin(): Carbon|CarbonInterface|null
     {
         return $this->dateFin;
     }
 
-    public function getHeureFin()
+    public function getHeureFin(): Carbon|CarbonInterface|null
     {
         return $this->heureFin;
     }
@@ -292,7 +285,7 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
         $this->heureFin = $heureFin;
     }
 
-    public function prepareData()
+    public function prepareData(): void
     {
         $this->setDateDebut($this->getDateHeureDebut());
         $this->setHeureDebut($this->getDateHeureDebut());
@@ -300,7 +293,7 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
         $this->setHeureFin($this->getDateHeureFin());
     }
 
-    public function transformeData()
+    public function transformeData(): void
     {
         $this->setDateHeureDebut(Carbon::createFromFormat('Y-m-d H:i',
             $this->getDateDebut()->format('Y-m-d') . ' ' . $this->getHeureDebut()->format('H:i')));

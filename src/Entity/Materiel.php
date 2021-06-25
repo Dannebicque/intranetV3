@@ -4,18 +4,17 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Materiel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/06/2021 11:26
+ * @lastUpdate 06/06/2021 12:28
  */
 
 namespace App\Entity;
 
-use DateTime;
+use App\Entity\Traits\LifeCycleTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
@@ -24,30 +23,30 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  */
 class Materiel extends BaseEntity
 {
+    use LifeCycleTrait;
+
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\TypeMateriel", inversedBy="materiels")
      */
-    private $typeMateriel;
+    private ?TypeMateriel $typeMateriel;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $libelle;
+    private ?string $libelle;
 
     /**
      * @ORM\Column(type="text")
      */
-    private $description;
+    private ?string $description;
 
     /**
-     * @var string
      *
      * @ORM\Column(type="string", length=50, nullable=true)
      */
-    private $photoName;
+    private ?string $photoName = 'noimage.png';
 
     /**
-     * @var UploadedFile
      *
      * @Vich\UploadableField(mapping="materiel", fileNameProperty="photoName")
      */
@@ -56,17 +55,17 @@ class Materiel extends BaseEntity
     /**
      * @ORM\Column(type="string", length=50, nullable=true)
      */
-    private $codebarre;
+    private ?string $codebarre;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $empruntable;
+    private ?bool $empruntable = true;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\EmpruntMateriel", mappedBy="materiel")
      */
-    private $empruntMateriels;
+    private Collection $empruntMateriels;
 
     public function __construct()
     {
@@ -128,9 +127,6 @@ class Materiel extends BaseEntity
         return $this->photoFile;
     }
 
-    /**
-     * @return string
-     */
     public function getPhotoName(): ?string
     {
         return $this->photoName;

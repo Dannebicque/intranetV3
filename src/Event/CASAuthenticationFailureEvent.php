@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Event/CASAuthenticationFailureEvent.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:51
+ * @lastUpdate 06/06/2021 09:46
  */
 
 namespace App\Event;
@@ -16,9 +16,9 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class CASAuthenticationFailureEvent extends Event
 {
-    private $request;
-    private $exception;
-    private $response;
+    private Request $request;
+    private AuthenticationException $exception;
+    private Response $response;
 
     public function __construct(Request $request, AuthenticationException $exception, Response $response)
     {

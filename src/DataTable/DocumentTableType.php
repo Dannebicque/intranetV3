@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/DataTable/DocumentTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/05/2021 16:26
+ * @lastUpdate 25/06/2021 10:28
  */
 
 namespace App\DataTable;
@@ -82,7 +82,7 @@ class DocumentTableType extends DataTableType
         $this->departement = $options['departement'];
 
         $builder->add('libelle', PropertyColumnType::class, ['label' => 'titre']);
-        $builder->add('typeFichier', PropertyColumnType::class, ['label' => 'texte']);
+        $builder->add('typeFichier', PropertyColumnType::class, ['label' => 'type_fichier']);
         $builder->add('typeDocument', CategorieArticleColumnType::class, ['label' => 'categorie']);
         $builder->add('semestres', SemestreColumnType::class, ['label' => 'semestres']);
         $builder->add('updated', DateColumnType::class, [

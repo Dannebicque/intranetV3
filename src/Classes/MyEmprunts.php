@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEmprunts.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 15/05/2021 09:08
+ * @lastUpdate 06/06/2021 10:01
  */
 
 namespace App\Classes;
@@ -21,6 +21,7 @@ use App\Event\EmpruntEvent;
 use App\Repository\EmpruntRepository;
 use App\Repository\MaterielRepository;
 use App\Utils\Tools;
+use Carbon\Carbon;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -112,21 +113,21 @@ class MyEmprunts
                 break;
             case Emprunt::ACCEPTE:
                 $this->emprunt->setEtat(Emprunt::ACCEPTE);
-                $this->emprunt->setDateValidation(new DateTime('now'));
+                $this->emprunt->setDateValidation(Carbon::now());
                 $eventNotif = EmpruntEvent::CHGT_ETAT_EMPRUNT_ACCEPTE;
                 break;
             case Emprunt::SORTIE:
                 $this->emprunt->setEtat(Emprunt::SORTIE);
-                $this->emprunt->setDateSortie(new DateTime('now'));
+                $this->emprunt->setDateSortie(Carbon::now());
                 break;
             case Emprunt::REFUS:
                 $this->emprunt->setEtat(Emprunt::REFUS);
-                $this->emprunt->setDateValidation(new DateTime('now'));
+                $this->emprunt->setDateValidation(Carbon::now());
                 $eventNotif = EmpruntEvent::CHGT_ETAT_EMPRUNT_REFUS;
                 break;
             case Emprunt::REVENU:
                 $this->emprunt->setEtat(Emprunt::REVENU);
-                $this->emprunt->setDateRetour(new DateTime('now'));
+                $this->emprunt->setDateRetour(Carbon::now());
                 break;
         }
 

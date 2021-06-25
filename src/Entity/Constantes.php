@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Constantes.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/06/2021 11:08
+ * @lastUpdate 06/06/2021 17:19
  */
 
 namespace App\Entity;
@@ -51,7 +51,6 @@ class Constantes
     public const FORMAT_PDF = 'pdf';
 
     public const NB_RESULTS_PER_PAGE = 2;
-    public const BASE_URL = '';
 
     public const CIVILITE_HOMME = 'M.';
     public const CIVILITE_FEMME = 'Mme';
@@ -102,7 +101,7 @@ class Constantes
     ];
 
     public const TAB_HEURES_INDEX = [
-        ''         => 0,
+        '' => 0,
         '08:00:00' => 1,
         '08:30:00' => 2,
         '09:00:00' => 3,
@@ -136,7 +135,7 @@ class Constantes
 
     public const TAB_METHODE_CALCUL = [
         'choice.moymodules' => Constantes::METHODE_CALCUL_MOY_MODULE,
-        'choice.moyues' => Constantes::METHODE_CALCUL_MOY_UE
+        'choice.moyues' => Constantes::METHODE_CALCUL_MOY_UE,
     ];
 
     public const TAB_GROUPES_INDEX = [
@@ -148,11 +147,11 @@ class Constantes
         'S2 TD2' => 2,
         'S2 TD3' => 3,
         'S2 TP11' => 1,
-        'S2 TP12'     => 2,
-        'S2 TP21'     => 3,
-        'S2 TP22'     => 4,
-        'S2 TP31'     => 5,
-        'S2 TP32'     => 6,
+        'S2 TP12' => 2,
+        'S2 TP21' => 3,
+        'S2 TP22' => 4,
+        'S2 TP31' => 5,
+        'S2 TP32' => 6,
     ];
 
     public const TAB_JOURS = ['', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi'];
@@ -173,9 +172,9 @@ class Constantes
     ];
 
     public const TAB_CRENEAUX = [
-        1  => ['8h00', '9h25'],
-        4  => ['9h35', '11h00'],
-        7  => ['11h10', '12h35'],
+        1 => ['8h00', '9h25'],
+        4 => ['9h35', '11h00'],
+        7 => ['11h10', '12h35'],
         10 => ['12h35', '14h00'],
         13 => ['14h00', '15h25'],
         16 => ['15h35', '17h00'],
@@ -199,13 +198,13 @@ class Constantes
     public const SCOLARITE_DIPLOME = 'diplome';
 
     public const SS_COMM_DECISION_COULEUR = [
-        self::SEMESTRE_VALIDE     => 'ff00cc00',
+        self::SEMESTRE_VALIDE => 'ff00cc00',
         self::SEMESTRE_NON_VALIDE => 'ffff0000',
-        self::SEMESTRE_VCA        => 'fff0a300',
-        self::SEMESTRE_VCJ        => 'fff30900',
-        ''                        => 'ffffff',
-        'EC'                      => 'ffff0000',
-        'E.C.'                    => 'ffff0000',
+        self::SEMESTRE_VCA => 'fff0a300',
+        self::SEMESTRE_VCJ => 'fff30900',
+        '' => 'ffffff',
+        'EC' => 'ffff0000',
+        'E.C.' => 'ffff0000',
     ];
     public const NB_MESSAGE_PAR_PAGE = 10;
     public const TAB_HEURES_EDT = [
@@ -219,16 +218,16 @@ class Constantes
     ];
 
     public const COULEURS = [
-        'Bleu'          => 'blue',
-        'Indigo'        => 'Indigo',
+        'Bleu' => 'blue',
+        'Indigo' => 'Indigo',
         'Mauve/pourpre' => 'purple',
-        'Rose'          => 'pink',
-        'Rouge'         => 'red',
-        'Orange'        => 'orange',
-        'Jaune'         => 'yellow',
-        'Vert'          => 'green',
-        'Turquoise'     => 'teal',
-        'Cyan'          => 'cyan',
+        'Rose' => 'pink',
+        'Rouge' => 'red',
+        'Orange' => 'orange',
+        'Jaune' => 'yellow',
+        'Vert' => 'green',
+        'Turquoise' => 'teal',
+        'Cyan' => 'cyan',
     ];
     public const PAS_DE_SOUS_COMM = 'PAS_DE_SOUS_COMM';
     public const MAJORATION_CM = 1.5;

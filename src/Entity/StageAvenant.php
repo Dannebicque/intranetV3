@@ -4,13 +4,14 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/StageAvenant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 06/06/2021 09:19
  */
 
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
 use App\Repository\StageAvenantRepository;
+use Carbon\CarbonInterface;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -30,57 +31,57 @@ class StageAvenant extends BaseEntity
     /**
      * @ORM\ManyToOne(targetEntity=StageEtudiant::class, inversedBy="stageAvenants")
      */
-    private $stageEtudiant;
+    private ?StageEtudiant $stageEtudiant;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $cas;
+    private ?int $cas;
 
     /**
      * @ORM\Column(type="date", nullable=true)
      */
-    private $nouvelleDateFin;
+    private ?CarbonInterface $nouvelleDateFin;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
-    private $nouvelleDureeJour;
+    private ?int $nouvelleDureeJour;
 
     /**
      * @ORM\OneToOne(targetEntity=Adresse::class, cascade={"persist", "remove"})
      */
-    private $nouvelleAdresse;
+    private ?Adresse $nouvelleAdresse;
 
     /**
      * @ORM\Column(type="date", nullable=true)
      */
-    private $dateDebutSuspension;
+    private ?CarbonInterface $dateDebutSuspension;
 
     /**
      * @ORM\Column(type="date", nullable=true)
      */
-    private $dateFinSuspension;
+    private ?CarbonInterface $dateFinSuspension;
 
     /**
      * @ORM\Column(type="date", nullable=true)
      */
-    private $dateRepriseStage;
+    private ?CarbonInterface $dateRepriseStage;
 
     /**
      * @ORM\Column(type="date", nullable=true)
      */
-    private $dateInterruption;
+    private ?CarbonInterface $dateInterruption;
 
     /**
      * @ORM\Column(type="date", nullable=true)
      */
-    private $dateDebutAbsence;
+    private ?CarbonInterface $dateDebutAbsence;
 
     /**
      * @ORM\Column(type="date", nullable=true)
      */
-    private $dateFinAbsence;
+    private ?CarbonInterface $dateFinAbsence;
 
     /**
      * StageAvenant constructor.
@@ -116,12 +117,12 @@ class StageAvenant extends BaseEntity
         return $this;
     }
 
-    public function getNouvelleDateFin(): ?DateTimeInterface
+    public function getNouvelleDateFin(): ?CarbonInterface
     {
         return $this->nouvelleDateFin;
     }
 
-    public function setNouvelleDateFin(?DateTimeInterface $nouvelleDateFin): self
+    public function setNouvelleDateFin(?CarbonInterface $nouvelleDateFin): self
     {
         $this->nouvelleDateFin = $nouvelleDateFin;
 
@@ -152,72 +153,72 @@ class StageAvenant extends BaseEntity
         return $this;
     }
 
-    public function getDateDebutSuspension(): ?DateTimeInterface
+    public function getDateDebutSuspension(): ?CarbonInterface
     {
         return $this->dateDebutSuspension;
     }
 
-    public function setDateDebutSuspension(?DateTimeInterface $dateDebutSuspension): self
+    public function setDateDebutSuspension(?CarbonInterface $dateDebutSuspension): self
     {
         $this->dateDebutSuspension = $dateDebutSuspension;
 
         return $this;
     }
 
-    public function getDateFinSuspension(): ?DateTimeInterface
+    public function getDateFinSuspension(): ?CarbonInterface
     {
         return $this->dateFinSuspension;
     }
 
-    public function setDateFinSuspension(?DateTimeInterface $dateFinSuspension): self
+    public function setDateFinSuspension(?CarbonInterface $dateFinSuspension): self
     {
         $this->dateFinSuspension = $dateFinSuspension;
 
         return $this;
     }
 
-    public function getDateRepriseStage(): ?DateTimeInterface
+    public function getDateRepriseStage(): ?CarbonInterface
     {
         return $this->dateRepriseStage;
     }
 
-    public function setDateRepriseStage(?DateTimeInterface $dateRepriseStage): self
+    public function setDateRepriseStage(?CarbonInterface $dateRepriseStage): self
     {
         $this->dateRepriseStage = $dateRepriseStage;
 
         return $this;
     }
 
-    public function getDateInterruption(): ?DateTimeInterface
+    public function getDateInterruption(): ?CarbonInterface
     {
         return $this->dateInterruption;
     }
 
-    public function setDateInterruption(?DateTimeInterface $dateInterruption): self
+    public function setDateInterruption(?CarbonInterface $dateInterruption): self
     {
         $this->dateInterruption = $dateInterruption;
 
         return $this;
     }
 
-    public function getDateDebutAbsence(): ?DateTimeInterface
+    public function getDateDebutAbsence(): ?CarbonInterface
     {
         return $this->dateDebutAbsence;
     }
 
-    public function setDateDebutAbsence(?DateTimeInterface $dateDebutAbsence): self
+    public function setDateDebutAbsence(?CarbonInterface $dateDebutAbsence): self
     {
         $this->dateDebutAbsence = $dateDebutAbsence;
 
         return $this;
     }
 
-    public function getDateFinAbsence(): ?DateTimeInterface
+    public function getDateFinAbsence(): ?CarbonInterface
     {
         return $this->dateFinAbsence;
     }
 
-    public function setDateFinAbsence(?DateTimeInterface $dateFinAbsence): self
+    public function setDateFinAbsence(?CarbonInterface $dateFinAbsence): self
     {
         $this->dateFinAbsence = $dateFinAbsence;
 

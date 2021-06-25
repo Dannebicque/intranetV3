@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/EnqueteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 06/06/2021 09:53
  */
 
 namespace App\Controller;
@@ -12,6 +12,7 @@ namespace App\Controller;
 use App\Entity\Etudiant;
 use App\Entity\QuestionnaireQuizz;
 use App\Repository\QuestionnaireEtudiantRepository;
+use Carbon\Carbon;
 use DateTime;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -47,7 +48,7 @@ class EnqueteController extends AbstractController
             'etudiant'           => $etudiant->getId(),
         ]);
         if (null !== $quizzEtudiant) {
-            $quizzEtudiant->setDateTermine(new DateTime('now'));
+            $quizzEtudiant->setDateTermine(Carbon::now());
             $quizzEtudiant->setTermine(true);
             $this->getDoctrine()->getManager()->flush();
 

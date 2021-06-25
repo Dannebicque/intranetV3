@@ -1,0 +1,96 @@
+<div class="alert alert-warning">
+    <strong>Analyse des évaluations saisies :</strong><br>
+    <p>
+        Il y a {{ notesAvecAbsence|length }} notes présentes et marquées absentes, qui ne sont pas comptabilisées
+        dans la moyenne. {% if  notesAvecAbsence|length>0 %}<a href="#" id="voirDetailAbsent">Voir le
+                                                                                              détail</a>{% endif %}
+    </p>
+    <p>
+        Il y a {{ notesIncoherentes|length }} notes égales à -0.01, négatives ou supérieures à 20, qui sont
+        comptabilisées
+        dans la moyenne. {% if  notesIncoherentes|length>0 %}
+            <a href="#" id="voirDetailIncoherent">Voir le détail</a>{% endif %}
+    </p>
+</div>
+
+<div id="detailIncoherent" style="display: none">
+    <div class="alert alert-warning">
+        Les notes ci-dessous <strong>sont prises</strong> en compte dans la moyenne.
+    </div>
+    <br>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Etudiant</th>
+            <th>Note</th>
+            <th>Date</th>
+            <th>Evaluation</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for note in notesIncoherentes %}
+            <tr id="ligne_{{ note.id }}">
+                <td>{{ note.etudiant.display }}</td>
+                <td id="note_{{ note.id }}">{{ note.note }}</td>
+                <td>{{ note.evaluation.dateEvaluation|format_date('short') }}</td>
+                <td><a href="" target="_blank">{{ note.evaluation.libelle }}</a></td>
+                <td>
+                    <button id="remplacerParZero" data-note="{{ note.id }}" class="btn btn-danger">Remplacer par
+                                                                                                   0
+                    </button>
+                </td>
+                <td>
+                    <button id="marquerAbsent" data-note="{{ note.id }}" class="btn btn-warning">Marquer
+                                                                                                 Absent
+                    </button>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6" class="bg-pale-success">Pas de notes concernées</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div id="detailAbsent" style="display: none">
+    <div class="alert alert-warning">
+        Les notes ci-dessous <strong>ne sont pas prises</strong> en compte dans la moyenne. <a href="">
+            Supprimer toutes les absences pour lesquelles une note est présente.
+        </a>
+    </div>
+    <br>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Etudiant</th>
+            <th>Note</th>
+            <th>Date</th>
+            <th>Evaluation</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for note in notesAvecAbsence %}
+            <tr id="ligne_{{ note.id }}">
+                <td>{{ note.etudiant.display }}</td>
+                <td id="note_{{ note.id }}">{{ note.note }}</td>
+                <td>{{ note.evaluation.dateEvaluation|format_date('short') }}</td>
+                <td><a href="" target="_blank">{{ note.evaluation.libelle }}</a></td>
+                <td>
+                    <button id="supprAbsent" data-note="{{ note.id }}" class="btn btn-warning">Marquer
+                                                                                               Absent
+                    </button>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5" class="bg-pale-success">Pas de notes concernées</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

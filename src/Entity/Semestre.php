@@ -4,13 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Semestre.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 25/06/2021 10:28
  */
 
 namespace App\Entity;
 
-use App\Utils\Tools;
 use App\Entity\Traits\LifeCycleTrait;
+use App\Utils\Tools;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -29,269 +29,226 @@ class Semestre extends BaseEntity
      * @Groups({"article_administration", "date_administration", "semestre",
      *                                    "etudiants_administration","document_administration"})
      */
-    private $libelle;
+    private ?string $libelle;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", length=20, nullable=true)
      */
-    private $couleur;
+    private ?string $couleur;
 
     /**
-     * @var int
-     *
      * @ORM\Column(type="integer")
      */
-    private $ordreAnnee; //dans l'année
+    private int $ordreAnnee; //dans l'année
 
     /**
-     * @var int
-     *
      * @ORM\Column(type="integer")
      */
-    private $ordreLmd; //dans le LMD
+    private int $ordreLmd; //dans le LMD
 
     /**
-     * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
-    private $actif = false;
+    private bool $actif = false;
 
     /**
-     * @var Semestre
-     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Semestre")
      */
-    private $precedent;
+    private ?Semestre $precedent;
 
     /**
-     * @var Semestre
-     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Semestre")
      */
-    private $suivant;
+    private ?Semestre $suivant;
 
     /**
-     * @var Semestre
-     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Semestre")
      */
-    private $decale; //semestre equivalent en décalé
+    private ?Semestre $decale; //semestre equivalent en décalé
 
     /**
-     * @var int
-     *
      * @ORM\Column(type="integer")
      */
-    private $nbGroupesCm = 1;
+    private int $nbGroupesCm = 1;
 
     /**
-     * @var int
-     *
      * @ORM\Column(type="integer")
      */
-    private $nbGroupesTd = 1;
+    private int $nbGroupesTd = 1;
 
     /**
-     * @var int
-     *
      * @ORM\Column(type="integer")
      */
-    private $nbGroupesTP = 2;
+    private int $nbGroupesTP = 2;
 
     /**
-     * @var
      * @ORM\OneToMany(targetEntity="App\Entity\Etudiant", mappedBy="semestre")
      * @ORM\OrderBy({"nom" = "ASC", "prenom" = "ASC"})
      */
-    private $etudiants;
+    private Collection $etudiants;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
-    private $optMailReleve = false;
+    private bool $optMailReleve = false;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
-    private $optMailModificationNote = false;
+    private bool $optMailModificationNote = false;
 
     /**
-     * @var Personnel
-     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Personnel")
      */
-    private $optDestMailReleve;
+    private ?Personnel $optDestMailReleve;
 
     /**
-     * @var Personnel
-     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Personnel")
      */
-    private $optDestMailModifNote;
+    private ?Personnel $optDestMailModifNote;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
-    private $optEvaluationVisible = true;
+    private bool $optEvaluationVisible = true;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
-    private $optEvaluationModifiable = true;
+    private bool $optEvaluationModifiable = true;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
-    private $optPenaliteAbsence = true;
+    private bool $optPenaliteAbsence = true;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
-    private $optMailAbsenceResp = false;
+    private bool $optMailAbsenceResp = false;
 
     /**
-     * @var Personnel
-     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Personnel")
      */
-    private $optDestMailAbsenceResp;
+    private ?Personnel $optDestMailAbsenceResp;
 
     /**
-     * @var bool
-     *
      * @ORM\Column(type="boolean")
      */
-    private $optMailAbsenceEtudiant = false;
+    private bool $optMailAbsenceEtudiant = false;
 
     /**
-     * @var float
-     *
      * @ORM\Column(type="float")
      */
-    private $optPointPenaliteAbsence = 0.5;
+    private float $optPointPenaliteAbsence = 0.5;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Article", mappedBy="semestres")
      */
-    private $articles;
+    private Collection $articles;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Document", mappedBy="semestres")
      */
-    private $documents;
+    private Collection $documents;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Date", mappedBy="semestres")
      */
-    private $dates;
+    private Collection $dates;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Hrs", mappedBy="semestre")
      */
-    private $hrs;
+    private Collection $hrs;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Parcour", mappedBy="semestre")
      */
-    private $parcours;
+    private Collection $parcours;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Borne", mappedBy="semestres")
      */
-    private $bornes;
+    private Collection $bornes;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\CahierTexte", mappedBy="semestre")
      */
-    private $cahierTextes;
+    private Collection $cahierTextes;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Ue", mappedBy="semestre")
      * @ORM\OrderBy({"numeroUe" = "ASC"})
      */
-    private $ues;
+    private Collection $ues;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\TypeGroupe", mappedBy="semestre")
      * @ORM\OrderBy({"libelle" = "ASC"})
      */
-    private $typeGroupes;
+    private Collection $typeGroupes;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $moisDebut;
+    private ?int $moisDebut;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Annee", inversedBy="semestres")
      * @Groups({"semestre"})
      */
-    private $annee;
+    private ?Annee $annee;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\StagePeriode", mappedBy="semestre")
      */
-    private $stagePeriodes;
+    private Collection $stagePeriodes;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\ScolaritePromo", mappedBy="semestre")
      */
-    private $scolaritePromos;
+    private Collection $scolaritePromos;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Ppn", inversedBy="semestres")
      */
-    private $ppn_actif;
+    private ?Ppn $ppn_actif;
 
     /**
      * @ORM\Column(type="string", length=20)
      */
-    private $codeElement;
+    private ?string $codeElement;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $optEvaluationPreInitialisee = false;
+    private bool $optEvaluationPreInitialisee = false;
 
     /**
      * @ORM\OneToMany(targetEntity="QuestionnaireQualite", mappedBy="semestre")
      */
-    private $qualiteQuestionnaires;
+    private Collection $qualiteQuestionnaires;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $optNbJoursSaisieAbsence = 10;
+    private int $optNbJoursSaisieAbsence = 10;
 
     /**
      * @ORM\OneToMany(targetEntity=ProjetPeriode::class, mappedBy="semestre")
      */
-    private $projetPeriodes;
+    private Collection $projetPeriodes;
 
     /**
      * @ORM\OneToMany(targetEntity=ApcRessource::class, mappedBy="semestre")
      */
-    private $apcRessources;
+    private Collection $apcRessources;
 
     /**
      * @ORM\OneToMany(targetEntity=ApcSae::class, mappedBy="semestre")
      */
-    private $apcSaes;
+    private Collection $apcSaes;
 
     public function __construct()
     {
@@ -313,7 +270,7 @@ class Semestre extends BaseEntity
         $this->apcSaes = new ArrayCollection();
     }
 
-    public function getLibelle()
+    public function getLibelle(): ?string
     {
         return $this->libelle;
     }
@@ -323,9 +280,6 @@ class Semestre extends BaseEntity
         $this->libelle = $libelle;
     }
 
-    /**
-     * @return string
-     */
     public function getCouleur(): ?string
     {
         return $this->couleur;
@@ -336,9 +290,6 @@ class Semestre extends BaseEntity
         $this->couleur = $couleur;
     }
 
-    /**
-     * @return int
-     */
     public function getOrdreAnnee(): ?int
     {
         return $this->ordreAnnee;
@@ -349,9 +300,6 @@ class Semestre extends BaseEntity
         $this->ordreAnnee = $ordreAnnee;
     }
 
-    /**
-     * @return int
-     */
     public function getOrdreLmd(): ?int
     {
         return $this->ordreLmd;
@@ -372,9 +320,6 @@ class Semestre extends BaseEntity
         $this->actif = $actif;
     }
 
-    /**
-     * @return Semestre
-     */
     public function getPrecedent(): ?self
     {
         return $this->precedent;
@@ -385,9 +330,6 @@ class Semestre extends BaseEntity
         $this->precedent = $precedent;
     }
 
-    /**
-     * @return Semestre
-     */
     public function getSuivant(): ?self
     {
         return $this->suivant;
@@ -398,9 +340,6 @@ class Semestre extends BaseEntity
         $this->suivant = $suivant;
     }
 
-    /**
-     * @return Semestre
-     */
     public function getDecale(): ?self
     {
         return $this->decale;
@@ -451,34 +390,22 @@ class Semestre extends BaseEntity
         $this->optMailModificationNote = $optMailModificationNote;
     }
 
-    /**
-     * @return Personnel
-     */
     public function getOptDestMailReleve(): ?Personnel
     {
         return $this->optDestMailReleve;
     }
 
-    /**
-     * @param Personnel|null $optDestMailReleve
-     */
-    public function setOptDestMailReleve($optDestMailReleve): void
+    public function setOptDestMailReleve(?Personnel $optDestMailReleve): void
     {
         $this->optDestMailReleve = $optDestMailReleve;
     }
 
-    /**
-     * @return Personnel
-     */
     public function getOptDestMailModifNote(): ?Personnel
     {
         return $this->optDestMailModifNote;
     }
 
-    /**
-     * @param Personnel|null $optDestMailModifNote
-     */
-    public function setOptDestMailModifNote($optDestMailModifNote): void
+    public function setOptDestMailModifNote(?Personnel $optDestMailModifNote): void
     {
         $this->optDestMailModifNote = $optDestMailModifNote;
     }
@@ -523,18 +450,12 @@ class Semestre extends BaseEntity
         $this->optMailAbsenceResp = $optMailAbsenceResp;
     }
 
-    /**
-     * @return Personnel
-     */
     public function getOptDestMailAbsenceResp(): ?Personnel
     {
         return $this->optDestMailAbsenceResp;
     }
 
-    /**
-     * @param Personnel|null $optDestMailAbsenceResp
-     */
-    public function setOptDestMailAbsenceResp($optDestMailAbsenceResp): void
+    public function setOptDestMailAbsenceResp(?Personnel $optDestMailAbsenceResp): void
     {
         $this->optDestMailAbsenceResp = $optDestMailAbsenceResp;
     }
@@ -559,7 +480,7 @@ class Semestre extends BaseEntity
         $this->optPointPenaliteAbsence = $optPointPenaliteAbsence;
     }
 
-    public function getEtudiants()
+    public function getEtudiants(): ArrayCollection|Collection
     {
         return $this->etudiants;
     }
@@ -578,9 +499,6 @@ class Semestre extends BaseEntity
         return $this->libelle;
     }
 
-    /**
-     * @return Annee
-     */
     public function getAnnee(): ?Annee
     {
         return $this->annee;
@@ -805,7 +723,7 @@ class Semestre extends BaseEntity
         return $this;
     }
 
-    public function getUes()
+    public function getUes(): Collection
     {
         return $this->ues;
     }
@@ -907,7 +825,7 @@ class Semestre extends BaseEntity
         return $this;
     }
 
-    public function getDiplome()
+    public function getDiplome(): ?Diplome
     {
         if (null !== $this->getAnnee() && null !== $this->getAnnee()->getDiplome()) {
             return $this->getAnnee()->getDiplome();
@@ -916,9 +834,6 @@ class Semestre extends BaseEntity
         return null;
     }
 
-    /**
-     * @return AnneeUniversitaire
-     */
     public function getAnneeUniversitaire(): ?AnneeUniversitaire
     {
         if (null !== $this->getDiplome() && null !== $this->getDiplome()->getAnneeUniversitaire()) {
@@ -971,9 +886,6 @@ class Semestre extends BaseEntity
         return $this;
     }
 
-    /**
-     * Get nbgroupeTP.
-     */
     public function getNbgroupeTpEdt(): int
     {
         if (0 === $this->nbGroupesTP % 2) {
@@ -1199,11 +1111,9 @@ class Semestre extends BaseEntity
 
     public function removeApcRessource(ApcRessource $apcRessource): self
     {
-        if ($this->apcRessources->removeElement($apcRessource)) {
-            // set the owning side to null (unless already changed)
-            if ($apcRessource->getSemestre() === $this) {
-                $apcRessource->setSemestre(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->apcRessources->removeElement($apcRessource) && $apcRessource->getSemestre() === $this) {
+            $apcRessource->setSemestre(null);
         }
 
         return $this;
@@ -1229,11 +1139,9 @@ class Semestre extends BaseEntity
 
     public function removeApcSae(ApcSae $apcSae): self
     {
-        if ($this->apcSaes->removeElement($apcSae)) {
-            // set the owning side to null (unless already changed)
-            if ($apcSae->getSemestre() === $this) {
-                $apcSae->setSemestre(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->apcSaes->removeElement($apcSae) && $apcSae->getSemestre() === $this) {
+            $apcSae->setSemestre(null);
         }
 
         return $this;

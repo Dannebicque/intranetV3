@@ -1,11 +1,11 @@
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/covid.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/11/2020 15:33
+// @lastUpdate 08/06/2021 08:24
 import '../../vendor/jquery.collection.min'
 import '../../vendor/bootstrap-datepicker/locales/bootstrap-datepicker.fr.min'
-import $ from 'jquery'
+// import $ from 'jquery'
 
 
 $(document).ready(function () {

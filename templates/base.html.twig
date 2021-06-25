@@ -206,8 +206,9 @@
         {% if (is_granted('ROLE_PERMANENT') and user_data.departementMultiple == true) %}
             <div class="dropdown d-none d-md-block">
                 <span class="topbar-btn" data-toggle="dropdown">
-                    <i class="fas fa-random"></i></span>
-                <div class="dropdown-menu dropdown-grid">
+                    <i class="fas fa-random"></i>
+                </span>
+                <div class="dropdown-menu dropdown-grid cols-4">
                     {% for departement in user_data.user.getPersonnelDepartements %}
                         <a class="dropdown-item {% if departement.defaut == true %}is-default{% endif %}"
                            href="{{ path('security_change_departement',{departement:departement.departement.uuidString}) }}">

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/TypeHrs.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/06/2021 10:56
+ * @lastUpdate 25/06/2021 10:28
  */
 
 namespace App\Entity;
@@ -43,30 +43,30 @@ class TypeHrs extends BaseEntity
      * @ORM\Column(type="string", length=100)
      * @Groups({"type_hrs_administration"})
      */
-    private $libelle;
+    private ?string $libelle;
 
     /**
      * @ORM\Column(type="string", length=20)
      * @Groups({"type_hrs_administration"})
      */
-    private $type;
+    private ?string $type;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Hrs", mappedBy="typeHrs")
      */
-    private $hrs;
+    private Collection $hrs;
 
     /**
      * @ORM\Column(type="boolean")
      * @Groups({"type_hrs_administration"})
      */
-    private $incluService;
+    private bool $incluService = false;
 
     /**
      * @ORM\Column(type="float")
      * @Groups({"type_hrs_administration"})
      */
-    private $maximum;
+    private float $maximum = 96;
 
     public function __construct()
     {
@@ -140,7 +140,7 @@ class TypeHrs extends BaseEntity
         return $this;
     }
 
-    public function getType()
+    public function getType(): ?string
     {
         return $this->type;
     }

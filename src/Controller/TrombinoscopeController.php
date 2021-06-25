@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/TrombinoscopeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/05/2021 16:35
+ * @lastUpdate 25/06/2021 10:28
  */
 
 namespace App\Controller;
 
+use App\Classes\Configuration;
 use App\Classes\MyExport;
 use App\Classes\MyExportListing;
 use App\Classes\Pdf\MyPDF;
@@ -47,7 +48,6 @@ class TrombinoscopeController extends BaseController
      * @Route("/etudiant/export/{typeGroupe<\d+>}.{_format}", name="trombinoscope_etudiant_export", methods="GET",
      *                                                   requirements={"_format"="csv|xlsx|pdf"})
      *
-     *
      * @throws Exception
      * @throws LoaderError
      * @throws RuntimeError
@@ -71,7 +71,6 @@ class TrombinoscopeController extends BaseController
      *                                                           methods="GET",
      *                                                           requirements={"_format"="csv|xlsx|pdf"})
      *
-     *
      * @throws Exception
      * @throws LoaderError
      * @throws RuntimeError
@@ -94,9 +93,9 @@ class TrombinoscopeController extends BaseController
      * @Route("/etudiant/export-image/{typeGroupe<\d+>}.pdf", name="trombinoscope_etudiant_image", methods="GET")
      *
      * @return Response
+     *
      * @throws SyntaxError
      * @throws LoaderError
-     *
      * @throws RuntimeError
      */
     public function trombiEtudiantExportImage(
@@ -106,8 +105,8 @@ class TrombinoscopeController extends BaseController
         return $myPDF::generePdf('pdf/trombinoscope.html.twig',
             [
                 'typeGroupe' => $typeGroupe,
-                'groupes'    => $typeGroupe->getGroupes(),
-                'semestre'   => $typeGroupe->getSemestre(),
+                'groupes' => $typeGroupe->getGroupes(),
+                'semestre' => $typeGroupe->getSemestre(),
             ],
             null !== $typeGroupe->getSemestre() ? 'trombinoscope-' . $typeGroupe->getSemestre()->getLibelle() : '',
             null !== $this->getDepartement() ? $this->getDepartement()->getLibelle() : ''
@@ -139,33 +138,35 @@ class TrombinoscopeController extends BaseController
         }
 
         return $this->render('trombinoscope/trombiEtudiant.html.twig', [
-            'semestre'           => $semestre,
+            'semestre' => $semestre,
             'selectedTypeGroupe' => $typegroupe,
-            'groupes'            => $groupes,
+            'groupes' => $groupes,
         ]);
     }
 
     /**
      * @Route("/personnel/{type}", name="trombinoscope_personnel", options={"expose":true})
-     *
      */
-    public function trombiPersonnel(PersonnelRepository $personnelRepository, $type): Response
-    {
+    public function trombiPersonnel(
+        Configuration $configuration,
+        PersonnelRepository $personnelRepository,
+        $type
+    ): Response {
         $personnels = $personnelRepository->findByType(
             $type,
-            $this->dataUserSession->getDepartementId()
+            $this->dataUserSession->getDepartementId(),
+            $configuration->get('AFFICHAGE_TROMBI')
         );
 
         return $this->render('trombinoscope/trombiPersonnel.html.twig', [
             'personnels' => $personnels,
-            'type'       => $type,
+            'type' => $type,
         ]);
     }
 
     /**
      * @Route("/{type}.{_format}", name="trombinoscope_personnel_export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"})
-     *
      */
     public function trombiPersonnelExport(
         MyExport $myExport,

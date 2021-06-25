@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Apogee/GenereCodeApogee.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/06/2021 12:07
+ * @lastUpdate 25/06/2021 10:28
  */
 
 namespace App\Classes\Apogee;
@@ -34,6 +34,8 @@ class GenereCodeApogee
         if (null === $this->diplome) {
             return false;
         }
+
+        return true;
     }
 
     public function genereCodes(): bool
@@ -41,8 +43,8 @@ class GenereCodeApogee
         //annees
         $annees = $this->diplome->getAnnees();
         foreach ($annees as $annee) {
-            $debut = substr(1, strlen($annee->getCodeEtape() - 1),
-                $annee->getCodeEtape()); //je récupère le code étape de l'année, et je retire le 5 et le nuéro.
+            $debut = substr($annee->getCodeEtape(), 1,
+                4); //je récupère le code étape de l'année, et je retire le 5 et le nuéro.
             $semestres = $annee->getSemestres();
             foreach ($semestres as $semestre) {
                 $semestre->setCodeElement($debut . $semestre->getOrdreLmd());
@@ -69,10 +71,10 @@ class GenereCodeApogee
                     if (1 === count($sae->getApcSaeCompetences())) {
                         $ue = $sae->getApcSaeCompetences()[0]->getCompetence()->getCouleur();
                         $sae->setCodeElement($debut . $semestre->getOrdreLmd() . $ue[1] . ((int)substr($sae->getCodeMatiere(),
-                                    -2) + 49));
+                                    -2) + 50));
                     } else {
                         $sae->setCodeElement($debut . $semestre->getOrdreLmd() . 'M' . ((int)substr($sae->getCodeMatiere(),
-                                    -2) + 49));
+                                    -2) + 50));
                     }
                 }
             }

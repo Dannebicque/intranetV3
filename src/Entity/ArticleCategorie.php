@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ArticleCategorie.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:49
+ * @lastUpdate 06/06/2021 11:05
  */
 
 namespace App\Entity;
@@ -17,39 +17,27 @@ use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ArticleCategorieRepository")
  */
-class ArticleCategorie
+class ArticleCategorie extends BaseEntity
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
-
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"article_administration"})
      */
-    private $libelle;
+    private ?string $libelle;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="categorie")
      */
-    private $articles;
+    private Collection $articles;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Departement", inversedBy="articleCategories")
      */
-    private $departement;
+    private ?Departement $departement;
 
     public function __construct()
     {
         $this->articles = new ArrayCollection();
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     public function getLibelle(): ?string

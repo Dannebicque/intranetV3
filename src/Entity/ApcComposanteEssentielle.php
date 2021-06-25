@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcComposanteEssentielle.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 05/06/2021 17:33
  */
 
 namespace App\Entity;
@@ -24,19 +24,14 @@ class ApcComposanteEssentielle extends BaseEntity
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $libelle;
+    private ?string $libelle;
 
     /**
      * @ORM\ManyToOne(targetEntity=ApcCompetence::class, inversedBy="apcComposanteEssentielles")
      */
-    private $competence;
+    private ?ApcCompetence $competence;
 
-    /**
-     * ApcComposanteEssentielle constructor.
-     *
-     * @param $competence
-     */
-    public function __construct($competence = null)
+    public function __construct(?ApcCompetence $competence = null)
     {
         $this->competence = $competence;
     }

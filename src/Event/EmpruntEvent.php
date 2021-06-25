@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Event/EmpruntEvent.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:51
+ * @lastUpdate 06/06/2021 09:46
  */
 
 namespace App\Event;
@@ -18,8 +18,7 @@ class EmpruntEvent extends Event
     public const CHGT_ETAT_EMPRUNT_ACCEPTE = 'chgt.emprunt.accepte';
     public const CHGT_ETAT_EMPRUNT_REFUS = 'chgt.emprunt.refus';
 
-    /** @var Emprunt */
-    protected $emprunt;
+    protected Emprunt $emprunt;
 
     public function __construct(Emprunt $emprunt)
     {

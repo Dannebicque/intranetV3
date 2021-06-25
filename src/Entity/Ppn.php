@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Ppn.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 25/06/2021 10:28
  */
 
 namespace App\Entity;
@@ -23,33 +23,29 @@ class Ppn extends BaseEntity
     use LifeCycleTrait;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", length=255)
      */
-    private $libelle;
+    private string $libelle;
 
     /**
-     * @var int
-     *
      * @ORM\Column(type="integer")
      */
-    private $annee;
+    private int $annee;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Matiere", mappedBy="ppn")
      */
-    private $matieres;
+    private Collection $matieres; //todo: a revoir???
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Diplome", inversedBy="ppns")
      */
-    private $diplome;
+    private ?Diplome $diplome;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Semestre", mappedBy="ppn_actif")
      */
-    private $semestres;
+    private Collection $semestres;
 
     public function __construct()
     {

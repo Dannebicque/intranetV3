@@ -24,7 +24,10 @@
     <div class="card">
         <h3 class="card-title">{{ 'adm.alternance.modification.heading'|trans }}</h3>
         <div class="card-body">
-            <h4>Alternance de {{ alternance.etudiant ? alternance.etudiant.displayPr : 'non.defini'|trans }} pour l'année {{ alternance.annee ? alternance.annee.libelle : 'non.defini'|trans }} ({{ alternance.anneeUniversitaire }} / {{ alternance.anneeUniversitaire+1 }})</h4>
+            <h4>Alternance de {{ alternance.etudiant ? alternance.etudiant.displayPr : 'non.defini'|trans }} pour
+                l'année {{ alternance.annee ? alternance.annee.libelle : 'non.defini'|trans }}
+                ({{ alternance.anneeUniversitaire != null ? alternance.anneeUniversitaire.displayAnneeUniversitaire : 'non.defini'|trans }}
+                )</h4>
             {{ include('composants/adm-form.html.twig', {'button_label': 'update'|trans}) }}
         </div>
     </div>

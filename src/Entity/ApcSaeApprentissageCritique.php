@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcSaeApprentissageCritique.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 05/06/2021 18:40
  */
 
 namespace App\Entity;
@@ -24,20 +24,15 @@ class ApcSaeApprentissageCritique extends BaseEntity
     /**
      * @ORM\ManyToOne(targetEntity=ApcSae::class, inversedBy="apcSaeApprentissageCritiques")
      */
-    private $sae;
+    private ?ApcSae $sae;
 
     /**
      * @ORM\ManyToOne(targetEntity=ApcApprentissageCritique::class, inversedBy="apcSaeApprentissageCritiques")
      */
-    private $apprentissageCritique;
+    private ?ApcApprentissageCritique $apprentissageCritique;
 
-    /**
-     * ApcSaeApprentissageCritique constructor.
-     *
-     * @param $sae
-     * @param $apprentissageCritique
-     */
-    public function __construct($sae, $apprentissageCritique)
+
+    public function __construct(ApcSae $sae, ApcApprentissageCritique $apprentissageCritique)
     {
         $this->sae = $sae;
         $this->apprentissageCritique = $apprentissageCritique;

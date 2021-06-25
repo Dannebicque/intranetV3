@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcSae.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/05/2021 15:23
+ * @lastUpdate 05/06/2021 18:40
  */
 
 namespace App\Entity;
@@ -48,17 +48,17 @@ class ApcSae extends AbstractMatiere
     /**
      * @ORM\OneToMany(targetEntity=ApcSaeCompetence::class, mappedBy="sae", cascade={"persist","remove"})
      */
-    private $apcSaeCompetences;
+    private Collection $apcSaeCompetences;
 
     /**
      * @ORM\OneToMany(targetEntity=ApcSaeRessource::class, mappedBy="sae", cascade={"persist","remove"})
      */
-    private $apcSaeRessources;
+    private Collection $apcSaeRessources;
 
     /**
      * @ORM\OneToMany(targetEntity=ApcSaeApprentissageCritique::class, mappedBy="sae")
      */
-    private $apcSaeApprentissageCritiques;
+    private Collection $apcSaeApprentissageCritiques;
 
     /**
      * @ORM\Column(type="text", nullable=true)

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/TypeMateriel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 06/06/2021 09:36
  */
 
 namespace App\Entity;
@@ -25,17 +25,17 @@ class TypeMateriel extends BaseEntity
     /**
      * @ORM\Column(type="string", length=100)
      */
-    private $libelle;
+    private ?string $libelle;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Departement", inversedBy="typeMateriels")
      */
-    private $departement;
+    private Departement $departement;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Materiel", mappedBy="typeMateriel")
      */
-    private $materiels;
+    private Collection $materiels;
 
     public function __construct(Departement $departement)
     {
@@ -60,7 +60,7 @@ class TypeMateriel extends BaseEntity
         return $this->departement;
     }
 
-    public function setDepartement(?Departement $departement): self
+    public function setDepartement(Departement $departement): self
     {
         $this->departement = $departement;
 

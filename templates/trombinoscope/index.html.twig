@@ -24,6 +24,12 @@
             <li class="nav-item">
                 <a class="nav-link enseignanttrombi" data-toggle="tab" href="#" data-type="vacataire" role="tab"> {{ 'vacataires.heading'|trans }}</a>
             </li>
+            {% if settings('AFFICHAGE_TROMBI') == 'separation' %}
+                <li class="nav-item">
+                    <a class="nav-link enseignanttrombi" data-toggle="tab" href="#" data-type="administratif" role="tab">
+                        {{ 'administratifs.et.techniques.heading'|trans }}</a>
+                </li>
+            {% endif %}
         </ul>
         <div class="buttons">
             <a href="{{ path('default_homepage') }}" class="btn btn-primary btn-float" data-provide="tooltip"

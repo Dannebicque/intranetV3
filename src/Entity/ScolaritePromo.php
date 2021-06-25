@@ -4,12 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ScolaritePromo.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:49
+ * @lastUpdate 06/06/2021 09:12
  */
 
 namespace App\Entity;
 
-use DateTimeInterface;
+use Carbon\CarbonInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -17,78 +17,67 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ScolaritePromoRepository")
  */
-class ScolaritePromo
+class ScolaritePromo extends BaseEntity
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
-
+    //todo: ajouter horodatage ?
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Semestre", inversedBy="scolaritePromos")
      */
-    private $semestre;
+    private ?Semestre $semestre;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\AnneeUniversitaire", inversedBy="scolaritePromos")
      */
-    private $anneeUniversitaire;
+    private ?AnneeUniversitaire $anneeUniversitaire;
 
     /**
      * @ORM\Column(type="float")
      */
-    private $min = -0.01;
+    private float $min = -0.01;
 
     /**
      * @ORM\Column(type="float")
      */
-    private $max = -0.01;
+    private float $max = -0.01;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $nbEtudiants = 0;
+    private int $nbEtudiants = 0;
 
     /**
      * @ORM\Column(type="float")
      */
-    private $moyenne = -0.01;
+    private float $moyenne = -0.01;
 
     /**
      * @ORM\OneToMany(targetEntity=Scolarite::class, mappedBy="scolaritePromo")
      */
-    private $scolarites;
+    private Collection $scolarites;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $datePublication;
+    private ?CarbonInterface $datePublication;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $publie = false;
+    private bool $publie = false;
 
     /**
      * @ORM\Column(type="array")
      */
-    private $moyenneUes = [];
+    private array $moyenneUes = [];
 
     /**
      * @ORM\Column(type="array")
      */
-    private $moyenneMatieres = [];
+    private array $moyenneMatieres = [];
 
     public function __construct()
     {
         $this->scolarites = new ArrayCollection();
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     public function getSemestre(): ?Semestre
@@ -194,12 +183,12 @@ class ScolaritePromo
         return $this;
     }
 
-    public function getDatePublication(): ?DateTimeInterface
+    public function getDatePublication(): ?CarbonInterface
     {
         return $this->datePublication;
     }
 
-    public function setDatePublication(?DateTimeInterface $datePublication): self
+    public function setDatePublication(?CarbonInterface $datePublication): self
     {
         $this->datePublication = $datePublication;
 

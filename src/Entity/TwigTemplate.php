@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/TwigTemplate.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 06/06/2021 09:30
  */
 
 namespace App\Entity;
@@ -23,12 +23,12 @@ class TwigTemplate extends BaseEntity
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $name;
+    private ?string $name;
 
     /**
      * @ORM\Column(type="text")
      */
-    private $source;
+    private ?string $source;
 
     public function getName(): ?string
     {
@@ -54,7 +54,7 @@ class TwigTemplate extends BaseEntity
         return $this;
     }
 
-    public function __construct($name, $source)
+    public function __construct(string $name, string $source)
     {
         $this->name = $name;
         $this->source = $source;

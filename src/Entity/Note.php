@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Note.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 07/06/2021 11:33
  */
 
 namespace App\Entity;
@@ -29,32 +29,32 @@ class Note extends BaseEntity
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Evaluation", inversedBy="notes")
      */
-    private $evaluation;
+    private ?Evaluation $evaluation;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Etudiant", inversedBy="notes")
      */
-    private $etudiant;
+    private ?Etudiant $etudiant;
 
     /**
      * @ORM\Column(type="float")
      */
-    private $note;
+    private ?float $note;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $commentaire;
+    private ?string $commentaire;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\ModificationNote", mappedBy="note")
      */
-    private $modificationNotes;
+    private Collection $modificationNotes;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $absenceJustifie = false;
+    private bool $absenceJustifie = false;
 
     /**
      * Note constructor.
@@ -101,7 +101,7 @@ class Note extends BaseEntity
         return $this->note;
     }
 
-    public function setNote(float $note): self
+    public function setNote(mixed $note): self
     {
         $this->note = $note;
 

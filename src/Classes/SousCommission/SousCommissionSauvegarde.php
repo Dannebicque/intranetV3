@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/SousCommission/SousCommissionSauvegarde.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/05/2021 16:35
+ * @lastUpdate 21/06/2021 18:33
  */
 
 /*
@@ -20,6 +20,7 @@ use App\Entity\ScolaritePromo;
 use App\Entity\Semestre;
 use App\Repository\ScolaritePromoRepository;
 use App\Repository\ScolariteRepository;
+use Carbon\Carbon;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -136,7 +137,7 @@ class SousCommissionSauvegarde
         return $ssEtudiant;
     }
 
-    public function efface(ScolaritePromo $ssComm)
+    public function efface(ScolaritePromo $ssComm): void
     {
         foreach ($ssComm->getScolarites() as $scolarite) {
             $this->entityManager->remove($scolarite);
@@ -145,7 +146,7 @@ class SousCommissionSauvegarde
         $this->entityManager->flush();
     }
 
-    public function visibilite(ScolaritePromo $ssComm, $visibilite = true)
+    public function visibilite(ScolaritePromo $ssComm, $visibilite = true): void
     {
         foreach ($ssComm->getScolarites() as $scolarite) {
             $scolarite->setDiffuse($visibilite);
@@ -154,7 +155,7 @@ class SousCommissionSauvegarde
         if (false === $visibilite) {
             $ssComm->setDatePublication(null);
         } else {
-            $ssComm->setDatePublication(new DateTime('now'));
+            $ssComm->setDatePublication(Carbon::now());
         }
 
         $this->entityManager->flush();

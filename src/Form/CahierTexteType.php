@@ -4,17 +4,17 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/CahierTexteType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/05/2021 14:21
+ * @lastUpdate 06/06/2021 11:02
  */
 
 namespace App\Form;
 
 use App\Entity\CahierTexte;
 use App\Entity\Semestre;
+use App\Form\Type\CarbonDateTimeType;
 use App\Repository\SemestreRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -38,7 +38,7 @@ class CahierTexteType extends AbstractType
             ->add('description', TextareaType::class, [
                 'label' => 'description',
             ])
-            ->add('dateRetour', DateTimeType::class, [
+            ->add('dateRetour', CarbonDateTimeType::class, [
                 'label' => 'dateRetour',
             ])
             ->add('semestre', EntityType::class, [

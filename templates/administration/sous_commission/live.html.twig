@@ -42,6 +42,10 @@
             <h4><strong>Synthèse</strong> | {{ semestre.display }}</h4>
         </div>
         <div class="card-body">
+            <br>
+            {{ render(controller('App\\Controller\\administration\\NoteController::analyse', {semestre:semestre
+            .id})) }}
+            <br>
             {# todo: bouton pour masquer les colonnes pénalités ou les colonnes modules #}
             <button id="masqueMatieres">Masquer Matieres</button>
             <div style="overflow: auto; width: 100%; height: 500px">
@@ -290,4 +294,14 @@
     {# </table> #}
     {# </div> #}
     {# </div> #}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('adm.notes') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('adm.notes') }}
 {% endblock %}

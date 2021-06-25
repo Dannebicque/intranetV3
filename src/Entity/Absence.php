@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Absence.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/06/2021 11:19
+ * @lastUpdate 06/06/2021 11:21
  */
 
 namespace App\Entity;
@@ -66,13 +66,6 @@ class Absence extends BaseEntity implements Serializable
     private Personnel $personnel;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Matiere", inversedBy="absences")
-     * @MaxDepth(2)
-     * @Groups({"absences_administration"})
-     */
-    private ?Matiere $matiere;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Etudiant", inversedBy="absences")
      * @MaxDepth(2)
      * @Groups({"absences_administration"})
@@ -99,7 +92,7 @@ class Absence extends BaseEntity implements Serializable
         $this->setUuid(Uuid::uuid4());
     }
 
-    public static function getIconStatus(string $status)
+    public static function getIconStatus(string $status): string
     {
         return isset(self::STATUS_COLORS[$status])
             ? sprintf('<i class="fas fa-circle text-%s mr-1"></i> %s', self::STATUS_COLORS[$status], $status)
@@ -111,9 +104,6 @@ class Absence extends BaseEntity implements Serializable
         $this->setUuid(Uuid::uuid4());
     }
 
-    /**
-     * @return ?CarbonInterface
-     */
     public function getDateHeure(): ?CarbonInterface
     {
         return $this->dateHeure;
@@ -124,9 +114,6 @@ class Absence extends BaseEntity implements Serializable
         $this->dateHeure = $dateHeure;
     }
 
-    /**
-     * @return ?CarbonInterface
-     */
     public function getDuree(): ?CarbonInterface
     {
         return $this->duree;
@@ -147,9 +134,6 @@ class Absence extends BaseEntity implements Serializable
         $this->justifie = $justifie;
     }
 
-    /**
-     * @return mixed
-     */
     public function getPersonnel(): ?Personnel
     {
         return $this->personnel;
@@ -160,9 +144,6 @@ class Absence extends BaseEntity implements Serializable
         $this->personnel = $personnel;
     }
 
-    /**
-     * @return mixed
-     */
     public function getEtudiant(): ?Etudiant
     {
         return $this->etudiant;
@@ -171,18 +152,6 @@ class Absence extends BaseEntity implements Serializable
     public function setEtudiant($etudiant): void
     {
         $this->etudiant = $etudiant;
-    }
-
-    public function getMatiere(): ?Matiere
-    {
-        return $this->matiere;
-    }
-
-    public function setMatiere(?Matiere $matiere): self
-    {
-        $this->matiere = $matiere;
-
-        return $this;
     }
 
     public function getDateJustifie(): ?CarbonInterface
@@ -207,7 +176,7 @@ class Absence extends BaseEntity implements Serializable
             'heure' => null !== $this->getDateHeure() ? $this->getDateHeure()->format('H:i') : '-',
             'personnel' => null !== $this->getPersonnel() ? $this->getPersonnel()->getDisplay() : '-',
             'codeMatiere' => null !== $this->getIdMatiere(),
-            'typeIdMatiere' => null !== $this->getTypeIdMatiere()
+            'typeIdMatiere' => null !== $this->getTypeIdMatiere(),
         ];
     }
 

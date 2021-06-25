@@ -4,13 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/QuestionnaireEtudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2021 08:46
+ * @lastUpdate 06/06/2021 08:50
  */
 
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
-use DateTimeInterface;
+use Carbon\CarbonInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -47,12 +47,12 @@ class QuestionnaireEtudiant extends BaseEntity
      * @ORM\OneToMany(targetEntity="QuestionnaireEtudiantReponse", mappedBy="questionnaireEtudiant",
      *                                                             cascade={"persist", "remove"})
      */
-    private $questionnaireEtudiantReponses;
+    private Collection $questionnaireEtudiantReponses;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private ?DateTimeInterface $dateTermine;
+    private ?CarbonInterface $dateTermine;
 
     public function __construct(Etudiant $etudiant, $questionnaire, $typeQuestionnaire)
     {
@@ -124,12 +124,12 @@ class QuestionnaireEtudiant extends BaseEntity
         return $this;
     }
 
-    public function getDateTermine(): ?DateTimeInterface
+    public function getDateTermine(): ?CarbonInterface
     {
         return $this->dateTermine;
     }
 
-    public function setDateTermine(DateTimeInterface $dateTermine): self
+    public function setDateTermine(CarbonInterface $dateTermine): self
     {
         $this->dateTermine = $dateTermine;
 

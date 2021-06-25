@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ProjetPeriode.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 06/06/2021 08:48
  */
 
 namespace App\Entity;
@@ -12,6 +12,7 @@ namespace App\Entity;
 use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\UuidTrait;
 use App\Repository\ProjetPeriodeRepository;
+use Carbon\CarbonInterface;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -30,42 +31,42 @@ class ProjetPeriode extends BaseEntity
     /**
      * @ORM\Column(type="string", length=100)
      */
-    private $libelle;
+    private ?string $libelle;
 
     /**
      * @ORM\ManyToOne(targetEntity=Semestre::class, inversedBy="projetPeriodes")
      */
-    private $semestre;
+    private ?Semestre $semestre;
 
     /**
      * @ORM\ManyToMany(targetEntity=Personnel::class, inversedBy="projetPeriodes")
      */
-    private $responsables;
+    private Collection $responsables;
 
     /**
      * @ORM\Column(type="date")
      */
-    private $dateDebut;
+    private ?CarbonInterface $dateDebut;
 
     /**
      * @ORM\Column(type="date")
      */
-    private $dateFin;
+    private ?CarbonInterface $dateFin;
 
     /**
      * @ORM\ManyToOne(targetEntity=AnneeUniversitaire::class, inversedBy="projetPeriodes")
      */
-    private $anneeUniversitaire;
+    private ?AnneeUniversitaire $anneeUniversitaire;
 
     /**
      * @ORM\OneToMany(targetEntity=ProjetEtudiant::class, mappedBy="projetPeriode")
      */
-    private $projetEtudiants;
+    private Collection $projetEtudiants;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $texteLibre;
+    private ?string $texteLibre;
 
     public function __construct()
     {
@@ -129,24 +130,24 @@ class ProjetPeriode extends BaseEntity
         return $this;
     }
 
-    public function getDateDebut(): ?DateTimeInterface
+    public function getDateDebut(): ?CarbonInterface
     {
         return $this->dateDebut;
     }
 
-    public function setDateDebut(DateTimeInterface $dateDebut): self
+    public function setDateDebut(CarbonInterface $dateDebut): self
     {
         $this->dateDebut = $dateDebut;
 
         return $this;
     }
 
-    public function getDateFin(): ?DateTimeInterface
+    public function getDateFin(): ?CarbonInterface
     {
         return $this->dateFin;
     }
 
-    public function setDateFin(DateTimeInterface $dateFin): self
+    public function setDateFin(CarbonInterface $dateFin): self
     {
         $this->dateFin = $dateFin;
 

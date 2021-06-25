@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/CovidAttestationPersonnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 06/06/2021 09:55
  */
 
 namespace App\Controller\superAdministration;
@@ -16,6 +16,7 @@ use App\Entity\Constantes;
 use App\Entity\CovidAttestationPersonnel;
 use App\Event\CovidEvent;
 use App\Repository\CovidAttestationPersonnelRepository;
+use Carbon\Carbon;
 use DateTime;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -59,7 +60,7 @@ class CovidAttestationPersonnelController extends BaseController
         $etat
     ): Response {
         $covidAttestationPersonnel->setValidationDepartement(Tools::convertToBool($etat));
-        $covidAttestationPersonnel->setDateValidationDepartement(new DateTime());
+        $covidAttestationPersonnel->setDateValidationDepartement(Carbon::now());
         $this->entityManager->flush();
 
         $event = new CovidEvent($covidAttestationPersonnel);

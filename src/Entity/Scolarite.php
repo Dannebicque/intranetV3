@@ -4,13 +4,14 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Scolarite.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 24/06/2021 16:08
  */
 
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\UuidTrait;
+use App\Utils\Tools;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 
@@ -46,7 +47,7 @@ class Scolarite extends BaseEntity
     /**
      * @ORM\Column(type="float")
      */
-    private float $moyenne = 0;
+    private ?float $moyenne = 0;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Etudiant", inversedBy="scolarites")
@@ -66,7 +67,7 @@ class Scolarite extends BaseEntity
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\AnneeUniversitaire", inversedBy="scolarites")
      */
-    private $anneeUniversitaire;
+    private ?AnneeUniversitaire $anneeUniversitaire;
 
     /**
      * @ORM\Column(type="boolean")
@@ -76,7 +77,7 @@ class Scolarite extends BaseEntity
     /**
      * @ORM\ManyToOne(targetEntity=ScolaritePromo::class, inversedBy="scolarites")
      */
-    private $scolaritePromo;
+    private ?ScolaritePromo $scolaritePromo;
 
     /**
      * @ORM\Column(type="array", nullable=true)
@@ -164,9 +165,9 @@ class Scolarite extends BaseEntity
         return $this->moyenne;
     }
 
-    public function setMoyenne(float $moyenne): self
+    public function setMoyenne(mixed $moyenne): self
     {
-        $this->moyenne = $moyenne;
+        $this->moyenne = Tools::convertToFloat($moyenne);
 
         return $this;
     }
@@ -255,7 +256,7 @@ class Scolarite extends BaseEntity
         return $this->moyennesMatieres;
     }
 
-    public function setMoyennesMatieres(?array $moyennesMatieres): self
+    public function setMoyennesMatieres(array $moyennesMatieres): self
     {
         $this->moyennesMatieres = $moyennesMatieres;
 
@@ -267,7 +268,7 @@ class Scolarite extends BaseEntity
         return $this->moyennesUes;
     }
 
-    public function setMoyennesUes(?array $moyennesUes): self
+    public function setMoyennesUes(array $moyennesUes): self
     {
         $this->moyennesUes = $moyennesUes;
 
@@ -309,13 +310,13 @@ class Scolarite extends BaseEntity
         $ue = $this->getMoyennesUesById($idUe);
         if ([] !== $ue) {
             return [
-                'style'   => $this->getStyle($ue['moyenne']),
+                'style' => $this->getStyle($ue['moyenne']),
                 'moyenne' => $ue['moyenne'],
             ];
         }
 
         return [
-            'style'   => 'notenormale',
+            'style' => 'notenormale',
             'moyenne' => -0.01,
         ];
     }

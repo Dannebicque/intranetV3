@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Previsionnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/05/2021 09:11
+ * @lastUpdate 06/06/2021 11:17
  */
 
 namespace App\Entity;
@@ -23,14 +23,9 @@ class Previsionnel extends BaseEntity
     use MatiereTrait;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Matiere", inversedBy="previsionnels", fetch="EAGER")
-     */
-    private $matiere;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Personnel", inversedBy="previsionnels", fetch="EAGER" )
      */
-    private $personnel;
+    private ?Personnel $personnel;
 
     /**
      * @ORM\Column(type="integer")
@@ -78,18 +73,6 @@ class Previsionnel extends BaseEntity
         $this->annee = $annee;
     }
 
-    public function getMatiere(): ?Matiere
-    {
-        return $this->matiere;
-    }
-
-    public function setMatiere(?Matiere $matiere): self
-    {
-        $this->matiere = $matiere;
-
-        return $this;
-    }
-
     public function getPersonnel(): ?Personnel
     {
         return $this->personnel;
@@ -131,7 +114,7 @@ class Previsionnel extends BaseEntity
         return $this->nbHCm;
     }
 
-    public function setNbHCm(?float $nbHCm = 0): self
+    public function setNbHCm(float $nbHCm = 0): self
     {
         $this->nbHCm = $nbHCm;
 

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Parcour.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 06/06/2021 08:30
  */
 
 namespace App\Entity;
@@ -32,7 +32,7 @@ class Parcour extends BaseEntity
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Matiere", mappedBy="parcours")
      */
-    private $matieres;
+    private Collection $matieres;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Semestre", inversedBy="parcours")
@@ -47,7 +47,7 @@ class Parcour extends BaseEntity
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Groupe", mappedBy="parcours")
      */
-    private $groupes;
+    private Collection $groupes;
 
     public function __construct(Semestre $semestre)
     {

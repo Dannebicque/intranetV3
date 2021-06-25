@@ -4,13 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/StagePeriodeSoutenance.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/04/2021 15:30
+ * @lastUpdate 06/06/2021 09:30
  */
 
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
-use DateTimeInterface;
+use Carbon\CarbonInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -29,17 +29,17 @@ class StagePeriodeSoutenance extends BaseEntity
     /**
      * @ORM\Column(type="date")
      */
-    private ?DateTimeInterface $dateDebut;
+    private ?CarbonInterface $dateDebut;
 
     /**
      * @ORM\Column(type="date")
      */
-    private ?DateTimeInterface $dateFin;
+    private ?CarbonInterface $dateFin;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private ?DateTimeInterface $dateRenduRapport;
+    private ?CarbonInterface $dateRenduRapport;
 
     public function getStagePeriode(): ?StagePeriode
     {
@@ -53,36 +53,36 @@ class StagePeriodeSoutenance extends BaseEntity
         return $this;
     }
 
-    public function getDateDebut(): ?DateTimeInterface
+    public function getDateDebut(): ?CarbonInterface
     {
         return $this->dateDebut;
     }
 
-    public function setDateDebut(DateTimeInterface $dateDebut): self
+    public function setDateDebut(CarbonInterface $dateDebut): self
     {
         $this->dateDebut = $dateDebut;
 
         return $this;
     }
 
-    public function getDateFin(): ?DateTimeInterface
+    public function getDateFin(): ?CarbonInterface
     {
         return $this->dateFin;
     }
 
-    public function setDateFin(DateTimeInterface $dateFin): self
+    public function setDateFin(CarbonInterface $dateFin): self
     {
         $this->dateFin = $dateFin;
 
         return $this;
     }
 
-    public function getDateRenduRapport(): ?DateTimeInterface
+    public function getDateRenduRapport(): ?CarbonInterface
     {
         return $this->dateRenduRapport;
     }
 
-    public function setDateRenduRapport(?DateTimeInterface $dateRenduRapport): self
+    public function setDateRenduRapport(?CarbonInterface $dateRenduRapport): self
     {
         $this->dateRenduRapport = $dateRenduRapport;
 

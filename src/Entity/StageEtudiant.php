@@ -4,14 +4,15 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/StageEtudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/03/2021 19:26
+ * @lastUpdate 16/06/2021 08:56
  */
 
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\UuidTrait;
-use DateTimeInterface;
+use App\Utils\Tools;
+use Carbon\CarbonInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -57,160 +58,154 @@ class StageEtudiant extends BaseEntity
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\StagePeriode", inversedBy="stageEtudiants")
      */
-    private $stagePeriode;
+    private ?StagePeriode $stagePeriode;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Etudiant", inversedBy="stageEtudiants")
      * @Groups({"stage_periode_gestion"})
      */
-    private $etudiant;
+    private ?Etudiant $etudiant;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Contact", cascade={"persist", "remove"})
      * @Groups({"stage_entreprise_administration", "stage_entreprise"})
      */
-    private $tuteur;
+    private ?Contact $tuteur;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"stage_entreprise_administration", "stage_entreprise"})
      */
-    private $serviceStageEntreprise;
+    private ?string $serviceStageEntreprise;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      * @Groups({"stage_entreprise"})
      */
-    private $sujetStage;
+    private ?string $sujetStage;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $dateDepotFormulaire;
+    private ?CarbonInterface $dateDepotFormulaire;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $dateValidation;
+    private ?CarbonInterface $dateValidation;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $dateConventionEnvoyee;
+    private ?CarbonInterface $dateConventionEnvoyee;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $dateConventionRecu;
+    private ?CarbonInterface $dateConventionRecu;
 
     /**
      * @ORM\Column(type="string", length=30)
      */
-    private $etatStage = 'ETAT_STAGE_AUTORISE';
+    private string $etatStage = 'ETAT_STAGE_AUTORISE';
 
     /**
      * @ORM\Column(type="date")
      * @Groups({"stage_entreprise_administration", "stage_entreprise", "stage_periode_gestion"})
      */
-    private $dateDebutStage;
+    private ?CarbonInterface $dateDebutStage;
 
     /**
      * @ORM\Column(type="date")
      * @Groups({"stage_entreprise_administration", "stage_entreprise", "stage_periode_gestion"})
      */
-    private $dateFinStage;
+    private ?CarbonInterface $dateFinStage;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $activites;
+    private ?string $activites;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $amenagementStage;
+    private ?string $amenagementStage;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $gratification = false;
+    private bool $gratification = false;
 
     /**
      * @ORM\Column(type="float")
      *
      * @Assert\Type("float")
-     *
      */
-    private $gratificationMontant;
+    private ?float $gratificationMontant;
 
     /**
      * @ORM\Column(type="string", length=1)
      */
-    private $gratificationPeriode = 'H';
+    private string $gratificationPeriode = 'H';
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $avantages;
+    private ?string $avantages;
 
     /**
      * @ORM\Column(type="float")
      */
-    private $dureeHebdomadaire = 35;
+    private float $dureeHebdomadaire = 35;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $dureeJoursStage = 0;
+    private int $dureeJoursStage = 0;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Personnel", inversedBy="stageEtudiants")
      * @Groups({"stage_periode_gestion"})
      */
-    private $tuteurUniversitaire;
+    private ?Personnel $tuteurUniversitaire;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Entreprise", inversedBy="stageEtudiants", cascade={"persist", "remove"})
      * @Groups({"stage_entreprise_administration", "stage_periode_gestion"})
      */
-    private $entreprise;
+    private ?Entreprise $entreprise;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $dateAutorise;
+    private ?CarbonInterface $dateAutorise;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $dateImprime;
+    private ?CarbonInterface $dateImprime;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Adresse", cascade={"persist", "remove"})
      */
-    private $adresseStage;
+    private ?Adresse $adresseStage;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $periodesInterruptions;
+    private ?string $periodesInterruptions;
 
     /**
      * @ORM\Column(type="text", nullable=true)
      */
-    private $commentaireDureeHebdomadaire;
+    private ?string $commentaireDureeHebdomadaire;
 
     /**
      * @ORM\OneToMany(targetEntity=StageAvenant::class, mappedBy="stageEtudiant")
      */
-    private $stageAvenants;
+    private Collection $stageAvenants;
 
-    /**
-     * StageEtudiant constructor.
-     *
-     * @param $gratificationMontant
-     */
-    public function __construct($gratificationMontant)
+    public function __construct(?float $gratificationMontant)
     {
         $this->setUuid(Uuid::uuid4());
 
@@ -283,48 +278,48 @@ class StageEtudiant extends BaseEntity
         return $this;
     }
 
-    public function getDateDepotFormulaire(): ?DateTimeInterface
+    public function getDateDepotFormulaire(): ?CarbonInterface
     {
         return $this->dateDepotFormulaire;
     }
 
-    public function setDateDepotFormulaire(DateTimeInterface $dateDepotFormulaire): self
+    public function setDateDepotFormulaire(CarbonInterface $dateDepotFormulaire): self
     {
         $this->dateDepotFormulaire = $dateDepotFormulaire;
 
         return $this;
     }
 
-    public function getDateValidation(): ?DateTimeInterface
+    public function getDateValidation(): ?CarbonInterface
     {
         return $this->dateValidation;
     }
 
-    public function setDateValidation(DateTimeInterface $dateValidation): self
+    public function setDateValidation(CarbonInterface $dateValidation): self
     {
         $this->dateValidation = $dateValidation;
 
         return $this;
     }
 
-    public function getDateConventionEnvoyee(): ?DateTimeInterface
+    public function getDateConventionEnvoyee(): ?CarbonInterface
     {
         return $this->dateConventionEnvoyee;
     }
 
-    public function setDateConventionEnvoyee(DateTimeInterface $dateConventionEnvoyee): self
+    public function setDateConventionEnvoyee(CarbonInterface $dateConventionEnvoyee): self
     {
         $this->dateConventionEnvoyee = $dateConventionEnvoyee;
 
         return $this;
     }
 
-    public function getDateConventionRecu(): ?DateTimeInterface
+    public function getDateConventionRecu(): ?CarbonInterface
     {
         return $this->dateConventionRecu;
     }
 
-    public function setDateConventionRecu(DateTimeInterface $dateConventionRecu): self
+    public function setDateConventionRecu(CarbonInterface $dateConventionRecu): self
     {
         $this->dateConventionRecu = $dateConventionRecu;
 
@@ -343,24 +338,24 @@ class StageEtudiant extends BaseEntity
         return $this;
     }
 
-    public function getDateDebutStage(): ?DateTimeInterface
+    public function getDateDebutStage(): ?CarbonInterface
     {
         return $this->dateDebutStage;
     }
 
-    public function setDateDebutStage(DateTimeInterface $dateDebutStage): self
+    public function setDateDebutStage(CarbonInterface $dateDebutStage): self
     {
         $this->dateDebutStage = $dateDebutStage;
 
         return $this;
     }
 
-    public function getDateFinStage(): ?DateTimeInterface
+    public function getDateFinStage(): ?CarbonInterface
     {
         return $this->dateFinStage;
     }
 
-    public function setDateFinStage(DateTimeInterface $dateFinStage): self
+    public function setDateFinStage(CarbonInterface $dateFinStage): self
     {
         $this->dateFinStage = $dateFinStage;
 
@@ -408,9 +403,9 @@ class StageEtudiant extends BaseEntity
         return $this->gratificationMontant;
     }
 
-    public function setGratificationMontant(float $gratificationMontant): self
+    public function setGratificationMontant(mixed $gratificationMontant): self
     {
-        $this->gratificationMontant = $gratificationMontant;
+        $this->gratificationMontant = Tools::convertToFloat($gratificationMontant);
 
         return $this;
     }
@@ -420,7 +415,7 @@ class StageEtudiant extends BaseEntity
         return $this->gratificationPeriode;
     }
 
-    public function setGratificationPeriode(?string $gratificationPeriode): self
+    public function setGratificationPeriode(string $gratificationPeriode): self
     {
         $this->gratificationPeriode = $gratificationPeriode;
 
@@ -487,24 +482,24 @@ class StageEtudiant extends BaseEntity
         return $this;
     }
 
-    public function getDateAutorise(): ?DateTimeInterface
+    public function getDateAutorise(): ?CarbonInterface
     {
         return $this->dateAutorise;
     }
 
-    public function setDateAutorise(DateTimeInterface $dateAutorise): self
+    public function setDateAutorise(CarbonInterface $dateAutorise): self
     {
         $this->dateAutorise = $dateAutorise;
 
         return $this;
     }
 
-    public function getDateImprime(): ?DateTimeInterface
+    public function getDateImprime(): ?CarbonInterface
     {
         return $this->dateImprime;
     }
 
-    public function setDateImprime(DateTimeInterface $dateImprime): self
+    public function setDateImprime(CarbonInterface $dateImprime): self
     {
         $this->dateImprime = $dateImprime;
 

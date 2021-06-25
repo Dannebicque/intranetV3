@@ -4,13 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/CelcatEvent.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 25/06/2021 10:28
  */
 
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
-use DateTimeInterface;
+use Carbon\CarbonInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -24,87 +24,87 @@ class CelcatEvent extends BaseEntity
     /**
      * @ORM\Column(type="integer")
      */
-    private $eventId;
+    private ?int $eventId;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $jour;
+    private ?int $jour;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $debut;
+    private ?CarbonInterface $debut;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $fin;
+    private ?CarbonInterface $fin;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $semaineFormation;
+    private ?int $semaineFormation;
 
     /**
      * @ORM\Column(type="string", length=20)
      */
-    private $type;
+    private ?string $type;
 
     /**
      * @ORM\Column(type="string", length=20)
      */
-    private $codeModule;
+    private ?string $codeModule;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $libModule;
+    private ?string $libModule;
 
     /**
      * @ORM\Column(type="string", length=20)
      */
-    private $codePersonnel;
+    private ?string $codePersonnel;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $libPersonnel;
+    private ?string $libPersonnel;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $departementId;
+    private ?int $departementId;
 
     /**
      * @ORM\Column(type="string", length=20)
      */
-    private $codeSalle;
+    private ?string $codeSalle;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $libSalle;
+    private ?string $libSalle;
 
     /**
      * @ORM\Column(type="string", length=30)
      */
-    private $codeGroupe;
+    private ?string $codeGroupe;
 
     /**
      * @ORM\Column(type="string", length=30)
      */
-    private $libGroupe;
+    private ?string $libGroupe;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\AnneeUniversitaire")
      */
-    private $anneeUniversitaire;
+    private ?AnneeUniversitaire $anneeUniversitaire;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $updateEvent;
+    private ?CarbonInterface $updateEvent;
 
     public function getEventId(): ?int
     {
@@ -130,24 +130,24 @@ class CelcatEvent extends BaseEntity
         return $this;
     }
 
-    public function getDebut(): ?DateTimeInterface
+    public function getDebut(): ?CarbonInterface
     {
         return $this->debut;
     }
 
-    public function setDebut(DateTimeInterface $debut): self
+    public function setDebut(CarbonInterface $debut): self
     {
         $this->debut = $debut;
 
         return $this;
     }
 
-    public function getFin(): ?DateTimeInterface
+    public function getFin(): ?CarbonInterface
     {
         return $this->fin;
     }
 
-    public function setFin(DateTimeInterface $fin): self
+    public function setFin(CarbonInterface $fin): self
     {
         $this->fin = $fin;
 
@@ -298,12 +298,12 @@ class CelcatEvent extends BaseEntity
         return $this;
     }
 
-    public function getUpdateEvent(): ?DateTimeInterface
+    public function getUpdateEvent(): ?CarbonInterface
     {
         return $this->updateEvent;
     }
 
-    public function setUpdateEvent(DateTimeInterface $updateEvent): self
+    public function setUpdateEvent(CarbonInterface $updateEvent): self
     {
         $this->updateEvent = $updateEvent;
 

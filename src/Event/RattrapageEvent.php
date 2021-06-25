@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Event/RattrapageEvent.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:51
+ * @lastUpdate 06/06/2021 09:46
  */
 
 namespace App\Event;
@@ -18,8 +18,7 @@ class RattrapageEvent extends Event
     public const DECISION_RATTRAPAGE_ACCEPTEE = 'decision.rattrapage.acceptee';
     public const DECISION_RATTRAPAGE_REFUSEE = 'decision.rattrapage.refusee';
 
-    /** @var Rattrapage */
-    protected $rattrapage;
+    protected Rattrapage $rattrapage;
 
     public function __construct(Rattrapage $rattrapage)
     {

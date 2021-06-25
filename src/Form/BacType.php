@@ -4,13 +4,14 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/BacType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/05/2021 18:29
+ * @lastUpdate 05/06/2021 18:48
  */
 
 namespace App\Form;
 
 use App\Entity\Bac;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -23,6 +24,7 @@ class BacType extends AbstractType
             ->add('libelle', TextType::class, ['label' => 'libelle'])
             ->add('libelleLong', TextType::class, ['label' => 'libelle_long'])
             ->add('codeApogee', TextType::class, ['label' => 'codeApogee'])
+            ->add('typeBac', ChoiceType::class, ['label' => 'typeBac'])//todo: a finir
         ;
     }
 

@@ -4,110 +4,97 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/EdtPlanning.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 17/05/2021 18:44
+ * @lastUpdate 25/06/2021 10:28
  */
 
 namespace App\Entity;
 
 use App\Entity\Traits\MatiereTrait;
-use Carbon\Carbon;
 use Carbon\CarbonInterface;
+use function chr;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EdtPlanningRepository")
  */
-class EdtPlanning
+class EdtPlanning extends BaseEntity
 {
     use MatiereTrait;
 
     /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $jour;
+    private ?int $jour;
 
     /**
      * @ORM\Column(type="string", length=30)
      */
-    private $salle;
+    private ?string $salle;
 
     /**
      * @ORM\Column(type="string", length=20)
      */
-    private $ordre = 0;
+    private int $ordre = 0;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $debut;
+    private ?int $debut;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $fin;
+    private ?int $fin;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $semaine; //semaine réelle...
+    private ?int $semaine; //semaine réelle...
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $evaluation;
+    private ?bool $evaluation = false;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Semestre")
      */
-    private $semestre;
+    private ?Semestre $semestre;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Matiere")
      */
-    private $matiere;
+    private ?Matiere $matiere; //todo: a suppr
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Personnel")
      */
-    private $intervenant;
+    private ?Personnel $intervenant;
 
     /**
      * @ORM\Column(type="string", length=150, nullable=true)
      */
-    private $texte;
+    private ?string $texte;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $groupe;
+    private ?int $groupe;
 
     /**
      * @ORM\Column(type="string", length=10)
      */
-    private $type;
+    private ?string $type;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $commentaire;
+    private ?string $commentaire;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
     private ?CarbonInterface $date;
-
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getJour(): ?int
     {
@@ -275,9 +262,6 @@ class EdtPlanning
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getDisplayGroupe(): ?string
     {
         switch ($this->type) {
@@ -288,10 +272,10 @@ class EdtPlanning
             case 'td':
                 $tab = ['', 'AB', '', 'CD', '', 'EF', '', 'GH'];
 
-                return 'TD ' . $tab[$this->groupe];
+            return 'TD ' . $tab[$this->groupe];
             case 'TP':
             case 'tp':
-                return 'TP ' . \chr($this->groupe + 64);
+            return 'TP ' . chr($this->groupe + 64);
             default:
                 return '';
         }
@@ -334,10 +318,7 @@ class EdtPlanning
         return $td[$d];
     }
 
-    /**
-     * @return int|float
-     */
-    public function getDureeInt()
+    public function getDureeInt(): float|int
     {
         $d = $this->fin - $this->debut;
         $td = [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5];
@@ -357,7 +338,7 @@ class EdtPlanning
         return $this;
     }
 
-    public function getDate(): Carbon
+    public function getDate(): CarbonInterface
     {
         return $this->date;
     }
@@ -371,7 +352,7 @@ class EdtPlanning
         return $this->getTexte() . ' ' . $this->getDisplayGroupe();
     }
 
-    public function getJson()
+    public function getJson(): array
     {
         return [
             'id' => $this->getId(),
@@ -385,16 +366,14 @@ class EdtPlanning
             'personnelId' => null !== $this->getIntervenant() ? $this->getIntervenant()->getId() : null,
             'groupe' => $this->getGroupe(),
             'groupeId' => $this->getGroupe(),
-            'typeIdMatiere' => $this->getTypeMatiere() . '_' . $this->getIdMatiere()
+            'typeIdMatiere' => $this->getTypeMatiere() . '_' . $this->getIdMatiere(),
         ];
     }
 
-    public function setDate(?\DateTimeInterface $date): self
+    public function setDate(?CarbonInterface $date): self
     {
         $this->date = $date;
 
         return $this;
     }
-
-
 }

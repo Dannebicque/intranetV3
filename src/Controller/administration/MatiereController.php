@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/MatiereController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2021 08:46
+ * @lastUpdate 06/06/2021 11:16
  */
 
 namespace App\Controller\administration;
@@ -198,13 +198,6 @@ class MatiereController extends BaseController
         $id = $matiere->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token')) &&
             0 === \count($matiere->getEvaluations())) {
-            foreach ($matiere->getAbsences() as $abs) {
-                $this->entityManager->remove($abs);
-            }
-
-            foreach ($matiere->getPrevisionnels() as $previ) {
-                $this->entityManager->remove($previ);
-            }
 
             $this->entityManager->remove($matiere);
             $this->entityManager->flush();

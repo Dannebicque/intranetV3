@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Rdd/MyExportRdd.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 06/06/2021 10:02
  */
 
 /*
@@ -16,6 +16,7 @@ namespace App\Classes\Rdd;
 use App\Classes\Excel\MyExcelWriter;
 use App\Entity\Etudiant;
 use App\Entity\RddDiplome;
+use Carbon\Carbon;
 use DateTime;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -119,7 +120,7 @@ class MyExportRdd
         }
         $this->myExcelWriter->getColumnsAutoSize('A', 'Z');
         $writer = new Xlsx($this->myExcelWriter->getSpreadsheet());
-        $date = new DateTime('now');
+        $date = Carbon::now();
 
         return new StreamedResponse(
             static function() use ($writer) {

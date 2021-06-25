@@ -4,13 +4,14 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/RddDiplome.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 06/06/2021 09:05
  */
 
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
 use App\Repository\RddDiplomeRepository;
+use Carbon\CarbonInterface;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -25,47 +26,47 @@ class RddDiplome extends BaseEntity
     /**
      * @ORM\Column(type="string", length=10)
      */
-    private $numEtudiant;
+    private ?string $numEtudiant;
 
     /**
      * @ORM\Column(type="string", length=15)
      */
-    private $ine;
+    private ?string $ine;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $mailperso;
+    private ?string $mailperso;
 
     /**
      * @ORM\Column(type="string", length=20)
      */
-    private $diplome;
+    private ?string $diplome;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $libelleDiplome;
+    private ?string $libelleDiplome;
 
     /**
      * @ORM\Column(type="date")
      */
-    private $dateNaissance;
+    private ?CarbonInterface $dateNaissance;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $confirme = false;
+    private bool $confirme = false;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $enqueteAFaire = false;
+    private bool $enqueteAFaire = false;
 
     /**
      * @ORM\Column(type="string", length=30, nullable=true)
      */
-    private $codeEtape;
+    private ?string $codeEtape;
 
     public function getNumEtudiant(): ?string
     {
@@ -127,12 +128,12 @@ class RddDiplome extends BaseEntity
         return $this;
     }
 
-    public function getDateNaissance(): ?DateTimeInterface
+    public function getDateNaissance(): ?CarbonInterface
     {
         return $this->dateNaissance;
     }
 
-    public function setDateNaissance(DateTimeInterface $dateNaissance): self
+    public function setDateNaissance(CarbonInterface $dateNaissance): self
     {
         $this->dateNaissance = $dateNaissance;
 

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/SousComissionController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 16:07
+ * @lastUpdate 25/06/2021 10:28
  */
 
 namespace App\Controller\administration;
@@ -73,11 +73,16 @@ class SousComissionController extends BaseController
     /**
      * @Route("/purger/{scolaritePromo}", name="administration_sous_commission_purger")
      */
-    public function purger(NoteRepository $noteRepository, ScolaritePromo $scolaritePromo): Response
-    {
+    public function purger(
+        TypeMatiereManager $typeMatiereManager,
+        NoteRepository $noteRepository,
+        ScolaritePromo $scolaritePromo
+    ): Response {
         $semestre = $scolaritePromo->getSemestre();
+
         if (null !== $semestre) {
-            $notes = $noteRepository->findAllNotesSemestre($semestre, $scolaritePromo->getAnneeUniversitaire());
+            $matieres = $typeMatiereManager->findBySemestre($semestre);
+            $notes = $noteRepository->findBySemestre($matieres, $scolaritePromo->getAnneeUniversitaire());
 
             $em = $this->getDoctrine()->getManager();
 

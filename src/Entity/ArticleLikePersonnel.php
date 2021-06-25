@@ -4,12 +4,11 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ArticleLikePersonnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/05/2021 19:55
+ * @lastUpdate 05/06/2021 18:44
  */
 
 namespace App\Entity;
 
-use App\Entity\Traits\LifeCycleTrait;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -34,7 +33,7 @@ class ArticleLikePersonnel extends ArticleLike
         return $this->personnel;
     }
 
-    public function setPersonnel(?Personnel $personnel): self
+    public function setPersonnel(Personnel $personnel): self
     {
         $this->personnel = $personnel;
 

@@ -4,12 +4,14 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/AlternanceFicheSuivi.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 05/06/2021 17:17
  */
 
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
+use Carbon\Carbon;
+use Carbon\CarbonInterface;
 use DateTime;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -23,8 +25,8 @@ class AlternanceFicheSuivi extends BaseEntity
 {
     use LifeCycleTrait;
 
-    protected static $tabTexte = [1 => 'Faible', 2 => 'Bonne', 3 => 'Très Bonne', 4 => 'Excellente'];
-    protected static $tabTexteM = [1 => 'Faible', 2 => 'Bon', 3 => 'Très Bon', 4 => 'Excellent'];
+    protected static array $tabTexte = [1 => 'Faible', 2 => 'Bonne', 3 => 'Très Bonne', 4 => 'Excellente'];
+    protected static array $tabTexteM = [1 => 'Faible', 2 => 'Bon', 3 => 'Très Bon', 4 => 'Excellent'];
 
     public const VISITE_PHYSIQUE = 'v';
     public const VISITE_TELEPHONIQUE = 't';
@@ -32,69 +34,65 @@ class AlternanceFicheSuivi extends BaseEntity
     /**
      * @ORM\Column(type="string", length=1)
      */
-    private $methode = 'v';
+    private string $methode = self::VISITE_PHYSIQUE;
 
     /**
      * @ORM\Column(type="text")
      */
-    private $commentaire;
+    private ?string $commentaire;
 
     /**
      * @ORM\Column(type="text")
      */
-    private $missions;
+    private ?string $missions;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $integration;
+    private ?int $integration;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $initiative;
+    private ?int $initiative;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $adaptation;
+    private ?int $adaptation;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $performance;
+    private ?int $performance;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $delais;
+    private ?int $delais;
 
     /**
      * @ORM\Column(type="integer")
      */
-    private $comportement;
+    private ?int $comportement;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Alternance", inversedBy="alternanceFicheSuivis")
      */
-    private $alternance;
+    private ?Alternance $alternance;
 
     /**
      * @ORM\Column(type="date")
      */
-    private $date;
+    private ?CarbonInterface $date;
 
     /**
-     * AlternanceFicheSuivi constructor.
-     *
-     * @param $alternance
-     *
      * @throws Exception
      */
     public function __construct(Alternance $alternance)
     {
         $this->setAlternance($alternance);
-        $this->setDate(new DateTime('now'));
+        $this->setDate(Carbon::today());
     }
 
     public function getMethode(): ?string
@@ -217,12 +215,12 @@ class AlternanceFicheSuivi extends BaseEntity
         return $this;
     }
 
-    public function getDate(): ?DateTimeInterface
+    public function getDate(): ?CarbonInterface
     {
         return $this->date;
     }
 
-    public function setDate(DateTimeInterface $date): self
+    public function setDate(CarbonInterface $date): self
     {
         $this->date = $date;
 
@@ -280,9 +278,9 @@ class AlternanceFicheSuivi extends BaseEntity
     public function getMethodeLong(): ?string
     {
         switch ($this->methode) {
-            case 'v':
+            case self::VISITE_PHYSIQUE:
                 return 'Visite dans l\'entreprise';
-            case 't':
+            case self::VISITE_TELEPHONIQUE:
                 return 'Entretien téléphonique';
             default:
                 return '-';

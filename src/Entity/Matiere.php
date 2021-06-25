@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Matiere.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/05/2021 22:18
+ * @lastUpdate 06/06/2021 11:29
  */
 
 namespace App\Entity;
@@ -51,11 +51,10 @@ class Matiere extends AbstractMatiere
     private ?string $competencesVisees;
 
     /**
-     * @var string
      *
      * @ORM\Column(type="text",nullable=true)
      */
-    private $contenu;
+    private ?string $contenu;
 
     /**
      * @ORM\Column(type="text",nullable=true)
@@ -93,40 +92,22 @@ class Matiere extends AbstractMatiere
     private ?Parcour $parcours;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Previsionnel", mappedBy="matiere")
-     */
-    private $previsionnels;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Absence", mappedBy="matiere")
-     */
-    private $absences;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Evaluation", mappedBy="matiere")
-     */
-    private $evaluations;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Matiere", inversedBy="matiereEnfants")
      */
-    private $matiereParent;
+    private ?Matiere $matiereParent;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Matiere", mappedBy="matiereParent")
      */
-    private $matiereEnfants;
+    private Collection $matiereEnfants;
 
     /**
      * @ORM\ManyToMany(targetEntity=CovidAttestationEtudiant::class, mappedBy="matieres")
      */
-    private $covidAttestationEtudiants;
+    private Collection $covidAttestationEtudiants;
 
     public function __construct()
     {
-        $this->previsionnels = new ArrayCollection();
-        $this->absences = new ArrayCollection();
-        $this->evaluations = new ArrayCollection();
         $this->matiereEnfants = new ArrayCollection();
         $this->covidAttestationEtudiants = new ArrayCollection();
     }
@@ -262,99 +243,6 @@ class Matiere extends AbstractMatiere
     public function setParcours(?Parcour $parcours): self
     {
         $this->parcours = $parcours;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Previsionnel[]
-     */
-    public function getPrevisionnels(): Collection
-    {
-        return $this->previsionnels;
-    }
-
-    public function addPrevisionnel(Previsionnel $previsionnel): self
-    {
-        if (!$this->previsionnels->contains($previsionnel)) {
-            $this->previsionnels[] = $previsionnel;
-            $previsionnel->setMatiere($this);
-        }
-
-        return $this;
-    }
-
-    public function removePrevisionnel(Previsionnel $previsionnel): self
-    {
-        if ($this->previsionnels->contains($previsionnel)) {
-            $this->previsionnels->removeElement($previsionnel);
-            // set the owning side to null (unless already changed)
-            if ($previsionnel->getMatiere() === $this) {
-                $previsionnel->setMatiere(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Absence[]
-     */
-    public function getAbsences(): Collection
-    {
-        return $this->absences;
-    }
-
-    public function addAbsence(Absence $absence): self
-    {
-        if (!$this->absences->contains($absence)) {
-            $this->absences[] = $absence;
-            $absence->setMatiere($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAbsence(Absence $absence): self
-    {
-        if ($this->absences->contains($absence)) {
-            $this->absences->removeElement($absence);
-            // set the owning side to null (unless already changed)
-            if ($absence->getMatiere() === $this) {
-                $absence->setMatiere(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Evaluation[]
-     */
-    public function getEvaluations(): Collection
-    {
-        return $this->evaluations;
-    }
-
-    public function addEvaluation(Evaluation $evaluation): self
-    {
-        if (!$this->evaluations->contains($evaluation)) {
-            $this->evaluations[] = $evaluation;
-            $evaluation->setMatiere($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEvaluation(Evaluation $evaluation): self
-    {
-        if ($this->evaluations->contains($evaluation)) {
-            $this->evaluations->removeElement($evaluation);
-            // set the owning side to null (unless already changed)
-            if ($evaluation->getMatiere() === $this) {
-                $evaluation->setMatiere(null);
-            }
-        }
 
         return $this;
     }
