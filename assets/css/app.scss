@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/css/app.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 10/06/2021 17:18
+// @lastUpdate 28/06/2021 18:20
 
 @import "core.min.css";
 @import "~bootstrap/scss/functions";
@@ -49,7 +49,7 @@
 }
 
 .card-trombi {
-  background-color: #f5f6f7;
+  background-color: var(--body);
 }
 
 a .btn-round {
