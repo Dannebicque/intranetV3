@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/ScolariteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 25/06/2021 11:04
  */
 
 namespace App\Controller\superAdministration;
@@ -88,7 +88,6 @@ class ScolariteController extends AbstractController
 
             return $this->redirectToRoute('sa_scolarite_semestre_export_apogee', ['semestre' => $semestre->getId()]);
         }
-
         return $resultat;
     }
 }

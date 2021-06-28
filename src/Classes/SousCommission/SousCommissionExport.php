@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/SousCommission/SousCommissionExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/06/2021 10:28
+ * @lastUpdate 25/06/2021 11:19
  */
 
 namespace App\Classes\SousCommission;
@@ -547,7 +547,7 @@ class SousCommissionExport
         $matieres = $this->typeMatiereManager->findBySemestre($semestre);
         $matApogee = [];
         foreach ($matieres as $matiere) {
-            $matApogee[$matiere->codeElement] = $matiere->id;
+            $matApogee[$matiere->codeElement] = $matiere->getTypeIdMatiere();
         }
         $etuApogee = [];
         foreach ($etudiants as $etudiant) {
