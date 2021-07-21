@@ -4,13 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/MessageDestinataire.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 08:22
+ * @lastUpdate 28/06/2021 21:12
  */
 
 namespace App\Entity;
 
 use Carbon\CarbonInterface;
-use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

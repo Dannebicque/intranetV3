@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ProjetPeriode.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 08:48
+ * @lastUpdate 28/06/2021 21:20
  */
 
 namespace App\Entity;
@@ -13,7 +13,6 @@ use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\UuidTrait;
 use App\Repository\ProjetPeriodeRepository;
 use Carbon\CarbonInterface;
-use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;

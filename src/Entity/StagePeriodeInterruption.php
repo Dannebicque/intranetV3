@@ -4,14 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/StagePeriodeInterruption.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 09:28
+ * @lastUpdate 28/06/2021 21:20
  */
 
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
 use Carbon\CarbonInterface;
-use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

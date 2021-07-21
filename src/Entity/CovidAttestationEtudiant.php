@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/CovidAttestationEtudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 29/06/2021 17:48
  */
 
 namespace App\Entity;
@@ -204,16 +204,12 @@ class CovidAttestationEtudiant extends BaseEntity
 
     public function heureLong()
     {
-        switch ($this->heure) {
-            case self::MATIN:
-                return 'Matin';
-            case self::APRESMIDI:
-                return 'Après-midi';
-            case self::TOUTELAJOURNEE:
-                return 'Toute la journée';
-            default:
-                return '-';
-        }
+        return match ($this->heure) {
+            self::MATIN => 'Matin',
+            self::APRESMIDI => 'Après-midi',
+            self::TOUTELAJOURNEE => 'Toute la journée',
+            default => '-',
+        };
     }
 
     public function getConvocationEnvoyee(): ?bool

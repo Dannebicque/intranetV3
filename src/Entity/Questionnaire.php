@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Questionnaire.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 08:48
+ * @lastUpdate 28/06/2021 21:20
  */
 
 namespace App\Entity;
@@ -12,8 +12,6 @@ namespace App\Entity;
 use App\Entity\Traits\UuidTrait;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
-use DateTime;
-use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 

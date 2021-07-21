@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Alternance.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/06/2021 16:45
+ * @lastUpdate 29/06/2021 17:30
  */
 
 namespace App\Entity;
@@ -30,6 +30,7 @@ class Alternance extends BaseEntity
     public const ALTERNANCE_ETAT_INITIALISE = 'init';
     public const ALTERNANCE_ETAT_COMPLETE = 'complete';
     public const ALTERNANCE_ETAT_VALIDE = 'valide';
+    public const ALTERNANCE_ETAT_SANS = 'sans';
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Entreprise", cascade={"persist", "remove"})

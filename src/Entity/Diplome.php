@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Diplome.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/06/2021 10:28
+ * @lastUpdate 29/06/2021 18:15
  */
 
 namespace App\Entity;
@@ -675,7 +675,7 @@ class Diplome extends BaseEntity implements Serializable
         ]);
     }
 
-    public function unserialize($serialized): ?bool
+    public function unserialize($data): ?bool
     {
         return null;
     }

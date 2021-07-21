@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcNiveau.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/06/2021 10:28
+ * @lastUpdate 29/06/2021 17:48
  */
 
 namespace App\Entity;
@@ -171,17 +171,11 @@ class ApcNiveau extends BaseEntity
 
     public function display()
     {
-        switch ($this->ordre) {
-            case 1:
-                $niv = 'Novice';
-                break;
-            case 2:
-                $niv = 'Intermédiaire';
-                break;
-            case 3:
-                $niv = 'Compétent';
-                break;
-        }
+        $niv = match ($this->ordre) {
+            1 => 'Novice',
+            2 => 'Intermédiaire',
+            3 => 'Compétent',
+        };
 
         return $this->getCompetence()->getNomCourt() . ' - Niveau ' . $niv . '(' . $this->ordre . ')';
     }

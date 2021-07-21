@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/AbsenceJustificatif.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/06/2021 10:28
+ * @lastUpdate 21/07/2021 17:03
  */
 
 namespace App\Entity;
@@ -13,14 +13,11 @@ use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\UuidTrait;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
-use DateTime;
-use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use Ramsey\Uuid\Uuid;
 use Serializable;
 use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
@@ -116,7 +113,7 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
         $this->setUuid(Uuid::uuid4());
     }
 
-    public function getDateHeureDebut(): ?DateTimeInterface
+    public function getDateHeureDebut(): ?CarbonInterface
     {
         return $this->dateHeureDebut;
     }
@@ -240,27 +237,27 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
         return serialize($this->getId());
     }
 
-    public function unserialize($serialized)
+    public function unserialize($data)
     {
-        $this->uuid = unserialize($serialized, ['allowed_classes' => false]);
+        $this->uuid = unserialize($data, ['allowed_classes' => false]);
     }
 
-    public function getDateDebut(): Carbon|CarbonInterface|null
+    public function getDateDebut(): CarbonInterface|null
     {
         return $this->dateDebut;
     }
 
-    public function getHeureDebut(): Carbon|CarbonInterface|null
+    public function getHeureDebut(): CarbonInterface|null
     {
         return $this->heureDebut;
     }
 
-    public function getDateFin(): Carbon|CarbonInterface|null
+    public function getDateFin(): CarbonInterface|null
     {
         return $this->dateFin;
     }
 
-    public function getHeureFin(): Carbon|CarbonInterface|null
+    public function getHeureFin(): CarbonInterface|null
     {
         return $this->heureFin;
     }

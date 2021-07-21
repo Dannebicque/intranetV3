@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Absence.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 11:21
+ * @lastUpdate 29/06/2021 18:15
  */
 
 namespace App\Entity;
@@ -214,7 +214,7 @@ class Absence extends BaseEntity implements Serializable
     /**
      * {@inheritDoc}
      */
-    public function unserialize($serialized)
+    public function unserialize($data)
     {
     }
 }

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Borne.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/06/2021 10:28
+ * @lastUpdate 29/06/2021 09:03
  */
 
 namespace App\Entity;
@@ -60,7 +60,7 @@ class Borne extends BaseEntity
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"bornes_administration"})
      */
-    private $url;
+    private ?string $url;
 
     /**
      * @ORM\Column(type="datetime")

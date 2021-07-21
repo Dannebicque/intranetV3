@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Etudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 10:40
+ * @lastUpdate 29/06/2021 18:15
  */
 
 namespace App\Entity;
@@ -582,14 +582,14 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
      *
      * @since 5.1.0
      */
-    public function unserialize($serialized): void
+    public function unserialize($data): void
     {
         // Ajouté pour le problème de connexion avec le usernametoken
         [
             $this->id,
             $this->password,
             $this->username
-        ] = unserialize($serialized, ['allowed_classes' => false]);
+        ] = unserialize($data, ['allowed_classes' => false]);
     }
 
     public function getBoursier(): ?bool

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/AlternanceFicheSuivi.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/06/2021 17:17
+ * @lastUpdate 29/06/2021 17:48
  */
 
 namespace App\Entity;
@@ -12,8 +12,6 @@ namespace App\Entity;
 use App\Entity\Traits\LifeCycleTrait;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
-use DateTime;
-use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
 
@@ -277,13 +275,10 @@ class AlternanceFicheSuivi extends BaseEntity
 
     public function getMethodeLong(): ?string
     {
-        switch ($this->methode) {
-            case self::VISITE_PHYSIQUE:
-                return 'Visite dans l\'entreprise';
-            case self::VISITE_TELEPHONIQUE:
-                return 'Entretien téléphonique';
-            default:
-                return '-';
-        }
+        return match ($this->methode) {
+            self::VISITE_PHYSIQUE => 'Visite dans l\'entreprise',
+            self::VISITE_TELEPHONIQUE => 'Entretien téléphonique',
+            default => '-',
+        };
     }
 }
