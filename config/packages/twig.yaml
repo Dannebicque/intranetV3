@@ -5,6 +5,7 @@ twig:
 
     globals:
         # the value is the service's id
+        version: '@App\Classes\Version'
         user_data: '@App\Classes\DataUserSession'
         iconShow: 'mdi mdi-eye'
         iconEdit: 'mdi mdi-pencil'
