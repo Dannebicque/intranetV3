@@ -38,7 +38,7 @@
     "tinymce": "^5.7.0",
     "toastify-js": "^1.11.0"
   },
-  "license": "MPL2.0",
+  "license": "MPL-2.0",
   "private": true,
   "scripts": {
     "dev-server": "encore dev-server",
@@ -61,7 +61,7 @@
     "unreleased": true,
     "commitLimit": false
   },
-  "version": "0.0.0-development",
+  "version": "3.0.9",
   "author": "David Annebicque",
   "name": "intranetv3",
   "repository": {
