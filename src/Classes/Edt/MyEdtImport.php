@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/05/2021 16:35
+ * @lastUpdate 21/07/2021 09:41
  */
 
 /*
@@ -26,6 +26,8 @@ use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
+use function array_key_exists;
+use function ord;
 
 class MyEdtImport
 {
@@ -94,7 +96,7 @@ class MyEdtImport
         $tabSemestre = $this->semestreRepository->tableauSemestres($this->dataUserSession->getDepartement());
         $tabdebut = [1 => 1, 2 => 4, 3 => 7, 4 => 13, 5 => 16, 6 => 19, 7 => 22];
 
-        $handle = fopen($this->nomfile, 'r');
+        $handle = fopen($this->nomfile, 'rb');
         $tSemaineClear = []; //tableau pour mémoriser les semaines à supprimer
 
         /*Si on a réussi à ouvrir le fichier*/
@@ -110,7 +112,7 @@ class MyEdtImport
                     $heure = $phrase[4]; //a convertir
                     $semestre = mb_substr($phrase, 5, 2);
 
-                    if (!\array_key_exists($semestre, $tSemaineClear)) {
+                    if (!array_key_exists($semestre, $tSemaineClear)) {
                         //si la clé n'est pas dans le tableau, la semaine n'a pas encore été effacée, on supprime
                         $this->clearSemaine($this->semaine, $tabSemestre[$semestre]);
 
@@ -180,9 +182,9 @@ class MyEdtImport
                             }
                         }
 
-                        if (\array_key_exists($matiere, $tabMatieres) && \array_key_exists($prof, $tabIntervenants)) {
+                        if (array_key_exists($matiere, $tabMatieres) && array_key_exists($prof, $tabIntervenants)) {
                             $pl = new EdtPlanning();
-                            $pl->setSemestre($tabMatieres[$matiere]->getUE()->getSemestre());
+                            $pl->setSemestre($tabMatieres[$matiere]->semestre);
                             $this->semestre = $pl->getSemestre()->getId();
                             $pl->setIdMatiere($tabMatieres[$matiere]->id);
                             $pl->setTypeMatiere($tabMatieres[$matiere]->typeMatiere);
@@ -191,7 +193,7 @@ class MyEdtImport
                             $pl->setSalle($salle);
                             $pl->setOrdre($ordre);
                             $pl->setDate($date);
-                            $pl->setGroupe(\ord($groupe) - 64);
+                            $pl->setGroupe(ord($groupe) - 64);
                             $pl->setType(mb_strtoupper($typecours));
                             $pl->setDebut($tabdebut[$heure]);
                             $pl->setFin($tabdebut[$heure] + 3);

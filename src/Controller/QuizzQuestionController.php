@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/QuizzQuestionController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 29/06/2021 17:48
  */
 
 namespace App\Controller;
@@ -17,6 +17,7 @@ use App\Repository\QuestionnaireQuestionRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use function count;
 
 /**
  * @Route("/quizz/question")
@@ -48,7 +49,7 @@ class QuizzQuestionController extends BaseController
             //fonction du type on ajoute
             switch ($quizzQuestion->getType()) {
                 case 'qcu':
-                    $nbreponses = \count($request->request->get('question_qcu'));
+                    $nbreponses = count($request->request->get('question_qcu'));
                     for ($i = 1; $i <= $nbreponses; ++$i) {
                         $reponse = new QuestionnaireReponse();
                         $reponse->setQuestion($quizzQuestion);
@@ -58,7 +59,7 @@ class QuizzQuestionController extends BaseController
                     }
                     break;
                 case 'qcm':
-                    $nbreponses = \count($request->request->get('question_qcm'));
+                    $nbreponses = count($request->request->get('question_qcm'));
                     for ($i = 1; $i <= $nbreponses; ++$i) {
                         $reponse = new QuestionnaireReponse();
                         $reponse->setQuestion($quizzQuestion);

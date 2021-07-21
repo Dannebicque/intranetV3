@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/MatiereController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 11:16
+ * @lastUpdate 29/06/2021 17:48
  */
 
 namespace App\Controller\administration;
@@ -24,6 +24,7 @@ use App\Repository\MatiereRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use function count;
 
 /**
  * @Route("/administration/matiere")
@@ -197,7 +198,7 @@ class MatiereController extends BaseController
     {
         $id = $matiere->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token')) &&
-            0 === \count($matiere->getEvaluations())) {
+            0 === count($matiere->getEvaluations())) {
 
             $this->entityManager->remove($matiere);
             $this->entityManager->flush();

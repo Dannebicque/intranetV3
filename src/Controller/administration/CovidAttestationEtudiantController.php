@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/CovidAttestationEtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 21/07/2021 17:05
  */
 
 namespace App\Controller\administration;
@@ -62,7 +62,7 @@ class CovidAttestationEtudiantController extends BaseController
 
         return $this->render('administration/covid_attestation_etudiant/new.html.twig', [
             'covid_attestation_etudiant' => $covidAttestationEtudiant,
-            'form'                       => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 
@@ -81,9 +81,9 @@ class CovidAttestationEtudiantController extends BaseController
      *                                requirements={"etudiant":"\d+"})
      *
      * @return Response
+     *
      * @throws SyntaxError
      * @throws LoaderError
-     *
      * @throws RuntimeError
      */
     public function pdf(
@@ -100,11 +100,10 @@ class CovidAttestationEtudiantController extends BaseController
      * @Route("/{id}/{etudiant}/send-one", name="covid_attestation_etudiant_send_one", methods={"GET"},
      *                                     requirements={"etudiant":"\d+"})
      *
-     * @throws LoaderError
-     * @throws RuntimeError
-     * @throws SyntaxError
      *
-     * @return Response
+     * @throws RuntimeError
+     * @throws SyntaxError|\Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     * @throws LoaderError
      */
     public function sendOne(
         MyExportPresence $myExportPresence,
@@ -120,9 +119,10 @@ class CovidAttestationEtudiantController extends BaseController
     /**
      * @Route("/{id}/send-all", name="covid_attestation_etudiant_send_all", methods={"GET"})
      *
-     * @throws LoaderError
-     * @throws RuntimeError
-     * @throws SyntaxError
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
      */
     public function sendAll(
         MyExportPresence $myExportPresence,
@@ -164,7 +164,7 @@ class CovidAttestationEtudiantController extends BaseController
 
         return $this->render('administration/covid_attestation_etudiant/edit.html.twig', [
             'covid_attestation_etudiant' => $covidAttestationEtudiant,
-            'form'                       => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 

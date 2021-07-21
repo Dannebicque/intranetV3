@@ -4,12 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/BorneType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/05/2021 14:21
+ * @lastUpdate 29/06/2021 09:03
  */
 
 namespace App\Form;
 
 use App\Entity\Borne;
+use App\Entity\Departement;
 use App\Entity\Semestre;
 use App\Form\Type\DateRangeType;
 use App\Form\Type\YesNoType;
@@ -29,7 +30,7 @@ use Umbrella\CoreBundle\Form\Choice2Type;
  */
 class BorneType extends AbstractType
 {
-    private $departement;
+    private ?Departement $departement;
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

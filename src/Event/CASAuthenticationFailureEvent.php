@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Event/CASAuthenticationFailureEvent.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 09:46
+ * @lastUpdate 29/06/2021 17:30
  */
 
 namespace App\Event;
@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Contracts\EventDispatcher\Event;
+use function get_class;
 
 class CASAuthenticationFailureEvent extends Event
 {
@@ -49,6 +50,6 @@ class CASAuthenticationFailureEvent extends Event
 
     public function getExceptionType(): string
     {
-        return \get_class($this->exception);
+        return get_class($this->exception);
     }
 }

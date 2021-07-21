@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/structure/ParcourController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 29/06/2021 17:48
  */
 
 namespace App\Controller\administration\structure;
@@ -17,6 +17,7 @@ use App\Form\ParcourType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use function count;
 
 /**
  * @Route("/administration/structure/parcours")
@@ -115,7 +116,7 @@ class ParcourController extends BaseController
     {
         $id = $parcour->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token')) &&
-            0 === \count($parcour->getMatieres())
+            0 === count($parcour->getMatieres())
         ) {
             $this->entityManager->remove($parcour);
             $this->entityManager->flush();

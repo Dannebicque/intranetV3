@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/SousCommission/SousCommissionSauvegarde.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/06/2021 18:33
+ * @lastUpdate 29/06/2021 17:48
  */
 
 /*
@@ -21,8 +21,8 @@ use App\Entity\Semestre;
 use App\Repository\ScolaritePromoRepository;
 use App\Repository\ScolariteRepository;
 use Carbon\Carbon;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use function array_key_exists;
 
 class SousCommissionSauvegarde
 {
@@ -92,7 +92,7 @@ class SousCommissionSauvegarde
 
                     $tMatiere = [];
                     foreach ($matieres as $matiere) {
-                        if (\array_key_exists($matiere->getTypeIdMatiere(), $scEtudiant->moyenneMatieres)) {
+                        if (array_key_exists($matiere->getTypeIdMatiere(), $scEtudiant->moyenneMatieres)) {
                             if (true === $scEtudiant->moyenneMatieres[$matiere->getTypeIdMatiere()]->optionFaite) {
                                 if (true === $semestre->isOptPenaliteAbsence()) {
                                     $tMatiere[$matiere->getTypeIdMatiere()]['moyenne'] = $scEtudiant->moyenneMatieres[$matiere->getTypeIdMatiere()]->getMoyennePenalisee();

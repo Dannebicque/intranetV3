@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/InformationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 29/06/2021 17:31
  */
 
 namespace App\Controller;
@@ -15,6 +15,7 @@ use App\Entity\Article;
 use App\Entity\ArticleCategorie;
 use App\Entity\ArticleLike;
 use App\Repository\ArticleRepository;
+use function count;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -39,14 +40,12 @@ class InformationController extends BaseController
 
     /**
      * @Route("/categorie/{categorie}/{page}", name="information_categorie", options={"expose":true})
-     *
-     * @param int $page
      */
     public function categorie(
         MyPagination $myPagination,
         ArticleRepository $articleRepository,
         ArticleCategorie $categorie,
-        $page = 1
+        int $page = 1
     ): Response {
         $articles = $articleRepository->findByTypeDepartementBuilder($categorie->getId(),
             $this->dataUserSession->getDepartement());
@@ -65,7 +64,7 @@ class InformationController extends BaseController
         }
 
         return $this->render('information/articles.html.twig', [
-            'pagination'  => $myPagination,
+            'pagination' => $myPagination,
             'mesArticles' => $mesArticles,
         ]);
     }
@@ -86,7 +85,7 @@ class InformationController extends BaseController
 
         return $this->render('information/article.html.twig', [
             'article' => $article,
-            'like'    => $like,
+            'like' => $like,
         ]);
     }
 
@@ -98,6 +97,6 @@ class InformationController extends BaseController
     {
         $myArticle->setArticle($article)->saveLike($this->getConnectedUser());
 
-        return $this->json(\count($article->getArticleLikes()), Response::HTTP_OK);
+        return $this->json(count($article->getArticleLikes()), Response::HTTP_OK);
     }
 }

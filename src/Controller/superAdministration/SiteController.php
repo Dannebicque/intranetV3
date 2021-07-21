@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/SiteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 29/06/2021 17:48
  */
 
 namespace App\Controller\superAdministration;
@@ -18,6 +18,7 @@ use App\Repository\SiteRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use function count;
 
 /**
  * @Route("/administratif/site")
@@ -131,7 +132,7 @@ class SiteController extends BaseController
     {
         $id = $site->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
-            if (0 === \count($site->getUfrs()) && 0 === \count($site->getUfrPrincipales())) {
+            if (0 === count($site->getUfrs()) && 0 === count($site->getUfrPrincipales())) {
                 $this->entityManager->remove($site);
                 $this->entityManager->flush();
 

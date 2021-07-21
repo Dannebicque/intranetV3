@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Pdf/MyPDF.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 10:02
+ * @lastUpdate 28/06/2021 21:20
  */
 
 /*
@@ -14,7 +14,6 @@
 namespace App\Classes\Pdf;
 
 use Carbon\Carbon;
-use DateTime;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Knp\Snappy\Pdf;
 use Twig\Environment;

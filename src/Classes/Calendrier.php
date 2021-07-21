@@ -4,17 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Calendrier.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 10:01
- */
-
-/*
- * Pull your hearder here, for exemple, Licence header.
+ * @lastUpdate 29/06/2021 09:03
  */
 
 namespace App\Classes;
 
 use App\Utils\Tools;
-use DateTime;
 use Exception;
 
 /**
@@ -28,13 +23,9 @@ abstract class Calendrier
     private static array $tabJoursFeries = [];
 
     /**
-     * @param     $year
-     * @param int $bonMois
-     * @param int $nbMois
-     *
      * @throws Exception
      */
-    public static function calculPlanning($year, $bonMois = 9, $nbMois = 12): void
+    public static function calculPlanning(int $year, int $bonMois = 9, int $nbMois = 12): void
     {
         self::joursFeries($year);
 

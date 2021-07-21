@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/SecurityController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/05/2021 16:35
+ * @lastUpdate 29/06/2021 09:03
  */
 
 namespace App\Controller;
@@ -235,9 +235,8 @@ class SecurityController extends AbstractController
     /**
      * @Route("/connexion/{message}", name="security_login")
      *
-     * @param string $message
      */
-    public function login(AuthenticationUtils $authenticationUtils, $message = ''): Response
+    public function login(AuthenticationUtils $authenticationUtils, string $message = ''): Response
     {
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();

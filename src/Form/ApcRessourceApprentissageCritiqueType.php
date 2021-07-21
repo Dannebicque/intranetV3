@@ -4,13 +4,14 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ApcRessourceApprentissageCritiqueType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/05/2021 16:35
+ * @lastUpdate 29/06/2021 09:03
  */
 
 namespace App\Form;
 
 use App\Entity\ApcApprentissageCritique;
 use App\Entity\ApcRessourceApprentissageCritique;
+use App\Entity\Diplome;
 use App\Repository\ApcApprentissageCritiqueRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -19,7 +20,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ApcRessourceApprentissageCritiqueType extends AbstractType
 {
-    protected $diplome;
+    protected ?Diplome $diplome;
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

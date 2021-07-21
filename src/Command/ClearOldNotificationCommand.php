@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Command/ClearOldNotificationCommand.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:26
+ * @lastUpdate 11/07/2021 19:38
  */
 
 /*
@@ -23,8 +23,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class ClearOldNotificationCommand extends Command
 {
     protected static $defaultName = 'app:clear-old-notification';
-    /** @var NotificationRepository */
-    private $notificationRepository;
+    private NotificationRepository $notificationRepository;
 
     /**
      * ClearOldNotificationCommand constructor.

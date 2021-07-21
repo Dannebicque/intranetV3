@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Twig/AppExtension.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/05/2021 20:28
+ * @lastUpdate 29/06/2021 17:48
  */
 
 namespace App\Twig;
@@ -19,6 +19,8 @@ use Carbon\CarbonInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
+use function chr;
+use function count;
 
 /**
  * Class AppExtension.
@@ -83,16 +85,11 @@ class AppExtension extends AbstractExtension
 
     public function border($statut): string
     {
-        switch ($statut) {
-            case Personnel::ADMINISTRATIF:
-            case Personnel::ASSISTANTE:
-                return 'card-outline-warning';
-            case Personnel::MCF:
-            case Personnel::PU:
-                return 'card-outline-primary';
-            default:
-                return 'card-outline-info';
-        }
+        return match ($statut) {
+            Personnel::ADMINISTRATIF, Personnel::ASSISTANTE => 'card-outline-warning',
+            Personnel::MCF, Personnel::PU => 'card-outline-primary',
+            default => 'card-outline-info',
+        };
     }
 
     public function age($dateNaissance): string
@@ -112,7 +109,7 @@ class AppExtension extends AbstractExtension
     public function displayGroupes(Etudiant $etudiant): string
     {
         $html = '';
-        $nbGroupes = \count($etudiant->getGroupes());
+        $nbGroupes = count($etudiant->getGroupes());
         $loop = 0;
         foreach ($etudiant->getGroupes() as $groupe) {
             $html = $groupe->getLibelle();
@@ -162,7 +159,7 @@ class AppExtension extends AbstractExtension
 
     public function mychr($var): string
     {
-        return \chr($var);
+        return chr($var);
     }
 
     public function escapetitle($texte): ?string

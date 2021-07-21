@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/PersonnelRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/06/2021 10:28
+ * @lastUpdate 29/06/2021 17:48
  */
 
 namespace App\Repository;
@@ -20,6 +20,7 @@ use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Routing\RouterInterface;
+use function count;
 
 /**
  * @method Personnel|null find($id, $lockMode = null, $lockVersion = null)
@@ -151,13 +152,10 @@ class PersonnelRepository extends ServiceEntityRepository
 
     /**
      * @param      $data
-     * @param int  $page
-     * @param null $max
-     * @param bool $getResult
      *
      * @return Query|mixed
      */
-    public function getAllPersonnel($data, $page = 0, $max = null, $getResult = true)
+    public function getAllPersonnel($data, int $page = 0, ?int $max = null, bool $getResult = true)
     {
         $qb = $this->_em->createQueryBuilder();
         $query = isset($data['query']) && $data['query'] ? $data['query'] : null;
@@ -166,7 +164,7 @@ class PersonnelRepository extends ServiceEntityRepository
             ->select('u')
             ->from(Personnel::class, 'u');
 
-        if (null !== $order && \count($order) > 0) {
+        if (null !== $order && count($order) > 0) {
             switch ($order[0]['column']) {
                 case 0:
                     $qb->orderBy('u.numeroHarpege', $order[0]['dir']);

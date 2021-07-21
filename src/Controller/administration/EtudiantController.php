@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 21/07/2021 17:05
  */
 
 namespace App\Controller\administration;
@@ -43,10 +43,8 @@ class EtudiantController extends BaseController
 
     /**
      * @Route("/edit/{id}/{origin}", name="administration_etudiant_edit", methods="GET|POST")
-     *
-     * @param string $origin
      */
-    public function edit(Request $request, Etudiant $etudiant, $origin = 'semestre'): Response
+    public function edit(Request $request, Etudiant $etudiant, string $origin = 'semestre'): Response
     {
         $form = $this->createForm(
             EtudiantType::class,
@@ -171,8 +169,16 @@ class EtudiantController extends BaseController
             $_format,
             $etudiants,
             'etudiants_' . $this->getDepartement()->getLibelle(),
-            ['etudiants_administration'],
-            ['nom', 'prenom', 'civilite', 'numEtudiant', 'mailUniv', 'semestre' => ['libelle']]
+            ['etudiants_administration', 'adresse'],
+            [
+                'nom',
+                'prenom',
+                'civilite',
+                'numEtudiant',
+                'mailUniv',
+                'semestre' => ['libelle'],
+                'adresse' => ['adresse1', 'adresse2', 'cp', 'ville', 'pays']
+            ]
         );
     }
 }

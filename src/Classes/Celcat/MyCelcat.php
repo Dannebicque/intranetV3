@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Celcat/MyCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 10:01
+ * @lastUpdate 29/06/2021 17:48
  */
 
 /*
@@ -18,10 +18,10 @@ use App\Entity\Calendrier;
 use App\Entity\CelcatEvent;
 use App\Entity\Semestre;
 use App\Utils\Tools;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use function array_key_exists;
 
 class MyCelcat
 {
@@ -159,7 +159,7 @@ INNER JOIN CT_STUDENT ON CT_STUDENT.student_id=CT_GROUP_STUDENT.student_id WHERE
             // Vérifier si l'event est déjà dans l'intranet
             $gr = odbc_result($result, 1);
             $etu = odbc_result($result, 2);
-            if (\array_key_exists($etu, $etudiants) && \array_key_exists($gr, $groupes)) {
+            if (array_key_exists($etu, $etudiants) && array_key_exists($gr, $groupes)) {
                 $etudiants[$etu]->addGroupe($groupes[$gr]);
                 $groupes[$etu]->addEtudiant($etudiants[$gr]);
             }

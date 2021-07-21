@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/AlternanceType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/06/2021 10:28
+ * @lastUpdate 28/06/2021 21:20
  */
 
 namespace App\Form;
@@ -71,9 +71,6 @@ class AlternanceType extends AbstractType
                 $alternance = $event->getData();
                 $form = $event->getForm();
                 $dateRange = $form->get('dateRange')->getData();
-//                dump($dateRange);
-//                $alternance->setDateDebut($dateRange['from_date']);
-//                $alternance->setDateFin($dateRange['to_date']);
             })
             ->addEventListener(FormEvents::PRE_SET_DATA, static function(FormEvent $event) {
                 $alternance = $event->getData();

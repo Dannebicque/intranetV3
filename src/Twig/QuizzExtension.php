@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Twig/QuizzExtension.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 29/06/2021 17:48
  */
 
 namespace App\Twig;
@@ -13,6 +13,7 @@ use App\Utils\Tools;
 use App\Entity\QuestionnaireQuestion;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
+use function in_array;
 
 /**
  * Class QizzExtension.
@@ -54,7 +55,7 @@ class QuizzExtension extends AbstractExtension
 
     public function hasReponse($tab, $reponse)
     {
-        if (\in_array($reponse, json_decode($tab, false), true)) {
+        if (in_array($reponse, json_decode($tab, false), true)) {
             return true;
         }
 

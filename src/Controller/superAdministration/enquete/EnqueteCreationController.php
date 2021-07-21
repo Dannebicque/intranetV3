@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/enquete/EnqueteCreationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 29/06/2021 09:03
  */
 
 namespace App\Controller\superAdministration\enquete;
@@ -27,12 +27,11 @@ class EnqueteCreationController extends BaseController
     /**
      * @Route("/wizard-1/{action}/{semestre}/{qualiteQuestionnaire}", name="administratif_enquete_wizard_1")
      *
-     * @param string $action
      */
     public function wizard1(
         Request $request,
         Semestre $semestre,
-        $action = 'create',
+        string $action = 'create',
         QuestionnaireQualite $qualiteQuestionnaire = null
     ): Response {
         if (null === $qualiteQuestionnaire) {
@@ -74,11 +73,10 @@ class EnqueteCreationController extends BaseController
     /**
      * @Route("/wizard-2/{action}/{semestre}/{qualiteQuestionnaire}", name="administratif_enquete_wizard_2")
      *
-     * @param string $action
      */
     public function wizard2(
         QuestionnaireQuestionRepository $quizzQuestionRepository,
-        $action = 'create',
+        string $action = 'create',
         QuestionnaireQualite $qualiteQuestionnaire = null
     ): Response {
         $questions = $quizzQuestionRepository->findByUser($this->getConnectedUser());

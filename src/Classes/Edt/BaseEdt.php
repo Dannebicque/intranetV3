@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/BaseEdt.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/05/2021 08:43
+ * @lastUpdate 29/06/2021 17:48
  */
 
 namespace App\Classes\Edt;
@@ -262,37 +262,16 @@ abstract class BaseEdt
 
     protected function convertEdt($nb): ?int
     {
-        switch ($nb) {
-            case 1:
-            case 2:
-            case 3:
-                return 1;
-            case 4:
-            case 5:
-            case 6:
-                return 2;
-            case 7:
-            case 8:
-            case 9:
-                return 3;
-            case 10:
-            case 11:
-                return 4;
-            case 12:
-            case 13:
-            case 14:
-                return 5;
-            case 15:
-            case 16:
-            case 17:
-                return 6;
-            case 18:
-            case 19:
-            case 20:
-                return 7;
-            default:
-                return null;
-        }
+        return match ($nb) {
+            1, 2, 3 => 1,
+            4, 5, 6 => 2,
+            7, 8, 9 => 3,
+            10, 11 => 4,
+            12, 13, 14 => 5,
+            15, 16, 17 => 6,
+            18, 19, 20 => 7,
+            default => null,
+        };
     }
 
     protected function convertToDate($jour)

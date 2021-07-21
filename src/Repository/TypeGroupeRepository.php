@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/TypeGroupeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 29/06/2021 17:48
  */
 
 namespace App\Repository;
@@ -17,6 +17,7 @@ use App\Entity\TypeGroupe;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+use function array_key_exists;
 
 /**
  * @method TypeGroupe|null find($id, $lockMode = null, $lockVersion = null)
@@ -79,7 +80,7 @@ class TypeGroupeRepository extends ServiceEntityRepository
         /** @var TypeGroupe $tg */
         foreach ($req as $tg) {
             if (null !== $tg->getSemestre()) {
-                if (!\array_key_exists($tg->getSemestre()->getCodeElement(), $t)) {
+                if (!array_key_exists($tg->getSemestre()->getCodeElement(), $t)) {
                     $t[$tg->getSemestre()->getCodeElement()] = [];
                 }
                 $t[$tg->getSemestre()->getCodeElement()][$tg->getLibelle()] = $tg;

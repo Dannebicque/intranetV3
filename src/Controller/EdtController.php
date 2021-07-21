@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/EdtController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 21/07/2021 17:05
  */
 
 namespace App\Controller;
@@ -42,11 +42,9 @@ class EdtController extends BaseController
     }
 
     /**
-     * @param int $semaine
-     *
      * @throws Exception
      */
-    public function dashboardPersonnel($semaine = 0): Response
+    public function dashboardPersonnel(int $semaine = 0): Response
     {
         if (null !== $this->getConnectedUser()) {
             if (null !== $this->dataUserSession->getDepartement() && true === $this->dataUserSession->getDepartement()->isOptUpdateCelcat()) {
@@ -54,9 +52,9 @@ class EdtController extends BaseController
                     $this->dataUserSession->getAnneeUniversitaire(), $semaine);
 
                 return $this->render('edt/_intervenant.html.twig', [
-                    'edt'       => $this->myEdtCelcat,
-                    'filtre'    => 'prof',
-                    'valeur'    => $this->getConnectedUser()->getId(),
+                    'edt' => $this->myEdtCelcat,
+                    'filtre' => 'prof',
+                    'valeur' => $this->getConnectedUser()->getId(),
                     'tabHeures' => Constantes::TAB_HEURES_EDT,
                 ]);
             }
@@ -66,9 +64,9 @@ class EdtController extends BaseController
                 $semaine);
 
             return $this->render('edt/_intervenant.html.twig', [
-                'edt'       => $this->myEdtIntranet,
-                'filtre'    => 'prof',
-                'valeur'    => $this->getConnectedUser()->getId(),
+                'edt' => $this->myEdtIntranet,
+                'filtre' => 'prof',
+                'valeur' => $this->getConnectedUser()->getId(),
                 'tabHeures' => Constantes::TAB_HEURES_EDT,
             ]);
         }
@@ -82,10 +80,10 @@ class EdtController extends BaseController
             $this->myEdtCelcat->initSemestre($semaine, $semestre, $this->dataUserSession->getAnneeUniversitaire());
 
             return $this->render('edt/_semestre.html.twig', [
-                'edt'       => $this->myEdtCelcat,
-                'semestre'  => $semestre,
-                'filtre'    => 'promo',
-                'valeur'    => $semestre->getId(),
+                'edt' => $this->myEdtCelcat,
+                'semestre' => $semestre,
+                'filtre' => 'promo',
+                'valeur' => $semestre->getId(),
                 'tabHeures' => Constantes::TAB_HEURES_EDT,
             ]);
         }
@@ -93,20 +91,18 @@ class EdtController extends BaseController
         $this->myEdtIntranet->initSemestre($semaine, $semestre, $this->dataUserSession->getAnneeUniversitaire());
 
         return $this->render('edt/_semestre.html.twig', [
-            'edt'       => $this->myEdtIntranet,
-            'semestre'  => $semestre,
-            'filtre'    => 'promo',
-            'valeur'    => $semestre->getId(),
+            'edt' => $this->myEdtIntranet,
+            'semestre' => $semestre,
+            'filtre' => 'promo',
+            'valeur' => $semestre->getId(),
             'tabHeures' => Constantes::TAB_HEURES_EDT,
         ]);
     }
 
     /**
-     * @param int $semaine
-     *
      * @throws Exception
      */
-    public function dashboardEtudiant($semaine = 0): Response
+    public function dashboardEtudiant(int $semaine = 0): Response
     {
         if (null !== $this->getConnectedUser()) {
             if (null !== $this->dataUserSession->getDepartement() && true === $this->dataUserSession->getDepartement()->isOptUpdateCelcat()) {
@@ -114,7 +110,7 @@ class EdtController extends BaseController
                     $this->dataUserSession->getAnneeUniversitaire(), $semaine);
 
                 return $this->render('edt/_etudiant.html.twig', [
-                    'edt'       => $this->myEdtCelcat,
+                    'edt' => $this->myEdtCelcat,
                     'tabHeures' => Constantes::TAB_HEURES_EDT,
                 ]);
             }
@@ -123,7 +119,7 @@ class EdtController extends BaseController
                 $semaine);
 
             return $this->render('edt/_etudiant.html.twig', [
-                'edt'       => $this->myEdtIntranet,
+                'edt' => $this->myEdtIntranet,
                 'tabHeures' => Constantes::TAB_HEURES_EDT,
             ]);
         }
@@ -140,7 +136,6 @@ class EdtController extends BaseController
 
     /**
      * @Route("/semestre/export/semaine/{semaine}/{semestre}", name="edt_semestre_export_semaine_courante")
-     *
      *
      * @throws LoaderError
      * @throws RuntimeError
@@ -166,7 +161,7 @@ class EdtController extends BaseController
         $ical = $myEdtExport->export($this->getConnectedUser(), 'ics', 'personnel');
 
         return new Response($ical, 200, [
-            'Content-Type'        => 'application/force-download',
+            'Content-Type' => 'application/force-download',
             'Content-Disposition' => 'attachment; filename="export.ics"',
         ]);
     }
@@ -179,7 +174,7 @@ class EdtController extends BaseController
         if ($this->isEtudiant()) {
             return $this->render('edt/modal_lien_ical.html.twig', [
                 'lienIcal' => $this->generateUrl('edt_etudiant_synchro_ical', [
-                    'code'    => md5($this->getConnectedUser()->getSlug()),
+                    'code' => md5($this->getConnectedUser()->getSlug()),
                     '_format' => 'ics',
                 ],
                     UrlGeneratorInterface::ABSOLUTE_URL),
@@ -188,7 +183,7 @@ class EdtController extends BaseController
 
         return $this->render('edt/modal_lien_ical.html.twig', [
             'lienIcal' => $this->generateUrl('edt_intervenant_synchro_ical', [
-                'code'    => md5($this->getConnectedUser()->getSlug()),
+                'code' => md5($this->getConnectedUser()->getSlug()),
                 '_format' => 'ics',
             ],
                 UrlGeneratorInterface::ABSOLUTE_URL),
@@ -198,8 +193,6 @@ class EdtController extends BaseController
     /**
      * @Route("/etudiant/export/semaine/{semaine}", name="edt_etudiant_export_semaine_courante")
      *
-     * @param int $semaine
-     *
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -207,7 +200,7 @@ class EdtController extends BaseController
      */
     public function exportEtudiantSemaine(
         MyPDF $myPDF,
-        $semaine = 0
+        int $semaine = 0
     ): RedirectResponse {
         if (0 === $semaine) {
             $semaine = (int)date('W');
@@ -239,14 +232,13 @@ class EdtController extends BaseController
         $ical = $myEdtExport->export($this->getConnectedUser(), 'ics', 'etudiant');
 
         return new Response($ical, 200, [
-            'Content-Type'        => 'application/force-download',
+            'Content-Type' => 'application/force-download',
             'Content-Disposition' => 'attachment; filename="export.ics"',
         ]);
     }
 
     /**
      * @Route("/etudiant/details/{event}/{type}", name="edt_etudiant_detail_event")
-     *
      */
     public function detailEvent(
         MyEdtIntranet $myEdt,

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Excel/MyExcelMultiExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/05/2021 13:16
+ * @lastUpdate 29/06/2021 18:02
  */
 
 /*
@@ -26,6 +26,9 @@ use PhpOffice\PhpSpreadsheet\Writer\Csv;
 use PhpOffice\PhpSpreadsheet\Writer\Pdf\Dompdf;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use function array_key_exists;
+use function count;
+use function is_array;
 
 /**
  * Class MyExcelMultiExport.
@@ -132,11 +135,11 @@ class MyExcelMultiExport
         $i = 1;
         $ligne = 1;
         foreach ($colonne as $value) {
-            if (\is_array($value)) {
+            if (is_array($value)) {
                 foreach ($value as $col) {
-                    if (\is_array($col)) {
+                    if (is_array($col)) {
                         foreach ($col as $col2) {
-                            if (\is_array($col2)) {
+                            if (is_array($col2)) {
                                 foreach ($col2 as $col3) {
                                     $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(
                                         $i,
@@ -172,20 +175,19 @@ class MyExcelMultiExport
         ++$ligne;
         foreach ($tabData as $row) {
             foreach ($colonne as $key => $value) {
-                if ((!\is_array($value) && \array_key_exists($value,
-                            $row)) || (\is_array($value) && \array_key_exists($key,
+                if ((!is_array($value) && array_key_exists($value,
+                            $row)) || (is_array($value) && array_key_exists($key,
                             $row))) {
-                    if (\is_array($value)) {
+                    if (is_array($value)) {
                         foreach ($value as $k => $col) {
-                            if (\is_array($row[$key])) {
+                            if (is_array($row[$key])) {
                                 $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow($i, $ligne,
                                     $row[$key][$col]);
-                                ++$i;
                             } else {
                                 $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow($i, $ligne,
                                     '-');
-                                ++$i;
                             }
+                            ++$i;
                         }
                     } else {
                         $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow($i, $ligne, $row[$value]);
@@ -256,7 +258,7 @@ class MyExcelMultiExport
         $colonne = 1;
         /** @var Etudiant $etudiant */
         foreach ($semestre->getEtudiants() as $etudiant) {
-            if (\count($etudiant->getGroupes()) > 0) {
+            if (count($etudiant->getGroupes()) > 0) {
                 //uniquement si l'étudiant est dans un groupe.
                 $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getNumEtudiant());
                 ++$colonne;
@@ -301,7 +303,7 @@ class MyExcelMultiExport
                     ++$colonne;
                 }
 
-                if (\array_key_exists($etudiant->getId(), $notes)) {
+                if (array_key_exists($etudiant->getId(), $notes)) {
                     $this->myExcelWriter->writeCellXY($colonne, $ligne, $notes[$etudiant->getId()]->getNote());
                     ++$colonne;
                     $this->myExcelWriter->writeCellXY($colonne, $ligne, '');

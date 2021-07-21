@@ -4,13 +4,14 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/MailingSubscriber.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/06/2021 17:04
+ * @lastUpdate 29/06/2021 18:02
  */
 
 namespace App\EventSubscriber;
 
 use App\Classes\Mail\MailerFromTwig;
 use App\Classes\Matieres\TypeMatiereManager;
+use App\Entity\AbsenceJustificatif;
 use App\Entity\Rattrapage;
 use App\Event\AbsenceEvent;
 use App\Event\EvaluationEvent;
@@ -54,7 +55,8 @@ class MailingSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @throws TransportExceptionInterface
+     *
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
      */
     public function onMailAbsenceJustified(AbsenceEvent $event): void
     {
@@ -69,7 +71,7 @@ class MailingSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @throws TransportExceptionInterface
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
      */
     public function onMailAbsenceAdded(AbsenceEvent $event): void
     {
@@ -97,20 +99,19 @@ class MailingSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @throws TransportExceptionInterface
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
      */
     public function onMailDecisionRattrapage(RattrapageEvent $event): void
     {
         $rattrapage = $event->getRattrapage();
         $matiere = $this->typeMatiereManager->getMatiere($rattrapage->getIdMatiere(), $rattrapage->getTypeMatiere());
         if (null !== $rattrapage->getEtudiant() && null !== $matiere) {
+            $this->myMailer->initEmail();
             if (Rattrapage::DEMANDE_ACCEPTEE === $rattrapage->getEtatDemande()) {
-                $this->myMailer->initEmail();
                 $this->myMailer->setTemplate('mails/rattrapage_accepted.txt.twig',
                     ['rattrapage' => $rattrapage, 'matiere' => $matiere]);
                 $this->myMailer->sendMessage($rattrapage->getEtudiant()->getMails(), 'Demande de rattrapage acceptée');
             } else {
-                $this->myMailer->initEmail();
                 $this->myMailer->setTemplate('mails/rattrapage_refused.txt.twig',
                     ['rattrapage' => $rattrapage, 'matiere' => $matiere]);
                 $this->myMailer->sendMessage($rattrapage->getEtudiant()->getMails(), 'Demande de rattrapage refusée');
@@ -119,20 +120,19 @@ class MailingSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @throws TransportExceptionInterface
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
      */
     public function onMailDecisionJustificatif(JustificatifEvent $event): void
     {
         $absenceJustificatif = $event->getAbsenceJustificatif();
         if (null !== $absenceJustificatif->getEtudiant()) {
-            if ('A' === $absenceJustificatif->getEtat()) {
-                $this->myMailer->initEmail();
+            $this->myMailer->initEmail();
+            if (AbsenceJustificatif::ACCEPTE === $absenceJustificatif->getEtat()) {
                 $this->myMailer->setTemplate('mails/justificatif_accepted.txt.twig',
                     ['justificatif' => $absenceJustificatif]);
                 $this->myMailer->sendMessage($absenceJustificatif->getEtudiant()->getMails(),
                     'Justificatif d\'absence accepté');
             } else {
-                $this->myMailer->initEmail();
                 $this->myMailer->setTemplate('mails/justificatif_refused.txt.twig',
                     ['justificatif' => $absenceJustificatif]);
                 $this->myMailer->sendMessage($absenceJustificatif->getEtudiant()->getMails(),
@@ -142,7 +142,8 @@ class MailingSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @throws TransportExceptionInterface
+     *
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
      */
     public function onMailDeleteJustificatif(JustificatifEvent $event): void
     {
@@ -183,7 +184,8 @@ class MailingSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @throws TransportExceptionInterface
+     *
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
      */
     public function onMailNoteModificationResponsable(NoteEvent $event): void
     {

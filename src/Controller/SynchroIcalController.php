@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/SynchroIcalController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 09:53
+ * @lastUpdate 28/06/2021 21:20
  */
 
 namespace App\Controller;
@@ -13,7 +13,6 @@ use App\Classes\Edt\MyEdtExport;
 use App\Repository\EtudiantRepository;
 use App\Repository\PersonnelRepository;
 use Carbon\Carbon;
-use DateTime;
 use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;

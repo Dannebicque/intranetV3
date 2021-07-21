@@ -4,13 +4,14 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/EnqueteDiplomeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 29/06/2021 17:28
  */
 
 namespace App\Controller\superAdministration;
 
 use App\Classes\Enquetes\MyEnqueteDiplome;
 use App\Repository\RddDiplomeRepository;
+use function count;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -29,14 +30,14 @@ class EnqueteDiplomeController extends AbstractController
     ): Response {
         $enquete = $myEnqueteDiplome->getSyntheseReponse();
         $nbAttendus = $rddDiplomeRepository->findBy(['enqueteAFaire' => 1]);
-        $pourcentage = \count($enquete->getReponses()) / \count($nbAttendus) * 100;
+        $pourcentage = count($enquete->getReponses()) / count($nbAttendus) * 100;
 
         return $this->render('super-administration/enquete-diplome/index.html.twig', [
-            'questionnaire'     => $enquete->getQuestionnaire(),
-            'reponses'          => $enquete->getReponses(),
-            'nbAttendus'        => $nbAttendus,
+            'questionnaire' => $enquete->getQuestionnaire(),
+            'reponses' => $enquete->getReponses(),
+            'nbAttendus' => $nbAttendus,
             'pourcentageRetour' => $pourcentage,
-            'etudiants'         => $enquete->getEtudiantsReponses(),
+            'etudiants' => $enquete->getEtudiantsReponses(),
         ]);
     }
 

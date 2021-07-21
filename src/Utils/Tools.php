@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Utils/Tools.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/06/2021 10:28
+ * @lastUpdate 29/06/2021 17:48
  */
 
 /*
@@ -17,7 +17,9 @@ use Carbon\Carbon;
 use DateTime;
 use Exception;
 use RuntimeException;
-use Symfony\Component\Form\Exception\UnexpectedTypeException;
+use function chr;
+use function is_array;
+use function ord;
 
 abstract class Tools
 {
@@ -119,7 +121,7 @@ abstract class Tools
 
     public static function personnaliseTexte($texte, $config)
     {
-        if (\is_array($config)) {
+        if (is_array($config)) {
             foreach ($config as $key => $elt) {
                 $texte = str_replace('{{' . $key . '}}', $elt, $texte);
             }
@@ -144,7 +146,7 @@ abstract class Tools
     {
         $t = explode('_', $name);
         $name = $t[0];
-        $name[0] = \chr(\ord($name[0]) - 32);
+        $name[0] = chr(ord($name[0]) - 32);
 
         $method = 'set' . $name;
         if (method_exists($obj, $method)) {

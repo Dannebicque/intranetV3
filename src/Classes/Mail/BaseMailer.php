@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Mail/BaseMailer.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 29/06/2021 17:30
  */
 
 /*
@@ -18,6 +18,8 @@ use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use function array_key_exists;
+use function count;
 
 class BaseMailer
 {
@@ -56,7 +58,7 @@ class BaseMailer
 
     private function getFrom(array $options): Address
     {
-        if (\array_key_exists('from', $options) && \count($options['from']) > 0) {
+        if (array_key_exists('from', $options) && count($options['from']) > 0) {
             if ($options['from'][0] instanceof Address) {
                 return $options['from'][0];
             }
@@ -69,7 +71,7 @@ class BaseMailer
 
     private function getReplyTo(array $options, &$mail): void
     {
-        if (\array_key_exists('replyTo', $options) && '' !== $options['replyTo']) {
+        if (array_key_exists('replyTo', $options) && '' !== $options['replyTo']) {
             if (is_array($options['replyTo'])) {
                 foreach ($options['replyTo'] as $email) {
                     $mail->addReplyTo(new Address($email));
@@ -93,7 +95,7 @@ class BaseMailer
 
     private function checkCc(&$mail, array $options): void
     {
-        if (\array_key_exists('cc', $options) && \count($options['cc']) > 0) {
+        if (array_key_exists('cc', $options) && count($options['cc']) > 0) {
             foreach ($options['cc'] as $cc) {
                 $mail->addCc(new Address($cc));
             }

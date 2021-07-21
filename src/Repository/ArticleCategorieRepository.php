@@ -4,13 +4,14 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/ArticleCategorieRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 29/06/2021 17:25
  */
 
 namespace App\Repository;
 
 use App\Entity\ArticleCategorie;
 use App\Entity\Departement;
+use function count;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
@@ -43,9 +44,9 @@ class ArticleCategorieRepository extends ServiceEntityRepository
         /** @var ArticleCategorie $d */
         foreach ($data as $d) {
             $t[] = [
-                'libelle'    => $d->getLibelle(),
-                'id'         => $d->getId(),
-                'nbArticles' => \count($d->getArticles()),
+                'libelle' => $d->getLibelle(),
+                'id' => $d->getId(),
+                'nbArticles' => count($d->getArticles()),
             ];
         }
 

@@ -4,11 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEtudiants.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 10:01
- */
-
-/*
- * Pull your hearder here, for exemple, Licence header.
+ * @lastUpdate 29/06/2021 17:48
  */
 
 namespace App\Classes;
@@ -18,17 +14,17 @@ use App\Entity\Bac;
 use App\Entity\Etudiant;
 use App\Entity\Semestre;
 use App\Utils\Tools;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
+use function array_key_exists;
+use function count;
+use function is_array;
 
 class MyEtudiants
 {
-    /** @var EntityManagerInterface */
-    private $entityManager;
+    private EntityManagerInterface $entityManager;
 
-    /** @var MyUpload */
-    private $myUpload;
+    private MyUpload $myUpload;
 
     /**
      * MyEtudiants constructor.
@@ -58,7 +54,7 @@ class MyEtudiants
                 while (!feof($handle)) {
                     /*On lit la ligne courante*/
                     $ligne = fgetcsv($handle, 1024, ';');
-                    if (\is_array($ligne) && \count($ligne) > 10) {
+                    if (is_array($ligne) && count($ligne) > 10) {
                         $etudiant = new Etudiant();
                         //login	numetudiant	numine	nom	prenom	photo	mailuniv	siteuniv	mailperso	siteperso	visible	sexe	promo	anneesortie	datenaissance	bac	tel1	tel2	remarques	signature	anneebac	commentaire	typeuser	intitulesecu	adressesecu	loginMMI	slug	fifc	boursier	adresse1	adresse2	adresse3	cp	ville	pays	nomadresse	codeetape
                         $etudiant->setSemestre($semestre);
@@ -78,7 +74,7 @@ class MyEtudiants
                         $etudiant->setPromotion($ligne[12]);
                         $etudiant->setAnneeSortie($ligne[13]);
                         $etudiant->setDateNaissance(Tools::convertDateToObject($ligne[14]));
-                        if (\array_key_exists($ligne[15], $bacs)) {
+                        if (array_key_exists($ligne[15], $bacs)) {
                             $etudiant->setBac($bacs[$ligne[15]]);
                         } else {
                             $etudiant->setBac(null);

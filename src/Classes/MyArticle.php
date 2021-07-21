@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyArticle.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:10
+ * @lastUpdate 29/06/2021 17:48
  */
 
 /*
@@ -22,6 +22,7 @@ use App\Repository\ArticleLikeEtudiantRepository;
 use App\Repository\ArticleLikePersonnelRepository;
 use App\Repository\ArticleRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use function count;
 
 class MyArticle
 {
@@ -61,7 +62,7 @@ class MyArticle
     {
         if ($getConnectedUser instanceof Personnel) {
             $r = $this->articleLikePersonnelRepository->findLike($getConnectedUser, $this->article);
-            if (null === $r || 0 === \count($r)) {
+            if (null === $r || 0 === count($r)) {
                 //add
                 $n = new ArticleLikePersonnel($getConnectedUser, $this->article);
                 $this->entityManager->persist($n);
@@ -71,7 +72,7 @@ class MyArticle
             }
         } elseif ($getConnectedUser instanceof Etudiant) {
             $r = $this->articleLikeEtudiantRepository->findLike($getConnectedUser, $this->article);
-            if (null === $r || 0 === \count($r)) {
+            if (null === $r || 0 === count($r)) {
                 //add
                 $n = new ArticleLikeEtudiant($getConnectedUser, $this->article);
                 $this->entityManager->persist($n);

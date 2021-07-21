@@ -4,13 +4,14 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/AnneeType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/06/2021 08:08
+ * @lastUpdate 29/06/2021 09:03
  */
 
 namespace App\Form;
 
 use App\Entity\Annee;
 use App\Entity\Constantes;
+use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Form\Type\YesNoType;
 use App\Repository\DiplomeRepository;
@@ -27,7 +28,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class AnneeType extends AbstractType
 {
-    protected $departement;
+    protected ?Departement $departement;
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantNotes.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/05/2021 21:42
+ * @lastUpdate 29/06/2021 17:30
  */
 
 namespace App\Classes\Etudiant;
@@ -22,6 +22,8 @@ use App\Repository\NoteRepository;
 use App\Utils\Tools;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
+use function array_key_exists;
+use function count;
 
 class EtudiantNotes
 {
@@ -79,7 +81,7 @@ class EtudiantNotes
             'etudiant' => $this->etudiant->getId(),
         ]);
 
-        if (1 === \count($note)) {
+        if (1 === count($note)) {
             //update
             $modif = new ModificationNote();
             $modif->setNote($note[0]);
@@ -97,7 +99,7 @@ class EtudiantNotes
 
             $this->entityManager->persist($note[0]);
             $this->entityManager->flush();
-        } elseif (0 === \count($note)) {
+        } elseif (0 === count($note)) {
             //creation
 
             $newnote = new Note();
@@ -143,7 +145,7 @@ class EtudiantNotes
         foreach ($this->notes as $note) {
             if (null !== $note->getEvaluation() && 0 !== $note->getEvaluation()->getIdMatiere()) {
                 $idMatiere = $note->getEvaluation()->getTypeIdMatiere();
-                if (\array_key_exists($idMatiere, $tabMatiere)) {
+                if (array_key_exists($idMatiere, $tabMatiere)) {
                     $tabMatiere[$idMatiere]->addNote($note);
                 }
             }

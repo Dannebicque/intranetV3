@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Exporter/ExporterManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/05/2021 20:35
+ * @lastUpdate 28/06/2021 21:39
  */
 
 namespace App\Classes\Exporter;
@@ -44,7 +44,6 @@ class ExporterManager
                 $this->excelExporter->export($datas, $nomFichier);
 
                 return $this->excelExporter->genereFichier();
-                break;
             case 'csv':
                 $this->csvExporter->export($datas, $nomFichier);
 

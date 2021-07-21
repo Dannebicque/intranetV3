@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyGroupes.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 21/07/2021 17:05
  */
 
 /*
@@ -24,8 +24,11 @@ use App\Entity\TypeGroupe;
 use App\Repository\EtudiantRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\TypeGroupeRepository;
+use function array_key_exists;
+use function count;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
+use function is_array;
 
 class MyGroupes
 {
@@ -125,7 +128,7 @@ class MyGroupes
         /** @var Groupe $groupe */
         foreach ($groupes as $groupe) {
             //pas d'enfant c'est le groupe de plus bas  niveau
-            if (0 === \count($groupe->getEnfants()) && TypeGroupe::TYPE_GROUPE_LV !== $groupe->getTypeGroupe()->getType()) {
+            if (0 === count($groupe->getEnfants()) && TypeGroupe::TYPE_GROUPE_LV !== $groupe->getTypeGroupe()->getType()) {
                 $groupeParents = [];
                 $g = $groupe;
                 while (null !== $g->getParent()) {
@@ -174,7 +177,6 @@ class MyGroupes
     }
 
     /**
-     *
      * @throws Exception
      */
     public function importCsv($fichier, Departement $departement): bool
@@ -196,8 +198,8 @@ class MyGroupes
                 /*On lit la ligne courante*/
                 $ligne = fgetcsv($handle, 1024);
                 //nomgroupe,"ordre","codeapogee","option_apogee","semestre","tg_nom","tg_type"
-                if (\is_array($ligne) && \count($ligne) > 5 && \array_key_exists($ligne[4], $semestres)) {
-                    if (!\array_key_exists($ligne[4], $typeGroupes) || !\array_key_exists($ligne[5],
+                if (is_array($ligne) && count($ligne) > 5 && array_key_exists($ligne[4], $semestres)) {
+                    if (!array_key_exists($ligne[4], $typeGroupes) || !array_key_exists($ligne[5],
                             $typeGroupes[$ligne[4]])) {
                         //le type de groupe n'existe pas encore, donc on ajoute.
                         $tg = new TypeGroupe($semestres[$ligne[4]]);
@@ -214,7 +216,7 @@ class MyGroupes
                     $groupe->setOrdre($ligne[1]);
                     $groupe->setCodeApogee($ligne[2]);
                     if ('' !== $ligne[3] || null !== $ligne[3]) {
-                        if (\array_key_exists($ligne[3], $parcours)) {
+                        if (array_key_exists($ligne[3], $parcours)) {
                             $groupe->setParcours($parcours[$ligne[3]]);
                         }
                     }
@@ -235,7 +237,6 @@ class MyGroupes
     }
 
     /**
-     *
      * @throws Exception
      */
     public function importGroupeEtudiantCsv($fichier, Semestre $semestre): bool
@@ -261,8 +262,8 @@ class MyGroupes
             while (!feof($handle)) {
                 /*On lit la ligne courante*/
                 $ligne = fgetcsv($handle, 1024);
-                if (\is_array($ligne) && 2 === \count($ligne) && \array_key_exists($ligne[0],
-                        $groupes) && \array_key_exists($ligne[1], $etudiants)) {
+                if (is_array($ligne) && 2 === count($ligne) && array_key_exists($ligne[0],
+                        $groupes) && array_key_exists($ligne[1], $etudiants)) {
                     $etudiants[$ligne[1]]->addGroupe($groupes[$ligne[0]]);
                 }
             }

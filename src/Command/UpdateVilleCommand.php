@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Command/UpdateVilleCommand.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:26
+ * @lastUpdate 29/06/2021 17:48
  */
 
 /*
@@ -20,6 +20,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use function array_key_exists;
 
 class UpdateVilleCommand extends Command
 {
@@ -65,7 +66,7 @@ class UpdateVilleCommand extends Command
             $adresse = $data->getAdresse();
 
             if (null !== $adresse && null !== $adresse->getVille() && 1 === preg_match("(\d{5})",
-                    $adresse->getVille()) && \array_key_exists(trim($adresse->getVille()), $codeVille)) {
+                    $adresse->getVille()) && array_key_exists(trim($adresse->getVille()), $codeVille)) {
                 $adresse->setVille($codeVille[trim($adresse->getVille())]);
                 $this->entityManager->persist($adresse);
                 ++$i;

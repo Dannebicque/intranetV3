@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Previsionnel/PrevisionnelSynthese.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2021 21:52
+ * @lastUpdate 28/06/2021 21:39
  */
 
 namespace App\Classes\Previsionnel;
@@ -83,9 +83,6 @@ class PrevisionnelSynthese
         return $this->totalHrs + $this->getTotalService();
     }
 
-    /**
-     * @param $annee
-     */
     public function getHrsEnseignant(array $hrs): PrevisionnelSynthese
     {
         foreach ($hrs as $hr) {

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyMessagerie.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 08:20
+ * @lastUpdate 29/06/2021 17:48
  */
 
 
@@ -25,6 +25,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
+use function count;
 
 class MyMessagerie
 {
@@ -229,9 +230,9 @@ class MyMessagerie
         foreach ($this->pjs as $file) {
             $fichier = new MessagePieceJointe();
             $ext = explode('/', $file);
-            $fichier->setFichier($ext[\count($ext) - 1]);
+            $fichier->setFichier($ext[count($ext) - 1]);
             $ext = explode('.', $file);
-            $fichier->setExtension($ext[\count($ext) - 1]);
+            $fichier->setExtension($ext[count($ext) - 1]);
             $fichier->setMessage($mess);
             $this->entityManager->persist($fichier);
         }

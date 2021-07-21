@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/Scolarite.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:41
+ * @lastUpdate 29/06/2021 17:48
  */
 
 namespace App\DTO;
@@ -33,17 +33,12 @@ class Scolarite
 
     private function getStyle($decision): string
     {
-        switch ($decision) {
-            case Constantes::SEMESTRE_VALIDE:
-                return 'badge badge-success';
-            case Constantes::SEMESTRE_NON_VALIDE:
-                return 'badge badge-danger';
-            case Constantes::SEMESTRE_VCA:
-            case Constantes::SEMESTRE_VCJ:
-                return 'badge badge-warning';
-            default:
-                return '';
-        }
+        return match ($decision) {
+            Constantes::SEMESTRE_VALIDE => 'badge badge-success',
+            Constantes::SEMESTRE_NON_VALIDE => 'badge badge-danger',
+            Constantes::SEMESTRE_VCA, Constantes::SEMESTRE_VCJ => 'badge badge-warning',
+            default => '',
+        };
     }
 
     public function getStyleNote($note)

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/AbsenceJustificatifController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 21/07/2021 17:05
  */
 
 namespace App\Controller\administration;
@@ -37,7 +37,7 @@ class AbsenceJustificatifController extends BaseController
         Semestre $semestre
     ): Response {
         return $this->render('administration/absencejustificatif/justificatif.html.twig', [
-            'semestre'      => $semestre,
+            'semestre' => $semestre,
             'justificatifs' => $absenceJustificatifRepository->findBySemestre($semestre),
         ]);
     }
@@ -45,7 +45,6 @@ class AbsenceJustificatifController extends BaseController
     /**
      * @Route("/semestre/{semestre}/export.{_format}", name="administration_absences_justificatif_semestre_export",
      *                                                 requirements={"_format"="csv|xlsx|pdf"})
-     *
      */
     public function exportJustificatif(
         MyExport $myExport,
@@ -123,7 +122,6 @@ class AbsenceJustificatifController extends BaseController
      * @Route("/change-etat/{uuid}/{etat}", name="administration_absence_justificatif_change_etat", methods="GET",
      *                                    requirements={"etat"="A|R|D"}, options={"expose":true})
      * @ParamConverter("absenceJustificatif", options={"mapping": {"uuid": "uuid"}})
-     *
      */
     public function accepte(
         EventDispatcherInterface $eventDispatcher,

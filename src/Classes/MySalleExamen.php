@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MySalleExamen.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 21/07/2021 17:05
  */
 
 /*
@@ -26,11 +26,14 @@ use App\Repository\GroupeRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SalleExamenRepository;
 use App\Repository\TypeGroupeRepository;
+use function chr;
+use function count;
 use Doctrine\Common\Collections\Collection;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
+use function in_array;
 
 class MySalleExamen
 {
@@ -71,8 +74,8 @@ class MySalleExamen
     }
 
     /**
-     *
      * @return PdfResponse
+     *
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -107,7 +110,7 @@ class MySalleExamen
             $etudiants = $this->etudiantRepository->findBySemestre($this->matiere->semestre);
         }
 
-        if (\count($etudiants) <= $this->salle->getCapacite()) {
+        if (count($etudiants) <= $this->salle->getCapacite()) {
             $tabplace = $this->calculPlaces();
 
             /* document 1 par groupe */
@@ -157,12 +160,12 @@ class MySalleExamen
         for ($i = 0; $i < $nbCol; ++$i) {
             for ($j = 0; $j < $nbRang; ++$j) {
                 if ($j + 1 < 10) {
-                    $place = \chr(65 + $i) . '0' . ($j + 1);
+                    $place = chr(65 + $i) . '0' . ($j + 1);
                 } else {
-                    $place = \chr(65 + $i) . ($j + 1);
+                    $place = chr(65 + $i) . ($j + 1);
                 }
 
-                if (!\in_array($place, $tabinterdit, true)) {
+                if (!in_array($place, $tabinterdit, true)) {
                     $tabplace[$k] = $place;
                 }
                 ++$k;
@@ -174,11 +177,7 @@ class MySalleExamen
         return $tabplace;
     }
 
-    /**
-     * @param array $etudiants
-     * @param array $tabplace
-     */
-    private function placement($etudiants, $tabplace): array
+    private function placement(array $etudiants, array $tabplace): array
     {
         $placementetu = [];
         $placement = [];

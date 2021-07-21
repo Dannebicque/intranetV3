@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/AbsenceJustificatifRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 21/07/2021 17:05
  */
 
 namespace App\Repository;
@@ -19,6 +19,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
+use function count;
 
 /**
  * @method AbsenceJustificatif|null find($id, $lockMode = null, $lockVersion = null)
@@ -53,7 +54,7 @@ class AbsenceJustificatifRepository extends ServiceEntityRepository
      * @throws NonUniqueResultException
      * @throws NoResultException
      */
-    public function findBySemestreCount(Semestre $semestre, $annee = 0)
+    public function findBySemestreCount(Semestre $semestre, int $annee = 0)
     {
         if (0 === $annee) {
             $annee = null !== $semestre->getAnneeUniversitaire() ? $semestre->getAnneeUniversitaire()->getAnnee() : (int)date('Y');
@@ -87,7 +88,7 @@ class AbsenceJustificatifRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
 
-        return \count($query) >= 1;
+        return count($query) >= 1;
     }
 
     public function findByEtudiant(Etudiant $etudiant)

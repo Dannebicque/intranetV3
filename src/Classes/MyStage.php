@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyStage.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 29/06/2021 17:48
  */
 
 /*
@@ -19,6 +19,8 @@ use App\Entity\StagePeriode;
 use App\Repository\EtudiantRepository;
 use App\Repository\StageEtudiantRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use function array_key_exists;
+use function count;
 
 class MyStage
 {
@@ -59,7 +61,7 @@ class MyStage
         }
 
         $etudiants = $this->etudiantRepository->findBySemestre($stagePeriode->getSemestre());
-        if (0 === \count($etudiants)) {
+        if (0 === count($etudiants)) {
             $etudiants = $this->etudiantRepository->findByAnnee($stagePeriode->getSemestre()->getAnnee());
         }
 
@@ -71,7 +73,7 @@ class MyStage
         /** @var StageEtudiant $stageEtudiant */
         foreach ($stagePeriode->getStageEtudiants() as $stageEtudiant) {
             if (null !== $stageEtudiant->getEtudiant()) {
-                if (\array_key_exists($stageEtudiant->getEtudiant()->getId(), $this->dataEtudiants)) {
+                if (array_key_exists($stageEtudiant->getEtudiant()->getId(), $this->dataEtudiants)) {
                     $this->dataEtudiants[$stageEtudiant->getEtudiant()->getId()]['stage'] = $stageEtudiant;
                 }
 

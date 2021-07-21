@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/AnneeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 21/07/2021 17:05
  */
 
 namespace App\Controller\superAdministration;
@@ -14,6 +14,7 @@ use App\Entity\Annee;
 use App\Entity\Constantes;
 use App\Entity\Diplome;
 use App\Form\AnneeType;
+use function count;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -57,7 +58,7 @@ class AnneeController extends BaseController
 
             return $this->render('structure/annee/new.html.twig', [
                 'annee' => $annee,
-                'form'  => $form->createView(),
+                'form' => $form->createView(),
             ]);
         }
 
@@ -102,7 +103,7 @@ class AnneeController extends BaseController
 
             return $this->render('structure/annee/edit.html.twig', [
                 'annee' => $annee,
-                'form'  => $form->createView(),
+                'form' => $form->createView(),
             ]);
         }
 
@@ -131,7 +132,7 @@ class AnneeController extends BaseController
     {
         $id = $annee->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
-            if (0 === \count($annee->getSemestres())) {
+            if (0 === count($annee->getSemestres())) {
                 $this->entityManager->remove($annee);
                 $this->entityManager->flush();
                 $this->addFlashBag(

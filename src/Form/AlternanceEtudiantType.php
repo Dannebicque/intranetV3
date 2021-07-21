@@ -4,12 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/AlternanceEtudiantType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/05/2021 16:35
+ * @lastUpdate 29/06/2021 09:03
  */
 
 namespace App\Form;
 
 use App\Entity\Alternance;
+use App\Entity\Departement;
 use App\Entity\Personnel;
 use App\Form\Type\DateRangeType;
 use App\Repository\PersonnelRepository;
@@ -24,7 +25,7 @@ use Umbrella\CoreBundle\Form\Entity2Type;
 
 class AlternanceEtudiantType extends AbstractType
 {
-    private $departement;
+    private ?Departement $departement;
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

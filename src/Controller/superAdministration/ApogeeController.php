@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/ApogeeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 29/06/2021 18:02
  */
 
 namespace App\Controller\superAdministration;
@@ -27,10 +27,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ApogeeController extends BaseController
 {
-    /**
-     * @var array
-     */
-    private $etudiants;
+    private array $etudiants;
 
     /**
      * @Route("/", methods={"GET"}, name="sa_apogee_index")
@@ -131,13 +128,12 @@ class ApogeeController extends BaseController
                 $etudiant = $etudiantRepository->findOneBy(['numEtudiant' => $numEtudiant]);
                 if ($etudiant) {
                     $this->etudiants[$numEtudiant]['etat'] = 'deja';
-                    $this->etudiants[$numEtudiant]['data'] = $etudiant;
                 } else {
                     //n'existe pas on ajoute.
                     $etudiant = $etudiantImport->createEtudiant($semestre, $dataApogee);
                     $this->etudiants[$numEtudiant]['etat'] = 'add';
-                    $this->etudiants[$numEtudiant]['data'] = $etudiant;
                 }
+                $this->etudiants[$numEtudiant]['data'] = $etudiant;
             }
         }
         $this->entityManager->flush();

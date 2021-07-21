@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/structure/DiplomeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 29/06/2021 17:30
  */
 
 namespace App\Controller\administration\structure;
@@ -18,6 +18,7 @@ use Symfony\Component\Form\Exception\LogicException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use function count;
 
 /**
  * @Route("/administration/structure/diplome")
@@ -108,11 +109,11 @@ class DiplomeController extends BaseController
     {
         $id = $diplome->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token')) &&
-            0 === \count($diplome->getAnnees()) &&
-            0 === \count($diplome->getSemestres()) &&
-            0 === \count($diplome->getPpns()) &&
-            0 === \count($diplome->getHrs()) &&
-            0 === \count($diplome->getApcComptences())) {
+            0 === count($diplome->getAnnees()) &&
+            0 === count($diplome->getSemestres()) &&
+            0 === count($diplome->getPpns()) &&
+            0 === count($diplome->getHrs()) &&
+            0 === count($diplome->getApcComptences())) {
             $this->entityManager->remove($diplome);
             $this->entityManager->flush();
             $this->addFlashBag(

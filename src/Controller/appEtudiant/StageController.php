@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appEtudiant/StageController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 09:55
+ * @lastUpdate 28/06/2021 21:20
  */
 
 namespace App\Controller\appEtudiant;
@@ -17,7 +17,6 @@ use App\Event\StageEvent;
 use App\Form\StageEtudiantEtudiantType;
 use App\Repository\StagePeriodeRepository;
 use Carbon\Carbon;
-use DateTime;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;

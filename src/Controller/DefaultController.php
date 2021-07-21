@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/DefaultController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 12:48
+ * @lastUpdate 28/06/2021 20:40
  */
 
 namespace App\Controller;
@@ -41,7 +41,7 @@ class DefaultController extends BaseController
 
         return $this->render('default/index.html.twig', [
             'actualites' => $actualiteRepository->getByDepartement($this->getDepartement(), 3),
-            'dates' => $dates
+            'dates' => $dates,
         ]);
     }
 

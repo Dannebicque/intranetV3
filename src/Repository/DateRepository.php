@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/DateRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/05/2021 20:35
+ * @lastUpdate 29/06/2021 17:30
  */
 
 namespace App\Repository;
@@ -19,6 +19,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\Persistence\ManagerRegistry;
 use Exception;
+use function array_key_exists;
 
 /**
  * @method Date|null find($id, $lockMode = null, $lockVersion = null)
@@ -90,7 +91,7 @@ class DateRepository extends ServiceEntityRepository
         foreach ($query as $event) {
             if (null !== $event->getDateDebut()) {
                 $key = $event->getDateDebut()->format('Y-m-d');
-                if (!\array_key_exists($key, $tab)) {
+                if (!array_key_exists($key, $tab)) {
                     $tab[$key] = [];
                 }
                 $tab[$key][] = $event;

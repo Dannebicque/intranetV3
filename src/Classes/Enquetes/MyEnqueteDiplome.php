@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Enquetes/MyEnqueteDiplome.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 10:01
+ * @lastUpdate 29/06/2021 17:48
  */
 
 /*
@@ -24,9 +24,9 @@ use App\Repository\QuestionnaireEtudiantRepository;
 use App\Repository\QuestionnaireQuizzRepository;
 use App\Repository\QuestionnaireReponseRepository;
 use Carbon\Carbon;
-use DateTime;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use function array_key_exists;
 
 class MyEnqueteDiplome
 {
@@ -90,15 +90,15 @@ class MyEnqueteDiplome
             foreach ($tEnTeteId as $question) {
                 if (QuestionnaireQuestion::QUESTION_TYPE_LIBRE === $question->getType()) {
                     $cle = 'quizz_question_text_q' . $question->getId();
-                    if (\array_key_exists($cle, $reponses)) {
+                    if (array_key_exists($cle, $reponses)) {
                         $t[] = $reponses[$cle]->getValeur();
                     } else {
                         $t[] = '';
                     }
                 } else {
                     $cle = 'quizz_question_reponses_q' . $question->getId();
-                    if (\array_key_exists($cle, $reponses)) {
-                        if (\array_key_exists($reponses[$cle]->getIdReponse(), $tReponses)) {
+                    if (array_key_exists($cle, $reponses)) {
+                        if (array_key_exists($reponses[$cle]->getIdReponse(), $tReponses)) {
                             $t[] = $tReponses[$reponses[$cle]->getIdReponse()]->getLibelle();
                         }
                     } else {
@@ -148,7 +148,7 @@ class MyEnqueteDiplome
         $this->getSyntheseReponse();
 
         foreach ($attendus as $attendu) {
-            if (\array_key_exists($attendu->getNumEtudiant(), $this->etudiantsReponses)) {
+            if (array_key_exists($attendu->getNumEtudiant(), $this->etudiantsReponses)) {
                 $rep = $this->etudiantsReponses[$attendu->getNumEtudiant()];
 
                 if (null !== $rep['reponse']) {
@@ -209,7 +209,7 @@ class MyEnqueteDiplome
         }
 
         foreach ($this->reponses as $reponse) {
-            if (\array_key_exists($reponse->getEtudiant()->getNumEtudiant(), $tEtudiant)) {
+            if (array_key_exists($reponse->getEtudiant()->getNumEtudiant(), $tEtudiant)) {
                 $tEtudiant[$reponse->getEtudiant()->getNumEtudiant()]['reponse'] = $reponse;
             }
         }

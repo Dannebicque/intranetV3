@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/DataUserSession.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 21/07/2021 17:05
  */
 
 /*
@@ -33,6 +33,7 @@ use App\Repository\MessageDestinatairePersonnelRepository;
 use App\Repository\NotificationRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
+use function count;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Symfony\Component\EventDispatcher\GenericEvent;
@@ -40,6 +41,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use function in_array;
 
 /**
  * Récupère les données d'une session utilisateur
@@ -245,7 +247,7 @@ class DataUserSession
     public function getNbDocumentsFavoris()
     {
         if (null !== $this->getUser()) {
-            return \count($this->getUser()->getDocumentsFavoris());
+            return count($this->getUser()->getDocumentsFavoris());
         }
 
         return null;
@@ -271,7 +273,7 @@ class DataUserSession
             /** @var PersonnelDepartement $rf */
             foreach ($this->getUser()->getPersonnelDepartements() as $rf) {
                 if (null !== $rf->getDepartement() &&
-                    false !== \in_array($role, $rf->getRoles(), true) &&
+                    false !== in_array($role, $rf->getRoles(), true) &&
                     $rf->getDepartement()->getId() === $this->departement->getId()) {
                     return true;
                 }
@@ -285,13 +287,14 @@ class DataUserSession
 
     /**
      * @return MessageDestinataireEtudiant[]|MessageDestinatairePersonnel[]|int|mixed|string
-     * @throws NonUniqueResultException
      *
+     * @throws NonUniqueResultException
      * @throws NoResultException
      */
     public function getMessages()
     {
         if (null === $this->messages) {
+            //todo: a revoir?? Les mêmes lignes ?
             if ($this->getUser() instanceof Etudiant) {
                 $this->messages = $this->messagesRepository->findLast($this->getUser(), 4);
                 $this->nbUnread = $this->messagesRepository->getNbUnread($this->getUser());
@@ -307,7 +310,7 @@ class DataUserSession
     public function getDepartementMultiple(): bool
     {
         if (null !== $this->getUser()) {
-            return \count($this->getUser()->getPersonnelDepartements()) > 1;
+            return count($this->getUser()->getPersonnelDepartements()) > 1;
         }
 
         return false;

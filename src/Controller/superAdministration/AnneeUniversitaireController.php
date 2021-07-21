@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/AnneeUniversitaireController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 17:25
+ * @lastUpdate 21/07/2021 17:05
  */
 
 namespace App\Controller\superAdministration;
@@ -15,6 +15,7 @@ use App\Entity\AnneeUniversitaire;
 use App\Entity\Constantes;
 use App\Form\AnneeUniversitaireType;
 use App\Repository\AnneeUniversitaireRepository;
+use function count;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -61,7 +62,6 @@ class AnneeUniversitaireController extends BaseController
     /**
      * @Route("/export.{_format}", name="sa_annee_universitaire_export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"})
-     *
      */
     public function export(
         MyExport $myExport,
@@ -98,7 +98,7 @@ class AnneeUniversitaireController extends BaseController
 
         return $this->render('super-administration/annee_universitaire/new.html.twig', [
             'annee_universitaire' => $anneeUniversitaire,
-            'form'                => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 
@@ -131,7 +131,7 @@ class AnneeUniversitaireController extends BaseController
 
         return $this->render('super-administration/annee_universitaire/edit.html.twig', [
             'annee_universitaire' => $anneeUniversitaire,
-            'form'                => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 
@@ -156,10 +156,10 @@ class AnneeUniversitaireController extends BaseController
     {
         $id = $annee_universitaire->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
-            if (0 === \count($annee_universitaire->getDepartements()) &&
-                0 === \count($annee_universitaire->getDiplomes()) &&
-                0 === \count($annee_universitaire->getScolarites()) &&
-                0 === \count($annee_universitaire->getEvaluations())) {
+            if (0 === count($annee_universitaire->getDepartements()) &&
+                0 === count($annee_universitaire->getDiplomes()) &&
+                0 === count($annee_universitaire->getScolarites()) &&
+                0 === count($annee_universitaire->getEvaluations())) {
                 $this->entityManager->remove($annee_universitaire);
                 $this->entityManager->flush();
                 $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'annee_universitaire.delete.success.flash');

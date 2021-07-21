@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/CelcatEventsRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/02/2021 09:40
+ * @lastUpdate 29/06/2021 17:30
  */
 
 namespace App\Repository;
@@ -20,6 +20,7 @@ use App\Entity\Ue;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use http\Exception\InvalidArgumentException;
+use function array_key_exists;
 
 /**
  * @method CelcatEvent|null find($id, $lockMode = null, $lockVersion = null)
@@ -160,7 +161,7 @@ class CelcatEventsRepository extends ServiceEntityRepository
 
             $refmatiere = explode(' ', $row->getLibModule());
 
-            if (\array_key_exists($casedebut, Constantes::TAB_CRENEAUX) && 0 === $duree % 3) {
+            if (array_key_exists($casedebut, Constantes::TAB_CRENEAUX) && 0 === $duree % 3) {
                 $planning[$casedebut][$groupe]['prof'] = $prof;
                 $planning[$casedebut][$groupe]['module'] = $refmatiere[0];
                 $planning[$casedebut][$groupe]['salle'] = mb_substr($row->getLibSalle(), 0, $max);
@@ -189,7 +190,7 @@ class CelcatEventsRepository extends ServiceEntityRepository
                 }
             } else {
                 //pas sur un créneau classique pour le début
-                if (!\array_key_exists($casedebut, Constantes::TAB_CRENEAUX)) {
+                if (!array_key_exists($casedebut, Constantes::TAB_CRENEAUX)) {
                     $casedebut -= ($duree % 3);
                 }
 

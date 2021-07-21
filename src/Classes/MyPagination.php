@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyPagination.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 29/06/2021 17:48
  */
 
 /*
@@ -16,6 +16,7 @@ namespace App\Classes;
 use App\Entity\Constantes;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\Routing\RouterInterface;
+use function count;
 
 /**
  * Class MyPagination.
@@ -39,17 +40,14 @@ class MyPagination
         $this->router = $router;
     }
 
-    /**
-     * @param int $page
-     */
-    public function calculPagination(QueryBuilder $queryBuilder, $link, $page = 1): void
+    public function calculPagination(QueryBuilder $queryBuilder, $link, int $page = 1): void
     {
         $this->page = $page;
         $this->link = $link;
 
         $debut = $page * Constantes::NB_RESULTS_PER_PAGE - 2;
 
-        $this->nbMaxResult = \count($queryBuilder->getQuery()->getArrayResult());
+        $this->nbMaxResult = count($queryBuilder->getQuery()->getArrayResult());
         $this->data = $queryBuilder->setFirstResult($debut)
             ->setMaxResults(Constantes::NB_RESULTS_PER_PAGE)
             ->getQuery()

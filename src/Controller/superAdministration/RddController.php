@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/RddController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 29/06/2021 17:38
  */
 
 namespace App\Controller\superAdministration;
@@ -13,6 +13,7 @@ use App\Classes\Rdd\MyExportRdd;
 use App\Controller\BaseController;
 use App\Repository\EtudiantRepository;
 use App\Repository\RddDiplomeRepository;
+use function count;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Symfony\Component\HttpFoundation\Response;
@@ -42,10 +43,10 @@ class RddController extends BaseController
 
         return $this->render('super-administration/scolarite/rdd/index.html.twig',
             [
-                'diplomes'   => $diplomes,
-                'etudiants'  => $tEtudiant,
-                'nbComplet'  => $nbComplet,
-                'nbDiplomes' => \count($diplomes),
+                'diplomes' => $diplomes,
+                'etudiants' => $tEtudiant,
+                'nbComplet' => $nbComplet,
+                'nbDiplomes' => count($diplomes),
             ]);
     }
 

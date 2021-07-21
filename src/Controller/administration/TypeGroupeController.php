@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/TypeGroupeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 29/06/2021 17:48
  */
 
 namespace App\Controller\administration;
@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use function in_array;
 
 /**
  * @Route("/administration/type-de-groupe")
@@ -86,7 +87,7 @@ class TypeGroupeController extends BaseController
      */
     public function updateDefaut(Request $request, TypeGroupe $typegroupe, Semestre $semestre): Response
     {
-        if (\in_array($request->request->get('defaut'), ['on', 'true'], true)) {
+        if (in_array($request->request->get('defaut'), ['on', 'true'], true)) {
             foreach ($semestre->getTypeGroupes() as $tg) {
                 if ($tg->getId() === $typegroupe->getId()) {
                     $tg->setDefaut(true);

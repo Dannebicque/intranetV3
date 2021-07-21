@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/PersonnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 21/07/2021 17:05
  */
 
 namespace App\Controller\administration;
@@ -20,6 +20,8 @@ use App\Repository\PersonnelRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use function count;
+use function in_array;
 
 /**
  * @Route("/administration/personnel")
@@ -218,13 +220,14 @@ class PersonnelController extends BaseController
         Request $request,
         PersonnelDepartementRepository $personnelDepartementRepository,
         Personnel $personnel
-    ): Response {
+    ): Response
+    {
         $droit = $request->request->get('droit');
         $pf = $personnelDepartementRepository->findByPersonnelDepartement($personnel,
             $this->dataUserSession->getDepartement());
 
-        if (1 === \count($pf) && \in_array($droit, Constantes::ROLE_LISTE, true)) {
-            if (\in_array($droit, $pf[0]->getRoles(), true)) {
+        if (1 === count($pf) && in_array($droit, Constantes::ROLE_LISTE, true)) {
+            if (in_array($droit, $pf[0]->getRoles(), true)) {
                 //deja existant on retire
                 $pf[0]->removeRole($droit);
                 $this->entityManager->flush();
@@ -239,7 +242,7 @@ class PersonnelController extends BaseController
             return $this->json($droit, Response::HTTP_OK);
         }
 
-        if (0 === \count($pf) && \in_array($droit, Constantes::ROLE_LISTE, true)) {
+        if (0 === count($pf) && in_array($droit, Constantes::ROLE_LISTE, true)) {
             //etrangement pas dans un département, on ajoute.
             $pf = new PersonnelDepartement($personnel, $this->dataUserSession->getDepartement());
             $pf->setDepartement();

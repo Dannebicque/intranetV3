@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/api/PersonnelApiController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 21/07/2021 17:05
  */
 
 namespace App\Controller\api;
@@ -23,6 +23,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
+use function count;
 
 /**
  * Class AgendaController.
@@ -178,12 +179,12 @@ class PersonnelApiController extends BaseController
         $output = [
             'draw'            => $request->get('draw'),
             'data'            => $users,
-            'recordsFiltered' => \count($this->personnelRepository->getAllPersonnel(
+            'recordsFiltered' => count($this->personnelRepository->getAllPersonnel(
                 $filters,
                 0,
                 false
             )),
-            'recordsTotal'    => \count($this->personnelRepository->getAllPersonnel(
+            'recordsTotal' => count($this->personnelRepository->getAllPersonnel(
                 [],
                 0,
                 false

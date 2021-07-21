@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyProjet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 29/06/2021 17:48
  */
 
 /*
@@ -19,6 +19,7 @@ use App\Entity\ProjetPeriode;
 use App\Repository\EtudiantRepository;
 use App\Repository\ProjetEtudiantRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use function array_key_exists;
 
 class MyProjet
 {
@@ -59,7 +60,7 @@ class MyProjet
         /** @var ProjetEtudiant $projetEtudiants */
         foreach ($projetPeriode->getProjetEtudiants() as $projetEtudiants) {
             foreach ($projetEtudiants->getEtudiants() as $etudiant) {
-                if (\array_key_exists($etudiant->getId(), $this->dataEtudiants)) {
+                if (array_key_exists($etudiant->getId(), $this->dataEtudiants)) {
                     $this->dataEtudiants[$etudiant->getId()]['projet'] = $projetEtudiants;
                 }
             }

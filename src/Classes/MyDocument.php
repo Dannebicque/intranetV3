@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyDocument.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:10
+ * @lastUpdate 29/06/2021 17:48
  */
 
 /*
@@ -21,6 +21,7 @@ use App\Entity\Personnel;
 use App\Repository\DocumentFavoriEtudiantRepository;
 use App\Repository\DocumentFavoriPersonnelRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use function count;
 
 class MyDocument
 {
@@ -59,7 +60,7 @@ class MyDocument
         $etat = '';
         if ($getConnectedUser instanceof Personnel) {
             $r = $this->documentFavoriPersonnelRepository->findFavori($getConnectedUser, $this->document);
-            if (null === $r || 0 === \count($r)) {
+            if (null === $r || 0 === count($r)) {
                 //add
                 $n = new DocumentFavoriPersonnel($getConnectedUser, $this->document);
                 $this->entityManager->persist($n);
@@ -71,7 +72,7 @@ class MyDocument
             }
         } elseif ($getConnectedUser instanceof Etudiant) {
             $r = $this->documentFavoriEtudiantRepository->findFavori($getConnectedUser, $this->document);
-            if (null === $r || 0 === \count($r)) {
+            if (null === $r || 0 === count($r)) {
                 //add
                 $n = new DocumentFavoriEtudiant($getConnectedUser, $this->document);
                 $this->entityManager->persist($n);

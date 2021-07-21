@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEdtCompare.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/05/2021 08:40
+ * @lastUpdate 28/06/2021 21:39
  */
 
 /*
@@ -28,9 +28,7 @@ class MyEdtCompare
     /**
      * @var Previsionnel[]
      */
-    private $planning;
-
-    private PrevisionnelCollection $previsionnel;
+    private array $planning;
 
     private PrevisionnelManager $previsionnelManager;
 
@@ -58,7 +56,7 @@ class MyEdtCompare
                 'debut' => 'ASC',
             ]);
 
-        $this->previsionnel = $this->previsionnelManager->getPrevisionnelMatierePersonnel(
+        $previsionnel = $this->previsionnelManager->getPrevisionnelMatierePersonnel(
             $personnel,
             $matiere->id,
             $matiere->typeMatiere, $anneePrevi
@@ -72,7 +70,7 @@ class MyEdtCompare
         $t['td']['real'] = 0;
         $t['tp']['real'] = 0;
 
-        foreach ($this->previsionnel as $ppr) {
+        foreach ($previsionnel as $ppr) {
             foreach ($ppr as $pr) {
                 $t['cm']['previ'] += $pr->getTotalHCm();
                 $t['td']['previ'] += $pr->getTotalHTd();

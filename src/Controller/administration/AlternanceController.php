@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/AlternanceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 21/07/2021 17:05
  */
 
 namespace App\Controller\administration;
@@ -19,6 +19,7 @@ use App\Entity\Personnel;
 use App\Form\AlternanceType;
 use App\Repository\AlternanceRepository;
 use App\Repository\EtudiantRepository;
+use function count;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -43,11 +44,11 @@ class AlternanceController extends BaseController
         /** @var Etudiant $etudiant */
         foreach ($etudiants as $etudiant) {
             $exist = $alternanceRepository->findBy([
-                'etudiant'           => $etudiant->getId(),
+                'etudiant' => $etudiant->getId(),
                 'anneeUniversitaire' => $annee->getAnneeUniversitaire(),
-                'annee'              => $annee->getId(),
+                'annee' => $annee->getId(),
             ]);
-            if (0 === \count($exist)) {
+            if (0 === count($exist)) {
                 $alternance = new Alternance();
                 $alternance->setEtudiant($etudiant);
                 $alternance->setAnneeUniversitaire(null !== $annee->getDiplome() ? $annee->getDiplome()->getAnneeUniversitaire() : null);
@@ -65,7 +66,6 @@ class AlternanceController extends BaseController
     }
 
     /**
-     *
      * @Route("/init/{annee}/{action}/{etudiant}", name="administration_alternance_init")
      */
     public function init(Etudiant $etudiant, $action, Annee $annee): RedirectResponse
@@ -76,9 +76,9 @@ class AlternanceController extends BaseController
         $alternance->setAnnee($annee);
 
         if ('init-false' === $action) {
-            $alternance->setEtat('sans');
+            $alternance->setEtat(Alternance::ALTERNANCE_ETAT_SANS);
         } else {
-            $alternance->setEtat('init');
+            $alternance->setEtat(Alternance::ALTERNANCE_ETAT_INITIALISE);
         }
 
         $this->entityManager->persist($alternance);
@@ -92,7 +92,6 @@ class AlternanceController extends BaseController
     /**
      * @Route("/export/{annee}.{_format}", name="administration_alternance_export", methods="GET",
      *                                     requirements={"_format"="csv|xlsx|pdf"})
-     *
      */
     public function export(
         MyExport $myExport,
@@ -109,9 +108,9 @@ class AlternanceController extends BaseController
             'alternances',
             ['alternance_administration', 'utilisateur'],
             [
-                'entreprise'          => ['libelle'],
-                'tuteur'              => ['nom', 'prenom', 'fonction', 'telephone', 'email', 'portable'],
-                'etudiant'            => ['nom', 'prenom', 'mailUniv'],
+                'entreprise' => ['libelle'],
+                'tuteur' => ['nom', 'prenom', 'fonction', 'telephone', 'email', 'portable'],
+                'etudiant' => ['nom', 'prenom', 'mailUniv'],
                 'tuteurUniversitaire' => ['nom', 'prenom', 'mailUniv'],
                 'typeContrat',
                 'dateDebut',
@@ -146,7 +145,7 @@ class AlternanceController extends BaseController
 
         return $this->render('administration/alternance/edit.html.twig', [
             'alternance' => $alternance,
-            'form'       => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 
@@ -164,8 +163,8 @@ class AlternanceController extends BaseController
             [
                 'alternances' => $alternanceRepository->getByAnneeAndAnneeUniversitaireArray($annee,
                     $annee->getDiplome() ? $annee->getDiplome()->getAnneeUniversitaire() : null),
-                'annee'       => $annee,
-                'etudiants'   => $etudiants,
+                'annee' => $annee,
+                'etudiants' => $etudiants,
             ]);
     }
 

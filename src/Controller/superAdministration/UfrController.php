@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/UfrController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 29/06/2021 17:48
  */
 
 namespace App\Controller\superAdministration;
@@ -18,6 +18,7 @@ use App\Repository\UfrRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use function count;
 
 /**
  * @Route("/administratif/ufr")
@@ -130,7 +131,7 @@ class UfrController extends BaseController
     {
         $id = $ufr->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
-            if (0 === \count($ufr->getDepartements())) {
+            if (0 === count($ufr->getDepartements())) {
                 $this->entityManager->remove($ufr);
                 $this->entityManager->flush();
 

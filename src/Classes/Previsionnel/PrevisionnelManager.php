@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Previsionnel/PrevisionnelManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/05/2021 08:47
+ * @lastUpdate 21/07/2021 17:05
  */
 
 namespace App\Classes\Previsionnel;
@@ -170,19 +170,35 @@ class PrevisionnelManager
         return false;
     }
 
-    public function dupliqueAnnee(Departement $departement, $anneeDepart, $annee_destination, $annee_concerver): void
-    {
+    public function dupliqueAnnee(
+        Departement $departement,
+        $anneeDepart,
+        $annee_destination,
+        $annee_concerver,
+        $personnels
+    ): void {
         //on efface, sauf si la case est cochée.
         if (null === $annee_concerver || 'true' !== $annee_concerver) {
             $this->supprimeAnnee($departement, $annee_destination);
         }
 
-        $previsionnels = $this->previsionnelRepository->findByDepartement($departement, $anneeDepart);
+        $previsionnels = $this->getPrevisionnelDepartement($departement, $anneeDepart);
 
-        /** @var Previsionnel $previsionnel */
+        /** @var \App\DTO\Previsionnel $previsionnel */
         foreach ($previsionnels as $previsionnel) {
-            $newPrevisonnel = clone $previsionnel;
-            $newPrevisonnel->setAnnee($annee_destination);
+            $newPrevisonnel = new Previsionnel($annee_destination, null);
+            $newPrevisonnel->setIdMatiere($previsionnel->matiere_id);
+            $newPrevisonnel->setTypeMatiere($previsionnel->type_matiere);
+            $newPrevisonnel->setNbGrCm($previsionnel->nbGrCm);
+            $newPrevisonnel->setNbGrTd($previsionnel->nbGrTd);
+            $newPrevisonnel->setNbGrTp($previsionnel->nbGrTp);
+            $newPrevisonnel->setNbHCm($previsionnel->nbHCm);
+            $newPrevisonnel->setNbHTd($previsionnel->nbHTd);
+            $newPrevisonnel->setNbHTp($previsionnel->nbHTp);
+            if (array_key_exists($previsionnel->personnel_id, $personnels)) {
+                $newPrevisonnel->setPersonnel($personnels[$previsionnel->personnel_id]);
+            }
+
             $this->entityManager->persist($newPrevisonnel);
         }
         $this->entityManager->flush();
@@ -190,10 +206,22 @@ class PrevisionnelManager
 
     public function supprimeAnnee(Departement $departement, $annee_destination): void
     {
-        $previsionnels = $this->previsionnelRepository->findByDepartement($departement, $annee_destination);
+        $previsionnels = $this->getPrevisionnelDepartement($departement, $annee_destination);
         foreach ($previsionnels as $previsionnel) {
             $this->entityManager->remove($previsionnel);
         }
         $this->entityManager->flush();
+    }
+
+
+    public function getPrevisionnelDepartement(Departement $departement, int $anneeUniversitaire = 0): array
+    {
+        $t = [];
+        foreach ($this->managers as $manager) {
+            $previs = $manager->findByDepartement($departement, $anneeUniversitaire);
+            $t[] = $previs->toArray();
+        }
+
+        return array_merge(...$t);
     }
 }

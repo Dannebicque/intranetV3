@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/ComparePrevisionnel/ComparePrevisionnelPersonnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/05/2021 16:14
+ * @lastUpdate 29/06/2021 17:30
  */
 
 namespace App\Classes\ComparePrevisionnel;
@@ -15,6 +15,7 @@ use App\Entity\Departement;
 use App\Entity\Personnel;
 use App\Repository\EdtPlanningRepository;
 use App\Repository\PersonnelRepository;
+use function array_key_exists;
 
 class ComparePrevisionnelPersonnel extends ComparePrevisionnel
 {
@@ -55,10 +56,10 @@ class ComparePrevisionnelPersonnel extends ComparePrevisionnel
             if (null !== $p &&
                 0 !== $p->personnel_id &&
                 0 !== $p->matiere_id &&
-                \array_key_exists($p->personnel_id, $t)) {
+                array_key_exists($p->personnel_id, $t)) {
                 $colonne = $p->getTypeIdMatiere();
                 $ligne = $p->personnel_id;
-                if (!\array_key_exists($p->getTypeIdMatiere(), $t[$p->personnel_id])) {
+                if (!array_key_exists($p->getTypeIdMatiere(), $t[$p->personnel_id])) {
                     $t[$ligne][$colonne]['matiere_id'] = $p->getTypeIdMatiere();
                     $t[$ligne][$colonne]['matiere_code'] = $p->matiere_code;
                     $t[$ligne][$colonne]['matiere_code_element'] = $p->matiere_code_element;
@@ -81,10 +82,10 @@ class ComparePrevisionnelPersonnel extends ComparePrevisionnel
         foreach ($planning as $pl) {
             if (0 !== $pl->getIdMatiere() &&
                 null !== $pl->getIntervenant() &&
-                \array_key_exists($pl->getIntervenant()->getId(), $t)) {
+                array_key_exists($pl->getIntervenant()->getId(), $t)) {
                 $col = $pl->getTypeIdMatiere();
                 $ligne = $pl->getIntervenant()->getId();
-                if (!\array_key_exists($pl->getTypeIdMatiere(), $t[$pl->getIntervenant()->getId()])) {
+                if (!array_key_exists($pl->getTypeIdMatiere(), $t[$pl->getIntervenant()->getId()])) {
                     $matiere = $this->typeMatiereManager->getMatiereFromSelect($pl->getTypeIdMatiere());
                     $t[$ligne][$col]['matiere_id'] = $pl->getTypeIdMatiere();
                     $t[$ligne][$col]['matiere_code'] = $matiere?->codeMatiere;
