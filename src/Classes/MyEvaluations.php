@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEvaluations.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2021 08:46
+ * @lastUpdate 29/06/2021 17:48
  */
 
 /*
@@ -19,6 +19,7 @@ use App\Entity\AnneeUniversitaire;
 use App\Entity\Evaluation;
 use App\Entity\Semestre;
 use App\Repository\EvaluationRepository;
+use function array_key_exists;
 
 /**
  * Class MyEvaluations.
@@ -82,7 +83,7 @@ class MyEvaluations
         foreach ($evaluations as $eval) {
             if (0 !== $eval->getIdMatiere()) {
                 $matiereId = $eval->getTypeIdMatiere();
-                if (!\array_key_exists($matiereId, $tab)) {
+                if (!array_key_exists($matiereId, $tab)) {
                     $tab[$matiereId] = [];
                 }
 

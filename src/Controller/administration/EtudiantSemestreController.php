@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EtudiantSemestreController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/06/2021 13:13
+ * @lastUpdate 21/07/2021 17:05
  */
 
 namespace App\Controller\administration;
@@ -127,8 +127,16 @@ class EtudiantSemestreController extends BaseController
             $_format,
             $etudiants,
             'etudiants_' . $semestre->getLibelle(),
-            ['etudiants_administration', 'utilisateur'],
-            ['nom', 'prenom', 'sexe', 'numEtudiant', 'bac', 'mailUniv']
+            ['etudiants_administration', 'utilisateur', 'adresse'],
+            [
+                'nom',
+                'prenom',
+                'sexe',
+                'numEtudiant',
+                'bac',
+                'mailUniv',
+                'adresse' => ['adresse1', 'adresse2', 'codePostal', 'ville', 'pays']
+            ]
         );
     }
 }

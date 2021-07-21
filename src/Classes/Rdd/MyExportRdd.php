@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Rdd/MyExportRdd.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 10:02
+ * @lastUpdate 29/06/2021 17:48
  */
 
 /*
@@ -17,9 +17,9 @@ use App\Classes\Excel\MyExcelWriter;
 use App\Entity\Etudiant;
 use App\Entity\RddDiplome;
 use Carbon\Carbon;
-use DateTime;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use function array_key_exists;
 
 class MyExportRdd
 {
@@ -39,8 +39,8 @@ class MyExportRdd
      * @param Etudiant[]   $etudiants
      */
     public function genereFichier(
-        $diplomes,
-        $etudiants
+        array $diplomes,
+        array $etudiants
     ): ?StreamedResponse {
         $this->myExcelWriter->createSheet('rdd');
         $tEnTete = [
@@ -70,7 +70,7 @@ class MyExportRdd
         $ligne = 2;
 
         foreach ($diplomes as $diplome) {
-            if (\array_key_exists($diplome->getNumEtudiant(), $etudiants)) {
+            if (array_key_exists($diplome->getNumEtudiant(), $etudiants)) {
                 $t = [
                     $diplome->getNumEtudiant(),
                     $etudiants[$diplome->getNumEtudiant()]->getCiviliteLong(),

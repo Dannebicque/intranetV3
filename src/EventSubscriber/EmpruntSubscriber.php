@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/EmpruntSubscriber.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 21/07/2021 17:05
  */
 
 namespace App\EventSubscriber;
@@ -18,14 +18,9 @@ use Symfony\Component\Routing\RouterInterface;
 
 class EmpruntSubscriber implements EventSubscriberInterface
 {
-    /** @var MailerFromTwig */
-    protected $myMailer;
-
-    /** @var EntityManagerInterface */
-    private $entityManager;
-
-    /** @var RouterInterface */
-    private $router;
+    protected MailerFromTwig $myMailer;
+    private EntityManagerInterface $entityManager;
+    private RouterInterface $router;
 
     /**
      * StageSubscriber constructor.
@@ -45,14 +40,10 @@ class EmpruntSubscriber implements EventSubscriberInterface
         return [
             EmpruntEvent::CHGT_ETAT_EMPRUNT_DEMANDE => 'onChgtEmpruntDemande',
             EmpruntEvent::CHGT_ETAT_EMPRUNT_ACCEPTE => 'onChgtEmpruntAccepte',
-            EmpruntEvent::CHGT_ETAT_EMPRUNT_REFUS   => 'onChgtEmpruntRefus',
+            EmpruntEvent::CHGT_ETAT_EMPRUNT_REFUS => 'onChgtEmpruntRefus',
         ];
     }
 
-    /**
-     *
-     * @throws TransportExceptionInterface
-     */
     public function sendMail(EmpruntEvent $event, $codeEvent): void
     {
         $emprunt = $event->getEmprunt();

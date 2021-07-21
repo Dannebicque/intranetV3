@@ -4,20 +4,18 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/RattrapagePlanningController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 09:57
+ * @lastUpdate 21/07/2021 17:05
  */
 
 namespace App\Controller\administration;
 
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\MyExport;
-use App\Utils\Tools;
 use App\Controller\BaseController;
 use App\Entity\Diplome;
 use App\Entity\Rattrapage;
 use App\Repository\RattrapageRepository;
-use Carbon\Carbon;
-use DateTime;
+use App\Utils\Tools;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -44,16 +42,15 @@ class RattrapagePlanningController extends BaseController
             'matieres' => $typeMatiereManager->findByDiplomeArray($diplome),
             'options' => [
                 'data-options' => [
-                    'dateFormat' => 'd/m/Y'
-                ]
-            ]
+                    'dateFormat' => 'd/m/Y',
+                ],
+            ],
         ]);
     }
 
     /**
      * @Route("/{diplome}/export.{_format}", name="administration_rattrapage_planning_export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"})
-     *
      */
     public function export(
         MyExport $myExport,
@@ -69,11 +66,11 @@ class RattrapagePlanningController extends BaseController
             'rattrapages_' . $diplome->getLibelle(),
             ['rattrapage_administration', 'utilisateur', 'matiere'],
             [
-                'etudiant'  => ['nom', 'prenom'],
+                'etudiant' => ['nom', 'prenom'],
                 'dateEval',
                 'heureEval',
                 'duree',
-                'matiere'   => ['libelle'],
+                'matiere' => ['libelle'],
                 'personnel' => ['nom', 'prenom'],
                 'dateRattrapage',
                 'heureRattrapage',
@@ -87,7 +84,6 @@ class RattrapagePlanningController extends BaseController
      * @Route("/change/{uuid}/{type}", name="administration_rattrapage_planning_change", methods="POST",
      *                                    requirements={"type"="date|heure|salle"}, options={"expose":true})
      * @ParamConverter("rattrapage", options={"mapping": {"uuid": "uuid"}})
-     *
      *
      * @throws \Exception
      */
@@ -115,7 +111,6 @@ class RattrapagePlanningController extends BaseController
     /**
      * @Route("/update_global/{type}/{diplome}", name="administration_rattrapage_update_global", methods="POST",
      *                                    requirements={"type"="salle|heure|date"}, options={"expose":true})
-     *
      *
      * @throws \Exception
      */

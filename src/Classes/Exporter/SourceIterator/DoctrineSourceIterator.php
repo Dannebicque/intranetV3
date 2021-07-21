@@ -4,14 +4,19 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Exporter/SourceIterator/DoctrineSourceIterator.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/05/2021 20:35
+ * @lastUpdate 29/06/2021 17:30
  */
 
 namespace App\Classes\Exporter\SourceIterator;
 
+use DateInterval;
+use DateTimeInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\PropertyInfo\DoctrineExtractor;
 use Symfony\Component\PropertyInfo\PropertyInfoExtractor;
+use Traversable;
+use function is_array;
+use function is_object;
 
 class DoctrineSourceIterator implements SourceInterface
 {
@@ -51,8 +56,8 @@ class DoctrineSourceIterator implements SourceInterface
 
     private function getHeader($datas)
     {
-        foreach ($datas as $key => $data) {
-            $this->fields[$data] = $this->propertyInfo->getTypes($this->classType, $datas[$key]);
+        foreach ($datas as $data) {
+            $this->fields[$data] = $this->propertyInfo->getTypes($this->classType, $data);
         }
     }
 
@@ -68,19 +73,20 @@ class DoctrineSourceIterator implements SourceInterface
     private function getValue(mixed $value): ?string
     {
         switch (true) {
-            case \is_array($value):
+            case is_array($value):
                 return '[' . implode(', ', array_map([$this, 'getValue'], $value)) . ']';
-            case $value instanceof \Traversable:
+            case $value instanceof Traversable:
                 return '[' . implode(', ', array_map([$this, 'getValue'], iterator_to_array($value))) . ']';
-            case $value instanceof \DateTimeInterface:
+            case $value instanceof DateTimeInterface:
+                //todo: ajouter CarbonInterface ?
                 if ('01/01/1970' === $value->format($this->dateFormat) || '00/00/0000' === $value->format($this->dateFormat)) {
                     return $value->format($this->timeFormat);
                 }
 
                 return $value->format($this->dateFormat . ' ' . $this->timeFormat);
-            case $value instanceof \DateInterval:
+            case $value instanceof DateInterval:
                 return $this->getDuration($value);
-            case \is_object($value):
+            case is_object($value):
                 return method_exists($value, '__toString') ? (string)$value : null;
             case is_bool($value):
                 return true === $value ? 'Oui' : 'Non';
@@ -89,7 +95,7 @@ class DoctrineSourceIterator implements SourceInterface
         }
     }
 
-    public function getDuration(\DateInterval $interval): string
+    public function getDuration(DateInterval $interval): string
     {
         $datePart = '';
         foreach (self::DATE_PARTS as $datePartAttribute => $datePartAttributeString) {

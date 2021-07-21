@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyMaterielCommun.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:17
+ * @lastUpdate 29/06/2021 09:03
  */
 
 /*
@@ -21,7 +21,6 @@ class MyMaterielCommun
 {
     private MaterielCommunRepository $materielCommunRepository;
     private MaterielCommunPretRepository $materielCommunPretRepository;
-    private int $nbjouremprunt;
 
     /**
      * MyMaterielCommun constructor.
@@ -37,10 +36,10 @@ class MyMaterielCommun
     public function getJours(): array
     {
         $jours = [];
-        $this->nbjouremprunt = 28;
+        $nbjouremprunt = 28;
         $j = -2;
 
-        for ($i = 0; $i < $this->nbjouremprunt; ++$i) {
+        for ($i = 0; $i < $nbjouremprunt; ++$i) {
             $d = mktime(0, 0, 0, date('m'), date('d') + $j, date('Y'));
             $jour = date('N', $d);
             if (6 !== $jour && 7 !== $jour) {
@@ -56,10 +55,7 @@ class MyMaterielCommun
         return $jours;
     }
 
-    /**
-     * @param array $jours
-     */
-    public function obtainDispoMateriel($jours): array
+    public function obtainDispoMateriel(array $jours): array
     {
         $prets = $this->materielCommunPretRepository->findAll();
         $t = [];

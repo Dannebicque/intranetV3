@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Csv/CsvWrite.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 29/06/2021 17:30
  */
 
 /*
@@ -12,6 +12,10 @@
  */
 
 namespace App\Classes\Csv;
+
+use function get_class;
+use function is_object;
+use function is_string;
 
 /**
  * Class CsvWrite.
@@ -22,18 +26,14 @@ abstract class CsvWrite
     public const FORMAT_STRING = 'string';
     public const ECHAPPEMENT = '"';
 
-    /**
-     * @param string $key
-     */
-    public static function writeField($value, $key = ''): string
+    public static function writeField($value, string $key = ''): string
     {
-        $field = '';
-        $field .= $key;
+        $field = $key;
 
-        if (\is_string($value)) {
+        if (is_string($value)) {
             $field .= self::ECHAPPEMENT . $value . self::ECHAPPEMENT;
-        } elseif (\is_object($value)) {
-            if (self::FORMAT_DATETIME === \get_class($value)) {
+        } elseif (is_object($value)) {
+            if (self::FORMAT_DATETIME === get_class($value)) {
                 $field .= $value->format('d-m-Y');
             }
         } else {

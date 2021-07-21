@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ApplicationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 21/07/2021 17:05
  */
 
 namespace App\Controller;
@@ -21,15 +21,12 @@ class ApplicationController extends BaseController
 {
     /**
      * @Route("/{onglet}/{param}", name="application_index", requirements={"param"="\d+"})
-     *
-     * @param string $onglet
-     * @param string $param
      */
-    public function index($onglet = 'messagerie', $param = ''): Response
+    public function index(string $onglet = 'messagerie', string $param = ''): Response
     {
         return $this->render('application/index.html.twig', [
             'onglet' => $onglet,
-            'param'  => $param,
+            'param' => $param,
         ]);
     }
 }

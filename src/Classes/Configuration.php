@@ -4,12 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Configuration.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/03/2021 17:17
+ * @lastUpdate 21/07/2021 17:05
  */
 
 namespace App\Classes;
 
 use App\Repository\ConfigurationRepository;
+use function count;
 use Symfony\Component\Mime\Address;
 
 class Configuration
@@ -26,9 +27,9 @@ class Configuration
         $this->configurationRepository = $configurationRepository;
     }
 
-    public function get($name): string
+    public function get($name)
     {
-        if (0 === \count($this->settings)) {
+        if (0 === count($this->settings)) {
             $this->getAllSettings();
         }
 

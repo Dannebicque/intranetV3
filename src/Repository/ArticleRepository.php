@@ -4,13 +4,14 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/ArticleRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 29/06/2021 09:03
  */
 
 namespace App\Repository;
 
 use App\Entity\Article;
 use App\Entity\ArticleCategorie;
+use App\Entity\Departement;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\QueryBuilder;
@@ -65,17 +66,14 @@ class ArticleRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param $departement
-     * @param $nbResult
-     *
      * @return Article[]
      */
-    public function findByDepartement($departement, $nbResult = 0): array
+    public function findByDepartement(Departement $departement, int $nbResult = 0): array
     {
         $q = $this->createQueryBuilder('a')
             ->innerJoin(ArticleCategorie::class, 'c', 'WITH', 'c.id = a.categorie')
             ->andWhere('c.departement = :departement')
-            ->setParameter('departement', $departement)
+            ->setParameter('departement', $departement->getId())
             ->orderBy('a.created', 'DESC');
 
         if (0 !== $nbResult) {

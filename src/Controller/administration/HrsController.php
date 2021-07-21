@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/HrsController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 29/06/2021 09:03
  */
 
 namespace App\Controller\administration;
@@ -28,10 +28,8 @@ class HrsController extends BaseController
     /**
      * @Route("/{annee}", name="administration_hrs_index", methods="GET|POST", options={"expose":true},
      *                    requirements={"annee":"\d+"})
-     *
-     * @param int $annee
      */
-    public function index(Request $request, HrsRepository $hrsRepository, $annee = 0): Response
+    public function index(Request $request, HrsRepository $hrsRepository, int $annee = 0): Response
     {
         if (0 === $annee && null !== $this->dataUserSession->getDepartement()) {
             $annee = $this->dataUserSession->getDepartement()->getOptAnneePrevisionnel();

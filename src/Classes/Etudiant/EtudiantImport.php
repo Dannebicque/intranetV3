@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/06/2021 15:59
+ * @lastUpdate 29/06/2021 17:30
  */
 
 /*
@@ -19,6 +19,9 @@ use App\Entity\Etudiant;
 use App\Entity\Semestre;
 use App\Utils\Tools;
 use Doctrine\ORM\EntityManagerInterface;
+use function array_key_exists;
+use function count;
+use function is_array;
 
 class EtudiantImport
 {
@@ -60,7 +63,7 @@ class EtudiantImport
     private function updateLdap(Etudiant $etudiant)
     {
         $etuLdap = $this->myLdap->getInfoEtudiant($etudiant->getNumEtudiant());
-        if (\is_array($etuLdap) && 2 === \count($etuLdap) && '' !== $etuLdap['mail'] && '' !== $etuLdap['login']) {
+        if (is_array($etuLdap) && 2 === count($etuLdap) && '' !== $etuLdap['mail'] && '' !== $etuLdap['login']) {
             $etudiant->updateFromLdap($etuLdap);
 
             return true;
@@ -147,7 +150,8 @@ class EtudiantImport
         $etudiant->setPromotion($ligne[5]);
 
         $etudiant->setAnneeBac($ligne[6]);
-        $etudiant->setBac(true === \array_key_exists($ligne[7], $tBac) ? $tBac[$data[7]] : null);
+        //todo: corriger
+        $etudiant->setBac(true === array_key_exists($ligne[7], $tBac) ? $tBac[$data[7]] : null);
         $etudiant->setCivilite('M' === $ligne[8] ? 'M.' : 'Mme'); //M ou F
 
         $etudiant->setTel1($ligne[9]);

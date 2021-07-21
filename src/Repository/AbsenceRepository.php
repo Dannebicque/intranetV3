@@ -4,16 +4,18 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/AbsenceRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2021 08:46
+ * @lastUpdate 21/07/2021 17:05
  */
 
 namespace App\Repository;
 
+use App\DTO\Matiere;
 use App\Entity\Absence;
 use App\Entity\AbsenceJustificatif;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Etudiant;
 use App\Entity\Semestre;
+use function array_key_exists;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -43,11 +45,11 @@ class AbsenceRepository extends ServiceEntityRepository
             $date = null !== $absence->getDateHeure() ? $absence->getDateHeure()->format('Y-m-d') : '';
             $heure = null !== $absence->getDateHeure() ? $absence->getDateHeure()->format('H:i') : '';
 
-            if (!\array_key_exists($date, $tab)) {
+            if (!array_key_exists($date, $tab)) {
                 $tab[$date] = [];
             }
 
-            if (!\array_key_exists($heure, $tab[$date])) {
+            if (!array_key_exists($heure, $tab[$date])) {
                 $tab[$date][$heure] = [];
             }
 
@@ -57,7 +59,7 @@ class AbsenceRepository extends ServiceEntityRepository
         return $tab;
     }
 
-    public function getByMatiere(\App\DTO\Matiere $matiere, AnneeUniversitaire $anneeUniversitaire)
+    public function getByMatiere(Matiere $matiere, AnneeUniversitaire $anneeUniversitaire)
     {
         return $this->createQueryBuilder('m')
             ->innerJoin(AnneeUniversitaire::class, 'a', 'WITH', 'm.anneeUniversitaire = a.id')
@@ -82,11 +84,11 @@ class AbsenceRepository extends ServiceEntityRepository
         foreach ($absences as $absence) {
             if (null !== $absence->getEtudiant() &&
                 null !== $absence->getDateHeure() &&
-                \array_key_exists($absence->getEtudiant()->getId(), $trattrapages) &&
-                \array_key_exists($absence->getDateHeure()->format('Ymd'),
+                array_key_exists($absence->getEtudiant()->getId(), $trattrapages) &&
+                array_key_exists($absence->getDateHeure()->format('Ymd'),
                     $trattrapages[$absence->getEtudiant()->getId()]
                 )) {
-                if (!\array_key_exists(
+                if (!array_key_exists(
                     $absence->getDateHeure()->format('Hi'),
                     $trattrapages[$absence->getEtudiant()->getId()][$absence->getDateHeure()->format('Ymd')]
                 )) {
@@ -126,7 +128,6 @@ class AbsenceRepository extends ServiceEntityRepository
             ->setParameter('annee', $anneeUniversitaire->getId())
             ->setParameter('etudiant', $etudiant->getId())
             ->orderBy('a.dateHeure', 'DESC');
-
 
         $ors = [];
         foreach ($matieres as $matiere) {

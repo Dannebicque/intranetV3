@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyExportListing.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/05/2021 18:52
+ * @lastUpdate 29/06/2021 17:48
  */
 
 /*
@@ -32,6 +32,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
+use function count;
 
 class MyExportListing
 {
@@ -163,7 +164,7 @@ class MyExportListing
     private function exportCsv($separateur): StreamedResponse
     {
         $this->myExcelWriter->createSheet('export');
-        if (\count($this->colonnesEnTete) > 1) {
+        if (count($this->colonnesEnTete) > 1) {
             foreach ($this->colonnesEnTete as $col) {
                 $this->myExcelWriter->writeCellXY($this->colonne, $this->ligne, $col);
                 $this->newColonne();
@@ -418,7 +419,7 @@ class MyExportListing
 
     private function writeLine(Etudiant $etudiant, Groupe $groupe): void
     {
-        if (\count($this->colonnesEnTete) > 1) {
+        if (count($this->colonnesEnTete) > 1) {
             $this->myExcelWriter->writeCellXY($this->colonne, $this->ligne, mb_strtoupper($etudiant->getNom()));
             $this->newColonne();
             $this->myExcelWriter->writeCellXY($this->colonne, $this->ligne, mb_strtoupper($etudiant->getPrenom()));

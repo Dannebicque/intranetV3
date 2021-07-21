@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtExportController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2021 15:21
+ * @lastUpdate 29/06/2021 17:30
  */
 
 namespace App\Controller\administration;
@@ -25,6 +25,7 @@ use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use ZipArchive;
+use function array_key_exists;
 
 /**
  * Class EdtController.
@@ -265,8 +266,8 @@ class EdtExportController extends BaseController
             if (
                 null !== $p->getIntervenant() &&
                 null !== $p->getMatiere() &&
-                \array_key_exists($p->getIntervenant()->getNumeroHarpege(), $tabProf) &&
-                \array_key_exists($p->getSalle(), $tabSalles)) {
+                array_key_exists($p->getIntervenant()->getNumeroHarpege(), $tabProf) &&
+                array_key_exists($p->getSalle(), $tabSalles)) {
                 /*
                  * # 1= jour de la semaine (ex: 1 pour lundi)
 # 2= heure de debut (ex: 11:00)

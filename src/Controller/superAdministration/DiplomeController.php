@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/DiplomeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/05/2021 09:04
+ * @lastUpdate 29/06/2021 17:30
  */
 
 namespace App\Controller\superAdministration;
@@ -23,6 +23,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use function count;
 
 /**
  * @Route("/administratif/structure/diplome")
@@ -161,7 +162,7 @@ class DiplomeController extends BaseController
     {
         $id = $diplome->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
-            if (0 === \count($diplome->getAnnees())) {
+            if (0 === count($diplome->getAnnees())) {
                 $this->entityManager->remove($diplome);
                 $this->entityManager->flush();
                 $this->addFlashBag(

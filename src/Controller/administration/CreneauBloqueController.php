@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/CreneauBloqueController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 29/06/2021 17:30
  */
 
 namespace App\Controller\administration;
@@ -15,10 +15,12 @@ use App\Entity\CreneauCours;
 use App\Repository\CalendrierRepository;
 use App\Repository\CreneauBloqueRepository;
 use App\Repository\CreneauCoursRepository;
+use function array_key_exists;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use function count;
 
 /**
  * @Route("/administration/creneau/bloque")
@@ -39,7 +41,7 @@ class CreneauBloqueController extends BaseController
             $tCreneaux = [];
             /** @var CreneauCours $creneau */
             foreach ($creneaux as $creneau) {
-                if (!\array_key_exists($creneau->getJourLong(), $tCreneaux)) {
+                if (!array_key_exists($creneau->getJourLong(), $tCreneaux)) {
                     $tCreneaux[$creneau->getJourLong()] = [];
                 }
                 $tCreneaux[$creneau->getJourLong()][] = $creneau;
@@ -47,8 +49,8 @@ class CreneauBloqueController extends BaseController
 
             return $this->render('administration/creneau_bloque/index.html.twig', [
                 'creneau_bloques' => $creneauBloqueRepository->findAll(),
-                'creneaux'        => $tCreneaux,
-                'semaines'        => $calendrierRepository->findByAnneeUniversitaire($this->dataUserSession->getDepartement()->getAnneeUniversitairePrepare()),
+                'creneaux' => $tCreneaux,
+                'semaines' => $calendrierRepository->findByAnneeUniversitaire($this->dataUserSession->getDepartement()->getAnneeUniversitairePrepare()),
             ]);
         }
 
@@ -74,7 +76,7 @@ class CreneauBloqueController extends BaseController
             $type = $request->request->get('type');
             $crBl = $creneauBloqueRepository->findBy(['creneau' => $cr->getId(), 'semaine' => $semaine->getId()]);
 
-            if (1 === \count($crBl)) {
+            if (1 === count($crBl)) {
                 if ('dispo' === $type) {
                     $this->entityManager->remove($crBl[0]);
                 } else {
@@ -86,7 +88,7 @@ class CreneauBloqueController extends BaseController
                 return $this->json(true, Response::HTTP_OK);
             }
 
-            if (0 === \count($crBl)) {
+            if (0 === count($crBl)) {
                 $crBl = new CreneauBloque();
                 $crBl->setType($type);
                 $crBl->setCreneau($cr);

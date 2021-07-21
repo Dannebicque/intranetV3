@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/05/2021 08:47
+ * @lastUpdate 29/06/2021 17:48
  */
 
 /*
@@ -30,6 +30,9 @@ use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use function array_key_exists;
+use function chr;
+use function count;
 
 class MyEdtIntranet extends BaseEdt implements EdtInterface
 {
@@ -151,7 +154,7 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
     ): self {
         if ('' === $valeur) {
             $semestres = $this->semestreRepository->findByDepartementActif($departement);
-            if (\count($semestres) > 0) {
+            if (count($semestres) > 0) {
                 $valeur = $semestres[0]->getId();
             }
             //erreur
@@ -290,32 +293,21 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
      */
     private function getCouleur(EdtPlanning $p): ?string
     {
-        switch (mb_strtolower($p->getType())) {
-            case 'cm':
-            case 'td':
-            case 'tp':
-            return mb_strtolower($p->getType()) . '_' . $p->getSemestre()->getAnnee()->getCouleur();
-            default:
-                return 'CCCCCC';
-        }
+        return match (mb_strtolower($p->getType())) {
+            'cm', 'td', 'tp' => mb_strtolower($p->getType()) . '_' . $p->getSemestre()->getAnnee()->getCouleur(),
+            default => 'CCCCCC',
+        };
     }
 
     private function getCouleurTexte(EdtPlanning $p): string
     {
-        switch ($p->getSemestre()->getAnnee()->getCouleur()) {
-            case 'pink':
-            case 'red':
-            case 'orange':
-                return 'black';
-            default:
-                return 'white';
-        }
+        return match ($p->getSemestre()->getAnnee()->getCouleur()) {
+            'pink', 'red', 'orange' => 'black',
+            default => 'white',
+        };
     }
 
-    /**
-     * @param string $type
-     */
-    private function isEvaluation(EdtPlanning $p, $type = 'short'): string
+    private function isEvaluation(EdtPlanning $p, string $type = 'short'): string
     {
         if (0 !== $p->getIdMatiere()) {
             $matiere = $this->typeMatiereManager->getMatiere($p->getIdMatiere(), $p->getTypeMatiere());
@@ -526,11 +518,11 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
                     break;
                 case TypeGroupe::TYPE_GROUPE_TD:
                     $t['type'] = 'Travaux Dirigés';
-                    $t['groupes'] = \chr($pl->getGroupe() + 64) . \chr($pl->getGroupe() + 65);
+                    $t['groupes'] = chr($pl->getGroupe() + 64) . chr($pl->getGroupe() + 65);
                     break;
                 case TypeGroupe::TYPE_GROUPE_TP:
                     $t['type'] = 'Travaux Pratiques';
-                    $t['groupes'] = \chr($pl->getGroupe() + 64);
+                    $t['groupes'] = chr($pl->getGroupe() + 64);
                     break;
             }
 
@@ -639,7 +631,7 @@ class MyEdtIntranet extends BaseEdt implements EdtInterface
         $this->tab[$p->getJour()][$idDebut]['format'] = 'aie';
 
         //regarde si le format entre dans une case ou dépasse. retourne 'ok' ou 'nok'
-        if (\array_key_exists($casedebut, Constantes::TAB_CRENEAUX) && 0 === ($duree % 3)) {
+        if (array_key_exists($casedebut, Constantes::TAB_CRENEAUX) && 0 === ($duree % 3)) {
             $this->tab[$p->getJour()][$idDebut]['format'] = 'ok';
 
             if (0 === $duree % 3) {

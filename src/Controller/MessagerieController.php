@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/MessagerieController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/06/2021 10:28
+ * @lastUpdate 29/06/2021 17:48
  */
 
 namespace App\Controller;
@@ -20,7 +20,6 @@ use App\Repository\MessageDestinatairePersonnelRepository;
 use App\Repository\MessageRepository;
 use App\Repository\TypeGroupeRepository;
 use Carbon\Carbon;
-use DateTime;
 use Doctrine\ORM\NonUniqueResultException;
 use Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -28,6 +27,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use function count;
+use function is_array;
 
 /**
  * Class MessagerieController.
@@ -38,10 +39,8 @@ class MessagerieController extends BaseController
 {
     /**
      * @Route("/{param}", name="messagerie_index", requirements={"param"="\d+"})
-     *
-     * @param string $param
      */
-    public function index($param = ''): Response
+    public function index(string $param = ''): Response
     {
         return $this->render('messagerie/index.html.twig', [
             'filtre' => 'all',
@@ -96,7 +95,6 @@ class MessagerieController extends BaseController
     }
 
     /**
-     *
      * @return JsonResponse
      * @Route("/filtre/{filtre}", name="messagerie_filtre", options={"expose"=true})
      */
@@ -122,22 +120,19 @@ class MessagerieController extends BaseController
         return $this->render('messagerie/listeMessages.html.twig', [
             'filtre' => $filtre,
             'messages' => $messages,
-            'pagination' => ['depart' => 1, 'fin' => \count($messages)],
+            'pagination' => ['depart' => 1, 'fin' => count($messages)],
         ]);
     }
 
     /**
      * @Route("/liste-messages/{filtre}/{page}", name="messagerie_liste_messages", options={"expose":true})
-     *
-     * @param string $filtre
-     * @param int    $page
      */
     public function listeMessages(
         MessageRepository $messageRepository,
         MessageDestinatairePersonnelRepository $messagePersonnelRepository,
         MessageDestinataireEtudiantRepository $messageEtudiantRepository,
-        $filtre = 'all',
-        $page = 0
+        string $filtre = 'all',
+        int $page = 0
     ): Response {
         if ('send' === $filtre) {
             $messages = $messageRepository->findBy(['expediteur' => $this->getConnectedUser(), 'etat' => 'E']);
@@ -155,7 +150,7 @@ class MessagerieController extends BaseController
         return $this->render('messagerie/listeMessages.html.twig', [
             'filtre' => $filtre,
             'messages' => $messages,
-            'pagination' => ['depart' => 1, 'fin' => \count($messages)],
+            'pagination' => ['depart' => 1, 'fin' => count($messages)],
         ]);
     }
 
@@ -185,7 +180,7 @@ class MessagerieController extends BaseController
         $messagerie->setMessage($sujet, $message, $this->getConnectedUser());
         $messagerie->sendToDestinataires($this->checkArray($destinataires), $typeDestinataire, $this->getDepartement());
 
-        if (is_countable($copie) && \count($copie) > 0) {
+        if (is_countable($copie) && count($copie) > 0) {
             $messagerie->setCopie($copie, $this->getDepartement());
         }
 
@@ -247,8 +242,7 @@ class MessagerieController extends BaseController
         MessageDestinatairePersonnelRepository $messagePersonnelRepository,
         MessageDestinataireEtudiantRepository $messageEtudiantRepository,
         Message $message
-    ): Response
-    {
+    ): Response {
         if ($this->getConnectedUser() instanceof Etudiant) {
             $messaged = $messageEtudiantRepository->findDest($this->getConnectedUser(), $message);
         } elseif ($this->getConnectedUser() instanceof Personnel) {
@@ -271,7 +265,7 @@ class MessagerieController extends BaseController
 
     private function checkArray($get)
     {
-        if (!\is_array($get)) {
+        if (!is_array($get)) {
             return [$get];
         }
 

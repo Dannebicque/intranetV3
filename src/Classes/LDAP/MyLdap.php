@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/LDAP/MyLdap.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 29/06/2021 17:48
  */
 
 /*
@@ -15,6 +15,7 @@ namespace App\Classes\LDAP;
 
 use Exception;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use const LDAP_OPT_PROTOCOL_VERSION;
 
 class MyLdap
 {
@@ -34,7 +35,7 @@ class MyLdap
     {
         try {
             $this->ds = ldap_connect($this->parameterBag->get('LDAP_HOST'));
-            ldap_set_option($this->ds, \LDAP_OPT_PROTOCOL_VERSION, 3);
+            ldap_set_option($this->ds, LDAP_OPT_PROTOCOL_VERSION, 3);
             if ($this->ds) {
                 ldap_bind($this->ds, $this->parameterBag->get('LDAP_LOGIN'),
                     $this->parameterBag->get('LDAP_PASSWORD'));

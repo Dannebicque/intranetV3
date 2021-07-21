@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/PrevisionnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2021 21:52
+ * @lastUpdate 21/07/2021 17:05
  */
 
 namespace App\Controller\administration;
@@ -227,13 +227,22 @@ class PrevisionnelController extends BaseController
     /**
      * @Route("/dupliquer-annee-complete", name="administration_previsionnel_duplicate_annee", methods="POST")
      */
-    public function duplicateAnnee(PrevisionnelManager $previsionnelManager, Request $request): Response
-    {
+    public function duplicateAnnee(
+        PersonnelRepository $personnelRepository,
+        PrevisionnelManager $previsionnelManager,
+        Request $request
+    ): Response {
         $anneeDepart = $request->request->get('annee_depart');
         $annee_destination = $request->request->get('annee_destination');
         $annee_concerver = $request->request->get('annee_concerver');
+        $personnels = $personnelRepository->findByDepartement($this->dataUserSession->getDepartement());
+        $tPersonnels = [];
+        foreach ($personnels as $personnel) {
+            $tPersonnels[$personnel->getId()] = $personnel;
+        }
+
         $previsionnelManager->dupliqueAnnee($this->dataUserSession->getDepartement(), $anneeDepart, $annee_destination,
-            $annee_concerver);
+            $annee_concerver, $tPersonnels);
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'previsionnel.duplicate_annee.success.flash');
 
         return $this->redirectToRoute('administration_previsionnel_index', ['annee' => $annee_destination]);

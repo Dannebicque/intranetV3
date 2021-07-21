@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/ComparePrevisionnel/ComparePrevisonnelMatiere.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 11:29
+ * @lastUpdate 29/06/2021 17:30
  */
 
 namespace App\Classes\ComparePrevisionnel;
@@ -14,6 +14,7 @@ use App\Classes\Previsionnel\PrevisionnelManager;
 use App\Entity\Departement;
 use App\Repository\CelcatEventsRepository;
 use App\Repository\EdtPlanningRepository;
+use function array_key_exists;
 
 class ComparePrevisonnelMatiere extends ComparePrevisionnel
 {
@@ -56,11 +57,11 @@ class ComparePrevisonnelMatiere extends ComparePrevisionnel
 
         foreach ($previsonnel as $p) {
             if ((null !== $p && 0 !== $p->matiere_id && 0 !== $p->personnel_id) &&
-                \array_key_exists($p->matiere_id, $t)) {
+                array_key_exists($p->matiere_id, $t)) {
                 $ligne = $p->matiere_id;
                 $col = $p->personnel_id;
 
-                if (!\array_key_exists($col, $t[$ligne])) {
+                if (!array_key_exists($col, $t[$ligne])) {
                     $t[$ligne][$col]['personnel_id'] = $p->personnel_id;
                     $t[$ligne][$col]['personnel_prenom'] = $p->personnel_prenom;
                     $t[$ligne][$col]['personnel_nom'] = $p->personnel_nom;
@@ -81,10 +82,10 @@ class ComparePrevisonnelMatiere extends ComparePrevisionnel
         foreach ($planning as $pl) {
             if (0 !== $pl->getIdMatiere() &&
                 null !== $pl->getIntervenant() &&
-                \array_key_exists($ligne, $t)) {
+                array_key_exists($ligne, $t)) {
                 $ligne = $pl->getIdMatiere();
                 $col = $pl->getIntervenant()->getId();
-                if (!\array_key_exists($col, $t[$ligne])) {
+                if (!array_key_exists($col, $t[$ligne])) {
                     $t[$ligne][$col]['personnel_id'] = $pl->getIntervenant()->getId();
                     $t[$ligne][$col]['personnel_prenom'] = $pl->getIntervenant()->getPrenom();
                     $t[$ligne][$col]['personnel_nom'] = $pl->getIntervenant()->getNom();

@@ -4,13 +4,14 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ApcSaeCompetenceType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/03/2021 18:49
+ * @lastUpdate 29/06/2021 09:03
  */
 
 namespace App\Form;
 
 use App\Entity\ApcCompetence;
 use App\Entity\ApcSaeCompetence;
+use App\Entity\Diplome;
 use App\Repository\ApcComptenceRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -19,7 +20,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ApcSaeCompetenceType extends AbstractType
 {
-    protected $diplome;
+    protected ?Diplome $diplome;
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

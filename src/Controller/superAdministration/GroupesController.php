@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/GroupesController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/04/2021 12:10
+ * @lastUpdate 29/06/2021 17:48
  */
 
 namespace App\Controller\superAdministration;
@@ -25,6 +25,8 @@ use Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use function array_key_exists;
+use function count;
 
 /**
  * @Route("/administratif/groupes")
@@ -64,7 +66,7 @@ class GroupesController extends BaseController
                 //pas de hierarchie
                 $groupes = $apogeeGroupe->getGroupesSemestre($semestre);
                 $i = 1;
-                if (\count($semestre->getTypeGroupes()) > 0) {
+                if (count($semestre->getTypeGroupes()) > 0) {
                     $tg = $semestre->getTypeGroupes()[0];
                 } else {
                     //si pas de type de groupe on en ajoute un par défaut.
@@ -140,7 +142,7 @@ class GroupesController extends BaseController
         $groupes = $apogeeGroupe->getEtudiantsGroupesSemestre($semestre);
 
         while ($groupe = $groupes->fetch()) {
-            if (\array_key_exists($groupe['COD_ETU'], $tEtudiants) && \array_key_exists($groupe['COD_EXT_GPE'],
+            if (array_key_exists($groupe['COD_ETU'], $tEtudiants) && array_key_exists($groupe['COD_EXT_GPE'],
                     $tGroupes)) {
                 $tEtudiants[$groupe['COD_ETU']]->addGroupe($tGroupes[$groupe['COD_EXT_GPE']]);
                 $tGroupes[$groupe['COD_EXT_GPE']]->addEtudiant($tEtudiants[$groupe['COD_ETU']]);

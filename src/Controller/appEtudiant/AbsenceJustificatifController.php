@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appEtudiant/AbsenceJustificatifController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 21/07/2021 17:05
  */
 
 namespace App\Controller\appEtudiant;
@@ -57,7 +57,7 @@ class AbsenceJustificatifController extends BaseController
 
             return $this->render('appEtudiant/absence_justificatif/new.html.twig', [
                 'absence_justificatif' => $absenceJustificatif,
-                'form'                 => $form->createView(),
+                'form' => $form->createView(),
             ]);
         }
 
@@ -90,7 +90,7 @@ class AbsenceJustificatifController extends BaseController
 
         return $this->render('appEtudiant/absence_justificatif/edit.html.twig', [
             'absence_justificatif' => $absenceJustificatif,
-            'form'                 => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/AbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/06/2021 10:28
+ * @lastUpdate 21/07/2021 17:05
  */
 
 namespace App\Controller\administration;
@@ -107,7 +107,6 @@ class AbsenceController extends BaseController
     /**
      * @Route("/semestre/{semestre}/justificatif/export.{_format}", name="administration_absences_semestre_justificatif_export",
      *                                                              requirements={"_format"="csv|xlsx|pdf"})
-     *
      */
     public function exportJustificatif(
         MyExport $myExport,
@@ -123,7 +122,6 @@ class AbsenceController extends BaseController
     /**
      * @Route("/semestre/{semestre}/export.{_format}", name="administration_absences_semestre_liste_export",
      *                                                 requirements={"_format"="csv|xlsx|pdf"})
-     *
      *
      * @throws Exception
      */
@@ -143,7 +141,6 @@ class AbsenceController extends BaseController
     /**
      * @Route("/all/semestre/{semestre}/export.{_format}", name="administration_all_absences_semestre_export",
      *                                                     requirements={"_format"="csv|xlsx|pdf"})
-     *
      */
     public function exportAllAbsences(
         MyExport $myExport,

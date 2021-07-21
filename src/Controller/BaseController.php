@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/BaseController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/05/2021 16:35
+ * @lastUpdate 29/06/2021 09:03
  */
 
 namespace App\Controller;
@@ -13,6 +13,7 @@ use App\Classes\DataUserSession;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Entity\Personnel;
+use App\Interfaces\UtilisateurInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Translation\TranslatableMessage;
@@ -97,11 +98,9 @@ class BaseController extends AbstractController
         }
     }
 
-    /**
-     * @return Personnel|Etudiant
-     */
-    public function getConnectedUser()
+    public function getConnectedUser(): UtilisateurInterface
     {
+        //todo: retourner un utilisateur interface ?
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         return $this->getUser();

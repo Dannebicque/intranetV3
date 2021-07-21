@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/SemestreController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 29/06/2021 17:48
  */
 
 namespace App\Controller\superAdministration;
@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use function count;
 
 /**
  * @Route("/administratif/structure/semestre")
@@ -127,7 +128,7 @@ class SemestreController extends BaseController
     {
         $id = $semestre->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
-            if (0 === \count($semestre->getUes()) && 0 === \count($semestre->getParcours()) && 0 === \count($semestre->getEtudiants())) {
+            if (0 === count($semestre->getUes()) && 0 === count($semestre->getParcours()) && 0 === count($semestre->getEtudiants())) {
                 $this->entityManager->remove($semestre);
                 $this->entityManager->flush();
                 $this->addFlashBag(

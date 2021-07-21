@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyStageEtudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 15/05/2021 09:16
+ * @lastUpdate 29/06/2021 09:03
  */
 
 namespace App\Classes;
@@ -145,11 +145,10 @@ class MyStageEtudiant
     }
 
     /**
-     * @param string $type
      *
      * @throws Exception
      */
-    public function update(StageEtudiant $stageEtudiant, $name, $value, $type = 'text'): bool
+    public function update(StageEtudiant $stageEtudiant, string $name, $value, string $type = 'text'): bool
     {
         if ('date' === $type) {
             $value = Tools::convertDateToObject($value);

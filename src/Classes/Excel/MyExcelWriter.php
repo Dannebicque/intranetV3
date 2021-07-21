@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Excel/MyExcelWriter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/05/2021 20:35
+ * @lastUpdate 21/07/2021 17:05
  */
 
 /*
@@ -20,19 +20,19 @@ use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
+use PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use function array_key_exists;
+use function is_array;
 
 class MyExcelWriter
 {
-    /** @var Spreadsheet */
-    private $spreadsheet;
+    private Spreadsheet $spreadsheet;
 
-    /** @var Worksheet */
-    private $sheet;
+    private ?Worksheet $sheet;
 
-    /** @var TranslatorInterface */
-    private $translator;
+    private TranslatorInterface $translator;
 
     /**
      * MyExcelWriter constructor.
@@ -62,24 +62,18 @@ class MyExcelWriter
     public function createSheet($libelle): void
     {
         $this->spreadsheet->createSheet()->setTitle($libelle);
+
         $this->sheet = $this->spreadsheet->getSheetByName($libelle);
+        $this->sheet->getPageSetup()->setPaperSize(PageSetup::PAPERSIZE_A4);
+
     }
 
-    /**
-     * @param bool|true $logo
-     */
-    public function setHeader($logo = true): void
+    public function setHeader(bool $logo = true): void
     {
         //todo: a fusionner avec le header de writeSpecialHeader dans MyExportListing
     }
 
-    /**
-     * @param      $array
-     * @param int  $col
-     * @param int  $row
-     * @param bool $translate
-     */
-    public function writeHeader($array, $col = 1, $row = 1, $translate = true): void
+    public function writeHeader($array, int $col = 1, int $row = 1, bool $translate = true): void
     {
         foreach ($array as $value) {
             if (!empty($value) && '#' !== $value && true === $translate) {
@@ -91,18 +85,12 @@ class MyExcelWriter
         }
     }
 
-    /**
-     * @param       $col
-     * @param       $row
-     * @param       $value
-     * @param array $options
-     */
-    public function writeCellXY($col, $row, $value, $options = []): void
+    public function writeCellXY(int $col, int $row, string $value, array $options = []): void
     {
         $this->sheet->setCellValueByColumnAndRow($col, $row, $value);
         //traiter les options
         //style n'est pas un tableau
-        if (\is_array($options) && $this->sheet->getCellByColumnAndRow($col,
+        if (is_array($options) && $this->sheet->getCellByColumnAndRow($col,
                 $row)) {
             foreach ($options as $key => $valeur) {
                 switch ($key) {
@@ -176,7 +164,7 @@ class MyExcelWriter
     {
         $this->sheet->setCellValue($adresse, $value);
 
-        if (\is_array($options) && \array_key_exists('style', $options)) {
+        if (is_array($options) && array_key_exists('style', $options)) {
             //style n'est pas un tableau
             switch ($options['style']) {
                 case 'HORIZONTAL_RIGHT':
@@ -250,20 +238,12 @@ class MyExcelWriter
         $this->sheet->getStyle($cells)->getBorders()->getAllBorders()->setBorderStyle(Border::BORDER_THIN);
     }
 
-    /**
-     * @param int $ligne
-     * @param int $taille
-     */
-    public function getRowDimension($ligne, $taille): void
+    public function getRowDimension(int $ligne, int $taille): void
     {
         $this->sheet->getRowDimension($ligne)->setRowHeight($taille);
     }
 
-    /**
-     * @param string $col
-     * @param int    $taille
-     */
-    public function getColumnDimension($col, $taille): void
+    public function getColumnDimension(string $col, int $taille): void
     {
         $this->sheet->getColumnDimension($col)->setWidth($taille);
     }
@@ -317,12 +297,7 @@ class MyExcelWriter
         $this->sheet->getStyle($cell1 . ':' . $cell2)->getBorders()->getBottom()->setBorderStyle($array['size'])->getColor()->setARGB('FF' . $color);
     }
 
-    /**
-     * @param string[] $tEnTete
-     * @param int      $colonne
-     * @param int      $ligne
-     */
-    public function ecritLigne($tEnTete, $colonne, $ligne): void
+    public function ecritLigne(array $tEnTete, int $colonne, int $ligne): void
     {
         foreach ($tEnTete as $t) {
             $this->writeCellXY($colonne, $ligne, $t);

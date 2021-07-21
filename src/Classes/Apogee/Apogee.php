@@ -4,15 +4,15 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Apogee/Apogee.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/04/2021 12:05
+ * @lastUpdate 21/07/2021 17:05
  */
 
 namespace App\Classes\Apogee;
 
-
 use PDO;
 use PDOException;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use const E_USER_ERROR;
 
 abstract class Apogee
 {
@@ -37,7 +37,7 @@ abstract class Apogee
 
             return $this->conn;
         } catch (PDOException $e) {
-            trigger_error(htmlentities('Connexion échouée : ' . $e->getMessage()), \E_USER_ERROR);
+            trigger_error(htmlentities('Connexion échouée : ' . $e->getMessage()), E_USER_ERROR);
         }
     }
 }

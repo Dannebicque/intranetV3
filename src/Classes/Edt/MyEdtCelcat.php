@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/05/2021 08:59
+ * @lastUpdate 29/06/2021 17:48
  */
 
 /*
@@ -26,6 +26,7 @@ use App\Entity\Semestre;
 use App\Repository\CalendrierRepository;
 use App\Repository\CelcatEventsRepository;
 use App\Repository\GroupeRepository;
+use function array_key_exists;
 
 class MyEdtCelcat extends BaseEdt implements EdtInterface
 {
@@ -117,7 +118,7 @@ class MyEdtCelcat extends BaseEdt implements EdtInterface
         $tab = [];
         /** @var CelcatEvent $p */
         foreach ($pl as $p) {
-            if (\array_key_exists($p->getCodeGroupe(), $gr)) {
+            if (array_key_exists($p->getCodeGroupe(), $gr)) {
                 $groupe = $gr[$p->getCodeGroupe()];
                 $jour = $p->getJour() + 1;
                 $dbtEdt = $p->getDebut();
@@ -221,7 +222,7 @@ class MyEdtCelcat extends BaseEdt implements EdtInterface
         $duree = $casefin - $casedebut;
 
         //regarde si le format entre dans une case ou dépasse. retourne 'ok' ou 'nok'
-        if (\array_key_exists($casedebut, Constantes::TAB_CRENEAUX) && 0 === $duree % 3) {
+        if (array_key_exists($casedebut, Constantes::TAB_CRENEAUX) && 0 === $duree % 3) {
             $this->tab[$p->getJour()][$idDebut]->format = 'ok';
 
             if (0 === $duree % 3) {
@@ -231,7 +232,7 @@ class MyEdtCelcat extends BaseEdt implements EdtInterface
             }
         } else {
             //pas sur un créneau classique pour le début
-            if (!\array_key_exists($casedebut, Constantes::TAB_CRENEAUX)) {
+            if (!array_key_exists($casedebut, Constantes::TAB_CRENEAUX)) {
                 $casedebut -= ($duree % 3);
             }
 
@@ -243,7 +244,7 @@ class MyEdtCelcat extends BaseEdt implements EdtInterface
                 $casedebut = 1;
             }
 
-            if (!\array_key_exists($casedebut, $this->tab[$p->getJour()])) {
+            if (!array_key_exists($casedebut, $this->tab[$p->getJour()])) {
                 $this->tab[$p->getJour()][$this->convertEdt($casedebut)] = $this->tab[$p->getJour()][$idDebut];
                 unset($this->tab[$p->getJour()][$idDebut]);
             }
@@ -260,19 +261,12 @@ class MyEdtCelcat extends BaseEdt implements EdtInterface
         if (null !== $matiere && null !== $matiere->getSemestre()) {
             $annee = $matiere->getSemestre()->getAnnee();
             if (null !== $annee) {
-                switch ($p->getType()) {
-                    case 'CM':
-                    case 'cm':
-                        return $annee->getCouleurCM();
-                    case 'TD':
-                    case 'td':
-                        return $annee->getCouleurTd();
-                    case 'TP':
-                    case 'tp':
-                        return $annee->getCouleurTp();
-                    default:
-                        return 'CCCCCC';
-                }
+                return match ($p->getType()) {
+                    'CM', 'cm' => $annee->getCouleurCM(),
+                    'TD', 'td' => $annee->getCouleurTd(),
+                    'TP', 'tp' => $annee->getCouleurTp(),
+                    default => 'CCCCCC',
+                };
             }
         }
 
@@ -284,19 +278,12 @@ class MyEdtCelcat extends BaseEdt implements EdtInterface
      */
     private function getCouleur(CelcatEvent $p): ?string
     {
-        switch ($p->getType()) {
-            case 'CM':
-            case 'cm':
-                return $this->annee->getCouleurCM();//dans semestre
-            case 'TD':
-            case 'td':
-                return $this->annee->getCouleurTd();//dans semestre
-            case 'TP':
-            case 'tp':
-                return $this->annee->getCouleurTp();//dans semestre
-            default:
-                return 'CCCCCC';
-        }
+        return match ($p->getType()) {
+            'CM', 'cm' => $this->annee->getCouleurCM(),
+            'TD', 'td' => $this->annee->getCouleurTd(),
+            'TP', 'tp' => $this->annee->getCouleurTp(),
+            default => 'CCCCCC',
+        };
     }
 
     public function initSemestre(int $semaine, Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): self

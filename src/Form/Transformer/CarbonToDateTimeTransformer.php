@@ -4,12 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/Transformer/CarbonToDateTimeTransformer.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/06/2021 16:33
+ * @lastUpdate 29/06/2021 17:30
  */
 
 namespace App\Form\Transformer;
 
 use Carbon\Carbon;
+use DateTime;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
 
@@ -26,7 +27,7 @@ class CarbonToDateTimeTransformer implements DataTransformerInterface
             return null;
         }
 
-        if ($value instanceof \DateTime) {
+        if ($value instanceof DateTime) {
             return Carbon::instance($value);
         }
 

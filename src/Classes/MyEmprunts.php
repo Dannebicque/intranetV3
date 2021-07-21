@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEmprunts.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 10:01
+ * @lastUpdate 29/06/2021 17:48
  */
 
 namespace App\Classes;
@@ -22,13 +22,13 @@ use App\Repository\EmpruntRepository;
 use App\Repository\MaterielRepository;
 use App\Utils\Tools;
 use Carbon\Carbon;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
+use function array_key_exists;
 
 class MyEmprunts
 {
@@ -230,9 +230,9 @@ class MyEmprunts
 
         foreach ($materieljour as $m) {
             $t = explode('_', $m); //jour, AM/PM, matériel
-            if (\array_key_exists($t[1], $tmat)) {
+            if (array_key_exists($t[1], $tmat)) {
                 //matériel existant, on ajoute
-                if (!\array_key_exists($t[1], $matde)) {
+                if (!array_key_exists($t[1], $matde)) {
                     $matde[$t[1]] = $tmat[$t[1]];
                 }
 

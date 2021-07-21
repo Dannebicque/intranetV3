@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/api/EtudiantApiController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 29/06/2021 17:28
  */
 
 namespace App\Controller\api;
@@ -13,6 +13,7 @@ use App\Controller\BaseController;
 use App\Entity\Etudiant;
 use App\Entity\Semestre;
 use App\Repository\EtudiantRepository;
+use function count;
 use InvalidArgumentException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -89,15 +90,15 @@ class EtudiantApiController extends BaseController
         );
 
         $output = [
-            'draw'            => $request->get('draw'),
-            'data'            => $users,
-            'recordsFiltered' => \count($this->etudiantRepository->getByDepartement(
+            'draw' => $request->get('draw'),
+            'data' => $users,
+            'recordsFiltered' => count($this->etudiantRepository->getByDepartement(
                 $this->dataUserSession->getDepartementId(),
                 $filters,
                 0,
                 false
             )),
-            'recordsTotal'    => \count($this->etudiantRepository->getByDepartement(
+            'recordsTotal' => count($this->etudiantRepository->getByDepartement(
                 $this->dataUserSession->getDepartementId(),
                 [],
                 0,

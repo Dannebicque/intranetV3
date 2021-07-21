@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/bloc_saisie_absence/SaisieAbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/05/2021 21:04
+ * @lastUpdate 29/06/2021 17:48
  */
 
 namespace App\Controller\bloc_saisie_absence;
@@ -26,6 +26,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use function count;
 
 /**
  * Class AbsenceController.
@@ -116,7 +117,7 @@ class SaisieAbsenceController extends BaseController
                 'anneeUniversitaire' => $etudiant->getSemestre() ? $etudiant->getSemestre()->getAnneeUniversitaire()->getId() : 0,
             ]);
 
-            if ('saisie' === $request->get('action') && 0 === \count($absence)) {
+            if ('saisie' === $request->get('action') && 0 === count($absence)) {
                 if ($this->saisieAutorise($mat->semestre->getOptNbJoursSaisieAbsence(), $dateHeure)) {
                     $etudiantAbsences->setEtudiant($etudiant);
                     $etudiantAbsences->addAbsence(
@@ -136,7 +137,7 @@ class SaisieAbsenceController extends BaseController
                 return new response('out', 500);
             }
 
-            if (1 === \count($absence)) {
+            if (1 === count($absence)) {
                 //un tableau, donc une absence ?
                 $etudiantAbsences->removeAbsence($absence[0]);
 

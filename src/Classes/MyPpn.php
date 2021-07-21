@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyPpn.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/06/2021 15:33
+ * @lastUpdate 29/06/2021 17:48
  */
 
 /*
@@ -20,6 +20,7 @@ use App\Entity\Ppn;
 use App\Entity\Ue;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
+use function array_key_exists;
 
 class MyPpn
 {
@@ -62,10 +63,10 @@ class MyPpn
                     /*On lit la ligne courante*/
                     $ligne = fgetcsv($handle, 1024, ';');
 
-                    if (\array_key_exists($ligne[0], $ues)) {
+                    if (array_key_exists($ligne[0], $ues)) {
                         $matiere = new Matiere();
                         if ('' !== $ligne[1] || null !== $ligne[1]) {
-                            if (\array_key_exists($ligne[1], $parcours)) {
+                            if (array_key_exists($ligne[1], $parcours)) {
                                 $matiere->setParcours($parcours[$ligne[1]]);
                             }
                         }

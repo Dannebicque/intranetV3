@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/structure/DepartementController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 29/06/2021 17:30
  */
 
 namespace App\Controller\administration\structure;
@@ -16,6 +16,7 @@ use Symfony\Component\Form\Exception\LogicException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use function count;
 
 /**
  * @Route("/administration/structure/departement")
@@ -39,14 +40,14 @@ class DepartementController extends BaseController
     {
         $id = $departement->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token')) &&
-            0 === \count($departement->getDiplomes()) &&
-            0 === \count($departement->getHrs()) &&
-            0 === \count($departement->getEtudiants()) &&
-            0 === \count($departement->getPersonnelDepartements()) &&
-            0 === \count($departement->getArticleCategories()) &&
-            0 === \count($departement->getTypeDocuments()) &&
-            0 === \count($departement->getCreneauCours()) &&
-            0 === \count($departement->getActualites())) {
+            0 === count($departement->getDiplomes()) &&
+            0 === count($departement->getHrs()) &&
+            0 === count($departement->getEtudiants()) &&
+            0 === count($departement->getPersonnelDepartements()) &&
+            0 === count($departement->getArticleCategories()) &&
+            0 === count($departement->getTypeDocuments()) &&
+            0 === count($departement->getCreneauCours()) &&
+            0 === count($departement->getActualites())) {
             $this->entityManager->remove($departement);
             $this->entityManager->flush();
             $this->addFlashBag(

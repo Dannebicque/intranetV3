@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/QuestionnaireEtudiantRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/04/2021 09:18
+ * @lastUpdate 29/06/2021 17:48
  */
 
 namespace App\Repository;
@@ -18,6 +18,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
+use function array_key_exists;
 
 /**
  * @method QuestionnaireEtudiant|null find($id, $lockMode = null, $lockVersion = null)
@@ -63,7 +64,7 @@ class QuestionnaireEtudiantRepository extends ServiceEntityRepository
         /** @var QuestionnaireEtudiant $r */
         foreach ($q as $r) {
             if (null !== $r->getQuestionnaireQualite() && null !== $r->getEtudiant()) {
-                if (!\array_key_exists($r->getQuestionnaireQualite()->getId(), $t)) {
+                if (!array_key_exists($r->getQuestionnaireQualite()->getId(), $t)) {
                     $t[$r->getQuestionnaireQualite()->getId()] = [];
                 }
                 $t[$r->getQuestionnaireQualite()->getId()][$r->getEtudiant()->getId()] = $r;

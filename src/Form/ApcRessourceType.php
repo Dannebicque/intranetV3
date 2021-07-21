@@ -4,13 +4,14 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ApcRessourceType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/05/2021 12:34
+ * @lastUpdate 29/06/2021 09:03
  */
 
 namespace App\Form;
 
 use App\Entity\ApcCompetence;
 use App\Entity\ApcRessource;
+use App\Entity\Diplome;
 use App\Entity\Semestre;
 use App\Repository\ApcComptenceRepository;
 use App\Repository\SemestreRepository;
@@ -23,7 +24,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ApcRessourceType extends AbstractType
 {
-    protected $diplome;
+    protected ?Diplome $diplome;
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

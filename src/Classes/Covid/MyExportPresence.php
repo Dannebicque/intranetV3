@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Covid/MyExportPresence.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 10:01
+ * @lastUpdate 29/06/2021 09:03
  */
 
 /*
@@ -20,7 +20,6 @@ use App\Entity\CovidAttestationEtudiant;
 use App\Entity\CovidAttestationPersonnel;
 use App\Entity\Etudiant;
 use Carbon\Carbon;
-use DateTime;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -54,11 +53,8 @@ class MyExportPresence
         $this->dir = $kernel->getProjectDir() . '/public/upload/';
     }
 
-    /**
-     * @param CovidAttestationPersonnel[] $presences
-     */
     public function genereFichier(
-        $presences
+        array $presences
     ): ?StreamedResponse {
         $this->myExcelWriter->createSheet('stage');
         $tEnTete = [

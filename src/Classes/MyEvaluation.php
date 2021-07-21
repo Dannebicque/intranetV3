@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEvaluation.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/06/2021 13:21
+ * @lastUpdate 29/06/2021 18:02
  */
 
 /*
@@ -25,6 +25,7 @@ use App\Entity\Semestre;
 use App\Exception\MatiereNotFoundException;
 use App\Utils\Tools;
 use function array_key_exists;
+use function chr;
 use function count;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
@@ -184,12 +185,11 @@ class MyEvaluation
         $notePrec = 21;
         $rangEtudiant = 0;
         foreach ($this->classement as $key => $value) {
+            ++$rangreel;
             if ($value !== $notePrec) {
-                ++$rangreel; //index de la note en cours de lecture
+                //index de la note en cours de lecture
                 $rangEtudiant = $rangreel;
                 $notePrec = $value;
-            } else {
-                ++$rangreel; //index de la note en cours de lecture
             }
             if ($key === $etudiant->getId()) {
                 return $rangEtudiant; //si c'est l'étudiant, on retourne le rang
@@ -238,11 +238,11 @@ class MyEvaluation
     }
 
     /**
-     * @return PdfResponse|StreamedResponse|null
      *
-     * @throws SyntaxError
-     * @throws LoaderError
-     * @throws RuntimeError
+     * @throws \App\Exception\MatiereNotFoundException
+     * @throws \Twig\Error\LoaderError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
      */
     public function exportReleve($_format, $groupes, Departement $departement)
     {
@@ -379,7 +379,7 @@ class MyEvaluation
                 if (is_array($sheetData[$i])) {
                     $nb = count($sheetData[$i]);
                     for ($j = 1; $j <= $nb; ++$j) {
-                        $t[$ordre[$j - 1]] = $sheetData[$i][\chr($j + 64)];
+                        $t[$ordre[$j - 1]] = $sheetData[$i][chr($j + 64)];
                     }
                     $data[] = $t;
                 }

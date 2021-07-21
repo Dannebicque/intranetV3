@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Excel/MyExcelRead.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 29/06/2021 09:03
  */
 
 /*
@@ -43,12 +43,11 @@ class MyExcelRead
     }
 
     /**
-     * @param string $fichier
      *
      * @throws Exception
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
-    public function readFile($fichier): void
+    public function readFile(string $fichier): void
     {
         $inputFileType = IOFactory::identify($fichier);
         /**  Create a new Reader of the type that has been identified  **/
@@ -94,11 +93,7 @@ class MyExcelRead
         }
     }
 
-    /**
-     * @param int $col
-     * @param int $lig
-     */
-    public function getCellColLigne($col, $lig): Cell
+    public function getCellColLigne(int $col, int $lig): Cell
     {
         return $this->sheet->getCellByColumnAndRow($col, $lig);
     }
@@ -115,11 +110,10 @@ class MyExcelRead
     }
 
     /**
-     * @param string $filename
      *
      * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
      */
-    public function sauvegarde($filename): void
+    public function sauvegarde(string $filename): void
     {
         $objWriter = IOFactory::createWriter($this->phpExcelObject, 'Xls');
         $objWriter->save($filename);

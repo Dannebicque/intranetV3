@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Security/CasAuthenticator.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/02/2021 22:52
+ * @lastUpdate 29/06/2021 18:15
  */
 
 namespace App\Security;
@@ -26,12 +26,11 @@ use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
 
 class CasAuthenticator extends AbstractGuardAuthenticator
 {
-    private $urlGenerator;
-    private $user;
-    private $session;
+    private UrlGeneratorInterface $urlGenerator;
+    private ?UserInterface $user;
+    private SessionInterface $session;
 
-    /** @var DepartementRepository */
-    private $departementRepository;
+    private DepartementRepository $departementRepository;
 
     public function __construct(
         UrlGeneratorInterface $urlGenerator,
@@ -55,8 +54,7 @@ class CasAuthenticator extends AbstractGuardAuthenticator
         $cas_context = '/cas';
         // Port of your CAS server. Normally for a https server it's 443
         $cas_port = 443;
-
-        phpCAS::setDebug();
+        //todo: ajouter le certificat ?
         phpCAS::setVerbose(true);
         phpCAS::client(CAS_VERSION_2_0, $cas_host, $cas_port, $cas_context);
         phpCAS::setFixedServiceURL($this->urlGenerator->generate('cas_return', [],
@@ -95,10 +93,7 @@ class CasAuthenticator extends AbstractGuardAuthenticator
         return $event->getResponse();
     }
 
-    /**
-     * @param string $providerKey
-     */
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey): ?Response
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $providerKey): ?Response
     {
         return AbstractAuthenticator::onAuthenticationSuccess(
             $this->urlGenerator,

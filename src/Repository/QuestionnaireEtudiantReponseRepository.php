@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/QuestionnaireEtudiantReponseRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/05/2021 09:44
+ * @lastUpdate 21/07/2021 17:05
  */
 
 namespace App\Repository;
@@ -31,13 +31,12 @@ class QuestionnaireEtudiantReponseRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param QuestionnaireEtudiant $quizzEtudiant
      *
      * @throws NonUniqueResultException
      */
     public function findExistQuestion(
-        $cle,
-        $quizzEtudiant
+        string $cle,
+        QuestionnaireEtudiant $quizzEtudiant
     ) {
         return $this->createQueryBuilder('q')
             ->where('q.cleQuestion = :cle')

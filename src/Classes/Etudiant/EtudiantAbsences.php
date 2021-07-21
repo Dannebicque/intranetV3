@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantAbsences.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/06/2021 18:30
+ * @lastUpdate 29/06/2021 17:30
  */
 
 namespace App\Classes\Etudiant;
@@ -20,6 +20,7 @@ use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use function array_key_exists;
 
 class EtudiantAbsences
 {
@@ -110,7 +111,7 @@ class EtudiantAbsences
         foreach ($this->absences as $absence) {
             if (false === $absence->getJustifie() && 0 !== $absence->getIdMatiere()) {
                 $idMatiere = $absence->getTypeIdMatiere();
-                if (\array_key_exists($idMatiere, $tabMatiere)) {
+                if (array_key_exists($idMatiere, $tabMatiere)) {
                     ++$tabMatiere[$idMatiere]->absences;
                 }
             }

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/PrevisionnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2021 21:52
+ * @lastUpdate 29/06/2021 09:03
  */
 
 namespace App\Controller\superAdministration;
@@ -27,10 +27,8 @@ class PrevisionnelController extends BaseController
 {
     /**
      * @Route("/previsionnel/{annee}", name="sa_previsionnel_index")
-     *
-     * @param int $annee
      */
-    public function index(PersonnelRepository $personnelRepository, $annee = 0): Response
+    public function index(PersonnelRepository $personnelRepository, int $annee = 0): Response
     {
         if (0 === $annee) {
             if (date('m') >= 7 && (int)date('m') <= 12) {

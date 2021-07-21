@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/EdtPlanningRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/05/2021 08:45
+ * @lastUpdate 21/07/2021 17:01
  */
 
 namespace App\Repository;
@@ -17,6 +17,7 @@ use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use function array_key_exists;
 
 /**
  * @method EdtPlanning|null find($id, $lockMode = null, $lockVersion = null)
@@ -34,10 +35,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
         parent::__construct($registry, EdtPlanning::class);
     }
 
-    /**
-     * @param int $semaine
-     */
-    public function findEdtProf(int $prof, $semaine = 0): array
+    public function findEdtProf(int $prof, int $semaine = 0): array
     {
         $query = $this->createQueryBuilder('p')
             ->where('p.intervenant = :idprof')
@@ -56,10 +54,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    /**
-     * @param int $semaine
-     */
-    public function findEdtSemestre($semestre, $semaine): array
+    public function findEdtSemestre($semestre, int $semaine): array
     {
         return $this->createQueryBuilder('p')
             ->where('p.semaine = :semaine')
@@ -72,11 +67,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    /**
-     * @param int $module
-     * @param int $semaine
-     */
-    public function findEdtModule(int $idModule, string $typeModule, $semaine): array
+    public function findEdtModule(int $idModule, string $typeModule, int $semaine): array
     {
         return $this->createQueryBuilder('p')
             ->where('p.semaine = :semaine')
@@ -90,11 +81,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    /**
-     * @param int $jour
-     * @param int $semaine
-     */
-    public function findEdtJour($jour, $semaine): array
+    public function findEdtJour(int $jour, int $semaine): array
     {
         return $this->createQueryBuilder('p')
             ->where('p.semaine = :semaine')
@@ -107,11 +94,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    /**
-     * @param string $salle
-     * @param int    $semaine
-     */
-    public function findEdtSalle($salle, $semaine): array
+    public function findEdtSalle(string $salle, int $semaine): array
     {
         return $this->createQueryBuilder('p')
             ->where('p.semaine = :semaine')
@@ -152,12 +135,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    /**
-     * @param int $semaine
-     *
-     * @return array
-     */
-    public function findEdtEtu(Etudiant $user, $semaine): ?array
+    public function findEdtEtu(Etudiant $user, int $semaine): ?array
     {
         if (null !== $user->getSemestre()) {
             $this->groupes($user);
@@ -181,11 +159,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
         return null;
     }
 
-    /**
-     * @param int $numSemaine
-     * @param int $jour
-     */
-    public function recupereEDTBornes($numSemaine, Semestre $semestre, $jour): array
+    public function recupereEDTBornes(int $numSemaine, Semestre $semestre, int $jour): array
     {
         $creneaux = [
             1 => ['8h00', '9h30'],
@@ -245,7 +219,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
                 $refmatiere = $row->getMatiere()->getCodeMatiere();
             }
 
-            if (\array_key_exists($casedebut, $creneaux) && 0 === $duree % 3) {
+            if (array_key_exists($casedebut, $creneaux) && 0 === $duree % 3) {
                 $planning[$casedebut][$groupe]['prof'] = $prof;
                 $planning[$casedebut][$groupe]['module'] = $refmatiere;
                 $planning[$casedebut][$groupe]['salle'] = mb_substr($row->getSalle(), 0, $max);
@@ -275,7 +249,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
                 }
             } else {
                 //pas sur un créneau classique pour le début
-                if (!\array_key_exists($casedebut, $creneaux)) {
+                if (!array_key_exists($casedebut, $creneaux)) {
                     $casedebut -= ($duree % 3);
                 }
 

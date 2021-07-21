@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/PersonnelDepartementController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 29/06/2021 17:48
  */
 
 namespace App\Controller\superAdministration;
@@ -17,6 +17,7 @@ use App\Repository\PersonnelDepartementRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use function in_array;
 
 /**
  * Class PersonnelDepartementController.
@@ -66,7 +67,7 @@ class PersonnelDepartementController extends BaseController
     public function modifierDroits(Request $request, PersonnelDepartement $pf): Response
     {
         $droit = $request->request->get('droit');
-        if (null !== $pf && \in_array($droit, Constantes::ROLE_LISTE, true)) {
+        if (null !== $pf && in_array($droit, Constantes::ROLE_LISTE, true)) {
             $pf->clearRole();
             $pf->addRole($droit);
             $this->entityManager->flush();

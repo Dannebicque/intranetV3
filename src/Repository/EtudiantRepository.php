@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/EtudiantRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/05/2021 16:12
+ * @lastUpdate 29/06/2021 09:03
  */
 
 namespace App\Repository;
@@ -107,14 +107,12 @@ class EtudiantRepository extends ServiceEntityRepository
     /**
      * @param      $departement
      * @param      $data
-     * @param int  $page
-     * @param null $max
-     * @param bool $getResult
      *
      * @return Query|mixed
      */
-    public function getByDepartement($departement, $data, $page = 0, $max = null, $getResult = true)
+    public function getByDepartement($departement, $data, int $page = 0, ?int $max = null, bool $getResult = true)
     {
+        //todo: utile ?
         $qb = $this->createQueryBuilder('u');
         $query = isset($data['query']) && $data['query'] ? $data['query'] : null;
         $order = isset($data['order']) && $data['order'] ? $data['order'] : null;

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/StageSubscriber.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/05/2021 16:35
+ * @lastUpdate 21/07/2021 17:05
  */
 
 namespace App\EventSubscriber;
@@ -50,14 +50,14 @@ class StageSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            StageEvent::CHGT_ETAT_STAGE_AUTORISE            => 'onChgtEtatStageAutorise',
-            StageEvent::CHGT_ETAT_STAGE_DEPOSE              => 'onChgtEtatStageDepose',
-            StageEvent::CHGT_ETAT_STAGE_VALIDE              => 'onChgtEtatStageValide',
-            StageEvent::CHGT_ETAT_STAGE_REFUS               => 'onChgtEtatStageRefus',
-            StageEvent::CHGT_ETAT_STAGE_INCOMPLET           => 'onChgtEtatStageIncomplet',
+            StageEvent::CHGT_ETAT_STAGE_AUTORISE => 'onChgtEtatStageAutorise',
+            StageEvent::CHGT_ETAT_STAGE_DEPOSE => 'onChgtEtatStageDepose',
+            StageEvent::CHGT_ETAT_STAGE_VALIDE => 'onChgtEtatStageValide',
+            StageEvent::CHGT_ETAT_STAGE_REFUS => 'onChgtEtatStageRefus',
+            StageEvent::CHGT_ETAT_STAGE_INCOMPLET => 'onChgtEtatStageIncomplet',
             StageEvent::CHGT_ETAT_STAGE_CONVENTION_IMPRIMEE => 'onChgtEtatStageImprime',
-            StageEvent::CHGT_ETAT_STAGE_CONVENTION_ENVOYEE  => 'onChgtEtatStageConventionEnvoyee',
-            StageEvent::CHGT_ETAT_CONVENTION_RECUE          => 'onChgtEtatStageConventionRecue',
+            StageEvent::CHGT_ETAT_STAGE_CONVENTION_ENVOYEE => 'onChgtEtatStageConventionEnvoyee',
+            StageEvent::CHGT_ETAT_CONVENTION_RECUE => 'onChgtEtatStageConventionRecue',
         ];
     }
 
@@ -182,11 +182,10 @@ class StageSubscriber implements EventSubscriberInterface
     }
 
     /**
-     *
      * @throws LoaderError
      * @throws NonUniqueResultException
      * @throws SyntaxError
-     * @throws TransportExceptionInterface
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
      */
     public function sendMail(StageEvent $event, $codeEvent): void
     {

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/AbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2021 21:40
+ * @lastUpdate 21/07/2021 17:05
  */
 
 namespace App\Controller\appPersonnel;
@@ -18,6 +18,7 @@ use App\Entity\Absence;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Exception\MatiereNotFoundException;
+use App\Exception\SemestreNotFoundException;
 use App\Repository\AbsenceRepository;
 use App\Repository\CelcatEventsRepository;
 use App\Repository\EdtPlanningRepository;
@@ -53,20 +54,29 @@ class AbsenceController extends BaseController
 
     /**
      * @Route("/{matiere}", name="application_personnel_absence_index", methods={"GET"})
+     *
+     * @throws \App\Exception\MatiereNotFoundException
+     * @throws \App\Exception\SemestreNotFoundException
      */
     public function index(
         TypeMatiereManager $typeMatiereManager,
         string $matiere
-    ): Response {
+    ): Response
+    {
         $mat = $typeMatiereManager->getMatiereFromSelect($matiere);
-        if (null !== $mat && null !== $mat->semestre) {
-            return $this->render('appPersonnel/absence/index.html.twig', [
-                'semestre' => $mat->semestre,
-                'matiere' => $mat,
-            ]);
+
+        if (null === $mat) {
+            throw new MatiereNotFoundException();
         }
 
-        throw new MatiereNotFoundException(); //todo: a tester
+        if (null !== $mat->semestre) {
+            throw new SemestreNotFoundException();
+        }
+
+        return $this->render('appPersonnel/absence/index.html.twig', [
+            'semestre' => $mat->semestre,
+            'matiere' => $mat,
+        ]);
     }
 
     /**
@@ -124,8 +134,6 @@ class AbsenceController extends BaseController
 
     /**
      * @Route("/export/{matiere}/export.{_format}", name="application_personnel_absence_export", methods="GET")
-     *
-     * @return Response
      */
     public function export(TypeMatiereManager $typeMatiereManager, string $matiere, $_format): ?Response
     {

@@ -4,12 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/CahierTexteType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 11:02
+ * @lastUpdate 29/06/2021 09:03
  */
 
 namespace App\Form;
 
 use App\Entity\CahierTexte;
+use App\Entity\Departement;
 use App\Entity\Semestre;
 use App\Form\Type\CarbonDateTimeType;
 use App\Repository\SemestreRepository;
@@ -25,7 +26,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CahierTexteType extends AbstractType
 {
-    private $departement;
+    private ?Departement $departement;
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

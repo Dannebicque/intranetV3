@@ -4,13 +4,14 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Apogee/ApogeeEtudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/05/2021 19:35
+ * @lastUpdate 21/07/2021 17:05
  */
 
 namespace App\Classes\Apogee;
 
-use App\Utils\Tools;
 use App\Entity\Annee;
+use App\Utils\Tools;
+use function array_key_exists;
 
 class ApogeeEtudiant extends Apogee
 {
@@ -29,35 +30,35 @@ class ApogeeEtudiant extends Apogee
      * @param $tBac
      *
      * @return array[]
-     * @throws \Exception
      *
+     * @throws \Exception
      */
     public function transformeApogeeToArray($data, $tBac): array
     {
         // COD_ETU, COD_NNE_IND, DATE_NAI_IND, DAA_ENT_ETB, LIB_NOM_PAT_IND, LIB_PR1_IND, COD_SEX_ETU
         return [
             'etudiant' => [
-                'setNumEtudiant'   => $data['COD_ETU'],
-                'setNumIne'        => $data['COD_NNE_IND'] . $data['COD_CLE_NNE_IND'],
+                'setNumEtudiant' => $data['COD_ETU'],
+                'setNumIne' => $data['COD_NNE_IND'] . $data['COD_CLE_NNE_IND'],
                 'setDateNaissance' => Tools::convertDateToObject($data['DATE_NAI_IND']), //en fr?
-                'setPromotion'     => $data['DAA_ETB'],
-                'setNom'           => $data['LIB_NOM_PAT_IND'],
-                'setAnneeBac'      => $data['DAA_OBT_BAC_IBA'],
-                'setPrenom'        => $data['LIB_PR1_IND'],
-                'setTel1'          => $data['NUM_TEL'],
-                'setCivilite'      => 'M' === $data['COD_SEX_ETU'] ? 'M.' : 'Mme', //M ou F
-                'setTypeUser'      => 'etudiant',
-                'setBac'           => true === \array_key_exists($data['COD_BAC'],
+                'setPromotion' => $data['DAA_ETB'],
+                'setNom' => $data['LIB_NOM_PAT_IND'],
+                'setAnneeBac' => $data['DAA_OBT_BAC_IBA'],
+                'setPrenom' => $data['LIB_PR1_IND'],
+                'setTel1' => $data['NUM_TEL'],
+                'setCivilite' => 'M' === $data['COD_SEX_ETU'] ? 'M.' : 'Mme', //M ou F
+                'setTypeUser' => 'etudiant',
+                'setBac' => true === array_key_exists($data['COD_BAC'],
                     $tBac) ? $tBac[$data['COD_BAC']] : null,
-                'setRemarque'      => $data['COD_BAC'],
+                'setRemarque' => $data['COD_BAC'],
             ],
-            'adresse'  => [
-                'setAdresse1'   => $data['LIB_AD1'],
-                'setAdresse2'   => $data['LIB_AD2'],
-                'setAdresse3'   => $data['LIB_AD3'],
+            'adresse' => [
+                'setAdresse1' => $data['LIB_AD1'],
+                'setAdresse2' => $data['LIB_AD2'],
+                'setAdresse3' => $data['LIB_AD3'],
                 'setCodePostal' => $data['COD_BDI'],
-                'setVille'      => $data['COD_COM'], //code commune INSEE
-                'setPays'       => $data['COD_PAY'], //code
+                'setVille' => $data['COD_COM'], //code commune INSEE
+                'setPays' => $data['COD_PAY'], //code
             ],
         ];
     }

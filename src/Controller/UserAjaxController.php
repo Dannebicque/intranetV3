@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/UserAjaxController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 29/06/2021 09:03
  */
 
 namespace App\Controller;
@@ -131,15 +131,11 @@ class UserAjaxController extends BaseController
 
     /**
      * @Route("/change-semestre/{etudiant}/{semestre}", name="user_change_semestre", options={"expose":true})
-     *
-     * @param Semestre $semestre
-     *
-     * @return JsonResponse
      */
     public function changeSemestreEtudiant(
         SemestreRepository $semestreRepository,
         Etudiant $etudiant,
-        $semestre
+        Semestre $semestre
     ): ?JsonResponse {
         $semestre = $semestreRepository->find($semestre);
         if (null !== $semestre) {

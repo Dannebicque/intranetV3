@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/SousCommission/SousCommissionExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/06/2021 11:19
+ * @lastUpdate 29/06/2021 18:02
  */
 
 namespace App\Classes\SousCommission;
@@ -21,12 +21,12 @@ use App\Entity\ScolaritePromo;
 use App\Entity\Semestre;
 use App\Entity\Ue;
 use Carbon\Carbon;
-use DateTime;
 use PhpOffice\PhpSpreadsheet\Exception;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\HttpKernel\KernelInterface;
 use function array_key_exists;
+use function count;
 
 class SousCommissionExport
 {
@@ -81,7 +81,7 @@ class SousCommissionExport
 
         $ues = $this->sousCommission->getUes();
         $matieres = $this->sousCommission->getMatieres();
-        $nbUes = \count($ues);
+        $nbUes = count($ues);
 
         $this->myExcelWriter->writeCellName('B1', 'Sous commission ');
         $this->myExcelWriter->writeCellName('C1', $semestre->display());
@@ -139,7 +139,7 @@ class SousCommissionExport
         foreach ($this->sousCommission->getSemestresScolarite() as $s) {
             //titre semestre
             $this->myExcelWriter->writeCellXY($colonne, $ligne - 1, $s->getLibelle(), ['style' => 'HORIZONTAL_CENTER']);
-            $colFin = $colonne + \count($s->getUes()) + 1;
+            $colFin = $colonne + count($s->getUes()) + 1;
             $this->myExcelWriter->mergeCellsCaR($colonne, $ligne - 1, $colFin, $ligne - 1);
             /** @var Ue $ue */
             foreach ($s->getUes() as $ue) {
@@ -309,13 +309,12 @@ class SousCommissionExport
                         $sousCommissionEtudiant->getScolarite()[$s->getOrdreLmd()]->decision);
                     $this->myExcelWriter->colorCellRange($colonne, $ligne,
                         Constantes::SS_COMM_DECISION_COULEUR[$sousCommissionEtudiant->getScolarite()[$s->getOrdreLmd()]->decision]);
-                    ++$colonne;
                 } else {
                     $this->myExcelWriter->writeCellXY($colonne, $ligne, ' - ');
                     ++$colonne;
                     $this->myExcelWriter->writeCellXY($colonne, $ligne, ' - ');
-                    ++$colonne;
                 }
+                ++$colonne;
             }
             $this->myExcelWriter->getColumnDimension('H', 6);
 
@@ -420,7 +419,7 @@ class SousCommissionExport
                     $colonne = 7;
 
                     $this->myExcelWriter->writeCellXY($colonne, $ligne,
-                        \count($ssCommTravail->recupereScolarite($etu)));
+                        count($ssCommTravail->recupereScolarite($etu)));
 
                     foreach ($ues as $ue) {
                         ++$colonne;

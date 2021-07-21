@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Semestre/NotesExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/06/2021 10:28
+ * @lastUpdate 29/06/2021 17:48
  */
 
 /*
@@ -21,6 +21,7 @@ use App\Repository\EvaluationRepository;
 use App\Repository\NoteRepository;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use function array_key_exists;
 
 class NotesExport
 {
@@ -87,7 +88,7 @@ class NotesExport
             $this->myExcel->writeCellXY(3, $ligne, $etu->getNumetudiant());
 
             foreach ($evaluations as $eval) {
-                if (\array_key_exists($etu->getId(), $notes) && \array_key_exists($eval->getId(),
+                if (array_key_exists($etu->getId(), $notes) && array_key_exists($eval->getId(),
                         $notes[$etu->getId()])) {
                     $this->myExcel->writeCellXY($colonne, $ligne,
                         number_format($notes[$etu->getId()][$eval->getId()]['note'], 2));

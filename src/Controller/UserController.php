@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/UserController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 21/07/2021 17:05
  */
 
 namespace App\Controller;
@@ -31,14 +31,12 @@ class UserController extends BaseController
 {
     /**
      * @Route("/mon-profil/{onglet}", name="user_mon_profil")
-     *
-     * @param string $onglet
      */
-    public function monProfil($onglet = 'scolarite'): Response
+    public function monProfil(string $onglet = 'scolarite'): Response
     {
         return $this->render('user/profil.html.twig', [
-            'user'      => $this->getConnectedUser(),
-            'onglet'    => $onglet,
+            'user' => $this->getConnectedUser(),
+            'onglet' => $onglet,
             'monprofil' => true,
         ]);
     }
@@ -46,25 +44,21 @@ class UserController extends BaseController
     /**
      * @Route("/{type}/{slug}/{onglet}", name="user_profil", options={"expose": true})
      *
-     * @param string $onglet
-     *
-     * @return RedirectResponse|Response
      * @throws NonUniqueResultException
-     *
      */
     public function index(
         EtudiantRepository $etudiantRepository,
         PersonnelRepository $personnelRepository,
-        $type,
-        $slug,
-        $onglet = 'scolarite'
-    ) {
+        string $type,
+        string $slug,
+        string $onglet = 'scolarite'
+    ): RedirectResponse|Response {
         if ('personnel' === $type) {
             $user = $personnelRepository->findOneBySlug($slug);
             if (null !== $user) {
                 return $this->render('user/profil.html.twig', [
-                    'user'      => $user,
-                    'onglet'    => $onglet,
+                    'user' => $user,
+                    'onglet' => $onglet,
                     'monprofil' => false,
                 ]);
             }
@@ -74,8 +68,8 @@ class UserController extends BaseController
             $user = $etudiantRepository->findOneBySlug($slug);
             if (null !== $user) {
                 return $this->render('user/profil.html.twig', [
-                    'user'      => $user,
-                    'onglet'    => $onglet,
+                    'user' => $user,
+                    'onglet' => $onglet,
                     'monprofil' => false,
                 ]);
             }

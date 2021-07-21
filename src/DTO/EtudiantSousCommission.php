@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/EtudiantSousCommission.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 15:39
+ * @lastUpdate 29/06/2021 17:48
  */
 
 namespace App\DTO;
@@ -13,6 +13,9 @@ use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Entity\Semestre;
 use App\Entity\Ue;
+use function array_key_exists;
+use function count;
+use function in_array;
 
 class EtudiantSousCommission
 {
@@ -104,10 +107,10 @@ class EtudiantSousCommission
             //premier semestre
             $this->decision = Constantes::SEMESTRE_NON_VALIDE;
             $this->proposition = Constantes::PROPOSITION_INDEFINIE;
-        } elseif (\array_key_exists($this->semestre->getOrdreLmd() - 1, $this->scolarite)) {
+        } elseif (array_key_exists($this->semestre->getOrdreLmd() - 1, $this->scolarite)) {
             //c'est pas le premier, on regarde le passé.
             $prec = $this->scolarite[$this->semestre->getOrdreLmd() - 1];
-            if (\in_array($prec->decision, [Constantes::SEMESTRE_VALIDE, Constantes::SEMESTRE_NON_VALIDE], true)) {
+            if (in_array($prec->decision, [Constantes::SEMESTRE_VALIDE, Constantes::SEMESTRE_NON_VALIDE], true)) {
                 //donc pas utilisé pour VCA ou VCJ
                 if (true === $this->semestre->isOptPenaliteAbsence()) {
                     $moyenneS = ($this->moyenneSemestrePenalisee + $prec->moyenne) / 2;
@@ -168,17 +171,12 @@ class EtudiantSousCommission
 
     public function getDecisionStyle(): string
     {
-        switch ($this->decision) {
-            case Constantes::SEMESTRE_VALIDE:
-                return 'badge badge-success';
-            case Constantes::SEMESTRE_NON_VALIDE:
-                return 'badge badge-danger';
-            case Constantes::SEMESTRE_VCA:
-            case Constantes::SEMESTRE_VCJ:
-                return 'badge badge-warning';
-            default:
-                return '';
-        }
+        return match ($this->decision) {
+            Constantes::SEMESTRE_VALIDE => 'badge badge-success',
+            Constantes::SEMESTRE_NON_VALIDE => 'badge badge-danger',
+            Constantes::SEMESTRE_VCA, Constantes::SEMESTRE_VCJ => 'badge badge-warning',
+            default => '',
+        };
     }
 
     public function getAbsencesStyle()
@@ -207,7 +205,7 @@ class EtudiantSousCommission
 
     public function getNbSemestres()
     {
-        return \count($this->scolarite);
+        return count($this->scolarite);
     }
 
     public function getScolarite(): array
