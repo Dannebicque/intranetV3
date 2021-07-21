@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/DataUserSession.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/07/2021 17:05
+ * @lastUpdate 21/07/2021 17:22
  */
 
 /*
@@ -316,9 +316,6 @@ class DataUserSession
         return false;
     }
 
-    /**
-     * @return AnneeUniversitaire
-     */
     public function getAnneeUniversitaire(): ?AnneeUniversitaire
     {
         if (null === $this->anneeUniversitaire) {

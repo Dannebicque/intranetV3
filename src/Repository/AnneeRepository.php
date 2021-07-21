@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/AnneeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 21/07/2021 17:22
  */
 
 namespace App\Repository;
@@ -44,6 +44,7 @@ class AnneeRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('a')
             ->innerJoin(Diplome::class, 'd', 'WITH', 'd.id = a.diplome')
             ->where('d.departement = :departement')
+            ->andWhere('a.actif = true')
             ->setParameter('departement', $departement->getId())
             ->getQuery()
             ->getResult();
