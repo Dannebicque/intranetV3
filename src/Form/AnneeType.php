@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/AnneeType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 09:03
+ * @lastUpdate 21/07/2021 17:25
  */
 
 namespace App\Form;
@@ -67,6 +67,9 @@ class AnneeType extends AbstractType
             ])
             ->add('optAlternance', YesNoType::class, [
                 'label' => 'opt_alternance'
+            ])
+            ->add('actif', YesNoType::class, [
+                'label' => 'annee_active'
             ]);
     }
 
