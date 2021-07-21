@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/structure/AnneeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:30
+ * @lastUpdate 21/07/2021 17:27
  */
 
 namespace App\Controller\administration\structure;
@@ -82,7 +82,7 @@ class AnneeController extends BaseController
                 AnneeType::class,
                 $annee,
                 [
-                    'departement' => $annee->getDiplome()->getDepartement()->getId(),
+                    'departement' => $annee->getDiplome()->getDepartement(),
                     'attr' => [
                         'data-provide' => 'validation',
                     ],
