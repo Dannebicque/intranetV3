@@ -12,7 +12,7 @@
                         <small>{{ 'type_fichier'|trans }}: {{ document.typeFichierTraduit }}</small>
                     </p>
                     <p>
-                        <small>{{ 'update'|trans }}: {{ document.updatedDate|format_datetime('long', 'short') }}</small>
+                        <small>{{ 'update'|trans }}: {{ document.updated|format_datetime('long', 'short') }}</small>
                     </p>
                 </div>
                 <a class="primary" href="{{ asset('upload/documents/'~document.documentName) }}"
