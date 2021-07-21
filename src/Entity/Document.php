@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Document.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 12:26
+ * @lastUpdate 06/07/2021 11:50
  */
 
 namespace App\Entity;
@@ -35,9 +35,11 @@ class Document extends BaseEntity
     public const TYPE_DOCUMENT = [
         'application/vnd.openxmlformats-officedocument.presentationml.presentation' => 'Prés. PPT',
         'application/pdf' => 'PDF',
+        'image/jpeg' => 'Image (jpeg)',
         'application/vnd.ms-excel' => 'Tabl. Excel',
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => 'Tabl. Excel',
         'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => 'Doc. Word',
+        'application/msword' => 'Doc. Word',
         'application/vnd.oasis.opendocument.text' => 'Doc. ODT',
     ];
 
@@ -203,9 +205,6 @@ class Document extends BaseEntity
         return $this->documentFile;
     }
 
-    /**
-     * @return string
-     */
     public function getDocumentName(): ?string
     {
         return $this->documentName;

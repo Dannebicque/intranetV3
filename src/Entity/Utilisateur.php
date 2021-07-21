@@ -4,12 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Utilisateur.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/06/2021 10:28
+ * @lastUpdate 21/07/2021 17:03
  */
 
 namespace App\Entity;
 
 use Carbon\CarbonInterface;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use const JSON_THROW_ON_ERROR;
 use JsonException;
@@ -119,6 +120,7 @@ abstract class Utilisateur implements UserInterface, Serializable
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Adresse", cascade={"persist"})
+     * @Groups({"etudiants_administration"})
      */
     private ?Adresse $adresse;
 

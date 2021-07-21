@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/RddDiplome.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 09:05
+ * @lastUpdate 28/06/2021 21:20
  */
 
 namespace App\Entity;
@@ -12,7 +12,6 @@ namespace App\Entity;
 use App\Entity\Traits\LifeCycleTrait;
 use App\Repository\RddDiplomeRepository;
 use Carbon\CarbonInterface;
-use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

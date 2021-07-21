@@ -4,15 +4,14 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/CovidAttestationPersonnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/06/2021 11:26
+ * @lastUpdate 29/06/2021 17:26
  */
 
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
 use App\Repository\CovidAttestationPersonnelRepository;
-use Carbon\Carbon;
-use DateTime;
+use function array_key_exists;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -264,13 +263,13 @@ class CovidAttestationPersonnel extends BaseEntity
     public function moyenLong()
     {
         $tab = [
-            'velo'      => 'Vélo',
-            'pied'      => 'A pieds',
-            'vehicule'  => 'Véhicule personnel',
+            'velo' => 'Vélo',
+            'pied' => 'A pieds',
+            'vehicule' => 'Véhicule personnel',
             'transport' => 'Transports en commun (bus, train, ...)',
         ];
 
-        if (\array_key_exists($this->moyenDeplacement, $tab)) {
+        if (array_key_exists($this->moyenDeplacement, $tab)) {
             return $tab[$this->moyenDeplacement];
         }
 

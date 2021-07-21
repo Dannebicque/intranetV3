@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Scolarite.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/06/2021 16:08
+ * @lastUpdate 29/06/2021 17:48
  */
 
 namespace App\Entity;
@@ -14,6 +14,7 @@ use App\Entity\Traits\UuidTrait;
 use App\Utils\Tools;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
+use function array_key_exists;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ScolariteRepository")
@@ -277,7 +278,7 @@ class Scolarite extends BaseEntity
 
     public function getMoyennesUesById($ue): ?array
     {
-        return \array_key_exists($ue, $this->moyennesUes) ? $this->moyennesUes[$ue] : [];
+        return array_key_exists($ue, $this->moyennesUes) ? $this->moyennesUes[$ue] : [];
     }
 
     public function getRang(): ?int

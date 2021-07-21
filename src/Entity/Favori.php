@@ -4,17 +4,14 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Favori.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 11:05
+ * @lastUpdate 28/06/2021 21:10
  */
 
 namespace App\Entity;
 
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
-use DateTime;
-use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
-use Exception;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\FavoriRepository")

@@ -4,13 +4,14 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Previsionnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 11:17
+ * @lastUpdate 28/06/2021 20:45
  */
 
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\MatiereTrait;
+use App\Utils\Tools;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -40,17 +41,17 @@ class Previsionnel extends BaseEntity
     /**
      * @ORM\Column(type="float")
      */
-    private float $nbHCm = 0;
+    private ?float $nbHCm = 0;
 
     /**
      * @ORM\Column(type="float")
      */
-    private float $nbHTd = 0;
+    private ?float $nbHTd = 0;
 
     /**
      * @ORM\Column(type="float")
      */
-    private float $nbHTp = 0;
+    private ?float $nbHTp = 0;
 
     /**
      * @ORM\Column(type="integer")
@@ -114,9 +115,9 @@ class Previsionnel extends BaseEntity
         return $this->nbHCm;
     }
 
-    public function setNbHCm(float $nbHCm = 0): self
+    public function setNbHCm(mixed $nbHCm = 0): self
     {
-        $this->nbHCm = $nbHCm;
+        $this->nbHCm = Tools::convertToFloat($nbHCm);
 
         return $this;
     }
@@ -126,9 +127,9 @@ class Previsionnel extends BaseEntity
         return $this->nbHTd;
     }
 
-    public function setNbHTd(float $nbHTd = 0): self
+    public function setNbHTd(mixed $nbHTd = 0): self
     {
-        $this->nbHTd = $nbHTd;
+        $this->nbHTd = Tools::convertToFloat($nbHTd);
 
         return $this;
     }
@@ -138,9 +139,9 @@ class Previsionnel extends BaseEntity
         return $this->nbHTp;
     }
 
-    public function setNbHTp(float $nbHTp = 0): self
+    public function setNbHTp(mixed $nbHTp = 0): self
     {
-        $this->nbHTp = $nbHTp;
+        $this->nbHTp = Tools::convertToFloat($nbHTp);
 
         return $this;
     }
