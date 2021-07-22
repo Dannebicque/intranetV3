@@ -11,8 +11,8 @@
                    title="{{ bouton.title }}" data-provide="tooltip"
                    data-placement="left"
                    {% if bouton.id is defined %}id="{{ bouton.id }}"{% endif %}
-                   target="{{ bouton.target is defined ? bouton.target : '' }}"
-                ><i class="{{ bouton.icone }}" ></i>
+                   target="{{ bouton.target is defined ? bouton.target : '_blank' }}"
+                ><i class="{{ bouton.icone }}"></i>
                     <span class="sr-only">{{ bouton.title }}</span></a></li>
         {% endfor %}
     </ul>
