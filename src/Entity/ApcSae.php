@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcSae.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/06/2021 18:40
+ * @lastUpdate 22/07/2021 15:41
  */
 
 namespace App\Entity;
@@ -248,19 +248,9 @@ class ApcSae extends AbstractMatiere
 
     public function getJson(): array
     {
-        $t = [];
-        $t['id'] = $this->getId();
-        $t['libelle'] = $this->getLibelle();
-        $t['display'] = '-';
-        $t['cmFormation'] = $this->getCmFormation();
-        $t['tdFormation'] = $this->getTdFormation();
-        $t['tpFormation'] = $this->getTpFormation();
+        $t = $this->initTabJson();
         $t['ptutFormation'] = $this->getProjetFormation();
-        $t['cmPpn'] = $this->getCmPpn();
-        $t['tdPpn'] = $this->getTdPpn();
-        $t['tpPpn'] = $this->getTpPpn();
         $t['ptutPpn'] = $this->getProjetPpn();
-
         return $t;
     }
 
