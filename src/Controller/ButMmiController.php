@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ButMmiController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 27/05/2021 20:52
+ * @lastUpdate 22/07/2021 13:22
  */
 
 namespace App\Controller;
@@ -74,7 +74,7 @@ class ButMmiController extends AbstractController
     ): Response {
         $diplome = $this->diplomeRepository->findOneBy(['typeDiplome' => 4, 'sigle' => strtoupper($diplome)]);
         $search = $request->query->get('s');
-        $saes = $apcSaeRepository->search($search);
+        $saes = $apcSaeRepository->search($search, $diplome);
         $ressources = $apcRessourceRepository->search($search, $diplome);
 
         return $this->render('but_mmi/resultats.html.twig', [

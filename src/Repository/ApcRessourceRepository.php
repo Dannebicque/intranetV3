@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/ApcRessourceRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/06/2021 21:39
+ * @lastUpdate 22/07/2021 13:25
  */
 
 namespace App\Repository;
@@ -58,13 +58,16 @@ class ApcRessourceRepository extends ServiceEntityRepository
 
     public function search(?string $search, Diplome $diplome)
     {
-        //todo: utiliser diplome ?
         return $this->createQueryBuilder('a')
+            ->innerJoin(Semestre::class, 's', 'WITH', 'a.semestre=s.id')
+            ->innerJoin(Annee::class, 'an', 'WITH', 's.annee=an.id')
             ->where('a.libelle LIKE :search')
             ->orWhere('a.description LIKE :search')
             ->orWhere('a.motsCles LIKE :search')
             ->orWhere('a.libelle LIKE :search')
+            ->andWhere('an.diplome = :diplome')
             ->setParameter('search', '%' . $search . '%')
+            ->setParameter('diplome', $diplome->getId())
             ->getQuery()
             ->getResult();
     }
