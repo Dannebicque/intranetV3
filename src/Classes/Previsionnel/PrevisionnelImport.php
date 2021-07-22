@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Previsionnel/PrevisionnelImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/05/2021 09:10
+ * @lastUpdate 22/07/2021 13:38
  */
 
 namespace App\Classes\Previsionnel;
 
+use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\MyUpload;
 use App\Entity\Diplome;
 use App\Entity\Matiere;
@@ -29,12 +30,15 @@ class PrevisionnelImport
     private EntityManagerInterface $entityManager;
 
     private MyUpload $myUpload;
+    private TypeMatiereManager $typeMatiereManager;
 
     public function __construct(
+        TypeMatiereManager $typeMatiereManager,
         PrevisionnelRepository $previsionnelRepository,
         EntityManagerInterface $entityManager,
         MyUpload $myUpload
     ) {
+        $this->typeMatiereManager = $typeMatiereManager;
         $this->entityManager = $entityManager;
         $this->previsionnelRepository = $previsionnelRepository;
         $this->myUpload = $myUpload;
@@ -49,7 +53,7 @@ class PrevisionnelImport
         $file = $this->myUpload->upload($data['fichier'], 'temp');
 
         if (null !== $data['diplome']) {
-            $matieres = $this->entityManager->getRepository(Matiere::class)->tableauMatieresApogees($data['diplome']); //todo: find plus global... sur toutes les sources possibleS...
+            $matieres = $this->typeMatiereManager->tableauApogeeDiplome($data['diplome']);
             $personnels = $this->entityManager->getRepository(Personnel::class)->tableauPersonnelHarpege($data['diplome']);
 
             $handle = fopen($file, 'rb');
@@ -77,8 +81,8 @@ class PrevisionnelImport
                         $pr->setNbGrTd(Tools::convertToInt($ligne[9]));
                         $pr->setNbHTp(Tools::convertToFloat($ligne[10]));
                         $pr->setNbGrTp(Tools::convertToInt($ligne[11]));
-                        $pr->setIdMatiere();
-                        $pr->setTypeMatiere();
+                        $pr->setIdMatiere($matieres[$ligne[2]]->id);
+                        $pr->setTypeMatiere($matieres[$ligne[2]]->typeMatiere);
                         $this->entityManager->persist($pr);
                     }
                 }
