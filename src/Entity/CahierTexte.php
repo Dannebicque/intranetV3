@@ -4,12 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/CahierTexte.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/06/2021 19:05
+ * @lastUpdate 22/07/2021 11:23
  */
 
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
+use App\Entity\Traits\MatiereTrait;
 use Carbon\CarbonInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -23,6 +24,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 class CahierTexte extends BaseEntity
 {
     use LifeCycleTrait;
+    use MatiereTrait;
 
     /**
      * @ORM\Column(type="string", length=150)
@@ -58,12 +60,6 @@ class CahierTexte extends BaseEntity
      * @Groups({"carnet_personnel"})
      */
     private ?Semestre $semestre;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Matiere")
-     * @Groups({"carnet_personnel"})
-     */
-    private ?Matiere $matiere;
 
     public function __construct()
     {
@@ -152,18 +148,6 @@ class CahierTexte extends BaseEntity
     public function setSemestre(?Semestre $semestre): self
     {
         $this->semestre = $semestre;
-
-        return $this;
-    }
-
-    public function getMatiere(): ?Matiere
-    {
-        return $this->matiere;
-    }
-
-    public function setMatiere(?Matiere $matiere): self
-    {
-        $this->matiere = $matiere;
 
         return $this;
     }

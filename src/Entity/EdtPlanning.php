@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/EdtPlanning.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/06/2021 10:28
+ * @lastUpdate 22/07/2021 11:23
  */
 
 namespace App\Entity;
@@ -60,11 +60,6 @@ class EdtPlanning extends BaseEntity
      * @ORM\ManyToOne(targetEntity="App\Entity\Semestre")
      */
     private ?Semestre $semestre;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Matiere")
-     */
-    private ?Matiere $matiere; //todo: a suppr
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Personnel")
@@ -202,18 +197,6 @@ class EdtPlanning extends BaseEntity
         return $this;
     }
 
-    public function getMatiere(): ?Matiere
-    {
-        return $this->matiere;
-    }
-
-    public function setMatiere(?Matiere $matiere): self
-    {
-        $this->matiere = $matiere;
-
-        return $this;
-    }
-
     public function getIntervenant(): ?Personnel
     {
         return $this->intervenant;
@@ -343,15 +326,6 @@ class EdtPlanning extends BaseEntity
         return $this->date;
     }
 
-    public function getDisplayIcal(): string
-    {
-        if (null !== $this->getMatiere()) {
-            return $this->getMatiere()->getLibelle() . '(' . $this->getMatiere()->getCodeMatiere() . ') ' . $this->getDisplayGroupe();
-        }
-
-        return $this->getTexte() . ' ' . $this->getDisplayGroupe();
-    }
-
     public function getJson(): array
     {
         return [
@@ -362,7 +336,7 @@ class EdtPlanning extends BaseEntity
             'salle' => $this->getSalle(),
             'typecours' => $this->getType(),
             'texte' => $this->getTexte(),
-            'matiereId' => null !== $this->getMatiere() ? $this->getMatiere()->getId() : null,
+            'matiereId' => $this->getIdMatiere(),
             'personnelId' => null !== $this->getIntervenant() ? $this->getIntervenant()->getId() : null,
             'groupe' => $this->getGroupe(),
             'groupeId' => $this->getGroupe(),
