@@ -2097,6 +2097,14 @@ table:
   visible: Visible
   volume_horaire: 'Volume horaire'
   competence: 'Compétence'
+  type_bac: 'Type spécialité'
+
+type_bac:
+  g: 'Série générale'
+  t: 'Série technologique'
+  p: 'Série professionnelle'
+  e: 'Bac étrangers'
+  a: 'Autre'
 
 taille: Taille
 td: TD

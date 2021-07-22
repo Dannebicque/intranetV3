@@ -21,6 +21,7 @@
                     <th>{{ 'table.libelle'|trans }}</th>
                     <th>{{ 'table.libelle_long'|trans }}</th>
                     <th>{{ 'table.code_apogee'|trans }}</th>
+                    <th>{{ 'table.type_bac'|trans }}</th>
                     <th>{{ 'table.actions'|trans }}</th>
                 </tr>
                 </thead>
@@ -30,6 +31,7 @@
                         <td>{{ bac.libelle }}</td>
                         <td>{{ bac.libelleLong }}</td>
                         <td>{{ bac.codeApogee }}</td>
+                        <td>{{ 'type_bac.'~bac.typeBac|trans }}</td>
                         <td>
                             {{ include('composants/sadm-buttons-table-index.html.twig', {elt:'bac', id: bac.id}) }}
                         </td>

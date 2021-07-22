@@ -23,20 +23,28 @@
                     <td>{{ bac.id }}</td>
                 </tr>
                 <tr>
-                  <th>{{ 'table.libelle'|trans }}</th>
-                  <td>{{ bac.libelle }}</td>
+                    <th>{{ 'table.libelle'|trans }}</th>
+                    <td>{{ bac.libelle }}</td>
                 </tr>
                 <tr>
-                  <th>{{ 'table.libelle_long'|trans }}</th>
-                  <td>{{ bac.libelleLong }}</td>
+                    <th>{{ 'table.libelle_long'|trans }}</th>
+                    <td>{{ bac.libelleLong }}</td>
                 </tr>
                 <tr>
-                  <th>{{ 'table.created'|trans }}</th>
-                  <td>{{ bac.created ? bac.created|format_datetime('long', 'short') : '' }}</td>
+                    <th>{{ 'table.code_apogee'|trans }}</th>
+                    <td>{{ bac.codeApogee }}</td>
                 </tr>
                 <tr>
-                  <th>{{ 'table.updated'|trans }}</th>
-                  <td>{{ bac.updated ? bac.updated|format_datetime('long', 'short') : '' }}</td>
+                    <th>{{ 'table.type_bac'|trans }}</th>
+                    <td>{{ 'type_bac.'~bac.typeBac|trans }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.created'|trans }}</th>
+                    <td>{{ bac.created ? bac.created|format_datetime('long', 'short') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.updated'|trans }}</th>
+                    <td>{{ bac.updated ? bac.updated|format_datetime('long', 'short') : '' }}</td>
                 </tr>
                 </tbody>
             </table>
