@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/ApcSaeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 27/05/2021 06:38
+ * @lastUpdate 22/07/2021 13:25
  */
 
 namespace App\Repository;
@@ -57,13 +57,17 @@ class ApcSaeRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function search(?string $search)
+    public function search(?string $search, Diplome $diplome)
     {
         return $this->createQueryBuilder('a')
+            ->innerJoin(Semestre::class, 's', 'WITH', 'a.semestre=s.id')
+            ->innerJoin(Annee::class, 'an', 'WITH', 's.annee=an.id')
             ->where('a.libelle LIKE :search')
             ->orWhere('a.livrables LIKE :search')
             ->orWhere('a.description LIKE :search')
             ->orWhere('a.libelle LIKE :search')
+            ->andWhere('an.diplome = :diplome')
+            ->setParameter('diplome', $diplome->getId())
             ->setParameter('search', '%' . $search . '%')
             ->getQuery()
             ->getResult();
