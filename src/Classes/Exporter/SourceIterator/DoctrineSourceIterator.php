@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Exporter/SourceIterator/DoctrineSourceIterator.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:30
+ * @lastUpdate 22/07/2021 13:35
  */
 
 namespace App\Classes\Exporter\SourceIterator;
 
+use Carbon\CarbonInterface;
 use DateInterval;
 use DateTimeInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -78,7 +79,7 @@ class DoctrineSourceIterator implements SourceInterface
             case $value instanceof Traversable:
                 return '[' . implode(', ', array_map([$this, 'getValue'], iterator_to_array($value))) . ']';
             case $value instanceof DateTimeInterface:
-                //todo: ajouter CarbonInterface ?
+            case $value instanceof CarbonInterface:
                 if ('01/01/1970' === $value->format($this->dateFormat) || '00/00/0000' === $value->format($this->dateFormat)) {
                     return $value->format($this->timeFormat);
                 }

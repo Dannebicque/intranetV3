@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Matieres/TypeMatiereManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/07/2021 11:49
+ * @lastUpdate 22/07/2021 13:35
  */
 
 namespace App\Classes\Matieres;
@@ -145,7 +145,7 @@ class TypeMatiereManager
         return $t;
     }
 
-    public function findByDiplome(Diplome $diplome)
+    public function findByDiplome(mixed $diplome)
     {
         $t = [];
         foreach ($this->managers as $manager) {
@@ -154,5 +154,16 @@ class TypeMatiereManager
         }
 
         return array_merge(...$t);
+    }
+
+    public function tableauApogeeDiplome(mixed $diplome)
+    {
+        $matieres = $this->findByDiplome($diplome);
+        $t = [];
+        foreach ($matieres as $matiere) {
+            $t[$matiere->codeElement] = $matiere;
+        }
+
+        return $t;
     }
 }
