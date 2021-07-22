@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/05/2021 16:35
+ * @lastUpdate 22/07/2021 13:07
  */
 
 /*
@@ -13,6 +13,7 @@
 
 namespace App\Classes\Edt;
 
+use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\MyIcal;
 use App\Classes\Pdf\MyPDF;
 use App\Utils\Tools;
@@ -47,6 +48,8 @@ class MyEdtExport
      */
     private $dir;
 
+    private TypeMatiereManager $typeMatiereManager;
+
     /**
      * MyEdtExport constructor.
      */
@@ -58,12 +61,14 @@ class MyEdtExport
         MyEdtCelcat $myEdtCelcat,
         MyIcal $myIcal,
         MyPDF $myPDF,
+        TypeMatiereManager $typeMatiereManager,
         KernelInterface $kernel
     ) {
         $this->dir = $kernel->getProjectDir() . '/public/upload/';
 
         $this->edtPlanningRepository = $edtPlanningRepository;
         $this->celcatEventsRepository = $celcatEventsRepository;
+        $this->typeMatiereManager = $typeMatiereManager;
         $this->myEdtIntranet = $myEdtIntranet;
         $this->myEdtCelcat = $myEdtCelcat;
         $this->calendrierRepository = $calendrierRepository;
@@ -74,16 +79,16 @@ class MyEdtExport
     public function export($user, $_format, $type)
     {
         $this->calendrier = $this->calendrierRepository->findCalendrierArray();
-        $edt = [];
+        $temp = [];
+
         if ('Personnel' === $type) {
-            $temp = $this->edtPlanningRepository->getByPersonnelArray($user);
-            foreach ($temp as $row) {
-                $edt[] = $row;
+            foreach ($user->getPersonnelDepartements() as $departement) {
+                $tabMatieresDepartement = $this->typeMatiereManager->findByDepartementArray($departement->getDepartement());
+                $temp[] = $this->edtPlanningRepository->getByPersonnelArray($user, $departement->getDepartement(),
+                    $tabMatieresDepartement);
             }
-            $temp = $this->celcatEventsRepository->getByPersonnelArray($user);
-            foreach ($temp as $row) {
-                $edt[] = $row;
-            }
+
+            $temp[] = $this->celcatEventsRepository->getByPersonnelArray($user);
         } else {
             /** @var Etudiant $user */
             $nbSemaines = 0 !== $user->getSemestre()->getAnnee()->getDiplome()->getOptSemainesVisibles() ? $user->getSemestre()->getAnnee()->getDiplome()->getOptSemainesVisibles() : 52;
@@ -94,20 +99,17 @@ class MyEdtExport
             $max = $emaineActuelle->getSemaineFormation() + $nbSemaines;
             if ($user->getDepartement()->isOptUpdateCelcat()) {
                 for ($i = $emaineActuelle->getSemaineFormation(); $i < $max; ++$i) {
-                    $temp = $this->celcatEventsRepository->getByEtudiantArray($user, $i);
-                    foreach ($temp as $row) {
-                        $edt[] = $row;
-                    }
+                    $temp[] = $this->celcatEventsRepository->getByEtudiantArray($user, $i);
                 }
             } else {
                 for ($i = $emaineActuelle->getSemaineFormation(); $i < $max; ++$i) {
-                    $temp = $this->edtPlanningRepository->getByEtudiantArray($user, $i);
-                    foreach ($temp as $row) {
-                        $edt[] = $row;
-                    }
+                    $temp[] = $this->edtPlanningRepository->getByEtudiantArray($user, $i,
+                        $this->typeMatiereManager->findBySemestreArray($user->getSemestre()));
                 }
             }
         }
+
+        $edt = array_merge(...$temp);
 
         switch ($_format) {
             case 'ics':
@@ -117,14 +119,14 @@ class MyEdtExport
         return false;
     }
 
-    private function genereIcal($edt)
+    private function genereIcal($edt): bool|string
     {
         foreach ($edt as $pl) {
             if (null !== $pl['date']) {
                 $this->myIcal->setDtstart($pl['date'], $pl['debut']);
                 $this->myIcal->setDtend($pl['date'], $pl['fin']);
                 $this->myIcal->setDescription($pl['commentaire']);
-                $this->myIcal->setSummary($pl['ical']);
+                $this->myIcal->setSummary($pl['ical']);//soit typeIdMatiere si Intranet, sinon OK pour Celcat...
                 $this->myIcal->setLocation($pl['salle']);
                 $this->myIcal->addEvent($pl['id']);
             }

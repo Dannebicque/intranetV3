@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/EdtPlanningRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/07/2021 17:01
+ * @lastUpdate 22/07/2021 13:07
  */
 
 namespace App\Repository;
@@ -15,9 +15,9 @@ use App\Entity\Etudiant;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
+use function array_key_exists;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use function array_key_exists;
 
 /**
  * @method EdtPlanning|null find($id, $lockMode = null, $lockVersion = null)
@@ -27,8 +27,8 @@ use function array_key_exists;
  */
 class EdtPlanningRepository extends ServiceEntityRepository
 {
-    protected $groupetp = 1;
-    protected $groupetd = 1;
+    protected int $groupetp = 1;
+    protected int $groupetd = 1;
 
     public function __construct(ManagerRegistry $registry)
     {
@@ -290,20 +290,30 @@ class EdtPlanningRepository extends ServiceEntityRepository
         return $planning;
     }
 
-    public function getByPersonnelArray(Personnel $user): array
+    public function getByPersonnelArray(Personnel $user, Departement $departement, $tabMatieresDepartement): array
     {
         $query = $this->createQueryBuilder('p')
             ->andWhere('p.intervenant = :idprof')
             ->setParameter('idprof', $user->getId())
             ->orderBy('p.jour', 'ASC')
             ->addOrderBy('p.debut', 'ASC')
-            ->addOrderBy('p.groupe', 'ASC')
+            ->addOrderBy('p.groupe', 'ASC');
+        $ors = [];
+
+        foreach ($departement->getDiplomes() as $diplome) {
+            foreach ($diplome->getSemestres() as $semestre) {
+                $ors[] = '(' . $query->expr()->orx('p.semestre = ' . $query->expr()->literal($semestre->getId())) . ')';
+            }
+        }
+
+        $query = $query->andWhere(implode(' OR ', $ors))
             ->getQuery()
             ->getResult();
 
         $t = [];
         /** @var EdtPlanning $event */
         foreach ($query as $event) {
+            $matiere = $tabMatieresDepartement[$event->getTypeIdMatiere()] ?? null;
             $pl = [];
             $pl['id'] = $event->getId();
             $pl['semaine'] = $event->getSemaine();
@@ -312,7 +322,11 @@ class EdtPlanningRepository extends ServiceEntityRepository
             $pl['date'] = $event->getDate();
             $pl['fin'] = $event->getFin();
             $pl['commentaire'] = $event->getCommentaire();
-            $pl['ical'] = $event->getDisplayIcal();
+            if (null !== $matiere) {
+                $pl['ical'] = $matiere->libelle . ' (' . $matiere->codeMatiere . ')';
+            } else {
+                $pl['ical'] = '';
+            }
             $pl['salle'] = $event->getSalle();
             $t[] = $pl;
         }
@@ -320,19 +334,20 @@ class EdtPlanningRepository extends ServiceEntityRepository
         return $t;
     }
 
-    public function getByEtudiantArray($user, $semaine)
+    public function getByEtudiantArray($user, $semaine, $tabMatieresSemestre)
     {
         $query = $this->findEdtEtu($user, $semaine);
 
-        return $this->transformeArray($query);
+        return $this->transformeArray($query, $tabMatieresSemestre);
     }
 
-    private function transformeArray($data): array
+    private function transformeArray($data, $tabMatieresSemestre): array
     {
         $t = [];
         /** @var EdtPlanning $event */
         foreach ($data as $event) {
             if ((TypeGroupe::TYPE_GROUPE_CM === $event->getType()) || (TypeGroupe::TYPE_GROUPE_TD === $event->getType() && $event->getGroupe() === $this->groupetd) || (TypeGroupe::TYPE_GROUPE_TP === $event->getType() && $event->getGroupe() === $this->groupetp)) {
+                $matiere = $tabMatieresSemestre[$event->getTypeIdMatiere()] ?? null;
                 $pl = [];
                 $pl['id'] = $event->getId();
                 $pl['semaine'] = $event->getSemaine();
@@ -340,7 +355,11 @@ class EdtPlanningRepository extends ServiceEntityRepository
                 $pl['debut'] = $event->getDebut();
                 $pl['fin'] = $event->getFin();
                 $pl['commentaire'] = '';
-                $pl['ical'] = $event->getDisplayIcal();
+                if (null !== $matiere) {
+                    $pl['ical'] = $matiere->libelle . ' (' . $matiere->codeMatiere . ')';
+                } else {
+                    $pl['ical'] = '';
+                }
                 $pl['date'] = $event->getDate();
                 $pl['salle'] = $event->getSalle();
                 $t[] = $pl;

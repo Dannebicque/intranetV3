@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/EdtPlanning.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/07/2021 11:23
+ * @lastUpdate 22/07/2021 12:39
  */
 
 namespace App\Entity;
@@ -34,7 +34,7 @@ class EdtPlanning extends BaseEntity
     /**
      * @ORM\Column(type="string", length=20)
      */
-    private int $ordre = 0;
+    private ?string $ordre = "0";
 
     /**
      * @ORM\Column(type="integer")

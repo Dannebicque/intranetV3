@@ -4,34 +4,30 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyIcal.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/07/2021 17:05
- */
-
-/*
- * Pull your hearder here, for exemple, Licence header.
+ * @lastUpdate 22/07/2021 13:07
  */
 
 namespace App\Classes;
 
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
-use DateTimeInterface;
 use function chr;
+use DateTimeInterface;
 
 /**
  * Class MyIcal.
  */
 class MyIcal
 {
-    protected $dtstart; //DTSTART: Date de début de l'événement
-    protected $dtend; //DTEND: Date de fin de l'événement
-    protected $summary; //SUMMARY: Titre de l'événement
-    protected $location; //LOCATION: Lieu de l'événement
-    protected $description; //DESCRIPTION: Description de l'événement
-    protected $filevt;
-    protected $uid;
-    protected $decalage;
-    private $tabheure;
+    protected ?string $dtstart; //DTSTART: Date de début de l'événement
+    protected ?string $dtend; //DTEND: Date de fin de l'événement
+    protected ?string $summary; //SUMMARY: Titre de l'événement
+    protected ?string $location; //LOCATION: Lieu de l'événement
+    protected ?string $description; //DESCRIPTION: Description de l'événement
+    protected ?string $filevt;
+    protected ?string $uid;
+    protected ?string $decalage;
+    private array $tabheure;
 
     public function __construct()
     {
