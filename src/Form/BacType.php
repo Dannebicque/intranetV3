@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/BacType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/06/2021 18:48
+ * @lastUpdate 22/07/2021 11:15
  */
 
 namespace App\Form;
@@ -24,14 +24,14 @@ class BacType extends AbstractType
             ->add('libelle', TextType::class, ['label' => 'libelle'])
             ->add('libelleLong', TextType::class, ['label' => 'libelle_long'])
             ->add('codeApogee', TextType::class, ['label' => 'codeApogee'])
-            ->add('typeBac', ChoiceType::class, ['label' => 'typeBac'])//todo: a finir
+            ->add('typeBac', ChoiceType::class, ['label' => 'typeBac', 'choices' => Bac::TAB_TYPE_BAC])
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class'         => Bac::class,
+            'data_class' => Bac::class,
             'translation_domain' => 'form',
         ]);
     }

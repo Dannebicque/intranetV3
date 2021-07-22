@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Bac.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/06/2021 18:48
+ * @lastUpdate 22/07/2021 09:13
  */
 
 namespace App\Entity;
@@ -26,6 +26,14 @@ class Bac extends BaseEntity
     public const SERIE_BAC_PRO = 'p';
     public const SERIE_BAC_ETRANGER = 'e';
     public const SERIE_BAC_AUTRE = 'a';
+
+    public const TAB_TYPE_BAC = [
+        self::SERIE_BAC_GENERAL => self::SERIE_BAC_GENERAL,
+        self::SERIE_BAC_TECHNO => self::SERIE_BAC_TECHNO,
+        self::SERIE_BAC_PRO => self::SERIE_BAC_PRO,
+        self::SERIE_BAC_ETRANGER => self::SERIE_BAC_ETRANGER,
+        self::SERIE_BAC_AUTRE => self::SERIE_BAC_AUTRE
+    ];
 
     /**
      * @ORM\Column(type="string", length=30)
