@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/AbstractMatiere.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/06/2021 10:28
+ * @lastUpdate 22/07/2021 15:44
  */
 
 namespace App\Entity;
@@ -254,5 +254,23 @@ abstract class AbstractMatiere extends BaseEntity
         $this->libelleCourt = $libelleCourt;
 
         return $this;
+    }
+
+    public function initTabJson()
+    {
+        $t = [];
+        $t['id'] = $this->getId();
+        $t['libelle'] = $this->getLibelle();
+        $t['display'] = '-';
+        $t['cmFormation'] = $this->getCmFormation();
+        $t['tdFormation'] = $this->getTdFormation();
+        $t['tpFormation'] = $this->getTpFormation();
+        $t['cmPpn'] = $this->getCmPpn();
+        $t['tdPpn'] = $this->getTdPpn();
+        $t['tpPpn'] = $this->getTpPpn();
+        $t['ptutFormation'] = null;
+        $t['ptutPpn'] = null;
+
+        return $t;
     }
 }

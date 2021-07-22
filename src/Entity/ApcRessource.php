@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcRessource.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/06/2021 17:46
+ * @lastUpdate 22/07/2021 15:41
  */
 
 namespace App\Entity;
@@ -249,19 +249,6 @@ class ApcRessource extends AbstractMatiere
 
     public function getJson(): array
     {
-        $t = [];
-        $t['id'] = $this->getId();
-        $t['libelle'] = $this->getLibelle();
-        $t['display'] = '-';
-        $t['cmFormation'] = $this->getCmFormation();
-        $t['tdFormation'] = $this->getTdFormation();
-        $t['tpFormation'] = $this->getTpFormation();
-        $t['ptutFormation'] = null;
-        $t['cmPpn'] = $this->getCmPpn();
-        $t['tdPpn'] = $this->getTdPpn();
-        $t['tpPpn'] = $this->getTpPpn();
-        $t['ptutPpn'] = null;
-
-        return $t;
+        return $this->initTabJson();
     }
 }
