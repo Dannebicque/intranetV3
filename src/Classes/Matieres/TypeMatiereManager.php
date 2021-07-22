@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Matieres/TypeMatiereManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/05/2021 22:04
+ * @lastUpdate 22/07/2021 11:49
  */
 
 namespace App\Classes\Matieres;
@@ -115,6 +115,17 @@ class TypeMatiereManager
     public function findBySemestreArray(Semestre $semestre)
     {
         $matieres = $this->findBySemestre($semestre);
+        $t = [];
+        foreach ($matieres as $matiere) {
+            $t[$matiere->getTypeIdMatiere()] = $matiere;
+        }
+
+        return $t;
+    }
+
+    public function findByDepartementArray(Departement $departement)
+    {
+        $matieres = $this->findByDepartement($departement);
         $t = [];
         foreach ($matieres as $matiere) {
             $t[$matiere->getTypeIdMatiere()] = $matiere;
