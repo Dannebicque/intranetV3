@@ -1,20 +1,20 @@
 {
-    "_readme": [
-        "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
-        "This file is @generated automatically"
-    ],
-    "content-hash": "34f6f7162a1eada0df50b20edd4b1ac2",
-    "packages": [
-        {
-            "name": "bacon/bacon-qr-code",
-            "version": "2.0.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Bacon/BaconQrCode.git",
-                "reference": "f73543ac4e1def05f1a70bcd1525c8a157a1ad09"
-            },
-            "dist": {
+  "_readme": [
+    "This file locks the dependencies of your project to a known state",
+    "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+    "This file is @generated automatically"
+  ],
+  "content-hash": "9e0c6217bb5cd6f15c456b235f0c9db0",
+  "packages": [
+    {
+      "name": "bacon/bacon-qr-code",
+      "version": "2.0.4",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/Bacon/BaconQrCode.git",
+        "reference": "f73543ac4e1def05f1a70bcd1525c8a157a1ad09"
+      },
+      "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/Bacon/BaconQrCode/zipball/f73543ac4e1def05f1a70bcd1525c8a157a1ad09",
                 "reference": "f73543ac4e1def05f1a70bcd1525c8a157a1ad09",
@@ -13722,32 +13722,33 @@
             ],
             "time": "2021-05-31T14:58:13+00:00"
         },
-        {
-            "name": "symfony/web-profiler-bundle",
-            "version": "v5.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/web-profiler-bundle.git",
-                "reference": "4d7bdd83fc92d10f005d99d04f80cc0c79c29ef9"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/web-profiler-bundle/zipball/4d7bdd83fc92d10f005d99d04f80cc0c79c29ef9",
-                "reference": "4d7bdd83fc92d10f005d99d04f80cc0c79c29ef9",
-                "shasum": ""
-            },
+      {
+        "name": "symfony/web-profiler-bundle",
+        "version": "v5.3.2",
+        "source": {
+          "type": "git",
+          "url": "https://github.com/symfony/web-profiler-bundle.git",
+          "reference": "8feb731cfc248cce5c0ac6eeba63ec4923c6a264"
+        },
+        "dist": {
+          "type": "zip",
+          "url": "https://api.github.com/repos/symfony/web-profiler-bundle/zipball/8feb731cfc248cce5c0ac6eeba63ec4923c6a264",
+          "reference": "8feb731cfc248cce5c0ac6eeba63ec4923c6a264",
+          "shasum": ""
+        },
             "require": {
-                "php": ">=7.2.5",
-                "symfony/config": "^4.4|^5.0",
-                "symfony/framework-bundle": "^5.1",
-                "symfony/http-kernel": "^4.4|^5.0",
-                "symfony/routing": "^4.4|^5.0",
-                "symfony/twig-bundle": "^4.4|^5.0",
-                "twig/twig": "^2.10|^3.0"
+              "php": ">=7.2.5",
+              "symfony/config": "^4.4|^5.0",
+              "symfony/framework-bundle": "^5.3",
+              "symfony/http-kernel": "^5.3",
+              "symfony/routing": "^4.4|^5.0",
+              "symfony/twig-bundle": "^4.4|^5.0",
+              "twig/twig": "^2.13|^3.0.4"
             },
             "conflict": {
-                "symfony/form": "<4.4",
-                "symfony/messenger": "<4.4"
+              "symfony/dependency-injection": "<5.2",
+              "symfony/form": "<4.4",
+              "symfony/messenger": "<4.4"
             },
             "require-dev": {
                 "symfony/browser-kit": "^4.4|^5.0",
@@ -13756,11 +13757,6 @@
                 "symfony/stopwatch": "^4.4|^5.0"
             },
             "type": "symfony-bundle",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "5.1-dev"
-                }
-            },
             "autoload": {
                 "psr-4": {
                     "Symfony\\Bundle\\WebProfilerBundle\\": ""
@@ -13773,27 +13769,27 @@
             "license": [
                 "MIT"
             ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony WebProfilerBundle",
-            "homepage": "https://symfony.com",
-            "support": {
-                "source": "https://github.com/symfony/web-profiler-bundle/tree/5.1"
-            },
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
+        "authors": [
+          {
+            "name": "Fabien Potencier",
+            "email": "fabien@symfony.com"
+          },
+          {
+            "name": "Symfony Community",
+            "homepage": "https://symfony.com/contributors"
+          }
+        ],
+        "description": "Provides a development tool that gives detailed information about the execution of any request",
+        "homepage": "https://symfony.com",
+        "support": {
+          "source": "https://github.com/symfony/web-profiler-bundle/tree/v5.3.2"
+        },
+        "funding": [
+          {
+            "url": "https://symfony.com/sponsor",
+            "type": "custom"
+          },
+          {
                     "url": "https://github.com/fabpot",
                     "type": "github"
                 },
@@ -13802,7 +13798,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-05-28T08:20:44+00:00"
+        "time": "2021-06-07T14:51:59+00:00"
         },
         {
             "name": "theseer/tokenizer",
