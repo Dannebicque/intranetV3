@@ -2,7 +2,7 @@
 /.env.local
 /.env.local.php
 /.env.*.local
-/node_modules
+/config/secrets/prod/prod.decrypt.private.php
 /public/bundles/
 /var/
 /vendor/
@@ -50,3 +50,8 @@ yarn-error.log
 /phpcs.xml
 ###< squizlabs/php_codesniffer ###
 /report.txt
+
+###> phpunit/phpunit ###
+/phpunit.xml
+.phpunit.result.cache
+###< phpunit/phpunit ###
