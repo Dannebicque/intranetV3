@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Groupe.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/06/2021 10:28
+ * @lastUpdate 22/07/2021 16:00
  */
 
 namespace App\Entity;
@@ -71,11 +71,17 @@ class Groupe extends BaseEntity
      */
     private Collection $covidAttestationEtudiants;
 
+    /**
+     * @ORM\OneToMany(targetEntity=AbsenceEtatAppel::class, mappedBy="groupe")
+     */
+    private $absenceEtatAppels;
+
     public function __construct()
     {
         $this->etudiants = new ArrayCollection();
         $this->enfants = new ArrayCollection();
         $this->covidAttestationEtudiants = new ArrayCollection();
+        $this->absenceEtatAppels = new ArrayCollection();
     }
 
     public function getLibelle(): ?string
@@ -267,5 +273,35 @@ class Groupe extends BaseEntity
         }
 
         return '-Err Semestre-';
+    }
+
+    /**
+     * @return Collection|AbsenceEtatAppel[]
+     */
+    public function getAbsenceEtatAppels(): Collection
+    {
+        return $this->absenceEtatAppels;
+    }
+
+    public function addAbsenceEtatAppel(AbsenceEtatAppel $absenceEtatAppel): self
+    {
+        if (!$this->absenceEtatAppels->contains($absenceEtatAppel)) {
+            $this->absenceEtatAppels[] = $absenceEtatAppel;
+            $absenceEtatAppel->setGroupe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAbsenceEtatAppel(AbsenceEtatAppel $absenceEtatAppel): self
+    {
+        if ($this->absenceEtatAppels->removeElement($absenceEtatAppel)) {
+            // set the owning side to null (unless already changed)
+            if ($absenceEtatAppel->getGroupe() === $this) {
+                $absenceEtatAppel->setGroupe(null);
+            }
+        }
+
+        return $this;
     }
 }

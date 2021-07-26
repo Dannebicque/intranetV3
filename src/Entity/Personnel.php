@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Personnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 18:15
+ * @lastUpdate 22/07/2021 15:57
  */
 
 namespace App\Entity;
@@ -253,6 +253,11 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     private Collection $covidAttestationPersonnels;
 
     /**
+     * @ORM\OneToMany(targetEntity=AbsenceEtatAppel::class, mappedBy="personnel")
+     */
+    private $absenceEtatAppels;
+
+    /**
      * Personnel constructor.
      *
      * @throws JsonException
@@ -283,6 +288,7 @@ class Personnel extends Utilisateur implements UtilisateurInterface
         $this->materielCommuns = new ArrayCollection();
         $this->materielCommunPrets = new ArrayCollection();
         $this->covidAttestationPersonnels = new ArrayCollection();
+        $this->absenceEtatAppels = new ArrayCollection();
     }
 
     public function getId()
@@ -1251,6 +1257,36 @@ class Personnel extends Utilisateur implements UtilisateurInterface
             // set the owning side to null (unless already changed)
             if ($covidAttestationPersonnel->getPersonnel() === $this) {
                 $covidAttestationPersonnel->setPersonnel(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|AbsenceEtatAppel[]
+     */
+    public function getAbsenceEtatAppels(): Collection
+    {
+        return $this->absenceEtatAppels;
+    }
+
+    public function addAbsenceEtatAppel(AbsenceEtatAppel $absenceEtatAppel): self
+    {
+        if (!$this->absenceEtatAppels->contains($absenceEtatAppel)) {
+            $this->absenceEtatAppels[] = $absenceEtatAppel;
+            $absenceEtatAppel->setPersonnel($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAbsenceEtatAppel(AbsenceEtatAppel $absenceEtatAppel): self
+    {
+        if ($this->absenceEtatAppels->removeElement($absenceEtatAppel)) {
+            // set the owning side to null (unless already changed)
+            if ($absenceEtatAppel->getPersonnel() === $this) {
+                $absenceEtatAppel->setPersonnel(null);
             }
         }
 

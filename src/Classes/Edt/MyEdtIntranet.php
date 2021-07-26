@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:48
+ * @lastUpdate 26/07/2021 14:59
  */
 
 /*
@@ -34,7 +34,7 @@ use function array_key_exists;
 use function chr;
 use function count;
 
-class MyEdtIntranet extends BaseEdt implements EdtInterface
+class MyEdtIntranet extends BaseEdt
 {
     protected EdtPlanningRepository $edtPlanningRepository;
 

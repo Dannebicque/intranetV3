@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Semestre.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/06/2021 10:28
+ * @lastUpdate 26/07/2021 16:06
  */
 
 namespace App\Entity;
@@ -250,6 +250,11 @@ class Semestre extends BaseEntity
      */
     private Collection $apcSaes;
 
+    /**
+     * @ORM\OneToMany(targetEntity=AbsenceEtatAppel::class, mappedBy="semestre")
+     */
+    private $absenceEtatAppels;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
@@ -268,6 +273,7 @@ class Semestre extends BaseEntity
         $this->projetPeriodes = new ArrayCollection();
         $this->apcRessources = new ArrayCollection();
         $this->apcSaes = new ArrayCollection();
+        $this->absenceEtatAppels = new ArrayCollection();
     }
 
     public function getLibelle(): ?string
@@ -1142,6 +1148,36 @@ class Semestre extends BaseEntity
         // set the owning side to null (unless already changed)
         if ($this->apcSaes->removeElement($apcSae) && $apcSae->getSemestre() === $this) {
             $apcSae->setSemestre(null);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|AbsenceEtatAppel[]
+     */
+    public function getAbsenceEtatAppels(): Collection
+    {
+        return $this->absenceEtatAppels;
+    }
+
+    public function addAbsenceEtatAppel(AbsenceEtatAppel $absenceEtatAppel): self
+    {
+        if (!$this->absenceEtatAppels->contains($absenceEtatAppel)) {
+            $this->absenceEtatAppels[] = $absenceEtatAppel;
+            $absenceEtatAppel->setSemestre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAbsenceEtatAppel(AbsenceEtatAppel $absenceEtatAppel): self
+    {
+        if ($this->absenceEtatAppels->removeElement($absenceEtatAppel)) {
+            // set the owning side to null (unless already changed)
+            if ($absenceEtatAppel->getSemestre() === $this) {
+                $absenceEtatAppel->setSemestre(null);
+            }
         }
 
         return $this;

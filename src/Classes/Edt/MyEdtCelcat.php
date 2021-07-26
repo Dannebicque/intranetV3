@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:48
+ * @lastUpdate 26/07/2021 14:59
  */
 
 /*
@@ -28,7 +28,7 @@ use App\Repository\CelcatEventsRepository;
 use App\Repository\GroupeRepository;
 use function array_key_exists;
 
-class MyEdtCelcat extends BaseEdt implements EdtInterface
+class MyEdtCelcat extends BaseEdt
 {
     protected CelcatEventsRepository $celcatEventsRepository;
     private ?Annee $annee;
