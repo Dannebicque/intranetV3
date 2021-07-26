@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EvaluationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 07:59
+ * @lastUpdate 26/07/2021 16:46
  */
 
 namespace App\Controller\administration;
@@ -15,6 +15,7 @@ use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Evaluation;
 use App\Entity\Semestre;
+use App\Exception\MatiereNotFoundException;
 use App\Form\EvaluationType;
 use App\Repository\EvaluationRepository;
 use Exception;
@@ -38,7 +39,6 @@ class EvaluationController extends BaseController
     /**
      * @Route("/details/{uuid}", name="administration_evaluation_show", methods="GET|POST")
      * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
-     *
      */
     public function show(
         TypeMatiereManager $typeMatiereManager,
@@ -57,7 +57,6 @@ class EvaluationController extends BaseController
     /**
      * @Route("/export/{uuid}.{_format}", name="administration_evaluation_export", methods="GET")
      * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
-     *
      *
      * @throws SyntaxError
      * @throws LoaderError
@@ -84,44 +83,45 @@ class EvaluationController extends BaseController
     public function create(TypeMatiereManager $typeMatiereManager, Request $request, string $matiere)
     {
         $mat = $typeMatiereManager->getMatiereFromSelect($matiere);
-        if (null !== $mat) {
-            $evaluation = new Evaluation($this->getConnectedUser(), $mat);
-            $form = $this->createForm(
-                EvaluationType::class,
-                $evaluation,
-                [
-                    'departement' => $this->dataUserSession->getDepartement(),
-                    'semestre' => $mat->semestre,
-                    'matiereDisabled' => true,
-                    'personnelDisabled' => false,
-                    'autorise' => true,
-                    'locale' => $request->getLocale(),
-                    'attr' => [
-                        'data-provide' => 'validation',
-                    ],
-                ]
-            );
-            $form->handleRequest($request);
 
-            if ($form->isSubmitted() && $form->isValid()) {
-                $evaluation->setAnneeUniversitaire($this->dataUserSession->getAnneeUniversitaire());
-                $this->entityManager->persist($evaluation);
-                $this->entityManager->flush();
-                $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'evaluation.add.success.flash');
-
-                return $this->redirectToRoute(
-                    'administration_note_saisie_2',
-                    ['uuid' => $evaluation->getUuidString()]
-                );
-            }
-
-            return $this->render('administration/evaluation/create.html.twig', [
-                'form' => $form->createView(),
-                'matiere' => $mat,
-            ]);
+        if (null === $mat) {
+            throw new MatiereNotFoundException();
         }
 
-        return $this->render(':bundles/TwigBundle/Exception:error666.html.twig'); //todo: exception
+        $evaluation = new Evaluation($this->getConnectedUser(), $mat);
+        $form = $this->createForm(
+            EvaluationType::class,
+            $evaluation,
+            [
+                'departement' => $this->dataUserSession->getDepartement(),
+                'semestre' => $mat->semestre,
+                'matiereDisabled' => true,
+                'personnelDisabled' => false,
+                'autorise' => true,
+                'locale' => $request->getLocale(),
+                'attr' => [
+                    'data-provide' => 'validation',
+                ],
+            ]
+        );
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $evaluation->setAnneeUniversitaire($this->dataUserSession->getAnneeUniversitaire());
+            $this->entityManager->persist($evaluation);
+            $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'evaluation.add.success.flash');
+
+            return $this->redirectToRoute(
+                'administration_note_saisie_2',
+                ['uuid' => $evaluation->getUuidString()]
+            );
+        }
+
+        return $this->render('administration/evaluation/create.html.twig', [
+            'form' => $form->createView(),
+            'matiere' => $mat,
+        ]);
     }
 
     /**
@@ -138,12 +138,11 @@ class EvaluationController extends BaseController
         return $this->render('administration/evaluation/saisie_2.html.twig', [
             'evaluation' => $evaluation,
             'notes' => $notes,
-            'matiere' => $typeMatiereManager->getMatiere($evaluation->getIdMatiere(), $evaluation->getTypeMatiere())
+            'matiere' => $typeMatiereManager->getMatiere($evaluation->getIdMatiere(), $evaluation->getTypeMatiere()),
         ]);
     }
 
     /**
-     *
      * @Route("/visibilite/semestre/{semestre}/{etat}", name="administration_evaluation_visibilite_all",
      *                                                  methods={"GET"})
      */
@@ -168,7 +167,6 @@ class EvaluationController extends BaseController
     }
 
     /**
-     *
      * @Route("/modifiable/semestre/{semestre}/{etat}", name="administration_evaluation_modifiable_all",
      *                                                  methods={"GET"})
      */
