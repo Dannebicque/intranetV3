@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Utils/Tools.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:48
+ * @lastUpdate 26/07/2021 16:40
  */
 
 /*
@@ -14,12 +14,12 @@
 namespace App\Utils;
 
 use Carbon\Carbon;
+use function chr;
 use DateTime;
 use Exception;
-use RuntimeException;
-use function chr;
 use function is_array;
 use function ord;
+use RuntimeException;
 
 abstract class Tools
 {
@@ -28,11 +28,13 @@ abstract class Tools
      */
     public static function convertDateToObject($date): DateTime
     {
-        if (false === mb_strpos($date, '/')) {
-            return Carbon::createFromFormat('Y-m-d', $date);
+        if (!str_contains($date, '/')) {
+            $d = Carbon::createFromFormat('Y-m-d', $date);
+        } else {
+            $d = Carbon::createFromFormat('d/m/Y', $date);
         }
 
-        return Carbon::createFromFormat('d/m/Y', $date);
+        return Carbon::createMidnightDate($d->year, $d->month, $d->day);
     }
 
     /**

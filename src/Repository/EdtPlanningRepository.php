@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/EdtPlanningRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/07/2021 13:07
+ * @lastUpdate 26/07/2021 15:15
  */
 
 namespace App\Repository;
@@ -382,5 +382,19 @@ class EdtPlanningRepository extends ServiceEntityRepository
         }
 
         return $quer->getQuery()->getResult();
+    }
+
+    public function findAllEdtSemestre(Semestre $semestre)
+    {
+        //todo: ajouter année universitaire
+        return $this->createQueryBuilder('p')
+            ->where('p.semestre = :semestre')
+            ->setParameter('semestre', $semestre)
+            ->orderBy('p.semaine', 'ASC')
+            ->addOrderBy('p.jour', 'ASC')
+            ->addOrderBy('p.debut', 'ASC')
+            ->addOrderBy('p.groupe', 'ASC')
+            ->getQuery()
+            ->getResult();
     }
 }

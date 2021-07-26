@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/EvenementEdt.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:41
+ * @lastUpdate 26/07/2021 15:57
  */
 
 namespace App\DTO;
@@ -18,5 +18,7 @@ class EvenementEdt
     public ?string $matiere;
     public ?string $personnel;
     public ?string $groupe;
+    public ?int $groupeId;
+    public ?string $typeIdMatiere;
     public ?string $type_cours;
 }

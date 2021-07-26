@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/EdtInterface.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:06
+ * @lastUpdate 26/07/2021 14:46
  */
 
 /*
@@ -13,6 +13,10 @@
 
 namespace App\Classes\Edt;
 
+use App\DTO\EvenementEdtCollection;
+use App\Entity\Semestre;
+
 interface EdtInterface
 {
+    public function getPlanningSemestre(Semestre $semestre): EvenementEdtCollection;
 }
