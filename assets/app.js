@@ -2,21 +2,17 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/app.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 17/02/2021 20:09
+// @lastUpdate 25/07/2021 12:18
 
-import {startStimulusApp} from '@symfony/stimulus-bridge'
+/*
+ * Welcome to your app's main JavaScript file!
+ *
+ * We recommend including the built version of this JavaScript file
+ * (and its CSS file) in your base layout (base.html.twig).
+ */
 
-// Registers Stimulus controllers from controllers.json and in the controllers/ directory
-export const app2 = startStimulusApp(require.context(
-  '@symfony/stimulus-bridge/lazy-controller-loader!./controllers',
-  true,
-  /\.(j|t)sx?$/
-))
+// any CSS you import will output into a single css file (app.css in this case)
 
-import './js/app.js'
-
-/* Stimulus controller */
-import Clipboard from 'stimulus-clipboard'
-
-app2.register('clipboard', Clipboard)
-
+// start the Stimulus application
+import './bootstrap'
+import './js/app'

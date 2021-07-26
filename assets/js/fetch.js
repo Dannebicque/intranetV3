@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/fetch.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 10/06/2021 17:23
+// @lastUpdate 23/07/2021 08:48
 
 const request = (url, params = {}, method = 'GET') => {
   let options = {
@@ -12,6 +12,9 @@ const request = (url, params = {}, method = 'GET') => {
     url += '?' + (new URLSearchParams(params)).toString()
   } else {
     options.body = JSON.stringify(params)
+    options.headers = {
+      'Content-Type': 'application/json;charset=utf-8'
+    }
   }
 
   return fetch(url, options).then(response => response.json())
