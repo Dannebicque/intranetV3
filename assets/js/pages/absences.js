@@ -2,11 +2,11 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/absences.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/06/2021 08:18
+// @lastUpdate 26/07/2021 11:38
 import {addCallout} from '../util'
-// import '../../vendor/datatables'
-// import $ from 'jquery'
+
 import {dataTableLangueFr} from '../lang/fr'
+import {post} from '../fetch'
 
 let tabsences = []
 
@@ -144,3 +144,29 @@ function updateAffichage (date, heure) {
     }
   })
 }
+
+window.addEventListener('load', function () { //le dom est chargé
+  document.querySelectorAll('.pasabsent').forEach((elem) => {
+    elem.addEventListener('click', (e) => {
+      console.log('toto')
+      post(Routing.generate('app_personnel_absence_etat_appel'), {
+        date: document.querySelector('#absence-date').value,
+        heure: document.querySelector('#absence-heure').value,
+        groupe: e.target.dataset.groupe,
+        matiere: document.querySelector('#absence-matiere').value
+      })
+        .then(data => {
+          // Handle data
+          if (data === true) {
+            addCallout('Saisie enregistéeavec succès.', 'success')
+          } else {
+            addCallout('Vous avez déjà effectué une saisie.', 'warning')
+          }
+        }).catch(error => {
+        // Handle error
+        addCallout('Erreur lors de l\'enregistrement.', 'error')
+
+      })
+    })
+  })
+})
