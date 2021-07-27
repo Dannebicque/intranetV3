@@ -33,8 +33,9 @@
                     <td>{% if effectifs[diplome.id] is defined %}{{ effectifs[diplome.id] }}{% else %}-{% endif %}</td>
                     <td>
                         {% for semestre in diplome.semestres %}
-                          <a href="{{ path('administratif_enquete_semestre', {semestre:semestre.id}) }}" class="btn
-                        btn-primary">{{ semestre.libelle }}</a>
+                            <a href="{{ path('administratif_enquete_semestre', {semestre:semestre.id}) }}" class="btn
+                        {% if semestre.actif == true %}btn-success{% else %}btn-secondary{% endif %}">{{ semestre
+                                .libelle }}</a>
                         {% endfor %}
                     </td>
                       <td>Formateurs</td>
