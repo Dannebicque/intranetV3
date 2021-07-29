@@ -2,6 +2,37 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.10](https://github.com/Dannebicque/intranetV3/compare/v3.0.9...v3.0.10) (2021-07-29)
+
+
+### Features
+
+* Affichage de la version du site ([6a74598](https://github.com/Dannebicque/intranetV3/commit/6a7459832396518f0cf90d035c0ac83d9805895b))
+* Ajout activation/désactivation d'une année ([f02e72d](https://github.com/Dannebicque/intranetV3/commit/f02e72dd82ff87416cf8b962cfa8e3fc52369302))
+* Ajout du "type" de spécialité au bac. Pour les statistiques ([c0f4a7e](https://github.com/Dannebicque/intranetV3/commit/c0f4a7ee0523a3f5a7b7bf02d62feca1f5e0b6be))
+* bouton saisie absence faite ([4f25804](https://github.com/Dannebicque/intranetV3/commit/4f25804f40bb27cba8af28ae21b8a3b8e939f57a))
+* Filtre par années actives ([2e50ddc](https://github.com/Dannebicque/intranetV3/commit/2e50ddc4ee19f401a42a61d7174b3b32fc04772a))
+* Gestion de la version améliorée ([c4cf550](https://github.com/Dannebicque/intranetV3/commit/c4cf55046fe1e8e69ad2d95e8966021943daa772))
+* Nouveau composant pour datatable, sans jquery, et sans dépendance à Umbrella. V0.1 ([dffb96a](https://github.com/Dannebicque/intranetV3/commit/dffb96a7f9f008a25a1fffb14bbbcf7d89a0bf67))
+* Redirection vers l'aide officielle ([fa2e28f](https://github.com/Dannebicque/intranetV3/commit/fa2e28ff4baced9e6bf2c863ed4525449092445d))
+* Suivi de l'appel fait. ([2697fbd](https://github.com/Dannebicque/intranetV3/commit/2697fbd58414bb4f142babc5ce379c0d8ac4db07))
+* Utilisation de la librairie Carbon pour la gestion des dates ([18c7c33](https://github.com/Dannebicque/intranetV3/commit/18c7c33baba189be003ca1809f9bac31365eb15a))
+
+
+### Bug Fixes
+
+* Affichage du semestre actif dans la liste des questionnaires ([738a456](https://github.com/Dannebicque/intranetV3/commit/738a456c909ba1164bbb1d9a82c0a1ec409f6622))
+* bouton saisie absence faite ([59684d0](https://github.com/Dannebicque/intranetV3/commit/59684d0b99a675dd849198c89e868f0eb62bc232))
+* Export Ical avec Ressources, SAE et Matières ([b64ce21](https://github.com/Dannebicque/intranetV3/commit/b64ce21c0d8fcdd7551ee1b9858598671d1d82e3))
+* Import d'une prévisionnel OMEGA avec SAE/Ressource ou Matieres ([c9f40cc](https://github.com/Dannebicque/intranetV3/commit/c9f40cc53af7e2d5d06f7e7d8629fac4f3c208a6))
+* Kernel suite mise à jour sf ([6dabd1e](https://github.com/Dannebicque/intranetV3/commit/6dabd1e45616cd6d6ef9b451cc0763bb5a8b4397))
+* Mise à jour version SF + Notifier ([653a2c1](https://github.com/Dannebicque/intranetV3/commit/653a2c1ff71923945bd638efe10d934d571507e9))
+* Mise à jour version SF + Notifier ([0f634b8](https://github.com/Dannebicque/intranetV3/commit/0f634b8fc5738b99a19d0d3c99385ac18c4c18dd))
+* recherche SAE/Ressource sur BUT, filtre par diplome ([9621298](https://github.com/Dannebicque/intranetV3/commit/9621298e979a0f7d0bc9197a142b539eab587e73))
+* Suppression du lien vers Matiere pour utiliser la classe générique ([a6c5ad0](https://github.com/Dannebicque/intranetV3/commit/a6c5ad0b47527ddc163f9868610fe4d0f70b9b7d))
+* typo ([371850f](https://github.com/Dannebicque/intranetV3/commit/371850ffed66be7af3106683fddb3df8a3a2da8b))
+* Utilisation d'une exception lorsqu'une matière n'existe pas ([1069e76](https://github.com/Dannebicque/intranetV3/commit/1069e76c581b9c9a24b53551568e00e12e7c1577))
+
 ### [3.0.9](https://github.com/Dannebicque/intranetV3/compare/v3.0.6...v3.0.9) (2021-07-21)
 
 ### [3.0.8](https://github.com/Dannebicque/intranetV3/compare/v3.0.6...v3.0.8) (2021-07-21)
