@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/app.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 23/07/2021 08:36
+// @lastUpdate 29/07/2021 18:38
 
 import '@fortawesome/fontawesome-free/scss/fontawesome.scss'
 import '@fortawesome/fontawesome-free/scss/solid.scss'
@@ -35,6 +35,9 @@ let lookup = {}
 
 require('bootstrap-select')
 
+import Table from '../components/table'
+
+customElements.define('my-table', Table)
 
 $('input[type="file"]').on('change', function (e) {
   let filename = e.target.files[0].name
