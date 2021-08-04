@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Command/GenereCodeApogeeCommand.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/06/2021 12:06
+ * @lastUpdate 25/07/2021 11:20
  */
 
 namespace App\Command;
@@ -20,7 +20,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class GenereCodeApogeeCommand extends Command
 {
     protected static $defaultName = 'app:genere-code-apogee';
-    protected static string $defaultDescription = 'Génére les codes Apogées pour les nouveaux diplôme du B.U.T.';
+    protected static $defaultDescription = 'Génére les codes Apogées pour les nouveaux diplôme du B.U.T.';
     protected EntityManagerInterface $entityManager;
 
     /**

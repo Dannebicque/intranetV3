@@ -4,16 +4,18 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/Matiere.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2021 08:46
+ * @lastUpdate 28/07/2021 14:03
  */
 
 namespace App\DTO;
 
 use App\Entity\Constantes;
 use App\Entity\Semestre;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 class Matiere
 {
+    /**  ne-pas-exporter */
     public int $id;
     public string $typeMatiere;
     public string $libelle;
@@ -39,6 +41,7 @@ class Matiere
 
     public bool $pac = false;
 
+    /**  ne-pas-exporter */
     public int $ue_id;
     public string $ue_display;
     public ?int $ue_numero;
@@ -47,6 +50,7 @@ class Matiere
     public ?Semestre $semestre;
     public $parcours;
 
+    /**  ne-pas-exporter */
     public function getJson()
     {
         return [
@@ -65,6 +69,7 @@ class Matiere
         ];
     }
 
+    /**  ne-pas-exporter */
     public function getParcours()
     {
         if (\App\Entity\Matiere::SOURCE === $this->typeMatiere) {
@@ -79,16 +84,19 @@ class Matiere
         return $this->suspendu;
     }
 
+    /** ne-pas-exporter */
     public function getTypeIdMatiere()
     {
         return $this->typeMatiere . '_' . $this->id;
     }
 
+    /** ne-pas-exporter */
     public function getEqTdFormation(): float
     {
         return $this->cmFormation * Constantes::MAJORATION_CM + $this->tdFormation + $this->tpFormation;
     }
 
+    /** ne-pas-exporter */
     public function getEtuFormation(): float
     {
         return $this->cmFormation + $this->tdFormation + $this->tpFormation;

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/QuestionnaireSection.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 08:59
+ * @lastUpdate 02/08/2021 18:10
  */
 
 namespace App\Entity;
@@ -171,5 +171,10 @@ class QuestionnaireSection extends BaseEntity
         $this->typeCalcul = $typeCalcul;
 
         return $this;
+    }
+
+    public function getType()
+    {
+        return 'App\Components\Questionnaire\Section\QuestionsSection'; //todo: pour les tests...
     }
 }

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/AbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/07/2021 17:05
+ * @lastUpdate 04/08/2021 08:01
  */
 
 namespace App\Controller\appPersonnel;
@@ -61,8 +61,7 @@ class AbsenceController extends BaseController
     public function index(
         TypeMatiereManager $typeMatiereManager,
         string $matiere
-    ): Response
-    {
+    ): Response {
         $mat = $typeMatiereManager->getMatiereFromSelect($matiere);
 
         if (null === $mat) {
@@ -209,7 +208,7 @@ class AbsenceController extends BaseController
             'matiere' => $matiere,
             'etudiant' => $etudiant->getId(),
             'dateHeure' => $dateHeure,
-            'anneeUniversitaire' => $etudiant->getSemestre() ? $etudiant->getSemestre()->getAnneeUniversitaire()->getId() : 0,
+            'anneeUniversitaire' => $etudiant->getSemestre() ? $etudiant->getSemestre()->getAnneeUniversitaire()?->getId() : 0,
         ]);
 
         if (null !== $mat && 'saisie' === $request->get('action') && 0 === count($absence)) {

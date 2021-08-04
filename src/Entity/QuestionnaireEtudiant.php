@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/QuestionnaireEtudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 08:50
+ * @lastUpdate 27/07/2021 10:37
  */
 
 namespace App\Entity;
@@ -129,7 +129,7 @@ class QuestionnaireEtudiant extends BaseEntity
         return $this->dateTermine;
     }
 
-    public function setDateTermine(CarbonInterface $dateTermine): self
+    public function setDateTermine(?CarbonInterface $dateTermine): self
     {
         $this->dateTermine = $dateTermine;
 

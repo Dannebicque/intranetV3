@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/DataTable/Widget/RowEditLinkType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/05/2021 08:39
+ * @lastUpdate 03/08/2021 17:05
  */
 
 namespace App\DataTable\Widget;
@@ -21,7 +21,7 @@ class RowEditLinkType extends RowLinkType
 
         $resolver
             ->setDefault('title', 'action.edit')
-            ->setDefault('icon', 'mdi mdi-pencil')
+            ->setDefault('icon', 'fas fa-edit')
             ->setDefault('class', 'table-link text-warning');
     }
 }
