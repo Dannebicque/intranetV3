@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/Adapter/AdapterInterface.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/07/2021 11:06
+ * @lastUpdate 29/07/2021 18:39
  */
 
 namespace App\Components\Table\Adapter;

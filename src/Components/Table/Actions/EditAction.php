@@ -1,10 +1,10 @@
 <?php
 /*
  * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/Actions/ActionDelete.php
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/Actions/EditAction.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/07/2021 11:06
+ * @lastUpdate 03/08/2021 18:11
  */
 
 namespace App\Components\Table\Actions;
@@ -12,14 +12,14 @@ namespace App\Components\Table\Actions;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ActionDelete extends ActionButton
+class EditAction extends AbstractButtonAction implements ActionInterface
 {
-    public const ICON = 'fas fa-garbadge';
-    public const CLASS_CSS = 'btn btn-outline-danger btn-square';
-    public const NAME = 'delete';
+    public const ICON = 'fas fa-edit';
+    public const CLASS_CSS = 'btn btn-outline btn-warning btn-square';
+    public const NAME = 'edit';
 
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
 

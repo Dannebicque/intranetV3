@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/Column.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/07/2021 15:56
+ * @lastUpdate 31/07/2021 18:16
  */
 
 namespace App\Components\Table;
@@ -83,5 +83,10 @@ class Column
     public function render($object)
     {
         return $this->columnType->render($object, $this->options);
+    }
+
+    public function updateOptions(array $options)
+    {
+        $this->options = array_merge($this->options, $options);
     }
 }

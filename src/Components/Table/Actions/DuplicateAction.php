@@ -1,10 +1,10 @@
 <?php
 /*
  * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/Actions/ActionEdit.php
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/Actions/DuplicateAction.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/07/2021 11:06
+ * @lastUpdate 03/08/2021 18:11
  */
 
 namespace App\Components\Table\Actions;
@@ -12,14 +12,14 @@ namespace App\Components\Table\Actions;
 
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ActionEdit extends ActionButton
+class DuplicateAction extends AbstractButtonAction implements ActionInterface
 {
-    public const ICON = 'fas fa-pencil';
-    public const CLASS_CSS = 'btn btn-outline-warning btn-square';
-    public const NAME = 'edit';
+    public const ICON = 'fas fa-copy';
+    public const CLASS_CSS = 'btn btn-outline btn-success btn-square';
+    public const NAME = 'duplicate';
 
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
 

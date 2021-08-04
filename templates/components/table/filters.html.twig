@@ -1,8 +1,38 @@
-Filtres....
 <div class="row">
-    {% for filter in filters %}
-        <div class="col-md-3 col-sm-12">
-            {{ filter.name }}
+    {# si export et/ou add alors uniquement 8/12 de largeeur sinon full #}
+    <div class="col-sm-12 {% if add_button == true or export_button == true %}col-md-9{% else %}col-md-12{% endif %}">
+        <div class="row">
+            {% for filter in filters %}
+                {{ filter_render(filter) }}
+            {% endfor %}
         </div>
-    {% endfor %}
+    </div>
+    {% if add_button == true or export_button == true %}
+        <div class="col-md-3 cols-sm-12">
+            {# add + export #}
+            <div class="row mr-15">
+                {% if add_button == true %}
+                    <div class="col-md-6 col-sm-12">
+                        <a class="btn btn-block btn-primary" href="{{ add_button_url }}">+ Ajouter</a>
+                    </div>
+                {% endif %}
+                {% if export_button == true %}
+                    <div class="col-md-6 col-sm-12">
+                        <div class="btn-group">
+                            <button class="btn btn-label btn-success dropdown-toggle" data-toggle="dropdown"
+                                    aria-expanded="false">
+                                <label><i class="fas fa-download"></i></label>
+                                Exports
+                            </button>
+                            <div class="dropdown-menu">
+                                {% for option in export_options %}
+                                    <a class="dropdown-item" href="{{ option.url }}">{{ option.label }}</a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
 </div>
