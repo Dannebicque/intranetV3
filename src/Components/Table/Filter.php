@@ -4,11 +4,15 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/Filter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/07/2021 11:06
+ * @lastUpdate 02/08/2021 11:02
  */
 
 namespace App\Components\Table;
 
+
+use App\Components\Table\Column\ColumnType;
+use App\Components\Table\Filters\AbstractFilter;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class Filter
 {
@@ -18,26 +22,28 @@ class Filter
     public const RANGE = 'range';
 
     protected string $name;
-    protected string $type_filter;
+    protected AbstractFilter $filter;
     protected array $columns = [];
     protected array $options = [];
 
-    public function __construct(string $name, string $type_filter, array $columns, array $options)
+    public function __construct(string $name, AbstractFilter $filter, array $columns, array $options)
     {
         $this->name = $name;
-        $this->type_filter = $type_filter;
+        $this->filter = $filter;
         $this->columns = $columns;
-        $this->options = $options;
+
+        $resolver = new OptionsResolver();
+        $resolver
+            ->setDefault('name', $name)
+            ->setDefault('id', $name) //transformer en unique??
+            ->setDefault('is_safe_html', true);
+        $filter->configureOptions($resolver);
+        $this->options = $resolver->resolve($options);
     }
 
     public function getName(): string
     {
         return $this->name;
-    }
-
-    public function getTypeFilter(): string
-    {
-        return $this->type_filter;
     }
 
     public function getColumns(): array
@@ -50,5 +56,13 @@ class Filter
         return $this->options;
     }
 
+    public function render()
+    {
+        $this->filter->render();
+    }
 
+    public function getFilter()
+    {
+        return $this->filter;
+    }
 }

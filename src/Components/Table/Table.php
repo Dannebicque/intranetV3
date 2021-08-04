@@ -4,13 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/Table.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/07/2021 18:38
+ * @lastUpdate 04/08/2021 08:01
  */
 
 namespace App\Components\Table;
 
 use App\Components\Table\Adapter\AbstractAdapter;
-use App\Components\Table\Adapter\AdapterInterface;
+use App\Components\Table\Column\ActionsColumnType;
 use App\Components\Table\DTO\Row;
 use App\Components\Table\DTO\TableResult;
 use App\Components\Table\Exceptions\ColumnWithSameNameExistException;
@@ -23,6 +23,8 @@ class Table
 
     protected Filters $filters;
     protected Columns $columns;
+    private Actions $actions;
+
     protected Paging $paging;
     protected array $fields = [];
 
@@ -45,6 +47,7 @@ class Table
 
         $this->columns = new Columns();
         $this->filters = new Filters();
+        $this->actions = new Actions();
         $this->paging = new Paging();
 
         $resolver = new OptionsResolver();
@@ -77,22 +80,29 @@ class Table
         return $this;
     }
 
-    public function addActions(array $actions = [])
+    public function addAction(string $name, string $action_type, array $options = [])
     {
-        foreach ($actions as $action) {
-            //créer les boutons, ajouter dans une colonne spéciale
-        }
+
+        $actionButton = $this->tableRegistry->getAction($action_type);
+        $resolver = new OptionsResolver();
+        $actionButton->configureOptions($resolver);
+        $options = $resolver->resolve($options);
+
+        $action = new Button($name, $actionButton, $options);
+        $this->actions->addAction($action);
+        $this->addActionColumn();
 
         return $this;
     }
 
     public function addFilter(
         string $name,
-        string $type_filter = Filter::SEARCH,
+        string $type_filter,
         array $columns = [],
         array $options = []
     ) {
-        $filter = new Filter($name, $type_filter, $columns, $options);
+        $typeFilter = $this->tableRegistry->getFilter($type_filter);
+        $filter = new Filter($name, $typeFilter, $columns, $options);
         $this->filters->addFilter($filter);
 
         return $this;
@@ -108,6 +118,11 @@ class Table
     public function getFilters()
     {
         return $this->filters;
+    }
+
+    public function getActions()
+    {
+        return $this->actions;
     }
 
     public function getColumns()
@@ -187,5 +202,17 @@ class Table
         }
 
         //ordre, filtre...
+    }
+
+    public function addActionColumn()
+    {
+        if ($this->actions->hasActions()) {
+            if (in_array('actions', $this->fields)) {
+                $this->columns->get('actions')->updateOptions(['actions' => $this->actions->getActions()]);
+            } else {
+                $this->addColumn('actions', ActionsColumnType::class, ['actions' => $this->actions->getActions()]);
+                $this->fields[] = 'actions';
+            }
+        }
     }
 }

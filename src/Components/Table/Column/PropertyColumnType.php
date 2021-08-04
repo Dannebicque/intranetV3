@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/Column/PropertyColumnType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/07/2021 18:38
+ * @lastUpdate 04/08/2021 08:01
  */
 
 namespace App\Components\Table\Column;
@@ -23,7 +23,6 @@ class PropertyColumnType extends ColumnType
         $this->accessor = PropertyAccess::createPropertyAccessor();
     }
 
-
     public function render($rowData, array $options): string
     {
         return $this->renderProperty($this->accessor->getValue($rowData, $options['property_path']), $options);
@@ -34,8 +33,7 @@ class PropertyColumnType extends ColumnType
         return (string)$value;
     }
 
-
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setDefault('property_path', function(Options $options) {

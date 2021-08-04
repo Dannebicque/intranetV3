@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/Adapter/AbstractAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/07/2021 12:15
+ * @lastUpdate 02/08/2021 10:49
  */
 
 namespace App\Components\Table\Adapter;
@@ -16,10 +16,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 abstract class AbstractAdapter
 {
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
     }
 
-
-    abstract public function getResult(Table $state, array $options): TableResult;
+    abstract public function getResult(Table $table, array $options): TableResult;
 }

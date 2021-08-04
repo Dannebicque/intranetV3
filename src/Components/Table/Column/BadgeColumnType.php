@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/Column/BadgeColumnType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/07/2021 16:05
+ * @lastUpdate 02/08/2021 10:50
  */
 
 namespace App\Components\Table\Column;
@@ -18,7 +18,7 @@ class BadgeColumnType extends PropertyColumnType
         return sprintf('<span class="badge %s">%s<span>', $options['badge_class'], $value);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
         $resolver

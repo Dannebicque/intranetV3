@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/Column/BooleanColumnType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/07/2021 18:38
+ * @lastUpdate 02/08/2021 10:55
  */
 
 namespace App\Components\Table\Column;
@@ -16,18 +16,12 @@ class BooleanColumnType extends PropertyColumnType
 {
     protected TranslatorInterface $translator;
 
-    /**
-     * EnableColumnType constructor.
-     */
     public function __construct(TranslatorInterface $translator)
     {
         parent::__construct();
         $this->translator = $translator;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function renderProperty($value, array $options): string
     {
         if ($options['strict_comparison'] && !is_bool($value)) {
@@ -53,10 +47,7 @@ class BooleanColumnType extends PropertyColumnType
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
 

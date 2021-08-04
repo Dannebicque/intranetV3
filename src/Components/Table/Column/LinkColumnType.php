@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/Column/LinkColumnType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/07/2021 18:38
+ * @lastUpdate 02/08/2021 10:59
  */
 
 namespace App\Components\Table\Column;
@@ -17,18 +17,12 @@ class LinkColumnType extends PropertyColumnType
 {
     protected RouterInterface $router;
 
-    /**
-     * LinkColumnType constructor.
-     */
     public function __construct(RouterInterface $router)
     {
         parent::__construct();
         $this->router = $router;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function render($rowData, array $options): string
     {
         $attr = [];
@@ -77,10 +71,7 @@ class LinkColumnType extends PropertyColumnType
         return sprintf('<a %s>%s</a>', HtmlUtils::to_attr($attr), $text);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
 

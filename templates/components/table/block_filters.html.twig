@@ -1,0 +1,81 @@
+{% block filter_search %}
+    <div class="col-6">
+        <div class="form-group">
+            <label for="{{ id }}" class="sr-only">
+                {{ label }}
+            </label>
+            <input type="text" name="{{ name }}" id="{{ id }}" class="form-control" placeholder="{{ label }}">
+        </div>
+    </div>
+{% endblock %}
+
+{% block filter_range %}
+    <div class="col-6">
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group">
+                    <label for="{{ id }}" class="sr-only">
+                        {{ label }}{# translation domain... #}
+                    </label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">{{ label_1 }}</span>
+                        </div>
+                        <input type="text" name="" id="" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-group">
+
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon2">{{ label_2 }}</span>
+                        </div>
+                        <input type="text" name="" id="" class="form-control">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+
+{% block filter_select %}
+    <div class="col-3">
+        <div class="form-group">
+            <label for="{{ id }}" class="sr-only">
+                {{ label }}
+            </label>
+            <select name="{{ name }}" id="{{ id }}" class="form-control">
+                <option value="">{{ label }}</option>
+                {% for option in options %}
+                    <option value="{{ option.value }}">{{ option.label }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+{% endblock %}
+
+{% block filter_select_expanded %}
+    <div class="col-3">
+        <div class="form-group">
+            <label>
+                {{ label }}
+            </label>
+            {% set i = 1 %}
+            {% for option in options %}
+                <div class="form-check">
+                    <input class="form-check-input" type="{{ type }}" value="{{ option.value }}"
+                           id="{{ name }}_{{ i }}">
+                    <label class="form-check-label" for={{ name }}_{{ i }}">
+                        {{ option.label }}
+                    </label>
+                </div>
+                {% set i = i + 1 %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+

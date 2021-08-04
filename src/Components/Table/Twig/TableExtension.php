@@ -4,43 +4,43 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/Twig/TableExtension.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/07/2021 11:06
+ * @lastUpdate 30/07/2021 09:34
  */
 
 namespace App\Components\Table\Twig;
 
+use App\Components\Table\FilterRenderer;
 use App\Components\Table\TableRenderer;
-use Twig\TwigFunction;
 use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
 class TableExtension extends AbstractExtension
 {
-    protected TableRenderer $renderer;
+    protected TableRenderer $tableRenderer;
+    protected FilterRenderer $filterRenderer;
 
-    /**
-     * DataTableTwigExtension constructor.
-     */
-    public function __construct(TableRenderer $renderer)
+    public function __construct(TableRenderer $tableRenderer, FilterRenderer $filterRenderer)
     {
-        $this->renderer = $renderer;
+        $this->tableRenderer = $tableRenderer;
+        $this->filterRenderer = $filterRenderer;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
-            new TwigFunction('table_render', [$this->renderer, 'render'], [
+            new TwigFunction('table_render', [$this->tableRenderer, 'render'], [
                 'is_safe' => ['html'],
             ]),
-            new TwigFunction('fitlers_render', [$this->renderer, 'renderFilters'], [
+            new TwigFunction('fitlers_render', [$this->tableRenderer, 'renderFilters'], [
                 'is_safe' => ['html'],
             ]),
-            new TwigFunction('paging_render', [$this->renderer, 'renderPaging'], [
+            new TwigFunction('filter_render', [$this->filterRenderer, 'render'], [
                 'is_safe' => ['html'],
             ]),
-            new TwigFunction('render_export_action', [$this->renderer, 'renderExportAction'], [
+            new TwigFunction('paging_render', [$this->tableRenderer, 'renderPaging'], [
+                'is_safe' => ['html'],
+            ]),
+            new TwigFunction('render_export_action', [$this->tableRenderer, 'renderExportAction'], [
                 'is_safe' => ['html'],
             ]),
         ];

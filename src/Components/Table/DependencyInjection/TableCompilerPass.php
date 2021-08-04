@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/DependencyInjection/TableCompilerPass.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/07/2021 15:32
+ * @lastUpdate 02/08/2021 10:55
  */
 
 namespace App\Components\Table\DependencyInjection;
@@ -23,16 +23,11 @@ class TableCompilerPass implements CompilerPassInterface
     public function process(ContainerBuilder $container)
     {
         $registry = $container->getDefinition(TableRegistry::class);
-//        $this->addToRegistry($container, $registry, TableRegistry::TAG_TYPE, 'registerType');
         $this->addToRegistry($container, $registry, TableRegistry::TAG_ADAPTER, 'registerAdapter');
         $this->addToRegistry($container, $registry, TableRegistry::TAG_COLUMN_TYPES, 'registerColumnType');
+        $this->addToRegistry($container, $registry, TableRegistry::TAG_FILTERS, 'registerFilter');
+        $this->addToRegistry($container, $registry, TableRegistry::TAG_ACTIONS, 'registerAction');
 
-//        $registry = $container->getDefinition(WidgetRegistry::class);
-//        $this->addToRegistry($container, $registry, WidgetRegistry::TAG_TYPE, 'registerType');
-//
-//        $registry = $container->getDefinition(MenuRegistry::class);
-//        $this->addToRegistry($container, $registry, MenuRegistry::TAG_TYPE, 'registerType');
-//        $this->addToRegistry($container, $registry, MenuRegistry::TAG_VISITOR, 'registerVisitor');
     }
 
     private function addToRegistry(ContainerBuilder $container, Definition $registry, string $tag, string $method)

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/Adapter/EntityAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/07/2021 18:38
+ * @lastUpdate 02/08/2021 10:49
  */
 
 namespace App\Components\Table\Adapter;
@@ -38,7 +38,7 @@ class EntityAdapter extends AbstractAdapter implements AdapterInterface
         return new TableResult($paginator);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
 

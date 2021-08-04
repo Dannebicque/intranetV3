@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/TableRenderer.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/07/2021 18:38
+ * @lastUpdate 04/08/2021 08:01
  */
 
 namespace App\Components\Table;
@@ -117,12 +117,25 @@ class TableRenderer
         return $this->twig->render($filters->getOption('template'), $this->viewFilters($filters));
     }
 
+    public function renderFilter(Filter $filter): string
+    {
+        return $this->twig->render($filter->getOption('template'), $this->viewFilter($filter));
+    }
+
     private function viewFilters(Filters $filters)
     {
         $options = $filters->getOptions();
 
         $vars = [];
         $vars['filters'] = $filters->getFilters();
+        $vars['add_button'] = true; //todo: a récupérer
+        $vars['add_button_url'] = 'http://'; //todo: a récupérer
+        $vars['export_button'] = true; //todo: a récupérer
+        $vars['export_options'] = [
+            'xlsx' => ['url' => '...', 'label' => 'Excel'],
+            'csv' => ['url' => '...', 'label' => 'CSV'],
+            'pdf' => ['url' => '...', 'label' => 'PDF']
+        ];
 
         return $vars;
     }
