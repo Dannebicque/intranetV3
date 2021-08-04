@@ -33,7 +33,7 @@
         <div class="tab-pane fade active show" id="wizard-intro">
             <p class="text-center fs-35 text-muted"><strong class="text-primary">Bienvenue</strong>
                 sur le questionnaire {{ questionnaire.libelle }}</p>
-            <p class="text-center text-gray">{{ questionnaire.texteDebut|raw }}</p>
+            <p class="text-center text-gray">{{ questionnaire.texteExplication|raw }}</p>
             <hr class="w-100px">
             <div class="alert alert-info">Questionnaire à compléter entre le {{ questionnaire
                 .dateOuverture|format_date

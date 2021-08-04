@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/components/table.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 29/07/2021 18:38
+// @lastUpdate 03/08/2021 17:59
 
 import {post} from '../js/fetch'
 
@@ -19,6 +19,8 @@ export default class Table extends HTMLElement {
     this.tableBody = this.table.querySelector('tbody')
     this.pageActive = this.options.pageActive //par défaut on récupère
     this.nbElementPerPage = this.options.pageLength
+
+    //récupérer les filtres disponibles et ajouter les écouteurs selon?
 
     this.tableBody.innerHTML = ''
     // this.tableBody.innerHTML = `<tr><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td></tr>`
