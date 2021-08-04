@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.articles.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 23/05/2021 15:34
+// @lastUpdate 03/08/2021 16:56
 
 import {dataTableLangueFr} from '../lang/fr'
 
@@ -43,7 +43,7 @@ $(document).on('click', '#addCategorie', function () {
           '                               data-provide="tooltip"\n' +
           '                               data-placement="bottom"\n' +
           '                               title="Supprimer la catégorie">\n' +
-          '                                <i class="mdi mdi-delete"></i>\n' +
+          '                                <i class="fas fa-trash-alt"></i>\n' +
           '                                <span class="sr-only">Supprimer la catégorie</span>\n' +
           '                            </a></td>\n' +
           '                    </tr>'

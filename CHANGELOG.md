@@ -34,28 +34,45 @@ All notable changes to this project will be documented in this file. See [standa
 * Utilisation d'une exception lorsqu'une matière n'existe pas ([1069e76](https://github.com/Dannebicque/intranetV3/commit/1069e76c581b9c9a24b53551568e00e12e7c1577))
 
 ### [3.0.9](https://github.com/Dannebicque/intranetV3/compare/v3.0.6...v3.0.9) (2021-07-21)
+-> Versionning non fonctionnel
 
 ### [3.0.8](https://github.com/Dannebicque/intranetV3/compare/v3.0.6...v3.0.8) (2021-07-21)
 
+-> Versionning non fonctionnel
+
 ### [3.0.6](https://github.com/Dannebicque/intranetV3/compare/v3.0.8...v3.0.6) (2021-07-21)
+
+-> Versionning non fonctionnel
 
 ### [3.0.2](https://github.com/Dannebicque/intranetV3/compare/3.0.1...3.0.2) - 2021-05-12
 
+-> Versionning non fonctionnel
+
 ### [3.0.1](https://github.com/Dannebicque/intranetV3/compare/3.0.0...3.0.1) - 2021-05-12
+
+-> Versionning non fonctionnel
 
 ## [3.0.0](https://github.com/Dannebicque/intranetV3/compare/v1.0.3...3.0.0) - 2021-03-01
 
+Versions 3.0.0 à 3.0.9
+
 ### Commits
 
-- Mise en place du référentiel de BUT [`e6f84f1`](https://github.com/Dannebicque/intranetV3/commit/e6f84f18cd0df750d36f21909d2f631949caa0d5)
-- Edition des questionnaires en SA [`7ca831e`](https://github.com/Dannebicque/intranetV3/commit/7ca831e1811c8f58e83380d4e81e9c08c10cb8be)
+- Mise en place du référentiel de
+  BUT [`e6f84f1`](https://github.com/Dannebicque/intranetV3/commit/e6f84f18cd0df750d36f21909d2f631949caa0d5)
+- Edition des questionnaires en
+  SA [`7ca831e`](https://github.com/Dannebicque/intranetV3/commit/7ca831e1811c8f58e83380d4e81e9c08c10cb8be)
 - PHp-CS-Fixer [`5471f42`](https://github.com/Dannebicque/intranetV3/commit/5471f4234e934d4a9dd4fb623b30b00120b49950)
 - Update Webpack [`509bfaa`](https://github.com/Dannebicque/intranetV3/commit/509bfaa1668d680ba84aa1e1815cfabe8d0f2c5a)
-- Passage de DomPdf à WkHtmlToPdf (gain de perf) [`9bc3b45`](https://github.com/Dannebicque/intranetV3/commit/9bc3b457d887a4d9edf8c62086f3c7317f342243)
-- Suppression de DomPdf pour passer à WkHtmlToPdf [`ac9e50f`](https://github.com/Dannebicque/intranetV3/commit/ac9e50fe963d5723d8f7d5283fe89e943bb0380a)
+- Passage de DomPdf à WkHtmlToPdf (gain de
+  perf) [`9bc3b45`](https://github.com/Dannebicque/intranetV3/commit/9bc3b457d887a4d9edf8c62086f3c7317f342243)
+- Suppression de DomPdf pour passer à
+  WkHtmlToPdf [`ac9e50f`](https://github.com/Dannebicque/intranetV3/commit/ac9e50fe963d5723d8f7d5283fe89e943bb0380a)
 - Sentry [`9462053`](https://github.com/Dannebicque/intranetV3/commit/946205366e20f847754271cd542a9be85530fe41)
-- Remove de Sentry [`a153ee6`](https://github.com/Dannebicque/intranetV3/commit/a153ee6ae79996035e21cc3ca573fcac08c38687)
-- Remplacement de Quill par TinyMce [`984a568`](https://github.com/Dannebicque/intranetV3/commit/984a568d5c1b69d8e06f18b27d9cf8b324a2e1a0)
+- Remove de
+  Sentry [`a153ee6`](https://github.com/Dannebicque/intranetV3/commit/a153ee6ae79996035e21cc3ca573fcac08c38687)
+- Remplacement de Quill par
+  TinyMce [`984a568`](https://github.com/Dannebicque/intranetV3/commit/984a568d5c1b69d8e06f18b27d9cf8b324a2e1a0)
 - PHp-CS-Fixer [`1972b54`](https://github.com/Dannebicque/intranetV3/commit/1972b54e4dfc910821a6f7a03501f617a69cdf6a)
 - Attestations COVID [`dc22ddb`](https://github.com/Dannebicque/intranetV3/commit/dc22ddb1504bb1cd4635450c98bf42d0ed371b82)
 - Référentiel de compétence [`9bb061f`](https://github.com/Dannebicque/intranetV3/commit/9bb061f1ee1c1d29c1a9560fbf4386489fc5f3fa)

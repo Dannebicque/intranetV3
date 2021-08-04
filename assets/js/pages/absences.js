@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/absences.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/07/2021 11:38
+// @lastUpdate 27/07/2021 10:26
 import {addCallout} from '../util'
 
 import {dataTableLangueFr} from '../lang/fr'
@@ -148,7 +148,6 @@ function updateAffichage (date, heure) {
 window.addEventListener('load', function () { //le dom est chargé
   document.querySelectorAll('.pasabsent').forEach((elem) => {
     elem.addEventListener('click', (e) => {
-      console.log('toto')
       post(Routing.generate('app_personnel_absence_etat_appel'), {
         date: document.querySelector('#absence-date').value,
         heure: document.querySelector('#absence-heure').value,
@@ -158,7 +157,7 @@ window.addEventListener('load', function () { //le dom est chargé
         .then(data => {
           // Handle data
           if (data === true) {
-            addCallout('Saisie enregistéeavec succès.', 'success')
+            addCallout('Saisie enregistée avec succès.', 'success')
           } else {
             addCallout('Vous avez déjà effectué une saisie.', 'warning')
           }

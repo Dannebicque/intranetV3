@@ -7,13 +7,13 @@ twig:
         # the value is the service's id
         version: '@App\Classes\Version'
         user_data: '@App\Classes\DataUserSession'
-        iconShow: 'mdi mdi-eye'
-        iconEdit: 'mdi mdi-pencil'
-        iconDelete: 'mdi mdi-delete'
-        iconPrint: 'mdi mdi-printer'
-        iconDuplicate: 'mdi mdi-content-copy'
-        iconAdmin: 'mdi mdi-wrench'
-        iconDashboard: 'mdi mdi-home mdi-36px'
+        iconShow: 'fas fa-info'
+        iconEdit: 'fas fa-edit'
+        iconDelete: 'fas fa-trash-alt'
+        iconPrint: 'fas fa-print'
+        iconDuplicate: 'fas fa-copy'
+        iconAdmin: 'fas fa-wrench'
+        iconDashboard: 'fas fa-home fa-3x'
         linuxpath: '%env(resolve:BASE_URL)%'
 
         exception_controller: null # This is needed to fix the deprecation in Symfony 4.4
