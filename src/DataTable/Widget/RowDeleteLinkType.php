@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/DataTable/Widget/RowDeleteLinkType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/05/2021 09:43
+ * @lastUpdate 03/08/2021 17:05
  */
 
 namespace App\DataTable\Widget;
@@ -20,7 +20,7 @@ class RowDeleteLinkType extends RowLinkType
         parent::configureOptions($resolver);
         $resolver
             ->setDefault('title', 'action.delete')
-            ->setDefault('icon', 'mdi mdi-delete')
+            ->setDefault('icon', 'fas fa-trash')
             ->setDefault('xhr', true)
             //->setDefault('confirm', 'message.delete_confirm')
             ->setDefault('class', 'table-link text-danger confirm-delete');

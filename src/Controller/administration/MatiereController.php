@@ -4,27 +4,33 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/MatiereController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:48
+ * @lastUpdate 04/08/2021 08:01
  */
 
 namespace App\Controller\administration;
 
 use App\Classes\Configuration;
+use App\Classes\Exporter\ExporterManager;
+use App\Classes\Exporter\SourceIterator\DoctrineSourceIterator;
+use App\Classes\Exporter\SourceIterator\DtoSourceIterator;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\MyExport;
 use App\Controller\BaseController;
+use App\DTO\MatiereCollection;
 use App\Entity\Constantes;
+use App\Entity\Date;
 use App\Entity\Diplome;
 use App\Entity\Matiere;
 use App\Entity\Ue;
 use App\Form\MatiereType;
 use App\Repository\ApcRessourceRepository;
 use App\Repository\ApcSaeRepository;
+use App\Repository\DateRepository;
 use App\Repository\MatiereRepository;
+use function count;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use function count;
 
 /**
  * @Route("/administration/matiere")
@@ -69,36 +75,46 @@ class MatiereController extends BaseController
     /**
      * @Route("/{diplome}/export.{_format}", name="administration_matiere_export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"}, options={"expose":true})
-     *
      */
     public function export(
-        MyExport $myExport,
+        ExporterManager $exporter,
         TypeMatiereManager $typeMatiereManager,
         Diplome $diplome,
-        string $_format
+        $_format
     ): Response {
-        $actualites = $typeMatiereManager->findByDiplome($diplome);
+        $matieres = $typeMatiereManager->findByDiplome($diplome);
+        $datas = new DtoSourceIterator($matieres, \App\DTO\Matiere::class, $matieres);
 
-        return $myExport->genereFichierGenerique(
-            $_format,
-            $actualites,
-            'matieres',
-            ['matiere', 'matiere_administration'],
-            [
-                'libelle',
-                'codeMatiere',
-                'cmPpn',
-                'tdPpn',
-                'tpPpn',
-                'cmFormation',
-                'tdFormation',
-                'tpFormation',
-                'nbNotes',
-                'coefficient',
-                'suspendu',
-            ]
-        );
+        return $exporter->export($datas, $_format, 'matieres');
     }
+//    public function export(
+//        MyExport $myExport,
+//        TypeMatiereManager $typeMatiereManager,
+//        Diplome $diplome,
+//        string $_format
+//    ): Response {
+//        $actualites = $typeMatiereManager->findByDiplome($diplome);
+//
+//        return $myExport->genereFichierGenerique(
+//            $_format,
+//            $actualites,
+//            'matieres',
+//            ['matiere', 'matiere_administration'],
+//            [
+//                'libelle',
+//                'codeMatiere',
+//                'cmPpn',
+//                'tdPpn',
+//                'tpPpn',
+//                'cmFormation',
+//                'tdFormation',
+//                'tpFormation',
+//                'nbNotes',
+//                'coefficient',
+//                'suspendu',
+//            ]
+//        );
+//    }
 
     /**
      * @Route("/new/{diplome}/{ue}", name="administration_matiere_new", methods="GET|POST")
@@ -199,7 +215,6 @@ class MatiereController extends BaseController
         $id = $matiere->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token')) &&
             0 === count($matiere->getEvaluations())) {
-
             $this->entityManager->remove($matiere);
             $this->entityManager->flush();
             $this->addFlashBag(

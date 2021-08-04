@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/DataTable/Widget/RowShowLinkType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/05/2021 08:39
+ * @lastUpdate 03/08/2021 17:05
  */
 
 namespace App\DataTable\Widget;
@@ -21,7 +21,7 @@ class RowShowLinkType extends RowLinkType
 
         $resolver
             ->setDefault('title', 'action.show')
-            ->setDefault('icon', 'mdi mdi-eye')
+            ->setDefault('icon', 'fas fa-info')
             ->setDefault('class', 'table-link text-info');
     }
 }

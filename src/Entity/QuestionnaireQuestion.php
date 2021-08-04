@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/QuestionnaireQuestion.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/06/2021 10:28
+ * @lastUpdate 04/08/2021 08:01
  */
 
 namespace App\Entity;
@@ -301,5 +301,18 @@ class QuestionnaireQuestion extends BaseEntity
         $this->parametre = json_encode($parametre);
 
         return $this;
+    }
+
+    public function getTypeQuestion()
+    {
+        $t = [
+            self::QUESTION_TYPE_QCU => 'App\Components\Questionnaire\TypeQuestion\TypeQcu',
+            self::QUESTION_TYPE_QCM => 'App\Components\Questionnaire\TypeQuestion\TypeQcm',
+            self::QUESTION_TYPE_YESNO => 'App\Components\Questionnaire\TypeQuestion\TypeOuiNon',
+            self::QUESTION_TYPE_ECHELLE => 'App\Components\Questionnaire\TypeQuestion\TypeEchelle',
+            self::QUESTION_TYPE_LIBRE => 'App\Components\Questionnaire\TypeQuestion\TypeLibre',
+        ];
+
+        return $t[$this->type];
     }
 }

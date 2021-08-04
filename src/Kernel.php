@@ -4,19 +4,28 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Kernel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/07/2021 16:41
+ * @lastUpdate 02/08/2021 17:09
  */
 
 namespace App;
 
+use App\Components\Questionnaire\DependencyInjection\QuestionnaireCompilerPass;
+use App\Components\Table\DependencyInjection\TableCompilerPass;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class Kernel extends BaseKernel
 {
     use MicroKernelTrait;
+
+    protected function build(ContainerBuilder $container): void
+    {
+        $container->addCompilerPass(new TableCompilerPass());
+        $container->addCompilerPass(new QuestionnaireCompilerPass());
+    }
 
     protected function configureContainer(ContainerConfigurator $container): void
     {
@@ -29,6 +38,10 @@ class Kernel extends BaseKernel
         } else {
             $container->import('../config/{services}.php');
         }
+
+        //mon service pour Table
+        $container->import('../src/Components/Table/{services}.php');
+        $container->import('../src/Components/Questionnaire/{services}.php');
     }
 
     protected function configureRoutes(RoutingConfigurator $routes): void

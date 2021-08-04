@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/enquete/EnqueteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2021 08:46
+ * @lastUpdate 27/07/2021 09:38
  */
 
 namespace App\Controller\superAdministration\enquete;
@@ -192,19 +192,6 @@ class EnqueteController extends AbstractController
             'typeQuestionnaire' => 'qualite',
             'semestre' => $questionnaire->getSemestre(),
             'apercu' => true,
-        ]);
-    }
-
-    /**
-     * @Route("/questionnaire/reponses/{questionnaire}", name="administratif_enquete_reponses")
-     */
-    public function reponses(MyEnquete $myEnquete, QuestionnaireQualite $questionnaire): Response
-    {
-        $reponses = $myEnquete->getReponseFromQuestionnaire($questionnaire);
-
-        return $this->render('super-administration/enquete/reponses.html.twig', [
-            'questionnaire' => $questionnaire,
-            'reponses' => $reponses = null,
         ]);
     }
 
