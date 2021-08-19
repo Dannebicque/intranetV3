@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/AbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/08/2021 08:01
+ * @lastUpdate 19/08/2021 09:32
  */
 
 namespace App\Controller\appPersonnel;
@@ -68,7 +68,8 @@ class AbsenceController extends BaseController
             throw new MatiereNotFoundException();
         }
 
-        if (null !== $mat->semestre) {
+
+        if (null === $mat->semestre) {
             throw new SemestreNotFoundException();
         }
 

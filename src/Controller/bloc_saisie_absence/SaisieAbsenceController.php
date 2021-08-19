@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/bloc_saisie_absence/SaisieAbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:48
+ * @lastUpdate 19/08/2021 11:46
  */
 
 namespace App\Controller\bloc_saisie_absence;
@@ -31,7 +31,7 @@ use function count;
 /**
  * Class AbsenceController.
  *
- * @Route("/application/personnel/absence")
+ * @Route("/application/personnel/absence/ajax")
  * @IsGranted("ROLE_PERMANENT")
  */
 class SaisieAbsenceController extends BaseController
@@ -40,8 +40,8 @@ class SaisieAbsenceController extends BaseController
         TypeMatiereManager $typeMatiereManager,
         TypeGroupeRepository $typeGroupeRepository,
         Semestre $semestre,
-        string $matiere = null,
-        EdtPlanning $event = null
+        ?string $matiere = null,
+        ?EdtPlanning $event = null
     ): Response {
         $mat = $typeMatiereManager->getMatiereFromSelect($matiere);
         if (null !== $event) {
@@ -68,7 +68,7 @@ class SaisieAbsenceController extends BaseController
     }
 
     /**
-     * @Route("/ajax/absences/{matiere}", name="application_personnel_absence_get_ajax", methods="GET",
+     * @Route("/absences/{matiere}", name="application_personnel_absence_get_ajax", methods="GET",
      *                                    options={"expose":true})
      */
     public function ajaxGetAbsencesMatiere(
@@ -90,7 +90,7 @@ class SaisieAbsenceController extends BaseController
     }
 
     /**
-     * @Route("/ajax/saisie/{matiere}/{etudiant}", name="application_personnel_absence_saisie_ajax", methods="POST",
+     * @Route("/saisie/{matiere}/{etudiant}", name="application_personnel_absence_saisie_ajax", methods="POST",
      *                                             options={"expose":true})
      *
      * @return JsonResponse|Response

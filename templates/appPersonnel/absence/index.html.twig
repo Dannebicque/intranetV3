@@ -24,7 +24,8 @@
             {{ render(controller('App\\Controller\\bloc_saisie_absence\\SaisieAbsenceController::index',
                 {semestre:semestre.id, matiere:matiere.typeIdMatiere, event:event.id})) }}
         {% else %}
-            {{ render(controller('App\\Controller\\bloc_saisie_absence\\SaisieAbsenceController::index', {semestre:semestre.id, matiere:matiere.typeIdMatiere})) }}
+            {{ render(controller('App\\Controller\\bloc_saisie_absence\\SaisieAbsenceController::index',
+                {semestre:semestre.id, matiere:matiere.typeIdMatiere, event: ''})) }}
         {% endif %}
     {% endif %}
 {% endblock %}
