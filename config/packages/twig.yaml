@@ -13,7 +13,7 @@ twig:
         iconPrint: 'fas fa-print'
         iconDuplicate: 'fas fa-copy'
         iconAdmin: 'fas fa-wrench'
-        iconDashboard: 'fas fa-home fa-3x'
+        iconDashboard: 'fas fa-home'
         linuxpath: '%env(resolve:BASE_URL)%'
 
         exception_controller: null # This is needed to fix the deprecation in Symfony 4.4
