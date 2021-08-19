@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/absences.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 27/07/2021 10:26
+// @lastUpdate 19/08/2021 11:26
 import {addCallout} from '../util'
 
 import {dataTableLangueFr} from '../lang/fr'
@@ -17,7 +17,6 @@ $(document).on('click', '.absChangeTypeGroupe', function (e) {
   $('.absChangeTypeGroupe').removeClass('btn-primary')
   $(this).addClass('btn-primary')
   $('#listeEtudiantsAbsences').load(Routing.generate('api_absence_liste_etudiant', {typegroupe: $(this).data('typegroupe')}), (function () {
-    console.log('then...')
     let date = $('#absence-date')
     let heure = $('#absence-heure')
     updateAffichage(date.val(), heure.val())
@@ -101,7 +100,7 @@ $(document).on('click', '.etudiant', function () {
           addCallout('Erreur lors de l\'enregistrement.', 'danger')
         }
       },
-      success: function (data) {
+      success: function () {
         addCallout('Absence enregistrée avec succés !', 'success')
       }
     })
@@ -157,6 +156,8 @@ window.addEventListener('load', function () { //le dom est chargé
         .then(data => {
           // Handle data
           if (data === true) {
+            console.log(e)
+            e.target.textContent = 'Vous avez indiqué qu\'il n\'y a pas d\'absent dans ce groupe.'
             addCallout('Saisie enregistée avec succès.', 'success')
           } else {
             addCallout('Vous avez déjà effectué une saisie.', 'warning')
