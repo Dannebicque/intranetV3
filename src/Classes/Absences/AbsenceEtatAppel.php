@@ -4,11 +4,10 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Absences/AbsenceEtatAppel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/07/2021 16:36
+ * @lastUpdate 21/08/2021 13:09
  */
 
 namespace App\Classes\Absences;
-
 
 use App\Entity\Semestre;
 use App\Repository\AbsenceEtatAppelRepository;
@@ -21,7 +20,6 @@ class AbsenceEtatAppel
     private AbsenceEtatAppelRepository $absenceEtatAppelRepository;
     private EntityManagerInterface $entityManager;
 
-
     public function __construct(
         AbsenceEtatAppelRepository $absenceEtatAppelRepository,
         EntityManagerInterface $entityManager
@@ -32,7 +30,7 @@ class AbsenceEtatAppel
 
     public function enregistreAppelFait(array $data)
     {
-        if ($this->verifieIfExist($data) === null) {
+        if (null === $this->verifieIfExist($data)) {
             $appel = new \App\Entity\AbsenceEtatAppel();
             $appel->setPersonnel($data['personnel']);
             $appel->setTypeMatiere(ToolsMatiere::getType($data['matiere']));
@@ -63,8 +61,6 @@ class AbsenceEtatAppel
             'typeMatiere' => ToolsMatiere::getType($data['matiere']),
             'idMatiere' => ToolsMatiere::getId($data['matiere']),
         ]);
-
-
     }
 
     public function getBySemestre(Semestre $semestre)
@@ -75,23 +71,25 @@ class AbsenceEtatAppel
         $tab['statistiques']['nbsaisie'] = 0;
 
         foreach ($abs as $ab) {
-            if (!array_key_exists($ab->getDate()->format('Ymd'), $tab)) {
-                $tab[$ab->getDate()->format('Ymd')] = [];
-            }
-            if (!array_key_exists($ab->getTypeIdMatiere(), $tab[$ab->getDate()->format('Ymd')])) {
-                $tab[$ab->getDate()->format('Ymd')][$ab->getTypeIdMatiere()] = [];
-            }
-            if (!array_key_exists($ab->getHeure()->format('H:i'),
-                $tab[$ab->getDate()->format('Ymd')][$ab->getTypeIdMatiere()])) {
-                $tab[$ab->getDate()->format('Ymd')][$ab->getTypeIdMatiere()][$ab->getHeure()->format('H:i')] = [];
-            }
-            if (!array_key_exists($ab->getGroupe()->getOrdre(),
-                $tab[$ab->getDate()->format('Ymd')][$ab->getTypeIdMatiere()][$ab->getHeure()->format('H:i')])) {
-                //todo: ordre risuqe de buguer... faudrait un type+ordre?
-                $tab[$ab->getDate()->format('Ymd')][$ab->getTypeIdMatiere()][$ab->getHeure()->format('H:i')][$ab->getGroupe()->getOrdre()] = [];
-            }
+            if (null !== $ab->getDate() && null !== $ab->getHeure() && null !== $ab->getGroupe()) {
+                if (!array_key_exists($ab->getDate()->format('Ymd'), $tab)) {
+                    $tab[$ab->getDate()->format('Ymd')] = [];
+                }
+                if (!array_key_exists($ab->getTypeIdMatiere(), $tab[$ab->getDate()->format('Ymd')])) {
+                    $tab[$ab->getDate()->format('Ymd')][$ab->getTypeIdMatiere()] = [];
+                }
+                if (!array_key_exists($ab->getHeure()->format('H:i'),
+                    $tab[$ab->getDate()->format('Ymd')][$ab->getTypeIdMatiere()])) {
+                    $tab[$ab->getDate()->format('Ymd')][$ab->getTypeIdMatiere()][$ab->getHeure()->format('H:i')] = [];
+                }
+                if (!array_key_exists($ab->getGroupe()->getOrdre(),
+                    $tab[$ab->getDate()->format('Ymd')][$ab->getTypeIdMatiere()][$ab->getHeure()->format('H:i')])) {
+                    //todo: ordre risuqe de buguer... faudrait un type+ordre?
+                    $tab[$ab->getDate()->format('Ymd')][$ab->getTypeIdMatiere()][$ab->getHeure()->format('H:i')][$ab->getGroupe()->getOrdre()] = [];
+                }
 
-            $tab[$ab->getDate()->format('Ymd')][$ab->getTypeIdMatiere()][$ab->getHeure()->format('H:i')][$ab->getGroupe()->getOrdre()] = $ab->getTypeSaisie();
+                $tab[$ab->getDate()->format('Ymd')][$ab->getTypeIdMatiere()][$ab->getHeure()->format('H:i')][$ab->getGroupe()->getOrdre()] = $ab->getTypeSaisie();
+            }
         }
 
         return $tab;

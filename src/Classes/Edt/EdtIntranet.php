@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/EdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/07/2021 15:57
+ * @lastUpdate 21/08/2021 13:09
  */
 
 namespace App\Classes\Edt;
@@ -37,6 +37,7 @@ class EdtIntranet extends AbstractEdt implements EdtInterface
             $event->heure = $evt->getDebutTexte();
             $event->matiere = $evt->getTypeIdMatiere();
             $event->typeIdMatiere = $evt->getTypeIdMatiere();
+            $event->texte = $evt->getTexte();
             $event->groupeId = $evt->getGroupe();
             $event->personnel = null !== $evt->getIntervenant() ? $evt->getIntervenant()->getDisplayPr() : '-';
             $event->groupe = $evt->getDisplayGroupe();
