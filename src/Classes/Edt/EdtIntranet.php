@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/EdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/08/2021 13:09
+ * @lastUpdate 21/08/2021 16:07
  */
 
 namespace App\Classes\Edt;
@@ -23,7 +23,7 @@ class EdtIntranet extends AbstractEdt implements EdtInterface
         $this->edtPlanningRepository = $edtPlanningRepository;
     }
 
-    public function getPlanningSemestre(Semestre $semestre): EvenementEdtCollection
+    public function getPlanningSemestre(Semestre $semestre, array $matieres = []): EvenementEdtCollection
     {
         $evts = $this->edtPlanningRepository->findAllEdtSemestre($semestre);
         $evtCollection = new EvenementEdtCollection();
@@ -31,17 +31,25 @@ class EdtIntranet extends AbstractEdt implements EdtInterface
         /** @var \App\Entity\EdtPlanning $evt */
         foreach ($evts as $evt) {
             $event = new EvenementEdt();
+
+            if (array_key_exists($evt->getTypeIdMatiere(), $matieres)) {
+                $matiere = $matieres[$evt->getTypeIdMatiere()]->display;
+            } else {
+                $matiere = 'Inconnue';
+            }
+
             $event->date = $evt->getDate();
             $event->jour = $evt->getJour();
             $event->duree = $evt->getDureeInt();
             $event->heure = $evt->getDebutTexte();
-            $event->matiere = $evt->getTypeIdMatiere();
+            $event->matiere = $matiere;
             $event->typeIdMatiere = $evt->getTypeIdMatiere();
             $event->texte = $evt->getTexte();
             $event->groupeId = $evt->getGroupe();
             $event->personnel = null !== $evt->getIntervenant() ? $evt->getIntervenant()->getDisplayPr() : '-';
             $event->groupe = $evt->getDisplayGroupe();
             $event->type_cours = $evt->getType();
+            $event->display = $evt->getTexte() ?? $matiere;
             $evtCollection->add($event);
         }
 
