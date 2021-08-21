@@ -103,6 +103,9 @@ absence:
   justificatif.valide.success.flash: 'Justificatif d''absence validé avec succès'
   justificatif_all.delete.success.flash: 'Tous les justificatifs de l''année concernée ont été supprimés'
   removed: 'Absence supprimée'
+  appel:
+    semestre:
+      heading: 'Suivi du pointage des présents pour le semestre %semestre%'
 
 ACCEPTE: ACCEPTE
 acceptee: Acceptée
@@ -1733,6 +1736,8 @@ situation.par.rapport.promo: 'Votre situation par rapport à la promo'
 situation.par.semestre.notes: 'Situation par semestre'
 
 soit: soit
+
+suivi.appels: 'Suivi des pointages de présence'
 stage:
   valide: Stage validé
 stage_avenant:

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/EdtManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/07/2021 14:51
+ * @lastUpdate 21/08/2021 16:06
  */
 
 namespace App\Classes\Edt;
@@ -29,13 +29,13 @@ class EdtManager
     }
 
 
-    public function getPlanningSemestre(Semestre $semestre)
+    public function getPlanningSemestre(Semestre $semestre, array $matieres = [])
     {
         switch ($this->getSourceEdt($semestre)) {
             case self::EDT_CELCAT:
                 return $this->edtCelcat->getPlanningSemestre($semestre);
             case self::EDT_INTRANET:
-                return $this->edtIntranet->getPlanningSemestre($semestre);
+                return $this->edtIntranet->getPlanningSemestre($semestre, $matieres);
             case self::EDT_ADE:
                 return $this->edtAde->getPlanningSemestre($semestre);
         }

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/AbsenceAppelSuiviController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/08/2021 13:09
+ * @lastUpdate 21/08/2021 16:06
  */
 
 namespace App\Controller\administration;
@@ -40,9 +40,8 @@ class AbsenceAppelSuiviController extends BaseController
         return $this->render('administration/absence_appel/index.html.twig',
             [
                 'semestre' => $semestre,
-                'pl' => $this->edtManager->getPlanningSemestre($semestre),
-                'statsAppel' => $statsAppel,
-                'matieres' => $matieres
+                'pl' => $this->edtManager->getPlanningSemestre($semestre, $matieres),
+                'statsAppel' => $statsAppel
             ]);
     }
 

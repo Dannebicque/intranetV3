@@ -53,8 +53,7 @@
                     <tr>
                         <td>{{ element.date|format_date('short') }}</td>
                         <td>{{ element.heure }}</td>
-                        <td>{{ matieres[element.matiere] is defined ? matieres[element.matiere].display : (element
-                            .texte is defined ? element.texte : 'Erreur Matière') }}</td>
+                        <td>{{ element.display }}</td>
                         <td>{{ element.groupe }}</td>
                         <td>{{ element.personnel }}</td>
                         <td>
