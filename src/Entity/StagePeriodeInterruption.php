@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/StagePeriodeInterruption.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/06/2021 21:20
+ * @lastUpdate 21/08/2021 12:37
  */
 
 namespace App\Entity;
@@ -29,12 +29,12 @@ class StagePeriodeInterruption extends BaseEntity
     /**
      * @ORM\Column(type="date")
      */
-    private ?CarbonInterface $dateDebut;
+    private ?CarbonInterface $dateDebut = null;
 
     /**
      * @ORM\Column(type="date")
      */
-    private ?CarbonInterface $dateFin;
+    private ?CarbonInterface $dateFin = null;
 
     /**
      * @ORM\Column(type="string", length=255)

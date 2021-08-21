@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/StagePeriode.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 12:28
+ * @lastUpdate 21/08/2021 12:37
  */
 
 namespace App\Entity;
@@ -70,13 +70,13 @@ class StagePeriode extends BaseEntity implements Serializable
      * @ORM\Column(type="date")
      * @Groups({"stage_periode_administration"})
      */
-    private ?CarbonInterface $dateDebut;
+    private ?CarbonInterface $dateDebut = null;
 
     /**
      * @ORM\Column(type="date")
      * @Groups({"stage_periode_administration"})
      */
-    private ?CarbonInterface $dateFin;
+    private ?CarbonInterface $dateFin = null;
 
     /**
      * @ORM\Column(type="text", nullable=true)

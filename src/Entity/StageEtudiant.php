@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/StageEtudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/06/2021 08:56
+ * @lastUpdate 21/08/2021 12:37
  */
 
 namespace App\Entity;
@@ -113,13 +113,13 @@ class StageEtudiant extends BaseEntity
      * @ORM\Column(type="date")
      * @Groups({"stage_entreprise_administration", "stage_entreprise", "stage_periode_gestion"})
      */
-    private ?CarbonInterface $dateDebutStage;
+    private ?CarbonInterface $dateDebutStage = null;
 
     /**
      * @ORM\Column(type="date")
      * @Groups({"stage_entreprise_administration", "stage_entreprise", "stage_periode_gestion"})
      */
-    private ?CarbonInterface $dateFinStage;
+    private ?CarbonInterface $dateFinStage = null;
 
     /**
      * @ORM\Column(type="text", nullable=true)

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/AlternanceFicheSuivi.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:48
+ * @lastUpdate 21/08/2021 12:37
  */
 
 namespace App\Entity;
@@ -82,7 +82,7 @@ class AlternanceFicheSuivi extends BaseEntity
     /**
      * @ORM\Column(type="date")
      */
-    private ?CarbonInterface $date;
+    private ?CarbonInterface $date = null;
 
     /**
      * @throws Exception
