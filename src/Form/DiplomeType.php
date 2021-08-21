@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/DiplomeType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/06/2021 11:08
+ * @lastUpdate 21/08/2021 11:50
  */
 
 namespace App\Form;
@@ -14,6 +14,7 @@ use App\Entity\Constantes;
 use App\Entity\Diplome;
 use App\Entity\Personnel;
 use App\Entity\TypeDiplome;
+use App\Form\Type\EntityCompleteType;
 use App\Form\Type\YesNoType;
 use App\Repository\PersonnelRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -23,7 +24,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\Exception\AccessException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Umbrella\CoreBundle\Form\Entity2Type;
 
 /**
  * Class DiplomeType.
@@ -44,7 +44,7 @@ class DiplomeType extends AbstractType
             ->add('sigle', TextType::class, [
                 'label' => 'sigle',
             ])
-            ->add('responsable_diplome', Entity2Type::class, [
+            ->add('responsable_diplome', EntityCompleteType::class, [
                 'class' => Personnel::class,
                 'query_builder' => static function(PersonnelRepository $personnelRepository) {
                     return $personnelRepository->findAllOrder();
@@ -52,7 +52,7 @@ class DiplomeType extends AbstractType
                 'choice_label' => 'display',
                 'label' => 'responsable_diplome',
             ])
-            ->add('assistant_diplome', Entity2Type::class, [
+            ->add('assistant_diplome', EntityCompleteType::class, [
                 'class' => Personnel::class,
                 'query_builder' => static function(PersonnelRepository $personnelRepository) {
                     return $personnelRepository->findAllOrder();

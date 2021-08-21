@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/UfrType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/05/2021 14:21
+ * @lastUpdate 21/08/2021 11:50
  */
 
 namespace App\Form;
@@ -12,6 +12,7 @@ namespace App\Form;
 use App\Entity\Personnel;
 use App\Entity\Site;
 use App\Entity\Ufr;
+use App\Form\Type\EntityCompleteType;
 use App\Repository\PersonnelRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -19,7 +20,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\Exception\AccessException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Umbrella\CoreBundle\Form\Entity2Type;
 
 /**
  * Class UfrType.
@@ -30,7 +30,7 @@ class UfrType extends AbstractType
     {
         $builder
             ->add('libelle', TextType::class, ['label' => 'libelle'])
-            ->add('responsable', Entity2Type::class, [
+            ->add('responsable', EntityCompleteType::class, [
                 'class' => Personnel::class,
                 'label' => 'responsable_site',
                 'choice_label' => 'displayPr',

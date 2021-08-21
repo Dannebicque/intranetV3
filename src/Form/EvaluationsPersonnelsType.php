@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/EvaluationsPersonnelsType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/05/2021 16:35
+ * @lastUpdate 21/08/2021 11:50
  */
 
 namespace App\Form;
@@ -12,26 +12,25 @@ namespace App\Form;
 use App\Entity\Evaluation;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
+use App\Form\Type\EntityCompleteType;
 use App\Repository\PersonnelRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Umbrella\CoreBundle\Form\Entity2Type;
 
 /**
  * Class EvaluationsType.
  */
 class EvaluationsPersonnelsType extends AbstractType
 {
-    /** @var Semestre */
-    protected $semestre;
+    protected ?Semestre $semestre;
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->semestre = $options['semestre'];
 
         $builder
-            ->add('personnelAutorise', Entity2Type::class, [
+            ->add('personnelAutorise', EntityCompleteType::class, [
                 'class' => Personnel::class,
                 'choice_label' => 'display',
                 'multiple' => true,

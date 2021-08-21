@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/app.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 29/07/2021 18:38
+// @lastUpdate 21/08/2021 11:53
 
 import '@fortawesome/fontawesome-free/scss/fontawesome.scss'
 import '@fortawesome/fontawesome-free/scss/solid.scss'
@@ -36,8 +36,10 @@ let lookup = {}
 require('bootstrap-select')
 
 import Table from '../components/table'
+import SelectComplete from '../components/SelectComplete'
 
 customElements.define('my-table', Table)
+customElements.define('select-complete', SelectComplete, {extends: 'select'})
 
 $('input[type="file"]').on('change', function (e) {
   let filename = e.target.files[0].name
@@ -78,7 +80,7 @@ window.addEventListener('load', function () { //le dom est chargé
 
 $(document).ready(function () {
   // script pour afficher le fichier selectionné avec bootstrap4
-  $('.custom-file input').change(function (e) {
+  $('.custom-file input').change(function () {
     const files = []
     for (let i = 0; i < $(this)[0].files.length; i++) {
       files.push($(this)[0].files[i].name)
@@ -183,7 +185,7 @@ function updateInterface () {
     e.stopPropagation()
     $.ajax({
       url: Routing.generate('notification_marquer_lu'),
-      success: function (e) {
+      success: function () {
         $('.notification').removeClass('media-new')
       }
     })
@@ -212,7 +214,7 @@ function updateInterface () {
       format: 'dd/mm/yyyy'
     }
 
-    if ($(this).prop('tagName') != 'INPUT') {
+    if ($(this).prop('tagName') !== 'INPUT') {
       //si ce n'est pas un input => donc un date range
       options.inputs = [$(this).find('input:first'), $(this).find('input:last')]
     }
@@ -357,7 +359,7 @@ let qps = null
 
 // Update scrollbar on tab change
 //
-$(document).on('shown.bs.tab', '.quickview-header a[data-toggle="tab"]', function (e) {
+$(document).on('shown.bs.tab', '.quickview-header a[data-toggle="tab"]', function () {
   qps.update()
 })
 
@@ -379,7 +381,7 @@ $(document).on('click', '[data-toggle="quickview"]', function (e) {
   e.preventDefault()
   let target = app.getTarget($(this))
 
-  if (target == false) {
+  if (target === false) {
     quickview.close($(this).closest('.quickview'))
   } else {
     let url = ''
@@ -476,13 +478,13 @@ app.getTarget = function (e) {
     target = e.attr('href')
   }
 
-  if (target == 'next') {
+  if (target === 'next') {
     target = $(e).next()
-  } else if (target == 'prev') {
+  } else if (target === 'prev') {
     target = $(e).prev()
   }
 
-  if (target == undefined) {
+  if (target === undefined) {
     return false
   }
 
