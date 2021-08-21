@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Date.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/06/2021 18:58
+ * @lastUpdate 21/08/2021 12:37
  */
 
 namespace App\Entity;
@@ -60,10 +60,10 @@ class Date extends BaseEntity
     private ?string $texte;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="date", nullable=true)
      * @Groups({"date_administration"})
      */
-    private ?CarbonInterface $dateDebut;
+    private ?CarbonInterface $dateDebut = null;
 
     /**
      * @ORM\Column(type="time", nullable=true)
@@ -72,10 +72,10 @@ class Date extends BaseEntity
     private ?CarbonInterface $heureDebut;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="date", nullable=true)
      * @Groups({"date_administration"})
      */
-    private ?CarbonInterface $dateFin;
+    private ?CarbonInterface $dateFin = null;
 
     /**
      * @ORM\Column(type="time", nullable=true)

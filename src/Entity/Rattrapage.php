@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Rattrapage.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/06/2021 10:28
+ * @lastUpdate 21/08/2021 12:39
  */
 
 namespace App\Entity;
@@ -53,7 +53,7 @@ class Rattrapage extends BaseEntity
      * @ORM\Column(type="date")
      * @Groups({"rattrapage_administration"})
      */
-    private ?CarbonInterface $dateEval;
+    private ?CarbonInterface $dateEval = null;
 
     /**
      * @ORM\Column(type="time", nullable=true)
@@ -271,7 +271,7 @@ class Rattrapage extends BaseEntity
     public function absenceJustifiee(): ?string
     {
         if (null !== $this->getDateEval() && null !== $this->getHeureEval()) {
-            return $this->getEtudiant()->getId() . '_' . $this->getDateEval()->format('Ymd') . '_' . $this->getHeureEval()->format('Hi');
+            return $this->getEtudiant()?->getId() . '_' . $this->getDateEval()->format('Ymd') . '_' . $this->getHeureEval()->format('Hi');
         }
 
         return null;

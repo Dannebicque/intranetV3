@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/RddDiplome.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/06/2021 21:20
+ * @lastUpdate 21/08/2021 12:37
  */
 
 namespace App\Entity;
@@ -50,7 +50,7 @@ class RddDiplome extends BaseEntity
     /**
      * @ORM\Column(type="date")
      */
-    private ?CarbonInterface $dateNaissance;
+    private ?CarbonInterface $dateNaissance = null;
 
     /**
      * @ORM\Column(type="boolean")

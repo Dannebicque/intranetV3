@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Evaluation.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/06/2021 10:28
+ * @lastUpdate 21/08/2021 12:37
  */
 
 namespace App\Entity;
@@ -47,7 +47,7 @@ class Evaluation extends BaseEntity
      * @ORM\Column(type="date")
      * @Assert\Date()
      */
-    private ?CarbonInterface $dateEvaluation;
+    private ?CarbonInterface $dateEvaluation = null;
 
     /**
      * @ORM\Column(type="boolean")

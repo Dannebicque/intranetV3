@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/AbsenceEtatAppel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/07/2021 16:06
+ * @lastUpdate 21/08/2021 12:37
  */
 
 namespace App\Entity;
@@ -30,7 +30,7 @@ class AbsenceEtatAppel extends BaseEntity
     /**
      * @ORM\Column(type="date")
      */
-    private ?CarbonInterface $date;
+    private ?CarbonInterface $date = null;
 
     /**
      * @ORM\Column(type="time")
