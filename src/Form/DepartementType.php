@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/DepartementType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/05/2021 14:21
+ * @lastUpdate 21/08/2021 11:53
  */
 
 namespace App\Form;
@@ -12,6 +12,7 @@ namespace App\Form;
 use App\Entity\Departement;
 use App\Entity\Personnel;
 use App\Entity\Ufr;
+use App\Form\Type\EntityCompleteType;
 use App\Form\Type\YesNoType;
 use App\Repository\PersonnelRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -23,7 +24,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\Exception\AccessException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Umbrella\CoreBundle\Form\Entity2Type;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 
 /**
@@ -48,8 +48,8 @@ class DepartementType extends AbstractType
                 ChoiceType::class,
                 [
                     'choices' => array_combine(
-                        range(date('Y') - 2, date('Y') + 4),
-                        range(date('Y') - 2, date('Y') + 4)
+                        range((int)date('Y') - 2, (int)date('Y') + 4),
+                        range((int)date('Y') - 2, (int)date('Y') + 4)
                     ),
                     'label' => 'opt_annee_previsionnel',
                 ]
@@ -122,7 +122,7 @@ class DepartementType extends AbstractType
                     'label' => 'opt_messagerie',
                 ]
             )
-            ->add('respri', Entity2Type::class, [
+            ->add('respri', EntityCompleteType::class, [
                 'class' => Personnel::class,
                 'choice_label' => 'display',
                 'query_builder' => static function(PersonnelRepository $personnelRepository) {
@@ -144,7 +144,7 @@ class DepartementType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class'         => Departement::class,
+            'data_class' => Departement::class,
             'translation_domain' => 'form',
         ]);
     }

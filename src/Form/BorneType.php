@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/BorneType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 09:03
+ * @lastUpdate 21/08/2021 11:50
  */
 
 namespace App\Form;
@@ -12,6 +12,7 @@ namespace App\Form;
 use App\Entity\Borne;
 use App\Entity\Departement;
 use App\Entity\Semestre;
+use App\Form\Type\ChoiceCompleteType;
 use App\Form\Type\DateRangeType;
 use App\Form\Type\YesNoType;
 use App\Repository\SemestreRepository;
@@ -23,7 +24,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Umbrella\CoreBundle\Form\Choice2Type;
 
 /**
  * Class BorneType.
@@ -37,17 +37,11 @@ class BorneType extends AbstractType
         $this->departement = $options['departement'];
 
         $builder
-            ->add('icone', Choice2Type::class, [
+            ->add('icone', ChoiceCompleteType::class, [
                 'label' => 'icone',
                 'choices' => Borne::ICONES,
-                'template_html' => '<span><i class="[[icone]] mr-2"></i> [[text]]</span>',
-                'expose' => function($icone) {
-                    return [
-                        'icone' => Borne::ICONES_CHOICE[$icone],
-                    ];
-                },
             ])
-            ->add('couleur', Choice2Type::class, [
+            ->add('couleur', ChoiceCompleteType::class, [
                 'label' => 'couleur',
                 'choices' => Borne::COULEURS,
             ])

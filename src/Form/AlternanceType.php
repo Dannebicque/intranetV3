@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/AlternanceType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/06/2021 21:20
+ * @lastUpdate 21/08/2021 11:50
  */
 
 namespace App\Form;
@@ -13,6 +13,7 @@ use App\Entity\Alternance;
 use App\Entity\Departement;
 use App\Entity\Personnel;
 use App\Form\Type\DateRangeType;
+use App\Form\Type\EntityCompleteType;
 use App\Repository\PersonnelRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -21,7 +22,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Umbrella\CoreBundle\Form\Entity2Type;
 
 class AlternanceType extends AbstractType
 {
@@ -53,7 +53,7 @@ class AlternanceType extends AbstractType
                 ['label' => 'dateRange.periode.alternance', 'mapped' => false, 'required' => true])
             ->add('entreprise', EntrepriseType::class, ['label' => 'entreprise'])
             ->add('tuteur', ContactType::class, ['label' => 'tuteur'])
-            ->add('tuteurUniversitaire', Entity2Type::class, [
+            ->add('tuteurUniversitaire', EntityCompleteType::class, [
                 'label' => 'tuteur_universitaire',
                 'expanded' => false,
                 'multiple' => false,

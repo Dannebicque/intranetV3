@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/HrsType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/05/2021 14:21
+ * @lastUpdate 21/08/2021 11:50
  */
 
 namespace App\Form;
@@ -14,6 +14,7 @@ use App\Entity\Hrs;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
 use App\Entity\TypeHrs;
+use App\Form\Type\EntityCompleteType;
 use App\Repository\DiplomeRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
@@ -23,21 +24,20 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Umbrella\CoreBundle\Form\Entity2Type;
 
 /**
  * Class HrsType.
  */
 class HrsType extends AbstractType
 {
-    protected $departement;
+    protected ?int $departement;
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->departement = $options['departement'];
 
         $builder
-            ->add('personnel', Entity2Type::class, [
+            ->add('personnel', EntityCompleteType::class, [
                 'class' => Personnel::class,
                 'required' => true,
                 'choice_label' => 'display',
@@ -46,7 +46,7 @@ class HrsType extends AbstractType
                 },
                 'label' => 'personnel',
             ])
-            ->add('typeHrs', Entity2Type::class, [
+            ->add('typeHrs', EntityCompleteType::class, [
                 'class' => TypeHrs::class,
                 'required' => true,
                 'choice_label' => 'libelle',
@@ -78,8 +78,8 @@ class HrsType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class'         => Hrs::class,
-            'departement'        => null,
+            'data_class' => Hrs::class,
+            'departement' => null,
             'translation_domain' => 'form',
         ]);
     }

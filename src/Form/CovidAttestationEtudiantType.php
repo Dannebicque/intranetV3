@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/CovidAttestationEtudiantType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 11:45
+ * @lastUpdate 21/08/2021 11:50
  */
 
 namespace App\Form;
@@ -14,6 +14,7 @@ use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Groupe;
 use App\Form\Type\CarbonDateTimePickerType;
+use App\Form\Type\EntityCompleteType;
 use App\Repository\DiplomeRepository;
 use App\Repository\GroupeRepository;
 use Carbon\Carbon;
@@ -21,7 +22,6 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Umbrella\CoreBundle\Form\Entity2Type;
 
 class CovidAttestationEtudiantType extends AbstractType
 {
@@ -53,7 +53,7 @@ class CovidAttestationEtudiantType extends AbstractType
                 'data' => $date->addDays(2),
                 'help' => 'Merci de ne pas dépasser un délai d\'une semaine',
             ])
-            ->add('groupes', Entity2Type::class, [
+            ->add('groupes', EntityCompleteType::class, [
                 'label' => 'Choisissez des groupes présents',
                 'help' => 'Indiquez les groupes présents à l\'IUT sur le créneau indiqué ci-après.',
                 'expanded' => false,

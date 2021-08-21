@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/SemestreType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/05/2021 14:21
+ * @lastUpdate 21/08/2021 11:50
  */
 
 namespace App\Form;
@@ -14,6 +14,7 @@ use App\Entity\Diplome;
 use App\Entity\Personnel;
 use App\Entity\Ppn;
 use App\Entity\Semestre;
+use App\Form\Type\EntityCompleteType;
 use App\Form\Type\YesNoType;
 use App\Repository\AnneeRepository;
 use App\Repository\PersonnelRepository;
@@ -27,15 +28,13 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\Exception\AccessException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Umbrella\CoreBundle\Form\Entity2Type;
 
 /**
  * Class SemestreType.
  */
 class SemestreType extends AbstractType
 {
-    /** @var Diplome */
-    protected $diplome;
+    protected ?Diplome $diplome;
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -80,11 +79,11 @@ class SemestreType extends AbstractType
                     'Juillet' => 7,
                     'Août' => 8,
                     'Septembre' => 9,
-                    'Octobre'   => 10,
-                    'Novembre'  => 11,
-                    'Décembre'  => 12,
+                    'Octobre' => 10,
+                    'Novembre' => 11,
+                    'Décembre' => 12,
                 ],
-                'expanded'           => false,
+                'expanded' => false,
                 'translation_domain' => 'form',
             ])
             ->add('ordreLmd', ChoiceType::class, [
@@ -117,7 +116,7 @@ class SemestreType extends AbstractType
                     'label' => 'opt_mail_releve',
                 ]
             )
-            ->add('optDestMailReleve', Entity2Type::class, [
+            ->add('optDestMailReleve', EntityCompleteType::class, [
                 'class' => Personnel::class,
                 'choice_label' => 'display',
                 'label' => 'opt_destinataire_mail_releve',
@@ -140,7 +139,7 @@ class SemestreType extends AbstractType
                     'label' => 'opt_mail_modification_note',
                 ]
             )
-            ->add('optDestMailModifNote', Entity2Type::class, [
+            ->add('optDestMailModifNote', EntityCompleteType::class, [
                 'class' => Personnel::class,
                 'choice_label' => 'display',
                 'label' => 'opt_destinataire_mail_modification_note',
@@ -178,7 +177,7 @@ class SemestreType extends AbstractType
                     'label' => 'opt_mail_absence_responsable',
                 ]
             )
-            ->add('optDestMailAbsenceResp', Entity2Type::class, [
+            ->add('optDestMailAbsenceResp', EntityCompleteType::class, [
                 'class' => Personnel::class,
                 'choice_label' => 'display',
                 'label' => 'opt_destinataire_mail_absence_responsable',
@@ -250,8 +249,8 @@ class SemestreType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class'         => Semestre::class,
-            'diplome'            => null,
+            'data_class' => Semestre::class,
+            'diplome' => null,
             'translation_domain' => 'form',
         ]);
     }

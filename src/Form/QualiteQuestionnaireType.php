@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/QualiteQuestionnaireType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 11:02
+ * @lastUpdate 21/08/2021 11:50
  */
 
 namespace App\Form;
@@ -12,19 +12,19 @@ namespace App\Form;
 use App\Entity\QuestionnaireQualite;
 use App\Entity\Semestre;
 use App\Form\Type\CarbonDateTimeType;
+use App\Form\Type\EntityCompleteType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Umbrella\CoreBundle\Form\Entity2Type;
 
 class QualiteQuestionnaireType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('semestre', Entity2Type::class, [
+            ->add('semestre', EntityCompleteType::class, [
                 'label' => 'semestre',
                 'help' => 'help.semestre.enquete',
                 'class' => Semestre::class,
@@ -43,7 +43,7 @@ class QualiteQuestionnaireType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class'         => QuestionnaireQualite::class,
+            'data_class' => QuestionnaireQualite::class,
             'translation_domain' => 'form',
         ]);
     }

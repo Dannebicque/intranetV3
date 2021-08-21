@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/RattrapageType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 11:45
+ * @lastUpdate 21/08/2021 11:50
  */
 
 namespace App\Form;
@@ -12,22 +12,23 @@ namespace App\Form;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Entity\Personnel;
 use App\Entity\Rattrapage;
+use App\Entity\Semestre;
 use App\Form\Type\CarbonDateTimePickerType;
+use App\Form\Type\ChoiceCompleteType;
+use App\Form\Type\EntityCompleteType;
 use App\Repository\PersonnelRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Umbrella\CoreBundle\Form\Choice2Type;
-use Umbrella\CoreBundle\Form\Entity2Type;
 
 /**
  * Class RattrapageType.
  */
 class RattrapageType extends AbstractType
 {
-    private $semestre;
+    private ?Semestre $semestre;
 
     private TypeMatiereManager $typeMatiereManager;
 
@@ -49,7 +50,7 @@ class RattrapageType extends AbstractType
             ])
             ->add('heureEval', TimeType::class, ['label' => 'heure_evaluation', 'required' => false])
             ->add('duree', TextType::class, ['label' => 'duree_evaluation', 'required' => false])
-            ->add('typeIdMatiere', Choice2Type::class, [
+            ->add('typeIdMatiere', ChoiceCompleteType::class, [
                 'choices' => $this->typeMatiereManager->findBySemestreChoiceType($this->semestre),
                 'label' => 'matiere',
                 'required' => true,
@@ -57,7 +58,7 @@ class RattrapageType extends AbstractType
                 'multiple' => false,
                 'mapped' => false,
             ])
-            ->add('personnel', Entity2Type::class, [
+            ->add('personnel', EntityCompleteType::class, [
                 'class' => Personnel::class,
                 'label' => 'personnel',
                 'choice_label' => 'displayPr',

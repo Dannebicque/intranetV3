@@ -4,20 +4,20 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/MaterielCommunType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/05/2021 16:35
+ * @lastUpdate 21/08/2021 11:50
  */
 
 namespace App\Form;
 
 use App\Entity\MaterielCommun;
 use App\Entity\Personnel;
+use App\Form\Type\EntityCompleteType;
 use App\Repository\PersonnelRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Umbrella\CoreBundle\Form\Entity2Type;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class MaterielCommunType extends AbstractType
@@ -33,7 +33,7 @@ class MaterielCommunType extends AbstractType
                 'download_label' => 'apercu',
                 'allow_delete' => false,
             ])
-            ->add('contact', Entity2Type::class, [
+            ->add('contact', EntityCompleteType::class, [
                 'class' => Personnel::class,
                 'query_builder' => static function(PersonnelRepository $personnelRepository) {
                     return $personnelRepository->findAllOrder();
@@ -46,7 +46,7 @@ class MaterielCommunType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class'         => MaterielCommun::class,
+            'data_class' => MaterielCommun::class,
             'translation_domain' => 'form',
         ]);
     }
