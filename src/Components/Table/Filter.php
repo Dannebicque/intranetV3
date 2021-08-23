@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/Filter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/08/2021 11:02
+ * @lastUpdate 23/08/2021 13:34
  */
 
 namespace App\Components\Table;
@@ -34,8 +34,9 @@ class Filter
 
         $resolver = new OptionsResolver();
         $resolver
-            ->setDefault('name', $name)
             ->setDefault('id', $name) //transformer en unique??
+            ->setDefault('name', $name)
+            ->setDefault('columns', $columns)
             ->setDefault('is_safe_html', true);
         $filter->configureOptions($resolver);
         $this->options = $resolver->resolve($options);

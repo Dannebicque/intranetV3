@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/TableRenderer.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/08/2021 08:01
+ * @lastUpdate 23/08/2021 13:34
  */
 
 namespace App\Components\Table;
@@ -37,6 +37,7 @@ class TableRenderer
         $vars['columns'] = array_map(function(Column $c) {
             return $this->columnView($c);
         }, $table->getColumns());
+
         $vars['attr'] = [
             'data-base_url' => $options['base_url'],
             'data-options' => json_encode($this->getJsOptions($table)),
@@ -99,13 +100,21 @@ class TableRenderer
 
         // columns options
         $jsOptions['columns'] = [];
+        $jsOptions['filters'] = [];
 
         foreach ($table->getColumns() as $column) {
             $jsOptions['columns'][] = [
                 'name' => $column->getName(),
                 'id' => $this->generateId($column->getName()), //clé...
-                'sortable' => $column->getOption('sortable'),
-                'order' => false !== $column->isSortable() ? strtolower($column->getDefaultOrder()) : false,
+                'sortable' => $column->isSortable(),
+                'order' => strtolower($column->getDefaultOrder()),
+            ];
+        }
+
+        foreach ($table->getFilters()->getFilters() as $filter) {
+            $jsOptions['filters'][$filter->getName()] = [
+                'columns' => $filter->getColumns()
+                //pourrait avoir un champs pour sauvegarder une valeur et préremplir ...
             ];
         }
 
@@ -115,11 +124,6 @@ class TableRenderer
     public function renderFilters(Filters $filters): string
     {
         return $this->twig->render($filters->getOption('template'), $this->viewFilters($filters));
-    }
-
-    public function renderFilter(Filter $filter): string
-    {
-        return $this->twig->render($filter->getOption('template'), $this->viewFilter($filter));
     }
 
     private function viewFilters(Filters $filters)

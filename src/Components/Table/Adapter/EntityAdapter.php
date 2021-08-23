@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/Adapter/EntityAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/08/2021 10:49
+ * @lastUpdate 23/08/2021 13:34
  */
 
 namespace App\Components\Table\Adapter;
@@ -31,9 +31,9 @@ class EntityAdapter extends AbstractAdapter implements AdapterInterface
         $this->configureOptions($resolver);
         $options = $resolver->resolve($options);
 
-        $query = $this->getQueryBuilder($table, $options)->getQuery();
+        //$query = $this->getQueryBuilder($table, $options)->getQuery();
 
-        $paginator = new Paginator($query, $options['fetch_join_collection']);
+        $paginator = new Paginator($this->getQueryBuilder($table, $options), $options['fetch_join_collection']);
 
         return new TableResult($paginator);
     }
@@ -49,49 +49,48 @@ class EntityAdapter extends AbstractAdapter implements AdapterInterface
             ->setAllowedTypes('query_alias', 'string')
             ->setDefault('query', null)
             ->setAllowedTypes('query', ['callable', 'null'])
-            /*
-             * Paginator / query options (use for optimization)
-             *
-             * To fetch large data (~over 1m) use options :
-             *  [
-             *      'fetch_join_collection' => false,
-             *      'use_output_walker' => false,
-             *      'use_distinct_hint' => false
-             * ]
-             */
+            ->setDefault('order', [])
+            ->setDefault('filter', [])
             ->setDefault('fetch_join_collection', true)
             ->setAllowedTypes('fetch_join_collection', 'bool');
     }
 
     public function getQueryBuilder(Table $table, array $options): QueryBuilder
     {
-        //$formData = $state->getFormData();
-
         $qb = $this->em->createQueryBuilder()
             ->select($options['query_alias'])
             ->from($options['class'], $options['query_alias']);
 
-//        if (is_callable($options['query'])) {
-//            call_user_func($options['query'], $qb, $formData);
-//        }
+        //query (pour les filtres
+        if (is_callable($options['query'])) {
+            call_user_func($options['query'], $qb, $options['filter']);
+        }
+
+        //order
+        if (count($options['order']) > 0) {
+            foreach ($options['order'] as $order) {
+                $direction = 'ASC' === $order['order'] ? 'DESC' : 'ASC';
+                $qb->addOrderBy($options['query_alias'] . '.' . $order['column'], strtoupper($direction));
+            }
+        }
 
         // pagination
+        // pagination
+//        if ($dataTable->hasPaging()) {
+//            if (isset($data['start'])) {
+//                $qb->setFirstResult($data['start']);
+//            }
+//
+//            if (isset($data['length'])) {
+//                $qb->setMaxResults($data['length']);
+//            }
+//        }
+
+
         $qb->setFirstResult($table->getPaging()->getStart());
         if ($table->getPaging()->getLength() >= 0) {
             $qb->setMaxResults($table->getPaging()->getLength());
         }
-
-        // order by
-//        foreach ($state->getOrderBy() as [$column, $direction]) {
-//            foreach ($column->getOrderBy() as $path) {
-//                // if path is not a sub property path, prefix it by alias
-//                if (false === strpos($path, '.')) {
-//                    $path = sprintf('%s.%s', $options['query_alias'], $path);
-//                }
-//
-//                $qb->addOrderBy($path, strtoupper($direction));
-//            }
-//        }
 
         return $qb;
     }
