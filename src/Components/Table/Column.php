@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/Column.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/07/2021 18:16
+ * @lastUpdate 23/08/2021 13:34
  */
 
 namespace App\Components\Table;
@@ -72,7 +72,7 @@ class Column
 
     public function getDefaultOrder(): ?string
     {
-        return is_string($this->options['sortable']) ? $this->options['sortable'] : null;
+        return is_string($this->options['sortable']) ? $this->options['sortable'] : 'DESC';
     }
 
     public function getOption(string $key)

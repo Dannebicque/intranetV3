@@ -4,14 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/Column/ColumnType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/07/2021 18:38
+ * @lastUpdate 23/08/2021 13:34
  */
 
 namespace App\Components\Table\Column;
 
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Umbrella\CoreBundle\Utils\Utils;
 
 class ColumnType
 {

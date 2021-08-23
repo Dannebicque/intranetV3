@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/Paging.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/07/2021 18:38
+ * @lastUpdate 23/08/2021 13:34
  */
 
 namespace App\Components\Table;
@@ -84,8 +84,8 @@ class Paging
 
     public function setPage(mixed $page)
     {
-        $this->pageActive = $page;
-        $this->start = $page * $this->getLength();
+        $this->pageActive = (int)$page;
+        $this->start = ($this->pageActive - 1) * $this->getLength();
     }
 
     public function getLength()
@@ -101,5 +101,16 @@ class Paging
     public function setNbElementPerPage(mixed $nbElementPerPage)
     {
         $this->options['page_length'] = $nbElementPerPage;
+    }
+
+    public function getJsonDatas()
+    {
+        return [
+            'firstPage' => $this->isFirstPage(),
+            'lastPage' => $this->isLastPage(),
+            'numActivePage' => $this->getNumActivePage(),
+            'nbPages' => $this->getNbPages(),
+            'name' => $this->getName()
+        ];
     }
 }

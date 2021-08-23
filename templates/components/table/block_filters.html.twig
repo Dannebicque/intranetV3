@@ -21,7 +21,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1">{{ label_1 }}</span>
                         </div>
-                        <input type="text" name="" id="" class="form-control">
+                        <input type="text" name="{{ name }}_1" id="{{ id }}_1" class="form-control">
                     </div>
                 </div>
             </div>
@@ -32,7 +32,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon2">{{ label_2 }}</span>
                         </div>
-                        <input type="text" name="" id="" class="form-control">
+                        <input type="text" name="{{ name }}_2" id="{{ id }}_2" class="form-control">
                     </div>
                 </div>
             </div>
@@ -50,8 +50,8 @@
             </label>
             <select name="{{ name }}" id="{{ id }}" class="form-control">
                 <option value="">{{ label }}</option>
-                {% for option in options %}
-                    <option value="{{ option.value }}">{{ option.label }}</option>
+                {% for label, value in choices %}
+                    <option value="{{ value }}">{{ label }}</option>
                 {% endfor %}
             </select>
         </div>
@@ -60,21 +60,29 @@
 
 {% block filter_select_expanded %}
     <div class="col-3">
+
         <div class="form-group">
             <label>
                 {{ label }}
             </label>
             {% set i = 1 %}
-            {% for option in options %}
-                <div class="form-check">
-                    <input class="form-check-input" type="{{ type }}" value="{{ option.value }}"
-                           id="{{ name }}_{{ i }}">
-                    <label class="form-check-label" for={{ name }}_{{ i }}">
-                        {{ option.label }}
-                    </label>
-                </div>
-                {% set i = i + 1 %}
-            {% endfor %}
+            <div class="row">
+                {% for label, value in choices %}
+
+                    <div class="col-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="{{ type }}" value="{{ value }}"
+                                   name="{{ name }}"
+                                   id="{{ name }}_{{ i }}">
+                            <label class="form-check-label" for={{ name }}_{{ i }}">
+                                {{ label }}
+                            </label>
+                        </div>
+                    </div>
+
+                    {% set i = i + 1 %}
+                {% endfor %}
+            </div>
         </div>
     </div>
 {% endblock %}

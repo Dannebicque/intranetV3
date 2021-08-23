@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/Filters/FilterRange.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/07/2021 09:20
+ * @lastUpdate 23/08/2021 13:34
  */
 
 namespace App\Components\Table\Filters;
@@ -19,7 +19,7 @@ class FilterRange extends AbstractFilter implements FilterInterface
         parent::configureOptions($resolver);
         $resolver
             ->setDefault('block_name', 'filter_range')
-            ->setDefault('label_1', 'lbl1')
-            ->setDefault('label_2', 'lbl2');
+            ->setRequired('label_1')
+            ->setRequired('label_2');
     }
 }

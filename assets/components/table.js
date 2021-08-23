@@ -2,11 +2,19 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/components/table.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 03/08/2021 17:59
+// @lastUpdate 23/08/2021 13:34
 
 import {post} from '../js/fetch'
 
+const ASC = 'asc'
+const DESC = 'desc'
+
+const ICON_ASC = '&#9660;'
+const ICON_DESC = '&#9650;'
+
 export default class Table extends HTMLElement {
+
+
   constructor () {
     super()
     this.div = this
@@ -14,30 +22,53 @@ export default class Table extends HTMLElement {
     this.base_url = this.dataset.base_url
 
     this.options = JSON.parse(this.dataset.options)
-    console.log(this.options)
     this.table = this.querySelector('table.datable')
     this.tableBody = this.table.querySelector('tbody')
     this.pageActive = this.options.pageActive //par défaut on récupère
     this.nbElementPerPage = this.options.pageLength
-
+    this.order = []
+    this.filter = []
     //récupérer les filtres disponibles et ajouter les écouteurs selon?
 
     this.tableBody.innerHTML = ''
-    // this.tableBody.innerHTML = `<tr><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td></tr>`
 
     this.options.columns.forEach((column) => {
       if (column.sortable === true) {
         document.getElementById(column.id).style.cursor = 'pointer'
         document.getElementById(column.id).addEventListener('click', (elem) => {
-          console.log('click')
+          this.order = [{
+            column: elem.target.dataset.name,
+            order: elem.target.dataset.order//todo: ordre actuel... a inverser dans la requete? Mettre les deux fleches si pas trié ? si defaultorder = false?
+          }]
+          //todo: mettre à jour le sens de la fleche...
+          this._buildArray()
         })
       }
     })
 
     const select = document.getElementById('datable_select') //todo: ne doit pas dépendre de datatable qui est le nom du tableau...
     select.addEventListener('change', (e) => {
-      console.log(e)
       this.nbElementPerPage = e.target.value
+      this._buildArray()
+    })
+
+    document.getElementById('table_filtre').addEventListener('click', () => {
+      let inputs = document.getElementById('table-filters').getElementsByTagName('input')
+      let selects = document.getElementById('table-filters').getElementsByTagName('select')
+      inputs.forEach((input) => {
+        this._getFilterFromField(input)
+      })
+
+      selects.forEach((select) => {
+        this._getFilterFromField(select)
+      })
+
+      this._buildArray()
+    })
+
+    //suppression des filtres
+    document.getElementById('table_suppr_filtre').addEventListener('click', () => {
+      this.filter = []
       this._buildArray()
     })
 
@@ -45,15 +76,25 @@ export default class Table extends HTMLElement {
     this._buildArray()
   }
 
+  _convertToFetch (tableau) {
+    let obj = {}
+
+    Object.entries(tableau).forEach(entry => {
+      const [key, item] = entry
+      obj[key] = item
+    })
+    return obj
+  }
+
   _buildArray () {
     this.tableBody.innerHTML = ''
     post(this.base_url, {
       page: this.pageActive,
-      nbElementPerPage: this.nbElementPerPage
+      nbElementPerPage: this.nbElementPerPage,
+      order: this.order,
+      filter: this._convertToFetch(this.filter)
     }).then((data) => {
-      //console.log(data)
       data.data.forEach((item) => {
-        // console.log(item)
         let html = '<tr>'
         this.options.columns.forEach((column) => {
           html += `<td>${item[column.name]}</td>`
@@ -67,15 +108,15 @@ export default class Table extends HTMLElement {
   }
 
   _updateHeader () {
-    //console.log(this.options.columns)
     this.options.columns.forEach((column) => {
       let texte = document.getElementById(column.id).innerText
       if (column.sortable === true) {
-        texte = texte.trim().substring(0, texte.length - 1)
-        if (column.order === 'DESC' || column.order === '') {
-          document.getElementById(column.id).innerHTML = texte + '&#9650;'
+        if (column.order === DESC || column.order === '') {
+          document.getElementById(column.id).innerHTML = texte + ' ' + ICON_DESC
+          document.getElementById(column.id).dataset.order = DESC
         } else {
-          document.getElementById(column.id).innerHTML = texte + '&#9660;'
+          document.getElementById(column.id).innerHTML = texte + ' ' + ICON_ASC
+          document.getElementById(column.id).dataset.order = ASC
         }
       }
     })
@@ -96,7 +137,7 @@ export default class Table extends HTMLElement {
                         </li>`
     // 10 pages, on affiche tout
     if (paging.nbPages <= 10) {
-      for (let i = 1; i < paging.nbPages; i++) {
+      for (let i = 1; i <= paging.nbPages; i++) {
         let pageActive = i === paging.numActivePage ? 'active' : ''
         html += `<li class="page-item ${pageActive}">
                   <a class="page-link" href="#">${i}</a>
@@ -146,7 +187,6 @@ export default class Table extends HTMLElement {
           } else {
             pag = paging.numActivePage + 2
           }
-          console.log(pag)
           html += '<li class="page-item"><a class="page-link" href="#" data-page="' + pag + '">...</a></li>'
         }
         html += '<li class="page-item"><a class="page-link" href="#">' + paging.nbPages + '</a></li>'
@@ -171,5 +211,23 @@ export default class Table extends HTMLElement {
         this._buildArray()
       })
     })
+  }
+
+  _getFilterFromField (input) {
+    switch (input.type) {
+      case 'text':
+      case 'select-one':
+        this.filter[input.name] = input.value
+        break
+      case 'checkbox':
+        if (input.checked === true) {
+          if (!(input.name in this.filter)) {
+            this.filter[input.name] = []
+          }
+          this.filter[input.name].push(
+            input.value)
+        }
+        break
+    }
   }
 }

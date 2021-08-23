@@ -4,16 +4,18 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/Table.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/08/2021 08:01
+ * @lastUpdate 23/08/2021 13:34
  */
 
 namespace App\Components\Table;
 
 use App\Components\Table\Adapter\AbstractAdapter;
+use App\Components\Table\Adapter\EntityAdapter;
 use App\Components\Table\Column\ActionsColumnType;
 use App\Components\Table\DTO\Row;
 use App\Components\Table\DTO\TableResult;
 use App\Components\Table\Exceptions\ColumnWithSameNameExistException;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -35,6 +37,11 @@ class Table
 
     private TableRegistry $tableRegistry;
     private AbstractAdapter $adapter;
+    private Request $request;
+
+    private array $order = [];
+    private array $filter = [];
+    private array $parametersAsArray = [];
 
     public function __construct(TableRegistry $tableRegistry)
     {
@@ -82,7 +89,6 @@ class Table
 
     public function addAction(string $name, string $action_type, array $options = [])
     {
-
         $actionButton = $this->tableRegistry->getAction($action_type);
         $resolver = new OptionsResolver();
         $actionButton->configureOptions($resolver);
@@ -154,7 +160,7 @@ class Table
     {
         $this->adapter = $this->tableRegistry->getAdapter($adapter);
         $datas = $this->adapter->getResult($this, $options);
-        $this->getPaging()->setResult($datas);//mise à jour de paging...
+        $this->getPaging()->setResult($datas); //mise à jour de paging...
 
         return $this->prepareData($datas);
     }
@@ -176,7 +182,6 @@ class Table
             // dump($object);
             $view = new Row();
             foreach ($this->columns->getColumns() as $column) {
-
                 $view->data[$column->getName()] = $column->render($object);
             }
             //  $this->rowModifier->modify($view, $object); //pour le tri??
@@ -188,20 +193,28 @@ class Table
 
     public function handleRequest(Request $request)
     {
-        $parametersAsArray = [];
+        $this->request = $request;
+
+        $this->parametersAsArray = [];
+
         if ($content = $request->getContent()) {
-            $parametersAsArray = json_decode($content, true);
+            $this->parametersAsArray = json_decode($content, true);
+        }
+        if (array_key_exists('page', $this->parametersAsArray)) {
+            $this->paging->setPage($this->parametersAsArray['page']);
         }
 
-        if (array_key_exists('page', $parametersAsArray)) {
-            $this->paging->setPage($parametersAsArray['page']);
+        if (array_key_exists('nbElementPerPage', $this->parametersAsArray)) {
+            $this->paging->setNbElementPerPage($this->parametersAsArray['nbElementPerPage']);
         }
 
-        if (array_key_exists('nbElementPerPage', $parametersAsArray)) {
-            $this->paging->setNbElementPerPage($parametersAsArray['nbElementPerPage']);
+        if (array_key_exists('order', $this->parametersAsArray)) {
+            $this->order = $this->parametersAsArray['order'];
         }
 
-        //ordre, filtre...
+        if (array_key_exists('filter', $this->parametersAsArray)) {
+            $this->filter = $this->parametersAsArray['filter'];
+        }
     }
 
     public function addActionColumn()
@@ -214,5 +227,27 @@ class Table
                 $this->fields[] = 'actions';
             }
         }
+    }
+
+    public function isCallback(): bool
+    {
+        return null !== $this->request && ($this->request->isXmlHttpRequest() || $this->request->isMethod('POST'));
+    }
+
+    public function getCallbackResponse(string $class, array $options = [])
+    {
+        $datas = $this->getData(EntityAdapter::class, [
+            'class' => $class,
+            'query' => $options['query'] ?? null,
+            'order' => $this->order,
+            'filter' => $this->filter,
+        ]);
+
+        $t = [
+            'data' => $datas,
+            'paging' => $this->paging->getJsonDatas(),
+        ];
+
+        return new JsonResponse($t);
     }
 }
