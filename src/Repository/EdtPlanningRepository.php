@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/EdtPlanningRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/07/2021 15:15
+ * @lastUpdate 24/08/2021 13:05
  */
 
 namespace App\Repository;
@@ -323,7 +323,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
             $pl['fin'] = $event->getFin();
             $pl['commentaire'] = $event->getCommentaire();
             if (null !== $matiere) {
-                $pl['ical'] = $matiere->libelle . ' (' . $matiere->codeMatiere . ')';
+                $pl['ical'] = $matiere->libelle . ' (' . $matiere->codeMatiere . ') ' . $event->getDisplayGroupe();
             } else {
                 $pl['ical'] = '';
             }
@@ -356,7 +356,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
                 $pl['fin'] = $event->getFin();
                 $pl['commentaire'] = '';
                 if (null !== $matiere) {
-                    $pl['ical'] = $matiere->libelle . ' (' . $matiere->codeMatiere . ')';
+                    $pl['ical'] = $matiere->libelle . ' (' . $matiere->codeMatiere . ') ' . $event->getDisplayGroupe();
                 } else {
                     $pl['ical'] = '';
                 }
