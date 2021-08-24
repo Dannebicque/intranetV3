@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/07/2021 13:07
+ * @lastUpdate 24/08/2021 09:10
  */
 
 /*
@@ -16,7 +16,6 @@ namespace App\Classes\Edt;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\MyIcal;
 use App\Classes\Pdf\MyPDF;
-use App\Utils\Tools;
 use App\Entity\Departement;
 use App\Entity\Etudiant;
 use App\Entity\Personnel;
@@ -24,6 +23,7 @@ use App\Entity\Semestre;
 use App\Repository\CalendrierRepository;
 use App\Repository\CelcatEventsRepository;
 use App\Repository\EdtPlanningRepository;
+use App\Utils\Tools;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Twig\Error\LoaderError;
@@ -96,15 +96,18 @@ class MyEdtExport
                 'semaineReelle' => date('W'),
                 'anneeUniversitaire' => $user->getAnneeUniversitaire()->getId(),
             ]);
-            $max = $emaineActuelle->getSemaineFormation() + $nbSemaines;
-            if ($user->getDepartement()->isOptUpdateCelcat()) {
-                for ($i = $emaineActuelle->getSemaineFormation(); $i < $max; ++$i) {
-                    $temp[] = $this->celcatEventsRepository->getByEtudiantArray($user, $i);
-                }
-            } else {
-                for ($i = $emaineActuelle->getSemaineFormation(); $i < $max; ++$i) {
-                    $temp[] = $this->edtPlanningRepository->getByEtudiantArray($user, $i,
-                        $this->typeMatiereManager->findBySemestreArray($user->getSemestre()));
+
+            if ($emaineActuelle !== null) {
+                $max = $emaineActuelle->getSemaineFormation() + $nbSemaines;
+                if ($user->getDepartement()->isOptUpdateCelcat()) {
+                    for ($i = $emaineActuelle->getSemaineFormation(); $i < $max; ++$i) {
+                        $temp[] = $this->celcatEventsRepository->getByEtudiantArray($user, $i);
+                    }
+                } else {
+                    for ($i = $emaineActuelle->getSemaineFormation(); $i < $max; ++$i) {
+                        $temp[] = $this->edtPlanningRepository->getByEtudiantArray($user, $i,
+                            $this->typeMatiereManager->findBySemestreArray($user->getSemestre()));
+                    }
                 }
             }
         }
