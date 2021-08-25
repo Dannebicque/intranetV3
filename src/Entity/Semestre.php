@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Semestre.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/07/2021 16:06
+ * @lastUpdate 25/08/2021 10:50
  */
 
 namespace App\Entity;
@@ -195,7 +195,7 @@ class Semestre extends BaseEntity
     private ?int $moisDebut;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Annee", inversedBy="semestres")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Annee", inversedBy="semestres", fetch="EAGER")
      * @Groups({"semestre"})
      */
     private ?Annee $annee;
@@ -500,6 +500,15 @@ class Semestre extends BaseEntity
     {
         if (null !== $this->getAnnee()) {
             return $this->libelle . ' | ' . $this->getAnnee()->getLibelle();
+        }
+
+        return $this->libelle;
+    }
+
+    public function displayAvecTypeDiplome(): string
+    {
+        if (null !== $this->getAnnee() && null !== $this->getAnnee()->getDiplome() && null !== $this->getAnnee()->getDiplome()->getTypeDiplome()) {
+            return $this->getAnnee()->getDiplome()->getTypeDiplome()->getSigle() . ' | ' . $this->libelle;
         }
 
         return $this->libelle;

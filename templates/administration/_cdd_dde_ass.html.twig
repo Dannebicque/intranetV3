@@ -41,7 +41,7 @@
                         <div class="col-md-2"><a
                                     href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}"
                                     class="btn btn-block btn-primary">
-                                {{ semestre.diplome.sigle }} | {{ semestre.libelle }}
+                                {{ semestre.diplome.displayCourt }} | {{ semestre.libelle }}
                             </a></div>
                     {% endfor %}
 
@@ -49,7 +49,7 @@
                         <div class="col-md-2"><a
                                     href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}"
                                     class="btn btn-block btn-default">
-                                {{ semestre.diplome.sigle }} | {{ semestre.libelle }}
+                                {{ semestre.diplome.displayCourt }} | {{ semestre.libelle }}
                             </a></div>
                     {% endfor %}
 
