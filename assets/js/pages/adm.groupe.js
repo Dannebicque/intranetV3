@@ -1,8 +1,8 @@
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.groupe.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 01/09/2020 21:31
+// @lastUpdate 25/08/2021 10:42
 
 import {addCallout} from '../util'
 
@@ -135,6 +135,7 @@ $(document).on('click', '#addGroupe', function (e) {
 })
 
 $(document).on('click', '#addTypeGroupe', function (e) {
+  console.log($('#typegroupe_defaut').prop('checked'))
   e.preventDefault()
   const semestre = $(this).data('semestre')
   $.ajax({
@@ -142,7 +143,7 @@ $(document).on('click', '#addTypeGroupe', function (e) {
     data: {
       libelle: $('#typegroupe_libelle').val(),
       type: $('#typegroupe_type').val(),
-      defaut: $('#typegroupe_defaut').val()
+      defaut: $('#typegroupe_defaut').prop('checked')
     },
     method: 'POST',
     success: function () {

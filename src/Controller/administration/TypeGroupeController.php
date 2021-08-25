@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/TypeGroupeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:48
+ * @lastUpdate 25/08/2021 10:45
  */
 
 namespace App\Controller\administration;
@@ -13,6 +13,7 @@ use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
+use App\Utils\Tools;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -46,7 +47,7 @@ class TypeGroupeController extends BaseController
         $typeGroupe = new TypeGroupe($semestre);
         $typeGroupe->setLibelle($request->request->get('libelle'));
         $typeGroupe->setType($request->request->get('type'));
-        'on' === $request->request->get('defaut') ? $typeGroupe->setDefaut(true) : $typeGroupe->setDefaut(false);
+        $typeGroupe->setDefaut(Tools::convertToBool($request->request->get('defaut')));
         $this->entityManager->persist($typeGroupe);
         $this->entityManager->flush();
 
