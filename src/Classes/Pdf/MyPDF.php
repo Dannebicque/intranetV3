@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Pdf/MyPDF.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/06/2021 21:20
+ * @lastUpdate 25/08/2021 11:42
  */
 
 /*
@@ -36,6 +36,8 @@ class MyPDF
     {
         self::$templating = $templating;
         self::$pdf = $pdf;
+        self::$options['enable-local-file-access'] = true; //https://yusufbiberoglu.medium.com/symfony-5-knpsnappybundle-wkhtmltopdf-setup-and-example-with-an-explanation-of-possible-errors-a890dbca238a
+
         $date = Carbon::now();
         self::setFooter([
             'footer-left' => 'Document généré depuis l\'intranet le ' . $date->format('d/m/Y H:i') . '.',
