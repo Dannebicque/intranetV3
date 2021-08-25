@@ -39,6 +39,12 @@
                     {{ render(controller(
                         'App\\Controller\\administration\\GroupeController::listeSemestre', {semestre:semestre.id}
                     )) }}
+
+                    <div id="type_groupes_semestre">
+                        {{ render(controller(
+                            'App\\Controller\\administration\\TypeGroupeController::listeSemestre', {semestre:semestre.id}
+                        )) }}
+                    </div>
                 {% endif %}
             {% endif %}
         {% endfor %}
