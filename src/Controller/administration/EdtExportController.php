@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtExportController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:30
+ * @lastUpdate 26/08/2021 22:19
  */
 
 namespace App\Controller\administration;
@@ -13,10 +13,12 @@ use App\Classes\Edt\MyEdtExport;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
+use App\Entity\Personnel;
 use App\Repository\EdtPlanningRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
+use function array_key_exists;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -25,7 +27,6 @@ use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use ZipArchive;
-use function array_key_exists;
 
 /**
  * Class EdtController.
@@ -315,6 +316,17 @@ class EdtExportController extends BaseController
         $response->headers->set('Content-length', filesize($zipName));
 
         return $response;
+    }
+
+    /**
+     * @Route("/one/{personnel}/{source}.{_format}", name="administration_edt_export_one",
+     *                                    requirements={"source"="intranet|celcat"})
+     */
+    public function exportOne(MyEdtExport $myEdtExport, Personnel $personnel, $source, $_format): Response
+    {
+        $myEdtExport->genereOneDocument($source, $_format, $personnel, $this->dataUserSession->getDepartement());
+
+        return $this->redirectToRoute('administration_edt_export_voir');
     }
 
     /**

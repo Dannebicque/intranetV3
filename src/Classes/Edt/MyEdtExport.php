@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/08/2021 09:10
+ * @lastUpdate 26/08/2021 22:19
  */
 
 /*
@@ -190,11 +190,15 @@ class MyEdtExport
     {
         $dir = $this->dir . 'pdfedt/' . $departement->getId() . '/';
         Tools::checkDirectoryExist($dir);
-
+        //todo: passer par le DTO Evenement, comme ca compatible avec celcat
         if ('intranet' === $source) {
             $planning = $this->edtPlanningRepository->findEdtProf($personnel->getId());
             $this->myPDF::genereAndSavePdf('pdf/edt/planning.html.twig',
-                ['planning' => $planning, 'personnel' => $personnel],
+                [
+                    'planning' => $planning,
+                    'personnel' => $personnel,
+                    'matieres' => $this->typeMatiereManager->findByDepartementArray($departement)
+                ],
                 $personnel->getId() . '_' . $personnel->getInitiales(),
                 $dir, $departement->getLibelle());
         }
@@ -256,5 +260,10 @@ class MyEdtExport
         $response->headers->set('Content-length', filesize($zipName));
 
         return $fileName;
+    }
+
+    public function genereOneDocument($source, $_format, Personnel $personnel, Departement $departement)
+    {
+        $this->generePdf($personnel, $source, $departement);
     }
 }
