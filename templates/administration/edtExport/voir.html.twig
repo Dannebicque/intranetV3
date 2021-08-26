@@ -39,7 +39,7 @@
                             <td>
                                 {% if docs[personnel.id] is defined %}
                                     <a href="{{ absolute_url(asset('upload/pdfedt/'~user_data.departement
-                                        .id~'/'~docs[personnel.id])) }}"
+                                    .id~'/'~docs[personnel.id])) }}"
                                        class="btn btn-info btn-block"
                                        target="_blank"><i class="fas fa-download"></i></a>
                                 {% else %}
@@ -47,9 +47,10 @@
                                 {% endif %}
                             </td>
                             <td>
-                                <a href="#" data-pers="{{ personnel.id }}"
-                                   class="btn btn-warning genereOne" title="Générer/Mettre à jour le
-                                        fichier">
+                                <a href="{{ path('administration_edt_export_one', {personnel: personnel.id,
+                                    source:'intranet', _format:'pdf'}) }}"
+                                   class="btn btn-warning genereOne"
+                                   title="Générer/Mettre à jour le fichier">
                                     <i class="fas fa-sync"></i>
                                 </a>
                                 {% if docs[personnel.id] is defined %}
