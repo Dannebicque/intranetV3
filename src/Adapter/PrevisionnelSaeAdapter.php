@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Adapter/PrevisionnelSaeAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/05/2021 17:06
+ * @lastUpdate 27/08/2021 11:53
  */
 
 namespace App\Adapter;
@@ -43,7 +43,7 @@ class PrevisionnelSaeAdapter implements PrevisionnelAdapterInterface
         $p->matiere_id = $previ['id_sae'];
         $p->matiere_libelle = $previ['libelle'];
         $p->matiere_code = $previ['codeMatiere'];
-        $p->matiere_code_element = '---';
+        $p->matiere_code_element = $previ['matiere_code_element'];
         $p->personnel_id = $previ['id_personnel'] ?? 0;
         $p->personnel_nom = $previ['nom'] ?? '-';
         $p->personnel_prenom = $previ['prenom'] ?? '-';
