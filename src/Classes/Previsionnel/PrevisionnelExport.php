@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Previsionnel/PrevisionnelExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/05/2021 13:11
+ * @lastUpdate 27/08/2021 21:22
  */
 
 namespace App\Classes\Previsionnel;
@@ -33,7 +33,7 @@ class PrevisionnelExport
     }
 
     public function exportOmegaDepartement(
-        PrevisionnelCollection $previsionnels,
+        array $previsionnels,
         array $hrs,
         Departement $departement
     ): StreamedResponse {
@@ -155,9 +155,8 @@ class PrevisionnelExport
     /**
      * @param $hrs
      */
-    private function ecritHRS($hrs): void
+    private function ecritHRS(array $hrs): void
     {
-        /** @var Hrs $previ */
         foreach ($hrs as $previ) {
             $colonne = 1;
             //CODE VET
