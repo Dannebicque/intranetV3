@@ -4,13 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Utilisateur.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/07/2021 17:03
+ * @lastUpdate 27/08/2021 09:18
  */
 
 namespace App\Entity;
 
 use Carbon\CarbonInterface;
-use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use const JSON_THROW_ON_ERROR;
 use JsonException;
@@ -307,7 +306,7 @@ abstract class Utilisateur implements UserInterface, Serializable
         $this->adresse = $adresse;
     }
 
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
