@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Previsionnel/PrevisionnelImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/07/2021 13:38
+ * @lastUpdate 27/08/2021 22:22
  */
 
 namespace App\Classes\Previsionnel;
@@ -12,7 +12,6 @@ namespace App\Classes\Previsionnel;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\MyUpload;
 use App\Entity\Diplome;
-use App\Entity\Matiere;
 use App\Entity\Personnel;
 use App\Entity\Previsionnel;
 use App\Repository\PrevisionnelRepository;
@@ -73,7 +72,6 @@ class PrevisionnelImport
 
                     if (array_key_exists($ligne[2], $matieres)) {
                         $personnel = $personnels[$ligne[4]] ?? null;
-
                         $pr = new Previsionnel($annee, $personnel);
                         $pr->setNbHCm(Tools::convertToFloat($ligne[6]));
                         $pr->setNbGrCm(Tools::convertToInt($ligne[7]));
@@ -84,6 +82,7 @@ class PrevisionnelImport
                         $pr->setIdMatiere($matieres[$ligne[2]]->id);
                         $pr->setTypeMatiere($matieres[$ligne[2]]->typeMatiere);
                         $this->entityManager->persist($pr);
+
                     }
                 }
                 $this->entityManager->flush();
