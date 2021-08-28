@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EvaluationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/07/2021 16:46
+ * @lastUpdate 28/08/2021 08:41
  */
 
 namespace App\Controller\administration;
@@ -19,11 +19,13 @@ use App\Exception\MatiereNotFoundException;
 use App\Form\EvaluationType;
 use App\Repository\EvaluationRepository;
 use Exception;
+use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -66,7 +68,7 @@ class EvaluationController extends BaseController
         MyEvaluation $myEvaluation,
         Evaluation $evaluation,
         $_format
-    ) {
+    ): StreamedResponse|PdfResponse|null {
         $data = $evaluation->getTypeGroupe()->getGroupes();
 
         return $myEvaluation->setEvaluation($evaluation)->exportReleve($_format, $data,
@@ -76,12 +78,13 @@ class EvaluationController extends BaseController
     /**
      * @Route("/ajouter/{matiere}", name="administration_evaluation_create", methods="GET|POST")
      *
-     * @throws Exception
-     *
-     * @return RedirectResponse|Response
+     * @throws \App\Exception\MatiereNotFoundException
      */
-    public function create(TypeMatiereManager $typeMatiereManager, Request $request, string $matiere)
-    {
+    public function create(
+        TypeMatiereManager $typeMatiereManager,
+        Request $request,
+        string $matiere
+    ): RedirectResponse|Response {
         $mat = $typeMatiereManager->getMatiereFromSelect($matiere);
 
         if (null === $mat) {
@@ -147,11 +150,13 @@ class EvaluationController extends BaseController
      *                                                  methods={"GET"})
      */
     public function visibiliteAll(
+        TypeMatiereManager $typeMatiereManager,
         EvaluationRepository $evaluationRepository,
         $etat,
         Semestre $semestre
     ): RedirectResponse {
-        $evals = $evaluationRepository->findBySemestre($semestre, $this->dataUserSession->getAnneeUniversitaire());
+        $matieres = $typeMatiereManager->findBySemestreArray($semestre);
+        $evals = $evaluationRepository->findBySemestre($matieres, $this->dataUserSession->getAnneeUniversitaire());
 
         /** @var Evaluation $eval */
         foreach ($evals as $eval) {
@@ -171,11 +176,13 @@ class EvaluationController extends BaseController
      *                                                  methods={"GET"})
      */
     public function modifiableAll(
+        TypeMatiereManager $typeMatiereManager,
         EvaluationRepository $evaluationRepository,
         $etat,
         Semestre $semestre
     ): RedirectResponse {
-        $evals = $evaluationRepository->findBySemestre($semestre, $this->dataUserSession->getAnneeUniversitaire());
+        $matieres = $typeMatiereManager->findBySemestreArray($semestre);
+        $evals = $evaluationRepository->findBySemestre($matieres, $this->dataUserSession->getAnneeUniversitaire());
 
         /** @var Evaluation $eval */
         foreach ($evals as $eval) {
