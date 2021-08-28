@@ -4,18 +4,18 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/CovidCreneauPresenceType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/05/2021 16:35
+ * @lastUpdate 21/08/2021 12:12
  */
 
 namespace App\Form;
 
 use App\Entity\CovidCreneauPresence;
+use App\Form\Type\CarbonDateType;
 use Carbon\Carbon;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Umbrella\CoreBundle\Form\DatepickerType;
 
 class CovidCreneauPresenceType extends AbstractType
 {
@@ -23,7 +23,7 @@ class CovidCreneauPresenceType extends AbstractType
     {
         $date = new Carbon();
         $builder
-            ->add('date', DatepickerType::class, [
+            ->add('date', CarbonDateType::class, [
                 'label' => 'date_evaluation',
                 'data' => $date->addDays(2),
             ])
