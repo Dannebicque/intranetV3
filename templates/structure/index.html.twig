@@ -194,6 +194,10 @@
                                                 class="{{ iconDelete }}" data-provide="tooltip" data-placement="bottom"
                                                 title="{{ 'atitle.supprimer'|trans }}"></i></a>
                                 {% endif %}
+                                <a href="{{ path(baseurl ~ 'annee_synchronise_apogee', {id: annee.id}) }}"
+                                   class="btn btn-danger btn-outline btn-square btn-xs"><i
+                                            class="fas fa-reload" data-provide="tooltip" data-placement="bottom"
+                                            title="{{ 'atitle.synchro_apogee'|trans }}"></i></a>
                             {% endif %}
                         </div>
                     </div>
