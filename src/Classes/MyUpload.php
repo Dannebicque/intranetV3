@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyUpload.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:48
+ * @lastUpdate 26/08/2021 14:51
  */
 
 /*
@@ -33,8 +33,10 @@ class MyUpload
     /**
      * @throws Exception
      */
-    public function upload(UploadedFile $fichier, string $destination, array $extensions = []): ?string
+    public function upload($fichier, string $destination, array $extensions = []): ?string
     {
+        //todo: quel type est $fichier
+
         $extension = $this->getExtension($fichier);
         $dir = $this->valideDir($destination);
 
@@ -65,8 +67,9 @@ class MyUpload
         return $dir;
     }
 
-    public function getExtension(UploadedFile $fichier): string
+    public function getExtension($fichier): string
     {
+        //todo: quel type est $fichier
         return $fichier->getClientOriginalExtension();
     }
 
