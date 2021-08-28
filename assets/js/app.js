@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/app.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 21/08/2021 11:53
+// @lastUpdate 26/08/2021 21:25
 
 import '@fortawesome/fontawesome-free/scss/fontawesome.scss'
 import '@fortawesome/fontawesome-free/scss/solid.scss'
@@ -12,7 +12,7 @@ import '../vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js'
 import '../vendor/bootstrap-datepicker/locales/bootstrap-datepicker.fr.min'
 
 
-import 'umbrella_core/Core'
+// import 'umbrella_core/Core'
 import $ from 'jquery' //todo: nécessaire si déj dans Umbrella?
 
 import PerfectScrollbar from 'perfect-scrollbar'
@@ -22,11 +22,13 @@ import './material'
 import './search'
 import './modaler'
 
+require('bootstrap')
+
 import tinymce from 'tinymce/tinymce.min'
 import 'tinymce/plugins/lists/plugin.min'
-import 'tinymce/icons/default'
+import 'tinymce/icons/default/icons.min'
 // A theme is also required
-import 'tinymce/themes/silver'
+import 'tinymce/themes/silver/theme.min'
 import '../vendor/tinyMceLang/fr_FR'
 
 import '../css/app.scss'
