@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Apogee/ApogeeGroupe.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/04/2021 12:09
+ * @lastUpdate 28/08/2021 08:40
  */
 
 namespace App\Classes\Apogee;
@@ -17,9 +17,10 @@ class ApogeeGroupe extends Apogee
     {
         $this->connect();
         $stid = $this->conn->prepare(
-            'SELECT GROUPE.COD_GPE, GROUPE.LIB_GPE, GROUPE.COD_EXT_GPE FROM GROUPE INNER JOIN GPE_OBJ ON GROUPE.COD_GPE=GPE_OBJ.COD_GPE WHERE GPE_OBJ.COD_ELP=:semestre AND GROUPE.DAA_FIN_VAL_GPE IS NULL');
+            'SELECT GROUPE.COD_GPE, GROUPE.LIB_GPE, GROUPE.COD_EXT_GPE FROM GROUPE INNER JOIN GPE_OBJ ON GROUPE.COD_GPE=GPE_OBJ.COD_GPE WHERE GPE_OBJ.COD_ELP=:semestre AND GROUPE.DAA_FIN_VAL_GPE IS NULL ORDER BY GROUPE.COD_EXT_GPE ASC');
         $stid->execute([':semestre' => $semestre->getCodeElement()]);
 
+//        SELECT GROUPE.COD_GPE, GROUPE.LIB_GPE, GROUPE.COD_EXT_GPE FROM GROUPE INNER JOIN GPE_OBJ ON GROUPE.COD_GPE=GPE_OBJ.COD_GPE WHERE GPE_OBJ.COD_ELP='TSBZ1' AND GROUPE.DAA_FIN_VAL_GPE IS NULL
         return $stid;
     }
 
@@ -27,9 +28,10 @@ class ApogeeGroupe extends Apogee
     {
         $this->connect();
         $stid = $this->conn->prepare(
-            'SELECT * FROM GPE_INCLUS_GPE INNER JOIN GPE_OBJ ON (GPE_INCLUS_GPE.COD_GPE_1=GPE_OBJ.COD_GPE OR GPE_INCLUS_GPE.COD_GPE_2=GPE_OBJ.COD_GPE) WHERE GPE_OBJ.COD_ELP=:semestre');
+            'SELECT GPE_INCLUS_GPE.COD_GPE_1, GPE_INCLUS_GPE.COD_GPE_2, GR1.COD_EXT_GPE, GR2.COD_EXT_GPE FROM GPE_INCLUS_GPE INNER JOIN GPE_OBJ ON GPE_INCLUS_GPE.COD_GPE_1=GPE_OBJ.COD_GPE INNER JOIN GROUPE GR1 ON GPE_INCLUS_GPE.COD_GPE_1 = GR1.COD_GPE INNER JOIN GROUPE GR2 ON GPE_INCLUS_GPE.COD_GPE_2 = GR2.COD_GPE WHERE GPE_OBJ.COD_ELP=:semestre');
         $stid->execute([':semestre' => $semestre->getCodeElement()]);
 
+        //SELECT GPE_INCLUS_GPE.COD_GPE_1, GPE_INCLUS_GPE.COD_GPE_2 FROM GPE_INCLUS_GPE INNER JOIN GPE_OBJ ON GPE_INCLUS_GPE.COD_GPE_1=GPE_OBJ.COD_GPE WHERE GPE_OBJ.COD_ELP='TSBZ1';
         return $stid;
     }
 
