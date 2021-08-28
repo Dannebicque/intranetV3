@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/GroupesController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:48
+ * @lastUpdate 23/08/2021 21:48
  */
 
 namespace App\Controller\superAdministration;
@@ -42,8 +42,8 @@ class GroupesController extends BaseController
         Semestre $semestre = null
     ): Response {
         return $this->render('super-administration/groupes/index.html.twig', [
-            'departement'     => $departement,
-            'semestres'       => $semestreRepository->findByDepartement($departement),
+            'departement' => $departement,
+            'semestres' => $semestreRepository->findByDepartement($departement),
             'afficheSemestre' => null !== $semestre ? $semestre->getId() : null,
         ]);
     }
@@ -59,39 +59,42 @@ class GroupesController extends BaseController
         $semestres = $semestreRepository->findByDepartement($departement);
         /** @var Semestre $semestre */
         foreach ($semestres as $semestre) {
-            $groupes = $apogeeGroupe->getHierarchieGroupesSemestre($semestre);
-            $nbgroupes = $groupes->rowCount();
-            //todo: déplacer dans une classe si OK.
-            if (0 === $nbgroupes) {
-                //pas de hierarchie
-                $groupes = $apogeeGroupe->getGroupesSemestre($semestre);
-                $i = 1;
-                if (count($semestre->getTypeGroupes()) > 0) {
-                    $tg = $semestre->getTypeGroupes()[0];
-                } else {
-                    //si pas de type de groupe on en ajoute un par défaut.
-                    $tg = new TypeGroupe($semestre);
-                    $tg->setLibelle('Defaut');
-                    $tg->setDefaut(true);
-                    $tg->setType('TD');
-                    $this->entityManager->persist($tg);
-                }
-
-                while ($ligne = $groupes->fetch()) {
-                    $groupe = new Groupe();
-                    $groupe->setTypeGroupe($tg);
-                    $groupe->setCodeApogee($ligne['COD_EXT_GPE']);
-                    $groupe->setLibelle($ligne['LIB_GPE']);
-                    $groupe->setOrdre($i);
-                    ++$i;
-                    $this->entityManager->persist($groupe);
-                }
-                $this->entityManager->flush();
-            }
+            $this->insertGroupes($semestre, $apogeeGroupe);
         }
         $this->addFlashBag('success', 'sa_groupes_departement_synchro_all.success');
 
         return $this->redirectToRoute('sa_groupes_departement_index', ['departement' => $departement->getId()]);
+    }
+
+    private function insertGroupes(Semestre $semestre, ApogeeGroupe $apogeeGroupe)
+    {
+        $treeGroupes = $apogeeGroupe->getHierarchieGroupesSemestre($semestre);
+
+        //récupérer les groupes
+        $groupes = $apogeeGroupe->getGroupesSemestre($semestre);
+        $i = 1;
+        if (count($semestre->getTypeGroupes()) > 0) {
+            $tg = $semestre->getTypeGroupes()[0];
+        } else {
+            //si pas de type de groupe on en ajoute un par défaut.
+            $tg = new TypeGroupe($semestre);
+            $tg->setLibelle('Defaut');
+            $tg->setDefaut(true);
+            $tg->setType('TD');
+            $this->entityManager->persist($tg);
+        }
+
+        while ($ligne = $groupes->fetch()) {
+            //todo: gérer la hierarchie
+            $groupe = new Groupe();
+            $groupe->setTypeGroupe($tg);
+            $groupe->setCodeApogee($ligne['COD_EXT_GPE']);
+            $groupe->setLibelle($ligne['LIB_GPE']);
+            $groupe->setOrdre($i);
+            ++$i;
+            $this->entityManager->persist($groupe);
+        }
+        $this->entityManager->flush();
     }
 
     /**
@@ -103,19 +106,17 @@ class GroupesController extends BaseController
         Semestre $semestre
     ): Response {
         //supprimer les groupes du semestre
-        //récupérer les gorupes
+
         //calcluler l'aroborescence
 
-        $groupes = $apogeeGroupe->getHierarchieGroupesSemestre($semestre);
-
-        while ($row = $groupes->fetch($groupes)) {
-        }
+        $this->insertGroupes($semestre, $apogeeGroupe);
     }
 
     /**
      * @Route("/synchronise/etudiant/semestre/{semestre}", name="sa_groupes_etudiant_synchro_semestre")
      */
-    public function synchroApogeeEtudiantSemestre(
+    public
+    function synchroApogeeEtudiantSemestre(
         ApogeeGroupe $apogeeGroupe,
         EtudiantRepository $etudiantRepository,
         GroupeRepository $groupeRepository,
@@ -161,8 +162,12 @@ class GroupesController extends BaseController
      *
      * @throws Exception
      */
-    public function import(MyGroupes $myGroupes, Request $request, Departement $departement): Response
-    {
+    public
+    function import(
+        MyGroupes $myGroupes,
+        Request $request,
+        Departement $departement
+    ): Response {
         if ($request->isMethod('POST')) {
             $myGroupes->importCsv($request->files->get('fichier'), $departement);
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'groupes.import.success.flash');
@@ -181,8 +186,12 @@ class GroupesController extends BaseController
      *
      * @throws Exception
      */
-    public function importEtudiant(MyGroupes $myGroupes, Request $request, Semestre $semestre): Response
-    {
+    public
+    function importEtudiant(
+        MyGroupes $myGroupes,
+        Request $request,
+        Semestre $semestre
+    ): Response {
         if ($request->isMethod('POST')) {
             $myGroupes->importGroupeEtudiantCsv($request->files->get('fichier'), $semestre);
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'groupes.etudiants.import.success.flash');
@@ -192,7 +201,7 @@ class GroupesController extends BaseController
 
         return $this->render('administration/groupe/import-etudiant.html.twig',
             [
-                'semestre'    => $semestre,
+                'semestre' => $semestre,
                 'departement' => $semestre->getDiplome()->getDepartement(),
             ]
         );

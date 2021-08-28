@@ -4,14 +4,20 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/ApogeeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 18:02
+ * @lastUpdate 25/08/2021 18:25
  */
 
 namespace App\Controller\superAdministration;
 
 use App\Classes\Apogee\ApogeeEtudiant;
+use App\Classes\Apogee\ApogeeMaquette;
 use App\Classes\Etudiant\EtudiantImport;
+use App\Classes\MyStructure;
+use App\Classes\Structure\ApogeeImport;
 use App\Controller\BaseController;
+use App\Entity\Annee;
+use App\Entity\Configuration;
+use App\Entity\Constantes;
 use App\Repository\AnneeUniversitaireRepository;
 use App\Repository\BacRepository;
 use App\Repository\EtudiantRepository;
@@ -138,6 +144,39 @@ class ApogeeController extends BaseController
         }
         $this->entityManager->flush();
         $this->addFlashBag('success', 'import.etudiant.apogee.ok');
+
+        return $this->render('super-administration/apogee/confirmation.html.twig', [
+            'etudiants' => $this->etudiants,
+        ]);
+    }
+
+    /**
+     * @Route("/import/structure/{annee}", methods={"POST"}, name="sa_annee_synchronise_apogee")
+     * @IsGranted("ROLE_SUPER_ADMIN")
+     *
+     * @throws Exception
+     */
+    public function synchronisationApogeeAnnee(
+        ApogeeMaquette $apogeeMaquette,
+        ApogeeImport $apogeeImport,
+        Annee $annee
+    ): Response {
+        //suppr les données déjà présentes ?
+
+        $apoSemestres = $apogeeMaquette->getSemestresAnnee($annee);
+        $apogeeImport->createSemestre($apoSemestres);
+
+        foreach ($annee->getSemestres() as $semestre) {
+            $apoUes = $apogeeMaquette->getUesSemestre($semestre);
+            $apogeeImport->createUes($apoUes);
+
+            foreach ($semestre->getUes() as $ue) {
+                $apoMatieres = $apogeeMaquette->getMatieresUe($ue);
+                $apogeeImport->createMatiere($apoMatieres);
+            }
+        }
+
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'synchro.maquette.apogee.ok');
 
         return $this->render('super-administration/apogee/confirmation.html.twig', [
             'etudiants' => $this->etudiants,

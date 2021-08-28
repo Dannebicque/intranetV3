@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Apogee/Apogee.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/07/2021 17:05
+ * @lastUpdate 23/08/2021 23:02
  */
 
 namespace App\Classes\Apogee;
@@ -16,7 +16,7 @@ use const E_USER_ERROR;
 
 abstract class Apogee
 {
-    protected PDO $conn;
+    protected $conn;
 
     private ParameterBagInterface $parameterBag;
 
