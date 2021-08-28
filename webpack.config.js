@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/webpack.config.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/06/2021 10:28
+// @lastUpdate 26/08/2021 18:08
 
 var Encore = require('@symfony/webpack-encore')
 var path = require('path')
@@ -99,12 +99,6 @@ Encore
     config.corejs = 3
   })
 
-  .copyFiles([
-    {
-      from: './vendor/umbrella/corebundle/assets/images',
-      to: 'images/[path][name].[ext]'
-    }
-  ])
   .enableSassLoader()
 
   .autoProvidejQuery()
