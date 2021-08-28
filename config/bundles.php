@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/config/bundles.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/05/2021 15:08
+ * @lastUpdate 26/08/2021 18:04
  */
 
 return [
@@ -27,5 +27,4 @@ return [
     Bugsnag\BugsnagBundle\BugsnagBundle::class => ['all' => true],
     Knp\Bundle\SnappyBundle\KnpSnappyBundle::class => ['all' => true],
     Symfony\UX\Chartjs\ChartjsBundle::class => ['all' => true],
-    Umbrella\CoreBundle\UmbrellaCoreBundle::class => ['all' => true],
 ];
