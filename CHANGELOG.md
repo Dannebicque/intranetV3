@@ -2,6 +2,52 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.11](https://github.com/Dannebicque/intranetV3/compare/v3.0.10...v3.0.11) (2021-08-28)
+
+
+### Features
+
+* gestion des filtres sur le composant tableau. ([dc477c3](https://github.com/Dannebicque/intranetV3/commit/dc477c3f64e611897493a8e06afce8b2511c2ad7))
+* Nouveau composant pour datatable, correctiofs V0.2 ([d6fe9ef](https://github.com/Dannebicque/intranetV3/commit/d6fe9ef884c819dd71ccfc328583e5c47abe5b72))
+* Nouveau composant pour le questionnaire V0.1 ([47c6d3c](https://github.com/Dannebicque/intranetV3/commit/47c6d3ce3ff8b78fa98edd6d947ae6b4c41f08ab))
+* Suppression de select2 (et les parties associées à Umbrella). Utilisation de tom-select et d'un composant HTML surchargé. ([a4f70ee](https://github.com/Dannebicque/intranetV3/commit/a4f70eec15c13b904edf60c8fe33a4c84636ab77))
+
+
+### Bug Fixes
+
+* Affichage d'un message lorsque la saisie est faite (sans absent) ([57a96f2](https://github.com/Dannebicque/intranetV3/commit/57a96f2027ef262202fd5a4e27686629a957b2cb))
+* Affichage des matières dans le suivi d'appel ([9c45b3f](https://github.com/Dannebicque/intranetV3/commit/9c45b3f271dc3e97f712d41fdadf4eac582ccb8d))
+* Affichage des matières dans le suivi d'appel ([f9d7521](https://github.com/Dannebicque/intranetV3/commit/f9d75218af3638d3fcdfa14b767a1e7e7a8a3e3a))
+* Affichage du groupe dans l'ICS ([abd3c11](https://github.com/Dannebicque/intranetV3/commit/abd3c11c0f3e6a2746fdbcf90b4b809e4e81c4ba))
+* Affichage en doublons + erreur lors de la récupération du groupe par défaut ([#68](https://github.com/Dannebicque/intranetV3/issues/68)) ([2a043ca](https://github.com/Dannebicque/intranetV3/commit/2a043cad0bbb735b0d41b0f4124c531be0661c4c))
+* Bug typage méthode getPassword ([975adca](https://github.com/Dannebicque/intranetV3/commit/975adcab256581aea7a5cbd0a2b5ca3bf01a47a7))
+* Code Element matière ([9deae5b](https://github.com/Dannebicque/intranetV3/commit/9deae5bb611c0922ddf3e9e6761053431e0e1c53))
+* Code Element matière ([4f192de](https://github.com/Dannebicque/intranetV3/commit/4f192dedc6a903a47fe6d5bd5e7f844e75e3fdc8))
+* Composant Table ([e2d5f01](https://github.com/Dannebicque/intranetV3/commit/e2d5f01feeda0908382cf0f88f7e53deef0fefc9))
+* Correctifs mineurs JS ([0ccc91f](https://github.com/Dannebicque/intranetV3/commit/0ccc91f24c81c6c6d4337a001fac17075029d23c))
+* Correction taille icone dashboard ([0556e49](https://github.com/Dannebicque/intranetV3/commit/0556e49f26342143b2f139e3ba1f942d52a20129))
+* CS ([4736692](https://github.com/Dannebicque/intranetV3/commit/4736692d540b2d2b5af7de5cb1bce8f48d2a8ace))
+* Date null ([b558c55](https://github.com/Dannebicque/intranetV3/commit/b558c55489b604a02ed6c117cd16c0b8e7c18e80))
+* Divers correctifs et améliorations de code. ([a18ce13](https://github.com/Dannebicque/intranetV3/commit/a18ce130291a9d505ffc5e0cab9caf9679b7fa9f))
+* DTO prévisionnel et typage ([37ea499](https://github.com/Dannebicque/intranetV3/commit/37ea49909b36a0241c7f9c9868d1f69cc4e18f0e))
+* Event présent, même si ne venait pas de l'EDT ([07cc887](https://github.com/Dannebicque/intranetV3/commit/07cc887fb2153638da8edcae3882923de5ec2564))
+* Export PDF avec les différents types de matières (a adapter avec EDTManager ensuite) ([37ff161](https://github.com/Dannebicque/intranetV3/commit/37ff1615e1d0c84088dbc038ff477100c5c277ef))
+* Export Prévisionnel ([849d10e](https://github.com/Dannebicque/intranetV3/commit/849d10e41c809116120efaa21f58994283bae41e))
+* Génération des PDF, erreur si plusieurs liens (?). ([313e2dc](https://github.com/Dannebicque/intranetV3/commit/313e2dc55a36f8c0a224c646b68bedd04d2c33d4))
+* Import maquette depuis Apogée ([6eedefc](https://github.com/Dannebicque/intranetV3/commit/6eedefc8083446838815d34876a7a12275f8022a))
+* Lisibilité du semestre et du diplôme associé (confusion DUT.BUT) ([b068845](https://github.com/Dannebicque/intranetV3/commit/b06884521c1ae45b4d978234debff9d69469bee4))
+* PHPCSFixer ([186d778](https://github.com/Dannebicque/intranetV3/commit/186d7782b2139762d2e1fa0038749e0bfc4e6559))
+* Si pas de semaine de formation trouvée. Bug sur l'export ICS des étudiants. ([544cbd8](https://github.com/Dannebicque/intranetV3/commit/544cbd81b79a9189245568934e3e7cd0bca3cb15))
+* Suppression de Umbrella ([31a4d0d](https://github.com/Dannebicque/intranetV3/commit/31a4d0dba2aa35e9f6a6b319aba5fb781ecff139))
+* Suppression de Umbrella et des dépendances JS ([72f71d2](https://github.com/Dannebicque/intranetV3/commit/72f71d2f570955e529db85589423c6c7ce9f91c0))
+* Suppression des fichiers de déploiement automatisés ([6faf71b](https://github.com/Dannebicque/intranetV3/commit/6faf71b8a7f82db16f4f0e0342ffc60fa3050c66))
+* Suppression du datepicker d'Umbrella. ([b625336](https://github.com/Dannebicque/intranetV3/commit/b625336a440d6ee8390702cdc84195893da75f93))
+* Suppressions des icones MDI. ([ff747a0](https://github.com/Dannebicque/intranetV3/commit/ff747a036fff8360013fb00ac7e94f1052355353))
+* Synchronisation Apogée (groupes et maquettes) ([f6082e2](https://github.com/Dannebicque/intranetV3/commit/f6082e211263492d64da8d3232bb03abb93538b2))
+* Synchronisation Celcat ([4d9f87f](https://github.com/Dannebicque/intranetV3/commit/4d9f87f69902ad53965b12d1cca079af2003bcdf))
+* Typage incorrect ([6851962](https://github.com/Dannebicque/intranetV3/commit/6851962a1141531b858b64d9f155b4da793ac3d9))
+* Typage incorrect ([75706af](https://github.com/Dannebicque/intranetV3/commit/75706af2700b3d5c614376a467e716cd3d5ca4a3))
+
 ### [3.0.10](https://github.com/Dannebicque/intranetV3/compare/v3.0.9...v3.0.10) (2021-07-29)
 
 
