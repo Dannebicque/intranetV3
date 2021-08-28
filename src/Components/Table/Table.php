@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/Table.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/08/2021 13:34
+ * @lastUpdate 28/08/2021 08:39
  */
 
 namespace App\Components\Table;
@@ -42,6 +42,8 @@ class Table
     private array $order = [];
     private array $filter = [];
     private array $parametersAsArray = [];
+    private string $classAdapter;
+    private mixed $queryAdapter;
 
     public function __construct(TableRegistry $tableRegistry)
     {
@@ -234,11 +236,19 @@ class Table
         return null !== $this->request && ($this->request->isXmlHttpRequest() || $this->request->isMethod('POST'));
     }
 
-    public function getCallbackResponse(string $class, array $options = [])
+    public function useAdapter(string $class, array $options = [])
     {
+        //pourrait permettre de dfinir l'adpteur utilisé ensuite'
+        $this->classAdapter = $class;
+        $this->queryAdapter = $options['query'] ?? null;
+    }
+
+    public function getCallbackResponse()
+    {
+        //pourrait permettre d'avoir différent adapter
         $datas = $this->getData(EntityAdapter::class, [
-            'class' => $class,
-            'query' => $options['query'] ?? null,
+            'class' => $this->classAdapter,
+            'query' => $this->queryAdapter,
             'order' => $this->order,
             'filter' => $this->filter,
         ]);
@@ -250,4 +260,5 @@ class Table
 
         return new JsonResponse($t);
     }
+
 }
