@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Matieres/TypeMatiereManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/07/2021 13:35
+ * @lastUpdate 27/08/2021 22:21
  */
 
 namespace App\Classes\Matieres;
@@ -30,18 +30,18 @@ class TypeMatiereManager
         $this->managers[ApcRessource::SOURCE] = $ressourceManager;
     }
 
-    public function getLibelleMatiere($value)
+    public function getLibelleMatiere($value): string
     {
         $mat = $this->getMatiereFromSelect($value);
 
-        return $mat !== null ? $mat->display : 'err';
+        return null !== $mat ? $mat->display : 'err';
     }
 
     public function getMatiereFromSelect($data): ?\App\DTO\Matiere
     {
         $d = explode('_', $data);
 
-        if (2 === count($d) && $d[0] !== '') {
+        if (2 === count($d) && '' !== $d[0]) {
             return $this->typeDeMatiere($d[0])->find($d[1]);
         }
 
@@ -79,7 +79,7 @@ class TypeMatiereManager
         return $t;
     }
 
-    public function findByDepartement(Departement $departement)
+    public function findByDepartement(Departement $departement): array
     {
         $t = [];
         foreach ($this->managers as $manager) {
@@ -101,7 +101,7 @@ class TypeMatiereManager
         return $t;
     }
 
-    public function findBySemestre(Semestre $semestre)
+    public function findBySemestre(Semestre $semestre): array
     {
         $t = [];
         foreach ($this->managers as $manager) {
@@ -112,7 +112,7 @@ class TypeMatiereManager
         return array_merge(...$t);
     }
 
-    public function findBySemestreArray(Semestre $semestre)
+    public function findBySemestreArray(Semestre $semestre): array
     {
         $matieres = $this->findBySemestre($semestre);
         $t = [];
@@ -123,7 +123,7 @@ class TypeMatiereManager
         return $t;
     }
 
-    public function findByDepartementArray(Departement $departement)
+    public function findByDepartementArray(Departement $departement): array
     {
         $matieres = $this->findByDepartement($departement);
         $t = [];
@@ -134,7 +134,7 @@ class TypeMatiereManager
         return $t;
     }
 
-    public function findByDiplomeArray(Diplome $diplome)
+    public function findByDiplomeArray(Diplome $diplome): array
     {
         $matieres = $this->findByDiplome($diplome);
         $t = [];
@@ -145,7 +145,7 @@ class TypeMatiereManager
         return $t;
     }
 
-    public function findByDiplome(mixed $diplome)
+    public function findByDiplome(mixed $diplome): array
     {
         $t = [];
         foreach ($this->managers as $manager) {
@@ -156,7 +156,7 @@ class TypeMatiereManager
         return array_merge(...$t);
     }
 
-    public function tableauApogeeDiplome(mixed $diplome)
+    public function tableauApogeeDiplome(mixed $diplome): array
     {
         $matieres = $this->findByDiplome($diplome);
         $t = [];
