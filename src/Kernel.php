@@ -4,13 +4,15 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Kernel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/08/2021 17:09
+ * @lastUpdate 26/08/2021 17:14
  */
 
 namespace App;
 
 use App\Components\Questionnaire\DependencyInjection\QuestionnaireCompilerPass;
 use App\Components\Table\DependencyInjection\TableCompilerPass;
+use App\Components\Table\TableRegistry;
+use App\Components\Table\TableType;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
@@ -25,6 +27,7 @@ class Kernel extends BaseKernel
     {
         $container->addCompilerPass(new TableCompilerPass());
         $container->addCompilerPass(new QuestionnaireCompilerPass());
+        $container->registerForAutoconfiguration(TableType::class)->addTag(TableRegistry::TAG_TABLE_TYPE);
     }
 
     protected function configureContainer(ContainerConfigurator $container): void

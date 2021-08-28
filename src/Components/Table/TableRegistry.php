@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/TableRegistry.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/07/2021 17:37
+ * @lastUpdate 26/08/2021 16:57
  */
 
 namespace App\Components\Table;
@@ -22,11 +22,13 @@ class TableRegistry
     public const TAG_COLUMN_TYPES = 'da.table.columntypes';
     public const TAG_FILTERS = 'da.table.filters';
     public const TAG_ACTIONS = 'da.table.actions';
+    public const TAG_TABLE_TYPE = 'da.table.type';
 
     private array $columnTypes = [];
     private array $adapters = [];
     private array $filters = [];
     private array $actions = [];
+    private array $tablesType = [];
 
     public function registerAdapter(string $name, AbstractAdapter $adapter)
     {
@@ -36,6 +38,12 @@ class TableRegistry
     public function registerFilter(string $name, AbstractFilter $filter)
     {
         $this->filters[$name] = $filter;
+    }
+
+    public function registerTableType(string $name, TableType $tableType)
+    {
+        //ajout des TableType créé?? comment.
+        $this->tablesType[$name] = $tableType;
     }
 
     public function registerAction(string $name, AbstractButtonAction $filter)
@@ -64,6 +72,13 @@ class TableRegistry
     {
         //todo: test?
         return $this->filters[$class];
+    }
+
+    public function getTableType(string $class)
+    {
+
+        //todo: test?
+        return $this->tablesType[$class];
     }
 
     public function getAction(string $class): AbstractButtonAction
