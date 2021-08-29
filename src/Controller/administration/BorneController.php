@@ -4,14 +4,14 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/BorneController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/05/2021 15:20
+ * @lastUpdate 29/08/2021 09:50
  */
 
 namespace App\Controller\administration;
 
 use App\Classes\MyExport;
 use App\Controller\BaseController;
-use App\DataTable\BorneTableType;
+use App\Table\BorneTableType;
 use App\Entity\Borne;
 use App\Entity\Constantes;
 use App\Form\BorneType;

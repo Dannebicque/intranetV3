@@ -87,7 +87,7 @@
 {% endblock collection_widget %}
 
 {%- block form_widget_simple -%}
-    {% if input_prefix or input_suffix %}
+    {% if input_prefix is defined or input_suffix is defined %}
         <div class="input-group">
             {% if input_prefix %}
                 <div class="input-group-prepend">

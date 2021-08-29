@@ -4,30 +4,27 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/BaseController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 09:03
+ * @lastUpdate 28/08/2021 14:18
  */
 
 namespace App\Controller;
 
 use App\Classes\DataUserSession;
+use App\Components\Table\DTO\Table;
+use App\Components\Table\TableFactory;
 use App\Entity\Constantes;
-use App\Entity\Etudiant;
-use App\Entity\Personnel;
 use App\Interfaces\UtilisateurInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Translation\TranslatableMessage;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Umbrella\CoreBundle\Component\DataTable\DataTableFactory;
-use Umbrella\CoreBundle\Component\DataTable\DTO\DataTable;
-use Umbrella\CoreBundle\Component\Toast\Toast;
 
 /**
  * Class BaseController.
  */
 class BaseController extends AbstractController
 {
-    const BAG_TOAST = 'toast';
+    public const BAG_TOAST = 'toast';
     protected DataUserSession $dataUserSession;
 
     protected EntityManagerInterface $entityManager;
@@ -37,15 +34,9 @@ class BaseController extends AbstractController
     public static function getSubscribedServices()
     {
         return parent::getSubscribedServices() + [
-                'datatable.factory' => DataTableFactory::class,
-                // 'jsresponse.builder' => JsResponseBuilder::class,
+                TableFactory::class => TableFactory::class
             ];
     }
-
-//    protected function jsResponseBuilder(): JsResponseBuilder
-//    {
-//        return $this->get('jsresponse.builder');
-//    }
 
     /**
      * @required
@@ -55,9 +46,9 @@ class BaseController extends AbstractController
         $this->dataUserSession = $dataUserSession;
     }
 
-    protected function createTable(string $type, array $options = []): DataTable
+    protected function createTable(string $type, array $options = []): Table
     {
-        return $this->get('datatable.factory')->create($type, $options);
+        return $this->get(TableFactory::class)->create($type, $options);
     }
 
     /**
@@ -78,20 +69,21 @@ class BaseController extends AbstractController
 
     public function addFlashBag($niveau, $cleTraduction)
     {
+        //todo: revoir ?? mélange avec toast
         $cle = $this->translator->trans($cleTraduction);
-        $niv = $this->translator->trans($niveau);
+        $titre = $this->translator->trans($niveau);
         switch ($niveau) {
             case Constantes::FLASHBAG_INFO:
-                $this->toastInfo($cle, $niv);
+                $this->toastInfo($cle, $titre);
                 break;
             case Constantes::FLASHBAG_SUCCESS:
-                $this->toastSuccess($cle, $niv);
+                $this->toastSuccess($cle, $titre);
                 break;
             case Constantes::FLASHBAG_NOTICE:
-                $this->toastWarning($cle, $niv);
+                $this->toastWarning($cle, $titre);
                 break;
             case Constantes::FLASHBAG_ERROR:
-                $this->toastError($cle, $niv);
+                $this->toastError($cle, $titre);
                 break;
             default:
                 $this->toastError('Clé inexistante', 'Erreur');

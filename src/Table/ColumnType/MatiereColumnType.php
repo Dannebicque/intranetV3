@@ -1,18 +1,17 @@
 <?php
 /*
  * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/DataTable/ColumnType/MatiereColumnType.php
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/ColumnType/MatiereColumnType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/05/2021 16:03
+ * @lastUpdate 29/08/2021 09:32
  */
 
-namespace App\DataTable\ColumnType;
-
+namespace App\Table\ColumnType;
 
 use App\Classes\Matieres\TypeMatiereManager;
+use App\Components\Table\Column\PropertyColumnType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Umbrella\CoreBundle\Component\DataTable\Column\PropertyColumnType;
 
 class MatiereColumnType extends PropertyColumnType
 {
