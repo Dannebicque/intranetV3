@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Kernel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 14:37
+ * @lastUpdate 29/08/2021 15:24
  */
 
 namespace App;
@@ -47,9 +47,9 @@ class Kernel extends BaseKernel
         }
 
         //mon service pour Table
-        $container->import('../src/Components/Table/{services}.php');
-        $container->import('../src/Components/Widget/{services}.php');
-        $container->import('../src/Components/Questionnaire/{services}.php');
+        $container->import('../src/Components/Table/DependencyInjection/{services}.php');
+        $container->import('../src/Components/Widget/DependencyInjection/{services}.php');
+        $container->import('../src/Components/Questionnaire/DependencyInjection/{services}.php');
     }
 
     protected function configureRoutes(RoutingConfigurator $routes): void

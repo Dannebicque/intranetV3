@@ -1,13 +1,13 @@
 <?php
 /*
  * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Questionnaire/services.php
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Questionnaire/DependencyInjection/services.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/08/2021 17:51
+ * @lastUpdate 29/08/2021 15:23
  */
 
-namespace App\Components\Questionnaire;
+namespace App\Components\Questionnaire\DependencyInjection;
 
 use App\Components\Questionnaire\Section\EndSection;
 use App\Components\Questionnaire\Section\QuestionsSection;

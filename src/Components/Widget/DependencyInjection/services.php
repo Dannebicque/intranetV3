@@ -1,13 +1,13 @@
 <?php
 /*
  * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Widget/services.php
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Widget/DependencyInjection/services.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 14:37
+ * @lastUpdate 29/08/2021 15:25
  */
 
-namespace App\Components\Widget;
+namespace App\Components\Widget\DependencyInjection;
 
 use App\Components\Widget\Type\AddLinkType;
 use App\Components\Widget\Type\ButtonDropdownType;
@@ -20,6 +20,7 @@ use App\Components\Widget\Type\RowEditLinkType;
 use App\Components\Widget\Type\RowLinkType;
 use App\Components\Widget\Type\RowShowLinkType;
 use App\Components\Widget\Type\WidgetType;
+use App\Components\Widget\WidgetRegistry;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 return static function(ContainerConfigurator $configurator): void {
