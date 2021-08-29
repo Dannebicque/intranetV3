@@ -4,34 +4,30 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/DocumentController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 09:50
+ * @lastUpdate 29/08/2021 21:51
  */
 
 namespace App\Controller\administration;
 
 use App\Classes\MyExport;
 use App\Controller\BaseController;
-use App\Table\DocumentTableType;
 use App\Entity\Constantes;
 use App\Entity\Document;
 use App\Form\DocumentType;
 use App\Repository\DocumentFavoriEtudiantRepository;
 use App\Repository\DocumentFavoriPersonnelRepository;
 use App\Repository\DocumentRepository;
+use App\Table\DocumentTableType;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/administration/documents", name="administration_document_")
- */
+#[Route('/administration/documents', name: 'administration_document_')]
 class DocumentController extends BaseController
 {
-    /**
-     * @Route("/", name="index", methods="GET")
-     */
+    #[Route('/', name: 'index', methods: ['GET', 'POST'], options: ['expose' => true])]
     public function index(Request $request): Response
     {
         $table = $this->createTable(DocumentTableType::class, [
@@ -47,11 +43,7 @@ class DocumentController extends BaseController
             ['table' => $table]);
     }
 
-    /**
-     * @Route("/export.{_format}", name="export", methods="GET",
-     *                             requirements={"_format"="csv|xlsx|pdf"})
-     *
-     */
+    #[Route("/export.{_format}", name: "export", methods: "GET", requirements: ["_format" => "csv|xlsx|pdf"])]
     public function export(MyExport $myExport, DocumentRepository $documentRepository, $_format): Response
     {
         $documents = $documentRepository->findByDepartement($this->getDepartement());
@@ -65,11 +57,7 @@ class DocumentController extends BaseController
         );
     }
 
-    /**
-     * @Route("/new", name="new", methods="GET|POST")
-     *
-     * @throws Exception
-     */
+    #[Route("/new", name: "new", methods: ['GET', 'POST'])]
     public function create(Request $request): Response
     {
         $document = new Document();
@@ -97,7 +85,7 @@ class DocumentController extends BaseController
 
         return $this->render('administration/document/new.html.twig', [
             'document' => $document,
-            'form'     => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 
@@ -140,7 +128,7 @@ class DocumentController extends BaseController
 
         return $this->render('administration/document/edit.html.twig', [
             'document' => $document,
-            'form'     => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/ActualiteTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 14:38
+ * @lastUpdate 29/08/2021 21:51
  */
 
 namespace App\Table;
@@ -24,6 +24,7 @@ use App\Components\Widget\Type\RowShowLinkType;
 use App\Components\Widget\WidgetBuilder;
 use App\Entity\Actualite;
 use App\Entity\Departement;
+use App\Form\Type\DatePickerType;
 use App\Form\Type\SearchType;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -44,12 +45,12 @@ class ActualiteTableType extends TableType
         $this->departement = $options['departement'];
 
         $builder->addFilter('search', SearchType::class);
-//        $builder->addFilter('from', DatepickerType::class, [
-//            'input_prefix_text' => 'Du',
-//        ]);
-//        $builder->addFilter('to', DatepickerType::class, [
-//            'input_prefix_text' => 'Au',
-//        ]);
+        $builder->addFilter('from', DatePickerType::class, [
+            'input_prefix_text' => 'Du',
+        ]);
+        $builder->addFilter('to', DatePickerType::class, [
+            'input_prefix_text' => 'Au',
+        ]);
 
 //        // Export button (use to export data)
         $builder->addWidget('export', ButtonDropdownType::class, [
@@ -71,12 +72,17 @@ class ActualiteTableType extends TableType
             },
         ]);
 
-        $builder->addColumn('titre', PropertyColumnType::class, ['label' => 'titre']);
-        $builder->addColumn('texte', PropertyColumnType::class, ['label' => 'texte']);
+        $builder->setLoadUrl('administration_actualite_index');
+
+        $builder->addColumn('titre', PropertyColumnType::class,
+            ['label' => 'table.titre', 'translation_domain' => 'messages']);
+        $builder->addColumn('texte', PropertyColumnType::class,
+            ['label' => 'table.texte', 'translation_domain' => 'messages']);
         $builder->addColumn('updated', DateColumnType::class, [
             'order' => 'DESC',
             'format' => 'd/m/Y',
-            'label' => 'updated',
+            'label' => 'table.updated',
+            'translation_domain' => 'messages'
         ]);
 
         $builder->addColumn('links', WidgetColumnType::class, [

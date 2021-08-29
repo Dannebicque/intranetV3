@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/ArticleTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 14:38
+ * @lastUpdate 29/08/2021 19:43
  */
 
 namespace App\Table;
@@ -22,6 +22,7 @@ use App\Components\Widget\Type\RowDuplicateLinkType;
 use App\Components\Widget\Type\RowEditLinkType;
 use App\Components\Widget\Type\RowShowLinkType;
 use App\Components\Widget\WidgetBuilder;
+use App\Form\Type\DatePickerType;
 use App\Table\ColumnType\CategorieArticleColumnType;
 use App\Table\ColumnType\SemestreColumnType;
 use App\Entity\Article;
@@ -47,12 +48,12 @@ class ArticleTableType extends TableType
         $this->departement = $options['departement'];
 
         $builder->addFilter('search', SearchType::class);
-//        $builder->addFilter('from', DatepickerType::class, [
-//            'input_prefix_text' => 'Du',
-//        ]);
-//        $builder->addFilter('to', DatepickerType::class, [
-//            'input_prefix_text' => 'Au',
-//        ]);
+        $builder->addFilter('from', DatePickerType::class, [
+            'input_prefix_text' => 'Du',
+        ]);
+        $builder->addFilter('to', DatePickerType::class, [
+            'input_prefix_text' => 'Au',
+        ]);
 
 //        // Export button (use to export data)
         $builder->addWidget('export', ButtonDropdownType::class, [

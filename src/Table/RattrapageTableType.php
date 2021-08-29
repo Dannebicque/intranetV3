@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/RattrapageTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 09:59
+ * @lastUpdate 29/08/2021 21:51
  */
 
 namespace App\Table;
@@ -19,8 +19,11 @@ use App\Components\Widget\Type\ButtonType;
 use App\Components\Widget\Type\LinkType;
 use App\Components\Widget\Type\RowDeleteLinkType;
 use App\Components\Widget\WidgetBuilder;
+use App\Entity\AnneeUniversitaire;
 use App\Entity\Etudiant;
 use App\Entity\Rattrapage;
+use App\Entity\Semestre;
+use App\Form\Type\DatePickerType;
 use App\Form\Type\SearchType;
 use App\Table\ColumnType\EtudiantColumnType;
 use App\Table\ColumnType\GroupeEtudiantColumnType;
@@ -34,10 +37,10 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class RattrapageTableType extends TableType
 {
-    private $semestre;
-    private $anneeUniversitaire;
+    private ?Semestre $semestre;
+    private ?AnneeUniversitaire $anneeUniversitaire;
     private $absences;
-    private $csrfToken;
+    private CsrfTokenManagerInterface $csrfToken;
 
     public function __construct(CsrfTokenManagerInterface $csrfToken)
     {
@@ -50,12 +53,12 @@ class RattrapageTableType extends TableType
         $this->anneeUniversitaire = $options['anneeUniversitaire'];
         $this->absences = $options['absences'];
         $builder->addFilter('search', SearchType::class);
-//        $builder->addFilter('from', DatepickerType::class, [
-//            'input_prefix_text' => 'From',
-//        ]);
-//        $builder->addFilter('to', DatepickerType::class, [
-//            'input_prefix_text' => 'To',
-//        ]);
+        $builder->addFilter('from', DatePickerType::class, [
+            'input_prefix_text' => 'From',
+        ]);
+        $builder->addFilter('to', DatePickerType::class, [
+            'input_prefix_text' => 'To',
+        ]);
 
 //        // Export button (use to export data)
         $builder->addWidget('export', ButtonDropdownType::class, [
@@ -77,30 +80,39 @@ class RattrapageTableType extends TableType
             },
         ]);
 //        $builder->add('select', CheckBoxColumnType::class);
-        $builder->addColumn('etudiant', EtudiantColumnType::class);
-        $builder->addColumn('groupes', GroupeEtudiantColumnType::class, ['label' => 'groupe']);
-        $builder->addColumn('typeIdMatiere', MatiereColumnType::class, ['label' => 'matiere']);
+        $builder->addColumn('etudiant', EtudiantColumnType::class,
+            ['label' => 'table.etudiant', 'translation_domain' => 'messages']);
+        $builder->addColumn('groupes', GroupeEtudiantColumnType::class,
+            ['label' => 'table.groupe', 'translation_domain' => 'messages']);
+        $builder->addColumn('typeIdMatiere', MatiereColumnType::class,
+            ['label' => 'table.matiere', 'translation_domain' => 'messages']);
         $builder->addColumn('personnel', PersonnelColumnType::class);
         $builder->addColumn('dateEval', DateColumnType::class, [
             'order' => 'DESC',
             'format' => 'd/m/Y',
-            'label' => 'date_evaluation',
+            'label' => 'table.date_evaluation',
+            'translation_domain' => 'messages',
         ]);
         $builder->addColumn('heureEval', DateColumnType::class, [
             'order' => 'DESC',
             'format' => 'h:i',
-            'label' => 'heure_evaluation',
+            'label' => 'table.heure_evaluation',
+            'translation_domain' => 'messages',
         ]);
         $builder->addColumn('created', DateColumnType::class, [
             'order' => 'DESC',
             'format' => 'd/m/Y',
-            'label' => 'date_demande',
+            'label' => 'table.date_demande',
+            'translation_domain' => 'messages',
         ]);
         $builder->addColumn('absenceJustifiee', StatusAbsenceColumnType::class,
             [
                 'absences' => $this->absences,
-                'label' => 'absence_justifiee',
+                'label' => 'table.absence_justifiee',
+                'translation_domain' => 'messages',
             ]);
+
+        $builder->setLoadUrl('administration_rattrapage_semestre_index', ['semestre' => $this->semestre->getId()]);
 
         $builder->addColumn('links', WidgetColumnType::class, [
             'build' => function(WidgetBuilder $builder, Rattrapage $s) {

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/DocumentTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 14:38
+ * @lastUpdate 29/08/2021 21:51
  */
 
 namespace App\Table;
@@ -22,14 +22,15 @@ use App\Components\Widget\Type\RowDuplicateLinkType;
 use App\Components\Widget\Type\RowEditLinkType;
 use App\Components\Widget\Type\RowShowLinkType;
 use App\Components\Widget\WidgetBuilder;
-use App\Table\ColumnType\CategorieArticleColumnType;
-use App\Table\ColumnType\SemestreColumnType;
 use App\Entity\Annee;
 use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Document;
 use App\Entity\Semestre;
+use App\Form\Type\DatePickerType;
 use App\Form\Type\SearchType;
+use App\Table\ColumnType\CategorieArticleColumnType;
+use App\Table\ColumnType\SemestreColumnType;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
@@ -49,12 +50,14 @@ class DocumentTableType extends TableType
         $this->departement = $options['departement'];
 
         $builder->addFilter('search', SearchType::class);
-//        $builder->addFilter('from', DatepickerType::class, [
-//            'input_prefix_text' => 'Du',
-//        ]);
-//        $builder->addFilter('to', DatepickerType::class, [
-//            'input_prefix_text' => 'Au',
-//        ]);
+        $builder->addFilter('from', DatePickerType::class, [
+            'input_prefix_text' => 'Du',
+        ]);
+        $builder->addFilter('to', DatePickerType::class, [
+            'input_prefix_text' => 'Au',
+        ]);
+
+        $builder->setLoadUrl('administration_document_index');
 
 //        // Export button (use to export data)
         $builder->addWidget('export', ButtonDropdownType::class, [
@@ -76,14 +79,19 @@ class DocumentTableType extends TableType
             },
         ]);
 
-        $builder->addColumn('libelle', PropertyColumnType::class, ['label' => 'titre']);
-        $builder->addColumn('typeFichier', PropertyColumnType::class, ['label' => 'type_fichier']);
-        $builder->addColumn('typeDocument', CategorieArticleColumnType::class, ['label' => 'categorie']);
-        $builder->addColumn('semestres', SemestreColumnType::class, ['label' => 'semestres']);
+        $builder->addColumn('libelle', PropertyColumnType::class,
+            ['label' => 'table.titre', 'translation_domain' => 'messages']);
+        $builder->addColumn('typeFichier', PropertyColumnType::class,
+            ['label' => 'table.type_fichier', 'translation_domain' => 'messages']);
+        $builder->addColumn('typeDocument', CategorieArticleColumnType::class,
+            ['label' => 'table.categorie', 'translation_domain' => 'messages']);
+        $builder->addColumn('semestres', SemestreColumnType::class,
+            ['label' => 'table.semestres', 'translation_domain' => 'messages']);
         $builder->addColumn('updated', DateColumnType::class, [
             'order' => 'DESC',
             'format' => 'd/m/Y',
-            'label' => 'updated',
+            'label' => 'table.updated',
+            'translation_domain' => 'messages',
         ]);
 
         $builder->addColumn('links', WidgetColumnType::class, [

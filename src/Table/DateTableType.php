@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/DateTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 14:38
+ * @lastUpdate 29/08/2021 21:51
  */
 
 namespace App\Table;
@@ -52,16 +52,13 @@ class DateTableType extends TableType
 
         $builder->addFilter('search', SearchType::class);
         $builder->addFilter('from', DatePickerType::class, [
-            'input_prefix' => 'Du'
+            'input_prefix_text' => 'Du'
         ]);
         $builder->addFilter('to', DatePickerType::class, [
-            'input_prefix' => 'Au',
+            'input_prefix_text' => 'Au',
         ]);
 
 //        // Export button (use to export data)
-        $builder->addWidget('add', AddLinkType::class, [
-            'route' => 'administration_date_new',
-        ]);
         $builder->addWidget('export', ButtonDropdownType::class, [
             'icon' => 'fas fa-download',
             'attr' => ['data-toggle' => 'dropdown'],
@@ -81,17 +78,21 @@ class DateTableType extends TableType
             },
         ]);
 
-        $builder->addColumn('libelle', PropertyColumnType::class, ['label' => 'libelle']);
-        $builder->addColumn('lieu', PropertyColumnType::class, ['label' => 'lieu']);
+        $builder->addColumn('libelle', PropertyColumnType::class,
+            ['label' => 'table.libelle', 'translation_domain' => 'messages']);
+        $builder->addColumn('lieu', PropertyColumnType::class,
+            ['label' => 'table.lieu', 'translation_domain' => 'messages']);
         $builder->addColumn('dateDebut', DateColumnType::class, [
             'order' => 'DESC',
             'format' => 'd/m/Y',
-            'label' => 'dateDebut',
+            'label' => 'table.dateDebut',
+            'translation_domain' => 'messages'
         ]);
         $builder->addColumn('heureDebut', DateColumnType::class, [
             'order' => 'DESC',
             'format' => 'H:i',
-            'label' => 'heureDebut',
+            'label' => 'table.heureDebut',
+            'translation_domain' => 'messages'
         ]);
         //$builder->add('semestres', SemestreColumnType::class, ['label' => 'semestres']);
 

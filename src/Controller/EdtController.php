@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/EdtController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/07/2021 17:05
+ * @lastUpdate 29/08/2021 21:51
  */
 
 namespace App\Controller;
@@ -12,6 +12,7 @@ namespace App\Controller;
 use App\Classes\Edt\MyEdtCelcat;
 use App\Classes\Edt\MyEdtExport;
 use App\Classes\Edt\MyEdtIntranet;
+use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\Pdf\MyPDF;
 use App\Entity\Constantes;
 use App\Entity\Semestre;
@@ -34,9 +35,14 @@ class EdtController extends BaseController
 {
     private MyEdtIntranet $myEdtIntranet;
     private MyEdtCelcat $myEdtCelcat;
+    private TypeMatiereManager $typeMatiereManager;
 
-    public function __construct(MyEdtIntranet $myEdt, MyEdtCelcat $myEdtCelcat)
-    {
+    public function __construct(
+        TypeMatiereManager $typeMatiereManager,
+        MyEdtIntranet $myEdt,
+        MyEdtCelcat $myEdtCelcat
+    ) {
+        $this->typeMatiereManager = $typeMatiereManager;
         $this->myEdtIntranet = $myEdt;
         $this->myEdtCelcat = $myEdtCelcat;
     }

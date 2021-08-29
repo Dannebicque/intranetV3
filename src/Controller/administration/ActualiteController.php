@@ -4,18 +4,18 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/ActualiteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 09:50
+ * @lastUpdate 29/08/2021 21:51
  */
 
 namespace App\Controller\administration;
 
 use App\Classes\MyExport;
 use App\Controller\BaseController;
-use App\Table\ActualiteTableType;
 use App\Entity\Actualite;
 use App\Entity\Constantes;
 use App\Form\ActualiteType;
 use App\Repository\ActualiteRepository;
+use App\Table\ActualiteTableType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -25,9 +25,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ActualiteController extends BaseController
 {
-    /**
-     * @Route("/", name="index", methods="GET")
-     */
+    #[Route('/', name: 'index', methods: ['GET', 'POST'], options: ['expose' => true])]
     public function index(
         Request $request
     ): Response {
