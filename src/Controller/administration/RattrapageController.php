@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/RattrapageController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/05/2021 14:32
+ * @lastUpdate 29/08/2021 09:50
  */
 
 namespace App\Controller\administration;
@@ -12,7 +12,7 @@ namespace App\Controller\administration;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\MyExport;
 use App\Controller\BaseController;
-use App\DataTable\RattrapageTableType;
+use App\Table\RattrapageTableType;
 use App\Entity\Constantes;
 use App\Entity\Rattrapage;
 use App\Entity\Semestre;

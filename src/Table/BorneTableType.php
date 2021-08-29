@@ -1,43 +1,41 @@
 <?php
 /*
  * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/DataTable/BorneTableType.php
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/BorneTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/05/2021 16:03
+ * @lastUpdate 29/08/2021 09:59
  */
 
-namespace App\DataTable;
+namespace App\Table;
 
-use App\DataTable\ColumnType\IconeColumnType;
-use App\DataTable\ColumnType\SemestreColumnType;
-use App\DataTable\Widget\RowDeleteLinkType;
-use App\DataTable\Widget\RowDuplicateLinkType;
-use App\DataTable\Widget\RowEditLinkType;
-use App\DataTable\Widget\RowShowLinkType;
+use App\Components\Table\Adapter\EntityAdapter;
+use App\Components\Table\Column\BooleanColumnType;
+use App\Components\Table\Column\DateColumnType;
+use App\Components\Table\Column\PropertyColumnType;
+use App\Components\Table\Column\WidgetColumnType;
+use App\Components\Table\TableBuilder;
+use App\Components\Table\TableType;
+use App\Components\Widget\Type\ButtonDropdownType;
+use App\Components\Widget\Type\LinkType;
+use App\Components\Widget\Type\RowDeleteLinkType;
+use App\Components\Widget\Type\RowDuplicateLinkType;
+use App\Components\Widget\Type\RowEditLinkType;
+use App\Components\Widget\Type\RowShowLinkType;
+use App\Components\Widget\WidgetBuilder;
+use App\Table\ColumnType\IconeColumnType;
+use App\Table\ColumnType\SemestreColumnType;
 use App\Entity\Annee;
 use App\Entity\Borne;
 use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Semestre;
+use App\Form\Type\SearchType;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
-use Umbrella\CoreBundle\Component\DataTable\Adapter\EntityAdapter;
-use Umbrella\CoreBundle\Component\DataTable\Column\BooleanColumnType;
-use Umbrella\CoreBundle\Component\DataTable\Column\DateColumnType;
-use Umbrella\CoreBundle\Component\DataTable\Column\PropertyColumnType;
-use Umbrella\CoreBundle\Component\DataTable\Column\WidgetColumnType;
-use Umbrella\CoreBundle\Component\DataTable\DataTableBuilder;
-use Umbrella\CoreBundle\Component\DataTable\DataTableType;
-use Umbrella\CoreBundle\Component\DataTable\ToolbarBuilder;
-use Umbrella\CoreBundle\Component\Widget\Type\ButtonDropdownType;
-use Umbrella\CoreBundle\Component\Widget\Type\LinkType;
-use Umbrella\CoreBundle\Component\Widget\WidgetBuilder;
-use Umbrella\CoreBundle\Form\DatepickerType;
-use Umbrella\CoreBundle\Form\SearchType;
 
-class BorneTableType extends DataTableType
+class BorneTableType extends TableType
 {
     private ?Departement $departement;
     private CsrfTokenManagerInterface $csrfToken;
@@ -47,18 +45,20 @@ class BorneTableType extends DataTableType
         $this->csrfToken = $csrfToken;
     }
 
-    public function buildToolbar(ToolbarBuilder $builder, array $options): void
+    public function buildTable(TableBuilder $builder, array $options): void
     {
+        $this->departement = $options['departement'];
+
         $builder->addFilter('search', SearchType::class);
-        $builder->addFilter('from', DatepickerType::class, [
-            'input_prefix_text' => 'Du',
-        ]);
-        $builder->addFilter('to', DatepickerType::class, [
-            'input_prefix_text' => 'Au',
-        ]);
+//        $builder->addFilter('from', DatepickerType::class, [
+//            'input_prefix_text' => 'Du',
+//        ]);
+//        $builder->addFilter('to', DatepickerType::class, [
+//            'input_prefix_text' => 'Au',
+//        ]);
 
         $builder->addWidget('export', ButtonDropdownType::class, [
-            'icon' => 'mdi mdi-download',
+            'icon' => 'fas fa-download',
             'attr' => ['data-toggle' => 'dropdown'],
             'build' => function(WidgetBuilder $builder) {
                 $builder->add('pdf', LinkType::class, [
@@ -75,30 +75,25 @@ class BorneTableType extends DataTableType
                 ]);
             },
         ]);
-    }
 
-    public function buildTable(DataTableBuilder $builder, array $options): void
-    {
-        $this->departement = $options['departement'];
-
-        $builder->add('icone', IconeColumnType::class, ['label' => 'icone']);
-        $builder->add('message', PropertyColumnType::class, ['label' => 'message']);
-        $builder->add('dateDebutPublication', DateColumnType::class, [
+        $builder->addColumn('icone', IconeColumnType::class, ['label' => 'icone']);
+        $builder->addColumn('message', PropertyColumnType::class, ['label' => 'message']);
+        $builder->addColumn('dateDebutPublication', DateColumnType::class, [
             'order' => 'DESC',
             'format' => 'd/m/Y',
             'label' => 'dateDebutPublication',
         ]);
-        $builder->add('dateFinPublication', DateColumnType::class, [
+        $builder->addColumn('dateFinPublication', DateColumnType::class, [
             'format' => 'd/m/Y',
             'label' => 'dateFinPublication',
         ]);
-        $builder->add('visible', BooleanColumnType::class, [
+        $builder->addColumn('visible', BooleanColumnType::class, [
         ]);
-        $builder->add('semestres', SemestreColumnType::class, [
+        $builder->addColumn('semestres', SemestreColumnType::class, [
             'label' => 'semestres',
         ]);
 
-        $builder->add('links', WidgetColumnType::class, [
+        $builder->addColumn('links', WidgetColumnType::class, [
             'build' => function(WidgetBuilder $builder, Borne $s) {
                 $builder->add('duplicate', RowDuplicateLinkType::class, [
                     'route' => 'administration_borne_duplicate',

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/DateController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/05/2021 20:35
+ * @lastUpdate 29/08/2021 10:05
  */
 
 namespace App\Controller\administration;
@@ -12,11 +12,11 @@ namespace App\Controller\administration;
 use App\Classes\Exporter\ExporterManager;
 use App\Classes\Exporter\SourceIterator\DoctrineSourceIterator;
 use App\Controller\BaseController;
-use App\DataTable\DateTableType;
 use App\Entity\Constantes;
 use App\Entity\Date;
 use App\Form\DatesType;
 use App\Repository\DateRepository;
+use App\Table\DateTableType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -26,9 +26,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class DateController extends BaseController
 {
-    /**
-     * @Route("/", name="administration_date_index", methods="GET")
-     */
+    #[Route("/", name: "administration_date_index", options: ['expose' => true], methods: ['GET', 'POST'])]
     public function index(Request $request): Response
     {
         $table = $this->createTable(DateTableType::class, [
@@ -40,7 +38,10 @@ class DateController extends BaseController
             return $table->getCallbackResponse();
         }
 
-        return $this->render('administration/date/index.html.twig', ['table' => $table]);
+        return $this->render('administration/date/index.html.twig',
+            [
+                'table' => $table,
+            ]);
     }
 
     /**

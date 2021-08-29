@@ -1,39 +1,38 @@
 <?php
 /*
  * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/DataTable/RattrapageTableType.php
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/RattrapageTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/05/2021 16:35
+ * @lastUpdate 29/08/2021 09:59
  */
 
-namespace App\DataTable;
+namespace App\Table;
 
-use App\DataTable\ColumnType\EtudiantColumnType;
-use App\DataTable\ColumnType\GroupeEtudiantColumnType;
-use App\DataTable\ColumnType\MatiereColumnType;
-use App\DataTable\ColumnType\PersonnelColumnType;
-use App\DataTable\ColumnType\StatusAbsenceColumnType;
-use App\DataTable\Widget\RowDeleteLinkType;
+use App\Components\Table\Adapter\EntityAdapter;
+use App\Components\Table\Column\DateColumnType;
+use App\Components\Table\Column\WidgetColumnType;
+use App\Components\Table\TableBuilder;
+use App\Components\Table\TableType;
+use App\Components\Widget\Type\ButtonDropdownType;
+use App\Components\Widget\Type\ButtonType;
+use App\Components\Widget\Type\LinkType;
+use App\Components\Widget\Type\RowDeleteLinkType;
+use App\Components\Widget\WidgetBuilder;
 use App\Entity\Etudiant;
 use App\Entity\Rattrapage;
+use App\Form\Type\SearchType;
+use App\Table\ColumnType\EtudiantColumnType;
+use App\Table\ColumnType\GroupeEtudiantColumnType;
+use App\Table\ColumnType\MatiereColumnType;
+use App\Table\ColumnType\PersonnelColumnType;
+use App\Table\ColumnType\StatusAbsenceColumnType;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
-use Umbrella\CoreBundle\Component\DataTable\Adapter\EntityAdapter;
-use Umbrella\CoreBundle\Component\DataTable\Column\DateColumnType;
-use Umbrella\CoreBundle\Component\DataTable\Column\WidgetColumnType;
-use Umbrella\CoreBundle\Component\DataTable\DataTableBuilder;
-use Umbrella\CoreBundle\Component\DataTable\DataTableType;
-use Umbrella\CoreBundle\Component\DataTable\ToolbarBuilder;
-use Umbrella\CoreBundle\Component\Widget\Type\ButtonDropdownType;
-use Umbrella\CoreBundle\Component\Widget\Type\ButtonType;
-use Umbrella\CoreBundle\Component\Widget\Type\LinkType;
-use Umbrella\CoreBundle\Component\Widget\WidgetBuilder;
-use Umbrella\CoreBundle\Form\DatepickerType;
-use Umbrella\CoreBundle\Form\SearchType;
 
-class RattrapageTableType extends DataTableType
+
+class RattrapageTableType extends TableType
 {
     private $semestre;
     private $anneeUniversitaire;
@@ -45,20 +44,22 @@ class RattrapageTableType extends DataTableType
         $this->csrfToken = $csrfToken;
     }
 
-    public function buildToolbar(ToolbarBuilder $builder, array $options)
+    public function buildTable(TableBuilder $builder, array $options)
     {
         $this->semestre = $options['semestre'];
+        $this->anneeUniversitaire = $options['anneeUniversitaire'];
+        $this->absences = $options['absences'];
         $builder->addFilter('search', SearchType::class);
-        $builder->addFilter('from', DatepickerType::class, [
-            'input_prefix_text' => 'From',
-        ]);
-        $builder->addFilter('to', DatepickerType::class, [
-            'input_prefix_text' => 'To',
-        ]);
+//        $builder->addFilter('from', DatepickerType::class, [
+//            'input_prefix_text' => 'From',
+//        ]);
+//        $builder->addFilter('to', DatepickerType::class, [
+//            'input_prefix_text' => 'To',
+//        ]);
 
 //        // Export button (use to export data)
         $builder->addWidget('export', ButtonDropdownType::class, [
-            'icon' => 'mdi mdi-download',
+            'icon' => 'fas fa-download',
             'attr' => ['data-toggle' => 'dropdown'],
             'build' => function(WidgetBuilder $builder) {
                 $builder->add('pdf', LinkType::class, [
@@ -75,41 +76,33 @@ class RattrapageTableType extends DataTableType
                 ]);
             },
         ]);
-    }
-
-    public function buildTable(DataTableBuilder $builder, array $options)
-    {
-        $this->semestre = $options['semestre'];
-        $this->anneeUniversitaire = $options['anneeUniversitaire'];
-        $this->absences = $options['absences'];
-
 //        $builder->add('select', CheckBoxColumnType::class);
-        $builder->add('etudiant', EtudiantColumnType::class);
-        $builder->add('groupes', GroupeEtudiantColumnType::class, ['label' => 'groupe']);
-        $builder->add('typeIdMatiere', MatiereColumnType::class, ['label' => 'matiere']);
-        $builder->add('personnel', PersonnelColumnType::class);
-        $builder->add('dateEval', DateColumnType::class, [
+        $builder->addColumn('etudiant', EtudiantColumnType::class);
+        $builder->addColumn('groupes', GroupeEtudiantColumnType::class, ['label' => 'groupe']);
+        $builder->addColumn('typeIdMatiere', MatiereColumnType::class, ['label' => 'matiere']);
+        $builder->addColumn('personnel', PersonnelColumnType::class);
+        $builder->addColumn('dateEval', DateColumnType::class, [
             'order' => 'DESC',
             'format' => 'd/m/Y',
             'label' => 'date_evaluation',
         ]);
-        $builder->add('heureEval', DateColumnType::class, [
+        $builder->addColumn('heureEval', DateColumnType::class, [
             'order' => 'DESC',
             'format' => 'h:i',
             'label' => 'heure_evaluation',
         ]);
-        $builder->add('created', DateColumnType::class, [
+        $builder->addColumn('created', DateColumnType::class, [
             'order' => 'DESC',
             'format' => 'd/m/Y',
             'label' => 'date_demande',
         ]);
-        $builder->add('absenceJustifiee', StatusAbsenceColumnType::class,
+        $builder->addColumn('absenceJustifiee', StatusAbsenceColumnType::class,
             [
                 'absences' => $this->absences,
                 'label' => 'absence_justifiee',
             ]);
 
-        $builder->add('links', WidgetColumnType::class, [
+        $builder->addColumn('links', WidgetColumnType::class, [
             'build' => function(WidgetBuilder $builder, Rattrapage $s) {
                 switch ($s->getEtatDemande()) {
                     case Rattrapage::DEMANDE_ACCEPTEE:
@@ -186,33 +179,7 @@ class RattrapageTableType extends DataTableType
             'semestre' => null,
             'anneeUniversitaire' => null,
             'absences' => null,
+            'exportable' => true,
         ]);
-
-//        $resolver
-//            ->define('administration_etudiant_show')
-//            ->default(true)
-//            ->allowedTypes('bool');
-//
-        $resolver
-            ->define('exportable')
-            ->default(true)
-            ->allowedTypes('bool');
-
-//        $resolver
-//            ->define('editable')
-//            ->default(false)
-//            ->allowedTypes('bool');
-
-//        // filter table depending of options
-//        $resolver
-//            ->define('mission_status')
-//            ->default(null)
-//            ->allowedValues(
-//                SpaceMission::MISSION_FAILURE,
-//                SpaceMission::MISSION_PARTIAL_FAILURE,
-//                SpaceMission::MISSION_PRELAUNCH_FAILURE,
-//                SpaceMission::MISSION_SUCCESS,
-//                null
-//            );
     }
 }

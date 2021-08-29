@@ -1,37 +1,35 @@
 <?php
 /*
  * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/DataTable/ActualiteTableType.php
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/ActualiteTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/05/2021 14:50
+ * @lastUpdate 29/08/2021 14:38
  */
 
-namespace App\DataTable;
+namespace App\Table;
 
-use App\DataTable\Widget\RowDeleteLinkType;
-use App\DataTable\Widget\RowDuplicateLinkType;
-use App\DataTable\Widget\RowEditLinkType;
-use App\DataTable\Widget\RowShowLinkType;
+use App\Components\Table\Adapter\EntityAdapter;
+use App\Components\Table\Column\DateColumnType;
+use App\Components\Table\Column\PropertyColumnType;
+use App\Components\Table\Column\WidgetColumnType;
+use App\Components\Table\TableBuilder;
+use App\Components\Table\TableType;
+use App\Components\Widget\Type\ButtonDropdownType;
+use App\Components\Widget\Type\LinkType;
+use App\Components\Widget\Type\RowDeleteLinkType;
+use App\Components\Widget\Type\RowDuplicateLinkType;
+use App\Components\Widget\Type\RowEditLinkType;
+use App\Components\Widget\Type\RowShowLinkType;
+use App\Components\Widget\WidgetBuilder;
 use App\Entity\Actualite;
 use App\Entity\Departement;
+use App\Form\Type\SearchType;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
-use Umbrella\CoreBundle\Component\DataTable\Adapter\EntityAdapter;
-use Umbrella\CoreBundle\Component\DataTable\Column\DateColumnType;
-use Umbrella\CoreBundle\Component\DataTable\Column\PropertyColumnType;
-use Umbrella\CoreBundle\Component\DataTable\Column\WidgetColumnType;
-use Umbrella\CoreBundle\Component\DataTable\DataTableBuilder;
-use Umbrella\CoreBundle\Component\DataTable\DataTableType;
-use Umbrella\CoreBundle\Component\DataTable\ToolbarBuilder;
-use Umbrella\CoreBundle\Component\Widget\Type\ButtonDropdownType;
-use Umbrella\CoreBundle\Component\Widget\Type\LinkType;
-use Umbrella\CoreBundle\Component\Widget\WidgetBuilder;
-use Umbrella\CoreBundle\Form\DatepickerType;
-use Umbrella\CoreBundle\Form\SearchType;
 
-class ActualiteTableType extends DataTableType
+class ActualiteTableType extends TableType
 {
     private ?Departement $departement;
     private CsrfTokenManagerInterface $csrfToken;
@@ -41,19 +39,21 @@ class ActualiteTableType extends DataTableType
         $this->csrfToken = $csrfToken;
     }
 
-    public function buildToolbar(ToolbarBuilder $builder, array $options)
+    public function buildTable(TableBuilder $builder, array $options)
     {
+        $this->departement = $options['departement'];
+
         $builder->addFilter('search', SearchType::class);
-        $builder->addFilter('from', DatepickerType::class, [
-            'input_prefix_text' => 'Du',
-        ]);
-        $builder->addFilter('to', DatepickerType::class, [
-            'input_prefix_text' => 'Au',
-        ]);
+//        $builder->addFilter('from', DatepickerType::class, [
+//            'input_prefix_text' => 'Du',
+//        ]);
+//        $builder->addFilter('to', DatepickerType::class, [
+//            'input_prefix_text' => 'Au',
+//        ]);
 
 //        // Export button (use to export data)
         $builder->addWidget('export', ButtonDropdownType::class, [
-            'icon' => 'mdi mdi-download',
+            'icon' => 'fas fa-download',
             'attr' => ['data-toggle' => 'dropdown'],
             'build' => function(WidgetBuilder $builder) {
                 $builder->add('pdf', LinkType::class, [
@@ -70,21 +70,16 @@ class ActualiteTableType extends DataTableType
                 ]);
             },
         ]);
-    }
 
-    public function buildTable(DataTableBuilder $builder, array $options)
-    {
-        $this->departement = $options['departement'];
-
-        $builder->add('titre', PropertyColumnType::class, ['label' => 'titre']);
-        $builder->add('texte', PropertyColumnType::class, ['label' => 'texte']);
-        $builder->add('updated', DateColumnType::class, [
+        $builder->addColumn('titre', PropertyColumnType::class, ['label' => 'titre']);
+        $builder->addColumn('texte', PropertyColumnType::class, ['label' => 'texte']);
+        $builder->addColumn('updated', DateColumnType::class, [
             'order' => 'DESC',
             'format' => 'd/m/Y',
             'label' => 'updated',
         ]);
 
-        $builder->add('links', WidgetColumnType::class, [
+        $builder->addColumn('links', WidgetColumnType::class, [
             'build' => function(WidgetBuilder $builder, Actualite $s) {
                 $builder->add('duplicate', RowDuplicateLinkType::class, [
                     'route' => 'administration_actualite_duplicate',

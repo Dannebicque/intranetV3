@@ -4,14 +4,14 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/ArticleController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/05/2021 16:03
+ * @lastUpdate 29/08/2021 09:50
  */
 
 namespace App\Controller\administration;
 
 use App\Classes\MyExport;
 use App\Controller\BaseController;
-use App\DataTable\ArticleTableType;
+use App\Table\ArticleTableType;
 use App\Entity\Article;
 use App\Entity\ArticleCategorie;
 use App\Entity\Constantes;

@@ -1,41 +1,38 @@
 <?php
 /*
  * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/DataTable/DateTableType.php
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/ArticleTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/05/2021 16:35
+ * @lastUpdate 29/08/2021 14:38
  */
 
-namespace App\DataTable;
+namespace App\Table;
 
-use App\DataTable\ColumnType\SemestreColumnType;
-use App\DataTable\Widget\RowDeleteLinkType;
-use App\DataTable\Widget\RowDuplicateLinkType;
-use App\DataTable\Widget\RowEditLinkType;
-use App\DataTable\Widget\RowShowLinkType;
-use App\Entity\Annee;
-use App\Entity\Date;
+use App\Components\Table\Adapter\EntityAdapter;
+use App\Components\Table\Column\DateColumnType;
+use App\Components\Table\Column\PropertyColumnType;
+use App\Components\Table\Column\WidgetColumnType;
+use App\Components\Table\TableBuilder;
+use App\Components\Table\TableType;
+use App\Components\Widget\Type\ButtonDropdownType;
+use App\Components\Widget\Type\LinkType;
+use App\Components\Widget\Type\RowDeleteLinkType;
+use App\Components\Widget\Type\RowDuplicateLinkType;
+use App\Components\Widget\Type\RowEditLinkType;
+use App\Components\Widget\Type\RowShowLinkType;
+use App\Components\Widget\WidgetBuilder;
+use App\Table\ColumnType\CategorieArticleColumnType;
+use App\Table\ColumnType\SemestreColumnType;
+use App\Entity\Article;
+use App\Entity\ArticleCategorie;
 use App\Entity\Departement;
-use App\Entity\Diplome;
-use App\Entity\Semestre;
+use App\Form\Type\SearchType;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
-use Umbrella\CoreBundle\Component\DataTable\Adapter\EntityAdapter;
-use Umbrella\CoreBundle\Component\DataTable\Column\DateColumnType;
-use Umbrella\CoreBundle\Component\DataTable\Column\PropertyColumnType;
-use Umbrella\CoreBundle\Component\DataTable\Column\WidgetColumnType;
-use Umbrella\CoreBundle\Component\DataTable\DataTableBuilder;
-use Umbrella\CoreBundle\Component\DataTable\DataTableType;
-use Umbrella\CoreBundle\Component\DataTable\ToolbarBuilder;
-use Umbrella\CoreBundle\Component\Widget\Type\ButtonDropdownType;
-use Umbrella\CoreBundle\Component\Widget\Type\LinkType;
-use Umbrella\CoreBundle\Component\Widget\WidgetBuilder;
-use Umbrella\CoreBundle\Form\DatepickerType;
-use Umbrella\CoreBundle\Form\SearchType;
 
-class DateTableType extends DataTableType
+class ArticleTableType extends TableType
 {
     private ?Departement $departement;
     private CsrfTokenManagerInterface $csrfToken;
@@ -45,71 +42,64 @@ class DateTableType extends DataTableType
         $this->csrfToken = $csrfToken;
     }
 
-    public function buildToolbar(ToolbarBuilder $builder, array $options): void
+    public function buildTable(TableBuilder $builder, array $options): void
     {
+        $this->departement = $options['departement'];
+
         $builder->addFilter('search', SearchType::class);
-        $builder->addFilter('from', DatepickerType::class, [
-            'input_prefix_text' => 'Du',
-        ]);
-        $builder->addFilter('to', DatepickerType::class, [
-            'input_prefix_text' => 'Au',
-        ]);
+//        $builder->addFilter('from', DatepickerType::class, [
+//            'input_prefix_text' => 'Du',
+//        ]);
+//        $builder->addFilter('to', DatepickerType::class, [
+//            'input_prefix_text' => 'Au',
+//        ]);
 
 //        // Export button (use to export data)
         $builder->addWidget('export', ButtonDropdownType::class, [
-            'icon' => 'mdi mdi-download',
+            'icon' => 'fas fa-download',
             'attr' => ['data-toggle' => 'dropdown'],
             'build' => function(WidgetBuilder $builder) {
                 $builder->add('pdf', LinkType::class, [
-                    'route' => 'administration_date_export',
+                    'route' => 'administration_article_export',
                     'route_params' => ['_format' => 'pdf'],
                 ]);
                 $builder->add('csv', LinkType::class, [
-                    'route' => 'administration_date_export',
+                    'route' => 'administration_article_export',
                     'route_params' => ['_format' => 'csv'],
                 ]);
                 $builder->add('excel', LinkType::class, [
-                    'route' => 'administration_date_export',
+                    'route' => 'administration_article_export',
                     'route_params' => ['_format' => 'xlsx'],
                 ]);
             },
         ]);
-    }
 
-    public function buildTable(DataTableBuilder $builder, array $options): void
-    {
-        $this->departement = $options['departement'];
-
-        $builder->add('libelle', PropertyColumnType::class, ['label' => 'libelle']);
-        $builder->add('lieu', PropertyColumnType::class, ['label' => 'lieu']);
-        $builder->add('dateDebut', DateColumnType::class, [
+        $builder->addColumn('titre', PropertyColumnType::class, ['label' => 'titre']);
+        $builder->addColumn('texte', PropertyColumnType::class, ['label' => 'texte']);
+        $builder->addColumn('categorie', CategorieArticleColumnType::class, ['label' => 'categorie']);
+        $builder->addColumn('semestres', SemestreColumnType::class, ['label' => 'semestres']);
+        $builder->addColumn('updated', DateColumnType::class, [
             'order' => 'DESC',
             'format' => 'd/m/Y',
-            'label' => 'dateDebut',
+            'label' => 'updated',
         ]);
-        $builder->add('heureDebut', DateColumnType::class, [
-            'order' => 'DESC',
-            'format' => 'H:i',
-            'label' => 'heureDebut',
-        ]);
-        $builder->add('semestres', SemestreColumnType::class, ['label' => 'semestres']);
 
-        $builder->add('links', WidgetColumnType::class, [
-            'build' => function(WidgetBuilder $builder, Date $s) {
+        $builder->addColumn('links', WidgetColumnType::class, [
+            'build' => function(WidgetBuilder $builder, Article $s) {
                 $builder->add('duplicate', RowDuplicateLinkType::class, [
-                    'route' => 'administration_date_duplicate',
+                    'route' => 'administration_article_duplicate',
                     'route_params' => ['id' => $s->getId()],
                     'xhr' => false,
                 ]);
                 $builder->add('show', RowShowLinkType::class, [
-                    'route' => 'administration_date_show',
+                    'route' => 'administration_article_show',
                     'route_params' => [
                         'id' => $s->getId(),
                     ],
                     'xhr' => false,
                 ]);
                 $builder->add('edit', RowEditLinkType::class, [
-                    'route' => 'administration_date_edit',
+                    'route' => 'administration_article_edit',
                     'route_params' => [
                         'id' => $s->getId(),
                     ],
@@ -117,7 +107,7 @@ class DateTableType extends DataTableType
                 ]);
                 $builder->add('delete', RowDeleteLinkType::class, [
                     'attr' => [
-                        'data-href' => 'administration_date_delete',
+                        'data-href' => 'administration_article_delete',
                         'data-uuid' => $s->getId(),
                         'data-csrf' => $this->csrfToken->getToken('delete' . $s->getId()),
                     ],
@@ -126,14 +116,12 @@ class DateTableType extends DataTableType
         ]);
 
         $builder->useAdapter(EntityAdapter::class, [
-            'class' => Date::class,
+            'class' => Article::class,
             'fetch_join_collection' => false,
             'query' => function(QueryBuilder $qb, array $formData) {
-                $qb->innerJoin('e.semestres', 'c')//récupération de la jointure dans la table dédiée
-                ->innerJoin(Semestre::class, 's', 'WITH', 'c.id = s.id')
-                    ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
-                    ->innerJoin(Diplome::class, 'd', 'WITH', 'a.diplome = d.id')
-                    ->where('d.departement = :departement')
+                $qb
+                    ->innerJoin(ArticleCategorie::class, 'c', 'WITH', 'c.id = e.categorie')
+                    ->where('c.departement = :departement')
                     ->setParameter('departement', $this->departement->getId());
 
                 if (isset($formData['search'])) {

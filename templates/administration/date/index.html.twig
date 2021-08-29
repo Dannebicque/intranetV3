@@ -11,10 +11,17 @@
 {% endblock %}
 
 {% block content %}
+    {# <div class="card"> #}
+    {# <h4 class="card-title">{{ 'adm.date.index.heading'|trans }}</h4> #}
+    {# <div class="card-body"> #}
+    {# {{ table_render(tableau) }} #}
+    {# </div> #}
+    {# </div> #}
+
     <div class="card">
         <h4 class="card-title">{{ 'adm.date.index.heading'|trans }}</h4>
         <div class="card-body">
-            {{ render_table(table) }}
+            {{ table_render(table) }}
         </div>
     </div>
 {% endblock %}

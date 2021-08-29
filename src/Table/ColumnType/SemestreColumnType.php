@@ -1,18 +1,18 @@
 <?php
 /*
  * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/DataTable/ColumnType/GroupeEtudiantColumnType.php
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/ColumnType/SemestreColumnType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/05/2021 16:03
+ * @lastUpdate 29/08/2021 09:32
  */
 
-namespace App\DataTable\ColumnType;
+namespace App\Table\ColumnType;
 
+use App\Components\Table\Column\PropertyColumnType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Umbrella\CoreBundle\Component\DataTable\Column\PropertyColumnType;
 
-class GroupeEtudiantColumnType extends PropertyColumnType
+class SemestreColumnType extends PropertyColumnType
 {
     public function renderProperty($value, array $options): string
     {
@@ -20,14 +20,14 @@ class GroupeEtudiantColumnType extends PropertyColumnType
             return 'err';
         }
         $html = '';
-        foreach ($value as $gr) {
-            $html .= '<span class="badge badge-success mr-2">' . $gr->getLibelle() . '</span>';
+        foreach ($value as $semestre) {
+            $html .= '<span class="badge badge-success mr-2">' . $semestre->getLibelle() . '</span>';
         }
 
         return $html;
     }
 
-    public function configureOptions(OptionsResolver $resolver): void
+    public function configureOptions(OptionsResolver $resolver)
     {
         parent::configureOptions($resolver);
         $resolver->setDefault('is_safe_html', true);

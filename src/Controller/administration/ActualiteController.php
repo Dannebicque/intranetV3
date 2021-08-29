@@ -4,14 +4,14 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/ActualiteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/05/2021 16:07
+ * @lastUpdate 29/08/2021 09:50
  */
 
 namespace App\Controller\administration;
 
 use App\Classes\MyExport;
 use App\Controller\BaseController;
-use App\DataTable\ActualiteTableType;
+use App\Table\ActualiteTableType;
 use App\Entity\Actualite;
 use App\Entity\Constantes;
 use App\Form\ActualiteType;
