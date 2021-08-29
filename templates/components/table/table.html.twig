@@ -8,7 +8,7 @@
 <my-table {{ _self.attributes(attr) }}>
 
     {% block toolbar %}
-        {{ fitlers_render(filters) }}
+        {{ fitlers_render(toolbar) }}
     {% endblock %}
 
     {% block table %}
@@ -23,12 +23,6 @@
                                     {{- (column.label) | trans([], column.translation_domain) | raw -}}
                                 {% else -%}
                                     {{- (column.label) | raw -}}
-                                {% endif -%}
-                            {% else %}
-                                {%- if column.translation_domain %}
-                                    {{- (column.name) | trans([], column.translation_domain) | raw -}}
-                                {% else -%}
-                                    {{- (column.name) | raw -}}
                                 {% endif -%}
                             {% endif -%}
 
@@ -45,20 +39,22 @@
     {% endblock %}
 
     {% block paging %}
-        <div class="row" id="{{ paging_attr.id }}_bloc">
-            <div class="col-3">
-                <select class="form-control" id="{{ paging_attr.id }}_select">
-                    {% for length in paging_attr.lengths %}
-                        <option value="{{ length }}" {% if length == paging_attr.length %}selected="selected"{% endif %}>{{ length }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div class="col-3" id="{{ paging_attr.id }}_middle"></div>
-            <div class="col-6">
-                <nav id="{{ paging_attr.id }}_nav">
+        {% if paging == true %}
+            <div class="row" id="{{ paging_attr.id }}_bloc">
+                <div class="col-3">
+                    <select class="form-control" id="{{ paging_attr.id }}_select">
+                        {% for length in paging_attr.lengthMenu %}
+                            <option value="{{ length }}" {% if length == paging_attr.pageLength %}selected="selected"{% endif %}>{{ length }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-3" id="{{ paging_attr.id }}_middle"></div>
+                <div class="col-6">
+                    <nav id="{{ paging_attr.id }}_nav">
 
-                </nav>
+                    </nav>
+                </div>
             </div>
-        </div>
+        {% endif %}
     {% endblock %}
 </my-table>

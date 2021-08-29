@@ -4,13 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/Column/DetailsHandleColumnType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/07/2021 18:38
+ * @lastUpdate 29/08/2021 14:37
  */
 
 namespace App\Components\Table\Column;
 
+use App\Utils\HtmlUtils;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Umbrella\CoreBundle\Utils\HtmlUtils;
 
 class DetailsHandleColumnType extends ColumnType
 {
@@ -27,7 +27,7 @@ class DetailsHandleColumnType extends ColumnType
             : $options['expanded'];
 
         return sprintf(
-            '<a href data-tag="dt:details" data-init-state="%s" row-details="%s" class="row-details-handle"><i class="mdi"></i></a>',
+            '<a href data-tag="dt:details" data-init-state="%s" row-details="%s" class="row-details-handle"><i class="fas"></i></a>',
             $expanded ? 'expanded' : 'collapsed',
             HtmlUtils::escape($details, 'html_attr')
         );

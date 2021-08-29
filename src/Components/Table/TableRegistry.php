@@ -4,86 +4,86 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/TableRegistry.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/08/2021 16:57
+ * @lastUpdate 29/08/2021 14:37
  */
 
 namespace App\Components\Table;
 
-
-use App\Components\Table\Actions\AbstractButtonAction;
-use App\Components\Table\Adapter\AbstractAdapter;
+use App\Components\Table\Adapter\TableAdapter;
 use App\Components\Table\Column\ColumnType;
-use App\Components\Table\Filters\AbstractFilter;
 
+/**
+ * Registry used for Columns / adapter and DataTableType
+ */
 class TableRegistry
 {
-
-    public const TAG_ADAPTER = 'da.table.adapter';
-    public const TAG_COLUMN_TYPES = 'da.table.columntypes';
-    public const TAG_FILTERS = 'da.table.filters';
-    public const TAG_ACTIONS = 'da.table.actions';
     public const TAG_TABLE_TYPE = 'da.table.type';
+    public const TAG_COLUMN_TYPE = 'da.table.columntype';
+    public const TAG_ADAPTER = 'da.table.adapter';
 
-    private array $columnTypes = [];
-    private array $adapters = [];
-    private array $filters = [];
-    private array $actions = [];
-    private array $tablesType = [];
+    /**
+     * @var TableType[]
+     */
+    protected array $types = [];
 
-    public function registerAdapter(string $name, AbstractAdapter $adapter)
+    /**
+     * @var ColumnType[]
+     */
+    protected array $columnTypes = [];
+
+    /**
+     * @var TableAdapter[]
+     */
+    protected array $adapters = [];
+
+    // DataTable Type
+
+    public function registerType(string $name, TableType $type)
+    {
+        $this->types[$name] = $type;
+    }
+
+    public function getType(string $name): TableType
+    {
+        if (!isset($this->types[$name])) {
+            throw new \InvalidArgumentException(sprintf('Table "%s" doesn\'t exist, maybe you have forget to register it ?',
+                $name));
+        }
+
+        return $this->types[$name];
+    }
+
+    // Column Type
+
+    public function registerColumnType(string $name, ColumnType $columnType)
+    {
+        $this->columnTypes[$name] = $columnType;
+    }
+
+    public function getColumnType(string $name): ColumnType
+    {
+        if (!isset($this->columnTypes[$name])) {
+            throw new \InvalidArgumentException(sprintf('Column "%s" doesn\'t exist, maybe you have forget to register it ?',
+                $name));
+        }
+
+        return $this->columnTypes[$name];
+    }
+
+    // Adaptater (type)
+
+    public function registerAdapter(string $name, TableAdapter $adapter)
     {
         $this->adapters[$name] = $adapter;
     }
 
-    public function registerFilter(string $name, AbstractFilter $filter)
+    public function getAdapter(string $name): TableAdapter
     {
-        $this->filters[$name] = $filter;
-    }
+        if (!isset($this->adapters[$name])) {
+            throw new \InvalidArgumentException(sprintf('Adapter "%s" doesn\'t exist, maybe you have forget to register it ?',
+                $name));
+        }
 
-    public function registerTableType(string $name, TableType $tableType)
-    {
-        //ajout des TableType créé?? comment.
-        $this->tablesType[$name] = $tableType;
-    }
-
-    public function registerAction(string $name, AbstractButtonAction $filter)
-    {
-        $this->actions[$name] = $filter;
-    }
-
-    public function registerColumnType(string $name, ColumnType $adapter)
-    {
-        $this->columnTypes[$name] = $adapter;
-    }
-
-    public function getAdapter(string $class)
-    {
-        //todo: test?
-        return $this->adapters[$class];
-    }
-
-    public function getColumnType(string $class)
-    {
-        //todo: test?
-        return $this->columnTypes[$class];
-    }
-
-    public function getFilter(string $class)
-    {
-        //todo: test?
-        return $this->filters[$class];
-    }
-
-    public function getTableType(string $class)
-    {
-
-        //todo: test?
-        return $this->tablesType[$class];
-    }
-
-    public function getAction(string $class): AbstractButtonAction
-    {
-        //todo: test?
-        return $this->actions[$class];
+        return $this->adapters[$name];
     }
 }

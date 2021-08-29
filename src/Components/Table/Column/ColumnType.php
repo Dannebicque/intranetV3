@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/Column/ColumnType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/08/2021 13:34
+ * @lastUpdate 29/08/2021 14:37
  */
 
 namespace App\Components\Table\Column;
 
+use App\Utils\HtmlUtils;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -21,8 +22,7 @@ class ColumnType
             ->setRequired('id')
             ->setAllowedTypes('id', 'string')
             ->setDefault('label', function(Options $options) {
-                return $options['id'];
-                // return Utils::humanize($options['id']);
+                return HtmlUtils::humanize($options['id']);
             })
             ->setAllowedTypes('label', ['null', 'string'])
             ->setDefault('translation_domain', null)
@@ -42,12 +42,6 @@ class ColumnType
             })
             ->setDefault('render_html', null)
             ->setAllowedTypes('render_html', ['null', 'callable'])
-            ->setDefault('sortable', null)
-            // ->setAllowedValues('sortable', [false, true, 'ASC', 'DESC'])
-
-            ->setDefault('masquable', false)
-            // ->setAllowedTypes('masquable', [true, false])
-
             ->setDefault('is_safe_html', true)
             ->setAllowedTypes('is_safe_html', 'bool')
             ->setNormalizer('is_safe_html', function(Options $options, $value) {

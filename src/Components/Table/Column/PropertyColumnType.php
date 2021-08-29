@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/Column/PropertyColumnType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/08/2021 08:01
+ * @lastUpdate 29/08/2021 14:37
  */
 
 namespace App\Components\Table\Column;
@@ -18,23 +18,37 @@ class PropertyColumnType extends ColumnType
 {
     protected PropertyAccessorInterface $accessor;
 
+    /**
+     * PropertyColumn constructor.
+     */
     public function __construct()
     {
         $this->accessor = PropertyAccess::createPropertyAccessor();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function render($rowData, array $options): string
     {
         return $this->renderProperty($this->accessor->getValue($rowData, $options['property_path']), $options);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function renderProperty($value, array $options): string
     {
         return (string)$value;
     }
 
-    public function configureOptions(OptionsResolver $resolver): void
+    /**
+     * {@inheritdoc}
+     */
+    public function configureOptions(OptionsResolver $resolver)
     {
+        parent::configureOptions($resolver);
+
         $resolver
             ->setDefault('property_path', function(Options $options) {
                 return $options['id'];

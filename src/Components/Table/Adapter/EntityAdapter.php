@@ -4,41 +4,32 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/Adapter/EntityAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/08/2021 13:34
+ * @lastUpdate 29/08/2021 14:37
  */
 
 namespace App\Components\Table\Adapter;
 
-use App\Components\Table\DTO\TableResult;
-use App\Components\Table\Table;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\ORM\Tools\Pagination\CountWalker;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use App\Components\Table\DTO\TableResult;
+use App\Components\Table\DTO\TableState;
 
-class EntityAdapter extends AbstractAdapter implements AdapterInterface
+class EntityAdapter extends TableAdapter implements DoctrineAdapterInterface
 {
     protected EntityManagerInterface $em;
 
+    /**
+     * EntityCollector constructor.
+     */
     public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
     }
 
-    public function getResult(Table $table, array $options): TableResult
-    {
-        $resolver = new OptionsResolver();
-        $this->configureOptions($resolver);
-        $options = $resolver->resolve($options);
-
-        //$query = $this->getQueryBuilder($table, $options)->getQuery();
-
-        $paginator = new Paginator($this->getQueryBuilder($table, $options), $options['fetch_join_collection']);
-
-        return new TableResult($paginator);
-    }
-
-    public function configureOptions(OptionsResolver $resolver): void
+    public function configureOptions(OptionsResolver $resolver)
     {
         parent::configureOptions($resolver);
 
@@ -49,47 +40,69 @@ class EntityAdapter extends AbstractAdapter implements AdapterInterface
             ->setAllowedTypes('query_alias', 'string')
             ->setDefault('query', null)
             ->setAllowedTypes('query', ['callable', 'null'])
-            ->setDefault('order', [])
-            ->setDefault('filter', [])
+            /*
+             * Paginator / query options (use for optimization)
+             *
+             * To fetch large data (~over 1m) use options :
+             *  [
+             *      'fetch_join_collection' => false,
+             *      'use_output_walker' => false,
+             *      'use_distinct_hint' => false
+             * ]
+             */
             ->setDefault('fetch_join_collection', true)
-            ->setAllowedTypes('fetch_join_collection', 'bool');
+            ->setAllowedTypes('fetch_join_collection', 'bool')
+            ->setDefault('use_output_walker', null)
+            ->setAllowedTypes('use_output_walker', ['null', 'bool'])
+            ->setDefault('use_distinct_hint', true)
+            ->setAllowedTypes('use_distinct_hint', 'bool');
     }
 
-    public function getQueryBuilder(Table $table, array $options): QueryBuilder
+    public function getResult(TableState $state, array $options): TableResult
     {
+        $query = $this->getQueryBuilder($state, $options)->getQuery();
+        if (false === $options['use_distinct_hint']) {
+            $query->setHint(CountWalker::HINT_DISTINCT, false);
+        }
+
+        $paginator = new Paginator($query, $options['fetch_join_collection']);
+        if (null !== $options['use_output_walker']) {
+            $paginator->setUseOutputWalkers($options['use_output_walker']);
+        }
+
+        return new TableResult($paginator);
+    }
+
+    public function getQueryBuilder(TableState $state, array $options): QueryBuilder
+    {
+        $table = $state->getTable();
+        $formData = $state->getFormData();
+
+
         $qb = $this->em->createQueryBuilder()
             ->select($options['query_alias'])
             ->from($options['class'], $options['query_alias']);
 
-        //query (pour les filtres
         if (is_callable($options['query'])) {
-            call_user_func($options['query'], $qb, $options['filter']);
+            call_user_func($options['query'], $qb, $formData);
         }
 
-        //order
-        if (count($options['order']) > 0) {
-            foreach ($options['order'] as $order) {
-                $direction = 'ASC' === $order['order'] ? 'DESC' : 'ASC';
-                $qb->addOrderBy($options['query_alias'] . '.' . $order['column'], strtoupper($direction));
+        // pagination
+        $qb->setFirstResult($state->getStart());
+        if ($state->getLength() >= 0) {
+            $qb->setMaxResults($state->getLength());
+        }
+
+        // order by
+        foreach ($state->getOrderBy() as [$column, $direction]) {
+            foreach ($column->getOrderBy() as $path) {
+                // if path is not a sub property path, prefix it by alias
+                if (false === strpos($path, '.')) {
+                    $path = sprintf('%s.%s', $options['query_alias'], $path);
+                }
+
+                $qb->addOrderBy($path, strtoupper($direction));
             }
-        }
-
-        // pagination
-        // pagination
-//        if ($dataTable->hasPaging()) {
-//            if (isset($data['start'])) {
-//                $qb->setFirstResult($data['start']);
-//            }
-//
-//            if (isset($data['length'])) {
-//                $qb->setMaxResults($data['length']);
-//            }
-//        }
-
-
-        $qb->setFirstResult($table->getPaging()->getStart());
-        if ($table->getPaging()->getLength() >= 0) {
-            $qb->setMaxResults($table->getPaging()->getLength());
         }
 
         return $qb;
