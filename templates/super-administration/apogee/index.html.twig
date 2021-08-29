@@ -158,7 +158,7 @@
                                             >
                                                 <option value="">Choisir le semestre de destination</option>
                                                 {% for semestre in semestres %}
-                                                    <option value="{{ semestre.id }}">{{ semestre.display }}</option>
+                                                    <option value="{{ semestre.id }}">{{ semestre.displayAvecTypeDiplome }}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>
