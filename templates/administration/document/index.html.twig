@@ -14,18 +14,12 @@
     <div class="card">
         <h4 class="card-title">{{ 'adm.document.index.heading'|trans }}</h4>
         <div class="card-body">
-            {{ render_table(table) }}
+            {{ table_render(table) }}
         </div>
     </div>
 {% endblock %}
 
 {% block fabactions %}
-    {{ include('composants/fab-buttons.html.twig', {boutons:[
-        {
-            type:'info',
-            href:path('help_article', {sujet: 'administration-document-index'}),
-            title: 'aide'|trans,
-            icone: 'fa fa-question'
-        }
-    ]}) }}
+    {{ include('composants/fab-button-help.html.twig', {
+        href:path('help_article', {sujet: 'administration-document-index'})}) }}
 {% endblock %}

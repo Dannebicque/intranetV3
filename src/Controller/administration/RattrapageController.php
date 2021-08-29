@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/RattrapageController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 09:50
+ * @lastUpdate 29/08/2021 21:51
  */
 
 namespace App\Controller\administration;
@@ -25,16 +25,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
-/**
- * Class RattrapageController.
- *
- * @Route("/administration/rattrapage")
- */
+#[Route("/administration/rattrapage")]
 class RattrapageController extends BaseController
 {
-    /**
-     * @Route("/semestre/{semestre}", name="administration_rattrapage_semestre_index")
-     */
+    #[Route("/semestre/{semestre}", name: "administration_rattrapage_semestre_index", options: ['expose' => true])]
     public function index(
         Request $request,
         AbsenceRepository $absenceRepository,

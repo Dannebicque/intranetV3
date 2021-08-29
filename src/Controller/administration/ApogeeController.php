@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/ApogeeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 17:00
+ * @lastUpdate 29/08/2021 21:26
  */
 
 namespace App\Controller\administration;
@@ -35,7 +35,7 @@ class ApogeeController extends BaseController
     private array $etudiants;
 
 
-    #[Route("/import/diplome/{type}", name: "administration_apogee_maj", methods: ["POST"])]
+    #[Route("/import/diplome/{type}", name: "administration_apogee_maj", methods: ["GET", "POST"])]
     public function importMaj(
         ApogeeEtudiant $apogeeEtudiant,
         EtudiantImport $etudiantImport,
@@ -85,7 +85,7 @@ class ApogeeController extends BaseController
         return $this->redirectToRoute('administration_etudiant_add');
     }
 
-    #[Route("/import/etudiant", name: "administration_apogee_un_etudiant", methods: ['POST'])]
+    #[Route("/import/etudiant", name: "administration_apogee_un_etudiant", methods: ['GET', 'POST'])]
     public function importEtudiant(
         EtudiantImport $etudiantImport,
         ApogeeEtudiant $apogeeEtudiant,

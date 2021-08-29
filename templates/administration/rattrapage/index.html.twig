@@ -39,20 +39,15 @@
 {% block content %}
     <div class="card">
         <div class="card-body">
-            {{ render_table(table) }}
+            {{ table_render(table) }}
         </div>
     </div>
 {% endblock %}
 
 {% block fabactions %}
-    {{ include('composants/fab-buttons.html.twig', {boutons:[
-        {
-            type:'info',
-            href:path('help_article', {sujet: 'administration-etudiants-rattrapage'}),
-            title: 'aide'|trans,
-            icone: 'fa fa-question'
-        }
-    ]}) }}
+    {{ include('composants/fab-button-help.html.twig', {
+        href:path('help_article', {sujet: 'administration-etudiants-rattrapage'})}
+    ) }}
 {% endblock %}
 
 {% block stylesheets %}
