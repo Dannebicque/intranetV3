@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/components/table.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 29/08/2021 14:37
+// @lastUpdate 29/08/2021 21:22
 
 import {post} from '../js/fetch'
 
@@ -32,11 +32,12 @@ export default class Table extends HTMLElement {
     this.tableBody.innerHTML = ''
 
     this.options.columns.forEach((column) => {
-      if (column.sortable === true) {
+      console.log(column)
+      if (column.orderable === true) {
         document.getElementById(column.id).style.cursor = 'pointer'
         document.getElementById(column.id).addEventListener('click', (elem) => {
           this.order = [{
-            column: elem.target.dataset.name,
+            column: elem.target.id,
             order: elem.target.dataset.order//todo: ordre actuel... a inverser dans la requete? Mettre les deux fleches si pas trié ? si defaultorder = false?
           }]
           //todo: mettre à jour le sens de la fleche...
@@ -59,15 +60,12 @@ export default class Table extends HTMLElement {
         //   this._filterArray()
         // })
         input.addEventListener('keyup', (event) => {
-          console.log('filtre')
-          console.log(event.target)
           if (event.target.type === 'text' && event.target.value.length < 3) {
             //on ne déclenche rien si moins de 3 caractères
             return
           }
 
           this._getFilterFromField(event.target)
-          console.log(this.filter)
           this._buildArray()
         })
       }
@@ -144,7 +142,7 @@ export default class Table extends HTMLElement {
   _updateHeader () {
     this.options.columns.forEach((column) => {
       let texte = document.getElementById(column.id).innerText
-      if (column.sortable === true) {
+      if (column.orderable === true) {
         if (column.order === DESC || column.order === '') {
           document.getElementById(column.id).innerHTML = texte + ' ' + ICON_DESC
           document.getElementById(column.id).dataset.order = DESC

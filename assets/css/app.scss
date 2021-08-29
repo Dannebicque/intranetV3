@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/css/app.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 29/08/2021 14:42
+// @lastUpdate 29/08/2021 19:41
 
 @import "core.min.css";
 @import "~bootstrap/scss/functions";
@@ -15,6 +15,10 @@
 @import "./apc.scss";
 @import "./_toolbar.scss";
 @import "perfect-scrollbar.css";
+
+// FlatPickr
+@import "~flatpickr";
+
 @import "~toastify-js/src/toastify.css";
 @import '~tom-select/dist/css/tom-select.bootstrap4.min.css';
 

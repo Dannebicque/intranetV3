@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/DTO/Paging.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 14:37
+ * @lastUpdate 29/08/2021 21:50
  */
 
 namespace App\Components\Table\DTO;
@@ -50,7 +50,7 @@ class Paging
 
     private function getStart(): int
     {
-        return $this->pageActive * $this->pageLength;
+        return ($this->pageActive - 1) * $this->pageLength;
     }
 
     public function setResult(TableResult $tableResult): void

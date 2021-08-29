@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/TableRenderer.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 12:03
+ * @lastUpdate 29/08/2021 21:15
  */
 
 namespace App\Components\Table;
@@ -122,6 +122,7 @@ class TableRenderer
         $vars['attr'] = [
             'class' => $options['class'],
             'id' => $options['id'],
+            'order' => $column->getDefaultOrder(),
             'style' => $options['width'] ? sprintf('width:%s', $options['width']) : null,
         ];
 
@@ -135,6 +136,7 @@ class TableRenderer
     {
         return [
             'orderable' => $column->isOrderable(),
+            'order' => $column->getDefaultOrder(),
             'className' => $column->getOption('class'),
             'id' => $column->getOption('id'),
         ];
