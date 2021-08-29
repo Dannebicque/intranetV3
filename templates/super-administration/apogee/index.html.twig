@@ -58,7 +58,7 @@
                                             <select class="form-control selectpicker" id="semestreforce" name="semestreforce">
                                                 <option value="">Choisir le semestre à mettre à jour</option>
                                                 {% for semestre in semestres %}
-                                                    <option value="{{ semestre.id }}">{{ semestre.display }}</option>
+                                                    <option value="{{ semestre.id }}">{{ semestre.displayAvecTypeDiplome }}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>
