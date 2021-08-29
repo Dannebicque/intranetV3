@@ -33,6 +33,9 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
             - '../src/Tests/'
+            - '../src/Components/Questionnaire/service.php'
+            - '../src/Components/Table/service.php'
+            - '../src/Components/Widget/service.php'
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
