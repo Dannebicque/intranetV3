@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.2](https://github.com/Dannebicque/intranetV3/compare/v3.1.1...v3.1.2) (2021-08-29)
+
+
+### Features
+
+* Import Apogée depuis les départements ([d347db2](https://github.com/Dannebicque/intranetV3/commit/d347db2e2c9c79b8e01dbabdc94ed5a4c7a1607d))
+
+
+### Bug Fixes
+
+* Convertion en float ([b8353be](https://github.com/Dannebicque/intranetV3/commit/b8353be32977b61abc3a6008309686e94111ffab))
+* Correctifs Table + Nouveau DatePicker ([3cf32d2](https://github.com/Dannebicque/intranetV3/commit/3cf32d2a102dda7eaf026071056298ace05401bf))
+* import apogée et mise en page. ([8e4588d](https://github.com/Dannebicque/intranetV3/commit/8e4588d2cb883f597ae7a2f895bce6a8de9a70ce))
+* Utilisation du composant Table ([7d3c13a](https://github.com/Dannebicque/intranetV3/commit/7d3c13a9b7231536a22351536d2147f9f834d178))
+
 ### [3.1.1](https://github.com/Dannebicque/intranetV3/compare/v3.1.0...v3.1.1) (2021-08-29)
 
 
