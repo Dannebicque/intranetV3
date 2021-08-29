@@ -1,0 +1,74 @@
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetV3/assets/css/_toolbar.scss
+// @author davidannebicque
+// @project intranetV3
+// @lastUpdate 29/08/2021 14:42
+
+my-toolbar[theme=default] {
+  display: block;
+
+  .toolbar-item[data-mode=selection] {
+    display: none;
+  }
+
+  &[data-mode=selection] {
+    padding: $alert-padding-y $alert-padding-x;
+    border: $alert-border-width solid transparent;
+    @include border-radius($alert-border-radius);
+    background-color: $gray-100;
+
+    .toolbar-item[data-mode=default] {
+      display: none;
+    }
+
+    .toolbar-item[data-mode=selection] {
+      display: inherit;
+    }
+  }
+
+
+  .toolbar-item-container {
+
+    .toolbar-item {
+      margin-bottom: 1rem;
+    }
+
+    .toolbar-item-filter {
+      .form-check {
+        padding-top: 7px;
+      }
+    }
+
+
+  }
+
+  @include media-breakpoint-up(md) {
+    .toolbar-item-container {
+      display: flex;
+
+      .toolbar-item-filter {
+        min-width: 180px;
+      }
+
+      .toolbar-item-separator {
+        margin-right: auto;
+      }
+
+      .toolbar-item {
+        &:not(:last-child) {
+          margin-right: 0.5rem;
+        }
+      }
+    }
+  }
+
+  @include media-breakpoint-down(md) {
+    .toolbar-item-container {
+
+      .toolbar-item {
+        margin-bottom: 0.5rem;
+      }
+    }
+  }
+
+}

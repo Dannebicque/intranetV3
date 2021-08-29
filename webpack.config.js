@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/webpack.config.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/08/2021 18:08
+// @lastUpdate 29/08/2021 09:37
 
 var Encore = require('@symfony/webpack-encore')
 var path = require('path')
@@ -104,10 +104,6 @@ Encore
   .autoProvidejQuery()
   .configureBabel(function (babelConfig) {
   }, {})
-
-  .addAliases({
-    'umbrella_core': path.join(__dirname, '/vendor/umbrella/corebundle/assets/')
-  })
   //optimisations
   .addPlugin(
     new BundleAnalyzerPlugin({

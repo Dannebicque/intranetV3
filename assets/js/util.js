@@ -2,10 +2,11 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/util.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/06/2021 08:21
+// @lastUpdate 29/08/2021 09:44
 
 // import $ from 'jquery'
 import Swal from 'sweetalert2'
+import Toast from '../components/Toast'
 
 let $stopCatchEnter = false
 
@@ -123,103 +124,19 @@ $(document).on('click', '.supprimer', function (e) {
 })
 
 
-$(document).on('click', '.confirm-delete', function (e) {
-  e.preventDefault()
-  const url = $(this).data('href')
-  const params = $(this).data('uuid')
-  const csrf = $(this).data('csrf')
-  console.log(params)
-  console.log(csrf)
-  Swal.fire({
-    title: 'Confirmer la suppression ?',
-    text: 'L\'opération ne pourra pas être annulée.',
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Oui, je confirme',
-    cancelButtonText: 'Non, Annuler',
-    customClass: {
-      confirmButton: 'btn btn-primary',
-      cancelButton: 'btn btn-secondary'
-    },
-    buttonsStyling: false
-  }).then(function (result) {
-    if (result.value) {
-      $.ajax({
-        url: Routing.generate(url, {uuid: params}),
-        type: 'DELETE',
-        data: {
-          _token: csrf
-        },
-        success: function (id) {
-          if (id.hasOwnProperty('redirect') && id.hasOwnProperty('url')) {
-            document.location.href = id.url
-          } else {
-            //t.row("#ligne_"+id).remove().draw(); =< datattable todo: remove ligne si datatable ?? problème dans adm>personnel
-            $('#ligne_' + id).closest('tr').remove()
-            addCallout('Suppression effectuée avec succès', 'success')
-            Swal.fire({
-              title: 'Supprimé!',
-              text: 'L\'enregistrement a été supprimé.',
-              icon: 'success',
-              confirmButtonText: 'OK',
-              customClass: {
-                confirmButton: 'btn btn-primary',
-                cancelButton: 'btn btn-secondary'
-              },
-              buttonsStyling: false
-            })
-          }
-        },
-        error: function (xhr, ajaxOptions, thrownError) {
-          Swal.fire({
-            title: 'Erreur lors de la suppression!',
-            text: 'Merci de renouveler l\'opération',
-            icon: 'error',
-            confirmButtonText: 'OK',
-            customClass: {
-              confirmButton: 'btn btn-primary',
-              cancelButton: 'btn btn-secondary'
-            },
-            buttonsStyling: false
-          })
-          addCallout('Erreur lors de la tentative de suppression', 'danger')
-        }
-      })
-
-    } else if (
-      // Read more about handling dismissals
-      result.dismiss === 'cancel'
-    ) {
-      Swal.fire({
-        title: 'Cancelled',
-        text: 'OK! Tout est comme avant !',
-        icon: 'error',
-        confirmButtonText: 'OK',
-        customClass: {
-          confirmButton: 'btn btn-primary',
-          cancelButton: 'btn btn-secondary'
-        },
-        buttonsStyling: false
-      })
-    }
-  })
-})
-
 export function addCallout (message, label) {
   switch (label) {
     case 'success':
-      window.umbrella.Toast.success(message)
+      Toast.success(message)
       break
     case 'danger':
-      window.umbrella.Toast.error(message)
+      Toast.error(message)
       break
     case 'warning':
-      window.umbrella.Toast.warning(message)
+      Toast.warning(message)
       break
     case 'info':
-      window.umbrella.Toast.info(message)
+      Toast.info(message)
       break
   }
 }
