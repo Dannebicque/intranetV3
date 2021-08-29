@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+
+
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <h4>Tableau</h4>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" placeholder="Filtrer par nom ou prénom"/>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" value="" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">
+                            S1
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" value="" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">
+                            S2
+                        </label>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" value="" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">
+                            TPA
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" value="" id="defaultCheck1">
+                        <label class="form-check-label" for="defaultCheck1">
+                            TPB
+                        </label>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    Du
+                    <input type="text" class="form-control" placeholder="dd/mm/aaaa"/>
+                    Au
+                    <input type="text" class="form-control" placeholder="dd/mm/aaaa"/>
+                </div>
+            </div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Préom</th>
+                    <th>Semestre</th>
+                    <th>Groupe</th>
+                    <th>Date Inscription</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for i in 1..10 %}
+                    <tr>
+                        <td>Paul {{ i }}</td>
+                        <td>Pierre {{ i }}</td>
+                        <td>S{{ i is odd ? 1 : 2 }}</td>
+                        <td>TP{{ i is odd ? 'A' : 'B' }}</td>
+                        <td>{{ i < 10 ? '0'~i : i }}/{{ i < 10 ? '0'~i : i }}/2001</td>
+                        <td>
+                            <button class="btn btn-outline btn-outline-info btn-square">
+                                <i class="{{ iconShow }}"></i>
+                            </button>
+                            <button class="btn btn-outline-success btn-square">
+                                <i class="{{ iconDuplicate }}"></i>
+                            </button>
+                            <button class="btn btn-outline-warning btn-square">
+                                <i class="{{ iconEdit }}"></i>
+                            </button>
+                            <button class="btn btn-outline-danger btn-square">
+                                <i class="{{ iconDelete }}"></i>
+                            </button>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

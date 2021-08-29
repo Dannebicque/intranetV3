@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/fetch.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 23/08/2021 12:43
+// @lastUpdate 29/08/2021 09:37
 
 const request = (url, params = {}, method = 'GET') => {
   console.log(params)
@@ -25,7 +25,7 @@ export const get = (url, params) => request(url, params, 'GET')
 export const post = (url, params) => request(url, params, 'POST')
 
 export const load = (url, params, objet) => {
-  window.umbrella.Spinner.show()
+  //loader?window.umbrella.Spinner.show()
   objet.innerHTML = ''
   fetch(Routing.generate(url, params))
     .then(function (response) {
@@ -33,7 +33,7 @@ export const load = (url, params, objet) => {
     })
     .then(function (body) {
       objet.innerHTML = body
-      window.umbrella.Spinner.hide()
+      //loader?window.umbrella.Spinner.hide()
     })
 }
 

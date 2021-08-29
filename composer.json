@@ -3,12 +3,6 @@
   "description": "Intranet, Version 3 de l'IUT de Troyes et de Reims Châlons Charleville.",
   "type": "project",
   "license": "MPL-2.0",
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://github.com/Dannebicque/umbrella-corebundle"
-    }
-  ],
   "require": {
     "php": "^8.0.0",
     "ext-bcmath": "*",
