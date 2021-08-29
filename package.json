@@ -44,6 +44,7 @@
     "babel-core": "^6.26.3",
     "babel-loader": "^8.2.2",
     "babel-preset-es2015": "^6.24.1",
+    "flatpickr": "^4.6.9",
     "html-loader": "^1.3.2",
     "tom-select": "^2.0.0-Beta.3",
     "webpack-bundle-analyzer": "^4.4.2",

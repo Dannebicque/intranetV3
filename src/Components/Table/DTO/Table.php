@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/DTO/Table.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 14:37
+ * @lastUpdate 29/08/2021 21:19
  */
 
 namespace App\Components\Table\DTO;
@@ -132,7 +132,7 @@ class Table
             $this->state->setFormData($this->toolbar->getFormData());
 
 
-            $this->state->applyParameters($httpRequest->query->all());
+            $this->state->applyParameters($parametersAsArray);
 
         }
 

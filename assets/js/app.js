@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/app.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 29/08/2021 09:37
+// @lastUpdate 29/08/2021 21:50
 
 import '@fortawesome/fontawesome-free/scss/fontawesome.scss'
 import '@fortawesome/fontawesome-free/scss/solid.scss'
@@ -37,9 +37,17 @@ require('bootstrap-select')
 
 import Table from '../components/table'
 import SelectComplete from '../components/SelectComplete'
+import DatePicker from '../components/DatePicker'
+
+export const LANG = document.querySelector('html').getAttribute('lang')
+
+window.da = {
+  LANG: LANG
+}
 
 customElements.define('my-table', Table)
 customElements.define('select-complete', SelectComplete, {extends: 'select'})
+customElements.define('my-datepicker', DatePicker, {extends: 'input'})
 
 $('input[type="file"]').on('change', function (e) {
   let filename = e.target.files[0].name

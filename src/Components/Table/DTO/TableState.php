@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/DTO/TableState.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 14:37
+ * @lastUpdate 29/08/2021 21:21
  */
 
 namespace App\Components\Table\DTO;
@@ -41,7 +41,7 @@ class TableState
         if (isset($parameters['order'])) {
             foreach ($parameters['order'] as $orderData) {
                 // invalid dir
-                if (!\in_array($orderData['dir'], [Table::SORT_ASCENDING, Table::SORT_DESCENDING])) {
+                if (!\in_array($orderData['order'], [Table::SORT_ASCENDING, Table::SORT_DESCENDING])) {
                     continue;
                 }
 
@@ -57,7 +57,7 @@ class TableState
                     continue;
                 }
 
-                $this->addOrderBy($c, $orderData['dir']);
+                $this->addOrderBy($c, $orderData['order']);
             }
         }
     }
