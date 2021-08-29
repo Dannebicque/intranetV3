@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.1.0](https://github.com/Dannebicque/intranetV3/compare/v3.0.11...v3.1.0) (2021-08-29)
+
+
+### Bug Fixes
+
+* Mis à jour JS sans Umbrella, retrait des dépendances inutiles ([33d1ebc](https://github.com/Dannebicque/intranetV3/commit/33d1ebca866fc72822ec5dda203012736fd84d82))
+* Refonte composant Table, ajout de Widget ([01c8e3e](https://github.com/Dannebicque/intranetV3/commit/01c8e3e07d64c89f42b0e617c0d41613eb7b3597))
+* Utilisation du nouveau composant Table ([818e8eb](https://github.com/Dannebicque/intranetV3/commit/818e8eb9757ca836d2e51f3c6b752b9aab6af6e4))
+
 ### [3.0.11](https://github.com/Dannebicque/intranetV3/compare/v3.0.10...v3.0.11) (2021-08-28)
 
 
