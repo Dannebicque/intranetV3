@@ -1562,7 +1562,8 @@ recherche:
   personnel.heading: 'Rechercher un personnel/intervenant'
 rechercher: rechercher
 
-recuperation.apogee.etudiant: 'Récupération depuis Apogée'
+recuperation.apogee.etudiants: 'Récupération des étudiants (Apogée)'
+recuperation.apogee.etudiant: 'Récupération d''un étudiant (Apogée)'
 REFUS: REFUS
 refusee: Refusée
 report.problem: 'Signaler le problème'

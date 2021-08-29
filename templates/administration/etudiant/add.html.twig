@@ -22,15 +22,15 @@
         <ul class="nav nav-tabs" role="tablist">
             <li class="nav-item">
                 <a class="nav-link active" data-toggle="tab"
-                   href="#importApogee">{{ 'recuperation.apogee.etudiant'|trans }}</a>
+                   href="#importApogee">{{ 'recuperation.apogee.etudiants'|trans }}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab"
+                   href="#importUnApogee">{{ 'recuperation.apogee.etudiant'|trans }}</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" data-toggle="tab"
                    href="#fichiersUrca">{{ 'importer.photo.zip'|trans }}</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="tab"
-                   href="#autresFichiers">{{ 'importer.photo'|trans }}</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" data-toggle="tab"
@@ -54,7 +54,75 @@
                     <div class="card">
                         <h4 class="card-title">Récupérez depuis Apogée pour le semestre {{ semestre.libelle }}</h4>
                         <div class="card-body">
-                            <div class="alert alert-info">Comming Soon</div>
+                            <form class="form" action="{{ path('administration_apogee_maj', {type:'maj'}) }}"
+                                  method="post">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="form-group">
+                                            <label for="semestreforce">Semestre à importer</label>
+                                            <select class="form-control selectpicker" id="semestreforce" name="semestreforce">
+                                                <option value="">Choisir le semestre à mettre à jour</option>
+                                                {% for semestre in user_data.semestresActifs %}
+                                                    <option value="{{ semestre.id }}">{{ semestre.displayAvecTypeDiplome }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="form-group">
+                                            <label for="anneeuniversitaire">Année universitaire</label>
+                                            <select class="form-control selectpicker" id="anneeuniversitaire"
+                                                    name="anneeuniversitaire">
+                                                <option value="">Choisir l'année universitaire</option>
+                                                {% for anneeUniversitaire in anneeUniversitaires %}
+                                                    <option value="{{ anneeUniversitaire.id }}" {% if anneeUniversitaire.active == true %}selected{% endif %}>{{ anneeUniversitaire.displayAnneeUniversitaire }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-success">Mettre à jour</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane" id="importUnApogee">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card">
+                        <h4 class="card-title">Récupérez depuis Apogée un étudiant</h4>
+                        <div class="card-body">
+                            <div class="alert alert-info">
+                                Cette fonctionnalité permet d'importer que des étudiants de manière cilbée (avec un
+                                numéro étudiant). Vous pouvez saisir plusieurs numéros en séparant par un ; (point
+                                virugule).
+                            </div>
+                            <form class="form" action="{{ path('administration_apogee_un_etudiant') }}" method="post">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="form-group">
+                                            <label for="listeetudiants">Etudiant(s)</label>
+                                            <textarea class="form-control" id="listeetudiants" name="listeetudiants">
+                                    </textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="form-group">
+                                            <label for="semestreforce">Semestre de destination</label>
+                                            <select class="form-control selectpicker" id="semestreforce" name="semestreforce"
+                                            >
+                                                <option value="">Choisir le semestre de destination</option>
+                                                {% for semestre in user_data.semestresActifs %}
+                                                    <option value="{{ semestre.id }}">{{ semestre.display }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="btn btn-success">Mettre à jour</button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -83,20 +151,6 @@
                                     <button type="submit" class="btn btn-primary btn-large">Importer</button>
                                 </div>
                             </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="tab-pane" id="autresFichiers">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="card">
-                        <h4 class="card-title">Import depuis vos fichiers</h4>
-                        <div class="card-body">
-                            <div class="alert alert-warning">
-                                Les fichiers doivent se nommer : "numero_etudiant.jpg"
-                            </div>
                         </div>
                     </div>
                 </div>
