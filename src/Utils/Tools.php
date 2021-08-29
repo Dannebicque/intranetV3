@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Utils/Tools.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/08/2021 21:49
+ * @lastUpdate 29/08/2021 21:06
  */
 
 /*
@@ -53,11 +53,11 @@ abstract class Tools
             return 0;
         }
 
-        if (is_float($value) || is_int($value)) {
+        if (is_float($value) || is_int($value) || is_float((float)$value) || is_int((float)$value)) {
             return (float)$value;
         }
 
-        return null;
+        return 0;
     }
 
     public static function convertToBool($texte): bool
