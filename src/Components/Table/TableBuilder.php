@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/TableBuilder.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 14:37
+ * @lastUpdate 29/08/2021 16:01
  */
 
 namespace App\Components\Table;
@@ -70,7 +70,7 @@ class TableBuilder
         // Configure options from bundle config
         $resolver
             ->setDefault('id', HtmlUtils::type_class_to_id(get_class($this->type)))
-            ->setDefault('page_length', 1)
+            ->setDefault('page_length', 30)
             ->setDefault('page_active', 1)
             ->setDefault('class', 'table table-striped table-centered dt-responsive w-100');
 
@@ -156,11 +156,7 @@ class TableBuilder
 
     public function useEntityAdapter($options = []): self
     {
-        if (!is_string($options) && !is_array($options)) {
-            throw new \InvalidArgumentException('Options must be of an array or string');
-        }
-
-        return $this->useAdapter(EntityAdapter::class, is_string($options) ? ['class' => $options] : $options);
+        return $this->useAdapter(EntityAdapter::class, $options);
     }
 
     public function useAdapter($type, array $options = []): self
