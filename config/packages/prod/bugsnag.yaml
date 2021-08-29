@@ -1,3 +1,2 @@
 bugsnag:
   api_key: '%env(BUGSNAG)%'
-  app_version: '%env(APP_VERSION)%'
