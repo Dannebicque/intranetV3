@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EtudiantSemestreController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/07/2021 17:05
+ * @lastUpdate 29/08/2021 17:00
  */
 
 namespace App\Controller\administration;
@@ -14,6 +14,7 @@ use App\Classes\MyUpload;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Semestre;
+use App\Repository\AnneeUniversitaireRepository;
 use App\Repository\BacRepository;
 use App\Repository\DepartementRepository;
 use App\Repository\EtudiantRepository;
@@ -45,14 +46,17 @@ class EtudiantSemestreController extends BaseController
     /**
      * @Route("/add/{semestre}", name="administration_etudiant_semestre_add", requirements={"semestre"="\d+"})
      */
-    public function addEtudiant(Semestre $semestre = null): Response
-    {
+    public function addEtudiant(
+        AnneeUniversitaireRepository $anneeUniversitaireRepository,
+        Semestre $semestre = null
+    ): Response {
         if (null === $semestre) {
             $semestre = $this->dataUserSession->getSemestres()[0];
         }
 
         return $this->render('administration/etudiant/add.html.twig', [
             'semestre' => $semestre,
+            'anneeUniversitaires' => $anneeUniversitaireRepository->findAll()
         ]);
     }
 

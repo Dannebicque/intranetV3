@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">Mise à jour d'une promotion</h4>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Etudiant</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for etudiant in etudiants|filter(etudiant => etudiant.data != null) %}
+                    <tr>
+                        <td>{{ etudiant.data.display }}</td>
+                        <td>{{ etudiant.etat }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}"
+               class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_semestres'|trans }}"><i class="fas fa-arrow-left"></i></a>
+            <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="{{ iconAdmin }}"><span class="sr-only">Administration</span></i></a>
+        </div>
+    </div>
+{% endblock %}
+
