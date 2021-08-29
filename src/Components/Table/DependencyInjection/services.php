@@ -1,13 +1,13 @@
 <?php
 /*
  * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/services.php
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/DependencyInjection/services.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 14:37
+ * @lastUpdate 29/08/2021 15:25
  */
 
-namespace App\Components\Table;
+namespace App\Components\Table\DependencyInjection;
 
 use App\Components\Table\Adapter\CallableAdapter;
 use App\Components\Table\Adapter\EntityAdapter;
@@ -21,6 +21,7 @@ use App\Components\Table\Column\LinkColumnType;
 use App\Components\Table\Column\ManyColumnType;
 use App\Components\Table\Column\PropertyColumnType;
 use App\Components\Table\Column\WidgetColumnType;
+use App\Components\Table\TableRegistry;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 return static function(ContainerConfigurator $configurator): void {
