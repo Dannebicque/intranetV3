@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Previsionnel/PrevisionnelExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 27/08/2021 21:22
+ * @lastUpdate 29/08/2021 22:39
  */
 
 namespace App\Classes\Previsionnel;
@@ -168,7 +168,7 @@ class PrevisionnelExport
                     $previ->getSemestre()->getAnnee()->getLibelleLong());
             } elseif (null !== $previ->getDiplome()) {
                 $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
-                    $previ->getDiplome()->getCodeEtape());
+                    $previ->getDiplome()->getCodeDiplome());
                 ++$colonne;
                 $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
                     $previ->getDiplome()->getLibelle());
