@@ -1,52 +1,17 @@
-<div class="row">
-    {# si export et/ou add alors uniquement 8/12 de largeeur sinon full #}
-    <div class="col-sm-12 {% if add_button == true or export_button == true %}col-md-9{% else %}col-md-12{% endif %}">
-        <div class="row" id="table-filters">
-            {% for filter in filters %}
-                {{ filter_render(filter) }}
-            {% endfor %}
-            {% if filters|length > 0 %}
-                <div class="col-3">
-                    <button class="btn btn-block btn-success" id="table_filtre">
-                        <i class="fas fa-filter"></i>
-                        Filtrer
-                    </button>
-                </div>
-                <div class="col-3">
-                    <button class="btn btn-block btn-primary" id="table_suppr_filtre">
-                        <i class="fas fa-eraser"></i> Effacer Filtre
-                    </button>
-                </div>
-            {% endif %}
-        </div>
-    </div>
-    {% if add_button == true or export_button == true %}
-        <div class="col-md-3 cols-sm-12">
-            {# add + export #}
-            <div class="row mr-15">
-                {% if add_button == true %}
-                    <div class="col-md-6 col-sm-12">
-                        <a class="btn btn-block btn-primary" href="{{ add_button_url }}">+ Ajouter</a>
-                    </div>
-                {% endif %}
-                {% if export_button == true %}
-                    <div class="col-md-6 col-sm-12">
-                        <div class="btn-group">
-                            <button class="btn btn-label btn-success dropdown-toggle" data-toggle="dropdown"
-                                    aria-expanded="false">
-                                <label><i class="fas fa-download"></i></label>
-                                Exports
-                            </button>
-                            <div class="dropdown-menu">
-                                {% for option in export_options %}
-                                    <a class="dropdown-item" href="{{ option.url }}">{{ option.label }}</a>
-                                {% endfor %}
-                            </div>
-                        </div>
-                    </div>
-                {% endif %}
-
+<my-toolbar theme="default">
+    {% form_theme form "form/my-form.html.twig" %}
+    <form class="toolbar-item-container">
+        {%- for child in form -%}
+            <div class="toolbar-item-filter toolbar-item">
+                {{- form_widget(child) -}}
             </div>
-        </div>
-    {% endif %}
-</div>
+        {%- endfor -%}
+        <div class="toolbar-item-separator"></div>
+        {%- for child in widget -%}
+            <div class="toolbar-item-widget toolbar-item">
+                {{- render_widget(child) -}}
+            </div>
+        {%- endfor -%}
+    </form>
+    <div class="toolbar-alert"></div>
+</my-toolbar>

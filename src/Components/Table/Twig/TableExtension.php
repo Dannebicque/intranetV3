@@ -4,43 +4,40 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/Twig/TableExtension.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/07/2021 09:34
+ * @lastUpdate 28/08/2021 14:49
  */
 
 namespace App\Components\Table\Twig;
 
-use App\Components\Table\FilterRenderer;
-use App\Components\Table\TableRenderer;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
+use App\Components\Table\TableRenderer;
 
 class TableExtension extends AbstractExtension
 {
-    protected TableRenderer $tableRenderer;
-    protected FilterRenderer $filterRenderer;
+    protected TableRenderer $renderer;
 
-    public function __construct(TableRenderer $tableRenderer, FilterRenderer $filterRenderer)
+    /**
+     * DataTableTwigExtension constructor.
+     */
+    public function __construct(TableRenderer $renderer)
     {
-        $this->tableRenderer = $tableRenderer;
-        $this->filterRenderer = $filterRenderer;
+        $this->renderer = $renderer;
     }
 
-    public function getFunctions(): array
+    /**
+     * {@inheritdoc}
+     */
+    public function getFunctions()
     {
         return [
-            new TwigFunction('table_render', [$this->tableRenderer, 'render'], [
+            new TwigFunction('table_render', [$this->renderer, 'render'], [
                 'is_safe' => ['html'],
             ]),
-            new TwigFunction('fitlers_render', [$this->tableRenderer, 'renderFilters'], [
+            new TwigFunction('fitlers_render', [$this->renderer, 'renderToolbar'], [
                 'is_safe' => ['html'],
             ]),
-            new TwigFunction('filter_render', [$this->filterRenderer, 'render'], [
-                'is_safe' => ['html'],
-            ]),
-            new TwigFunction('paging_render', [$this->tableRenderer, 'renderPaging'], [
-                'is_safe' => ['html'],
-            ]),
-            new TwigFunction('render_export_action', [$this->tableRenderer, 'renderExportAction'], [
+            new TwigFunction('action_render', [$this->renderer, 'renderAction'], [
                 'is_safe' => ['html'],
             ]),
         ];

@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/components/table.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 23/08/2021 13:34
+// @lastUpdate 29/08/2021 14:37
 
 import {post} from '../js/fetch'
 
@@ -19,16 +19,15 @@ export default class Table extends HTMLElement {
     super()
     this.div = this
 
-    this.base_url = this.dataset.base_url
-
     this.options = JSON.parse(this.dataset.options)
+    this.base_url = this.options.ajax.url
+
     this.table = this.querySelector('table.datable')
     this.tableBody = this.table.querySelector('tbody')
     this.pageActive = this.options.pageActive //par défaut on récupère
     this.nbElementPerPage = this.options.pageLength
     this.order = []
     this.filter = []
-    //récupérer les filtres disponibles et ajouter les écouteurs selon?
 
     this.tableBody.innerHTML = ''
 
@@ -46,33 +45,66 @@ export default class Table extends HTMLElement {
       }
     })
 
-    const select = document.getElementById('datable_select') //todo: ne doit pas dépendre de datatable qui est le nom du tableau...
-    select.addEventListener('change', (e) => {
-      this.nbElementPerPage = e.target.value
-      this._buildArray()
+    this.form = this.getElementsByTagName('form')
+
+    //ajout des events sur le form
+    let inputs = this.form[0].getElementsByTagName('input')
+    let selects = this.form[0].getElementsByTagName('select')
+
+    inputs.forEach((input) => {
+      console.log(input.type)
+      if (input.type === 'text') {
+        // input.addEventListener('keyup', (elem) => {
+        //   this._getFilterFromField(elem)
+        //   this._filterArray()
+        // })
+        input.addEventListener('keyup', (event) => {
+          console.log('filtre')
+          console.log(event.target)
+          if (event.target.type === 'text' && event.target.value.length < 3) {
+            //on ne déclenche rien si moins de 3 caractères
+            return
+          }
+
+          this._getFilterFromField(event.target)
+          console.log(this.filter)
+          this._buildArray()
+        })
+      }
+
+      if (input.type === 'radio' || input.type === 'checkbox') {
+        input.addEventListener('change', (elem) => {
+          this._getFilterFromField(elem)
+          this._filterArray()
+        })
+      }
     })
 
-    document.getElementById('table_filtre').addEventListener('click', () => {
-      let inputs = document.getElementById('table-filters').getElementsByTagName('input')
-      let selects = document.getElementById('table-filters').getElementsByTagName('select')
-      inputs.forEach((input) => {
-        this._getFilterFromField(input)
+    selects.forEach((select) => {
+      select.addEventListener('change', (elem) => {
+        this._getFilterFromField(elem)
+        this._filterArray()
       })
+    })
 
-      selects.forEach((select) => {
-        this._getFilterFromField(select)
+    if (this.options.paging === true) {
+      const select = document.getElementById(this.options.paging_id + '_select')
+      select.addEventListener('change', (e) => {
+        e.preventDefault()
+        this.nbElementPerPage = e.target.value
+        this._buildArray()
       })
-
-      this._buildArray()
-    })
-
-    //suppression des filtres
-    document.getElementById('table_suppr_filtre').addEventListener('click', () => {
-      this.filter = []
-      this._buildArray()
-    })
+    }
 
     this._updateHeader()
+    this._buildArray()
+  }
+
+  _filterArray (event) {
+    console.log('filtre')
+    console.log(event.target)
+    //this._getFilterFromField(event.target)
+    console.log(this.filter)
     this._buildArray()
   }
 
@@ -89,15 +121,17 @@ export default class Table extends HTMLElement {
   _buildArray () {
     this.tableBody.innerHTML = ''
     post(this.base_url, {
-      page: this.pageActive,
-      nbElementPerPage: this.nbElementPerPage,
+      paging: {
+        pageLength: this.nbElementPerPage,
+        pageActive: this.pageActive
+      },
       order: this.order,
       filter: this._convertToFetch(this.filter)
     }).then((data) => {
       data.data.forEach((item) => {
         let html = '<tr>'
         this.options.columns.forEach((column) => {
-          html += `<td>${item[column.name]}</td>`
+          html += `<td>${item[column.id]}</td>`
         })
         html += '</tr>'
         this.tableBody.innerHTML += html
@@ -123,7 +157,7 @@ export default class Table extends HTMLElement {
   }
 
   _updatePagination (paging) {
-    const nav = document.getElementById('datable_nav')
+    const nav = document.getElementById(this.options.paging_id + '_nav')
     const previousDisabled = paging.firstPage === true ? 'disabled' : ''
     const nextDisabled = paging.lastPage === true ? 'disabled' : ''
     let pageCutLow = paging.numActivePage - 1
@@ -213,18 +247,24 @@ export default class Table extends HTMLElement {
     })
   }
 
+  _extractNameFromForm (name) {
+    let t = name.split('[')
+    return t[1].substr(0, t[1].length - 1)
+  }
+
   _getFilterFromField (input) {
+    const name = this._extractNameFromForm(input.name)
     switch (input.type) {
       case 'text':
       case 'select-one':
-        this.filter[input.name] = input.value
+        this.filter[name] = input.value
         break
       case 'checkbox':
         if (input.checked === true) {
-          if (!(input.name in this.filter)) {
-            this.filter[input.name] = []
+          if (!(name in this.filter)) {
+            this.filter[name] = []
           }
-          this.filter[input.name].push(
+          this.filter[name].push(
             input.value)
         }
         break

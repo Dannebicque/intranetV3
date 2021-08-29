@@ -4,14 +4,14 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Questionnaire/TypeQuestionRenderer.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/08/2021 08:00
+ * @lastUpdate 28/08/2021 13:37
  */
 
 namespace App\Components\Questionnaire;
 
 use App\Components\Questionnaire\DTO\Question;
 use App\Components\Questionnaire\TypeQuestion\AbstractQuestion;
-use App\Components\Table\Filters\FilterSelect;
+use App\Components\TableOld\Filters\FilterSelect;
 use Twig\Environment;
 use Twig\TemplateWrapper;
 

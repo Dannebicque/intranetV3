@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/Column/ManyColumnType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/07/2021 18:38
+ * @lastUpdate 29/08/2021 14:37
  */
 
 namespace App\Components\Table\Column;

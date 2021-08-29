@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/DependencyInjection/TableCompilerPass.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/08/2021 08:39
+ * @lastUpdate 29/08/2021 10:04
  */
 
 namespace App\Components\Table\DependencyInjection;
@@ -25,11 +25,8 @@ class TableCompilerPass implements CompilerPassInterface
     {
         $registry = $container->getDefinition(TableRegistry::class);
         $this->addToRegistry($container, $registry, TableRegistry::TAG_ADAPTER, 'registerAdapter');
-        $this->addToRegistry($container, $registry, TableRegistry::TAG_COLUMN_TYPES, 'registerColumnType');
-        $this->addToRegistry($container, $registry, TableRegistry::TAG_FILTERS, 'registerFilter');
-        $this->addToRegistry($container, $registry, TableRegistry::TAG_ACTIONS, 'registerAction');
-        $this->addToRegistry($container, $registry, TableRegistry::TAG_TABLE_TYPE, 'registerTableType');
-        //
+        $this->addToRegistry($container, $registry, TableRegistry::TAG_COLUMN_TYPE, 'registerColumnType');
+        $this->addToRegistry($container, $registry, TableRegistry::TAG_TABLE_TYPE, 'registerType');
 
     }
 

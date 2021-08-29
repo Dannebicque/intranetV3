@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/Column/BooleanColumnType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/08/2021 10:55
+ * @lastUpdate 29/08/2021 14:37
  */
 
 namespace App\Components\Table\Column;
@@ -16,12 +16,18 @@ class BooleanColumnType extends PropertyColumnType
 {
     protected TranslatorInterface $translator;
 
+    /**
+     * EnableColumnType constructor.
+     */
     public function __construct(TranslatorInterface $translator)
     {
         parent::__construct();
         $this->translator = $translator;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function renderProperty($value, array $options): string
     {
         if ($options['strict_comparison'] && !is_bool($value)) {
@@ -47,7 +53,10 @@ class BooleanColumnType extends PropertyColumnType
         }
     }
 
-    public function configureOptions(OptionsResolver $resolver): void
+    /**
+     * {@inheritdoc}
+     */
+    public function configureOptions(OptionsResolver $resolver)
     {
         parent::configureOptions($resolver);
 
@@ -58,9 +67,9 @@ class BooleanColumnType extends PropertyColumnType
             ->setAllowedTypes('yes_value', 'string')
             ->setDefault('no_value', 'No')
             ->setAllowedTypes('no_value', 'string')
-            ->setDefault('yes_icon', 'mdi mdi-check me-1')
+            ->setDefault('yes_icon', 'fas fa-check me-1')
             ->setAllowedTypes('yes_icon', 'string')
-            ->setDefault('no_icon', 'mdi mdi-cancel me-1')
+            ->setDefault('no_icon', 'fas fa-ban me-1')
             ->setAllowedTypes('no_icon', 'string')
             ->setDefault('is_safe_html', true);
     }

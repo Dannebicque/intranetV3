@@ -4,20 +4,22 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Kernel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/08/2021 17:14
+ * @lastUpdate 29/08/2021 14:37
  */
 
 namespace App;
 
 use App\Components\Questionnaire\DependencyInjection\QuestionnaireCompilerPass;
+use App\Components\Table\Column\ColumnType;
 use App\Components\Table\DependencyInjection\TableCompilerPass;
 use App\Components\Table\TableRegistry;
 use App\Components\Table\TableType;
+use App\Components\Widget\DependencyInjection\WidgetCompilerPass;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class Kernel extends BaseKernel
 {
@@ -26,8 +28,10 @@ class Kernel extends BaseKernel
     protected function build(ContainerBuilder $container): void
     {
         $container->addCompilerPass(new TableCompilerPass());
+        $container->addCompilerPass(new WidgetCompilerPass());
         $container->addCompilerPass(new QuestionnaireCompilerPass());
         $container->registerForAutoconfiguration(TableType::class)->addTag(TableRegistry::TAG_TABLE_TYPE);
+        $container->registerForAutoconfiguration(ColumnType::class)->addTag(TableRegistry::TAG_COLUMN_TYPE);
     }
 
     protected function configureContainer(ContainerConfigurator $container): void
@@ -44,6 +48,7 @@ class Kernel extends BaseKernel
 
         //mon service pour Table
         $container->import('../src/Components/Table/{services}.php');
+        $container->import('../src/Components/Widget/{services}.php');
         $container->import('../src/Components/Questionnaire/{services}.php');
     }
 

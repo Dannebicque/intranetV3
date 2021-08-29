@@ -4,17 +4,24 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/TableRenderer.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/08/2021 13:34
+ * @lastUpdate 29/08/2021 12:03
  */
 
 namespace App\Components\Table;
 
+use App\Components\Table\DTO\Column;
+use App\Components\Table\DTO\Table;
+use App\Components\Table\DTO\Toolbar;
 use Twig\Environment;
 
+// FIXME use View Object ?
 class TableRenderer
 {
     protected Environment $twig;
 
+    /**
+     * DataTableRenderer constructor.
+     */
     public function __construct(Environment $twig)
     {
         $this->twig = $twig;
@@ -25,134 +32,122 @@ class TableRenderer
         return $this->twig->render($table->getOption('template'), $this->view($table));
     }
 
-    protected function view(Table $table): array
+    public function renderToolbar(Toolbar $toolbar): string
     {
-        $options = $table->getOptions();
+        return $this->twig->render($toolbar->getOption('toolbar_template'), $this->toolbarView($toolbar));
+    }
+
+    protected function view(Table $dataTable): array
+    {
+        $options = $dataTable->getOptions();
 
         $vars = [];
-        $vars['filters'] = $table->getFilters();
+        $vars['toolbar'] = $dataTable->getToolbar();
         $vars['template'] = $options['template'];
-        // $vars['paging'] = $this->viewPaging($table->getPaging());
-
-        $vars['columns'] = array_map(function(Column $c) {
-            return $this->columnView($c);
-        }, $table->getColumns());
-
+        $vars['id'] = $options['id'];
         $vars['attr'] = [
-            'data-base_url' => $options['base_url'],
-            'data-options' => json_encode($this->getJsOptions($table)),
+            'id' => $options['id'],
+            'class' => 'datable-container',
+            'data-options' => json_encode($this->getJsOptions($dataTable)),
+        ];
+
+        if ($options['paging']) {
+            $vars['lengthChange'] = $options['length_change'];
+            $vars['pageLength'] = $options['page_length'];
+            $vars['lengthMenu'] = $options['length_menu'];
+        } else {
+            $vars['paging'] = false;
+        }
+
+        $vars['paging'] = $options['paging'];
+        $vars['paging_attr'] = [
+            'id' => 'id_paging',
+            'lengthChange' => $options['length_change'],
+            'pageLength' => $options['page_length'],
+            'lengthMenu' => $options['length_menu']
         ];
         $vars['table_attr'] = [
-            'class' => $options['class'] . ' datable',
+            'class' => $options['class'] .= ' datable'
         ];
-
-        $vars['paging_attr'] = [
-            'id' => $table->getPaging()->getName(),//todo: avoir un name unique pour le tableau
-            'lengths' => $table->getPaging()->getLengths(),
-            'length' => $table->getPaging()->getLength(),
-        ];
+        $vars['columns'] = array_map(function(Column $c) {
+            return $this->columnView($c);
+        }, $dataTable->getColumns());
 
         return $vars;
     }
 
-//    public function renderPaging(Paging $paging): string
-//    {
-//        return $this->twig->render($paging->getOption('template'), $this->viewPaging($paging));
-//    }
-
-    private function columnView(Column $column)
+    protected function getJsOptions(Table $dataTable): array
     {
-        $options = $column->getOptions();
+        $options = $dataTable->getOptions();
 
-        $vars = [];
-//        $vars['attr'] = [
-//            'class' => $options['class'],
-//        ];
-
-        $vars['name'] = $column->getName();
-        $vars['label'] = $options['label'];
-        $vars['sortable'] = $column->isSortable();
-        $vars['order'] = strtolower($column->getDefaultOrder());
-        $vars['masquable'] = $options['masquable'];
-        $vars['translation_domain'] = $options['translation_domain'];
-        $vars['attr'] = [
-            'id' => $this->generateId($column->getName()), //générer une clé aléatoire...
-            'data-name' => $column->getName(),
-        ];
-
-        return $vars;
-    }
-
-    private function generateId(string $name)
-    {
-        return $name;
-    }
-
-    private function getJsOptions(Table $table)
-    {
-        $options = $table->getOptions();
-        $paging = $table->getPaging();
         // js options
         $jsOptions = [];
 
-        $jsOptions['pageLength'] = $paging->getOption('page_length');
-        $jsOptions['pageActive'] = $paging->getNumActivePage();
+        $jsOptions['ajax'] = [
+            'url' => $options['load_url'],
+        ];
+
+        if ($options['paging']) {
+            $jsOptions['paging_id'] = 'id_paging';
+            $jsOptions['paging'] = true;
+        } else {
+            $jsOptions['paging'] = false;
+        }
+
+        $jsOptions['ordering'] = $options['orderable'];
 
         // columns options
         $jsOptions['columns'] = [];
-        $jsOptions['filters'] = [];
+        $jsOptions['order'] = [];
 
-        foreach ($table->getColumns() as $column) {
-            $jsOptions['columns'][] = [
-                'name' => $column->getName(),
-                'id' => $this->generateId($column->getName()), //clé...
-                'sortable' => $column->isSortable(),
-                'order' => strtolower($column->getDefaultOrder()),
-            ];
-        }
+        foreach ($dataTable->getColumns() as $name => $column) {
+            if ($column->isOrderable()) {
+                $jsOptions['order'][] = [
+                    $name,
+                    strtolower($column->getDefaultOrder()),
+                ];
+            }
 
-        foreach ($table->getFilters()->getFilters() as $filter) {
-            $jsOptions['filters'][$filter->getName()] = [
-                'columns' => $filter->getColumns()
-                //pourrait avoir un champs pour sauvegarder une valeur et préremplir ...
-            ];
+            $jsOptions['columns'][] = $this->getColumnJsOptions($column);
         }
 
         return $jsOptions;
     }
 
-    public function renderFilters(Filters $filters): string
+    protected function columnView(Column $column): array
     {
-        return $this->twig->render($filters->getOption('template'), $this->viewFilters($filters));
-    }
-
-    private function viewFilters(Filters $filters)
-    {
-        $options = $filters->getOptions();
+        $options = $column->getOptions();
 
         $vars = [];
-        $vars['filters'] = $filters->getFilters();
-        $vars['add_button'] = true; //todo: a récupérer
-        $vars['add_button_url'] = 'http://'; //todo: a récupérer
-        $vars['export_button'] = true; //todo: a récupérer
-        $vars['export_options'] = [
-            'xlsx' => ['url' => '...', 'label' => 'Excel'],
-            'csv' => ['url' => '...', 'label' => 'CSV'],
-            'pdf' => ['url' => '...', 'label' => 'PDF']
+        $vars['attr'] = [
+            'class' => $options['class'],
+            'id' => $options['id'],
+            'style' => $options['width'] ? sprintf('width:%s', $options['width']) : null,
         ];
+
+        $vars['label'] = $options['label'];
+        $vars['translation_domain'] = $options['translation_domain'];
 
         return $vars;
     }
 
-    private function viewPaging(Paging $paging)
+    protected function getColumnJsOptions(Column $column): array
     {
-        $options = $paging->getOptions();
+        return [
+            'orderable' => $column->isOrderable(),
+            'className' => $column->getOption('class'),
+            'id' => $column->getOption('id'),
+        ];
+    }
+
+    protected function toolbarView(Toolbar $toolbar): array
+    {
+        $options = $toolbar->getOptions();
+
         $vars = [];
-        $vars['firstPage'] = $paging->isFirstPage();
-        $vars['lastPage'] = $paging->isLastPage();
-        $vars['pageActive'] = $paging->getNumActivePage();
-        $vars['nbPages'] = $paging->getNbPages();
-        $vars['name'] = $paging->getName();
+        $vars['template'] = $options['toolbar_template'];
+        $vars['form'] = $toolbar->getForm()->createView();
+        $vars['widget'] = $toolbar->getWidget()->createView();
 
         return $vars;
     }

@@ -4,25 +4,32 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/Column/LinkColumnType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/08/2021 10:59
+ * @lastUpdate 29/08/2021 14:37
  */
 
 namespace App\Components\Table\Column;
 
+use PhpOffice\PhpWord\Shared\Html;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
-use Umbrella\CoreBundle\Utils\HtmlUtils;
+use App\Utils\HtmlUtils;
 
 class LinkColumnType extends PropertyColumnType
 {
     protected RouterInterface $router;
 
+    /**
+     * LinkColumnType constructor.
+     */
     public function __construct(RouterInterface $router)
     {
         parent::__construct();
         $this->router = $router;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function render($rowData, array $options): string
     {
         $attr = [];
@@ -71,7 +78,10 @@ class LinkColumnType extends PropertyColumnType
         return sprintf('<a %s>%s</a>', HtmlUtils::to_attr($attr), $text);
     }
 
-    public function configureOptions(OptionsResolver $resolver): void
+    /**
+     * {@inheritdoc}
+     */
+    public function configureOptions(OptionsResolver $resolver)
     {
         parent::configureOptions($resolver);
 
