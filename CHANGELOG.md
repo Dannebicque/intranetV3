@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.1](https://github.com/Dannebicque/intranetV3/compare/v3.1.0...v3.1.1) (2021-08-29)
+
+
+### Features
+
+* Import Apogée depuis les départements ([f2c6236](https://github.com/Dannebicque/intranetV3/commit/f2c623625fc87ab151af4d3bbae8c151519c9cd0))
+
+
+### Bug Fixes
+
+* Configuration pagination ([e94754e](https://github.com/Dannebicque/intranetV3/commit/e94754e72a9ae387525793ccda5cd54a8532bbaa))
+* Mis à jour JS sans Umbrella, retrait des dépendances inutiles ([9f0c96a](https://github.com/Dannebicque/intranetV3/commit/9f0c96a08fd102f58f2684fadb02a45063b22937))
+* Mise en place de Services.php dans DependencyInjection ([bb9545e](https://github.com/Dannebicque/intranetV3/commit/bb9545e052056aaf1bfd69958bfa88a4c5c1157d))
+* Mise en place de Services.php dans DependencyInjection ([7688cad](https://github.com/Dannebicque/intranetV3/commit/7688cadd1afc138b1417dbb6cb332eea97130505))
+* Requete Synchro Apogée améliorée ([c687812](https://github.com/Dannebicque/intranetV3/commit/c687812c469a0ba71d53aa7abec25ce42b1f7f67))
+* Type fichier Version.php ([c9b7a70](https://github.com/Dannebicque/intranetV3/commit/c9b7a70c48569cc307596a2334769a39f058fe9a))
+
 ## [3.1.0](https://github.com/Dannebicque/intranetV3/compare/v3.0.11...v3.1.0) (2021-08-29)
 
 
