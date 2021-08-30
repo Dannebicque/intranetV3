@@ -8,37 +8,38 @@
             <div class="form-group">
                 <label class="control-label required" for="selectsemestre">Choisir semestre</label>
                 <div>
-                        <select data-placeholder="Choisir le semestre" class="form-control" id="selectsemestre"
-                                name="selectsemestre" required="required">
-                            <option value="">Choisissez un semestre</option>
-                            {% for semestre in user_data.semestres %}
+                    <select data-placeholder="Choisir le semestre" class="form-control" id="selectsemestre"
+                            name="selectsemestre" required="required" is="select-complete">
+                        <option value="">Choisissez un semestre</option>
+                        {% for semestre in user_data.semestres %}
                                 <option value="{{ semestre.id }}">{{ semestre.display }}</option>
                             {% endfor %}
-                        </select>
+                    </select>
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="control-label required" for="selectmatiere">Matière</label>
-                <div >
-                        <select class="form-control" id="selectmatiere" name="selectmatiere" required="required">
-                            <option value="">Choisissez d'abord un semestre</option>
-                        </select>
+                <div>
+                    <select class="form-control" id="selectmatiere" name="selectmatiere" required="required" is="select-complete">
+                        <option value="">Choisissez d'abord un semestre</option>
+                    </select>
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="control-label required" for="selectgroupes">Groupes</label>
-                    <div >
-                        <select class="form-control" id="selectgroupes" name="selectgroupes" required="required">
-                            <option value="">Choisissez d'abord un semestre</option>
-                        </select>
+                <div>
+                    <select class="form-control" id="selectgroupes" name="selectgroupes" required="required"
+                            is="select-complete">
+                        <option value="">Choisissez d'abord un semestre</option>
+                    </select>
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="control-label required">Choix des groupes</label>
-                <div >
+                <div>
                     <div id="listegroupe" class="col-xs-7">Choisissez d'abord un type de groupe</div>
                 </div>
             </div>
@@ -49,7 +50,8 @@
             <div class="form-group">
                 <label class="control-label" for="enseignant1">Enseignant 1</label>
                 <div>
-                    <select class="form-control selectpicker" id="enseignant1" name="enseignant1"
+                    <select class="form-control" id="enseignant1" name="enseignant1"
+                            is="select-complete"
                     >
                         <option value="">Choisissez un enseignant</option>
                         {% for enseignant in personnels %}
@@ -62,13 +64,14 @@
             <div class="form-group">
                 <label class="control-label" for="enseignant2">Enseignant 2</label>
                 <div>
-                    <select class="form-control selectpicker" id="enseignant2" name="enseignant2"
+                    <select class="form-control" id="enseignant2" name="enseignant2"
+                            is="select-complete"
                     >
                         <option value="">Choisissez un enseignant</option>
                         {% for enseignant in personnels %}
                                 <option value="{{ enseignant.id }}">{{ enseignant.displayPr }}</option>
                             {% endfor %}
-                        </select>
+                    </select>
                 </div>
             </div>
 
@@ -77,12 +80,12 @@
             <div class="form-group">
                 <label class="control-label required" for="salle">Salle</label>
                 <div>
-                        <select class="form-control" id="salle" name="salle" required="required">
-                            <option value="">Choisissez la salle</option>
-                            {% for salle in salles %}
+                    <select class="form-control" id="salle" name="salle" required="required" is="select-complete">
+                        <option value="">Choisissez la salle</option>
+                        {% for salle in salles %}
                                 <option value="{{ salle.id }}">{{ salle.salle.libelle }} </option>
                             {% endfor %}
-                        </select>
+                    </select>
                 </div>
             </div>
 
@@ -92,8 +95,8 @@
                 <div>
                     <input type="text"
                            name="dateeval" id="dateeval" class="form-control"
-                            {{ options | html_attr }}
-                           is="date-picker"
+                           is="my-datepicker"
+                            {# todo: marche pas le picker ? options à passer ? #}
                     >
                 </div>
             </div>
