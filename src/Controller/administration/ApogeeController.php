@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/ApogeeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/08/2021 13:50
+ * @lastUpdate 30/08/2021 19:19
  */
 
 namespace App\Controller\administration;
@@ -94,7 +94,7 @@ class ApogeeController extends BaseController
         foreach ($listeetudiants as $numEtu) {
             $numEtu = (int)trim($numEtu);
             if (is_int($numEtu)) {
-                $stid = $apogeeEtudiant->getEtudiant($numEtu);
+                $stid = $apogeeEtudiant->getEtudiant($numEtu, $semestre->getAnnee());
                 while ($row = $stid->fetch()) {
                     //requete pour récupérer les datas de l'étudiant et ajouter à la BDD.
                     $dataApogee = $apogeeEtudiant->transformeApogeeToArray($row, $bacRepository->getApogeeArray());
