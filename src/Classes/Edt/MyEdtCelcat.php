@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/07/2021 14:59
+ * @lastUpdate 30/08/2021 13:35
  */
 
 /*
@@ -19,6 +19,7 @@ use App\Entity\Annee;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\CelcatEvent;
 use App\Entity\Constantes;
+use App\Entity\Departement;
 use App\Entity\Etudiant;
 use App\Entity\Groupe;
 use App\Entity\Personnel;
@@ -35,6 +36,8 @@ class MyEdtCelcat extends BaseEdt
     private GroupeRepository $groupeRepository;
     private TypeMatiereManager $typeMatiereManager;
     private array $tab = [];
+    private array $matieres;
+
 
     public function __construct(
         CalendrierRepository $celcatCalendrierRepository,
@@ -51,9 +54,11 @@ class MyEdtCelcat extends BaseEdt
     public function initPersonnel(
         Personnel $personnel,
         AnneeUniversitaire $anneeUniversitaire,
-        int $semaine = 0
+        int $semaine = 0,
+        array $matieres
     ): self {
         $this->user = $personnel;
+        $this->matieres = $matieres;
         $this->init($anneeUniversitaire, 'prof', $personnel->getId(), $semaine);
         $this->semaines = $this->calculSemaines();
         $this->calculEdt();
@@ -123,7 +128,7 @@ class MyEdtCelcat extends BaseEdt
                 $jour = $p->getJour() + 1;
                 $dbtEdt = $p->getDebut();
 
-                $tab[$jour][$dbtEdt][$groupe]['duree'] = $p->getFin() - $p->getDebut();
+                $tab[$jour][$dbtEdt][$groupe]['duree'] = $p->getFin()->sub($p->getDebut());
 
                 $tab[$jour][$dbtEdt][$groupe]['couleur'] = $this->getCouleur($p);
                 $tab[$jour][$dbtEdt][$groupe]['couleurTexte'] = $this->annee->getCouleurTexte();//todo: le code est dans le semestre...
@@ -164,21 +169,21 @@ class MyEdtCelcat extends BaseEdt
 
         /** @var CelcatEvent $p */
         foreach ($pl as $p) {
-            $dbtEdt = $p->getDebut();
-            $finEdt = $p->getFin();
+            $dbtEdt = $p->getDebut()->format('h:i');
+            $finEdt = $p->getFin()->format('h:i');
 
-            $tab[$p->getJour()][$dbtEdt]['duree'] = $p->getFin() - $p->getDebut();
+            $tab[$p->getJour()][$dbtEdt]['duree'] = $p->getFin()->sub($p->getDebut());
 
-            for ($i = $dbtEdt; $i < $finEdt; ++$i) {
-                $tab[$p->getJour()][$i]['texte'] = 'xx';
-            }
+//            for ($i = $dbtEdt; $i < $finEdt; ++$i) {
+//                $tab[$p->getJour()][$i]['texte'] = 'xx';
+//            }
 
             $tab[$p->getJour()][$dbtEdt]['texte'] = $p->getLibSalle() . '<br />' . $p->getLibModule() . '<br /> sem?! |  ' . $p->getLibGroupe();
 
             $tab[$p->getJour()][$dbtEdt]['couleur'] = $this->getCouleurFromModule($p);
             $tab[$p->getJour()][$dbtEdt]['pl'] = $p->getId();
             $tab[$p->getJour()][$dbtEdt]['couleurTexte'] = '#ffffff';
-            $this->calculTotal($p);
+            // $this->calculTotal($p);
         }
 
         return $tab;
@@ -257,14 +262,14 @@ class MyEdtCelcat extends BaseEdt
 
     private function getCouleurFromModule(CelcatEvent $p): string
     {
-        $matiere = $this->typeMatiereManager->findByCodeApogee(['codeapogee' => $p->getCodeModule()]);
-        if (null !== $matiere && null !== $matiere->getSemestre()) {
-            $annee = $matiere->getSemestre()->getAnnee();
+        $matiere = $this->matieres[$p->getCodeModule()];
+        if (null !== $matiere && null !== $matiere->semestre) {
+            $annee = $matiere->semestre->getAnnee();
             if (null !== $annee) {
                 return match ($p->getType()) {
-                    'CM', 'cm' => $annee->getCouleurCM(),
-                    'TD', 'td' => $annee->getCouleurTd(),
-                    'TP', 'tp' => $annee->getCouleurTp(),
+                    'CM', 'cm' => $matiere->semestre->getCouleur(),
+                    'TD', 'td' => $matiere->semestre->getCouleur(),
+                    'TP', 'tp' => $matiere->semestre->getCouleur(),
                     default => 'CCCCCC',
                 };
             }
@@ -279,9 +284,9 @@ class MyEdtCelcat extends BaseEdt
     private function getCouleur(CelcatEvent $p): ?string
     {
         return match ($p->getType()) {
-            'CM', 'cm' => $this->annee->getCouleurCM(),
-            'TD', 'td' => $this->annee->getCouleurTd(),
-            'TP', 'tp' => $this->annee->getCouleurTp(),
+            'CM', 'cm' => $this->annee->getCouleur(),
+            'TD', 'td' => $this->annee->getCouleur(),
+            'TP', 'tp' => $this->annee->getCouleur(),
             default => 'CCCCCC',
         };
     }

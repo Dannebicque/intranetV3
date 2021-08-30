@@ -4,26 +4,18 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/ApogeeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 21:26
+ * @lastUpdate 30/08/2021 13:27
  */
 
 namespace App\Controller\administration;
 
 use App\Classes\Apogee\ApogeeEtudiant;
-use App\Classes\Apogee\ApogeeMaquette;
 use App\Classes\Etudiant\EtudiantImport;
-use App\Classes\MyStructure;
-use App\Classes\Structure\ApogeeImport;
 use App\Controller\BaseController;
-use App\Entity\Annee;
-use App\Entity\Configuration;
-use App\Entity\Constantes;
 use App\Repository\AnneeUniversitaireRepository;
 use App\Repository\BacRepository;
 use App\Repository\EtudiantRepository;
 use App\Repository\SemestreRepository;
-use Exception;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -58,6 +50,7 @@ class ApogeeController extends BaseController
                     //if ((int)Tools::convertDateToObject($row['DAT_MOD_IND'])->format('Y') === $semestre->getAnneeUniversitaire()->getAnnee()) {
                     $dataApogee = $apogeeEtudiant->transformeApogeeToArray($row, $bacRepository->getApogeeArray());
                     $numEtudiant = $dataApogee['etudiant']['setNumEtudiant'];
+                    dump($numEtudiant);
                     $etudiant = $etudiantRepository->findOneBy(['numEtudiant' => $numEtudiant]);
                     if (null === $etudiant) {
                         //l'étudiant n'existe pas, quelque soit la situation, on va l'ajouter
@@ -94,27 +87,30 @@ class ApogeeController extends BaseController
         SemestreRepository $semestreRepository,
         BacRepository $bacRepository
     ): Response {
-        $listeetudiants = explode(';', $request->request->get('listeetudiants'));
+        $listeetudiants = explode(';', trim($request->request->get('listeetudiants')));
         $semestre = $semestreRepository->find($request->request->get('semestreforce'));
 
         $this->etudiants = [];
         foreach ($listeetudiants as $numEtu) {
-            $stid = $apogeeEtudiant->getEtudiant($numEtu);
-            while ($row = $stid->fetch()) {
-                //requete pour récupérer les datas de l'étudiant et ajouter à la BDD.
-                $dataApogee = $apogeeEtudiant->transformeApogeeToArray($row, $bacRepository->getApogeeArray());
-                $numEtudiant = $dataApogee['etudiant']['setNumEtudiant'];
+            $numEtu = (int)trim($numEtu);
+            if (is_int($numEtu)) {
+                $stid = $apogeeEtudiant->getEtudiant($numEtu);
+                while ($row = $stid->fetch()) {
+                    //requete pour récupérer les datas de l'étudiant et ajouter à la BDD.
+                    $dataApogee = $apogeeEtudiant->transformeApogeeToArray($row, $bacRepository->getApogeeArray());
+                    $numEtudiant = $dataApogee['etudiant']['setNumEtudiant'];
 
-                //Stocker réponse dans un tableau pour page confirmation
-                $etudiant = $etudiantRepository->findOneBy(['numEtudiant' => $numEtudiant]);
-                if ($etudiant) {
-                    $this->etudiants[$numEtudiant]['etat'] = 'deja';
-                } else {
-                    //n'existe pas on ajoute.
-                    $etudiant = $etudiantImport->createEtudiant($semestre, $dataApogee);
-                    $this->etudiants[$numEtudiant]['etat'] = 'add';
+                    //Stocker réponse dans un tableau pour page confirmation
+                    $etudiant = $etudiantRepository->findOneBy(['numEtudiant' => $numEtudiant]);
+                    if ($etudiant) {
+                        $this->etudiants[$numEtudiant]['etat'] = 'deja';
+                    } else {
+                        //n'existe pas on ajoute.
+                        $etudiant = $etudiantImport->createEtudiant($semestre, $dataApogee);
+                        $this->etudiants[$numEtudiant]['etat'] = 'add';
+                    }
+                    $this->etudiants[$numEtudiant]['data'] = $etudiant;
                 }
-                $this->etudiants[$numEtudiant]['data'] = $etudiant;
             }
         }
         $this->entityManager->flush();
