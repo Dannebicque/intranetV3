@@ -4,11 +4,14 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/Type/DatePickerType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 21:50
+ * @lastUpdate 30/08/2021 18:51
  */
 
 namespace App\Form\Type;
 
+use App\Form\Transformer\CarbonToDateTimeTransformer;
+use Carbon\Carbon;
+use Carbon\CarbonInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -42,7 +45,7 @@ class DatePickerType extends AbstractType
     {
         $builder->addModelTransformer(new CallbackTransformer(
             function($value) use ($options) {
-                if (\is_a($value, \DateTimeInterface::class)) {
+                if (\is_a($value, CarbonInterface::class)) {
                     return $value->format($options['format']);
                 }
 
@@ -50,7 +53,7 @@ class DatePickerType extends AbstractType
             },
 
             function($value) use ($options) {
-                $date = \DateTime::createFromFormat($options['format'], $value);
+                $date = Carbon::createFromFormat($options['format'], $value);
 
                 return false === $date ? null : $date;
             }
