@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/SousCommission/SousCommissionExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 18:02
+ * @lastUpdate 30/08/2021 09:15
  */
 
 namespace App\Classes\SousCommission;
@@ -424,13 +424,14 @@ class SousCommissionExport
                     foreach ($ues as $ue) {
                         ++$colonne;
                         $this->myExcelWriter->writeCellXY($colonne, $ligne,
-                            number_format($ssCommTravail->ue($etu->getId(), $ue->getId())['moyenne'], 3), 'numerique3');
+                            number_format($ssCommTravail->ue($etu->getId(), $ue->getId())['moyenne'], 3),
+                            ['style' => 'numerique3']);
                     }
 
                     $colonne = 12;
                     $this->myExcelWriter->writeCellXY($colonne, $ligne,
                         number_format($ssCommTravail->etudiant($etu->getId())->getMoyenne(), 3),
-                        'numerique3');
+                        ['style' => 'numerique3']);
                     ++$colonne;
                     $this->myExcelWriter->writeCellXY($colonne, $ligne,
                         $ssCommTravail->etudiant($etu->getId())->getDecision());
@@ -449,7 +450,7 @@ class SousCommissionExport
                                 $this->myExcelWriter->writeCellXY($colonne, $ligne,
                                     number_format($ssCommTravail->matiere($etu->getId(),
                                         $m->getTypeIdMatiere())['moyenne'], 2),
-                                    'numerique');
+                                    ['style' => 'numerique']);
                             }
                         }
                         ++$colonne;
