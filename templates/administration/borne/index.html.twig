@@ -21,14 +21,8 @@
 
 
 {% block fabactions %}
-    {{ include('composants/fab-buttons.html.twig', {boutons:[
-        {
-            type:'info',
-            href:path('help_article', {sujet: 'administration-borne'}),
-            title: 'aide'|trans,
-            icone: 'fa fa-question'
-        }
-    ]}) }}
+    {{ include('composants/fab-button-help.html.twig', {
+        href:path('help_article', {sujet: 'administration-borne'})}) }}
 {% endblock %}
 
 {% block stylesheets %}

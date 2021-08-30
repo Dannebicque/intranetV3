@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/BorneTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 19:44
+ * @lastUpdate 30/08/2021 08:29
  */
 
 namespace App\Table;
@@ -76,6 +76,8 @@ class BorneTableType extends TableType
                 ]);
             },
         ]);
+
+        $builder->setLoadUrl('administration_borne_index');
 
         $builder->addColumn('icone', IconeColumnType::class, ['label' => 'icone']);
         $builder->addColumn('message', PropertyColumnType::class, ['label' => 'message']);
