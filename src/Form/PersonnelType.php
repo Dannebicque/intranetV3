@@ -4,15 +4,15 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/PersonnelType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/05/2021 14:21
+ * @lastUpdate 30/08/2021 18:43
  */
 
 namespace App\Form;
 
 use App\Entity\Personnel;
 use App\Form\Type\CiviliteType;
+use App\Form\Type\DatePickerType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -34,7 +34,7 @@ class PersonnelType extends AbstractType
             ])
             ->add('nom', TextType::class, ['label' => 'nom'])
             ->add('prenom', TextType::class, ['label' => 'prenom'])
-            ->add('date_naissance', BirthdayType::class, ['label' => 'date_naissance'])
+            ->add('date_naissance', DatePickerType::class, ['label' => 'date_naissance'])
             ->add('initiales', TextType::class, ['label' => 'initiales', 'required' => false])
             ->add('photoFile', VichFileType::class, ['label' => 'photo', 'required' => false])
             ->add('username', TextType::class, ['label' => 'username'])

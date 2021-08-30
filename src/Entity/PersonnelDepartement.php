@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/PersonnelDepartement.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/06/2021 10:28
+ * @lastUpdate 30/08/2021 18:52
  */
 
 namespace App\Entity;
@@ -35,7 +35,7 @@ class PersonnelDepartement extends BaseEntity
     /**
      * @ORM\Column(type="string", length=250)
      */
-    private ?string $roles;
+    private ?string $roles = '';
 
     /**
      * @ORM\Column(type="boolean")
