@@ -55,7 +55,10 @@
                         <td>{{ cours.date }}</td>
                         <td>{{ cours.jour }}</td>
                         <td>{{ cours.heure }}</td>
-                        <td>{{ cours.matiere }}</td>
+                        <td>
+                            {{ matieres[cours.typeIdMatiere] is defined ? matieres[cours.typeIdMatiere].display :
+                            '-Matière inconnue-' }}
+                        </td>
                         <td>{{ cours.type_cours }}</td>
                         <td>{{ cours.groupe }}</td>
                     </tr>

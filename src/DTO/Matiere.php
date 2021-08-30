@@ -4,14 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/Matiere.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/07/2021 14:03
+ * @lastUpdate 30/08/2021 18:54
  */
 
 namespace App\DTO;
 
 use App\Entity\Constantes;
 use App\Entity\Semestre;
-use Symfony\Component\Serializer\Annotation\Groups;
 
 class Matiere
 {
