@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Previsionnel/PrevisionnelImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 27/08/2021 22:22
+ * @lastUpdate 30/08/2021 08:55
  */
 
 namespace App\Classes\Previsionnel;
@@ -24,7 +24,7 @@ use function array_key_exists;
  */
 class PrevisionnelImport
 {
-    private PrevisionnelRepository $previsionnelRepository;
+    private PrevisionnelManager $previsionnelManager;
 
     private EntityManagerInterface $entityManager;
 
@@ -33,13 +33,13 @@ class PrevisionnelImport
 
     public function __construct(
         TypeMatiereManager $typeMatiereManager,
-        PrevisionnelRepository $previsionnelRepository,
+        PrevisionnelManager $previsionnelManager,
         EntityManagerInterface $entityManager,
         MyUpload $myUpload
     ) {
         $this->typeMatiereManager = $typeMatiereManager;
         $this->entityManager = $entityManager;
-        $this->previsionnelRepository = $previsionnelRepository;
+        $this->previsionnelManager = $previsionnelManager;
         $this->myUpload = $myUpload;
     }
 
@@ -102,8 +102,8 @@ class PrevisionnelImport
 
     private function supprPrevisionnel(Diplome $diplome, $annee): void
     {
-        $pr = $this->previsionnelRepository->findByDiplome($diplome, $annee);
-        /** @var Previsionnel $p */
+        $pr = $this->previsionnelManager->findByDiplome($diplome, $annee);
+
         foreach ($pr as $p) {
             $this->entityManager->remove($p);
         }

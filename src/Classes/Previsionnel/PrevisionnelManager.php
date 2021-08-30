@@ -4,13 +4,14 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Previsionnel/PrevisionnelManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/07/2021 17:05
+ * @lastUpdate 30/08/2021 08:55
  */
 
 namespace App\Classes\Previsionnel;
 
 use App\Entity\Annee;
 use App\Entity\Departement;
+use App\Entity\Diplome;
 use App\Entity\Personnel;
 use App\Entity\Previsionnel;
 use App\Entity\Semestre;
@@ -121,6 +122,17 @@ class PrevisionnelManager
         $t = [];
         foreach ($this->managers as $manager) {
             $previs = $manager->findByDepartement($departement, $annee);
+            $t[] = $previs->toArray();
+        }
+
+        return array_merge(...$t);
+    }
+
+    public function findByDiplome(Diplome $diplome, $annee)
+    {
+        $t = [];
+        foreach ($this->managers as $manager) {
+            $previs = $manager->findByDiplome($diplome, $annee);
             $t[] = $previs->toArray();
         }
 

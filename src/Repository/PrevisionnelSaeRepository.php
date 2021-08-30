@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/PrevisionnelSaeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 27/08/2021 21:46
+ * @lastUpdate 30/08/2021 08:55
  */
 
 namespace App\Repository;
@@ -149,6 +149,32 @@ class PrevisionnelSaeRepository extends PrevisionnelRepository
             ->orderBy('pers.nom', 'ASC')
             ->orderBy('pers.prenom', 'ASC')
             ->getQuery()
+            ->getResult();
+    }
+
+    public function findByDiplome(Diplome $diplome, $annee = 0)
+    {
+        $query = $this->createQueryBuilder('p')
+            ->innerJoin(Personnel::class, 'pers', 'WITH', 'p.personnel = pers.id')
+            ->innerJoin(ApcSae::class, 'm', 'WITH', 'p.idMatiere = m.id')
+            ->select('p.id as id_previsionnel, p.annee, p.referent, p.nbHCm, p.nbHTd, p.nbHTp, p.nbGrCm, p.nbGrTd, p.nbGrTp, m.id as id_sae, m.libelle, m.codeMatiere, m.codeElement as matiere_code_element, pers.id as id_personnel, pers.nom, pers.prenom, pers.numeroHarpege, pers.mailUniv, pers.nbHeuresService, s.id as id_semestre, s.libelle as libelle_semestre, a.id as id_annee, a.codeEtape as annee_code_etape, a.libelleLong as annee_libelle_long, a.libelle as libelle_annee, d.id as id_diplome, d.libelle as libelle_diplome')
+            ->innerJoin(Semestre::class, 's', 'WITH', 'm.semestre = s.id')
+            ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
+            ->andWhere('a.diplome = :diplome')
+            ->setParameter('diplome', $diplome->getId())
+            ->andWhere('p.typeMatiere = :type')
+            ->setParameter('type', self::TYPE);
+
+        if (0 !== $annee) {
+            $query->andWhere('p.annee = :annee')
+                ->setParameter('annee', $annee);
+        } elseif (null !== $diplome->getDepartement()) {
+            $annee = $diplome->getDepartement()->getOptAnneePrevisionnel();
+            $query->andWhere('p.annee = :annee')
+                ->setParameter('annee', $annee);
+        }
+
+        return $query->getQuery()
             ->getResult();
     }
 }
