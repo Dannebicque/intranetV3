@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.4](https://github.com/Dannebicque/intranetV3/compare/v3.1.3...v3.1.4) (2021-08-30)
+
+
+### Bug Fixes
+
+* Affichage des détails d'un événement pour les étudiants ([b0047f3](https://github.com/Dannebicque/intranetV3/commit/b0047f3b6e2bcf2c1e738ad8de1ed63899035227))
+* Optimisation de ConvertToFloat. ([e570f68](https://github.com/Dannebicque/intranetV3/commit/e570f682c9cafcbf943e4c60291120a4c11ead15))
+* Options pas dans le bon format ([902b78a](https://github.com/Dannebicque/intranetV3/commit/902b78aa1b72d63b6cdcf19fe96eac50fad4864f))
+
 ### [3.1.3](https://github.com/Dannebicque/intranetV3/compare/v3.1.2...v3.1.3) (2021-08-30)
 
 
