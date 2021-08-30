@@ -4,12 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/PrevisionnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2021 21:52
+ * @lastUpdate 30/08/2021 15:24
  */
 
 namespace App\Controller\appPersonnel;
 
 use App\Classes\Hrs\HrsManager;
+use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\Previsionnel\PrevisionnelManager;
 use App\Classes\Previsionnel\PrevisionnelSynthese;
 use App\Classes\ServiceRealise\ServiceRealiseCelcat;
@@ -59,18 +60,23 @@ class PrevisionnelController extends BaseController
      * @Route("/chronologique", name="previsionnel_chronologique")
      */
     public function chronologique(
+        TypeMatiereManager $typeMatiereManager,
         ServiceRealiseIntranet $serviceRealiseIntranet,
         ServiceRealiseCelcat $serviceRealiseCelcat
     ): Response {
-        if (null !== $this->getDepartement() && true === $this->getDepartement()->getOptUpdateCelcat()) {
-            $chronologique = $serviceRealiseCelcat;
-        } else {
-            $chronologique = $serviceRealiseIntranet;
-        }
+        if (null !== $this->getDepartement()) {
+            $matieres = $typeMatiereManager->findByDepartementArray($this->getDepartement());
+            if (true === $this->getDepartement()->getOptUpdateCelcat()) {
+                $chronologique = $serviceRealiseCelcat;
+            } else {
+                $chronologique = $serviceRealiseIntranet;
+            }
 
-        return $this->render('appPersonnel/previsionnel/chronologique.html.twig', [
-            'chronologique' => $chronologique->getServiceRealiserParEnseignant($this->getConnectedUser()),
-        ]);
+            return $this->render('appPersonnel/previsionnel/chronologique.html.twig', [
+                'chronologique' => $chronologique->getServiceRealiserParEnseignant($this->getConnectedUser()),
+                'matieres' => $matieres,
+            ]);
+        }
     }
 
     /**
