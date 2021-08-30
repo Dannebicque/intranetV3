@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/ServiceRealise/ServiceRealiseIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2021 08:46
+ * @lastUpdate 30/08/2021 18:54
  */
 
 /*
@@ -59,7 +59,7 @@ class ServiceRealiseIntranet implements ServiceRealiseInterface
     public function getServiceRealiserParEnseignant(Personnel $personnel): array
     {
         $events = $this->edtPlanningRepository->findBy(['intervenant' => $personnel->getId()],
-            ['matiere' => 'ASC', 'semaine' => 'ASC', 'jour' => 'ASC', 'debut' => 'ASC']);
+            ['semaine' => 'ASC', 'jour' => 'ASC', 'debut' => 'ASC']);
         $tabEvent = [];
         foreach ($events as $event) {
             $tabEvent[] = $this->convertToEvenementEdt($event);
@@ -82,7 +82,8 @@ class ServiceRealiseIntranet implements ServiceRealiseInterface
         $ev->duree = $event->getDureeInt();
         $ev->date = $date->isoFormat('L');
         $ev->heure = Constantes::TAB_HEURES[$event->getDebut()] . ' à ' . Constantes::TAB_HEURES[$event->getFin()];
-        $ev->matiere = null !== $event->getMatiere() ? $event->getMatiere()->getDisplay() : $event->getTexte();
+        //$ev->matiere = null !== $event->getMatiere() ? $event->getMatiere()->getDisplay() : $event->getTexte();
+        $ev->typeIdMatiere = $event->getTypeIdMatiere();
         $ev->type_cours = $event->getType();
         $ev->personnel = null !== $event->getIntervenant() ? $event->getIntervenantEdt() : '';
 
