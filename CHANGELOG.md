@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.3](https://github.com/Dannebicque/intranetV3/compare/v3.1.2...v3.1.3) (2021-08-30)
+
+
+### Bug Fixes
+
+* Bug ancien picker ([47db044](https://github.com/Dannebicque/intranetV3/commit/47db04483c4b8ed583942493c434e28833ed8aed))
+* FindByDiplome dans le prévisionnel ([c492e77](https://github.com/Dannebicque/intranetV3/commit/c492e778f67a6c2a90328285ba38a3678fc718a4))
+* PDF format qualité ([ee69ccf](https://github.com/Dannebicque/intranetV3/commit/ee69ccf486fe7b21bfbac4f6fd5bd7bf19f1afc0))
+* setMatiere residuel. ([48cd503](https://github.com/Dannebicque/intranetV3/commit/48cd50370d1c7427f150f74831762ff880abd06c))
+* Table sur la page Borne ([0dc66e2](https://github.com/Dannebicque/intranetV3/commit/0dc66e259ffee1b4dbc8fac15286c673219d9214))
+* Typo getter ([d284828](https://github.com/Dannebicque/intranetV3/commit/d284828b480d1a848ca8f85f450b34fafc2b4521))
+
 ### [3.1.2](https://github.com/Dannebicque/intranetV3/compare/v3.1.1...v3.1.2) (2021-08-29)
 
 
