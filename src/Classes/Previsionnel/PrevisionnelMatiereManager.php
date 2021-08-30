@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Previsionnel/PrevisionnelMatiereManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/05/2021 08:47
+ * @lastUpdate 30/08/2021 19:30
  */
 
 namespace App\Classes\Previsionnel;
@@ -13,6 +13,7 @@ namespace App\Classes\Previsionnel;
 use App\Adapter\PrevisionnelMatiereAdapter;
 use App\DTO\PrevisionnelCollection;
 use App\Entity\Departement;
+use App\Entity\Diplome;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
 use App\Repository\PrevisionnelMatiereRepository;
@@ -77,6 +78,13 @@ class PrevisionnelMatiereManager extends AbstractPrevisionnelManager implements 
     public function findByDepartement(Departement $departement, $annee = 0): PrevisionnelCollection
     {
         $data = $this->previsionnelRepository->findByDepartement($departement, $annee);
+
+        return $this->previsionnelMatiereAdapter->collection($data);
+    }
+
+    public function findByDiplome(Diplome $diplome, $annee = 0): PrevisionnelCollection
+    {
+        $data = $this->previsionnelRepository->findByDiplome($diplome, $annee);
 
         return $this->previsionnelMatiereAdapter->collection($data);
     }
