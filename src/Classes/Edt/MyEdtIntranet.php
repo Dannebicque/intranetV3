@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/08/2021 08:59
+ * @lastUpdate 30/08/2021 09:07
  */
 
 /*
@@ -499,7 +499,7 @@ class MyEdtIntranet extends BaseEdt
     {
         if (null !== $pl) {
             $t = [];
-            $t['matiere'] = null !== $pl->getMatiere() ? $pl->getMatiere()->getDisplay() : $pl->getTexte();
+            $t['matiere'] = null !== $this->typeMatiereManager->getMatiereFromSelect($pl->getTypeIdMatiere())->display;
 
             if (null !== $pl->getIntervenant()) {
                 $t['enseignant'] = $pl->getIntervenant()->getDisplayPr();
