@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/BorneController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 09:50
+ * @lastUpdate 30/08/2021 08:30
  */
 
 namespace App\Controller\administration;
@@ -21,14 +21,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/administration/bornes")
- */
+#[Route("/administration/bornes")]
 class BorneController extends BaseController
 {
-    /**
-     * @Route("/", name="administration_borne_index", methods="GET")
-     */
+    #[Route("/", name: "administration_borne_index", methods: ['GET', 'POST'])]
     public function index(Request $request): Response
     {
         $table = $this->createTable(BorneTableType::class, [
