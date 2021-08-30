@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/PrevisionnelRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2021 14:41
+ * @lastUpdate 30/08/2021 08:55
  */
 
 namespace App\Repository;
@@ -33,21 +33,5 @@ class PrevisionnelRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Previsionnel::class);
-    }
-
-    public function findByDiplome(Diplome $diplome, $annee)
-    {
-        return $this->createQueryBuilder('s')
-            ->innerJoin(Personnel::class, 'p', 'WITH', 's.personnel = p.id')
-            ->innerJoin(Matiere::class, 'm', 'WITH', 's.matiere = m.id')
-            ->innerJoin(Ue::class, 'u', 'with', 'u.id=m.ue')
-            ->innerJoin(Semestre::class, 'se', 'with', 'se.id=u.semestre')
-            ->innerJoin(Annee::class, 'a', 'with', 'a.id=se.annee')
-            ->where('a.diplome = :diplome')
-            ->andWhere('s.annee = :annee')
-            ->setParameter('diplome', $diplome->getId())
-            ->setParameter('annee', $annee)
-            ->getQuery()
-            ->getResult();
     }
 }
