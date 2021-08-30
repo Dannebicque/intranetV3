@@ -2,29 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.etudiants.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 23/05/2021 14:06
-import {dataTableLangueFr} from '../lang/fr'
-
-const table = $('#datatableEtudiants').DataTable({})
-table.clear() //effacer le datatable
-table.destroy() //supprimer le datatable
-
-$('#datatableEtudiants').DataTable({
-  'language': dataTableLangueFr,
-  'processing': true,
-  'serverSide': true,
-  'ajax': Routing.generate('api_etudiant_departement'),
-  'sAjaxDataProp': 'data',
-  'order': [[1, 'asc'], [2, 'asc']],
-  'pageLength': 25,
-  'columns': [
-    {'data': 'numetudiant'},
-    {'data': 'nom'},
-    {'data': 'prenom'},
-    {'data': 'semestre'},
-    {'data': 'etat'},
-    {'data': 'profil'}]
-})
+// @lastUpdate 30/08/2021 12:12
 
 
 $(document).on('change', '.changeEtat', function () {

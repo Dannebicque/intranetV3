@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Matieres/TypeMatiereManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 27/08/2021 22:21
+ * @lastUpdate 29/08/2021 19:05
  */
 
 namespace App\Classes\Matieres;
@@ -71,6 +71,17 @@ class TypeMatiereManager
     public function tableauMatieres(Departement $departement): array
     {
         $matieres = $this->findByDepartement($departement);
+        $t = [];
+        foreach ($matieres as $matiere) {
+            $t[$matiere->codeMatiere] = $matiere;
+        }
+
+        return $t;
+    }
+
+    public function tableauMatieresEdt(): array
+    {
+        $matieres = $this->findAllArray();
         $t = [];
         foreach ($matieres as $matiere) {
             $t[$matiere->codeMatiere] = $matiere;

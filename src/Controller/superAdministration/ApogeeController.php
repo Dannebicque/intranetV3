@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/ApogeeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/08/2021 18:25
+ * @lastUpdate 30/08/2021 10:14
  */
 
 namespace App\Controller\superAdministration;
@@ -12,11 +12,9 @@ namespace App\Controller\superAdministration;
 use App\Classes\Apogee\ApogeeEtudiant;
 use App\Classes\Apogee\ApogeeMaquette;
 use App\Classes\Etudiant\EtudiantImport;
-use App\Classes\MyStructure;
 use App\Classes\Structure\ApogeeImport;
 use App\Controller\BaseController;
 use App\Entity\Annee;
-use App\Entity\Configuration;
 use App\Entity\Constantes;
 use App\Repository\AnneeUniversitaireRepository;
 use App\Repository\BacRepository;
@@ -44,7 +42,7 @@ class ApogeeController extends BaseController
         AnneeUniversitaireRepository $anneeUniversitaireRepository
     ): Response {
         return $this->render('super-administration/apogee/index.html.twig', [
-            'semestres'           => $semestreRepository->findAll(),
+            'semestres' => $semestreRepository->findAll(),
             'anneeUniversitaires' => $anneeUniversitaireRepository->findAll(),
         ]);
     }
@@ -124,22 +122,25 @@ class ApogeeController extends BaseController
 
         $this->etudiants = [];
         foreach ($listeetudiants as $numEtu) {
-            $stid = $apogeeEtudiant->getEtudiant($numEtu);
-            while ($row = $stid->fetch()) {
-                //requete pour récupérer les datas de l'étudiant et ajouter à la BDD.
-                $dataApogee = $apogeeEtudiant->transformeApogeeToArray($row, $bacRepository->getApogeeArray());
-                $numEtudiant = $dataApogee['etudiant']['setNumEtudiant'];
+            $numEtu = (int)trim($numEtu);
+            if (is_int($numEtu)) {
+                $stid = $apogeeEtudiant->getEtudiant($numEtu);
+                while ($row = $stid->fetch()) {
+                    //requete pour récupérer les datas de l'étudiant et ajouter à la BDD.
+                    $dataApogee = $apogeeEtudiant->transformeApogeeToArray($row, $bacRepository->getApogeeArray());
+                    $numEtudiant = $dataApogee['etudiant']['setNumEtudiant'];
 
-                //Stocker réponse dans un tableau pour page confirmation
-                $etudiant = $etudiantRepository->findOneBy(['numEtudiant' => $numEtudiant]);
-                if ($etudiant) {
-                    $this->etudiants[$numEtudiant]['etat'] = 'deja';
-                } else {
-                    //n'existe pas on ajoute.
-                    $etudiant = $etudiantImport->createEtudiant($semestre, $dataApogee);
-                    $this->etudiants[$numEtudiant]['etat'] = 'add';
+                    //Stocker réponse dans un tableau pour page confirmation
+                    $etudiant = $etudiantRepository->findOneBy(['numEtudiant' => $numEtudiant]);
+                    if ($etudiant) {
+                        $this->etudiants[$numEtudiant]['etat'] = 'deja';
+                    } else {
+                        //n'existe pas on ajoute.
+                        $etudiant = $etudiantImport->createEtudiant($semestre, $dataApogee);
+                        $this->etudiants[$numEtudiant]['etat'] = 'add';
+                    }
+                    $this->etudiants[$numEtudiant]['data'] = $etudiant;
                 }
-                $this->etudiants[$numEtudiant]['data'] = $etudiant;
             }
         }
         $this->entityManager->flush();
