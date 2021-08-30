@@ -45,11 +45,9 @@
                 </div>
                 <div class="col-sm-6 col-md-2"><label for="date" class="sr-only">Date</label>
                     <input type="text"
-
                            name="date"
                            id="date"
-                            {{ options | html_attr }}
-                           is="date-picker"
+                           is="my-datepicker"
                            class="form-control"
                            placeholder="Date">
                 </div>
@@ -101,14 +99,13 @@
                         </td>
                         <td><label for="date_{{ rattrapage.uuidString }}" class="sr-only">Date</label>
                             <input type="text"
-                                   is="date-picker"
                                    name="date_{{ rattrapage.uuidString }}"
                                    id="date_{{ rattrapage.uuidString }}"
                                    class="form-control dateChange"
                                    placeholder="Date"
                                    value="{{ rattrapage.dateRattrapage|date('d/m/Y') }}"
                                    data-rattrapage="{{ rattrapage.uuidString }}"
-                                    {{ options | html_attr }}
+                                   is="my-datepicker"
                             />
                         </td>
                         <td><label for="heure_{{ rattrapage.uuidString }}" class="sr-only">Salle</label>
