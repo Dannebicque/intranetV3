@@ -22,8 +22,7 @@
                     <label for="absence-date">{{ 'date'|trans }}</label>
                     <div class="input-group">
                         <input type="text" class="form-control"
-                                {{ options | html_attr }}
-                               is="date-picker"
+                               is="my-datepicker"
                                id="absence-date"
                                value="{% if event != null %}{{ event.date|date('d/m/Y') }} {% else %} {{ date("now")
                                |date('d/m/Y') }}{% endif %}">
