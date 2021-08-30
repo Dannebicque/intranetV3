@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/ApogeeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/08/2021 13:41
+ * @lastUpdate 30/08/2021 13:50
  */
 
 namespace App\Controller\administration;
@@ -108,12 +108,13 @@ class ApogeeController extends BaseController
                         //n'existe pas on ajoute.
                         $etudiant = $etudiantImport->createEtudiant($semestre, $dataApogee);
                         $this->etudiants[$numEtudiant]['etat'] = 'add';
+                        $this->entityManager->flush();
                     }
                     $this->etudiants[$numEtudiant]['data'] = $etudiant;
                 }
             }
         }
-        $this->entityManager->flush();
+
         $this->addFlashBag('success', 'import.etudiant.apogee.ok');
 
         return $this->render('administration/apogee/confirmation.html.twig', [
