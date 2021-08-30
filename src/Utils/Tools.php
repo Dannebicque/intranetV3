@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Utils/Tools.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 21:06
+ * @lastUpdate 30/08/2021 09:02
  */
 
 /*
@@ -52,9 +52,9 @@ abstract class Tools
         if ('' === $value || null === $value) {
             return 0;
         }
-
-        if (is_float($value) || is_int($value) || is_float((float)$value) || is_int((float)$value)) {
-            return (float)$value;
+        $value = (float)$value;
+        if (is_float($value) || is_int($value)) {
+            return $value;
         }
 
         return 0;
