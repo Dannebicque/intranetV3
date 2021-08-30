@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/07/2021 14:59
+ * @lastUpdate 30/08/2021 08:59
  */
 
 /*
@@ -578,7 +578,7 @@ class MyEdtIntranet extends BaseEdt
 
         if ('' !== $request->request->get('texte')) {
             $plann->setTexte($request->request->get('texte'));
-            $plann->setMatiere(null);
+            $plann->setIdMatiere(0);
         } else {
             $module = $this->typeMatiereManager->getMatiereFromSelect($request->request->get('selectmatiere'));
             if (null === $module) {
