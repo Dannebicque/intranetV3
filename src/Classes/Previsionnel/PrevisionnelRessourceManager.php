@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Previsionnel/PrevisionnelRessourceManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/05/2021 08:47
+ * @lastUpdate 30/08/2021 19:30
  */
 
 namespace App\Classes\Previsionnel;
@@ -12,6 +12,7 @@ namespace App\Classes\Previsionnel;
 use App\Adapter\PrevisionnelRessourceAdapter;
 use App\DTO\PrevisionnelCollection;
 use App\Entity\Departement;
+use App\Entity\Diplome;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
 use App\Repository\PrevisionnelRessourceRepository;
@@ -76,6 +77,13 @@ class PrevisionnelRessourceManager extends AbstractPrevisionnelManager implement
     public function findByDepartement(Departement $departement, $annee = 0): PrevisionnelCollection
     {
         $data = $this->previsionnelRepository->findByDepartement($departement, $annee);
+
+        return $this->previsionnelRessourceAdapter->collection($data);
+    }
+
+    public function findByDiplome(Diplome $diplome, $annee = 0): PrevisionnelCollection
+    {
+        $data = $this->previsionnelRepository->findByDiplome($diplome, $annee);
 
         return $this->previsionnelRessourceAdapter->collection($data);
     }
