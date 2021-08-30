@@ -8,52 +8,74 @@
                 <td style="text-align: center; width:20%">
                     <img src="{{ settings('BASE_PATH') }}{{ 'logo/'~user_data.departement.logoName }}" alt="logo" height="75px"/>
                 </td>
-                <td style="text-align: center; width:60%"><h2>{{ typeGroupe.semestre.display }}
-                        | {{ user_data.displayAnneeUniversitaire }}</h2></td>
-                <td style="text-align: center; width:20%"><img
-                            src="{{ settings('BASE_PATH') }}logo/{{ settings('LOGO_IUT') }}"
-                            alt="logo"
-                            height="75px"/></td>
+                <td style="text-align: center; width:20%"></td>
+                <td style="text-align: right; width:60%">
+                    Année Universitaire {{ user_data.displayAnneeUniversitaire }}<br><br>
+                    FEUILLE D'EMARGEMENT - Semestre {{ typeGroupe.semestre.libelle }}<br>
+                    {{ settings('NOM_IUT') }} - {{ typeGroupe.semestre.diplome.display }}<br>
+                    Période du ______________ au ______________________
+                </td>
             </tr>
         </table>
-        <h4>Feuille d'émargement | <strong>Groupe {{ groupe.libelle }}</strong></h4>
+        <table style="width: 100%; border:none;">
+            <tr>
+                <td style="text-align: center; width:20%">
+                    <br>
+                    NOM de L'ENSEIGNANT :<br><br>
+                    MATIERE ENSEIGNÉE : <br><br>
+                </td>
+                <td style="text-align: center; width:40%"></td>
+                <td style="text-align: right; width:40%">
+                    Total des heures<br>
+                    faites sur la période<br>
+                    <br><br><br>
+                </td>
+            </tr>
+        </table>
+        <p>*Toutes les cases grisées sont à remplir par l'enseignant. Merci !</p>
 
-        <table>
-            <tr style="height:25px">
-                <td>Enseignant :</td>
-                <td>{% if personnel != null %}{{ personnel.displayPr }}{% else %}____________________________________{% endif %}</td>
-                <td>&nbsp;</td>
-                <td>Matiere :</td>
-                <td>{% if matiere != null %}{{ matiere.display }}{% else %}____________________________________{% endif %}</td>
-            </tr>
-        </table>
         <br/><br/>
         <table style="width:100%" class="table">
-            <tr>
-                <td style="font-weight: bold; width:30px;" rowspan="2">#</td>
-                <td style="font-weight: bold; width:75px;" rowspan="2">N°</td>
-                <td style="font-weight: bold">Date</td>
-                <td style="width:60px">&nbsp;</td>
-                <td style="width:60px">&nbsp;</td>
-                <td style="width:60px">&nbsp;</td>
-                <td style="width:60px">&nbsp;</td>
-                <td style="width:60px">&nbsp;</td>
-                <td style="width:60px">&nbsp;</td>
+            <thead>
+            <tr style="height: 30px">
+                <th style="font-weight: bold" colspan="4">Date de la séance</th>
+                <th style="width:60px">&nbsp;</th>
+                <th style="width:60px">&nbsp;</th>
+                <th style="width:60px">&nbsp;</th>
+                <th style="width:60px">&nbsp;</th>
+                <th style="width:60px">&nbsp;</th>
+                <th style="width:60px">&nbsp;</th>
+
             </tr>
-            <tr>
-                <td style="font-weight: bold">Heure</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
+            <tr style="height: 30px">
+                <th style="font-weight: bold" colspan="4">Nombre d'heures</th>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
+
             </tr>
+            <tr style="height: 30px">
+                <th>#</th>
+                <th>N° Etudiant</th>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
+            </tr>
+            </thead>
             {% for etu in groupe.etudiants %}
                 <tr style="height: 25px;">
                     <td style="vertical-align: middle">#{{ loop.index }}</td>
                     <td style="vertical-align: middle">{{ etu.numEtudiant }}</td>
-                    <td style="vertical-align: middle">{{ etu.display  }}</td>
+                    <td style="vertical-align: middle">{{ etu.nom }}</td>
+                    <td style="vertical-align: middle">{{ etu.prenom }}</td>
                     <td style="width:60px">&nbsp;</td>
                     <td style="width:60px">&nbsp;</td>
                     <td style="width:60px">&nbsp;</td>
@@ -62,18 +84,27 @@
                     <td style="width:60px">&nbsp;</td>
                 </tr>
             {% endfor %}
-            <tr>
-                <td colspan="3">Nb. Absence(s) sur la période</td>
-                <td style="width:60px">&nbsp;</td>
-                <td style="width:60px">&nbsp;</td>
-                <td style="width:60px">&nbsp;</td>
-                <td style="width:60px">&nbsp;</td>
-                <td style="width:60px">&nbsp;</td>
-                <td style="width:60px">&nbsp;</td>
+            <tbody>
+            <tr style="height: 30px">
+                <th colspan="4">Nb. Absence(s) sur la période</th>
+                <th style="width:60px">&nbsp;</th>
+                <th style="width:60px">&nbsp;</th>
+                <th style="width:60px">&nbsp;</th>
+                <th style="width:60px">&nbsp;</th>
+                <th style="width:60px">&nbsp;</th>
+                <th style="width:60px">&nbsp;</th>
             </tr>
+            <tr style="height: 30px">
+                <th colspan="4">Signature de l'enseignant</th>
+                <th style="width:60px">&nbsp;</th>
+                <th style="width:60px">&nbsp;</th>
+                <th style="width:60px">&nbsp;</th>
+                <th style="width:60px">&nbsp;</th>
+                <th style="width:60px">&nbsp;</th>
+                <th style="width:60px">&nbsp;</th>
+            </tr>
+            </tbody>
         </table>
-        <footer>&nbsp;
-           </footer>
 
         {% if not loop.last %}
             <div style="page-break-after: always"></div>
