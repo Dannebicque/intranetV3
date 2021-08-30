@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/ApogeeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/08/2021 13:39
+ * @lastUpdate 30/08/2021 13:41
  */
 
 namespace App\Controller\administration;
@@ -46,25 +46,25 @@ class ApogeeController extends BaseController
             //pour chaque étudiant, s'il existe, on update, sinon on ajoute (et si type=force).
             $stid = $apogeeEtudiant->getEtudiantsAnnee($semestre->getAnnee());
             while ($row = $stid->fetch()) {
-                dump($row);
-                if ((int)$row['DAA_ETB'] === $semestre->getAnneeUniversitaire()->getAnnee()) {
-                    //if ((int)Tools::convertDateToObject($row['DAT_MOD_IND'])->format('Y') === $semestre->getAnneeUniversitaire()->getAnnee()) {
-                    $dataApogee = $apogeeEtudiant->transformeApogeeToArray($row, $bacRepository->getApogeeArray());
-                    $numEtudiant = $dataApogee['etudiant']['setNumEtudiant'];
-                    $etudiant = $etudiantRepository->findOneBy(['numEtudiant' => $numEtudiant]);
-                    if (null === $etudiant) {
-                        //l'étudiant n'existe pas, quelque soit la situation, on va l'ajouter
-                        $etudiant = $etudiantImport->createEtudiant($semestre, $dataApogee);
-                        $this->etudiants[$numEtudiant]['etat'] = 'force';
-                        $this->etudiants[$numEtudiant]['data'] = $etudiant;
-                    } elseif ($etudiant && 'force' === $type) {
+//                dump($row);
+//                if ((int)$row['DAA_ETB'] === $semestre->getAnneeUniversitaire()->getAnnee()) {
+                //if ((int)Tools::convertDateToObject($row['DAT_MOD_IND'])->format('Y') === $semestre->getAnneeUniversitaire()->getAnnee()) {
+                $dataApogee = $apogeeEtudiant->transformeApogeeToArray($row, $bacRepository->getApogeeArray());
+                $numEtudiant = $dataApogee['etudiant']['setNumEtudiant'];
+                $etudiant = $etudiantRepository->findOneBy(['numEtudiant' => $numEtudiant]);
+                if (null === $etudiant) {
+                    //l'étudiant n'existe pas, quelque soit la situation, on va l'ajouter
+                    $etudiant = $etudiantImport->createEtudiant($semestre, $dataApogee);
+                    $this->etudiants[$numEtudiant]['etat'] = 'force';
+                    $this->etudiants[$numEtudiant]['data'] = $etudiant;
+                } elseif ($etudiant && 'force' === $type) {
                         //l'étudiant existe, et on force la mise à jour
                         $etudiant = $etudiantImport->updateEtudiant($etudiant, $semestre, $dataApogee);
                         $this->etudiants[$numEtudiant]['etat'] = 'maj';
                         $this->etudiants[$numEtudiant]['data'] = $etudiant;
                     }
                     $this->entityManager->flush();
-                }
+                //}
             }
 
             $this->addFlashBag('success', 'import.etudiant.apogee.ok');
