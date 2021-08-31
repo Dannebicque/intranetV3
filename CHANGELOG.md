@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.5](https://github.com/Dannebicque/intranetV3/compare/v3.1.4...v3.1.5) (2021-08-31)
+
+
+### Bug Fixes
+
+* Ajout d'un permanent ([f0a4a69](https://github.com/Dannebicque/intranetV3/commit/f0a4a69d03ee0ab142063887cd044378da274658))
+* Ancien Date Picker ([9aac574](https://github.com/Dannebicque/intranetV3/commit/9aac574561f18aa61788d70b61a1726ec837472d))
+* Convert to float ([7997b96](https://github.com/Dannebicque/intranetV3/commit/7997b9673619e0a83984d3420f939ac1626f982d))
+* Datatable (changement de département) ([333c70e](https://github.com/Dannebicque/intranetV3/commit/333c70e3b06ab5e1256fdccb85590eb886a05568))
+* Datatable (changement de département) ([e7962d8](https://github.com/Dannebicque/intranetV3/commit/e7962d8938bf0c83ed7ed220d76a08e4fff64a6f))
+* emploi du temps chronologique ([eeeb100](https://github.com/Dannebicque/intranetV3/commit/eeeb1008e2c3dc0916df3a5c207647a15d08a2e8))
+* Emploi du temps chronologique ([da4f88c](https://github.com/Dannebicque/intranetV3/commit/da4f88c2a832407e629e948d25bb549e9487e531))
+* Espaces dans le textarea d'import des étudiants ([4d716f8](https://github.com/Dannebicque/intranetV3/commit/4d716f83b2867d89f2104a48dafa75d92805684e))
+* FindByDiplome manquante dans les manager du prévisionnel ([a0f1b0e](https://github.com/Dannebicque/intranetV3/commit/a0f1b0e7fd395cc66e9cb2461b0b7061b6bf6b80))
+* FindByDiplome manquante dans les manager du prévisionnel ([269f370](https://github.com/Dannebicque/intranetV3/commit/269f37020946141f777d434766036512776f7aec))
+* Import apogée si plusieurs étapes ([105177f](https://github.com/Dannebicque/intranetV3/commit/105177f6468cc7c4ffc4d03aa68e4c3ed6d03ebe))
+* Import des prévisionnels ([d4141a0](https://github.com/Dannebicque/intranetV3/commit/d4141a07a7b4785d9d632d63958deb25cf3ee247))
+* Synchro Apogée ([7117acc](https://github.com/Dannebicque/intranetV3/commit/7117acc5d0132db512102873b7ecbf6742d918a6))
+* Synchro Apogée ([10cab10](https://github.com/Dannebicque/intranetV3/commit/10cab10f0eb1bbc6d761b5dcc0017eb1742a2192))
+* Typo sur constante ([bc8cebf](https://github.com/Dannebicque/intranetV3/commit/bc8cebf35e343bc4fe4819b4c9afffa0d68ff75a))
+* Update dates EDT ([b85db4b](https://github.com/Dannebicque/intranetV3/commit/b85db4b4052b30693a1e26a8de5d53c9675edc5a))
+
 ### [3.1.4](https://github.com/Dannebicque/intranetV3/compare/v3.1.3...v3.1.4) (2021-08-30)
 
 
