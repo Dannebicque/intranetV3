@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Constantes.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 17:19
+ * @lastUpdate 31/08/2021 07:26
  */
 
 namespace App\Entity;
@@ -195,7 +195,7 @@ class Constantes
     public const SEMESTRE_DEMISSIONNAIRE = 'DEM';
     public const SEMESTRE_REORIENTE = 'REO';
     public const SEMESTRE_BLANCHIMENT = 'BL';
-    public const SCOLARITE_DIPLOME = 'diplome';
+    public const SCOLARITE_DIPLOME = 'DIPLOME';
 
     public const SS_COMM_DECISION_COULEUR = [
         self::SEMESTRE_VALIDE => 'ff00cc00',
