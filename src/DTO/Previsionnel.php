@@ -4,14 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/Previsionnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 27/08/2021 13:05
+ * @lastUpdate 31/08/2021 23:00
  */
 
 namespace App\DTO;
 
-
 use App\Entity\Constantes;
-
 
 class Previsionnel
 {
@@ -59,33 +57,21 @@ class Previsionnel
         return number_format($this->nbHTp / Constantes::DUREE_COURS, 2);
     }
 
-    /**
-     * @return float
-     */
     public function getTotalEqTd(): float
     {
         return $this->getTotalHCm() * Constantes::MAJORATION_CM + $this->getTotalHTd() + $this->getTotalHTp();
     }
 
-    /**
-     * @return float
-     */
     public function getTotalHCm(): float
     {
         return $this->nbHCm * $this->nbGrCm;
     }
 
-    /**
-     * @return float
-     */
     public function getTotalHTd(): float
     {
         return $this->nbHTd * $this->nbGrTd;
     }
 
-    /**
-     * @return float
-     */
     public function getTotalHTp(): float
     {
         return $this->nbHTp * $this->nbGrTp;

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/PrevisionnelRessourceRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/08/2021 19:32
+ * @lastUpdate 31/08/2021 22:50
  */
 
 namespace App\Repository;
@@ -177,4 +177,30 @@ class PrevisionnelRessourceRepository extends PrevisionnelRepository
         return $query->getQuery()
             ->getResult();
     }
+
+    public function findByDiplomeToDelete(Diplome $diplome, $annee = 0)
+    {
+        $query = $this->createQueryBuilder('p')
+            ->innerJoin(ApcRessource::class, 'm', 'WITH', 'p.idMatiere = m.id')
+            ->innerJoin(Semestre::class, 's', 'WITH', 'm.semestre = s.id')
+            ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
+            ->andWhere('p.typeMatiere = :type')
+            ->setParameter('type', self::TYPE)
+            ->andWhere('a.diplome = :diplome')
+            ->setParameter('diplome', $diplome->getId());
+
+        if (0 !== $annee) {
+            $query->andWhere('p.annee = :annee')
+                ->setParameter('annee', $annee);
+        } elseif (null !== $diplome->getDepartement()) {
+            $annee = $diplome->getDepartement()->getOptAnneePrevisionnel();
+            $query->andWhere('p.annee = :annee')
+                ->setParameter('annee', $annee);
+        }
+
+        return $query->getQuery()
+            ->getResult();
+    }
+
+
 }

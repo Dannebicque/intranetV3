@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Utils/Tools.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/08/2021 22:07
+ * @lastUpdate 31/08/2021 22:58
  */
 
 /*
@@ -48,8 +48,7 @@ abstract class Tools
     public static function convertToFloat(mixed $value): ?float
     {
         $value = trim($value);
-        str_replace([',', '.'], '.', $value);
-
+        $value = str_replace([',', '.'], '.', $value);
         return (float)$value;
     }
 

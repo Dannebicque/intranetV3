@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Previsionnel/PrevisionnelSaeManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/08/2021 19:30
+ * @lastUpdate 31/08/2021 22:50
  */
 
 namespace App\Classes\Previsionnel;
@@ -86,5 +86,10 @@ class PrevisionnelSaeManager extends AbstractPrevisionnelManager implements Prev
         $data = $this->previsionnelRepository->findByDiplome($diplome, $annee);
 
         return $this->previsionnelSaeAdapter->collection($data);
+    }
+
+    public function findByDiplomeToDelete(Diplome $diplome, $annee = 0)
+    {
+        return $this->previsionnelRepository->findByDiplomeToDelete($diplome, $annee);
     }
 }

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Previsionnel/PrevisionnelManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/08/2021 08:55
+ * @lastUpdate 31/08/2021 22:52
  */
 
 namespace App\Classes\Previsionnel;
@@ -134,6 +134,16 @@ class PrevisionnelManager
         foreach ($this->managers as $manager) {
             $previs = $manager->findByDiplome($diplome, $annee);
             $t[] = $previs->toArray();
+        }
+
+        return array_merge(...$t);
+    }
+
+    public function findByDiplomeToDelete(Diplome $diplome, $annee)
+    {
+        $t = [];
+        foreach ($this->managers as $manager) {
+            $t[] = $manager->findByDiplomeToDelete($diplome, $annee);
         }
 
         return array_merge(...$t);
