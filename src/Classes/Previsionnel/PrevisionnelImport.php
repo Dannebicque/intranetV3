@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Previsionnel/PrevisionnelImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/08/2021 08:55
+ * @lastUpdate 31/08/2021 23:00
  */
 
 namespace App\Classes\Previsionnel;
@@ -14,7 +14,6 @@ use App\Classes\MyUpload;
 use App\Entity\Diplome;
 use App\Entity\Personnel;
 use App\Entity\Previsionnel;
-use App\Repository\PrevisionnelRepository;
 use App\Utils\Tools;
 use Doctrine\ORM\EntityManagerInterface;
 use function array_key_exists;
@@ -69,15 +68,14 @@ class PrevisionnelImport
                 while (!feof($handle)) {
                     /*On lit la ligne courante*/
                     $ligne = fgetcsv($handle, 1024, ';');
-
                     if (array_key_exists($ligne[2], $matieres)) {
                         $personnel = $personnels[$ligne[4]] ?? null;
                         $pr = new Previsionnel($annee, $personnel);
-                        $pr->setNbHCm(Tools::convertToFloat($ligne[6]));
+                        $pr->setNbHCm($ligne[6]);
                         $pr->setNbGrCm(Tools::convertToInt($ligne[7]));
-                        $pr->setNbHTd(Tools::convertToFloat($ligne[8]));
+                        $pr->setNbHTd($ligne[8]);
                         $pr->setNbGrTd(Tools::convertToInt($ligne[9]));
-                        $pr->setNbHTp(Tools::convertToFloat($ligne[10]));
+                        $pr->setNbHTp($ligne[10]);
                         $pr->setNbGrTp(Tools::convertToInt($ligne[11]));
                         $pr->setIdMatiere($matieres[$ligne[2]]->id);
                         $pr->setTypeMatiere($matieres[$ligne[2]]->typeMatiere);
@@ -102,7 +100,7 @@ class PrevisionnelImport
 
     private function supprPrevisionnel(Diplome $diplome, $annee): void
     {
-        $pr = $this->previsionnelManager->findByDiplome($diplome, $annee);
+        $pr = $this->previsionnelManager->findByDiplomeToDelete($diplome, $annee);
 
         foreach ($pr as $p) {
             $this->entityManager->remove($p);

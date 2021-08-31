@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/PrevisionnelMatiereRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/08/2021 19:32
+ * @lastUpdate 31/08/2021 22:50
  */
 
 namespace App\Repository;
@@ -164,6 +164,31 @@ class PrevisionnelMatiereRepository extends PrevisionnelRepository
             ->innerJoin(Personnel::class, 'pers', 'WITH', 'p.personnel = pers.id')
             ->innerJoin(Matiere::class, 'm', 'WITH', 'p.idMatiere = m.id')
             ->select('p.id as id_previsionnel, p.annee, p.referent, p.nbHCm, p.nbHTd, p.nbHTp, p.nbGrCm, p.nbGrTd, p.nbGrTp, m.id as id_matiere, m.libelle, m.codeMatiere, m.codeElement as matiere_code_element, pers.id as id_personnel, pers.nom, pers.prenom, pers.numeroHarpege, pers.mailUniv, pers.nbHeuresService, s.id as id_semestre, s.libelle as libelle_semestre, a.id as id_annee, a.libelle as libelle_annee, a.codeEtape as annee_code_etape, a.libelleLong as annee_libelle_long')
+            ->innerJoin(Ue::class, 'u', 'WITH', 'm.ue = u.id')
+            ->innerJoin(Semestre::class, 's', 'WITH', 'u.semestre = s.id')
+            ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
+            ->andWhere('p.typeMatiere = :type')
+            ->andWhere('a.diplome = :diplome')
+            ->setParameter('type', self::TYPE)
+            ->setParameter('diplome', $diplome->getId());
+
+        if (0 !== $annee) {
+            $query->andWhere('p.annee = :annee')
+                ->setParameter('annee', $annee);
+        } elseif (null !== $diplome->getDepartement()) {
+            $annee = $diplome->getDepartement()->getOptAnneePrevisionnel();
+            $query->andWhere('p.annee = :annee')
+                ->setParameter('annee', $annee);
+        }
+
+        return $query->getQuery()
+            ->getResult();
+    }
+
+    public function findByDiplomeToDelete(Diplome $diplome, $annee)
+    {
+        $query = $this->createQueryBuilder('p')
+            ->innerJoin(Matiere::class, 'm', 'WITH', 'p.idMatiere = m.id')
             ->innerJoin(Ue::class, 'u', 'WITH', 'm.ue = u.id')
             ->innerJoin(Semestre::class, 's', 'WITH', 'u.semestre = s.id')
             ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')

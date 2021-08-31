@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ImportPrevisionnelType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/05/2021 14:21
+ * @lastUpdate 31/08/2021 22:11
  */
 
 namespace App\Form;
 
+use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Repository\DiplomeRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -23,7 +24,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ImportPrevisionnelType extends AbstractType
 {
-    private $departement;
+    private ?Departement $departement;
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
