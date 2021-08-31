@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Command/UpdateDateEdtCommand.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 14:04
+ * @lastUpdate 31/08/2021 21:43
  */
 
 namespace App\Command;
@@ -52,7 +52,7 @@ class UpdateDateEdtCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $calendriers = $this->calendrierRepository->findBy(['anneeUniversitaire' => 3]);
+        $calendriers = $this->calendrierRepository->findBy(['anneeUniversitaire' => 4]);
         $t = [];
         foreach ($calendriers as $calendrier) {
             $t[$calendrier->getSemaineFormation()] = $calendrier->getDateLundi();
