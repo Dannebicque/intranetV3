@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtBorne.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/02/2021 09:40
+ * @lastUpdate 01/09/2021 09:09
  */
 
 /*
@@ -13,6 +13,7 @@
 
 namespace App\Classes\Edt;
 
+use App\Classes\Matieres\TypeMatiereManager;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Semestre;
 use App\Repository\CalendrierRepository;
@@ -61,7 +62,8 @@ class MyEdtBorne
     public function calculSemestre(
         Semestre $semestre1,
         Semestre $semestre2,
-        AnneeUniversitaire $anneeUniversitaire
+        AnneeUniversitaire $anneeUniversitaire,
+        TypeMatiereManager $typeMatiereManager
     ): void {
         $semaine = $this->calendrierRepository->findOneBy([
             'semaineReelle' => $this->data['semaine'],
@@ -78,9 +80,9 @@ class MyEdtBorne
                     $semestre2, $this->data['jsem']);
             } else {
                 $this->data['p1']['planning'] = $this->edtPlanningRepository->recupereEDTBornes($semaine->getSemaineFormation(),
-                    $semestre1, $this->data['jsem']);
+                    $semestre1, $this->data['jsem'], $typeMatiereManager->findBySemestreArray($semestre1));
                 $this->data['p2']['planning'] = $this->edtPlanningRepository->recupereEDTBornes($semaine->getSemaineFormation(),
-                    $semestre2, $this->data['jsem']);
+                    $semestre2, $this->data['jsem'], $typeMatiereManager->findBySemestreArray($semestre2));
             }
 
             $this->data['p1']['groupes'] = $this->groupeRepository->findAllGroupes($semestre1);
