@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Celcat/MyCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/09/2021 16:23
+ * @lastUpdate 01/09/2021 16:26
  */
 
 /*
@@ -170,7 +170,7 @@ INNER JOIN CT_STUDENT ON CT_STUDENT.student_id=CT_GROUP_STUDENT.student_id WHERE
             dump($etu);
             if (array_key_exists($etu, $etudiants) && array_key_exists($gr, $groupes)) {
                 $etudiants[$etu]->addGroupe($groupes[$gr]);
-                $groupes[$etu]->addEtudiant($etudiants[$gr]);
+                $groupes[$gr]->addEtudiant($etudiants[$etu]);
             }
         }
 
