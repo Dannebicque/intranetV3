@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Celcat/MyCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/08/2021 08:40
+ * @lastUpdate 01/09/2021 16:16
  */
 
 /*
@@ -148,14 +148,17 @@ class MyCelcat
         Semestre $semestre,
         array $groupes,
         array $etudiants
-    ): void {
+    ): void
+    {
         $this->connect();
         $query = 'SELECT CT_GROUP.unique_name, CT_STUDENT.unique_name FROM CT_GROUP_STUDENT
 INNER JOIN CT_GROUP ON CT_GROUP.group_id=CT_GROUP_STUDENT.group_id
-INNER JOIN CT_STUDENT ON CT_STUDENT.student_id=CT_GROUP_STUDENT.student_id WHERE CT_GROUP.dept_id=?';
+INNER JOIN CT_STUDENT ON CT_STUDENT.student_id=CT_GROUP_STUDENT.student_id WHERE CT_GROUP.dept_id=' . $semestre->getDiplome()->getCodeCelcatDepartement();
 
-        $stmt = odbc_prepare($this->conn, $query);
-        $result = odbc_execute($stmt, [$semestre->getDiplome()->getCodeCelcatDepartement()]);
+//        $stmt = odbc_prepare($this->conn, $query);
+//        $result = odbc_execute($stmt, [$semestre->getDiplome()->getCodeCelcatDepartement()]);
+        $result = odbc_exec($this->conn, $query);
+
 
         while (odbc_fetch_row($result)) {
             // Vérifier si l'event est déjà dans l'intranet
