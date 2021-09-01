@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Celcat/MyCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/09/2021 16:16
+ * @lastUpdate 01/09/2021 16:23
  */
 
 /*
@@ -150,6 +150,7 @@ class MyCelcat
         array $etudiants
     ): void
     {
+        dump($groupes);
         $this->connect();
         $query = 'SELECT CT_GROUP.unique_name, CT_STUDENT.unique_name FROM CT_GROUP_STUDENT
 INNER JOIN CT_GROUP ON CT_GROUP.group_id=CT_GROUP_STUDENT.group_id
@@ -162,8 +163,11 @@ INNER JOIN CT_STUDENT ON CT_STUDENT.student_id=CT_GROUP_STUDENT.student_id WHERE
 
         while (odbc_fetch_row($result)) {
             // Vérifier si l'event est déjà dans l'intranet
+
             $gr = odbc_result($result, 1);
             $etu = odbc_result($result, 2);
+            dump($gr);
+            dump($etu);
             if (array_key_exists($etu, $etudiants) && array_key_exists($gr, $groupes)) {
                 $etudiants[$etu]->addGroupe($groupes[$gr]);
                 $groupes[$etu]->addEtudiant($etudiants[$gr]);
