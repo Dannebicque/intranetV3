@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/EdtPlanningRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/08/2021 13:05
+ * @lastUpdate 01/09/2021 09:09
  */
 
 namespace App\Repository;
@@ -159,7 +159,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
         return null;
     }
 
-    public function recupereEDTBornes(int $numSemaine, Semestre $semestre, int $jour): array
+    public function recupereEDTBornes(int $numSemaine, Semestre $semestre, int $jour, array $matieres): array
     {
         $creneaux = [
             1 => ['8h00', '9h30'],
@@ -213,10 +213,10 @@ class EdtPlanningRepository extends ServiceEntityRepository
                 $prof = '';
             }
 
-            if (null === $row->getMatiere()) {
+            if (null === $matieres[$row->getTypeIdMatiere()]) {
                 $refmatiere = $row->getTexte();
             } else {
-                $refmatiere = $row->getMatiere()->getCodeMatiere();
+                $refmatiere = $matieres[$row->getTypeIdMatiere()]->getCodeMatiere();
             }
 
             if (array_key_exists($casedebut, $creneaux) && 0 === $duree % 3) {

@@ -4,12 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/BorneController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/02/2021 09:23
+ * @lastUpdate 01/09/2021 09:12
  */
 
 namespace App\Controller;
 
 use App\Classes\Edt\MyEdtBorne;
+use App\Classes\Matieres\TypeMatiereManager;
 use App\Entity\Constantes;
 use App\Entity\Semestre;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,10 +22,14 @@ class BorneController extends AbstractController
     /**
      * @Route("/borne/{semestre1}/{semestre2}", name="borne")
      */
-    public function index(MyEdtBorne $myEdtBorne, Semestre $semestre1, Semestre $semestre2): Response
-    {
+    public function index(
+        TypeMatiereManager $typeMatiereManager,
+        MyEdtBorne $myEdtBorne,
+        Semestre $semestre1,
+        Semestre $semestre2
+    ): Response {
         $myEdtBorne->init();
-        $myEdtBorne->calculSemestre($semestre1, $semestre2, $semestre1->getAnneeUniversitaire());
+        $myEdtBorne->calculSemestre($semestre1, $semestre2, $semestre1->getAnneeUniversitaire(), $typeMatiereManager);
         // récupération des messages
         $messages = [];
         $messages[] = $semestre1->getBornes();
