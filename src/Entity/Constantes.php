@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Constantes.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/08/2021 07:26
+ * @lastUpdate 01/09/2021 09:28
  */
 
 namespace App\Entity;
@@ -172,13 +172,13 @@ class Constantes
     ];
 
     public const TAB_CRENEAUX = [
-        1 => ['8h00', '9h25'],
-        4 => ['9h35', '11h00'],
-        7 => ['11h10', '12h35'],
-        10 => ['12h35', '14h00'],
-        13 => ['14h00', '15h25'],
-        16 => ['15h35', '17h00'],
-        19 => ['17h10', '18h35'],
+        1 => ['8h00', '9h30'],
+        4 => ['9h30', '11h00'],
+        7 => ['11h00', '12h30'],
+        10 => ['12h30', '14h00'],
+        13 => ['14h00', '15h30'],
+        16 => ['15h30', '17h00'],
+        19 => ['17h00', '18h30'],
     ];
 
     //Sous Commission
