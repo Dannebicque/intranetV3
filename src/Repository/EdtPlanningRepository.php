@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/EdtPlanningRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/09/2021 09:09
+ * @lastUpdate 01/09/2021 09:18
  */
 
 namespace App\Repository;
@@ -213,10 +213,10 @@ class EdtPlanningRepository extends ServiceEntityRepository
                 $prof = '';
             }
 
-            if (null === $matieres[$row->getTypeIdMatiere()]) {
+            if (0 === $row->getIdMatiere()) {
                 $refmatiere = $row->getTexte();
             } else {
-                $refmatiere = $matieres[$row->getTypeIdMatiere()]->getCodeMatiere();
+                $refmatiere = $matieres[$row->getTypeIdMatiere()]->codeMatiere;
             }
 
             if (array_key_exists($casedebut, $creneaux) && 0 === $duree % 3) {
