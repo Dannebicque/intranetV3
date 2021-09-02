@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/NotificationRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 02/09/2021 13:21
  */
 
 namespace App\Repository;
@@ -73,11 +73,15 @@ class NotificationRepository extends ServiceEntityRepository
         $query = $this->createQueryBuilder('n');
 
         if ($user instanceof Personnel) {
-            $query->andWhere('n.personnel = :user');
+            $query->where('n.personnel = :user');
+            $typeUser = 'p';
         } else {
             $query->andWhere('n.etudiant = :user');
+            $typeUser = 'e';
         }
+        $query->andWhere('n.typeUser = :typeUser');
         $query->setParameter('user', $user->getId());
+        $query->setParameter('typeUser', $typeUser);
 
         return $query->getQuery()->getResult();
     }

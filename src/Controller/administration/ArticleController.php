@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/ArticleController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 09:50
+ * @lastUpdate 02/09/2021 13:31
  */
 
 namespace App\Controller\administration;
@@ -175,7 +175,7 @@ class ArticleController extends BaseController
     public function gestionCategorie(): Response
     {
         return $this->render('administration/article/gestionCategorie.html.twig', [
-            'categories' => $this->dataUserSession->getArticlesCategories(),
+            'categories' => $this->getDepartement() ? $this->getDepartement()->getArticleCategories() : [],
         ]);
     }
 

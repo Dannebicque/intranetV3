@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/DataUserSession.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/07/2021 17:22
+ * @lastUpdate 02/09/2021 22:36
  */
 
 /*
@@ -18,8 +18,6 @@ use App\Entity\AnneeUniversitaire;
 use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Etudiant;
-use App\Entity\MessageDestinataireEtudiant;
-use App\Entity\MessageDestinatairePersonnel;
 use App\Entity\Personnel;
 use App\Entity\PersonnelDepartement;
 use App\Entity\Semestre;
@@ -28,20 +26,16 @@ use App\Repository\AnneeRepository;
 use App\Repository\AnneeUniversitaireRepository;
 use App\Repository\DepartementRepository;
 use App\Repository\DiplomeRepository;
-use App\Repository\MessageDestinataireEtudiantRepository;
-use App\Repository\MessageDestinatairePersonnelRepository;
-use App\Repository\NotificationRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
 use function count;
 use Doctrine\ORM\NonUniqueResultException;
-use Doctrine\ORM\NoResultException;
+use function in_array;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
-use function in_array;
 
 /**
  * Récupère les données d'une session utilisateur
@@ -64,16 +58,11 @@ class DataUserSession
      */
     protected $annees;
 
-    /** @var MessageDestinataireEtudiant[]|MessageDestinatairePersonnel[] */
-    protected $messages;
-
     protected $departement;
 
     protected $user;
 
     protected SemestreRepository $semestreRepository;
-
-    protected $messagesRepository;
 
     protected AnneeRepository $anneeRepository;
 
@@ -85,12 +74,9 @@ class DataUserSession
 
     protected DepartementRepository $departementRepository;
 
-    protected NotificationRepository $notificationRepository;
-
     protected $security;
 
     private $semestresActifs;
-    private $nbUnread;
 
     /**
      * @var string
@@ -103,11 +89,6 @@ class DataUserSession
         return $this->type_user;
     }
 
-    public function getNbUnread()
-    {
-        return $this->nbUnread;
-    }
-
     /**
      * DataUserSession constructor.
      *
@@ -115,13 +96,10 @@ class DataUserSession
      */
     public function __construct(
         SemestreRepository $semestreRepository,
-        MessageDestinataireEtudiantRepository $messageDestinataireEtudiantRepository,
-        MessageDestinatairePersonnelRepository $messageDestinatairePersonnelRepository,
         AnneeRepository $anneeRepository,
         DiplomeRepository $diplomeRepository,
         PersonnelRepository $personnelRepository,
         DepartementRepository $departementRepository,
-        NotificationRepository $notificationRepository,
         AnneeUniversitaireRepository $anneeUniversitaireRepository,
         TokenStorageInterface $user,
         Security $security,
@@ -133,7 +111,6 @@ class DataUserSession
         $this->diplomeRepository = $diplomeRepository;
         $this->personnelRepository = $personnelRepository;
         $this->departementRepository = $departementRepository;
-        $this->notificationRepository = $notificationRepository;
         $this->anneeUniversitaireRepository = $anneeUniversitaireRepository;
 
         $this->user = $user;
@@ -141,11 +118,11 @@ class DataUserSession
 
         if ($this->getUser() instanceof Etudiant) {
             $this->type_user = 'e';
-            $this->messagesRepository = $messageDestinataireEtudiantRepository;
+            //$this->messagesRepository = $messageDestinataireEtudiantRepository;
             $this->departement = $this->departementRepository->findDepartementEtudiant($this->getUser());
         } elseif ($this->getUser() instanceof Personnel) {
             $this->type_user = 'p';
-            $this->messagesRepository = $messageDestinatairePersonnelRepository;
+            // $this->messagesRepository = $messageDestinatairePersonnelRepository;
             if (null !== $session->get('departement')) {
                 $this->departement = $this->departementRepository->findOneBy(['uuid' => $session->get('departement')]);
             }
@@ -235,24 +212,6 @@ class DataUserSession
         return $this->personnelRepository->findBy(['deleted' => false], ['nom' => 'ASC', 'prenom' => 'ASC']);
     }
 
-    public function getNotifications()
-    {
-        if (null !== $this->getUser()) {
-            return $this->getUser()->getNotifications();
-        }
-
-        return null;
-    }
-
-    public function getNbDocumentsFavoris()
-    {
-        if (null !== $this->getUser()) {
-            return count($this->getUser()->getDocumentsFavoris());
-        }
-
-        return null;
-    }
-
     public function getAnneePrevisionnel(): ?int
     {
         return $this->departement->getOptAnneePrevisionnel();
@@ -285,28 +244,6 @@ class DataUserSession
         return false;
     }
 
-    /**
-     * @return MessageDestinataireEtudiant[]|MessageDestinatairePersonnel[]|int|mixed|string
-     *
-     * @throws NonUniqueResultException
-     * @throws NoResultException
-     */
-    public function getMessages()
-    {
-        if (null === $this->messages) {
-            //todo: a revoir?? Les mêmes lignes ?
-            if ($this->getUser() instanceof Etudiant) {
-                $this->messages = $this->messagesRepository->findLast($this->getUser(), 4);
-                $this->nbUnread = $this->messagesRepository->getNbUnread($this->getUser());
-            } else {
-                $this->messages = $this->messagesRepository->findLast($this->getUser(), 4);
-                $this->nbUnread = $this->messagesRepository->getNbUnread($this->getUser());
-            }
-        }
-
-        return $this->messages;
-    }
-
     public function getDepartementMultiple(): bool
     {
         if (null !== $this->getUser()) {
@@ -331,14 +268,13 @@ class DataUserSession
 
     public function displayAnneeUniversitaire(): string
     {
-        $fin = $this->getAnneeUniversitaire()->getAnnee() + 1;
+        if (null !== $this->getAnneeUniversitaire()) {
+            $fin = $this->getAnneeUniversitaire()->getAnnee() + 1;
 
-        return $this->getAnneeUniversitaire()->getAnnee() . ' | ' . $fin;
-    }
+            return $this->getAnneeUniversitaire()->getAnnee() . ' | ' . $fin;
+        }
 
-    public function getArticlesCategories()
-    {
-        return null !== $this->getDepartement() ? $this->getDepartement()->getArticleCategories() : [];
+        return '- err année universitaire -';
     }
 
     public function getSemestresActifs(): array
