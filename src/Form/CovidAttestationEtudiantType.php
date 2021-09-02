@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/CovidAttestationEtudiantType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/08/2021 11:50
+ * @lastUpdate 02/09/2021 21:26
  */
 
 namespace App\Form;
@@ -13,7 +13,7 @@ use App\Entity\CovidAttestationEtudiant;
 use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Groupe;
-use App\Form\Type\CarbonDateTimePickerType;
+use App\Form\Type\DatePickerType;
 use App\Form\Type\EntityCompleteType;
 use App\Repository\DiplomeRepository;
 use App\Repository\GroupeRepository;
@@ -43,12 +43,12 @@ class CovidAttestationEtudiantType extends AbstractType
                 },
                 'label' => 'Diplôme concerné par votre demande',
             ])
-            ->add('dateDebut', CarbonDateTimePickerType::class, [
+            ->add('dateDebut', DatePickerType::class, [
                 'label' => 'Date du début de la période',
                 'data' => $date->addDays(2),
 
             ])
-            ->add('dateFin', CarbonDateTimePickerType::class, [
+            ->add('dateFin', DatePickerType::class, [
                 'label' => 'Date de fin de la période',
                 'data' => $date->addDays(2),
                 'help' => 'Merci de ne pas dépasser un délai d\'une semaine',

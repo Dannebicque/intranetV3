@@ -4,13 +4,14 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/Type/DateRangeType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/06/2021 16:51
+ * @lastUpdate 02/09/2021 21:28
  */
 
 namespace App\Form\Type;
 
 use Carbon\Carbon;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -22,10 +23,10 @@ class DateRangeType extends AbstractType
     //todo: a faire avec la librairie de Umlbrella ?
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add('from_date', CarbonDateType::class,
+        $builder->add('from_date', DatePickerType::class,
             array_merge($options['from_date_options'], ['data' => $options['date_data']['from']]));
-        $builder->add('to_date', CarbonDateType::class,
-            array_merge($options['from_date_options'], ['data' => $options['date_data']['to']]));
+        $builder->add('to_date', DatePickerType::class,
+            array_merge($options['to_date_options'], ['data' => $options['date_data']['to']]));
     }
 
     /**
@@ -35,9 +36,10 @@ class DateRangeType extends AbstractType
     {
         $resolver
             ->setDefaults([
+                'compound' => true,
                 'required' => true,
-                'from_date_options' => ['widget' => 'single_text', 'html5' => false, 'format' => 'dd/MM/yyyy'],
-                'to_date_options' => ['widget' => 'single_text', 'html5' => false, 'format' => 'dd/MM/yyyy'],
+                'from_date_options' => ['format' => 'd/m/Y', 'input_prefix_text' => 'A partir du'],
+                'to_date_options' => ['format' => 'd/m/Y', 'input_prefix_text' => 'Jusqu\'au'],
                 'date_data' => ['from' => Carbon::now(), 'to' => Carbon::now()],
             ]);
     }
@@ -48,5 +50,10 @@ class DateRangeType extends AbstractType
     public function getBlockPrefix(): string
     {
         return 'my_date_range';
+    }
+
+    public function getParent()
+    {
+        return TextType::class;
     }
 }

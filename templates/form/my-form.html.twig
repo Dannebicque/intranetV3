@@ -63,15 +63,13 @@
 {% endblock %}
 
 {% block my_date_range_widget %}
-    <div class="input-group" data-provide="datepicker" data-language="{{ app.request.locale }}">
-        <div class="input-group-prepend">
-            <span class="input-group-text">{{ 'from_date'|trans }}</span>
+    <div class="row">
+        <div class="col-6">
+            {{ form_widget(form.from_date, {'attr': attr}) }}
         </div>
-        {{ form_widget(form.from_date, {'attr': attr}) }}
-        <div class="input-group-prepend input-group-append">
-            <span class="input-group-text">{{ 'to_date'|trans }}</span>
+        <div class="col-6">
+            {{ form_widget(form.to_date, {'attr': attr}) }}
         </div>
-        {{ form_widget(form.to_date, {'attr': attr}) }}
     </div>
 {% endblock %}
 
