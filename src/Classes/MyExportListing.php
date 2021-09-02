@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyExportListing.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:48
+ * @lastUpdate 02/09/2021 17:43
  */
 
 /*
@@ -326,6 +326,12 @@ class MyExportListing
                     ['style' => 'HORIZONTAL_CENTER']
                 );
 
+                $this->myExcelWriter->writeCellXY(
+                    10, 12,
+                    $groupe->getDisplay(),
+                    ['style' => 'HORIZONTAL_CENTER', 'font-weight' => true, 'font-size' => 16]
+                );
+
                 $this->myExcelWriter->mergeCells('A14:C14');
                 $this->myExcelWriter->mergeCells('A15:C15');
                 $this->myExcelWriter->mergeCells('A16:C16');
@@ -350,9 +356,9 @@ class MyExportListing
 
                 $this->myExcelWriter->mergeCells('H7:J7');
                 $this->myExcelWriter->mergeCells('H8:J8');
-                $this->myExcelWriter->mergeCells('H9:J12');
-                $this->myExcelWriter->borderCellsRange(8, 7, 10, 12);
-                $this->myExcelWriter->colorCells('H7:J12', 'ffC0C0C0');
+                $this->myExcelWriter->mergeCells('H9:J10');
+                $this->myExcelWriter->borderCellsRange(8, 7, 10, 10);
+                $this->myExcelWriter->colorCells('H7:J10', 'ffC0C0C0');
                 $this->myExcelWriter->colorCells('A14:J16', 'ffC0C0C0');
                 $this->ligne = 17;
                 break;
