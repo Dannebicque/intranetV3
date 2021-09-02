@@ -4,14 +4,14 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/PersonnelProfilType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 11:45
+ * @lastUpdate 02/09/2021 21:26
  */
 
 namespace App\Form;
 
 use App\Entity\Personnel;
-use App\Form\Type\CarbonDateTimePickerType;
 use App\Form\Type\CiviliteType;
+use App\Form\Type\DatePickerType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -40,7 +40,7 @@ class PersonnelProfilType extends AbstractType
             ->add('site_univ', TextType::class, ['label' => 'site_univ', 'required' => false])
             ->add('mail_perso', TextType::class, ['label' => 'mail_perso', 'required' => false])
             ->add('site_perso', TextType::class, ['label' => 'site_perso', 'required' => false])
-            ->add('date_naissance', CarbonDateTimePickerType::class, [
+            ->add('date_naissance', DatePickerType::class, [
                 'label' => 'date_naissance',
                 'attr' => ['data-options' => ['locale' => $locale]],
             ])

@@ -4,14 +4,14 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/CelcatCalendrierType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 11:45
+ * @lastUpdate 02/09/2021 21:26
  */
 
 namespace App\Form;
 
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Calendrier;
-use App\Form\Type\CarbonDateTimePickerType;
+use App\Form\Type\DatePickerType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -34,7 +34,7 @@ class CelcatCalendrierType extends AbstractType
             ->add('semaineReelle', TextType::class, [
                 'label' => 'semaineReelle',
             ])
-            ->add('dateLundi', CarbonDateTimePickerType::class, [
+            ->add('dateLundi', DatePickerType::class, [
                 'label' => 'dateLundi',
             ]);
     }

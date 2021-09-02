@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/EvaluationType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/06/2021 10:28
+ * @lastUpdate 02/09/2021 21:26
  */
 
 namespace App\Form;
@@ -15,7 +15,7 @@ use App\Entity\Evaluation;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
-use App\Form\Type\CarbonDateTimePickerType;
+use App\Form\Type\DatePickerType;
 use App\Form\Type\FloatType;
 use App\Form\Type\YesNoType;
 use App\Repository\PersonnelRepository;
@@ -73,7 +73,7 @@ class EvaluationType extends AbstractType
                     'required' => false,
                     'disabled' => $autorise,
                 ])
-            ->add('dateEvaluation', CarbonDateTimePickerType::class, [
+            ->add('dateEvaluation', DatePickerType::class, [
                 'label' => 'date_evaluation',
                 'disabled' => $autorise,
                 'attr' => ['data-options' => ['locale' => $locale]],

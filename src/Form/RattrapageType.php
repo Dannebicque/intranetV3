@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/RattrapageType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/08/2021 11:50
+ * @lastUpdate 02/09/2021 21:26
  */
 
 namespace App\Form;
@@ -13,8 +13,8 @@ use App\Classes\Matieres\TypeMatiereManager;
 use App\Entity\Personnel;
 use App\Entity\Rattrapage;
 use App\Entity\Semestre;
-use App\Form\Type\CarbonDateTimePickerType;
 use App\Form\Type\ChoiceCompleteType;
+use App\Form\Type\DatePickerType;
 use App\Form\Type\EntityCompleteType;
 use App\Repository\PersonnelRepository;
 use Symfony\Component\Form\AbstractType;
@@ -43,7 +43,7 @@ class RattrapageType extends AbstractType
         $locale = $options['locale'];
 
         $builder
-            ->add('dateEval', CarbonDateTimePickerType::class, [
+            ->add('dateEval', DatePickerType::class, [
                 'label' => 'date_evaluation',
                 'required' => true,
                 'attr' => ['data-options' => ['locale' => $locale]],

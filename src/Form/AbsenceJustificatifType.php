@@ -4,13 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/AbsenceJustificatifType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 11:45
+ * @lastUpdate 02/09/2021 21:26
  */
 
 namespace App\Form;
 
 use App\Entity\AbsenceJustificatif;
-use App\Form\Type\CarbonDateTimePickerType;
+use App\Form\Type\DatePickerType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
@@ -23,9 +23,9 @@ class AbsenceJustificatifType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('dateDebut', CarbonDateTimePickerType::class, ['label' => 'date_debut'])
+            ->add('dateDebut', DatePickerType::class, ['label' => 'date_debut'])
             ->add('heureDebut', TimeType::class, ['label' => 'heure_debut'])
-            ->add('dateFin', CarbonDateTimePickerType::class, ['label' => 'date_fin'])
+            ->add('dateFin', DatePickerType::class, ['label' => 'date_fin'])
             ->add('heureFin', TimeType::class, ['label' => 'heure_fin'])
             ->add('motif', TextType::class, ['label' => 'motif'])
             ->add('fichierFile', VichFileType::class, [
