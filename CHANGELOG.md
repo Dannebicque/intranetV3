@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.7](https://github.com/Dannebicque/intranetV3/compare/v3.1.6...v3.1.7) (2021-09-02)
+
+
+### Bug Fixes
+
+* Bug typage Excel ([a7a0458](https://github.com/Dannebicque/intranetV3/commit/a7a0458cf1f2a730cb67b2c5bc4f28270253e3e1))
+* Correctifs js, traductions, ... ([7ba0e74](https://github.com/Dannebicque/intranetV3/commit/7ba0e742bdc0a8e350f056adad7ba2de36b9a495))
+* Documents Favoris ([c2b2912](https://github.com/Dannebicque/intranetV3/commit/c2b2912fee01c9a67680feddc087215cf872c1d0))
+* Listing étudiants format qualité ([045e894](https://github.com/Dannebicque/intranetV3/commit/045e8944c752c8b8bfd32fc8721628a79d1aa004))
+* Listing étudiants format qualité ([04553c5](https://github.com/Dannebicque/intranetV3/commit/04553c55c6e2fcc9671b3a48922bde69fe283538))
+* Problème de DatePicker ([d25dd26](https://github.com/Dannebicque/intranetV3/commit/d25dd26e5a8a184e0fc97478711f6e5f5b526707))
+* Suppression avec le composant Table ([9090bda](https://github.com/Dannebicque/intranetV3/commit/9090bda38d135ebe21295fd0e8f1b8ba34acac4a))
+
 ### [3.1.6](https://github.com/Dannebicque/intranetV3/compare/v3.1.5...v3.1.6) (2021-09-02)
 
 
