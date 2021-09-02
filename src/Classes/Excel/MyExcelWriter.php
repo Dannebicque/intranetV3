@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Excel/MyExcelWriter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/07/2021 17:05
+ * @lastUpdate 02/09/2021 16:01
  */
 
 /*
@@ -85,7 +85,7 @@ class MyExcelWriter
         }
     }
 
-    public function writeCellXY(int $col, int $row, string $value, array $options = []): void
+    public function writeCellXY(int $col, int $row, ?string $value = '', array $options = []): void
     {
         $this->sheet->setCellValueByColumnAndRow($col, $row, $value);
         //traiter les options
