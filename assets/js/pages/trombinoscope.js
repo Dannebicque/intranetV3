@@ -2,9 +2,10 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/trombinoscope.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 10/06/2021 17:30
+// @lastUpdate 02/09/2021 13:51
 
 import {load} from '../fetch'
+import {getParentByTagName} from '../util'
 
 // $(document).on('click', '.semestretrombi', function (e) {
 //   e.preventDefault()
@@ -26,7 +27,8 @@ document.querySelectorAll('.semestretrombi').forEach((elem) => {
     document.querySelectorAll('.enseignanttrombi').forEach(enseignanttrombi => {
       enseignanttrombi.classList.remove('active', 'show')
     })
-    load('trombinoscope_etudiant_semestre', {semestre: element.dataset.sem}, trombi)
+    const el = getParentByTagName(element, 'a') //s'assurer d'avoir bien la balise a
+    load('trombinoscope_etudiant_semestre', {semestre: el.dataset.sem}, trombi)
   })
 })
 
@@ -51,6 +53,7 @@ document.querySelectorAll('.enseignanttrombi').forEach((elem) => {
     document.querySelectorAll('.enseignanttrombi').forEach(enseignanttrombi => {
       enseignanttrombi.classList.remove('active', 'show')
     })
-    load('trombinoscope_personnel', {type: element.dataset.type}, trombi)
+    const el = getParentByTagName(element, 'a') //s'assurer d'avoir bien la balise a
+    load('trombinoscope_personnel', {type: el.dataset.type}, trombi)
   })
 })

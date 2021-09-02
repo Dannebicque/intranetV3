@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Questionnaire/TypeQuestionRenderer.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/08/2021 13:37
+ * @lastUpdate 02/09/2021 21:36
  */
 
 namespace App\Components\Questionnaire;
@@ -35,7 +35,6 @@ class TypeQuestionRenderer
         $template = $this->load();
 
         $params = $question->getOptions();
-        dump($params);
         //init avec un tableau dans la classe ??
         $params['block_name'] = $question->getOption('block_name');
         $params['id'] = $question->id;

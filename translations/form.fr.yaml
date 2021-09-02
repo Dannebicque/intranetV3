@@ -46,11 +46,14 @@ choice:
   ri: 'Relations Internationales'
   suivi: Suivi
   vacataire: Vacataire
+  oui: Oui
+  non: Non
 
 cm: cm
 CM: CM
 Commentaire: Commentaire
 complete: 'Complété par l''étudiant'
+code_postal: Code postal
 danger: danger
 date_naissance: 'Date de naissance'
 dateRange: 'Période d''affichage'
@@ -459,6 +462,7 @@ NV: NV
 Ordre: Ordre
 Oui: Oui
 P: P
+pays: Pays
 Parcours: Parcours
 photo: Photo
 poste_interne: 'N° poste interne'
@@ -503,7 +507,28 @@ valide: Validé
 value1: value1
 value2: value2
 VCJ: VCJ
+ville: Ville
 vich_uploader.form_label.delete_confirm: 'Confirmer la suppression'
 vich_uploader.link.download: Télécharger
 visible: Visible
 Year: Année
+
+adresse_parentale: Adresse des parents
+amenagementsParticuliers: Aménagements particuliers
+adresse1: Adresse
+adresse2: Complément d'adresse
+adresse3: Complément d'adresse (suite)
+anneeSortie: Année de sortie de la formation
+promotion: Année d'intégration de l'IUT
+Month: Mois
+civilite: Civilité
+
+titre_date: Titre
+texte_date: Texte/Description
+heure_debut: Heure de début
+heure_fin: Heure de fin
+lieu_date: Lieu de l'événement
+allday: Toute la journée
+qui_concerne: Qui est concerné ?
+typedate: Type d'événement
+semestres_date: Semestres concernées
