@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.6](https://github.com/Dannebicque/intranetV3/compare/v3.1.5...v3.1.6) (2021-09-02)
+
+
+### Bug Fixes
+
+* Bornes EDT ([3707607](https://github.com/Dannebicque/intranetV3/commit/3707607a3e0053e0d46ea00980452a29ab16fe7f))
+* Bornes EDT ([bcc9246](https://github.com/Dannebicque/intranetV3/commit/bcc9246a2f52c28f9592f662d8fe9c19e53333dc))
+* Bornes EDT ([88ed61c](https://github.com/Dannebicque/intranetV3/commit/88ed61ca9d17e983a310057189533f99476934fe))
+* Fix Celcat Groupes ([82459a4](https://github.com/Dannebicque/intranetV3/commit/82459a41f6ca868a4c7579bc7019de2d0932a3cc))
+* Fix Celcat Groupes ([ef8a4ca](https://github.com/Dannebicque/intranetV3/commit/ef8a4ca98edab570e5d5b4c24169275e9f04447d))
+* Fix Celcat Groupes ([12662aa](https://github.com/Dannebicque/intranetV3/commit/12662aaac64a64530996d46ae80c8f0d6970c59a))
+* Fix Celcat Groupes ([619cad8](https://github.com/Dannebicque/intranetV3/commit/619cad881ce7aad1cf839d3d583769bed77990f6))
+* Fix import Apogée étudiants étrangers ([c9eb8c7](https://github.com/Dannebicque/intranetV3/commit/c9eb8c797b89f242cc1b263a6c097c54b328279d))
+* Suppression avec le composant Table ([6c70260](https://github.com/Dannebicque/intranetV3/commit/6c702600861fbf3fc05f93489ea2e5a6e63dd662))
+
 ### [3.1.5](https://github.com/Dannebicque/intranetV3/compare/v3.1.4...v3.1.5) (2021-08-31)
 
 
