@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/08/2021 22:19
+ * @lastUpdate 02/09/2021 15:58
  */
 
 /*
@@ -91,22 +91,25 @@ class MyEdtExport
             $temp[] = $this->celcatEventsRepository->getByPersonnelArray($user);
         } else {
             /** @var Etudiant $user */
-            $nbSemaines = 0 !== $user->getSemestre()->getAnnee()->getDiplome()->getOptSemainesVisibles() ? $user->getSemestre()->getAnnee()->getDiplome()->getOptSemainesVisibles() : 52;
-            $emaineActuelle = $this->calendrierRepository->findOneBy([
-                'semaineReelle' => date('W'),
-                'anneeUniversitaire' => $user->getAnneeUniversitaire()->getId(),
-            ]);
 
-            if ($emaineActuelle !== null) {
-                $max = $emaineActuelle->getSemaineFormation() + $nbSemaines;
-                if ($user->getDepartement()->isOptUpdateCelcat()) {
-                    for ($i = $emaineActuelle->getSemaineFormation(); $i < $max; ++$i) {
-                        $temp[] = $this->celcatEventsRepository->getByEtudiantArray($user, $i);
-                    }
-                } else {
-                    for ($i = $emaineActuelle->getSemaineFormation(); $i < $max; ++$i) {
-                        $temp[] = $this->edtPlanningRepository->getByEtudiantArray($user, $i,
-                            $this->typeMatiereManager->findBySemestreArray($user->getSemestre()));
+            if ($user->getAnneeUniversitaire() !== null && $user->getSemestre() !== null && $user->getSemestre()->getAnnee() !== null && $user->getSemestre()->getAnnee()->getDiplome() !== null) {
+                $nbSemaines = 0 !== $user->getSemestre()->getAnnee()->getDiplome()->getOptSemainesVisibles() ? $user->getSemestre()->getAnnee()->getDiplome()->getOptSemainesVisibles() : 52;
+                $emaineActuelle = $this->calendrierRepository->findOneBy([
+                    'semaineReelle' => date('W'),
+                    'anneeUniversitaire' => $user->getAnneeUniversitaire()->getId(),
+                ]);
+
+                if ($emaineActuelle !== null) {
+                    $max = $emaineActuelle->getSemaineFormation() + $nbSemaines;
+                    if ($user->getDepartement()->isOptUpdateCelcat()) {
+                        for ($i = $emaineActuelle->getSemaineFormation(); $i < $max; ++$i) {
+                            $temp[] = $this->celcatEventsRepository->getByEtudiantArray($user, $i);
+                        }
+                    } else {
+                        for ($i = $emaineActuelle->getSemaineFormation(); $i < $max; ++$i) {
+                            $temp[] = $this->edtPlanningRepository->getByEtudiantArray($user, $i,
+                                $this->typeMatiereManager->findBySemestreArray($user->getSemestre()));
+                        }
                     }
                 }
             }
