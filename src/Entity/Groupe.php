@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Groupe.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/07/2021 16:00
+ * @lastUpdate 02/09/2021 17:35
  */
 
 namespace App\Entity;
@@ -270,6 +270,15 @@ class Groupe extends BaseEntity
     {
         if (null !== $this->getTypeGroupe() && null !== $this->getTypeGroupe()->getSemestre()) {
             return $this->getTypeGroupe()->getSemestre()->display() . ' | ' . $this->getLibelle();
+        }
+
+        return '-Err Semestre-';
+    }
+
+    public function getDisplay(): string
+    {
+        if (null !== $this->getTypeGroupe()) {
+            return $this->getTypeGroupe()->getLibelle() . ' ' . $this->getLibelle();
         }
 
         return '-Err Semestre-';
