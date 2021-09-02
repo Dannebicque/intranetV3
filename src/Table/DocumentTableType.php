@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/DocumentTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 21:51
+ * @lastUpdate 02/09/2021 08:12
  */
 
 namespace App\Table;
@@ -116,8 +116,10 @@ class DocumentTableType extends TableType
                     'xhr' => false,
                 ]);
                 $builder->add('delete', RowDeleteLinkType::class, [
+                    'route' => 'administration_document_delete',
+                    'route_params' => ['id' => $s->getUuidString()],
                     'attr' => [
-                        'data-href' => 'administration_document_delete',
+                        'data-titre' => 'Document intitulé "' . $s->getLibelle() . '"',
                         'data-uuid' => $s->getUuidString(),
                         'data-csrf' => $this->csrfToken->getToken('delete' . $s->getId()),
                     ],

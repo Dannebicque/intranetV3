@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/util.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 29/08/2021 09:44
+// @lastUpdate 02/09/2021 08:12
 
 // import $ from 'jquery'
 import Swal from 'sweetalert2'
@@ -73,7 +73,10 @@ $(document).on('click', '.supprimer', function (e) {
             document.location.href = id.url
           } else {
             //t.row("#ligne_"+id).remove().draw(); =< datattable todo: remove ligne si datatable ?? problème dans adm>personnel
-            $('#ligne_' + id).closest('tr').remove()
+            // $('#ligne_' + id).closest('tr').remove()
+            const ligne = getParentByTagName(e.target, 'tr')
+            ligne.parentNode.removeChild(ligne)
+
             addCallout('Suppression effectuée avec succès', 'success')
             Swal.fire({
               title: 'Supprimé!',
@@ -123,6 +126,14 @@ $(document).on('click', '.supprimer', function (e) {
   })
 })
 
+
+export function getParentByTagName (el, tag) {
+  tag = tag.toLowerCase()
+  while (el && el.nodeName.toLowerCase() != tag) {
+    el = el.parentNode
+  }
+  return el || null
+}
 
 export function addCallout (message, label) {
   switch (label) {

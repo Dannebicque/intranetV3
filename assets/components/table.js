@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/components/table.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 29/08/2021 21:22
+// @lastUpdate 02/09/2021 08:12
 
 import {post} from '../js/fetch'
 
@@ -32,7 +32,6 @@ export default class Table extends HTMLElement {
     this.tableBody.innerHTML = ''
 
     this.options.columns.forEach((column) => {
-      console.log(column)
       if (column.orderable === true) {
         document.getElementById(column.id).style.cursor = 'pointer'
         document.getElementById(column.id).addEventListener('click', (elem) => {
@@ -53,12 +52,7 @@ export default class Table extends HTMLElement {
     let selects = this.form[0].getElementsByTagName('select')
 
     inputs.forEach((input) => {
-      console.log(input.type)
       if (input.type === 'text') {
-        // input.addEventListener('keyup', (elem) => {
-        //   this._getFilterFromField(elem)
-        //   this._filterArray()
-        // })
         input.addEventListener('keyup', (event) => {
           if (event.target.type === 'text' && event.target.value.length < 3) {
             //on ne déclenche rien si moins de 3 caractères
@@ -135,9 +129,9 @@ export default class Table extends HTMLElement {
         this.tableBody.innerHTML += html
       })
       this._updatePagination(data.paging)
-
     })
   }
+
 
   _updateHeader () {
     this.options.columns.forEach((column) => {
