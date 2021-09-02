@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/DocumentController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 02/09/2021 22:32
  */
 
 namespace App\Controller;
@@ -17,59 +17,46 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * Class DocumentController.
- *
- * @Route("/document")
- */
+#[Route('/document')]
 class DocumentController extends BaseController
 {
-    /**
-     * @Route("", name="document_index")
-     */
+    #[Route('/', name: 'document_index')]
     public function index(): Response
     {
-        return $this->render('document/index.html.twig', [
-        ]);
+        return $this->render('document/index.html.twig', []);
     }
 
-    /**
-     * @Route("/ajax/typedocument", name="typedocument_ajax", options={"expose": true})
-     */
+    #[Route('/ajax/typedocument', name: 'typedocument_ajax', options: ['expose' => true])]
     public function typeDocument(TypeDocumentRepository $typeDocumentRepository): Response
     {
         $typeDocuments = $typeDocumentRepository->findByDepartement($this->getDepartement());
 
         return $this->render('document/typedocument.html.twig', [
             'typedocuments' => $typeDocuments,
+            'nbDocumentsFavoris' => count($this->getUser()?->getDocumentsFavoris()),
         ]);
     }
 
-    /**
-     * @Route("/ajax/document/favori", name="document_ajax_favori", options={"expose": true})
-     */
+    #[Route('/ajax/document/favori', name: 'document_ajax_favori', options: ['expose' => true])]
     public function documentsFavoris(MyDocument $myDocument): Response
     {
         $documents = $myDocument->mesDocumentsFavoris($this->getConnectedUser());
         $idDocuments = $myDocument->idMesDocumentsFavoris($this->getConnectedUser());
 
         return $this->render('document/documents.html.twig', [
-            'documents'     => $documents,
+            'documents' => $documents,
             'listesFavoris' => $idDocuments,
         ]);
     }
 
-    /**
-     *
-     * @Route("/ajax/document/{typedocument}", name="document_ajax", options={"expose": true})
-     */
+    #[Route('/ajax/document/{typedocument}', name: 'document_ajax', options: ['expose' => true])]
     public function documents(MyDocument $myDocument, DocumentRepository $documentRepository, $typedocument): Response
     {
         $documents = $documentRepository->findByTypeDocument($typedocument);
         $idDocuments = $myDocument->idMesDocumentsFavoris($this->getConnectedUser());
 
         return $this->render('document/documents.html.twig', [
-            'documents'     => $documents,
+            'documents' => $documents,
             'listesFavoris' => $idDocuments,
         ]);
     }
