@@ -273,110 +273,18 @@
             <!-- END Change language -->
 
             <!-- Notifications -->
-            {% set newNotification = false %}
-            {% for notification in user_data.notifications|filter(notification => (notification.lu == false and
-                notification.typeUser == user_data.typeUser)) %}
-                {% set newNotification = true %}
-            {% endfor %}
-            <li class="dropdown d-none d-md-block">
-                <span class="topbar-btn {% if newNotification == true %}has-new{% endif %}" data-toggle="dropdown"><i
-                            class="fas fa-bell"></i><span
-                            class="sr-only">Notifications</span></span>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <div class="media-list media-list-hover media-list-divided media-list-xs">
-                        {% for notification in user_data.notifications|filter(notification => (notification.typeUser == user_data.typeUser)) %}
-                            <a class="media {% if notification.lu == false %}media-new{% endif %} notification"
-                               href="{{ path('notification_lire', {uuid:notification.uuidString}) }}">
-                                    <span class="avatar bg-{{ notification.color }}"><i
-                                                class="{{ notification.icone }}"></i></span>
-                                <div class="media-body">
-                                    <p>{{ notification.type|trans }}</p>
-                                    <time datetime="{{ notification.created|format_datetime('medium', 'short') }}">{{ notification.created|time_ago(app.request.locale) }}</time>
-                                </div>
-                            </a>
-                        {% else %}
-                            <a class="media notification">{{ 'aucune.notification'|trans }}</a>
-                        {% endfor %}
-                    </div>
-
-                    <div class="dropdown-footer">
-                        <div class="left">
-                            <a href="{{ path('notification_index') }}">{{ 'lire.toutes.les.notifications'|trans }}</a>
-                        </div>
-
-                        <div class="right">
-                            <a href="#" data-provide="tooltip" title="{{ 'marquer.tout.comme.lu'|trans }}"
-                               id="marquerNotificationsRead">
-                                <i class="fas fa-circle">
-                                    <span class="sr-only">Marquer comme lu</span>
-                                </i>
-                            </a>
-                            <a href="#" data-provide="tooltip" title="{{ 'update'|trans }}">
-                                <i class="fas fa-redo-alt">
-                                    <span class="sr-only">Marquer comme lu</span>
-                                </i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </li>
+            {{ render_esi(controller(
+                'App\\Controller\\ToolBarController::notifications'
+            )) }}
             <!-- END Notifications -->
 
+            <!-- Messagerie -->
             {% if ((is_granted('ROLE_PERMANENT') or is_granted('ROLE_ETUDIANT')) and user_data.departement.optMessagerie == true) %}
-                <!-- Messages -->
-                <li class="dropdown d-none d-md-block">
-                    {% set newNotification = false %}
-                    {% for message in user_data.messages|filter(message => (message.etat == 'U')) %}
-                        {% set newNotification = true %}
-                    {% endfor %}
-                    <span class="topbar-btn {% if newNotification == true %}has-new{% endif %}"
-                          data-toggle="dropdown"><i class="fas fa-envelope"></i></span>
-                    <div class="dropdown-menu dropdown-menu-right">
-
-                        <div class="media-list media-list-divided media-list-hover media-list-xs scrollable"
-                             style="height: 290px">
-                            {% for message in user_data.messages %}
-                                <a class="media {% if message.etat == 'U' %}media-new{% endif %}"
-                                   href="{{ path('application_index',{onglet:'messagerie', param:message.message
-                                       .id}) }}">
-                          <span class="avatar status-success">
-                              {% if message.message.expediteur.photoName != null and message.message.expediteur.photoName != 'noimage.png' %}
-                                  <img class="avatar" src="{{ asset('upload/personnels/'~message.message.expediteur.photoName)
-                                  |imagine_filter('avatar') }}" alt="Avatar de l'expéditeur">
-                              {% else %}
-                                  {{ include('composants/_avatar.html.twig', {user:message.message.expediteur, size:'sm'}) }}
-                              {% endif %}
-                          </span>
-
-                                    <div class="media-body">
-                                        <p><strong>{{ message.message.expediteur.displayPr }}</strong>
-                                            <time class="float-right"
-                                                  datetime="{{ message.message.created|date('d/m/Y H:i') }}">{{ message.message.created|time_ago(app.request.locale) }}</time>
-                                        </p>
-                                        <p class="text-truncate">{{ message.message.sujet }}</p>
-                                    </div>
-                                </a>
-                            {% endfor %}
-                        </div>
-
-                        <div class="dropdown-footer">
-                            <div class="left">
-                                <a href="{{ path('application_index', {onglet: 'messagerie'}) }}">{{ 'voir.tous.les.messages'|trans }}</a>
-                            </div>
-
-                            <div class="right">
-                                <a href="#" data-provide="tooltip" title="Mark all as read">
-                                    <i class="fas fa-circle">
-                                        <span class="sr-only">Marquer comme lu</span>
-                                    </i>
-                                </a>
-                            </div>
-                        </div>
-
-                    </div>
-                </li>
-                <!-- END Messages -->
+                {{ render_esi(controller(
+                    'App\\Controller\\ToolBarController::messages'
+                )) }}
             {% endif %}
+            <!-- END Messagerie -->
         </ul>
     </div>
 </header>
@@ -437,7 +345,9 @@
             <div class="col-md-6">
                 <ul class="nav nav-primary nav-dotted nav-dot-separated justify-content-center justify-content-md-end">
                     <li class="nav-item">
-                        <a class="nav-link" href="https://dannebicque.gitbook.io/intranet/" target="_blank">{{ 'menu.documentation'|trans }}</a>
+                        <a class="nav-link" href="https://documentation.iutranet.fr" target="_blank">
+                            {{ 'menu.documentation'|trans }}
+                        </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" target="_blank" href="{{ path('rgpd_index') }}">{{ 'menu.rgpd'|trans }}</a>

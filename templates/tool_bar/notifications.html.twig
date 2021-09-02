@@ -1,0 +1,42 @@
+<li class="dropdown d-none d-md-block">
+                <span class="topbar-btn {% if newNotification == true %}has-new{% endif %}" data-toggle="dropdown"><i
+                            class="fas fa-bell"></i><span
+                            class="sr-only">Notifications</span></span>
+    <div class="dropdown-menu dropdown-menu-right">
+        <div class="media-list media-list-hover media-list-divided media-list-xs">
+            {% for notification in notifications %}
+                <a class="media {% if notification.lu == false %}media-new{% endif %} notification"
+                   href="{{ path('notification_lire', {uuid:notification.uuidString}) }}">
+                                    <span class="avatar bg-{{ notification.color }}"><i
+                                                class="{{ notification.icone }}"></i></span>
+                    <div class="media-body">
+                        <p>{{ notification.type|trans }}</p>
+                        <time datetime="{{ notification.created|format_datetime('medium', 'short') }}">{{ notification.created|time_ago(app.request.locale) }}</time>
+                    </div>
+                </a>
+            {% else %}
+                <a class="media notification">{{ 'aucune.notification'|trans }}</a>
+            {% endfor %}
+        </div>
+
+        <div class="dropdown-footer">
+            <div class="left">
+                <a href="{{ path('notification_index') }}">{{ 'lire.toutes.les.notifications'|trans }}</a>
+            </div>
+
+            <div class="right">
+                <a href="#" data-provide="tooltip" title="{{ 'marquer.tout.comme.lu'|trans }}"
+                   id="marquerNotificationsRead">
+                    <i class="fas fa-circle">
+                        <span class="sr-only">Marquer comme lu</span>
+                    </i>
+                </a>
+                <a href="#" data-provide="tooltip" title="{{ 'update'|trans }}">
+                    <i class="fas fa-redo-alt">
+                        <span class="sr-only">Marquer comme lu</span>
+                    </i>
+                </a>
+            </div>
+        </div>
+    </div>
+</li>

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/InformationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:31
+ * @lastUpdate 02/09/2021 13:31
  */
 
 namespace App\Controller;
@@ -34,7 +34,7 @@ class InformationController extends BaseController
     public function index(): Response
     {
         return $this->render('information/index.html.twig', [
-            'categories' => $this->dataUserSession->getArticlesCategories(),
+            'categories' => $this->getDepartement() ? $this->getDepartement()->getArticleCategories() : [],
         ]);
     }
 
