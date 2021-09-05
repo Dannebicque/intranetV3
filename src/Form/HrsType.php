@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/HrsType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/08/2021 11:50
+ * @lastUpdate 05/09/2021 18:25
  */
 
 namespace App\Form;
 
+use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Hrs;
 use App\Entity\Personnel;
@@ -30,7 +31,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class HrsType extends AbstractType
 {
-    protected ?int $departement;
+    protected ?Departement $departement;
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

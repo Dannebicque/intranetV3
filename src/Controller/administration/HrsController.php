@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/HrsController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 09:03
+ * @lastUpdate 05/09/2021 18:25
  */
 
 namespace App\Controller\administration;
@@ -35,9 +35,9 @@ class HrsController extends BaseController
             $annee = $this->dataUserSession->getDepartement()->getOptAnneePrevisionnel();
         }
 
-        $hrs = new Hrs($this->dataUserSession->getDepartement());
+        $hrs = new Hrs($this->getDepartement());
         $form = $this->createForm(HrsType::class, $hrs, [
-            'departement' => $this->dataUserSession->getDepartement(),
+            'departement' => $this->getDepartement(),
             'attr' => [
                 'data-provide' => 'validation',
             ],
