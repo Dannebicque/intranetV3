@@ -4,13 +4,14 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/AbsenceJustificatif.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/07/2021 17:03
+ * @lastUpdate 05/09/2021 18:22
  */
 
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\UuidTrait;
+use App\Utils\Tools;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -269,7 +270,7 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
 
     public function setHeureDebut($heureDebut): void
     {
-        $this->heureDebut = $heureDebut;
+        $this->heureDebut = Carbon::instance($heureDebut);
     }
 
     public function setDateFin($dateFin): void
@@ -279,7 +280,7 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
 
     public function setHeureFin($heureFin): void
     {
-        $this->heureFin = $heureFin;
+        $this->heureFin = Carbon::instance($heureFin);
     }
 
     public function prepareData(): void
@@ -296,5 +297,22 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
             $this->getDateDebut()->format('Y-m-d') . ' ' . $this->getHeureDebut()->format('H:i')));
         $this->setDateHeureFin(Carbon::createFromFormat('Y-m-d H:i',
             $this->getDateFin()->format('Y-m-d') . ' ' . $this->getHeureFin()->format('H:i')));
+    }
+
+    public function getPeriodeAbsence()
+    {
+        return [
+            'dateHeureDebut' => $this->getDateHeureDebut(),
+            'dateHeureFin' => $this->getDateHeureFin(),
+        ];
+    }
+
+    public function getEtudiantGroupes()
+    {
+        if ($this->getEtudiant() !== null) {
+            return $this->getEtudiant()->getGroupes();
+        }
+
+        return null;
     }
 }
