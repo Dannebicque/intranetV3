@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Constantes.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/09/2021 09:28
+ * @lastUpdate 06/09/2021 10:19
  */
 
 namespace App\Entity;
@@ -208,13 +208,13 @@ class Constantes
     ];
     public const NB_MESSAGE_PAR_PAGE = 10;
     public const TAB_HEURES_EDT = [
-        1 => ['8h00', '9h25'],
-        2 => ['9h35', '11h00'],
-        3 => ['11h10', '12h35'],
-        4 => ['12h35', '14h00'],
-        5 => ['14h00', '15h25'],
-        6 => ['15h35', '17h00'],
-        7 => ['17h10', '18h35'],
+        1 => ['8h00', '9h30'],
+        2 => ['9h30', '11h00'],
+        3 => ['11h00', '12h30'],
+        4 => ['12h30', '14h00'],
+        5 => ['14h00', '15h30'],
+        6 => ['15h30', '17h00'],
+        7 => ['17h00', '18h30'],
     ];
 
     public const COULEURS = [
