@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/08/2021 13:35
+ * @lastUpdate 03/09/2021 19:05
  */
 
 /*
@@ -55,7 +55,7 @@ class MyEdtCelcat extends BaseEdt
         Personnel $personnel,
         AnneeUniversitaire $anneeUniversitaire,
         int $semaine = 0,
-        array $matieres
+        array $matieres = []
     ): self {
         $this->user = $personnel;
         $this->matieres = $matieres;

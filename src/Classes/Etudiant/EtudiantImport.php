@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:30
+ * @lastUpdate 03/09/2021 19:17
  */
 
 /*
@@ -151,7 +151,7 @@ class EtudiantImport
 
         $etudiant->setAnneeBac($ligne[6]);
         //todo: corriger
-        $etudiant->setBac(true === array_key_exists($ligne[7], $tBac) ? $tBac[$data[7]] : null);
+        $etudiant->setBac(true === array_key_exists($ligne[7], $tBac) ? $tBac[$ligne[7]] : null);
         $etudiant->setCivilite('M' === $ligne[8] ? 'M.' : 'Mme'); //M ou F
 
         $etudiant->setTel1($ligne[9]);
