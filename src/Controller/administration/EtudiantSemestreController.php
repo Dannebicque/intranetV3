@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EtudiantSemestreController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 17:00
+ * @lastUpdate 04/09/2021 17:15
  */
 
 namespace App\Controller\administration;
@@ -18,6 +18,8 @@ use App\Repository\AnneeUniversitaireRepository;
 use App\Repository\BacRepository;
 use App\Repository\DepartementRepository;
 use App\Repository\EtudiantRepository;
+use App\Repository\SemestreRepository;
+use App\Table\EtudiantSemestreTableType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -56,7 +58,7 @@ class EtudiantSemestreController extends BaseController
 
         return $this->render('administration/etudiant/add.html.twig', [
             'semestre' => $semestre,
-            'anneeUniversitaires' => $anneeUniversitaireRepository->findAll()
+            'anneeUniversitaires' => $anneeUniversitaireRepository->findAll(),
         ]);
     }
 
@@ -99,14 +101,23 @@ class EtudiantSemestreController extends BaseController
      * @Route("/{semestre}", name="administration_etudiant_semestre_index", requirements={"semestre"="\d+"})
      */
     public function semestre(
-        DepartementRepository $departementRepository,
-        BacRepository $bacRepository,
+        Request $request,
         Semestre $semestre
     ): Response {
+        $table = $this->createTable(EtudiantSemestreTableType::class, [
+            'semestre' => $semestre,
+            'departement' => $this->getDepartement(),
+        ]);
+
+        $table->handleRequest($request);
+
+        if ($table->isCallback()) {
+            return $table->getCallbackResponse();
+        }
+
         return $this->render('administration/etudiant/semestre.html.twig', [
             'semestre' => $semestre,
-            'departements' => $departementRepository->findActifs(),
-            'bacs' => $bacRepository->findAll(),
+            'table' => $table,
         ]);
     }
 
@@ -130,7 +141,7 @@ class EtudiantSemestreController extends BaseController
         return $myExport->genereFichierGenerique(
             $_format,
             $etudiants,
-            'etudiants_' . $semestre->getLibelle(),
+            'etudiants_'.$semestre->getLibelle(),
             ['etudiants_administration', 'utilisateur', 'adresse'],
             [
                 'nom',
@@ -139,7 +150,7 @@ class EtudiantSemestreController extends BaseController
                 'numEtudiant',
                 'bac',
                 'mailUniv',
-                'adresse' => ['adresse1', 'adresse2', 'codePostal', 'ville', 'pays']
+                'adresse' => ['adresse1', 'adresse2', 'codePostal', 'ville', 'pays'],
             ]
         );
     }

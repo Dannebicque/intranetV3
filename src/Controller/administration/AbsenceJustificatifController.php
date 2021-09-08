@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/AbsenceJustificatifController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/07/2021 17:05
+ * @lastUpdate 04/09/2021 16:51
  */
 
 namespace App\Controller\administration;
@@ -16,6 +16,7 @@ use App\Entity\Constantes;
 use App\Entity\Semestre;
 use App\Event\JustificatifEvent;
 use App\Repository\AbsenceJustificatifRepository;
+use App\Table\AbsenceJustificatifTableType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -33,12 +34,24 @@ class AbsenceJustificatifController extends BaseController
      * @Route("/semestre/{semestre}", name="administration_absences_justificatif_semestre_liste")
      */
     public function justificatif(
-        AbsenceJustificatifRepository $absenceJustificatifRepository,
+        Request $request,
         Semestre $semestre
     ): Response {
+
+        $table = $this->createTable(AbsenceJustificatifTableType::class, [
+            'semestre' => $semestre
+        ]);
+
+        $table->handleRequest($request);
+
+        if ($table->isCallback()) {
+            return $table->getCallbackResponse();
+        }
+
+
         return $this->render('administration/absencejustificatif/justificatif.html.twig', [
             'semestre' => $semestre,
-            'justificatifs' => $absenceJustificatifRepository->findBySemestre($semestre),
+            'table' => $table
         ]);
     }
 

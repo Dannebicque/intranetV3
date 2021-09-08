@@ -29,7 +29,7 @@
                 <strong>{{ nbComplet }}</strong> (soit {{ pourcent|number_format(2) }}%)
             </div>
             <br>
-            <table class="table table-bordered" data-provide="datatables">
+            <table class="table table-bordered">
                 <thead>
                 <tr>
                     <th>Numéro étudiant</th>
@@ -81,13 +81,3 @@
     ]}) }}
 {% endblock %}
 
-
-{% block stylesheets %}
-    {{ parent() }}
-    {{ encore_entry_link_tags('datatable') }}
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    {{ encore_entry_script_tags('datatable') }}
-{% endblock %}

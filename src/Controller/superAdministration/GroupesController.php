@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/GroupesController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/08/2021 21:48
+ * @lastUpdate 04/09/2021 08:50
  */
 
 namespace App\Controller\superAdministration;
@@ -162,8 +162,7 @@ class GroupesController extends BaseController
      *
      * @throws Exception
      */
-    public
-    function import(
+    public function import(
         MyGroupes $myGroupes,
         Request $request,
         Departement $departement
@@ -186,8 +185,7 @@ class GroupesController extends BaseController
      *
      * @throws Exception
      */
-    public
-    function importEtudiant(
+    public function importEtudiant(
         MyGroupes $myGroupes,
         Request $request,
         Semestre $semestre

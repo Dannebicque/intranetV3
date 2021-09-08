@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/Type/SearchType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/08/2021 16:55
+ * @lastUpdate 03/09/2021 19:35
  */
 
 namespace App\Form\Type;
@@ -33,7 +33,7 @@ class SearchType extends AbstractType implements DataTransformerInterface
         $resolver->setDefaults([
             'required' => false,
             'attr' => [
-                'placeholder' => 'Search ...',
+                'placeholder' => 'Rechercher ...',
             ],
         ]);
     }

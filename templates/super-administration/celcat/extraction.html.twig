@@ -23,7 +23,7 @@
     <div class="card">
         <h4 class="card-title">{{ 'sadm.celcat.extraction.heading'|trans }}</h4>
         <div class="card-body">
-            <table class="table table-striped table-bordered" data-provide="datatables" data-checkbox="false">
+            <table class="table table-striped table-bordered">
                 <thead>
                 <tr>
                     <th>{{ 'table.diplome'|trans }}</th>
@@ -59,12 +59,3 @@
     ]}) }}
 {% endblock %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    {{ encore_entry_link_tags('datatable') }}
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    {{ encore_entry_script_tags('datatable') }}
-{% endblock %}

@@ -46,7 +46,7 @@
     <div class="card">
         <h4 class="card-title">{{ 'scolarite.index.heading'|trans }}</h4>
         <div class="card-body">
-            <table class="table table-bordered" data-provide="datatables">
+            <table class="table table-bordered">
                 <thead>
                 <tr>
                     <th>Type</th>
@@ -81,13 +81,4 @@
     </div>
 {% endblock %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    {{ encore_entry_link_tags('datatable') }}
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    {{ encore_entry_script_tags('datatable') }}
-{% endblock %}
 

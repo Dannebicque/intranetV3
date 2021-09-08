@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/AbsenceAppelSuiviController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/08/2021 16:06
+ * @lastUpdate 06/09/2021 10:51
  */
 
 namespace App\Controller\administration;
@@ -14,6 +14,8 @@ use App\Classes\Edt\EdtManager;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Controller\BaseController;
 use App\Entity\Semestre;
+use App\Table\AppelSuiviTableType;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -31,21 +33,33 @@ class AbsenceAppelSuiviController extends BaseController
 
     #[Route('/{semestre}', name: 'administration_absence_appel_index', requirements: ['semestre' => "\d+"])]
     public function index(
+        Request $request,
         TypeMatiereManager $typeMatiereManager,
         Semestre $semestre
     ): Response {
         $statsAppel = $this->absenceEtatAppel->getBySemestre($semestre);
         $matieres = $typeMatiereManager->findBySemestreArray($semestre);
 
+        $table = $this->createTable(AppelSuiviTableType::class, [
+            'matieres' => $matieres,
+            'statsAppel' => $statsAppel,
+            'semestre' => $semestre,
+        ]);
+
+        $table->handleRequest($request);
+
+        if ($table->isCallback()) {
+            return $table->getCallbackResponse();
+        }
+
         return $this->render('administration/absence_appel/index.html.twig',
             [
                 'semestre' => $semestre,
-                'pl' => $this->edtManager->getPlanningSemestre($semestre, $matieres),
-                'statsAppel' => $statsAppel
+                'table' => $table
             ]);
     }
 
-    #[Route('/export/{semestre}', name: 'administration_absence_appel_export')]
+    #[Route('/export/{semestre}.{_format}', name: 'administration_absence_appel_export')]
     public function export(
         Semestre $semestre
     ) {
