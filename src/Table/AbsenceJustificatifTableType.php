@@ -1,16 +1,18 @@
 <?php
 /*
  * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/RattrapageTableType.php
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/AbsenceJustificatifTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/09/2021 16:43
+ * @lastUpdate 04/09/2021 17:18
  */
 
 namespace App\Table;
 
 use App\Components\Table\Adapter\EntityAdapter;
+use App\Components\Table\Column\CheckBoxColumnType;
 use App\Components\Table\Column\DateColumnType;
+use App\Components\Table\Column\PropertyColumnType;
 use App\Components\Table\Column\WidgetColumnType;
 use App\Components\Table\TableBuilder;
 use App\Components\Table\TableType;
@@ -19,6 +21,8 @@ use App\Components\Widget\Type\ButtonType;
 use App\Components\Widget\Type\LinkType;
 use App\Components\Widget\Type\RowDeleteLinkType;
 use App\Components\Widget\WidgetBuilder;
+use App\Entity\Absence;
+use App\Entity\AbsenceJustificatif;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Etudiant;
 use App\Entity\Groupe;
@@ -27,22 +31,25 @@ use App\Entity\Semestre;
 use App\Form\Type\DatePickerType;
 use App\Form\Type\SearchType;
 use App\Repository\GroupeRepository;
+use App\Table\ColumnType\DatePeriodeColumnType;
+use App\Table\ColumnType\DatePeriodeJustificatifColumnType;
 use App\Table\ColumnType\EtudiantColumnType;
 use App\Table\ColumnType\GroupeEtudiantColumnType;
+use App\Table\ColumnType\GroupeFromEtudiantColumnType;
 use App\Table\ColumnType\MatiereColumnType;
 use App\Table\ColumnType\PersonnelColumnType;
 use App\Table\ColumnType\StatusAbsenceColumnType;
+use App\Table\ColumnType\StatusJustificatifAbsenceColumnType;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
-class RattrapageTableType extends TableType
+class AbsenceJustificatifTableType extends TableType
 {
     private ?Semestre $semestre;
     private ?AnneeUniversitaire $anneeUniversitaire;
-    private $absences;
     private CsrfTokenManagerInterface $csrfToken;
 
     public function __construct(CsrfTokenManagerInterface $csrfToken)
@@ -54,7 +61,7 @@ class RattrapageTableType extends TableType
     {
         $this->semestre = $options['semestre'];
         $this->anneeUniversitaire = $options['anneeUniversitaire'];
-        $this->absences = $options['absences'];
+
         $builder->addFilter('search', SearchType::class);
         $builder->addFilter('from', DatePickerType::class, [
             'input_prefix_text' => 'Du',
@@ -63,7 +70,7 @@ class RattrapageTableType extends TableType
             'input_prefix_text' => 'au',
         ]);
         $builder->addFilter('etat_demande', ChoiceType::class, [
-            'choices' => ['Acceptée' => Rattrapage::DEMANDE_ACCEPTEE, 'Refusée' => Rattrapage::DEMANDE_REFUSEE, 'En attente' => Rattrapage::DEMANDE_FAITE],
+            'choices' => ['Acceptée' => AbsenceJustificatif::ACCEPTE, 'Refusée' => AbsenceJustificatif::REFUSE, 'En attente' => AbsenceJustificatif::DEPOSE],
             'required' => false,
             'placeholder' => 'Etat de la demande'
         ]);
@@ -97,45 +104,32 @@ class RattrapageTableType extends TableType
                 ]);
             },
         ]);
-//        $builder->add('select', CheckBoxColumnType::class);
+        $builder->addColumn('select', CheckBoxColumnType::class);
         $builder->addColumn('etudiant', EtudiantColumnType::class,
             ['label' => 'table.etudiant', 'translation_domain' => 'messages']);
-        $builder->addColumn('groupes', GroupeEtudiantColumnType::class,
+        $builder->addColumn('etudiantGroupes', GroupeEtudiantColumnType::class,
             ['label' => 'table.groupe', 'translation_domain' => 'messages']);
-        $builder->addColumn('typeIdMatiere', MatiereColumnType::class,
-            ['label' => 'table.matiere', 'translation_domain' => 'messages']);
-        $builder->addColumn('personnel', PersonnelColumnType::class);
-        $builder->addColumn('dateEval', DateColumnType::class, [
-            'order' => 'DESC',
-            'format' => 'd/m/Y',
-            'label' => 'table.date_evaluation',
-            'translation_domain' => 'messages',
-        ]);
-        $builder->addColumn('heureEval', DateColumnType::class, [
-            'order' => 'DESC',
-            'format' => 'h:i',
-            'label' => 'table.heure_evaluation',
-            'translation_domain' => 'messages',
-        ]);
+        $builder->addColumn('periodeAbsence', DatePeriodeJustificatifColumnType::class,
+            ['label' => 'table.periodeAbsence', 'translation_domain' => 'messages']);
         $builder->addColumn('created', DateColumnType::class, [
             'order' => 'DESC',
             'format' => 'd/m/Y',
-            'label' => 'table.date_demande',
+            'label' => 'table.created',
             'translation_domain' => 'messages',
         ]);
-        $builder->addColumn('absenceJustifiee', StatusAbsenceColumnType::class,
+        $builder->addColumn('motif', PropertyColumnType::class,  ['label' => 'table.motif', 'translation_domain' => 'messages']);
+        $builder->addColumn('etat', StatusJustificatifAbsenceColumnType::class,
             [
-                'absences' => $this->absences,
-                'label' => 'table.absence_justifiee',
+                'label' => 'table.etat_justificatif_absence',
                 'translation_domain' => 'messages',
             ]);
 
-        $builder->setLoadUrl('administration_rattrapage_semestre_index', ['semestre' => $this->semestre->getId()]);
+        $builder->setLoadUrl('administration_absences_justificatif_semestre_liste', ['semestre' => $this->semestre->getId()]);
 
         $builder->addColumn('links', WidgetColumnType::class, [
-            'build' => function (WidgetBuilder $builder, Rattrapage $s) {
-                switch ($s->getEtatDemande()) {
-                    case Rattrapage::DEMANDE_ACCEPTEE:
+            'build' => function (WidgetBuilder $builder, AbsenceJustificatif $s) {
+                switch ($s->getEtat()) {
+                    case AbsenceJustificatif::ACCEPTE:
                         $builder->add('demande.acceptee', ButtonType::class, [
                             'class' => 'btn btn-outline btn-success rattrapage-accepte bx_'.$s->getUuidString(),
                             'title' => 'demande.acceptee',
@@ -143,7 +137,7 @@ class RattrapageTableType extends TableType
                             'translation_domain' => 'messages',
                         ]);
                         break;
-                    case Rattrapage::DEMANDE_REFUSEE:
+                    case AbsenceJustificatif::REFUSE:
                         $builder->add('demande.refusee', ButtonType::class, [
                             'class' => 'btn btn-outline btn-danger rattrapage-accepte bx_'.$s->getUuidString(),
                             'title' => 'demande.refusee',
@@ -151,7 +145,7 @@ class RattrapageTableType extends TableType
                             'translation_domain' => 'messages',
                         ]);
                         break;
-                    case Rattrapage::DEMANDE_FAITE:
+                    case AbsenceJustificatif::DEPOSE:
                         $builder->add('accepter', ButtonType::class, [
                             'class' => 'btn btn-outline btn-success rattrapage-accepte bx_'.$s->getUuidString(),
                             'title' => 'Accepter la demande',
@@ -178,14 +172,14 @@ class RattrapageTableType extends TableType
         ]);
 
         $builder->useAdapter(EntityAdapter::class, [
-            'class' => Rattrapage::class,
+            'class' => AbsenceJustificatif::class,
             'fetch_join_collection' => false,
             'query' => function (QueryBuilder $qb, array $formData) {
                 $qb->innerJoin(Etudiant::class, 'etu', 'WITH', 'e.etudiant = etu.id')
                     ->where('etu.semestre = :semestre')
-                    ->andWhere('e.anneeUniversitaire = :anneeuniversitaire')
-                    ->setParameter('semestre', $this->semestre->getId())
-                    ->setParameter('anneeuniversitaire', $this->anneeUniversitaire->getId());
+                //    ->andWhere('e.anneeUniversitaire = :anneeuniversitaire')
+                    ->setParameter('semestre', $this->semestre->getId());
+                //    ->setParameter('anneeuniversitaire', $this->anneeUniversitaire->getId());
 
                 if (isset($formData['search'])) {
                     $qb->andWhere('LOWER(etu.nom) LIKE :search');
@@ -193,19 +187,19 @@ class RattrapageTableType extends TableType
                     $qb->setParameter('search', '%'.$formData['search'].'%');
                 }
 
-                if (isset($formData['from'])) {
-                    $qb->andWhere('e.dateEval >= :from');
-                    $qb->setParameter('from', $formData['from']);
-                }
-
-                if (isset($formData['to'])) {
-                    $qb->andWhere('e.dateEval <= :to');
-                    $qb->setParameter('to', $formData['to']);
-                }
+//                if (isset($formData['from'])) {
+//                    $qb->andWhere('e.dateEval >= :from');
+//                    $qb->setParameter('from', $formData['from']);
+//                }
+//
+//                if (isset($formData['to'])) {
+//                    $qb->andWhere('e.dateEval <= :to');
+//                    $qb->setParameter('to', $formData['to']);
+//                }
 
                 if (isset($formData['etat_demande'])) {
                     $qb->andWhere('e.etat_demande = :etat_demande');
-                    $qb->setParameter('etat_demande', $formData['etat_demande']);
+                    $qb->setParameter('etat', $formData['etat_demande']);
                 }
             },
         ]);
@@ -217,7 +211,6 @@ class RattrapageTableType extends TableType
             'orderable' => true,
             'semestre' => null,
             'anneeUniversitaire' => null,
-            'absences' => null,
             'exportable' => true,
         ]);
     }

@@ -36,8 +36,7 @@
         <h2 class="card-title">{{ 'adm.hrs.index.heading'|trans({'%annee%':annee}) }}</h2>
         <div class="card-body">
 
-            <table class="table table-striped table-bordered"
-                   data-provide="datatables">
+            <table class="table table-striped table-bordered">
                 <thead>
                 <tr>
                     <th>{{ 'table.libelle'|trans }}</th>
@@ -201,13 +200,11 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    {{ encore_entry_link_tags('datatable') }}
     {{ encore_entry_link_tags('adm.previsionnel') }}
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    {{ encore_entry_script_tags('datatable') }}
     {{ encore_entry_script_tags('adm.previsionnel') }}
 {% endblock %}
 

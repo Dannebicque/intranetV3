@@ -38,7 +38,7 @@
         </header>
 
         <div class="card-body">
-            <table class="table table-bordered table-condensed" data-provide="datatable">
+            <table class="table table-bordered table-condensed">
                 <thead>
                 <tr>
                     <th>{{ 'table.date'|trans }}</th>
@@ -69,12 +69,3 @@
     </div>
 {% endblock %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    {{ encore_entry_link_tags('datatable') }}
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    {{ encore_entry_script_tags('datatable') }}
-{% endblock %}

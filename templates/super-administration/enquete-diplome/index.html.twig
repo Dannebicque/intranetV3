@@ -45,7 +45,7 @@
                     (2) }}%.
             </div>
             <br>
-            <table class="table table-striped" data-provide="datatables">
+            <table class="table table-striped">
                 <thead>
                 <tr>
                     <th>Etudiant</th>
@@ -90,14 +90,4 @@
             </table>
         </div>
     </div>
-{% endblock %}
-
-{% block stylesheets %}
-    {{ parent() }}
-    {{ encore_entry_link_tags('datatable') }}
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    {{ encore_entry_script_tags('datatable') }}
 {% endblock %}
