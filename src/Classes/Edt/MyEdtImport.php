@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/07/2021 09:41
+ * @lastUpdate 08/09/2021 17:29
  */
 
 /*
@@ -126,7 +126,7 @@ class MyEdtImport
                     $date = $this->convertToDate($jour);
                     $groupe = $phrase[7];
 
-                    if ('Z' === $phrase[8]) {
+                    if ('Z' === $phrase[8] && mb_substr($phrase, 16, 4) !== 'PROJ') {
                         //prof commence par Z, donc, c'est une zone sans enseignant
                         $salle = mb_substr($phrase, 11, 4);
                         $fin = $phrase[15];
@@ -182,13 +182,17 @@ class MyEdtImport
                             }
                         }
 
-                        if (array_key_exists($matiere, $tabMatieres) && array_key_exists($prof, $tabIntervenants)) {
+                        if (array_key_exists($matiere, $tabMatieres)) {
                             $pl = new EdtPlanning();
                             $pl->setSemestre($tabMatieres[$matiere]->semestre);
                             $this->semestre = $pl->getSemestre()->getId();
                             $pl->setIdMatiere($tabMatieres[$matiere]->id);
                             $pl->setTypeMatiere($tabMatieres[$matiere]->typeMatiere);
-                            $pl->setIntervenant($tabIntervenants[$prof]);
+                            if ($prof !== 'Z01' && array_key_exists($prof, $tabIntervenants)) {
+                                $pl->setIntervenant($tabIntervenants[$prof]);//todo: pourrait être NULL  équivalent à john doe?? gérer affichage
+                            } else {
+                                $pl->setIntervenant(null);
+                            }
                             $pl->setJour($jour);
                             $pl->setSalle($salle);
                             $pl->setOrdre($ordre);
