@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/ApogeeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/08/2021 19:19
+ * @lastUpdate 08/09/2021 21:35
  */
 
 namespace App\Controller\superAdministration;
@@ -152,7 +152,7 @@ class ApogeeController extends BaseController
     }
 
     /**
-     * @Route("/import/structure/{annee}", methods={"POST"}, name="sa_annee_synchronise_apogee")
+     * @Route("/import/structure/{annee}", methods={"GET"}, name="sa_annee_synchronise_apogee")
      * @IsGranted("ROLE_SUPER_ADMIN")
      *
      * @throws Exception
@@ -161,26 +161,28 @@ class ApogeeController extends BaseController
         ApogeeMaquette $apogeeMaquette,
         ApogeeImport $apogeeImport,
         Annee $annee
-    ): Response {
+    ): Response
+    {
         //suppr les données déjà présentes ?
 
-        $apoSemestres = $apogeeMaquette->getSemestresAnnee($annee);
-        $apogeeImport->createSemestre($apoSemestres);
+        //$apoSemestres = $apogeeMaquette->getSemestresAnnee($annee);
+
 
         foreach ($annee->getSemestres() as $semestre) {
-            $apoUes = $apogeeMaquette->getUesSemestre($semestre);
-            $apogeeImport->createUes($apoUes);
-
-            foreach ($semestre->getUes() as $ue) {
-                $apoMatieres = $apogeeMaquette->getMatieresUe($ue);
-                $apogeeImport->createMatiere($apoMatieres);
-            }
+            $apogeeImport->createSemestre($semestre);
+//            $apoUes = $apogeeMaquette->getUesSemestre($semestre);
+//            $apogeeImport->createUes($apoUes);
+//
+//            foreach ($semestre->getUes() as $ue) {
+//                $apoMatieres = $apogeeMaquette->getMatieresUe($ue);
+//                $apogeeImport->createMatiere($apoMatieres);
+//            }
         }
 
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'synchro.maquette.apogee.ok');
 
         return $this->render('super-administration/apogee/confirmation.html.twig', [
-            'etudiants' => $this->etudiants,
+            // 'etudiants' => $this->etudiants,
         ]);
     }
 }
