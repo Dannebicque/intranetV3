@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/LDAP/MyLdap.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/09/2021 14:58
+ * @lastUpdate 08/09/2021 15:19
  */
 
 /*
@@ -34,17 +34,13 @@ class MyLdap
     public function connect(): void
     {
         try {
-            dump($this->parameterBag->get('LDAP_HOST'));
-            dump($this->parameterBag->get('LDAP_LOGIN'));
-            dump($this->parameterBag->get('LDAP_PASSWORD'));
             $this->ds = ldap_connect($this->parameterBag->get('LDAP_HOST'));
-            ldap_set_option($this->ds, LDAP_OPT_PROTOCOL_VERSION, 3);
+           # ldap_set_option($this->ds, LDAP_OPT_PROTOCOL_VERSION, 3);
             if ($this->ds) {
                 ldap_bind($this->ds, $this->parameterBag->get('LDAP_LOGIN'),
                     $this->parameterBag->get('LDAP_PASSWORD'));
             }
         } catch (Exception $e) {
-            dump($e);
         }
     }
 
@@ -67,14 +63,10 @@ class MyLdap
     public function getInfoPersonnel($numeroHarpege)
     {
         $this->connect();
-        dump($numeroHarpege);
-        dump($this->parameterBag->get('LDAP_BASE_DN'));
+
         $sr = ldap_search($this->ds, $this->parameterBag->get('LDAP_BASE_DN'),
             '(supannEmpId=' . $numeroHarpege . ')', ['uid', 'mail']);
-        echo '--';
-        dump($sr);
-        echo '--';
-        dump(ldap_count_entries($this->ds, $sr));
+
         if (1 === ldap_count_entries($this->ds, $sr)) {
             $personnel = ldap_get_entries($this->ds, $sr);
             $t['login'] = $personnel[0]['uid'][0];
