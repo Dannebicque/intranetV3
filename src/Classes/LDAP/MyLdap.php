@@ -69,7 +69,7 @@ class MyLdap
         $this->connect();
         dump($this->parameterBag->get('LDAP_BASE_DN'));
         $sr = ldap_search($this->ds, $this->parameterBag->get('LDAP_BASE_DN'),
-            '(supannEmpId=' . $numeroHarpege . ')')
+            '(supannEmpId=' . $numeroHarpege . ')');
         echo '--';
         dump($sr);
         echo '--';
