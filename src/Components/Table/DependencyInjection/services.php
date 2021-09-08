@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/DependencyInjection/services.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 15:25
+ * @lastUpdate 04/09/2021 09:07
  */
 
 namespace App\Components\Table\DependencyInjection;
@@ -20,6 +20,7 @@ use App\Components\Table\Column\DetailsHandleColumnType;
 use App\Components\Table\Column\LinkColumnType;
 use App\Components\Table\Column\ManyColumnType;
 use App\Components\Table\Column\PropertyColumnType;
+use App\Components\Table\Column\SelectColumnType;
 use App\Components\Table\Column\WidgetColumnType;
 use App\Components\Table\TableRegistry;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
@@ -38,6 +39,7 @@ return static function(ContainerConfigurator $configurator): void {
     $services->set(BadgeColumnType::class)->tag(TableRegistry::TAG_COLUMN_TYPE);
     $services->set(CheckBoxColumnType::class)->tag(TableRegistry::TAG_COLUMN_TYPE);
     $services->set(ColumnType::class)->tag(TableRegistry::TAG_COLUMN_TYPE);
+    $services->set(SelectColumnType::class)->tag(TableRegistry::TAG_COLUMN_TYPE);
     //$services->set(BadgeCollectionColumnType::class)->tag(TableRegistry::TAG_COLUMN_TYPE);
     $services->set(BooleanColumnType::class)->tag(TableRegistry::TAG_COLUMN_TYPE);
     $services->set(DateColumnType::class)->tag(TableRegistry::TAG_COLUMN_TYPE);

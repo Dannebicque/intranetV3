@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/Column/DetailsHandleColumnType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 14:37
+ * @lastUpdate 03/09/2021 19:17
  */
 
 namespace App\Components\Table\Column;
@@ -27,7 +27,7 @@ class DetailsHandleColumnType extends ColumnType
             : $options['expanded'];
 
         return sprintf(
-            '<a href data-tag="dt:details" data-init-state="%s" row-details="%s" class="row-details-handle"><i class="fas"></i></a>',
+            '<a href data-tag="details" data-init-state="%s" data-row-details="%s" class="row-details-handle"><i class="fas"></i></a>',
             $expanded ? 'expanded' : 'collapsed',
             HtmlUtils::escape($details, 'html_attr')
         );

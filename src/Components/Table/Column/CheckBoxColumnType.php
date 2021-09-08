@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/Column/CheckBoxColumnType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 09:56
+ * @lastUpdate 04/09/2021 18:45
  */
 
 namespace App\Components\Table\Column;
@@ -29,19 +29,12 @@ class CheckBoxColumnType extends ColumnType
      */
     public function render($rowData, array $options): string
     {
-        return '<input class="form-check-input" type="checkbox">';
+        return '<div class="form-check"><input class="form-check-input position-static" type="checkbox"></div>';
     }
 
     private function labelTemplate(): string
     {
-        return '<div class="dropdown">'
-            . '<button class="btn btn-sm p-0 w-100" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'
-            . '<i class="fas fa-ellipsis-v"></i>'
-            . '</button>'
-            . '<div class="dropdown-menu">'
-            . '<a class="dropdown-item" href data-tag="dt:selectpage">' . $this->translator->trans('All') . '</a>'
-            . '<a class="dropdown-item" href data-tag="dt:unselectpage">' . $this->translator->trans('None') . '</a>'
-            . '</div>';
+        return '<div class="form-check"><input class="form-check-input position-static row-selector" type="checkbox"></div>';
     }
 
     /**
@@ -53,10 +46,10 @@ class CheckBoxColumnType extends ColumnType
 
         $resolver
             ->setDefault('order', false)
-            ->setDefault('class', 'text-center row-selector')
+            ->setDefault('class', 'text-center')
             ->setDefault('label', $this->labelTemplate())
             ->setDefault('translation_domain', null)
-            ->setDefault('width', '80px')
+            ->setDefault('width', '40px')
             ->setDefault('is_safe_html', true);
     }
 }
