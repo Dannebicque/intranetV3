@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/QuestionnaireEtudiantReponseRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/07/2021 15:33
+ * @lastUpdate 03/09/2021 19:17
  */
 
 namespace App\Repository;
@@ -20,8 +20,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method QuestionnaireEtudiantReponse|null find($id, $lockMode = null, $lockVersion = null)
  * @method QuestionnaireEtudiantReponse|null findOneBy(array $criteria, array $orderBy = null)
  * @method QuestionnaireEtudiantReponse[]    findAll()
- * @method QuestionnaireEtudiantReponse[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset =
- *         null)
+ * @method QuestionnaireEtudiantReponse[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class QuestionnaireEtudiantReponseRepository extends ServiceEntityRepository
 {

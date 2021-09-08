@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/GroupeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 04/09/2021 14:50
  */
 
 namespace App\Repository;
@@ -66,7 +66,8 @@ class GroupeRepository extends ServiceEntityRepository
             ->innerJoin(TypeGroupe::class, 't', 'WITH', 'g.typeGroupe = t.id')
             ->where('t.semestre = :semestre')
             ->setParameter('semestre', $semestre->getId())
-            ->orderBy('g.libelle', 'ASC');
+            ->orderBy('t.libelle', 'ASC')
+            ->addOrderBy('g.libelle', 'ASC');
     }
 
     public function findAllGroupes(Semestre $semestre): array
