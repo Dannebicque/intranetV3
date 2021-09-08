@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/LDAP/MyLdap.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:48
+ * @lastUpdate 04/09/2021 08:42
  */
 
 /*
@@ -14,8 +14,8 @@
 namespace App\Classes\LDAP;
 
 use Exception;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use const LDAP_OPT_PROTOCOL_VERSION;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class MyLdap
 {
@@ -47,7 +47,7 @@ class MyLdap
     public function getInfoEtudiant($numetudiant)
     {
         $this->connect();
-        $sr = ldap_search($this->ds, $this->parameterBag->get('LDAP_BASE_DN'), 'supannetuid=' . $numetudiant);
+        $sr = ldap_search($this->ds, $this->parameterBag->get('LDAP_BASE_DN'), 'supannetuid='.$numetudiant);
         if (1 === ldap_count_entries($this->ds, $sr)) {
             $etudiant = ldap_get_entries($this->ds, $sr);
             $t['login'] = $etudiant[0]['uid'][0];
@@ -63,7 +63,7 @@ class MyLdap
     public function getInfoPersonnel($numeroHarpege)
     {
         $this->connect();
-        $sr = ldap_search($this->ds, $this->parameterBag->get('LDAP_BASE_DN'), 'supannEmpId=' . $numeroHarpege);
+        $sr = ldap_search($this->ds, $this->parameterBag->get('LDAP_BASE_DN'), 'supannEmpId='.$numeroHarpege);
         if (1 === ldap_count_entries($this->ds, $sr)) {
             $personnel = ldap_get_entries($this->ds, $sr);
             $t['login'] = $personnel[0]['uid'][0];

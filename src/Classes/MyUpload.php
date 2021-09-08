@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyUpload.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/08/2021 14:51
+ * @lastUpdate 04/09/2021 08:44
  */
 
 /*
@@ -14,20 +14,19 @@
 namespace App\Classes;
 
 use App\Exception\ExtensionInterditeException;
-use Exception;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use ZipArchive;
 use function count;
+use Exception;
 use function in_array;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use ZipArchive;
 
 class MyUpload
 {
-    private $dir;
+    private ?String $dir;
 
     public function __construct(ParameterBagInterface $parameterBag)
     {
-        $this->dir = $parameterBag->get('kernel.project_dir') . '/public/upload/';
+        $this->dir = $parameterBag->get('kernel.project_dir').'/public/upload/';
     }
 
     /**
@@ -45,10 +44,10 @@ class MyUpload
                 throw new ExtensionInterditeException();
             }
 
-            $nomfile = random_int(1, 99999) . '_' . date('YmdHis') . '.' . $extension;
-            $fichier->move($this->dir . $dir, $nomfile);
+            $nomfile = random_int(1, 99999).'_'.date('YmdHis').'.'.$extension;
+            $fichier->move($this->dir.$dir, $nomfile);
 
-            return $this->dir . $dir . $nomfile;
+            return $this->dir.$dir.$nomfile;
         }
 
         return null;
@@ -79,19 +78,19 @@ class MyUpload
      */
     public function traitePhoto($dossierTemp, $dossierDest): void
     {
-        $folder = $this->dir . $dossierTemp;
+        $folder = $this->dir.$dossierTemp;
         $dossier = opendir($folder);
-        $newdir = $this->dir . $dossierDest;
+        $newdir = $this->dir.$dossierDest;
         //2)Tant que le dossier est aps vide
         while ($fichier = readdir($dossier)) {
             //todo: supprimer si existe ou ca remplace ? Purger le cache de vich ?
             if ('.' !== $fichier && '..' !== $fichier) {
                 $t = explode('.', $fichier);
-                $vidage = $folder . $fichier;
+                $vidage = $folder.$fichier;
                 if ('jpg' === $t[1] || 'jpeg' === $t[1]) {
                     $f = explode('_', $fichier);
                     $name = $f[count($f) - 1];
-                    rename($vidage, $newdir . $name);
+                    rename($vidage, $newdir.$name);
                 } else {
                     unlink($vidage); //suppression du fichier
                 }
@@ -110,7 +109,7 @@ class MyUpload
             return false;
         }
         // Extraire le contenu dans le dossier de destination
-        $zip->extractTo($this->dir . $dest);
+        $zip->extractTo($this->dir.$dest);
         // Fermer l'archive
         $zip->close();
         unlink($fichier); //suppression du zip.

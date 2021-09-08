@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Celcat/MyCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/09/2021 16:39
+ * @lastUpdate 04/09/2021 08:41
  */
 
 /*
@@ -18,10 +18,10 @@ use App\Entity\Calendrier;
 use App\Entity\CelcatEvent;
 use App\Entity\Semestre;
 use App\Utils\Tools;
+use function array_key_exists;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use function array_key_exists;
 
 class MyCelcat
 {
@@ -63,7 +63,7 @@ class MyCelcat
             $cal = new Calendrier();
             $cal->setAnneeUniversitaire($anneeUniversitaire);
             $cal->setSemaineFormation(odbc_result($result, 'week_no'));
-            $cal->setSemaineReelle((int)date('W', strtotime($date)));
+            $cal->setSemaineReelle((int) date('W', strtotime($date)));
             $cal->setDateLundi(Tools::convertDateToObject($date));
             $this->entityManger->persist($cal);
         }
@@ -96,7 +96,7 @@ class MyCelcat
     ): void {
         if (null !== $anneeUniversitaire) {
             $this->connect();
-            $query = 'SELECT CT_EVENT.event_id, CT_EVENT.day_of_week, CT_EVENT.start_time, CT_EVENT.end_time, CT_EVENT.weeks, CT_EVENT_CAT.name, CT_VIEW_EVENT_MODULE001.resourcecode, CT_VIEW_EVENT_MODULE001.resourcename, CT_VIEW_EVENT_STAFF001.resourcecode, CT_VIEW_EVENT_STAFF001.resourcename, CT_VIEW_EVENT_ROOM001.resourcecode, CT_VIEW_EVENT_ROOM001.resourcename, CT_VIEW_EVENT_GROUP001.resourcecode, CT_VIEW_EVENT_GROUP001.resourcename, CT_EVENT.date_change FROM CT_EVENT INNER JOIN CT_EVENT_CAT ON CT_EVENT_CAT.event_cat_id = CT_EVENT.event_cat_id INNER JOIN CT_VIEW_EVENT_STAFF001 ON CT_VIEW_EVENT_STAFF001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_GROUP001 ON CT_VIEW_EVENT_GROUP001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_MODULE001 ON CT_VIEW_EVENT_MODULE001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_ROOM001 ON CT_VIEW_EVENT_ROOM001.eid=CT_EVENT.event_id WHERE dept_id=' . $codeCelcatDepartement . ' ORDER BY CT_EVENT.date_change DESC, CT_EVENT.event_id DESC';
+            $query = 'SELECT CT_EVENT.event_id, CT_EVENT.day_of_week, CT_EVENT.start_time, CT_EVENT.end_time, CT_EVENT.weeks, CT_EVENT_CAT.name, CT_VIEW_EVENT_MODULE001.resourcecode, CT_VIEW_EVENT_MODULE001.resourcename, CT_VIEW_EVENT_STAFF001.resourcecode, CT_VIEW_EVENT_STAFF001.resourcename, CT_VIEW_EVENT_ROOM001.resourcecode, CT_VIEW_EVENT_ROOM001.resourcename, CT_VIEW_EVENT_GROUP001.resourcecode, CT_VIEW_EVENT_GROUP001.resourcename, CT_EVENT.date_change FROM CT_EVENT INNER JOIN CT_EVENT_CAT ON CT_EVENT_CAT.event_cat_id = CT_EVENT.event_cat_id INNER JOIN CT_VIEW_EVENT_STAFF001 ON CT_VIEW_EVENT_STAFF001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_GROUP001 ON CT_VIEW_EVENT_GROUP001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_MODULE001 ON CT_VIEW_EVENT_MODULE001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_ROOM001 ON CT_VIEW_EVENT_ROOM001.eid=CT_EVENT.event_id WHERE dept_id='.$codeCelcatDepartement.' ORDER BY CT_EVENT.date_change DESC, CT_EVENT.event_id DESC';
 
 //            $stmt = odbc_prepare($this->conn, $query);
 //            $result = odbc_execute($stmt, [$codeCelcatDepartement]);
@@ -148,17 +148,15 @@ class MyCelcat
         Semestre $semestre,
         array $groupes,
         array $etudiants
-    ): void
-    {
+    ): void {
         $this->connect();
         $query = 'SELECT CT_GROUP.unique_name, CT_STUDENT.unique_name FROM CT_GROUP_STUDENT
 INNER JOIN CT_GROUP ON CT_GROUP.group_id=CT_GROUP_STUDENT.group_id
-INNER JOIN CT_STUDENT ON CT_STUDENT.student_id=CT_GROUP_STUDENT.student_id WHERE CT_GROUP.dept_id=' . $semestre->getDiplome()->getCodeCelcatDepartement();
+INNER JOIN CT_STUDENT ON CT_STUDENT.student_id=CT_GROUP_STUDENT.student_id WHERE CT_GROUP.dept_id='.$semestre->getDiplome()->getCodeCelcatDepartement();
 
 //        $stmt = odbc_prepare($this->conn, $query);
 //        $result = odbc_execute($stmt, [$semestre->getDiplome()->getCodeCelcatDepartement()]);
         $result = odbc_exec($this->conn, $query);
-
 
         while (odbc_fetch_row($result)) {
             // Vérifier si l'event est déjà dans l'intranet

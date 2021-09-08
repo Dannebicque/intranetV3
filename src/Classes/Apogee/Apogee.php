@@ -4,15 +4,15 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Apogee/Apogee.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/08/2021 23:02
+ * @lastUpdate 04/09/2021 08:41
  */
 
 namespace App\Classes\Apogee;
 
+use const E_USER_ERROR;
 use PDO;
 use PDOException;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use const E_USER_ERROR;
 
 abstract class Apogee
 {
@@ -31,13 +31,13 @@ abstract class Apogee
     protected function connect(): ?PDO
     {
         try {
-            $this->conn = new PDO('oci:dbname=' . $this->parameterBag->get('APOGEE_STRING'),
+            $this->conn = new PDO('oci:dbname='.$this->parameterBag->get('APOGEE_STRING'),
                 $this->parameterBag->get('APOGEE_LOGIN'),
                 $this->parameterBag->get('APOGEE_PASSWORD'));
 
             return $this->conn;
         } catch (PDOException $e) {
-            trigger_error(htmlentities('Connexion échouée : ' . $e->getMessage()), E_USER_ERROR);
+            trigger_error(htmlentities('Connexion échouée : '.$e->getMessage()), E_USER_ERROR);
         }
     }
 }
