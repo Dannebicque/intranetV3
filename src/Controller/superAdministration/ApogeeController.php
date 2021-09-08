@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/ApogeeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/09/2021 21:35
+ * @lastUpdate 08/09/2021 21:42
  */
 
 namespace App\Controller\superAdministration;
@@ -167,9 +167,9 @@ class ApogeeController extends BaseController
 
         //$apoSemestres = $apogeeMaquette->getSemestresAnnee($annee);
 
-
+        $liste = [];
         foreach ($annee->getSemestres() as $semestre) {
-            $apogeeImport->createSemestre($semestre);
+            $liste[] = $apogeeImport->createSemestre($semestre);
 //            $apoUes = $apogeeMaquette->getUesSemestre($semestre);
 //            $apogeeImport->createUes($apoUes);
 //
@@ -183,6 +183,7 @@ class ApogeeController extends BaseController
 
         return $this->render('super-administration/apogee/confirmation.html.twig', [
             // 'etudiants' => $this->etudiants,
+            'liste' => $liste
         ]);
     }
 }

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Structure/ApogeeImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/09/2021 21:13
+ * @lastUpdate 08/09/2021 21:42
  */
 
 namespace App\Classes\Structure;
@@ -51,16 +51,17 @@ class ApogeeImport extends Apogee
                 'SELECT ELEMENT_PEDAGOGI.COD_ELP, ELEMENT_PEDAGOGI.LIB_ELP, ELEMENT_PEDAGOGI.LIC_ELP, ELEMENT_PEDAGOGI.COD_NEL, ELP_CHG_TYP_HEU.COD_TYP_HEU, ELP_CHG_TYP_HEU.NBR_HEU_ELP FROM ELP_REGROUPE_ELP  INNER JOIN ELEMENT_PEDAGOGI ON ELP_REGROUPE_ELP.COD_ELP_FILS=ELEMENT_PEDAGOGI.COD_ELP INNER JOIN ELP_CHG_TYP_HEU ON ELP_CHG_TYP_HEU.COD_ELP=ELEMENT_PEDAGOGI.COD_ELP WHERE COD_LSE=:codeliste and ELP_REGROUPE_ELP.COD_ELP_PERE IS NULL');
             $stidListe->execute([':codeliste' => $row['COD_LSE']]);
 
-            while ($elp = $stidListe->fetch()) {
-                dump($elp);
-                //création de la matière...
-                if (substr($elp['COD_ELP'], 1, 1) === 'R') {
-                    //ressource
-
-                } elseif (substr($elp['COD_ELP'], 1, 1) === 'S') {
-                    //Sae
-                }
-            }
+            return $stidListe;
+//            while ($elp = $stidListe->fetch()) {
+//                dump($elp);
+//                //création de la matière...
+//                if (substr($elp['COD_ELP'], 1, 1) === 'R') {
+//                    //ressource
+//
+//                } elseif (substr($elp['COD_ELP'], 1, 1) === 'S') {
+//                    //Sae
+//                }
+//            }
         }
 
 
