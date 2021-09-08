@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/LDAP/MyLdap.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/09/2021 17:18
+ * @lastUpdate 08/09/2021 21:13
  */
 
 /*
@@ -31,8 +31,7 @@ class MyLdap
     public function connect(): void
     {
         try {
-            $this->ds = Ldap::create('ext_ldap',
-                ['connection_string' => $this->parameterBag->get('LDAP_HOST'), 'version' => 3]);
+            $this->ds = Ldap::create('ext_ldap', ['connection_string' => $this->parameterBag->get('LDAP_HOST')]);
            # ldap_set_option($this->ds, LDAP_OPT_PROTOCOL_VERSION, 3);
             if ($this->ds) {
                 $this->ds->bind($this->parameterBag->get('LDAP_LOGIN'), $this->parameterBag->get('LDAP_PASSWORD'));
@@ -59,34 +58,19 @@ class MyLdap
 
     public function getInfoPersonnel($numeroHarpege)
     {
-        // $this->connect();
-        $ds = Ldap::create('ext_ldap', ['connection_string' => $this->parameterBag->get('LDAP_HOST'), 'version' => 3]);
-        dump($ds);
-        $ds->bind($this->parameterBag->get('LDAP_LOGIN'), $this->parameterBag->get('LDAP_PASSWORD'));
-        dump($ds);
-        $query = $ds->query($this->parameterBag->get('LDAP_BASE_DN'), '(supannEmpId=' . $numeroHarpege . ')');
-        dump($query);
-        $results = $query->execute();
-        dump($results);
-        foreach ($results as $entry) {
-            // Do something with the results
-            dump($entry);
+        $this->connect();
+
+        $sr = ldap_search($this->ds, $this->parameterBag->get('LDAP_BASE_DN'),
+            '(supannEmpId=' . $numeroHarpege . ')', ['uid', 'mail']);
+
+        if (1 === ldap_count_entries($this->ds, $sr)) {
+            $personnel = ldap_get_entries($this->ds, $sr);
+            $t['login'] = $personnel[0]['uid'][0];
+            $t['mail'] = $personnel[0]['mail'][0];
+            ldap_unbind($this->ds);
+
+            return $t;
         }
-
-
-
-
-//        $sr = ldap_search($this->ds, $this->parameterBag->get('LDAP_BASE_DN'),
-//            '(supannEmpId=' . $numeroHarpege . ')', ['uid', 'mail']);
-//
-//        if (1 === ldap_count_entries($this->ds, $sr)) {
-//            $personnel = ldap_get_entries($this->ds, $sr);
-//            $t['login'] = $personnel[0]['uid'][0];
-//            $t['mail'] = $personnel[0]['mail'][0];
-//            ldap_unbind($this->ds);
-//
-//            return $t;
-//        }
 
         return null;
     }
