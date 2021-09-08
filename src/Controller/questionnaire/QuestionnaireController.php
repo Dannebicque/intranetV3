@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/questionnaire/QuestionnaireController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 08/09/2021 07:55
  */
 
 namespace App\Controller\questionnaire;
@@ -140,6 +140,7 @@ class QuestionnaireController extends AbstractController
             if (null === $quizzEtudiant) {
                 $quizzEtudiant = new QuestionnaireEtudiant($etudiant, $questionnaire, $typeQuestionnaire);
                 $this->entityManager->persist($quizzEtudiant);
+                $this->entityManager->flush();
             }
 
             /** @var QuestionnaireEtudiantReponse $exist */
