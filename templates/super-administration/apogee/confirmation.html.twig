@@ -5,6 +5,9 @@
 {% endblock %}
 
 {% block content %}
+    {% for lis in liste %}
+        {{ dump(lis) }}
+    {% endfor %}
     {# <div class="card"> #}
     {# <h4 class="card-title">Mettre à jour une promotion</h4> #}
     {# <div class="card-body"> #}
