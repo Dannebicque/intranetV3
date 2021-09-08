@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/LDAP/MyLdap.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/09/2021 14:56
+ * @lastUpdate 08/09/2021 14:58
  */
 
 /*
@@ -67,6 +67,7 @@ class MyLdap
     public function getInfoPersonnel($numeroHarpege)
     {
         $this->connect();
+        dump($numeroHarpege);
         dump($this->parameterBag->get('LDAP_BASE_DN'));
         $sr = ldap_search($this->ds, $this->parameterBag->get('LDAP_BASE_DN'),
             '(supannEmpId=' . $numeroHarpege . ')', ['uid', 'mail']);
