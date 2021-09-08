@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/DefaultController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/06/2021 20:40
+ * @lastUpdate 03/09/2021 18:38
  */
 
 namespace App\Controller;
@@ -12,6 +12,7 @@ namespace App\Controller;
 use App\Repository\ActualiteRepository;
 use App\Repository\DateRepository;
 use App\Repository\DepartementRepository;
+use App\Repository\TypeGroupeRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -23,7 +24,10 @@ class DefaultController extends BaseController
     /**
      * @Route("/tableau-de-bord", name="default_homepage")
      */
-    public function index(ActualiteRepository $actualiteRepository, DateRepository $dateRepository): Response
+    public function index(
+        TypeGroupeRepository $typeGroupeRepository,
+        ActualiteRepository $actualiteRepository,
+        DateRepository $dateRepository): Response
     {
         if ($this->isGranted('ROLE_SUPER_ADMIN') || $this->isGranted('ROLE_ADMINISTRATIF')) {
             return $this->redirectToRoute('super_admin_homepage');
@@ -35,13 +39,16 @@ class DefaultController extends BaseController
 
         if ($this->isGranted('ROLE_ETUDIANT')) {
             $dates = $dateRepository->findByDateForEtudiant($this->getConnectedUser(), 2);
+            $typesGroupes = $typeGroupeRepository->findBySemestre($this->getUser()->getSemestre());
         } else {
             $dates = $dateRepository->findByDateForPersonnel($this->getDepartement(), 2);
+            $typesGroupes = $typeGroupeRepository->findByDepartementSemestresActifs($this->getDepartement());
         }
 
         return $this->render('default/index.html.twig', [
             'actualites' => $actualiteRepository->getByDepartement($this->getDepartement(), 3),
             'dates' => $dates,
+            'typegroupes' => $typesGroupes
         ]);
     }
 

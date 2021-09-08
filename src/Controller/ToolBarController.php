@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ToolBarController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/09/2021 22:36
+ * @lastUpdate 07/09/2021 12:00
  */
 
 namespace App\Controller;
@@ -12,6 +12,7 @@ namespace App\Controller;
 use App\Entity\Etudiant;
 use App\Entity\MessageDestinataire;
 use App\Entity\Personnel;
+use App\Repository\AnneeUniversitaireRepository;
 use App\Repository\MessageDestinataireEtudiantRepository;
 use App\Repository\MessageDestinatairePersonnelRepository;
 use App\Repository\NotificationRepository;
@@ -22,14 +23,17 @@ class ToolBarController extends AbstractController
 {
     private NotificationRepository $notificationRepository;
     private MessageDestinataireEtudiantRepository $messageDestinataireEtudiantRepository;
+    private AnneeUniversitaireRepository $anneeUniversitaireRepository;
     private MessageDestinatairePersonnelRepository $messageDestinatairePersonnelRepository;
     private MessageDestinatairePersonnelRepository|MessageDestinataireEtudiantRepository $messagesRepository;
 
     public function __construct(
         NotificationRepository $notificationRepository,
+        AnneeUniversitaireRepository $anneeUniversitaireRepository,
         MessageDestinataireEtudiantRepository $messageDestinataireEtudiantRepository,
         MessageDestinatairePersonnelRepository $messageDestinatairePersonnelRepository
     ) {
+        $this->anneeUniversitaireRepository = $anneeUniversitaireRepository;
         $this->notificationRepository = $notificationRepository;
         $this->messageDestinataireEtudiantRepository = $messageDestinataireEtudiantRepository;
         $this->messageDestinatairePersonnelRepository = $messageDestinatairePersonnelRepository;
@@ -48,7 +52,7 @@ class ToolBarController extends AbstractController
 
         $nouveauxMessages = false;
         foreach ($messages as $message) {
-            if (MessageDestinataire::UNREAD === $message->getEtat) {
+            if (MessageDestinataire::UNREAD === $message->getEtat()) {
                 $nouveauxMessages = true;
             }
         }
@@ -78,6 +82,13 @@ class ToolBarController extends AbstractController
         return $this->render('tool_bar/notifications.html.twig', [
             'notifications' => $notifications,
             'newNotification' => $newNotification,
+        ]);
+    }
+
+    public function anneeUniversitairePermanent(): Response
+    {
+        return $this->render('tool_bar/anneeUniversitairePermanent.html.twig', [
+            'annees_universitaire' => $this->anneeUniversitaireRepository->findAll(),
         ]);
     }
 }
