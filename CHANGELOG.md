@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.8](https://github.com/Dannebicque/intranetV3/compare/v3.1.7...v3.1.8) (2021-09-08)
+
+
+### Features
+
+* Optimisation des classes executées avant le contrôleur (receuil des données) ([8c6cd65](https://github.com/Dannebicque/intranetV3/commit/8c6cd65c11a736cf71848f92117bf4e9552d25b9))
+* Retrait de datatableJs dans les assets ([1e52628](https://github.com/Dannebicque/intranetV3/commit/1e5262881cf000a6c03be373e2495b7226c93c65))
+
+
+### Bug Fixes
+
+* Améliorations et correctifs composant table ([292032f](https://github.com/Dannebicque/intranetV3/commit/292032f6661daa1887078ff4a9ed90b1b8b52fb5))
+* Bug questionnaire ([5dc413a](https://github.com/Dannebicque/intranetV3/commit/5dc413a434216458b8f3fd455185348c12a00c9b))
+* Bug questionnaire ([d5cf39c](https://github.com/Dannebicque/intranetV3/commit/d5cf39c5f9583dd25f44e4ece2271253af21af9b))
+* Composant table et requetes liées aux pages ([8aa96d5](https://github.com/Dannebicque/intranetV3/commit/8aa96d5fca8bd018aeb2cf696fae946b5c671669))
+* Convertion date/heure ([806f2bd](https://github.com/Dannebicque/intranetV3/commit/806f2bd98e4f54e0341ae0d713110a6ac4f4e119))
+* date évaluation ([8df0292](https://github.com/Dannebicque/intranetV3/commit/8df0292866c9e5b6f59b9857ed5c936c47f38be8))
+* Dates conventions ([4147ce4](https://github.com/Dannebicque/intranetV3/commit/4147ce49fde95ce2d30b4fa3873b86078dcb50fb))
+* Fix divers ([92f7e4e](https://github.com/Dannebicque/intranetV3/commit/92f7e4e6939e69d5737f21c1b0da21eed2d045b8))
+* problème ajout justificatif absence ([45b1833](https://github.com/Dannebicque/intranetV3/commit/45b1833531da7efc6a670c1136150b9e0f24c95e))
+* Remise des heures EDT "hors COVID" ([0f826cb](https://github.com/Dannebicque/intranetV3/commit/0f826cb1fc72915b75ab00e6677dd6c57e0ec2f8))
+* Typage Hrs ([7f9e267](https://github.com/Dannebicque/intranetV3/commit/7f9e267a453015dd854b31c040adc54b3f54343e))
+* Utilisation du composant table ([2f9b18b](https://github.com/Dannebicque/intranetV3/commit/2f9b18bd6aa705866d8d9671c8e7dcbe427eb6ee))
+
 ### [3.1.7](https://github.com/Dannebicque/intranetV3/compare/v3.1.6...v3.1.7) (2021-09-02)
 
 
