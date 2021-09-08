@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Utils/Tools.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/08/2021 22:58
+ * @lastUpdate 04/09/2021 19:17
  */
 
 /*
@@ -14,6 +14,7 @@
 namespace App\Utils;
 
 use Carbon\Carbon;
+use Carbon\CarbonInterface;
 use function chr;
 use DateTime;
 use Exception;
@@ -40,7 +41,7 @@ abstract class Tools
     /**
      * @throws Exception
      */
-    public static function convertTimeToObject($heure): DateTime
+    public static function convertTimeToObject($heure): CarbonInterface
     {
         return Carbon::createFromTimeString($heure);
     }
