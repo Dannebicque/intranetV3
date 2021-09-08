@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/TypeGroupeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:48
+ * @lastUpdate 03/09/2021 18:34
  */
 
 namespace App\Repository;
@@ -67,6 +67,7 @@ class TypeGroupeRepository extends ServiceEntityRepository
             ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
             ->innerJoin(Diplome::class, 'd', 'WITH', 'a.diplome = d.id')
             ->where('d.departement = :departement')
+            ->andWhere('a.actif = true')
             ->andWhere('s.actif = true')
             ->setParameter('departement', $departement->getId())
             ->getQuery()
