@@ -157,8 +157,8 @@
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="row">
-                                            {% for typeGroupe in semestre.typegroupes|filter(typeGroupe => typeGroupe
-                                                .defaut == true) %}
+                                            {% for typeGroupe in typegroupes|filter(typeGroupe => (typeGroupe.defaut
+                                                == true) and (typeGroupe.semestre == semestre)) %}
                                                 {% for groupe in typeGroupe.groupes %}
                                                     <div class="col-sm-12 col-md-3 mb-2">
                                                         <a href="{{ path('trombinoscope_etudiant_export_groupe',
@@ -184,7 +184,8 @@
                                                         data-toggle="dropdown">Format PDF
                                                 </button>
                                                 <div class="dropdown-menu">
-                                                    {% for typegroupe in semestre.typegroupes %}
+                                                    {% for typegroupe in typegroupes|filter(typegroupe => typegroupe
+                                                        .semestre == semestre) %}
                                                         <li>
                                                             <a class="dropdown-item" href="{{ path('trombinoscope_etudiant_export', {_format:'pdf', typeGroupe: typegroupe.id}) }}">{{ typegroupe.libelle }}</a>
                                                         </li>
@@ -198,7 +199,8 @@
                                                         data-toggle="dropdown">Format Excel
                                                 </button>
                                                 <div class="dropdown-menu">
-                                                    {% for typegroupe in semestre.typegroupes %}
+                                                    {% for typegroupe in typegroupes|filter(typegroupe => typegroupe
+                                                    .semestre == semestre) %}
                                                         <li>
                                                             <a class="dropdown-item" href="{{ path('trombinoscope_etudiant_export',
                                                                 {_format:'xlsx', typeGroupe: typegroupe.id}) }}">{{ typegroupe.libelle }}</a>
@@ -213,7 +215,8 @@
                                                         data-toggle="dropdown">Format Csv
                                                 </button>
                                                 <div class="dropdown-menu">
-                                                    {% for typegroupe in semestre.typegroupes %}
+                                                    {% for typegroupe in typegroupes|filter(typegroupe => typegroupe
+                                                    .semestre == semestre) %}
                                                         <li>
                                                             <a class="dropdown-item" href="{{ path('trombinoscope_etudiant_export',
                                                                 {_format:'csv', typeGroupe: typegroupe.id}) }}">{{ typegroupe.libelle }}</a>
@@ -229,7 +232,8 @@
                                                 </button>
 
                                                 <div class="dropdown-menu">
-                                                    {% for typegroupe in semestre.typegroupes %}
+                                                    {% for typegroupe in typegroupes|filter(typegroupe => typegroupe
+                                                    .semestre == semestre) %}
                                                         <li>
                                                             <a class="dropdown-item" href="{{ path
                                                                 ('trombinoscope_etudiant_image',
@@ -315,12 +319,3 @@
     </div>
 {% endblock %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    {{ encore_entry_link_tags('datatable') }}
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    {{ encore_entry_script_tags('datatable') }}
-{% endblock %}
