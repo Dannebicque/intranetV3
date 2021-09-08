@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/webpack.config.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 29/08/2021 09:37
+// @lastUpdate 08/09/2021 12:08
 
 var Encore = require('@symfony/webpack-encore')
 var path = require('path')
@@ -35,9 +35,7 @@ Encore
   .addEntry('app', './assets/app.js')
   .addEntry('covid', './assets/js/pages/covid.js')
   .addEntry('apc', './assets/js/pages/apc.js')
-  .addEntry('sadmCovid', './assets/js/pages/sadmCovid.js')
   .addEntry('agenda', './assets/js/pages/agenda.js')
-  .addEntry('datatable', './assets/js/datatable.js')
   .addEntry('trombinoscope', './assets/js/pages/trombinoscope.js')
   .addEntry('absences', './assets/js/pages/absences.js')
   .addEntry('applications', './assets/js/pages/applications.js')

@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.matieres.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 01/03/2021 18:49
+// @lastUpdate 08/09/2021 12:08
 
 import {dataTableLangueFr} from '../lang/fr'
 
@@ -97,9 +97,6 @@ $(document).on('click', '.change-diplome', function (e) {
     type: 'GET',
     success: function (data) {
       $('#content_diplome').slideUp().empty().append(data).slideDown()
-      // $('.datatable_matieres').dataTable({
-      //   language: dataTableLangueFr
-      // })
       $('#export_csv').attr('href', Routing.generate('administration_matiere_export', {
         diplome: $diplome,
         '_format': 'csv'

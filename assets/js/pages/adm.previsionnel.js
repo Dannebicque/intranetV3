@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.previsionnel.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 03/05/2021 17:16
+// @lastUpdate 08/09/2021 12:08
 import {addCallout} from '../util'
 
 let nbLignePrevisionnel = 1
@@ -128,7 +128,8 @@ $(document).on('click', '#addIntervenantPrevisionnel', function (e) {
 
       $('#nbLigne').val(nbLignePrevisionnel)
       $('#ligneAdd').before(html)
-      $('#intervenant_' + nbLignePrevisionnel).selectpicker()
+      //todo: a remplacer
+      //$('#intervenant_' + nbLignePrevisionnel).selectpicker()
     }
   })
 

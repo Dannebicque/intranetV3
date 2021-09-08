@@ -2,16 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.personnels.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 23/05/2021 14:06
-
-// import '../../vendor/datatables'
-import {dataTableLangueFr} from '../lang/fr'
-
-$(document).ready(function () {
-  $('#tableau').DataTable({
-    'langue': dataTableLangueFr
-  }) //regenerer le datatable avec les nouvelles data
-})
+// @lastUpdate 08/09/2021 12:08
 
 $(document).on('keyup', '#login_urca', function () {
   const $val = $(this).val()

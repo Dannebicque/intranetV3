@@ -119,6 +119,7 @@ action:
   refuser: Refuser
   export: 'Télécharger'
   duplicate: 'Dupliquer'
+  delete: 'Supprimer'
   pdf: PDF
   csv: CSV
   excel: XLSX
@@ -991,6 +992,9 @@ déconnexion: Déconnexion
 default.heading: 'Intranet du département <strong>%departement%</strong>'
 DEMANDE: DEMANDE
 demandes.rattrapages: 'Demandes de rattrapages'
+demande.acceptee: Demande Acceptée
+demande.refusee: Demande Refusée
+
 departement:
   activate..flash: departement.activate..flash
   activate.1.flash: departement.activate.1.flash
@@ -1800,6 +1804,8 @@ tab:
   vosParametres: 'Vos paramètres'
 
 table:
+  periodeAbsence: 'Période d''absence'
+  etat_justificatif_absence: 'Etat du justificatif d''absence'
   absence_justificatif_etat: 'Etat du justificatif d''absence'
   absence_justifiee: 'Absence justifiée'
   absence: Absences
@@ -2104,6 +2110,7 @@ table:
   volume_horaire: 'Volume horaire'
   competence: 'Compétence'
   type_bac: 'Type spécialité'
+  heure_evaluation: Heure évaluation
 
 type_bac:
   g: 'Série générale'
@@ -2266,3 +2273,5 @@ nb.saisie.par: 'Evaluation saisie par '
 assistant:
   creation:
     diplome: 'Assistant de création d''un diplôme'
+All: 'Tous'
+None: 'Aucun'

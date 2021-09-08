@@ -2,14 +2,10 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/app.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 29/08/2021 21:50
+// @lastUpdate 08/09/2021 12:08
 
 import '@fortawesome/fontawesome-free/scss/fontawesome.scss'
 import '@fortawesome/fontawesome-free/scss/solid.scss'
-import 'bootstrap-select/dist/css/bootstrap-select.min.css'
-import '../vendor/bootstrap-datepicker/css/bootstrap-datepicker3.min.css'
-import '../vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js'
-import '../vendor/bootstrap-datepicker/locales/bootstrap-datepicker.fr.min'
 
 import $ from 'jquery'
 
@@ -32,8 +28,6 @@ import '../vendor/tinyMceLang/fr_FR'
 import '../css/app.scss'
 
 let lookup = {}
-
-require('bootstrap-select')
 
 import Table from '../components/table'
 import SelectComplete from '../components/SelectComplete'
@@ -178,15 +172,6 @@ function updateInterface () {
     })
   }
 
-  //selectpicker
-  $('.selectpicker').selectpicker({
-    iconBase: '',
-    tickIcon: 'fas fa-check',
-    style: 'btn-light',
-    size: 10,
-    liveSearch: true
-  })
-
   //notifications
   $(document).on('click', '#marquerNotificationsRead', function (e) {
     e.preventDefault()
@@ -213,22 +198,6 @@ function updateInterface () {
       template: '<div class="tooltip' + color + '" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>'
     })
   })
-
-  $('[data-provide~="datepicker"]').each(function () {
-    var options = {
-      multidateSeparator: ', ',
-      language: 'fr',
-      daysOfWeekHighlighted: '06',
-      format: 'dd/mm/yyyy'
-    }
-
-    if ($(this).prop('tagName') !== 'INPUT') {
-      //si ce n'est pas un input => donc un date range
-      options.inputs = [$(this).find('input:first'), $(this).find('input:last')]
-    }
-    $(this).datepicker(options)
-  })
-
 }
 
 // Open fullscreen lookup

@@ -55,6 +55,8 @@ Commentaire: Commentaire
 complete: 'Complété par l''étudiant'
 code_postal: Code postal
 danger: danger
+date_debut: Date début
+date_fin: Date fin
 date_naissance: 'Date de naissance'
 dateRange: 'Période d''affichage'
 dateRange.interruption: 'Périodes d''interruption du stage'
