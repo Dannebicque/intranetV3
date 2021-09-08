@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/LDAP/MyLdap.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/09/2021 08:42
+ * @lastUpdate 08/09/2021 13:57
  */
 
 /*
@@ -34,6 +34,9 @@ class MyLdap
     public function connect(): void
     {
         try {
+            dump($this->parameterBag->get('LDAP_HOST'));
+            dump($this->parameterBag->get('LDAP_LOGIN'));
+            dump($this->parameterBag->get('LDAP_PASSWORD'));
             $this->ds = ldap_connect($this->parameterBag->get('LDAP_HOST'));
             ldap_set_option($this->ds, LDAP_OPT_PROTOCOL_VERSION, 3);
             if ($this->ds) {
@@ -41,6 +44,7 @@ class MyLdap
                     $this->parameterBag->get('LDAP_PASSWORD'));
             }
         } catch (Exception $e) {
+            dump($e);
         }
     }
 
