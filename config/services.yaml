@@ -44,9 +44,9 @@ services:
               arguments:
                   - '@App\Classes\Configuration'
 
-    App\Event\SlugGenerator:
-        tags:
-            - { name: 'doctrine.event_subscriber' }
+    #    App\Event\SlugGenerator:
+    #        tags:
+    #            - { name: 'doctrine.event_subscriber' }
 
     App\Security\AbstractAuthenticator:
         class: App\Security\AbstractAuthenticator
