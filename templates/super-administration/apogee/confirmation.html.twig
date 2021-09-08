@@ -6,7 +6,10 @@
 
 {% block content %}
     {% for lis in liste %}
-        {{ dump(lis) }}
+        {% for k,v in lis %}
+            <p>{{ k }} => {{ v }}</p>
+        {% endfor %}
+
     {% endfor %}
     {# <div class="card"> #}
     {# <h4 class="card-title">Mettre à jour une promotion</h4> #}
