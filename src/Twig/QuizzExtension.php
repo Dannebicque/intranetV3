@@ -4,16 +4,16 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Twig/QuizzExtension.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:48
+ * @lastUpdate 03/09/2021 19:04
  */
 
 namespace App\Twig;
 
-use App\Utils\Tools;
 use App\Entity\QuestionnaireQuestion;
+use App\Utils\Tools;
+use function in_array;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
-use function in_array;
 
 /**
  * Class QizzExtension.
@@ -46,6 +46,7 @@ class QuizzExtension extends AbstractExtension
             case QuestionnaireQuestion::QUESTION_TYPE_QCM:
                 return 'checkbox';
         }
+        return '';
     }
 
     public function personnalise($texte, $config)

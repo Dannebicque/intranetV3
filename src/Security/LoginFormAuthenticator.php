@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Security/LoginFormAuthenticator.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 04/09/2021 20:12
  */
 
 namespace App\Security;
@@ -28,18 +28,9 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 {
     use TargetPathTrait;
 
-    /**
-     * @var UrlGeneratorInterface
-     */
-    private $urlGenerator;
-    /**
-     * @var CsrfTokenManagerInterface
-     */
-    private $csrfTokenManager;
-    /**
-     * @var UserPasswordEncoderInterface
-     */
-    private $passwordEncoder;
+    private UrlGeneratorInterface $urlGenerator;
+    private CsrfTokenManagerInterface $csrfTokenManager;
+    private UserPasswordEncoderInterface $passwordEncoder;
     /**
      * @var
      */
@@ -49,8 +40,7 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
      */
     private $user;
 
-    /** @var DepartementRepository */
-    private $departementRepository;
+    private DepartementRepository $departementRepository;
 
     public function __construct(
         UrlGeneratorInterface $urlGenerator,
