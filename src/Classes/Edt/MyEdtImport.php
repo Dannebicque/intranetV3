@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/09/2021 17:29
+ * @lastUpdate 08/09/2021 17:39
  */
 
 /*
@@ -188,7 +188,7 @@ class MyEdtImport
                             $this->semestre = $pl->getSemestre()->getId();
                             $pl->setIdMatiere($tabMatieres[$matiere]->id);
                             $pl->setTypeMatiere($tabMatieres[$matiere]->typeMatiere);
-                            if ($prof !== 'Z01' && array_key_exists($prof, $tabIntervenants)) {
+                            if ($prof !== 'PRJ' && array_key_exists($prof, $tabIntervenants)) {
                                 $pl->setIntervenant($tabIntervenants[$prof]);//todo: pourrait être NULL  équivalent à john doe?? gérer affichage
                             } else {
                                 $pl->setIntervenant(null);
