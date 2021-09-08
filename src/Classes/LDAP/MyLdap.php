@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/LDAP/MyLdap.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/09/2021 14:17
+ * @lastUpdate 08/09/2021 14:47
  */
 
 /*
@@ -68,7 +68,8 @@ class MyLdap
     {
         $this->connect();
         dump($this->parameterBag->get('LDAP_BASE_DN'));
-        $sr = ldap_search($this->ds, $this->parameterBag->get('LDAP_BASE_DN'), 'supannEmpId=' . $numeroHarpege);
+        $sr = ldap_search($this->ds, $this->parameterBag->get('LDAP_BASE_DN'),
+            '(supannEmpId=' . $numeroHarpege . ')') or die ('Error trying to bind: ' . ldap_error($this->ds));
         dump($sr);
         if (1 === ldap_count_entries($this->ds, $sr)) {
             $personnel = ldap_get_entries($this->ds, $sr);
