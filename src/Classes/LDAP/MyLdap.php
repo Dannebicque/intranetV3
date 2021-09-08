@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/LDAP/MyLdap.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/09/2021 14:50
+ * @lastUpdate 08/09/2021 14:56
  */
 
 /*
@@ -69,7 +69,7 @@ class MyLdap
         $this->connect();
         dump($this->parameterBag->get('LDAP_BASE_DN'));
         $sr = ldap_search($this->ds, $this->parameterBag->get('LDAP_BASE_DN'),
-            '(supannEmpId=' . $numeroHarpege . ')');
+            '(supannEmpId=' . $numeroHarpege . ')', ['uid', 'mail']);
         echo '--';
         dump($sr);
         echo '--';
