@@ -2,9 +2,8 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.absences.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 23/05/2021 14:06
+// @lastUpdate 08/09/2021 12:08
 import {addCallout} from '../util'
-// import '../../vendor/datatables'
 
 $(document).on('change', '#justifier_etudiant', function () {
   $('#listeJustifie').empty().load(Routing.generate('administration_absences_liste_absence_etudiant', {etudiant: $(this).val()}))

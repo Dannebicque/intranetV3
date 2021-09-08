@@ -2,10 +2,8 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/apc.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/06/2021 08:24
+// @lastUpdate 08/09/2021 12:08
 import '../../vendor/jquery.collection'
-import '../../vendor/bootstrap-datepicker/locales/bootstrap-datepicker.fr.min'
-// import $ from 'jquery'
 
 let semestreSae = false
 let semestreRessource = false

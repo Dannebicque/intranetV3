@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/util.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 02/09/2021 08:12
+// @lastUpdate 08/09/2021 12:08
 
 // import $ from 'jquery'
 import Swal from 'sweetalert2'
@@ -72,8 +72,6 @@ $(document).on('click', '.supprimer', function (e) {
           if (id.hasOwnProperty('redirect') && id.hasOwnProperty('url')) {
             document.location.href = id.url
           } else {
-            //t.row("#ligne_"+id).remove().draw(); =< datattable todo: remove ligne si datatable ?? problème dans adm>personnel
-            // $('#ligne_' + id).closest('tr').remove()
             const ligne = getParentByTagName(e.target, 'tr')
             ligne.parentNode.removeChild(ligne)
 

@@ -2,19 +2,10 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.articles.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 03/08/2021 16:56
-
-import {dataTableLangueFr} from '../lang/fr'
+// @lastUpdate 08/09/2021 12:08
 
 
 $(document).on('click', '#addCategorie', function () {
-  // if ($('#listeCategories').hasDataAttr('data-checkbox')) {
-  //   const table = $('#listeCategories').DataTable()
-  //   table.clear() //effacer le datatable
-  //   table.destroy() //supprimer le datatable
-  // }
-
-
   $.ajax({
     url: Routing.generate('administration_article_categorie_add'),
     //dataType: 'json',

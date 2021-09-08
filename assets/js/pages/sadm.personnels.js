@@ -2,8 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/sadm.personnels.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 23/05/2021 14:06
-import {dataTableLangueFr} from '../lang/fr'
+// @lastUpdate 08/09/2021 12:08
 
 $(document).on('keyup', '#sa_login_urca', function () {
   const departement = $(this).data('departement')
@@ -44,39 +43,39 @@ $(document).on('click', '.sa_addpersonnel', function () {
   })
 })
 
-$('#datatableRh').DataTable({
-  'processing': true,
-  'serverSide': true,
-  'language': dataTableLangueFr,
-  'ajax': Routing.generate('api_all_personnel'),
-  'sAjaxDataProp': 'data',
-  'pageLength': 25,
-  'order': [[1, 'asc']],
-  'columns': [
-    {'data': 'numero_harpege'},
-    {'data': 'nom'},
-    {'data': 'prenom'},
-    {'data': 'login'},
-    {'data': 'departements'},
-    {'data': 'deleted'},
-    {
-      'data': 'id',
-      'sortable': false,
-      'mRender': function (data, type, full) {
-        return '<a href="' + Routing.generate('sa_rh_personnel_show', {id: data}) + '" class="btn btn-info btn-outline btn-square" data-provide="tooltip"\n' +
-          '   data-placement="bottom" title="Détails"><i class="fa fa-info"></i></a>\n' +
-          '<a href="' + Routing.generate('sa_rh_personnel_edit', {id: data}) + '"\n' +
-          '   class="btn btn-warning btn-outline btn-square"\n' +
-          '                                                     data-provide="tooltip"\n' +
-          '                                                     data-placement="bottom"\n' +
-          '                                                     title="Modifier"><i class="fa fa-edit"></i></a>\n' +
-          '<a href="' + Routing.generate('sa_rh_delete_personnel', {id: data}) + '" class="btn btn-danger btn-outline btn-square supprimer" data-id="id"' +
-          '            data-provide="tooltip" data-placement="bottom"\n' +
-          '            title="Supprimer"><i class="fa fa-trash"></i></a>'
-      }
-    }]
-  //todo: gérer scrf sur le delete
-})
+// $('#datatableRh').DataTable({
+//   'processing': true,
+//   'serverSide': true,
+//   'language': dataTableLangueFr,
+//   'ajax': Routing.generate('api_all_personnel'),
+//   'sAjaxDataProp': 'data',
+//   'pageLength': 25,
+//   'order': [[1, 'asc']],
+//   'columns': [
+//     {'data': 'numero_harpege'},
+//     {'data': 'nom'},
+//     {'data': 'prenom'},
+//     {'data': 'login'},
+//     {'data': 'departements'},
+//     {'data': 'deleted'},
+//     {
+//       'data': 'id',
+//       'sortable': false,
+//       'mRender': function (data, type, full) {
+//         return '<a href="' + Routing.generate('sa_rh_personnel_show', {id: data}) + '" class="btn btn-info btn-outline btn-square" data-provide="tooltip"\n' +
+//           '   data-placement="bottom" title="Détails"><i class="fa fa-info"></i></a>\n' +
+//           '<a href="' + Routing.generate('sa_rh_personnel_edit', {id: data}) + '"\n' +
+//           '   class="btn btn-warning btn-outline btn-square"\n' +
+//           '                                                     data-provide="tooltip"\n' +
+//           '                                                     data-placement="bottom"\n' +
+//           '                                                     title="Modifier"><i class="fa fa-edit"></i></a>\n' +
+//           '<a href="' + Routing.generate('sa_rh_delete_personnel', {id: data}) + '" class="btn btn-danger btn-outline btn-square supprimer" data-id="id"' +
+//           '            data-provide="tooltip" data-placement="bottom"\n' +
+//           '            title="Supprimer"><i class="fa fa-trash"></i></a>'
+//       }
+//     }]
+//   //todo: gérer scrf sur le delete
+// })
 
 $(document).on('change', '.change_droit_pf', function () {
   $.ajax({

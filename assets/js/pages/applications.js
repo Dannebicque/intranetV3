@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/applications.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/05/2021 08:46
+// @lastUpdate 08/09/2021 12:08
 import {addCallout} from '../util'
 import './messagerie'
 
@@ -34,8 +34,9 @@ $(document).on('change', '#selectsemestre', function () {
             .attr('value', matiere.typeMatiere + '_' + matiere.id)
             .text(matiere.display))
         })
-        selectMatiere.attr('data-provide', 'selectpicker')
-        selectMatiere.attr('data-live-search', 'true')
+        //todo: a remplacer
+        // selectMatiere.attr('data-provide', 'selectpicker')
+        // selectMatiere.attr('data-live-search', 'true')
       },
       error: function () {
         addCallout('Erreur lors de la tentative d\'affichage des matières du semestres. Veuillez contacter le responsable de l\'intranet si le problème persiste !', 'danger')
