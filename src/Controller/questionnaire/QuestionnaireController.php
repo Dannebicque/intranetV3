@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/questionnaire/QuestionnaireController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/09/2021 07:55
+ * @lastUpdate 08/09/2021 07:59
  */
 
 namespace App\Controller\questionnaire;
@@ -125,14 +125,14 @@ class QuestionnaireController extends AbstractController
                     $questionnaire = $this->questionnaireQuizzRepository->find($questionnaire);
                     $quizzEtudiant = $quizzEtudiantRepository->findOneBy([
                         'questionnaireQuizz' => $questionnaire->getId(),
-                        'etudiant' => $etudiant,
+                        'etudiant' => $etudiant->getId(),
                     ]);
                     break;
                 case 'qualite':
                     $questionnaire = $this->questionnaireQualiteRepository->find($questionnaire);
                     $quizzEtudiant = $quizzEtudiantRepository->findOneBy([
                         'questionnaireQualite' => $questionnaire->getId(),
-                        'etudiant' => $etudiant,
+                        'etudiant' => $etudiant->getId(),
                     ]);
                     break;
             }
@@ -144,7 +144,7 @@ class QuestionnaireController extends AbstractController
             }
 
             /** @var QuestionnaireEtudiantReponse $exist */
-            $exist = $quizzEtudiantReponseRepository->findExistQuestion($cleQuestion, $quizzEtudiant->getId());
+            $exist = $quizzEtudiantReponseRepository->findExistQuestion($cleQuestion, $quizzEtudiant);
 
             $t = explode('_', $cleReponse);
             $question = $quizzQuestionRepository->find(mb_substr($t[3], 1, mb_strlen($t[0])));
