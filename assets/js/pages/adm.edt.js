@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.edt.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 17/05/2021 18:41
+// @lastUpdate 09/09/2021 19:02
 
 import '../../vendor/jqueryui/jquery-ui.min'
 
@@ -16,14 +16,19 @@ function updateBloc (id) {
   $.ajax({
     url: Routing.generate('administration_edt_get_event', {id: id}),
     success: function (data) {
-      $('#hdbt').selectpicker('val', data.heureDbtInt)
-      $('#hfin').selectpicker('val', data.heureFinInt)
+      // $('#hdbt').selectpicker('val', data.heureDbtInt)
+      // $('#hfin').selectpicker('val', data.heureFinInt)
+      $('#hdbt').val(data.heureDbtInt)
+      $('#hfin').val(data.heureFinInt)
       $('#jourc' + data.jour).prop('checked', true)
-      $('#typecours').selectpicker('val', data.typecours + '-' + data.groupe)
+      // $('#typecours').selectpicker('val', data.typecours + '-' + data.groupe)
+      $('#typecours').val(data.typecours + '-' + data.groupe)
       $('#salle').val(data.salle)
       $('#texte').val(data.texte)
-      $('#selectmatiere').selectpicker('val', data.typeIdMatiere)
-      $('#selectenseignant').selectpicker('val', data.personnelId)
+      // $('#selectmatiere').selectpicker('val', data.typeIdMatiere)
+      // $('#selectenseignant').selectpicker('val', data.personnelId)
+      $('#selectmatiere').val(data.typeIdMatiere)
+      $('#selectenseignant').val(data.personnelId)
       $('#idEdtUpdate').val(data.id)
       $('#btnAddEDT').empty().append('Modifier le créneau')
       $('#btnDelete').prop('href', Routing.generate('administration_edt_delete', {'id': data.id}))
@@ -38,12 +43,14 @@ function selectfin () {
   let valeur
 
   let tabdbt = Cells[0].split('_')
-  $('#hdbt').selectpicker('val', tabdbt[1])
+  // $('#hdbt').selectpicker('val', tabdbt[1])
+  $('#hdbt').val(tabdbt[1])
 
   let tabfin = Cells[Cells.length - 1].split('_')
 
   let fin = parseInt(tabfin[1]) + 1
-  $('#hfin').selectpicker('val', fin)
+  //$('#hfin').selectpicker('val', fin)
+  $('#hfin').val(fin)
 
   $('#jourc' + tabdbt[2]).prop('checked', true)
 
@@ -58,9 +65,12 @@ function selectfin () {
     valeur = 'CM-1'
   }
 
-  $('#typecours').selectpicker('val', valeur)
-  $('#salle').selectpicker('val', '')
-  $('#texte').selectpicker('val', '')
+  // $('#typecours').selectpicker('val', valeur)
+  // $('#salle').selectpicker('val', '')
+  // $('#texte').selectpicker('val', '')
+  $('#typecours').val(valeur)
+  $('#salle').val('')
+  $('#texte').val('')
   $('#idEdtUpdate').val('')
   $('#btnAddEDT').empty().append('Ajouter le créneau')
   $('#blocadd').show()
@@ -82,6 +92,7 @@ $('#selectable').selectable({
     }
   },
   stop: function (event, ui) {
+    console.log('stop')
     if ($(event.originalEvent.target).hasClass('edt_cours')) {
       updateBloc($(event.originalEvent.target).data('edt'))
     } else {
@@ -192,7 +203,8 @@ $(document).on('change', '#affichematiere', function () {
 
 $(document).on('change', '#selectpersonnel', function () {
   const selectMatiere = $('#selectmatiere')
-  selectMatiere.selectpicker('val', '0')
+  //selectMatiere.selectpicker('val', '0')
+  selectMatiere.val(0)
 
 })
 
