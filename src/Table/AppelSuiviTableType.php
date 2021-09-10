@@ -4,13 +4,15 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/AppelSuiviTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/09/2021 10:48
+ * @lastUpdate 10/09/2021 20:37
  */
 
 namespace App\Table;
 
 use App\Components\Table\Adapter\EntityAdapter;
 use App\Components\Table\Column\DateColumnType;
+use App\Components\Table\Column\EntityColumnType;
+use App\Components\Table\Column\PropertyColumnType;
 use App\Components\Table\Column\WidgetColumnType;
 use App\Components\Table\TableBuilder;
 use App\Components\Table\TableType;
@@ -107,8 +109,8 @@ class AppelSuiviTableType extends TableType
         $builder->addColumn('typeIdMatiere', MatiereColumnType::class,
             ['label' => 'table.matiere', 'translation_domain' => 'messages', 'matieres' => $this->matieres]);
 
-        $builder->addColumn('groupes', GroupeEtudiantColumnType::class,
-            ['label' => 'table.groupe', 'translation_domain' => 'messages']);
+        $builder->addColumn('groupe', EntityColumnType::class,
+            ['label' => 'table.groupe', 'translation_domain' => 'messages', 'display_field' => 'libelle']);
 
         $builder->addColumn('personnel', PersonnelColumnType::class);
 

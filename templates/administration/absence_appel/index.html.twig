@@ -33,63 +33,12 @@
 {% block content %}
     <div class="card">
         <div class="card-body">
-            <table class="table table-striped table-bordered">
-                <thead>
-                <tr>
-                    <th>{{ 'table.date'|trans }}</th>
-                    <th>{{ 'table.heure'|trans }}</th>
-                    <th>{{ 'table.matiere'|trans }}</th>
-                    <th>{{ 'table.groupe'|trans }}</th>
-                    <th>{{ 'table.personnel'|trans }}</th>
-                    <th>{{ 'table.etat'|trans }}</th>
-                    <th>{{ 'table.actions'|trans }}</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% set total = 0 %}
-                {% set saisie = 0 %}
-                {% for element in pl.evenements %}
-                    {% set total = total + 1 %}
-                    <tr>
-                        <td>{{ element.date|format_date('short') }}</td>
-                        <td>{{ element.heure }}</td>
-                        <td>{{ element.display }}</td>
-                        <td>{{ element.groupe }}</td>
-                        <td>{{ element.personnel }}</td>
-                        <td>
-                            {% if statsAppel[element.date|date('Ymd')] is defined %}
-                                {% if statsAppel[element.date|date('Ymd')][element.typeIdMatiere] is defined %}
-                                    {% if statsAppel[element.date|date('Ymd')][element.typeIdMatiere][element.heure] is defined %}
-                                        {% if statsAppel[element.date|date('Ymd')][element.typeIdMatiere][element.heure][element.groupeId]
-                                            is defined %}
-                                            {% set saisie = saisie + 1 %}
-                                            <span class="badge badge-success">{{ statsAppel[element.date|date('Ymd')
-                                                ][element.typeIdMatiere][element.heure][element.groupeId]|trans }}</span>
-                                        {% else %}
-                                            <span class="badge badge-warning">Pas de saisie</span>
-                                        {% endif %}
-                                    {% else %}
-                                        <span class="badge badge-warning">Pas de saisie</span>
-                                    {% endif %}
-                                {% else %}
-                                    <span class="badge badge-warning">Pas de saisie</span>
-                                {% endif %}
-                            {% else %}
-                                <span class="badge badge-warning">Pas de saisie</span>
-                            {% endif %}
-                        </td>
-                        <td>{{ 'table.actions'|trans }}</td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+            {{ table_render(table) }}
 
-{#            {{ table_render(table) }}#}
-
-            <div class="alert alert-info">
-                {{ total }} créneaux de cours et {{ saisie }} créneaux saisis. Soit {{ (saisie/total)|number_format
-                    (2) }}% de saisie.
-            </div>
+            {# <div class="alert alert-info"> #}
+            {# {{ total }} créneaux de cours et {{ saisie }} créneaux saisis. Soit {{ (saisie/total)|number_format #}
+            {# (2) }}% de saisie. #}
+            {# </div> #}
         </div>
     </div>
 {% endblock %}

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/ColumnType/MatiereColumnType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/09/2021 07:26
+ * @lastUpdate 10/09/2021 20:28
  */
 
 namespace App\Table\ColumnType;
@@ -19,7 +19,7 @@ class MatiereColumnType extends PropertyColumnType
         $matieres = $options['matieres'];
 
         if (array_key_exists($value, $matieres)) {
-            return $$matieres[$value]->display;
+            return $matieres[$value]->display;
         }
 
         return '-err matière-';

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/ColumnType/StatusAppelFaitColumnType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/09/2021 07:39
+ * @lastUpdate 10/09/2021 20:42
  */
 
 namespace App\Table\ColumnType;
@@ -32,12 +32,12 @@ class StatusAppelFaitColumnType extends PropertyColumnType
             array_key_exists($elt[1], $statsAppel[0]) &&
             array_key_exists($elt[2], $statsAppel[0][1]) &&
             array_key_exists($elt[3], $statsAppel[0][1][2])) {
-                    return '<span class="badge badge-success">'.$this->translator->trans($statsAppel[0][1][2][3],
-                                    'messages').'</span>';
+                    return '<span class="badge badge-success">' . $this->translator->trans($statsAppel[0][1][2][3],
+                            ['domain' => 'messages']) . '</span>';
                 }
 
-        return '<span class="badge badge-warning">'.$this->translator->trans('pas.d.absence.saisie',
-                'messages').'</span>';
+        return '<span class="badge badge-warning">' . $this->translator->trans('pas.d.absence.saisie',
+                ['domain' => 'messages']) . '</span>';
     }
 
     public function configureOptions(
