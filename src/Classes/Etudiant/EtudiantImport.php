@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/09/2021 19:17
+ * @lastUpdate 10/09/2021 14:41
  */
 
 /*
@@ -50,6 +50,7 @@ class EtudiantImport
         $etudiant->updateFromApogee($dataApogee['etudiant']);
         $etudiant->setPhotoName($etudiant->getNumEtudiant() . '.jpg');
         $update = $this->updateLdap($etudiant);
+
         $this->saveAdresse($dataApogee, $etudiant);
         if (true === $update) {
             $this->entity->persist($etudiant);
@@ -65,6 +66,8 @@ class EtudiantImport
         $etuLdap = $this->myLdap->getInfoEtudiant($etudiant->getNumEtudiant());
         if (is_array($etuLdap) && 2 === count($etuLdap) && '' !== $etuLdap['mail'] && '' !== $etuLdap['login']) {
             $etudiant->updateFromLdap($etuLdap);
+            $slug = explode('@', $etudiant->getMailUniv());
+            $etudiant->setSlug($slug[0]);
 
             return true;
         }
