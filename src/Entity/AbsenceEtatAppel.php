@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/AbsenceEtatAppel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/08/2021 12:37
+ * @lastUpdate 10/09/2021 20:42
  */
 
 namespace App\Entity;
@@ -127,5 +127,10 @@ class AbsenceEtatAppel extends BaseEntity
         $this->semestre = $semestre;
 
         return $this;
+    }
+
+    public function appelFait()
+    {
+        return $this->getDate()->format('dmY') . '_' . $this->getTypeIdMatiere() . '_' . $this->getHeure() . '_' . $this->getGroupe()->getId();
     }
 }

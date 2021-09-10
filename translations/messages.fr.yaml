@@ -1804,6 +1804,7 @@ tab:
   vosParametres: 'Vos paramètres'
 
 table:
+  appelFait: 'Etat de l''appel'
   periodeAbsence: 'Période d''absence'
   etat_justificatif_absence: 'Etat du justificatif d''absence'
   absence_justificatif_etat: 'Etat du justificatif d''absence'
