@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/LDAP/MyLdap.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/09/2021 21:13
+ * @lastUpdate 10/09/2021 08:44
  */
 
 /*
@@ -13,7 +13,6 @@
 
 namespace App\Classes\LDAP;
 
-use Exception;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Ldap\Ldap;
 
@@ -30,25 +29,22 @@ class MyLdap
 
     public function connect(): void
     {
-        try {
-            $this->ds = Ldap::create('ext_ldap', ['connection_string' => $this->parameterBag->get('LDAP_HOST')]);
-           # ldap_set_option($this->ds, LDAP_OPT_PROTOCOL_VERSION, 3);
-            if ($this->ds) {
-                $this->ds->bind($this->parameterBag->get('LDAP_LOGIN'), $this->parameterBag->get('LDAP_PASSWORD'));
-            }
-        } catch (Exception $e) {
-        }
+        $this->ds = Ldap::create('ext_ldap',
+            ['connection_string' => $this->parameterBag->get('LDAP_HOST'), 'version' => 3]);
+        $this->ds->bind($this->parameterBag->get('LDAP_LOGIN'), $this->parameterBag->get('LDAP_PASSWORD'));
     }
 
     public function getInfoEtudiant($numetudiant)
     {
         $this->connect();
-        $sr = ldap_search($this->ds, $this->parameterBag->get('LDAP_BASE_DN'), 'supannetuid='.$numetudiant);
-        if (1 === ldap_count_entries($this->ds, $sr)) {
-            $etudiant = ldap_get_entries($this->ds, $sr);
-            $t['login'] = $etudiant[0]['uid'][0];
-            $t['mail'] = $etudiant[0]['mail'][0];
-            ldap_unbind($this->ds);
+
+        $query = $this->ds->query($this->parameterBag->get('LDAP_BASE_DN'), '(supannetuid=' . $numetudiant . ')',
+            ['filter' => ['uid', 'mail']]);
+        $results = $query->execute()->toArray();
+
+        if (1 === count($results)) {
+            $t['login'] = $results[0]->getAttribute('uid')[0];
+            $t['mail'] = $results[0]->getAttribute('mail')[0];
 
             return $t;
         }
@@ -60,14 +56,13 @@ class MyLdap
     {
         $this->connect();
 
-        $sr = ldap_search($this->ds, $this->parameterBag->get('LDAP_BASE_DN'),
-            '(supannEmpId=' . $numeroHarpege . ')', ['uid', 'mail']);
+        $query = $this->ds->query($this->parameterBag->get('LDAP_BASE_DN'), '(supannEmpId=' . $numeroHarpege . ')',
+            ['filter' => ['uid', 'mail']]);
+        $results = $query->execute()->toArray();
 
-        if (1 === ldap_count_entries($this->ds, $sr)) {
-            $personnel = ldap_get_entries($this->ds, $sr);
-            $t['login'] = $personnel[0]['uid'][0];
-            $t['mail'] = $personnel[0]['mail'][0];
-            ldap_unbind($this->ds);
+        if (1 === count($results)) {
+            $t['login'] = $results[0]->getAttribute('uid')[0];
+            $t['mail'] = $results[0]->getAttribute('mail')[0];
 
             return $t;
         }
