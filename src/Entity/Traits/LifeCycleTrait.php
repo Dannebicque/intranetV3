@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Traits/LifeCycleTrait.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/09/2021 23:06
+ * @lastUpdate 10/09/2021 11:56
  */
 
 namespace App\Entity\Traits;
@@ -50,7 +50,7 @@ trait LifeCycleTrait
 
     public function setUpdatedValue(): void
     {
-        $this->updated = $this->updated; //todo: a confirmer, risque de ne plus permettre à Vich de fonctionner?
+        $this->updated = Carbon::now();
     }
 
     /**
