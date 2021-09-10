@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/RattrapageType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/09/2021 21:26
+ * @lastUpdate 10/09/2021 12:00
  */
 
 namespace App\Form;
@@ -13,6 +13,7 @@ use App\Classes\Matieres\TypeMatiereManager;
 use App\Entity\Personnel;
 use App\Entity\Rattrapage;
 use App\Entity\Semestre;
+use App\Form\Type\CarbonTimeType;
 use App\Form\Type\ChoiceCompleteType;
 use App\Form\Type\DatePickerType;
 use App\Form\Type\EntityCompleteType;
@@ -48,7 +49,7 @@ class RattrapageType extends AbstractType
                 'required' => true,
                 'attr' => ['data-options' => ['locale' => $locale]],
             ])
-            ->add('heureEval', TimeType::class, ['label' => 'heure_evaluation', 'required' => false])
+            ->add('heureEval', CarbonTimeType::class, ['label' => 'heure_evaluation', 'required' => false])
             ->add('duree', TextType::class, ['label' => 'duree_evaluation', 'required' => false])
             ->add('typeIdMatiere', ChoiceCompleteType::class, [
                 'choices' => $this->typeMatiereManager->findBySemestreChoiceType($this->semestre),
