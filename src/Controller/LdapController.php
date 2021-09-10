@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/LdapController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/09/2021 15:00
+ * @lastUpdate 09/09/2021 10:52
  */
 
 namespace App\Controller;
@@ -27,7 +27,6 @@ class LdapController extends BaseController
     public function searchLdap(MyLdap $myLdap, Request $request): Response
     {
         $numero = $request->request->get('numero');
-        //$myLdap->connect();
         $data = $myLdap->getInfoPersonnel($numero);
 
         return $this->json($data);
