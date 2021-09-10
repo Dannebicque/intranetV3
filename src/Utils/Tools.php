@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Utils/Tools.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/09/2021 19:17
+ * @lastUpdate 09/09/2021 10:55
  */
 
 /*
@@ -166,5 +166,16 @@ abstract class Tools
         }
 
         return $int;
+    }
+
+    public static function convertApogeeDateToObject($date)
+    {
+        if (!str_contains($date, '/')) {
+            $d = Carbon::createFromFormat('y-m-d', $date);
+        } else {
+            $d = Carbon::createFromFormat('d/m/y', $date);
+        }
+
+        return Carbon::createMidnightDate($d->year, $d->month, $d->day);
     }
 }

@@ -449,6 +449,9 @@ libelle:
   salle: 'Nom de la salle'
 
 login: Login
+Minute: Minute
+motif: Motif
+fichier: Fichier
 M.: M.
 mail_perso: 'Email personnel'
 mail_univ: 'Email université (ou professionnel)'
