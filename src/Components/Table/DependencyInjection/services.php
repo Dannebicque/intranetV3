@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/DependencyInjection/services.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/09/2021 09:07
+ * @lastUpdate 10/09/2021 20:37
  */
 
 namespace App\Components\Table\DependencyInjection;
@@ -17,6 +17,7 @@ use App\Components\Table\Column\CheckBoxColumnType;
 use App\Components\Table\Column\ColumnType;
 use App\Components\Table\Column\DateColumnType;
 use App\Components\Table\Column\DetailsHandleColumnType;
+use App\Components\Table\Column\EntityColumnType;
 use App\Components\Table\Column\LinkColumnType;
 use App\Components\Table\Column\ManyColumnType;
 use App\Components\Table\Column\PropertyColumnType;
@@ -35,6 +36,7 @@ return static function(ContainerConfigurator $configurator): void {
     $services->set(CallableAdapter::class)->tag(TableRegistry::TAG_ADAPTER);
     $services->set(EntityAdapter::class)->tag(TableRegistry::TAG_ADAPTER);
 
+    $services->set(EntityColumnType::class)->tag(TableRegistry::TAG_COLUMN_TYPE);
     $services->set(PropertyColumnType::class)->tag(TableRegistry::TAG_COLUMN_TYPE);
     $services->set(BadgeColumnType::class)->tag(TableRegistry::TAG_COLUMN_TYPE);
     $services->set(CheckBoxColumnType::class)->tag(TableRegistry::TAG_COLUMN_TYPE);
