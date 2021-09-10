@@ -2,6 +2,39 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.9](https://github.com/Dannebicque/intranetV3/compare/v3.1.8...v3.1.9) (2021-09-10)
+
+
+### Features
+
+* Import des Maquettes depuis Apogée ([8e5f7c7](https://github.com/Dannebicque/intranetV3/commit/8e5f7c7b7772a5ec4d198858fb3754dc6285064b))
+* Import des Maquettes depuis Apogée ([c036be5](https://github.com/Dannebicque/intranetV3/commit/c036be5b697b4e738e294d534bf9f0d1ae9fb41b))
+* Import des Maquettes depuis Apogée ([5139505](https://github.com/Dannebicque/intranetV3/commit/5139505ec03e05fb494925b0440248e9b4d0207d))
+* Import des Maquettes depuis Apogée ([47e770b](https://github.com/Dannebicque/intranetV3/commit/47e770b104b01f27c6b35cec6351ea9ae6bc242d))
+* Import des SAE ([42822c1](https://github.com/Dannebicque/intranetV3/commit/42822c1a54e3fc70a743da2698e58f367d67fa08))
+* Import des SAE ([c2ec78d](https://github.com/Dannebicque/intranetV3/commit/c2ec78dea076f56d049ec9b0799509378cc2754c))
+
+
+### Bug Fixes
+
+* Bug de la date updated ([f4c85fc](https://github.com/Dannebicque/intranetV3/commit/f4c85fcde5ee9fb82dbdb656b98930683970611e))
+* Bug Edt suite suppression dépendance ([12d033b](https://github.com/Dannebicque/intranetV3/commit/12d033b591b83e98adfc97b74fa2586bd7b197f5))
+* Fix divers ([2c3f83d](https://github.com/Dannebicque/intranetV3/commit/2c3f83d05d8340837f8b6b90e794964fa9a279cc))
+* Fix divers ([d5f7740](https://github.com/Dannebicque/intranetV3/commit/d5f77403f33dd4cb9c7ddf19a261c7632e369404))
+* Fix divers ([9944818](https://github.com/Dannebicque/intranetV3/commit/99448181265e8604237c8baac6483e5703422ce4))
+* Fix divers ([0d28d75](https://github.com/Dannebicque/intranetV3/commit/0d28d7589202dde8303baf7f09bfd43271b9ce48))
+* Fix divers ([fc1f60c](https://github.com/Dannebicque/intranetV3/commit/fc1f60c56e9b836b774b56a5efd754bf40fbfff6))
+* Fix divers ([10bf83c](https://github.com/Dannebicque/intranetV3/commit/10bf83cc4b2e8b352e51b86c30a707563f2799c2))
+* Fix divers ([010122d](https://github.com/Dannebicque/intranetV3/commit/010122d2e5d8b843422c67be35f4ae698312006a))
+* Fix divers ([643a656](https://github.com/Dannebicque/intranetV3/commit/643a656c36bb62327499b07a428a230ad3380552))
+* Fix divers ([b9b6704](https://github.com/Dannebicque/intranetV3/commit/b9b6704759dc7bf43e8cc0f31753c7090a679d57))
+* Fix divers ([da49968](https://github.com/Dannebicque/intranetV3/commit/da49968f22cf12eedf701660a87afd0e441d2ee2))
+* Fix divers ([c132153](https://github.com/Dannebicque/intranetV3/commit/c132153b64d1c4b5bcbe170472917a1e24942ed3))
+* Fix divers ([fbf928d](https://github.com/Dannebicque/intranetV3/commit/fbf928d1e0fc0af86040e998ccec01fd3d7fc743))
+* Ldap ([43a39af](https://github.com/Dannebicque/intranetV3/commit/43a39afcf3b5d378ce5d17f25a5dd875e2cffb77))
+* MyLdap correctif pour utiliser la librairie Symfony ([a059987](https://github.com/Dannebicque/intranetV3/commit/a0599871d3e5403d7c4653479f3f77b42e9bcb2f))
+* Saisie d'un rattrapage ([4a919ec](https://github.com/Dannebicque/intranetV3/commit/4a919ece4886a0c1e78e1e502e96ae16b74e1998))
+
 ### [3.1.8](https://github.com/Dannebicque/intranetV3/compare/v3.1.7...v3.1.8) (2021-09-08)
 
 
