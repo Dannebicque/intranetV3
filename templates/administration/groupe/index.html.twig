@@ -30,15 +30,17 @@
 {% endblock %}
 
 {% block content %}
-    <div id="liste_semestre">
+
         {% for semestre in user_data.semestres %}
             {% if (semestre.diplome.responsableDiplome.id == user_data.user.id and user_data.isGoodDepartement('ROLE_RP')) or user_data.isGoodDepartement
                 ('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ASS') %}
                 {% if (afficheSemestre != null and afficheSemestre == semestre.id) or
                     (afficheSemestre == null and loop.first) %}
-                    {{ render(controller(
-                        'App\\Controller\\administration\\GroupeController::listeSemestre', {semestre:semestre.id}
-                    )) }}
+                    <div id="liste_semestre">
+                        {{ render(controller(
+                            'App\\Controller\\administration\\GroupeController::listeSemestre', {semestre:semestre.id}
+                        )) }}
+                    </div>
 
                     <div id="type_groupes_semestre">
                         {{ render(controller(
