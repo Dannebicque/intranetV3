@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.groupe.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/08/2021 10:42
+// @lastUpdate 11/09/2021 11:59
 
 import {addCallout} from '../util'
 
@@ -27,6 +27,7 @@ $(document).on('click', '.change-semestre', function (e) {
       }))
     })
   )
+  $('#type_groupes_semestre').empty().load(Routing.generate('administration_type_groupe_liste_semestre', {semestre: semestre}))
 })
 
 $(document).on('change', '.change-parent', function () {
