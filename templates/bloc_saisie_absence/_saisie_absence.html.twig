@@ -7,6 +7,7 @@
                     <label for="absence-matiere">{{ 'matiere'|trans }}</label>
                     <select class="form-control selectpicker"
                             id="absence-matiere"
+                            is="select-complete"
                     >
                         {% for mati in matieres %}
                             <option value="{{ mati.typeIdMatiere }}"
@@ -19,7 +20,7 @@
             </div>
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
-                    <label for="absence-date">{{ 'date'|trans }}</label>
+                    <label for="absence-date">{{ 'date_'|trans }}</label>
                     <div class="input-group">
                         <input type="text" class="form-control"
                                is="my-datepicker"
@@ -36,6 +37,7 @@
                 <div class="form-group">
                     <label for="absence-heure">Heure</label>
                     <select class="form-control selectpicker" id="absence-heure"
+                            is="select-complete"
                     >
                         <option value="">{{ 'choisir.heure.debut'|trans }}</option>
                         {% for i in 08..19 %}
