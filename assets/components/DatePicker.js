@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/components/DatePicker.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 29/08/2021 21:50
+// @lastUpdate 11/09/2021 19:12
 
 import flatpickr from 'flatpickr'
 import 'flatpickr/dist/l10n/fr.js'
@@ -12,7 +12,13 @@ export default class DatePicker extends HTMLInputElement {
     constructor () {
         super()
         console.log(flatpickr)
-        this.options = JSON.parse(this.dataset.options)
+        console.log(typeof this.dataset.options)
+        if (this.dataset.options) {
+            this.options = JSON.parse(this.dataset.options)
+        } else {
+            this.options = []
+            this.options['dateFormat'] = 'd/m/Y'
+        }
         this.options['locale'] = da.LANG
     }
 
