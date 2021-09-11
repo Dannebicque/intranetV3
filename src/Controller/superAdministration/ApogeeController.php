@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/ApogeeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/09/2021 21:42
+ * @lastUpdate 11/09/2021 11:21
  */
 
 namespace App\Controller\superAdministration;
@@ -15,7 +15,7 @@ use App\Classes\Etudiant\EtudiantImport;
 use App\Classes\Structure\ApogeeImport;
 use App\Controller\BaseController;
 use App\Entity\Annee;
-use App\Entity\Constantes;
+use App\Entity\Ppn;
 use App\Repository\AnneeUniversitaireRepository;
 use App\Repository\BacRepository;
 use App\Repository\EtudiantRepository;
@@ -161,29 +161,89 @@ class ApogeeController extends BaseController
         ApogeeMaquette $apogeeMaquette,
         ApogeeImport $apogeeImport,
         Annee $annee
-    ): Response
-    {
-        //suppr les données déjà présentes ?
+    ): Response {
+        //création d'un PN
+        $pn = new Ppn();
+        $pn->setDiplome($annee->getDiplome());
+        if ($annee->getDiplome()->getTypeDiplome() === 4) {
+            $pn->setLibelle('PN B.U.T. ' . $annee->getDiplome()->getSigle());
+            $pn->setAnnee(2021);
+        } else {
+            $pn->setLibelle('PPN DUT ' . $annee->getDiplome()->getSigle());
+            $pn->setAnnee(2013);
+        }
+        $this->entityManager->persist($pn);
 
-        //$apoSemestres = $apogeeMaquette->getSemestresAnnee($annee);
+        if ($annee->getDiplome()->getTypeDiplome()->getApc() === true) {
+            //BUT
+            $t = [];
+            $elementsAnnee = $apogeeImport->getElementsFromAnnee($annee);
+            while ($elpAnnee = $elementsAnnee->fetch()) {
+                //echo $elpAnnee['COD_ELP'].'<br>';
+                if ($elpAnnee['COD_NEL'] === 'SEM') {
+                    $semestre = $apogeeMaquette->createSemestre($elpAnnee, $annee, $pn);
+                    $elementsSemestre = $apogeeImport->getElementsFromSemestre($elpAnnee['COD_ELP']);
 
-        $liste = [];
-        foreach ($annee->getSemestres() as $semestre) {
-            $liste[] = $apogeeImport->createSemestre($semestre);
-//            $apoUes = $apogeeMaquette->getUesSemestre($semestre);
-//            $apogeeImport->createUes($apoUes);
-//
-//            foreach ($semestre->getUes() as $ue) {
-//                $apoMatieres = $apogeeMaquette->getMatieresUe($ue);
-//                $apogeeImport->createMatiere($apoMatieres);
-//            }
+                    while ($elpSemestre = $elementsSemestre->fetch()) {
+                        //print_r($elpSemestre);echo '<br>';
+                        echo $elpSemestre['LIC_ELP'] . '<br>';
+                        if (!array_key_exists($elpSemestre['COD_ELP'], $t)) {
+                            //création
+                            $data = $apogeeMaquette->createElement($elpSemestre, $semestre);
+                            if ($data !== null) {
+                                $t[$elpSemestre['COD_ELP']] = $data;
+                            }
+                        } else {
+                            //mise à jour avec les heures
+                            $t[$elpSemestre['COD_ELP']] = $apogeeMaquette->updateElement($t[$elpSemestre['COD_ELP']],
+                                $elpSemestre);
+                        }
+                    }
+                }
+            }
+            $this->entityManager->flush();
+            $elementsAnnee = $apogeeImport->getElementsFromAnnee($annee);
+            while ($elpAnnee = $elementsAnnee->fetch()) {
+                if ($elpAnnee['COD_NEL'] === 'COMP') {
+
+                    $competence = $apogeeMaquette->createCompetence($elpAnnee, $annee);
+                    $elementsUe = $apogeeImport->getCompUesFromSemestre($elpAnnee['COD_ELP']);
+                    while ($elpUe = $elementsUe->fetch()) {
+                        $apogeeMaquette->createUe($elpUe, $competence, $annee);
+                        echo $elpUe['COD_ELP'];
+                    }
+                }
+            }
+        } else {
+            //DUT
+            $t = [];
+            $semestres = $apogeeImport->getElementsFromAnneeDut($annee);
+            while ($semestre = $semestres->fetch()) {
+                $objSemestre = $apogeeMaquette->createSemestreDut($semestre, $annee, $pn);
+                $ues = $apogeeImport->getUesFromSemestreDut($objSemestre);
+                while ($ue = $ues->fetch()) {
+                    $objUe = $apogeeMaquette->createUeDut($ue, $objSemestre);
+                    $matieres = $apogeeImport->getMatieresFromUe($objUe);
+                    while ($matiere = $matieres->fetch()) {
+                        if (!array_key_exists($matiere['COD_ELP'], $t)) {
+                            //création
+                            $t[$matiere['COD_ELP']] = $apogeeMaquette->createMatiere($matiere, $objUe, $pn);
+                        } else {
+                            //mise à jour avec les heures
+                            $t[$matiere['COD_ELP']] = $apogeeMaquette->updateMatiere($t[$matiere['COD_ELP']], $matiere);
+                        }
+                    }
+                }
+            }
         }
 
-        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'synchro.maquette.apogee.ok');
+        // $this->entityManager->flush();
+
+        //$this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'synchro.maquette.apogee.ok');
 
         return $this->render('super-administration/apogee/confirmation.html.twig', [
             // 'etudiants' => $this->etudiants,
-            'liste' => $liste
+            'liste' => $t
         ]);
     }
 }

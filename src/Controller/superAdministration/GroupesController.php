@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/GroupesController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/09/2021 08:50
+ * @lastUpdate 11/09/2021 11:21
  */
 
 namespace App\Controller\superAdministration;
@@ -68,7 +68,7 @@ class GroupesController extends BaseController
 
     private function insertGroupes(Semestre $semestre, ApogeeGroupe $apogeeGroupe)
     {
-        $treeGroupes = $apogeeGroupe->getHierarchieGroupesSemestre($semestre);
+        //$treeGroupes = $apogeeGroupe->getHierarchieGroupesSemestre($semestre);
 
         //récupérer les groupes
         $groupes = $apogeeGroupe->getGroupesSemestre($semestre);
@@ -104,12 +104,15 @@ class GroupesController extends BaseController
         ApogeeGroupe $apogeeGroupe,
         GroupeRepository $groupeRepository,
         Semestre $semestre
-    ): Response {
+    ): Response
+    {
         //supprimer les groupes du semestre
 
         //calcluler l'aroborescence
 
         $this->insertGroupes($semestre, $apogeeGroupe);
+
+        return $this->redirectToRoute('sa_groupes_departement_index', ['semestre' => $semestre->getId()]);
     }
 
     /**
@@ -147,7 +150,7 @@ class GroupesController extends BaseController
                     $tGroupes)) {
                 $tEtudiants[$groupe['COD_ETU']]->addGroupe($tGroupes[$groupe['COD_EXT_GPE']]);
                 $tGroupes[$groupe['COD_EXT_GPE']]->addEtudiant($tEtudiants[$groupe['COD_ETU']]);
-                $tEtudiants[$groupe['COD_ETU']]->setSemestre($tGroupes[$groupe['COD_EXT_GPE']]->getTypeGroupe()->getSemestre());
+                //$tEtudiants[$groupe['COD_ETU']]->setSemestre($tGroupes[$groupe['COD_EXT_GPE']]->getTypeGroupe()->getSemestre());
             }
         }
         $this->entityManager->flush();
