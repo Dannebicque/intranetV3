@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.10](https://github.com/Dannebicque/intranetV3/compare/v3.1.9...v3.1.10) (2021-09-11)
+
+
+### Features
+
+* Ajout d'un type EntityColumnType.php sur le composant Table ([4a1e4f8](https://github.com/Dannebicque/intranetV3/commit/4a1e4f8d8f1aa7eaa76705d9d0b075ced0da817c))
+
+
+### Bug Fixes
+
+* Calcul du slug ([f1a2c9e](https://github.com/Dannebicque/intranetV3/commit/f1a2c9ea37ab03b7d1d7971ade8942ba98cc3c62))
+* Import d'étudiants depuis Apogée avec la date au format dd/mm/aa ([d9ff74a](https://github.com/Dannebicque/intranetV3/commit/d9ff74a96e3827e911da97e6f9fd06d246ef56e3))
+* Liens avec id du département ([71da933](https://github.com/Dannebicque/intranetV3/commit/71da9331d3481b414906db95d36a8ee3e1bdb7ce))
+* Synchros apogée, gestion des versions, import DUT ou BUT ([b4a394d](https://github.com/Dannebicque/intranetV3/commit/b4a394dd441c0b1de1e09cba6ebf5db5a7976eff))
+* Utilisation d'un table type dans Appel Fait ([8548e11](https://github.com/Dannebicque/intranetV3/commit/8548e11532aa04fe9d247ce2c460e899711a6c5d))
+
 ### [3.1.9](https://github.com/Dannebicque/intranetV3/compare/v3.1.8...v3.1.9) (2021-09-10)
 
 
