@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyGroupes.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/07/2021 17:05
+ * @lastUpdate 11/09/2021 11:21
  */
 
 /*
@@ -13,7 +13,7 @@
 
 namespace App\Classes;
 
-use App\Classes\Celcat\MyCelcat;
+use App\Classes\Apogee\ApogeeGroupe;
 use App\Entity\Departement;
 use App\Entity\EdtPlanning;
 use App\Entity\Etudiant;
@@ -32,28 +32,23 @@ use function is_array;
 
 class MyGroupes
 {
-    /** @var EntityManagerInterface */
-    protected $entityManager;
+    protected EntityManagerInterface $entityManager;
 
     protected $groupedefaut;
 
     // type de groupes  pour un semestre
     protected $typeGroupes;
 
-    /** @var TypeGroupeRepository */
-    protected $typeGroupeRepository;
+    protected TypeGroupeRepository $typeGroupeRepository;
 
-    /** @var GroupeRepository */
-    protected $groupeRepository;
+    protected GroupeRepository $groupeRepository;
 
     // groupes d'un type de groupe pour un semestre
     protected $groupes;
 
-    /** @var EtudiantRepository */
-    protected $etudiantRepository;
-    private $myUpload;
-
-    private MyCelcat $myCelcat;
+    protected EtudiantRepository $etudiantRepository;
+    private MyUpload $myUpload;
+    private ApogeeGroupe $apogeeGroupe;
 
     /**
      * MyGroupes constructor.
@@ -63,7 +58,7 @@ class MyGroupes
         TypeGroupeRepository $typeGroupeRepository,
         GroupeRepository $groupeRepository,
         MyUpload $myUpload,
-        MyCelcat $myCelcat,
+        ApogeeGroupe $apogeeGroupe,
         EtudiantRepository $etudiantRepository
     ) {
         $this->groupedefaut = null;
@@ -72,7 +67,7 @@ class MyGroupes
         $this->groupeRepository = $groupeRepository;
         $this->etudiantRepository = $etudiantRepository;
         $this->myUpload = $myUpload;
-        $this->myCelcat = $myCelcat;
+        $this->apogeeGroupe = $apogeeGroupe;
     }
 
     public function getGroupesSemestre(Semestre $semestre): void
@@ -156,9 +151,17 @@ class MyGroupes
     public function updateFromApogee(Semestre $semestre): void
     {
         $this->removeGroupeFromSemestre($semestre);
-        $groupes = $this->groupeRepository->findBySemestreArray($semestre);
-        $etudiants = $this->etudiantRepository->findBySemestreArray($semestre);
-        $this->myCelcat->updateGroupeBySemestre($semestre, $groupes, $etudiants);
+        $tGroupes = $this->groupeRepository->findBySemestreArray($semestre);
+        $tEtudiants = $this->etudiantRepository->findBySemestreArray($semestre);
+        $groupes = $this->apogeeGroupe->getEtudiantsGroupesSemestre($semestre);
+        while ($groupe = $groupes->fetch()) {
+            if (array_key_exists($groupe['COD_ETU'], $tEtudiants) && array_key_exists($groupe['COD_EXT_GPE'],
+                    $tGroupes)) {
+                $tEtudiants[$groupe['COD_ETU']]->addGroupe($tGroupes[$groupe['COD_EXT_GPE']]);
+                $tGroupes[$groupe['COD_EXT_GPE']]->addEtudiant($tEtudiants[$groupe['COD_ETU']]);
+            }
+        }
+        $this->entityManager->flush();
     }
 
     private function removeGroupeFromSemestre(Semestre $semestre): void
