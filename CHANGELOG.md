@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.11](https://github.com/Dannebicque/intranetV3/compare/v3.1.10...v3.1.11) (2021-09-11)
+
+
+### Features
+
+* Ajout d'une commande pour mette à jour les données étudiantes depuis Apogée ([1d94d6b](https://github.com/Dannebicque/intranetV3/commit/1d94d6be1551b974413e87a783ea25d5a0ac4dff))
+
+
+### Bug Fixes
+
+* Gestion des types de groupes qui disparait selon le semestre ([5edf7e4](https://github.com/Dannebicque/intranetV3/commit/5edf7e45d0b0c7e49f25c3e2f8cfa16cdf6a570b))
+
 ### [3.1.10](https://github.com/Dannebicque/intranetV3/compare/v3.1.9...v3.1.10) (2021-09-11)
 
 
