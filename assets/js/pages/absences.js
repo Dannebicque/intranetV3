@@ -2,10 +2,9 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/absences.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/08/2021 11:26
+// @lastUpdate 11/09/2021 19:00
 import {addCallout} from '../util'
 
-import {dataTableLangueFr} from '../lang/fr'
 import {post} from '../fetch'
 
 let tabsences = []
@@ -107,17 +106,17 @@ $(document).on('click', '.etudiant', function () {
   }
 })
 
-$('#liste-absences').dataTable({
-  'language': dataTableLangueFr,
-  'fnRowCallback': function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-
-    if (aData[5] === 'non' || aData[5] === 'no' || aData[5] === 'No' || aData[5] === 'Non') {
-      $('td', nRow).css('background-color', '#fce3e3')
-    } else {
-      $('td', nRow).css('background-color', '#e3fcf2')
-    }
-  }
-})
+// $('#liste-absences').dataTable({
+//   'language': dataTableLangueFr,
+//   'fnRowCallback': function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+//
+//     if (aData[5] === 'non' || aData[5] === 'no' || aData[5] === 'No' || aData[5] === 'Non') {
+//       $('td', nRow).css('background-color', '#fce3e3')
+//     } else {
+//       $('td', nRow).css('background-color', '#e3fcf2')
+//     }
+//   }
+// })
 
 function updateAffichage (date, heure) {
   $.ajax({
