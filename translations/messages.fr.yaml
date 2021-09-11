@@ -969,6 +969,7 @@ csv:
 
 danger: danger
 
+date_: Date
 date:
   create.success.flash: 'Evénement ajouté avec succès'
   de.levaluation: 'Date de l''évaluation'
