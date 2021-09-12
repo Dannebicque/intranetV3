@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/app.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/09/2021 12:08
+// @lastUpdate 12/09/2021 17:31
 
 import '@fortawesome/fontawesome-free/scss/fontawesome.scss'
 import '@fortawesome/fontawesome-free/scss/solid.scss'
@@ -31,6 +31,7 @@ let lookup = {}
 
 import Table from '../components/table'
 import SelectComplete from '../components/SelectComplete'
+import SelectChangeWidget from '../components/SelectChangeWidget'
 import DatePicker from '../components/DatePicker'
 
 export const LANG = document.querySelector('html').getAttribute('lang')
@@ -41,6 +42,7 @@ window.da = {
 
 customElements.define('my-table', Table)
 customElements.define('select-complete', SelectComplete, {extends: 'select'})
+customElements.define('select-live-update', SelectChangeWidget, {extends: 'select'})
 customElements.define('my-datepicker', DatePicker, {extends: 'input'})
 
 $('input[type="file"]').on('change', function (e) {

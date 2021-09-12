@@ -25,6 +25,21 @@
     </div>
 {%- endblock -%}
 
+{%- block select_change_widget -%}
+    {% if choices != false %}
+        {# todo à ajouter #}
+    {% else %}
+        <select {{ block('attributes') }}>
+            {% if attr.required == false %}
+                <option value="" selected>Choisir</option>
+            {% endif %}
+            {% for key, data in datas %}
+                <option value="{{ key }}" {% if key == value %}selected{% endif %}>{{ data }}</option>
+            {% endfor %}
+        </select>
+    {% endif %}
+{%- endblock -%}
+
 {% block attributes -%}
     {%- for attrname, attrvalue in attr -%}
         {{- " " -}}

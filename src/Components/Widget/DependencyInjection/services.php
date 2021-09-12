@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Widget/DependencyInjection/services.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 15:25
+ * @lastUpdate 12/09/2021 16:50
  */
 
 namespace App\Components\Widget\DependencyInjection;
@@ -19,6 +19,7 @@ use App\Components\Widget\Type\RowDuplicateLinkType;
 use App\Components\Widget\Type\RowEditLinkType;
 use App\Components\Widget\Type\RowLinkType;
 use App\Components\Widget\Type\RowShowLinkType;
+use App\Components\Widget\Type\SelectChangeType;
 use App\Components\Widget\Type\WidgetType;
 use App\Components\Widget\WidgetRegistry;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
@@ -41,5 +42,6 @@ return static function(ContainerConfigurator $configurator): void {
     $services->set(RowShowLinkType::class)->tag(WidgetRegistry::TAG_TYPE);
     $services->set(RowDuplicateLinkType::class)->tag(WidgetRegistry::TAG_TYPE);
     $services->set(WidgetType::class)->tag(WidgetRegistry::TAG_TYPE);
+    $services->set(SelectChangeType::class)->tag(WidgetRegistry::TAG_TYPE);
     //todo: ajotuer les manquants et reprendre Collection...
 };

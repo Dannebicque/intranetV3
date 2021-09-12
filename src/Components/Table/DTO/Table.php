@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/DTO/Table.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 21:19
+ * @lastUpdate 12/09/2021 16:29
  */
 
 namespace App\Components\Table\DTO;
@@ -17,8 +17,8 @@ use App\Components\Table\Adapter\DoctrineAdapterInterface;
 
 class Table
 {
-    public const SORT_ASCENDING = 'asc';
-    public const SORT_DESCENDING = 'desc';
+    public const SORT_ASCENDING = 'ASC';
+    public const SORT_DESCENDING = 'DESC';
 
     protected Toolbar $toolbar;
 
@@ -130,7 +130,6 @@ class Table
 
             $this->state->setPaging($this->paging->getData());
             $this->state->setFormData($this->toolbar->getFormData());
-
 
             $this->state->applyParameters($parametersAsArray);
 
