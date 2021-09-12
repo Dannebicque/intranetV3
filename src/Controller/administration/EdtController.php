@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 12/09/2021 12:41
  */
 
 namespace App\Controller\administration;
@@ -48,7 +48,6 @@ class EdtController extends BaseController
     }
 
     /**
-     *
      * @Route("/ajax-update/{filtre}/{valeur}/{semaine}", name="administration_edt_ajax_update",
      *                                                    options={"expose"=true})
      */
@@ -62,6 +61,7 @@ class EdtController extends BaseController
         string $valeur,
         string $filtre
     ): Response {
+        $filtre = '' === $filtre ? 'promo' : $filtre;
         $edt = $myEdt->initAdministration($this->dataUserSession->getDepartement(), $semaine, $filtre,
             $valeur, $this->dataUserSession->getAnneeUniversitaire());
 
