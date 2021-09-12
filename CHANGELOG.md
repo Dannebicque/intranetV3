@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.13](https://github.com/Dannebicque/intranetV3/compare/v3.1.12...v3.1.13) (2021-09-12)
+
+
+### Features
+
+* Refonte de la liste des étudiants d'un semestre avec le composant Table ([9e1a9ab](https://github.com/Dannebicque/intranetV3/commit/9e1a9ab80ec505d88f44a67fb042bbf274cb3a0a))
+* SelectChangeWidget ([69e2a4d](https://github.com/Dannebicque/intranetV3/commit/69e2a4d8c7daf398f64fb775e11a5006b12c92bd))
+
 ### [3.1.12](https://github.com/Dannebicque/intranetV3/compare/v3.1.11...v3.1.12) (2021-09-12)
 
 
