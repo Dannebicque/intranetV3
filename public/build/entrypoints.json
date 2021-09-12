@@ -11,12 +11,12 @@
         "/build/5322.986f1b60.js",
         "/build/8336.56fc07d6.js",
         "/build/1056.3f37b13b.js",
-        "/build/5762.3f32589f.js",
-        "/build/app.330697f0.js"
+        "/build/186.38c5046d.js",
+        "/build/app.cf008c4d.js"
       ],
       "css": [
         "/build/8336.1ab51809.css",
-        "/build/5762.7aac1516.css"
+        "/build/186.7aac1516.css"
       ]
     },
     "covid": {
@@ -52,12 +52,12 @@
         "/build/8771.1ffa9cd9.js",
         "/build/5322.986f1b60.js",
         "/build/8336.56fc07d6.js",
-        "/build/5762.3f32589f.js",
-        "/build/agenda.77cf7bc1.js"
+        "/build/186.38c5046d.js",
+        "/build/agenda.204e1ab0.js"
       ],
       "css": [
         "/build/8336.1ab51809.css",
-        "/build/5762.7aac1516.css"
+        "/build/186.7aac1516.css"
       ]
     },
     "trombinoscope": {
@@ -181,7 +181,7 @@
       "js": [
         "/build/runtime.e815f202.js",
         "/build/9755.cbb1b4d2.js",
-        "/build/adm.etudiants.75b28a72.js"
+        "/build/adm.etudiants.03fc1ea1.js"
       ]
     },
     "adm.personnels": {

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantUpdate.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 12/09/2021 18:21
  */
 
 /*
@@ -54,6 +54,7 @@ class EtudiantUpdate
                     $semestre = $this->semestreRepository->find($value);
                     $etudiant->setSemestre($semestre);
                 }
+                $this->entityManager->flush();
                 $this->etudiantGroupes->setEtudiant($etudiant);
                 $this->etudiantGroupes->suppressionGroupes();
                 break;
@@ -65,7 +66,7 @@ class EtudiantUpdate
                     $departement = $this->departementRepository->find($value);
                     $etudiant->setDepartement($departement);
                 }
-
+                $this->entityManager->flush();
                 $this->etudiantGroupes->setEtudiant($etudiant);
                 $this->etudiantGroupes->suppressionGroupes();
                 break;
