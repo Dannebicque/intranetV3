@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.personnels.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/09/2021 12:08
+// @lastUpdate 12/09/2021 09:01
 
 $(document).on('keyup', '#login_urca', function () {
   const $val = $(this).val()
@@ -39,7 +39,6 @@ $(document).on('click', '.addpersonnel', function () {
     url: Routing.generate('api_personnel_add_to_departement', {slug: $(this).data('slug')}),
     dataType: 'json',
     success: function (data) {
-      console.log(data)
       addCallout('Personnel ajouté au département !', 'success')
     }
   })

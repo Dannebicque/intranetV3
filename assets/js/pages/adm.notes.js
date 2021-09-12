@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.notes.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/06/2021 10:28
+// @lastUpdate 12/09/2021 09:01
 import {addCallout} from '../util'
 
 $(document).on('click', '.optAfficher', function () {
@@ -42,7 +42,6 @@ $(document).on('click', '.optVerrouiller', function () {
     url: Routing.generate('administration_evaluation_modifiable', {uuid: evaluation}),
     success: function () {
       if ($child.hasClass('fa-lock-open')) {
-        console.log('ok')
         $a.addClass('btn-danger')
         $a.removeClass('btn-warning').removeClass('btn-outline')
         $child.removeClass('fa-lock-open')

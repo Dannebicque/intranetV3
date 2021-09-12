@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/absences.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/09/2021 19:00
+// @lastUpdate 12/09/2021 09:01
 import {addCallout} from '../util'
 
 import {post} from '../fetch'
@@ -155,7 +155,6 @@ window.addEventListener('load', function () { //le dom est chargé
         .then(data => {
           // Handle data
           if (data === true) {
-            console.log(e)
             e.target.textContent = 'Vous avez indiqué qu\'il n\'y a pas d\'absent dans ce groupe.'
             addCallout('Saisie enregistée avec succès.', 'success')
           } else {

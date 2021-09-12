@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/apc.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/09/2021 12:08
+// @lastUpdate 12/09/2021 09:01
 import '../../vendor/jquery.collection'
 
 let semestreSae = false
@@ -198,7 +198,6 @@ $(document).ready(function () {
   if (ressource !== null) {
     semestre = $('input:radio[name="apc_ressource[semestre]"]:checked').val()
   }
-  console.log(semestre)
   competenceSae = $('input:checkbox[name="apc_sae[competences][]"]:checked').length > 0
   competenceRessource = $('input:checkbox[name="apc_ressource[competences][]"]:checked').length > 0
   updateSaeApprentisagesCritiques()

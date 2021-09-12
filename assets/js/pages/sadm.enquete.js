@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/sadm.enquete.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 04/08/2021 08:02
+// @lastUpdate 12/09/2021 09:01
 
 import {post} from '../fetch'
 import {addCallout} from '../util'
@@ -28,7 +28,6 @@ window.addEventListener('load', function () {
         },
         method: 'POST',
         success: function () {
-          console.log('ok')
         }
       })
     })
@@ -37,7 +36,6 @@ window.addEventListener('load', function () {
   document.querySelectorAll('.deverouiller').forEach((elem) => {
     elem.addEventListener('click', (e) => {
       e.preventDefault()
-      console.log(e)
       const id = e.target.dataset.id
       post(Routing.generate('administratif_enquete_etudiant_deverouiller', {questionnaire: id}))
         .then(() => {

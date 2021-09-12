@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.edt.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 09/09/2021 19:02
+// @lastUpdate 12/09/2021 09:01
 
 import '../../vendor/jqueryui/jquery-ui.min'
 
@@ -92,7 +92,6 @@ $('#selectable').selectable({
     }
   },
   stop: function (event, ui) {
-    console.log('stop')
     if ($(event.originalEvent.target).hasClass('edt_cours')) {
       updateBloc($(event.originalEvent.target).data('edt'))
     } else {
