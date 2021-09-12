@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/UserAjaxController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 09:03
+ * @lastUpdate 12/09/2021 20:17
  */
 
 namespace App\Controller;
@@ -162,7 +162,7 @@ class UserAjaxController extends BaseController
     public function changeDepartementEtudiant(
         DepartementRepository $departementRepository,
         Etudiant $etudiant,
-        $departement
+        $departement = null
     ): ?JsonResponse {
         $departement = $departementRepository->find($departement);
         if (null !== $departement) {
