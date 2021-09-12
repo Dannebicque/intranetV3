@@ -76,6 +76,7 @@ Etat: Etat
 fichier_import: 'Fichier à importer'
 h: Heure
 help:
+  ficheRenseignement: 'Vous pouvez joindre un document à pré-remplir. Ce document sera accessible aux étudiants dans la partie Applications > Stages'
   personnel:
     entreprise: 'Nom de l''entreprise pour les intervenants professionnels. Information visible des étudiants'
   activites: 'Décrivez les missions qui vous seront confiées'
@@ -127,6 +128,10 @@ initiales: Initiales
 j: Jour
 Jour: Jour
 label:
+  dateRange: 'Période d''affichage'
+  dateRange.interruption: 'Périodes d''interruption du stage'
+  dateRange.periode: 'Période de stage (début / fin)'
+  dateRange.soutenance: 'Dates de Soutenance'
   year: Année
   month: Mois
   day: Jour
@@ -537,3 +542,4 @@ allday: Toute la journée
 qui_concerne: Qui est concerné ?
 typedate: Type d'événement
 semestres_date: Semestres concernées
+

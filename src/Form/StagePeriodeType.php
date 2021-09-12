@@ -4,12 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/StagePeriodeType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/05/2021 14:21
+ * @lastUpdate 12/09/2021 10:28
  */
 
 namespace App\Form;
 
 use App\Entity\AnneeUniversitaire;
+use App\Entity\Departement;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
 use App\Entity\StagePeriode;
@@ -31,21 +32,21 @@ use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class StagePeriodeType extends AbstractType
 {
-    private $departement;
+    private ?Departement $departement;
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->departement = $options['departement'];
         $builder
-            ->add('libelle', TextType::class, ['label' => 'libelle', 'help' => 'help.libelleStagePeriode'])
+            ->add('libelle', TextType::class, ['label' => 'label.libelle', 'help' => 'help.libelleStagePeriode'])
             ->add('numeroPeriode', ChoiceType::class, [
-                'label' => 'ordre_annee',
+                'label' => 'label.ordre_annee',
                 'choices' => [1 => 1, 2 => 2, 3 => 3, 4 => 4, 5 => 5, 6 => 6],
                 'translation_domain' => 'form',
             ])
             ->add('semestre', EntityType::class, [
                 'class' => Semestre::class,
-                'label' => 'semestre_stage_periode',
+                'label' => 'label.semestre_stage_periode',
                 'choice_label' => 'libelle',
                 'query_builder' => function(SemestreRepository $semestreRepository) {
                     return $semestreRepository->findByDepartementBuilder($this->departement);
@@ -55,7 +56,7 @@ class StagePeriodeType extends AbstractType
                 'multiple' => false,
             ])
             ->add('responsables', EntityType::class, [
-                'label' => 'responsables',
+                'label' => 'label.responsables',
                 'expanded' => true,
                 'multiple' => true,
                 'class' => Personnel::class,
@@ -66,29 +67,30 @@ class StagePeriodeType extends AbstractType
                 },
             ])
             ->add('anneeUniversitaire', EntityType::class, [
-                'label' => 'anneeUniversitaire',
+                'label' => 'label.anneeUniversitaire',
                 'choice_label' => 'displayAnneeUniversitaire',
                 'class' => AnneeUniversitaire::class,
             ])
             ->add('dateRange', DateRangeType::class,
-                ['label' => 'dateRange.periode', 'mapped' => false, 'required' => true])
-            ->add('nbSemaines', TextType::class, ['label' => 'nbSemaines', 'help' => 'help.nbSemaines'])
-            ->add('nbJours', TextType::class, ['label' => 'nbJours', 'help' => 'help.nbJours'])
+                ['label' => 'label.dateRange.periode', 'mapped' => false, 'required' => true])
+            ->add('nbSemaines', TextType::class, ['label' => 'label.nbSemaines', 'help' => 'help.nbSemaines'])
+            ->add('nbJours', TextType::class, ['label' => 'label.nbJours', 'help' => 'help.nbJours'])
             ->add('datesFlexibles', YesNoType::class,
-                ['label' => 'datesFlexibles', 'help' => 'help.datesFlexibles'])
+                ['label' => 'label.datesFlexibles', 'help' => 'help.datesFlexibles'])
             ->add('stagePeriodeInterruptions', CollectionType::class, [
-                'entry_type'    => StagePeriodeInterruptionType::class,
+                'entry_type' => StagePeriodeInterruptionType::class,
                 'entry_options' => ['label' => false],
-                'allow_add'     => true,
-                'prototype'     => true,
-                'allow_delete'  => true,
-                'by_reference'  => false,
-                'attr'          => [
+                'allow_add' => true,
+                'prototype' => true,
+                'allow_delete' => true,
+                'by_reference' => false,
+                'attr' => [
                     'class' => 'selector-stagePeriodeInterruptions',
                 ],
+                'help' => 'Vous pouvez indiquer une ou plusieurs périodes d\'interruption pendant la durée du stage',
             ])
             ->add('stagePeriodeSoutenances', CollectionType::class, [
-                'entry_type'    => StagePeriodeSoutenanceType::class,
+                'entry_type' => StagePeriodeSoutenanceType::class,
                 'entry_options' => ['label' => false],
                 'allow_add' => true,
                 'prototype' => true,
@@ -97,28 +99,29 @@ class StagePeriodeType extends AbstractType
                 'attr' => [
                     'class' => 'selector-stagePeriodeSoutenances',
                 ],
+                'help' => 'Veuillez indiquer au moins une période de soutenances.',
             ])
             ->add('copieAssistant', YesNoType::class,
-                ['label' => 'copieAssistant', 'help' => 'help.copieAssistant'])
+                ['label' => 'label.copieAssistant', 'help' => 'help.copieAssistant'])
             ->add('documentFile', VichFileType::class, [
                 'required' => true,
-                'label' => 'fichier',
+                'label' => 'label.fichier',
                 'download_label' => 'apercu',
                 'allow_delete' => true,
                 'help' => 'help.ficheRenseignement',
             ])
-            ->add('texteLibre', TextareaType::class, ['label' => 'texteLibre', 'help' => 'help.texteLibre'])
+            ->add('texteLibre', TextareaType::class, ['label' => 'label.texteLibre', 'help' => 'help.texteLibre'])
             ->add('competencesVisees', TextareaType::class,
-                ['label' => 'competencesVisees', 'help' => 'help.competencesVisees'])
+                ['label' => 'label.competencesVisees', 'help' => 'help.competencesVisees'])
             ->add('modaliteEvaluation', TextareaType::class,
-                ['label' => 'modaliteEvaluation', 'help' => 'help.modaliteEvaluation'])
+                ['label' => 'label.modaliteEvaluation', 'help' => 'help.modaliteEvaluation'])
             ->add('modaliteEvaluationPedagogique', TextareaType::class,
-                ['label' => 'modaliteEvaluationPedagogique', 'help' => 'help.modaliteEvaluationPedagogique'])
+                ['label' => 'label.modaliteEvaluationPedagogique', 'help' => 'help.modaliteEvaluationPedagogique'])
             ->add('modaliteEncadrement', TextareaType::class,
-                ['label' => 'modaliteEncadrement', 'help' => 'help.modaliteEncadrement'])
+                ['label' => 'label.modaliteEncadrement', 'help' => 'help.modaliteEncadrement'])
             ->add('documentRendre', TextareaType::class,
-                ['label' => 'documentRendre', 'help' => 'help.documentRendre'])
-            ->add('nbEcts', TextType::class, ['label' => 'nbEcts', 'help' => 'help.nbEcts'])
+                ['label' => 'label.documentRendre', 'help' => 'help.documentRendre'])
+            ->add('nbEcts', TextType::class, ['label' => 'label.nbEcts', 'help' => 'help.nbEcts'])
             ->addEventListener(FormEvents::POST_SUBMIT, static function(FormEvent $event) {
                 $stagePeriode = $event->getData();
                 $form = $event->getForm();
@@ -130,8 +133,8 @@ class StagePeriodeType extends AbstractType
                 $stagePeriode = $event->getData();
                 $form = $event->getForm();
                 $form->add('dateRange', DateRangeType::class, [
-                    'label'     => 'dateRange.periode',
-                    'mapped'    => false,
+                    'label' => 'label.dateRange.periode',
+                    'mapped' => false,
                     'date_data' => ['from' => $stagePeriode->getDateDebut(), 'to' => $stagePeriode->getDateFin()],
                 ]);
             });
@@ -140,8 +143,8 @@ class StagePeriodeType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class'         => StagePeriode::class,
-            'departement'        => null,
+            'data_class' => StagePeriode::class,
+            'departement' => null,
             'translation_domain' => 'form',
         ]);
     }
