@@ -26,6 +26,10 @@
             {{ form_widget(form) }}
             <button class="btn btn-success">{{ button_label|default('label.update'|trans) }}</button>
             {{ form_end(form) }}
+            <br>
+            <div class="alert alert-info">
+                Tous les champs avec un <span class="text-red">*</span> sont obligatoires
+            </div>
         </div>
     </div>
 {% endblock %}

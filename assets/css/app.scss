@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/css/app.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 29/08/2021 19:41
+// @lastUpdate 12/09/2021 10:13
 
 @import "core.min.css";
 @import "~bootstrap/scss/functions";
@@ -677,4 +677,8 @@ td.td-edt.col-new-day {
   &.toast-info {
     background: linear-gradient(135deg, var(--colorInfo), var(--colorInfo));
   }
+}
+
+.text-red {
+  color: var(--colorDanger);
 }
