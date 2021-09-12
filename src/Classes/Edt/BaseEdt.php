@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/BaseEdt.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:48
+ * @lastUpdate 12/09/2021 12:50
  */
 
 namespace App\Classes\Edt;
@@ -12,12 +12,14 @@ namespace App\Classes\Edt;
 use App\DTO\Matiere;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Calendrier;
+use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
 use App\Repository\CalendrierRepository;
 use Carbon\Carbon;
 use Carbon\CarbonImmutable;
+use Carbon\CarbonInterface;
 use RuntimeException;
 
 abstract class BaseEdt
@@ -37,17 +39,12 @@ abstract class BaseEdt
     protected ?int $semaineFormationIUT;
 
     protected ?CarbonImmutable $semaineFormationLundi;
-    protected $filtre;
+    protected ?string $filtre;
     protected $valeur;
     protected array $total = [];
 
     protected ?Semestre $semestre;
-
-    /**
-     * @var Personnel|Etudiant
-     */
-    protected $user;
-
+    protected Personnel|Etudiant $user;
     protected ?Matiere $module;
 
     protected $groupes;
@@ -108,9 +105,9 @@ abstract class BaseEdt
             $this->semaine = $semaine;
 
             //traitement du Week end
-            if (Carbon::SATURDAY === $dateDuJour->dayOfWeek || Carbon::SUNDAY === $dateDuJour->dayOfWeek) {
+            if (CarbonInterface::SATURDAY === $dateDuJour->dayOfWeek || CarbonInterface::SUNDAY === $dateDuJour->dayOfWeek) {
                 ++$this->semaine;
-                if ($this->semaine > Carbon::WEEKS_PER_YEAR) {
+                if ($this->semaine > CarbonInterface::WEEKS_PER_YEAR) {
                     $this->semaine = 1;
                 }
             }
@@ -144,7 +141,7 @@ abstract class BaseEdt
         }
 
         if ('' === $filtre) {
-            $this->filtre = 'promo';
+            $this->filtre = Constantes::FILTRE_EDT_PROMO;
             //récupérer promo par défaut !
         } else {
             $this->filtre = $filtre;
@@ -189,7 +186,7 @@ abstract class BaseEdt
         $s = (int)$this->semaine - 1;
 
         if (0 === $s) {
-            return Carbon::WEEKS_PER_YEAR;
+            return CarbonInterface::WEEKS_PER_YEAR;
         }
 
         return $s;
@@ -198,7 +195,7 @@ abstract class BaseEdt
     public function getSemaineSuivante(): int
     {
         $s = $this->semaine + 1;
-        if ($s > Carbon::WEEKS_PER_YEAR) {
+        if ($s > CarbonInterface::WEEKS_PER_YEAR) {
             return 1;
         }
 

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Constantes.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/09/2021 10:19
+ * @lastUpdate 12/09/2021 12:50
  */
 
 namespace App\Entity;
@@ -231,4 +231,11 @@ class Constantes
     ];
     public const PAS_DE_SOUS_COMM = 'PAS_DE_SOUS_COMM';
     public const MAJORATION_CM = 1.5;
+
+    public const FILTRE_EDT_PROMO = 'promo';
+    public const FILTRE_EDT_PROF = 'prof';
+    public const FILTRE_EDT_MODULE = 'module';
+    public const FILTRE_EDT_SALLE = 'salle';
+    public const FILTRE_EDT_ETUDIANT = 'etudiant';
+    public const FILTRE_EDT_JOUR = 'jour';
 }
