@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/messagerie.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 03/06/2021 16:27
+// @lastUpdate 12/09/2021 09:01
 
 
 $(document).on('click', '.messagerie-filtre', function (e) {
@@ -104,7 +104,6 @@ $(document).on('click', '#new-message', function (e) {
 $(document).on('change', '.pjFile', function () {
   let tailleTotale = 0
   $('input[type="file"]').each(function (file, element) {
-    console.log(element.files[0])
     if (typeof element.files[0] !== 'undefined') {
       tailleTotale += element.files[0].size
     }

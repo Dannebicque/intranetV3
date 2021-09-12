@@ -2,10 +2,9 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/fetch.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 29/08/2021 09:37
+// @lastUpdate 12/09/2021 09:01
 
 const request = (url, params = {}, method = 'GET') => {
-  console.log(params)
   let options = {
     method
   }

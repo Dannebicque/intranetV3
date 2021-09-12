@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/profil.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 28/03/2021 12:43
+// @lastUpdate 12/09/2021 09:01
 import {addCallout} from '../util'
 import {get, post} from '../fetch'
 
@@ -67,8 +67,6 @@ $(document).on('click', '.changeprofil', function (e) {
       })
     }
     if ($onglet.attr('id') === 'profil-notes') {
-      // console.log('graph')
-      // const graph = $('#chart-radar')
       // $.get(Routing.generate('profil_etudiant_ajax_notes_graph', {slug: $(graph).data('etudiant')}), function (datasets) {
       //   console.log(datasets)
       //   let labels = []
@@ -164,7 +162,6 @@ $(document).on('click', '#btnabs', function (e) {
         '                        </td>\n' +
         '                </tr>'
 
-      console.log(html)
       $('#tableAbsence > tbody:last').append(html)
     }
   })
@@ -192,7 +189,6 @@ $(document).on('click', '.checkAbsence', function (e) {
 })
 
 $(document).on('click', '#btnInit', function () {
-  console.log('init')
   $.ajax({
     url: Routing.generate('security_password_init', {user: $(this).data('personnel')}),
     method: 'POST',

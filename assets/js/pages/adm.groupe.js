@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.groupe.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/09/2021 11:59
+// @lastUpdate 12/09/2021 09:01
 
 import {addCallout} from '../util'
 
@@ -136,7 +136,6 @@ $(document).on('click', '#addGroupe', function (e) {
 })
 
 $(document).on('click', '#addTypeGroupe', function (e) {
-  console.log($('#typegroupe_defaut').prop('checked'))
   e.preventDefault()
   const semestre = $(this).data('semestre')
   $.ajax({
