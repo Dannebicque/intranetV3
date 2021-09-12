@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/EtudiantSemestreTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/09/2021 14:51
+ * @lastUpdate 12/09/2021 18:19
  */
 
 namespace App\Table;
@@ -20,28 +20,25 @@ use App\Components\Widget\Type\LinkType;
 use App\Components\Widget\Type\RowDeleteLinkType;
 use App\Components\Widget\Type\RowEditLinkType;
 use App\Components\Widget\Type\RowShowLinkType;
+use App\Components\Widget\Type\SelectChangeType;
 use App\Components\Widget\WidgetBuilder;
-use App\Entity\AnneeUniversitaire;
 use App\Entity\Bac;
 use App\Entity\Departement;
 use App\Entity\Etudiant;
 use App\Entity\Groupe;
 use App\Entity\Semestre;
-use App\Form\Type\EntityCompleteType;
 use App\Form\Type\SearchType;
 use App\Repository\GroupeRepository;
 use App\Repository\SemestreRepository;
 use App\Table\ColumnType\GroupeEtudiantColumnType;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class EtudiantSemestreTableType extends TableType
 {
     private ?Semestre $semestre;
-    private ?AnneeUniversitaire $anneeUniversitaire;
     private ?Departement $departement;
     private CsrfTokenManagerInterface $csrfToken;
 
@@ -53,7 +50,6 @@ class EtudiantSemestreTableType extends TableType
     public function buildTable(TableBuilder $builder, array $options)
     {
         $this->semestre = $options['semestre'];
-        $this->anneeUniversitaire = $options['anneeUniversitaire'];
         $this->departement = $options['departement'];
 
         $builder->addFilter('search', SearchType::class);
@@ -94,45 +90,89 @@ class EtudiantSemestreTableType extends TableType
             },
         ]);
 
-        $builder->addColumn('id', PropertyColumnType::class,
-            ['label' => 'table.nom', 'translation_domain' => 'messages']);
         $builder->addColumn('nom', PropertyColumnType::class,
-            ['label' => 'table.nom', 'translation_domain' => 'messages']);
+            ['label' => 'table.nom', 'translation_domain' => 'messages', 'order' => 'ASC']);
         $builder->addColumn('prenom', PropertyColumnType::class,
             ['label' => 'table.prenom', 'translation_domain' => 'messages']);
         $builder->addColumn('numetudiant', PropertyColumnType::class,
             ['label' => 'table.numetudiant', 'translation_domain' => 'messages']);
         $builder->addColumn('bac', SelectColumnType::class,
-            ['label' => 'table.bac', 'translation_domain' => 'messages',
+            [
+                'label' => 'table.bac',
+                'translation_domain' => 'messages',
                 'entity' => Bac::class,
                 'choice_label' => 'libelle',
                 'live_update' => true,
                 'live_update_path' => 'path_update',
-                'live_update_params' => [], ]);
+                'live_update_params' => [],
+            ]);
         $builder->addColumn('groupes', GroupeEtudiantColumnType::class,
             ['label' => 'table.groupe', 'translation_domain' => 'messages']);
 
-        $builder->addColumn('semestre', SelectColumnType::class,
-            ['label' => 'table.semestre', 'translation_domain' => 'messages',
-                'entity' => Semestre::class,
-                'query_builder' => function(SemestreRepository $semestreRepository) {
-                            return $semestreRepository->findByDepartementBuilder($this->departement);
-                        },
-                'live_update' => true,
-                'live_update_path' => 'path_update',
-                'live_update_params' => [], ]);
-        $builder->addColumn('departement', SelectColumnType::class,
-            ['label' => 'table.departement', 'translation_domain' => 'messages',
-                'entity' => Departement::class,
-                'choice_label' => 'libelle',
-                'live_update' => true,
-                'live_update_path' => 'path_update',
-                'live_update_params' => [], ]);
-
         $builder->setLoadUrl('administration_etudiant_semestre_index', ['semestre' => $this->semestre->getId()]);
 
+        $builder->addColumn('bac', WidgetColumnType::class, [
+            'label' => 'table.bac',
+            'translation_domain' => 'messages',
+            'build' => function(WidgetBuilder $builder, Etudiant $s) {
+                $builder->add('bac', SelectChangeType::class, [
+                    'route' => 'adm_etudiant_edit_ajax',
+                    'route_params' => [
+                        'id' => $s->getId(),
+                    ],
+                    'post_params' => [
+                        'field' => 'bac',
+                    ],
+                    'value' => $s->getBac()?->getId(),
+                    'entity' => Bac::class,
+                    'choice_label' => 'libelle',
+                ]);
+            },
+        ]);
+
+        $builder->addColumn('semestre', WidgetColumnType::class, [
+            'label' => 'table.semestre',
+            'translation_domain' => 'messages',
+            'build' => function(WidgetBuilder $builder, Etudiant $s) {
+                $builder->add('semestre', SelectChangeType::class, [
+                    'route' => 'adm_etudiant_edit_ajax',
+                    'route_params' => [
+                        'id' => $s->getId(),
+                    ],
+                    'post_params' => [
+                        'field' => 'semestre',
+                    ],
+                    'query_builder' => function(SemestreRepository $semestreRepository) {
+                        return $semestreRepository->findByDepartementBuilder($this->departement);
+                    },
+                    'value' => $s->getSemestre()?->getId(),
+                    'entity' => Semestre::class,
+                    'choice_label' => 'libelle',
+                ]);
+            },
+        ]);
+
+        $builder->addColumn('departement', WidgetColumnType::class, [
+            'label' => 'table.departement',
+            'translation_domain' => 'messages',
+            'build' => function(WidgetBuilder $builder, Etudiant $s) {
+                $builder->add('departement', SelectChangeType::class, [
+                    'route' => 'adm_etudiant_edit_ajax',
+                    'route_params' => [
+                        'id' => $s->getId(),
+                    ],
+                    'post_params' => [
+                        'field' => 'departement',
+                    ],
+                    'value' => $s->getDepartement()?->getId(),
+                    'entity' => Departement::class,
+                    'choice_label' => 'libelle',
+                ]);
+            },
+        ]);
+
         $builder->addColumn('links', WidgetColumnType::class, [
-            'build' => function (WidgetBuilder $builder, Etudiant $s) {
+            'build' => function(WidgetBuilder $builder, Etudiant $s) {
                 $builder->add('show', RowShowLinkType::class, [
                     'route' => 'user_profil',
                     'route_params' => [
@@ -165,9 +205,7 @@ class EtudiantSemestreTableType extends TableType
             'query' => function (QueryBuilder $qb, array $formData) {
                 $qb
                     ->where('e.semestre = :semestre')
-//                    ->andWhere('e.anneeUniversitaire = :anneeuniversitaire')
                     ->setParameter('semestre', $this->semestre->getId());
-                // ->setParameter('anneeuniversitaire', $this->anneeUniversitaire->getId());
 
                 if (isset($formData['search'])) {
                     $qb->andWhere('LOWER(e.nom) LIKE :search');
@@ -198,7 +236,6 @@ class EtudiantSemestreTableType extends TableType
         $resolver->setDefaults([
             'orderable' => true,
             'semestre' => null,
-            'anneeUniversitaire' => null,
             'departement' => null,
             'exportable' => true,
         ]);

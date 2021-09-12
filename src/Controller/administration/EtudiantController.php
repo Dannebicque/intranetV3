@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/07/2021 17:05
+ * @lastUpdate 12/09/2021 18:19
  */
 
 namespace App\Controller\administration;
@@ -79,8 +79,8 @@ class EtudiantController extends BaseController
 
         return $this->render('administration/etudiant/edit.html.twig', [
             'etudiant' => $etudiant,
-            'form'     => $form->createView(),
-            'origin'   => $origin,
+            'form' => $form->createView(),
+            'origin' => $origin,
         ]);
     }
 
@@ -119,7 +119,6 @@ class EtudiantController extends BaseController
     /**
      * @Route("/change-etat/{uuid}/{etat}", name="adm_etudiant_change_etat", methods="POST", options={"expose":true})
      * @ParamConverter("etudiant", options={"mapping": {"uuid": "uuid"}})
-     *
      */
     public function changeEtat(EtudiantScolarite $etudiantScolarite, Etudiant $etudiant, $etat): JsonResponse
     {
@@ -148,10 +147,11 @@ class EtudiantController extends BaseController
      */
     public function editAjax(EtudiantUpdate $etudiantUpdate, Request $request, Etudiant $etudiant): JsonResponse
     {
-        $field = $request->request->get('field');
-        $value = $request->request->get('value');
+        if ($content = $request->getContent()) {
+            $parametersAsArray = json_decode($content, true);
+        }
 
-        $etudiantUpdate->update($etudiant, $field, $value);
+        $etudiantUpdate->update($etudiant, $parametersAsArray['field'], $parametersAsArray['value']);
 
         return $this->json(true, Response::HTTP_OK);
     }
@@ -159,7 +159,6 @@ class EtudiantController extends BaseController
     /**
      * @Route("/export.{_format}", name="administration_all_etudiant_export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"})
-     *
      */
     public function export(MyExport $myExport, EtudiantRepository $etudiantRepository, $_format): Response
     {
@@ -177,7 +176,7 @@ class EtudiantController extends BaseController
                 'numEtudiant',
                 'mailUniv',
                 'semestre' => ['libelle'],
-                'adresse' => ['adresse1', 'adresse2', 'cp', 'ville', 'pays']
+                'adresse' => ['adresse1', 'adresse2', 'cp', 'ville', 'pays'],
             ]
         );
     }
