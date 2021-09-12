@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.12](https://github.com/Dannebicque/intranetV3/compare/v3.1.11...v3.1.12) (2021-09-12)
+
+
+### Features
+
+* Utilisation de tom-select pour la partie emploi du temps ([28d1117](https://github.com/Dannebicque/intranetV3/commit/28d1117fd0c184f0e697ca5ab3c9af80a0179afd))
+
+
+### Bug Fixes
+
+* Affichage du type de groupe ([17100ec](https://github.com/Dannebicque/intranetV3/commit/17100ec252d9e736c9cb9bd399846a09f49aa691))
+* assets ([f88b901](https://github.com/Dannebicque/intranetV3/commit/f88b90141ebc6782b0155f7859b4ba634c5b5fac))
+* Correctifs sur la partie période de stage, lisibilité du formulaire, traductions, et textes d'aide ([3a0c6c0](https://github.com/Dannebicque/intranetV3/commit/3a0c6c032dab3a3308623c18ecbb2c86d5ebb18c))
+* DatePicker sur la saisie des absences ([8c50e6f](https://github.com/Dannebicque/intranetV3/commit/8c50e6f96937ac8bee70f3fba55021f94df41b71))
+* Filtre par défaut sr l'Edt en administration ([1d7cd68](https://github.com/Dannebicque/intranetV3/commit/1d7cd68450df13ad7700910ba9f704a6a6e1d224))
+* Suppression des console.log dans le js ([d494861](https://github.com/Dannebicque/intranetV3/commit/d494861a2a173f7cd461de3595adb4d52c8abefb))
+* Tom-Select + utilisation sur des formulaires ([9d34b4d](https://github.com/Dannebicque/intranetV3/commit/9d34b4dc1f3097ce0e110e6493aff13b35cc8ce3))
+
 ### [3.1.11](https://github.com/Dannebicque/intranetV3/compare/v3.1.10...v3.1.11) (2021-09-11)
 
 
