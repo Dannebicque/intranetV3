@@ -106,6 +106,12 @@
                                                                 <i class="fa fa-heart"></i>
                                                             </label>
                                                         {% endif %}
+                                                        {% if is_granted('ROLE_PERMANENT') and user_data.user.id == 1 %}
+                                                            <button class="removeEtudiantDepartement btn
+                                                        btn-danger" data-etudiant="{{ etudiant.id }}">
+                                                                Effacer département
+                                                            </button>
+                                                        {% endif %}
                                                     </div>
                                                 </div>
                                                 <h4><a class="text-white trombinoscope_nom" data-provide="tooltip"

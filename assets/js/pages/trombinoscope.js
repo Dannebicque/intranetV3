@@ -2,10 +2,10 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/trombinoscope.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 02/09/2021 13:51
+// @lastUpdate 12/09/2021 20:13
 
 import {load} from '../fetch'
-import {getParentByTagName} from '../util'
+import {addCallout, getParentByTagName} from '../util'
 
 // $(document).on('click', '.semestretrombi', function (e) {
 //   e.preventDefault()
@@ -55,5 +55,19 @@ document.querySelectorAll('.enseignanttrombi').forEach((elem) => {
     })
     const el = getParentByTagName(element, 'a') //s'assurer d'avoir bien la balise a
     load('trombinoscope_personnel', {type: el.dataset.type}, trombi)
+  })
+})
+
+$(document).on('click', '.removeEtudiantDepartement', function (e) {
+  $.ajax({
+    url: Routing.generate('user_change_departement', {etudiant: $(this).data('etudiant'), departement: null}),
+    method: 'POST',
+    success: function (e) {
+      addCallout('Mofification enregistrée !', 'success')
+    },
+    error: function (e) {
+      addCallout('Erreur lors de la sauvegarde de la modification !', 'danger')
+    }
+
   })
 })
