@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/TableBuilder.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 16:01
+ * @lastUpdate 12/09/2021 16:32
  */
 
 namespace App\Components\Table;
@@ -192,7 +192,7 @@ class TableBuilder
         // resolve column
         $columns = [];
         foreach ($this->columnsData as $name => $columnData) {
-            $columns[] = $this->helper->createColumn($name, $columnData['type'], $columnData['options']);
+            $columns[$name] = $this->helper->createColumn($name, $columnData['type'], $columnData['options']);
         }
 
         // resolve adapter

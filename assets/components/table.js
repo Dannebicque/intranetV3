@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/components/table.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 02/09/2021 08:12
+// @lastUpdate 12/09/2021 16:07
 
 import {post} from '../js/fetch'
 
@@ -33,6 +33,13 @@ export default class Table extends HTMLElement {
 
     this.options.columns.forEach((column) => {
       if (column.orderable === true) {
+        if (column.order != null) {
+          this.order = [{
+            column: column.id,
+            order: column.order
+          }]
+        }
+
         document.getElementById(column.id).style.cursor = 'pointer'
         document.getElementById(column.id).addEventListener('click', (elem) => {
           this.order = [{
@@ -93,8 +100,6 @@ export default class Table extends HTMLElement {
   }
 
   _filterArray (event) {
-    console.log('filtre')
-    console.log(event.target)
     //this._getFilterFromField(event.target)
     console.log(this.filter)
     this._buildArray()
@@ -111,6 +116,7 @@ export default class Table extends HTMLElement {
   }
 
   _buildArray () {
+    console.log(this.order)
     this.tableBody.innerHTML = ''
     post(this.base_url, {
       paging: {

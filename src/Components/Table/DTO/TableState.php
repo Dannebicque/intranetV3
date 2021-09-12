@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/DTO/TableState.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 21:21
+ * @lastUpdate 12/09/2021 16:34
  */
 
 namespace App\Components\Table\DTO;
@@ -53,10 +53,10 @@ class TableState
                 $c = $this->table->getColumn($orderData['column']);
 
                 // column not orderable
+
                 if (!$c->isOrderable()) {
                     continue;
                 }
-
                 $this->addOrderBy($c, $orderData['order']);
             }
         }
@@ -75,7 +75,6 @@ class TableState
     public function addOrderBy(Column $column, string $direction): self
     {
         $this->orderBy[] = [$column, $direction];
-
         return $this;
     }
 
