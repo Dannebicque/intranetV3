@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/trombinoscope.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/09/2021 20:13
+// @lastUpdate 12/09/2021 20:17
 
 import {load} from '../fetch'
 import {addCallout, getParentByTagName} from '../util'
@@ -60,7 +60,7 @@ document.querySelectorAll('.enseignanttrombi').forEach((elem) => {
 
 $(document).on('click', '.removeEtudiantDepartement', function (e) {
   $.ajax({
-    url: Routing.generate('user_change_departement', {etudiant: $(this).data('etudiant'), departement: null}),
+    url: Routing.generate('user_change_departement', {etudiant: $(this).data('etudiant')}),
     method: 'POST',
     success: function (e) {
       addCallout('Mofification enregistrée !', 'success')
