@@ -1,7 +1,7 @@
 <div class="row gap-y">
   <div class="col-sm-2">
     <label for="affichejour" class="sr-only">Jour de la semaine</label>
-    <select class="form-control selectpicker" id="affichejour" name="affichejour">
+    <select class="form-control" id="affichejour" name="affichejour">
       <option value="">{{ 'edt.filtrer.jour'|trans }}</option>
       <option value="1">Lundi</option>
       <option value="2">Mardi</option>
@@ -12,7 +12,7 @@
   </div>
   <div class="col-sm-2">
     <label for="affichesalle" class="sr-only">Salle</label>
-    <select class="form-control selectpicker" id="affichesalle" name="affichesalle">
+    <select class="form-control" id="affichesalle" name="affichesalle" is="select-complete">
       <option value="">{{ 'edt.filtrer.salle'|trans }}</option>
       {% for salle in salles %}
         <option value="{{ salle.libelle }}">{{ salle.libelle }}</option>
@@ -21,7 +21,7 @@
   </div>
   <div class="col-sm-2">
     <label for="affichepersonnel" class="sr-only">Personnel</label>
-    <select class="form-control selectpicker" id="affichepersonnel" name="affichepersonnel">
+    <select class="form-control" id="affichepersonnel" name="affichepersonnel" is="select-complete">
       <option value="">{{ 'edt.filtrer.personnel'|trans }}</option>
       {% for personnel in personnels %}
         <option value="{{ personnel.id }}">{{ personnel.displayPr }}</option>
@@ -30,7 +30,7 @@
   </div>
   <div class="col-sm-3">
     <label for="affichematiere" class="sr-only">Matière</label>
-    <select class="form-control selectpicker" name="affichematiere" id="affichematiere">
+    <select class="form-control" name="affichematiere" id="affichematiere" is="select-complete">
       <option value="">{{ 'edt.filtrer.matiere'|trans }}</option>
       {% for matiere in matieres %}
           <option value="{{ matiere.typeIdMatiere }}">{{ matiere.display }}</option>
@@ -39,7 +39,7 @@
   </div>
   <div class="col-sm-3">
     <label for="affichesemaine" class="sr-only">Semaine</label>
-    <select class="form-control selectpicker" name="affichesemaine" id="affichesemaine">
+    <select class="form-control" name="affichesemaine" id="affichesemaine" is="select-complete">
       <option value="">{{ 'edt.filtrer.semaine'|trans }}</option>
       {% for sem in edt.semaines %}
         <option value="{{ edt.filtre }}_{{ edt.valeur }}_{{ sem.semaineReelle }}">
