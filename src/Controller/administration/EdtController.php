@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/09/2021 12:41
+ * @lastUpdate 12/09/2021 12:50
  */
 
 namespace App\Controller\administration;
@@ -61,12 +61,12 @@ class EdtController extends BaseController
         string $valeur,
         string $filtre
     ): Response {
-        $filtre = '' === $filtre ? 'promo' : $filtre;
+        $filtre = '' === $filtre ? Constantes::FILTRE_EDT_PROMO : $filtre;
         $edt = $myEdt->initAdministration($this->dataUserSession->getDepartement(), $semaine, $filtre,
             $valeur, $this->dataUserSession->getAnneeUniversitaire());
 
         switch ($filtre) {
-            case 'prof':
+            case Constantes::FILTRE_EDT_PROF:
                 return $this->render('administration/edt/_edt-prof.html.twig', [
                     'prof' => $personnelRepository->find($valeur),
                     'filtre' => $filtre,
@@ -77,7 +77,7 @@ class EdtController extends BaseController
                     'tabHeures' => Constantes::TAB_HEURES_EDT,
                 ]);
 
-            case 'module':
+            case Constantes::FILTRE_EDT_MODULE:
                 return $this->render('administration/edt/_edt-matiere.html.twig', [
                     'matiere' => $typeMatiereManager->getMatiereFromSelect($valeur), //todo: manque le type?
                     'filtre' => $filtre,
@@ -86,7 +86,7 @@ class EdtController extends BaseController
                     'matieres' => $typeMatiereManager->findByDepartement($this->dataUserSession->getDepartement()),
                     'edt' => $edt,
                 ]);
-            case 'salle':
+            case Constantes::FILTRE_EDT_SALLE:
                 return $this->render('administration/edt/_edt-salle.html.twig', [
                     'salle' => $valeur,
                     'filtre' => $filtre,
