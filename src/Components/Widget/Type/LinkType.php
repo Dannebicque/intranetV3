@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Widget/Type/LinkType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 14:37
+ * @lastUpdate 13/09/2021 22:04
  */
 
 namespace App\Components\Widget\Type;
@@ -34,7 +34,7 @@ class LinkType extends WidgetType
 
         if ($options['url']) {
             if ($options['xhr']) {
-                $view->vars['attr']['href'] = ''; // Link always have href
+                $view->vars['attr']['href'] = '#'; // Link always have href
                 $view->vars['attr']['data-xhr'] = $options['url'];
 
                 if (!empty($options['confirm'])) {
