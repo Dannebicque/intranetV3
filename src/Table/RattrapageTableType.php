@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/RattrapageTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/09/2021 16:43
+ * @lastUpdate 13/09/2021 21:16
  */
 
 namespace App\Table;
@@ -41,6 +41,7 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 class RattrapageTableType extends TableType
 {
     private ?Semestre $semestre;
+    private array $matieres;
     private ?AnneeUniversitaire $anneeUniversitaire;
     private $absences;
     private CsrfTokenManagerInterface $csrfToken;
@@ -55,6 +56,8 @@ class RattrapageTableType extends TableType
         $this->semestre = $options['semestre'];
         $this->anneeUniversitaire = $options['anneeUniversitaire'];
         $this->absences = $options['absences'];
+        $this->matieres = $options['matieres'];
+
         $builder->addFilter('search', SearchType::class);
         $builder->addFilter('from', DatePickerType::class, [
             'input_prefix_text' => 'Du',
@@ -63,7 +66,11 @@ class RattrapageTableType extends TableType
             'input_prefix_text' => 'au',
         ]);
         $builder->addFilter('etat_demande', ChoiceType::class, [
-            'choices' => ['Acceptée' => Rattrapage::DEMANDE_ACCEPTEE, 'Refusée' => Rattrapage::DEMANDE_REFUSEE, 'En attente' => Rattrapage::DEMANDE_FAITE],
+            'choices' => [
+                'Acceptée' => Rattrapage::DEMANDE_ACCEPTEE,
+                'Refusée' => Rattrapage::DEMANDE_REFUSEE,
+                'En attente' => Rattrapage::DEMANDE_FAITE
+            ],
             'required' => false,
             'placeholder' => 'Etat de la demande'
         ]);
@@ -103,7 +110,7 @@ class RattrapageTableType extends TableType
         $builder->addColumn('groupes', GroupeEtudiantColumnType::class,
             ['label' => 'table.groupe', 'translation_domain' => 'messages']);
         $builder->addColumn('typeIdMatiere', MatiereColumnType::class,
-            ['label' => 'table.matiere', 'translation_domain' => 'messages']);
+            ['label' => 'table.matiere', 'translation_domain' => 'messages', 'matieres' => $this->matieres]);
         $builder->addColumn('personnel', PersonnelColumnType::class);
         $builder->addColumn('dateEval', DateColumnType::class, [
             'order' => 'DESC',
@@ -219,6 +226,7 @@ class RattrapageTableType extends TableType
             'anneeUniversitaire' => null,
             'absences' => null,
             'exportable' => true,
+            'matieres' => null,
         ]);
     }
 }

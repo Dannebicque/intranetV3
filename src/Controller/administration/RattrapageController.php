@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/RattrapageController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 21:51
+ * @lastUpdate 13/09/2021 21:16
  */
 
 namespace App\Controller\administration;
@@ -12,24 +12,25 @@ namespace App\Controller\administration;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\MyExport;
 use App\Controller\BaseController;
-use App\Table\RattrapageTableType;
 use App\Entity\Constantes;
 use App\Entity\Rattrapage;
 use App\Entity\Semestre;
 use App\Event\RattrapageEvent;
 use App\Repository\AbsenceRepository;
 use App\Repository\RattrapageRepository;
+use App\Table\RattrapageTableType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
-#[Route("/administration/rattrapage")]
+#[Route('/administration/rattrapage')]
 class RattrapageController extends BaseController
 {
-    #[Route("/semestre/{semestre}", name: "administration_rattrapage_semestre_index", options: ['expose' => true])]
+    #[Route('/semestre/{semestre}', name: 'administration_rattrapage_semestre_index', options: ['expose' => true])]
     public function index(
+        TypeMatiereManager $typeMatiereManager,
         Request $request,
         AbsenceRepository $absenceRepository,
         Semestre $semestre
@@ -38,7 +39,8 @@ class RattrapageController extends BaseController
             'semestre' => $semestre,
             'anneeUniversitaire' => $semestre->getAnneeUniversitaire(),
             'absences' => $absenceRepository->findBySemestreRattrapage($semestre,
-                $semestre->getAnneeUniversitaire())
+                $semestre->getAnneeUniversitaire()),
+            'matieres' => $typeMatiereManager->findBySemestreArray($semestre),
         ]);
         $table->handleRequest($request);
 
