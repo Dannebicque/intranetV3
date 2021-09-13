@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.14](https://github.com/Dannebicque/intranetV3/compare/v3.1.13...v3.1.14) (2021-09-13)
+
+
+### Features
+
+* Suppression département étudiant depuis trombi ([9e9f912](https://github.com/Dannebicque/intranetV3/commit/9e9f9120d24efbe873f2eda51bba3bd8e070612f))
+* Suppression département étudiant depuis trombi ([a3e17da](https://github.com/Dannebicque/intranetV3/commit/a3e17daaab6bd38e9991f40b947d5ffe6717e77b))
+
+
+### Bug Fixes
+
+* Suppression département étudiant depuis trombi ([f3ad1ae](https://github.com/Dannebicque/intranetV3/commit/f3ad1ae33360dab70ef1da606b03cc0d1e01f1e8))
+
 ### [3.1.13](https://github.com/Dannebicque/intranetV3/compare/v3.1.12...v3.1.13) (2021-09-12)
 
 
