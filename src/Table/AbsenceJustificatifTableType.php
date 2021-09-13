@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/AbsenceJustificatifTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/09/2021 17:18
+ * @lastUpdate 13/09/2021 22:07
  */
 
 namespace App\Table;
@@ -20,13 +20,12 @@ use App\Components\Widget\Type\ButtonDropdownType;
 use App\Components\Widget\Type\ButtonType;
 use App\Components\Widget\Type\LinkType;
 use App\Components\Widget\Type\RowDeleteLinkType;
+use App\Components\Widget\Type\RowShowLinkType;
 use App\Components\Widget\WidgetBuilder;
-use App\Entity\Absence;
 use App\Entity\AbsenceJustificatif;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Etudiant;
 use App\Entity\Groupe;
-use App\Entity\Rattrapage;
 use App\Entity\Semestre;
 use App\Form\Type\DatePickerType;
 use App\Form\Type\SearchType;
@@ -36,14 +35,12 @@ use App\Table\ColumnType\DatePeriodeJustificatifColumnType;
 use App\Table\ColumnType\EtudiantColumnType;
 use App\Table\ColumnType\GroupeEtudiantColumnType;
 use App\Table\ColumnType\GroupeFromEtudiantColumnType;
-use App\Table\ColumnType\MatiereColumnType;
-use App\Table\ColumnType\PersonnelColumnType;
-use App\Table\ColumnType\StatusAbsenceColumnType;
 use App\Table\ColumnType\StatusJustificatifAbsenceColumnType;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class AbsenceJustificatifTableType extends TableType
@@ -51,10 +48,12 @@ class AbsenceJustificatifTableType extends TableType
     private ?Semestre $semestre;
     private ?AnneeUniversitaire $anneeUniversitaire;
     private CsrfTokenManagerInterface $csrfToken;
+    private RouterInterface $router;
 
-    public function __construct(CsrfTokenManagerInterface $csrfToken)
+    public function __construct(CsrfTokenManagerInterface $csrfToken, RouterInterface $router)
     {
         $this->csrfToken = $csrfToken;
+        $this->router = $router;
     }
 
     public function buildTable(TableBuilder $builder, array $options)
@@ -70,7 +69,11 @@ class AbsenceJustificatifTableType extends TableType
             'input_prefix_text' => 'au',
         ]);
         $builder->addFilter('etat_demande', ChoiceType::class, [
-            'choices' => ['Acceptée' => AbsenceJustificatif::ACCEPTE, 'Refusée' => AbsenceJustificatif::REFUSE, 'En attente' => AbsenceJustificatif::DEPOSE],
+            'choices' => [
+                'Acceptée' => AbsenceJustificatif::ACCEPTE,
+                'Refusée' => AbsenceJustificatif::REFUSE,
+                'En attente' => AbsenceJustificatif::DEPOSE
+            ],
             'required' => false,
             'placeholder' => 'Etat de la demande'
         ]);
@@ -89,7 +92,7 @@ class AbsenceJustificatifTableType extends TableType
             'icon' => 'fas fa-download',
             'text' => '',
             'attr' => ['data-toggle' => 'dropdown'],
-            'build' => function (WidgetBuilder $builder) {
+            'build' => function(WidgetBuilder $builder) {
                 $builder->add('pdf', LinkType::class, [
                     'route' => 'administration_rattrapage_export',
                     'route_params' => ['semestre' => $this->semestre->getId(), '_format' => 'pdf'],
@@ -117,21 +120,40 @@ class AbsenceJustificatifTableType extends TableType
             'label' => 'table.created',
             'translation_domain' => 'messages',
         ]);
-        $builder->addColumn('motif', PropertyColumnType::class,  ['label' => 'table.motif', 'translation_domain' => 'messages']);
+        $builder->addColumn('motif', PropertyColumnType::class,
+            ['label' => 'table.motif', 'translation_domain' => 'messages']);
         $builder->addColumn('etat', StatusJustificatifAbsenceColumnType::class,
             [
                 'label' => 'table.etat_justificatif_absence',
                 'translation_domain' => 'messages',
             ]);
 
-        $builder->setLoadUrl('administration_absences_justificatif_semestre_liste', ['semestre' => $this->semestre->getId()]);
+        $builder->setLoadUrl('administration_absences_justificatif_semestre_liste',
+            ['semestre' => $this->semestre->getId()]);
+
+        $builder->addColumn('apercu', WidgetColumnType::class, [
+            'label' => 'apercu',
+            'build' => function(WidgetBuilder $builder, AbsenceJustificatif $s) {
+                $builder->add('voir.justificatif', ButtonType::class, [
+                    'class' => 'btn btn-outline btn-info',
+                    'icon' => 'fas fa-eye',
+                    'text' => false,
+                    'translation_domain' => 'messages',
+                    'attr' => ['data-provide' => 'modaler tooltip',
+                        'data-url' => $this->router->generate('administration_absence_justificatif_details',
+                            ['uuid' => $s->getUuidString()]),
+                        'data-title' => 'Détail du justificatif'
+                    ]
+                ]);
+            },
+        ]);
 
         $builder->addColumn('links', WidgetColumnType::class, [
-            'build' => function (WidgetBuilder $builder, AbsenceJustificatif $s) {
+            'build' => function(WidgetBuilder $builder, AbsenceJustificatif $s) {
                 switch ($s->getEtat()) {
                     case AbsenceJustificatif::ACCEPTE:
                         $builder->add('demande.acceptee', ButtonType::class, [
-                            'class' => 'btn btn-outline btn-success rattrapage-accepte bx_'.$s->getUuidString(),
+                            'class' => 'btn btn-outline btn-success rattrapage-accepte bx_' . $s->getUuidString(),
                             'title' => 'demande.acceptee',
                             'text' => 'demande.acceptee',
                             'translation_domain' => 'messages',
@@ -139,7 +161,7 @@ class AbsenceJustificatifTableType extends TableType
                         break;
                     case AbsenceJustificatif::REFUSE:
                         $builder->add('demande.refusee', ButtonType::class, [
-                            'class' => 'btn btn-outline btn-danger rattrapage-accepte bx_'.$s->getUuidString(),
+                            'class' => 'btn btn-outline btn-danger rattrapage-accepte bx_' . $s->getUuidString(),
                             'title' => 'demande.refusee',
                             'text' => 'demande.refusee',
                             'translation_domain' => 'messages',
@@ -147,13 +169,13 @@ class AbsenceJustificatifTableType extends TableType
                         break;
                     case AbsenceJustificatif::DEPOSE:
                         $builder->add('accepter', ButtonType::class, [
-                            'class' => 'btn btn-outline btn-success rattrapage-accepte bx_'.$s->getUuidString(),
+                            'class' => 'btn btn-outline btn-success rattrapage-accepte bx_' . $s->getUuidString(),
                             'title' => 'Accepter la demande',
                             'icon' => 'fas fa-check',
                             'attr' => ['data-rattrapage' => $s->getUuidString()],
                         ]);
                         $builder->add('refuser', ButtonType::class, [
-                            'class' => 'btn btn-outline btn-danger rattrapage-refuse bx_'.$s->getUuidString(),
+                            'class' => 'btn btn-outline btn-danger rattrapage-refuse bx_' . $s->getUuidString(),
                             'title' => 'Refuser la demande',
                             'icon' => 'fas fa-ban',
                             'attr' => ['data-rattrapage' => $s->getUuidString()],
@@ -165,7 +187,7 @@ class AbsenceJustificatifTableType extends TableType
                     'attr' => [
                         'data-href' => 'administration_rattrapage_delete',
                         'data-uuid' => $s->getUuidString(),
-                        'data-csrf' => $this->csrfToken->getToken('delete'.$s->getUuidString()),
+                        'data-csrf' => $this->csrfToken->getToken('delete' . $s->getUuidString()),
                     ],
                 ]);
             },
@@ -174,17 +196,17 @@ class AbsenceJustificatifTableType extends TableType
         $builder->useAdapter(EntityAdapter::class, [
             'class' => AbsenceJustificatif::class,
             'fetch_join_collection' => false,
-            'query' => function (QueryBuilder $qb, array $formData) {
+            'query' => function(QueryBuilder $qb, array $formData) {
                 $qb->innerJoin(Etudiant::class, 'etu', 'WITH', 'e.etudiant = etu.id')
                     ->where('etu.semestre = :semestre')
-                //    ->andWhere('e.anneeUniversitaire = :anneeuniversitaire')
+                    //    ->andWhere('e.anneeUniversitaire = :anneeuniversitaire')
                     ->setParameter('semestre', $this->semestre->getId());
                 //    ->setParameter('anneeuniversitaire', $this->anneeUniversitaire->getId());
 
                 if (isset($formData['search'])) {
                     $qb->andWhere('LOWER(etu.nom) LIKE :search');
                     $qb->orWhere('LOWER(etu.prenom) LIKE :search');
-                    $qb->setParameter('search', '%'.$formData['search'].'%');
+                    $qb->setParameter('search', '%' . $formData['search'] . '%');
                 }
 
 //                if (isset($formData['from'])) {
