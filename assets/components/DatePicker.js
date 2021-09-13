@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/components/DatePicker.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/09/2021 20:17
+// @lastUpdate 13/09/2021 20:59
 
 import flatpickr from 'flatpickr'
 import 'flatpickr/dist/l10n/fr.js'
@@ -24,4 +24,3 @@ export default class DatePicker extends HTMLInputElement {
         this.flatpickr = flatpickr(this, this.options)
     }
 }
-

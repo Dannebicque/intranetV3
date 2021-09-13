@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/components/SelectChangeWidget.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/09/2021 18:18
+// @lastUpdate 13/09/2021 20:59
 
 import {post} from '../js/fetch'
 
@@ -12,8 +12,6 @@ export default class SelectChangeWidget extends HTMLSelectElement {
 
     super()
     this.addEventListener('change', (e) => {
-      console.log('change')
-      console.log(e.target.dataset.params)
       this.route = e.target.dataset.route
       this.params = JSON.parse(e.target.dataset.params)
       this.params.value = e.target.value

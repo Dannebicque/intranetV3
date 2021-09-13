@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/absences.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/09/2021 09:01
+// @lastUpdate 13/09/2021 20:58
 import {addCallout} from '../util'
 
 import {post} from '../fetch'
@@ -105,18 +105,6 @@ $(document).on('click', '.etudiant', function () {
     })
   }
 })
-
-// $('#liste-absences').dataTable({
-//   'language': dataTableLangueFr,
-//   'fnRowCallback': function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-//
-//     if (aData[5] === 'non' || aData[5] === 'no' || aData[5] === 'No' || aData[5] === 'Non') {
-//       $('td', nRow).css('background-color', '#fce3e3')
-//     } else {
-//       $('td', nRow).css('background-color', '#e3fcf2')
-//     }
-//   }
-// })
 
 function updateAffichage (date, heure) {
   $.ajax({
