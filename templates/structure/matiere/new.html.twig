@@ -7,11 +7,11 @@
 {% block headeractions %}
     <div class="header-action">
         {% if is_granted('ROLE_SUPER_ADMIN') %}
-            {{ include('composants/sadm-buttons-new.html.twig', {elt: 'matiere', id: matiere.id, retour: {path:
+            {{ include('composants/sadm-buttons-new.html.twig', {elt: 'matiere', retour: {path:
                 'sa_structure_index', titre: 'atitle.retour_structure'|trans, params:{departement:matiere.ue.diplome
                     .departement.id}}}) }}
         {% else %}
-            {{ include('composants/adm-buttons-new.html.twig', {elt: 'matiere', id: matiere.id, retour: {path: 'administration_structure_index', titre: 'atitle.retour_structure'|trans}}) }}
+            {{ include('composants/adm-buttons-new.html.twig', {elt: 'matiere', retour: {path: 'administration_structure_index', titre: 'atitle.retour_structure'|trans}}) }}
         {% endif %}
     </div>
 {% endblock %}

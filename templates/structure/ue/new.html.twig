@@ -7,9 +7,9 @@
 {%block headeractions %}
     <div class="header-action">
         {% if is_granted('ROLE_SUPER_ADMIN') %}
-            {{ include('composants/sadm-buttons-new.html.twig', {elt: 'ue', id: ue.id, retour: {path: 'sa_structure_index', titre: 'atitle.retour_structure'|trans, params:{departement:ue.diplome.departement.id}}}) }}
+            {{ include('composants/sadm-buttons-new.html.twig', {elt: 'ue', retour: {path: 'sa_structure_index', titre: 'atitle.retour_structure'|trans, params:{departement:ue.diplome.departement.id}}}) }}
         {% else %}
-            {{ include('composants/adm-buttons-new.html.twig', {elt: 'ue', id: ue.id, retour: {path: 'administration_structure_index', titre: 'atitle.retour_structure'|trans}}) }}
+            {{ include('composants/adm-buttons-new.html.twig', {elt: 'ue', retour: {path: 'administration_structure_index', titre: 'atitle.retour_structure'|trans}}) }}
         {% endif %}    </div>
 {% endblock %}
 
