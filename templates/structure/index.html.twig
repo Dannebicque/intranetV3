@@ -86,7 +86,8 @@
                 <div class="row gap-y lignehover">
                     <div class="col-md-1">&nbsp;</div>
                     <div class="col-md-9" id="diplome_{{ diplome.id }}">{{ diplome.typediplome.sigle }}
-                        | {{ diplome.libelle }} | {{ diplome.codeDiplome }} | {{ diplome.codeVersion }}</div>
+                        | {{ diplome.libelle }} | {{ diplome.codeDiplome }} | {{ diplome.codeVersion }} | {{ diplome
+                        .codeDepartement }}</div>
                     <div class="col-md-2">
 
                         <a href="{{ path(baseurl ~ 'diplome_duplicate', {'id': diplome.id}) }}"
@@ -161,7 +162,8 @@
                 {% for annee in diplome.annees %}
                     <div class="row gap-y dip_{{ diplome.id }} lignehover">
                         <div class="col-md-2"></div>
-                        <div class="col-md-8">{{ annee.libelle }} | {{ annee.codeEtape }}</div>
+                        <div class="col-md-8">{{ annee.libelle }} | {{ annee.codeEtape }}
+                                                                  | {{ annee.codeVersion }}</div>
                         <div class="col-md-2">
                             <a href="{{ path(baseurl ~ 'annee_duplicate', {'id': annee.id}) }}"
                                class="btn btn-success btn-outline btn-square btn-xs" data-provide="tooltip"
