@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/AbsenceJustificatifTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/09/2021 22:07
+ * @lastUpdate 15/09/2021 20:52
  */
 
 namespace App\Table;
@@ -153,7 +153,7 @@ class AbsenceJustificatifTableType extends TableType
                 switch ($s->getEtat()) {
                     case AbsenceJustificatif::ACCEPTE:
                         $builder->add('demande.acceptee', ButtonType::class, [
-                            'class' => 'btn btn-outline btn-success rattrapage-accepte bx_' . $s->getUuidString(),
+                            'class' => 'btn btn-outline btn-success',
                             'title' => 'demande.acceptee',
                             'text' => 'demande.acceptee',
                             'translation_domain' => 'messages',
@@ -161,7 +161,7 @@ class AbsenceJustificatifTableType extends TableType
                         break;
                     case AbsenceJustificatif::REFUSE:
                         $builder->add('demande.refusee', ButtonType::class, [
-                            'class' => 'btn btn-outline btn-danger rattrapage-accepte bx_' . $s->getUuidString(),
+                            'class' => 'btn btn-outline btn-danger',
                             'title' => 'demande.refusee',
                             'text' => 'demande.refusee',
                             'translation_domain' => 'messages',
@@ -169,16 +169,16 @@ class AbsenceJustificatifTableType extends TableType
                         break;
                     case AbsenceJustificatif::DEPOSE:
                         $builder->add('accepter', ButtonType::class, [
-                            'class' => 'btn btn-outline btn-success rattrapage-accepte bx_' . $s->getUuidString(),
+                            'class' => 'btn btn-outline btn-success justificatif-accepte bx_' . $s->getUuidString(),
                             'title' => 'Accepter la demande',
                             'icon' => 'fas fa-check',
-                            'attr' => ['data-rattrapage' => $s->getUuidString()],
+                            'attr' => ['data-justificatif' => $s->getUuidString()],
                         ]);
                         $builder->add('refuser', ButtonType::class, [
-                            'class' => 'btn btn-outline btn-danger rattrapage-refuse bx_' . $s->getUuidString(),
+                            'class' => 'btn btn-outline btn-danger justificatif-refuse bx_' . $s->getUuidString(),
                             'title' => 'Refuser la demande',
                             'icon' => 'fas fa-ban',
-                            'attr' => ['data-rattrapage' => $s->getUuidString()],
+                            'attr' => ['data-justificatif' => $s->getUuidString()],
                         ]);
                         break;
                 }
