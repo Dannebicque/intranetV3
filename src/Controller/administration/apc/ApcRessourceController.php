@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcRessourceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/05/2021 16:40
+ * @lastUpdate 15/09/2021 20:34
  */
 
 namespace App\Controller\administration\apc;
@@ -64,7 +64,7 @@ class ApcRessourceController extends BaseController
         RessourceManager $ressourceManager,
         Request $request,
         ApcRessource $apcRessource
-    ): Response {
+    ): JsonResponse {
         $name = $request->request->get('field');
         $value = $request->request->get('value');
 

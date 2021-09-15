@@ -53,12 +53,62 @@
                                 <td>{{ matiere.codeElement }}</td>
                                 <td>{{ matiere.codeMatiere }}</td>
                                 <td>{{ matiere.libelle }}</td>
-                                <td>{{ matiere.cmPpn }} | {{ matiere.cmFormation }}</td>
-                                <td>{{ matiere.tdPpn }} | {{ matiere.tdFormation }}</td>
-                                <td>{{ matiere.tpPpn }} | {{ matiere.tpFormation }}</td>
-                                <td>{{ matiere.nbNotes }}</td>
-                                <td>{{ matiere.coefficient }}</td>
-                                <td>{{ matiere.nbEcts }}</td>
+                                <td>
+                                    <a class="myedit"
+                                       data-field="CmPpn"
+                                       href="{{ path('administration_matiere_ajax_edit', {id:matiere.id}) }}"
+                                       data-title="Corriger le volume horaire">
+                                        {{ matiere.cmPpn }}</a> |
+                                    <a class="myedit"
+                                       data-field="CmFormation"
+                                       href="{{ path('administration_matiere_ajax_edit', {id:matiere.id}) }}"
+                                       data-title="Corriger le volume horaire">
+                                        {{ matiere.cmFormation }}</a>
+                                </td>
+                                <td>
+                                    <a class="myedit"
+                                       data-field="TdPpn"
+                                       href="{{ path('administration_matiere_ajax_edit', {id:matiere.id}) }}"
+                                       data-title="Corriger le volume horaire">
+                                        {{ matiere.tdPpn }}</a> |
+                                    <a class="myedit"
+                                       data-field="TdFormation"
+                                       href="{{ path('administration_matiere_ajax_edit', {id:matiere.id}) }}"
+                                       data-title="Corriger le volume horaire">
+                                        {{ matiere.tdFormation }}</a>
+                                </td>
+                                <td>
+                                    <a class="myedit"
+                                       data-field="TpPpn"
+                                       href="{{ path('administration_matiere_ajax_edit', {id:matiere.id}) }}"
+                                       data-title="Corriger le volume horaire">
+                                        {{ matiere.tpPpn }}
+                                    </a> |
+                                    <a class="myedit"
+                                       data-field="TpFormation"
+                                       href="{{ path('administration_matiere_ajax_edit', {id:matiere.id}) }}"
+                                       data-title="Corriger le volume horaire">
+                                        {{ matiere.tpFormation }}
+                                    </a>
+                                </td>
+                                <td><a class="myedit"
+                                       data-field="NbNotes"
+                                       href="{{ path('administration_matiere_ajax_edit', {id:matiere.id}) }}"
+                                       data-title="Corriger le volume horaire">
+                                        {{ matiere.nbNotes }}</a>
+                                </td>
+                                <td><a class="myedit"
+                                       data-field="Coefficient"
+                                       href="{{ path('administration_matiere_ajax_edit', {id:matiere.id}) }}"
+                                       data-title="Corriger le volume horaire">
+                                        {{ matiere.coefficient }}</a>
+                                </td>
+                                <td><a class="myedit"
+                                       data-field="NbEcts"
+                                       href="{{ path('administration_matiere_ajax_edit', {id:matiere.id}) }}"
+                                       data-title="Corriger le volume horaire">
+                                        {{ matiere.nbEcts }}</a>
+                                </td>
                                 <td>{{ matiere.suspendu ? 'Yes'|trans : 'No'|trans }}</td>
                                 <td>{{ matiere.pac ? 'Yes'|trans : 'No'|trans }}</td>
                                 <td>
@@ -72,7 +122,6 @@
                                             <i class="{{ iconDuplicate }}"></i>
                                             <span class="sr-only">{{ 'atitle.dupliquer'|trans }}</span>
                                         </a>
-
                                     {% endif %}
                                     <a href="{{ path('administration_matiere_show', {'id': matiere.id}) }}"
                                        class="btn btn-info btn-outline btn-square"

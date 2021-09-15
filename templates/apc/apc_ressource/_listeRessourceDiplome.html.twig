@@ -56,7 +56,12 @@
                    data-title="Corriger le volume horaire">
                     {{ ressource.tpFormation }}</a>
             </td>
-            <td>{{ ressource.nbNotes }}</td>
+            <td>
+                <a class="myedit"
+                   data-field="NbNotes"
+                   href="{{ path('administration_apc_ressources_ajax_edit', {id:ressource.id}) }}"
+                   data-title="Corriger le nombre de notes">
+                    {{ ressource.nbNotes }}</a></td>
             <td>{{ ressource.suspendu ? 'Yes'|trans : 'No'|trans }}</td>
             <td>
                 {% if settings('MODIFICATION_PPN') == 1 %}

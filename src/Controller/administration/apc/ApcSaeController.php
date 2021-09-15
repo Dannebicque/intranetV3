@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcSaeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/05/2021 15:55
+ * @lastUpdate 15/09/2021 20:34
  */
 
 namespace App\Controller\administration\apc;
@@ -81,7 +81,7 @@ class ApcSaeController extends BaseController
         SaeManager $saeManager,
         Request $request,
         ApcSae $acpSae
-    ): Response {
+    ): JsonResponse {
         $name = $request->request->get('field');
         $value = $request->request->get('value');
 
