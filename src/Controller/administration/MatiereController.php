@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/MatiereController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/08/2021 08:01
+ * @lastUpdate 15/09/2021 20:33
  */
 
 namespace App\Controller\administration;
@@ -27,6 +27,7 @@ use App\Repository\ApcRessourceRepository;
 use App\Repository\ApcSaeRepository;
 use App\Repository\DateRepository;
 use App\Repository\MatiereRepository;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use function count;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -157,6 +158,23 @@ class MatiereController extends BaseController
     public function show(Matiere $matiere): Response
     {
         return $this->render('administration/matiere/show.html.twig', ['matiere' => $matiere]);
+    }
+
+    /**
+     * @Route("/{id}/ajax-edit", name="administration_matiere_ajax_edit", methods={"POST"}, options={"expose":true})
+     */
+    public function ajaxEdit(
+        Request $request,
+        Matiere $matiere
+    ): JsonResponse {
+        $name = $request->request->get('field');
+        $value = $request->request->get('value');
+
+        $update = $matiere->update($name, $value);
+        $this->entityManager->flush();
+
+        return $update ? new JsonResponse('', Response::HTTP_OK) : new JsonResponse('erreur',
+            Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
     /**

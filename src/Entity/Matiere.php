@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Matiere.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 11:29
+ * @lastUpdate 15/09/2021 20:43
  */
 
 namespace App\Entity;
 
+use App\Utils\Tools;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -386,5 +387,17 @@ class Matiere extends AbstractMatiere
     public function setCoefficient(float $coefficient): void
     {
         $this->coefficient = $coefficient;
+    }
+
+    public function update($name, $value): bool
+    {
+        $method = 'set' . $name;
+        if (method_exists($this, $method)) {
+            $this->$method(Tools::convertToFloat($value));
+
+            return true;
+        }
+
+        return false;
     }
 }

@@ -4,22 +4,21 @@
         <th>{{ 'table.code_sae'|trans }}</th>
         <th>{{ 'table.code_element'|trans }}</th>
         <th>{{ 'table.libelle'|trans }}</th>
-        <th>{{ 'table.semestre'|trans }}</th>
         <th>Compétences</th>
         <th>Heures CM</th>
         <th>Heures TD</th>
         <th>Heures TP</th>
         <th>Heures Projet</th>
+        <th>Nb Notes</th>
         <th>{{ 'table.actions'|trans }}</th>
     </tr>
     </thead>
     <tbody>
-    {% for apc_sae in apc_saes %}
+    {% for apc_sae in apc_saes|filter(apc_sae => apc_sae.semestre.id == semestre.id) %}
         <tr id="ligne_{{ apc_sae.id }}">
             <td>{{ apc_sae.codeMatiere }}</td>
             <td>{{ apc_sae.codeElement }}</td>
             <td>{{ apc_sae.libelle }}</td>
-            <td>{{ apc_sae.semestre != null ? apc_sae.semestre.libelle : 'non.defini'|trans }}</td>
             <td>
                 {% for competence in apc_sae.apcSaeCompetences %}
                     <span class="badge badge-{{ competence.competence.couleur }}">
@@ -73,6 +72,12 @@
                    href="{{ path('administration_apc_sae_ajax_edit', {id:apc_sae.id}) }}"
                    data-title="Corriger le volume horaire">
                     {{ apc_sae.projetFormation }}</a>
+            </td>
+            <td><a class="myedit"
+                   data-field="NbNotes"
+                   href="{{ path('administration_apc_sae_ajax_edit', {id:apc_sae.id}) }}"
+                   data-title="Corriger le nombre de notes">
+                    {{ apc_sae.nbNotes }}</a>
             </td>
             <td>
                 {{ include('composants/adm-buttons-table-index.html.twig', {elt: 'apc_sae', id: apc_sae.id}) }}

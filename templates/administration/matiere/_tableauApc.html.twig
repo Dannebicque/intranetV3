@@ -26,25 +26,26 @@
 
     <div class="card-body">
         <ul class="nav nav-tabs">
-            <li class="nav-item">
-                <a class="nav-link active" data-toggle="tab"
-                   href="#sae">SAÉ</a>
-            </li>
+
             {% for semestre in user_data.semestresByDiplome(diplome.id) %}
                 <li class="nav-item">
+                    <a class="nav-link {% if loop.first %}active{% endif %}" data-toggle="tab"
+                       href="#sae{{ semestre.id }}">SAÉ {{ semestre.libelle }}</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link " data-toggle="tab"
-                       href="#semestre{{ semestre.id }}">{{ semestre.libelle }}</a>
+                       href="#semestre{{ semestre.id }}">Ress. {{ semestre.libelle }}</a>
                 </li>
             {% endfor %}
 
         </ul>
         <!-- Tab panes -->
         <div class="tab-content">
-            <div class="tab-pane fade active show"
-                 id="sae">
-                {{ include('apc/apc_sae/_listeSaeDiplome.html.twig',{apc_saes:saes}) }}
-            </div>
             {% for semestre in user_data.semestresByDiplome(diplome.id) %}
+                <div class="tab-pane {% if loop.first %}fade active show{% endif %}"
+                     id="sae{{ semestre.id }}">
+                    {{ include('apc/apc_sae/_listeSaeDiplome.html.twig',{apc_saes:saes}) }}
+                </div>
                 <div class="tab-pane"
                      id="semestre{{ semestre.id }}">
                     {{ include('apc/apc_ressource/_listeRessourceDiplome.html.twig') }}
