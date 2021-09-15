@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.15](https://github.com/Dannebicque/intranetV3/compare/v3.1.14...v3.1.15) (2021-09-15)
+
+
+### Features
+
+* Apercu du justificatif d'absence ([3a7d6bf](https://github.com/Dannebicque/intranetV3/commit/3a7d6bf6697800e8236bd1b2f04395c5a7cd789c))
+* Edition des PN en live-edit ([7b9b2ae](https://github.com/Dannebicque/intranetV3/commit/7b9b2aed0277f7c2ad09c55d145e96fc667a04f7))
+
+
+### Bug Fixes
+
+* assets ([051cb04](https://github.com/Dannebicque/intranetV3/commit/051cb04191cefe98dd256135eb4ed5f6f6932a72))
+* assets ([6284c12](https://github.com/Dannebicque/intranetV3/commit/6284c12b02c181a85b428ed5848643a7c4ef4b38))
+* Liens dans les menus pour la gestion de la structure de diplôme ([91026d2](https://github.com/Dannebicque/intranetV3/commit/91026d2aca0e7a23af959a5ffcf93e3fba341dbf))
+* Lisibilité structure ([2983a59](https://github.com/Dannebicque/intranetV3/commit/2983a59d87df3646a49212efe52864c319ccbf72))
+* Liste des justificatifs ([778918d](https://github.com/Dannebicque/intranetV3/commit/778918d58ae3e2ee266735c99a09c4fa13648b60))
+* Tableau de rattrapage ([a5dc268](https://github.com/Dannebicque/intranetV3/commit/a5dc2680ea6dddb42f53508d9f59c7bca6a4b74d))
+
 ### [3.1.14](https://github.com/Dannebicque/intranetV3/compare/v3.1.13...v3.1.14) (2021-09-13)
 
 
