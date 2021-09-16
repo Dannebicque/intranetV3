@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/StagePeriodeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:08
+ * @lastUpdate 16/09/2021 18:53
  */
 
 namespace App\Repository;
@@ -51,7 +51,7 @@ class StagePeriodeRepository extends ServiceEntityRepository
             ->addOrderBy('p.numeroPeriode', 'ASC');
     }
 
-    public function findStageEtudiant(Semestre $semestre)
+    public function findStageEtudiant(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire)
     {
         //trouver les périodes de stage sur ce semestre et le suivant
         $query = $this->createQueryBuilder('s')
@@ -64,7 +64,7 @@ class StagePeriodeRepository extends ServiceEntityRepository
 
         $query->andWhere('s.anneeUniversitaire = :annee')
             ->setParameter('semestreCourant', $semestre->getId())
-            ->setParameter('annee', $semestre->getAnneeUniversitaire()->getId());
+            ->setParameter('annee', $anneeUniversitaire->getId());
         if (null !== $semestre->getSuivant()) {
             $query->orWhere('s.semestre = :semestreSuivant')
                 ->setParameter('semestreSuivant', $semestre->getSuivant()->getId());
