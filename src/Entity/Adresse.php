@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Adresse.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 15/09/2021 21:09
+ * @lastUpdate 16/09/2021 09:25
  */
 
 namespace App\Entity;
@@ -43,13 +43,13 @@ class Adresse extends BaseEntity
      * @ORM\Column(type="string", length=10, nullable=true)
      * @Groups({"adresse"})
      */
-    private ?string $codePostal;
+    private ?string $codePostal = '';
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
      * @Groups({"adresse"})
      */
-    private ?string $ville;
+    private ?string $ville = '';
 
     /**
      * @ORM\Column(type="string", length=100, nullable=true)
