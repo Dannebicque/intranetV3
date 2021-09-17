@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.16](https://github.com/Dannebicque/intranetV3/compare/v3.1.15...v3.1.16) (2021-09-17)
+
+
+### Bug Fixes
+
+* Affichage des périodes de stage pour les étudiants ([b862ab5](https://github.com/Dannebicque/intranetV3/commit/b862ab5cd1a1143c439c2e487d78b703e73fc596))
+* Bug adresse Stage ([b680b67](https://github.com/Dannebicque/intranetV3/commit/b680b67ebc944b05a361ad3fe840cddcd222d36d))
+* Bug adresse Stage ([5a7282c](https://github.com/Dannebicque/intranetV3/commit/5a7282ce42a000e1ef8d1db19b794ea6b4308b86))
+
 ### [3.1.15](https://github.com/Dannebicque/intranetV3/compare/v3.1.14...v3.1.15) (2021-09-15)
 
 
