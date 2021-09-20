@@ -288,7 +288,7 @@
                 {% for m in message|filter(m => (m.visible == true)) %}
                     <div class="carousel-item" style="background-color:{{ m.couleur }}" href="#sli_{{ loop.index }}">
                         <div class="align">
-                            <img src="{{ asset('assets/bornes/img/' ~ m.icone~'.png') }}" alt="m.icone">
+                            <i class="{{ m.icone }} fa-7x"></i>
                             <p class="white-text">
                                 {{ m.message }}
                             </p>
@@ -708,6 +708,7 @@
 
 <!-- SLIDER -->
 <script src="{{ asset('assets/bornes/js/jquery-3.5.1.min.js') }}"></script>
+<script src="https://kit.fontawesome.com/65234004ed.js" crossorigin="anonymous"></script>
 <script src="{{ asset('assets/bornes/materialize/js/materialize.min.js') }}"></script>
 <script src="{{ asset('assets/bornes/js/main.js') }}"></script>
 <script>
