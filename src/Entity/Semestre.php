@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Semestre.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/08/2021 10:50
+ * @lastUpdate 18/09/2021 12:55
  */
 
 namespace App\Entity;
@@ -33,6 +33,7 @@ class Semestre extends BaseEntity
 
     /**
      * @ORM\Column(type="string", length=20, nullable=true)
+     * @deprecated
      */
     private ?string $couleur;
 
