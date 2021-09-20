@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.17](https://github.com/Dannebicque/intranetV3/compare/v3.1.16...v3.1.17) (2021-09-20)
+
+
+### Features
+
+* Affichage de l'emploi du temps importé depuis Celcat ([0d646da](https://github.com/Dannebicque/intranetV3/commit/0d646dac4b7e91a66ea60d34e0f5a06498760957))
+* Ajout de paramètres pour les personnels ([4fe6143](https://github.com/Dannebicque/intranetV3/commit/4fe6143788464ce8daf8667bdb5c5918f6a061cc))
+
+
+### Bug Fixes
+
+* Affichage des icônes sur les bornes ([a06bbaf](https://github.com/Dannebicque/intranetV3/commit/a06bbafa26ffd29e8bd74230049a8bfc93e22081))
+* Affichage des périodes de stage pour les étudiants ([258508e](https://github.com/Dannebicque/intranetV3/commit/258508e1c6dc4121d3081e87f6bc74c2531d1200))
+* ToolBar choix de l'année universitaire ([576f1e2](https://github.com/Dannebicque/intranetV3/commit/576f1e2849580da402cc0ed26c54b725f71e7db7))
+
 ### [3.1.16](https://github.com/Dannebicque/intranetV3/compare/v3.1.15...v3.1.16) (2021-09-17)
 
 
