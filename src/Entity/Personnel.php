@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Personnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/07/2021 15:57
+ * @lastUpdate 19/09/2021 14:13
  */
 
 namespace App\Entity;
@@ -97,27 +97,22 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     protected ?string $initiales;
 
     /**
-     *
      * @ORM\Column(type="string", length=50, nullable=true)
      */
     private ?string $cvName = '';
 
     /**
-     *
      * @Vich\UploadableField(mapping="cv", fileNameProperty="cvName")
      */
     private $cvFile;
 
     /**
-     *
      * @ORM\Column(type="string", length=50)
      */
     private ?string $photoName = 'noimage.png';
 
     /**
-     *
      * @Vich\UploadableField(mapping="personnel", fileNameProperty="photoName")
-     *
      */
     private $photoFile;
 
@@ -255,7 +250,17 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     /**
      * @ORM\OneToMany(targetEntity=AbsenceEtatAppel::class, mappedBy="personnel")
      */
-    private $absenceEtatAppels;
+    private Collection $absenceEtatAppels;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=AnneeUniversitaire::class, inversedBy="personnels")
+     */
+    private ?AnneeUniversitaire $anneeUniversitaire;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $configuration;
 
     /**
      * Personnel constructor.
@@ -1289,6 +1294,30 @@ class Personnel extends Utilisateur implements UtilisateurInterface
                 $absenceEtatAppel->setPersonnel(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAnneeUniversitaire(): ?AnneeUniversitaire
+    {
+        return $this->anneeUniversitaire;
+    }
+
+    public function setAnneeUniversitaire(?AnneeUniversitaire $anneeUniversitaire): self
+    {
+        $this->anneeUniversitaire = $anneeUniversitaire;
+
+        return $this;
+    }
+
+    public function getConfiguration(): array
+    {
+        return null !== $this->configuration ? json_decode($this->configuration, true) : [];
+    }
+
+    public function setConfiguration(array $configuration = []): self
+    {
+        $this->configuration = json_encode($configuration);
 
         return $this;
     }

@@ -1182,6 +1182,8 @@ H: Heure
 heading.edt.dashboard: 'Votre emploi du temps'
 
 help:
+  validationSaisieAbsence: La saisie des absences impliquera une phase de validation, et non plus une saisie enregistrée automatiquement.
+  saisieDesPresents: Vous indiquez les présents, et les absents sont automatiquement determinés et sauvegardés.
   heading: 'Aide sur l''intranet'
   annee_courante: 'Année courante pour la formation universitaire'
   import.etudiant: "Le fichier doit être au format CSV (séparateur ;) et doit correspondre au formatage présenté ici\n          (télécharger un exemple). Toutes les colonnes doivent être présente (l'ordre n'a pas d'importante si\n          les\n          en-têtes sont présentes)\n        "
@@ -2113,6 +2115,8 @@ table:
   competence: 'Compétence'
   type_bac: 'Type spécialité'
   heure_evaluation: Heure évaluation
+  validationSaisieAbsence: Etape de validation lors de la saisie des absences
+  saisieDesPresents: Saisir les présents plutôt que les absents
 
 type_bac:
   g: 'Série générale'

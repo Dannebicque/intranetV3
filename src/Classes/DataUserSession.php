@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/DataUserSession.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/09/2021 22:36
+ * @lastUpdate 20/09/2021 22:03
  */
 
 /*
@@ -46,21 +46,21 @@ class DataUserSession
     /**
      * @var Semestre[]
      */
-    protected $semestres; //semestres actifs de la departement
+    protected array $semestres; //semestres actifs de la departement
 
     /**
      * @var Diplome[]
      */
-    protected $diplomes;
+    protected array $diplomes;
 
     /**
      * @var Annee[]
      */
-    protected $annees;
+    protected array $annees;
 
-    protected $departement;
+    protected ?Departement $departement = null;
 
-    protected $user;
+    protected TokenStorageInterface $user;
 
     protected SemestreRepository $semestreRepository;
 
@@ -74,15 +74,11 @@ class DataUserSession
 
     protected DepartementRepository $departementRepository;
 
-    protected $security;
+    protected Security $security;
 
-    private $semestresActifs;
+    private array $semestresActifs;
 
-    /**
-     * @var string
-     */
-    private $type_user;
-    private $anneeUniversitaire;
+    private ?string $type_user;
 
     public function getTypeUser(): string
     {
@@ -100,7 +96,6 @@ class DataUserSession
         DiplomeRepository $diplomeRepository,
         PersonnelRepository $personnelRepository,
         DepartementRepository $departementRepository,
-        AnneeUniversitaireRepository $anneeUniversitaireRepository,
         TokenStorageInterface $user,
         Security $security,
         EventDispatcherInterface $eventDispatcher,
@@ -111,7 +106,6 @@ class DataUserSession
         $this->diplomeRepository = $diplomeRepository;
         $this->personnelRepository = $personnelRepository;
         $this->departementRepository = $departementRepository;
-        $this->anneeUniversitaireRepository = $anneeUniversitaireRepository;
 
         $this->user = $user;
         $this->security = $security;
@@ -255,15 +249,7 @@ class DataUserSession
 
     public function getAnneeUniversitaire(): ?AnneeUniversitaire
     {
-        if (null === $this->anneeUniversitaire) {
-            if ($this->getUser() instanceof Etudiant) {
-                $this->anneeUniversitaire = $this->getUser()->getAnneeUniversitaire();
-            } else {
-                $this->anneeUniversitaire = $this->anneeUniversitaireRepository->findActive();
-            }
-        }
-
-        return $this->anneeUniversitaire;
+        return null !== $this->getUser() ? $this->getUser()->getAnneeUniversitaire() : null;
     }
 
     public function displayAnneeUniversitaire(): string
