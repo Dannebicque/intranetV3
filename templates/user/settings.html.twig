@@ -36,7 +36,6 @@
         </div>
         {% if not is_granted('ROLE_ETUDIANT') %}
             <div class="tab-pane" id="vosParametres">
-
                 {% if user.password is defined %}
                     <div class="card">
                         <h4 class="card-title">{{ 'settings.votre.password'|trans }}</h4>
@@ -92,6 +91,46 @@
                     <h4 class="card-title">{{ 'settings.vos.parametres'|trans }}</h4>
                     <div class="card-body">
                         {% if user.typeUser == 'permanent' %}
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <p><strong>{{ 'table.validationSaisieAbsence'|trans }}</strong></p>
+                                            <p>{{ 'help.validationSaisieAbsence'|trans }}</p>
+                                        </div>
+                                        <label class="switch" for="validationSaisieAbsence">
+                                            <input type="checkbox" {{ (user_data.user.configuration
+                                            .validationSaisieAbsence is
+                                            defined and user_data.user.configuration.validationSaisieAbsence == true) ?
+                                            'checked': '' }}
+                                                   class="changeConfigurationPersonne"
+                                                   name="validationSaisieAbsence"
+                                                   id="validationSaisieAbsence">
+                                            <span class="switch-indicator"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <p><strong>{{ 'table.saisieDesPresents'|trans }}</strong></p>
+                                            <p>{{ 'help.saisieDesPresents'|trans }}</p>
+                                        </div>
+                                        <label class="switch" for="saisieDesPresents">
+                                            <input type="checkbox" {{ (user_data.user.configuration.saisieDesPresents is
+                                            defined and user_data.user.configuration.saisieDesPresents == true) ?
+                                            'checked': '' }}
+                                                   class="changeConfigurationPersonne"
+                                                   name="saisieDesPresents"
+                                                   id="saisieDesPresents">
+                                            <span class="switch-indicator"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
                             <table class="table table-striped">
                                 <thead>
                                 <tr>

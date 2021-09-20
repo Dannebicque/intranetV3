@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/AnneeUniversitaire.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/06/2021 10:28
+ * @lastUpdate 17/09/2021 08:06
  */
 
 namespace App\Entity;
@@ -91,6 +91,11 @@ class AnneeUniversitaire extends BaseEntity
      */
     private Collection $projetPeriodes;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Personnel::class, mappedBy="anneeUniversitaire")
+     */
+    private $personnels;
+
     public function __construct()
     {
         $this->setAnnee(date('Y'));
@@ -103,6 +108,7 @@ class AnneeUniversitaire extends BaseEntity
         $this->stagePeriodes = new ArrayCollection();
         $this->evaluations = new ArrayCollection();
         $this->projetPeriodes = new ArrayCollection();
+        $this->personnels = new ArrayCollection();
     }
 
     public function getLibelle(): ?string
@@ -438,6 +444,36 @@ class AnneeUniversitaire extends BaseEntity
             // set the owning side to null (unless already changed)
             if ($projetPeriode->getAnneeUniversitaire() === $this) {
                 $projetPeriode->setAnneeUniversitaire(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Personnel[]
+     */
+    public function getPersonnels(): Collection
+    {
+        return $this->personnels;
+    }
+
+    public function addPersonnel(Personnel $personnel): self
+    {
+        if (!$this->personnels->contains($personnel)) {
+            $this->personnels[] = $personnel;
+            $personnel->setAnneeUniversitaire($this);
+        }
+
+        return $this;
+    }
+
+    public function removePersonnel(Personnel $personnel): self
+    {
+        if ($this->personnels->removeElement($personnel)) {
+            // set the owning side to null (unless already changed)
+            if ($personnel->getAnneeUniversitaire() === $this) {
+                $personnel->setAnneeUniversitaire(null);
             }
         }
 

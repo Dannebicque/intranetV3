@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/BaseController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/08/2021 14:18
+ * @lastUpdate 20/09/2021 22:03
  */
 
 namespace App\Controller;
@@ -103,11 +103,17 @@ class BaseController extends AbstractController
         return $this->isGranted('ROLE_ETUDIANT');
     }
 
+    /** @deprecated */
     public function getEtudiantAnneeUniversitaire()
     {
         $this->denyAccessUnlessGranted('ROLE_ETUDIANT');
 
         return null !== $this->getUser() ? $this->getUser()->getAnneeUniversitaire() : null;
+    }
+
+    public function getAnneeUniversitaire()
+    {
+        return $this->dataUserSession->getAnneeUniversitaire();
     }
 
     public function getEtudiantSemestre()
