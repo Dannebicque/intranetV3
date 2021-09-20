@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/AbstractEdt.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/07/2021 15:47
+ * @lastUpdate 18/09/2021 13:00
  */
 
 namespace App\Classes\Edt;
@@ -14,6 +14,9 @@ use App\Classes\Matieres\TypeMatiereManager;
 
 abstract class AbstractEdt
 {
+    public const SOURCE_EDT_INTRANET = 'intranet';
+    public const SOURCE_EDT_CELCAT = 'celcat';
+
     private TypeMatiereManager $typeMatiereManager;
 
     /**

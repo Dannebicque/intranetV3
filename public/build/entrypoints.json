@@ -11,12 +11,12 @@
         "/build/5322.986f1b60.js",
         "/build/8336.56fc07d6.js",
         "/build/1056.3f37b13b.js",
-        "/build/186.00bb65f5.js",
+        "/build/186.ca6d289f.js",
         "/build/app.cf008c4d.js"
       ],
       "css": [
         "/build/8336.1ab51809.css",
-        "/build/186.7aac1516.css"
+        "/build/186.3560e193.css"
       ]
     },
     "covid": {
@@ -52,12 +52,12 @@
         "/build/8771.1ffa9cd9.js",
         "/build/5322.986f1b60.js",
         "/build/8336.56fc07d6.js",
-        "/build/186.00bb65f5.js",
+        "/build/186.ca6d289f.js",
         "/build/agenda.204e1ab0.js"
       ],
       "css": [
         "/build/8336.1ab51809.css",
-        "/build/186.7aac1516.css"
+        "/build/186.3560e193.css"
       ]
     },
     "trombinoscope": {
@@ -344,7 +344,8 @@
         "/build/4093.500a9375.js",
         "/build/1870.fff3f253.js",
         "/build/8771.1ffa9cd9.js",
-        "/build/settings.63dc6fe1.js"
+        "/build/5322.986f1b60.js",
+        "/build/settings.682e1ab5.js"
       ]
     },
     "notes": {

@@ -1,0 +1,130 @@
+<div class="card">
+    <header class="card-header">
+        <h4 class="card-title">
+            {{ 'heading.edt.dashboard'|trans }} | {{ user_data.user.displayPr }} |
+                                                Semaine {{ edt.semaine }}
+                                                (semaine formation {{ edt.semaineFormation }})
+        </h4>
+        <div class="card-header-actions">
+            <ul class="card-controls">
+                <li class="dropdown">
+                    <a data-toggle="dropdown" href="#">
+                        <i class="fas fa-ellipsis-h rotate-90"
+                           data-provide="tooltip"
+                           title="Options d'export ou de synchronisation"></i>
+                        <span class="sr-only">Options d'export ou de synchronisation</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        {# todo:                          <a href="{{ path('edt_intervenant_export_semaine_courante', {semaine:12}) }}" #}
+                        {# class="dropdown-item"><i #}
+                        {# class="fa fa-file-pdf"></i>{{ 'exporter.semaine.courante.pdf'|trans }}</a> #}
+                        {# <a href="{{ path('edt_intervenant_export_annee') }}" #}
+                        {# class="dropdown-item"><i #}
+                        {# class="fas fa-file-export"></i>{{ 'edt.intervenant.export.annee'|trans }} #}
+                        {# </a> #}
+                        {# <a href="{{ path('edt_intervenant_export_ical') }}" #}
+                        {# class="dropdown-item"><i #}
+                        {# class="fas fa-file-export"></i>{{ 'edt.intervenant.export.ical'|trans }}</a> #}
+                        <a href="#"
+                           data-provide="modaler tooltip"
+                           data-url="{{ path('edt_affiche_ical') }}"
+                           data-placement="bottom"
+                           title="{{ 'atitle.lien_ical'|trans }}"
+                           data-title="{{ 'edt.intervenant.synchro.ical.heading'|trans }}"
+                           class="dropdown-item"><i
+                                    class="fas fa-file-export"></i>{{ 'edt.intervenant.synchro.ical'|trans }}
+                        </a>
+                        <a class="dropdown-item" href="{{ path('previsionnel_chronologique') }}"
+                           title="{{ 'atitle.service_chronologique'|trans }}"
+                        >
+                            <i class="fas fa-bell"></i>
+                            {{ 'chronologique'|trans }}
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </header>
+    <div class="card-body">
+        <div class="row justify-content-end">
+            <div class="col-md-3 col-sm-12 mt-2">
+                <div class="btn-group btn-block">
+                    {% if user_data.user.diplome.optSemainesVisibles > 2 or user_data.user.diplome
+                    .optSemainesVisibles == 0 %}
+                        <a class="btn btn-primary" href="{{ path('agenda_index', {semaine:edt.semainePrecedente,
+                            filtre:'etudiant'}) }}"
+                           data-provide="tooltip"
+                           title="Semaine précédente"
+                           id="semainePrecedente"><i
+                                    class="fa fa-caret-left"></i><span class="sr-only">Semaine précédente</span></a>
+                        <a class="btn btn-secondary" href="{{ path('agenda_index', {semaine:'now'|date('W')}) }}" data-provide="tooltip" title="Cette semaine"><i class="fa
+	fa-calendar"></i> Semaine</a>
+                        <a class="btn btn-primary" href="{{ path('agenda_index', {semaine:edt.semaineSuivante,filtre:'etudiant'}) }}"
+                           data-provide="tooltip"
+                           title="Semaine suivante"
+                           id="semaineSuivante"><i
+                                    class="fa fa-caret-right"></i><span class="sr-only">Semaine suivante</span></a>
+                    {% else %}
+                        {% if edt.semaine=='now'|date('W') %}
+                            <a class="btn btn-secondary" href="{{ path('agenda_index', {semaine:'now'|date('W')}) }}" data-provide="tooltip" title="Cette semaine"><i class="fa
+	fa-calendar"></i> Semaine</a>
+                            <a class="btn btn-primary" href="{{ path('agenda_index', {semaine:edt.semaineSuivante,filtre:'etudiant'}) }}"
+                               data-provide="tooltip"
+                               title="Semaine suivante"
+                               id="semaineSuivante"><i
+                                        class="fa fa-caret-right"></i><span class="sr-only">Semaine suivante</span></a>
+                        {% else %}
+                            <a class="btn btn-primary" href="{{ path('agenda_index', {semaine:edt.semainePrecedente,filtre:'etudiant'
+                            }) }}"
+                               data-provide="tooltip"
+                               title="Semaine précédente"
+                               id="semainePrecedente"><i
+                                        class="fa fa-caret-left"></i><span class="sr-only">Semaine précédente</span></a>
+                            <a class="btn btn-secondary" href="{{ path('agenda_index', {semaine:'now'|date('W')}) }}" data-provide="tooltip" title="Cette semaine"><i class="fa
+	fa-calendar"></i> Semaine</a>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-sm-12 hide-on-large mt-2">
+                <div class="btn-group btn-block">
+                    <a class="btn btn-primary w-25" href="#" data-provide="tooltip" title="Jour précédent"
+                       id="jourPrecedent"><i
+                                class="fa fa-caret-left"></i><span class="sr-only">Jour précédent</span></a>
+                    <a class="btn btn-secondary" href="" data-provide="tooltip" title="Aujourd'hui" id="jourCourant"><i
+                                class="fa
+	fa-calendar"></i> Aujourd'hui</a>
+                    <a class="btn btn-primary w-25" href="#" data-provide="tooltip" title="Jour suivant" id="jourSuivant"><i
+                                class="fa fa-caret-right"></i><span class="sr-only">Jour suivant</span></a>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="schedule-individual" aria-labelledby="schedule-heading">
+                    {{ include('edt/_header_edt2.html.twig') }}
+
+                    {% for ligne in 0..24 %}
+                        <h2 class="time-slot col-edt-hide" style="grid-row: time-{{ tabHeures[ligne][0] }};">{{ tabHeures[ligne][1] }}</h2>
+                        {% for j in 1..5 %}
+                            {% if edt.planning[j][ligne] is defined %}
+                                <div class="session {{ edt.planning[j][ligne].classCss }} {% if 'now'|date('N') != j %}col-edt-hide{% endif %}"
+                                     style="grid-column:track-{{ j }}; grid-row:time-{{ edt.planning[j][ligne].gridStart }} / time-{{ edt.planning[j][ligne].gridEnd }};">
+                                    <div class="session-body">
+                                        <span class="session-title">{{ edt.planning[j][ligne].matiere|raw }}</span>
+                                        <span class="session-time">{{ edt.planning[j][ligne].heureDebut|format_time('short') }} - {{ edt
+                                            .planning[j][ligne].heureFin|format_time('short') }}</span>
+                                        <span class="session-track">{{ edt.planning[j][ligne].groupe }}</span>
+                                        <span class="session-presenter">{{ edt.planning[j][ligne].personnel }}</span>
+                                        <span class="session-room">{{ edt.planning[j][ligne].salle }}</span>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

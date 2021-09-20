@@ -1,0 +1,193 @@
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetV3/assets/css/_edt.scss
+// @author davidannebicque
+// @project intranetV3
+// @lastUpdate 18/09/2021 09:22
+
+@media screen and (min-width:640px) {
+  .schedule-individual {
+    display: grid;
+    grid-gap: 1em;
+    grid-template-rows:
+      [tracks] auto
+      [time-0800] 1fr
+      [time-0830] 1fr
+      [time-0900] 1fr
+      [time-0930] 1fr
+      [time-1000] 1fr
+      [time-1030] 1fr
+      [time-1100] 1fr
+      [time-1130] 1fr
+      [time-1200] 1fr
+      [time-1230] 1fr
+      [time-1300] 1fr
+      [time-1330] 1fr
+      [time-1400] 1fr
+      [time-1430] 1fr
+      [time-1500] 1fr
+      [time-1530] 1fr
+      [time-1600] 1fr
+      [time-1630] 1fr
+      [time-1700] 1fr
+      [time-1730] 1fr
+      [time-1800] 1fr
+      [time-1830] 1fr
+      [time-1900] 1fr
+      [time-1930] 1fr
+      [time-2000] 1fr;
+    align-self: center;
+    grid-template-columns:
+      [times] 4em
+      [track-1-start] 1fr
+      [track-1-end track-2-start] 1fr
+      [track-2-end track-3-start] 1fr
+      [track-3-end track-4-start] 1fr
+      [track-4-end track-5-start] 1fr
+      [track-5-end];
+    grid-template-areas: "time jour1 jour2 jour3 jour4 jour5"
+    "time jour1a jour2a jour3a jour4a jour5a"
+    "time jour1b jour2b jour3b jour4b jour5b"
+    "time jour1c jour2c jour3c jour4c jour5c"
+
+    "time jour1d jour2d jour3d jour4d jour5d"
+    "time jour1e jour2e jour3e jour4e jour5e"
+    "time jour1f jour2f jour3f jour4f jour5f"
+    "time jour1g jour2g jour3g jour4g jour5g"
+
+    "time jour1h jour2h jour3h jour4h jour5h"
+    "time jour1i jour2i jour3i jour4i jour5i"
+    "time jour1j jour2j jour3j jour4j jour5j"
+
+    "time jour1k jour2k jour3k jour4k jour5k"
+    "time jour1l jour2l jour3l jour4l jour5l"
+    "time jour1m jour2m jour3m jour4m jour5m"
+
+    "time jour1n jour2n jour3n jour4n jour5n"
+    "time jour1o jour2o jour3o jour4o jour5o"
+    "time jour1p jour2p jour3p jour4p jour5p"
+
+    "time jour1q jour2q jour3q jour4q jour5q"
+    "time jour1r jour2r jour3r jour4r jour5r"
+    "time jour1s jour2s jour3s jour4s jour5s"
+
+    "time jour1t jour2t jour3t jour4t jour5t"
+    "time jour1u jour2u jour3u jour4u jour5u"
+    "time jour1v jour2v jour3v jour4v jour5v"
+
+    "time jour1w jour2w jour3w jour4w jour5w"
+    "time jour1x jour2x jour3x jour4x jour5x"
+    "time jour1y jour2y jour3y jour4y jour5y";
+  }
+}
+
+@for $i from 1 through 6 {
+  @each $lettre in a, c, e, g, i, k, m, o, q, s, u, w, y {
+    .jour#{$i}#{$lettre} {
+      grid-area: jour#{$i}#{$lettre};
+      background-color: var(--backgroundEdtVide);
+    }
+  }
+
+  @each $lettre in b, d, f, h, j, l, n, p, r, t, v, x {
+    .jour#{$i}#{$lettre} {
+      grid-area: jour#{$i}#{$lettre};
+      background-color: var(--backgroundEdtVidePair);
+    }
+  }
+}
+
+.track-slot {
+  display: none; /* hidden on small screens and browsers without grid support */
+}
+
+@supports( display:grid ) {
+  @media screen and (min-width:640px) {
+    .track-slot {
+      display: block;
+      padding: 10px 5px 5px;
+      background-color: var(--colorIUTComplementaire);
+      color: white;
+      text-align: center;
+      box-shadow: 0 2px 3px rgba(0, 0, 0, 0.03);
+    }
+  }
+}
+
+/* Small-screen & fallback styles */
+.session {
+  margin-bottom:  1em;
+}
+
+@supports( display:grid ) {
+  @media screen and (min-width: 640px) {
+    .session {
+      margin: 0;
+    }
+  }
+}
+
+/*************************
+ * VISUAL STYLES
+ * Design-y stuff ot particularly important to the demo
+ *************************/
+.session {
+  text-align: center;
+  padding: .5em;
+  border-radius: 2px;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.03);
+}
+
+.session-body {
+  display: block;
+  text-align: center;
+  height:80%
+}
+
+.session-footer {
+  display: block;
+  text-align: center;
+  height:20%
+}
+
+.session-body a {
+  color: white;
+}
+
+.session-title,
+.session-time,
+.session-track,
+.session-room,
+.session-link,
+.session-presenter {
+  display: block;
+}
+
+.session-title {
+  margin: 0;
+  font-size: 1em;
+}
+
+.time-slot {
+  margin: 0;
+  background-color: var(--colorIUTComplementaire);
+  padding: .25em;
+  color: white;
+  text-align: center;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.03);
+}
+
+.track-slot,
+.time-slot {
+  font-weight: bold;
+  font-size:.75em;
+}
+
+.track-all {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #ccc;
+  color: #000;
+  box-shadow: none;
+}
+

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/09/2021 19:05
+ * @lastUpdate 20/09/2021 22:06
  */
 
 /*
@@ -13,13 +13,11 @@
 
 namespace App\Classes\Edt;
 
-use App\Classes\Matieres\TypeMatiereManager;
-use App\DTO\EventEdt;
+use App\DTO\EvenementEdt;
 use App\Entity\Annee;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\CelcatEvent;
 use App\Entity\Constantes;
-use App\Entity\Departement;
 use App\Entity\Etudiant;
 use App\Entity\Groupe;
 use App\Entity\Personnel;
@@ -34,21 +32,17 @@ class MyEdtCelcat extends BaseEdt
     protected CelcatEventsRepository $celcatEventsRepository;
     private ?Annee $annee;
     private GroupeRepository $groupeRepository;
-    private TypeMatiereManager $typeMatiereManager;
-    private array $tab = [];
-    private array $matieres;
 
+    private array $matieres;
 
     public function __construct(
         CalendrierRepository $celcatCalendrierRepository,
         CelcatEventsRepository $celcatEventsRepository,
-        GroupeRepository $groupeRepository,
-        TypeMatiereManager $typeMatiereManager
+        GroupeRepository $groupeRepository
     ) {
         parent::__construct($celcatCalendrierRepository);
         $this->celcatEventsRepository = $celcatEventsRepository;
         $this->groupeRepository = $groupeRepository;
-        $this->typeMatiereManager = $typeMatiereManager;
     }
 
     public function initPersonnel(
@@ -66,8 +60,13 @@ class MyEdtCelcat extends BaseEdt
         return $this;
     }
 
-    public function initEtudiant(Etudiant $etudiant, AnneeUniversitaire $anneeUniversitaire, int $semaine = 0): self
-    {
+    public function initEtudiant(
+        Etudiant $etudiant,
+        AnneeUniversitaire $anneeUniversitaire,
+        int $semaine = 0,
+        array $matieres
+    ): self {
+        $this->matieres = $matieres;
         $this->user = $etudiant;
         $this->init($anneeUniversitaire, 'etudiant', $etudiant->getId(), $semaine);
         $this->calculEdt();
@@ -83,23 +82,20 @@ class MyEdtCelcat extends BaseEdt
     {
         if ('' !== $this->semaineFormationIUT) {
             switch ($this->filtre) {
-                case 'promo':
+                case Constantes::FILTRE_EDT_PROMO:
                     $this->groupes = $this->groupeRepository->findAllGroupes($this->semestre);
                     $pl = $this->celcatEventsRepository->findEdtSemestre($this->semestre, $this->semaineFormationIUT);
                     $this->planning = $this->transformePromo($pl);
                     break;
-                case 'prof':
+                case Constantes::FILTRE_EDT_PROF:
                     $pl = $this->celcatEventsRepository->findEdtProf($this->user->getNumeroHarpege(),
                         $this->semaineFormationIUT);
-                    $this->planning = $this->transformeProf($pl);
+                    $this->planning = $this->transformeIndividuel($pl);
                     break;
-                case 'etudiant':
+                case Constantes::FILTRE_EDT_ETUDIANT:
                     $pl = $this->celcatEventsRepository->findEdtEtu($this->user, $this->semaineFormationIUT);
-                    $this->annee = null !== $this->user->getSemestre() ? $this->user->getSemestre()->getAnnee() : null;
-
                     if (null !== $pl) {
-                        $this->planning = $this->transformeEtudiant($pl);
-                        $this->semestre = $this->user->getSemestre();
+                        $this->planning = $this->transformeIndividuel($pl);
                     } else {
                         return false;
                     }
@@ -131,7 +127,7 @@ class MyEdtCelcat extends BaseEdt
                 $tab[$jour][$dbtEdt][$groupe]['duree'] = $p->getFin()->sub($p->getDebut());
 
                 $tab[$jour][$dbtEdt][$groupe]['couleur'] = $this->getCouleur($p);
-                $tab[$jour][$dbtEdt][$groupe]['couleurTexte'] = $this->annee->getCouleurTexte();//todo: le code est dans le semestre...
+                $tab[$jour][$dbtEdt][$groupe]['couleurTexte'] = $this->annee->getCouleurTexte(); //todo: le code est dans le semestre...
 
                 switch ($p->getType()) {
                     case 'CM':
@@ -163,132 +159,50 @@ class MyEdtCelcat extends BaseEdt
         return $tab;
     }
 
-    private function transformeProf(array $pl): array
+    private function transformeIndividuel(array $pl): array
     {
+        //prof ou étudiant
         $tab = [];
 
         /** @var CelcatEvent $p */
         foreach ($pl as $p) {
-            $dbtEdt = $p->getDebut()->format('h:i');
-            $finEdt = $p->getFin()->format('h:i');
+            $evt = new EvenementEdt();
+            $evt->source = AbstractEdt::SOURCE_EDT_CELCAT;
+            $evt->id = $p->getId();
+            $evt->jour = $p->getJour() + 1;
+            $evt->heureDebut = $p->getDebut();
+            $evt->heureFin = $p->getFin();
+            $evt->matiere = $p->getLibModule();
+            $evt->salle = $p->getLibSalle();
+            $evt->personnel = $p->getLibPersonnel();
+            $evt->groupe = $p->getLibGroupe();
+            $evt->typeIdMatiere = $this->getTypeIdMatiere($p);
+            $evt->type_cours = $p->getType();
 
-            $tab[$p->getJour()][$dbtEdt]['duree'] = $p->getFin()->sub($p->getDebut());
+            $evt->gridStart = $p->getDebut()?->format('Hi');
+            $evt->gridEnd = $p->getFin()?->format('Hi');
 
-//            for ($i = $dbtEdt; $i < $finEdt; ++$i) {
-//                $tab[$p->getJour()][$i]['texte'] = 'xx';
-//            }
-
-            $tab[$p->getJour()][$dbtEdt]['texte'] = $p->getLibSalle() . '<br />' . $p->getLibModule() . '<br /> sem?! |  ' . $p->getLibGroupe();
-
-            $tab[$p->getJour()][$dbtEdt]['couleur'] = $this->getCouleurFromModule($p);
-            $tab[$p->getJour()][$dbtEdt]['pl'] = $p->getId();
-            $tab[$p->getJour()][$dbtEdt]['couleurTexte'] = '#ffffff';
-            // $this->calculTotal($p);
+            $evt->couleur = $this->getCouleurFromModule($p);
+            $dbtEdt = Constantes::TAB_HEURES_EDT_LIGNE_2[$p->getDebut()->format('Hi')];
+            $tab[$evt->jour][$dbtEdt] = $evt;
         }
 
         return $tab;
     }
 
-    private function transformeEtudiant(array $pl): array
-    {
-        /** @var CelcatEvent $p */
-        foreach ($pl as $p) {
-            $dbtEdt = $this->convertEdt(Constantes::TAB_HEURES_INDEX[$p->getDebut()->format('H:i:s')]);
-            $finEdt = $this->convertEdt(Constantes::TAB_HEURES_INDEX[$p->getFin()->format('H:i:s')]);
-            $eventEdt = new EventEdt();
-
-            $eventEdt->duree = $p->getFin()->diff($p->getDebut());
-            $eventEdt->debut = $dbtEdt;
-            $eventEdt->fin = $finEdt;
-
-            $eventEdt->texte = $p->getLibModule() . '<br />' . $p->getLibSalle() . ' | ' . $p->getLibGroupe() . ' <br /> ' . $p->getLibPersonnel();
-            $eventEdt->couleur = $this->getCouleur($p);
-            $eventEdt->id = $p->getId();
-            $eventEdt->couleurTexte = $this->annee->getCouleurTexte();//a prendre dans semestre
-            $eventEdt->format = 'ok';
-            for ($i = $dbtEdt; $i < $finEdt; ++$i) {
-                $evtEdtxx = new EventEdt();
-                $evtEdtxx->texte = 'xx';
-                $this->tab[$p->getJour()][$i] = $evtEdtxx;
-            }
-            $this->tab[$p->getJour()][$dbtEdt] = $eventEdt;
-
-            $this->valideFormat($p);
-        }
-
-        return $this->tab;
-    }
-
-    private function valideFormat(CelcatEvent $p)
-    {
-        $casedebut = Constantes::TAB_HEURES_INDEX[$p->getDebut()->format('H:i:s')];
-        $casefin = Constantes::TAB_HEURES_INDEX[$p->getFin()->format('H:i:s')];
-        $idDebut = $this->convertEdt($casedebut);
-        $duree = $casefin - $casedebut;
-
-        //regarde si le format entre dans une case ou dépasse. retourne 'ok' ou 'nok'
-        if (array_key_exists($casedebut, Constantes::TAB_CRENEAUX) && 0 === $duree % 3) {
-            $this->tab[$p->getJour()][$idDebut]->format = 'ok';
-
-            if (0 === $duree % 3) {
-                for ($i = 1; $i < $duree / 3; ++$i) {
-                    $this->tab[$p->getJour()][$this->convertEdt($casedebut + ($i * 3))] = $this->tab[$p->getJour()][$idDebut];
-                }
-            }
-        } else {
-            //pas sur un créneau classique pour le début
-            if (!array_key_exists($casedebut, Constantes::TAB_CRENEAUX)) {
-                $casedebut -= ($duree % 3);
-            }
-
-            if (11 === $casedebut || 12 === $casedebut) {
-                $casedebut = 10;
-            }
-
-            if (2 === $casedebut || 3 === $casedebut) {
-                $casedebut = 1;
-            }
-
-            if (!array_key_exists($casedebut, $this->tab[$p->getJour()])) {
-                $this->tab[$p->getJour()][$this->convertEdt($casedebut)] = $this->tab[$p->getJour()][$idDebut];
-                unset($this->tab[$p->getJour()][$idDebut]);
-            }
-
-            $this->tab[$p->getJour()][$this->convertEdt($casedebut)]->debut = Constantes::TAB_HEURES_INDEX[$p->getDebut()->format('H:i:s')];
-            $this->tab[$p->getJour()][$this->convertEdt($casedebut)]->format = 'nok';
-            $this->tab[$p->getJour()][$this->convertEdt($casedebut)]->fin = $casefin;
-        }
-    }
-
     private function getCouleurFromModule(CelcatEvent $p): string
     {
-        $matiere = $this->matieres[$p->getCodeModule()];
-        if (null !== $matiere && null !== $matiere->semestre) {
-            $annee = $matiere->semestre->getAnnee();
-            if (null !== $annee) {
-                return match ($p->getType()) {
-                    'CM', 'cm' => $matiere->semestre->getCouleur(),
-                    'TD', 'td' => $matiere->semestre->getCouleur(),
-                    'TP', 'tp' => $matiere->semestre->getCouleur(),
-                    default => 'CCCCCC',
-                };
+        if (array_key_exists($p->getCodeModule(), $this->matieres)) {
+            $matiere = $this->matieres[$p->getCodeModule()];
+            if (null !== $matiere && null !== $matiere->semestre) {
+                $annee = $matiere->semestre->getAnnee();
+                if (null !== $annee) {
+                    return $annee->getCouleur();
+                }
             }
         }
 
         return 'CCCCCC';
-    }
-
-    /**
-     * @return string
-     */
-    private function getCouleur(CelcatEvent $p): ?string
-    {
-        return match ($p->getType()) {
-            'CM', 'cm' => $this->annee->getCouleur(),
-            'TD', 'td' => $this->annee->getCouleur(),
-            'TP', 'tp' => $this->annee->getCouleur(),
-            default => 'CCCCCC',
-        };
     }
 
     public function initSemestre(int $semaine, Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): self
@@ -299,5 +213,16 @@ class MyEdtCelcat extends BaseEdt
         $this->calculEdt();
 
         return $this;
+    }
+
+    private function getTypeIdMatiere(CelcatEvent $p)
+    {
+        if (array_key_exists($p->getCodeModule(), $this->matieres)) {
+            $matiere = $this->matieres[$p->getCodeModule()];
+
+            return $matiere->getTypeIdMatiere();
+        }
+
+        return null;
     }
 }

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/CelcatEventsRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:30
+ * @lastUpdate 20/09/2021 22:06
  */
 
 namespace App\Repository;
@@ -17,10 +17,10 @@ use App\Entity\Matiere;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
 use App\Entity\Ue;
+use function array_key_exists;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use http\Exception\InvalidArgumentException;
-use function array_key_exists;
 
 /**
  * @method CelcatEvent|null find($id, $lockMode = null, $lockVersion = null)
