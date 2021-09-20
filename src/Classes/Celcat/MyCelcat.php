@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Celcat/MyCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/09/2021 22:20
+ * @lastUpdate 20/09/2021 22:22
  */
 
 /*
@@ -122,7 +122,7 @@ class MyCelcat
                         $event->setDebut(Tools::convertTimeToObject($debut[1]));
                         $event->setFin(Tools::convertTimeToObject($fin[1]));
                         $event->setSemaineFormation($semaine);
-                        $event->setType($this->convertUnicode($type));
+                        $event->setType(utf8_decode($type));
                         $event->setCodeModule(odbc_result($result, 7));
                         $event->setLibModule(utf8_encode(odbc_result($result, 8)));
                         $event->setCodePersonnel(odbc_result($result, 9));
