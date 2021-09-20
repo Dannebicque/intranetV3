@@ -4,12 +4,13 @@
                     </span>
     <div class="dropdown-menu dropdown-menu-right">
         {% for annee_u in annees_universitaire %}
-            <a class="dropdown-item"
-               href="{% if annee_u.active == true %}#{% else %}{% endif %}"
+            <a class="dropdown-item{% if annee_u.id != user_data.anneeUniversitaire.id %} changeAnneeUniversitaire{% endif %}"
+               href="#"
+               {% if annee_u.id != user_data.anneeUniversitaire.id %}data-annee="{{ annee_u.id }}"{% endif %}
                title="Changer d'année universitaire">
                 {% if annee_u.active == true %}
                     <i class="fas fa-long-arrow-alt-right"></i>
-                {% else%}
+                {% else %}
                     <i class="fas fa-random"></i>
                 {% endif %} {{ annee_u.displayAnneeUniversitaire }}
             </a>
