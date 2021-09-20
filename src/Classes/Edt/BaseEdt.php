@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/BaseEdt.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/09/2021 12:50
+ * @lastUpdate 18/09/2021 08:49
  */
 
 namespace App\Classes\Edt;
@@ -234,6 +234,7 @@ abstract class BaseEdt
 
     protected function calculSemaines(): array
     {
+        //déja fait dans le parent ??
         $allsemaine = $this->calendrierRepository->findByAnneeUniversitaire($this->anneeUniversitaire);
 
         $t = [];

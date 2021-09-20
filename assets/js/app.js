@@ -11,7 +11,7 @@ import $ from 'jquery'
 
 import PerfectScrollbar from 'perfect-scrollbar'
 import './validator-bs4'
-import {getDataOptions} from './util'
+import {getDataOptions, getParentByTagName} from './util'
 import './material'
 import './search'
 import './modaler'
@@ -33,6 +33,7 @@ import Table from '../components/table'
 import SelectComplete from '../components/SelectComplete'
 import SelectChangeWidget from '../components/SelectChangeWidget'
 import DatePicker from '../components/DatePicker'
+import {post} from './fetch'
 
 export const LANG = document.querySelector('html').getAttribute('lang')
 
@@ -68,6 +69,16 @@ window.addEventListener('load', function () { //le dom est chargé
     }
     // Then save the choice in localStorage
     localStorage.setItem('theme', theme)
+  })
+
+  document.querySelectorAll('.changeAnneeUniversitaire').forEach((elem) => {
+    elem.addEventListener('click', (e) => {
+      e.preventDefault()
+      console.log("coucou")
+      console.log(e.target.dataset.annee)
+      const el = getParentByTagName(e.target, 'a')
+      post(Routing.generate('settings_change_annee_universitaire'), {'annee_universitaire' : el.dataset.annee})
+    })
   })
 
   // If the current theme in localStorage is "dark"...

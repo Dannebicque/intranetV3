@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Matieres/TypeMatiereManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 19:05
+ * @lastUpdate 18/09/2021 20:02
  */
 
 namespace App\Classes\Matieres;
@@ -74,6 +74,17 @@ class TypeMatiereManager
         $t = [];
         foreach ($matieres as $matiere) {
             $t[$matiere->codeMatiere] = $matiere;
+        }
+
+        return $t;
+    }
+
+    public function tableauMatieresCodeApogee(Departement $departement): array
+    {
+        $matieres = $this->findByDepartement($departement);
+        $t = [];
+        foreach ($matieres as $matiere) {
+            $t[$matiere->codeElement] = $matiere;
         }
 
         return $t;
@@ -170,6 +181,17 @@ class TypeMatiereManager
     public function tableauApogeeDiplome(mixed $diplome): array
     {
         $matieres = $this->findByDiplome($diplome);
+        $t = [];
+        foreach ($matieres as $matiere) {
+            $t[$matiere->codeElement] = $matiere;
+        }
+
+        return $t;
+    }
+
+    public function tableauMatieresSemestreCodeApogee(Semestre $semestre)
+    {
+        $matieres = $this->findBySemestre($semestre);
         $t = [];
         foreach ($matieres as $matiere) {
             $t[$matiere->codeElement] = $matiere;

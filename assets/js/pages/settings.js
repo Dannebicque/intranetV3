@@ -3,7 +3,8 @@
 // @author davidannebicque
 // @project intranetV3
 // @lastUpdate 07/03/2021 21:05
-import {addCallout} from '../util'
+import {addCallout, getParentByTagName} from '../util'
+import {post} from '../fetch'
 
 $(document).on('change', '.departementParDefaut', function (e) {
   $.ajax({
@@ -15,6 +16,17 @@ $(document).on('change', '.departementParDefaut', function (e) {
     error: function (e) {
       addCallout('Erreur lors de la sauvegarde de la modification !', 'danger')
     }
+  })
+})
+
+document.querySelectorAll('.changeConfigurationPersonne').forEach((elem) => {
+  elem.addEventListener('change', (e) => {
+    e.preventDefault()
+    post(Routing.generate('settings_configuration_personnel'), {'field' : elem.name, 'value': elem.checked}).then(() => {
+      addCallout('Mofification enregistrée !', 'success')
+    }).catch(() => {
+      addCallout('Erreur lors de la sauvegarde de la modification !', 'danger')
+    })
   })
 })
 
