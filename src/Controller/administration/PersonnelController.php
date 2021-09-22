@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/PersonnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/07/2021 17:05
+ * @lastUpdate 22/09/2021 14:40
  */
 
 namespace App\Controller\administration;
@@ -17,11 +17,11 @@ use App\Entity\PersonnelDepartement;
 use App\Form\PersonnelType;
 use App\Repository\PersonnelDepartementRepository;
 use App\Repository\PersonnelRepository;
+use function count;
+use function in_array;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use function count;
-use function in_array;
 
 /**
  * @Route("/administration/personnel")
@@ -38,7 +38,7 @@ class PersonnelController extends BaseController
             [
                 'personnels' => $personnelRepository->findByType('permanent',
                     $this->dataUserSession->getDepartementId()),
-                'type'       => 'permanent',
+                'type' => 'permanent',
             ]
         );
     }
@@ -46,7 +46,6 @@ class PersonnelController extends BaseController
     /**
      * @Route("/ajax/load-liste/{type}", name="administration_personnel_load_liste", options={"expose"=true},
      *                                   requirements={"type": "permanent|vacataire"})
-     *
      */
     public function loadListe(PersonnelDepartementRepository $personnelRepository, $type): Response
     {
@@ -54,7 +53,7 @@ class PersonnelController extends BaseController
             'administration/personnel/_listePersonnel.html.twig',
             [
                 'personnels' => $personnelRepository->findByType($type, $this->dataUserSession->getDepartementId()),
-                'type'       => $type,
+                'type' => $type,
             ]
         );
     }
@@ -62,7 +61,6 @@ class PersonnelController extends BaseController
     /**
      * @Route("/export_{type}.{_format}", name="administration_personnel_export", methods="GET",
      *                             requirements={"_format"="csv|xlsx|pdf"}, options={"expose":true})
-     *
      */
     public function export(MyExport $myExport, PersonnelRepository $personnelRepository, $type, $_format): Response
     {
@@ -99,6 +97,10 @@ class PersonnelController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if (null === $personnel->getSlug()) {
+                $t = explode('@', $personnel->getMailUniv());
+                $personnel->setSlug($t[0]);
+            }
             $this->entityManager->persist($personnel);
 
             $personnelDepartement = new PersonnelDepartement($personnel, $this->dataUserSession->getDepartement());
@@ -112,7 +114,7 @@ class PersonnelController extends BaseController
 
         return $this->render('administration/personnel/new.html.twig', [
             'personnel' => $personnel,
-            'form'      => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 
@@ -148,7 +150,7 @@ class PersonnelController extends BaseController
 
         return $this->render('administration/personnel/edit.html.twig', [
             'personnel' => $personnel,
-            'form'      => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 
@@ -220,8 +222,7 @@ class PersonnelController extends BaseController
         Request $request,
         PersonnelDepartementRepository $personnelDepartementRepository,
         Personnel $personnel
-    ): Response
-    {
+    ): Response {
         $droit = $request->request->get('droit');
         $pf = $personnelDepartementRepository->findByPersonnelDepartement($personnel,
             $this->dataUserSession->getDepartement());
