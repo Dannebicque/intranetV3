@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/PersonnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/09/2021 14:40
+ * @lastUpdate 22/09/2021 14:42
  */
 
 namespace App\Controller\administration;
@@ -97,7 +97,7 @@ class PersonnelController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if (null === $personnel->getSlug()) {
+            if ($personnel->getMailUniv() !== null) {
                 $t = explode('@', $personnel->getMailUniv());
                 $personnel->setSlug($t[0]);
             }
