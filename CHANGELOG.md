@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.18](https://github.com/Dannebicque/intranetV3/compare/v3.1.17...v3.1.18) (2021-09-22)
+
+
+### Bug Fixes
+
+* Filtre par année universitaire ([ecc513b](https://github.com/Dannebicque/intranetV3/commit/ecc513be15ab4915cb56aee64d8434e2e1b5db4a))
+* Génération du slug pour les personnels ([a5ca277](https://github.com/Dannebicque/intranetV3/commit/a5ca2771b520556f7ce139a119fe8149ca2b07a4))
+* Unicode lors de la synchro celcat ([c94ee29](https://github.com/Dannebicque/intranetV3/commit/c94ee29e0ae6bed7934b04eece5dbb11118b9573))
+* Unicode lors de la synchro celcat ([ed90e9b](https://github.com/Dannebicque/intranetV3/commit/ed90e9bbc6463b4108fbef423c4e29f52a44f379))
+* Unicode lors de la synchro celcat ([08a39c6](https://github.com/Dannebicque/intranetV3/commit/08a39c6f635a4333717a48283c09936c0771d932))
+
 ### [3.1.17](https://github.com/Dannebicque/intranetV3/compare/v3.1.16...v3.1.17) (2021-09-20)
 
 
