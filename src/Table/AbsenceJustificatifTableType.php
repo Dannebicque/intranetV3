@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/AbsenceJustificatifTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 15/09/2021 20:52
+ * @lastUpdate 22/09/2021 09:11
  */
 
 namespace App\Table;
@@ -199,9 +199,9 @@ class AbsenceJustificatifTableType extends TableType
             'query' => function(QueryBuilder $qb, array $formData) {
                 $qb->innerJoin(Etudiant::class, 'etu', 'WITH', 'e.etudiant = etu.id')
                     ->where('etu.semestre = :semestre')
-                    //    ->andWhere('e.anneeUniversitaire = :anneeuniversitaire')
-                    ->setParameter('semestre', $this->semestre->getId());
-                //    ->setParameter('anneeuniversitaire', $this->anneeUniversitaire->getId());
+                    ->andWhere('e.anneeUniversitaire = :anneeuniversitaire')
+                    ->setParameter('semestre', $this->semestre->getId())
+                    ->setParameter('anneeuniversitaire', $this->anneeUniversitaire->getId());
 
                 if (isset($formData['search'])) {
                     $qb->andWhere('LOWER(etu.nom) LIKE :search');
