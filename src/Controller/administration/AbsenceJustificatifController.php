@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/AbsenceJustificatifController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/09/2021 16:51
+ * @lastUpdate 23/09/2021 09:13
  */
 
 namespace App\Controller\administration;
@@ -39,7 +39,8 @@ class AbsenceJustificatifController extends BaseController
     ): Response {
 
         $table = $this->createTable(AbsenceJustificatifTableType::class, [
-            'semestre' => $semestre
+            'semestre' => $semestre,
+            'anneeUniversitaire' => $this->getAnneeUniversitaire()
         ]);
 
         $table->handleRequest($request);
