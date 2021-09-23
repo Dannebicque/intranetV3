@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.19](https://github.com/Dannebicque/intranetV3/compare/v3.1.18...v3.1.19) (2021-09-23)
+
+
+### Features
+
+* Affichage du bouton action dans les profils étudiants pour les assistantes ([387296d](https://github.com/Dannebicque/intranetV3/commit/387296dde0249281fe5f80387c02c7b07321e90f))
+
+
+### Bug Fixes
+
+* Génération du slug pour les personnels ([5d4a61a](https://github.com/Dannebicque/intranetV3/commit/5d4a61a53ea2d3cdbe6ad27d222c1ab02c84b98e))
+* Liste des justificatifs selon l'année universitaire de l'utilisateur ([fcd1463](https://github.com/Dannebicque/intranetV3/commit/fcd1463eb330ac2b338b5fc00c1d38595c50606b))
+
 ### [3.1.18](https://github.com/Dannebicque/intranetV3/compare/v3.1.17...v3.1.18) (2021-09-22)
 
 
