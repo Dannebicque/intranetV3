@@ -9,14 +9,14 @@
         "/build/1870.fff3f253.js",
         "/build/8771.1ffa9cd9.js",
         "/build/5322.986f1b60.js",
-        "/build/8336.56fc07d6.js",
+        "/build/934.2706c13e.js",
         "/build/1056.3f37b13b.js",
-        "/build/186.ca6d289f.js",
-        "/build/app.cf008c4d.js"
+        "/build/186.7c6ede80.js",
+        "/build/app.8e3efe13.js"
       ],
       "css": [
-        "/build/8336.1ab51809.css",
-        "/build/186.3560e193.css"
+        "/build/934.1ab51809.css",
+        "/build/186.6b35e136.css"
       ]
     },
     "covid": {
@@ -29,6 +29,13 @@
         "/build/6361.ea5f4034.js",
         "/build/1953.94b7676c.js",
         "/build/covid.8a5883de.js"
+      ]
+    },
+    "tinyMce": {
+      "js": [
+        "/build/runtime.e815f202.js",
+        "/build/8135.d89c0238.js",
+        "/build/tinyMce.3b7fa754.js"
       ]
     },
     "apc": {
@@ -51,13 +58,13 @@
         "/build/1870.fff3f253.js",
         "/build/8771.1ffa9cd9.js",
         "/build/5322.986f1b60.js",
-        "/build/8336.56fc07d6.js",
-        "/build/186.ca6d289f.js",
-        "/build/agenda.204e1ab0.js"
+        "/build/934.2706c13e.js",
+        "/build/186.7c6ede80.js",
+        "/build/agenda.ac418747.js"
       ],
       "css": [
-        "/build/8336.1ab51809.css",
-        "/build/186.3560e193.css"
+        "/build/934.1ab51809.css",
+        "/build/186.6b35e136.css"
       ]
     },
     "trombinoscope": {
@@ -195,7 +202,7 @@
       "js": [
         "/build/runtime.e815f202.js",
         "/build/9755.cbb1b4d2.js",
-        "/build/sadm.personnels.fdf0b392.js"
+        "/build/sadm.personnels.3af558af.js"
       ]
     },
     "adm.rattrapages": {
@@ -261,7 +268,8 @@
         "/build/4093.500a9375.js",
         "/build/1870.fff3f253.js",
         "/build/8771.1ffa9cd9.js",
-        "/build/adm.stage_courrier.048caaf4.js"
+        "/build/8135.d89c0238.js",
+        "/build/adm.stage_courrier.9e195425.js"
       ]
     },
     "adm.etudiant_groupe": {

@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/app.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/09/2021 17:31
+// @lastUpdate 23/09/2021 12:40
 
 import '@fortawesome/fontawesome-free/scss/fontawesome.scss'
 import '@fortawesome/fontawesome-free/scss/solid.scss'
@@ -18,12 +18,6 @@ import './modaler'
 
 require('bootstrap')
 
-import tinymce from 'tinymce/tinymce.min'
-import 'tinymce/plugins/lists/plugin.min'
-import 'tinymce/icons/default/icons.min'
-// A theme is also required
-import 'tinymce/themes/silver/theme.min'
-import '../vendor/tinyMceLang/fr_FR'
 
 import '../css/app.scss'
 
@@ -171,19 +165,6 @@ function updateInterface () {
     })
   }
 
-  if (document.getElementsByClassName('tinyMce').length > 0) {
-    tinymce.init({
-      selector: '.tinyMce',
-      height: 300,
-      menubar: false,
-      plugins: 'lists',
-      entity_encoding: 'raw',
-      encoding: 'UTF-8',
-      language: 'fr_FR',
-      content_css: 'default',
-      toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat'
-    })
-  }
 
   //notifications
   $(document).on('click', '#marquerNotificationsRead', function (e) {

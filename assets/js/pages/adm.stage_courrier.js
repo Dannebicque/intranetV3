@@ -2,8 +2,9 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.stage_courrier.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/06/2021 08:24
+// @lastUpdate 21/09/2021 10:25
 
+import '../tinyMce'
 import {addCallout} from '../util'
 // import $ from 'jquery'
 import Swal from 'sweetalert2'
@@ -12,10 +13,7 @@ let ed_courrier, ed_ETAT_STAGE_AUTORISE, ed_ETAT_STAGE_DEPOSE, ed_ETAT_STAGE_VAL
   ed_ETAT_STAGE_INCOMPLET,
   ed_ETAT_STAGE_CONVENTION_IMPRIMEE, ed_ETAT_STAGE_CONVENTION_ENVOYEE, ed_ETAT_STAGE_CONVENTION_RECUE
 
-// let tabEd = {}
-
 let fields = [
-
   '{{civilite_court_etudiant}}',
   '{{civilite_etudiant}}',
   '{{prenom_etudiant}}',
@@ -77,18 +75,6 @@ $(document).ready(function () {
   ed_ETAT_STAGE_CONVENTION_ENVOYEE = loadTinyMce('ETAT_STAGE_CONVENTION_ENVOYEE')
   ed_ETAT_STAGE_CONVENTION_RECUE = loadTinyMce('ETAT_STAGE_CONVENTION_RECUE')
   ed_courrier = loadTinyMce('courrier')
-
-  // tabEd = {
-  //   'ed_ETAT_STAGE_AUTORISE': ed_ETAT_STAGE_AUTORISE,
-  //   'ed_ETAT_STAGE_DEPOSE': ed_ETAT_STAGE_DEPOSE,
-  //   'ed_ETAT_STAGE_VALIDE': ed_ETAT_STAGE_VALIDE,
-  //   'ed_ETAT_STAGE_REFUS': ed_ETAT_STAGE_REFUS,
-  //   'ed_ETAT_STAGE_INCOMPLET': ed_ETAT_STAGE_INCOMPLET,
-  //   'ed_ETAT_STAGE_CONVENTION_IMPRIMEE': ed_ETAT_STAGE_CONVENTION_IMPRIMEE,
-  //   'ed_ETAT_STAGE_CONVENTION_ENVOYEE': ed_ETAT_STAGE_CONVENTION_ENVOYEE,
-  //   'ed_ETAT_STAGE_CONVENTION_RECUE': ed_ETAT_STAGE_CONVENTION_RECUE,
-  //   'ed_courrier': ed_courrier
-  // }
 })
 
 $(document).on('click', '.enregistreModeleMail', function () {

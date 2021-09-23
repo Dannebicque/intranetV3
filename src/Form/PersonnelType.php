@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/PersonnelType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/08/2021 18:43
+ * @lastUpdate 23/09/2021 12:38
  */
 
 namespace App\Form;
@@ -34,7 +34,7 @@ class PersonnelType extends AbstractType
             ])
             ->add('nom', TextType::class, ['label' => 'nom'])
             ->add('prenom', TextType::class, ['label' => 'prenom'])
-            ->add('date_naissance', DatePickerType::class, ['label' => 'date_naissance'])
+            ->add('date_naissance', DatePickerType::class, ['label' => 'date_naissance', 'required' => false])
             ->add('initiales', TextType::class, ['label' => 'initiales', 'required' => false])
             ->add('photoFile', VichFileType::class, ['label' => 'photo', 'required' => false])
             ->add('username', TextType::class, ['label' => 'username'])
@@ -50,6 +50,7 @@ class PersonnelType extends AbstractType
                     'choice.prce' => Personnel::PRCE,
                     'choice.vacataire' => Personnel::VACATAIRE,
                     'choice.ater' => Personnel::ATER,
+                    'choice.administratif' => Personnel::ADMINISTRATIF,
                 ],
                 'choice_translation_domain' => 'form',
                 'expanded' => true,
