@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/css/_edt.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 18/09/2021 09:22
+// @lastUpdate 23/09/2021 12:42
 
 @media screen and (min-width:640px) {
   .schedule-individual {
@@ -133,20 +133,18 @@
 .session {
   text-align: center;
   padding: .5em;
-  border-radius: 2px;
+  padding-bottom: 0;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.03);
 }
 
 .session-body {
-  display: block;
   text-align: center;
   height:80%
 }
 
 .session-footer {
-  display: block;
-  text-align: center;
-  height:20%
+
+  margin: -0.5em;
 }
 
 .session-body a {
