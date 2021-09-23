@@ -43,6 +43,7 @@ choice:
   prag: PRAG
   prce: PRCE
   prp: PRP
+  administratif: Personnel Administratif
   ri: 'Relations Internationales'
   suivi: Suivi
   vacataire: Vacataire

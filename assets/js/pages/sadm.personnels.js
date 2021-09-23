@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/sadm.personnels.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/09/2021 12:08
+// @lastUpdate 23/09/2021 09:58
 
 $(document).on('keyup', '#sa_login_urca', function () {
   const departement = $(this).data('departement')
@@ -100,6 +100,9 @@ $(document).on('click', '#searchLdap', function (e) {
     success: function (data) {
       $('#personnel_mail_univ').val(data.mail)
       $('#personnel_username').val(data.login)
+      $('#personnel_nom').val(data.nom)
+      $('#personnel_prenom').val(data.prenom)
+      $('#personnel_date_naissance').val(data.dateNaissance)
     }
   })
 })
