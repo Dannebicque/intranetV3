@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.20](https://github.com/Dannebicque/intranetV3/compare/v3.1.19...v3.1.20) (2021-09-23)
+
+
+### Features
+
+* Pré-remplissage des nom, prénom et date de naissance des personnels à partir du LDAP. Ajout du type d'utilisateur TEC. ([98a2326](https://github.com/Dannebicque/intranetV3/commit/98a2326cea3bf2ca7ba8ac2810755d3662dbac10))
+
 ### [3.1.19](https://github.com/Dannebicque/intranetV3/compare/v3.1.18...v3.1.19) (2021-09-23)
 
 
