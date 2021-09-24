@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/DepartementType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/08/2021 11:53
+ * @lastUpdate 24/09/2021 21:20
  */
 
 namespace App\Form;
@@ -35,10 +35,10 @@ class DepartementType extends AbstractType
     {
         $builder
             ->add('libelle', TextType::class, [
-                'label' => 'libelle',
+                'label' => 'label.libelle',
             ])
             ->add('logoFile', VichFileType::class, [
-                'label' => 'logoFile',
+                'label' => 'label.logoFile',
                 'download_label' => 'apercu',
                 'allow_delete' => false,
             ])
@@ -51,75 +51,75 @@ class DepartementType extends AbstractType
                         range((int)date('Y') - 2, (int)date('Y') + 4),
                         range((int)date('Y') - 2, (int)date('Y') + 4)
                     ),
-                    'label' => 'opt_annee_previsionnel',
+                    'label' => 'label.opt_annee_previsionnel',
                 ]
             )
             ->add('tel_contact', TextType::class, [
-                'label' => 'tel_contact',
+                'label' => 'label.tel_contact',
                 'required' => false,
             ])
             ->add('fax', TextType::class, [
-                'label' => 'fax',
+                'label' => 'label.fax',
                 'required' => false,
             ])
             ->add('couleur', ColorType::class, [
-                'label' => 'couleur',
+                'label' => 'label.couleur',
                 'required' => false,
             ])
             ->add('site_web', TextType::class, [
-                'label' => 'site_web',
+                'label' => 'label.site_web',
                 'required' => false,
             ])
             ->add('description', TextareaType::class, [
-                'label' => 'description',
+                'label' => 'label.description',
             ])
             ->add(
                 'opt_update_celcat',
                 YesNoType::class,
                 [
-                    'label' => 'opt_update_celcat',
+                    'label' => 'label.opt_update_celcat',
                 ]
             )
             ->add(
                 'opt_agence',
                 YesNoType::class,
                 [
-                    'label' => 'opt_agence',
+                    'label' => 'label.opt_agence',
                 ]
             )
             ->add(
                 'opt_materiel',
                 YesNoType::class,
                 [
-                    'label' => 'opt_materiel',
+                    'label' => 'label.opt_materiel',
                 ]
             )
             ->add(
                 'opt_edt',
                 YesNoType::class,
                 [
-                    'label' => 'opt_edt',
+                    'label' => 'label.opt_edt',
                 ]
             )
             ->add(
                 'opt_stage',
                 YesNoType::class,
                 [
-                    'label' => 'opt_stage',
+                    'label' => 'label.opt_stage',
                 ]
             )
             ->add(
                 'opt_synthese',
                 YesNoType::class,
                 [
-                    'label' => 'opt_synthese',
+                    'label' => 'label.opt_synthese',
                 ]
             )
             ->add(
                 'opt_messagerie',
                 YesNoType::class,
                 [
-                    'label' => 'opt_messagerie',
+                    'label' => 'label.opt_messagerie',
                 ]
             )
             ->add('respri', EntityCompleteType::class, [
@@ -128,13 +128,13 @@ class DepartementType extends AbstractType
                 'query_builder' => static function(PersonnelRepository $personnelRepository) {
                     return $personnelRepository->findAllOrder();
                 },
-                'label' => 'respri',
+                'label' => 'label.respri',
                 'required' => false,
             ])
             ->add('ufr', EntityType::class, [
                 'class' => Ufr::class,
                 'choice_label' => 'libelle',
-                'label' => 'ufr',
+                'label' => 'label.ufr',
             ]);
     }
 

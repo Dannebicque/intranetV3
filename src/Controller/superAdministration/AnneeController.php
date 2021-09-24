@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/AnneeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/07/2021 17:05
+ * @lastUpdate 24/09/2021 21:02
  */
 
 namespace App\Controller\superAdministration;
@@ -57,7 +57,6 @@ class AnneeController extends BaseController
             }
 
             return $this->render('structure/annee/new.html.twig', [
-                'annee' => $annee,
                 'form' => $form->createView(),
             ]);
         }

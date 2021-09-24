@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/structure/DiplomeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:30
+ * @lastUpdate 24/09/2021 21:05
  */
 
 namespace App\Controller\administration\structure;
@@ -48,7 +48,6 @@ class DiplomeController extends BaseController
         }
 
         return $this->render('structure/diplome/new.html.twig', [
-            'diplome' => $diplome,
             'form'    => $form->createView(),
         ]);
     }

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/AnneeType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/07/2021 17:25
+ * @lastUpdate 24/09/2021 21:20
  */
 
 namespace App\Form;
@@ -36,10 +36,10 @@ class AnneeType extends AbstractType
 
         $builder
             ->add('libelle', TextType::class, [
-                'label' => 'libelle'
+                'label' => 'label.libelle',
             ])
             ->add('libelle_long', TextType::class, [
-                'label' => 'libelle_long'
+                'label' => 'label.libelle_long',
             ])
             ->add('diplome', EntityType::class, [
                 'class' => Diplome::class,
@@ -49,27 +49,27 @@ class AnneeType extends AbstractType
                 'query_builder' => function(DiplomeRepository $diplomeRepository) {
                     return $diplomeRepository->findByDepartementBuilder($this->departement);
                 },
-                'label' => 'diplome'
+                'label' => 'label.diplome',
             ])
             ->add('codeEtape', TextType::class, [
-                'label' => 'code_etape'
+                'label' => 'label.code_etape',
             ])
             ->add('codeVersion', TextType::class, [
-                'label' => 'code_version'
+                'label' => 'label.code_version',
             ])
             ->add('ordre', TextType::class, [
-                'label' => 'ordre'
+                'label' => 'label.ordre',
             ])
             ->add('couleur', ChoiceType::class, [
-                'label' => 'couleur',
+                'label' => 'label.couleur',
                 'required' => true,
-                'choices' => Constantes::COULEURS
+                'choices' => Constantes::COULEURS,
             ])
             ->add('optAlternance', YesNoType::class, [
-                'label' => 'opt_alternance'
+                'label' => 'label.opt_alternance',
             ])
             ->add('actif', YesNoType::class, [
-                'label' => 'annee_active'
+                'label' => 'label.annee_active',
             ]);
     }
 

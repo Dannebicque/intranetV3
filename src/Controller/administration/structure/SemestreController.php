@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/structure/SemestreController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:48
+ * @lastUpdate 24/09/2021 21:04
  */
 
 namespace App\Controller\administration\structure;
@@ -50,7 +50,6 @@ class SemestreController extends BaseController
             }
 
             return $this->render('structure/semestre/new.html.twig', [
-                'semestre' => $semestre,
                 'form'     => $form->createView(),
             ]);
         }

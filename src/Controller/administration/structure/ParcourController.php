@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/structure/ParcourController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:48
+ * @lastUpdate 24/09/2021 21:05
  */
 
 namespace App\Controller\administration\structure;
@@ -49,7 +49,6 @@ class ParcourController extends BaseController
             }
 
             return $this->render('structure/parcour/new.html.twig', [
-                'parcour' => $parcour,
                 'form'    => $form->createView(),
             ]);
         }
