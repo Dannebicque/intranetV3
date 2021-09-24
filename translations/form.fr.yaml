@@ -129,6 +129,9 @@ initiales: Initiales
 j: Jour
 Jour: Jour
 label:
+  typeGroupe: Type de groupe
+  groupe_parent: Groupe parent
+  annee_active: 'Année active'
   dateRange: 'Période d''affichage'
   dateRange.interruption: 'Périodes d''interruption du stage'
   dateRange.periode: 'Période de stage (début / fin)'
