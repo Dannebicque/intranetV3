@@ -6,29 +6,19 @@
     <div class="card-body">
         {% form_theme form 'form/my-form.html.twig' %}
         {{ form_start(form) }}
-        <table class="table">
-            <thead>
-            <tr>
-                <th>Libellé</th>
-                <th>Ordre</th>
-                <th>Parent</th>
-                <th>Code Apogée</th>
-                <th>Type Groupe</th>
-                <th>Parcours</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
+        <table class="table table-borderless">
             <tbody>
-
             <tr>
-                <td>{{ form_widget(form.libelle) }}</td>
-                <td>{{ form_widget(form.ordre) }}</td>
-                <td>{{ form_widget(form.parent) }}</td>
-                <td>{{ form_widget(form.codeApogee) }}</td>
-                <td>{{ form_widget(form.typeGroupe) }}</td>
-                <td>{{ form_widget(form.parcours) }}</td>
-                <td>
-                    <button class="btn btn-success" id="addGroupe" data-semestre="{{ semestre.id }}">{{ button_label|default('label.save'|trans) }}</button>
+                <td>{{ form_row(form.libelle) }}</td>
+                <td>{{ form_row(form.ordre) }}</td>
+                <td>{{ form_row(form.parent) }}</td>
+                <td>{{ form_row(form.codeApogee) }}</td>
+                <td>{{ form_row(form.typeGroupe) }}</td>
+                <td>{{ form_row(form.parcours) }}</td>
+            </tr>
+            <tr>
+                <td colspan="6">
+                    <button class="btn btn-success btn-block" id="addGroupe" data-semestre="{{ semestre.id }}">{{ button_label|default('label.save'|trans) }}</button>
                 </td>
             </tr>
             </tbody>

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Groupe.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/09/2021 17:35
+ * @lastUpdate 24/09/2021 22:20
  */
 
 namespace App\Entity;
@@ -35,7 +35,7 @@ class Groupe extends BaseEntity
      * @ORM\Column(type="string", length=50, nullable=true)
      * @Groups({"groupe_administration"})
      */
-    private ?string $codeApogee;
+    private ?string $codeApogee = '';
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Groupe", inversedBy="enfants")
