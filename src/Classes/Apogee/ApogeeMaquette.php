@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Apogee/ApogeeMaquette.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/09/2021 11:21
+ * @lastUpdate 24/09/2021 18:56
  */
 
 namespace App\Classes\Apogee;
@@ -170,7 +170,7 @@ class ApogeeMaquette
         return $ue;
     }
 
-    public function createMatiere($elp, $ue, Ppn $pn)
+    public function createMatiere($elp, $ue, ?Ppn $pn)
     {
         //ressource
         $res = new Matiere();
