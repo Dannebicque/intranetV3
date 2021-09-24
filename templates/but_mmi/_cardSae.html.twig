@@ -4,7 +4,7 @@
             <span class="badge badge-primary">{{ sae
                 .semestre.libelle }}</span></h4>
         <div class="card-body">
-            <p>{{ sae.description|markdown_to_html }}</p>
+            <p>{{ sae.description != null ? sae.description|markdown_to_html : '' }}</p>
             <p>
                 <a data-provide="tooltip"
                    href="{{ path('but_fiche_sae',
