@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/ApogeeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/09/2021 18:56
+ * @lastUpdate 24/09/2021 19:09
  */
 
 namespace App\Controller\superAdministration;
@@ -241,7 +241,8 @@ class ApogeeController extends BaseController
 
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'synchro.maquette.apogee.ok');
 
-        return $this->redirectToRoute('sa_structure_index');
+        return $this->redirectToRoute('sa_structure_index',
+            ['departement' => $annee->getDiplome()->getDepartement()->getId()]);
     }
 
     /**
@@ -304,8 +305,8 @@ class ApogeeController extends BaseController
 
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'synchro.maquette.apogee.ok');
 
-        return $this->redirectToRoute('sa_structure_index');
-
+        return $this->redirectToRoute('sa_structure_index',
+            ['departement' => $semestre->getDiplome()->getDepartement()->getId()]);
     }
 
     /**
@@ -345,6 +346,7 @@ class ApogeeController extends BaseController
 
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'synchro.maquette.apogee.ok');
 
-        return $this->redirectToRoute('sa_structure_index');
+        return $this->redirectToRoute('sa_structure_index',
+            ['departement' => $ue->getDiplome()->getDepartement()->getId()]);
     }
 }
