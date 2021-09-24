@@ -4,13 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Structure/ApogeeImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/09/2021 11:21
+ * @lastUpdate 24/09/2021 19:35
  */
 
 namespace App\Classes\Structure;
 
 use App\Classes\Apogee\Apogee;
-use App\Classes\Matieres\TypeMatiereManager;
 use App\Entity\Annee;
 use App\Entity\Semestre;
 use App\Entity\Ue;
@@ -18,35 +17,27 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class ApogeeImport extends Apogee
 {
-    private typeMatiereManager $typeMatiereManager;
-
     public function __construct(
-        ParameterBagInterface $parameterBag,
-        typeMatiereManager $typeMatiereManager
+        ParameterBagInterface $parameterBag
     ) {
         parent::__construct($parameterBag);
-        $this->typeMatiereManager = $typeMatiereManager;
     }
 
     public function getElementsFromAnnee(Annee $annee)
     {
-        echo $annee->getCodeEtape();
         $this->connect();
         $stid = $this->conn->prepare('SELECT COD_ETP, COD_LSE FROM VET_REGROUPE_LSE WHERE COD_ETP=:codeannee AND COD_VRS_VET=:version');
         $stid->execute([':codeannee' => trim($annee->getCodeEtape()), ':version' => trim($annee->getCodeVersion())]);
         //permet de récupérer le code de la liste generale (L5RV1GEN)
         $liste = $stid->fetch();
-        echo '-' . $liste['COD_LSE'];
         $listeElp = $this->conn->prepare('SELECT COD_LSE, COD_ELP FROM LSE_REGROUPE_ELP WHERE COD_LSE=:codeListe');
         $listeElp->execute([':codeListe' => trim($liste['COD_LSE'])]);
         $elp = $listeElp->fetch();
 
         $listeElpsSemComp = $this->conn->prepare('SELECT * FROM ELP_REGROUPE_LSE WHERE COD_ELP=:codeliste');
-        echo '--' . $elp['COD_ELP'];
         $listeElpsSemComp->execute([':codeListe' => trim($elp['COD_ELP'])]);
 
         $elpSemComp = $listeElpsSemComp->fetch();
-        echo '---' . $elpSemComp['COD_LSE'];
         $stid = $this->conn->prepare('SELECT LSE_REGROUPE_ELP.COD_LSE,  ELEMENT_PEDAGOGI.COD_ELP, ELEMENT_PEDAGOGI.COD_NEL,  ELEMENT_PEDAGOGI.LIB_ELP, ELEMENT_PEDAGOGI.LIC_ELP FROM LSE_REGROUPE_ELP INNER JOIN ELEMENT_PEDAGOGI ON ELEMENT_PEDAGOGI.COD_ELP=LSE_REGROUPE_ELP.COD_ELP WHERE COD_LSE=:elpSemComp');
 
         $stid->execute([':elpSemComp' => trim($elpSemComp['COD_LSE'])]);
@@ -56,13 +47,11 @@ class ApogeeImport extends Apogee
 
     public function getElementsFromAnneeDut(Annee $annee)
     {
-        echo $annee->getCodeEtape();
         $this->connect();
         $stid = $this->conn->prepare('SELECT COD_ETP, COD_LSE FROM VET_REGROUPE_LSE WHERE COD_ETP=:codeannee AND COD_VRS_VET=:version');
         $stid->execute([':codeannee' => trim($annee->getCodeEtape()), ':version' => trim($annee->getCodeVersion())]);
         //permet de récupérer le code de la liste generale (L5RV1GEN)
         $liste = $stid->fetch();
-        echo '-' . $liste['COD_LSE'];
         $listeElp = $this->conn->prepare('SELECT LSE_REGROUPE_ELP.COD_LSE, ELEMENT_PEDAGOGI.COD_ELP, ELEMENT_PEDAGOGI.LIB_ELP FROM LSE_REGROUPE_ELP INNER JOIN ELEMENT_PEDAGOGI ON ELEMENT_PEDAGOGI.COD_ELP=LSE_REGROUPE_ELP.COD_ELP WHERE COD_LSE=:codeListe');
         $listeElp->execute([':codeListe' => trim($liste['COD_LSE'])]); //récupère le semestre
 
@@ -74,11 +63,9 @@ class ApogeeImport extends Apogee
     {
         $this->connect();
         $listeElpsSemComp = $this->conn->prepare('SELECT * FROM ELP_REGROUPE_LSE WHERE COD_ELP=:codeliste');
-        echo '--' . $elp['COD_ELP'];
         $listeElpsSemComp->execute([':codeListe' => trim($semestre->getCodeElement())]);
 
         $elpSemComp = $listeElpsSemComp->fetch();
-        echo '---' . $elpSemComp['COD_LSE'];
         $stid = $this->conn->prepare('SELECT LSE_REGROUPE_ELP.COD_LSE,  ELEMENT_PEDAGOGI.COD_ELP, ELEMENT_PEDAGOGI.COD_NEL,  ELEMENT_PEDAGOGI.LIB_ELP, ELEMENT_PEDAGOGI.LIC_ELP, ELEMENT_PEDAGOGI.NBR_CRD_ELP FROM LSE_REGROUPE_ELP INNER JOIN ELEMENT_PEDAGOGI ON ELEMENT_PEDAGOGI.COD_ELP=LSE_REGROUPE_ELP.COD_ELP WHERE COD_LSE=:elpSemComp');
 
         $stid->execute([':elpSemComp' => trim($elpSemComp['COD_LSE'])]);
@@ -98,7 +85,6 @@ class ApogeeImport extends Apogee
 
         return $stid;
     }
-
 
     public function getElementsFromSemestre(string $codElp)
     {
@@ -130,6 +116,4 @@ class ApogeeImport extends Apogee
 
         return $stid;
     }
-
-
 }
