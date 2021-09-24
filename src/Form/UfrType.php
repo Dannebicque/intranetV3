@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/UfrType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/08/2021 11:50
+ * @lastUpdate 24/09/2021 21:20
  */
 
 namespace App\Form;
@@ -32,7 +32,7 @@ class UfrType extends AbstractType
             ->add('libelle', TextType::class, ['label' => 'libelle'])
             ->add('responsable', EntityCompleteType::class, [
                 'class' => Personnel::class,
-                'label' => 'responsable_site',
+                'label' => 'label.responsable_site',
                 'choice_label' => 'displayPr',
                 'expanded' => false,
                 'multiple' => false,
@@ -42,14 +42,14 @@ class UfrType extends AbstractType
             ])
             ->add('sitePrincipal', EntityType::class, [
                 'class' => Site::class,
-                'label' => 'site_principal',
+                'label' => 'label.site_principal',
                 'choice_label' => 'libelle',
                 'expanded' => true,
                 'multiple' => false,
             ])
             ->add('sites', EntityType::class, [
                 'class' => Site::class,
-                'label' => 'sites',
+                'label' => 'label.sites',
                 'choice_label' => 'libelle',
                 'expanded' => true,
                 'multiple' => true,
