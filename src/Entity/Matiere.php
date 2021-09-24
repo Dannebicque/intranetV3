@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Matiere.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 15/09/2021 20:43
+ * @lastUpdate 24/09/2021 20:51
  */
 
 namespace App\Entity;
@@ -128,9 +128,9 @@ class Matiere extends AbstractMatiere
         return $this->nbEcts;
     }
 
-    public function setNbEcts(float $nbEcts): void
+    public function setNbEcts(mixed $nbEcts): void
     {
-        $this->nbEcts = $nbEcts;
+        $this->nbEcts = Tools::convertToFloat($nbEcts);
     }
 
     public function getObjectifsModule(): ?string
@@ -384,9 +384,9 @@ class Matiere extends AbstractMatiere
         return $this->coefficient;
     }
 
-    public function setCoefficient(float $coefficient): void
+    public function setCoefficient(mixed $coefficient): void
     {
-        $this->coefficient = $coefficient;
+        $this->coefficient = Tools::convertToFloat($coefficient);
     }
 
     public function update($name, $value): bool
