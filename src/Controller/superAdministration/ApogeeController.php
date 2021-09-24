@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/ApogeeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/09/2021 11:21
+ * @lastUpdate 24/09/2021 18:56
  */
 
 namespace App\Controller\superAdministration;
@@ -15,7 +15,10 @@ use App\Classes\Etudiant\EtudiantImport;
 use App\Classes\Structure\ApogeeImport;
 use App\Controller\BaseController;
 use App\Entity\Annee;
+use App\Entity\Constantes;
 use App\Entity\Ppn;
+use App\Entity\Semestre;
+use App\Entity\Ue;
 use App\Repository\AnneeUniversitaireRepository;
 use App\Repository\BacRepository;
 use App\Repository\EtudiantRepository;
@@ -50,7 +53,6 @@ class ApogeeController extends BaseController
     /**
      * @Route("/import/diplome/{type}", methods={"POST"}, name="sa_apogee_maj")
      * @IsGranted("ROLE_SUPER_ADMIN")
-     *
      *
      * @throws Exception
      */
@@ -152,7 +154,7 @@ class ApogeeController extends BaseController
     }
 
     /**
-     * @Route("/import/structure/{annee}", methods={"GET"}, name="sa_annee_synchronise_apogee")
+     * @Route("/import/structure/annee/{annee}", methods={"GET"}, name="sa_annee_synchronise_apogee")
      * @IsGranted("ROLE_SUPER_ADMIN")
      *
      * @throws Exception
@@ -165,7 +167,7 @@ class ApogeeController extends BaseController
         //création d'un PN
         $pn = new Ppn();
         $pn->setDiplome($annee->getDiplome());
-        if ($annee->getDiplome()->getTypeDiplome() === 4) {
+        if (4 === $annee->getDiplome()->getTypeDiplome()) {
             $pn->setLibelle('PN B.U.T. ' . $annee->getDiplome()->getSigle());
             $pn->setAnnee(2021);
         } else {
@@ -174,13 +176,13 @@ class ApogeeController extends BaseController
         }
         $this->entityManager->persist($pn);
 
-        if ($annee->getDiplome()->getTypeDiplome()->getApc() === true) {
+        if (true === $annee->getDiplome()->getTypeDiplome()->getApc()) {
             //BUT
             $t = [];
             $elementsAnnee = $apogeeImport->getElementsFromAnnee($annee);
             while ($elpAnnee = $elementsAnnee->fetch()) {
                 //echo $elpAnnee['COD_ELP'].'<br>';
-                if ($elpAnnee['COD_NEL'] === 'SEM') {
+                if ('SEM' === $elpAnnee['COD_NEL']) {
                     $semestre = $apogeeMaquette->createSemestre($elpAnnee, $annee, $pn);
                     $elementsSemestre = $apogeeImport->getElementsFromSemestre($elpAnnee['COD_ELP']);
 
@@ -190,7 +192,7 @@ class ApogeeController extends BaseController
                         if (!array_key_exists($elpSemestre['COD_ELP'], $t)) {
                             //création
                             $data = $apogeeMaquette->createElement($elpSemestre, $semestre);
-                            if ($data !== null) {
+                            if (null !== $data) {
                                 $t[$elpSemestre['COD_ELP']] = $data;
                             }
                         } else {
@@ -204,8 +206,7 @@ class ApogeeController extends BaseController
             $this->entityManager->flush();
             $elementsAnnee = $apogeeImport->getElementsFromAnnee($annee);
             while ($elpAnnee = $elementsAnnee->fetch()) {
-                if ($elpAnnee['COD_NEL'] === 'COMP') {
-
+                if ('COMP' === $elpAnnee['COD_NEL']) {
                     $competence = $apogeeMaquette->createCompetence($elpAnnee, $annee);
                     $elementsUe = $apogeeImport->getCompUesFromSemestre($elpAnnee['COD_ELP']);
                     while ($elpUe = $elementsUe->fetch()) {
@@ -235,15 +236,115 @@ class ApogeeController extends BaseController
                     }
                 }
             }
+            $this->entityManager->flush();
         }
 
-        // $this->entityManager->flush();
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'synchro.maquette.apogee.ok');
 
-        //$this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'synchro.maquette.apogee.ok');
+        return $this->redirectToRoute('sa_structure_index');
+    }
 
-        return $this->render('super-administration/apogee/confirmation.html.twig', [
-            // 'etudiants' => $this->etudiants,
-            'liste' => $t
-        ]);
+    /**
+     * @Route("/import/structure/semestre/{semestre}", methods={"GET"}, name="sa_semestre_synchronise_apogee")
+     * @IsGranted("ROLE_SUPER_ADMIN")
+     *
+     * @throws Exception
+     */
+    public function synchronisationApogeeSemestre(
+        ApogeeMaquette $apogeeMaquette,
+        ApogeeImport $apogeeImport,
+        Semestre $semestre
+    ): Response {
+        //création d'un PN
+        $pn = $semestre->getPpnActif();
+
+        if (true === $semestre->getDiplome()?->getTypeDiplome()?->getApc()) {
+            //BUT
+            $t = [];
+
+            $elementsSemestre = $apogeeImport->getElementsFromSemestre($semestre->getCodeElement());
+
+            while ($elpSemestre = $elementsSemestre->fetch()) {
+                //print_r($elpSemestre);echo '<br>';
+                echo $elpSemestre['LIC_ELP'] . '<br>';
+                if (!array_key_exists($elpSemestre['COD_ELP'], $t)) {
+                    //création
+                    $data = $apogeeMaquette->createElement($elpSemestre, $semestre);
+                    if (null !== $data) {
+                        $t[$elpSemestre['COD_ELP']] = $data;
+                    }
+                } else {
+                    //mise à jour avec les heures
+                    $t[$elpSemestre['COD_ELP']] = $apogeeMaquette->updateElement($t[$elpSemestre['COD_ELP']],
+                        $elpSemestre);
+                }
+            }
+
+            $this->entityManager->flush();
+        } else {
+            //DUT
+            $t = [];
+
+            $ues = $apogeeImport->getUesFromSemestreDut($semestre);
+            while ($ue = $ues->fetch()) {
+                $objUe = $apogeeMaquette->createUeDut($ue, $semestre);
+                $matieres = $apogeeImport->getMatieresFromUe($objUe);
+                while ($matiere = $matieres->fetch()) {
+                    if (!array_key_exists($matiere['COD_ELP'], $t)) {
+                        //création
+                        $t[$matiere['COD_ELP']] = $apogeeMaquette->createMatiere($matiere, $objUe, $pn);
+                    } else {
+                        //mise à jour avec les heures
+                        $t[$matiere['COD_ELP']] = $apogeeMaquette->updateMatiere($t[$matiere['COD_ELP']], $matiere);
+                    }
+                }
+            }
+            $this->entityManager->flush();
+        }
+
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'synchro.maquette.apogee.ok');
+
+        return $this->redirectToRoute('sa_structure_index');
+
+    }
+
+    /**
+     * @Route("/import/structure/ue/{ue}", methods={"GET"}, name="sa_ue_synchronise_apogee")
+     * @IsGranted("ROLE_SUPER_ADMIN")
+     *
+     * @throws Exception
+     */
+    public function synchronisationApogeeUe(
+        ApogeeMaquette $apogeeMaquette,
+        ApogeeImport $apogeeImport,
+        Ue $ue
+    ): Response {
+        //création d'un PN
+
+        $pn = $ue->getSemestre()?->getPpnActif();
+
+        if (true === $ue->getDiplome()?->getTypeDiplome()?->getApc()) {
+            //BUT
+            //todo: a définir.
+        } else {
+            //DUT
+            $t = [];
+
+            $matieres = $apogeeImport->getMatieresFromUe($ue);
+            while ($matiere = $matieres->fetch()) {
+                if (!array_key_exists($matiere['COD_ELP'], $t)) {
+                    //création
+                    $t[$matiere['COD_ELP']] = $apogeeMaquette->createMatiere($matiere, $ue, $pn);
+                } else {
+                    //mise à jour avec les heures
+                    $t[$matiere['COD_ELP']] = $apogeeMaquette->updateMatiere($t[$matiere['COD_ELP']], $matiere);
+                }
+            }
+            $this->entityManager->flush();
+        }
+
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'synchro.maquette.apogee.ok');
+
+        return $this->redirectToRoute('sa_structure_index');
     }
 }

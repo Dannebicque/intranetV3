@@ -197,8 +197,8 @@
                                                 title="{{ 'atitle.supprimer'|trans }}"></i></a>
                                 {% endif %}
                                 <a href="{{ path(baseurl ~ 'annee_synchronise_apogee', {annee: annee.id}) }}"
-                                   class="btn btn-danger btn-outline btn-square btn-xs"><i
-                                            class="fas fa-reload" data-provide="tooltip" data-placement="bottom"
+                                   class="btn btn-purple btn-outline btn-square btn-xs"><i
+                                            class="fas fa-sync-alt" data-provide="tooltip" data-placement="bottom"
                                             title="{{ 'atitle.synchro_apogee'|trans }}"></i></a>
                             {% endif %}
                         </div>
@@ -246,6 +246,10 @@
                                                     class="{{ iconDelete }}" data-provide="tooltip" data-placement="bottom"
                                                     title="{{ 'atitle.supprimer'|trans }}"></i></a>
                                     {% endif %}
+                                    <a href="{{ path(baseurl ~ 'semestre_synchronise_apogee', {semestre: semestre.id}) }}"
+                                       class="btn btn-purple btn-outline btn-square btn-xs"><i
+                                                class="fas fa-sync-alt" data-provide="tooltip" data-placement="bottom"
+                                                title="{{ 'atitle.synchro_apogee_semestre'|trans }}"></i></a>
                                 {% endif %}
                             </div>
                         </div>
@@ -290,6 +294,10 @@
                                                         class="{{ iconDelete }}" data-provide="tooltip" data-placement="bottom"
                                                         title="{{ 'atitle.supprimer'|trans }}"></i></a>
                                         {% endif %}
+                                        <a href="{{ path(baseurl ~ 'ue_synchronise_apogee', {ue: ue.id}) }}"
+                                           class="btn btn-purple btn-outline btn-square btn-xs"><i
+                                                    class="fas fa-sync-alt" data-provide="tooltip" data-placement="bottom"
+                                                    title="{{ 'atitle.synchro_apogee_ue'|trans }}"></i></a>
                                     {% endif %}
                                 </div>
                             </div>
