@@ -4,13 +4,14 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcSae.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/07/2021 15:41
+ * @lastUpdate 24/09/2021 20:51
  */
 
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
 use App\Repository\ApcSaeRepository;
+use App\Utils\Tools;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -259,9 +260,9 @@ class ApcSae extends AbstractMatiere
         return $this->projetPpn;
     }
 
-    public function setProjetPpn(float $projetPpn): self
+    public function setProjetPpn(mixed $projetPpn): self
     {
-        $this->projetPpn = $projetPpn;
+        $this->projetPpn = Tools::convertToFloat($projetPpn);
 
         return $this;
     }
@@ -271,9 +272,9 @@ class ApcSae extends AbstractMatiere
         return $this->projetFormation;
     }
 
-    public function setProjetFormation(float $projetFormation): self
+    public function setProjetFormation(mixed $projetFormation): self
     {
-        $this->projetFormation = $projetFormation;
+        $this->projetFormation = Tools::convertToFloat($projetFormation);
 
         return $this;
     }
