@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/MatiereType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 27/05/2021 20:52
+ * @lastUpdate 24/09/2021 22:06
  */
 
 namespace App\Form;
@@ -65,38 +65,38 @@ class MatiereType extends AbstractType
     {
         $this->diplome = $options['diplome'];
         $builder
-            ->add('libelle', TextType::class, ['label' => 'libelle'])
-            ->add('codeMatiere', TextType::class, ['label' => 'code_matiere'])
-            ->add('codeElement', TextType::class, ['label' => 'code_element'])
+            ->add('libelle', TextType::class, ['label' => 'label.libelle'])
+            ->add('codeMatiere', TextType::class, ['label' => 'label.code_matiere'])
+            ->add('codeElement', TextType::class, ['label' => 'label.code_element'])
             ->add('suspendu', YesNoType::class, [
-                'label' => 'suspendu',
+                'label' => 'label.suspendu',
             ])
-            ->add('cmPpn', TextType::class, ['label' => 'cm_ppn'])
-            ->add('tdPpn', TextType::class, ['label' => 'td_ppn'])
-            ->add('tpPpn', TextType::class, ['label' => 'tp_ppn'])
-            ->add('cmFormation', TextType::class, ['label' => 'cm_formation'])
-            ->add('tdFormation', TextType::class, ['label' => 'td_formation'])
-            ->add('tpFormation', TextType::class, ['label' => 'tp_formation'])
-            ->add('commentaire', TextareaType::class, ['label' => 'commentaire', 'required' => false])
-            ->add('nbNotes', TextType::class, ['label' => 'nb_notes'])
-            ->add('coefficient', TextType::class, ['label' => 'coefficient'])
-            ->add('nbEcts', TextType::class, ['label' => 'nb_ects'])
+            ->add('cmPpn', TextType::class, ['label' => 'label.cm_ppn'])
+            ->add('tdPpn', TextType::class, ['label' => 'label.td_ppn'])
+            ->add('tpPpn', TextType::class, ['label' => 'label.tp_ppn'])
+            ->add('cmFormation', TextType::class, ['label' => 'label.cm_formation'])
+            ->add('tdFormation', TextType::class, ['label' => 'label.td_formation'])
+            ->add('tpFormation', TextType::class, ['label' => 'label.tp_formation'])
+            ->add('commentaire', TextareaType::class, ['label' => 'label.commentaire', 'required' => false])
+            ->add('nbNotes', TextType::class, ['label' => 'label.nb_notes'])
+            ->add('coefficient', TextType::class, ['label' => 'label.coefficient'])
+            ->add('nbEcts', TextType::class, ['label' => 'label.nb_ects'])
             ->add('pac', YesNoType::class, [
-                'label' => 'pac',
+                'label' => 'label.pac',
             ])
-            ->add('objectifsModule', TextareaType::class, ['label' => 'objectifs_module', 'required' => false])
+            ->add('objectifsModule', TextareaType::class, ['label' => 'label.objectifs_module', 'required' => false])
             ->add(
                 'competencesVisees',
                 TextareaType::class,
-                ['label' => 'competences_visees', 'required' => false]
+                ['label' => 'label.competences_visees', 'required' => false]
             )
-            ->add('contenu', TextareaType::class, ['label' => 'contenu', 'required' => false])
-            ->add('preRequis', TextareaType::class, ['label' => 'pre_requis', 'required' => false])
-            ->add('modalites', TextareaType::class, ['label' => 'modalites', 'required' => false])
-            ->add('prolongements', TextareaType::class, ['label' => 'prolongements', 'required' => false])
-            ->add('motsCles', TextareaType::class, ['label' => 'mots_cles', 'required' => false])
+            ->add('contenu', TextareaType::class, ['label' => 'label.contenu', 'required' => false])
+            ->add('preRequis', TextareaType::class, ['label' => 'label.pre_requis', 'required' => false])
+            ->add('modalites', TextareaType::class, ['label' => 'label.modalites', 'required' => false])
+            ->add('prolongements', TextareaType::class, ['label' => 'label.prolongements', 'required' => false])
+            ->add('motsCles', TextareaType::class, ['label' => 'label.mots_cles', 'required' => false])
             ->add('Ppn', EntityType::class, [
-                'label' => 'Ppn',
+                'label' => 'label.ppn',
                 'class' => Ppn::class,
                 'choice_label' => 'libelle',
                 'query_builder' => function(PpnRepository $ppnRepository) {
@@ -146,7 +146,7 @@ class MatiereType extends AbstractType
         ]);
 
         $form->add('matiereParent', EntityType::class, [
-            'label' => 'matiere.parent',
+            'label' => 'label.matiere.parent',
             'required' => false,
             'placeholder' => 'Choisir d\'abord un semestre ...',
             'class' => Matiere::class,
