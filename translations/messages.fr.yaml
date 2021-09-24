@@ -805,7 +805,9 @@ atitle:
   stage_soutenances: 'Soutenances de stage'
   supprimer: Supprimer
   supprimer.impossible: 'Suppression impossible'
-  synchro_apogee: 'Synchronisation apogée'
+  synchro_apogee: 'Synchronisation de l''année depuis Apogée'
+  synchro_apogee_semestre: 'Synchronisation du semestre depuis apogée'
+  synchro_apogee_ue: 'Synchronisation de l''UE depuis apogée'
   synchro_parent: 'Synchronisation des parents'
   update_events: 'Forcer la Mise à jour les événements depuis Celcat'
   voir_fichier: 'Voir fichier'
