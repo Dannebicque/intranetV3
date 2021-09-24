@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/MatiereController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/09/2021 21:57
+ * @lastUpdate 24/09/2021 22:03
  */
 
 namespace App\Controller\administration;
@@ -65,7 +65,7 @@ class MatiereController extends BaseController
 
     #[Route('/{diplome}/export.{_format}',
         name: 'administration_matiere_export',
-        requirements: ['_format' => ['csv', 'xlsx', 'pdf']],
+        requirements: ['_format' => 'csv|xlsx|pdf'],
         options: ['expose' => true],
         methods: ['GET'])]
     public function export(
@@ -112,7 +112,7 @@ class MatiereController extends BaseController
     #[Route('/new/{diplome}/{ue}', name: 'administration_matiere_new', methods: ['GET', 'POST'])]
     public function create(Configuration $configuration, Request $request, Diplome $diplome, Ue $ue = null): Response
     {
-        if (true === Tools::convertToBool($configuration->get('MODIFICATION_PPN'))) {
+        if (true === (bool)($configuration->get('MODIFICATION_PPN'))) {
             $matiere = new Matiere();
             $form = $this->createForm(MatiereType::class, $matiere, [
                 'diplome' => $diplome,
@@ -166,7 +166,7 @@ class MatiereController extends BaseController
     #[Route('/{id}/edit', name: 'administration_matiere_edit', methods: ['GET', 'POST'])]
     public function edit(Configuration $configuration, Request $request, Matiere $matiere): Response
     {
-        if (true === Tools::convertToBool($configuration->get('MODIFICATION_PPN'))) {
+        if (true === (bool)($configuration->get('MODIFICATION_PPN'))) {
             $form = $this->createForm(MatiereType::class, $matiere, [
                 'diplome' => $matiere->getSemestre()->getAnnee()->getDiplome(),
                 'attr' => [
@@ -194,7 +194,7 @@ class MatiereController extends BaseController
     #[Route('/{id}/duplicate', name: 'administration_matiere_duplicate', methods: ['GET', 'POST'])]
     public function duplicate(Configuration $configuration, Matiere $matiere): Response
     {
-        if (true === Tools::convertToBool($configuration->get('MODIFICATION_PPN'))) {
+        if (true === (bool)($configuration->get('MODIFICATION_PPN'))) {
             $newMatiere = clone $matiere;
 
             $this->entityManager->persist($newMatiere);
