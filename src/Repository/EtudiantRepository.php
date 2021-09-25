@@ -4,13 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/EtudiantRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 09:03
+ * @lastUpdate 25/09/2021 16:01
  */
 
 namespace App\Repository;
 
 use App\Entity\Annee;
-use App\Entity\Constantes;
 use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Etudiant;
@@ -60,54 +59,7 @@ class EtudiantRepository extends ServiceEntityRepository
         return $tab;
     }
 
-    public function getArrayEtudiantsByDepartement($getId, $filters, $start, $length): array
-    {
-        $etudiants = $this->getByDepartement($getId, $filters, $start, $length);
-        $tab = [];
-        /** @var Etudiant $etudiant */
-        foreach ($etudiants as $etudiant) {
-            $t = [];
-
-            $t['id'] = $etudiant->getId();
-            $t['numetudiant'] = $etudiant->getNumEtudiant();
-            $t['nom'] = $etudiant->getNom();
-            $t['prenom'] = $etudiant->getPrenom();
-            $t['semestre'] = $etudiant->getSemestre() ? $etudiant->getSemestre()->getLibelle() : '-';
-            $t['profil'] = '<a href="' . $this->router->generate('user_profil',
-                    ['type' => 'etudiant', 'slug' => $etudiant->getSlug()]) . '"
-       class="btn btn-info btn-outline btn-square"
-       data-provide="tooltip"
-       target="_blank"
-       data-placement="bottom"
-       title="Profil de l\'étudiant">
-        <i class="fas fa-info"></i>
-        <span class="sr-only">Profil de l\'étudiant</span>
-    </a> <a href="' . $this->router->generate('administration_etudiant_edit',
-                    ['origin' => 'etudiant', 'id' => $etudiant->getId()]) . '"
-       class="btn btn-warning btn-outline btn-square"
-       data-provide="tooltip"
-       data-placement="bottom"
-       title="Modifier les données de l\'étudiant">
-        <i class="fas fa-edit"></i>
-        <span class="sr-only">Modifier les données de l\'étudiant</span>
-    </a>';
-            $t['etat'] = '<select class="form-control changeEtat" data-etudiant="' . $etudiant->getUuidString() . '">
-                        <option value="">Choisir une action</option>
-                        <option value="' . Constantes::SCOLARITE_DIPLOME . '">Diplômé</option>
-                        <option value="' . Constantes::SEMESTRE_REORIENTE . '">Réorienter</option>
-                        <option value="erreur">Erreur/Pas dans la formation</option>
-                        </select>';
-
-            $tab[] = $t;
-        }
-
-        return $tab;
-    }
-
     /**
-     * @param      $departement
-     * @param      $data
-     *
      * @return Query|mixed
      */
     public function getByDepartement($departement, $data, int $page = 0, ?int $max = null, bool $getResult = true)
@@ -176,7 +128,6 @@ class EtudiantRepository extends ServiceEntityRepository
     }
 
     /**
-     *
      * @throws NonUniqueResultException
      */
     public function findOneBySlug($slug)
@@ -270,7 +221,6 @@ class EtudiantRepository extends ServiceEntityRepository
     }
 
     /**
-     *
      * @throws NonUniqueResultException
      */
     public function findByCode($code)
@@ -352,8 +302,8 @@ class EtudiantRepository extends ServiceEntityRepository
      * @param $date
      *
      * @return int|mixed|string|null
-     * @throws NonUniqueResultException
      *
+     * @throws NonUniqueResultException
      */
     public function identificationRdd($login, $date)
     {
