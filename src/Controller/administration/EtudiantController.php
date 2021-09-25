@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/09/2021 18:19
+ * @lastUpdate 25/09/2021 16:06
  */
 
 namespace App\Controller\administration;
@@ -17,6 +17,7 @@ use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Form\EtudiantType;
 use App\Repository\EtudiantRepository;
+use App\Table\EtudiantDepartementTableType;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -25,25 +26,28 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * Class EtudiantController.
- *
- * @Route("/administration/etudiant")
- */
+#[Route("/administration/etudiant")]
 class EtudiantController extends BaseController
 {
-    /**
-     * @Route("/", name="administration_etudiant_index")
-     */
-    public function index(): Response
+    #[Route("/", name: "administration_etudiant_index", options: ['expose' => true])]
+    public function index(Request $request): Response
     {
+        $table = $this->createTable(EtudiantDepartementTableType::class, [
+            'departement' => $this->getDepartement()
+        ]);
+
+        $table->handleRequest($request);
+
+        if ($table->isCallback()) {
+            return $table->getCallbackResponse();
+        }
+
         return $this->render('administration/etudiant/index.html.twig', [
+            'table' => $table
         ]);
     }
 
-    /**
-     * @Route("/edit/{id}/{origin}", name="administration_etudiant_edit", methods="GET|POST")
-     */
+    #[Route("/edit/{id}/{origin}", name: "administration_etudiant_edit", methods: ['GET', 'POST'])]
     public function edit(Request $request, Etudiant $etudiant, string $origin = 'semestre'): Response
     {
         $form = $this->createForm(
@@ -84,11 +88,7 @@ class EtudiantController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/add", name="administration_etudiant_add", methods="POST")
-     *
-     * @throws Exception
-     */
+    #[Route("/add", name: "administration_etudiant_add", methods: ["POST"])]
     public function create(Request $request): Response
     {
         $etudiant = new Etudiant();
@@ -142,9 +142,7 @@ class EtudiantController extends BaseController
         return $this->redirectToRoute('trombinoscope_index');
     }
 
-    /**
-     * @Route("/edit-ajax/{id}", name="adm_etudiant_edit_ajax", methods="POST", options={"expose":true})
-     */
+    #[Route("/edit-ajax/{id}", name: "adm_etudiant_edit_ajax", methods: ["POST"], options: ["expose" => true])]
     public function editAjax(EtudiantUpdate $etudiantUpdate, Request $request, Etudiant $etudiant): JsonResponse
     {
         if ($content = $request->getContent()) {
@@ -156,10 +154,8 @@ class EtudiantController extends BaseController
         return $this->json(true, Response::HTTP_OK);
     }
 
-    /**
-     * @Route("/export.{_format}", name="administration_all_etudiant_export", methods="GET",
-     *                             requirements={"_format"="csv|xlsx|pdf"})
-     */
+    #[Route("/export.{_format}", name: "administration_all_etudiant_export", methods: ["GET"],
+        requirements: ["_format" => "csv|xlsx|pdf"])]
     public function export(MyExport $myExport, EtudiantRepository $etudiantRepository, $_format): Response
     {
         $etudiants = $etudiantRepository->getByDepartement($this->getDepartement(), []);

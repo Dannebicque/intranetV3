@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/EtudiantSemestreTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/09/2021 18:19
+ * @lastUpdate 25/09/2021 15:56
  */
 
 namespace App\Table;
@@ -70,25 +70,25 @@ class EtudiantSemestreTableType extends TableType
         ]);
 
 //        // Export button (use to export data)
-        $builder->addWidget('export', ButtonDropdownType::class, [
-            'icon' => 'fas fa-download',
-            'text' => '',
-            'attr' => ['data-toggle' => 'dropdown'],
-            'build' => function (WidgetBuilder $builder) {
-                $builder->add('pdf', LinkType::class, [
-                    'route' => 'administration_rattrapage_export',
-                    'route_params' => ['semestre' => $this->semestre->getId(), '_format' => 'pdf'],
-                ]);
-                $builder->add('csv', LinkType::class, [
-                    'route' => 'administration_rattrapage_export',
-                    'route_params' => ['semestre' => $this->semestre->getId(), '_format' => 'csv'],
-                ]);
-                $builder->add('excel', LinkType::class, [
-                    'route' => 'administration_rattrapage_export',
-                    'route_params' => ['semestre' => $this->semestre->getId(), '_format' => 'xlsx'],
-                ]);
-            },
-        ]);
+//        $builder->addWidget('export', ButtonDropdownType::class, [
+//            'icon' => 'fas fa-download',
+//            'text' => '',
+//            'attr' => ['data-toggle' => 'dropdown'],
+//            'build' => function (WidgetBuilder $builder) {
+//                $builder->add('pdf', LinkType::class, [
+//                    'route' => 'administration_rattrapage_export',
+//                    'route_params' => ['semestre' => $this->semestre->getId(), '_format' => 'pdf'],
+//                ]);
+//                $builder->add('csv', LinkType::class, [
+//                    'route' => 'administration_rattrapage_export',
+//                    'route_params' => ['semestre' => $this->semestre->getId(), '_format' => 'csv'],
+//                ]);
+//                $builder->add('excel', LinkType::class, [
+//                    'route' => 'administration_rattrapage_export',
+//                    'route_params' => ['semestre' => $this->semestre->getId(), '_format' => 'xlsx'],
+//                ]);
+//            },
+//        ]);
 
         $builder->addColumn('nom', PropertyColumnType::class,
             ['label' => 'table.nom', 'translation_domain' => 'messages', 'order' => 'ASC']);
