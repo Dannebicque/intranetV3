@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/TypeDocumentController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 25/09/2021 16:39
  */
 
 namespace App\Controller\administration;
 
+use App\Classes\DocumentDelete;
 use App\Classes\MyExport;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
@@ -38,7 +39,6 @@ class TypeDocumentController extends BaseController
     /**
      * @Route("/export.{_format}", name="administration_type_document_export", methods="GET",
      *                             requirements={"_format":"pdf|csv|xlsx"})
-     *
      */
     public function export(MyExport $myExport, TypeDocumentRepository $typeDocumentRepository, $_format): Response
     {
@@ -79,7 +79,7 @@ class TypeDocumentController extends BaseController
 
         return $this->render('administration/type_document/new.html.twig', [
             'type_document' => $typeDocument,
-            'form'          => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 
@@ -115,7 +115,7 @@ class TypeDocumentController extends BaseController
 
         return $this->render('administration/type_document/edit.html.twig', [
             'type_document' => $typeDocument,
-            'form'          => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 
@@ -123,20 +123,27 @@ class TypeDocumentController extends BaseController
      * @Route("/{id}", name="administration_type_document_delete", methods="DELETE")
      */
     public function delete(
+        DocumentDelete $documentDelete,
         Request $request,
         TypeDocument $typeDocument
     ): Response {
         $id = $typeDocument->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
             foreach ($typeDocument->getDocuments() as $document) {
-                $typeDocument->removeDocument($document);
+                $documentDelete->deleteDocument($document);
+                if (true !== $documentDelete) {
+                    return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
+                }
             }
 
             $this->entityManager->remove($typeDocument);
             $this->entityManager->flush();
 
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'type_document.delete.success.flash');
+
             return $this->json($id, Response::HTTP_OK);
         }
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'type_document.delete.success.flash');
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
