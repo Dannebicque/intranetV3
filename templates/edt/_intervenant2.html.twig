@@ -61,7 +61,9 @@
                                         time-{{ edt
                                 .planning[j][ligne].gridStart }} / time-{{ edt.planning[j][ligne].gridEnd }};">
                                     <div class="session-body">
-                                        <a href="#">
+                                        <a href="{{ path('application_personnel_absence_from_planning',{
+                                            'event':edt.planning[j][ligne].id,
+                                            'source': edt.planning[j][ligne].source }) }}">
                                             <span class="session-title">{{ edt.planning[j][ligne].matiere|raw }}</span>
                                             <span class="session-time">{{ edt.planning[j][ligne].heureDebut|format_time('short') }} - {{ edt
                                                 .planning[j][ligne].heureFin|format_time('short') }}</span>
@@ -70,13 +72,30 @@
                                         </a>
                                     </div>
                                     <div class="session-footer">
-                                    <span class="session-link">
-                                        <a href=""><i class="fas fa-users"></i></a>
-                                        <a href=""><i class="fas fa-pencil"></i></a>
-                                        <a href=""><i class="fas fa-users"></i></a>
-                                    </span>
-                                    </div>
+                                        <div class="row no-gutters">
 
+                                            <div class="col-4">
+                                                <a href="" class="btn btn-block btn-purple no-radius"
+                                                   title="Cahier de texte enseignant">
+                                                    <i class="fas fa-book-open"></i>
+                                                </a>
+                                            </div>
+                                            <div class="col-4">
+                                                <a href="" class="btn btn-block btn-warning no-radius"
+                                                   title="Appel fait, pas d'absents">
+                                                    <i class="fas fa-users-slash"></i>
+                                                </a>
+                                            </div>
+                                            <div class="col-4">
+                                                <a href="" class="btn btn-block btn-danger no-radius">
+                                                    <i class="fas fa-times"></i>
+                                                </a>
+                                                {# <a href="" class="btn btn-block btn-success no-radius"> #}
+                                                {# <i class="fas fa-check"></i> #}
+                                                {# </a> #}
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             {% endif %}
                         {% endfor %}
