@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/PrevisionnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/07/2021 17:05
+ * @lastUpdate 25/09/2021 09:47
  */
 
 namespace App\Controller\administration;
@@ -164,19 +164,24 @@ class PrevisionnelController extends BaseController
             if (null !== $matiere) {
                 $nbLignes = $request->request->get('nbLignes');
                 for ($i = 1; $i <= $nbLignes; ++$i) {
-                    $personnel = $personnelRepository->find($request->request->get('intervenant_' . $i));
-                    if (null !== $personnel) {
-                        $previsionnel = new Previsionnel($annee, $personnel);
-                        $previsionnel->setNbHCm($request->request->get('cm_' . $i));
-                        $previsionnel->setNbHTd($request->request->get('td_' . $i));
-                        $previsionnel->setNbHTp($request->request->get('tp_' . $i));
-                        $previsionnel->setNbGrCm($request->request->get('gr_cm_' . $i));
-                        $previsionnel->setNbGrTd($request->request->get('gr_td_' . $i));
-                        $previsionnel->setNbGrTp($request->request->get('gr_tp_' . $i));
-                        $previsionnel->setIdMatiere($matiere->id);
-                        $previsionnel->setTypeMatiere($matiere->typeMatiere);
-                        $this->entityManager->persist($previsionnel);
+                    $idPersonnel = $request->request->get('intervenant_' . $i);
+                    if (isset($idPersonnel)) {
+                        $personnel = $personnelRepository->find($idPersonnel);
+                    } else {
+                        $personnel = null;
                     }
+
+                    $previsionnel = new Previsionnel($annee, $personnel);
+                    $previsionnel->setNbHCm($request->request->get('cm_' . $i));
+                    $previsionnel->setNbHTd($request->request->get('td_' . $i));
+                    $previsionnel->setNbHTp($request->request->get('tp_' . $i));
+                    $previsionnel->setNbGrCm($request->request->get('gr_cm_' . $i));
+                    $previsionnel->setNbGrTd($request->request->get('gr_td_' . $i));
+                    $previsionnel->setNbGrTp($request->request->get('gr_tp_' . $i));
+                    $previsionnel->setIdMatiere($matiere->id);
+                    $previsionnel->setTypeMatiere($matiere->typeMatiere);
+                    $this->entityManager->persist($previsionnel);
+
                 }
                 $this->entityManager->flush();
                 $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'previsionnel.add.success.flash');
