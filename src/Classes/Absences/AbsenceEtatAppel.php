@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Absences/AbsenceEtatAppel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/08/2021 13:09
+ * @lastUpdate 25/09/2021 09:17
  */
 
 namespace App\Classes\Absences;
@@ -57,7 +57,6 @@ class AbsenceEtatAppel
             'date' => Tools::convertDateToObject($data['date']),
             'heure' => Tools::convertTimeToObject($data['heure']),
             'groupe' => $data['groupe']->getId(),
-//            'semestre' => $data['groupe']->getId(),
             'typeMatiere' => ToolsMatiere::getType($data['matiere']),
             'idMatiere' => ToolsMatiere::getId($data['matiere']),
         ]);
@@ -65,7 +64,7 @@ class AbsenceEtatAppel
 
     public function getBySemestre(Semestre $semestre)
     {
-        $abs = $this->absenceEtatAppelRepository->findBy(['semestre' => $semestre]);
+        $abs = $this->absenceEtatAppelRepository->findBy(['semestre' => $semestre->getId()]);
         $tab = [];
         $tab['statistiques']['nbcours'] = 0;
         $tab['statistiques']['nbsaisie'] = 0;

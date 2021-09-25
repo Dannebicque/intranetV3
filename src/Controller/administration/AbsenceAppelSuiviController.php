@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/AbsenceAppelSuiviController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/09/2021 10:51
+ * @lastUpdate 16/09/2021 08:40
  */
 
 namespace App\Controller\administration;
@@ -14,6 +14,7 @@ use App\Classes\Edt\EdtManager;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Controller\BaseController;
 use App\Entity\Semestre;
+use App\Repository\EdtPlanningRepository;
 use App\Table\AppelSuiviTableType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -33,6 +34,7 @@ class AbsenceAppelSuiviController extends BaseController
 
     #[Route('/{semestre}', name: 'administration_absence_appel_index', requirements: ['semestre' => "\d+"])]
     public function index(
+        EdtPlanningRepository $edtPlanningRepository,
         Request $request,
         TypeMatiereManager $typeMatiereManager,
         Semestre $semestre
@@ -54,8 +56,11 @@ class AbsenceAppelSuiviController extends BaseController
 
         return $this->render('administration/absence_appel/index.html.twig',
             [
+                'pl' => $this->edtManager->getPlanningSemestre($semestre),
                 'semestre' => $semestre,
-                'table' => $table
+                'table' => $table,
+                'statsAppel' => $statsAppel,
+                'matieres' => $matieres
             ]);
     }
 

@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/AbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/08/2021 09:32
+ * @lastUpdate 25/09/2021 09:19
  */
 
 namespace App\Controller\appPersonnel;
 
+use App\Classes\Edt\EdtManager;
 use App\Classes\Etudiant\EtudiantAbsences;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\MyAbsences;
@@ -20,8 +21,6 @@ use App\Entity\Etudiant;
 use App\Exception\MatiereNotFoundException;
 use App\Exception\SemestreNotFoundException;
 use App\Repository\AbsenceRepository;
-use App\Repository\CelcatEventsRepository;
-use App\Repository\EdtPlanningRepository;
 use App\Utils\Tools;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
@@ -53,7 +52,7 @@ class AbsenceController extends BaseController
     }
 
     /**
-     * @Route("/{matiere}", name="application_personnel_absence_index", methods={"GET"})
+     * @Route("/matiere/{matiere}", name="application_personnel_absence_index", methods={"GET"})
      *
      * @throws \App\Exception\MatiereNotFoundException
      * @throws \App\Exception\SemestreNotFoundException
@@ -68,7 +67,6 @@ class AbsenceController extends BaseController
             throw new MatiereNotFoundException();
         }
 
-
         if (null === $mat->semestre) {
             throw new SemestreNotFoundException();
         }
@@ -80,33 +78,27 @@ class AbsenceController extends BaseController
     }
 
     /**
-     * @Route("/edt/{event}", name="application_personnel_absence_from_planning", requirements={"event"="\d+"},
+     * @Route("/edt/{event}/{source}", name="application_personnel_absence_from_planning", requirements={"event"="\d+"},
      *                        methods={"GET"})
      */
     public function saisieFromEdt(
         TypeMatiereManager $typeMatiereManager,
-        EdtPlanningRepository $edtPlanningRepository,
-        CelcatEventsRepository $celcatEventsRepository,
+        EdtManager $edtManager,
         MyGroupes $myGroupes,
-        $event
+        $event,
+        string $source = EdtManager::EDT_INTRANET
     ): Response {
-        if (null !== $this->dataUserSession->getDepartement() && true === $this->dataUserSession->getDepartement()->isOptUpdateCelcat()) {
-            $planning = $celcatEventsRepository->find($event);
-            $matiere = null !== $planning ? $typeMatiereManager->findByCodeApogee($planning->getCodeModule()) : null;
-        } else {
-            $planning = $edtPlanningRepository->find($event);
-            $matiere = null !== $planning ? $typeMatiereManager->getMatiere($planning->getIdMatiere(),
-                $planning->getTypeMatiere()) : null;
-        }
+        $planning = $edtManager->getManager($source)?->find($event);
+        $matiere = $typeMatiereManager->findByCodeApogeeOrId($planning);
 
         if (null !== $planning) {
             return $this->render('appPersonnel/absence/index.html.twig', [
-                'semestre' => null !== $matiere ? $matiere->semestre : null,
+                'semestre' => $matiere?->semestre,
                 'matiere' => $matiere,
                 'event' => $planning,
-                'groupes' => $myGroupes->getGroupesPlanning($planning),
-                'heure' => Constantes::TAB_HEURES[$planning->getDebut()],
-                'date' => $planning->getDate(),
+                'groupes' => $myGroupes->getGroupesSemestre($planning->semestre, $planning->type_cours),
+                'heure' => $planning->heureDebut,
+                'date' => $planning->dateObjet,
             ]);
         }
 
