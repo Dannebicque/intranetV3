@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/PrevisionnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/09/2021 09:47
+ * @lastUpdate 25/09/2021 11:10
  */
 
 namespace App\Controller\administration;
@@ -21,23 +21,16 @@ use App\Entity\Previsionnel;
 use App\Entity\Semestre;
 use App\Form\ImportPrevisionnelType;
 use App\Repository\PersonnelRepository;
-use Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * Class PrevisionnelController.
- *
- * @Route("/administration/service-previsionnel")
- */
+#[Route('/administration/service-previsionnel')]
 class PrevisionnelController extends BaseController
 {
-    /**
-     * @Route("/annee/{annee}", name="administration_previsionnel_index", options={"expose":true})
-     */
+    #[Route('/annee/{annee}', name: 'administration_previsionnel_index', options: ['expose' => true])]
     public function index(TypeMatiereManager $typeMatiereManager, int $annee = 0): Response
     {
         if (0 === $annee && null !== $this->dataUserSession->getDepartement()) {
@@ -50,9 +43,7 @@ class PrevisionnelController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/matiere/{matiere}/{type}/{annee}", name="administration_previsionnel_matiere", options={"expose":true})
-     */
+    #[Route('/matiere/{matiere}/{type}/{annee}', name: 'administration_previsionnel_matiere', options: ['expose' => true])]
     public function matiere(
         PrevisionnelManager $previsionnelManager,
         TypeMatiereManager $typeMatiereManager,
@@ -76,9 +67,7 @@ class PrevisionnelController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/semestre/{semestre}/{annee}", name="administration_previsionnel_semestre", options={"expose":true})
-     */
+    #[Route('/semestre/{semestre}/{annee}', name: 'administration_previsionnel_semestre', options: ['expose' => true])]
     public function semestre(
         PrevisionnelManager $previsionnelManager,
         PrevisionnelSynthese $previsionnelSynthese,
@@ -100,9 +89,7 @@ class PrevisionnelController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/personnel/{personnel}/{annee}", name="administration_previsionnel_personnel", options={"expose":true})
-     */
+    #[Route('/personnel/{personnel}/{annee}', name: 'administration_previsionnel_personnel', options: ['expose' => true])]
     public function personnel(
         PrevisionnelManager $previsionnelManager,
         HrsManager $hrsManager,
@@ -128,9 +115,7 @@ class PrevisionnelController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/ajax/edit/{id}", name="administration_previsionnel_ajax_edit", options={"expose":true})
-     */
+    #[Route('/ajax/edit/{id}', name: 'administration_previsionnel_ajax_edit', options: ['expose' => true])]
     public function edit(
         PrevisionnelManager $previsionnelManager,
         Request $request,
@@ -141,20 +126,16 @@ class PrevisionnelController extends BaseController
 
         $update = $previsionnelManager->update($previsionnel, $name, $value);
 
-        return $update ? new JsonResponse('', Response::HTTP_OK) : new JsonResponse('erreur',
+        return $update ? new JsonResponse(true, Response::HTTP_OK) : new JsonResponse(false,
             Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    /**
-     * @Route("/new", name="administration_previsionnel_new", methods="GET|POST")
-     *
-     * @return RedirectResponse|Response
-     */
+    #[Route('/new', name: 'administration_previsionnel_new', methods: ['GET', 'POST'])]
     public function create(
         PersonnelRepository $personnelRepository,
         TypeMatiereManager $typeMatiereManager,
         Request $request
-    ) {
+    ): RedirectResponse|Response {
         //todo: faire une comparaison avec le prévisionnel max... et mettre des alertes.
         if ($request->isMethod('POST')) {
             $matiere = $typeMatiereManager->getMatiereFromSelect($request->request->get('previsionnel_matiere'));
@@ -181,7 +162,6 @@ class PrevisionnelController extends BaseController
                     $previsionnel->setIdMatiere($matiere->id);
                     $previsionnel->setTypeMatiere($matiere->typeMatiere);
                     $this->entityManager->persist($previsionnel);
-
                 }
                 $this->entityManager->flush();
                 $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'previsionnel.add.success.flash');
@@ -200,10 +180,9 @@ class PrevisionnelController extends BaseController
     }
 
     /**
-     * @Route("/import", name="administration_previsionnel_import", methods="GET|POST")
-     *
-     * @throws Exception
+     * @throws \Exception
      */
+    #[Route('/import', name: 'administration_previsionnel_import', methods: ['GET', 'POST'])]
     public function import(PrevisionnelImport $myPrevisionnel, Request $request): Response
     {
         $form = $this->createForm(
@@ -229,9 +208,7 @@ class PrevisionnelController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/dupliquer-annee-complete", name="administration_previsionnel_duplicate_annee", methods="POST")
-     */
+    #[Route('/dupliquer-annee-complete', name: 'administration_previsionnel_duplicate_annee', methods: ['POST'])]
     public function duplicateAnnee(
         PersonnelRepository $personnelRepository,
         PrevisionnelManager $previsionnelManager,
@@ -253,10 +230,8 @@ class PrevisionnelController extends BaseController
         return $this->redirectToRoute('administration_previsionnel_index', ['annee' => $annee_destination]);
     }
 
-    /**
-     * @Route("/{id}/dupliquer", name="administration_previsionnel_duplicate",
-     *                                 methods="GET")
-     */
+    #[Route('/{id}/dupliquer', name: 'administration_previsionnel_duplicate',
+        methods: ['GET'])]
     public function duplicate(Request $request, Previsionnel $previsionnel): Response
     {
         $newprevisionnel = clone $previsionnel;
@@ -267,9 +242,7 @@ class PrevisionnelController extends BaseController
         return $this->redirect($request->headers->get('referer'));
     }
 
-    /**
-     * @Route("/{id}", name="administration_previsionnel_delete", methods="DELETE")
-     */
+    #[Route('/{id}', name: 'administration_previsionnel_delete', methods: ['DELETE'])]
     public function delete(
         Request $request,
         Previsionnel $previsionnel
@@ -285,9 +258,7 @@ class PrevisionnelController extends BaseController
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    /**
-     * @Route("/supprimer/annee", name="administration_previsionnel_supprimer_annee", methods="POST")
-     */
+    #[Route('/supprimer/annee', name: 'administration_previsionnel_supprimer_annee', methods: ['POST'])]
     public function supprimer(Request $request, PrevisionnelManager $previsionnelManager): Response
     {
         if ($this->isCsrfTokenValid('supprimer', $request->request->get('_token'))) {

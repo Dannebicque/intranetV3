@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Previsionnel/PrevisionnelManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/08/2021 22:52
+ * @lastUpdate 25/09/2021 11:13
  */
 
 namespace App\Classes\Previsionnel;
@@ -15,7 +15,6 @@ use App\Entity\Diplome;
 use App\Entity\Personnel;
 use App\Entity\Previsionnel;
 use App\Entity\Semestre;
-use App\Repository\PrevisionnelRepository;
 use App\Utils\Tools;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -25,16 +24,12 @@ class PrevisionnelManager
 
     private EntityManagerInterface $entityManager;
 
-    private PrevisionnelRepository $previsionnelRepository;
-
     public function __construct(
-        PrevisionnelRepository $previsionnelRepository,
         EntityManagerInterface $entityManager,
         PrevisionnelSaeManager $previsionnelSae,
         PrevisionnelRessourceManager $previsionnelRessource,
         PrevisionnelMatiereManager $previsionnelMatiere
     ) {
-        $this->previsionnelRepository = $previsionnelRepository;
         $this->entityManager = $entityManager;
         $this->managers[PrevisionnelSaeManager::TYPE] = $previsionnelSae;
         $this->managers[PrevisionnelRessourceManager::TYPE] = $previsionnelRessource;
@@ -105,7 +100,7 @@ class PrevisionnelManager
         return array_merge(...$t);
     }
 
-    public function getPrevisionnelAnneeArray(Annee $annee, int $anneeUniversitaire = 0)
+    public function getPrevisionnelAnneeArray(Annee $annee, int $anneeUniversitaire = 0): array
     {
         $previsionnels = $this->getPrevisionnelAnnee($annee, $anneeUniversitaire);
         $tPrevisionnel = [];
@@ -117,7 +112,7 @@ class PrevisionnelManager
         return $tPrevisionnel;
     }
 
-    public function findByDepartement(Departement $departement, $annee)
+    public function findByDepartement(Departement $departement, $annee): array
     {
         $t = [];
         foreach ($this->managers as $manager) {
@@ -128,7 +123,7 @@ class PrevisionnelManager
         return array_merge(...$t);
     }
 
-    public function findByDiplome(Diplome $diplome, $annee)
+    public function findByDiplome(Diplome $diplome, $annee): array
     {
         $t = [];
         foreach ($this->managers as $manager) {
@@ -139,7 +134,7 @@ class PrevisionnelManager
         return array_merge(...$t);
     }
 
-    public function findByDiplomeToDelete(Diplome $diplome, $annee)
+    public function findByDiplomeToDelete(Diplome $diplome, $annee): array
     {
         $t = [];
         foreach ($this->managers as $manager) {
@@ -149,44 +144,31 @@ class PrevisionnelManager
         return array_merge(...$t);
     }
 
-//    public function getPrevisionnelSemestrePersonnel(Semestre $semestre, Personnel $personnel, int $annee): array
-//    {
-//        $t = [];
-//        foreach ($this->managers as $manager) {
-//            $previs = $manager->getPrevisionnelSemestrePersonnel($semestre, $personnel, $annee);
-//            $t = array_merge($t, $previs->toArray());
-//        }
-//
-//        return $t;
-//    }
-
     public function update(Previsionnel $previ, $name, $value): bool
     {
-        if ($previ) {
-            if ('personnel' === $name) {
-                if ('' === $value) {
-                    $previ->setPersonnel(null);
-                    $this->entityManager->flush();
-
-                    return true;
-                }
-                $personnel = $this->entityManager->getRepository(Personnel::class)->find($value);
-                if (null !== $personnel) {
-                    $previ->setPersonnel($personnel);
-                    $this->entityManager->flush();
-
-                    return true;
-                }
-
-                return false;
-            }
-            $method = 'set' . $name;
-            if (method_exists($previ, $method)) {
-                $previ->$method(Tools::convertToFloat($value));
+        if ('personnel' === $name) {
+            if ('' === $value) {
+                $previ->setPersonnel(null);
                 $this->entityManager->flush();
 
                 return true;
             }
+            $personnel = $this->entityManager->getRepository(Personnel::class)->find($value);
+            if (null !== $personnel) {
+                $previ->setPersonnel($personnel);
+                $this->entityManager->flush();
+
+                return true;
+            }
+
+            return false;
+        }
+        $method = 'set' . $name;
+        if (method_exists($previ, $method)) {
+            $previ->$method(Tools::convertToFloat($value));
+            $this->entityManager->flush();
+
+            return true;
         }
 
         return false;
@@ -200,7 +182,7 @@ class PrevisionnelManager
         $personnels
     ): void {
         //on efface, sauf si la case est cochée.
-        if (null === $annee_concerver || 'true' !== $annee_concerver) {
+        if ('true' !== $annee_concerver) {
             $this->supprimeAnnee($departement, $annee_destination);
         }
 
@@ -230,11 +212,12 @@ class PrevisionnelManager
     {
         $previsionnels = $this->getPrevisionnelDepartement($departement, $annee_destination);
         foreach ($previsionnels as $previsionnel) {
-            $this->entityManager->remove($previsionnel);
+            if (null !== $previsionnel->objPrevisionnel) {
+                $this->entityManager->remove($previsionnel->objPrevisionnel);
+            }
         }
         $this->entityManager->flush();
     }
-
 
     public function getPrevisionnelDepartement(Departement $departement, int $anneeUniversitaire = 0): array
     {

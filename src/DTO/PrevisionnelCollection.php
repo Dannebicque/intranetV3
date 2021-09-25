@@ -4,11 +4,10 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/PrevisionnelCollection.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/05/2021 16:35
+ * @lastUpdate 25/09/2021 11:10
  */
 
 namespace App\DTO;
-
 
 class PrevisionnelCollection
 {
