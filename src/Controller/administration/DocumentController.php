@@ -4,18 +4,17 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/DocumentController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/09/2021 16:20
+ * @lastUpdate 25/09/2021 16:38
  */
 
 namespace App\Controller\administration;
 
+use App\Classes\DocumentDelete;
 use App\Classes\MyExport;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Document;
 use App\Form\DocumentType;
-use App\Repository\DocumentFavoriEtudiantRepository;
-use App\Repository\DocumentFavoriPersonnelRepository;
 use App\Repository\DocumentRepository;
 use App\Table\DocumentTableType;
 use Exception;
@@ -43,7 +42,7 @@ class DocumentController extends BaseController
             ['table' => $table]);
     }
 
-    #[Route("/export.{_format}", name: "export", methods: "GET", requirements: ["_format" => "csv|xlsx|pdf"])]
+    #[Route('/export.{_format}', name: 'export', methods: 'GET', requirements: ['_format' => 'csv|xlsx|pdf'])]
     public function export(MyExport $myExport, DocumentRepository $documentRepository, $_format): Response
     {
         $documents = $documentRepository->findByDepartement($this->getDepartement());
@@ -57,7 +56,7 @@ class DocumentController extends BaseController
         );
     }
 
-    #[Route("/new", name: "new", methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'new', methods: ['GET', 'POST'])]
     public function create(Request $request): Response
     {
         $document = new Document();
@@ -138,8 +137,7 @@ class DocumentController extends BaseController
      * @ParamConverter("document", options={"mapping": {"id": "uuid"}})
      */
     public function delete(
-        DocumentFavoriEtudiantRepository $documentFavoriEtudiantRepository,
-        DocumentFavoriPersonnelRepository $documentFavoriPersonnelRepository,
+        DocumentDelete $documentDelete,
         Request $request,
         Document $document
     ): Response {
@@ -147,23 +145,12 @@ class DocumentController extends BaseController
         $uuid = $document->getUuid();
 
         if ($this->isCsrfTokenValid('delete' . $uuid, $request->request->get('_token'))) {
+            $docDelete = $documentDelete->deleteDocument($document);
+            if (true === $docDelete) {
+                $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'document.delete.success.flash');
 
-            //suppression des favoris
-            $docs = $documentFavoriEtudiantRepository->findBy(['document' => $document->getId()]);
-            foreach ($docs as $doc) {
-                $this->entityManager->remove($doc);
+                return $this->json($id, Response::HTTP_OK);
             }
-
-            $docs = $documentFavoriPersonnelRepository->findBy(['document' => $document->getId()]);
-            foreach ($docs as $doc) {
-                $this->entityManager->remove($doc);
-            }
-
-            $this->entityManager->remove($document);
-            $this->entityManager->flush();
-            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'document.delete.success.flash');
-
-            return $this->json($id, Response::HTTP_OK);
         }
         $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'document.delete.error.flash');
 
