@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/Previsionnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/08/2021 23:00
+ * @lastUpdate 25/09/2021 11:12
  */
 
 namespace App\DTO;
@@ -41,6 +41,7 @@ class Previsionnel
     public ?string $diplome_libelle = '';
     public ?string $annee_code_etape = '';
     public ?string $annee_libelle_long = '';
+    public mixed $objPrevisionnel;
 
     public function getNbSeanceCm(): string
     {
@@ -82,12 +83,12 @@ class Previsionnel
         return $this->nbHCm + $this->nbHTd + $this->nbHTp;
     }
 
-    public function getDisplay()
+    public function getDisplay(): string
     {
         return $this->matiere_code . ' | ' . $this->matiere_libelle;
     }
 
-    public function getTypeIdMatiere()
+    public function getTypeIdMatiere(): string
     {
         return $this->type_matiere . '_' . $this->matiere_id;
     }
