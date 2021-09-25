@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/DocumentController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/09/2021 20:09
+ * @lastUpdate 25/09/2021 16:20
  */
 
 namespace App\Controller\administration;
@@ -144,8 +144,9 @@ class DocumentController extends BaseController
         Document $document
     ): Response {
         $id = $document->getId();
+        $uuid = $document->getUuid();
 
-        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $uuid, $request->request->get('_token'))) {
 
             //suppression des favoris
             $docs = $documentFavoriEtudiantRepository->findBy(['document' => $document->getId()]);
