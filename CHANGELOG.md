@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.22](https://github.com/Dannebicque/intranetV3/compare/v3.1.21...v3.1.22) (2021-09-26)
+
+
+### Features
+
+* Amélioration de l'affichage de l'EDT quelque soit la source ([c3af970](https://github.com/Dannebicque/intranetV3/commit/c3af9708ced43224b52ef27deab051e708fa8df3))
+* Dématérialisation de la demande des BC. Structure et Workflow ([e572d0d](https://github.com/Dannebicque/intranetV3/commit/e572d0de8eebe15296b0b96ab81acc9ced6405c9))
+* Saisie des absences depuis Celcat ou l'EDT de l'intranet ([1a0773b](https://github.com/Dannebicque/intranetV3/commit/1a0773bbb32bf8bd4095b4f821b43af271194de8))
+
+
+### Bug Fixes
+
+* Import avec les périodes de projets DUT ([27e6975](https://github.com/Dannebicque/intranetV3/commit/27e6975af4301a977a439d5b2776d6412bb7fdd4))
+* tableType étudiant et appelSuivi, EvenementEdt.php, paging ([d953b84](https://github.com/Dannebicque/intranetV3/commit/d953b8474d8de333e4e16606219edba5c6868e96))
+
 ### [3.1.21](https://github.com/Dannebicque/intranetV3/compare/v3.1.20...v3.1.21) (2021-09-26)
 
 
