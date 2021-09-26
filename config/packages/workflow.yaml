@@ -1,0 +1,61 @@
+framework:
+    workflows:
+        bon_commande:
+            type: workflow
+            audit_trail:
+                enabled: "%kernel.debug%"
+            marking_store:
+                type: 'method'
+                property: 'state'
+            supports:
+                - App\Entity\BCDemande
+            initial_marking: demande_initiale
+            places:
+                - demande_initiale
+                - attente_validation_direction
+                - avis_favorable
+                - avis_defavorable
+                - verification_compta
+                - validation_compta
+                - validation_csa
+                - validation_migo
+                - validation_migo_partiel
+                - validation_migo_complet
+                - cloture
+            transitions:
+                validation_responsable:
+                    from: demande_initiale
+                    to: attente_validation_direction
+                avis_direction_favorable:
+                    from: attente_validation_direction
+                    to: avis_favorable
+                avis_direction_defavorable:
+                    from: attente_validation_direction
+                    to: avis_defavorable
+                verification_compta:
+                    from: avis_favorable
+                    to: verification_compta
+                validation_compta:
+                    from: verification_compta
+                    to: validation_compta
+                validation_csa:
+                    from: validation_compta
+                    to: validation_csa
+                service_fait:
+                    from: validation_csa
+                    to: validation_migo
+                validation_service_fait_partiel:
+                    from: validation_migo
+                    to: validation_migo_partiel
+                validation_service_fait_compet:
+                    from: validation_migo
+                    to: validation_migo_complet
+                validation_service_fait_partiel_complement:
+                    from: validation_migo
+                    to: validation_migo_partiel
+                cloture_bc_demande:
+                    from: validation_migo_complet
+                    to: cloture
+                cloture_bc_demande_defavorable:
+                    from: avis_defavorable
+                    to: cloture

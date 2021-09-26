@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}BCCentreFinancier index{% endblock %}
+
+{% block body %}
+    <h1>BCCentreFinancier index</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Libelle</th>
+            <th>Code</th>
+            <th>Created</th>
+            <th>Updated</th>
+            <th>actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for b_c_centre_financier in b_c_centre_financiers %}
+            <tr>
+                <td>{{ b_c_centre_financier.id }}</td>
+                <td>{{ b_c_centre_financier.libelle }}</td>
+                <td>{{ b_c_centre_financier.code }}</td>
+                <td>{{ b_c_centre_financier.created ? b_c_centre_financier.created|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ b_c_centre_financier.updated ? b_c_centre_financier.updated|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('b_c_centre_financier_show', {'id': b_c_centre_financier.id}) }}">show</a>
+                    <a href="{{ path('b_c_centre_financier_edit', {'id': b_c_centre_financier.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('b_c_centre_financier_new') }}">Create new</a>
+{% endblock %}

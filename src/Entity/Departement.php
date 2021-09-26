@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Departement.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/06/2021 10:28
+ * @lastUpdate 22/09/2021 14:11
  */
 
 namespace App\Entity;
@@ -181,6 +181,11 @@ class Departement extends BaseEntity
     private Collection $etudiants;
 
     /**
+     * @ORM\OneToMany(targetEntity=BCDemande::class, mappedBy="departement")
+     */
+    private $bCDemandes;
+
+    /**
      * Departement constructor.
      *
      * @throws Exception
@@ -200,6 +205,7 @@ class Departement extends BaseEntity
         $this->articleCategories = new ArrayCollection();
         $this->emprunts = new ArrayCollection();
         $this->etudiants = new ArrayCollection();
+        $this->bCDemandes = new ArrayCollection();
     }
 
     public function __clone()
@@ -845,5 +851,35 @@ class Departement extends BaseEntity
     public function libelleInitiales(): array|string|null
     {
         return str_replace(' ', '<br>', $this->libelle);
+    }
+
+    /**
+     * @return Collection|BCDemande[]
+     */
+    public function getBCDemands(): Collection
+    {
+        return $this->bCDemandes;
+    }
+
+    public function addBCDemand(BCDemande $bCDemand): self
+    {
+        if (!$this->bCDemandes->contains($bCDemand)) {
+            $this->bCDemandes[] = $bCDemand;
+            $bCDemand->setDepartement($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBCDemand(BCDemande $bCDemand): self
+    {
+        if ($this->bCDemandes->removeElement($bCDemand)) {
+            // set the owning side to null (unless already changed)
+            if ($bCDemand->getDepartement() === $this) {
+                $bCDemand->setDepartement(null);
+            }
+        }
+
+        return $this;
     }
 }

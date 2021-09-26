@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/CelcatEvent.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/06/2021 10:28
+ * @lastUpdate 23/09/2021 08:57
  */
 
 namespace App\Entity;
@@ -20,6 +20,9 @@ use Doctrine\ORM\Mapping as ORM;
 class CelcatEvent extends BaseEntity
 {
     use LifeCycleTrait;
+
+    //todo: calculer la date réelle (comme pour EdtPlanning, Calculer le semestre).
+    //todo: refactor les noms des deux entités EDTIntranet, EDTCelcat
 
     /**
      * @ORM\Column(type="integer")
@@ -105,6 +108,16 @@ class CelcatEvent extends BaseEntity
      * @ORM\Column(type="datetime")
      */
     private ?CarbonInterface $updateEvent;
+
+    /**
+     * @ORM\Column(type="date", nullable=true)
+     */
+    private $dateCours;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Semestre::class, inversedBy="celcatEvents")
+     */
+    private $semestre;
 
     public function getEventId(): ?int
     {
@@ -313,5 +326,29 @@ class CelcatEvent extends BaseEntity
     public function getDisplayIcal(): string
     {
         return $this->getLibModule() . ' ' . $this->getLibGroupe();
+    }
+
+    public function getDateCours(): ?\DateTimeInterface
+    {
+        return $this->dateCours;
+    }
+
+    public function setDateCours(?\DateTimeInterface $dateCours): self
+    {
+        $this->dateCours = $dateCours;
+
+        return $this;
+    }
+
+    public function getSemestre(): ?Semestre
+    {
+        return $this->semestre;
+    }
+
+    public function setSemestre(?Semestre $semestre): self
+    {
+        $this->semestre = $semestre;
+
+        return $this;
     }
 }

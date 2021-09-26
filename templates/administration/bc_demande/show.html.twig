@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.bc.demande.show.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        {{ include('composants/adm-buttons-show.html.twig', {elt: 'bc_demande', id: bc_demande.id}) }}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.bc.demande.show.heading'|trans }}</h4>
+        <div class="card-body">
+
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ bc_demande.id }}</td>
+                </tr>
+                <tr>
+                    <th>Service</th>
+                    <td>{{ bc_demande.service }}</td>
+                </tr>
+                <tr>
+                    <th>Prestation</th>
+                    <td>{{ bc_demande.prestation }}</td>
+                </tr>
+                <tr>
+                    <th>ObjetDemande</th>
+                    <td>{{ bc_demande.objetDemande }}</td>
+                </tr>
+                <tr>
+                    <th>Description</th>
+                    <td>{{ bc_demande.description }}</td>
+                </tr>
+                <tr>
+                    <th>MontantTTC</th>
+                    <td>{{ bc_demande.montantTTC }}</td>
+                </tr>
+                <tr>
+                    <th>MontantHT</th>
+                    <td>{{ bc_demande.montantHT }}</td>
+                </tr>
+                <tr>
+                    <th>DateDemande</th>
+                    <td>{{ bc_demande.dateDemande ? bc_demande.dateDemande|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>ValidationResponsable</th>
+                    <td>{{ bc_demande.validationResponsable ? bc_demande.validationResponsable|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>AvisDirection</th>
+                    <td>{{ bc_demande.avisDirection }}</td>
+                </tr>
+                <tr>
+                    <th>DateAvisDirection</th>
+                    <td>{{ bc_demande.dateAvisDirection ? bc_demande.dateAvisDirection|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Created</th>
+                    <td>{{ bc_demande.created ? bc_demande.created|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Updated</th>
+                    <td>{{ bc_demande.updated ? bc_demande.updated|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
