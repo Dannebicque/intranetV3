@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/AbsenceRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/07/2021 17:05
+ * @lastUpdate 26/09/2021 14:25
  */
 
 namespace App\Repository;
@@ -59,18 +59,22 @@ class AbsenceRepository extends ServiceEntityRepository
         return $tab;
     }
 
-    public function getByMatiere(Matiere $matiere, AnneeUniversitaire $anneeUniversitaire)
+    public function getByMatiere(Matiere $matiere, ?AnneeUniversitaire $anneeUniversitaire = null)
     {
-        return $this->createQueryBuilder('m')
-            ->innerJoin(AnneeUniversitaire::class, 'a', 'WITH', 'm.anneeUniversitaire = a.id')
+        $query = $this->createQueryBuilder('m')
             ->where('m.idMatiere = :matiere')
             ->andWhere('m.typeMatiere = :type')
-            ->andWhere('a.annee = :annee')
             ->setParameter('matiere', $matiere->id)
             ->setParameter('type', $matiere->typeMatiere)
-            ->setParameter('annee', $anneeUniversitaire->getAnnee())
-            ->orderBy('m.dateHeure', 'DESC')
-            ->getQuery()
+            ->orderBy('m.dateHeure', 'DESC');
+
+        if (null !== $anneeUniversitaire) {
+            $query->innerJoin(AnneeUniversitaire::class, 'a', 'WITH', 'm.anneeUniversitaire = a.id')
+                ->andWhere('a.annee = :annee')
+                ->setParameter('annee', $anneeUniversitaire->getAnnee());
+        }
+
+        return $query->getQuery()
             ->getResult();
     }
 
@@ -150,6 +154,25 @@ class AbsenceRepository extends ServiceEntityRepository
             ->setParameter('dateFin', $justificatif->getDateHeureFin())
             ->setParameter('etudiant', $justificatif->getEtudiant()->getId())
             ->getQuery()
+            ->getResult();
+    }
+
+    public function findByMatiere(int $matiere, string $type, ?AnneeUniversitaire $annee = null)
+    {
+        $query = $this->createQueryBuilder('e')
+            ->where('e.idMatiere = :matiere')
+            ->andWhere('e.typeMatiere = :type')
+            ->setParameter('matiere', $matiere)
+            ->setParameter('type', $type)
+            ->orderBy('e.dateHeure', 'ASC');
+
+        if (null !== $annee) {
+            $query->innerJoin(AnneeUniversitaire::class, 'u', 'WITH', 'e.anneeUniversitaire = u.id')
+                ->andWhere('u.annee = :annee')
+                ->setParameter('annee', $annee->getAnnee());
+        }
+
+        return $query->getQuery()
             ->getResult();
     }
 }
