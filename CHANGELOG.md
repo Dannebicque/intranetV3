@@ -2,6 +2,37 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.21](https://github.com/Dannebicque/intranetV3/compare/v3.1.20...v3.1.21) (2021-09-26)
+
+
+### Features
+
+* Amélioration du formulaire d'ajout d'un groupe ([976ac24](https://github.com/Dannebicque/intranetV3/commit/976ac248fd7e6be37f9a9f878f5b8398089591a4))
+* Pré-remplissage des nom, prénom et date de naissance des personnels à partir du LDAP. Ajout du type d'utilisateur TEC. ([b6e274c](https://github.com/Dannebicque/intranetV3/commit/b6e274c578d0bb011091f92a38723a46e0ac01e9))
+* Pré-remplissage des nom, prénom et date de naissance des personnels à partir du LDAP. Ajout du type d'utilisateur TEC. ([1e2e864](https://github.com/Dannebicque/intranetV3/commit/1e2e864c47f96fa611de009d15b506db0b2609e9))
+* Synchro structure depuis UE ou Semestre. ([aa4d3ff](https://github.com/Dannebicque/intranetV3/commit/aa4d3ffce203afde4ee34ff8a06d0abf23469226))
+* Synchro structure depuis UE ou Semestre. ([ce9d770](https://github.com/Dannebicque/intranetV3/commit/ce9d770bb52a08202afd251d63ce3c4f5420ed30))
+* Synchro structure depuis UE ou Semestre. ([c00494e](https://github.com/Dannebicque/intranetV3/commit/c00494e8a023379549ad1bc28bb92590670bc1d9))
+* TableType pour tous les étudiants ([798dd00](https://github.com/Dannebicque/intranetV3/commit/798dd00a697233af747eac338a4dc93ddab25098))
+
+
+### Bug Fixes
+
+* Bug et traductions sur la création de structure ([5c422c7](https://github.com/Dannebicque/intranetV3/commit/5c422c7519e9ba4d80e94fa2f1f7dd250c1ce755))
+* Convertion Markdown si champ vide ([049718f](https://github.com/Dannebicque/intranetV3/commit/049718ff474e28b84e38b9a4c0099184849dc7f5))
+* Correctifs page structure ([a1d6724](https://github.com/Dannebicque/intranetV3/commit/a1d6724d28a4021ce3fe827d2712536f6447dcc5))
+* Filtre sur personnel = null pour la création d'un prévisionnel ([e498b19](https://github.com/Dannebicque/intranetV3/commit/e498b19464c726ce0dd2c955e02cf6746853fb84))
+* mise en page des formulaires ([ac81a79](https://github.com/Dannebicque/intranetV3/commit/ac81a79f847e3a7f10088b1f1688d9ba8215e1b0))
+* Saisie absence, sans absent. Bug de semestre. + Saisie depuis l'EDT ([d3de0f6](https://github.com/Dannebicque/intranetV3/commit/d3de0f689d262f418a4c3c483825aa86561b29b6))
+* Suppression d'une matière ([46dd240](https://github.com/Dannebicque/intranetV3/commit/46dd24048aa45b9ad7a43a785b9593cfb3aa97a5))
+* Suppression d'une matière ([1592c8d](https://github.com/Dannebicque/intranetV3/commit/1592c8d74608b55da38b25fbeb5f4195dc261dfa))
+* Suppression d'une matière ([4227719](https://github.com/Dannebicque/intranetV3/commit/4227719e1abf51e720db62c6f23644f3e767bfdb))
+* Suppression des documents ([7c64b90](https://github.com/Dannebicque/intranetV3/commit/7c64b90a04185fb0cf75835e556ccbff626f920d))
+* Suppression des documents et des types de document, avec suppression des fichiers et des liaisons ([71dc323](https://github.com/Dannebicque/intranetV3/commit/71dc32370c0a373e16225205c08289844284e9c2))
+* Suppression du prévisionnel avec le DTO. Optomisation des adapters ([a090102](https://github.com/Dannebicque/intranetV3/commit/a090102bdc4f552677e1ae86ce483ed31db8e903))
+* Traduction du formulaire d'ajout de matière ([24846f0](https://github.com/Dannebicque/intranetV3/commit/24846f0048027a7d38980399c57efdd932d06d57))
+* Typage float, et conversion ([2eb0689](https://github.com/Dannebicque/intranetV3/commit/2eb06894644e2392a04bf666a9b8260e66ddedd8))
+
 ### [3.1.20](https://github.com/Dannebicque/intranetV3/compare/v3.1.19...v3.1.20) (2021-09-23)
 
 
