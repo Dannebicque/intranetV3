@@ -21,6 +21,7 @@
                 {% if i==0 %}
                     <tr>
                 {% endif %}
+                {# todo: pourrait être absolute_url(asset(...)) #}
                 <td><img src="{{ settings('BASE_PATH')~'/etudiants/'~etu.photoName }}" alt="Photo" width="100px"
                     /><br />{{ etu.display  }}</td>
                 {% set i=i+1 %}

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/AppelSuiviTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 10/09/2021 20:37
+ * @lastUpdate 16/09/2021 08:35
  */
 
 namespace App\Table;
@@ -145,26 +145,7 @@ class AppelSuiviTableType extends TableType
                     //->setParameter('semestre', $this->semestre->getId());
                   //  ->setParameter('anneeuniversitaire', $this->anneeUniversitaire->getId());
 
-                if (isset($formData['search'])) {
-                    $qb->andWhere('LOWER(etu.nom) LIKE :search');
-                    $qb->orWhere('LOWER(etu.prenom) LIKE :search');
-                    $qb->setParameter('search', '%'.$formData['search'].'%');
-                }
 
-                if (isset($formData['from'])) {
-                    $qb->andWhere('e.dateEval >= :from');
-                    $qb->setParameter('from', $formData['from']);
-                }
-
-                if (isset($formData['to'])) {
-                    $qb->andWhere('e.dateEval <= :to');
-                    $qb->setParameter('to', $formData['to']);
-                }
-
-                if (isset($formData['etat_demande'])) {
-                    $qb->andWhere('e.etat_demande = :etat_demande');
-                    $qb->setParameter('etat_demande', $formData['etat_demande']);
-                }
             },
         ]);
     }

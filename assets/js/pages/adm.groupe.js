@@ -119,6 +119,7 @@ $(document).on('click', '.duplicate-type_groupe', function (e) {
 })
 
 $(document).on('click', '#addGroupe', function (e) {
+  //todo: vérifier que les champs obligatoires sont remplis.
   e.preventDefault()
   const semestre = $(this).data('semestre')
   let data = new FormData($('#form_groupe')[0])

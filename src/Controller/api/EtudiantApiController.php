@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/api/EtudiantApiController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:28
+ * @lastUpdate 25/09/2021 15:37
  */
 
 namespace App\Controller\api;
@@ -59,53 +59,5 @@ class EtudiantApiController extends BaseController
         }
 
         return new JsonResponse($etus);
-    }
-
-    /**
-     * @Route("/departement", name="api_etudiant_departement", options={"expose":true})
-     *
-     * @throws InvalidArgumentException
-     */
-    public function getEtudiantsByDepartement(Request $request): Response
-    {
-        $length = $request->get('length');
-        $length = $length && (-1 !== $length) ? $length : 0;
-
-        $start = $request->get('start');
-        $start = $length ? ($start && (-1 !== $start) ? $start : 0) / $length : 0;
-
-        $order = $request->get('order');
-
-        $search = $request->get('search');
-        $filters = [
-            'query' => $search['value'],
-            'order' => $order,
-        ];
-
-        $users = $this->etudiantRepository->getArrayEtudiantsByDepartement(
-            $this->dataUserSession->getDepartementId(),
-            $filters,
-            $start,
-            $length
-        );
-
-        $output = [
-            'draw' => $request->get('draw'),
-            'data' => $users,
-            'recordsFiltered' => count($this->etudiantRepository->getByDepartement(
-                $this->dataUserSession->getDepartementId(),
-                $filters,
-                0,
-                false
-            )),
-            'recordsTotal' => count($this->etudiantRepository->getByDepartement(
-                $this->dataUserSession->getDepartementId(),
-                [],
-                0,
-                false
-            )),
-        ];
-
-        return $this->json($output, Response::HTTP_OK);
     }
 }

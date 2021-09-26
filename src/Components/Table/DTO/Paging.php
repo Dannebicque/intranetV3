@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/DTO/Paging.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 21:50
+ * @lastUpdate 26/09/2021 18:48
  */
 
 namespace App\Components\Table\DTO;
@@ -26,11 +26,11 @@ class Paging
     public function handleRequest(array $paging): void
     {
         if (array_key_exists('pageLength', $paging)) {
-            $this->pageLength = $paging['pageLength'];
+            $this->pageLength = is_int((int)$paging['pageLength']) ? (int)$paging['pageLength'] : 30;
         }
 
         if (array_key_exists('pageActive', $paging)) {
-            $this->pageActive = $paging['pageActive'];
+            $this->pageActive = is_int((int)$paging['pageActive']) ? (int)$paging['pageActive'] : 1;
         }
     }
 
