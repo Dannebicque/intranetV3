@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Personnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/09/2021 14:13
+ * @lastUpdate 22/09/2021 14:24
  */
 
 namespace App\Entity;
@@ -44,7 +44,7 @@ class Personnel extends Utilisateur implements UtilisateurInterface
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private ?int $id;
+    private mixed $id;
 
     /**
      * @ORM\Column(type="string", length=15)
@@ -263,6 +263,26 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     private $configuration;
 
     /**
+     * @ORM\OneToMany(targetEntity=BCDemande::class, mappedBy="responsable")
+     */
+    private $bcDemandesResponsable;
+
+    /**
+     * @ORM\OneToMany(targetEntity=BCDemande::class, mappedBy="signataireCompta")
+     */
+    private $bcDemandeSignataireCompta;
+
+    /**
+     * @ORM\OneToMany(targetEntity=BCServiceFait::class, mappedBy="receptionnisteMigo")
+     */
+    private $bcServiceFaitReceptionniste;
+
+    /**
+     * @ORM\OneToMany(targetEntity=BCServiceFait::class, mappedBy="responsableSignataire")
+     */
+    private $bcServiceFaitResponsableSignataire;
+
+    /**
      * Personnel constructor.
      *
      * @throws JsonException
@@ -294,6 +314,10 @@ class Personnel extends Utilisateur implements UtilisateurInterface
         $this->materielCommunPrets = new ArrayCollection();
         $this->covidAttestationPersonnels = new ArrayCollection();
         $this->absenceEtatAppels = new ArrayCollection();
+        $this->bcDemandesResponsable = new ArrayCollection();
+        $this->bcDemandeSignataireCompta = new ArrayCollection();
+        $this->bcServiceFaitReceptionniste = new ArrayCollection();
+        $this->bcServiceFaitResponsableSignataire = new ArrayCollection();
     }
 
     public function getId()
@@ -1318,6 +1342,126 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     public function setConfiguration(array $configuration = []): self
     {
         $this->configuration = json_encode($configuration);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|BCDemande[]
+     */
+    public function getBcDemandesResponsable(): Collection
+    {
+        return $this->bcDemandesResponsable;
+    }
+
+    public function addBcDemandesResponsable(BCDemande $bcDemandesResponsable): self
+    {
+        if (!$this->bcDemandesResponsable->contains($bcDemandesResponsable)) {
+            $this->bcDemandesResponsable[] = $bcDemandesResponsable;
+            $bcDemandesResponsable->setResponsable($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBcDemandesResponsable(BCDemande $bcDemandesResponsable): self
+    {
+        if ($this->bcDemandesResponsable->removeElement($bcDemandesResponsable)) {
+            // set the owning side to null (unless already changed)
+            if ($bcDemandesResponsable->getResponsable() === $this) {
+                $bcDemandesResponsable->setResponsable(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|BCDemande[]
+     */
+    public function getBcDemandeSignataireCompta(): Collection
+    {
+        return $this->bcDemandeSignataireCompta;
+    }
+
+    public function addBcDemandeSignataireComptum(BCDemande $bcDemandeSignataireComptum): self
+    {
+        if (!$this->bcDemandeSignataireCompta->contains($bcDemandeSignataireComptum)) {
+            $this->bcDemandeSignataireCompta[] = $bcDemandeSignataireComptum;
+            $bcDemandeSignataireComptum->setSignataireCompta($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBcDemandeSignataireComptum(BCDemande $bcDemandeSignataireComptum): self
+    {
+        if ($this->bcDemandeSignataireCompta->removeElement($bcDemandeSignataireComptum)) {
+            // set the owning side to null (unless already changed)
+            if ($bcDemandeSignataireComptum->getSignataireCompta() === $this) {
+                $bcDemandeSignataireComptum->setSignataireCompta(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|BCServiceFait[]
+     */
+    public function getBcServiceFaitReceptionniste(): Collection
+    {
+        return $this->bcServiceFaitReceptionniste;
+    }
+
+    public function addBcServiceFaitReceptionniste(BCServiceFait $bcServiceFaitReceptionniste): self
+    {
+        if (!$this->bcServiceFaitReceptionniste->contains($bcServiceFaitReceptionniste)) {
+            $this->bcServiceFaitReceptionniste[] = $bcServiceFaitReceptionniste;
+            $bcServiceFaitReceptionniste->setReceptionnisteMigo($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBcServiceFaitReceptionniste(BCServiceFait $bcServiceFaitReceptionniste): self
+    {
+        if ($this->bcServiceFaitReceptionniste->removeElement($bcServiceFaitReceptionniste)) {
+            // set the owning side to null (unless already changed)
+            if ($bcServiceFaitReceptionniste->getReceptionnisteMigo() === $this) {
+                $bcServiceFaitReceptionniste->setReceptionnisteMigo(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|BCServiceFait[]
+     */
+    public function getBcServiceFaitResponsableSignataire(): Collection
+    {
+        return $this->bcServiceFaitResponsableSignataire;
+    }
+
+    public function addBcServiceFaitResponsableSignataire(BCServiceFait $bcServiceFaitResponsableSignataire): self
+    {
+        if (!$this->bcServiceFaitResponsableSignataire->contains($bcServiceFaitResponsableSignataire)) {
+            $this->bcServiceFaitResponsableSignataire[] = $bcServiceFaitResponsableSignataire;
+            $bcServiceFaitResponsableSignataire->setResponsableSignataire($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBcServiceFaitResponsableSignataire(BCServiceFait $bcServiceFaitResponsableSignataire): self
+    {
+        if ($this->bcServiceFaitResponsableSignataire->removeElement($bcServiceFaitResponsableSignataire)) {
+            // set the owning side to null (unless already changed)
+            if ($bcServiceFaitResponsableSignataire->getResponsableSignataire() === $this) {
+                $bcServiceFaitResponsableSignataire->setResponsableSignataire(null);
+            }
+        }
 
         return $this;
     }

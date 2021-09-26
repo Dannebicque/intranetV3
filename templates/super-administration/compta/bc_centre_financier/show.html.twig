@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}BCCentreFinancier{% endblock %}
+
+{% block body %}
+    <h1>BCCentreFinancier</h1>
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ b_c_centre_financier.id }}</td>
+        </tr>
+        <tr>
+            <th>Libelle</th>
+            <td>{{ b_c_centre_financier.libelle }}</td>
+        </tr>
+        <tr>
+            <th>Code</th>
+            <td>{{ b_c_centre_financier.code }}</td>
+        </tr>
+        <tr>
+            <th>Created</th>
+            <td>{{ b_c_centre_financier.created ? b_c_centre_financier.created|date('Y-m-d H:i:s') : '' }}</td>
+        </tr>
+        <tr>
+            <th>Updated</th>
+            <td>{{ b_c_centre_financier.updated ? b_c_centre_financier.updated|date('Y-m-d H:i:s') : '' }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('b_c_centre_financier_index') }}">back to list</a>
+
+    <a href="{{ path('b_c_centre_financier_edit', {'id': b_c_centre_financier.id}) }}">edit</a>
+
+    {{ include('b_c_centre_financier/_delete_form.html.twig') }}
+{% endblock %}

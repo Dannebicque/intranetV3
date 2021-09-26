@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Semestre.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/09/2021 12:55
+ * @lastUpdate 26/09/2021 18:50
  */
 
 namespace App\Entity;
@@ -256,25 +256,19 @@ class Semestre extends BaseEntity
      */
     private $absenceEtatAppels;
 
+    /**
+     * @ORM\OneToMany(targetEntity=CelcatEvent::class, mappedBy="semestre")
+     */
+    private $celcatEvents;
+
     public function __construct()
     {
-        $this->articles = new ArrayCollection();
-        $this->documents = new ArrayCollection();
-        $this->dates = new ArrayCollection();
-        $this->hrs = new ArrayCollection();
-        $this->parcours = new ArrayCollection();
-        $this->bornes = new ArrayCollection();
-        $this->cahierTextes = new ArrayCollection();
-        $this->ues = new ArrayCollection();
-        $this->typeGroupes = new ArrayCollection();
-        $this->stagePeriodes = new ArrayCollection();
-        $this->scolaritePromos = new ArrayCollection();
-        $this->etudiants = new ArrayCollection();
-        $this->qualiteQuestionnaires = new ArrayCollection();
-        $this->projetPeriodes = new ArrayCollection();
-        $this->apcRessources = new ArrayCollection();
-        $this->apcSaes = new ArrayCollection();
-        $this->absenceEtatAppels = new ArrayCollection();
+        $this->init();
+    }
+
+    public function __clone()
+    {
+        $this->init();
     }
 
     public function getLibelle(): ?string
@@ -1191,5 +1185,57 @@ class Semestre extends BaseEntity
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection|CelcatEvent[]
+     */
+    public function getCelcatEvents(): Collection
+    {
+        return $this->celcatEvents;
+    }
+
+    public function addCelcatEvent(CelcatEvent $celcatEvent): self
+    {
+        if (!$this->celcatEvents->contains($celcatEvent)) {
+            $this->celcatEvents[] = $celcatEvent;
+            $celcatEvent->setSemestre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCelcatEvent(CelcatEvent $celcatEvent): self
+    {
+        if ($this->celcatEvents->removeElement($celcatEvent)) {
+            // set the owning side to null (unless already changed)
+            if ($celcatEvent->getSemestre() === $this) {
+                $celcatEvent->setSemestre(null);
+            }
+        }
+
+        return $this;
+    }
+
+    private function init()
+    {
+        $this->articles = new ArrayCollection();
+        $this->documents = new ArrayCollection();
+        $this->dates = new ArrayCollection();
+        $this->hrs = new ArrayCollection();
+        $this->parcours = new ArrayCollection();
+        $this->bornes = new ArrayCollection();
+        $this->cahierTextes = new ArrayCollection();
+        $this->ues = new ArrayCollection();
+        $this->typeGroupes = new ArrayCollection();
+        $this->stagePeriodes = new ArrayCollection();
+        $this->scolaritePromos = new ArrayCollection();
+        $this->etudiants = new ArrayCollection();
+        $this->qualiteQuestionnaires = new ArrayCollection();
+        $this->projetPeriodes = new ArrayCollection();
+        $this->apcRessources = new ArrayCollection();
+        $this->apcSaes = new ArrayCollection();
+        $this->absenceEtatAppels = new ArrayCollection();
+        $this->celcatEvents = new ArrayCollection();
     }
 }

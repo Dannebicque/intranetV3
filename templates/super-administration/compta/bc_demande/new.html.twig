@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.bc.demande.new.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        {{ include('composants/adm-buttons-new.html.twig', {elt: 'bc_demande'}) }}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.bc.demande.new.heading'|trans }}</h4>
+        <div class="card-body">
+            {{ include('composants/adm-form.html.twig') }}
+        </div>
+    </div>
+{% endblock %}
