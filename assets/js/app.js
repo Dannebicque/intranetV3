@@ -49,6 +49,13 @@ window.addEventListener('load', function () { //le dom est chargé
   const currentTheme = localStorage.getItem('theme')
   const menuDarkTheme = document.getElementById('darkMode')
 
+  //Regarde si des boutons ont un data-confirm = true
+  const elements = document.querySelectorAll("[data-confirm='true']");
+
+  elements.forEach(el=>{
+    console.log(el);
+  })
+
   menuDarkTheme.addEventListener('click', function () {
     document.body.classList.toggle('dark-theme')
     // Let's say the theme is equal to light

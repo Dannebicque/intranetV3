@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/EvenementEdt.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/09/2021 22:06
+ * @lastUpdate 26/09/2021 18:33
  */
 
 namespace App\DTO;
 
+use App\Entity\Semestre;
 use Carbon\CarbonInterface;
 
 class EvenementEdt
@@ -23,6 +24,7 @@ class EvenementEdt
 
     public ?CarbonInterface $heureDebut;
     public ?CarbonInterface $heureFin;
+    public ?CarbonInterface $dateObjet = null;
 
     public ?string $matiere;
     public ?string $salle;
@@ -33,6 +35,8 @@ class EvenementEdt
     public ?string $type_cours;
     public ?string $texte = null;
 
+    public ?Semestre $semestre = null;
+
     public ?string $gridStart = '';
     public ?string $gridEnd = '';
 
@@ -40,6 +44,7 @@ class EvenementEdt
 
     /** @deprecated */
     public ?string $display = '';
+    public ?string $codeelement = '';
 
     public function getDisplay()
     {
