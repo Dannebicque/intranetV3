@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Celcat/MyCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/09/2021 19:33
+ * @lastUpdate 26/09/2021 19:34
  */
 
 /*
@@ -121,7 +121,7 @@ class MyCelcat
             $groupes = $this->groupeRepository->findAll();
             $tgroupes = [];
             foreach ($groupes as $groupe) {
-                $t[$groupe->getCodeApogee()] = $groupe->getTypeGroupe()?->getSemestre();
+                $tgroupes[$groupe->getCodeApogee()] = $groupe->getTypeGroupe()?->getSemestre();
             }
 
             while (odbc_fetch_row($result)) {
