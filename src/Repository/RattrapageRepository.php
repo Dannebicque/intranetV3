@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/RattrapageRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 26/09/2021 14:24
  */
 
 namespace App\Repository;
@@ -117,6 +117,25 @@ class RattrapageRepository extends ServiceEntityRepository
             ->orderBy('e.nom', 'ASC')
             ->orderBy('e.prenom', 'ASC')
             ->getQuery()
+            ->getResult();
+    }
+
+    public function findByMatiere(int $matiere, string $type, ?AnneeUniversitaire $annee = null)
+    {
+        $query = $this->createQueryBuilder('e')
+            ->where('e.idMatiere = :matiere')
+            ->andWhere('e.typeMatiere = :type')
+            ->setParameter('matiere', $matiere)
+            ->setParameter('type', $type)
+            ->orderBy('e.dateEval', 'ASC');
+
+        if (null !== $annee) {
+            $query->innerJoin(AnneeUniversitaire::class, 'u', 'WITH', 'e.anneeUniversitaire = u.id')
+                ->andWhere('u.annee = :annee')
+                ->setParameter('annee', $annee->getAnnee());
+        }
+
+        return $query->getQuery()
             ->getResult();
     }
 }

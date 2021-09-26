@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/EvaluationRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/06/2021 10:28
+ * @lastUpdate 26/09/2021 14:25
  */
 
 namespace App\Repository;
@@ -52,18 +52,22 @@ class EvaluationRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findByMatiere(int $matiere, string $type, AnneeUniversitaire $annee)
+    public function findByMatiere(int $matiere, string $type, ?AnneeUniversitaire $annee = null)
     {
-        return $this->createQueryBuilder('e')
-            ->innerJoin(AnneeUniversitaire::class, 'u', 'WITH', 'e.anneeUniversitaire = u.id')
+        $query = $this->createQueryBuilder('e')
             ->where('e.idMatiere = :matiere')
             ->andWhere('e.typeMatiere = :type')
-            ->andWhere('u.annee = :annee')
             ->setParameter('matiere', $matiere)
             ->setParameter('type', $type)
-            ->setParameter('annee', $annee->getAnnee())
-            ->orderBy('e.dateEvaluation', 'ASC')
-            ->getQuery()
+            ->orderBy('e.dateEvaluation', 'ASC');
+
+        if (null !== $annee) {
+            $query->innerJoin(AnneeUniversitaire::class, 'u', 'WITH', 'e.anneeUniversitaire = u.id')
+                ->andWhere('u.annee = :annee')
+                ->setParameter('annee', $annee->getAnnee());
+        }
+
+        return $query->getQuery()
             ->getResult();
     }
 }
