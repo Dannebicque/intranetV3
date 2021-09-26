@@ -4,12 +4,9 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Celcat/MyCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/09/2021 19:34
+ * @lastUpdate 26/09/2021 19:47
  */
 
-/*
- * Pull your hearder here, for exemple, Licence header.
- */
 
 namespace App\Classes\Celcat;
 
@@ -19,7 +16,6 @@ use App\Entity\CelcatEvent;
 use App\Entity\Semestre;
 use App\Repository\CalendrierRepository;
 use App\Repository\GroupeRepository;
-use App\Repository\TypeGroupeRepository;
 use App\Utils\Tools;
 use function array_key_exists;
 use Doctrine\ORM\EntityManagerInterface;
@@ -180,8 +176,6 @@ class MyCelcat
 INNER JOIN CT_GROUP ON CT_GROUP.group_id=CT_GROUP_STUDENT.group_id
 INNER JOIN CT_STUDENT ON CT_STUDENT.student_id=CT_GROUP_STUDENT.student_id WHERE CT_GROUP.dept_id='.$semestre->getDiplome()->getCodeCelcatDepartement();
 
-//        $stmt = odbc_prepare($this->conn, $query);
-//        $result = odbc_execute($stmt, [$semestre->getDiplome()->getCodeCelcatDepartement()]);
         $result = odbc_exec($this->conn, $query);
 
         while (odbc_fetch_row($result)) {
