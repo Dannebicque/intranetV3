@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/09/2021 17:39
+ * @lastUpdate 26/09/2021 16:05
  */
 
 /*
@@ -126,8 +126,9 @@ class MyEdtImport
                     $date = $this->convertToDate($jour);
                     $groupe = $phrase[7];
 
-                    if ('Z' === $phrase[8] && mb_substr($phrase, 16, 4) !== 'PROJ') {
+                    if ('Z' === $phrase[8]) {
                         //prof commence par Z, donc, c'est une zone sans enseignant
+                        //&& mb_substr($phrase, 16, 4) !== 'PROJ'
                         $salle = mb_substr($phrase, 11, 4);
                         $fin = $phrase[15];
                         $texte = mb_substr($phrase, 16);
