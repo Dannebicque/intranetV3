@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/EdtController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/09/2021 20:03
+ * @lastUpdate 26/09/2021 18:47
  */
 
 namespace App\Controller;
@@ -52,10 +52,10 @@ class EdtController extends BaseController
      */
     public function dashboardPersonnel(int $semaine = 0): Response
     {
-        $matieres = $this->typeMatiereManager->tableauMatieresCodeApogee($this->getDepartement());
         if (null !== $this->getConnectedUser()) {
             //todo: passer le lien semestre-> couleur plutôt que les matières ??
             if (null !== $this->dataUserSession->getDepartement() && true === $this->dataUserSession->getDepartement()->isOptUpdateCelcat()) {
+                $matieres = $this->typeMatiereManager->tableauMatieresCodeApogee($this->getDepartement());
                 $this->myEdtCelcat->initPersonnel($this->getConnectedUser(),
                     $this->dataUserSession->getAnneeUniversitaire(), $semaine, $matieres);
 
@@ -66,16 +66,16 @@ class EdtController extends BaseController
                     'tabHeures' => Constantes::TAB_HEURES_EDT_2,
                 ]);
             }
-
+            $matieres = $this->typeMatiereManager->findByDepartementArray($this->getDepartement());
             $this->myEdtIntranet->initPersonnel($this->getConnectedUser(),
                 $this->dataUserSession->getAnneeUniversitaire(),
-                $semaine);
+                $semaine, $matieres);
 
-            return $this->render('edt/_intervenant.html.twig', [
+            return $this->render('edt/_intervenant2.html.twig', [
                 'edt' => $this->myEdtIntranet,
                 'filtre' => 'prof',
                 'valeur' => $this->getConnectedUser()->getId(),
-                'tabHeures' => Constantes::TAB_HEURES_EDT,
+                'tabHeures' => Constantes::TAB_HEURES_EDT_2,
             ]);
         }
 
