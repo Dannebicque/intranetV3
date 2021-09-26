@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/EdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/08/2021 16:07
+ * @lastUpdate 26/09/2021 18:46
  */
 
 namespace App\Classes\Edt;
 
+use App\Adapter\EdtIntranetAdapter;
 use App\DTO\EvenementEdt;
 use App\DTO\EvenementEdtCollection;
 use App\Entity\Semestre;
@@ -17,10 +18,12 @@ use App\Repository\EdtPlanningRepository;
 class EdtIntranet extends AbstractEdt implements EdtInterface
 {
     private EdtPlanningRepository $edtPlanningRepository;
+    private EdtIntranetAdapter $edtIntranetAdapter;
 
-    public function __construct(EdtPlanningRepository $edtPlanningRepository)
+    public function __construct(EdtPlanningRepository $edtPlanningRepository, EdtIntranetAdapter $edtIntranetAdapter)
     {
         $this->edtPlanningRepository = $edtPlanningRepository;
+        $this->edtIntranetAdapter = $edtIntranetAdapter;
     }
 
     public function getPlanningSemestre(Semestre $semestre, array $matieres = []): EvenementEdtCollection
@@ -37,7 +40,7 @@ class EdtIntranet extends AbstractEdt implements EdtInterface
             } else {
                 $matiere = 'Inconnue';
             }
-
+            $event->source = EdtManager::EDT_INTRANET;
             $event->date = $evt->getDate();
             $event->jour = $evt->getJour();
             $event->duree = $evt->getDureeInt();
@@ -49,10 +52,16 @@ class EdtIntranet extends AbstractEdt implements EdtInterface
             $event->personnel = null !== $evt->getIntervenant() ? $evt->getIntervenant()->getDisplayPr() : '-';
             $event->groupe = $evt->getDisplayGroupe();
             $event->type_cours = $evt->getType();
-            $event->display = $evt->getTexte() ?? $matiere;
             $evtCollection->add($event);
         }
 
         return $evtCollection;
+    }
+
+    public function find($event): EvenementEdt
+    {
+        $evt = $this->edtPlanningRepository->find($event);
+
+        return $this->edtIntranetAdapter->single($evt);
     }
 }

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/bloc_saisie_absence/SaisieAbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/08/2021 11:46
+ * @lastUpdate 26/09/2021 18:38
  */
 
 namespace App\Controller\bloc_saisie_absence;
@@ -12,7 +12,8 @@ namespace App\Controller\bloc_saisie_absence;
 use App\Classes\Etudiant\EtudiantAbsences;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Controller\BaseController;
-use App\Entity\EdtPlanning;
+use App\DTO\EvenementEdt;
+use App\DTO\Matiere;
 use App\Entity\Etudiant;
 use App\Entity\Semestre;
 use App\Repository\AbsenceRepository;
@@ -20,13 +21,13 @@ use App\Repository\TypeGroupeRepository;
 use App\Utils\Tools;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
+use function count;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use function count;
 
 /**
  * Class AbsenceController.
@@ -40,30 +41,29 @@ class SaisieAbsenceController extends BaseController
         TypeMatiereManager $typeMatiereManager,
         TypeGroupeRepository $typeGroupeRepository,
         Semestre $semestre,
-        ?string $matiere = null,
-        ?EdtPlanning $event = null
+        ?Matiere $matiere = null,
+        ?EvenementEdt $event = null
     ): Response {
-        $mat = $typeMatiereManager->getMatiereFromSelect($matiere);
         if (null !== $event) {
             $groupes = $typeGroupeRepository->findOneBy([
                 'semestre' => $semestre->getId(),
-                'type' => $event->getType(),
+                'type' => $event->type_cours,
             ]);
         } else {
             $groupes = null;
         }
 
         return $this->render('bloc_saisie_absence/_saisie_absence.html.twig', [
-            'matiere' => $mat,
+            'matiere' => $matiere,
             'matieres' => $typeMatiereManager->findBySemestre($semestre),
             'typeGroupes' => $typeGroupeRepository->findBySemestre($semestre),
             'event' => $event,
             'groupes' => $groupes,
             'options' => [
                 'data-options' => [
-                    'dateFormat' => 'd/m/Y'
-                ]
-            ]
+                    'dateFormat' => 'd/m/Y',
+                ],
+            ],
         ]);
     }
 

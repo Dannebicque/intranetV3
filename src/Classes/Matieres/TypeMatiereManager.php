@@ -4,11 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Matieres/TypeMatiereManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/09/2021 20:02
+ * @lastUpdate 26/09/2021 18:46
  */
 
 namespace App\Classes\Matieres;
 
+use App\Classes\Edt\EdtManager;
+use App\DTO\EvenementEdt;
 use App\Entity\ApcRessource;
 use App\Entity\ApcSae;
 use App\Entity\Departement;
@@ -198,5 +200,20 @@ class TypeMatiereManager
         }
 
         return $t;
+    }
+
+    public function findByCodeApogeeOrId(?EvenementEdt $planning)
+    {
+        if ($planning === null) {
+            return null;
+        }
+
+        switch ($planning->source) {
+            case EdtManager::EDT_CELCAT:
+                return $this->findByCodeApogee($planning->codeelement);
+            case EdtManager::EDT_INTRANET:
+                return $this->getMatiereFromSelect($planning->typeIdMatiere);
+
+        }
     }
 }

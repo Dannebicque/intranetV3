@@ -4,12 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/09/2021 12:50
+ * @lastUpdate 26/09/2021 18:46
  */
 
 namespace App\Classes\Edt;
 
 use App\Classes\Matieres\TypeMatiereManager;
+use App\DTO\EvenementEdt;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Constantes;
 use App\Entity\EdtPlanning;
@@ -24,11 +25,12 @@ use App\Repository\EdtPlanningRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\Request;
 use function array_key_exists;
+use Carbon\Carbon;
 use function chr;
 use function count;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 class MyEdtIntranet extends BaseEdt
 {
@@ -42,6 +44,7 @@ class MyEdtIntranet extends BaseEdt
     private PersonnelRepository $personnelRepository;
     private EntityManagerInterface $entityManager;
     private array $tab = [];
+    private array $matieres = [];
 
     /**
      * MyEdt constructor.
@@ -67,8 +70,10 @@ class MyEdtIntranet extends BaseEdt
     public function initPersonnel(
         Personnel $personnel,
         AnneeUniversitaire $anneeUniversitaire,
-        int $semaine = 0
+        int $semaine = 0,
+        array $matieres = []
     ): self {
+        $this->matieres = $matieres;
         $this->user = $personnel;
         $this->init($anneeUniversitaire, Constantes::FILTRE_EDT_PROF, $personnel->getId(), $semaine);
         $this->semaines = $this->calculSemaines();
@@ -101,7 +106,7 @@ class MyEdtIntranet extends BaseEdt
                     break;
                 case Constantes::FILTRE_EDT_PROF:
                     $pl = $this->edtPlanningRepository->findEdtProf($this->valeur, $this->semaineFormationIUT);
-                    $this->planning = $this->transformeProf($pl);
+                    $this->planning = $this->transformeIndividuel($pl);
                     break;
                 case Constantes::FILTRE_EDT_ETUDIANT:
                     $this->groupes();
@@ -163,34 +168,54 @@ class MyEdtIntranet extends BaseEdt
         return $this;
     }
 
-    private function transformeProf($pl): array
+    private function transformeIndividuel(array $pl): array
     {
-        $this->tab = [];
+        //prof ou étudiant
+        $tab = [];
 
         /** @var EdtPlanning $p */
         foreach ($pl as $p) {
-            $dbtEdt = $this->convertEdt($p->getDebut());
-            $finEdt = $this->convertEdt($p->getFin());
+            $evt = new EvenementEdt();
+            //todo: utiliser le manager?? => En fait la requete doit être via le manager... Du coup un seul fichier EDT???
+            $evt->source = EdtManager::EDT_INTRANET;
+            $evt->id = $p->getId();
+            $evt->jour = $p->getJour();
+            $evt->heureDebut = Carbon::createFromTimeString($p->getDebutTexte());
+            $evt->heureFin = Carbon::createFromTimeString($p->getFinTexte());
 
-            $this->tab[$p->getJour()][$dbtEdt]['duree'] = $p->getFin() - $p->getDebut();
+            $evt->salle = $p->getSalle();
+            $evt->personnel = $p->getIntervenant()?->getDisplay();
+            $evt->groupe = $p->getGroupe();
+            $evt->typeIdMatiere = $p->getTypeIdMatiere();
+            $evt->type_cours = $p->getType();
 
-            for ($i = $dbtEdt; $i < $finEdt; ++$i) {
-                $this->tab[$p->getJour()][$i]['texte'] = 'xx';
-            }
+            $evt->gridStart = Constantes::TAB_HEURES_EDT_2[$p->getDebut() - 1][0];
+            $evt->gridEnd = Constantes::TAB_HEURES_EDT_2[$p->getFin() - 1][0];
 
-            $this->tab[$p->getJour()][$dbtEdt]['texte'] = $p->getSalle() . '<br />' . $this->isEvaluation($p,
-                    'long') . '<br />' . $p->getSemestre()->getLibelle() . ' |  ' . $p->getDisplayGroupe();
-
-            $this->tab[$p->getJour()][$dbtEdt]['couleur'] = $this->getCouleur($p);
-            $this->tab[$p->getJour()][$dbtEdt]['pl'] = $p->getId();
-            $this->tab[$p->getJour()][$dbtEdt]['couleurTexte'] = $this->getCouleurTexte($p);
-            $this->tab[$p->getJour()][$dbtEdt]['format'] = 'ok';
-            $this->valideFormat($p, $dbtEdt);
-            $this->calculTotal($p);
+            $evt = $this->getDonneesFromModule($p, $evt);
+            $dbtEdt = $p->getDebut() - 1;
+            $tab[$evt->jour][$dbtEdt] = $evt;
         }
 
-        return $this->tab;
+        return $tab;
     }
+
+    private function getDonneesFromModule(EdtPlanning $p, EvenementEdt $evt): EvenementEdt
+    {
+        if (array_key_exists($p->getTypeIdMatiere(), $this->matieres)) {
+            $matiere = $this->matieres[$p->getTypeIdMatiere()];
+            if (null !== $matiere && null !== $matiere->semestre) {
+                $annee = $matiere->semestre->getAnnee();
+                if (null !== $annee) {
+                    $evt->couleur = $annee->getCouleur();
+                    $evt->matiere = $matiere->display;
+                }
+            }
+        }
+
+        return $evt;
+    }
+
 
     private function transformeEtudiant($pl): array
     {

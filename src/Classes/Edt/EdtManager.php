@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/EdtManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/08/2021 16:06
+ * @lastUpdate 22/09/2021 18:02
  */
 
 namespace App\Classes\Edt;
@@ -17,6 +17,7 @@ class EdtManager
     public const EDT_ADE = 'ade';
     public const EDT_INTRANET = 'intranet';
 
+    private array $tabSources = [];
     private EdtIntranet $edtIntranet;
     private EdtCelcat $edtCelcat;
     private EdtAde $edtAde;
@@ -26,8 +27,11 @@ class EdtManager
         $this->edtIntranet = $edtIntranet;
         $this->edtCelcat = $edtCelcat;
         $this->edtAde = $edtAde;
-    }
 
+        $this->tabSources[self::EDT_CELCAT] = $edtCelcat;
+        $this->tabSources[self::EDT_ADE] = $edtAde;
+        $this->tabSources[self::EDT_INTRANET] = $edtIntranet;
+    }
 
     public function getPlanningSemestre(Semestre $semestre, array $matieres = [])
     {
@@ -48,5 +52,14 @@ class EdtManager
         }
 
         return self::EDT_INTRANET;
+    }
+
+    public function getManager(string $source): ?EdtInterface
+    {
+        if (array_key_exists($source, $this->tabSources)) {
+            return $this->tabSources[$source];
+        }
+
+        return null;
     }
 }

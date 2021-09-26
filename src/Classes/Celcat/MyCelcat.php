@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Celcat/MyCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/09/2021 22:22
+ * @lastUpdate 26/09/2021 18:46
  */
 
 /*
@@ -17,6 +17,7 @@ use App\Entity\AnneeUniversitaire;
 use App\Entity\Calendrier;
 use App\Entity\CelcatEvent;
 use App\Entity\Semestre;
+use App\Repository\CalendrierRepository;
 use App\Utils\Tools;
 use function array_key_exists;
 use Doctrine\ORM\EntityManagerInterface;
@@ -30,13 +31,18 @@ class MyCelcat
     private EntityManagerInterface $entityManger;
 
     private ParameterBagInterface $parameterBag;
+    private CalendrierRepository $calendrierRepository;
 
     /**
      * MyCelcat constructor.
      */
-    public function __construct(EntityManagerInterface $entityManger, ParameterBagInterface $parameterBag)
-    {
+    public function __construct(
+        EntityManagerInterface $entityManger,
+        ParameterBagInterface $parameterBag,
+        CalendrierRepository $calendrierRepository
+    ) {
         $this->entityManger = $entityManger;
+        $this->calendrierRepository = $calendrierRepository;
         $this->parameterBag = $parameterBag;
     }
 
@@ -96,11 +102,17 @@ class MyCelcat
     ): void {
         if (null !== $anneeUniversitaire) {
             $this->connect();
-            $query = 'SELECT CT_EVENT.event_id, CT_EVENT.day_of_week, CT_EVENT.start_time, CT_EVENT.end_time, CT_EVENT.weeks, CT_EVENT_CAT.name, CT_VIEW_EVENT_MODULE001.resourcecode, CT_VIEW_EVENT_MODULE001.resourcename, CT_VIEW_EVENT_STAFF001.resourcecode, CT_VIEW_EVENT_STAFF001.resourcename, CT_VIEW_EVENT_ROOM001.resourcecode, CT_VIEW_EVENT_ROOM001.resourcename, CT_VIEW_EVENT_GROUP001.resourcecode, CT_VIEW_EVENT_GROUP001.resourcename, CT_EVENT.date_change FROM CT_EVENT INNER JOIN CT_EVENT_CAT ON CT_EVENT_CAT.event_cat_id = CT_EVENT.event_cat_id INNER JOIN CT_VIEW_EVENT_STAFF001 ON CT_VIEW_EVENT_STAFF001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_GROUP001 ON CT_VIEW_EVENT_GROUP001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_MODULE001 ON CT_VIEW_EVENT_MODULE001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_ROOM001 ON CT_VIEW_EVENT_ROOM001.eid=CT_EVENT.event_id WHERE dept_id='.$codeCelcatDepartement.' ORDER BY CT_EVENT.date_change DESC, CT_EVENT.event_id DESC';
+            $query = 'SELECT CT_EVENT.event_id, CT_EVENT.day_of_week, CT_EVENT.start_time, CT_EVENT.end_time, CT_EVENT.weeks, CT_EVENT_CAT.name, CT_VIEW_EVENT_MODULE001.resourcecode, CT_VIEW_EVENT_MODULE001.resourcename, CT_VIEW_EVENT_STAFF001.resourcecode, CT_VIEW_EVENT_STAFF001.resourcename, CT_VIEW_EVENT_ROOM001.resourcecode, CT_VIEW_EVENT_ROOM001.resourcename, CT_VIEW_EVENT_GROUP001.resourcecode, CT_VIEW_EVENT_GROUP001.resourcename, CT_EVENT.date_change FROM CT_EVENT INNER JOIN CT_EVENT_CAT ON CT_EVENT_CAT.event_cat_id = CT_EVENT.event_cat_id INNER JOIN CT_VIEW_EVENT_STAFF001 ON CT_VIEW_EVENT_STAFF001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_GROUP001 ON CT_VIEW_EVENT_GROUP001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_MODULE001 ON CT_VIEW_EVENT_MODULE001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_ROOM001 ON CT_VIEW_EVENT_ROOM001.eid=CT_EVENT.event_id WHERE dept_id=' . $codeCelcatDepartement . ' ORDER BY CT_EVENT.date_change DESC, CT_EVENT.event_id DESC';
 
 //            $stmt = odbc_prepare($this->conn, $query);
 //            $result = odbc_execute($stmt, [$codeCelcatDepartement]);
             $result = odbc_exec($this->conn, $query);
+
+            $calendriers = $this->calendrierRepository->findBy(['anneeUniversitaire' => $anneeUniversitaire->getId()]);
+            $t = [];
+            foreach ($calendriers as $calendrier) {
+                $t[$calendrier->getSemaineFormation()] = $calendrier->getDateLundi();
+            }
 
             while (odbc_fetch_row($result)) {
                 $eventId = odbc_result($result, 1);
@@ -115,10 +127,11 @@ class MyCelcat
                 for ($i = 0; $i < $lg; ++$i) {
                     if ('Y' === $semaines[$i] || 'y' === $semaines[$i]) {
                         $semaine = $i;
+                        $jour = odbc_result($result, 2);
                         $event = new CelcatEvent();
                         $event->setAnneeUniversitaire($anneeUniversitaire);
                         $event->setEventId($eventId);
-                        $event->setJour(odbc_result($result, 2));
+                        $event->setJour($jour);
                         $event->setDebut(Tools::convertTimeToObject($debut[1]));
                         $event->setFin(Tools::convertTimeToObject($fin[1]));
                         $event->setSemaineFormation($semaine);
@@ -132,6 +145,8 @@ class MyCelcat
                         $event->setLibGroupe(utf8_encode(odbc_result($result, 14)));
                         $event->setCodeSalle(odbc_result($result, 11));
                         $event->setLibSalle(utf8_encode(odbc_result($result, 12)));
+                        $event->setDateCours($t[$semaine]->addDays($jour));
+                        $event->setSemestre();//todo: ajouter semestre et date réelle du cours...
                         $dt = explode(' ', odbc_result($result, 15));
                         $event->setUpdateEvent(Tools::convertDateHeureToObject($dt[0], $dt[1]));
 
@@ -171,10 +186,5 @@ INNER JOIN CT_STUDENT ON CT_STUDENT.student_id=CT_GROUP_STUDENT.student_id WHERE
         }
 
         $this->entityManger->flush();
-    }
-
-    private function convertUnicode(string $type)
-    {
-        return str_replace(['\\xE9'], ['é'], $type);
     }
 }

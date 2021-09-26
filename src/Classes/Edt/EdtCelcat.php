@@ -4,20 +4,37 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/EdtCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/07/2021 14:47
+ * @lastUpdate 26/09/2021 18:46
  */
 
 namespace App\Classes\Edt;
 
-
+use App\Adapter\EdtCelcatAdapter;
+use App\DTO\EvenementEdt;
 use App\DTO\EvenementEdtCollection;
 use App\Entity\Semestre;
+use App\Repository\CelcatEventsRepository;
 
 class EdtCelcat extends AbstractEdt implements EdtInterface
 {
+    private CelcatEventsRepository $celcatEventsRepository;
+    private EdtCelcatAdapter $edtCelcatAdapter;
+
+    public function __construct(CelcatEventsRepository $celcatEventsRepository, EdtCelcatAdapter $edtCelcatAdapter)
+    {
+        $this->celcatEventsRepository = $celcatEventsRepository;
+        $this->edtCelcatAdapter = $edtCelcatAdapter;
+    }
 
     public function getPlanningSemestre(Semestre $semestre): EvenementEdtCollection
     {
         // TODO: Implement getPlanningSemestre() method.
+    }
+
+    public function find($event): EvenementEdt
+    {
+        $evt = $this->celcatEventsRepository->find($event);
+
+        return $this->edtCelcatAdapter->single($evt);
     }
 }

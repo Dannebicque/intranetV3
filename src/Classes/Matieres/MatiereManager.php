@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Matieres/MatiereManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2021 08:46
+ * @lastUpdate 26/09/2021 18:29
  */
 
 namespace App\Classes\Matieres;
@@ -59,7 +59,7 @@ class MatiereManager extends AbstractMatiereManager implements MatiereInterface
 
     public function findByCodeApogee(string $code): ?Matiere
     {
-        $matiere = $this->matiereRepository->findBy(['codeElement' => $code]);
+        $matiere = $this->matiereRepository->findOneBy(['codeElement' => $code]);
 
         return $this->matiereAdapter->single($matiere);
     }

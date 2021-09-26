@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyGroupes.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/09/2021 11:21
+ * @lastUpdate 26/09/2021 18:46
  */
 
 /*
@@ -14,13 +14,14 @@
 namespace App\Classes;
 
 use App\Classes\Apogee\ApogeeGroupe;
+use App\DTO\EvenementEdt;
 use App\Entity\Departement;
-use App\Entity\EdtPlanning;
 use App\Entity\Etudiant;
 use App\Entity\Groupe;
 use App\Entity\Parcour;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
+use App\Exception\SemestreNotFoundException;
 use App\Repository\EtudiantRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\TypeGroupeRepository;
@@ -50,9 +51,6 @@ class MyGroupes
     private MyUpload $myUpload;
     private ApogeeGroupe $apogeeGroupe;
 
-    /**
-     * MyGroupes constructor.
-     */
     public function __construct(
         EntityManagerInterface $entityManager,
         TypeGroupeRepository $typeGroupeRepository,
@@ -70,39 +68,28 @@ class MyGroupes
         $this->apogeeGroupe = $apogeeGroupe;
     }
 
-    public function getGroupesSemestre(Semestre $semestre): void
+    public function getGroupesSemestre(?Semestre $semestre, ?string $defaut = null): self
     {
-        $this->typeGroupes = $this->typeGroupeRepository->findBy(['semestre' => $semestre->getId()]);
+        if (null === $semestre) {
+            throw new SemestreNotFoundException();
+        }
+
+        $this->typeGroupes = $this->typeGroupeRepository->findBySemestre($semestre);
 
         foreach ($this->typeGroupes as $tg) {
-            if (true === $tg->getDefaut()) {
+            if (null === $defaut && true === $tg->getDefaut()) {
+                $this->groupedefaut = $tg;
+            } elseif (null !== $defaut && mb_strtoupper($tg->getLibelle()) === mb_strtoupper($defaut)) {
                 $this->groupedefaut = $tg;
             }
         }
 
-        $this->groupes = $this->groupeRepository->findBy(['typegroupe' => $this->groupedefaut->getId()]);
-    }
-
-    public function getGroupesPlanning(EdtPlanning $planning): self
-    {
-        //todo: tester le type si planning ou celcat
-        $this->typeGroupes = $this->typeGroupeRepository->findBySemestre($planning->getSemestre());
-        /** @var TypeGroupe $tg */
-        foreach ($this->typeGroupes as $tg) {
-            if (mb_strtoupper($tg->getLibelle()) === mb_strtoupper($planning->getType())) {
-                $this->groupedefaut = $tg;
-            }
-        }
-
-        $this->groupes = $this->groupeRepository->findBy(['typeGroupe' => $this->groupedefaut]);
+        $this->groupes = $this->groupeRepository->findBy(['typeGroupe' => $this->groupedefaut->getId()]);
 
         return $this;
     }
 
-    /**
-     * @return null
-     */
-    public function getGroupedefaut()
+    public function getGroupedefaut(): ?TypeGroupe
     {
         return $this->groupedefaut;
     }

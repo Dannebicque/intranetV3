@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Adapter/AbstractMatiereAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/05/2021 15:25
+ * @lastUpdate 26/09/2021 18:28
  */
 
 namespace App\Adapter;
@@ -23,7 +23,6 @@ abstract class AbstractMatiereAdapter
         }
 
         $m = new Matiere();
-        $m->id = $matiere->getId();
         $m->typeMatiere = $matiere::SOURCE;
         $m->libelle = $matiere->getLibelle();
         $m->display = $matiere->getDisplay();
