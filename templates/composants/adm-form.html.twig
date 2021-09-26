@@ -6,8 +6,8 @@
 
 {% if button_label is defined and button_label == 'update'|trans %}
     <button class="btn btn-success" value="redirect_to_index" name="btn_update">{{ 'button_update_index'|trans }}</button>
-{% endif %}<br>
-<div class="alert alert-info">
+{% endif %}
+<div class="alert alert-info mt-2">
     Tous les champs avec un <span class="text-red">*</span> sont obligatoires
 </div>
 {{ form_end(form) }}
