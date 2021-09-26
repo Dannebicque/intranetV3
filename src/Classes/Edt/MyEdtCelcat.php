@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/09/2021 22:06
+ * @lastUpdate 23/09/2021 07:48
  */
 
 /*
@@ -166,8 +166,9 @@ class MyEdtCelcat extends BaseEdt
 
         /** @var CelcatEvent $p */
         foreach ($pl as $p) {
+            //todo: passer en partie par le manager ?
             $evt = new EvenementEdt();
-            $evt->source = AbstractEdt::SOURCE_EDT_CELCAT;
+            $evt->source = EdtManager::EDT_CELCAT;
             $evt->id = $p->getId();
             $evt->jour = $p->getJour() + 1;
             $evt->heureDebut = $p->getDebut();
@@ -178,6 +179,7 @@ class MyEdtCelcat extends BaseEdt
             $evt->groupe = $p->getLibGroupe();
             $evt->typeIdMatiere = $this->getTypeIdMatiere($p);
             $evt->type_cours = $p->getType();
+            $evt->codeelement = $p->getCodeModule();
 
             $evt->gridStart = $p->getDebut()?->format('Hi');
             $evt->gridEnd = $p->getFin()?->format('Hi');

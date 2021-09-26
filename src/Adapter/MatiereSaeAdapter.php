@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Adapter/MatiereSaeAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/05/2021 08:56
+ * @lastUpdate 26/09/2021 18:28
  */
 
 namespace App\Adapter;
@@ -35,6 +35,7 @@ class MatiereSaeAdapter extends AbstractMatiereAdapter implements MatiereAdapter
         }
         $m = parent::single($matiere);
         if (null !== $m) {
+            $m->id = $matiere->getId();
             $m->projetFormation = $matiere->getProjetFormation();
             $m->projetPpn = $matiere->getProjetPpn();
             $m->semestre = $matiere->getSemestre();

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Adapter/MatiereMatiereAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/05/2021 15:25
+ * @lastUpdate 26/09/2021 18:28
  */
 
 namespace App\Adapter;
@@ -32,6 +32,7 @@ class MatiereMatiereAdapter extends AbstractMatiereAdapter implements MatiereAda
     {
         $m = parent::single($matiere);
         if (null !== $m) {
+            $m->id = $matiere->getId();
             $m->commentaire = $matiere->getCommentaire();
             $m->nbEcts = $matiere->getNbEcts();
             $m->pac = $matiere->getPac();

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/AbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/09/2021 09:19
+ * @lastUpdate 26/09/2021 18:46
  */
 
 namespace App\Controller\appPersonnel;
@@ -96,7 +96,8 @@ class AbsenceController extends BaseController
                 'semestre' => $matiere?->semestre,
                 'matiere' => $matiere,
                 'event' => $planning,
-                'groupes' => $myGroupes->getGroupesSemestre($planning->semestre, $planning->type_cours),
+                'groupes' => $myGroupes->getGroupesSemestre($planning->semestre !== null ? $planning->semestre : $matiere->semestre,
+                    $planning->type_cours),
                 'heure' => $planning->heureDebut,
                 'date' => $planning->dateObjet,
             ]);

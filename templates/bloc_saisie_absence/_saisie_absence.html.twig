@@ -25,8 +25,10 @@
                         <input type="text" class="form-control"
                                is="my-datepicker"
                                id="absence-date"
-                               value="{% if event != null %}{{ event.date|date('d/m/Y') }} {% else %} {{ date("now")
-                               |date('d/m/Y') }}{% endif %}">
+                               value="{% if event != null and event.dateObjet != null %}{{ event.dateObjet|date
+                                   ('d/m/Y') }}
+                                {% else %}
+                                {{ date("now")|date('d/m/Y') }}{% endif %}">
                         <div class="input-group-append">
                             <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                         </div>
@@ -42,18 +44,18 @@
                         <option value="">{{ 'choisir.heure.debut'|trans }}</option>
                         {% for i in 08..19 %}
                             <option value="{{ i|formatHeure }}:00" {% if event != null and i|formatHeure~':00' ==
-                                event.debutTexte %} selected {% endif %}>
+                                event.heureDebut|date('H:i') %} selected {% endif %}>
                                 {{ i|formatHeure }}h00
                             </option>
                             <option value="{{ i|formatHeure }}:15" {% if event != null and
                                 i|formatHeure~':15'
-                                == event.debutTexte %} selected {% endif %}>
+                                == event.heureDebut|date('H:i') %} selected {% endif %}>
                                 {{ i|formatHeure }}h15
                             </option>
-                            <option value="{{ i|formatHeure }}:30" {% if event != null and  i|formatHeure~':30' == event.debutTexte %} selected {% endif %}>
+                            <option value="{{ i|formatHeure }}:30" {% if event != null and  i|formatHeure~':30' == event.heureDebut|date('H:i') %} selected {% endif %}>
                                 {{ i|formatHeure }}h30
                             </option>
-                            <option value="{{ i|formatHeure }}:45" {% if event != null and  i|formatHeure~':45' == event.debutTexte %} selected {% endif %}>
+                            <option value="{{ i|formatHeure }}:45" {% if event != null and  i|formatHeure~':45' == event.heureDebut|date('H:i') %} selected {% endif %}>
                                 {{ i|formatHeure }}h45
                             </option>
                         {% endfor %}
@@ -68,7 +70,7 @@
                             {% for typeGroupe in typeGroupes %}
                                 <div class="col-sm-2">
                                     <button data-typegroupe="{{ typeGroupe.id }}"
-                                            class="btn btn-block {% if event != null and event.type|upper ==
+                                            class="btn btn-block {% if event != null and event.type_cours|upper ==
                                                 typeGroupe.libelle|upper %}btn-primary{% endif %} absChangeTypeGroupe">{{ typeGroupe.libelle }}</button>
                                 </div>
                             {% else %}
@@ -92,7 +94,7 @@
                             {% for typeGroupe in groupes.typeGroupes %}
                                 <div class="col-sm-2">
                                     <button data-typegroupe="{{ typeGroupe.id }}"
-                                            class="btn btn-block {% if event != null and event.type|upper ==
+                                            class="btn btn-block {% if event != null and event.type_cours|upper ==
                                                 typeGroupe.libelle|upper %}btn-primary{% endif %} absChangeTypeGroupe">{{ typeGroupe.libelle }}</button>
                                 </div>
 

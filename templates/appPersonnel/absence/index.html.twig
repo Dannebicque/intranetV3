@@ -22,10 +22,10 @@
     {% else %}
         {% if event is defined %}
             {{ render(controller('App\\Controller\\bloc_saisie_absence\\SaisieAbsenceController::index',
-                {semestre:semestre.id, matiere:matiere.typeIdMatiere, event:event.id})) }}
+                {semestre:semestre, matiere:matiere, event:event})) }}
         {% else %}
             {{ render(controller('App\\Controller\\bloc_saisie_absence\\SaisieAbsenceController::index',
-                {semestre:semestre.id, matiere:matiere.typeIdMatiere, event: ''})) }}
+                {semestre:semestre, matiere:matiere, event: null})) }}
         {% endif %}
     {% endif %}
 {% endblock %}
