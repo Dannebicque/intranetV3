@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/09/2021 18:46
+ * @lastUpdate 27/09/2021 08:49
  */
 
 namespace App\Classes\Edt;
@@ -77,7 +77,7 @@ class MyEdtIntranet extends BaseEdt
         $this->user = $personnel;
         $this->init($anneeUniversitaire, Constantes::FILTRE_EDT_PROF, $personnel->getId(), $semaine);
         $this->semaines = $this->calculSemaines();
-        $this->calculEdt(); //todo: pour des datas en BDD sans scelcat. Ajouter test.
+        $this->calculEdt(); //todo: pour des datas en BDD sans scelcat. Ajouter test. Devrait permettre de récupérer les EDT des deux tables... et fusionner. Pour ensuite un affichage. On se moque de savoir qui est où...
 
         return $this;
     }
@@ -185,7 +185,7 @@ class MyEdtIntranet extends BaseEdt
 
             $evt->salle = $p->getSalle();
             $evt->personnel = $p->getIntervenant()?->getDisplay();
-            $evt->groupe = $p->getGroupe();
+            $evt->groupe = $p->getDisplayGroupe();
             $evt->typeIdMatiere = $p->getTypeIdMatiere();
             $evt->type_cours = $p->getType();
 
