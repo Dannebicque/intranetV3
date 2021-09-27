@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/applications.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/09/2021 12:08
+// @lastUpdate 27/09/2021 17:09
 import {addCallout} from '../util'
 import './messagerie'
 
@@ -34,6 +34,7 @@ $(document).on('change', '#selectsemestre', function () {
             .attr('value', matiere.typeMatiere + '_' + matiere.id)
             .text(matiere.display))
         })
+        console.log(selectMatiere)
         //todo: a remplacer
         // selectMatiere.attr('data-provide', 'selectpicker')
         // selectMatiere.attr('data-live-search', 'true')
