@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.23](https://github.com/Dannebicque/intranetV3/compare/v3.1.22...v3.1.23) (2021-09-27)
+
+
+### Features
+
+* Dématérialisation de la demande des BC. Structure et Workflow ([bb2faff](https://github.com/Dannebicque/intranetV3/commit/bb2faff7fa17812bf9ac2adfe7d88d498673b02c))
+* Récupération du groupe depuis les événements Celcat ([3443000](https://github.com/Dannebicque/intranetV3/commit/3443000ff1bde999461bb257bd62cd93a3ff7d45))
+* Récupération du groupe depuis les événements Celcat ([8c6da02](https://github.com/Dannebicque/intranetV3/commit/8c6da028c044b2457ffc2a0a9cdaa1a31523351e))
+* Récupération du groupe depuis les événements Celcat ([03719a8](https://github.com/Dannebicque/intranetV3/commit/03719a8fb1038a21083b0cea62f018eed4c632eb))
+* Récupération du groupe depuis les événements Celcat ([a2f2c9a](https://github.com/Dannebicque/intranetV3/commit/a2f2c9ac43741314c934df726b171d4d80dbc94a))
+* Récupération du groupe depuis les événements Celcat ([b9a2bf0](https://github.com/Dannebicque/intranetV3/commit/b9a2bf0cc80cc012b64e48ca599c78e72adeeec5))
+* Récupération du groupe depuis les événements Celcat ([5c309eb](https://github.com/Dannebicque/intranetV3/commit/5c309eba1337131a4785a9a1ba35733e16dfc1ee))
+
+
+### Bug Fixes
+
+* Affichage du groupe dans l'EDT ([611ad25](https://github.com/Dannebicque/intranetV3/commit/611ad2572adfb23a9350e2aa00d512df2685cb90))
+* Feuilles placement. Select ne marche pas après ajax. ([0678e34](https://github.com/Dannebicque/intranetV3/commit/0678e3412526f9de9144d1bc8522500c1889974d))
+* Nombre de mesasge n'est plus dans DataUserSession. A modifieR. Suspendu ([36471e2](https://github.com/Dannebicque/intranetV3/commit/36471e2e1e0fe5d37c033b11b7bbb45e77b5f981))
+* Saisie des absences depuis l'admin ([4f82e60](https://github.com/Dannebicque/intranetV3/commit/4f82e6048aafcfff2a9d40a3f648393550bd7358))
+* TinyMce dans la messagerie ([a701531](https://github.com/Dannebicque/intranetV3/commit/a701531ab6a982c96c7d8a61c00f5e02558fa7f8))
+
 ### [3.1.22](https://github.com/Dannebicque/intranetV3/compare/v3.1.21...v3.1.22) (2021-09-26)
 
 
