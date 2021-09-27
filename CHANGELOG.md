@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.24](https://github.com/Dannebicque/intranetV3/compare/v3.1.23...v3.1.24) (2021-09-27)
+
+
+### Features
+
+* Ajout d'une colonne pour les UE et Parcours dans la liste des matières du PPN. ([34e563e](https://github.com/Dannebicque/intranetV3/commit/34e563e1709a94efe77b2334b441ffd20f66cf6a))
+
+
+### Bug Fixes
+
+* Date de mise à jour qui change à chaque affichage si entité avec un fichier. ([8fcd6f8](https://github.com/Dannebicque/intranetV3/commit/8fcd6f8c7b1bc578fe86d97f88b57cdf3a0accc1))
+
 ### [3.1.23](https://github.com/Dannebicque/intranetV3/compare/v3.1.22...v3.1.23) (2021-09-27)
 
 
