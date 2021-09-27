@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Traits/LifeCycleTrait.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 10/09/2021 11:56
+ * @lastUpdate 27/09/2021 21:35
  */
 
 namespace App\Entity\Traits;
@@ -50,7 +50,7 @@ trait LifeCycleTrait
 
     public function setUpdatedValue(): void
     {
-        $this->updated = Carbon::now();
+        $this->updated = $this->updated->addSecond();
     }
 
     /**
