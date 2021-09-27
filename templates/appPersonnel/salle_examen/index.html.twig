@@ -12,8 +12,8 @@
                             name="selectsemestre" required="required" is="select-complete">
                         <option value="">Choisissez un semestre</option>
                         {% for semestre in user_data.semestres %}
-                                <option value="{{ semestre.id }}">{{ semestre.display }}</option>
-                            {% endfor %}
+                            <option value="{{ semestre.id }}">{{ semestre.display }}</option>
+                        {% endfor %}
                     </select>
                 </div>
             </div>
@@ -21,7 +21,7 @@
             <div class="form-group">
                 <label class="control-label required" for="selectmatiere">Matière</label>
                 <div>
-                    <select class="form-control" id="selectmatiere" name="selectmatiere" required="required" is="select-complete">
+                    <select class="form-control" id="selectmatiere" name="selectmatiere" required="required">{# is="select-complete" #}
                         <option value="">Choisissez d'abord un semestre</option>
                     </select>
                 </div>
@@ -31,7 +31,7 @@
                 <label class="control-label required" for="selectgroupes">Groupes</label>
                 <div>
                     <select class="form-control" id="selectgroupes" name="selectgroupes" required="required"
-                            is="select-complete">
+                    >{# is="select-complete" #}
                         <option value="">Choisissez d'abord un semestre</option>
                     </select>
                 </div>
