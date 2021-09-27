@@ -32,7 +32,7 @@
 
 {% block content %}
     {{ render(controller('App\\Controller\\bloc_saisie_absence\\SaisieAbsenceController::index', {semestre:semestre
-        .id})) }}
+    .id, matiere:null, event:null})) }}
 {% endblock %}
 
 {% block stylesheets %}
