@@ -2,9 +2,9 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.matieres.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/09/2021 12:08
+// @lastUpdate 27/09/2021 22:16
 
-import {dataTableLangueFr} from '../lang/fr'
+import {addCallout} from '../util'
 
 $('#matiere_semestre').change(function () {
   const semestreSelector = $(this)
@@ -113,3 +113,32 @@ $(document).on('click', '.change-diplome', function (e) {
   })
 
 })
+
+$(document).on('change', '.changeParcours', function () {
+  $.ajax({
+    url: Routing.generate('administration_matiere_change_parcours', {
+      id: $(this).data('matiere'),
+      parcours: $(this).val()
+    }),
+    method: 'POST',
+    success: function (data) {
+      addCallout('Modification enregistrée', 'success')
+    }, error: function (e) {
+      addCallout('Erreur lors de l\'enregistrement de la modification', 'danger')
+    }
+  })
+})
+
+$(document).on('change', '.changeUe', function () {
+  $.ajax({
+    url: Routing.generate('administration_matiere_change_ue', {id: $(this).data('matiere'), ue: $(this).val()}),
+    method: 'POST',
+    success: function (data) {
+      addCallout('Modification enregistrée', 'success')
+    }, error: function (e) {
+      addCallout('Erreur lors de l\'enregistrement de la modification', 'danger')
+    }
+  })
+})
+
+

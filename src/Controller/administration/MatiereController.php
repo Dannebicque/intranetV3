@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/MatiereController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/09/2021 22:03
+ * @lastUpdate 27/09/2021 22:16
  */
 
 namespace App\Controller\administration;
@@ -18,11 +18,13 @@ use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Diplome;
 use App\Entity\Matiere;
+use App\Entity\Parcour;
 use App\Entity\Ue;
 use App\Form\MatiereType;
 use App\Repository\ApcRessourceRepository;
 use App\Repository\ApcSaeRepository;
 use App\Repository\MatiereRepository;
+use App\Repository\ParcourRepository;
 use App\Utils\Tools;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -43,6 +45,7 @@ class MatiereController extends BaseController
 
     #[Route('/diplome/{diplome}', name: 'administration_matiere_diplome', options: ['expose' => true], methods: ['GET'])]
     public function diplome(
+        ParcourRepository $parcourRepository,
         MatiereRepository $matiereRepository,
         ApcRessourceRepository $apcRessourceRepository,
         ApcSaeRepository $apcSaeRepository,
@@ -162,6 +165,29 @@ class MatiereController extends BaseController
         return $update ? new JsonResponse('', Response::HTTP_OK) : new JsonResponse('erreur',
             Response::HTTP_INTERNAL_SERVER_ERROR);
     }
+
+    #[Route('/{id}/{parcours}/change-parcours', name: 'administration_matiere_change_parcours', options: ['expose' => true], methods: ['POST'])]
+    public function changeParcours(
+        Matiere $matiere,
+        ?Parcour $parcours = null
+    ): JsonResponse {
+        $matiere->setParcours($parcours);
+        $this->entityManager->flush();
+
+        return new JsonResponse('', Response::HTTP_OK);
+    }
+
+    #[Route('/{id}/{ue}/change-ue', name: 'administration_matiere_change_ue', options: ['expose' => true], methods: ['POST'])]
+    public function changeUe(
+        Matiere $matiere,
+        ?Ue $ue = null
+    ): JsonResponse {
+        $matiere->setUe($ue);
+        $this->entityManager->flush();
+
+        return new JsonResponse('', Response::HTTP_OK);
+    }
+
 
     #[Route('/{id}/edit', name: 'administration_matiere_edit', methods: ['GET', 'POST'])]
     public function edit(Configuration $configuration, Request $request, Matiere $matiere): Response
