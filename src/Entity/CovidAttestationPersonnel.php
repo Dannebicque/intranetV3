@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/CovidAttestationPersonnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:26
+ * @lastUpdate 27/09/2021 21:38
  */
 
 namespace App\Entity;
@@ -191,7 +191,7 @@ class CovidAttestationPersonnel extends BaseEntity
         $this->setValidationDepartement(null);
         $this->setValidationDirection(null);
         $this->setCreatedValue();
-        $this->setUpdatedValue();
+        $this->setUpdatedEntity();
     }
 
     public function getDiplome(): ?Diplome
