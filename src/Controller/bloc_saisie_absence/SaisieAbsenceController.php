@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/bloc_saisie_absence/SaisieAbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/09/2021 18:38
+ * @lastUpdate 27/09/2021 17:49
  */
 
 namespace App\Controller\bloc_saisie_absence;
@@ -65,28 +65,6 @@ class SaisieAbsenceController extends BaseController
                 ],
             ],
         ]);
-    }
-
-    /**
-     * @Route("/absences/{matiere}", name="application_personnel_absence_get_ajax", methods="GET",
-     *                                    options={"expose":true})
-     */
-    public function ajaxGetAbsencesMatiere(
-        TypeMatiereManager $typeMatiereManager,
-        AbsenceRepository $absenceRepository,
-        string $matiere
-    ): JsonResponse {
-        $mat = $typeMatiereManager->getMatiereFromSelect($matiere);
-        if (null !== $mat) {
-            $absences = $absenceRepository->getByMatiereArray(
-                $mat,
-                $mat->semestre ? $mat->semestre->getAnneeUniversitaire() : null
-            );
-
-            return $this->json($absences);
-        }
-
-        return $this->json(null);
     }
 
     /**
