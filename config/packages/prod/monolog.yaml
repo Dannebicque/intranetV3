@@ -6,6 +6,7 @@ monolog:
           path: "%kernel.logs_dir%/%kernel.environment%.all.log"
           level: info
           buffer_size: 50 # How many messages should be saved? Prevent memory leaks
+          channels: [ !security ]
         login:
           type: rotating_file
           max_files: 365
@@ -26,37 +27,15 @@ monolog:
           buffer_size: 50 # How many messages should be saved? Prevent memory leaks
 
         main_critical:
-          type:           fingers_crossed
-          action_level:   critical
-          handler:        grouped_critical
+          type: fingers_crossed
+          action_level: critical
+          handler: grouped_critical
         grouped_critical:
-          type:           group
-          members:        [streamed_critical] #, buffered_critical]
+          type: group
+          members: [ streamed_critical ] #, buffered_critical]
         streamed_critical:
-          type:           rotating_file
-          max_files:      10
-          path:           "%kernel.logs_dir%/%kernel.environment%.critical.log"
-          level:          info
-#        main:
-#            type: fingers_crossed
-#            action_level: error
-#            handler: nested
-#            excluded_404s:
-#                # regex: exclude all 404 errors from the logs
-#                - ^/
-#        nested:
-#            type: stream
-#            path: "%kernel.logs_dir%/%kernel.environment%.log"
-#            level: debug
-#        console:
-#            type: console
-#            process_psr_3_messages: false
-#            channels: ["!event", "!doctrine"]
-#        deprecation:
-#            type: stream
-#            path: "%kernel.logs_dir%/%kernel.environment%.deprecations.log"
-#        deprecation_filter:
-#            type: filter
-#            handler: deprecation
-#            max_level: info
-#            channels: ["php"]
+          type: rotating_file
+          max_files: 10
+          path: "%kernel.logs_dir%/%kernel.environment%.critical.log"
+          level: critical
+
