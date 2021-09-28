@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/BCCentreFinancier.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/09/2021 20:50
+ * @lastUpdate 28/09/2021 17:49
  */
 
 namespace App\Entity;
@@ -15,6 +15,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=BCCentreFinancierRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class BCCentreFinancier extends BaseEntity
 {

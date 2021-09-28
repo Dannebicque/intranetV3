@@ -1,13 +1,23 @@
-{% extends 'base.html.twig' %}
+{% extends 'base-super_admin.html.twig' %}
 
-{% block title %}Edit BCCentreFinancier{% endblock %}
+{% block header %}
+    {{ 'adm.bc.centre_financier.edit.heading'|trans }}
+{% endblock %}
 
-{% block body %}
-    <h1>Edit BCCentreFinancier</h1>
+{% block headeractions %}
+    <div class="header-action">
+        {{ include('composants/sadm-buttons-edit.html.twig', {elt:'bc_centre_financier', id: bc_centre_financier.id
+        }) }}
+    </div>
+{% endblock %}
 
-    {{ include('b_c_centre_financier/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('b_c_centre_financier_index') }}">back to list</a>
-
-    {{ include('b_c_centre_financier/_delete_form.html.twig') }}
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">
+            {{ 'adm.bc.centre_financier.edit.heading'|trans }}
+        </h4>
+        <div class="card-body">
+            {{ include('composants/adm-form.html.twig', {'button_label': 'update'|trans}) }}
+        </div>
+    </div>
 {% endblock %}

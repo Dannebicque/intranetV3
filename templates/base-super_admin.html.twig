@@ -67,6 +67,14 @@
             </a>
         </li>
     {% endif %}
+    {% if is_granted('ROLE_FINANCE') or is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_ADMINISTRATIF') %}
+        <li class="menu-item" id="menu-enquete">
+            <a class="menu-link" href="{{ path('sa_compta_index') }}">
+                <i class="fas fa-comments-dollar fa-2x"></i>
+                <span class="title">{{ 'menu.compta'|trans }}</span>
+            </a>
+        </li>
+    {% endif %}
 
 {% endblock %}
 

@@ -1,41 +1,46 @@
-{% extends 'base.html.twig' %}
+{% extends 'base-super_admin.html.twig' %}
 
-{% block title %}BCCentreFinancier index{% endblock %}
 
-{% block body %}
-    <h1>BCCentreFinancier index</h1>
+{% block header %}
+    {{ 'adm.bc.centre_financier.index.heading'|trans }}
+{% endblock %}
 
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Id</th>
-            <th>Libelle</th>
-            <th>Code</th>
-            <th>Created</th>
-            <th>Updated</th>
-            <th>actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for b_c_centre_financier in b_c_centre_financiers %}
-            <tr>
-                <td>{{ b_c_centre_financier.id }}</td>
-                <td>{{ b_c_centre_financier.libelle }}</td>
-                <td>{{ b_c_centre_financier.code }}</td>
-                <td>{{ b_c_centre_financier.created ? b_c_centre_financier.created|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ b_c_centre_financier.updated ? b_c_centre_financier.updated|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('b_c_centre_financier_show', {'id': b_c_centre_financier.id}) }}">show</a>
-                    <a href="{{ path('b_c_centre_financier_edit', {'id': b_c_centre_financier.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+{% block headeractions %}
+    <div class="header-action">
+        {{ include('composants/sadm-buttons-index.html.twig', {elt:'bc_centre_financier',  retour: {path:
+            'sa_compta_index', titre: 'Service comptabilité'}}) }}
+    </div>
+{% endblock %}
 
-    <a href="{{ path('b_c_centre_financier_new') }}">Create new</a>
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.bc.centre_financier.index.heading'|trans }}</h4>
+        <div class="card-body">
+            <table class="table table-striped table-bordered">
+
+                <thead>
+                <tr>
+                    <th>Libelle</th>
+                    <th>Code</th>
+                    <th>actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for bc_centre_financier in bc_centre_financiers %}
+                    <tr>
+                        <td>{{ bc_centre_financier.libelle }}</td>
+                        <td>{{ bc_centre_financier.code }}</td>
+                        <td>
+                            {{ include('composants/sadm-buttons-table-index.html.twig', {elt:'bc_centre_financier', id: bc_centre_financier.id}) }}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="3">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 {% endblock %}
