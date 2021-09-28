@@ -1,11 +1,20 @@
-{% extends 'base.html.twig' %}
+{% extends 'base-super_admin.html.twig' %}
 
-{% block title %}New BCCentreFinancier{% endblock %}
+{% block header %}
+    {{ 'adm.bc.centre_financier.new.heading'|trans }}
+{% endblock %}
 
-{% block body %}
-    <h1>Create new BCCentreFinancier</h1>
+{% block headeractions %}
+    <div class="header-action">
+        {{ include('composants/sadm-buttons-new.html.twig', {elt: 'bc_centre_financier'}) }}
+    </div>
+{% endblock %}
 
-    {{ include('b_c_centre_financier/_form.html.twig') }}
-
-    <a href="{{ path('b_c_centre_financier_index') }}">back to list</a>
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.bc.centre_financier.new.heading'|trans }}</h4>
+        <div class="card-body">
+            {{ include('composants/adm-form.html.twig') }}
+        </div>
+    </div>
 {% endblock %}

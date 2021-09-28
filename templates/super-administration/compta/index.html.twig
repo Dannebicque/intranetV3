@@ -1,0 +1,51 @@
+{% extends 'base-super_admin.html.twig' %}
+
+{% block header %}
+    {{ 'sa_compta.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('super_admin_homepage') }}" class="btn btn-primary btn-float" data-provide="tooltip"
+               data-placement="bottom" title="{{ 'atitle.retour_dashboard'|trans }}">
+                <i class="{{ iconDashboard }}"><span class="sr-only">dashboard</span></i>
+            </a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-6 col-lg-12">
+            <div class="card">
+                <header class="card-header">
+                    <h2 class="card-title">{{ 'sa_enquete.heading'|trans }}</h2>
+
+                </header>
+
+                <div class="card-body">
+                    Demandes en attente...
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-6  col-sm-12">
+            <div class="card">
+                <header class="card-header">
+                    <h2 class="card-title">{{ 'sa_bc_centre_financier.heading'|trans }}</h2>
+                </header>
+
+                <div class="card-body">
+
+                    <div class="col-sm-12 col-md-12">
+                        <div><a href="{{ path('sa_bc_centre_financier_index') }}"
+                                class="btn btn-block btn-primary"> {{ 'bc.centre_financier_index.index'|trans }}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

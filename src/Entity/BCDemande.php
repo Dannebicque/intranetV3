@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/BCDemande.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/09/2021 14:31
+ * @lastUpdate 28/09/2021 11:41
  */
 
 namespace App\Entity;
@@ -17,7 +17,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=BCDemandRepository::class)
+ * @ORM\Entity(repositoryClass=BCDemandeRepository::class)
  */
 class BCDemande extends BaseEntity
 {

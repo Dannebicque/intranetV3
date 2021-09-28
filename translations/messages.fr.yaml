@@ -171,6 +171,12 @@ adm:
     modification.heading: 'Modification d''un diplôme du bac'
     new.heading: 'Création d''un diplôme du bac'
     show.heading: 'Détails d''un diplôme du bac'
+  bc:
+    centre_financier:
+      index.heading: 'Gestion des centres financiers'
+      edit.heading: 'Modification d''un centre financier'
+      new.heading: 'Création d''un centre financier'
+      show.heading: 'Détails d''un centre financier'
   borne:
     index.heading: 'Liste des messages pour les bornes'
     modification.heading: 'Modification d''un message des bornes'
