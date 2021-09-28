@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/09/2021 12:50
+ * @lastUpdate 28/09/2021 09:27
  */
 
 namespace App\Controller\administration;
@@ -60,21 +60,23 @@ class EdtController extends BaseController
         int $semaine,
         string $valeur,
         string $filtre
-    ): Response {
+    ): Response
+    {
         $filtre = '' === $filtre ? Constantes::FILTRE_EDT_PROMO : $filtre;
-        $edt = $myEdt->initAdministration($this->dataUserSession->getDepartement(), $semaine, $filtre,
-            $valeur, $this->dataUserSession->getAnneeUniversitaire());
+        $matieres = $typeMatiereManager->findByDepartementArray($this->getDepartement());//todo: codeApogee si depuis Celcat. Trouverune solution, si Edt récupère depuis touues les tables pour la conversion...
+        $edt = $myEdt->initAdministration($this->getDepartement(), $semaine, $filtre,
+            $valeur, $this->getAnneeUniversitaire(), $matieres);
 
         switch ($filtre) {
             case Constantes::FILTRE_EDT_PROF:
                 return $this->render('administration/edt/_edt-prof.html.twig', [
                     'prof' => $personnelRepository->find($valeur),
                     'filtre' => $filtre,
-                    'personnels' => $personnelRepository->findByDepartement($this->dataUserSession->getDepartement()),
+                    'personnels' => $personnelRepository->findByDepartement($this->getDepartement()),
                     'salles' => $salleRepository->findAll(),
-                    'matieres' => $typeMatiereManager->findByDepartement($this->dataUserSession->getDepartement()),
-                    'edt' => $edt,
-                    'tabHeures' => Constantes::TAB_HEURES_EDT,
+                    'matieres' => $matieres,
+                    'edt' => $myEdt,
+                    'tabHeures' => Constantes::TAB_HEURES_EDT_2,
                 ]);
 
             case Constantes::FILTRE_EDT_MODULE:

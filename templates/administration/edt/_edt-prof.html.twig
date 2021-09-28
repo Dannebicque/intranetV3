@@ -5,38 +5,60 @@
         <h2>Emploi du temps de {{ prof.displayPr }}</h2>
         <div class="row">
             <div class="col-sm-12">
-                <div class="wrapper-edt-etudiant">
-                    {{ include('edt/_header_edt.html.twig') }}
-                    {% for ligne in 1..7 %}
-                        <div class="edt-etudiant-col1 col-edt-heure">{{ tabHeures[ligne][0] }}
-                            <br>{{ tabHeures[ligne][1] }}</div>
+                <div class="schedule-individual" aria-labelledby="schedule-heading">
+                    {{ include('edt/_header_edt2.html.twig') }}
+
+                    {% for ligne in 0..24 %}
+                        <h2 class="time-slot" style="grid-row: time-{{ tabHeures[ligne][0] }};">{{ tabHeures[ligne][1] }}</h2>
                         {% for j in 1..5 %}
-                            {% if edt.planning[j][ligne] is defined and edt.planning[j][ligne].texte != 'xx' %}
-                                <div class="edt-etudiant-col1 edt-cours {% if 'now'|date('N') != j %}col-edt-hide{% endif %} {{ edt.planning[j][ligne].couleur }}"
-                                     style="color:{{ edt.planning[j][ligne].couleurTexte }};">
-                                    {% if edt.planning[j][ligne].pl != "" %}
-                                    <a href="{{ path('application_personnel_absence_from_planning',{'event':edt.planning[j][ligne].pl }) }}" style="color:{{ edt.planning[j][ligne]
-                                    .couleurTexte }};">
-                                        {% endif %}
-                                        {{ edt.planning[j][ligne].texte|raw }}
-                                        {% if edt.planning[j][ligne].format == 'nok' %}
-                                            <br/>
-                                            <span class="edt-extra-time">{{ convertHeureEdt(edt
-                                                    .planning[j][ligne].debut) }} à  {{ convertHeureEdt(edt
-                                                    .planning[j][ligne].fin) }}</span>
-                                        {% endif %}
-                                        {% if edt.planning[j][ligne].pl != "" %}
-                                    </a>
-                                    {% endif %}
-                                </div>
-                            {% else %}
-                                <div class="edt-etudiant-col1 edt-cours {% if 'now'|date('N') != j %}col-edt-hide{% endif %}">
-                                    &nbsp;
+                            {% if edt.planning[j][ligne] is defined %}
+                                <div class="session {{ edt.planning[j][ligne].classCss }}" style="grid-column: track-{{ j }}; grid-row:
+                                        time-{{ edt
+                                .planning[j][ligne].gridStart }} / time-{{ edt.planning[j][ligne].gridEnd }};">
+                                    <div class="session-body">
+                                        <span class="session-title">{{ edt.planning[j][ligne].matiere|raw }}</span>
+                                        <span class="session-time">{{ edt.planning[j][ligne].heureDebut|format_time('short') }} - {{ edt
+                                            .planning[j][ligne].heureFin|format_time('short') }}</span>
+                                        <span class="session-track">{{ edt.planning[j][ligne].groupe }}</span>
+                                        <span class="session-room">{{ edt.planning[j][ligne].salle }}</span>
+                                    </div>
                                 </div>
                             {% endif %}
                         {% endfor %}
                     {% endfor %}
                 </div>
+                {# <div class="wrapper-edt-etudiant"> #}
+                {# {{ include('edt/_header_edt.html.twig') }} #}
+                {# {% for ligne in 1..7 %} #}
+                {# <div class="edt-etudiant-col1 col-edt-heure">{{ tabHeures[ligne][0] }} #}
+                {# <br>{{ tabHeures[ligne][1] }}</div> #}
+                {# {% for j in 1..5 %} #}
+                {# {% if edt.planning[j][ligne] is defined and edt.planning[j][ligne].texte != 'xx' %} #}
+                {# <div class="edt-etudiant-col1 edt-cours {% if 'now'|date('N') != j %}col-edt-hide{% endif %} {{ edt.planning[j][ligne].couleur }}" #}
+                {# style="color:{{ edt.planning[j][ligne].couleurTexte }};"> #}
+                {# {% if edt.planning[j][ligne].pl != "" %} #}
+                {# <a href="{{ path('application_personnel_absence_from_planning',{'event':edt.planning[j][ligne].pl }) }}" style="color:{{ edt.planning[j][ligne] #}
+                {# .couleurTexte }};"> #}
+                {# {% endif %} #}
+                {# {{ edt.planning[j][ligne].texte|raw }} #}
+                {# {% if edt.planning[j][ligne].format == 'nok' %} #}
+                {# <br/> #}
+                {# <span class="edt-extra-time">{{ convertHeureEdt(edt #}
+                {# .planning[j][ligne].debut) }} à  {{ convertHeureEdt(edt #}
+                {# .planning[j][ligne].fin) }}</span> #}
+                {# {% endif %} #}
+                {# {% if edt.planning[j][ligne].pl != "" %} #}
+                {# </a> #}
+                {# {% endif %} #}
+                {# </div> #}
+                {# {% else %} #}
+                {# <div class="edt-etudiant-col1 edt-cours {% if 'now'|date('N') != j %}col-edt-hide{% endif %}"> #}
+                {# &nbsp; #}
+                {# </div> #}
+                {# {% endif %} #}
+                {# {% endfor %} #}
+                {# {% endfor %} #}
+                {# </div> #}
             </div>
         </div>
         <br/>

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 27/09/2021 08:49
+ * @lastUpdate 28/09/2021 09:26
  */
 
 namespace App\Classes\Edt;
@@ -151,7 +151,8 @@ class MyEdtIntranet extends BaseEdt
         $semaine,
         $filtre,
         $valeur,
-        AnneeUniversitaire $anneeUniversitaire
+        AnneeUniversitaire $anneeUniversitaire,
+        array $matieres
     ): self {
         if ('' === $valeur) {
             $semestres = $this->semestreRepository->findByDepartementActif($departement);
@@ -160,7 +161,7 @@ class MyEdtIntranet extends BaseEdt
             }
             //erreur
         }
-
+        $this->matieres = $matieres;
         $this->init($anneeUniversitaire, $filtre, $valeur, $semaine);
         $this->semaines = $this->calculSemaines();
         $this->calculEdt();
@@ -205,10 +206,10 @@ class MyEdtIntranet extends BaseEdt
         if (array_key_exists($p->getTypeIdMatiere(), $this->matieres)) {
             $matiere = $this->matieres[$p->getTypeIdMatiere()];
             if (null !== $matiere && null !== $matiere->semestre) {
+                $evt->matiere = $matiere->display;
                 $annee = $matiere->semestre->getAnnee();
                 if (null !== $annee) {
                     $evt->couleur = $annee->getCouleur();
-                    $evt->matiere = $matiere->display;
                 }
             }
         }
