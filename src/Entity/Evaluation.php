@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Evaluation.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/09/2021 11:09
+ * @lastUpdate 28/09/2021 17:21
  */
 
 namespace App\Entity;
@@ -69,7 +69,7 @@ class Evaluation extends BaseEntity
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\NotBlank
      */
-    private ?string $commentaire;
+    private ?string $commentaire = '';
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Note", mappedBy="evaluation")

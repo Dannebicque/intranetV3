@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/EvaluationType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/09/2021 21:26
+ * @lastUpdate 28/09/2021 17:21
  */
 
 namespace App\Form;
@@ -86,7 +86,12 @@ class EvaluationType extends AbstractType
                     'constraints' => new Positive()
                 ])
             ->add('commentaire', TextType::class,
-                ['label' => 'commentaire', 'help' => 'help.commentaire_evaluation', 'disabled' => $autorise])
+                [
+                    'label' => 'commentaire',
+                    'help' => 'help.commentaire_evaluation',
+                    'disabled' => $autorise,
+                    'required' => false
+                ])
             ->add('visible', YesNoType::class,
                 ['label' => 'evaluation.visible', 'help' => 'help.evaluation.visible'])
             ->add('matiere', ChoiceType::class, [
