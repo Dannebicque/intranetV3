@@ -6,7 +6,7 @@ monolog:
           path: "%kernel.logs_dir%/%kernel.environment%.all.log"
           level: info
           buffer_size: 50 # How many messages should be saved? Prevent memory leaks
-          channels: [ !security ]
+          #channels: [ !security ]
         login:
           type: rotating_file
           max_files: 365
