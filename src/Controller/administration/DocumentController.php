@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/DocumentController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/09/2021 16:38
+ * @lastUpdate 29/09/2021 09:01
  */
 
 namespace App\Controller\administration;
@@ -132,7 +132,7 @@ class DocumentController extends BaseController
     }
 
     /**
-     * @Route("/{id}", name="delete", methods="DELETE")
+     * @Route("/{id}", name="delete", methods="DELETE|POST")
      *
      * @ParamConverter("document", options={"mapping": {"id": "uuid"}})
      */

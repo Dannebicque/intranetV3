@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/DocumentDelete.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/09/2021 16:35
+ * @lastUpdate 29/09/2021 09:11
  */
 
 namespace App\Classes;
@@ -46,7 +46,7 @@ class DocumentDelete
             $this->entityManager->remove($doc);
         }
         $file = $this->kernel->getProjectDir() . '/public/upload/documents/' . $document->getDocumentName();
-        if (file_exists($file)) {
+        if (file_exists($file) && !is_dir($file)) {
             unlink($file);
         }
         $this->entityManager->remove($document);

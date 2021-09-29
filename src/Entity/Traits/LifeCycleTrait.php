@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Traits/LifeCycleTrait.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 27/09/2021 21:35
+ * @lastUpdate 29/09/2021 08:59
  */
 
 namespace App\Entity\Traits;
@@ -26,7 +26,7 @@ trait LifeCycleTrait
     /**
      * @ORM\Column(type="datetime")
      */
-    private ?CarbonInterface $updated;
+    private ?CarbonInterface $updated = null;
 
     public function getCreated(): ?CarbonInterface
     {
@@ -50,7 +50,11 @@ trait LifeCycleTrait
 
     public function setUpdatedValue(): void
     {
-        $this->updated = $this->updated->addSecond();
+        if ($this->updated === null) {
+            $this->updated = Carbon::now();
+        } else {
+            $this->updated = $this->updated->addSecond();
+        }
     }
 
     /**
