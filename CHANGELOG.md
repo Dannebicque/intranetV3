@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.25](https://github.com/Dannebicque/intranetV3/compare/v3.1.24...v3.1.25) (2021-09-29)
+
+
+### Features
+
+* Gestion des centres financiers pour les bons de commandes dématérialisés ([cfdb3d5](https://github.com/Dannebicque/intranetV3/commit/cfdb3d541b3eed38e8a40f9a8fdf87e6b1dc931f))
+
+
+### Bug Fixes
+
+* Affichage des emplois du temps profs depuis l'admin ([5746497](https://github.com/Dannebicque/intranetV3/commit/5746497ed67cdf6c6c0bfa512863c398fe146846))
+* Affichage des emplois du temps profs depuis l'admin ([a9beef7](https://github.com/Dannebicque/intranetV3/commit/a9beef7f939ac5732f306c5a18f9db6a75ef8a90))
+* Ajout et suppression de documents ([b413d76](https://github.com/Dannebicque/intranetV3/commit/b413d7655f4d54ce5a1034ecb3750a90ec8715ff))
+* Commentaire sur une évaluation optionnel ([c5a5e23](https://github.com/Dannebicque/intranetV3/commit/c5a5e2380caf928db0a0e9c0459120f9bf5f6211))
+* Configuration des logs ([058d5f5](https://github.com/Dannebicque/intranetV3/commit/058d5f5adf6f20a2af8fb24e4f7efac7296ef5bc))
+
 ### [3.1.24](https://github.com/Dannebicque/intranetV3/compare/v3.1.23...v3.1.24) (2021-09-27)
 
 
