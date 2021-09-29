@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/DocumentTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/09/2021 08:12
+ * @lastUpdate 29/09/2021 09:04
  */
 
 namespace App\Table;
@@ -121,7 +121,7 @@ class DocumentTableType extends TableType
                     'attr' => [
                         'data-titre' => 'Document intitulé "' . $s->getLibelle() . '"',
                         'data-uuid' => $s->getUuidString(),
-                        'data-csrf' => $this->csrfToken->getToken('delete' . $s->getId()),
+                        'data-csrf' => $this->csrfToken->getToken('delete' . $s->getUuidString()),
                     ],
                 ]);
             },
