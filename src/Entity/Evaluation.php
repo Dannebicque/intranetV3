@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Evaluation.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/09/2021 16:00
+ * @lastUpdate 30/09/2021 16:16
  */
 
 namespace App\Entity;
 
+use App\Classes\DataUserSession;
 use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\MatiereTrait;
 use App\Entity\Traits\UuidTrait;
@@ -344,8 +345,11 @@ class Evaluation extends BaseEntity
         return $this;
     }
 
-    public function getAutorise($personnelId): bool
+    public function getAutorise($personnelId, DataUserSession $datauser): bool
     {
+        if ($datauser->isGoodDepartement('ROLE_CDD') || $datauser->isGoodDepartement('ROLE_DDE') || $datauser->isGoodDepartement('ROLE_ASS') || $datauser->isGoodDepartement('ROLE_RP') || $datauser->isGoodDepartement('ROLE_NOTES')) {
+            return true;
+        }
         $personnels[] = null !== $this->getPersonnelAuteur() ? $this->getPersonnelAuteur()->getId() : null;
         $autorises = $this->getPersonnelAutorise();
         foreach ($autorises as $autorise) {
