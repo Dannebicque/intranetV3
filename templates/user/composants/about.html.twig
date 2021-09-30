@@ -21,9 +21,10 @@
 
         {% elseif user.typeUser|lower == 'permanent' or user.typeUser|lower == 'vacataire' %}
             <p><strong>{{ 'prenom.nom'|trans }} :</strong> {{ user.displayPr }}</p>
-            {% if not is_granted('ROLE_ETUDIANT') %}
+            {% if (is_granted('ROLE_PERMANENT') and (user_data.isGoodDepartement('ROLE_ASS') or user_data
+                .isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE'))) or (user.typeUser == user_data.user.typeUser and user.id == user_data.user.id) %}
                 <p><strong>{{ 'date.naissance'|trans }}
-                        : </strong> {{ user.dateNaissance != null ? user.dateNaissance|format_datetime('short') : 'non.defini'|trans }}
+                        : </strong> {{ user.dateNaissance != null ? user.dateNaissance|format_date('short') : 'non.defini'|trans }}
                 </p>
             {% endif %}
             {% if user.typeUser|lower == 'permanent' %}
