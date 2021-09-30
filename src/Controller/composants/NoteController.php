@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/composants/NoteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2021 08:46
+ * @lastUpdate 30/09/2021 15:47
  */
 
 namespace App\Controller\composants;
@@ -30,13 +30,12 @@ class NoteController extends BaseController
 {
     /**
      *
-     * @Route("/edit-form-evaluation/{evaluation}/{autorise}/{source}", name="composant_edit_form_evaluation")
+     * @Route("/edit-form-evaluation/{evaluation}/{source}", name="composant_edit_form_evaluation")
      */
     public function editFormEvaluation(
         TypeMatiereManager $typeMatiereManager,
         Request $request,
         Evaluation $evaluation,
-        $autorise,
         $source
     ): Response {
         $matiere = $typeMatiereManager->getMatiere($evaluation->getIdMatiere(), $evaluation->getTypeMatiere());
@@ -44,17 +43,16 @@ class NoteController extends BaseController
         if (null === $matiere) {
             throw new MatiereNotFoundException();
         }
-
         $form = $this->createForm(
             EvaluationType::class,
             $evaluation,
             [
                 'action' => $this->generateUrl('composant_edit_form_evaluation',
-                    ['evaluation' => $evaluation->getId(), 'source' => $source, 'autorise' => $autorise]),
+                    ['evaluation' => $evaluation->getId(), 'source' => $source]),
                 'departement' => $this->dataUserSession->getDepartement(),
                 'semestre' => $matiere->semestre,
                 'matiereDisabled' => !('app' === $source),
-                'autorise' => $autorise,
+                'autorise' => $evaluation->getAutorise($this->getConnectedUser()->getId()),
                 'locale' => $request->getLocale(),
                 'attr' => [
                     'data-provide' => 'validation',
@@ -78,7 +76,7 @@ class NoteController extends BaseController
         return $this->render('composants/_edit_eval.html.twig', [
             'evaluation' => $evaluation,
             'form' => $form->createView(),
-            'autorise' => $autorise,
+            'autorise' => $evaluation->getAutorise($this->getConnectedUser()->getId()),
             'source' => $source,
         ]);
     }
