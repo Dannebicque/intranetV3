@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.2.0](https://github.com/Dannebicque/intranetV3/compare/v3.1.25...v3.2.0) (2021-09-30)
+
+
+### Bug Fixes
+
+* Affichage de la date de naissance uniquement RP + ASS + CDD ([482928b](https://github.com/Dannebicque/intranetV3/commit/482928b14c4a3a474344b473abaa3d2587648fb3))
+
 ### [3.1.25](https://github.com/Dannebicque/intranetV3/compare/v3.1.24...v3.1.25) (2021-09-29)
 
 
