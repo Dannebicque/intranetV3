@@ -35,7 +35,8 @@
 </div>
 {{ form_help(form.personnelAutorise) }}
 {{ form_errors(form.personnelAutorise) }}
-
+{% if autorise == true %}
 <button class="btn btn-success">{{ button_label|default('label.save'|trans) }}</button>
+{% endif %}
 {{ form_end(form) }}
 

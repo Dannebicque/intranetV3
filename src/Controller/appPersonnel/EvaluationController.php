@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/EvaluationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 30/09/2021 15:51
  */
 
 namespace App\Controller\appPersonnel;
 
+use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\MyEvaluation;
 use App\Controller\BaseController;
 use App\Entity\Evaluation;
@@ -36,14 +37,19 @@ class EvaluationController extends BaseController
      *                                    requirements={"evaluation"="\d+"})
      * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
      */
-    public function detailsEvaluation(MyEvaluation $myEvaluation, Evaluation $evaluation): Response
-    {
+    public function detailsEvaluation(
+        TypeMatiereManager $typeMatiereManager,
+        MyEvaluation $myEvaluation,
+        Evaluation $evaluation
+    ): Response {
+        $matiere = $typeMatiereManager->getMatiere($evaluation->getIdMatiere(), $evaluation->getTypeMatiere());
         $notes = $myEvaluation->setEvaluation($evaluation)->getNotesTableau();
 
         return $this->render('appPersonnel/note/saisie_2.html.twig', [
             'evaluation' => $evaluation,
-            'notes'      => $notes,
-            'autorise'   => $evaluation->getAutorise($this->getConnectedUser()->getId()),
+            'notes' => $notes,
+            'matiere' => $matiere,
+            'autorise' => $evaluation->getAutorise($this->getConnectedUser()->getId()),
         ]);
     }
 
@@ -61,8 +67,8 @@ class EvaluationController extends BaseController
 
         return $this->render('appPersonnel/note/saisie_2.html.twig', [
             'evaluation' => $evaluation,
-            'notes'      => $notes,
-            'autorise'   => true,
+            'notes' => $notes,
+            'autorise' => $evaluation->getAutorise($this->getConnectedUser()->getId()),
         ]);
     }
 

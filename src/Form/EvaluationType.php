@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/EvaluationType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/09/2021 17:21
+ * @lastUpdate 30/09/2021 15:37
  */
 
 namespace App\Form;
@@ -48,6 +48,7 @@ class EvaluationType extends AbstractType
         $this->departement = $options['departement'];
         $locale = $options['locale'];
         $autorise = !$options['autorise'];
+
         $this->semestre = $options['semestre'];
         $import = $options['import'];
         $matiereDisabled = $options['matiereDisabled'];
