@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/AbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/07/2021 17:05
+ * @lastUpdate 30/09/2021 16:04
  */
 
 namespace App\Controller\administration;
@@ -156,8 +156,7 @@ class AbsenceController extends BaseController
             'absences_' . $semestre->getLibelle(),
             ['absences_administration', 'utilisateur', 'matiere'],
             [
-                'date',
-                'heure',
+                'dateHeure',
                 'duree',
                 'etudiant' => ['nom', 'prenom'],
                 'justifie',
