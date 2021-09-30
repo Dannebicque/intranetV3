@@ -34,7 +34,8 @@
 
     <div class="card card-slided-up">
         <header class="card-header">
-            <h4 class="card-title"><strong>Détails</strong> de l'évaluation | {{ matiere.display }}</h4>
+            <h4 class="card-title"><strong>Détails</strong> de l'évaluation | {{ matiere.display }}
+                                                            | {{ evaluation.libelle }}</h4>
             <ul class="card-controls">
                 <li><a class="card-btn-slide" href="#" title="Plus de détails et modifications" data-provide="tooltip">
                         Cliquez pour éditer l'évaluation <i class="fas fa-chevron-down"></i>
@@ -52,7 +53,7 @@
     </div>
 
     <div class="card">
-        <h4 class="card-title"><strong>Saisie</strong> des notes | {{ matiere.display }}
+        <h4 class="card-title"><strong>Saisie</strong> des notes | {{ matiere.display }} | {{ evaluation.libelle }}
         </h4>
         <div class="card-body">
             {{ include('composants/_saisie_notes.html.twig') }}
