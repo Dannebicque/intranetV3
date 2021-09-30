@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.26](https://github.com/Dannebicque/intranetV3/compare/v3.2.0...v3.1.26) (2021-09-30)
+
 ## [3.2.0](https://github.com/Dannebicque/intranetV3/compare/v3.1.25...v3.2.0) (2021-09-30)
 
 
