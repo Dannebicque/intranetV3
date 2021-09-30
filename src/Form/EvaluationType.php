@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/EvaluationType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/09/2021 15:37
+ * @lastUpdate 30/09/2021 15:53
  */
 
 namespace App\Form;
@@ -57,7 +57,7 @@ class EvaluationType extends AbstractType
         $builder
             ->add('personnelAuteur', EntityType::class,
                 [
-                    'label' => 'personnelAuteur',
+                    'label' => 'label.personnelAuteur',
                     'help' => 'help.personnelAuteur',
                     'required' => true,
                     'disabled' => $personnelDisabled,
@@ -69,35 +69,35 @@ class EvaluationType extends AbstractType
                 ])
             ->add('libelle', TextType::class,
                 [
-                    'label' => 'libelle_evaluation',
+                    'label' => 'label.libelle_evaluation',
                     'help' => 'help.libelle_evaluation',
                     'required' => false,
                     'disabled' => $autorise,
                 ])
             ->add('dateEvaluation', DatePickerType::class, [
-                'label' => 'date_evaluation',
+                'label' => 'label.date_evaluation',
                 'disabled' => $autorise,
                 'attr' => ['data-options' => ['locale' => $locale]],
             ])
             ->add('coefficient', FloatType::class,
                 [
-                    'label' => 'coefficient',
+                    'label' => 'label.coefficient',
                     'help' => 'help.coefficient',
                     'disabled' => $autorise,
                     'constraints' => new Positive()
                 ])
             ->add('commentaire', TextType::class,
                 [
-                    'label' => 'commentaire',
+                    'label' => 'label.commentaire',
                     'help' => 'help.commentaire_evaluation',
                     'disabled' => $autorise,
                     'required' => false
                 ])
             ->add('visible', YesNoType::class,
-                ['label' => 'evaluation.visible', 'help' => 'help.evaluation.visible'])
+                ['label' => 'label.evaluation.visible', 'help' => 'help.evaluation.visible'])
             ->add('matiere', ChoiceType::class, [
                 'choices' => $this->typeMatiereManager->findBySemestreChoiceType($this->semestre),
-                'label' => 'evaluation_matiere',
+                'label' => 'label.evaluation_matiere',
                 'required' => true,
                 'data' => $options['data']->getTypeIdMatiere(),
                 'expanded' => false,
@@ -107,7 +107,7 @@ class EvaluationType extends AbstractType
             ])
             ->add('typeGroupe', EntityType::class, [
                 'class' => TypeGroupe::class,
-                'label' => 'evaluation_type_groupe',
+                'label' => 'label.evaluation_type_groupe',
                 'choice_label' => 'libelle',
                 'disabled' => $autorise,
                 'query_builder' => function(TypeGroupeRepository $typeGroupeRepository) {
@@ -120,7 +120,7 @@ class EvaluationType extends AbstractType
             ->add('personnelAutorise', EntityType::class, [
                 'class' => Personnel::class,
                 'help' => 'help.personnelAutorise',
-                'label' => 'evaluation_personnelAutorise',
+                'label' => 'label.evaluation_personnelAutorise',
                 'disabled' => $autorise,
                 'choice_label' => 'display',
                 'attr' => ['class' => ''],
