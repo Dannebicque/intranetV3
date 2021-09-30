@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/EvaluationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/09/2021 15:51
+ * @lastUpdate 30/09/2021 16:11
  */
 
 namespace App\Controller\appPersonnel;
@@ -49,7 +49,7 @@ class EvaluationController extends BaseController
             'evaluation' => $evaluation,
             'notes' => $notes,
             'matiere' => $matiere,
-            'autorise' => $evaluation->getAutorise($this->getConnectedUser()->getId()),
+            'autorise' => $evaluation->getAutorise($this->getConnectedUser()->getId(), $this->dataUserSession),
         ]);
     }
 
@@ -57,7 +57,6 @@ class EvaluationController extends BaseController
      * @Route("/visible/{uuid}/{etat}", name="application_personnel_evaluation_visible",
      *                                    requirements={"evaluation"="\d+"})
      * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
-     *
      */
     public function evaluationVisible(MyEvaluation $myEvaluation, Evaluation $evaluation, $etat): Response
     {
@@ -68,7 +67,7 @@ class EvaluationController extends BaseController
         return $this->render('appPersonnel/note/saisie_2.html.twig', [
             'evaluation' => $evaluation,
             'notes' => $notes,
-            'autorise' => $evaluation->getAutorise($this->getConnectedUser()->getId()),
+            'autorise' => $evaluation->getAutorise($this->getConnectedUser()->getId(), $this->dataUserSession),
         ]);
     }
 
@@ -96,11 +95,10 @@ class EvaluationController extends BaseController
      *                                    requirements={"evaluation"="\d+","_format"="csv|xlsx|pdf"})
      * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
      *
-     *
      * @return Response|StreamedResponse|null
+     *
      * @throws SyntaxError
      * @throws LoaderError
-     *
      * @throws RuntimeError
      */
     public function exportEvaluation(

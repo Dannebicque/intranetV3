@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/composants/NoteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/09/2021 15:47
+ * @lastUpdate 30/09/2021 16:16
  */
 
 namespace App\Controller\composants;
@@ -38,6 +38,7 @@ class NoteController extends BaseController
         Evaluation $evaluation,
         $source
     ): Response {
+
         $matiere = $typeMatiereManager->getMatiere($evaluation->getIdMatiere(), $evaluation->getTypeMatiere());
 
         if (null === $matiere) {
@@ -52,7 +53,7 @@ class NoteController extends BaseController
                 'departement' => $this->dataUserSession->getDepartement(),
                 'semestre' => $matiere->semestre,
                 'matiereDisabled' => !('app' === $source),
-                'autorise' => $evaluation->getAutorise($this->getConnectedUser()->getId()),
+                'autorise' => $evaluation->getAutorise($this->getConnectedUser()->getId(), $this->dataUserSession),
                 'locale' => $request->getLocale(),
                 'attr' => [
                     'data-provide' => 'validation',
@@ -76,7 +77,7 @@ class NoteController extends BaseController
         return $this->render('composants/_edit_eval.html.twig', [
             'evaluation' => $evaluation,
             'form' => $form->createView(),
-            'autorise' => $evaluation->getAutorise($this->getConnectedUser()->getId()),
+            'autorise' => $evaluation->getAutorise($this->getConnectedUser()->getId(), $this->dataUserSession),
             'source' => $source,
         ]);
     }
