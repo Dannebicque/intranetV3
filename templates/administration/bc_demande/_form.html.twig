@@ -1,0 +1,54 @@
+{% form_theme form 'form/my-form.html.twig' %}
+    {{ form_start(form) }}
+<div class="row">
+    <div class="col-sm-6">
+        {{ form_row(form.departement) }}
+    </div>
+    <div class="col-sm-6">
+        {{ form_row(form.service) }}
+    </div>
+    <div class="col-sm-12">
+        {{ form_row(form.objet) }}
+    </div>
+    <div class="col-sm-12">
+        {{ form_row(form.description) }}
+    </div>
+    <div class="col-sm-4">
+        {{ form_row(form.montantHT) }}
+    </div>
+    <div class="col-sm-4">
+        {{ form_row(form.montantTTC) }}
+    </div>
+    <div class="col-sm-4">
+        Choisir TVA et calculer
+    </div>
+    <div class="col-sm-4">
+        {{ form_row(form.fournisseur) }}
+    </div>
+    <div class="col-sm-2">
+        <div class="form-group">
+            <label class="">&nbsp;</label>
+            <button class="btn btn-block btn-primary"><i class="fas fa-plus-circle"></i> Nouveau</button>
+        </div>
+
+    </div>
+    <div class="col-sm-6">
+        {{ form_row(form.prestation) }}
+    </div>
+    <div class="col-sm-6">
+        {{ form_row(form.commandeMarche) }}
+    </div>
+    <div class="col-sm-6">
+        {{ form_row(form.numeroBC) }}
+    </div>
+    <div class="col-sm-12">
+        {{ form_row(form.responsable) }}
+    </div>
+</div>
+
+<button class="btn btn-success">{{ button_label|default('label.save'|trans) }}</button>
+{# todo: bouton sauvegarder sans valider. Si valider signature responsable. #}
+{% if button_label is defined and button_label == 'update'|trans %}
+    <button class="btn btn-success" value="redirect_to_index" name="btn_update">{{ 'button_update_index'|trans }}</button>
+{% endif %}
+{{ form_end(form) }}
