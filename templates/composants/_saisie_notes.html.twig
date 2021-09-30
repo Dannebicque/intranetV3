@@ -33,7 +33,7 @@
 </ul>
 
 <div class="tab-content">
-    {% for groupe in evaluation.typeGroupe.groupes %} {# if matiere.option == null or groupe.options == matiere.option#}
+    {% for groupe in evaluation.typeGroupe.groupes %} {# if matiere.option == null or groupe.options == matiere.option #}
         <div class="tab-pane {% if loop.index == 1 %} active {% endif %}" id="gr{{ groupe.id }}">
             {% if import is defined %}
                 <div class="alert alert-danger">
@@ -89,32 +89,46 @@
                         <td>
                             <label class="sr-only" for="no_{{ etudiant.id }}">Note
                                                                               pour {{ etudiant.display }}</label>
-                            <input type="text" name="no_{{ etudiant.id }}" tabindex="{{ tab }}"
-                                   id="no_{{ etudiant.id }}" data-etudiant="{{ etudiant.id }}"
-                                   class="form-control noteetudiant groupe_{{ groupe.id }}"
-                                   value="{% if notes[etudiant.id] is defined %}{{ notes[etudiant.id].note }}{% else %}-0.01{% endif %}"/>
+                            {% if  autorise == true %}
+                                <input type="text" name="no_{{ etudiant.id }}" tabindex="{{ tab }}"
+                                       id="no_{{ etudiant.id }}" data-etudiant="{{ etudiant.id }}"
+
+                                       class="form-control noteetudiant groupe_{{ groupe.id }}"
+                                       value="{% if notes[etudiant.id] is defined %}{{ notes[etudiant.id].note }}{% else %}-0.01{% endif %}"/>
+                            {% else %}
+                                {% if notes[etudiant.id] is defined %}{{ notes[etudiant.id].note }}{% else %}-0.01{% endif %}
+                            {% endif %}
                         </td>
                         <td>
                             <div class="form-check">
-                                <input type="checkbox" name="abs_{{ etudiant.id }}"
-                                       id="abs_{{ etudiant.id }}" data-etudiant="{{ etudiant.id }}"
-                                       class="form-check-input absenceetudiant"
-                                       {% if notes[etudiant.id] is defined and notes[etudiant.id]
+                                {% if  autorise == true %}
+                                    <input type="checkbox" name="abs_{{ etudiant.id }}"
+                                           id="abs_{{ etudiant.id }}" data-etudiant="{{ etudiant.id }}"
+                                           class="form-check-input absenceetudiant"
+                                           {% if notes[etudiant.id] is defined and notes[etudiant.id]
                                            .absenceJustifie ==
-                                           true %}checked{% endif %}/>
-                                <label for="abs_{{ etudiant.id }}" class="form-check-label">
+                                               true %}checked{% endif %}/>
+                                    <label for="abs_{{ etudiant.id }}" class="form-check-label">
 
-                                    Absence justfiée
-                                </label>
+                                        Absence justfiée
+                                    </label>
+                                {% else %}
+                                    {% if notes[etudiant.id] is defined and notes[etudiant.id]
+                                    .absenceJustifie == true %}'Absence justifiée{% else %}-{% endif %}
+                                {% endif %}
                             </div>
                         </td>
                         <td>
-                            <label class="sr-only" for="com_{{ etudiant.id }}">Commentaire pour {{ etudiant
-                                .display }}</label>
-                            <input type="text" name="com_{{ etudiant.id }}" id="com_{{ etudiant.id }}"
-                                   maxlength="255"
-                                   class="form-control groupe_{{ groupe.id }}"
-                                   value="{% if notes[etudiant.id] is defined %}{{ notes[etudiant.id].commentaire }}{% endif %}"/>
+                            {% if  autorise == true %}
+                                <label class="sr-only" for="com_{{ etudiant.id }}">Commentaire pour {{ etudiant
+                                    .display }}</label>
+                                <input type="text" name="com_{{ etudiant.id }}" id="com_{{ etudiant.id }}"
+                                       maxlength="255"
+                                       class="form-control groupe_{{ groupe.id }}"
+                                       value="{% if notes[etudiant.id] is defined %}{{ notes[etudiant.id].commentaire }}{% endif %}"/>
+                            {% else %}
+                                {% if notes[etudiant.id] is defined %}{{ notes[etudiant.id].commentaire }}{% endif %}
+                            {% endif %}
                         </td>
                     </tr>
                     {% set tab=tab+1 %}
@@ -126,11 +140,13 @@
                 </tbody>
             </table>
             <br/>
-            <button class="btn btn-success btn-large btn-block savegroupe"
-                    id="groupe_{{ groupe.id }}" data-evaluation="{{ evaluation.uuidString }}">Enregistrer
-                                                                                              les notes
-                                                                                              de ce groupe
-            </button>
+            {% if  autorise == true %}
+                <button class="btn btn-success btn-large btn-block savegroupe"
+                        id="groupe_{{ groupe.id }}" data-evaluation="{{ evaluation.uuidString }}">Enregistrer
+                                                                                                  les notes
+                                                                                                  de ce groupe
+                </button>
+            {% endif %}
         </div>
     {% endfor %}
 </div>
