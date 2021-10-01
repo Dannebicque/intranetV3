@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.28](https://github.com/Dannebicque/intranetV3/compare/v3.1.27...v3.1.28) (2021-10-01)
+
+
+### Features
+
+* Affichage du libellé de l'évalation en complément de la matière ([1af7fa7](https://github.com/Dannebicque/intranetV3/commit/1af7fa730ba1ea82dd58dca5d5fb5097971d45d6))
+* Affichage du libellé de l'évalation en complément de la matière ([7d28c64](https://github.com/Dannebicque/intranetV3/commit/7d28c64058a311fee5c18fd301477eda20726bed))
+* Suppression du rotating de la gestion des logs. Déchargée à Syslog ([244ca76](https://github.com/Dannebicque/intranetV3/commit/244ca765f48de2a2cb21456eb73abb51de62bd77))
+* Suppression du rotating de la gestion des logs. Déchargée à Syslog ([422e987](https://github.com/Dannebicque/intranetV3/commit/422e987dc0a4481e58a9f41e1a9104913a8abd8e))
+* Utilisation de FontAwesome 6 ([9f7eda8](https://github.com/Dannebicque/intranetV3/commit/9f7eda863c50f14ea7248a3c9a58a838dbeb8e42))
+
+
+### Bug Fixes
+
+* affichage date heure de l'absence. (patch temporaire...) ([9b831c4](https://github.com/Dannebicque/intranetV3/commit/9b831c4cffe07af052468938def3961987eacdc8))
+* Envoi des mails aux étudiant alors que l'option est désactivée. ([e4b63a3](https://github.com/Dannebicque/intranetV3/commit/e4b63a385bd05d3c27e088d88231656f0c460c7b))
+* Envoi des mails aux étudiant alors que l'option est désactivée. ([b00a7e3](https://github.com/Dannebicque/intranetV3/commit/b00a7e3537ea8cf0e4bfdb8c0e60abb218e2e4ed))
+* Gestion et accès aux notes/évaluations ([2c5b8ba](https://github.com/Dannebicque/intranetV3/commit/2c5b8ba03475ad28d3106e91ff94cabbfa9fe925))
+
 ### [3.1.27](https://github.com/Dannebicque/intranetV3/compare/v3.1.26...v3.1.27) (2021-09-30)
 
 
