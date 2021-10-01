@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/MailingSubscriber.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 18:02
+ * @lastUpdate 01/10/2021 09:36
  */
 
 namespace App\EventSubscriber;
@@ -55,7 +55,6 @@ class MailingSubscriber implements EventSubscriberInterface
     }
 
     /**
-     *
      * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
      */
     public function onMailAbsenceJustified(AbsenceEvent $event): void
@@ -78,23 +77,25 @@ class MailingSubscriber implements EventSubscriberInterface
         $absence = $event->getAbsence();
         $matiere = $this->typeMatiereManager->getMatiere($absence->getIdMatiere(), $absence->getTypeMatiere());
 
-        if (null !== $absence->getEtudiant()) {
+        if (null !== $matiere && null !== $matiere->semestre) {
+            if (null !== $absence->getEtudiant() && true === $matiere->semestre->isOptMailAbsenceEtudiant()) {
+                $this->myMailer->initEmail();
+                $this->myMailer->setTemplate('mails/absence_added.txt.twig',
+                    ['absence' => $absence, 'matiere' => $matiere]);
+                $this->myMailer->sendMessage($absence->getEtudiant()->getMails(), 'Nouvelle absence enregistrée',
+                    ['replyTo' => [$absence->getPersonnel() ? $absence->getPersonnel()->getMailUniv() : null]]);
+            }
             $this->myMailer->initEmail();
-            $this->myMailer->setTemplate('mails/absence_added.txt.twig',
-                ['absence' => $absence, 'matiere' => $matiere]);
-            $this->myMailer->sendMessage($absence->getEtudiant()->getMails(), 'Nouvelle absence enregistrée',
-                ['replyTo' => [$absence->getPersonnel() ? $absence->getPersonnel()->getMailUniv() : null]]);
-        }
-        $this->myMailer->initEmail();
-        //envoi en copie au responsable si l'option est activée
-        if (null !== $matiere && null !== $matiere->semestre && $matiere->semestre->isOptMailAbsenceResp() && null !== $matiere->semestre->getOptDestMailAbsenceResp()) {
-            $this->myMailer->initEmail();
-            $this->myMailer->setTemplate('mails/absence_added_responsable.txt.twig',
-                ['absence' => $absence, 'matiere' => $matiere]);
-            $this->myMailer->sendMessage(
-                $matiere->semestre->getOptDestMailAbsenceResp()->getMails(),
-                'Nouvelle absence enregistrée'
-            );
+            //envoi en copie au responsable si l'option est activée
+            if ($matiere->semestre->isOptMailAbsenceResp() && null !== $matiere->semestre->getOptDestMailAbsenceResp()) {
+                $this->myMailer->initEmail();
+                $this->myMailer->setTemplate('mails/absence_added_responsable.txt.twig',
+                    ['absence' => $absence, 'matiere' => $matiere]);
+                $this->myMailer->sendMessage(
+                    $matiere->semestre->getOptDestMailAbsenceResp()->getMails(),
+                    'Nouvelle absence enregistrée'
+                );
+            }
         }
     }
 
@@ -142,7 +143,6 @@ class MailingSubscriber implements EventSubscriberInterface
     }
 
     /**
-     *
      * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
      */
     public function onMailDeleteJustificatif(JustificatifEvent $event): void
@@ -164,27 +164,29 @@ class MailingSubscriber implements EventSubscriberInterface
     {
         $absence = $event->getAbsence();
         $matiere = $this->typeMatiereManager->getMatiere($absence->getIdMatiere(), $absence->getTypeMatiere());
-        if (null !== $absence->getEtudiant()) {
-            $this->myMailer->initEmail();
-            $this->myMailer->setTemplate('mails/absence_removed.txt.twig',
-                ['absence' => $absence, 'matiere' => $matiere]);
-            $this->myMailer->sendMessage($absence->getEtudiant()->getMails(), 'Suppression d\'une absence enregistrée',
-                ['replyTo' => [$absence->getPersonnel() ? $absence->getPersonnel()->getMailUniv() : null]]);
-        }
+        if (null !== $matiere && null !== $matiere->semestre) {
+            if (null !== $absence->getEtudiant() && $matiere->semestre->isOptMailAbsenceEtudiant()) {
+                $this->myMailer->initEmail();
+                $this->myMailer->setTemplate('mails/absence_removed.txt.twig',
+                    ['absence' => $absence, 'matiere' => $matiere]);
+                $this->myMailer->sendMessage($absence->getEtudiant()->getMails(),
+                    'Suppression d\'une absence enregistrée',
+                    ['replyTo' => [$absence->getPersonnel() ? $absence->getPersonnel()->getMailUniv() : null]]);
+            }
 
-        if (null !== $matiere && null !== $matiere->semestre && $matiere->semestre->isOptMailAbsenceResp() && null !== $matiere->semestre->getOptDestMailAbsenceResp()) {
-            $this->myMailer->initEmail();
-            $this->myMailer->setTemplate('mails/absence_removed_responsable.txt.twig',
-                ['absence' => $absence, 'matiere' => $matiere]);
-            $this->myMailer->sendMessage(
-                $matiere->semestre->getOptDestMailAbsenceResp()->getMails(),
-                'Suppression d\'une absence enregistrée'
-            );
+            if ($matiere->semestre->isOptMailAbsenceResp() && null !== $matiere->semestre->getOptDestMailAbsenceResp()) {
+                $this->myMailer->initEmail();
+                $this->myMailer->setTemplate('mails/absence_removed_responsable.txt.twig',
+                    ['absence' => $absence, 'matiere' => $matiere]);
+                $this->myMailer->sendMessage(
+                    $matiere->semestre->getOptDestMailAbsenceResp()->getMails(),
+                    'Suppression d\'une absence enregistrée'
+                );
+            }
         }
     }
 
     /**
-     *
      * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
      */
     public function onMailNoteModificationResponsable(NoteEvent $event): void
