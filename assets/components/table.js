@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/components/table.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/09/2021 16:07
+// @lastUpdate 01/10/2021 10:59
 
 import {post} from '../js/fetch'
 
@@ -126,14 +126,21 @@ export default class Table extends HTMLElement {
       order: this.order,
       filter: this._convertToFetch(this.filter)
     }).then((data) => {
-      data.data.forEach((item) => {
-        let html = '<tr>'
-        this.options.columns.forEach((column) => {
-          html += `<td>${item[column.id]}</td>`
+      if (data.data.length > 0) {
+        data.data.forEach((item) => {
+          let html = '<tr>'
+          this.options.columns.forEach((column) => {
+            html += `<td>${item[column.id]}</td>`
+          })
+          html += '</tr>'
+          this.tableBody.innerHTML += html
         })
+      } else {
+        let html = '<tr>'
+        html += '<td colspan="' + this.options.columns.length + '" class="text-center">Pas de données.</td>'
         html += '</tr>'
-        this.tableBody.innerHTML += html
-      })
+        this.tableBody.innerHTML = html
+      }
       this._updatePagination(data.paging)
     })
   }

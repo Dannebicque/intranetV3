@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/messagerie.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 27/09/2021 09:08
+// @lastUpdate 01/10/2021 10:59
 
 import '../tinyMce'
 
@@ -88,6 +88,7 @@ $(document).on('click', '#new-message', function (e) {
   e.stopPropagation()
 
   $('#messages-liste').empty().load(Routing.generate('messagerie_nouveau'), {}, (function () {
+      tinymce.remove('#messageMessage')
       tinymce.init({
         selector: '#messageMessage',
         height: 300,

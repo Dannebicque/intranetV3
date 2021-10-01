@@ -32,10 +32,13 @@
             <div id="blocDestMessgaeInfo" class="alert alert-info">Choisir d'abord le type de destinataire pour filtrer
             </div>
             <div id="blocDestSemestre"
+                 class="form-group"
                  {% if message != null and message.type== "s" %}style="display:block" {% else %}style="display:none"{% endif %}>
-                <label for="messageToSemestre" class="sr-only">Choix semestre(s)</label>
-                <select multiple
-                        class="form-control selectpicker"
+                <label for="messageToSemestre">Choix semestre(s)</label>
+                <select
+                        multiple
+                        is="select-complete"
+                        class="form-control"
                         id="messageToSemestre" name="messageToSemestre[]" data-size="10"
                         title="Choisir le(s) semestre(s)"
                 >
@@ -46,9 +49,12 @@
 
             </div>
         </div>
-        <div id="blocDestGroupe" {% if message != null and message.type== "g" %}style="display:block" {% else %}style="display:none"{% endif %}>
-            <label for="messageToGroupe" class="sr-only">Choix groupe(s)</label>
+        <div id="blocDestGroupe"
+             {% if message != null and message.type== "g" %}style="display:block" {% else %}style="display:none"{% endif %}
+             class="form-group">
+            <label for="messageToGroupe">Choix groupe(s)</label>
             <select
+                    is="select-complete"
                     multiple
                     class="form-control selectpicker"
                     id="messageToGroupe" name="messageToGroupe[]" data-size="10"
@@ -63,9 +69,12 @@
                 {% endfor %}
             </select>
         </div>
-        <div id="blocDestLibreEtudiant" {% if message != null and message.type== "e" %}style="display:block" {% else %}style="display:none"{% endif %}>
-            <label for="messageToLibreEtudiant" class="sr-only">Choisir le(s) étudiants(s)</label>
+        <div id="blocDestLibreEtudiant"
+             class="form-group"
+             {% if message != null and message.type== "e" %}style="display:block" {% else %}style="display:none"{% endif %}>
+            <label for="messageToLibreEtudiant">Choisir le(s) étudiants(s)</label>
             <select
+                    is="select-complete"
                     multiple
                     class="form-control selectpicker"
                     id="messageToLibreEtudiant" name="messageToLibreEtudiant[]"
@@ -83,7 +92,9 @@
             </select>
             <div>Saisissez les premières lettre d'un nom d'étudiant.</div>
         </div>
-        <div id="blocDestLibrePersonnel" {% if message != null and message.type== "p" %}style="display:block" {% else %}style="display:none"{% endif %}>
+        <div id="blocDestLibrePersonnel"
+             class="form-group"
+             {% if message != null and message.type== "p" %}style="display:block" {% else %}style="display:none"{% endif %}>
             <div class="row">
                 <div class="col-sm-6">
                     <div class="custom-control custom-checkbox">
@@ -103,26 +114,27 @@
         </div>
         <br>
         <div class="form-group">
-            <label for="messageCopy" class="sr-only">Copie(s)</label>
-
+            <label for="messageCopy">Copie(s)</label>
             <select class="form-control selectpicker" data-size="10"
+                    is="select-complete"
                     title="{{ 'message.copy'|trans }}" id="messageCopy" name="messageCopy[]" multiple>
                 {% for personnel in user_data.personnels %}
                     <option value="{{ personnel.id }}">{{ personnel.display }}</option>
                 {% endfor %}
             </select>
         </div>
-        <label for="messageSubject" class="sr-only">Sujet</label>
-
-        <input class="form-control form-control-lg" type="text" maxlength="255"
-               placeholder="{{ 'message.subject'|trans }}" id="messageSubject" name="messageSubject"
+        <div class="form-group">
+            <label for="messageSubject">Sujet</label>
+            <input class="form-control form-control-lg" type="text" maxlength="255"
+                   placeholder="{{ 'message.subject'|trans }}" id="messageSubject" name="messageSubject"
                {% if message != null %}value="{{ message.sujet }}"{% endif %}>
-        <br>
-        <label for="messageMessage" class="sr-only">Message</label>
-        <textarea id="messageMessage" name="messageMessage">
+        </div>
+        <div class="form-group">
+            <label for="messageMessage">Message</label>
+            <textarea id="messageMessage" name="messageMessage">
             {% if message != null %}{{ message.message|raw }}{% endif %}
         </textarea>
-        <br>
+        </div>
         <div style="display:none" id="blocPj">
             <div class="alert alert-info">
                 Le total du poids des pièces jointes, ne peut pas exceder 10Mo. Dans le cas contraire utilisez par
