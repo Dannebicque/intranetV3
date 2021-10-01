@@ -14,25 +14,24 @@ monolog:
         level: info
         channels: security
         buffer_size: 50 # How many messages should be saved? Prevent memory leaks
-        main_error:
-          type: fingers_crossed
-          action_level: error
-          handler: streamed_error
-          buffer_size: 50 # How many messages should be saved? Prevent memory leaks
+      main_error:
+        type: fingers_crossed
+        action_level: error
+        handler: streamed_error
+        buffer_size: 50 # How many messages should be saved? Prevent memory leaks
       streamed_error:
         #type: rotating_file
         #max_files: 10
         path: "%kernel.logs_dir%/%kernel.environment%.error.log"
         level: info
         buffer_size: 50 # How many messages should be saved? Prevent memory leaks
-
-        main_critical:
-          type: fingers_crossed
-          action_level: critical
-          handler: grouped_critical
-        grouped_critical:
-          type: group
-          members: [ streamed_critical ] #, buffered_critical]
+      main_critical:
+        type: fingers_crossed
+        action_level: critical
+        handler: grouped_critical
+      grouped_critical:
+        type: group
+        members: [ streamed_critical ] #, buffered_critical]
       streamed_critical:
         #type: rotating_file
         #max_files: 10
