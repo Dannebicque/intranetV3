@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/MailingSubscriber.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/10/2021 09:36
+ * @lastUpdate 01/10/2021 09:38
  */
 
 namespace App\EventSubscriber;
@@ -83,7 +83,7 @@ class MailingSubscriber implements EventSubscriberInterface
                 $this->myMailer->setTemplate('mails/absence_added.txt.twig',
                     ['absence' => $absence, 'matiere' => $matiere]);
                 $this->myMailer->sendMessage($absence->getEtudiant()->getMails(), 'Nouvelle absence enregistrée',
-                    ['replyTo' => [$absence->getPersonnel() ? $absence->getPersonnel()->getMailUniv() : null]]);
+                    ['replyTo' => [$absence->getPersonnel()?->getMailUniv()]]);
             }
             $this->myMailer->initEmail();
             //envoi en copie au responsable si l'option est activée
@@ -157,9 +157,6 @@ class MailingSubscriber implements EventSubscriberInterface
         }
     }
 
-    /**
-     * @throws TransportExceptionInterface
-     */
     public function onMailAbsenceRemoved(AbsenceEvent $event): void
     {
         $absence = $event->getAbsence();
@@ -171,7 +168,7 @@ class MailingSubscriber implements EventSubscriberInterface
                     ['absence' => $absence, 'matiere' => $matiere]);
                 $this->myMailer->sendMessage($absence->getEtudiant()->getMails(),
                     'Suppression d\'une absence enregistrée',
-                    ['replyTo' => [$absence->getPersonnel() ? $absence->getPersonnel()->getMailUniv() : null]]);
+                    ['replyTo' => [$absence->getPersonnel()?->getMailUniv()]]);
             }
 
             if ($matiere->semestre->isOptMailAbsenceResp() && null !== $matiere->semestre->getOptDestMailAbsenceResp()) {
@@ -210,9 +207,6 @@ class MailingSubscriber implements EventSubscriberInterface
         }
     }
 
-    /**
-     * @throws TransportExceptionInterface
-     */
     public function onMailNewTranscriptResponsable(EvaluationEvent $event): void
     {
         $evaluation = $event->getEvaluation();
