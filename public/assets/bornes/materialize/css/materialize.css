@@ -1,3 +1,9 @@
+/* Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved */
+/* @file /Users/davidannebicque/htdocs/intranetV3/public/assets/bornes/materialize/css/materialize.css */
+/* @author davidannebicque */
+/* @project intranetV3 */
+/* @lastUpdate 01/10/2021 09:41 */
+
 /* LAYOUT CAROUSEL */
 .carousel {
   overflow: hidden;
@@ -44,7 +50,7 @@
 .align>img {
   position: absolute;
   top: 23.5px;
-  left: 23.5px; 
+  left: 23.5px;
   width: 74px;
 }
 

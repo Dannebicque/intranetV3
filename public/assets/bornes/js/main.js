@@ -1,3 +1,9 @@
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetV3/public/assets/bornes/js/main.js
+// @author davidannebicque
+// @project intranetV3
+// @lastUpdate 01/10/2021 09:41
+
 $(document).ready(function(){
   initLocalClocks();
   horloge();
