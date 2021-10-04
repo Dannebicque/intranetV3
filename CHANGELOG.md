@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.29](https://github.com/Dannebicque/intranetV3/compare/v3.1.28...v3.1.29) (2021-10-04)
+
+
+### Features
+
+* Suppression du rotating de la gestion des logs. Déchargée à Syslog ([5f49867](https://github.com/Dannebicque/intranetV3/commit/5f4986796260f55f15927c3540fd888a77b95930))
+* Suppression du rotating de la gestion des logs. Déchargée à Syslog ([46330c8](https://github.com/Dannebicque/intranetV3/commit/46330c805f6b93e23e2f9ea245f32f9fe00d094b))
+
+
+### Bug Fixes
+
+* Prévisionnels même si pas de collègue pour les exports et listes globales ([1c7fae5](https://github.com/Dannebicque/intranetV3/commit/1c7fae557c8c4100bae27a5da95a793e90a2e0df))
+
 ### [3.1.28](https://github.com/Dannebicque/intranetV3/compare/v3.1.27...v3.1.28) (2021-10-01)
 
 
