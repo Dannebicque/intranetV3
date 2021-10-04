@@ -32,7 +32,7 @@
                  <td><select class="form-control" name="moduleabs" id="moduleabs">
                              <option value="0">Choisir</option>
                          {% for matiere in matieres %}
-                             <option value="{{ matiere.typeIdMatiere }}">{{ matiere.codeMatiere }}</option>
+                             <option value="{{ matiere.typeIdMatiere }}">{{ matiere.display }}</option>
                          {% endfor %}
                      </select></td>
                    <td>
