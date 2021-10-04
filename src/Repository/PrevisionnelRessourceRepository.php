@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/PrevisionnelRessourceRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/08/2021 22:50
+ * @lastUpdate 04/10/2021 09:48
  */
 
 namespace App\Repository;
@@ -72,7 +72,7 @@ class PrevisionnelRessourceRepository extends PrevisionnelRepository
     {
         $query = $this->createQueryBuilder('p')
             ->innerJoin(ApcRessource::class, 'm', 'WITH', 'p.idMatiere = m.id')
-            ->innerJoin(Personnel::class, 'pers', 'WITH', 'p.personnel = pers.id')
+            ->leftJoin(Personnel::class, 'pers', 'WITH', 'p.personnel = pers.id')
             ->select('p.id as id_previsionnel, p.annee, p.referent, p.nbHCm, p.nbHTd, p.nbHTp, p.nbGrCm, p.nbGrTd, p.nbGrTp, m.id as id_ressource, m.libelle, m.codeMatiere, m.codeElement as matiere_code_element, pers.id as id_personnel, pers.nom, pers.prenom, pers.numeroHarpege, pers.mailUniv, pers.nbHeuresService, s.id as id_semestre, s.libelle as libelle_semestre, a.codeEtape as annee_code_etape, a.libelleLong as annee_libelle_long, a.id as id_annee, a.libelle as libelle_annee, d.id as id_diplome, d.libelle as libelle_diplome')
             ->innerJoin(Semestre::class, 's', 'WITH', 'm.semestre = s.id')
             ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
