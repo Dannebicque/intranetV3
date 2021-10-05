@@ -6,6 +6,11 @@
     <meta name="description" content="Intranet des IUT de Troyes et Reims Châlons Charleville. Gestion de la
     scolarité des étudiants en DUT, B.U.T. et LP. GEA, TC, MMI, GMP, GEII, CJ.">
     <meta name="keywords" content="DUT, B.U.T., LP, GEA, TC, MMI, GMP, GEII, CJ, intranet, scolarite">
+    {% block meta %}
+        <meta name="description" content="Intranet des IUT de Troyes et Reims Châlons Charleville. Gestion de la
+    scolarité des étudiants en DUT, B.U.T. et LP. GEA, TC, MMI, GMP, GEII, CJ.">
+        <meta name="keywords" content="DUT, B.U.T., LP, GEA, TC, MMI, GMP, GEII, CJ, intranet, scolarite">
+    {% endblock %}
 
     <title>{{ block('header')|escapetitle|raw }} - Intranet {{ settings('NOM_IUT') }}</title>
 
@@ -55,6 +60,8 @@
 </head>
 
 <body class="{{ settings('CODE_IUT') }}">
+{% block full_body %}
+
 <!-- Preloader -->
 <div class="preloader">
     <div class="spinner-dots">
@@ -321,7 +328,11 @@
 
         <div hidden="hidden">
             {% for toast in app.session.flashbag.get('toast') %}
-                <div data-toggle="toast" data-text="{{ toast.text }}" data-title="{{ toast.title }}" data-type="{{ toast.type }}"></div>
+                <div role="alert" aria-live="assertive" aria-atomic="true" {{ stimulus_controller('toast', {
+                    text: toast.text,
+                    title: toast.title,
+                    type: toast.type
+                }) }}></div>
             {% endfor %}
         </div>
 
@@ -404,7 +415,7 @@
 <!-- Fullscreen search -->
 {{ include('recherche/_resultat.html.twig') }}
 <!-- END Fullscreen search -->
-
+{% endblock  %}{# fin du block full body #}
 <!-- Routing -->
 <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
 <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
@@ -412,5 +423,6 @@
     {{ encore_entry_script_tags('app') }}
 {% endblock %}
 <script data-provide="sweetalert"></script>
+
 </body>
 </html>
