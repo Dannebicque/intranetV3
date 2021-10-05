@@ -4,13 +4,16 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/EtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/04/2021 15:49
+ * @lastUpdate 05/10/2021 15:03
  */
 
 namespace App\Controller\superAdministration;
 
 use App\Classes\MyEtudiants;
 use App\Controller\BaseController;
+use App\Entity\Constantes;
+use App\Entity\Etudiant;
+use App\Form\EtudiantType;
 use App\Repository\DepartementRepository;
 use App\Repository\EtudiantRepository;
 use App\Repository\SemestreRepository;
@@ -68,6 +71,7 @@ class EtudiantController extends BaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function rechercheEtudiants(
+        SemestreRepository $semestreRepository,
         DepartementRepository $departementRepository,
         EtudiantRepository $etudiantRepository,
         $needle
@@ -75,8 +79,42 @@ class EtudiantController extends BaseController
         $etudiants = $etudiantRepository->searchScolarite($needle);
 
         return $this->render('super-administration/etudiant/recherche.html.twig', [
-            'etudiants'    => $etudiants,
+            'etudiants' => $etudiants,
             'departements' => $departementRepository->findActifs(),
+            'semestres' => $semestreRepository->findAll(),
+        ]);
+    }
+
+    #[Route('/edit/{id}', name: 'sadm_etudiant_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Etudiant $etudiant): Response
+    {
+        $form = $this->createForm(
+            EtudiantType::class,
+            $etudiant,
+            [
+                'attr' => [
+                    'data-provide' => 'validation',
+                ],
+                'departement' => $this->dataUserSession->getDepartement(),
+            ]
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->entityManager->persist($etudiant);
+            $this->entityManager->flush();
+
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'etudiant.edit.success.flash');
+
+            if (null !== $request->request->get('btn_update')) {
+                return $this->redirectToRoute('sa_etudiant_index');
+            }
+        }
+
+        return $this->render('super-administration/etudiant/edit.html.twig', [
+            'etudiant' => $etudiant,
+            'form' => $form->createView(),
         ]);
     }
 }
