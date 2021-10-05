@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantUpdate.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/09/2021 18:21
+ * @lastUpdate 05/10/2021 15:29
  */
 
 /*
@@ -53,6 +53,7 @@ class EtudiantUpdate
                 } else {
                     $semestre = $this->semestreRepository->find($value);
                     $etudiant->setSemestre($semestre);
+                    $etudiant->setDepartement($semestre->getDiplome()?->getDepartement());
                 }
                 $this->entityManager->flush();
                 $this->etudiantGroupes->setEtudiant($etudiant);
@@ -64,7 +65,10 @@ class EtudiantUpdate
                     $etudiant->setDepartement(null);
                 } else {
                     $departement = $this->departementRepository->find($value);
-                    $etudiant->setDepartement($departement);
+                    if (null === $etudiant->getDepartement() || $etudiant->getDepartement()->getId() !== $departement->getId()) {
+                        $etudiant->setDepartement($departement);
+                        $etudiant->setSemestre(null);
+                    }
                 }
                 $this->entityManager->flush();
                 $this->etudiantGroupes->setEtudiant($etudiant);

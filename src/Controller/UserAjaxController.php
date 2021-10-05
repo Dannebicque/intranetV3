@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/UserAjaxController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/09/2021 20:21
+ * @lastUpdate 05/10/2021 15:20
  */
 
 namespace App\Controller;
@@ -140,6 +140,7 @@ class UserAjaxController extends BaseController
         $semestre = $semestreRepository->find($semestre);
         if (null !== $semestre) {
             $etudiant->setSemestre($semestre);
+            $etudiant->setDepartement($semestre->getDiplome()->getDepartement());
         } else {
             $etudiant->setSemestre(null);
         }
