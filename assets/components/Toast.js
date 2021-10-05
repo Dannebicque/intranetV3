@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/components/Toast.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 29/08/2021 14:42
+// @lastUpdate 01/10/2021 13:06
 
 import Toastify from 'toastify-js'
 
@@ -21,7 +21,7 @@ class Toast {
 
   show (type, text, title = null, options = {}) {
     options = {...this.defaultOptions, ...options}
-
+//todo: Utiliser le type Alerte https://gouvfr.atlassian.net/wiki/spaces/DB/pages/736362500/Alertes+-+Alerts
     options['className'] += ' toast-' + type
 
     let html = '<div class="toast-wrapper">'
