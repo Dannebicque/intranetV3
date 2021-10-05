@@ -4,22 +4,21 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/EtudiantType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/10/2021 11:49
+ * @lastUpdate 05/10/2021 15:03
  */
 
 namespace App\Form;
 
 use App\Entity\Bac;
+use App\Entity\Departement;
 use App\Entity\Etudiant;
 use App\Entity\Semestre;
-use App\Form\Type\CarbonDateType;
 use App\Form\Type\CiviliteType;
 use App\Form\Type\DatePickerType;
 use App\Form\Type\YesNoType;
 use App\Repository\SemestreRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -32,7 +31,7 @@ use Vich\UploaderBundle\Form\Type\VichFileType;
  */
 class EtudiantType extends AbstractType
 {
-    private $departement;
+    private ?Departement $departement;
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -86,9 +85,9 @@ class EtudiantType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class'         => Etudiant::class,
+            'data_class' => Etudiant::class,
             'translation_domain' => 'form',
-            'departement'        => null,
+            'departement' => null,
         ]);
     }
 }

@@ -26,16 +26,12 @@
                     </p>
                 </div>
                 <div class="col-sm-3">
-                    {% if etudiant.anneeSortie == 0 %}
-                        <a href="#"
-                           class="btn btn-warning btnInit" data-element="{{ etudiant.id }}" rel="tooltip"
-                           data-placement="bottom"
-                           title="Ré/initiliser le mot de passe"><i class="fa fa-magic"></i></a>
-                    {% endif %}
                     <a href="" class="btn btn-info"
                        rel="tooltip" data-placement="bottom" title="Voir le profil" target="_blank"><i
                                 class="fa fa-eye"></i></a>
-                    <a href="" class="btn btn-warning" rel="tooltip" data-placement="bottom"
+                    <a href="{{ path('sadm_etudiant_edit', {id:etudiant.id}) }}" class="btn btn-warning" rel="tooltip"
+                       data-placement="bottom"
+                       target="_blank"
                        title="Modifier"><i class="fa fa-pencil"></i></a>
                 </div>
             </div>
@@ -46,10 +42,22 @@
                             name="departement"
                             data-etudiant="{{ etudiant.id }}">
                         {% for departement in departements %}
-                            <option value="{{ departement.id }}" {% if departement.id == etudiant.departement
-                                .id %} selected {% endif %}>{{ departement.libelle }}</option>
+                            <option value="{{ departement.id }}" {% if etudiant.departement != null and departement.id
+                                == etudiant.departement .id %} selected {% endif %}>{{ departement.libelle }}</option>
                         {% endfor %}
                         <option value="null">Aucune formation</option>
+                    </select>
+                </div>
+                <div class="col-sm-4">
+                    <label for="chgt_etudiant_departement">Semestre actuel</label>
+                    <select id="chgt_etudiant_departement" class="form-control chgt_etudiant_semestre"
+                            name="semestre"
+                            data-etudiant="{{ etudiant.id }}">
+                        {% for semestre in semestres %}
+                            <option value="{{ semestre.id }}" {% if etudiant.semestre != null and semestre.id
+                                == etudiant.semestre .id %} selected {% endif %}>{{ semestre.display }}</option>
+                        {% endfor %}
+                        <option value="null">Aucune semestre</option>
                     </select>
                 </div>
                 <div class="col-sm-4">
