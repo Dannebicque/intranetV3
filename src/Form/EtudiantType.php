@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/EtudiantType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/05/2021 14:21
+ * @lastUpdate 05/10/2021 11:49
  */
 
 namespace App\Form;
@@ -12,7 +12,9 @@ namespace App\Form;
 use App\Entity\Bac;
 use App\Entity\Etudiant;
 use App\Entity\Semestre;
+use App\Form\Type\CarbonDateType;
 use App\Form\Type\CiviliteType;
+use App\Form\Type\DatePickerType;
 use App\Form\Type\YesNoType;
 use App\Repository\SemestreRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -42,7 +44,7 @@ class EtudiantType extends AbstractType
             ])
             ->add('nom', TextType::class, ['label' => 'nom'])
             ->add('prenom', TextType::class, ['label' => 'prenom'])
-            ->add('date_naissance', BirthdayType::class, ['label' => 'date_naissance'])
+            ->add('date_naissance', DatePickerType::class, ['label' => 'date_naissance'])
             ->add('numEtudiant', TextType::class, ['label' => 'num_etudiant'])
             ->add('numIne', TextType::class, ['label' => 'num_ine', 'required' => false])
             ->add('username', TextType::class, ['label' => 'username'])
