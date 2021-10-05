@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/PersonnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/09/2021 14:42
+ * @lastUpdate 05/10/2021 10:12
  */
 
 namespace App\Controller\administration;
@@ -15,6 +15,7 @@ use App\Entity\Constantes;
 use App\Entity\Personnel;
 use App\Entity\PersonnelDepartement;
 use App\Form\PersonnelType;
+use App\Repository\AnneeUniversitaireRepository;
 use App\Repository\PersonnelDepartementRepository;
 use App\Repository\PersonnelRepository;
 use function count;
@@ -86,8 +87,9 @@ class PersonnelController extends BaseController
     /**
      * @Route("/create", name="administration_personnel_create", methods="GET|POST", options={"expose"=true})
      */
-    public function create(Request $request): Response
-    {
+    public function create(
+        Request $request
+    ): Response {
         $personnel = new Personnel();
         $form = $this->createForm(PersonnelType::class, $personnel, [
             'attr' => [
@@ -101,6 +103,7 @@ class PersonnelController extends BaseController
                 $t = explode('@', $personnel->getMailUniv());
                 $personnel->setSlug($t[0]);
             }
+            $personnel->setAnneeUniversitaire($this->getAnneeUniversitaire());
             $this->entityManager->persist($personnel);
 
             $personnelDepartement = new PersonnelDepartement($personnel, $this->dataUserSession->getDepartement());
