@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Security/Voter/AbstractVoter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/10/2021 13:18
+ * @lastUpdate 07/10/2021 13:20
  */
 
 namespace App\Security\Voter;
@@ -62,13 +62,15 @@ class AbstractVoter
     {
         $this->session = $session;
         $this->user = $tokenStorage->getToken()->getUser();
-        $this->departementRoles = [];
-        foreach ($this->user->getPersonnelDepartements() as $rf) {
-            if (!array_key_exists($rf->getDepartement()->getId(), $this->departementRoles)) {
-                $this->departementRoles[$rf->getDepartement()->getId()] = [];
-            }
-            if (null !== $rf->getDepartement()) {
-                $this->departementRoles[$rf->getDepartement()->getId()][] = $rf->getRoles()[0];
+        if (! is_string($this->user)) {
+            $this->departementRoles = [];
+            foreach ($this->user->getPersonnelDepartements() as $rf) {
+                if (!array_key_exists($rf->getDepartement()->getId(), $this->departementRoles)) {
+                    $this->departementRoles[$rf->getDepartement()->getId()] = [];
+                }
+                if (null !== $rf->getDepartement()) {
+                    $this->departementRoles[$rf->getDepartement()->getId()][] = $rf->getRoles()[0];
+                }
             }
         }
     }
