@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Security/Voter/AbstractVoter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/10/2021 13:17
+ * @lastUpdate 07/10/2021 13:18
  */
 
 namespace App\Security\Voter;
@@ -55,7 +55,7 @@ class AbstractVoter
     ];
 
     protected ?SessionInterface $session;
-    protected ?UserInterface $user;
+    protected UserInterface|string $user;
     protected array $departementRoles;
 
     public function __construct(SessionInterface $session, TokenStorageInterface $tokenStorage)
