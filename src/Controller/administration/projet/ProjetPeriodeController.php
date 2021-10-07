@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/projet/ProjetPeriodeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 07/10/2021 10:48
  */
 
 namespace App\Controller\administration\projet;
@@ -30,6 +30,8 @@ class ProjetPeriodeController extends BaseController
      */
     public function index(ProjetPeriodeRepository $projetPeriodeRepository): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_PROJET', $this->getDepartement());
+
         return $this->render('administration/projet/projet_periode/index.html.twig', [
             'projet_periodes' => $projetPeriodeRepository->findByDepartement($this->getDepartement()),
         ]);
@@ -42,6 +44,8 @@ class ProjetPeriodeController extends BaseController
      */
     public function export(MyExport $myExport, ProjetPeriodeRepository $projetPeriodeRepository, $_format): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_PROJET', $this->getDepartement());
+
         $dates = $projetPeriodeRepository->findByDepartement($this->getDepartement());
 
         return $myExport->genereFichierGenerique(
@@ -58,6 +62,8 @@ class ProjetPeriodeController extends BaseController
      */
     public function new(Request $request): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_PROJET', $this->getDepartement());
+
         $projetPeriode = new ProjetPeriode();
         $projetPeriode->setAnneeUniversitaire($this->dataUserSession->getAnneeUniversitaire());
         $form = $this->createForm(ProjetPeriodeType::class, $projetPeriode, [
@@ -88,6 +94,8 @@ class ProjetPeriodeController extends BaseController
      */
     public function show(ProjetPeriode $projetPeriode): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_PROJET', $projetPeriode->getSemestre());
+
         return $this->render('administration/projet/projet_periode/show.html.twig', [
             'projet_periode' => $projetPeriode,
         ]);
@@ -99,6 +107,8 @@ class ProjetPeriodeController extends BaseController
      */
     public function edit(Request $request, ProjetPeriode $projetPeriode): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_PROJET', $projetPeriode->getSemestre());
+
         $form = $this->createForm(ProjetPeriodeType::class, $projetPeriode, [
             'departement' => $this->dataUserSession->getDepartement(),
             'attr' => [
@@ -126,6 +136,8 @@ class ProjetPeriodeController extends BaseController
      */
     public function delete(Request $request, ProjetPeriode $projetPeriode): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_PROJET', $projetPeriode->getSemestre());
+
         //la suppression entraine la suppression des offres, des templates et des stages déjà présent.
         $id = $projetPeriode->getUuidString();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
@@ -150,6 +162,8 @@ class ProjetPeriodeController extends BaseController
      */
     public function duplicate(ProjetPeriode $projetPeriode): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_PROJET', $projetPeriode->getSemestre());
+
         $newProjetPeriode = clone $projetPeriode;
         $this->entityManager->persist($newProjetPeriode);
         $this->entityManager->flush();

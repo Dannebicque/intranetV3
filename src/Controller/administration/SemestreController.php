@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/SemestreController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 07/10/2021 12:14
  */
 
 namespace App\Controller\administration;
@@ -34,6 +34,8 @@ class SemestreController extends BaseController
      */
     public function activeSemestreAction(Semestre $semestre, bool $actif): RedirectResponse
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_CDD', $semestre);
+
         $semestre->setActif($actif);
         $this->entityManager->persist($semestre);
         $this->entityManager->flush();
@@ -51,11 +53,14 @@ class SemestreController extends BaseController
         AbsenceJustificatifRepository $absenceJustificatifRepository,
         RattrapageRepository $rattrapageRepository,
         Semestre $semestre
-    ): Response {
+    ): Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $semestre);
+
         return $this->render('administration/semestre/index.html.twig', [
-            'semestre'        => $semestre,
+            'semestre' => $semestre,
             'nbJustificatifs' => $absenceJustificatifRepository->findBySemestreCount($semestre),
-            'nbRattrapages'   => $rattrapageRepository->findBySemestreCount($semestre),
+            'nbRattrapages' => $rattrapageRepository->findBySemestreCount($semestre),
         ]);
     }
 }

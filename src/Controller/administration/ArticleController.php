@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/ArticleController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/09/2021 13:31
+ * @lastUpdate 07/10/2021 12:14
  */
 
 namespace App\Controller\administration;
@@ -33,6 +33,8 @@ class ArticleController extends BaseController
      */
     public function index(Request $request): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
+
         $table = $this->createTable(ArticleTableType::class, [
             'departement' => $this->getDepartement(),
         ]);
@@ -52,6 +54,8 @@ class ArticleController extends BaseController
      */
     public function export(MyExport $myExport, ArticleRepository $articleRepository, $_format): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
+
         $articles = $articleRepository->findByDepartement($this->getDepartement());
 
         return $myExport->genereFichierGenerique(
@@ -68,6 +72,8 @@ class ArticleController extends BaseController
      */
     public function create(Request $request): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
+
         $article = new Article($this->getConnectedUser());
         $form = $this->createForm(
             ArticleType::class,
@@ -100,6 +106,8 @@ class ArticleController extends BaseController
      */
     public function show(Article $article): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $article->getCategorie()?->getDepartement());
+
         return $this->render('administration/article/show.html.twig', ['article' => $article]);
     }
 
@@ -108,6 +116,8 @@ class ArticleController extends BaseController
      */
     public function edit(Request $request, Article $article): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $article->getCategorie()?->getDepartement());
+
         $form = $this->createForm(
             ArticleType::class,
             $article,
@@ -142,6 +152,8 @@ class ArticleController extends BaseController
      */
     public function delete(Request $request, Article $article): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $article->getCategorie()?->getDepartement());
+
         $id = $article->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
             $this->entityManager->remove($article);
@@ -160,6 +172,8 @@ class ArticleController extends BaseController
      */
     public function duplicate(Article $article): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $article->getCategorie()?->getDepartement());
+
         $newArticle = clone $article;
 
         $this->entityManager->persist($newArticle);
@@ -174,6 +188,8 @@ class ArticleController extends BaseController
      */
     public function gestionCategorie(): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
+
         return $this->render('administration/article/gestionCategorie.html.twig', [
             'categories' => $this->getDepartement() ? $this->getDepartement()->getArticleCategories() : [],
         ]);
@@ -185,7 +201,10 @@ class ArticleController extends BaseController
     public function addCategorie(
         ArticleCategorieRepository $categorieRepository,
         Request $request
-    ): JsonResponse {
+    ): JsonResponse
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
+
         $libelle = $request->request->get('libelle');
         $categorie = new ArticleCategorie();
         $categorie->setDepartement($this->dataUserSession->getDepartement());

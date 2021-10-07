@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/BaseController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/09/2021 22:03
+ * @lastUpdate 07/10/2021 09:37
  */
 
 namespace App\Controller;
@@ -16,6 +16,7 @@ use App\Entity\Constantes;
 use App\Interfaces\UtilisateurInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Translation\TranslatableMessage;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -34,7 +35,7 @@ class BaseController extends AbstractController
     public static function getSubscribedServices()
     {
         return parent::getSubscribedServices() + [
-                TableFactory::class => TableFactory::class
+                TableFactory::class => TableFactory::class,
             ];
     }
 

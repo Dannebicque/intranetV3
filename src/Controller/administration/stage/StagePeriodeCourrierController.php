@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StagePeriodeCourrierController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 07/10/2021 12:14
  */
 
 namespace App\Controller\administration\stage;
@@ -112,6 +112,8 @@ class StagePeriodeCourrierController extends BaseController
         StagePeriode $stagePeriode,
         $mail
     ): Response {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
+
         $mailTemplate = $stageMailTemplateRepository->findEventPeriode(
             $mail,
             $stagePeriode
@@ -144,13 +146,16 @@ class StagePeriodeCourrierController extends BaseController
         Request $request,
         StagePeriode $stagePeriode,
         $mail
-    ): Response {
+    ): Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
+
         $myStageMailTemplate->updateTemplate($mail, $request->request->get('sujet'), $request->request->get('message'),
             $stagePeriode);
 
         return $this->render('administration/stage/stage_periode_courrier/index.html.twig', [
             'etatsConvention' => StageEtudiant::ETATS,
-            'stagePeriode'    => $stagePeriode,
+            'stagePeriode' => $stagePeriode,
         ]);
     }
 
@@ -162,7 +167,10 @@ class StagePeriodeCourrierController extends BaseController
         StageMailTemplateRepository $stageMailTemplateRepository,
         StagePeriode $stagePeriode,
         $etat
-    ): Response {
+    ): Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
+
         $mails = $stageMailTemplateRepository->findBy(['stagePeriode' => $stagePeriode->getId(), 'event' => $etat]);
         foreach ($mails as $mail) {
             if (null !== $mail->getTwigTemplate()) {
@@ -182,13 +190,16 @@ class StagePeriodeCourrierController extends BaseController
     public function index(
         StageMailTemplateRepository $stageMailTemplateRepository,
         StagePeriode $stagePeriode
-    ): Response {
+    ): Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
+
         $courriers = $stageMailTemplateRepository->findByStagePeriodeArray($stagePeriode);
 
         return $this->render('administration/stage/stage_periode_courrier/index.html.twig', [
             'etatsConvention' => StageEtudiant::ETATS,
-            'stagePeriode'    => $stagePeriode,
-            'courriers'       => $courriers,
+            'stagePeriode' => $stagePeriode,
+            'courriers' => $courriers,
         ]);
     }
 }

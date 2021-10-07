@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/BorneController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/08/2021 08:30
+ * @lastUpdate 07/10/2021 09:47
  */
 
 namespace App\Controller\administration;
@@ -27,6 +27,8 @@ class BorneController extends BaseController
     #[Route("/", name: "administration_borne_index", methods: ['GET', 'POST'])]
     public function index(Request $request): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
+
         $table = $this->createTable(BorneTableType::class, [
             'departement' => $this->getDepartement(),
         ]);
@@ -47,6 +49,8 @@ class BorneController extends BaseController
      */
     public function export(MyExport $myExport, BorneRepository $borneRepository, $_format): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
+
         $bornes = $borneRepository->findByDepartement($this->dataUserSession->getDepartement(), 0);
 
         return $myExport->genereFichierGenerique(
@@ -63,6 +67,8 @@ class BorneController extends BaseController
      */
     public function duplicate(Borne $borne): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $borne->getSemestres()[0]);
+
         $newBorne = clone $borne;
         $this->entityManager->persist($newBorne);
         $this->entityManager->flush();
@@ -76,6 +82,7 @@ class BorneController extends BaseController
      */
     public function create(Request $request): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
         $borne = new Borne();
         $form = $this->createForm(
             BorneType::class,
@@ -108,6 +115,7 @@ class BorneController extends BaseController
      */
     public function show(Borne $borne): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $borne->getSemestres()[0]);
         return $this->render('administration/borne/show.html.twig', ['borne' => $borne]);
     }
 
@@ -116,6 +124,7 @@ class BorneController extends BaseController
      */
     public function edit(Request $request, Borne $borne): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $borne->getSemestres()[0]);
         $form = $this->createForm(
             BorneType::class,
             $borne,
@@ -149,6 +158,7 @@ class BorneController extends BaseController
      */
     public function delete(Request $request, Borne $borne): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $borne->getSemestres()[0]);
         $id = $borne->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
             $this->entityManager->remove($borne);
@@ -167,6 +177,7 @@ class BorneController extends BaseController
      */
     public function visibilite(Borne $borne): JsonResponse
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $borne->getSemestres()[0]);
         $borne->setVisible(!$borne->getVisible());
         $this->entityManager->flush();
 

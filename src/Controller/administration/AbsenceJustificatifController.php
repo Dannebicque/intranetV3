@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/AbsenceJustificatifController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/09/2021 09:13
+ * @lastUpdate 07/10/2021 12:14
  */
 
 namespace App\Controller\administration;
@@ -37,6 +37,7 @@ class AbsenceJustificatifController extends BaseController
         Request $request,
         Semestre $semestre
     ): Response {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $semestre);
 
         $table = $this->createTable(AbsenceJustificatifTableType::class, [
             'semestre' => $semestre,
@@ -65,7 +66,10 @@ class AbsenceJustificatifController extends BaseController
         AbsenceJustificatifRepository $absenceJustificatifRepository,
         Semestre $semestre,
         $_format
-    ): Response {
+    ): Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $semestre);
+
         $justificatifs = $absenceJustificatifRepository->findBySemestre(
             $semestre);
 
@@ -84,7 +88,10 @@ class AbsenceJustificatifController extends BaseController
     public function deleteAllAnnee(
         AbsenceJustificatifRepository $absenceJustificatifRepository,
         Semestre $semestre
-    ): Response {
+    ): Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $semestre);
+
         $absenceJustificatifs = $absenceJustificatifRepository->findByAnnee($semestre->getAnnee());
         foreach ($absenceJustificatifs as $absenceJustificatif) {
             $this->entityManager->remove($absenceJustificatif);
@@ -106,7 +113,10 @@ class AbsenceJustificatifController extends BaseController
         EventDispatcherInterface $eventDispatcher,
         Request $request,
         AbsenceJustificatif $absenceJustificatif
-    ): Response {
+    ): Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $absenceJustificatif->getEtudiant()?->getSemestre());
+
         $id = $absenceJustificatif->getUuidString();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
             $event = new JustificatifEvent($absenceJustificatif);
@@ -127,6 +137,8 @@ class AbsenceJustificatifController extends BaseController
      */
     public function details(AbsenceJustificatif $absenceJustificatif): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $absenceJustificatif->getEtudiant()?->getSemestre());
+
         return $this->render('administration/absencejustificatif/_details.html.twig', [
             'justificatif' => $absenceJustificatif,
         ]);
@@ -141,7 +153,10 @@ class AbsenceJustificatifController extends BaseController
         EventDispatcherInterface $eventDispatcher,
         AbsenceJustificatif $absenceJustificatif,
         $etat
-    ): Response {
+    ): Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $absenceJustificatif->getEtudiant()?->getSemestre());
+
         $absenceJustificatif->setEtat($etat);
         $this->entityManager->flush();
 

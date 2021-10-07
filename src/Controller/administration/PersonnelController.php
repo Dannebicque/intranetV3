@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/PersonnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/10/2021 10:12
+ * @lastUpdate 07/10/2021 12:14
  */
 
 namespace App\Controller\administration;
@@ -15,14 +15,13 @@ use App\Entity\Constantes;
 use App\Entity\Personnel;
 use App\Entity\PersonnelDepartement;
 use App\Form\PersonnelType;
-use App\Repository\AnneeUniversitaireRepository;
 use App\Repository\PersonnelDepartementRepository;
 use App\Repository\PersonnelRepository;
-use function count;
-use function in_array;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use function count;
+use function in_array;
 
 /**
  * @Route("/administration/personnel")
@@ -34,6 +33,8 @@ class PersonnelController extends BaseController
      */
     public function index(PersonnelDepartementRepository $personnelRepository): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
+
         return $this->render(
             'administration/personnel/index.html.twig',
             [
@@ -50,6 +51,8 @@ class PersonnelController extends BaseController
      */
     public function loadListe(PersonnelDepartementRepository $personnelRepository, $type): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
+
         return $this->render(
             'administration/personnel/_listePersonnel.html.twig',
             [
@@ -65,6 +68,8 @@ class PersonnelController extends BaseController
      */
     public function export(MyExport $myExport, PersonnelRepository $personnelRepository, $type, $_format): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
+
         $personnels = $personnelRepository->findByType($type, $this->dataUserSession->getDepartement());
 
         return $myExport->genereFichierGenerique(
@@ -81,6 +86,8 @@ class PersonnelController extends BaseController
      */
     public function ajout(): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
+
         return $this->render('administration/personnel/add.html.twig');
     }
 
@@ -90,6 +97,8 @@ class PersonnelController extends BaseController
     public function create(
         Request $request
     ): Response {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
+
         $personnel = new Personnel();
         $form = $this->createForm(PersonnelType::class, $personnel, [
             'attr' => [
@@ -126,6 +135,8 @@ class PersonnelController extends BaseController
      */
     public function show(Personnel $personnel): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
+
         return $this->render('administration/personnel/show.html.twig', ['personnel' => $personnel]);
     }
 
@@ -134,6 +145,8 @@ class PersonnelController extends BaseController
      */
     public function edit(Request $request, Personnel $personnel): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
+
         $form = $this->createForm(PersonnelType::class, $personnel, [
             'attr' => [
                 'data-provide' => 'validation',
@@ -162,6 +175,8 @@ class PersonnelController extends BaseController
      */
     public function duplicate(Personnel $personnel): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
+
         $newPersonnel = clone $personnel;
 
         $this->entityManager->persist($newPersonnel);
@@ -178,7 +193,10 @@ class PersonnelController extends BaseController
         PersonnelDepartementRepository $personnelDepartementRepository,
         Request $request,
         Personnel $personnel
-    ): Response {
+    ): Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
+
         $id = $personnel->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
             $pf = $personnelDepartementRepository->findByPersonnelDepartement($personnel,
@@ -206,16 +224,15 @@ class PersonnelController extends BaseController
     public function gestionDroit(
         PersonnelDepartementRepository $personnelDepartementRepository,
         Personnel $personnel
-    ): Response {
-        if ($this->dataUserSession->isGoodDepartement('ROLE_CDD') || $this->dataUserSession->isGoodDepartement('ROLE_DDE') || $this->dataUserSession->isGoodDepartement('ROLE_ADMIN')) {
-            $droits = $personnelDepartementRepository->findDroitsByPersonnelDepartement($personnel,
-                $this->dataUserSession->getDepartement());
+    ): Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_CDD', $this->getDepartement());
 
-            return $this->render('administration/personnel/_droit.html.twig',
-                ['personnel' => $personnel, 'droits' => $droits]);
-        }
+        $droits = $personnelDepartementRepository->findDroitsByPersonnelDepartement($personnel,
+            $this->getDepartement());
 
-        return $this->redirectToRoute('erreur_666');
+        return $this->render('administration/personnel/_droit.html.twig',
+            ['personnel' => $personnel, 'droits' => $droits]);
     }
 
     /**
@@ -225,10 +242,13 @@ class PersonnelController extends BaseController
         Request $request,
         PersonnelDepartementRepository $personnelDepartementRepository,
         Personnel $personnel
-    ): Response {
+    ): Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_CDD', $this->getDepartement());
+
         $droit = $request->request->get('droit');
         $pf = $personnelDepartementRepository->findByPersonnelDepartement($personnel,
-            $this->dataUserSession->getDepartement());
+            $this->getDepartement());
 
         if (1 === count($pf) && in_array($droit, Constantes::ROLE_LISTE, true)) {
             if (in_array($droit, $pf[0]->getRoles(), true)) {

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/ReservationMaterielCommunController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 07/10/2021 12:14
  */
 
 namespace App\Controller\administration;
@@ -33,15 +33,17 @@ class ReservationMaterielCommunController extends BaseController
         MaterielCommunPretRepository $materielCommunPretRepository,
         MyMaterielCommun $myMaterielCommun
     ): Response {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $this->getDepartement());
+
         $emprunts = $materielCommunPretRepository->findAll();
         $jr = $myMaterielCommun->getJours();
         $dispomateriel = $myMaterielCommun->obtainDispoMateriel($jr);
 
         return $this->render('administration/reservation_materiel_commun/reservation.html.twig', [
             'materiels' => $materielCommunRepository->findAll(),
-            'emprunts'  => $emprunts,
-            'dispo'     => $dispomateriel,
-            'jours'     => $jr,
+            'emprunts' => $emprunts,
+            'dispo' => $dispomateriel,
+            'jours' => $jr,
             'creneau'   => ['0800', '0930', '1100', '1400', '1530', '1700'],
         ]);
     }
@@ -53,6 +55,9 @@ class ReservationMaterielCommunController extends BaseController
      */
     public function addReservation(MyMaterielCommunReservation $myReservationMaterielCommun, Request $request): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $this->getDepartement());
+
+
         $t = explode('_', $request->request->get('id'));
         $rep = $myReservationMaterielCommun->addReservation($t[2], $t[0], $t[1], $this->getConnectedUser());
 
@@ -66,7 +71,11 @@ class ReservationMaterielCommunController extends BaseController
     public function supprReservation(
         MyMaterielCommunReservation $myReservationMaterielCommun,
         Request $request
-    ): Response {
+    ): Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $this->getDepartement());
+
+
         $id = $request->request->get('id');
         $rep = $myReservationMaterielCommun->supprReservation($id);
 

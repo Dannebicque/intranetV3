@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/PpnController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 07/10/2021 10:23
  */
 
 namespace App\Controller\administration;
@@ -31,6 +31,8 @@ class PpnController extends BaseController
      */
     public function index(PpnRepository $ppnRepository): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
+
         return $this->render('administration/ppn/index.html.twig', ['ppns' => $ppnRepository->findAll()]);
     }
 
@@ -40,6 +42,7 @@ class PpnController extends BaseController
      */
     public function export(): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
         //save en csv
         return new Response('', Response::HTTP_OK);
     }
@@ -51,6 +54,8 @@ class PpnController extends BaseController
      */
     public function copieIntegrale(PpnRepository $ppnRepository, Request $request): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_CDD', $this->getDepartement());
+
         $ppnOrigine = $ppnRepository->find($request->request->get('ppn_origine'));
         $ppnDest = $ppnRepository->find($request->request->get('ppn_dest'));
 
@@ -84,6 +89,8 @@ class PpnController extends BaseController
      */
     public function create(Request $request, Diplome $diplome = null): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $diplome);
+
         $ppn = new Ppn();
         $ppn->setDiplome($diplome);
         $form = $this->createForm(PpnType::class, $ppn, [
@@ -113,6 +120,8 @@ class PpnController extends BaseController
      */
     public function show(Ppn $ppn): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $ppn->getDiplome());
+
         return $this->render('structure/ppn/show.html.twig', ['ppn' => $ppn]);
     }
 
@@ -121,6 +130,8 @@ class PpnController extends BaseController
      */
     public function edit(Request $request, Ppn $ppn): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $ppn->getDiplome());
+
         $form = $this->createForm(PpnType::class, $ppn, [
             'departement' => $this->dataUserSession->getDepartement(),
             'attr' => [
@@ -150,6 +161,8 @@ class PpnController extends BaseController
      */
     public function delete(Request $request, Ppn $ppn): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $ppn->getDiplome());
+
         //suppression uniquement si vide.
         //feature: gérer une suppression plus complete en super-admin
         $id = $ppn->getId();
@@ -171,6 +184,8 @@ class PpnController extends BaseController
      */
     public function duplicate(Ppn $ppn): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $ppn->getDiplome());
+
         $newPpn = clone $ppn;
 
         $this->entityManager->persist($newPpn);

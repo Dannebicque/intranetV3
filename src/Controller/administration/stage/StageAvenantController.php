@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StageAvenantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 07/10/2021 12:14
  */
 
 namespace App\Controller\administration\stage;
@@ -33,10 +33,12 @@ class StageAvenantController extends BaseController
      */
     public function index(StageEtudiant $stageEtudiant): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stageEtudiant->getStagePeriode()?->getSemestre());
+
         return $this->render('administration/stage/stage_avenant/index.html.twig', [
             'stage_avenants' => $stageEtudiant->getStageAvenants(),
-            'stagePeriode'   => $stageEtudiant->getStagePeriode(),
-            'stageEtudiant'  => $stageEtudiant,
+            'stagePeriode' => $stageEtudiant->getStagePeriode(),
+            'stageEtudiant' => $stageEtudiant,
         ]);
     }
 
@@ -49,10 +51,13 @@ class StageAvenantController extends BaseController
      */
     public function avenantPdf(MyPDF $myPDF, StageAvenant $stageAvenant): PdfResponse
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE',
+            $stageAvenant->getStageEtudiant()?->getStagePeriode()?->getSemestre());
+
         return $myPDF::generePdf('pdf/stage/avenantStage.html.twig',
             [
                 'stage_avenant' => $stageAvenant,
-                'proposition'   => $stageAvenant->getStageEtudiant(),
+                'proposition' => $stageAvenant->getStageEtudiant(),
             ],
             'avenant-' . $stageAvenant->getStageEtudiant()->getEtudiant()->getNom(),
             $this->dataUserSession->getDepartement()
@@ -64,6 +69,8 @@ class StageAvenantController extends BaseController
      */
     public function new(Request $request, StageEtudiant $stageEtudiant): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stageEtudiant->getStagePeriode()?->getSemestre());
+
         $stageAvenant = new StageAvenant($stageEtudiant);
         $form = $this->createForm(StageAvenantType::class, $stageAvenant);
         $form->handleRequest($request);
@@ -90,6 +97,9 @@ class StageAvenantController extends BaseController
      */
     public function show(StageAvenant $stageAvenant): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE',
+            $stageAvenant->getStageEtudiant()?->getStagePeriode()?->getSemestre());
+
         return $this->render('administration/stage/stage_avenant/show.html.twig', [
             'stage_avenant' => $stageAvenant,
             'stageEtudiant' => $stageAvenant->getStageEtudiant(),
@@ -101,6 +111,9 @@ class StageAvenantController extends BaseController
      */
     public function edit(Request $request, StageAvenant $stageAvenant): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE',
+            $stageAvenant->getStageEtudiant()?->getStagePeriode()?->getSemestre());
+
         $form = $this->createForm(StageAvenantType::class, $stageAvenant);
         $form->handleRequest($request);
 
@@ -125,6 +138,9 @@ class StageAvenantController extends BaseController
      */
     public function delete(Request $request, StageAvenant $stageAvenant): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE',
+            $stageAvenant->getStageEtudiant()?->getStagePeriode()?->getSemestre());
+
         $id = $stageAvenant->getStageEtudiant()->getId();
         if ($this->isCsrfTokenValid('delete' . $stageAvenant->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -140,6 +156,9 @@ class StageAvenantController extends BaseController
      */
     public function duplicate(StageAvenant $stageAvenant): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE',
+            $stageAvenant->getStageEtudiant()?->getStagePeriode()?->getSemestre());
+
         $newstageAvenant = clone $stageAvenant;
         $this->entityManager->persist($newstageAvenant);
         $this->entityManager->flush();

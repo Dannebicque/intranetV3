@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/SemestreExportController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/03/2021 09:52
+ * @lastUpdate 07/10/2021 12:14
  */
 
 namespace App\Controller\administration;
@@ -37,6 +37,8 @@ class SemestreExportController extends BaseController
     public function exportTousLesRelevesProvisoires(
         Semestre $semestre
     ): RedirectResponse {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $semestre);
+
         $this->dispatchMessage(new ExportReleve($semestre->getId(),
             $this->dataUserSession->getAnneeUniversitaire()->getId(), $this->getConnectedUser()->getId()));
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS,
@@ -59,7 +61,10 @@ class SemestreExportController extends BaseController
         EtudiantExportReleve $etudiantExportReleve,
         Etudiant $etudiant,
         Semestre $semestre = null
-    ): PdfResponse {
+    ): PdfResponse
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $semestre ?: $etudiant->getSemestre());
+
         $etudiantExportReleve->setEtudiant($etudiant);
 
         return $etudiantExportReleve->exportReleveProvisoire($semestre ?: $etudiant->getSemestre(),
@@ -75,6 +80,7 @@ class SemestreExportController extends BaseController
         Etudiant $etudiant,
         Scolarite $scolarite
     ) {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $etudiant->getSemestre());
         $etudiantExportReleve->setEtudiant($etudiant);
         $etudiantExportReleve->exportReleveDefinitif($scolarite);
     }

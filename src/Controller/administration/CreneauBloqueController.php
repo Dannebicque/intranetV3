@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/CreneauBloqueController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:30
+ * @lastUpdate 07/10/2021 09:57
  */
 
 namespace App\Controller\administration;
@@ -24,6 +24,8 @@ use function count;
 
 /**
  * @Route("/administration/creneau/bloque")
+ * @deprecated
+ * Encore utilisé ?
  */
 class CreneauBloqueController extends BaseController
 {

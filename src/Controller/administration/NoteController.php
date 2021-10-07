@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/NoteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/06/2021 10:28
+ * @lastUpdate 07/10/2021 12:14
  */
 
 namespace App\Controller\administration;
@@ -33,6 +33,7 @@ class NoteController extends BaseController
         MyEvaluations $myEvaluations,
         Semestre $semestre
     ): Response {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $semestre);
         $myEvaluations->setSemestre($semestre);
 
         return $this->render('administration/notes/index.html.twig', [
@@ -53,7 +54,10 @@ class NoteController extends BaseController
         NotesExport $notesExport,
         Semestre $semestre,
         $_format
-    ): ?Response {
+    ): ?Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $semestre);
+
         return $notesExport->exportXlsToutesLesNotes($semestre, $this->dataUserSession->getAnneeUniversitaire());
     }
 
@@ -61,7 +65,11 @@ class NoteController extends BaseController
         TypeMatiereManager $typeMatiereManager,
         NoteRepository $noteRepository,
         Semestre $semestre
-    ) {
+    )
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $semestre);
+
+
         $matieres = $typeMatiereManager->findBySemestre($semestre);
         $notesAvecAbsence = $noteRepository->findBySemestreNoteAvecAbsence($matieres,
             $this->getDataUserSession()->getAnneeUniversitaire());
@@ -81,7 +89,11 @@ class NoteController extends BaseController
     public function corrigeNote(
         Note $note,
         string $action
-    ): Response {
+    ): Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $note->getEtudiant()?->getSemestre());
+
+
         switch ($action) {
             case 'absent':
                 $note->setAbsenceJustifie(true);

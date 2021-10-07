@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/DateController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 10:05
+ * @lastUpdate 07/10/2021 12:14
  */
 
 namespace App\Controller\administration;
@@ -26,9 +26,11 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class DateController extends BaseController
 {
-    #[Route("/", name: "administration_date_index", options: ['expose' => true], methods: ['GET', 'POST'])]
+    #[Route('/', name: 'administration_date_index', options: ['expose' => true], methods: ['GET', 'POST'])]
     public function index(Request $request): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
+
         $table = $this->createTable(DateTableType::class, [
             'departement' => $this->getDepartement(),
         ]);
@@ -50,6 +52,8 @@ class DateController extends BaseController
      */
     public function export(ExporterManager $exporter, DateRepository $dateRepository, $_format): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
+
         $dates = $dateRepository->findByDepartementArray($this->getDepartement());
         $datas = new DoctrineSourceIterator($dates, $this->entityManager, Date::class);
 
@@ -61,6 +65,8 @@ class DateController extends BaseController
      */
     public function create(Request $request): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
+
         $date = new Date();
         $date->setDepartement($this->getDepartement());
         $form = $this->createForm(
@@ -94,6 +100,8 @@ class DateController extends BaseController
      */
     public function show(Date $date): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $date->getDepartement());
+
         return $this->render('administration/date/show.html.twig', ['date' => $date]);
     }
 
@@ -102,6 +110,8 @@ class DateController extends BaseController
      */
     public function edit(Request $request, Date $date): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $date->getDepartement());
+
         $form = $this->createForm(
             DatesType::class,
             $date,
@@ -135,6 +145,8 @@ class DateController extends BaseController
      */
     public function duplicate(Date $date): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $date->getDepartement());
+
         $newDate = clone $date;
         $this->entityManager->persist($newDate);
         $this->entityManager->flush();
@@ -148,6 +160,8 @@ class DateController extends BaseController
      */
     public function delete(Request $request, Date $date): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $date->getDepartement());
+
         $id = $date->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
             $this->entityManager->remove($date);

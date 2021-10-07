@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/09/2021 16:06
+ * @lastUpdate 07/10/2021 12:14
  */
 
 namespace App\Controller\administration;
@@ -18,7 +18,6 @@ use App\Entity\Etudiant;
 use App\Form\EtudiantType;
 use App\Repository\EtudiantRepository;
 use App\Table\EtudiantDepartementTableType;
-use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -32,6 +31,8 @@ class EtudiantController extends BaseController
     #[Route("/", name: "administration_etudiant_index", options: ['expose' => true])]
     public function index(Request $request): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $this->getDepartement());
+
         $table = $this->createTable(EtudiantDepartementTableType::class, [
             'departement' => $this->getDepartement()
         ]);
@@ -50,6 +51,8 @@ class EtudiantController extends BaseController
     #[Route("/edit/{id}/{origin}", name: "administration_etudiant_edit", methods: ['GET', 'POST'])]
     public function edit(Request $request, Etudiant $etudiant, string $origin = 'semestre'): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $etudiant->getSemestre());
+
         $form = $this->createForm(
             EtudiantType::class,
             $etudiant,
@@ -91,6 +94,8 @@ class EtudiantController extends BaseController
     #[Route("/add", name: "administration_etudiant_add", methods: ["POST"])]
     public function create(Request $request): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $this->getDepartement());
+
         $etudiant = new Etudiant();
 
         $form = $this->createForm(
@@ -122,6 +127,8 @@ class EtudiantController extends BaseController
      */
     public function changeEtat(EtudiantScolarite $etudiantScolarite, Etudiant $etudiant, $etat): JsonResponse
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $etudiant->getSemestre());
+
         $etudiantScolarite->setEtudiant($etudiant);
         $etudiantScolarite->changeEtat($etat);
 
@@ -135,7 +142,10 @@ class EtudiantController extends BaseController
     public function demissionnaire(
         EtudiantScolarite $etudiantScolarite,
         Etudiant $etudiant
-    ): RedirectResponse {
+    ): RedirectResponse
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_DDE', $etudiant->getSemestre());
+
         $etudiantScolarite->setEtudiant($etudiant);
         $etudiantScolarite->changeEtat(Constantes::SEMESTRE_DEMISSIONNAIRE);
 
@@ -145,6 +155,8 @@ class EtudiantController extends BaseController
     #[Route("/edit-ajax/{id}", name: "adm_etudiant_edit_ajax", methods: ["POST"], options: ["expose" => true])]
     public function editAjax(EtudiantUpdate $etudiantUpdate, Request $request, Etudiant $etudiant): JsonResponse
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $etudiant->getSemestre());
+
         if ($content = $request->getContent()) {
             $parametersAsArray = json_decode($content, true);
         }
@@ -158,6 +170,8 @@ class EtudiantController extends BaseController
         requirements: ["_format" => "csv|xlsx|pdf"])]
     public function export(MyExport $myExport, EtudiantRepository $etudiantRepository, $_format): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $this->getDepartement());
+
         $etudiants = $etudiantRepository->getByDepartement($this->getDepartement(), []);
 
         return $myExport->genereFichierGenerique(

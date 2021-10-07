@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/AbsenceAppelSuiviController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/09/2021 08:40
+ * @lastUpdate 07/10/2021 09:34
  */
 
 namespace App\Controller\administration;
@@ -39,6 +39,8 @@ class AbsenceAppelSuiviController extends BaseController
         TypeMatiereManager $typeMatiereManager,
         Semestre $semestre
     ): Response {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $semestre);
+
         $statsAppel = $this->absenceEtatAppel->getBySemestre($semestre);
         $matieres = $typeMatiereManager->findBySemestreArray($semestre);
 
@@ -68,5 +70,8 @@ class AbsenceAppelSuiviController extends BaseController
     public function export(
         Semestre $semestre
     ) {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $semestre);
+
+
     }
 }

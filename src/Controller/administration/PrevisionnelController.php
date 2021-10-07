@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/PrevisionnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/09/2021 11:10
+ * @lastUpdate 07/10/2021 12:14
  */
 
 namespace App\Controller\administration;
@@ -33,8 +33,10 @@ class PrevisionnelController extends BaseController
     #[Route('/annee/{annee}', name: 'administration_previsionnel_index', options: ['expose' => true])]
     public function index(TypeMatiereManager $typeMatiereManager, int $annee = 0): Response
     {
-        if (0 === $annee && null !== $this->dataUserSession->getDepartement()) {
-            $annee = $this->dataUserSession->getDepartement()->getOptAnneePrevisionnel();
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $this->getDepartement());
+
+        if (0 === $annee && null !== $this->getDepartement()) {
+            $annee = $this->getDepartement()->getOptAnneePrevisionnel();
         }
 
         return $this->render('administration/previsionnel/index.html.twig', [
@@ -51,11 +53,15 @@ class PrevisionnelController extends BaseController
         int $matiere,
         string $type,
         int $annee = 0
-    ): Response {
+    ): Response
+    {
         if (0 === $annee && null !== $this->dataUserSession->getDepartement()) {
             $annee = $this->dataUserSession->getDepartement()->getOptAnneePrevisionnel();
         }
         $mat = $typeMatiereManager->getMatiere($matiere, $type);
+
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $mat->semestre);
+
         $previsionnel = $previsionnelManager->getPrevisionnelMatiere($matiere, $type, $annee);
         $synthese = $previsionnelSynthese->getSyntheseMatiere($previsionnel);
 
@@ -73,9 +79,11 @@ class PrevisionnelController extends BaseController
         PrevisionnelSynthese $previsionnelSynthese,
         Semestre $semestre,
         int $annee = 0
-    ): Response {
-        if (0 === $annee && null !== $this->dataUserSession->getDepartement()) {
-            $annee = $this->dataUserSession->getDepartement()->getOptAnneePrevisionnel();
+    ): Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $semestre);
+        if (0 === $annee && null !== $this->getDepartement()) {
+            $annee = $this->getDepartement()->getOptAnneePrevisionnel();
         }
 
         $previsionnel = $previsionnelManager->getPrevisionnelSemestre($semestre, $annee);
@@ -96,9 +104,12 @@ class PrevisionnelController extends BaseController
         PrevisionnelSynthese $previsionnelSynthese,
         Personnel $personnel,
         int $annee = 0
-    ): Response {
-        if (0 === $annee && null !== $this->dataUserSession->getDepartement()) {
-            $annee = $this->dataUserSession->getDepartement()->getOptAnneePrevisionnel();
+    ): Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $this->getDepartement());
+
+        if (0 === $annee && null !== $this->getDepartement()) {
+            $annee = $this->getDepartement()->getOptAnneePrevisionnel();
         }
         $previsionnels = $previsionnelManager->getPrevisionnelPersonnelDepartementAnnee($personnel,
             $this->getDepartement(), $annee);
@@ -139,6 +150,7 @@ class PrevisionnelController extends BaseController
         //todo: faire une comparaison avec le prévisionnel max... et mettre des alertes.
         if ($request->isMethod('POST')) {
             $matiere = $typeMatiereManager->getMatiereFromSelect($request->request->get('previsionnel_matiere'));
+            $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $matiere->semestre);
 
             $annee = '' !== $request->request->get('previsionnel_annee_previsionnel') ? $request->request->get('previsionnel_annee_previsionnel') : $this->dataUserSession->getAnneePrevisionnel();
 
@@ -185,11 +197,13 @@ class PrevisionnelController extends BaseController
     #[Route('/import', name: 'administration_previsionnel_import', methods: ['GET', 'POST'])]
     public function import(PrevisionnelImport $myPrevisionnel, Request $request): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $this->getDepartement());
+
         $form = $this->createForm(
             ImportPrevisionnelType::class,
             null,
             [
-                'departement' => $this->dataUserSession->getDepartement(),
+                'departement' => $this->getDepartement(),
                 'attr' => [
                     'data-provide' => 'validation',
                 ],
@@ -213,7 +227,10 @@ class PrevisionnelController extends BaseController
         PersonnelRepository $personnelRepository,
         PrevisionnelManager $previsionnelManager,
         Request $request
-    ): Response {
+    ): Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_CDD', $this->getDepartement());
+
         $anneeDepart = $request->request->get('annee_depart');
         $annee_destination = $request->request->get('annee_destination');
         $annee_concerver = $request->request->get('annee_concerver');
@@ -223,7 +240,7 @@ class PrevisionnelController extends BaseController
             $tPersonnels[$personnel->getId()] = $personnel;
         }
 
-        $previsionnelManager->dupliqueAnnee($this->dataUserSession->getDepartement(), $anneeDepart, $annee_destination,
+        $previsionnelManager->dupliqueAnnee($this->getDepartement(), $anneeDepart, $annee_destination,
             $annee_concerver, $tPersonnels);
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'previsionnel.duplicate_annee.success.flash');
 
@@ -234,6 +251,8 @@ class PrevisionnelController extends BaseController
         methods: ['GET'])]
     public function duplicate(Request $request, Previsionnel $previsionnel): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_CDD', $this->getDepartement());
+
         $newprevisionnel = clone $previsionnel;
         $this->entityManager->persist($newprevisionnel);
         $this->entityManager->flush();
@@ -246,7 +265,10 @@ class PrevisionnelController extends BaseController
     public function delete(
         Request $request,
         Previsionnel $previsionnel
-    ): Response {
+    ): Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_CDD', $this->getDepartement());
+
         $id = $previsionnel->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
             $this->entityManager->remove($previsionnel);
@@ -261,6 +283,8 @@ class PrevisionnelController extends BaseController
     #[Route('/supprimer/annee', name: 'administration_previsionnel_supprimer_annee', methods: ['POST'])]
     public function supprimer(Request $request, PrevisionnelManager $previsionnelManager): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_CDD', $this->getDepartement());
+
         if ($this->isCsrfTokenValid('supprimer', $request->request->get('_token'))) {
             $previsionnelManager->supprimeAnnee($this->dataUserSession->getDepartement(),
                 $request->request->get('annee_supprimer'));

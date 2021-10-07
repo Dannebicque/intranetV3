@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/CommissionAbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:17
+ * @lastUpdate 07/10/2021 09:57
  */
 
 namespace App\Controller\administration;
@@ -26,6 +26,8 @@ class CommissionAbsenceController extends BaseController
      */
     public function index(Semestre $semestre): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $semestre);
+
         return $this->render('administration/commission_absence/index.html.twig', [
             'semestre' => $semestre,
         ]);
@@ -37,6 +39,8 @@ class CommissionAbsenceController extends BaseController
      */
     public function export(Semestre $semestre): void
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $semestre);
+
         //todo:  a faire
     }
 }

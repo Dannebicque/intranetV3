@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/TypeGroupeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/08/2021 10:45
+ * @lastUpdate 07/10/2021 12:14
  */
 
 namespace App\Controller\administration;
@@ -31,6 +31,7 @@ class TypeGroupeController extends BaseController
      */
     public function listeSemestre(Semestre $semestre): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $semestre);
         $typeGroupes = $semestre->getTypeGroupes();
 
         return $this->render('administration/type_groupe/_listeSemestre.html.twig', [
@@ -44,6 +45,8 @@ class TypeGroupeController extends BaseController
      */
     public function new(Request $request, Semestre $semestre): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $semestre);
+
         $typeGroupe = new TypeGroupe($semestre);
         $typeGroupe->setLibelle($request->request->get('libelle'));
         $typeGroupe->setType($request->request->get('type'));
@@ -60,6 +63,8 @@ class TypeGroupeController extends BaseController
      */
     public function update(Request $request, TypeGroupe $typeGroupe): ?JsonResponse
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $typeGroupe->getSemestre());
+
         $value = $request->request->get('value');
 
         $typeGroupe->setLibelle($value);
@@ -75,7 +80,10 @@ class TypeGroupeController extends BaseController
     public function updateType(
         Request $request,
         TypeGroupe $typeGroupe
-    ): ?JsonResponse {
+    ): ?JsonResponse
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $typeGroupe->getSemestre());
+
         $typeGroupe->setType($request->request->get('type'));
         $this->entityManager->flush();
 
@@ -88,6 +96,8 @@ class TypeGroupeController extends BaseController
      */
     public function updateDefaut(Request $request, TypeGroupe $typegroupe, Semestre $semestre): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $semestre);
+
         if (in_array($request->request->get('defaut'), ['on', 'true'], true)) {
             foreach ($semestre->getTypeGroupes() as $tg) {
                 if ($tg->getId() === $typegroupe->getId()) {
@@ -110,6 +120,8 @@ class TypeGroupeController extends BaseController
      */
     public function duplicate(TypeGroupe $typegroupe): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $typegroupe->getSemestre());
+
         $newGroupe = clone $typegroupe;
         $newGroupe->setLibelle('Copie_' . $newGroupe->getLibelle());
         $this->entityManager->persist($newGroupe);
@@ -124,6 +136,8 @@ class TypeGroupeController extends BaseController
      */
     public function delete(Request $request, TypeGroupe $typeGroupe): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $typegroupe->getSemestre());
+
         $id = $typeGroupe->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
             $this->entityManager->remove($typeGroupe);

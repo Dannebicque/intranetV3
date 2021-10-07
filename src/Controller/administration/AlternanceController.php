@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/AlternanceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/07/2021 17:05
+ * @lastUpdate 07/10/2021 12:14
  */
 
 namespace App\Controller\administration;
@@ -39,6 +39,8 @@ class AlternanceController extends BaseController
         AlternanceRepository $alternanceRepository,
         Annee $annee
     ): RedirectResponse {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $annee);
+
         $etudiants = $etudiantRepository->findByAnnee($annee);
 
         /** @var Etudiant $etudiant */
@@ -70,6 +72,8 @@ class AlternanceController extends BaseController
      */
     public function init(Etudiant $etudiant, $action, Annee $annee): RedirectResponse
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $annee);
+
         $alternance = new Alternance();
         $alternance->setEtudiant($etudiant);
         $alternance->setAnneeUniversitaire(null !== $annee->getDiplome() ? $annee->getDiplome()->getAnneeUniversitaire() : null);
@@ -98,7 +102,10 @@ class AlternanceController extends BaseController
         AlternanceRepository $alternanceRepository,
         Annee $annee,
         $_format
-    ): Response {
+    ): Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $annee);
+
         $actualites = $alternanceRepository->getByAnneeAndAnneeUniversitaire($annee,
             null !== $annee->getDiplome() ? $annee->getDiplome()->getAnneeUniversitaire() : null);
 
@@ -124,6 +131,8 @@ class AlternanceController extends BaseController
      */
     public function show(Alternance $alternance): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $alternance->getAnnee());
+
         return $this->render('administration/alternance/show.html.twig', ['alternance' => $alternance]);
     }
 
@@ -132,6 +141,8 @@ class AlternanceController extends BaseController
      */
     public function edit(Request $request, Alternance $alternance): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $alternance->getAnnee());
+
         $form = $this->createForm(AlternanceType::class, $alternance,
             ['departement' => $this->dataUserSession->getDepartement()]);
         $form->handleRequest($request);
@@ -156,7 +167,10 @@ class AlternanceController extends BaseController
         EtudiantRepository $etudiantRepository,
         AlternanceRepository $alternanceRepository,
         Annee $annee
-    ): Response {
+    ): Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $annee);
+
         $etudiants = $etudiantRepository->findByAnnee($annee);
 
         return $this->render('administration/alternance/index.html.twig',
@@ -173,6 +187,8 @@ class AlternanceController extends BaseController
      */
     public function delete(Request $request, Alternance $alternance): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $alternance->getAnnee());
+
         $id = $alternance->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
             $this->entityManager->remove($alternance);
@@ -195,6 +211,8 @@ class AlternanceController extends BaseController
      */
     public function updateTuteurUniversitaire(Alternance $alternance, Personnel $personnel): JsonResponse
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $alternance->getAnnee());
+
         $alternance->setTuteurUniversitaire($personnel);
         $this->entityManager->persist($alternance);
         $this->entityManager->flush();

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/TypeDocumentController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/09/2021 16:39
+ * @lastUpdate 07/10/2021 12:14
  */
 
 namespace App\Controller\administration;
@@ -30,6 +30,8 @@ class TypeDocumentController extends BaseController
      */
     public function index(TypeDocumentRepository $typeDocumentRepository): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
+
         return $this->render(
             'administration/type_document/index.html.twig',
             ['type_documents' => $typeDocumentRepository->findByDepartement($this->getDepartement())]
@@ -42,6 +44,8 @@ class TypeDocumentController extends BaseController
      */
     public function export(MyExport $myExport, TypeDocumentRepository $typeDocumentRepository, $_format): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
+
         $typesDocuments = $typeDocumentRepository->findByDepartement($this->getDepartement());
 
         return $myExport->genereFichierGenerique(
@@ -61,6 +65,8 @@ class TypeDocumentController extends BaseController
      */
     public function create(Request $request): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
+
         $typeDocument = new TypeDocument($this->dataUserSession->getDepartement());
         $form = $this->createForm(TypeDocumentType::class, $typeDocument, [
             'attr' => [
@@ -88,6 +94,8 @@ class TypeDocumentController extends BaseController
      */
     public function show(TypeDocument $typeDocument): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $typeDocument->getDepartement());
+
         return $this->render('administration/type_document/show.html.twig', ['type_document' => $typeDocument]);
     }
 
@@ -96,6 +104,9 @@ class TypeDocumentController extends BaseController
      */
     public function edit(Request $request, TypeDocument $typeDocument): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $typeDocument->getDepartement());
+
+
         $form = $this->createForm(TypeDocumentType::class, $typeDocument, [
             'attr' => [
                 'data-provide' => 'validation',
@@ -126,7 +137,10 @@ class TypeDocumentController extends BaseController
         DocumentDelete $documentDelete,
         Request $request,
         TypeDocument $typeDocument
-    ): Response {
+    ): Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $typeDocument->getDepartement());
+
         $id = $typeDocument->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
             foreach ($typeDocument->getDocuments() as $document) {
@@ -151,9 +165,11 @@ class TypeDocumentController extends BaseController
     /**
      * @Route("/{id}/duplicate", name="administration_type_document_duplicate", methods="GET|POST")
      */
-    public function duplicate(TypeDocument $type_document): Response
+    public function duplicate(TypeDocument $typeDocument): Response
     {
-        $newTypeDocument = clone $type_document;
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $typeDocument->getDepartement());
+
+        $newTypeDocument = clone $typeDocument;
 
         $this->entityManager->persist($newTypeDocument);
         $this->entityManager->flush();

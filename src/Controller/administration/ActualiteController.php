@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/ActualiteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/09/2021 08:39
+ * @lastUpdate 07/10/2021 12:14
  */
 
 namespace App\Controller\administration;
@@ -20,13 +20,16 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route("/administration/actualites", name:"administration_actualite_")]
+#[Route('/administration/actualites', name: 'administration_actualite_')]
 class ActualiteController extends BaseController
 {
+
     #[Route('/', name: 'index', options: ['expose' => true], methods: ['GET', 'POST'])]
     public function index(
         Request $request
     ): Response {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
+
         $table = $this->createTable(ActualiteTableType::class, [
             'departement' => $this->getDepartement(),
         ]);
@@ -44,9 +47,11 @@ class ActualiteController extends BaseController
         );
     }
 
-    #[Route("/export.{_format}", name:"export", methods:["GET"], requirements:["_format"=>"csv|xlsx|pdf"])]
+    #[Route('/export.{_format}', name: 'export', methods: ['GET'], requirements: ['_format' => 'csv|xlsx|pdf'])]
     public function export(MyExport $myExport, ActualiteRepository $actualiteRepository, $_format): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
+
         $actualites = $actualiteRepository->getByDepartement($this->getDepartement());
 
         return $myExport->genereFichierGenerique(
@@ -58,9 +63,11 @@ class ActualiteController extends BaseController
         );
     }
 
-    #[Route("/new", name:"new", methods:["GET","POST"])]
+    #[Route('/new', name: 'new', methods: ['GET', 'POST'])]
     public function create(Request $request): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
+
         $actualite = new Actualite($this->dataUserSession->getDepartement());
         $form = $this->createForm(ActualiteType::class, $actualite, [
             'attr' => [
@@ -84,15 +91,19 @@ class ActualiteController extends BaseController
         ]);
     }
 
-    #[Route("/{id}", name:"show", methods:["GET"])]
+    #[Route('/{id}', name: 'show', methods: ['GET'])]
     public function show(Actualite $actualite): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $actualite->getDepartement());
+
         return $this->render('administration/actualite/show.html.twig', ['actualite' => $actualite]);
     }
 
-    #[Route("/{id}/edit", name:"edit", methods:["GET","POST"])]
+    #[Route('/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Actualite $actualite): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $actualite->getDepartement());
+
         $form = $this->createForm(ActualiteType::class, $actualite, [
             'attr' => [
                 'data-provide' => 'validation',
@@ -117,9 +128,11 @@ class ActualiteController extends BaseController
         ]);
     }
 
-    #[Route("/{id}", name:"delete", methods:["DELETE"])]
+    #[Route('/{id}', name: 'delete', methods: ['DELETE'])]
     public function delete(Request $request, Actualite $actualite): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $actualite->getDepartement());
+
         $id = $actualite->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
             $this->entityManager->remove($actualite);
@@ -137,9 +150,11 @@ class ActualiteController extends BaseController
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    #[Route("/{id}/duplicate", name:"duplicate", methods:["GET","POST"])]
+    #[Route('/{id}/duplicate', name: 'duplicate', methods: ['GET', 'POST'])]
     public function duplicate(Actualite $actualite): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $actualite->getDepartement());
+
         $newActualite = clone $actualite;
 
         $this->entityManager->persist($newActualite);

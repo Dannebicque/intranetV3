@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StagePeriodeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/09/2021 10:24
+ * @lastUpdate 07/10/2021 10:48
  */
 
 namespace App\Controller\administration\stage;
@@ -31,6 +31,8 @@ class StagePeriodeController extends BaseController
      */
     public function index(StagePeriodeRepository $stagePeriodeRepository): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $this->getDepartement());
+
         return $this->render(
             'administration/stage/stage_periode/index.html.twig',
             ['stage_periodes' => $stagePeriodeRepository->findByDepartement($this->dataUserSession->getDepartement())]
@@ -44,6 +46,8 @@ class StagePeriodeController extends BaseController
      */
     public function export(MyExport $myExport, StagePeriodeRepository $stagePeriodeRepository, $_format): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $this->getDepartement());
+
         $dates = $stagePeriodeRepository->findByDepartement($this->dataUserSession->getDepartement());
 
         return $myExport->genereFichierGenerique(
@@ -62,6 +66,8 @@ class StagePeriodeController extends BaseController
      */
     public function create(Request $request): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $this->getDepartement());
+
         $stagePeriode = new StagePeriode();
         $stagePeriode->setAnneeUniversitaire($this->dataUserSession->getAnneeUniversitaire());
         $form = $this->createForm(StagePeriodeType::class, $stagePeriode, [
@@ -92,6 +98,8 @@ class StagePeriodeController extends BaseController
      */
     public function show(StagePeriode $stagePeriode): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
+
         return $this->render('administration/stage/stage_periode/show.html.twig', ['stage_periode' => $stagePeriode]);
     }
 
@@ -101,6 +109,8 @@ class StagePeriodeController extends BaseController
      */
     public function edit(Request $request, StagePeriode $stagePeriode): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
+
         $form = $this->createForm(StagePeriodeType::class, $stagePeriode, [
             'departement' => $this->dataUserSession->getDepartement(),
             'attr' => [
@@ -130,6 +140,8 @@ class StagePeriodeController extends BaseController
      */
     public function delete(Request $request, StagePeriode $stagePeriode): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
+
         //la suppression entraine la suppression des offres, des templates et des stages déjà présent.
         $id = $stagePeriode->getUuidString();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
@@ -154,6 +166,8 @@ class StagePeriodeController extends BaseController
      */
     public function duplicate(StagePeriode $stagePeriode): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
+
         $newStagePeriode = clone $stagePeriode;
         $this->entityManager->persist($newStagePeriode);
         $this->entityManager->flush();

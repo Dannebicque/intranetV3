@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/ApogeeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/09/2021 21:37
+ * @lastUpdate 07/10/2021 12:14
  */
 
 namespace App\Controller\administration;
@@ -12,6 +12,7 @@ namespace App\Controller\administration;
 use App\Classes\Apogee\ApogeeEtudiant;
 use App\Classes\Etudiant\EtudiantImport;
 use App\Controller\BaseController;
+use App\Exception\SemestreNotFoundException;
 use App\Repository\AnneeUniversitaireRepository;
 use App\Repository\BacRepository;
 use App\Repository\EtudiantRepository;
@@ -41,6 +42,8 @@ class ApogeeController extends BaseController
         $semestre = $semestreRepository->find($request->request->get('semestreforce'));
         $anneeUniversitaire = $anneeUniversitaireRepository->find($request->request->get('anneeuniversitaire'));
         if ($semestre && $anneeUniversitaire) {
+            $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $semestre);
+
             $this->etudiants = [];
             //requete pour récupérer les étudiants de la promo.
             //pour chaque étudiant, s'il existe, on update, sinon on ajoute (et si type=force).
@@ -84,9 +87,17 @@ class ApogeeController extends BaseController
         EtudiantRepository $etudiantRepository,
         SemestreRepository $semestreRepository,
         BacRepository $bacRepository
-    ): Response {
+    ): Response
+    {
+
         $listeetudiants = explode(';', trim($request->request->get('listeetudiants')));
         $semestre = $semestreRepository->find($request->request->get('semestreforce'));
+
+        if ($semestre === null) {
+            throw new SemestreNotFoundException();
+        }
+
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $semestre);
 
         $this->etudiants = [];
         foreach ($listeetudiants as $numEtu) {

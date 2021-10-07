@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/FinSemestreController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 07/10/2021 12:14
  */
 
 namespace App\Controller\administration;
@@ -38,14 +38,16 @@ class FinSemestreController extends BaseController
         ScolariteRepository $scolariteRepository,
         Semestre $semestre
     ): Response {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $semestre);
+
         $etudiants = $etudiantRepository->findBySemestre($semestre);
         $scolarites = $scolariteRepository->findBySemestreArray($semestre,
             $this->dataUserSession->getAnneeUniversitaire());
 
         return $this->render('administration/fin_semestre/index.html.twig', [
-            'semestre'     => $semestre,
-            'etudiants'    => $etudiants,
-            'scolarites'   => $scolarites,
+            'semestre' => $semestre,
+            'etudiants' => $etudiants,
+            'scolarites' => $scolarites,
             'departements' => $departementRepository->findAll(),
         ]);
     }
@@ -59,7 +61,10 @@ class FinSemestreController extends BaseController
         Request $request,
         SemestreRepository $semestreRepository,
         Semestre $semestre
-    ): Response {
+    ): Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $semestre);
+
         $etudiants = $etudiantRepository->findBySemestre($semestre->getId());
 
         /** @var Etudiant $e */

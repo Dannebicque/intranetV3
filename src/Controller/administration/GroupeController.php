@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/GroupeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/06/2021 10:28
+ * @lastUpdate 07/10/2021 12:14
  */
 
 namespace App\Controller\administration;
@@ -32,6 +32,8 @@ class GroupeController extends BaseController
      */
     public function index(Semestre $semestre = null): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
+
         return $this->render('administration/groupe/index.html.twig', [
             'afficheSemestre' => null !== $semestre ? $semestre->getId() : null,
         ]);
@@ -43,6 +45,8 @@ class GroupeController extends BaseController
      */
     public function generationAutomatique(Semestre $semestre): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $semestre);
+
         return $this->render('administration/groupe/generation-automatique.html.twig', [
             'semestre' => $semestre,
         ]);
@@ -54,6 +58,8 @@ class GroupeController extends BaseController
      */
     public function genereGroupes(Request $request, Semestre $semestre): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $semestre);
+
         //sauvegarde du nombre de groupe de semestre ?
 
         //génére les groupes
@@ -71,15 +77,17 @@ class GroupeController extends BaseController
      */
     public function listeSemestre(GroupeRepository $groupeRepository, Semestre $semestre): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $semestre);
+
         $typeGroupes = $semestre->getTypeGroupes();
         $groupes = $groupeRepository->findBySemestre($semestre);
         $parcours = $semestre->getParcours();
 
         return $this->render('administration/groupe/_listeSemestre.html.twig', [
-            'semestre'    => $semestre,
-            'groupes'     => $groupes,
+            'semestre' => $semestre,
+            'groupes' => $groupes,
             'typeGroupes' => $typeGroupes,
-            'parcours'    => $parcours,
+            'parcours' => $parcours,
         ]);
     }
 
@@ -93,7 +101,10 @@ class GroupeController extends BaseController
         GroupeRepository $groupeRepository,
         Semestre $semestre,
         $_format
-    ): Response {
+    ): Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $semestre);
+
         $groupes = $groupeRepository->findBySemestre($semestre);
 
         return $myExport->genereFichierGenerique(

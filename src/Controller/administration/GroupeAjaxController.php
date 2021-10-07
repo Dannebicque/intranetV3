@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/GroupeAjaxController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:17
+ * @lastUpdate 07/10/2021 10:23
  */
 
 namespace App\Controller\administration;
@@ -30,6 +30,8 @@ class GroupeAjaxController extends BaseController
      */
     public function update(MyGroupes $myGroupes, Request $request, Groupe $groupe): ?JsonResponse
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $groupe->getTypeGroupe()?->getSemestre());
+
         $name = $request->request->get('field');
         $value = $request->request->get('value');
 
@@ -48,6 +50,8 @@ class GroupeAjaxController extends BaseController
         $parent = $groupeRepository->find($request->request->get('parent'));
 
         if (null !== $groupe && null !== $parent) {
+            $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $groupe->getTypeGroupe()?->getSemestre());
+
             $groupe->setParent($parent);
             $this->entityManager->flush();
 
@@ -70,6 +74,8 @@ class GroupeAjaxController extends BaseController
         $typegroupe = $typeGroupeRepository->find($request->request->get('typegroupe'));
 
         if (null !== $groupe && null !== $typegroupe) {
+            $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $typegroupe->getSemestre());
+
             $groupe->setTypeGroupe($typegroupe);
             $this->entityManager->flush();
 
@@ -92,6 +98,8 @@ class GroupeAjaxController extends BaseController
         $parcours = $parcourRepository->find($request->request->get('parcours'));
 
         if (null !== $groupe && null !== $parcours) {
+            $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $groupe->getTypeGroupe()->getSemestre());
+
             $groupe->setParcours($parcours);
             $this->entityManager->flush();
 

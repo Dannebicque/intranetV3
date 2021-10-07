@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StageEtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 07/10/2021 12:14
  */
 
 namespace App\Controller\administration\stage;
@@ -43,11 +43,13 @@ class StageEtudiantController extends BaseController
      */
     public function show(PersonnelRepository $personnelRepository, StageEtudiant $stageEtudiant): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stageEtudiant->getStagePeriode()?->getSemestre());
+
         return $this->render(
             'administration/stage/stage_etudiant/show.html.twig',
             [
                 'stageEtudiant' => $stageEtudiant,
-                'personnels'    => $personnelRepository->findByDepartement($this->dataUserSession->getDepartement()),
+                'personnels' => $personnelRepository->findByDepartement($this->dataUserSession->getDepartement()),
             ]
         );
     }
@@ -61,7 +63,10 @@ class StageEtudiantController extends BaseController
         MyStageEtudiant $myStageEtudiant,
         Request $request,
         StageEtudiant $stageEtudiant
-    ): JsonResponse {
+    ): JsonResponse
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stageEtudiant->getStagePeriode()?->getSemestre());
+
         $name = $request->request->get('field');
         $value = $request->request->get('value');
         $type = $request->request->get('type');
@@ -77,6 +82,8 @@ class StageEtudiantController extends BaseController
      */
     public function edit(Request $request, StageEtudiant $stageEtudiant): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stageEtudiant->getStagePeriode()?->getSemestre());
+
         $form = $this->createForm(StageEtudiantType::class, $stageEtudiant);
         $form->handleRequest($request);
 
@@ -98,6 +105,8 @@ class StageEtudiantController extends BaseController
      */
     public function delete(Request $request, StageEtudiant $stageEtudiant): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stageEtudiant->getStagePeriode()?->getSemestre());
+
         $id = $stageEtudiant->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
             $this->entityManager->remove($stageEtudiant);
@@ -125,7 +134,10 @@ class StageEtudiantController extends BaseController
         StagePeriode $stagePeriode,
         Etudiant $etudiant,
         $etat
-    ): RedirectResponse {
+    ): RedirectResponse
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
+
         $myStageEtudiant->changeEtat($stagePeriode, $etudiant, $etat);
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'stage_etudiant.change_etat.success.flash');
 
@@ -140,7 +152,10 @@ class StageEtudiantController extends BaseController
     public function changeTuteur(
         StageEtudiant $stageEtudiant,
         Personnel $tuteur
-    ): JsonResponse {
+    ): JsonResponse
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stageEtudiant->getStagePeriode()?->getSemestre());
+
         $stageEtudiant->setTuteurUniversitaire($tuteur);
         $this->entityManager->persist($stageEtudiant);
         $this->entityManager->flush();
@@ -158,6 +173,8 @@ class StageEtudiantController extends BaseController
      */
     public function conventionPdf(MyPDF $myPDF, StageEtudiant $stageEtudiant): PdfResponse
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stageEtudiant->getStagePeriode()?->getSemestre());
+
         //1. regarder si convention existe dans le répertoire ? (un champ avec le nom dans la BDD ?)
         //2. Si oui envoyer
         //3. Si non générer et envoyer + sauvegarde
@@ -181,6 +198,8 @@ class StageEtudiantController extends BaseController
      */
     public function courrierPdf(MyPDF $myPDF, StageEtudiant $stageEtudiant): PdfResponse
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stageEtudiant->getStagePeriode()?->getSemestre());
+
         return $myPDF::generePdf('pdf/stage/baseCourrier.html.twig',
             [
                 'stageEtudiant' => $stageEtudiant,
@@ -199,7 +218,10 @@ class StageEtudiantController extends BaseController
         Environment $twig,
         StageMailTemplateRepository $stageMailTemplateRepository,
         StageEtudiant $stageEtudiant
-    ): Response {
+    ): Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stageEtudiant->getStagePeriode()?->getSemestre());
+
         $mailTemplate = $stageMailTemplateRepository->findEventPeriode(
             'courrier',
             $stageEtudiant->getStagePeriode()
@@ -226,6 +248,8 @@ class StageEtudiantController extends BaseController
      */
     public function ficheEnseignant(MyPDF $myPDF, StageEtudiant $stageEtudiant): PdfResponse
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stageEtudiant->getStagePeriode()?->getSemestre());
+
         return $myPDF::generePdf('pdf/fichePDFStage.html.twig',
             [
                 'stageEtudiant' => $stageEtudiant,

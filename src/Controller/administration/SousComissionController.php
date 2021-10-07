@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/SousComissionController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/06/2021 10:28
+ * @lastUpdate 07/10/2021 12:14
  */
 
 namespace App\Controller\administration;
@@ -40,14 +40,16 @@ class SousComissionController extends BaseController
      */
     public function live(BacRepository $bacRepository, SousCommission $sousCommission, Semestre $semestre): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $semestre);
+
         $sousCommission->calcul($semestre, $this->dataUserSession->getAnneeUniversitaire());
         $bacs = $bacRepository->findAll();
 
         return $this->render('administration/sous_commission/live.html.twig', [
-            'semestre'       => $semestre,
+            'semestre' => $semestre,
             'sousCommission' => $sousCommission,
-            'bacs'           => $bacs,
-            'stats'          => $sousCommission->calculStats($bacs),
+            'bacs' => $bacs,
+            'stats' => $sousCommission->calculStats($bacs),
         ]);
     }
 
@@ -59,14 +61,17 @@ class SousComissionController extends BaseController
         SousCommission $sousCommission,
         SousCommissionSauvegarde $sousCommissionSauvegarde,
         Semestre $semestre
-    ): Response {
+    ): Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $semestre);
+
         $matieres = $typeMatiereManager->findBySemestre($semestre);
         $sousCommission->calcul($semestre, $this->dataUserSession->getAnneeUniversitaire());
         $sousCommissionTravail = $sousCommissionSauvegarde->sauvegardeTravail($sousCommission, $matieres);
 
         return $this->render('administration/sous_commission/travail.html.twig', [
             'semestre' => $semestre,
-            'sc'       => $sousCommissionTravail,
+            'sc' => $sousCommissionTravail,
         ]);
     }
 
@@ -79,7 +84,7 @@ class SousComissionController extends BaseController
         ScolaritePromo $scolaritePromo
     ): Response {
         $semestre = $scolaritePromo->getSemestre();
-
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $semestre);
         if (null !== $semestre) {
             $matieres = $typeMatiereManager->findBySemestre($semestre);
             $notes = $noteRepository->findBySemestre($matieres, $scolaritePromo->getAnneeUniversitaire());
@@ -108,6 +113,7 @@ class SousComissionController extends BaseController
     public function recalculer(SousCommissionSauvegarde $sousCommissionSauvegarde, ScolaritePromo $ssComm): Response
     {
         $semestre = $ssComm->getSemestre();
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $semestre);
         $sousCommissionSauvegarde->efface($ssComm);
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'scolarite.efface.et.recalculee.success.flash');
 
@@ -123,6 +129,7 @@ class SousComissionController extends BaseController
         ScolaritePromo $ssComm
     ): Response {
         $semestre = $ssComm->getSemestre();
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $semestre);
         $sousCommissionSauvegarde->visibilite($ssComm, true);
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'scolarite.publiee.success.flash');
 
@@ -140,6 +147,7 @@ class SousComissionController extends BaseController
         ScolaritePromo $ssComm
     ): Response {
         $semestre = $ssComm->getSemestre();
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $semestre);
         $sousCommissionSauvegarde->visibilite($ssComm, false);
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'scolarite.depubliee.success.flash');
 
@@ -153,6 +161,7 @@ class SousComissionController extends BaseController
      */
     public function exporter(SousCommissionExport $sousCommission, Semestre $semestre): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $semestre);
         return $sousCommission->export($semestre, $this->dataUserSession->getAnneeUniversitaire());
     }
 
@@ -161,6 +170,7 @@ class SousComissionController extends BaseController
      */
     public function grandJury(SousCommissionExport $sousCommissionExport, ScolaritePromo $scolaritePromo): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $scolaritePromo->getSemestre());
         return $sousCommissionExport->exportGrandJury($scolaritePromo, $this->dataUserSession->getAnneeUniversitaire());
     }
 
@@ -173,7 +183,10 @@ class SousComissionController extends BaseController
         Request $request,
         Scolarite $scolarite,
         $type
-    ): JsonResponse {
+    ): JsonResponse
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $sousCommission->getSemestre());
+
         $sousCommission->updateScolarite($scolarite,
             $type,
             $request->request->get('field'),

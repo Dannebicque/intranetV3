@@ -4,67 +4,90 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/BCDemandeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/09/2021 18:50
+ * @lastUpdate 07/10/2021 12:14
  */
 
 namespace App\Controller\administration;
 
 use App\Controller\BaseController;
-
-//use App\Entity\BCDemande;
-//use App\Entity\Constantes;
-//use App\Form\BCDemandeInitialeType;
-//use App\Repository\BCDemandeRepository;
+use App\Entity\BCDemande;
+use App\Entity\Constantes;
+use App\Form\BCDemandeInitialeType;
+use App\Table\BCDemandeDepartementType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Workflow\WorkflowInterface;
 
 #[Route('/administration/bon-commande', name: 'administration_bc_demande_')]
 class BCDemandeController extends BaseController
 {
-//    #[Route('/', name: 'index', methods: ['GET'])]
-//    public function index(BCDemandeRepository $bCDemandeRepository): Response
-//    {
-//        return $this->render('administration/bc_demande/index.html.twig', [
-//            'bc_demandes' => $bCDemandeRepository->findAll(),
-//        ]);
-//    }
-//
-//    #[Route('/nouvelle-demande', name: 'new', methods: ['GET', 'POST'])]
-//    public function new(Request $request): Response
-//    {
-//        $bCDemande = new BCDemande();
-//        $form = $this->createForm(BCDemandeInitialeType::class, $bCDemande, [
-//            'departement' => $this->getDepartement()
-//        ]);
-//        $form->handleRequest($request);
-//
-//        if ($form->isSubmitted() && $form->isValid()) {
-//
-//            $this->entityManager->persist($bCDemande);
-//            $this->entityManager->flush();
-//            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'bcdemande.new.success.flash');
-//
-//            return $this->redirectToRoute('administration_bc_demande_index', [], Response::HTTP_SEE_OTHER);
-//        }
-//
-//        return $this->renderForm('administration/bc_demande/new.html.twig', [
-//            'bc_demande' => $bCDemande,
-//            'form' => $form,
-//        ]);
-//    }
-//
-//    #[Route('/{id}', name: 'show', methods: ['GET'])]
-//    public function show(BCDemande $bCDemande): Response
-//    {
-//        return $this->render('administration/bc_demande/show.html.twig', [
-//            'bc_demande' => $bCDemande,
-//        ]);
-//    }
-//
-//    #[Route('/{id}/modifier', name: 'edit', methods: ['GET', 'POST'])]
-//    public function edit(Request $request, BCDemande $bCDemande): Response
-//    {
+    #[Route('/', name: 'index', methods: ['GET', 'POST'], options: ['expose' => true])]
+    public function index(Request $request): Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
+
+
+        $table = $this->createTable(BCDemandeDepartementType::class, [
+            'departement' => $this->getDepartement()
+        ]);
+
+        $table->handleRequest($request);
+
+        if ($table->isCallback()) {
+            return $table->getCallbackResponse();
+        }
+
+        return $this->render('administration/bc_demande/index.html.twig', [
+            'table' => $table
+        ]);
+    }
+
+    #[Route('/nouvelle-demande', name: 'new', methods: ['GET', 'POST'])]
+    public function new(WorkflowInterface $bonCommandeStateMachine, Request $request): Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
+
+
+        $bCDemande = new BCDemande();
+        $bCDemande->setDepartement($this->getDepartement());
+        // $bCDemande->setResponsable() => trouver le responsable de département ?
+        $form = $this->createForm(BCDemandeInitialeType::class, $bCDemande, [
+            'departement' => $this->getDepartement(),
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $bonCommandeStateMachine->apply($bCDemande, 'validation_responsable');
+            $this->entityManager->persist($bCDemande);
+            $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'bcdemande.new.success.flash');
+
+            return $this->redirectToRoute('administration_bc_demande_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('administration/bc_demande/new.html.twig', [
+            'bc_demande' => $bCDemande,
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/{id}', name: 'show', methods: ['GET'])]
+    public function show(BCDemande $bCDemande): Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $bCDemande->getDepartement());
+
+
+        return $this->render('administration/bc_demande/show.html.twig', [
+            'bc_demande' => $bCDemande,
+        ]);
+    }
+
+    #[Route('/{id}/modifier', name: 'edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, BCDemande $bCDemande): Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $bCDemande->getDepartement());
+
 //        $form = $this->createForm(BCDemandeInitialeType::class, $bCDemande, [
 //            'departement' => $this->getDepartement()
 //        ]);
@@ -76,36 +99,39 @@ class BCDemandeController extends BaseController
 //
 //            return $this->redirectToRoute('administration_bc_demande_index', [], Response::HTTP_SEE_OTHER);
 //        }
-//
-//        return $this->renderForm('administration/bc_demande/edit.html.twig', [
-//            'bc_demande' => $bCDemande,
-//            'form' => $form,
-//        ]);
-//    }
-//
-//    #[Route('/{id}/dupliquer', name: 'duplicate', methods: ['GET'])]
-//    public function duplicate(BCDemande $BCDemande): Response
-//    {
-//        $newBCDemande = clone $BCDemande;
-//
-//        $this->entityManager->persist($newBCDemande);
-//        $this->entityManager->flush();
-//        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'bcdemande.duplicate.success.flash');
-//
-//        return $this->redirectToRoute('administration_bc_demande_edit', ['id' => $newBCDemande->getId()]);
-//    }
-//
-//    #[Route('/{id}', name: 'delete', methods: ['POST'])]
-//    public function delete(Request $request, BCDemande $bCDemande): Response
-//    {
-//        if ($this->isCsrfTokenValid('delete'.$bCDemande->getId(), $request->request->get('_token'))) {
-//            $this->entityManager->remove($bCDemande);
-//            $this->entityManager->flush();
-//            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'bcdemande.delete.success.flash');
-//
-//        }
-//        $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'bcdemande.delete.error.flash');
-//
-//        return $this->redirectToRoute('administration_bc_demande_index', [], Response::HTTP_SEE_OTHER);
-//    }
+
+        return $this->renderForm('administration/bc_demande/edit.html.twig', [
+            'bc_demande' => $bCDemande,
+            //  'form' => $form,
+        ]);
+    }
+
+    #[Route('/{id}/dupliquer', name: 'duplicate', methods: ['GET'])]
+    public function duplicate(BCDemande $bCDemande): Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $bCDemande->getDepartement());
+
+        $newBCDemande = clone $bCDemande;
+
+        $this->entityManager->persist($newBCDemande);
+        $this->entityManager->flush();
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'bcdemande.duplicate.success.flash');
+
+        return $this->redirectToRoute('administration_bc_demande_edit', ['id' => $newBCDemande->getId()]);
+    }
+
+    #[Route('/{id}', name: 'delete', methods: ['POST'])]
+    public function delete(Request $request, BCDemande $bCDemande): Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $bCDemande->getDepartement());
+
+        if ($this->isCsrfTokenValid('delete' . $bCDemande->getId(), $request->request->get('_token'))) {
+            $this->entityManager->remove($bCDemande);
+            $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'bcdemande.delete.success.flash');
+        }
+        $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'bcdemande.delete.error.flash');
+
+        return $this->redirectToRoute('administration_bc_demande_index', [], Response::HTTP_SEE_OTHER);
+    }
 }

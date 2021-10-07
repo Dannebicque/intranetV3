@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/ConfigurationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:17
+ * @lastUpdate 07/10/2021 09:57
  */
 
 namespace App\Controller\administration;
@@ -29,6 +29,8 @@ class ConfigurationController extends BaseController
      */
     public function index(AnneeUniversitaireRepository $anneeUniversitaireRepository): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
+
         return $this->render('administration/configuration/index.html.twig', [
             'anneeUniversitaire' => $anneeUniversitaireRepository->findAll(),
         ]);
@@ -41,6 +43,8 @@ class ConfigurationController extends BaseController
      */
     public function changeOption(MyConfiguration $myConfiguration, Request $request): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
+
         $type = $request->request->get('type');
         $id = $request->request->get('id');
         $name = $request->request->get('name');

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/HrsController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/09/2021 18:25
+ * @lastUpdate 07/10/2021 10:23
  */
 
 namespace App\Controller\administration;
@@ -31,8 +31,10 @@ class HrsController extends BaseController
      */
     public function index(Request $request, HrsRepository $hrsRepository, int $annee = 0): Response
     {
-        if (0 === $annee && null !== $this->dataUserSession->getDepartement()) {
-            $annee = $this->dataUserSession->getDepartement()->getOptAnneePrevisionnel();
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
+
+        if (0 === $annee && null !== $this->getDepartement()) {
+            $annee = $this->getDepartement()->getOptAnneePrevisionnel();
         }
 
         $hrs = new Hrs($this->getDepartement());
@@ -63,8 +65,10 @@ class HrsController extends BaseController
      */
     public function edit(Request $request, Hrs $hrs): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_CDD', $hrs->getDepartement());//todo: département parfois null??
+
         $form = $this->createForm(HrsType::class, $hrs, [
-            'departement' => $this->dataUserSession->getDepartement(),
+            'departement' => $this->getDepartement(),
             'attr' => [
                 'data-provide' => 'validation',
             ],
@@ -93,20 +97,21 @@ class HrsController extends BaseController
      */
     public function duplicateAnnee(HrsRepository $hrsRepository, Request $request): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_CDD', $this->getDepartement());
         $anneeDepart = $request->request->get('annee_depart');
         $annee_destination = $request->request->get('annee_destination');
         $annee_concerver = $request->request->get('annee_concerver');
 
         //on efface, sauf si la case est cochée.
         if (null === $annee_concerver || 'true' !== $annee_concerver) {
-            $hrs = $hrsRepository->findByDepartement($this->dataUserSession->getDepartement(), $annee_destination);
+            $hrs = $hrsRepository->findByDepartement($this->getDepartement(), $annee_destination);
             foreach ($hrs as $hr) {
                 $this->entityManager->remove($hr);
             }
             $this->entityManager->flush();
         }
 
-        $hrs = $hrsRepository->findByDepartement($this->dataUserSession->getDepartement(), $anneeDepart);
+        $hrs = $hrsRepository->findByDepartement($this->getDepartement(), $anneeDepart);
 
         /** @var Hrs $hr */
         foreach ($hrs as $hr) {
@@ -126,6 +131,7 @@ class HrsController extends BaseController
      */
     public function duplicate(Hrs $hrs): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_CDD', $hrs->getDepartement());
         $newHrs = clone $hrs;
         $this->entityManager->persist($newHrs);
         $this->entityManager->flush();
@@ -140,6 +146,7 @@ class HrsController extends BaseController
      */
     public function show(Hrs $hrs): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $hrs->getDepartement());
         return $this->render('administration/hrs/show.html.twig', ['hrs' => $hrs]);
     }
 
@@ -148,6 +155,7 @@ class HrsController extends BaseController
      */
     public function delete(Request $request, Hrs $hrs): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_CDD', $hrs->getDepartement());
         $id = $hrs->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
             $this->entityManager->remove($hrs);
@@ -167,8 +175,10 @@ class HrsController extends BaseController
      */
     public function supprimer(Request $request, HrsRepository $hrsRepository): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_CDD', $this->getDepartement());
+
         if ($this->isCsrfTokenValid('supprimer', $request->request->get('_token'))) {
-            $hrs = $hrsRepository->findByDepartement($this->dataUserSession->getDepartement(),
+            $hrs = $hrsRepository->findByDepartement($this->getDepartement(),
                 $request->request->get('annee_supprimer'));
             foreach ($hrs as $hr) {
                 $this->entityManager->remove($hr);
