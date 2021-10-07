@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Previsionnel/PrevisionnelSynthese.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/06/2021 21:39
+ * @lastUpdate 07/10/2021 13:08
  */
 
 namespace App\Classes\Previsionnel;
 
+use App\Entity\Constantes;
 use App\Entity\Personnel;
 
 /**
@@ -75,7 +76,7 @@ class PrevisionnelSynthese
 
     public function getTotalService(): float
     {
-        return $this->totalCm + $this->totalTd + $this->totalTp;
+        return $this->totalCm * Constantes::MAJORATION_CM + $this->totalTd + $this->totalTp;
     }
 
     public function getTotalHrsService(): float
