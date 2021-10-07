@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.2.0](https://github.com/Dannebicque/intranetV3/compare/v3.1.29...v3.2.0) (2021-10-07)
+
+
+### Features
+
+* Affichage du bouton "Appel réalisé, aucun absent" En haut et en bas de la page avec nombre d'étudiants ([cb61bd5](https://github.com/Dannebicque/intranetV3/commit/cb61bd59f09168c4e5a000f5700b8c0c0ff28ce1))
+* Modification d'un étudiant depuis Super Admin ([32a3223](https://github.com/Dannebicque/intranetV3/commit/32a32231848e9fbe4c0965a686169a0551a023eb))
+* Nombre de jour pour justifier une absence en paramètre ([d1e4d45](https://github.com/Dannebicque/intranetV3/commit/d1e4d452f56b86a65430f0b7850d58822d251069))
+* Page d'erreur 403 ([4c6cb2b](https://github.com/Dannebicque/intranetV3/commit/4c6cb2bd85326b9bc7b267605a32449f94938f05))
+
+
+### Bug Fixes
+
+* Affichage matière complet dans profil. ([898adeb](https://github.com/Dannebicque/intranetV3/commit/898adeb56f5195defb9085bfd4eb5fb6c9c763f9))
+* Améliorations de sécurités sur les accès de la partie administration avec les départements. ([3c2784d](https://github.com/Dannebicque/intranetV3/commit/3c2784d94ffcb7492efa3bcb1c5d1f2eeffa12f0))
+* Année universitaire par défaut lors de la création d'un nouveau personnel. ([15330e2](https://github.com/Dannebicque/intranetV3/commit/15330e2a73aa0ee05160927703069d96b6d6b96c))
+* Build ([2b5d79c](https://github.com/Dannebicque/intranetV3/commit/2b5d79cdd4820d6d3f307c70aeed79fbca89160b))
+* Cohérence du département si changement de semestre ([7ae191c](https://github.com/Dannebicque/intranetV3/commit/7ae191ca83b07ecdd8cacd97a11a8fee4442cc49))
+* Correctifs sur la base + Toast + Meta ([6edf273](https://github.com/Dannebicque/intranetV3/commit/6edf273557927bbbceb40bcecda6104c36b888b7))
+* majoration des CM ([1c0ac3c](https://github.com/Dannebicque/intranetV3/commit/1c0ac3c9c548de1f3f0ff668b33446e7bdc98daa))
+* Modification d'un étudiant. ([93e1dd4](https://github.com/Dannebicque/intranetV3/commit/93e1dd4401729bb92446a823e0daa9aea54da4ca))
+* Stimulus controller pour gérer les toasts des pages. ([1e1960e](https://github.com/Dannebicque/intranetV3/commit/1e1960e9d6e7ce5130fcf5fd3b70330c626f882e))
+
 ### [3.1.29](https://github.com/Dannebicque/intranetV3/compare/v3.1.28...v3.1.29) (2021-10-04)
 
 
