@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Security/Voter/AbstractVoter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/10/2021 12:14
+ * @lastUpdate 07/10/2021 13:17
  */
 
 namespace App\Security\Voter;
@@ -54,8 +54,8 @@ class AbstractVoter
         self::MINIMAL_ROLE_CDD => ['ROLE_CDD'],
     ];
 
-    protected SessionInterface $session;
-    protected UserInterface $user;
+    protected ?SessionInterface $session;
+    protected ?UserInterface $user;
     protected array $departementRoles;
 
     public function __construct(SessionInterface $session, TokenStorageInterface $tokenStorage)
