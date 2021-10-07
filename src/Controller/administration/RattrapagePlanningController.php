@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/RattrapagePlanningController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/07/2021 17:05
+ * @lastUpdate 07/10/2021 12:14
  */
 
 namespace App\Controller\administration;
@@ -36,6 +36,8 @@ class RattrapagePlanningController extends BaseController
         RattrapageRepository $rattrapageRepository,
         Diplome $diplome
     ): Response {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $diplome);
+
         return $this->render('administration/rattrapagePlanning/index.html.twig', [
             'rattrapages' => $rattrapageRepository->findValidByDiplome($diplome, $diplome->getAnneeUniversitaire()),
             'diplome' => $diplome,
@@ -57,7 +59,10 @@ class RattrapagePlanningController extends BaseController
         RattrapageRepository $rattrapageRepository,
         Diplome $diplome,
         string $_format
-    ): Response {
+    ): Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $diplome);
+
         $rattrapages = $rattrapageRepository->findValidByDiplome($diplome, $diplome->getAnneeUniversitaire());
 
         return $myExport->genereFichierGenerique(
@@ -89,6 +94,8 @@ class RattrapagePlanningController extends BaseController
      */
     public function change(Request $request, Rattrapage $rattrapage, $type): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $rattrapage->getEtudiant()?->getSemestre());
+
         $data = $request->request->get('data');
         switch ($type) {
             case 'date':
@@ -119,7 +126,10 @@ class RattrapagePlanningController extends BaseController
         RattrapageRepository $rattrapageRepository,
         $type,
         Diplome $diplome
-    ): Response {
+    ): Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $diplome);
+
         $valeur = $request->request->get('valeur');
 
         $rattrapages = $rattrapageRepository->findValidByDiplome($diplome, $diplome->getAnneeUniversitaire());

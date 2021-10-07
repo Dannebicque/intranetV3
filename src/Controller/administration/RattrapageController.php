@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/RattrapageController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/09/2021 21:16
+ * @lastUpdate 07/10/2021 12:14
  */
 
 namespace App\Controller\administration;
@@ -35,6 +35,8 @@ class RattrapageController extends BaseController
         AbsenceRepository $absenceRepository,
         Semestre $semestre
     ): Response {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $semestre);
+
         $table = $this->createTable(RattrapageTableType::class, [
             'semestre' => $semestre,
             'anneeUniversitaire' => $semestre->getAnneeUniversitaire(),
@@ -64,7 +66,10 @@ class RattrapageController extends BaseController
         RattrapageRepository $rattrapageRepository,
         Semestre $semestre,
         string $_format
-    ): Response {
+    ): Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $semestre);
+
         $rattrapages = $rattrapageRepository->findBySemestre($semestre, $semestre->getAnneeUniversitaire());
         $matieres = $typeMatiereManager->findBySemestreArray($semestre);
         $tab = [];
@@ -103,6 +108,8 @@ class RattrapageController extends BaseController
      */
     public function accepte(EventDispatcherInterface $eventDispatcher, Rattrapage $rattrapage, $etat): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $rattrapage->getEtudiant()?->getSemestre());
+
         if (Rattrapage::DEMANDE_ACCEPTEE === $etat || Rattrapage::DEMANDE_REFUSEE === $etat) {
             $rattrapage->setEtatDemande($etat);
             $this->entityManager->flush();
@@ -121,6 +128,8 @@ class RattrapageController extends BaseController
      */
     public function deleteAllAnnee(RattrapageRepository $rattrapageRepository, Semestre $semestre): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $semestre);
+
         $rattrapages = $rattrapageRepository->findByAnnee($semestre->getAnnee());
         foreach ($rattrapages as $rattrapage) {
             $this->entityManager->remove($rattrapage);
@@ -141,6 +150,9 @@ class RattrapageController extends BaseController
      */
     public function delete(Request $request, Rattrapage $rattrapage): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $rattrapage->getEtudiant()?->getSemestre());
+
+
         $id = $rattrapage->getUuidString();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
             $this->entityManager->remove($rattrapage);

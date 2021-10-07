@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/CovidAttestationPersonnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 07/10/2021 12:14
  */
 
 namespace App\Controller\appPersonnel;
@@ -16,6 +16,7 @@ use App\Entity\CovidAttestationPersonnel;
 use App\Event\CovidEvent;
 use App\Form\CovidAttestationPersonnelType;
 use App\Repository\CovidAttestationPersonnelRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,9 +25,8 @@ use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
-/**
- * @Route("/covid/attestation/personnel", name="application_personnel_")
- */
+#[Route("/covid/attestation/personnel", name: "application_personnel_")]
+#[IsGranted('ROLE_PERMANENT')]
 class CovidAttestationPersonnelController extends BaseController
 {
     /**

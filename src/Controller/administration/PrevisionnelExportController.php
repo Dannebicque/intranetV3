@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/PrevisionnelExportController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/08/2021 08:39
+ * @lastUpdate 07/10/2021 12:14
  */
 
 namespace App\Controller\administration;
@@ -34,6 +34,8 @@ class PrevisionnelExportController extends BaseController
         PrevisionnelExport $myPrevisionnel,
         int $annee
     ): StreamedResponse {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $this->getDepartement());
+
         if (0 === $annee && null !== $this->getDepartement()) {
             $annee = $this->getDepartement()->getOptAnneePrevisionnel();
         }
@@ -56,7 +58,10 @@ class PrevisionnelExportController extends BaseController
         string $data,
         string $type,
         string $_format
-    ): StreamedResponse {
+    ): StreamedResponse
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $this->getDepartement());
+
         //todo: dépend du type : Personnel, Matiere, Semestre
         return $myPrevisionnel->export($this->getDepartement(), $annee, $data, $type, $_format);
     }

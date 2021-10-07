@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/projet/ProjetPeriodeGestionController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 07/10/2021 12:14
  */
 
 namespace App\Controller\administration\projet;
@@ -33,6 +33,8 @@ class ProjetPeriodeGestionController extends BaseController
      */
     public function export(MyExport $myExport, ProjetPeriode $projetPeriode, $_format): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_PROJET', $projetPeriode->getSemestre());
+
         $projetEtudiants = $projetPeriode->getProjetEtudiants();
 
         return $myExport->genereFichierGenerique(
@@ -41,7 +43,7 @@ class ProjetPeriodeGestionController extends BaseController
             'periode_stage_' . $projetPeriode->getLibelle(),
             ['projet_periode_gestion', 'utilisateur', 'projet_entreprise_administration', 'adresse'],
             [
-                'etudiant'            => ['nom', 'prenom'],
+                'etudiant' => ['nom', 'prenom'],
                 'entreprise'          => ['raisonSociale'],
                 'tuteur'              => ['nom', 'prenom', 'fonction', 'telephone', 'email'],
                 'tuteurUniversitaire' => ['nom', 'prenom'],
@@ -59,7 +61,10 @@ class ProjetPeriodeGestionController extends BaseController
         ProjetPeriodeRepository $projetPeriodeRepository,
         MyProjet $myProjet,
         ProjetPeriode $projetPeriode
-    ): Response {
+    ): Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_PROJET', $projetPeriode->getSemestre());
+
         $periodes = [];
         foreach ($this->dataUserSession->getDiplomes() as $diplome) {
             $pers = $projetPeriodeRepository->findByDiplome($diplome, $diplome->getAnneeUniversitaire());

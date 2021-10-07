@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/ScolariteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/05/2021 19:35
+ * @lastUpdate 07/10/2021 12:14
  */
 
 namespace App\Controller\administration;
@@ -45,6 +45,8 @@ class ScolariteController extends BaseController
         Etudiant $etudiant,
         ?Scolarite $scolarite = null
     ): Response {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_DDE', $etudiant->getSemestre());
+
         $edit = true;
         if (null === $scolarite) {
             $scolarite = new Scolarite($etudiant, $etudiant->getSemestre(),
@@ -85,6 +87,8 @@ class ScolariteController extends BaseController
      */
     public function uesSemestre(Semestre $semestre): JsonResponse
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $semestre);
+
         $ues = $semestre->getUes();
 
         $t = [];
@@ -105,7 +109,10 @@ class ScolariteController extends BaseController
         AnneeUniversitaireRepository $anneeUniversitaireRepository,
         MyScolarite $myScolarite,
         Request $request
-    ): RedirectResponse {
+    ): RedirectResponse
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_DDE', $this->getDepartement());
+
         $anneeUniversitaire = $anneeUniversitaireRepository->find($request->request->get('annee'));
         $myScolarite->importCsv($request->files->get('fichierImport'), $this->getDepartement(), $anneeUniversitaire);
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'parcours.scolarite.import.success.flash');

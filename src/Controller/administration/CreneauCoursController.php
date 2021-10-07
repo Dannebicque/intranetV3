@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/CreneauCoursController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 07/10/2021 09:57
  */
 
 namespace App\Controller\administration;
@@ -24,6 +24,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/administration/creneau/cours")
+ * @deprecated
+ * Encore utilisé ?
  */
 class CreneauCoursController extends BaseController
 {

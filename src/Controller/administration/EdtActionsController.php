@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtActionsController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/02/2021 18:37
+ * @lastUpdate 07/10/2021 12:14
  */
 
 namespace App\Controller\administration;
@@ -39,6 +39,7 @@ class EdtActionsController extends BaseController
         Request $request,
         MyEdtImport $myEdtImport
     ): ?RedirectResponse {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_EDT', $this->getDepartement());
         //récupérer le fichier
         $myEdtImport->init($request->files->get('fichieredt'), $this->dataUserSession)->traite();
 
@@ -61,7 +62,10 @@ class EdtActionsController extends BaseController
         Request $request,
         EdtPlanningRepository $edtPlanningRepository,
         MyEdtIntranet $myEdt
-    ): RedirectResponse {
+    ): RedirectResponse
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_EDT', $this->getDepartement());
+
         if ('' !== $request->request->get('idEdtUpdate')) {
             $plann = $edtPlanningRepository->find($request->request->get('idEdtUpdate'));
             if (null !== $plann) {
@@ -83,6 +87,8 @@ class EdtActionsController extends BaseController
      */
     public function getEvent(EdtPlanning $edtPlanning): JsonResponse
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_EDT', $edtPlanning->getSemestre());
+
         return $this->json($edtPlanning->getJson(), Response::HTTP_OK);
     }
 
@@ -91,6 +97,8 @@ class EdtActionsController extends BaseController
      */
     public function delete(Request $request, EdtPlanning $edtPlanning): JsonResponse
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_EDT', $edtPlanning->getSemestre());
+
         $this->entityManager->remove($edtPlanning);
         $this->entityManager->flush();
 

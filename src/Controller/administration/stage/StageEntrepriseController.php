@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StageEntrepriseController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:48
+ * @lastUpdate 07/10/2021 12:14
  */
 
 namespace App\Controller\administration\stage;
@@ -33,6 +33,8 @@ class StageEntrepriseController extends BaseController
      */
     public function index(StageEtudiantRepository $stageEtudiantRepository, StagePeriode $stagePeriode): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
+
         $entreprises = $stageEtudiantRepository->findEntreprisesByPeriode($stagePeriode);
         $tEntreprises = [];
         /** @var StageEtudiant $entreprise */
@@ -75,7 +77,10 @@ class StageEntrepriseController extends BaseController
         MyExport $myExport,
         StagePeriode $stagePeriode,
         $_format
-    ): Response {
+    ): Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
+
         $entreprises = $stageEtudiantRepository->findEntreprisesByPeriode($stagePeriode);
 
         return $myExport->genereFichierGenerique(

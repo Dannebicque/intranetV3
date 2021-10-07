@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/SalleExamenController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 07/10/2021 10:36
  */
 
 namespace App\Controller\administration;
@@ -40,6 +40,7 @@ class SalleExamenController extends BaseController
      */
     public function export(MyExport $myExport, SalleExamenRepository $salleExamenRepository, $_format): Response
     {
+
         $salles_examen = $salleExamenRepository->findByDepartement($this->dataUserSession->getDepartement());
 
         return $myExport->genereFichierGenerique(

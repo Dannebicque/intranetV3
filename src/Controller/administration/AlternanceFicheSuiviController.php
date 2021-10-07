@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/AlternanceFicheSuiviController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/06/2021 14:53
+ * @lastUpdate 07/10/2021 12:14
  */
 
 namespace App\Controller\administration;
@@ -33,6 +33,8 @@ class AlternanceFicheSuiviController extends BaseController
      */
     public function new(Request $request, Alternance $alternance): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $alternance->getAnnee());
+
         $alternanceFicheSuivi = new AlternanceFicheSuivi($alternance);
         $form = $this->createForm(AlternanceFicheSuiviType::class, $alternanceFicheSuivi);
         $form->handleRequest($request);
@@ -61,7 +63,10 @@ class AlternanceFicheSuiviController extends BaseController
     public function print(
         MyAlternanceFicheSuivi $myAlternanceFicheSuivi,
         AlternanceFicheSuivi $alternanceFicheSuivi
-    ): PdfResponse {
+    ): PdfResponse
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $alternanceFicheSuivi->getAlternance()?->getAnnee());
+
         return $myAlternanceFicheSuivi->print($alternanceFicheSuivi);
     }
 
@@ -70,6 +75,8 @@ class AlternanceFicheSuiviController extends BaseController
      */
     public function show(AlternanceFicheSuivi $alternanceFicheSuivi): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $alternanceFicheSuivi->getAlternance()?->getAnnee());
+
         return $this->render('administration/alternance_fiche_suivi/show.html.twig', [
             'alternance_fiche_suivi' => $alternanceFicheSuivi,
         ]);
@@ -80,6 +87,8 @@ class AlternanceFicheSuiviController extends BaseController
      */
     public function edit(Request $request, AlternanceFicheSuivi $alternanceFicheSuivi): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $alternanceFicheSuivi->getAlternance()?->getAnnee());
+
         $form = $this->createForm(AlternanceFicheSuiviType::class, $alternanceFicheSuivi);
         $form->handleRequest($request);
 
@@ -107,6 +116,8 @@ class AlternanceFicheSuiviController extends BaseController
      */
     public function delete(Request $request, AlternanceFicheSuivi $alternanceFicheSuivi): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $alternanceFicheSuivi->getAlternance()?->getAnnee());
+
         $alternance = $alternanceFicheSuivi->getAlternance();
 
         if ($this->isCsrfTokenValid('delete' . $alternanceFicheSuivi->getId(), $request->request->get('_token'))) {

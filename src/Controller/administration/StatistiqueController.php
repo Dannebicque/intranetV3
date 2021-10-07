@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/StatistiqueController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 07/10/2021 12:14
  */
 
 namespace App\Controller\administration;
@@ -27,6 +27,8 @@ class StatistiqueController extends BaseController
      */
     public function index(BacRepository $bacRepository, StatsSemestre $statsSemestre): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $this->getDepartement());
+
         $bacs = $bacRepository->findAll();
         $tabSemestres = [];
         foreach ($this->dataUserSession->getSemestres() as $semestre) {
@@ -35,7 +37,7 @@ class StatistiqueController extends BaseController
 
         return $this->render('administration/statistique/index.html.twig', [
             'statistiques' => $tabSemestres,
-            'bacs'         => $bacs,
+            'bacs' => $bacs,
         ]);
     }
 }

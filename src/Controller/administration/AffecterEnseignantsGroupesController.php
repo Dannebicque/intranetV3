@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/AffecterEnseignantsGroupesController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:17
+ * @lastUpdate 07/10/2021 09:45
  */
 
 namespace App\Controller\administration;
@@ -30,6 +30,8 @@ class AffecterEnseignantsGroupesController extends BaseController
     public function index(
         Semestre $semestre
     ): Response {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $semestre);
+
         return $this->render('administration/affecterEnseignantsGroupes/index.html.twig', [
             'semestre' => $semestre,
         ]);

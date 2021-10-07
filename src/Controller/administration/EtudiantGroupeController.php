@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EtudiantGroupeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 07/10/2021 12:14
  */
 
 namespace App\Controller\administration;
@@ -34,6 +34,8 @@ class EtudiantGroupeController extends BaseController
      */
     public function index(Semestre $semestre): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $semestre);
+
         return $this->render('administration/etudiant_groupe/index.html.twig', [
             'semestre' => $semestre,
         ]);
@@ -46,14 +48,17 @@ class EtudiantGroupeController extends BaseController
         GroupeRepository $groupeRepository,
         EtudiantRepository $etudiantRepository,
         TypeGroupe $typeGroupe
-    ): Response {
+    ): Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $typeGroupe->getSemestre());
+
         $etudiants = $etudiantRepository->findBySemestre($typeGroupe->getSemestre());
         $groupes = $groupeRepository->findByTypeGroupe($typeGroupe);
 
         return $this->render('administration/etudiant_groupe/affecte.html.twig', [
             'typeGroupe' => $typeGroupe,
-            'groupes'    => $groupes,
-            'etudiants'  => $etudiants,
+            'groupes' => $groupes,
+            'etudiants' => $etudiants,
         ]);
     }
 
@@ -62,6 +67,8 @@ class EtudiantGroupeController extends BaseController
      */
     public function synchroApogee(MyGroupes $myGroupes, Semestre $semestre): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_DDE', $semestre);
+
         $myGroupes->updateFromApogee($semestre);
 
         $this->addFlashBag('success', 'groupes.synchronises');
@@ -75,6 +82,8 @@ class EtudiantGroupeController extends BaseController
      */
     public function synchroParent(MyGroupes $myGroupes, Semestre $semestre): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_DDE', $semestre);
+
         $myGroupes->updateParent($semestre);
         $this->addFlashBag('success', 'groupes.parents.synchronises');
 
@@ -129,6 +138,8 @@ class EtudiantGroupeController extends BaseController
      */
     public function delete(Request $request, Groupe $groupe, Etudiant $etudiant): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $etudiant->getSemestre());
+
         if ($this->isCsrfTokenValid('delete' . $groupe->getId(), $request->request->get('_token'))) {
             $id = $groupe->getId();
             $etudiant->removeGroupe($groupe);

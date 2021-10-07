@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StagePeriodeGestionController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 07/10/2021 12:14
  */
 
 namespace App\Controller\administration\stage;
@@ -34,6 +34,8 @@ class StagePeriodeGestionController extends BaseController
      */
     public function export(MyExport $myExport, StagePeriode $stagePeriode, $_format): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
+
         $stageEtudiants = $stagePeriode->getStageEtudiants();
 
         return $myExport->genereFichierGenerique(
@@ -42,7 +44,7 @@ class StagePeriodeGestionController extends BaseController
             'periode_stage_' . $stagePeriode->getLibelle(),
             ['stage_periode_gestion', 'utilisateur', 'stage_entreprise_administration', 'adresse'],
             [
-                'etudiant'            => ['nom', 'prenom'],
+                'etudiant' => ['nom', 'prenom'],
                 'entreprise'          => ['raisonSociale'],
                 //'adresse' => ['adresse1','adresse2', 'cp', 'ville', 'pays']
                 'tuteur'              => ['nom', 'prenom', 'fonction', 'telephone', 'email'],
@@ -59,6 +61,8 @@ class StagePeriodeGestionController extends BaseController
      */
     public function exportXlsx(MyExportStage $myExport, StagePeriode $stagePeriode): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
+
         return $myExport->genereFichier($stagePeriode);
     }
 
@@ -70,7 +74,10 @@ class StagePeriodeGestionController extends BaseController
         StagePeriodeRepository $stagePeriodeRepository,
         MyStage $myStage,
         StagePeriode $stagePeriode
-    ): Response {
+    ): Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
+
         $periodes = [];
         foreach ($this->dataUserSession->getDiplomes() as $diplome) {
             $pers = $stagePeriodeRepository->findByDiplome($diplome, $diplome->getAnneeUniversitaire());

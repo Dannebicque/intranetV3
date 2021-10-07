@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/AbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/09/2021 16:04
+ * @lastUpdate 07/10/2021 12:14
  */
 
 namespace App\Controller\administration;
@@ -50,6 +50,9 @@ class AbsenceController extends BaseController
         StatsAbsences $statsAbsences,
         Etudiant $etudiant
     ): Response {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $etudiant->getSemestre());
+
+
         $matieres = $typeMatiereManager->findBySemestreArray($etudiant->getSemestre());
         $etudiantAbsences->setEtudiant($etudiant);
 
@@ -74,7 +77,10 @@ class AbsenceController extends BaseController
         TypeMatiereManager $typeMatiereManager,
         MyAbsences $myAbsences,
         Semestre $semestre
-    ): Response {
+    ): Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $semestre);
+
         $matieres = $typeMatiereManager->findBySemestreArray($semestre);
         $myAbsences->getAbsencesSemestre($matieres, $semestre);
 
@@ -89,6 +95,8 @@ class AbsenceController extends BaseController
      */
     public function justifier(Semestre $semestre): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $semestre);
+
         return $this->render('administration/absence/justifier.html.twig', [
             'semestre' => $semestre,
         ]);
@@ -99,6 +107,8 @@ class AbsenceController extends BaseController
      */
     public function saisie(Semestre $semestre): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $semestre);
+
         return $this->render('administration/absence/saisie.html.twig', [
             'semestre' => $semestre,
         ]);
@@ -113,7 +123,10 @@ class AbsenceController extends BaseController
         AbsenceJustificatifRepository $absenceJustificatifRepository,
         Semestre $semestre,
         string $_format
-    ): Response {
+    ): Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $semestre);
+
         $justificatifs = $absenceJustificatifRepository->findBySemestre($semestre);
 
         return $myExport->genereFichierAbsence($_format, $justificatifs, 'absences_' . $semestre->getLibelle());
@@ -131,7 +144,10 @@ class AbsenceController extends BaseController
         MyAbsences $myAbsences,
         Semestre $semestre,
         string $_format
-    ): Response {
+    ): Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $semestre);
+
         $matieres = $typeMatiereManager->findBySemestreArray($semestre);
         $myAbsences->getAbsencesSemestre($matieres, $semestre);
 
@@ -147,7 +163,10 @@ class AbsenceController extends BaseController
         AbsenceRepository $absenceRepository,
         Semestre $semestre,
         string $_format
-    ): Response {
+    ): Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $semestre);
+
         $absences = $absenceRepository->getBySemestre($semestre, $semestre->getAnneeUniversitaire());
 
         return $myExport->genereFichierGenerique(
@@ -173,7 +192,10 @@ class AbsenceController extends BaseController
         EventDispatcherInterface $eventDispatcher,
         Absence $absence,
         bool $etat
-    ): JsonResponse {
+    ): JsonResponse
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $absence->getEtudiant()?->getSemestre());
+
         $absence->setJustifie($etat);
         $this->entityManager->flush();
 
@@ -199,7 +221,10 @@ class AbsenceController extends BaseController
         EtudiantAbsences $etudiantAbsences
     ): JsonResponse {
         $etudiant = $etudiantRepository->find($request->request->get('etudiant'));
+
         if (null !== $etudiant) {
+            $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $etudiant->getSemestre());
+
             $matiere = $typeMatiereManager->getMatiereFromSelect($request->request->get('matiere'));
             if (null !== $matiere) {
                 $etudiantAbsences->setEtudiant($etudiant);
@@ -224,6 +249,8 @@ class AbsenceController extends BaseController
      */
     public function delete(Request $request, Absence $absence): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $absence->getEtudiant()?->getSemestre());
+
         $id = $absence->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
             $this->entityManager->remove($absence);

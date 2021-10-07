@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/MatiereController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 27/09/2021 22:16
+ * @lastUpdate 07/10/2021 12:14
  */
 
 namespace App\Controller\administration;
@@ -37,6 +37,8 @@ class MatiereController extends BaseController
     #[Route('/{diplome}', name: 'administration_matiere_index', methods: ['GET'])]
     public function index(Diplome $diplome = null): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $this->getDepartement());
+
         return $this->render('administration/matiere/index.html.twig',
             [
                 'diplomeSelect' => $diplome,
@@ -50,7 +52,11 @@ class MatiereController extends BaseController
         ApcRessourceRepository $apcRessourceRepository,
         ApcSaeRepository $apcSaeRepository,
         Diplome $diplome
-    ): Response {
+    ): Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $diplome);
+
+
         //feature: A optimiser pour pas dépendre des repository??
         if (null !== $diplome->getTypeDiplome() && true === $diplome->getTypeDiplome()->getApc()) {
             return $this->render('administration/matiere/_tableauApc.html.twig', [
@@ -76,7 +82,10 @@ class MatiereController extends BaseController
         TypeMatiereManager $typeMatiereManager,
         Diplome $diplome,
         $_format
-    ): Response {
+    ): Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $diplome);
+
         $matieres = $typeMatiereManager->findByDiplome($diplome);
         $datas = new DtoSourceIterator($matieres, \App\DTO\Matiere::class, $matieres);
 
@@ -115,6 +124,8 @@ class MatiereController extends BaseController
     #[Route('/new/{diplome}/{ue}', name: 'administration_matiere_new', methods: ['GET', 'POST'])]
     public function create(Configuration $configuration, Request $request, Diplome $diplome, Ue $ue = null): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_DDE', $diplome);
+
         if (true === (bool)($configuration->get('MODIFICATION_PPN'))) {
             $matiere = new Matiere();
             $form = $this->createForm(MatiereType::class, $matiere, [
@@ -148,6 +159,8 @@ class MatiereController extends BaseController
     #[Route('/{id}/detail', name: 'administration_matiere_show', methods: ['GET'])]
     public function show(Matiere $matiere): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $matiere->getSemestre());
+
         return $this->render('administration/matiere/show.html.twig', ['matiere' => $matiere]);
     }
 
@@ -155,7 +168,10 @@ class MatiereController extends BaseController
     public function ajaxEdit(
         Request $request,
         Matiere $matiere
-    ): JsonResponse {
+    ): JsonResponse
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $matiere->getSemestre());
+
         $name = $request->request->get('field');
         $value = $request->request->get('value');
 
@@ -170,7 +186,10 @@ class MatiereController extends BaseController
     public function changeParcours(
         Matiere $matiere,
         ?Parcour $parcours = null
-    ): JsonResponse {
+    ): JsonResponse
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $matiere->getSemestre());
+
         $matiere->setParcours($parcours);
         $this->entityManager->flush();
 
@@ -181,7 +200,10 @@ class MatiereController extends BaseController
     public function changeUe(
         Matiere $matiere,
         ?Ue $ue = null
-    ): JsonResponse {
+    ): JsonResponse
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $matiere->getSemestre());
+
         $matiere->setUe($ue);
         $this->entityManager->flush();
 
@@ -192,6 +214,8 @@ class MatiereController extends BaseController
     #[Route('/{id}/edit', name: 'administration_matiere_edit', methods: ['GET', 'POST'])]
     public function edit(Configuration $configuration, Request $request, Matiere $matiere): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $matiere->getSemestre());
+
         if (true === (bool)($configuration->get('MODIFICATION_PPN'))) {
             $form = $this->createForm(MatiereType::class, $matiere, [
                 'diplome' => $matiere->getSemestre()->getAnnee()->getDiplome(),
@@ -220,6 +244,7 @@ class MatiereController extends BaseController
     #[Route('/{id}/duplicate', name: 'administration_matiere_duplicate', methods: ['GET', 'POST'])]
     public function duplicate(Configuration $configuration, Matiere $matiere): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $matiere->getSemestre());
         if (true === (bool)($configuration->get('MODIFICATION_PPN'))) {
             $newMatiere = clone $matiere;
 
@@ -238,7 +263,10 @@ class MatiereController extends BaseController
         MatiereDelete $matiereDelete,
         Request $request,
         Matiere $matiere
-    ) {
+    )
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $matiere->getSemestre());
+
         $id = $matiere->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
             $rep = $matiereDelete->delete($matiere);

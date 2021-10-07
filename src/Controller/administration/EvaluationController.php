@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EvaluationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/09/2021 16:08
+ * @lastUpdate 07/10/2021 12:14
  */
 
 namespace App\Controller\administration;
@@ -18,7 +18,6 @@ use App\Entity\Semestre;
 use App\Exception\MatiereNotFoundException;
 use App\Form\EvaluationType;
 use App\Repository\EvaluationRepository;
-use Exception;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -38,6 +37,7 @@ use Twig\Error\SyntaxError;
  */
 class EvaluationController extends BaseController
 {
+   // todo: accès à préciser, car comment lier semestre à évaluation?
     /**
      * @Route("/details/{uuid}", name="administration_evaluation_show", methods="GET|POST")
      * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
@@ -46,7 +46,10 @@ class EvaluationController extends BaseController
         TypeMatiereManager $typeMatiereManager,
         MyEvaluation $myEvaluation,
         Evaluation $evaluation
-    ): Response {
+    ): Response
+    {
+        //$this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $evaluation->);
+
         $notes = $myEvaluation->setEvaluation($evaluation)->getNotesTableau();
 
         return $this->render('administration/evaluation/show.html.twig', [
@@ -91,6 +94,7 @@ class EvaluationController extends BaseController
         if (null === $mat) {
             throw new MatiereNotFoundException();
         }
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $mat->semestre);
 
         $evaluation = new Evaluation($this->getConnectedUser(), $mat);
         $form = $this->createForm(
@@ -136,13 +140,21 @@ class EvaluationController extends BaseController
         TypeMatiereManager $typeMatiereManager,
         MyEvaluation $myEvaluation,
         Evaluation $evaluation
-    ): Response {
+    ): Response
+    {
+        $matiere = $typeMatiereManager->getMatiere($evaluation->getIdMatiere(), $evaluation->getTypeMatiere());
+
+        if (null === $matiere) {
+            throw new MatiereNotFoundException();
+        }
+
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $matiere->semestre);
         $notes = $myEvaluation->setEvaluation($evaluation)->getNotesTableau();
 
         return $this->render('administration/evaluation/saisie_2.html.twig', [
             'evaluation' => $evaluation,
             'notes' => $notes,
-            'matiere' => $typeMatiereManager->getMatiere($evaluation->getIdMatiere(), $evaluation->getTypeMatiere()),
+            'matiere' => $matiere,
         ]);
     }
 
@@ -155,7 +167,10 @@ class EvaluationController extends BaseController
         EvaluationRepository $evaluationRepository,
         $etat,
         Semestre $semestre
-    ): RedirectResponse {
+    ): RedirectResponse
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $semestre);
+
         $matieres = $typeMatiereManager->findBySemestreArray($semestre);
         $evals = $evaluationRepository->findBySemestre($matieres, $this->dataUserSession->getAnneeUniversitaire());
 
@@ -181,7 +196,10 @@ class EvaluationController extends BaseController
         EvaluationRepository $evaluationRepository,
         $etat,
         Semestre $semestre
-    ): RedirectResponse {
+    ): RedirectResponse
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $semestre);
+
         $matieres = $typeMatiereManager->findBySemestreArray($semestre);
         $evals = $evaluationRepository->findBySemestre($matieres, $this->dataUserSession->getAnneeUniversitaire());
 

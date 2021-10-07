@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/AlternanceFicheSuiviController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 07/10/2021 12:14
  */
 
 namespace App\Controller\appPersonnel;
@@ -14,6 +14,7 @@ use App\Entity\Alternance;
 use App\Entity\AlternanceFicheSuivi;
 use App\Form\AlternanceFicheSuiviType;
 use Exception;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,9 +23,9 @@ use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
-/**
- * @Route("/application/personnel/alternance/fiche-suivi")
- */
+
+#[Route("/application/personnel/alternance/fiche-suivi")]
+#[IsGranted('ROLE_PERMANENT')]
 class AlternanceFicheSuiviController extends AbstractController
 {
     /**
@@ -34,7 +35,7 @@ class AlternanceFicheSuiviController extends AbstractController
     {
         return $this->render('appPersonnel/alternance_fiche_suivi/index.html.twig', [
             'alternance_fiche_suivis' => $alternance->getAlternanceFicheSuivis(),
-            'alternance'              => $alternance,
+            'alternance' => $alternance,
         ]);
     }
 

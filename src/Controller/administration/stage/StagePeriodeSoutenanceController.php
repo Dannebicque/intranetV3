@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StagePeriodeSoutenanceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:17
+ * @lastUpdate 07/10/2021 10:48
  */
 
 namespace App\Controller\administration\stage;
@@ -28,6 +28,8 @@ class StagePeriodeSoutenanceController extends BaseController
      */
     public function index(StagePeriode $stagePeriode): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
+
         return $this->render('administration/stage/stage_periode_soutenance/index.html.twig', [
             'stagePeriode' => $stagePeriode,
         ]);

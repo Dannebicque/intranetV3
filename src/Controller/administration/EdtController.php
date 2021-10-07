@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/09/2021 09:27
+ * @lastUpdate 07/10/2021 10:26
  */
 
 namespace App\Controller\administration;
@@ -32,6 +32,8 @@ class EdtController extends BaseController
      */
     public function index(int $semaine = 0, string $valeur = '', string $filtre = ''): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_EDT', $this->getDepartement());//todo: a priciser ?
+
         return $this->render('administration/edt/index.html.twig', [
             'semaine' => $semaine,
             'valeur' => $valeur,

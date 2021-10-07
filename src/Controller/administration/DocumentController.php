@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/DocumentController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/09/2021 09:01
+ * @lastUpdate 07/10/2021 12:14
  */
 
 namespace App\Controller\administration;
@@ -29,6 +29,8 @@ class DocumentController extends BaseController
     #[Route('/', name: 'index', methods: ['GET', 'POST'], options: ['expose' => true])]
     public function index(Request $request): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $this->getDepartement());
+
         $table = $this->createTable(DocumentTableType::class, [
             'departement' => $this->getDepartement(),
         ]);
@@ -45,6 +47,8 @@ class DocumentController extends BaseController
     #[Route('/export.{_format}', name: 'export', methods: 'GET', requirements: ['_format' => 'csv|xlsx|pdf'])]
     public function export(MyExport $myExport, DocumentRepository $documentRepository, $_format): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $this->getDepartement());
+
         $documents = $documentRepository->findByDepartement($this->getDepartement());
 
         return $myExport->genereFichierGenerique(
@@ -59,6 +63,8 @@ class DocumentController extends BaseController
     #[Route('/new', name: 'new', methods: ['GET', 'POST'])]
     public function create(Request $request): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $this->getDepartement());
+
         $document = new Document();
         $form = $this->createForm(
             DocumentType::class,
@@ -94,6 +100,8 @@ class DocumentController extends BaseController
      */
     public function show(Document $document): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $document->getSemestres()[0]);
+
         return $this->render('administration/document/show.html.twig', ['document' => $document]);
     }
 
@@ -103,6 +111,9 @@ class DocumentController extends BaseController
      */
     public function edit(Request $request, Document $document): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $document->getSemestres()[0]);
+
+
         $form = $this->createForm(
             DocumentType::class,
             $document,
@@ -140,7 +151,10 @@ class DocumentController extends BaseController
         DocumentDelete $documentDelete,
         Request $request,
         Document $document
-    ): Response {
+    ): Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $document->getSemestres()[0]);
+
         $id = $document->getId();
         $uuid = $document->getUuid();
 
@@ -165,6 +179,8 @@ class DocumentController extends BaseController
      */
     public function duplicate(Document $document): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $document->getSemestres()[0]);
+
         $newDocument = clone $document;
 
         $this->entityManager->persist($newDocument);

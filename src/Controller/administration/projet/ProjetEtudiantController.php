@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/projet/ProjetEtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 07/10/2021 12:14
  */
 
 namespace App\Controller\administration\projet;
@@ -38,6 +38,8 @@ class ProjetEtudiantController extends BaseController
      */
     public function edit(Request $request, ProjetEtudiant $projetEtudiant): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_PROJET', $projetEtudiant->getProjetPeriode()?->getSemestre());
+
         $form = $this->createForm(ProjetEtudiantType::class, $projetEtudiant, [
             'semestre' => $projetEtudiant->getProjetPeriode()->getSemestre(),
         ]);
@@ -67,6 +69,8 @@ class ProjetEtudiantController extends BaseController
      */
     public function delete(Request $request, ProjetEtudiant $projetEtudiant): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_PROJET', $projetEtudiant->getProjetPeriode()?->getSemestre());
+
         $id = $projetEtudiant->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
             $this->entityManager->remove($projetEtudiant);
@@ -94,7 +98,10 @@ class ProjetEtudiantController extends BaseController
         ProjetPeriode $projetPeriode,
         Etudiant $etudiant,
         $etat
-    ): RedirectResponse {
+    ): RedirectResponse
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_PROJET', $projetPeriode->getSemestre());
+
         $myProjetEtudiant->changeEtat($projetPeriode, $etudiant, $etat);
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'projet_etudiant.change_etat.success.flash');
 
@@ -111,6 +118,8 @@ class ProjetEtudiantController extends BaseController
      */
     public function conventionPdf(MyPDF $myPDF, ProjetEtudiant $projetEtudiant): PdfResponse
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_PROJET', $projetEtudiant->getProjetPeriode()?->getSemestre());
+
         return $myPDF::generePdf('pdf/projetTutore/conventionProjet.html.twig',
             [
                 'projetEtudiant' => $projetEtudiant,

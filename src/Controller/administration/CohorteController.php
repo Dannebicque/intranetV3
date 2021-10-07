@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/CohorteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:26
+ * @lastUpdate 07/10/2021 09:57
  */
 
 namespace App\Controller\administration;
@@ -32,6 +32,8 @@ class CohorteController extends BaseController
         ScolariteRepository $scolariteRepository,
         int $annee = 0
     ): Response {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
+
         if (0 === $annee) {
             $annee = date('Y') - 1;
         }
@@ -59,6 +61,7 @@ class CohorteController extends BaseController
      */
     public function export(): void
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
         //todo: a faire
     }
 }

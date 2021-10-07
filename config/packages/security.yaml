@@ -3,7 +3,12 @@ security:
     App\Entity\Utilisateur: bcrypt
 
   role_hierarchy:
-    - ROLE_SUPER_ADMIN:ROLE_PERMANENT
+    ROLE_SUPER_ADMIN: ROLE_ADMINISTRATIF
+    ROLE_QUALITE: ROLE_ADMINISTRATIF
+    ROLE_SCOLARITE: ROLE_ADMINISTRATIF
+    ROLE_RH: ROLE_ADMINISTRATIF
+    ROLE_FINANCE: ROLE_ADMINISTRATIF
+    #ROLE_ADMINISTRATIF: ROLE_PERMANENT #todo: si je laisse permament, les tests ne fonctionnent plus. Par contre quel effet pour Super_Admin ??
 
   providers:
     chain_provider:
@@ -27,16 +32,11 @@ security:
         entry_point: App\Security\LoginFormAuthenticator
       # les urls auxquels s'appliquent ce firewall, dans ce cas, ce sont toutes les urls
       pattern: ^/
-
-      # La connexion n'est pas requise sur toutes les pages
-      # par exemple la page d'accueil
-      # anonymous: true
       logout:
         path: security_logout
         target: security_login
       provider: chain_provider
-        #guard:
-        #authenticators:
+
 
   access_control:
     # Les regles de securité
@@ -52,6 +52,6 @@ security:
     - { path: '^/[a-z]{2}/api', roles: IS_AUTHENTICATED_ANONYMOUSLY }
     - { path: '^/[a-z]{2}/administration', roles: [ROLE_PERMANENT, ROLE_SUPER_ADMIN] }
     - { path: '^/[a-z]{2}/ldap', roles: [ ROLE_PERMANENT, ROLE_SUPER_ADMIN, ROLE_RH ] }
-    - { path: '^/[a-z]{2}/administratif', roles: [ROLE_SUPER_ADMIN, ROLE_ADMINISTRATIF, ROLE_QUALITE, ROLE_SCOLARITE, ROLE_RH] }
+    - { path: '^/[a-z]{2}/administratif', roles: [ ROLE_ADMINISTRATIF ] }
     - { path: '^/[a-z]{2}/', roles: IS_AUTHENTICATED_FULLY }
 

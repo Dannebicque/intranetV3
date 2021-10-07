@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/StructureController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 07/10/2021 10:36
  */
 
 namespace App\Controller\administration;
@@ -30,6 +30,8 @@ class StructureController extends BaseController
      */
     public function index(): Response
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_DDE', $this->getDepartement());
+
         return $this->render('structure/index.html.twig', [
             'departement' => $this->dataUserSession->getDepartement(),
         ]);
@@ -46,6 +48,8 @@ class StructureController extends BaseController
      */
     public function export(MyStructure $myStructure, Departement $departement, $_format): void
     {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_DDE', $departement);
+
         $myStructure->export($departement, $_format);
     }
 }
