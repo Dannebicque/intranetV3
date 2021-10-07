@@ -1,0 +1,39 @@
+{% extends 'base-speciale.html.twig' %}
+
+{% block header %}{{ 'erreur666.heading'|trans }}{% endblock %}
+
+{% block content %}
+    <div class="row no-margin h-fullscreen" style="padding-top: 10%">
+        <div class="col-12">
+            <div class="card card-transparent mx-auto text-center">
+                <h1 class="text-secondary lh-1" style="font-size: 200px">403</h1>
+                <hr class="w-30px">
+                <h3 class="text-uppercase">{{ 'titre.666'|trans }}</h3>
+
+                <p class="lead">{{ 'message.666'|trans }}</p>
+                <br>
+                <ul class="nav nav-primary nav-dotted nav-dot-separated justify-content-center fs-14">
+                    <li class="nav-item">
+                        <a class="nav-link" href="mailto:{{ settings('MAIL_DEBUG') }}">{{ 'report.problem'|trans }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('default_homepage') }}">{{ 'retour.666'|trans }}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+        <footer class="col-12 align-self-end text-center fs-13">
+            <p>Copyright © 2018 <a href="http://thetheme.io/theadmin" target="_blank">Template : TheAdmin</a> |
+                <a href="https://www.davidannebicque.fr" target="_blank">@DavidAnnebicque</a>.
+               All rights reserved.
+                <a class="nav-dotted" href="https://dannebicque.gitbook.io/intranet/" target="_blank">{{ 'menu.documentation'|trans }}</a>
+               |
+                <a class="" href="{{ path('mentions_about') }}">{{ 'menu.about'|trans }}</a>
+               |
+                <a class="" href="{{ path('mentions_index') }}">{{ 'menu.mentions_legales'|trans }}</a>
+            </p>
+        </footer>
+    </div>
+{% endblock %}
