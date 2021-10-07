@@ -4,12 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Security/Voter/AbstractVoter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/10/2021 13:20
+ * @lastUpdate 07/10/2021 14:03
  */
 
 namespace App\Security\Voter;
 
 use App\Entity\Departement;
+use App\Entity\Personnel;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -62,7 +63,7 @@ class AbstractVoter
     {
         $this->session = $session;
         $this->user = $tokenStorage->getToken()->getUser();
-        if (! is_string($this->user)) {
+        if (!is_string($this->user) && $this->user instanceof Personnel) {
             $this->departementRoles = [];
             foreach ($this->user->getPersonnelDepartements() as $rf) {
                 if (!array_key_exists($rf->getDepartement()->getId(), $this->departementRoles)) {
