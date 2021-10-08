@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/EdtController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/09/2021 18:47
+ * @lastUpdate 08/10/2021 07:01
  */
 
 namespace App\Controller;
@@ -28,23 +28,15 @@ use Twig\Error\SyntaxError;
 
 /**
  * Class EdtController.
- *
- * @Route("/emploi-du-temps")
  */
+#[Route(path: '/emploi-du-temps')]
 class EdtController extends BaseController
 {
-    private MyEdtIntranet $myEdtIntranet;
-    private MyEdtCelcat $myEdtCelcat;
-    private TypeMatiereManager $typeMatiereManager;
-
     public function __construct(
-        TypeMatiereManager $typeMatiereManager,
-        MyEdtIntranet $myEdt,
-        MyEdtCelcat $myEdtCelcat
+        private TypeMatiereManager $typeMatiereManager,
+        private MyEdtIntranet $myEdtIntranet,
+        private MyEdtCelcat $myEdtCelcat
     ) {
-        $this->typeMatiereManager = $typeMatiereManager;
-        $this->myEdtIntranet = $myEdt;
-        $this->myEdtCelcat = $myEdtCelcat;
     }
 
     /**
@@ -54,7 +46,7 @@ class EdtController extends BaseController
     {
         if (null !== $this->getConnectedUser()) {
             //todo: passer le lien semestre-> couleur plutôt que les matières ??
-            if (null !== $this->dataUserSession->getDepartement() && true === $this->dataUserSession->getDepartement()->isOptUpdateCelcat()) {
+            if (null !== $this->dataUserSession->getDepartement() && $this->dataUserSession->getDepartement()->isOptUpdateCelcat()) {
                 $matieres = $this->typeMatiereManager->tableauMatieresCodeApogee($this->getDepartement());
                 $this->myEdtCelcat->initPersonnel($this->getConnectedUser(),
                     $this->dataUserSession->getAnneeUniversitaire(), $semaine, $matieres);
@@ -84,7 +76,7 @@ class EdtController extends BaseController
 
     public function personnelSemestre(Semestre $semestre, $semaine = 0): Response
     {
-        if (null !== $this->dataUserSession->getDepartement() && true === $this->dataUserSession->getDepartement()->isOptUpdateCelcat()) {
+        if (null !== $this->dataUserSession->getDepartement() && $this->dataUserSession->getDepartement()->isOptUpdateCelcat()) {
             $this->myEdtCelcat->initSemestre($semaine, $semestre, $this->dataUserSession->getAnneeUniversitaire());
 
             return $this->render('edt/_semestre.html.twig', [
@@ -115,7 +107,7 @@ class EdtController extends BaseController
         $matieres = $this->typeMatiereManager->tableauMatieresSemestreCodeApogee($this->getConnectedUser()->getSemestre());
 
         if (null !== $this->getConnectedUser()) {
-            if (null !== $this->dataUserSession->getDepartement() && true === $this->dataUserSession->getDepartement()->isOptUpdateCelcat()) {
+            if (null !== $this->dataUserSession->getDepartement() && $this->dataUserSession->getDepartement()->isOptUpdateCelcat()) {
                 $this->myEdtCelcat->initEtudiant($this->getConnectedUser(),
                     $this->dataUserSession->getAnneeUniversitaire(), $semaine, $matieres);
 
@@ -137,35 +129,28 @@ class EdtController extends BaseController
         return $this->render('bundles/TwigBundle/Exception/error500.html.twig');
     }
 
-    /**
-     * @Route("/intervenant/export/semaine/{semaine}", name="edt_intervenant_export_semaine_courante")
-     */
+    #[Route(path: '/intervenant/export/semaine/{semaine}', name: 'edt_intervenant_export_semaine_courante')]
     public function exportIntervenantSemaine(): void
     {
     }
 
     /**
-     * @Route("/semestre/export/semaine/{semaine}/{semestre}", name="edt_semestre_export_semaine_courante")
-     *
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      */
+    #[Route(path: '/semestre/export/semaine/{semaine}/{semestre}', name: 'edt_semestre_export_semaine_courante')]
     public function exportSemestreSemaine(MyEdtExport $myEdtExport, $semaine, Semestre $semestre)
     {
         $myEdtExport->exportSemestre($semaine, $semestre);
     }
 
-    /**
-     * @Route("/intervenant/export/annee", name="edt_intervenant_export_annee")
-     */
+    #[Route(path: '/intervenant/export/annee', name: 'edt_intervenant_export_annee')]
     public function exportIntervenantAnnee(): void
     {
     }
 
-    /**
-     * @Route("/intervenant/export/ical", name="edt_intervenant_export_ical")
-     */
+    #[Route(path: '/intervenant/export/ical', name: 'edt_intervenant_export_ical')]
     public function exportIntervenantIcal(MyEdtExport $myEdtExport): Response
     {
         $ical = $myEdtExport->export($this->getConnectedUser(), 'ics', 'personnel');
@@ -176,9 +161,7 @@ class EdtController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/intervenant/affiche/ical", name="edt_affiche_ical")
-     */
+    #[Route(path: '/intervenant/affiche/ical', name: 'edt_affiche_ical')]
     public function afficheLienIcal(): Response
     {
         if ($this->isEtudiant()) {
@@ -201,26 +184,21 @@ class EdtController extends BaseController
     }
 
     /**
-     * @Route("/etudiant/export/semaine/{semaine}", name="edt_etudiant_export_semaine_courante")
-     *
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      * @throws Exception
      */
-    public function exportEtudiantSemaine(
-        MyPDF $myPDF,
-        int $semaine = 0
-    ): RedirectResponse {
+    #[Route(path: '/etudiant/export/semaine/{semaine}', name: 'edt_etudiant_export_semaine_courante')]
+    public function exportEtudiantSemaine(MyPDF $myPDF, int $semaine = 0): RedirectResponse
+    {
         if (0 === $semaine) {
             $semaine = (int)date('W');
         }
-
         if ($semaine !== (int)date('W') && $semaine !== ((int)date('W') + 1)) {
             return $this->redirect($this->generateUrl('erreur_666'));
         }
-
-        if (null !== $this->dataUserSession->getDepartement() && true === $this->dataUserSession->getDepartement()->isOptUpdateCelcat()) {
+        if (null !== $this->dataUserSession->getDepartement() && $this->dataUserSession->getDepartement()->isOptUpdateCelcat()) {
             $edt = $this->myEdtCelcat->initEtudiant($this->getConnectedUser(),
                 $this->dataUserSession->getAnneeUniversitaire(), $semaine);
         } else {
@@ -233,9 +211,7 @@ class EdtController extends BaseController
             'export-semaine-edt', $this->dataUserSession->getDepartement()->getLibelle());
     }
 
-    /**
-     * @Route("/etudiant/export/ical", name="edt_etudiant_export_ical")
-     */
+    #[Route(path: '/etudiant/export/ical', name: 'edt_etudiant_export_ical')]
     public function exportEtudiantIcal(MyEdtExport $myEdtExport): Response
     {
         //Le nombre de semaine selon la configuraiton
@@ -247,9 +223,7 @@ class EdtController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/etudiant/details/{event}/{type}", name="edt_etudiant_detail_event")
-     */
+    #[Route(path: '/etudiant/details/{event}/{type}', name: 'edt_etudiant_detail_event')]
     public function detailEvent(
         MyEdtIntranet $myEdt,
         EdtPlanningRepository $edtPlanningRepository,

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/BaseController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/10/2021 09:37
+ * @lastUpdate 08/10/2021 06:58
  */
 
 namespace App\Controller;
@@ -16,8 +16,8 @@ use App\Entity\Constantes;
 use App\Interfaces\UtilisateurInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Translation\TranslatableMessage;
+use Symfony\Contracts\Service\Attribute\Required;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -39,9 +39,7 @@ class BaseController extends AbstractController
             ];
     }
 
-    /**
-     * @required
-     */
+    #[Required]
     public function setDataUserSession(DataUserSession $dataUserSession): void
     {
         $this->dataUserSession = $dataUserSession;
@@ -52,17 +50,13 @@ class BaseController extends AbstractController
         return $this->get(TableFactory::class)->create($type, $options);
     }
 
-    /**
-     * @required
-     */
+    #[Required]
     public function setEntityManager(EntityManagerInterface $entityManager): void
     {
         $this->entityManager = $entityManager;
     }
 
-    /**
-     * @required
-     */
+    #[Required]
     public function setTranslator(TranslatorInterface $translator): void
     {
         $this->translator = $translator;

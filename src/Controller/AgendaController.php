@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/AgendaController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/07/2021 17:05
+ * @lastUpdate 08/10/2021 07:01
  */
 
 namespace App\Controller;
@@ -18,14 +18,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class AgendaController.
- *
- * @Route("/agenda")
  */
+#[Route(path: '/agenda')]
 class AgendaController extends BaseController
 {
-    /**
-     * @Route("/qv", name="agenda_qv", options={"expose"=true})
-     */
+    #[Route(path: '/qv', name: 'agenda_qv', options: ['expose' => true])]
     public function qv(PrevisionnelManager $previsionnelManager): Response
     {
         $previsionnel = $previsionnelManager->getPrevisionnelPersonnelDepartementAnnee($this->getConnectedUser(),
@@ -36,9 +33,7 @@ class AgendaController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/qv/{previ}", name="agenda_qv_previ", options={"expose"=true})
-     */
+    #[Route(path: '/qv/{previ}', name: 'agenda_qv_previ', options: ['expose' => true])]
     public function qvPrevi(
         ServiceRealiseIntranet $serviceRealiseIntranet,
         ServiceRealiseCelcat $serviceRealiseCelcat,
@@ -61,15 +56,9 @@ class AgendaController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/{semaine}/{filtre}/{valeur}", name="agenda_index", options={"expose"=true},
-     *                                        requirements={"semaine":"\d+"})
-     */
-    public function index(
-        int $semaine = 0,
-        string $filtre = 'prof',
-        string $valeur = ''
-    ): Response {
+    #[Route(path: '/{semaine}/{filtre}/{valeur}', name: 'agenda_index', options: ['expose' => true], requirements: ['semaine' => '\d+'])]
+    public function index(int $semaine = 0, string $filtre = 'prof', string $valeur = ''): Response
+    {
         if (0 === $semaine) {
             $semaine = (int)date('W');
         }

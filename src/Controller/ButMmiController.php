@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ButMmiController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/07/2021 13:22
+ * @lastUpdate 08/10/2021 07:01
  */
 
 namespace App\Controller;
@@ -25,21 +25,15 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class ButMmiController.
- *
- * @Route("/but")
  */
+#[Route(path: '/but')]
 class ButMmiController extends AbstractController
 {
-    private DiplomeRepository $diplomeRepository;
-
-    public function __construct(DiplomeRepository $diplomeRepository)
+    public function __construct(private DiplomeRepository $diplomeRepository)
     {
-        $this->diplomeRepository = $diplomeRepository;
     }
 
-    /**
-     * @Route("/", name="but_homepage")
-     */
+    #[Route(path: '/', name: 'but_homepage')]
     public function homePage(): Response
     {
         return $this->render('but_mmi/index.html.twig', [
@@ -47,9 +41,7 @@ class ButMmiController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{diplome}/referentiel-comptences", name="but_referentiel_competences")
-     */
+    #[Route(path: '/{diplome}/referentiel-comptences', name: 'but_referentiel_competences')]
     public function referentielCompetences(ApcStructure $apcStructure, $diplome): Response
     {
         $diplome = $this->diplomeRepository->findOneBy(['typeDiplome' => 4, 'sigle' => strtoupper($diplome)]);
@@ -63,9 +55,7 @@ class ButMmiController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{diplome}/recherche", name="but_recherche")
-     */
+    #[Route(path: '/{diplome}/recherche', name: 'but_recherche')]
     public function recherche(
         Request $request,
         ApcRessourceRepository $apcRessourceRepository,
@@ -84,13 +74,9 @@ class ButMmiController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{diplome}/fiche-sae/{apcSae}", name="but_fiche_sae")
-     */
-    public function ficheSae(
-        ApcSae $apcSae,
-        $diplome
-    ): Response {
+    #[Route(path: '/{diplome}/fiche-sae/{apcSae}', name: 'but_fiche_sae')]
+    public function ficheSae(ApcSae $apcSae, $diplome): Response
+    {
         $diplome = $this->diplomeRepository->findOneBy(['typeDiplome' => 4, 'sigle' => strtoupper($diplome)]);
 
         return $this->render('but_mmi/ficheSae.html.twig', [
@@ -99,13 +85,9 @@ class ButMmiController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{diplome}/sae", name="but_sae")
-     */
-    public function sae(
-        ApcSaeRepository $apcSaeRepository,
-        $diplome
-    ): Response {
+    #[Route(path: '/{diplome}/sae', name: 'but_sae')]
+    public function sae(ApcSaeRepository $apcSaeRepository, $diplome): Response
+    {
         $diplome = $this->diplomeRepository->findOneBy(['typeDiplome' => 4, 'sigle' => strtoupper($diplome)]);
 
         return $this->render('but_mmi/sae.html.twig', [
@@ -114,13 +96,9 @@ class ButMmiController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{diplome}/fiche-ressource/{apcRessource}", name="but_fiche_ressource")
-     */
-    public function ficheRessource(
-        $diplome,
-        ApcRessource $apcRessource
-    ): Response {
+    #[Route(path: '/{diplome}/fiche-ressource/{apcRessource}', name: 'but_fiche_ressource')]
+    public function ficheRessource($diplome, ApcRessource $apcRessource): Response
+    {
         $diplome = $this->diplomeRepository->findOneBy(['typeDiplome' => 4, 'sigle' => strtoupper($diplome)]);
 
         return $this->render('but_mmi/ficheRessource.html.twig', [
@@ -129,9 +107,7 @@ class ButMmiController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{diplome}/repartition-horaire", name="but_repartition_horaire")
-     */
+    #[Route(path: '/{diplome}/repartition-horaire', name: 'but_repartition_horaire')]
     public function repartitionHoraire(
         ApcRessourceRepository $apcRessourceRepository,
         ApcSaeRepository $apcSaeRepository,
@@ -148,9 +124,7 @@ class ButMmiController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{diplome}/coefficients", name="but_coefficients")
-     */
+    #[Route(path: '/{diplome}/coefficients', name: 'but_coefficients')]
     public function coefficients(
         ApcCoefficient $apcCoefficient,
         ApcRessourceRepository $apcRessourceRepository,
@@ -161,7 +135,6 @@ class ButMmiController extends AbstractController
         $diplome = $this->diplomeRepository->findOneBy(['typeDiplome' => 4, 'sigle' => strtoupper($diplome)]);
         $ressources = $apcRessourceRepository->findByDiplomeToSemestreArray($diplome);
         $saes = $apcSaeRepository->findByDiplomeToSemestreArray($diplome);
-
         $tab = [];
         foreach ($diplome->getSemestres() as $semestre) {
             $tab[$semestre->getId()] = [];
@@ -170,7 +143,6 @@ class ButMmiController extends AbstractController
             $tab[$semestre->getId()]['saes'] = $saes[$semestre->getId()];
             $tab[$semestre->getId()]['coefficients'] = $apcCoefficient->calculsCoefficients($tab[$semestre->getId()]['saes'],
                 $tab[$semestre->getId()]['ressources']);
-
         }
 
         return $this->render('but_mmi/coefficients.html.twig', [
@@ -179,14 +151,9 @@ class ButMmiController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{diplome}/ressource/{semestre}", name="but_ressource")
-     */
-    public function ressource(
-        ApcRessourceRepository $apcRessourceRepository,
-        $diplome,
-        Semestre $semestre
-    ): Response {
+    #[Route(path: '/{diplome}/ressource/{semestre}', name: 'but_ressource')]
+    public function ressource(ApcRessourceRepository $apcRessourceRepository, $diplome, Semestre $semestre): Response
+    {
         $diplome = $this->diplomeRepository->findOneBy(['typeDiplome' => 4, 'sigle' => strtoupper($diplome)]);
 
         return $this->render('but_mmi/ressources.html.twig', [
