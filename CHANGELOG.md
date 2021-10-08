@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.2.1](https://github.com/Dannebicque/intranetV3/compare/v3.2.0...v3.2.1) (2021-10-08)
+
+
+### Features
+
+* AbsenceNoteVoter pour la sécurité des app Personnels en fonction du prévisionnel ([b1eecf4](https://github.com/Dannebicque/intranetV3/commit/b1eecf4d45637b0d450b3bfe8e8547be968c3031))
+
+
+### Bug Fixes
+
+* AbstractVoter et typage ([063c353](https://github.com/Dannebicque/intranetV3/commit/063c353ad3bf6749574a4d3d174f5f6b1827dcdd))
+* AbstractVoter et typage ([c0b3883](https://github.com/Dannebicque/intranetV3/commit/c0b3883cda5c7410ac31e196fce76b9ec7ffbbad))
+* AbstractVoter et typage ([7b75028](https://github.com/Dannebicque/intranetV3/commit/7b75028d706cc82d1817e9561e15c818aec735bc))
+* AbstractVoter exclusion du cas étudiant ([067f651](https://github.com/Dannebicque/intranetV3/commit/067f651a0509fc8eb9c14589418b6a7e92a64e45))
+* Corrections CSS suite mise à jour FA6 ([4ce5c19](https://github.com/Dannebicque/intranetV3/commit/4ce5c1976041ab223dc10ca0ed4c0fa52db5c3ad))
+* Style sur MyEdit avec FA6 ([b6d0860](https://github.com/Dannebicque/intranetV3/commit/b6d086061f33b6be2ec600f40102be3902793dac))
+
 ## [3.2.0](https://github.com/Dannebicque/intranetV3/compare/v3.1.29...v3.2.0) (2021-10-07)
 
 
