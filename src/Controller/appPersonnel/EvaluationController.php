@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/EvaluationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/09/2021 16:11
+ * @lastUpdate 07/10/2021 17:32
  */
 
 namespace App\Controller\appPersonnel;
@@ -43,6 +43,8 @@ class EvaluationController extends BaseController
         Evaluation $evaluation
     ): Response {
         $matiere = $typeMatiereManager->getMatiere($evaluation->getIdMatiere(), $evaluation->getTypeMatiere());
+        $this->denyAccessUnlessGranted('CAN_ADD_NOTE', $matiere);
+
         $notes = $myEvaluation->setEvaluation($evaluation)->getNotesTableau();
 
         return $this->render('appPersonnel/note/saisie_2.html.twig', [
@@ -60,6 +62,7 @@ class EvaluationController extends BaseController
      */
     public function evaluationVisible(MyEvaluation $myEvaluation, Evaluation $evaluation, $etat): Response
     {
+        //todo: tester au niveau évaluation
         $notes = $myEvaluation->setEvaluation($evaluation)->getNotesTableau();
         $evaluation->setVisible('visible' === $etat);
         $this->entityManager->flush();
@@ -77,6 +80,7 @@ class EvaluationController extends BaseController
      */
     public function updateEvaluation(Request $request, Evaluation $evaluation): Response
     {
+        //todo: tester au niveau évaluation
         //mise à jour d'un champ d'une évaluation
         $name = $request->request->get('field');
         $value = $request->request->get('value');
@@ -108,6 +112,7 @@ class EvaluationController extends BaseController
         $type,
         $_format
     ) {
+        //todo: tester au niveau évaluation
         $t = explode('_', $type);
         if ('groupe' === $t[0]) {
             $grp = $groupeRepository->find($t[1]);

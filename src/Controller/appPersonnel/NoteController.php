@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/NoteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 10/06/2021 11:38
+ * @lastUpdate 08/10/2021 06:57
  */
 
 namespace App\Controller\appPersonnel;
@@ -53,7 +53,7 @@ class NoteController extends BaseController
         if (null === $mat) {
             throw new MatiereNotFoundException();
         }
-        //todo: vérifier les accès par des profs non autorisés ????
+        $this->denyAccessUnlessGranted('CAN_ADD_NOTE', $mat);
 
         $evaluation = new Evaluation($this->getConnectedUser(), $mat);
         $form = $this->createForm(
@@ -102,8 +102,11 @@ class NoteController extends BaseController
         TypeMatiereManager $typeMatiereManager,
         MyEvaluation $myEvaluation,
         Evaluation $evaluation
-    ): Response {
+    ): Response
+    {
         $matiere = $typeMatiereManager->getMatiere($evaluation->getIdMatiere(), $evaluation->getTypeMatiere());
+        $this->denyAccessUnlessGranted('CAN_ADD_NOTE', $matiere); //todo: vérifier s'il est autorisé dans l'évaluation
+
         $notes = $myEvaluation->setEvaluation($evaluation)->getNotesTableau();
 
         return $this->render('appPersonnel/note/saisie_2.html.twig', [
@@ -154,10 +157,13 @@ class NoteController extends BaseController
         MyUpload $myUpload,
         MyEvaluation $myEvaluation,
         Evaluation $evaluation
-    ): Response {
+    ): Response
+    {
         //upload
         $fichier = $myUpload->upload($request->files->get('fichier_import'), 'temp/');
         $matiere = $typeMatiereManager->getMatiere($evaluation->getIdMatiere(), $evaluation->getTypeMatiere());
+        $this->denyAccessUnlessGranted('CAN_ADD_NOTE', $matiere);
+
         if (null === $matiere) {
             throw new MatiereNotFoundException();
         }
@@ -182,8 +188,11 @@ class NoteController extends BaseController
         TypeMatiereManager $typeMatiereManager,
         MyExport $myExport,
         Evaluation $evaluation
-    ): ?Response {
+    ): ?Response
+    {
         $matiere = $typeMatiereManager->getMatiere($evaluation->getIdMatiere(), $evaluation->getTypeMatiere());
+        $this->denyAccessUnlessGranted('CAN_ADD_NOTE', $matiere);
+
         if (null === $matiere) {
             throw new MatiereNotFoundException();
         }
@@ -201,6 +210,7 @@ class NoteController extends BaseController
         int $index = 0
     ): Response {
         $mat = $typeMatiereManager->getMatiereFromSelect($matiere);
+        $this->denyAccessUnlessGranted('CAN_ADD_NOTE', $mat);
 
         if (null === $mat) {
             throw new MatiereNotFoundException();

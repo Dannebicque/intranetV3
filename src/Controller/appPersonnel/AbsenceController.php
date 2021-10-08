@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/AbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/09/2021 18:46
+ * @lastUpdate 08/10/2021 06:57
  */
 
 namespace App\Controller\appPersonnel;
@@ -33,30 +33,22 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * Class AbsenceController.
- *
- * @Route("/application/personnel/absence")
- * @IsGranted("ROLE_PERMANENT")
- */
+#[Route('/application/personnel/absence')]
+#[IsGranted('ROLE_PERMANENT')]
 class AbsenceController extends BaseController
 {
     private MyAbsences $myAbsences;
 
-    /**
-     * AbsenceController constructor.
-     */
     public function __construct(MyAbsences $myAbsences)
     {
         $this->myAbsences = $myAbsences;
     }
 
     /**
-     * @Route("/matiere/{matiere}", name="application_personnel_absence_index", methods={"GET"})
-     *
      * @throws \App\Exception\MatiereNotFoundException
      * @throws \App\Exception\SemestreNotFoundException
      */
+    #[Route('/matiere/{matiere}', name: 'application_personnel_absence_index', methods: ['GET'])]
     public function index(
         TypeMatiereManager $typeMatiereManager,
         string $matiere
@@ -66,6 +58,8 @@ class AbsenceController extends BaseController
         if (null === $mat) {
             throw new MatiereNotFoundException();
         }
+
+        $this->denyAccessUnlessGranted('CAN_ADD_ABSENCE', $mat);
 
         if (null === $mat->semestre) {
             throw new SemestreNotFoundException();
@@ -78,9 +72,13 @@ class AbsenceController extends BaseController
     }
 
     /**
-     * @Route("/edt/{event}/{source}", name="application_personnel_absence_from_planning", requirements={"event"="\d+"},
-     *                        methods={"GET"})
+     * @throws \App\Exception\MatiereNotFoundException
+     * @throws \App\Exception\SemestreNotFoundException
      */
+    #[Route('/edt/{event}/{source}',
+        name: 'application_personnel_absence_from_planning',
+        requirements: ['event' => "\d+"],
+        methods: ['GET'])]
     public function saisieFromEdt(
         TypeMatiereManager $typeMatiereManager,
         EdtManager $edtManager,
@@ -91,12 +89,17 @@ class AbsenceController extends BaseController
         $planning = $edtManager->getManager($source)?->find($event);
         $matiere = $typeMatiereManager->findByCodeApogeeOrId($planning);
 
+        if (null === $matiere) {
+            throw new MatiereNotFoundException();
+        }
+
+        $this->denyAccessUnlessGranted('CAN_ADD_ABSENCE', $matiere);
         if (null !== $planning) {
             return $this->render('appPersonnel/absence/index.html.twig', [
                 'semestre' => $matiere?->semestre,
                 'matiere' => $matiere,
                 'event' => $planning,
-                'groupes' => $myGroupes->getGroupesSemestre($planning->semestre !== null ? $planning->semestre : $matiere->semestre,
+                'groupes' => $myGroupes->getGroupesSemestre($planning->semestre ?? $matiere->semestre,
                     $planning->type_cours),
                 'heure' => $planning->heureDebut,
                 'date' => $planning->dateObjet,
@@ -107,14 +110,17 @@ class AbsenceController extends BaseController
     }
 
     /**
-     * @Route("/voir/{matiere}", name="application_personnel_absence_voir")
+     * @throws \App\Exception\MatiereNotFoundException
      */
+    #[Route('/voir/{matiere}', name: 'application_personnel_absence_voir')]
     public function voir(TypeMatiereManager $typeMatiereManager, string $matiere): Response
     {
         $mat = $typeMatiereManager->getMatiereFromSelect($matiere);
+
         if (null === $mat) {
             throw new MatiereNotFoundException();
         }
+        $this->denyAccessUnlessGranted('CAN_ADD_ABSENCE', $mat);
 
         return $this->render('appPersonnel/absence/voir.html.twig', [
             'matiere' => $mat,
@@ -126,8 +132,9 @@ class AbsenceController extends BaseController
     }
 
     /**
-     * @Route("/export/{matiere}/export.{_format}", name="application_personnel_absence_export", methods="GET")
+     * @throws \App\Exception\MatiereNotFoundException
      */
+    #[Route('/export/{matiere}/export.{_format}', name: 'application_personnel_absence_export', methods: ['GET'])]
     public function export(TypeMatiereManager $typeMatiereManager, string $matiere, $_format): ?Response
     {
         $mat = $typeMatiereManager->getMatiereFromSelect($matiere);
@@ -145,6 +152,7 @@ class AbsenceController extends BaseController
      */
     public function supprimer(EtudiantAbsences $etudiantAbsences, Request $request, Absence $absence): Response
     {
+        //todo: tester...
         $id = $absence->getUuidString();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
             $etudiantAbsences->removeAbsence($absence);
@@ -168,10 +176,11 @@ class AbsenceController extends BaseController
         string $matiere
     ): JsonResponse {
         $mat = $typeMatiereManager->getMatiereFromSelect($matiere);
+        $this->denyAccessUnlessGranted('CAN_ADD_ABSENCE', $mat);
         if (null !== $mat) {
             $absences = $absenceRepository->getByMatiereArray(
                 $mat,
-                $mat->semestre ? $mat->semestre->getAnneeUniversitaire() : null
+                $mat->semestre?->getAnneeUniversitaire()
             );
 
             return $this->json($absences);
@@ -184,8 +193,6 @@ class AbsenceController extends BaseController
      * @Route("/ajax/saisie/{matiere}/{etudiant}", name="application_personnel_absence_saisie_ajax", methods="POST",
      *                                             options={"expose":true})
      *
-     * @return JsonResponse|Response
-     *
      * @throws Exception
      */
     public function ajaxSaisie(
@@ -195,9 +202,10 @@ class AbsenceController extends BaseController
         Request $request,
         string $matiere,
         Etudiant $etudiant
-    ) {
+    ): JsonResponse|Response {
         $dateHeure = Tools::convertDateHeureToObject($request->request->get('date'), $request->request->get('heure'));
         $mat = $typeMatiereManager->getMatiereFromSelect($matiere);
+        $this->denyAccessUnlessGranted('CAN_ADD_ABSENCE', $mat);
         $absence = $absenceRepository->findBy([
             'matiere' => $matiere,
             'etudiant' => $etudiant->getId(),
@@ -217,7 +225,7 @@ class AbsenceController extends BaseController
 
                 $absences = $absenceRepository->getByMatiereArray(
                     $mat,
-                    $mat->semestre ? $mat->semestre->getAnneeUniversitaire() : null
+                    $mat->semestre?->getAnneeUniversitaire()
                 );
 
                 return $this->json($absences);
@@ -243,6 +251,6 @@ class AbsenceController extends BaseController
 
     private function saisieAutorise(int $nbjour, CarbonInterface $datesymfony): bool
     {
-        return 0 === $nbjour ? true : ($datesymfony->diffInDays(Carbon::now()) <= $nbjour);
+        return 0 === $nbjour || $datesymfony->diffInDays(Carbon::now()) <= $nbjour;
     }
 }
