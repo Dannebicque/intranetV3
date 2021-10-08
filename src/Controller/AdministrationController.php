@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/AdministrationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:36
+ * @lastUpdate 08/10/2021 07:01
  */
 
 namespace App\Controller;
@@ -16,14 +16,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class AdministrationController.
- *
- * @Route("/administration")
  */
+#[Route(path: '/administration')]
 class AdministrationController extends BaseController
 {
-    /**
-     * @Route("/", name="administration_index")
-     */
+    #[Route(path: '/', name: 'administration_index')]
     public function index(
         StagePeriodeRepository $stagePeriodeRepository,
         ProjetPeriodeRepository $projetPeriodeRepository
@@ -35,7 +32,6 @@ class AdministrationController extends BaseController
                 $tperiodes[] = $periode;
             }
         }
-
         $projetPeriodes = [];
         foreach ($this->dataUserSession->getDiplomes() as $diplome) {
             $periodes = $projetPeriodeRepository->findByDiplome($diplome, $diplome->getAnneeUniversitaire());

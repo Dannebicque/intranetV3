@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ActualiteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:36
+ * @lastUpdate 08/10/2021 06:57
  */
 
 namespace App\Controller;
@@ -15,14 +15,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class ActualiteController.
- *
- * @Route("/actualites")
  */
+#[Route(path: '/actualites')]
 class ActualiteController extends BaseController
 {
-    /**
-     * @Route("/anciennes", name="actualite_liste")
-     */
+    #[Route(path: '/anciennes', name: 'actualite_liste')]
     public function liste(ActualiteRepository $actualiteRepository): Response
     {
         return $this->render('actualite/liste.html.twig', [
