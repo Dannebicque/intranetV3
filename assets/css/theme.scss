@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/css/theme.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/09/2021 12:08
+// @lastUpdate 05/10/2021 15:06
 /* @file /Users/davidannebicque/htdocs/intranetV3/assets/css/theme.css */
 /* @author davidannebicque */
 /* @project intranetV3 */
@@ -2696,7 +2696,7 @@ table tbody tr {
 
 .nav-process-circle .nav-link::after {
     content: "\f00c";
-    font-family: "Font Awesome 5 Free";
+    font-family: "Font Awesome 6 Free";
     width: 0;
     height: 0;
     text-align: center;
@@ -13302,18 +13302,18 @@ select.form-control-lg:not([size]):not([multiple]) {
 }
 
 .lookup::before {
-  content: "\f002";
-  font-family: "Font Awesome 5 Free";
-  font-size: 16px;
-  position: absolute;
-  top: 52%;
-  left: 0;
-  -webkit-transform: translateY(-50%);
-  transform: translateY(-50%);
-  color: rgba(77, 82, 89, 0.4);
-  width: 36px;
-  text-align: center;
-  cursor: text;
+    content: "\f002";
+    font-family: "Font Awesome 6 Free";
+    font-size: 16px;
+    position: absolute;
+    top: 52%;
+    left: 0;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    color: rgba(77, 82, 89, 0.4);
+    width: 36px;
+    text-align: center;
+    cursor: text;
 }
 
 .lookup input {
