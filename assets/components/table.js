@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/components/table.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 01/10/2021 10:59
+// @lastUpdate 08/10/2021 16:15
 
 import {post} from '../js/fetch'
 
@@ -73,7 +73,7 @@ export default class Table extends HTMLElement {
 
       if (input.type === 'radio' || input.type === 'checkbox') {
         input.addEventListener('change', (elem) => {
-          this._getFilterFromField(elem)
+          this._getFilterFromField(elem.target)
           this._filterArray()
         })
       }
@@ -81,7 +81,7 @@ export default class Table extends HTMLElement {
 
     selects.forEach((select) => {
       select.addEventListener('change', (elem) => {
-        this._getFilterFromField(elem)
+        this._getFilterFromField(elem.target)
         this._filterArray()
       })
     })
@@ -253,15 +253,18 @@ export default class Table extends HTMLElement {
   }
 
   _extractNameFromForm (name) {
+    console.log(name)
     let t = name.split('[')
     return t[1].substr(0, t[1].length - 1)
   }
 
   _getFilterFromField (input) {
+    console.log(input)
     const name = this._extractNameFromForm(input.name)
     switch (input.type) {
       case 'text':
       case 'select-one':
+      case 'radio':
         this.filter[name] = input.value
         break
       case 'checkbox':
