@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/css/app.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/09/2021 10:13
+// @lastUpdate 08/10/2021 07:02
 
 @import "core.min.css";
 @import "~bootstrap/scss/functions";
@@ -350,7 +350,7 @@ thead {
 
 .myedit:after {
   content: '\f044';
-  font-family: "Font Awesome 5 Free", serif;
+  font-family: "Font Awesome 6 Free", serif;
   font-style: normal;
   font-weight: normal;
   text-decoration: inherit;
@@ -577,19 +577,20 @@ thead {
   color: #ffa000;
 }
 
+//todo: encore utile ?
 .datepicker .next::before {
   content: "\f101";
-  font-family: "Font Awesome 5 Free", serif;
+  font-family: "Font Awesome 6 Free", serif;
 }
 
 .datepicker .prev::before {
   content: "\f100";
-  font-family: "Font Awesome 5 Free", serif;
+  font-family: "Font Awesome 6 Free", serif;
 }
 
 .custom-checkbox .custom-control-input:checked ~ .custom-control-label::after {
   content: "\f00c";
-  font-family: "Font Awesome 5 Free", serif;
+  font-family: "Font Awesome 6 Free", serif;
 }
 
 #sidebar_departement {
