@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/PersonnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 10:57
+ * @lastUpdate 08/10/2021 18:51
  */
 
 namespace App\Controller\administration;
@@ -17,55 +17,72 @@ use App\Entity\PersonnelDepartement;
 use App\Form\PersonnelType;
 use App\Repository\PersonnelDepartementRepository;
 use App\Repository\PersonnelRepository;
+use App\Table\PersonnelDepartementTableType;
+use function count;
+use function in_array;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use function count;
-use function in_array;
 
-/**
- * @Route("/administration/personnel")
- */
+#[Route('/administration/personnel', name: 'administration_personnel_')]
 class PersonnelController extends BaseController
 {
-    /**
-     * @Route("/", name="administration_personnel_index", methods="GET")
-     */
-    public function index(PersonnelDepartementRepository $personnelRepository): Response
+    #[Route('/', name: 'index', methods: ['GET', 'POST'], options: ['expose' => true])]
+    public function index(Request $request): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
+
+        $table = $this->createTable(PersonnelDepartementTableType::class, [
+            'type' => Personnel::PERMANENT,
+            'departement' => $this->getDepartement(),
+            'autoriseToManageAccess' => $this->getDataUserSession()->isGoodDepartement('ROLE_CDD') || $this->getDataUserSession()->isGoodDepartement('ROLE_DDE'),
+        ]);
+        $table->handleRequest($request);
+
+        if ($table->isCallback()) {
+            return $table->getCallbackResponse();
+        }
 
         return $this->render(
             'administration/personnel/index.html.twig',
             [
-                'personnels' => $personnelRepository->findByType('permanent',
-                    $this->dataUserSession->getDepartementId()),
                 'type' => 'permanent',
+                'table' => $table,
             ]
         );
     }
 
-    /**
-     * @Route("/ajax/load-liste/{type}", name="administration_personnel_load_liste", options={"expose"=true},
-     *                                   requirements={"type": "permanent|vacataire"})
-     */
-    public function loadListe(PersonnelDepartementRepository $personnelRepository, $type): Response
-    {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
+//    #[Route('/ajax/load-liste/{type}',
+//        name: 'load_liste',
+//        requirements: ['type' => 'permanent|vacataire|administratif'],
+//        options: ['expose' => true])]
+//    public function loadListe(Request $request, $type): Response
+//    {
+//        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
+//
+//        $table = $this->createTable(PersonnelDepartementTableType::class, [
+//            'type' => $type,
+//            'departement' => $this->getDepartement()
+//        ]);
+//        $table->handleRequest($request);
+//
+//        if ($table->isCallback()) {
+//            return $table->getCallbackResponse();
+//        }
+//
+//        return $this->render(
+//            'administration/personnel/_listePersonnel.html.twig',
+//            [
+//                'table' => $table,
+//                'type' => $type,
+//            ]
+//        );
+//    }
 
-        return $this->render(
-            'administration/personnel/_listePersonnel.html.twig',
-            [
-                'personnels' => $personnelRepository->findByType($type, $this->dataUserSession->getDepartementId()),
-                'type' => $type,
-            ]
-        );
-    }
-
-    /**
-     * @Route("/export_{type}.{_format}", name="administration_personnel_export", methods="GET",
-     *                             requirements={"_format"="csv|xlsx|pdf"}, options={"expose":true})
-     */
+    #[Route('/export.{_format}', name: 'export',
+        methods: 'GET',
+        requirements: ['_format' => 'csv|xlsx|pdf'],
+        options: ['expose' => true])]
     public function export(MyExport $myExport, PersonnelRepository $personnelRepository, $type, $_format): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
@@ -81,9 +98,7 @@ class PersonnelController extends BaseController
         );
     }
 
-    /**
-     * @Route("/add", name="administration_personnel_new", methods="GET")
-     */
+    #[Route('/add', name: 'new', methods: ['GET'])]
     public function ajout(): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
@@ -91,9 +106,9 @@ class PersonnelController extends BaseController
         return $this->render('administration/personnel/add.html.twig');
     }
 
-    /**
-     * @Route("/create", name="administration_personnel_create", methods="GET|POST", options={"expose"=true})
-     */
+    #[Route('/create', name: 'create',
+        methods: ['GET', 'POST'],
+        options: ['expose' => true])]
     public function create(
         Request $request
     ): Response {
@@ -108,7 +123,7 @@ class PersonnelController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if ($personnel->getMailUniv() !== null) {
+            if (null !== $personnel->getMailUniv()) {
                 $t = explode('@', $personnel->getMailUniv());
                 $personnel->setSlug($t[0]);
             }
@@ -130,9 +145,9 @@ class PersonnelController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="administration_personnel_show", methods="GET", options={"expose":true})
-     */
+    #[Route('/{id}', name: 'show',
+        methods: ['GET'],
+        options: ['expose' => true])]
     public function show(Personnel $personnel): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
@@ -140,9 +155,9 @@ class PersonnelController extends BaseController
         return $this->render('administration/personnel/show.html.twig', ['personnel' => $personnel]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="administration_personnel_edit", methods="GET|POST", options={"expose":true})
-     */
+    #[Route('/{id}/edit', name: 'edit',
+        methods: ['GET', 'POST'],
+        options: ['expose' => true])]
     public function edit(Request $request, Personnel $personnel): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
@@ -170,9 +185,9 @@ class PersonnelController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/{id}/duplicate", name="administration_personnel_duplicate", methods="GET|POST")
-     */
+    #[Route('/{id}/duplicate',
+        name: 'duplicate',
+        methods: ['GET', 'POST'])]
     public function duplicate(Personnel $personnel): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
@@ -186,15 +201,15 @@ class PersonnelController extends BaseController
         return $this->redirectToRoute('administration_personnel_edit', ['id' => $newPersonnel->getId()]);
     }
 
-    /**
-     * @Route("/{id}", name="administration_personnel_delete", methods="DELETE", options={"expose":true})
-     */
+    #[Route('/{id}',
+        name: 'delete',
+        methods: ['DELETE', 'POST'],
+        options: ['expose' => true])]
     public function delete(
         PersonnelDepartementRepository $personnelDepartementRepository,
         Request $request,
         Personnel $personnel
-    ): Response
-    {
+    ): Response {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
 
         $id = $personnel->getId();
@@ -218,14 +233,11 @@ class PersonnelController extends BaseController
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    /**
-     * @Route("/gestion/droit/{personnel}", name="administration_personnel_droit")
-     */
+    #[Route('/gestion/droit/{personnel}', name: 'droit')]
     public function gestionDroit(
         PersonnelDepartementRepository $personnelDepartementRepository,
         Personnel $personnel
-    ): Response
-    {
+    ): Response {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
 
         $droits = $personnelDepartementRepository->findDroitsByPersonnelDepartement($personnel,
@@ -235,15 +247,14 @@ class PersonnelController extends BaseController
             ['personnel' => $personnel, 'droits' => $droits]);
     }
 
-    /**
-     * @Route("/modifier-droit/{personnel}", name="admin_personnel_departement_modifier_droit", options={"expose":true})
-     */
+    #[Route('/modifier-droit/{personnel}',
+        name: 'departement_modifier_droit',
+        options: ['expose' => true])]
     public function modifierDroits(
         Request $request,
         PersonnelDepartementRepository $personnelDepartementRepository,
         Personnel $personnel
-    ): Response
-    {
+    ): Response {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
 
         $droit = $request->request->get('droit');

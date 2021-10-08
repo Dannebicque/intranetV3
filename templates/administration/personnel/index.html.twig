@@ -4,58 +4,19 @@
     {{ 'adm.personnel.index.heading'|trans }}
 {% endblock %}
 
-{% block headeractions %}
-    <div class="header-action">
-        <nav class="nav">
-            <a class="nav-link active personnel_index_change" data-type="permanent" href="#">{{ 'permanent'|trans }}</a>
-            <a class="nav-link personnel_index_change" data-type="vacataire" href="#">{{ 'vacataire'|trans }}</a>
-        </nav>
-        {{ include('composants/adm-buttons-index.html.twig', {elt:'personnel'}) }}
-    </div>
-{% endblock %}
-
 {% block content %}
-    <div class="card" id="listePersonnel">
-        {{ include('administration/personnel/_listePersonnel.html.twig') }}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.personnel.index.heading'|trans }}</h4>
+        <div class="card-body">
+            {{ table_render(table) }}
+        </div>
     </div>
 {% endblock %}
 
 {% block fabactions %}
-    {{ include('composants/fab-buttons.html.twig', {
-        boutons:[
-            {type: 'info',
-                href: path('administration_personnel_export', {_format:'pdf', type:'permanent'}),
-                title: 'exporter.pdf'|trans,
-                id: 'export_pdf',
-                icone : "fa fa-file-pdf"
-            },
-            {
-                type:'info',
-                href:path('administration_personnel_export', {_format:'csv', type:'permanent'}),
-                title: 'exporter.csv'|trans,
-                id: 'export_csv',
-                icone: 'fa fa-file-csv'
-            },
-            {
-                type:'info',
-                href:path('administration_personnel_export', {_format:'xlsx', type:'permanent'}),
-                title: 'exporter.xls'|trans,
-                id: 'export_xlsx',
-                icone: 'fa fa-file-excel'
-            },
-            {
-                type:'info',
-                href:path('administration_personnel_new'),
-                title: 'ajouter'|trans,
-                icone: 'fas fa-plus'
-            },
-            {
-                type:'info',
-                href:path('help_article', {sujet: 'administration-personnel-index'}),
-                title: 'aide'|trans,
-                icone: 'fa fa-question'
-            }
-        ]}) }}
+    {{ include('composants/fab-button-help.html.twig', {
+        href:path('help_article', {sujet: 'administration-personnel-index'})}
+    ) }}
 {% endblock %}
 
 {% block stylesheets %}
