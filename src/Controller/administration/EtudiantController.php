@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/10/2021 12:14
+ * @lastUpdate 08/10/2021 10:52
  */
 
 namespace App\Controller\administration;
@@ -144,7 +144,7 @@ class EtudiantController extends BaseController
         Etudiant $etudiant
     ): RedirectResponse
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_DDE', $etudiant->getSemestre());
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $etudiant->getSemestre());
 
         $etudiantScolarite->setEtudiant($etudiant);
         $etudiantScolarite->changeEtat(Constantes::SEMESTRE_DEMISSIONNAIRE);

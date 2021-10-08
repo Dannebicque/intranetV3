@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/SemestreController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/10/2021 12:14
+ * @lastUpdate 08/10/2021 10:57
  */
 
 namespace App\Controller\administration;
@@ -34,7 +34,7 @@ class SemestreController extends BaseController
      */
     public function activeSemestreAction(Semestre $semestre, bool $actif): RedirectResponse
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_CDD', $semestre);
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $semestre);
 
         $semestre->setActif($actif);
         $this->entityManager->persist($semestre);

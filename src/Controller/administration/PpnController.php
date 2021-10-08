@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/PpnController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/10/2021 10:23
+ * @lastUpdate 08/10/2021 10:57
  */
 
 namespace App\Controller\administration;
@@ -54,7 +54,7 @@ class PpnController extends BaseController
      */
     public function copieIntegrale(PpnRepository $ppnRepository, Request $request): Response
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_CDD', $this->getDepartement());
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
 
         $ppnOrigine = $ppnRepository->find($request->request->get('ppn_origine'));
         $ppnDest = $ppnRepository->find($request->request->get('ppn_dest'));

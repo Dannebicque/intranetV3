@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/ScolariteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/10/2021 12:14
+ * @lastUpdate 08/10/2021 10:52
  */
 
 namespace App\Controller\administration;
@@ -45,7 +45,7 @@ class ScolariteController extends BaseController
         Etudiant $etudiant,
         ?Scolarite $scolarite = null
     ): Response {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_DDE', $etudiant->getSemestre());
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $etudiant->getSemestre());
 
         $edit = true;
         if (null === $scolarite) {
@@ -111,7 +111,7 @@ class ScolariteController extends BaseController
         Request $request
     ): RedirectResponse
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_DDE', $this->getDepartement());
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
 
         $anneeUniversitaire = $anneeUniversitaireRepository->find($request->request->get('annee'));
         $myScolarite->importCsv($request->files->get('fichierImport'), $this->getDepartement(), $anneeUniversitaire);

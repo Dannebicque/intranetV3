@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/HrsController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/10/2021 10:23
+ * @lastUpdate 08/10/2021 10:57
  */
 
 namespace App\Controller\administration;
@@ -65,7 +65,7 @@ class HrsController extends BaseController
      */
     public function edit(Request $request, Hrs $hrs): Response
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_CDD', $hrs->getDepartement());//todo: département parfois null??
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $hrs->getDepartement());//todo: département parfois null??
 
         $form = $this->createForm(HrsType::class, $hrs, [
             'departement' => $this->getDepartement(),
@@ -97,7 +97,7 @@ class HrsController extends BaseController
      */
     public function duplicateAnnee(HrsRepository $hrsRepository, Request $request): Response
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_CDD', $this->getDepartement());
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
         $anneeDepart = $request->request->get('annee_depart');
         $annee_destination = $request->request->get('annee_destination');
         $annee_concerver = $request->request->get('annee_concerver');
@@ -131,7 +131,7 @@ class HrsController extends BaseController
      */
     public function duplicate(Hrs $hrs): Response
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_CDD', $hrs->getDepartement());
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $hrs->getDepartement());
         $newHrs = clone $hrs;
         $this->entityManager->persist($newHrs);
         $this->entityManager->flush();
@@ -155,7 +155,7 @@ class HrsController extends BaseController
      */
     public function delete(Request $request, Hrs $hrs): Response
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_CDD', $hrs->getDepartement());
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $hrs->getDepartement());
         $id = $hrs->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
             $this->entityManager->remove($hrs);
@@ -175,7 +175,7 @@ class HrsController extends BaseController
      */
     public function supprimer(Request $request, HrsRepository $hrsRepository): Response
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_CDD', $this->getDepartement());
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
 
         if ($this->isCsrfTokenValid('supprimer', $request->request->get('_token'))) {
             $hrs = $hrsRepository->findByDepartement($this->getDepartement(),
