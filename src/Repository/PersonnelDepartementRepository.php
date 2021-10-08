@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/PersonnelDepartementRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 08/10/2021 15:01
  */
 
 namespace App\Repository;
@@ -34,20 +34,6 @@ class PersonnelDepartementRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, PersonnelDepartement::class);
         $this->router = $router;
-    }
-
-    public function findByType($type, $departement): array
-    {
-        return $this->createQueryBuilder('f')
-            ->innerJoin(Personnel::class, 'p', 'WITH', 'f.personnel = p.id')
-            ->where('p.typeUser = :type')
-            ->andWhere('f.departement = :departement')
-            ->setParameter('type', $type)
-            ->setParameter('departement', $departement)
-            ->orderBy('p.nom', 'asc')
-            ->orderBy('p.prenom', 'asc')
-            ->getQuery()
-            ->getResult();
     }
 
     public function findByPersonnel($user)
