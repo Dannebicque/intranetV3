@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EtudiantImportController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/10/2021 10:23
+ * @lastUpdate 08/10/2021 10:52
  */
 
 namespace App\Controller\administration;
@@ -28,7 +28,7 @@ class EtudiantImportController extends BaseController
         MyUpload $myUpload,
         EtudiantImport $etudiantImport
     ): Response {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_DDE', $this->getDepartement());
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
 
         //traitement de l'import
         $fichier = $myUpload->upload($request->files->get('fichierimportcsv'), 'temp');

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/PersonnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/10/2021 12:14
+ * @lastUpdate 08/10/2021 10:57
  */
 
 namespace App\Controller\administration;
@@ -226,7 +226,7 @@ class PersonnelController extends BaseController
         Personnel $personnel
     ): Response
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_CDD', $this->getDepartement());
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
 
         $droits = $personnelDepartementRepository->findDroitsByPersonnelDepartement($personnel,
             $this->getDepartement());
@@ -244,7 +244,7 @@ class PersonnelController extends BaseController
         Personnel $personnel
     ): Response
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_CDD', $this->getDepartement());
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
 
         $droit = $request->request->get('droit');
         $pf = $personnelDepartementRepository->findByPersonnelDepartement($personnel,

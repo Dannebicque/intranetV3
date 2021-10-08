@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/MatiereController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/10/2021 12:14
+ * @lastUpdate 08/10/2021 10:52
  */
 
 namespace App\Controller\administration;
@@ -124,7 +124,7 @@ class MatiereController extends BaseController
     #[Route('/new/{diplome}/{ue}', name: 'administration_matiere_new', methods: ['GET', 'POST'])]
     public function create(Configuration $configuration, Request $request, Diplome $diplome, Ue $ue = null): Response
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_DDE', $diplome);
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $diplome);
 
         if (true === (bool)($configuration->get('MODIFICATION_PPN'))) {
             $matiere = new Matiere();

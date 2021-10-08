@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Security/Voter/AbstractVoter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/10/2021 14:03
+ * @lastUpdate 08/10/2021 10:57
  */
 
 namespace App\Security\Voter;
@@ -44,8 +44,8 @@ class AbstractVoter
 
     public const HIERARCHICAL_ACCESS_FROM_ROLE = [
         self::MINIMAL_ROLE_ABS => ['ROLE_ABS', 'ROLE_ASS', 'ROLE_DDE', 'ROLE_RP', 'ROLE_CDD'],
-        self::MINIMAL_ROLE_SCOL => ['ROLE_NOTE', 'ROLE_ABS', 'ROLE_ASS', 'ROLE_DDE', 'ROLE_RP', 'ROLE_CDD'],
-        self::MINIMAL_ROLE_NOTE => ['ROLE_NOTE', 'ROLE_ASS', 'ROLE_DDE', 'ROLE_RP', 'ROLE_CDD'],
+        self::MINIMAL_ROLE_SCOL => ['ROLE_NOTES', 'ROLE_ABS', 'ROLE_ASS', 'ROLE_DDE', 'ROLE_RP', 'ROLE_CDD'],
+        self::MINIMAL_ROLE_NOTE => ['ROLE_NOTES', 'ROLE_ASS', 'ROLE_DDE', 'ROLE_RP', 'ROLE_CDD'],
         self::MINIMAL_ROLE_ASS => ['ROLE_ASS', 'ROLE_DDE', 'ROLE_RP', 'ROLE_CDD'],
         self::MINIMAL_ROLE_RP => ['ROLE_RP', 'ROLE_CDD'],
         self::MINIMAL_ROLE_DDE => ['ROLE_DDE', 'ROLE_CDD'],

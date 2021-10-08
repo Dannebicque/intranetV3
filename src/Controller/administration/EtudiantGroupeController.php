@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EtudiantGroupeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/10/2021 12:14
+ * @lastUpdate 08/10/2021 10:52
  */
 
 namespace App\Controller\administration;
@@ -67,7 +67,7 @@ class EtudiantGroupeController extends BaseController
      */
     public function synchroApogee(MyGroupes $myGroupes, Semestre $semestre): Response
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_DDE', $semestre);
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $semestre);
 
         $myGroupes->updateFromApogee($semestre);
 
@@ -82,7 +82,7 @@ class EtudiantGroupeController extends BaseController
      */
     public function synchroParent(MyGroupes $myGroupes, Semestre $semestre): Response
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_DDE', $semestre);
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $semestre);
 
         $myGroupes->updateParent($semestre);
         $this->addFlashBag('success', 'groupes.parents.synchronises');

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/PrevisionnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/10/2021 12:14
+ * @lastUpdate 08/10/2021 10:57
  */
 
 namespace App\Controller\administration;
@@ -229,7 +229,7 @@ class PrevisionnelController extends BaseController
         Request $request
     ): Response
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_CDD', $this->getDepartement());
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
 
         $anneeDepart = $request->request->get('annee_depart');
         $annee_destination = $request->request->get('annee_destination');
@@ -251,7 +251,7 @@ class PrevisionnelController extends BaseController
         methods: ['GET'])]
     public function duplicate(Request $request, Previsionnel $previsionnel): Response
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_CDD', $this->getDepartement());
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
 
         $newprevisionnel = clone $previsionnel;
         $this->entityManager->persist($newprevisionnel);
@@ -267,7 +267,7 @@ class PrevisionnelController extends BaseController
         Previsionnel $previsionnel
     ): Response
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_CDD', $this->getDepartement());
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
 
         $id = $previsionnel->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
@@ -283,7 +283,7 @@ class PrevisionnelController extends BaseController
     #[Route('/supprimer/annee', name: 'administration_previsionnel_supprimer_annee', methods: ['POST'])]
     public function supprimer(Request $request, PrevisionnelManager $previsionnelManager): Response
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_CDD', $this->getDepartement());
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
 
         if ($this->isCsrfTokenValid('supprimer', $request->request->get('_token'))) {
             $previsionnelManager->supprimeAnnee($this->dataUserSession->getDepartement(),
