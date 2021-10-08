@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EvaluationInitialisationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/10/2021 10:23
+ * @lastUpdate 08/10/2021 10:38
  */
 
 namespace App\Controller\administration;
@@ -38,7 +38,7 @@ class EvaluationInitialisationController extends BaseController
         EvaluationRepository $evaluationRepository,
         Semestre $semestre
     ): Response {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_DDE', $semestre);
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $semestre);
 
         $matieres = $typeMatiereManager->findBySemestre($semestre);
         $evaluations = $evaluationRepository->findBySemestre($matieres,
