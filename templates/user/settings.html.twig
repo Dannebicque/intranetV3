@@ -8,10 +8,10 @@
     <div class="header-action">
         <nav class="nav">
             <a class="nav-link active show"
-               href="#vosInformations" data-toggle="tab" role="tab"
+               href="#vosInformations" data-bs-toggle="tab" role="tab"
                id="profil-vosInformations">{{ 'tab.vosInformations'|trans }}</a>
             {% if not is_granted('ROLE_ETUDIANT') %}
-                <a class="nav-link" href="#vosParametres" data-toggle="tab" role="tab"
+                <a class="nav-link" href="#vosParametres" data-bs-toggle="tab" role="tab"
                    id="profil-vosParametres">{{ 'tab.vosParametres'|trans }}</a>
             {% endif %}
         </nav>

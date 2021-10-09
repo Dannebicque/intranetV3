@@ -48,7 +48,7 @@
             <ul class="nav nav-tabs">
                 {% for semestre in user_data.semestres %}
                     <li class="nav-item">
-                        <a class="nav-link {% if loop.first %} active{% endif %}" data-toggle="tab"
+                        <a class="nav-link {% if loop.first %} active{% endif %}" data-bs-toggle="tab"
                            href="#semestre{{ semestre.id }}">{{ semestre.libelle }}</a>
                     </li>
                 {% endfor %}
