@@ -16,10 +16,10 @@
                     </p>
                 </div>
                 <a class="primary" href="{{ asset('upload/documents/'~document.documentName) }}"
-                   data-provide="tooltip"
+                   data-bs-toggle="tooltip" data-bs-placement="bottom"
                    title="{{ 'telecharger'|trans }}"><i
                             class="fas fa-save"></i></a>
-                <label class="toggler toggler-danger fs-16" data-provide="tooltip" title="{{ 'favori'|trans }}">
+                <label class="toggler toggler-danger fs-16" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ 'favori'|trans }}">
                     <input type="checkbox" class="addFavori" data-document="{{ document.uuidString }}" {% if
                         document.id in listesFavoris %}checked{% endif %}>
                     <i class="fa fa-heart"></i>

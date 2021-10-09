@@ -69,24 +69,24 @@
                     <li class="br-1 border-light">
                         <span class="text-muted">{{ 'contacter'|trans }}</span><br>
                         <span class="fs-22"><a href="mailto:{{ user.mailUniv }}" target="_blank"
-                                               title="{{ 'contacter.sur.mail.univ'|trans }}" data-provide="tooltip"
-                                               data-placement="bottom"><i class="fa fa-envelope"></i></a></span>
+                                               title="{{ 'contacter.sur.mail.univ'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                            ><i class="fa fa-envelope"></i></a></span>
                     </li>
                     <li class="br-1 border-light">
 
                         <span class="text-muted">{{ 'espace.travail'|trans }}</span><br>
                         {% if user.siteUniv != '' or user.siteUniv != null %}
 
-                            <span class="fs-22"><a href="{{ user.siteUniv }}" target="_blank" title="{{ 'consulter.espace.travail'|trans }}" data-provide="tooltip" data-placement="bottom"><i class="fa fa-globe"></i></a></span>
+                            <span class="fs-22"><a href="{{ user.siteUniv }}" target="_blank" title="{{ 'consulter.espace.travail'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa fa-globe"></i></a></span>
                         {% else %}
-                            <span class="fs-22"><a href="#" target="_blank" title="{{ 'pas.d.espace.travail'|trans }}" data-provide="tooltip" class="isDisabled" data-placement="bottom"><i class="fa fa-globe"></i></a></span>
+                            <span class="fs-22"><a href="#" target="_blank" title="{{ 'pas.d.espace.travail'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom" class="isDisabled"><i class="fa fa-globe"></i></a></span>
                         {% endif %}
 
                         {% if user.sitePerso != '' and user.sitePerso != null %}
 
                             <span class="fs-22"><a href="{{ user.sitePerso }}" target="_blank"
                                                    title="{{ 'consulter.son.site.personnel'|trans }}"
-                                                   data-provide="tooltip" data-placement="bottom"><i
+                                                   data-bs-toggle="tooltip" data-bs-placement="bottom"><i
                                             class="fa fa-link"></i></a></span>
                         {% endif %}
 

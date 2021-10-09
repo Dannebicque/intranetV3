@@ -75,16 +75,16 @@
                                                             <i class="fa fa-fw fa-envelope w-20px"></i>
                                                             <a href="mailto:{{ etudiant.mailUniv }}" target="_blank"
                                                                class="text-white"
-                                                               title="Contacter" data-provide="tooltip"
-                                                               data-placement="bottom">Contacter
+                                                               title="Contacter" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                            >Contacter
                                                             </a>
                                                         </div>
                                                         <div>
                                                             {% if etudiant.siteUniv != '' and etudiant.siteUniv != null %}
                                                                 <a href="{{ etudiant.siteUniv }}"
                                                                    class="text-white"
-                                                                   target="_blank" title="Site Universitaire" data-provide="tooltip"
-                                                                   data-placement="bottom">
+                                                                   target="_blank" title="Site Universitaire" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                                >
                                                                     <i class="fa fa-fw fa-globe w-20px"></i>
                                                                     <span class="sr-only">Site Universitaire</span>
                                                                 </a>
@@ -92,8 +92,8 @@
                                                             {% if etudiant.sitePerso != '' and etudiant.sitePerso != null %}
                                                                 <a href="{{ etudiant.sitePerso }}"
                                                                    class="text-white"
-                                                                   target="_blank" title="Site personnel" data-provide="tooltip"
-                                                                   data-placement="bottom">
+                                                                   target="_blank" title="Site personnel" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                                >
                                                                     <i class="fa fa-fw fa-link"></i>
                                                                     <span class="sr-only">Site personnel</span>
                                                                 </a>
@@ -114,9 +114,10 @@
                                                         {% endif %}
                                                     </div>
                                                 </div>
-                                                <h4><a class="text-white trombinoscope_nom" data-provide="tooltip"
+                                                <h4>
+                                                    <a class="text-white trombinoscope_nom" data-bs-toggle="tooltip" data-bs-placement="bottom"
                                                        target="_blank"
-                                                       data-placement="bottom" title="Profil" href="{{ path('user_profil', {type:'etudiant', slug: etudiant.slug}) }}">
+                                                       title="Profil" href="{{ path('user_profil', {type:'etudiant', slug: etudiant.slug}) }}">
                                                         {{ etudiant.displayPr }}
                                                     </a></h4>
                                             </div>

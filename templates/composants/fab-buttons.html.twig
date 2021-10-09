@@ -8,7 +8,7 @@
     <ul class="fab-buttons">
         {% for bouton in boutons %}
             <li><a class="btn btn-float btn-sm btn-{{ bouton.type }}" href="{{ bouton.href }}"
-                   title="{{ bouton.title }}" data-provide="tooltip"
+                   title="{{ bouton.title }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
                    data-placement="left"
                    {% if bouton.id is defined %}id="{{ bouton.id }}"{% endif %}
                    target="{{ bouton.target is defined ? bouton.target : '_blank' }}"

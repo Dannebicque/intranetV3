@@ -8,11 +8,11 @@
     <div class="header-action">
         <div class="buttons">
             <a href="{{ path('application_index',{'onglet': 'justificatif'}) }}" class="btn btn-primary btn-float"
-               title="{{ 'atitle.retour_liste'|trans }}" data-provide="tooltip"
-               data-placement="bottom"><i class="fas fa-th-list"></i>
+               title="{{ 'atitle.retour_liste'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
+            ><i class="fas fa-th-list"></i>
             </a>
-            <a href="{{ path('default_homepage') }}" class="btn btn-primary btn-float" data-provide="tooltip"
-               data-placement="bottom" title="{{ 'atitle.retour_dashboard'|trans }}">
+            <a href="{{ path('default_homepage') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom"
+               title="{{ 'atitle.retour_dashboard'|trans }}">
                 <i class="{{ iconDashboard }}"><span class="sr-only">dashboard</span></i>
             </a>
 

@@ -33,7 +33,8 @@
                                 {% set pret = dispo[jr.date][cr][mat.id] %}
                                 class="reservationaccepte resa_{{ pret.id }} reservation" data-reservation="{{ pret.id }}">
 
-                            <a href="#modalPret" class="voirplus" rel="tooltip" data-placement="top" data-toggle="modal"
+                            <a href="#modalPret" class="voirplus" data-bs-toggle="tooltip" data-bs-placement="top"
+                               data-toggle="modal"
                                data-id="{{ pret.id }}"
                                title="Emprunt de {{ pret.personnel.displayPr }}">Res.</a>
                             {% if pret.personnel.id == user_data.user.id %}

@@ -1,9 +1,9 @@
 <div class="buttons">
     {% if retour is defined %}
-        <a href="{% if retour.params is defined %} {{ path(retour.path, retour.params) }}{% else %} {{ path(retour.path) }} {% endif %}" class="btn btn-primary btn-float" data-provide="tooltip"
-           data-placement="bottom" title="{{ retour.titre }}"><i class="fas fa-arrow-left"></i></a>
+        <a href="{% if retour.params is defined %} {{ path(retour.path, retour.params) }}{% else %} {{ path(retour.path) }} {% endif %}" class="btn btn-primary btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom"
+           title="{{ retour.titre }}"><i class="fas fa-arrow-left"></i></a>
     {% else %}
-        <a href="{{ path('sa_'~elt~'_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
-           data-placement="bottom" title="{{ 'atitle.retour_liste'|trans }}"><i class="fas fa-arrow-left"></i></a>
+        <a href="{{ path('sa_'~elt~'_index') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom"
+           title="{{ 'atitle.retour_liste'|trans }}"><i class="fas fa-arrow-left"></i></a>
     {% endif %}
 </div>

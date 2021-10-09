@@ -14,8 +14,8 @@
                     covid_attestation_personnel.id, etat:'true'}) }}"
                    class="btn btn-success btn-sm btn-float"
                    title="{{ 'atitle.valider'|trans }}"
-                   data-provide="tooltip"
-                   data-placement="bottom">
+                   data-bs-toggle="tooltip"
+                   data-bs-placement="bottom">
                     <i class="fas fa-check"></i>
                     <span class="sr-only">{{ 'atitle.valider'|trans }}</span>
                 </a>
@@ -23,8 +23,8 @@
                     covid_attestation_personnel.id, etat:'false'}) }}"
                    class="btn btn-warning btn-sm btn-float"
                    title="{{ 'atitle.refuser'|trans }}"
-                   data-provide="tooltip"
-                   data-placement="bottom">
+                   data-bs-toggle="tooltip"
+                   data-bs-placement="bottom">
                     <i class="fas fa-ban"></i>
                     <span class="sr-only">{{ 'atitle.refuser'|trans }}</span>
                 </a>
@@ -33,8 +33,8 @@
                    data-csrf="{{ csrf_token('delete' ~ covid_attestation_personnel.id) }}"
                    class="btn btn-danger btn-sm btn-float supprimer"
                    title="{{ 'atitle.supprimer'|trans }}"
-                   data-provide="tooltip"
-                   data-placement="bottom">
+                   data-bs-toggle="tooltip"
+                   data-bs-placement="bottom">
                     <i class="{{ iconDelete }}"></i>
                     <span class="sr-only">{{ 'atitle.supprimer'|trans }}</span>
                 </a>
@@ -43,8 +43,8 @@
             <a href="{{ path('administration_covid_attestation_personnel_index') }}"
                class="btn btn-primary btn-float"
                title="{{ 'atitle.retour_liste'|trans }}"
-               data-provide="tooltip"
-               data-placement="bottom">
+               data-bs-toggle="tooltip"
+               data-bs-placement="bottom">
                 <i class="fas fa-arrow-left"></i>
                 <span class="sr-only">{{ 'atitle.retour_liste'|trans }}</span>
             </a>

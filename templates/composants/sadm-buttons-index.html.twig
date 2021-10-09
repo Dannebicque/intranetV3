@@ -1,17 +1,17 @@
 <div class="buttons">
-    <a href="{{ path('sa_'~ elt ~ '_new') }}" class="btn btn-info btn-sm btn-float" title="{{ 'atitle.creer_nouveau'|trans }}" data-provide="tooltip" data-placement="bottom"><i class="fas fa-plus"></i></a>
+    <a href="{{ path('sa_'~ elt ~ '_new') }}" class="btn btn-info btn-sm btn-float" title="{{ 'atitle.creer_nouveau'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fas fa-plus"></i></a>
     {% if retour is defined %}
         <a href="{{ path(retour.path) }}"
            class="btn btn-primary btn-float"
-           data-provide="tooltip"
-           data-placement="bottom"
+           data-bs-toggle="tooltip" data-bs-placement="bottom"
+
            title="{{ retour.titre }}">
             <i class="fas fa-arrow-left"></i>
             <span class="sr-only">{{ retour.titre }}</span>
         </a>
     {% else %}
-        <a href="{{ path('super_admin_homepage') }}" class="btn btn-primary btn-float" data-provide="tooltip"
-           data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}">
+        <a href="{{ path('super_admin_homepage') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom"
+           title="{{ 'atitle.retour_administration'|trans }}">
             <i class="{{ iconDashboard }}"><span class="sr-only">dashboard</span></i>
         </a>
     {% endif %}

@@ -10,8 +10,8 @@
             <a href="{{ path('administration_rattrapage_semestre_index', {semestre:sem.id}) }}"
                class="btn btn-round {% if sem.id == semestre.id %}btn-primary{% endif %}"
                title="{{ 'atitle.changer.semestre'|trans }}"
-               data-provide="tooltip"
-               data-placement="bottom"
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
+
             >{{ sem.libelle }}</a>
         {% endfor %}
     </div>
@@ -21,17 +21,17 @@
     <div class="header-action">
         <div class="buttons">
             <a href="{{ path('administration_rattrapage_delete_all', {semestre: semestre.id}) }}"
-               class="btn btn-danger btn-sm btn-float supprimer" data-provide="tooltip"
-               data-placement="bottom" title="Supprimer toutes les demandes de rattrapage pour l'année {{ semestre
-            .annee.libelle }}"><i class="{{ iconDelete }}"></i></a>
+               class="btn btn-danger btn-sm btn-float supprimer" data-bs-toggle="tooltip" data-bs-placement="bottom"
+               title="Supprimer toutes les demandes de rattrapage pour l'année {{ semestre
+               .annee.libelle }}"><i class="{{ iconDelete }}"></i></a>
             <a href="{{ path('administration_rattrapage_planning_index', {diplome: semestre.diplome.id}) }}"
-               class="btn btn-success btn-sm btn-float" data-provide="tooltip"
-               data-placement="bottom" title="{{ 'atitle.planning'|trans }}"><i class="fas fa-calendar-alt"></i></a>
+               class="btn btn-success btn-sm btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom"
+               title="{{ 'atitle.planning'|trans }}"><i class="fas fa-calendar-alt"></i></a>
             <a href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}"
-               class="btn btn-primary btn-float" data-provide="tooltip"
-               data-placement="bottom" title="{{ 'atitle.retour_semestres'|trans }}"><i class="fas fa-arrow-left"></i></a>
-            <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
-               data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="{{ iconAdmin }}"><span class="sr-only">Administration</span></i></a>
+               class="btn btn-primary btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom"
+               title="{{ 'atitle.retour_semestres'|trans }}"><i class="fas fa-arrow-left"></i></a>
+            <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom"
+               title="{{ 'atitle.retour_administration'|trans }}"><i class="{{ iconAdmin }}"><span class="sr-only">Administration</span></i></a>
         </div>
     </div>
 {% endblock %}

@@ -4,7 +4,7 @@
         <div class="card-header-actions" style="">
             <button class="btn btn-sm btn-primary"
                     id="add_rattrapage"
-                    title="{{ 'atitle.creer_nouveau'|trans }}" data-provide="tooltip" data-placement="bottom"><i
+                    title="{{ 'atitle.creer_nouveau'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom"><i
                         class="fas fa-plus"></i><span class="sr-only">ajouter une demande d'emprunt</span></button>
         </div>
     </header>
@@ -34,11 +34,11 @@
                     <td>{{ emprunt.motif }}</td>
                     <td>{{ emprunt.etat|trans }}</td>
                     <td>
-                        <a data-provide="modaler tooltip"
+                        <a data-provide="modaler" data-bs-toggle="tooltip" data-bs-placement="bottom"
                            data-url="{{ path('application_etudiant_emprunt_detail', {emprunt: emprunt
                                .uuidString}) }}"
                            class="btn btn-info btn-outline btn-square"
-                           data-placement="bottom"
+
                            title="{{ 'atitle.details'|trans }}"
                            data-title="{{ 'app.etudiant.emprunt.show.heading'|trans }}"
                         >
@@ -48,8 +48,8 @@
                         <a href="{{ path('app_etudiant_emprunt_imprimer_fiche', {emprunt: emprunt.uuidString}) }}"
                            data-csrf="{{ csrf_token('delete' ~ emprunt.id) }}"
                            class="btn btn-primary btn-outline btn-square"
-                           data-provide="tooltip"
-                           data-placement="bottom"
+                           data-bs-toggle="tooltip" data-bs-placement="bottom"
+
                            title="{{ 'atitle.imprimer'|trans }}">
                             <i class="{{ iconPrint }}"></i>
                             <span class="sr-only">{{ 'atitle.imprimer'|trans }}</span>
@@ -57,8 +57,8 @@
                         <a href="{{ path('app_etudiant_emprunt_delete', {emprunt: emprunt.uuidString}) }}"
                            data-csrf="{{ csrf_token('delete' ~ emprunt.id) }}"
                            class="btn btn-danger btn-outline btn-square supprimer"
-                           data-provide="tooltip"
-                           data-placement="bottom"
+                           data-bs-toggle="tooltip" data-bs-placement="bottom"
+
                            title="{{ 'atitle.supprimer'|trans }}">
                             <i class="{{ iconDelete }}"></i>
                             <span class="sr-only">{{ 'atitle.supprimer'|trans }}</span>

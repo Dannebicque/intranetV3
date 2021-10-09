@@ -5,7 +5,8 @@
                 <h2 class="card-title">{{ 'adm.documents'|trans }}</h2>
                 <div class="card-header-actions" style="">
                     <a href="{{ path('administration_document_new') }}" class="btn btn-sm btn-info"
-                       title="Ajouter un document" data-provide="tooltip"> <i class="fas fa-plus"></i><span
+                       title="Ajouter un document" data-bs-toggle="tooltip" data-bs-placement="bottom">
+                        <i class="fas fa-plus"></i><span
                                 class="sr-only">ajouter un document</span></a>
                 </div>
             </header>
@@ -33,7 +34,8 @@
                 <h2 class="card-title">{{ 'adm.articles'|trans }}</h2>
                 <div class="card-header-actions" style="">
                     <a href="{{ path('administration_article_new') }}" class="btn btn-sm btn-info"
-                       title="Ajouter un article" data-provide="tooltip"> <i class="fas fa-plus"></i><span
+                       title="Ajouter un article" data-bs-toggle="tooltip" data-bs-placement="bottom">
+                        <i class="fas fa-plus"></i><span
                                 class="sr-only">Publier un article</span></a>
                 </div>
             </header>

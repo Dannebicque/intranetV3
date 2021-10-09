@@ -21,16 +21,16 @@
         <div class="buttons">
             <a href="{{ path('sa_groupes_import', {departement:departement.id}) }}" class="btn
             btn-info btn-float btn-sm"
-               data-provide="tooltip"
-               data-placement="bottom" title="{{ 'atitle.import'|trans }}"><i
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
+               title="{{ 'atitle.import'|trans }}"><i
                         class="fas fa-file-import"></i>
             </a><a href="{{ path('sa_groupes_departement_synchro_all', {departement:departement.id}) }}" class="btn
             btn-info btn-float btn-sm"
-                   data-provide="tooltip"
-                   data-placement="bottom" title="{{ 'atitle.synchro_apogee'|trans }}"><i
+                   data-bs-toggle="tooltip" data-bs-placement="bottom"
+                   title="{{ 'atitle.synchro_apogee'|trans }}"><i
                         class="fas fa-undo"></i></a>
-            <a href="{{ path('super_admin_homepage') }}" class="btn btn-primary btn-float" data-provide="tooltip"
-               data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}">
+            <a href="{{ path('super_admin_homepage') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom"
+               title="{{ 'atitle.retour_administration'|trans }}">
                 <i class="{{ iconDashboard }}"><span class="sr-only">dashboard</span></i>
             </a>
         </div>

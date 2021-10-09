@@ -10,24 +10,24 @@
             <a href="{{ path('administratif_enquete_diplome_export_manquant') }}"
                class="btn btn-warning btn-float btn-sm"
                title="{{ 'atitle.export_manquant'|trans }}"
-               data-provide="tooltip"
-               data-placement="bottom">
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
+            >
                 <i class="fas fa-star-half-alt"></i>
                 <span class="sr-only">{{ 'atitle.export_manquant'|trans }}</span>
             </a>
             <a href="{{ path('administratif_enquete_diplome_export') }}"
                class="btn btn-info btn-float btn-sm"
                title="{{ 'atitle.export_reponses'|trans }}"
-               data-provide="tooltip"
-               data-placement="bottom">
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
+            >
                 <i class="fas fa-file-download"></i>
                 <span class="sr-only">{{ 'atitle.export_reponses'|trans }}</span>
             </a>
             <a href="{{ path('super_admin_homepage') }}"
                class="btn btn-primary btn-float"
                title="{{ 'atitle.retour_administration'|trans }}"
-               data-provide="tooltip"
-               data-placement="bottom">
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
+            >
                 <i class="fas fa-arrow-left"></i>
                 <span class="sr-only">{{ 'atitle.retour_administration'|trans }}</span>
             </a>

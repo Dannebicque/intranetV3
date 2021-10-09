@@ -10,7 +10,7 @@
             <ul class="card-controls">
                 <li class="dropdown">
                     <a data-toggle="dropdown" href="#"><i
-                                class="fas fa-ellipsis-h rotate-90" data-provide="tooltip" title="Options d'export ou de synchronisation"></i><span class="sr-only">Options d'export ou de synchronisation</span></a>
+                                class="fas fa-ellipsis-h rotate-90" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Options d'export ou de synchronisation"></i><span class="sr-only">Options d'export ou de synchronisation</span></a>
                     <div class="dropdown-menu dropdown-menu-right">
                         {# todo:                    <a href="{{ path('edt_etudiant_export_semaine_courante', {semaine:edt.semaine}) }}" #}
                         {# class="dropdown-item"><i #}
@@ -19,9 +19,9 @@
                         {# class="dropdown-item"><i #}
                         {# class="fas fa-file-export"></i>{{ 'edt.etudiant.export.ical'|trans }}</a> #}
                         <a href="#"
-                           data-provide="modaler tooltip"
+                           data-provide="modaler"
                            data-url="{{ path('edt_affiche_ical') }}"
-                           data-placement="bottom"
+                           data-bs-toggle="tooltip" data-bs-placement="bottom"
                            title="{{ 'atitle.lien_ical'|trans }}"
                            data-title="{{ 'edt.intervenant.synchro.ical.heading'|trans }}"
                            class="dropdown-item"><i
@@ -39,34 +39,34 @@
                     .optSemainesVisibles == 0 %}
                         <a class="btn btn-primary" href="{{ path('agenda_index', {semaine:edt.semainePrecedente,
                             filtre:'etudiant'}) }}"
-                           data-provide="tooltip"
+                           data-bs-toggle="tooltip" data-bs-placement="bottom"
                            title="Semaine précédente"
                            id="semainePrecedente"><i
                                     class="fa fa-caret-left"></i><span class="sr-only">Semaine précédente</span></a>
-                        <a class="btn btn-secondary" href="{{ path('agenda_index', {semaine:'now'|date('W')}) }}" data-provide="tooltip" title="Cette semaine"><i class="fa
+                        <a class="btn btn-secondary" href="{{ path('agenda_index', {semaine:'now'|date('W')}) }}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cette semaine"><i class="fa
 	fa-calendar"></i> Semaine</a>
                         <a class="btn btn-primary" href="{{ path('agenda_index', {semaine:edt.semaineSuivante,filtre:'etudiant'}) }}"
-                           data-provide="tooltip"
+                           data-bs-toggle="tooltip" data-bs-placement="bottom"
                            title="Semaine suivante"
                            id="semaineSuivante"><i
                                     class="fa fa-caret-right"></i><span class="sr-only">Semaine suivante</span></a>
                     {% else %}
                         {% if edt.semaine=='now'|date('W') %}
-                            <a class="btn btn-secondary" href="{{ path('agenda_index', {semaine:'now'|date('W')}) }}" data-provide="tooltip" title="Cette semaine"><i class="fa
+                            <a class="btn btn-secondary" href="{{ path('agenda_index', {semaine:'now'|date('W')}) }}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cette semaine"><i class="fa
 	fa-calendar"></i> Semaine</a>
                             <a class="btn btn-primary" href="{{ path('agenda_index', {semaine:edt.semaineSuivante,filtre:'etudiant'}) }}"
-                               data-provide="tooltip"
+                               data-bs-toggle="tooltip" data-bs-placement="bottom"
                                title="Semaine suivante"
                                id="semaineSuivante"><i
                                         class="fa fa-caret-right"></i><span class="sr-only">Semaine suivante</span></a>
                         {% else %}
                             <a class="btn btn-primary" href="{{ path('agenda_index', {semaine:edt.semainePrecedente,filtre:'etudiant'
                             }) }}"
-                               data-provide="tooltip"
+                               data-bs-toggle="tooltip" data-bs-placement="bottom"
                                title="Semaine précédente"
                                id="semainePrecedente"><i
                                         class="fa fa-caret-left"></i><span class="sr-only">Semaine précédente</span></a>
-                            <a class="btn btn-secondary" href="{{ path('agenda_index', {semaine:'now'|date('W')}) }}" data-provide="tooltip" title="Cette semaine"><i class="fa
+                            <a class="btn btn-secondary" href="{{ path('agenda_index', {semaine:'now'|date('W')}) }}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cette semaine"><i class="fa
 	fa-calendar"></i> Semaine</a>
                         {% endif %}
                     {% endif %}
@@ -74,13 +74,13 @@
             </div>
             <div class="col-sm-12 hide-on-large mt-2">
                 <div class="btn-group btn-block">
-                    <a class="btn btn-primary w-25" href="#" data-provide="tooltip" title="Jour précédent"
+                    <a class="btn btn-primary w-25" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Jour précédent"
                        id="jourPrecedent"><i
                                 class="fa fa-caret-left"></i><span class="sr-only">Jour précédent</span></a>
-                    <a class="btn btn-secondary" href="" data-provide="tooltip" title="Aujourd'hui" id="jourCourant"><i
+                    <a class="btn btn-secondary" href="" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Aujourd'hui" id="jourCourant"><i
                                 class="fa
 	fa-calendar"></i> Aujourd'hui</a>
-                    <a class="btn btn-primary w-25" href="#" data-provide="tooltip" title="Jour suivant" id="jourSuivant"><i
+                    <a class="btn btn-primary w-25" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Jour suivant" id="jourSuivant"><i
                                 class="fa fa-caret-right"></i><span class="sr-only">Jour suivant</span></a>
                 </div>
             </div>
