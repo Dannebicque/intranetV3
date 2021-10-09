@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Absence.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 18:15
+ * @lastUpdate 09/10/2021 10:33
  */
 
 namespace App\Entity;
@@ -81,6 +81,11 @@ class Absence extends BaseEntity implements Serializable
      * @ORM\ManyToOne(targetEntity="App\Entity\AnneeUniversitaire")
      */
     private ?AnneeUniversitaire $anneeUniversitaire;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Semestre::class, inversedBy="absences")
+     */
+    private ?Semestre $semestre;
 
     /**
      * Absence constructor.
@@ -216,5 +221,17 @@ class Absence extends BaseEntity implements Serializable
      */
     public function unserialize($data)
     {
+    }
+
+    public function getSemestre(): ?Semestre
+    {
+        return $this->semestre;
+    }
+
+    public function setSemestre(?Semestre $semestre): self
+    {
+        $this->semestre = $semestre;
+
+        return $this;
     }
 }

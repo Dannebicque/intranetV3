@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Article.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 19:44
+ * @lastUpdate 09/10/2021 10:33
  */
 
 namespace App\Entity;
@@ -22,8 +22,6 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
  */
 class Article extends BaseEntity
 {
-    //todo: lier au département pour gérer personnel ou étudiant
-
     use LifeCycleTrait;
 
     /**
@@ -67,6 +65,11 @@ class Article extends BaseEntity
      * @ORM\OneToMany(targetEntity="App\Entity\ArticleLike", mappedBy="article")
      */
     private Collection $articleLikes;
+
+    /**
+     * @ORM\Column(type="string", length=5)
+     */
+    private ?string $typeDestinataire;
 
     /**
      * Article constructor.
@@ -221,6 +224,18 @@ class Article extends BaseEntity
                 $articleLike->setArticle(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTypeDestinataire(): ?string
+    {
+        return $this->typeDestinataire;
+    }
+
+    public function setTypeDestinataire(string $typeDestinataire): self
+    {
+        $this->typeDestinataire = $typeDestinataire;
 
         return $this;
     }

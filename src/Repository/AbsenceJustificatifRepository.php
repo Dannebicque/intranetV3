@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/AbsenceJustificatifRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/07/2021 17:05
+ * @lastUpdate 09/10/2021 10:33
  */
 
 namespace App\Repository;
@@ -37,8 +37,7 @@ class AbsenceJustificatifRepository extends ServiceEntityRepository
     public function findBySemestre(Semestre $semestre)
     {
         return $this->createQueryBuilder('j')
-            ->innerJoin(Etudiant::class, 'e', 'WITH', 'j.etudiant = e.id')
-            ->where('e.semestre = :semestre')
+            ->where('j.semestre = :semestre')
             ->andWhere('j.anneeUniversitaire = :annee')
             ->setParameter('semestre', $semestre->getId())
             ->setParameter('annee', $semestre->getAnneeUniversitaire())
@@ -62,14 +61,13 @@ class AbsenceJustificatifRepository extends ServiceEntityRepository
 
         return $this->createQueryBuilder('j')
             ->select('count(j.id)')
-            ->innerJoin(Etudiant::class, 'e', 'WITH', 'j.etudiant = e.id')
             ->innerJoin(AnneeUniversitaire::class, 'u', 'WITH', 'j.anneeUniversitaire = u.id')
-            ->where('e.semestre = :semestre')
+            ->where('j.semestre = :semestre')
             ->andWhere('u.annee = :annee')
             ->andWhere('j.etat = :etat')
             ->setParameter('semestre', $semestre->getId())
             ->setParameter('annee', $annee)
-            ->setParameter('etat', 'D')
+            ->setParameter('etat', AbsenceJustificatif::DEPOSE)
             ->getQuery()
             ->getSingleScalarResult()
             ;
