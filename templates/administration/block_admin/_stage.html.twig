@@ -1,0 +1,29 @@
+<div class="col-md-8 col-lg-8 col-sm-12">
+    <div class="card">
+        <header class="card-header">
+            <h2 class="card-title">{{ 'adm.stages'|trans }}</h2>
+            <div class="card-header-actions" style="">
+                <a href="{{ path('administration_stage_periode_index') }}" class="btn btn-sm btn-info"
+                   title="Créer une période" data-bs-toggle="tooltip" data-bs-placement="bottom">
+                    <i class="fas fa-plus"></i><span
+                            class="sr-only">Créer une période de stage</span></a>
+            </div>
+        </header>
+        <div class="card-body">
+            <div class="row">
+                {% for periode in stagePeriodes %}
+                    <div class="col-6 d-grid d-block mb-2">
+                        <a href="{{ path('administration_stage_periode_gestion', {uuid:periode.uuidString}) }}"
+                           class="btn btn-primary"> Période : <strong>{{ periode.libelle }}
+                                ({{ periode.semestre.display }})</strong></a>
+                    </div>
+                {% else %}
+                    <div class="col-sm-12">
+                        <div class="alert alert-info">Aucune période de stage.</div>
+                    </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,22 @@
+<div class="col-md-4 col-lg-4 col-sm-12">
+    <div class="card"><h2 class="card-title">{{ 'adm.personnels'|trans }}</h2>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-12 d-grid d-block mb-2">
+                    <a href="{{ path('administration_personnel_index') }}"
+                       class="btn btn-primary"> {{ 'adm.permanents.et.vacataires'|trans }}
+                    </a>
+                </div>
+                <div class="col-6 d-grid d-block mb-2">
+                    <a href="{{ path('administration_previsionnel_index') }}"
+                       class="btn btn-primary">
+                        {{ 'adm.previsionnels'|trans }}</a>
+                </div>
+                <div class="col-6 d-grid d-block mb-2">
+                    <a href="{{ path('administration_hrs_index') }}" class="btn btn-primary">
+                        {{ 'adm.hrs.primes'|trans }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

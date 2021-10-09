@@ -87,22 +87,32 @@
                         </div>
                     </header>
                     <div class="card-body">
-                        <a href="{{ path('administration_absences_semestre_liste',{semestre:semestre.id}) }}"
-                           class="btn btn-block btn-primary">
-                            {{ 'afficher.les.absences'|trans }}</a>
-                        <a href="{{ path('administration_absences_justificatif_semestre_liste',{semestre:semestre.id}) }}"
-                           class="btn btn-block btn-primary">
-                            {{ 'liste.justificatifs'|trans }}
-                            (<span class="badge badge-pill badge-info">{{ nbJustificatifs }}</span> nouveaux)</a>
-                        <a href="{{ path('administration_absences_semestre_justifier',{semestre:semestre.id}) }}"
-                           class="btn btn-block btn-primary">
-                            {{ 'justifier.les.absences'|trans }}</a>
-                        <a href="{{ path('administration_commission_absences_semestre_index',{semestre:semestre.id}) }}"
-                           class="btn btn-block btn-primary">
-                            {{ 'commission.des.absences'|trans }}</a>
-                        <a href="{{ path('administration_absence_appel_index',{semestre:semestre.id}) }}"
-                           class="btn btn-block btn-primary">
-                            {{ 'suivi.appels'|trans }}</a>
+                        <div class="col-12 d-block d-grid mb-2">
+                            <a href="{{ path('administration_absences_semestre_liste',{semestre:semestre.id}) }}"
+                               class="btn btn-primary">
+                                {{ 'afficher.les.absences'|trans }}</a>
+                        </div>
+                        <div class="col-12 d-block d-grid mb-2">
+                            <a href="{{ path('administration_absences_justificatif_semestre_liste',{semestre:semestre.id}) }}"
+                               class="btn btn-primary">
+                                {{ 'liste.justificatifs'|trans }}
+                                (<span class="badge badge-pill badge-info">{{ nbJustificatifs }}</span> nouveaux)</a>
+                        </div>
+                        <div class="col-12 d-block d-grid mb-2">
+                            <a href="{{ path('administration_absences_semestre_justifier',{semestre:semestre.id}) }}"
+                               class="btn btn-primary">
+                                {{ 'justifier.les.absences'|trans }}</a>
+                        </div>
+                        <div class="col-12 d-block d-grid mb-2">
+                            <a href="{{ path('administration_commission_absences_semestre_index',{semestre:semestre.id}) }}"
+                               class="btn btn-primary">
+                                {{ 'commission.des.absences'|trans }}</a>
+                        </div>
+                        <div class="col-12 d-block d-grid mb-2">
+                            <a href="{{ path('administration_absence_appel_index',{semestre:semestre.id}) }}"
+                               class="btn btn-primary">
+                                {{ 'suivi.appels'|trans }}</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -126,24 +136,34 @@
                         </ul>
                     </header>
                     <div class="card-body">
-                        <a href="{{ path('administration_notes_semestre_index',{semestre:semestre.id}) }}"
-                           class="btn btn-block btn-primary">
-                            {{ 'afficher.les.notes'|trans }}
-                        </a>
-                    <a href="{{ path('administration_evaluation_initialisation_index',{semestre:semestre.id}) }}"
-                       class="btn btn-block btn-primary">
-                        {{ 'initialiser.les.evaluations'|trans }}
-                    </a>
-                    <a href="{{ path('administration_affecter_enseignant_groupe_index',{semestre:semestre.id}) }}"
-                       class="btn btn-block btn-primary">
-                        {{ 'affecter.enseignant.groupe'|trans }}
-                    </a>
-                    <a href="{{ path('administration_rattrapage_semestre_index',{semestre:semestre.id}) }}"
-                       class="btn btn-block btn-primary">
-                        {{ 'demandes.rattrapages'|trans }}
-                      <span class="badge badge-pill badge-info">{{ nbRattrapages }}</span>
-                    </a>
-                  </div>
+
+                        <div class="col-12 d-block d-grid mb-2">
+                            <a href="{{ path('administration_notes_semestre_index',{semestre:semestre.id}) }}"
+                               class="btn btn-primary">
+                                {{ 'afficher.les.notes'|trans }}
+                            </a>
+                        </div>
+                        <div class="col-12 d-block d-grid mb-2">
+                            <a href="{{ path('administration_evaluation_initialisation_index',{semestre:semestre.id}) }}"
+                               class="btn btn-primary">
+                                {{ 'initialiser.les.evaluations'|trans }}
+                            </a>
+                        </div>
+                        <div class="col-12 d-block d-grid mb-2">
+                            <a href="{{ path('administration_affecter_enseignant_groupe_index',{semestre:semestre.id}) }}"
+                               class="btn btn-primary">
+                                {{ 'affecter.enseignant.groupe'|trans }}
+                            </a>
+                        </div>
+                        <div class="col-12 d-block d-grid mb-2">
+                            <a href="{{ path('administration_rattrapage_semestre_index',{semestre:semestre.id}) }}"
+                               class="btn btn-primary">
+                                {{ 'demandes.rattrapages'|trans }}
+                                <span class="badge badge-pill badge-info">{{ nbRattrapages }}</span>
+                            </a>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         {% endif %}
@@ -184,12 +204,20 @@
                         </div>
                     </header>
                     <div class="card-body">
-                        <a href="{{ path('administration_etudiant_semestre_index',{semestre:semestre.id}) }}"
-                           class="btn btn-block btn-primary"> {{ 'donnees.des.etudiants'|trans }}</a>
-                        <a href="{{ path('administration_etudiant_parcours_semestre_index',{semestre:semestre.id}) }}"
-                           class="btn btn-block btn-primary"> {{ 'synthese.des.parcours'|trans }}</a>
-                        <a href="{{ path('administration_etudiant_groupe_semestre_index',{semestre:semestre.id}) }}"
-                           class="btn btn-block btn-primary"> {{ 'groupes'|trans }}</a>
+
+                        <div class="col-12 d-block d-grid mb-2">
+                            <a href="{{ path('administration_etudiant_semestre_index',{semestre:semestre.id}) }}"
+                               class="btn btn-primary"> {{ 'donnees.des.etudiants'|trans }}</a>
+                        </div>
+                        <div class="col-12 d-block d-grid mb-2">
+                            <a href="{{ path('administration_etudiant_parcours_semestre_index',{semestre:semestre.id}) }}"
+                               class="btn btn-primary"> {{ 'synthese.des.parcours'|trans }}</a>
+                        </div>
+                        <div class="col-12 d-block d-grid mb-2">
+                            <a href="{{ path('administration_etudiant_groupe_semestre_index',{semestre:semestre.id}) }}"
+                               class="btn btn-primary"> {{ 'groupes'|trans }}</a>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -213,23 +241,26 @@
                                                     class="fa fa-file-pdf"></i>Saisie des parcours de scolarité
                                                                                pour un
                                                                                semestre</a>
-                                        {# <a href="{{ path('administration_scolarite_init_semestre', #}
-                                        {# {semestre:semestre.id}) }}" #}
-                                        {# class="dropdown-item"><i #}
-                                        {# class="fa fa-file-pdf"></i>Initialiser les scolarités pour le #}
-                                        {# semestre</a> #}
                                     </div>
                                 </li>
                             </ul>
                         </div>
                     </header>
                     <div class="card-body">
-                        <a href="{{ path('administration_sous_commission_live',{semestre:semestre.id}) }}"
-                           class="btn btn-block btn-primary">{{ 'simulation.sous-commission'|trans }}</a>
-                        <a href="{{ path('administration_sous_commission_travail',{semestre:semestre.id}) }}"
-                           class="btn btn-block btn-warning"> {{ 'preparer.sous-commission'|trans }}</a>
-                        <a href="{{ path('administration_fin_semestre_index',{semestre:semestre.id}) }}"
-                           class="btn btn-block btn-danger"> {{ 'changement.semestre'|trans }}</a>
+
+                        <div class="col-12 d-block d-grid mb-2">
+                            <a href="{{ path('administration_sous_commission_live',{semestre:semestre.id}) }}"
+                               class="btn btn-primary">{{ 'simulation.sous-commission'|trans }}</a>
+                        </div>
+                        <div class="col-12 d-block d-grid mb-2">
+                            <a href="{{ path('administration_sous_commission_travail',{semestre:semestre.id}) }}"
+                               class="btn btn-warning"> {{ 'preparer.sous-commission'|trans }}</a>
+                        </div>
+                        <div class="col-12 d-block d-grid mb-2">
+                            <a href="{{ path('administration_fin_semestre_index',{semestre:semestre.id}) }}"
+                               class="btn btn-danger"> {{ 'changement.semestre'|trans }}</a>
+                        </div>
+
                     </div>
                 </div>
             </div>
