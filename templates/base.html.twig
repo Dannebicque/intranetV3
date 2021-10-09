@@ -187,7 +187,7 @@
         </a>
 
         <div class="dropdown d-none d-md-block">
-            <span class="topbar-btn" data-toggle="dropdown"><i class="fas fa-th-large"></i></span>
+            <span class="topbar-btn" data-bs-toggle="dropdown"><i class="fas fa-th-large"></i></span>
             <div class="dropdown-menu dropdown-grid">
                 <a class="dropdown-item" href="{{ path('default_homepage') }}">
                     <span class="fas fa-home fa-3x fa-color-home"></span>
@@ -214,7 +214,7 @@
 
         {% if (is_granted('ROLE_PERMANENT') and user_data.departementMultiple == true) %}
             <div class="dropdown d-none d-md-block">
-                <span class="topbar-btn" data-toggle="dropdown">
+                <span class="topbar-btn" data-bs-toggle="dropdown">
                     <i class="fas fa-random"></i>
                 </span>
                 <div class="dropdown-menu dropdown-grid cols-4">
@@ -244,7 +244,7 @@
         <div class="topbar-divider"></div>
         <ul class="topbar-btns">
             <li class="dropdown">
-                    <span class="topbar-btn" data-toggle="dropdown">
+                    <span class="topbar-btn" data-bs-toggle="dropdown">
                         {% if user_data.user.photoName != null and user_data.user.photoName != 'noimage.png' %}
                             <img class="avatar" src="{% if user_data.user.typeUser == 'permanent' %}
 {{ asset('upload/personnels/'~user_data.user.photoName)|imagine_filter('avatar') }}{% else %}

@@ -12,7 +12,7 @@
             <ul class="nav nav-tabs" role="tablist">
                 {% for semestre in diplome.semestres %}
                     <li class="nav-item">
-                        <a class="nav-link {% if loop.first %}active{% endif %}" data-toggle="tab" href="#semestre_{{ semestre.id }}">{{ semestre
+                        <a class="nav-link {% if loop.first %}active{% endif %}" data-bs-toggle="tab" href="#semestre_{{ semestre.id }}">{{ semestre
                             .display }}</a>
                     </li>
                 {% endfor %}

@@ -26,11 +26,11 @@
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs nav-tabs-success">
                     <li class="nav-item">
-                        <a class="nav-link active" data-toggle="tab" href="#courrier">Courrier d'accompagement</a>
+                        <a class="nav-link active" data-bs-toggle="tab" href="#courrier">Courrier d'accompagement</a>
                     </li>
                     {% for etat in etatsConvention %}
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#{{ etat }}">{{ etat|trans }}</a>
+                            <a class="nav-link" data-bs-toggle="tab" href="#{{ etat }}">{{ etat|trans }}</a>
                         </li>
                     {% endfor %}
                 </ul>

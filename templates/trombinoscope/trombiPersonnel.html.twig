@@ -5,7 +5,7 @@
             {% if is_granted('ROLE_PERMANENT') %}
                 <ul class="card-controls">
                     <li class="dropdown">
-                        <a data-toggle="dropdown" href="#"><i class="fas fa-ellipsis-h rotate-90"></i></a>
+                        <a data-bs-toggle="dropdown" href="#"><i class="fas fa-ellipsis-h rotate-90"></i></a>
                         <div class="dropdown-menu dropdown-menu-right">
                             <a href="{{ path('trombinoscope_personnel_export', {_format:'pdf', type: type}) }}"
                                class="dropdown-item"><i class="fa fa-file-pdf"></i> {{ 'exporter.pdf'|trans }}</a>

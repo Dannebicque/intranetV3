@@ -130,26 +130,26 @@
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs nav-tabs-danger nav-justified" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active" data-toggle="tab" href="#onglet_proposition"
+                        <a class="nav-link active" data-bs-toggle="tab" href="#onglet_proposition"
                            role="tab">{{ 'propositions.a.valider'|trans }} ({{ myStage.propositionsAValider|length }}
                                                                            )</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#onglet_imprimer"
+                        <a class="nav-link" data-bs-toggle="tab" href="#onglet_imprimer"
                            role="tab">{{ 'convention.a.imprimer'|trans }}
                             ({{ myStage.conventionAImprimer|length }})</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#onglet_envoyer"
+                        <a class="nav-link" data-bs-toggle="tab" href="#onglet_envoyer"
                            role="tab">{{ 'convention.a.envoyer'|trans }}
                             ({{ myStage.conventionAEnvoyer|length }})</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#onglet_attente" role="tab">{{ 'convention.en.attente.de.retour'|trans }}
+                        <a class="nav-link" data-bs-toggle="tab" href="#onglet_attente" role="tab">{{ 'convention.en.attente.de.retour'|trans }}
                             ({{ myStage.conventionEnAttente|length }})</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#onglet_complet"
+                        <a class="nav-link" data-bs-toggle="tab" href="#onglet_complet"
                            role="tab">{{ 'conventions.completes'|trans }}
                             ({{ myStage.conventionComplete|length }})</a>
                     </li>
@@ -416,7 +416,7 @@
                                     </td>
                                     <td>
                                         <div class="dropdown table-action btn btn-primary btn-outline">
-                                            <span class="dropdown-toggle no-caret" data-toggle="dropdown"><i
+                                            <span class="dropdown-toggle no-caret" data-bs-toggle="dropdown"><i
                                                         class="fas fa-ellipsis-h rotate-90"></i>{{ 'autre.situation'|trans }}
                                                 ?</span>
                                             <div class="dropdown-menu dropdown-menu-right">
@@ -447,7 +447,7 @@
                                     </td>
                                     <td>
                                         <div class="dropdown table-action btn btn-primary btn-outline">
-                                            <span class="dropdown-toggle no-caret" data-toggle="dropdown"><i
+                                            <span class="dropdown-toggle no-caret" data-bs-toggle="dropdown"><i
                                                         class="fas fa-ellipsis-h rotate-90"></i>{{ 'autre.situation'|trans }}
                                                 ?</span>
                                             <div class="dropdown-menu dropdown-menu-right">
@@ -562,7 +562,7 @@
 
 
                                         <div class="dropdown table-action btn btn-primary btn-outline">
-                                            <span class="dropdown-toggle no-caret hover-primary" data-toggle="dropdown"><i
+                                            <span class="dropdown-toggle no-caret hover-primary" data-bs-toggle="dropdown"><i
                                                         class="fas fa-ellipsis-h rotate-90"></i> Actions</span>
                                             <div class="dropdown-menu dropdown-menu-right">
                                                 {% if stageEtudiant.stage.etatStage == constant
@@ -629,7 +629,7 @@
                                 </td>
                                 <td>
                                     <div class="dropdown table-action btn btn-primary btn-outline">
-                                        <span class="dropdown-toggle no-caret" data-toggle="dropdown"><i
+                                        <span class="dropdown-toggle no-caret" data-bs-toggle="dropdown"><i
                                                     class="fas fa-ellipsis-h rotate-90"></i> {{ 'autre.situation'|trans }}
                                             ?</span>
                                         <div class="dropdown-menu dropdown-menu-right">

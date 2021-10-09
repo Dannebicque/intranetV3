@@ -14,13 +14,13 @@
     <div class="header-action">
         <ul class="nav nav-tabs" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active" data-toggle="tab" href="#complet">Référentiel de compétences complet</a>
+                <a class="nav-link active" data-bs-toggle="tab" href="#complet">Référentiel de compétences complet</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#parcours">Référentiel par parcours</a>
+                <a class="nav-link" data-bs-toggle="tab" href="#parcours">Référentiel par parcours</a>
             </li>
             <li class="nav-item d-none d-sm-block">
-                <a class="nav-link" data-toggle="tab" href="#annee">Référentiel par année</a>
+                <a class="nav-link" data-bs-toggle="tab" href="#annee">Référentiel par année</a>
             </li>
         </ul>
 
@@ -65,7 +65,7 @@
                         <ul class="nav nav-tabs">
                             {% for competence in competences %}
                                 <li class="nav-item">
-                                    <a class="nav-link {% if loop.first %}active{% endif %}" data-toggle="tab"
+                                    <a class="nav-link {% if loop.first %}active{% endif %}" data-bs-toggle="tab"
                                        href="#comptence_{{ competence.id }}">{{ competence.nomCourt }}</a>
                                 </li>
                             {% endfor %}
@@ -103,7 +103,7 @@
                         <ul class="nav nav-tabs">
                             {% for parcour in parcours %}
                                 <li class="nav-item">
-                                    <a class="nav-link {% if loop.first %}active{% endif %}" data-toggle="tab"
+                                    <a class="nav-link {% if loop.first %}active{% endif %}" data-bs-toggle="tab"
                                        href="#parcour_{{ parcour.id }}">{{ parcour.libelle }}</a>
                                 </li>
                             {% endfor %}
@@ -141,7 +141,7 @@
                         <ul class="nav nav-tabs">
                             {% for annee in 1..3 %}
                                 <li class="nav-item">
-                                    <a class="nav-link {% if loop.first %}active{% endif %}" data-toggle="tab"
+                                    <a class="nav-link {% if loop.first %}active{% endif %}" data-bs-toggle="tab"
                                        href="#annee_{{ annee }}">Année {{ annee }}</a>
                                 </li>
                             {% endfor %}

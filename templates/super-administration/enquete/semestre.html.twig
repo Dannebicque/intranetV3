@@ -93,7 +93,7 @@
             <ul class="nav nav-tabs">
                 {% for questionnaire in  semestre.qualiteQuestionnaires %}
                     <li class="nav-item">
-                        <a class="nav-link {% if loop.first %} active{% endif %}" data-toggle="tab"
+                        <a class="nav-link {% if loop.first %} active{% endif %}" data-bs-toggle="tab"
                            href="#questionnaire{{ questionnaire.id }}">{{ questionnaire.libelle }}</a>
                     </li>
                 {% endfor %}
