@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}QuestionnaireSection index{% endblock %}
+
+{% block body %}
+    <h1>QuestionnaireSection index</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Titre</th>
+            <th>TextExplicatif</th>
+            <th>Config</th>
+            <th>TypeCalcul</th>
+            <th>Created</th>
+            <th>Updated</th>
+            <th>actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for questionnaire_section in questionnaire_sections %}
+            <tr>
+                <td>{{ questionnaire_section.id }}</td>
+                <td>{{ questionnaire_section.titre }}</td>
+                <td>{{ questionnaire_section.textExplicatif }}</td>
+                <td>{{ questionnaire_section.config }}</td>
+                <td>{{ questionnaire_section.typeCalcul }}</td>
+                <td>{{ questionnaire_section.created ? questionnaire_section.created|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ questionnaire_section.updated ? questionnaire_section.updated|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('questionnaire_section_show', {'id': questionnaire_section.id}) }}">show</a>
+                    <a href="{{ path('questionnaire_section_edit', {'id': questionnaire_section.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('questionnaire_section_new') }}">Create new</a>
+{% endblock %}
