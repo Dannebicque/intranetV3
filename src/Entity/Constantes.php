@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Constantes.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/09/2021 09:43
+ * @lastUpdate 09/10/2021 10:33
  */
 
 namespace App\Entity;
@@ -14,6 +14,18 @@ namespace App\Entity;
  */
 class Constantes
 {
+
+    public const TYPE_DESTINATAIRE_PERMANENT = 'PERM';
+    public const TYPE_DESTINATAIRE_ETUDIANT = 'ETU';
+    public const TYPE_DESTINATAIRE_TOUS = 'ALL';
+    public const TYPE_DESTINATAIRE_LISTE =
+        [
+            self::TYPE_DESTINATAIRE_PERMANENT => self::TYPE_DESTINATAIRE_PERMANENT,
+            self::TYPE_DESTINATAIRE_ETUDIANT => self::TYPE_DESTINATAIRE_ETUDIANT,
+            self::TYPE_DESTINATAIRE_TOUS => self::TYPE_DESTINATAIRE_TOUS,
+        ];
+
+
     public const ROLE_CDD = 'ROLE_CDD';
     public const ROLE_DDE = 'ROLE_DDE';
     public const ROLE_ASS = 'ROLE_ASS';

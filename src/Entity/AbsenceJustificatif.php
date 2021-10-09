@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/AbsenceJustificatif.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/10/2021 10:02
+ * @lastUpdate 09/10/2021 10:33
  */
 
 namespace App\Entity;
@@ -90,6 +90,11 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
     private ?CarbonInterface $heureDebut;
     private ?CarbonInterface $dateFin;
     private ?CarbonInterface $heureFin;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Semestre::class, inversedBy="absenceJustificatifs")
+     */
+    private ?Semestre $semestre;
 
     /**
      * AbsenceJustificatif constructor.
@@ -313,5 +318,17 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
         }
 
         return null;
+    }
+
+    public function getSemestre(): ?Semestre
+    {
+        return $this->semestre;
+    }
+
+    public function setSemestre(?Semestre $semestre): self
+    {
+        $this->semestre = $semestre;
+
+        return $this;
     }
 }

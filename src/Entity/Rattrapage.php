@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Rattrapage.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 19:11
+ * @lastUpdate 09/10/2021 10:33
  */
 
 namespace App\Entity;
@@ -99,6 +99,11 @@ class Rattrapage extends BaseEntity
      * @Groups({"rattrapage_administration"})
      */
     private ?string $libelleMatiere;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Semestre::class, inversedBy="rattrapages")
+     */
+    private ?Semestre $semestre;
 
     public function getLibelleMatiere(): ?string
     {
@@ -275,5 +280,17 @@ class Rattrapage extends BaseEntity
         }
 
         return null;
+    }
+
+    public function getSemestre(): ?Semestre
+    {
+        return $this->semestre;
+    }
+
+    public function setSemestre(?Semestre $semestre): self
+    {
+        $this->semestre = $semestre;
+
+        return $this;
     }
 }

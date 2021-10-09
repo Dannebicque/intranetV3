@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Evaluation.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 19:11
+ * @lastUpdate 09/10/2021 10:33
  */
 
 namespace App\Entity;
@@ -30,7 +30,6 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Evaluation extends BaseEntity
 {
-    //todo: add semestre poue faciliter les affichages avec la gestion Ressources/SAE...
     use UuidTrait;
     use LifeCycleTrait;
     use MatiereTrait;
@@ -101,6 +100,11 @@ class Evaluation extends BaseEntity
      * @ORM\ManyToOne(targetEntity="App\Entity\AnneeUniversitaire", inversedBy="evaluations")
      */
     private ?AnneeUniversitaire $anneeUniversitaire;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Semestre::class, inversedBy="evaluations")
+     */
+    private ?Semestre $semestre;
 
     /**
      * Evaluation constructor.
@@ -358,5 +362,17 @@ class Evaluation extends BaseEntity
         }
 
         return in_array($personnelId, $personnels, true);
+    }
+
+    public function getSemestre(): ?Semestre
+    {
+        return $this->semestre;
+    }
+
+    public function setSemestre(?Semestre $semestre): self
+    {
+        $this->semestre = $semestre;
+
+        return $this;
     }
 }

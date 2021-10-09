@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/AbsenceRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/09/2021 14:25
+ * @lastUpdate 09/10/2021 10:33
  */
 
 namespace App\Repository;
@@ -109,9 +109,8 @@ class AbsenceRepository extends ServiceEntityRepository
     public function getBySemestre(Semestre $semestre, AnneeUniversitaire $anneeCourante)
     {
         return $this->createQueryBuilder('a')
-            ->innerJoin(Etudiant::class, 'e', 'WITH', 'a.etudiant =e.id')
             ->innerJoin(AnneeUniversitaire::class, 'u', 'WITH', 'a.anneeUniversitaire = u.id')
-            ->where('e.semestre = :semestre')
+            ->where('a.semestre = :semestre')
             ->andWhere('u.annee = :annee')
             ->setParameter('semestre', $semestre->getId())
             ->setParameter('annee', $anneeCourante->getAnnee())
@@ -120,6 +119,7 @@ class AbsenceRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    //todo: utiliser le semestre de Absence ? plutot que matière
     public function getByEtudiantAndSemestre(
         $matieres,
         Etudiant $etudiant,

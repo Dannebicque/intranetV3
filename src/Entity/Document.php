@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Document.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/10/2021 09:57
+ * @lastUpdate 09/10/2021 10:33
  */
 
 namespace App\Entity;
@@ -29,7 +29,6 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  */
 class Document extends BaseEntity
 {
-    //todo: lier au département pour gérer personnel ou étudiant
     use UuidTrait;
     use LifeCycleTrait;
 
@@ -100,6 +99,11 @@ class Document extends BaseEntity
      * @ORM\OneToMany(targetEntity="App\Entity\DocumentFavori", mappedBy="document")
      */
     private Collection $documentsFavoris;
+
+    /**
+     * @ORM\Column(type="string", length=5)
+     */
+    private ?string $typeDestinataire;
 
     /**
      * Document constructor.
@@ -254,5 +258,17 @@ class Document extends BaseEntity
     public function tailleKo(): float
     {
         return $this->taille / 1024;
+    }
+
+    public function getTypeDestinataire(): ?string
+    {
+        return $this->typeDestinataire;
+    }
+
+    public function setTypeDestinataire(string $typeDestinataire): self
+    {
+        $this->typeDestinataire = $typeDestinataire;
+
+        return $this;
     }
 }

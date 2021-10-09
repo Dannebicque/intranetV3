@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/RattrapageRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/09/2021 14:24
+ * @lastUpdate 09/10/2021 10:33
  */
 
 namespace App\Repository;
@@ -39,8 +39,7 @@ class RattrapageRepository extends ServiceEntityRepository
     public function findBySemestre(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire)
     {
         return $this->createQueryBuilder('r')
-            ->innerJoin(Etudiant::class, 'e', 'WITH', 'r.etudiant = e.id')
-            ->where('e.semestre = :semestre')
+            ->where('r.semestre = :semestre')
             ->andWhere('r.anneeUniversitaire = :anneeuniversitaire')
             ->setParameter('semestre', $semestre->getId())
             ->setParameter('anneeuniversitaire', $anneeUniversitaire->getId())
@@ -73,9 +72,8 @@ class RattrapageRepository extends ServiceEntityRepository
 
         return $this->createQueryBuilder('r')
             ->select('COUNT(r.id)')
-            ->innerJoin(Etudiant::class, 'e', 'WITH', 'r.etudiant = e.id')
             ->innerJoin(AnneeUniversitaire::class, 'u', 'WITH', 'r.anneeUniversitaire = u.id')
-            ->where('e.semestre = :semestre')
+            ->where('r.semestre = :semestre')
             ->andWhere('u.annee = :anneeuniversitaire')
             ->setParameter('semestre', $semestre->getId())
             ->setParameter('anneeuniversitaire', $annee)
