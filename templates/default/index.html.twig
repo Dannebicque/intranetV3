@@ -36,7 +36,7 @@
                     {% if user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ASS') %}
                         <div class="card-header-actions" style="">
                             <a href="{{ path('administration_actualite_new') }}" class="btn btn-sm btn-primary"
-                               title="{{ 'atitle.deposer_nouvelle_actualite'|trans }}" data-provide="tooltip" data-placement="bottom"><i
+                               title="{{ 'atitle.deposer_nouvelle_actualite'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom"><i
                                         class="fas fa-plus"></i><span class="sr-only">{{ 'atitle.deposer_nouvelle_actualite'|trans }}</span></a>
                         </div>
                     {% endif %}
@@ -70,7 +70,7 @@
                     {% if user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ASS') %}
                         <div class="card-header-actions" style="">
                             <a href="{{ path('administration_date_new') }}" class="btn btn-sm btn-primary"
-                               title="{{ 'atitle.deposer_nouvel_evenement'|trans }}" data-provide="tooltip" data-placement="bottom"><i
+                               title="{{ 'atitle.deposer_nouvel_evenement'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom"><i
                                         class="fas fa-plus"></i><span class="sr-only">{{ 'atitle.deposer_nouvel_evenement'|trans }}</span></a>
                         </div>
                     {% endif %}

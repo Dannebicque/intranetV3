@@ -6,18 +6,18 @@
                 <span>
                      <a href="{{ path('administration_apc_referentiel_formation_grille',{diplome:diplome.id}) }}"
                         class="btn btn-sm btn btn-success" title="Coefficients des ressources et des SAÉ"
-                        data-provide="tooltip"
-                        data-placement="bottom"><i class="fas fa-table"></i>
+                        ddata-bs-toggle="tooltip"
+                        data-bs-placement="bottom"><i class="fas fa-table"></i>
                          Coefficients des ressources et des SAÉ
                      </a>
                     <a href="{{ path('administration_apc_ressource_new',{diplome:diplome.id}) }}"
                        class="btn btn-sm btn btn-info" title="{{ 'atitle.creer_nouveau'|trans }}"
-                       data-provide="tooltip"
-                       data-placement="bottom"><i class="fas fa-plus"></i> Ajouter une ressource</a>
+                       data-bs-toggle="tooltip"
+                       data-bs-placement="bottom"><i class="fas fa-plus"></i> Ajouter une ressource</a>
                     <a href="{{ path('administration_apc_sae_new',{diplome:diplome.id}) }}"
                        class="btn btn-sm btn btn-info" title="{{ 'atitle.creer_nouveau'|trans }}"
-                       data-provide="tooltip"
-                       data-placement="bottom"><i class="fas fa-plus"></i> Ajouter une SAÉ</a>
+                       data-bs-toggle="tooltip"
+                       data-bs-placement="bottom"><i class="fas fa-plus"></i> Ajouter une SAÉ</a>
                 </span>
             {% endif %}
         </div>

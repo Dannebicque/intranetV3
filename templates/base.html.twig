@@ -178,7 +178,8 @@
                 Département {{ user_data.departement.libelle }}
             </a>
         {% endif %}
-        <a class="topbar-btn d-none d-md-block" href="#" data-provide="fullscreen tooltip"
+        <a class="topbar-btn d-none d-md-block" href="#" data-provide="fullscreen"
+           data-bs-toggle="tooltip" data-bs-placement="bottom"
            title="{{ 'fullscreen'|trans }}">
             <i class="fas fa-expand fullscreen-default"></i>
             <i class="fas fa-compress fullscreen-active"></i>
@@ -230,7 +231,8 @@
             </div>
         {% endif %}
 
-        <a class="topbar-btn d-none d-md-block" href="#" data-provide="tooltip" title="{{ 'rechercher'|trans }}"
+        <a class="topbar-btn d-none d-md-block" href="#" title="{{ 'rechercher'|trans }}"
+           data-bs-toggle="tooltip" data-bs-placement="bottom"
            id="lookup"
            data-original-title="{{ 'rechercher'|trans }}">
             <i class="fas fa-search"></i>
@@ -268,11 +270,11 @@
             {# <li> #}
             {# {% if app.request.locale == 'en' %} #}
             {# <a class="topbar-btn d-none d-md-block" href="{{ path #}
-            {# ('default_homepage',{'_locale':'fr'}) }}" data-provide="tooltip" #}
+            {# ('default_homepage',{'_locale':'fr'}) }}" data-bs-toggle="tooltip" data-bs-placement="bottom" #}
             {# title="{{ 'passer.en.francais'|trans }}"><img src="{{ asset('assets/img/flag/fr.png') }}" #}
             {# width="16px" alt="{{ 'passer.en.francais'|trans }}"></a> #}
             {# {% else %} #}
-            {# <a href="{{ path('default_homepage',{'_locale':'en'}) }}" class="topbar-btn d-none d-md-block" data-provide="tooltip" #}
+            {# <a href="{{ path('default_homepage',{'_locale':'en'}) }}" class="topbar-btn d-none d-md-block" data-bs-toggle="tooltip" data-bs-placement="bottom" #}
             {# title="{{ 'passer.en.anglais'|trans }}" #}
             {# ><img src="{{ asset('assets/img/flag/en.png') }}" width="16px" alt="{{ 'passer.en.anglais'|trans }}"></a> #}
 
@@ -354,9 +356,9 @@
     <footer class="site-footer">
         <div class="row">
             <div class="col-md-6">
-                <p class="text-center text-md-left">Copyright © 2018-{{ 'now'|date('Y') }}
+                <p class="text-md-left">Copyright © 2018-{{ 'now'|date('Y') }}
                     <a href="https://www.davidannebicque.fr" target="_blank">@DavidAnnebicque</a>. All rights
-                                                    reserved. | Version {{ version.version }}</p>
+                                        reserved. | Version {{ version.version }}</p>
             </div>
 
             <div class="col-md-6">

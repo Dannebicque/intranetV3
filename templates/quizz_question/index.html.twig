@@ -12,23 +12,23 @@
             <a href="{{ path('quizz_question_new') }}"
                class="btn btn-info btn-sm btn-float"
                title="{{ 'atitle.creer_nouveau'|trans }}"
-               data-provide="tooltip"
-               data-placement="bottom">
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
+            >
                 <i class="fas fa-plus"></i>
                 <span class="sr-only">{{ 'atitle.creer_nouveau'|trans }}</span>
             </a>
             {% if is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_QUALITE') %}
                 <a href="{{ path('sa_qualite_index') }}"
                    class="btn btn-primary btn-float"
-                   data-provide="tooltip"
-                   data-placement="bottom"
+                   data-bs-toggle="tooltip" data-bs-placement="bottom"
+
                    title="{{ 'retour.administratif'|trans }}">
                     <i class="fas fa-home"></i>
                     <span class="sr-only">{{ 'retour.qualite'|trans }}</span>
                 </a>
             {% elseif is_granted('ROLE_PERMANENT') %}
-                <a href="{{ path('default_homepage') }}" class="btn btn-primary btn-float" data-provide="tooltip"
-                   data-placement="bottom" title="{{ 'atitle.retour_dashboard'|trans }}">
+                <a href="{{ path('default_homepage') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                   title="{{ 'atitle.retour_dashboard'|trans }}">
                     <i class="{{ iconDashboard }}"><span class="sr-only">dashboard</span></i>
                 </a>
             {% endif %}
@@ -61,17 +61,17 @@
                         <td>
                             <a href="{{ path('quizz_question_duplicate', {'id': quizz_question.id}) }}"
                                class="btn btn-success btn-outline btn-square"
-                               data-provide="tooltip"
-                               data-placement="bottom"
+                               data-bs-toggle="tooltip" data-bs-placement="bottom"
+
                                title="{{ 'atitle.dupliquer'|trans }}">
                                 <i class="{{ iconDuplicate }}"></i>
                                 <span class="sr-only">{{ 'atitle.dupliquer'|trans }}</span>
                             </a>
 
-                            <button data-provide="modaler tooltip"
+                            <button data-provide="modaler"
                                     data-url="{{ path('quizz_question_show', {'id': quizz_question.id}) }}"
                                     class="btn btn-info btn-outline btn-square"
-                                    data-placement="bottom"
+                                    data-bs-toggle="tooltip" data-bs-placement="bottom"
                                     data-size="lg"
                                     title="{{ 'atitle.details'|trans }}"
                                     data-title="{{ 'quizz_question.show.heading'|trans }}"
@@ -82,8 +82,8 @@
 
                             <a href="{{ path('quizz_question_edit', {'id': quizz_question.id}) }}"
                                class="btn btn-warning btn-outline btn-square"
-                               data-provide="tooltip"
-                               data-placement="bottom"
+                               data-bs-toggle="tooltip" data-bs-placement="bottom"
+
                                title="{{ 'atitle.modifier'|trans }}">
                                 <i class="{{ iconEdit }}"></i>
                                 <span class="sr-only">{{ 'atitle.modifier'|trans }}</span>
@@ -91,8 +91,8 @@
                             <a href="{{ path('quizz_question_delete', {id: quizz_question.id}) }}"
                                data-csrf="{{ csrf_token('delete' ~ quizz_question.id) }}"
                                class="btn btn-danger btn-outline btn-square supprimer"
-                               data-provide="tooltip"
-                               data-placement="bottom"
+                               data-bs-toggle="tooltip" data-bs-placement="bottom"
+
                                title="{{ 'atitle.supprimer'|trans }}">
                                 <i class="{{ iconDelete }}"></i>
                                 <span class="sr-only">{{ 'atitle.supprimer'|trans }}</span>

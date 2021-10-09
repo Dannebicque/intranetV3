@@ -26,13 +26,13 @@
 
         <div class="buttons">
             {% if is_granted('ROLE_SUPER_ADMIN') %}
-                <a href="{{ path('super_admin_homepage') }}" class="btn btn-primary btn-float" data-provide="tooltip"
-                   data-placement="bottom" title="{{ 'atitle.retour_super_administration'|trans }}">
+                <a href="{{ path('super_admin_homepage') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                   title="{{ 'atitle.retour_super_administration'|trans }}">
                     <i class="{{ iconDashboard }}"><span class="sr-only">dashboard</span></i>
                 </a>
             {% else %}
-                <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
-                   data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="{{ iconAdmin }}"><span class="sr-only">Administration</span></i></a>
+                <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                   title="{{ 'atitle.retour_administration'|trans }}"><i class="{{ iconAdmin }}"><span class="sr-only">Administration</span></i></a>
             {% endif %}
         </div>
     </div>
@@ -49,13 +49,13 @@
                 <span>
                     <a href="{{ path('administration_apc_niveau_annee_synchro', {diplome:diplome.id}) }}" class="btn
                     btn-sm btn btn-info"
-                       data-provide="tooltip"
-                       data-placement="bottom" title="Synchroniser les niveaux et les années"><i
+                       data-bs-toggle="tooltip" data-bs-placement="bottom"
+                       title="Synchroniser les niveaux et les années"><i
                                 class="fas fa-sync"></i></a>
                     <a href="{{ path('administration_apc_competence_new', {diplome:diplome.id}) }}" class="btn
                     btn-sm btn btn-info"
-                       data-provide="tooltip"
-                       data-placement="bottom" title="Ajouter une compétences"><i
+                       data-bs-toggle="tooltip" data-bs-placement="bottom"
+                       title="Ajouter une compétences"><i
                                 class="fas fa-plus"></i></a>
                 </span>
                     </div>
@@ -91,8 +91,8 @@
                 <span>
                     <a href="{{ path('administration_apc_parcours_new', {diplome:diplome.id}) }}" class="btn
                     btn-sm btn btn-info"
-                       data-provide="tooltip"
-                       data-placement="bottom" title="Ajouter un parcours"><i
+                       data-bs-toggle="tooltip" data-bs-placement="bottom"
+                       title="Ajouter un parcours"><i
                                 class="fas fa-plus"></i></a>
                 </span>
                     </div>
@@ -129,8 +129,8 @@
                 <span>
                     <a href="{{ path('administration_apc_parcours_new', {diplome:diplome.id}) }}" class="btn
                     btn-sm btn btn-info"
-                       data-provide="tooltip"
-                       data-placement="bottom" title="Ajouter un compétences"><i
+                       data-bs-toggle="tooltip" data-bs-placement="bottom"
+                       title="Ajouter un compétences"><i
                                 class="fas fa-plus"></i></a>
                 </span>
                     </div>

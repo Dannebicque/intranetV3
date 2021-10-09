@@ -65,14 +65,14 @@
             <a class="topbar-btn d-none d-md-block" href="{{ path('but_referentiel_competences', {diplome:diplome.sigle|lower }) }}">Référentiel
                                                                                                                                      Compétences</a>
             <a class="topbar-btn d-none d-md-block" href="{{ path('but_sae', {diplome:diplome.sigle|lower}) }}"
-               data-provide="tooltip"
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
                title="SAÉ">
                 SAÉ
             </a>
             {% for semestre in diplome.semestres %}
                 <a class="topbar-btn d-none d-md-block" href="{{ path('but_ressource', { diplome:diplome.sigle|lower,
                     semestre:semestre.id}) }}"
-                   data-provide="tooltip"
+                   data-bs-toggle="tooltip" data-bs-placement="bottom"
                    title="Ressources du S1">
                     Ressources {{ semestre.libelle }}
                 </a>

@@ -3,7 +3,7 @@
         <h4 class="card-title">{{ 'app.etudiant.absence.justificatif.index.heading'|trans }}</h4>
         <div class="card-header-actions" style="">
             <a href="{{ path('app_etudiant_absence_justificatif_new') }}" class="btn btn-sm btn-primary "
-               title="{{ 'atitle.creer_nouveau'|trans }}" data-provide="tooltip" data-placement="bottom"><i
+               title="{{ 'atitle.creer_nouveau'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom"><i
                         class="fas fa-plus"></i><span class="sr-only">ajouter un justificatif d'absence</span></a>
         </div>
     </header>
@@ -36,23 +36,23 @@
                     <td>{{ absence_justificatif.etatLong }}</td>
                     <td>{{ absence_justificatif.created ? absence_justificatif.created|format_datetime('long', 'short') : '' }}</td>
                     <td>
-                        <a href="{{ asset('upload/justificatif/'~absence_justificatif.fichierName) }}" data-provide="tooltip"
+                        <a href="{{ asset('upload/justificatif/'~absence_justificatif.fichierName) }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
                            target="_blank"
                            class="btn btn-info btn-outline btn-square"
-                           data-placement="bottom"
+
                            title="{{ 'atitle.voir_fichier'|trans }}">
                             <i class="{{ iconShow }}"><span class="sr-only">Voir le fichier</span></i></a>
                         {% if absence_justificatif.etat == 'D' %}
                             <a href="{{ path('app_etudiant_absence_justificatif_edit', {'id': absence_justificatif.uuidString}) }}"
                                class="btn btn-warning btn-outline btn-square"
-                               data-provide="tooltip"
-                               data-placement="bottom"
+                               data-bs-toggle="tooltip" data-bs-placement="bottom"
+
                                title="{{ 'atitle.modifier'|trans }}"><i class="{{ iconEdit }}"><span
                                             class="sr-only">Modification d'un justificatif</span></i></a>
                             <a href="{{ path('app_etudiant_absence_justificatif_delete', {id: absence_justificatif.uuidString}) }}"
                                data-csrf="{{ csrf_token('delete' ~ absence_justificatif.uuidString) }}"
-                               class="btn btn-danger btn-outline btn-square supprimer" data-provide="tooltip"
-                               data-placement="bottom"
+                               class="btn btn-danger btn-outline btn-square supprimer" data-bs-toggle="tooltip" data-bs-placement="bottom"
+
                                title="{{ 'atitle.supprimer'|trans }}"><i class="{{ iconDelete }}"><span class="sr-only">Détails du justificatif</span></i></a>
                         {% endif %}
                     </td>

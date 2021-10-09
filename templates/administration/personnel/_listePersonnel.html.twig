@@ -41,12 +41,13 @@
                 <td>{{ personnel.personnel.mailUniv|mailto }}</td>
                 <td>
                     {% if user_data.isGoodDepartement("ROLE_CDD") or user_data.isGoodDepartement("ROLE_DDE") %}
-                        <button data-provide="modaler tooltip"
+                        <button data-provide="modaler"
                                 data-url="{{ path('administration_personnel_droit', {'personnel': personnel.personnel.id}) }}"
                                 data-size="lg"
                                 data-confirm-text="{{ 'fermer'|trans }}"
                                 class="btn btn-warning btn-outline btn-square "
-                                data-placement="bottom"
+                                data-bs-toggle="tooltip"
+                                data-bs-placement="bottom"
                                 title="{{ 'gestion.personnel.droit.access'|trans }}"
                                 data-title="{{ 'gestion.personnel.droit.access'|trans }}"
                         >

@@ -11,39 +11,39 @@
         {#                <th>{{ 'table.libelle'|trans }}</th>#}
         {#                <th>{{ 'table.date_retour'|trans }}</th>#}
         {#                <th>{{ 'table.actions'|trans }}</th>#}
-        {#            </tr>#}
-        {#            </thead>#}
-        {#            <tbody>#}
-        {#            {% for cahierTexte in cahierTextes %}#}
-        {#                <tr id="ligne_{{ cahierTexte.id }}">#}
-        {#                    <td>{{ cahierTexte.semestre ? cahierTexte.semestre.libelle : 'non.defini'|trans }}</td>#}
-        {#                    <td>{{ cahierTexte.libelle }}</td>#}
-        {#                    <td>{{ cahierTexte.dateRetour ? cahierTexte.dateRetour|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td>#}
-        {#                    <td>#}
-        {#                        <a href="{{ path('application_personnel_carnet_duplicate', {'id': cahierTexte.id}) }}"#}
-        {#                           class="btn btn-success btn-outline btn-square" data-provide="tooltip"#}
-        {#                           data-placement="bottom" title="{{ 'atitle.dupliquer'|trans }}"><i class="{{ iconDuplicate }}"></i></a>#}
-        {#                        <a href="{{ path('application_personnel_carnet_show', {'id': cahierTexte.id}) }}"#}
-        {#                           class="btn btn-info btn-outline btn-square" data-provide="tooltip"#}
-        {#                           data-placement="bottom" title="{{ 'atitle.details'|trans }}"><i class="{{ iconShow }}"></i></a>#}
-        {#                        <a href="{{ path('application_personnel_carnet_edit', {'id': cahierTexte.id}) }}"#}
-        {#                           class="btn btn-warning btn-outline btn-square" data-provide="tooltip"#}
-        {#                           data-placement="bottom"#}
-        {#                           title="{{ 'atitle.modifier'|trans }}"><i class="{{ iconEdit }}"></i></a>#}
-        {#                        <a href="{{ path('application_personnel_carnet_delete', {id: cahierTexte.id}) }}"#}
-        {#                           data-csrf="{{ csrf_token('delete' ~ cahierTexte.id) }}"#}
-        {#                           class="btn btn-danger btn-outline btn-square supprimer" data-provide="tooltip"#}
-        {#                           data-placement="bottom"#}
-        {#                           title="{{ 'atitle.supprimer'|trans }}"><i#}
-        {#                                    class="{{ iconDelete }}"></i></a>#}
-        {#                    </td>#}
-        {#                </tr>#}
-        {#            {% else %}#}
-        {#                <tr>#}
-        {#                    <td colspan="4">{{ 'no.record.found'|trans }}</td>#}
-        {#                </tr>#}
-        {#            {% endfor %}#}
-        {#            </tbody>#}
+        {# </tr> #}
+        {# </thead> #}
+        {# <tbody> #}
+        {# {% for cahierTexte in cahierTextes %} #}
+        {# <tr id="ligne_{{ cahierTexte.id }}"> #}
+        {# <td>{{ cahierTexte.semestre ? cahierTexte.semestre.libelle : 'non.defini'|trans }}</td> #}
+        {# <td>{{ cahierTexte.libelle }}</td> #}
+        {# <td>{{ cahierTexte.dateRetour ? cahierTexte.dateRetour|localizeddate('long', 'short', app.request.getLocale()) : '' }}</td> #}
+        {# <td> #}
+        {# <a href="{{ path('application_personnel_carnet_duplicate', {'id': cahierTexte.id}) }}" #}
+        {# class="btn btn-success btn-outline btn-square" data-bs-toggle="tooltip" data-bs-placement="bottom" #}
+        {# title="{{ 'atitle.dupliquer'|trans }}"><i class="{{ iconDuplicate }}"></i></a> #}
+        {# <a href="{{ path('application_personnel_carnet_show', {'id': cahierTexte.id}) }}" #}
+        {# class="btn btn-info btn-outline btn-square" data-bs-toggle="tooltip" data-bs-placement="bottom" #}
+        {# title="{{ 'atitle.details'|trans }}"><i class="{{ iconShow }}"></i></a> #}
+        {# <a href="{{ path('application_personnel_carnet_edit', {'id': cahierTexte.id}) }}" #}
+        {# class="btn btn-warning btn-outline btn-square" data-bs-toggle="tooltip" data-bs-placement="bottom" #}
+        {# #}
+        {# title="{{ 'atitle.modifier'|trans }}"><i class="{{ iconEdit }}"></i></a> #}
+        {# <a href="{{ path('application_personnel_carnet_delete', {id: cahierTexte.id}) }}" #}
+        {# data-csrf="{{ csrf_token('delete' ~ cahierTexte.id) }}" #}
+        {# class="btn btn-danger btn-outline btn-square supprimer" data-bs-toggle="tooltip" data-bs-placement="bottom" #}
+        {# #}
+        {# title="{{ 'atitle.supprimer'|trans }}"><i #}
+        {# class="{{ iconDelete }}"></i></a> #}
+        {# </td> #}
+        {# </tr> #}
+        {# {% else %} #}
+        {# <tr> #}
+        {# <td colspan="4">{{ 'no.record.found'|trans }}</td> #}
+        {# </tr> #}
+        {# {% endfor %} #}
+        {# </tbody> #}
         {#        </table>#}
     </div>
 </div>

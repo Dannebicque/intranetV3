@@ -47,18 +47,18 @@
                     <td class="text-right table-actions">
                         <a class="table-action hover-primary duplicate-type_groupe"
                            href="#"
-                           data-provide="tooltip"
+                           data-bs-toggle="tooltip" data-bs-placement="bottom"
                            data-typegroupe="{{ tg.id }}"
                            data-semestre="{{ semestre.id }}"
-                           data-placement="bottom" title="{{ 'atitle.dupliquer'|trans }}">
+                           title="{{ 'atitle.dupliquer'|trans }}">
                             <span class="{{ iconDuplicate }}"></span>
                             <span class="sr-only">Dupliquer le type de groupe</span>
                         </a>
                         <a class="table-action hover-danger supprimer"
                            href="{{ path('administration_type_groupe_delete', {id:tg.id}) }}"
                            data-csrf="{{ csrf_token('delete' ~ tg.id) }}"
-                           data-provide="tooltip"
-                           data-placement="bottom" title="{{ 'atitle.supprimer'|trans }}">
+                           data-bs-toggle="tooltip" data-bs-placement="bottom"
+                           title="{{ 'atitle.supprimer'|trans }}">
                             <span class="{{ iconDelete }}"></span>
                             <span class="sr-only">Supprimer le type de groupe</span>
                         </a>

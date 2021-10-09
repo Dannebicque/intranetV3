@@ -10,7 +10,7 @@
                 <li class="dropdown">
                     <a data-toggle="dropdown" href="#">
                         <i class="fas fa-ellipsis-h rotate-90"
-                           data-provide="tooltip"
+                           data-bs-toggle="tooltip" data-bs-placement="bottom"
                            title="Options d'export ou de synchronisation"></i>
                         <span class="sr-only">Options d'export ou de synchronisation</span>
                     </a>
@@ -26,9 +26,9 @@
                         {# class="dropdown-item"><i #}
                         {# class="fas fa-file-export"></i>{{ 'edt.intervenant.export.ical'|trans }}</a> #}
                         <a href="#"
-                           data-provide="modaler tooltip"
+                           data-provide="modaler"
                            data-url="{{ path('edt_affiche_ical') }}"
-                           data-placement="bottom"
+                           data-bs-toggle="tooltip" data-bs-placement="bottom"
                            title="{{ 'atitle.lien_ical'|trans }}"
                            data-title="{{ 'edt.intervenant.synchro.ical.heading'|trans }}"
                            class="dropdown-item"><i

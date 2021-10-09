@@ -11,16 +11,16 @@
                data-csrf="{{ csrf_token('delete' ~ parcour.id) }}"
                class="btn btn-danger btn-sm btn-float supprimer"
                title="{{ 'atitle.supprimer'|trans }}"
-               data-provide="tooltip"
-               data-placement="bottom">
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
+            >
                 <i class="{{ iconDelete }}"></i>
                 <span class="sr-only">{{ 'atitle.supprimer'|trans }}</span>
             </a>
             <a href="{{ path('administration_apc_parcours_edit', {id: parcour.id}) }}"
                class="btn btn-warning btn-sm btn-float"
                title="{{ 'atitle.modifier'|trans }}"
-               data-provide="tooltip"
-               data-placement="bottom">
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
+            >
                 <i class="{{ iconEdit }}"></i>
                 <span class="sr-only">{{ 'atitle.modifier'|trans }}</span>
             </a>
@@ -29,8 +29,8 @@
             <a href="{{ path('administration_apc_referentiel_index',{'diplome' : parcour.diplome.id}) }}"
                class="btn btn-primary btn-float"
                title="{{ 'atitle.retour_liste'|trans }}"
-               data-provide="tooltip"
-               data-placement="bottom">
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
+            >
                 <i class="fas fa-arrow-left"></i>
                 <span class="sr-only">{{ 'atitle.retour_liste'|trans }}</span>
             </a>

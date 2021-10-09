@@ -16,23 +16,23 @@
             {% if is_granted('ROLE_SUPER_ADMIN') %}
                 <a href="{{ path('sa_matiere_import', {departement:departement.id}) }}" class="btn btn-info btn-sm
                 btn-float"
-                   data-provide="tooltip"
-                   data-placement="bottom" title="{{ 'atitle.import_ppn'|trans }}"><i class="fas fa-file-import"></i><span
+                   data-bs-toggle="tooltip" data-bs-placement="bottom"
+                   title="{{ 'atitle.import_ppn'|trans }}"><i class="fas fa-file-import"></i><span
                             class="sr-only">importer</span></a>
 
                 <a href="{{ path('sa_diplome_new_wizard_index', {departement:departement.id}) }}" class="btn btn-info
                 btn-sm
                 btn-float"
-                   data-provide="tooltip"
-                   data-placement="bottom" title="{{ 'assistant.creation.diplome'|trans }}"><i class="fas fa-magic"></i><span
+                   data-bs-toggle="tooltip" data-bs-placement="bottom"
+                   title="{{ 'assistant.creation.diplome'|trans }}"><i class="fas fa-magic"></i><span
                             class="sr-only">{{ 'assistant.creation.diplome'|trans }}</span></a>
-                <a href="{{ path('super_admin_homepage') }}" class="btn btn-primary btn-float" data-provide="tooltip"
-                   data-placement="bottom" title="{{ 'atitle.retour_super_administration'|trans }}">
+                <a href="{{ path('super_admin_homepage') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                   title="{{ 'atitle.retour_super_administration'|trans }}">
                     <i class="{{ iconDashboard }}"><span class="sr-only">dashboard</span></i>
                 </a>
             {% else %}
-                <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
-                   data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="{{ iconAdmin }}"><span class="sr-only">Administration</span></i></a>
+                <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                   title="{{ 'atitle.retour_administration'|trans }}"><i class="{{ iconAdmin }}"><span class="sr-only">Administration</span></i></a>
             {% endif %}
         </div>
     </div>
@@ -57,26 +57,26 @@
                 <div class="col-md-2">
 
                     <a href="{{ path(baseurl ~ 'departement_show', {'id': departement.id}) }}"
-                       class="btn btn-info btn-outline btn-square btn-xs" data-provide="tooltip"
-                       data-placement="bottom" title="{{ 'atitle.details'|trans }}"><i class="{{ iconShow }}"></i></a>
+                       class="btn btn-info btn-outline btn-square btn-xs" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                       title="{{ 'atitle.details'|trans }}"><i class="{{ iconShow }}"></i></a>
 
                     <a href="{{ path(baseurl ~ 'departement_edit', {'id': departement.id}) }}"
                        class="btn btn-warning btn-outline btn-square btn-xs"><i class="{{ iconEdit }}"
-                                                                                data-provide="tooltip"
-                                                                                data-placement="bottom"
+                                                                                data-bs-toggle="tooltip" data-bs-placement="bottom"
+
                                                                                 title="{{ 'atitle.modifier'|trans }}"></i></a>
                     {% if is_granted('ROLE_SUPER_ADMIN') %}
                         {% if departement.actif == true %}
                             <a href="{{ path(baseurl ~ 'departement_activate', {'departement': departement.id,
                                 etat:0}) }}"
-                               class="btn btn-secondary btn-outline btn-square btn-xs" data-provide="tooltip"
-                               data-placement="bottom" title="{{ 'atitle.desactiver'|trans }}"><i class="fa
+                               class="btn btn-secondary btn-outline btn-square btn-xs" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                               title="{{ 'atitle.desactiver'|trans }}"><i class="fa
                        fa-eye-slash"></i></a>
                         {% else %}
                             <a href="{{ path(baseurl ~ 'departement_activate', {'departement': departement.id,
                                 etat:1}) }}"
-                               class="btn btn-secondary btn-outline btn-square btn-xs" data-provide="tooltip"
-                               data-placement="bottom" title="{{ 'atitle.active'|trans }}"><i class="fa
+                               class="btn btn-secondary btn-outline btn-square btn-xs" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                               title="{{ 'atitle.active'|trans }}"><i class="fa
                        fa-eye"></i></a>
                         {% endif %}
                     {% endif %}
@@ -91,41 +91,41 @@
                     <div class="col-md-2">
 
                         <a href="{{ path(baseurl ~ 'diplome_duplicate', {'id': diplome.id}) }}"
-                           class="btn btn-success btn-outline btn-square btn-xs" data-provide="tooltip"
-                           data-placement="bottom" title="{{ 'atitle.dupliquer'|trans }}"><i class="{{ iconDuplicate }}"></i></a>
+                           class="btn btn-success btn-outline btn-square btn-xs" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                           title="{{ 'atitle.dupliquer'|trans }}"><i class="{{ iconDuplicate }}"></i></a>
                         <a href="{{ path(baseurl ~ 'diplome_show', {'id': diplome.id}) }}"
-                           class="btn btn-info btn-outline btn-square btn-xs" data-provide="tooltip"
-                           data-placement="bottom" title="{{ 'atitle.details'|trans }}"><i class="{{ iconShow }}"></i></a>
+                           class="btn btn-info btn-outline btn-square btn-xs" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                           title="{{ 'atitle.details'|trans }}"><i class="{{ iconShow }}"></i></a>
 
                         <a href="{{ path(baseurl ~ 'diplome_edit', {'id': diplome.id}) }}"
                            class="btn btn-warning btn-outline btn-square btn-xs"><i class="{{ iconEdit }}"
-                                                                                    data-provide="tooltip"
-                                                                                    data-placement="bottom"
+                                                                                    data-bs-toggle="tooltip" data-bs-placement="bottom"
+
                                                                                     title="{{ 'atitle.modifier'|trans }}"></i></a>
                         {% if is_granted('ROLE_SUPER_ADMIN') %}
                             {% if diplome.actif == true %}
                                 <a href="{{ path(baseurl ~ 'diplome_activate', {'diplome': diplome.id, etat:0}) }}"
-                                   class="btn btn-secondary btn-outline btn-square btn-xs" data-provide="tooltip"
-                                   data-placement="bottom" title="{{ 'atitle.desactiver'|trans }}"><i class="fa
+                                   class="btn btn-secondary btn-outline btn-square btn-xs" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                   title="{{ 'atitle.desactiver'|trans }}"><i class="fa
                        fa-eye-slash"></i></a>
                             {% else %}
                                 <a href="{{ path(baseurl ~ 'diplome_activate', {'diplome': diplome.id, etat:1}) }}"
-                                   class="btn btn-secondary btn-outline btn-square btn-xs" data-provide="tooltip"
-                                   data-placement="bottom" title="{{ 'atitle.active'|trans }}"><i class="fa
+                                   class="btn btn-secondary btn-outline btn-square btn-xs" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                   title="{{ 'atitle.active'|trans }}"><i class="fa
                        fa-eye"></i></a>
                             {% endif %}
                             {% if diplome.annees|length == 0 %}
                                 <a href="{{ path(baseurl ~ 'diplome_delete', {id: diplome.id}) }}"
                                    data-csrf="{{ csrf_token('delete' ~ diplome.id) }}"
                                    class="btn btn-danger btn-outline btn-square btn-xs supprimer"><i
-                                            class="{{ iconDelete }}" data-provide="tooltip" data-placement="bottom"
+                                            class="{{ iconDelete }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
                                             title="{{ 'atitle.supprimer'|trans }}"></i></a>
                             {% endif %}
                             {% if is_granted('ROLE_SUPER_ADMIN') %}
                                 <span class="dropdown">
                                 <a data-toggle="dropdown" href="#">
                                     <i class="fas fa-ellipsis-h rotate-90"
-                                       data-provide="tooltip"
+                                       data-bs-toggle="tooltip" data-bs-placement="bottom"
                                        title="Options d'export ou d'import"></i>
                                     <span class="sr-only">
                                         Options  d'export  ou d'import</span>
@@ -166,40 +166,40 @@
                                                                   | {{ annee.codeVersion }}</div>
                         <div class="col-md-2">
                             <a href="{{ path(baseurl ~ 'annee_duplicate', {'id': annee.id}) }}"
-                               class="btn btn-success btn-outline btn-square btn-xs" data-provide="tooltip"
-                               data-placement="bottom" title="{{ 'atitle.dupliquer'|trans }}"><i class="{{ iconDuplicate }}"></i></a>
+                               class="btn btn-success btn-outline btn-square btn-xs" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                               title="{{ 'atitle.dupliquer'|trans }}"><i class="{{ iconDuplicate }}"></i></a>
                             <a href="{{ path(baseurl ~ 'annee_show', {'id': annee.id}) }}"
-                               class="btn btn-info btn-outline btn-square btn-xs" data-provide="tooltip"
-                               data-placement="bottom" title="{{ 'atitle.details'|trans }}"><i class="{{ iconShow }}"></i></a>
+                               class="btn btn-info btn-outline btn-square btn-xs" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                               title="{{ 'atitle.details'|trans }}"><i class="{{ iconShow }}"></i></a>
 
                             <a href="{{ path(baseurl ~ 'annee_edit', {'id': annee.id}) }}"
                                class="btn btn-warning btn-outline btn-square btn-xs"><i class="{{ iconEdit }}"
-                                                                                        data-provide="tooltip"
-                                                                                        data-placement="bottom"
+                                                                                        data-bs-toggle="tooltip" data-bs-placement="bottom"
+
                                                                                         title="{{ 'atitle.modifier'|trans }}"></i></a>
                             {% if is_granted('ROLE_SUPER_ADMIN') %}
                                 {% if annee.actif == true %}
                                     <a href="{{ path(baseurl ~ 'annee_activate', {'annee': annee.id, etat:0}) }}"
-                                       class="btn btn-secondary btn-outline btn-square btn-xs" data-provide="tooltip"
-                                       data-placement="bottom" title="{{ 'atitle.desactiver'|trans }}"><i class="fa
+                                       class="btn btn-secondary btn-outline btn-square btn-xs" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                       title="{{ 'atitle.desactiver'|trans }}"><i class="fa
                        fa-eye-slash"></i></a>
                                 {% else %}
                                     <a href="{{ path(baseurl ~ 'annee_activate', {'annee': annee.id, etat:1}) }}"
-                                       class="btn btn-secondary btn-outline btn-square btn-xs" data-provide="tooltip"
-                                       data-placement="bottom" title="{{ 'atitle.active'|trans }}"><i class="fa
+                                       class="btn btn-secondary btn-outline btn-square btn-xs" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                       title="{{ 'atitle.active'|trans }}"><i class="fa
                        fa-eye"></i></a>
                                 {% endif %}
                                 {% if annee.semestres|length == 0 %}
                                     <a href="{{ path(baseurl ~ 'annee_delete', {id: annee.id}) }}"
                                        data-csrf="{{ csrf_token('delete' ~ annee.id) }}"
                                        class="btn btn-danger btn-outline btn-square btn-xs supprimer" data-id="id"><i
-                                                class="{{ iconDelete }}" data-provide="tooltip" data-placement="bottom"
+                                                class="{{ iconDelete }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
                                                 title="{{ 'atitle.supprimer'|trans }}"></i></a>
                                 {% endif %}
                                 <a href="{{ path(baseurl ~ 'annee_synchronise_apogee', {annee: annee.id}) }}"
                                    data-confirm="true"
                                    class="btn btn-purple btn-outline btn-square btn-xs"><i
-                                            class="fas fa-sync-alt" data-provide="tooltip" data-placement="bottom"
+                                            class="fas fa-sync-alt" data-bs-toggle="tooltip" data-bs-placement="bottom"
                                             title="{{ 'atitle.synchro_apogee'|trans }}"></i></a>
                             {% endif %}
                         </div>
@@ -211,32 +211,32 @@
                             <div class="col-md-7">{{ semestre.libelle }} | {{ semestre.codeElement }}</div>
                             <div class="col-md-2">
                                 <a href="{{ path(baseurl ~ 'semestre_duplicate', {'id': semestre.id}) }}"
-                                   class="btn btn-success btn-outline btn-square btn-xs" data-provide="tooltip"
-                                   data-placement="bottom" title="{{ 'atitle.dupliquer'|trans }}"><i
+                                   class="btn btn-success btn-outline btn-square btn-xs" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                   title="{{ 'atitle.dupliquer'|trans }}"><i
                                             class="{{ iconDuplicate }}"></i></a>
                                 <a href="{{ path(baseurl ~ 'semestre_show', {'id': semestre.id}) }}"
-                                   class="btn btn-info btn-outline btn-square btn-xs" data-provide="tooltip"
-                                   data-placement="bottom" title="{{ 'atitle.details'|trans }}"><i
+                                   class="btn btn-info btn-outline btn-square btn-xs" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                   title="{{ 'atitle.details'|trans }}"><i
                                             class="{{ iconShow }}"></i></a>
 
                                 <a href="{{ path(baseurl ~ 'semestre_edit', {'id': semestre.id}) }}"
                                    class="btn btn-warning btn-outline btn-square btn-xs"><i class="{{ iconEdit }}"
-                                                                                            data-provide="tooltip"
-                                                                                            data-placement="bottom"
+                                                                                            data-bs-toggle="tooltip" data-bs-placement="bottom"
+
                                                                                             title="{{ 'atitle.modifier'|trans }}"></i></a>
 
                                 {% if is_granted('ROLE_SUPER_ADMIN') %}
                                     {% if semestre.actif == true %}
                                         <a href="{{ path(baseurl ~ 'semestre_activate', {'semestre': semestre.id,
                                             etat:0}) }}"
-                                           class="btn btn-secondary btn-outline btn-square btn-xs" data-provide="tooltip"
-                                           data-placement="bottom" title="{{ 'atitle.desactiver'|trans }}"><i class="fa
+                                           class="btn btn-secondary btn-outline btn-square btn-xs" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                           title="{{ 'atitle.desactiver'|trans }}"><i class="fa
                        fa-eye-slash"></i></a>
                                     {% else %}
                                         <a href="{{ path(baseurl ~ 'semestre_activate', {'semestre': semestre.id,
                                             etat:1}) }}"
-                                           class="btn btn-secondary btn-outline btn-square btn-xs" data-provide="tooltip"
-                                           data-placement="bottom" title="{{ 'atitle.active'|trans }}"><i class="fa
+                                           class="btn btn-secondary btn-outline btn-square btn-xs" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                           title="{{ 'atitle.active'|trans }}"><i class="fa
                        fa-eye"></i></a>
                                     {% endif %}
                                     {% if semestre.ues|length == 0 and semestre
@@ -244,12 +244,12 @@
                                         <a href="{{ path(baseurl ~ 'semestre_delete', {id: semestre.id}) }}"
                                            data-csrf="{{ csrf_token('delete' ~ semestre.id) }}"
                                            class="btn btn-danger btn-outline btn-square btn-xs supprimer" data-id="id"><i
-                                                    class="{{ iconDelete }}" data-provide="tooltip" data-placement="bottom"
+                                                    class="{{ iconDelete }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
                                                     title="{{ 'atitle.supprimer'|trans }}"></i></a>
                                     {% endif %}
                                     <a href="{{ path(baseurl ~ 'semestre_synchronise_apogee', {semestre: semestre.id}) }}"
                                        class="btn btn-purple btn-outline btn-square btn-xs"><i
-                                                class="fas fa-sync-alt" data-provide="tooltip" data-placement="bottom"
+                                                class="fas fa-sync-alt" data-bs-toggle="tooltip" data-bs-placement="bottom"
                                                 title="{{ 'atitle.synchro_apogee_semestre'|trans }}"></i></a>
                                 {% endif %}
                             </div>
@@ -263,41 +263,41 @@
                                     .bonification==true %}(Bonification){% endif %}</div>
                                 <div class="col-md-2">
                                     <a href="{{ path(baseurl ~ 'ue_duplicate', {'id': ue.id}) }}"
-                                       class="btn btn-success btn-outline btn-square btn-xs" data-provide="tooltip"
-                                       data-placement="bottom" title="{{ 'atitle.dupliquer'|trans }}"><i
+                                       class="btn btn-success btn-outline btn-square btn-xs" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                       title="{{ 'atitle.dupliquer'|trans }}"><i
                                                 class="{{ iconDuplicate }}"></i></a>
                                     <a href="{{ path(baseurl ~ 'ue_show', {'id': ue.id}) }}"
-                                       class="btn btn-info btn-outline btn-square btn-xs" data-provide="tooltip"
-                                       data-placement="bottom" title="{{ 'atitle.details'|trans }}"><i
+                                       class="btn btn-info btn-outline btn-square btn-xs" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                       title="{{ 'atitle.details'|trans }}"><i
                                                 class="{{ iconShow }}"></i></a>
 
                                     <a href="{{ path(baseurl ~ 'ue_edit', {'id': ue.id}) }}"
                                        class="btn btn-warning btn-outline btn-square btn-xs"><i class="{{ iconEdit }}"
-                                                                                                data-provide="tooltip"
-                                                                                                data-placement="bottom"
+                                                                                                data-bs-toggle="tooltip" data-bs-placement="bottom"
+
                                                                                                 title="{{ 'atitle.modifier'|trans }}"></i></a>
                                     {% if is_granted('ROLE_SUPER_ADMIN') %}
                                         {% if semestre.actif == true %}
                                             <a href="{{ path(baseurl ~ 'ue_activate', {'ue': ue.id, etat:0}) }}"
-                                               class="btn btn-secondary btn-outline btn-square btn-xs" data-provide="tooltip"
-                                               data-placement="bottom" title="{{ 'atitle.desactiver'|trans }}"><i class="fa
+                                               class="btn btn-secondary btn-outline btn-square btn-xs" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                               title="{{ 'atitle.desactiver'|trans }}"><i class="fa
                        fa-eye-slash"></i></a>
                                         {% else %}
                                             <a href="{{ path(baseurl ~ 'ue_activate', {'ue': ue.id, etat:1}) }}"
-                                               class="btn btn-secondary btn-outline btn-square btn-xs" data-provide="tooltip"
-                                               data-placement="bottom" title="{{ 'atitle.active'|trans }}"><i class="fa
+                                               class="btn btn-secondary btn-outline btn-square btn-xs" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                               title="{{ 'atitle.active'|trans }}"><i class="fa
                        fa-eye"></i></a>
                                         {% endif %}
                                         {% if ue.matieres|length == 0 %}
                                             <a href="{{ path(baseurl ~ 'ue_delete', {id: ue.id}) }}"
                                                data-csrf="{{ csrf_token('delete' ~ ue.id) }}"
                                                class="btn btn-danger btn-outline btn-square btn-xs supprimer" data-id="id"><i
-                                                        class="{{ iconDelete }}" data-provide="tooltip" data-placement="bottom"
+                                                        class="{{ iconDelete }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
                                                         title="{{ 'atitle.supprimer'|trans }}"></i></a>
                                         {% endif %}
                                         <a href="{{ path(baseurl ~ 'ue_synchronise_apogee', {ue: ue.id}) }}"
                                            class="btn btn-purple btn-outline btn-square btn-xs"><i
-                                                    class="fas fa-sync-alt" data-provide="tooltip" data-placement="bottom"
+                                                    class="fas fa-sync-alt" data-bs-toggle="tooltip" data-bs-placement="bottom"
                                                     title="{{ 'atitle.synchro_apogee_ue'|trans }}"></i></a>
                                     {% endif %}
                                 </div>
@@ -309,37 +309,37 @@
                                                                                     | {{ matiere.libelle }}</div>
                                     <div class="col-md-2">
                                         <a href="{{ path(baseurl ~ 'matiere_duplicate', {'id': matiere.id}) }}"
-                                           class="btn btn-success btn-outline btn-square btn-xs" data-provide="tooltip"
-                                           data-placement="bottom" title="{{ 'atitle.dupliquer'|trans }}"><i
+                                           class="btn btn-success btn-outline btn-square btn-xs" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                           title="{{ 'atitle.dupliquer'|trans }}"><i
                                                     class="{{ iconDuplicate }}"></i></a>
                                         <a href="{{ path(baseurl ~ 'matiere_show', {'id': matiere.id}) }}"
-                                           class="btn btn-info btn-outline btn-square btn-xs" data-provide="tooltip"
-                                           data-placement="bottom" title="{{ 'atitle.details'|trans }}"><i
+                                           class="btn btn-info btn-outline btn-square btn-xs" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                           title="{{ 'atitle.details'|trans }}"><i
                                                     class="{{ iconShow }}"></i></a>
 
                                         <a href="{{ path(baseurl ~ 'matiere_edit', {'id': matiere.id}) }}"
                                            class="btn btn-warning btn-outline btn-square btn-xs"><i class="{{ iconEdit }}"
-                                                                                                    data-provide="tooltip"
-                                                                                                    data-placement="bottom"
+                                                                                                    data-bs-toggle="tooltip" data-bs-placement="bottom"
+
                                                                                                     title="{{ 'atitle.modifier'|trans }}"></i></a>
                                         {% if is_granted('ROLE_SUPER_ADMIN') %}
                                             {% if semestre.actif == true %}
                                                 <a href="{{ path(baseurl ~ 'matiere_activate', {'matiere': matiere
                                                 .id, etat:1}) }}"
-                                                   class="btn btn-secondary btn-outline btn-square btn-xs" data-provide="tooltip"
-                                                   data-placement="bottom" title="{{ 'atitle.desactiver'|trans }}"><i class="fa
+                                                   class="btn btn-secondary btn-outline btn-square btn-xs" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                   title="{{ 'atitle.desactiver'|trans }}"><i class="fa
                        fa-eye-slash"></i></a>
                                             {% else %}
                                                 <a href="{{ path(baseurl ~ 'matiere_activate', {'matiere': matiere
                                                 .id, etat:0}) }}"
-                                                   class="btn btn-secondary btn-outline btn-square btn-xs" data-provide="tooltip"
-                                                   data-placement="bottom" title="{{ 'atitle.active'|trans }}"><i class="fa
+                                                   class="btn btn-secondary btn-outline btn-square btn-xs" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                   title="{{ 'atitle.active'|trans }}"><i class="fa
                        fa-eye"></i></a>
                                             {% endif %}
                                             <a href="{{ path(baseurl ~ 'matiere_delete', {id: matiere.id}) }}"
                                                data-csrf="{{ csrf_token('delete' ~ matiere.id) }}"
                                                class="btn btn-danger btn-outline btn-square btn-xs supprimer" data-id="id"><i
-                                                        class="{{ iconDelete }}" data-provide="tooltip" data-placement="bottom"
+                                                        class="{{ iconDelete }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
                                                         title="{{ 'atitle.supprimer'|trans }}"></i></a>
                                         {% endif %}
                                     </div>
@@ -389,23 +389,23 @@
                                                       | {{ parcour.codeElement }}</div>
                                 <div class="col-md-2">
                                     <a href="{{ path(baseurl ~ 'parcour_duplicate', {'id': parcour.id}) }}"
-                                       class="btn btn-success btn-outline btn-square btn-xs" data-provide="tooltip"
-                                       data-placement="bottom" title="{{ 'atitle.dupliquer'|trans }}"><i
+                                       class="btn btn-success btn-outline btn-square btn-xs" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                       title="{{ 'atitle.dupliquer'|trans }}"><i
                                                 class="{{ iconDuplicate }}"></i></a>
                                     <a href="{{ path(baseurl ~ 'parcour_show', {'id': parcour.id}) }}"
-                                       class="btn btn-info btn-outline btn-square btn-xs" data-provide="tooltip"
-                                       data-placement="bottom" title="{{ 'atitle.details'|trans }}"><i
+                                       class="btn btn-info btn-outline btn-square btn-xs" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                       title="{{ 'atitle.details'|trans }}"><i
                                                 class="{{ iconShow }}"></i></a>
 
                                     <a href="{{ path(baseurl ~ 'parcour_edit', {'id': parcour.id}) }}"
                                        class="btn btn-warning btn-outline btn-square btn-xs"><i class="{{ iconEdit }}"
-                                                                                                data-provide="tooltip"
-                                                                                                data-placement="bottom"
+                                                                                                data-bs-toggle="tooltip" data-bs-placement="bottom"
+
                                                                                                 title="{{ 'atitle.modifier'|trans }}"></i></a>
                                     <a href="{{ path(baseurl ~ 'parcour_delete', {id: parcour.id}) }}"
                                        data-csrf="{{ csrf_token('delete' ~ parcour.id) }}"
                                        class="btn btn-danger btn-outline btn-square btn-xs supprimer" data-id="id"><i
-                                                class="{{ iconDelete }}" data-provide="tooltip" data-placement="bottom"
+                                                class="{{ iconDelete }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
                                                 title="{{ 'atitle.supprimer'|trans }}"></i></a>
                                 </div>
                             </div>

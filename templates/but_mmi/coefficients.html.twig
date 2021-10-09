@@ -37,7 +37,7 @@
                             {% for ressource in tab[semestre.id].ressources %}
                                 <tr>
                                     <td>
-                                        <a href="#" title="{{ ressource.display }}" data-provde="tooltip">{{ ressource.codeMatiere }}</a>
+                                        <a href="#" title="{{ ressource.display }}" data-bs-toggle="tooltip" data-bs-placement="bottom">{{ ressource.codeMatiere }}</a>
                                     </td>
                                     {% for niveau in tab[semestre.id].niveaux %}
                                         <td>
@@ -68,7 +68,7 @@
                             {% for sae in tab[semestre.id].saes %}
                                 <tr>
                                     <td>
-                                        <a href="#" title="{{ sae.display }}" data-provde="tooltip">{{ sae.codeMatiere }}</a>
+                                        <a href="#" title="{{ sae.display }}" data-bs-toggle="tooltip" data-bs-placement="bottom">{{ sae.codeMatiere }}</a>
                                     </td>
                                     {% for niveau in tab[semestre.id].niveaux %}
                                         <td>

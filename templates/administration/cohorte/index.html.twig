@@ -7,8 +7,8 @@
 {% block headeractions %}
     <div class="header-action">
         <div class="buttons">
-            <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
-               data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="{{ iconAdmin }}"><span class="sr-only">Administration</span></i></a>
+            <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip"
+               data-bs-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="{{ iconAdmin }}"><span class="sr-only">Administration</span></i></a>
         </div>
     </div>
 {% endblock %}
@@ -116,9 +116,9 @@
                         <td><a href="{{ path('user_profil',{slug:etudiant.slug, type:'etudiant'}) }}" target="_blank"
                                class="btn
                     btn-info"
-                               rel="tooltip" data-placement="top" data-original-title="Voir profil de l'étudiant"><i
+                               data-bs-toggle="tooltip"
+                               data-bs-placement="top" data-original-title="Voir profil de l'étudiant"><i
                                         class="fa fa-eye"></i></a>
-                            {#<a href="{{ path('da_kernel_administration_cohorte_parcours',{'etudiant':etudiant.id}) }}"  target="_blank" class="btn btn-warning" rel="tooltip" data-placement="top" data-original-title="Voir/modifier le parcours de l'étudiant"><i class="glyphicon glyphicon-road"></i></a>#}
                         </td>
                     </tr>
                 {% endfor %}

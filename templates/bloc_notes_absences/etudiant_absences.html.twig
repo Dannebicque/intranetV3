@@ -5,8 +5,8 @@
             <div class="card-header-actions">
                 <a href="{{ path('app_etudiant_absence_justificatif_new') }}" class="btn btn-sm btn-primary"
                    title="{{ 'absence_justificatif_deposer'|trans }}"
-                   data-provide="tooltip"
-                   data-placement="bottom">
+                   data-bs-toggle="tooltip" data-bs-placement="bottom"
+                >
                     <i class="fas fa-plus"></i>
                 </a>
             </div>
@@ -38,10 +38,10 @@
                     <td>{{ absence.justifie ? 'Yes'|trans : 'No'|trans }}</td>
                     <td class="hide">{{ absence.personnel ? absence.personnel.display : 'non.defini'|trans }}</td>
                     <td>
-                        <button data-provide="modaler tooltip"
+                        <button data-provide="modaler"
+                                data-bs-toggle="tooltip" data-bs-placement="bottom"
                                 data-url="{{ path('app_etudiant_absence_detail', {'uuid': absence.uuidString}) }}"
                                 class="btn btn-info btn-outline btn-square btn-xs"
-                                data-placement="bottom"
                                 title="{{ 'atitle.details'|trans }}"
                                 data-title="{{ 'detail.absence'|trans }}"
                         >
@@ -60,8 +60,8 @@
                             <a href="{{ path('application_personnel_absence_delete', {uuid: absence.uuidString}) }}"
                                class="btn btn-danger btn-outline btn-square supprimer"
                                data-csrf="{{ csrf_token('delete' ~ absence.uuidString) }}"><i class="{{ iconDelete }}"
-                                                                                              data-provide="tooltip"
-                                                                                              data-placement="bottom"
+                                                                                              data-bs-toggle="tooltip" data-bs-placement="bottom"
+
                                                                                               title="{{ 'supprimer'|trans }}"></i></a>
                         </td>
                     {% endif %}

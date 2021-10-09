@@ -9,8 +9,8 @@
         <div class="buttons">
             <a href="{{ path('application_personnel_note_index', {matiere: matiere.typeIdMatiere, index: evaluation.id}) }}"
                class="btn btn-primary btn-float"
-               data-provide="tooltip"
-               data-placement="bottom" title="{{ 'atitle.retour_synthese'|trans }}"><i class="fas fa-arrow-left"></i></a>
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
+               title="{{ 'atitle.retour_synthese'|trans }}"><i class="fas fa-arrow-left"></i></a>
         </div>
     </div>
 {% endblock %}
@@ -23,7 +23,7 @@
                                                             | {{ evaluation.libelle }}</h4>
             <ul class="card-controls">
                 <li>
-                    <a class="card-btn-slide" href="#" title="Plus de détails et modifications" data-provide="tooltip">
+                    <a class="card-btn-slide" href="#" title="Plus de détails et modifications" data-bs-toggle="tooltip" data-bs-placement="bottom">
                         Cliquez pour éditer l'évaluation <i class="fas fa-chevron-down"></i>
                     </a>
                 </li>

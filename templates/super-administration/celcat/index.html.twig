@@ -9,12 +9,12 @@
     <div class="header-action">
         <div class="buttons">
             <a href="{{ path('sa_celcat_extraction_code') }}" class="btn btn-info btn-sm btn-float"
-               data-provide="tooltip"
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
                target="_blank"
-               data-placement="bottom" title="{{ 'atitle.code_celcat'|trans }}"><i
+               title="{{ 'atitle.code_celcat'|trans }}"><i
                         class="fas fa-cogs"></i></a>
-            <a href="{{ path('super_admin_homepage') }}" class="btn btn-primary btn-float" data-provide="tooltip"
-               data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}">
+            <a href="{{ path('super_admin_homepage') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom"
+               title="{{ 'atitle.retour_administration'|trans }}">
                 <i class="{{ iconDashboard }}"><span class="sr-only">dashboard</span></i>
             </a>
         </div>
@@ -50,13 +50,13 @@
                         <td>
                             <a href="{{ path('sa_diplome_edit', {'id': diplome.id}) }}"
                                class="btn btn-warning btn-outline btn-square" target="_blank"><i class="{{ iconEdit }}"
-                                                                                                 data-provide="tooltip"
-                                                                                                 data-placement="bottom"
+                                                                                                 data-bs-toggle="tooltip" data-bs-placement="bottom"
+
                                                                                                  title="{{ 'atitle.modifier'|trans }}"></i></a>
                             <a href="{{ path('sa_celcat_update_events', {'id': diplome.id}) }}"
                                class="btn btn-success btn-outline btn-square"><i class="fas fa-sync"
-                                                                                 data-provide="tooltip"
-                                                                                 data-placement="bottom"
+                                                                                 data-bs-toggle="tooltip" data-bs-placement="bottom"
+
                                                                                  title="{{ 'atitle.update_events'|trans }}"></i></a>
                         </td>
                     </tr>

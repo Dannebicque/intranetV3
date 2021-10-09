@@ -24,10 +24,11 @@
                     <td>{{ note.note|format_note(2, 10) }}</td>
                     <td class="hide">{{ note.evaluation.coefficient|number_format(2) }}</td>
                     <td>
-                        <button data-provide="modaler tooltip"
+                        <button data-provide="modaler"
+                                data-bs-toggle="tooltip" data-bs-placement="bottom"
                                 data-url="{{ path('app_etudiant_note_detail', {'id': note.id}) }}"
                                 class="btn btn-info btn-outline btn-square btn-xs"
-                                data-placement="bottom"
+
                                 title="{{ 'atitle.details'|trans }}"
                                 data-title="{{ 'detail.note'|trans }}"
                         >
@@ -61,10 +62,11 @@
                         </td>
                         <td class="hide">{{ nnote.evaluation.coefficient|number_format(2) }}</td>
                         <td>
-                            <button data-provide="modaler tooltip"
+                            <button data-provide="modaler"
+                                    data-bs-toggle="tooltip" data-bs-placement="bottom"
                                     data-url="{{ path('app_etudiant_note_detail', {'id': nnote.id}) }}"
                                     class="btn btn-info btn-outline btn-square btn-xs"
-                                    data-placement="bottom"
+
                                     title="{{ 'atitle.details'|trans }}"
                                     data-title="{{ 'detail.note'|trans }}"
                             >
@@ -85,7 +87,7 @@
         <br>
         {% if  user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ADMIN') %}
             <a href="{{ path('administration_semestre_export_releve_provisoire',{slug:etudiant.slug}) }}"
-               class="btn btn-info btn-block" rel="tooltip" data-placement="bottom" title="Editer un relevé de notes
+               class="btn btn-info btn-block" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editer un relevé de notes
            provisoire"><i
                         class="fa fa-print"></i> Editer un relevé de notes provisoire</a>
         {% endif %}
