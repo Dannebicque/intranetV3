@@ -42,7 +42,7 @@
         {% if paging == true %}
             <div class="row" id="{{ paging_attr.id }}_bloc">
                 <div class="col-3">
-                    <select class="form-control" id="{{ paging_attr.id }}_select">
+                    <select class="form-select" id="{{ paging_attr.id }}_select">
                         {% for length in paging_attr.lengthMenu %}
                             <option value="{{ length }}" {% if length == paging_attr.pageLength %}selected="selected"{% endif %}>{{ length }}</option>
                         {% endfor %}

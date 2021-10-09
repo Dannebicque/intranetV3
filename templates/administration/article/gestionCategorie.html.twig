@@ -66,21 +66,23 @@
                         <td colspan="3">{{ 'no.record.found'|trans }}</td>
                     </tr>
                 {% endfor %}
-                </tbody>
+        </tbody>
                 <tfoot>
                 <tr>
                     <td><label for="libelle" class="sr-only">Libelle</label>
                         <input type="text" placeholder="Libellé de la catégorie" id="libelle" class="form-control"></td>
                     <td>&nbsp;</td>
                     <td>
-                        <button class="btn btn-success btn-block" id="addCategorie">Ajouter catégorie</button>
+                        <div class="col-12 d-block d-grid mb-2">
+                            <button class="btn btn-success" id="addCategorie">Ajouter catégorie</button>
+                        </div>
                     </td>
                 </tr>
                 </tfoot>
 
-      </table>
+            </table>
+        </div>
     </div>
-  </div>
 {% endblock %}
 
 {% block stylesheets %}

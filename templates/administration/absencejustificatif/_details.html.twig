@@ -20,7 +20,7 @@
         {% if justificatif.fichierName != null and justificatif.fichierName != '' %}
             <a href="{{ asset('upload/justificatif/'~justificatif.fichierName) }}" target="_blank">{{ 'voir.le.document'|trans }}</a>
         {% else %}
-            <button class="btn btn-block btn-danger">Pas de document justificatif</button>
+            <button class="btn btn-danger">Pas de document justificatif</button>
         {% endif %}
     </dd>
 </dl>

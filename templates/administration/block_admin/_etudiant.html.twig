@@ -1,0 +1,49 @@
+<div class="col-md-12 col-lg-12  col-sm-12">
+    <div class="card">
+        <header class="card-header">
+            <h2 class="card-title">{{ 'adm.etudiants'|trans }}</h2>
+            <div class="card-header-actions" style="">
+                <a href="{{ path('administration_etudiant_semestre_add') }}" class="btn btn-sm btn-info"
+                   title="{{ 'atitle.creer_nouveau'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom"><i
+                            class="fas fa-plus"></i><span class="sr-only">ajouter des étudiants</span></a>
+            </div>
+        </header>
+
+        <div class="card-body">
+            <div class="row">
+                {% for semestre in user_data.semestres|filter(semestre => semestre.actif == true) %}
+                    <div class="col-2 d-grid d-block mb-2"><a
+                                href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}"
+                                class="btn btn-primary">
+                            {{ semestre.diplome.displayCourt }} | {{ semestre.libelle }}
+                        </a></div>
+                {% endfor %}
+
+                {% for semestre in user_data.semestres|filter(semestre => semestre.actif == false) %}
+                    <div class="col-2 d-grid d-block mb-2">
+                        <a
+                                href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}"
+                                class="btn btn-default">
+                            {{ semestre.diplome.displayCourt }} | {{ semestre.libelle }}
+                        </a></div>
+                {% endfor %}
+            </div>
+            <div class="row">
+                <div class="col-4 d-grid d-block">
+                    <a href="{{ path('administration_etudiant_index') }}"
+                       class="btn btn-primary"> {{ 'adm.tous.les.etudiants'|trans }}</a>
+                </div>
+                <div class="col-4 d-grid d-block">
+                    <a href="{{ path('administration_statistique_index') }}"
+                       class="btn btn-primary">
+                        {{ 'adm.statistiques.menu'|trans }}</a>
+                </div>
+                <div class="col-4 d-grid d-block">
+                    <a href="{{ path('administration_cohorte_index') }}" class="btn btn-primary">
+                        {{ 'adm.cohortes'|trans }}</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
