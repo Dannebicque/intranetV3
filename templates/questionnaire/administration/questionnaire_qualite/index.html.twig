@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}QuestionnaireQualite index{% endblock %}
+
+{% block body %}
+    <h1>QuestionnaireQualite index</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Libelle</th>
+            <th>DateOuverture</th>
+            <th>DateFermeture</th>
+            <th>Titre</th>
+            <th>TexteExplication</th>
+            <th>TexteDebut</th>
+            <th>TextFin</th>
+            <th>Uuid</th>
+            <th>Created</th>
+            <th>Updated</th>
+            <th>actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for questionnaire_qualite in questionnaire_qualites %}
+            <tr>
+                <td>{{ questionnaire_qualite.id }}</td>
+                <td>{{ questionnaire_qualite.libelle }}</td>
+                <td>{{ questionnaire_qualite.dateOuverture ? questionnaire_qualite.dateOuverture|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ questionnaire_qualite.dateFermeture ? questionnaire_qualite.dateFermeture|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ questionnaire_qualite.titre }}</td>
+                <td>{{ questionnaire_qualite.texteExplication }}</td>
+                <td>{{ questionnaire_qualite.texteDebut }}</td>
+                <td>{{ questionnaire_qualite.textFin }}</td>
+                <td>{{ questionnaire_qualite.uuid }}</td>
+                <td>{{ questionnaire_qualite.created ? questionnaire_qualite.created|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ questionnaire_qualite.updated ? questionnaire_qualite.updated|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('questionnaire_qualite_show', {'id': questionnaire_qualite.id}) }}">show</a>
+                    <a href="{{ path('questionnaire_qualite_edit', {'id': questionnaire_qualite.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="12">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('questionnaire_qualite_new') }}">Create new</a>
+{% endblock %}
