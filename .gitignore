@@ -1,4 +1,5 @@
 ###> symfony/framework-bundle ###
+/graph.svg
 /.env.local
 /.env.local.php
 /.env.*.local
