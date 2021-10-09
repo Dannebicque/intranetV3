@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/MessageHandler/ExportPdfEdtHandler.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/03/2021 08:13
+ * @lastUpdate 08/10/2021 19:44
  */
 
 namespace App\MessageHandler;
@@ -60,24 +60,23 @@ class ExportPdfEdtHandler implements MessageHandlerInterface
             }
             $this->myEdtExport->compressDir($departement);
 
-            if (null !== $personnel) {
-                $mail = (new TemplatedEmail())
-                    ->from($this->configuration->get('MAIL_FROM'))
-                    ->to($personnel->getMailUniv())
-                    ->subject('Documents prêts')
+            $mail = (new TemplatedEmail())
+                ->from($this->configuration->get('MAIL_FROM'))
+                ->to($personnel->getMailUniv())
+                ->subject('Documents prêts')
 
-                    // path of the Twig template to render
-                    ->htmlTemplate('mails/documents_prets.html.twig')
+                // path of the Twig template to render
+                ->htmlTemplate('mails/documents_prets.html.twig')
 
-                    // pass variables (name => value) to the template
-                    ->context([
-                        'semestre'  => $semestre,
-                        'personnel' => $personnel,
-                        'lien'      => $lien,
-                    ]);
+                // pass variables (name => value) to the template
+                ->context([
+                    'semestre' => $semestre,
+                    'personnel' => $personnel,
+                    'lien' => $lien,
+                ]);
 
-                $this->mailer->send($mail);
-            }
+            $this->mailer->send($mail);
+
         }
     }
 }

@@ -1,0 +1,236 @@
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetV3/assets/css/borne.scss
+// @author davidannebicque
+// @project intranetV3
+// @lastUpdate 09/10/2021 10:02
+
+@import "core.min.css";
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/bootstrap";
+@import "./theme-troyes.scss";
+
+@import "./theme.scss";
+@import "./color.scss";
+@import "./_edt.scss";
+
+/* Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved */
+/* @file /Users/davidannebicque/htdocs/intranetV3/public/assets/bornes/css/style.css */
+/* @author davidannebicque */
+/* @project intranetV3 */
+/* @lastUpdate 01/10/2021 09:41 */
+
+/* CONTENEUR 1080px */
+html, body {
+  margin: 0 auto;
+  padding: 0;
+}
+
+#container {
+  width: 1080px;
+  margin: auto;
+}
+
+/* /CONTENEUR 1080px */
+
+/* DATE */
+#date {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  padding-left: 10px;
+  padding-right: 10px;
+  background-color: #146f88;
+  height: 70px;
+  line-height: 70px;
+  color: #fff;
+  font-size: 40px;
+  font-weight: 700;
+}
+
+.element:first-child {
+  flex: 1;
+}
+
+/* /DATE */
+
+/* HEADER SEMESTRE */
+.semestre {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 20px;
+  height: 91px;
+  color: #000;
+  font-weight: 700;
+  font-size: 21px;
+  text-align: center;
+}
+
+.semestre > * {
+  flex: 13% 50%;
+}
+
+.picto {
+  height: 65px;
+  width: 65px;
+}
+
+.heure {
+  //display: flex;
+  //justify-content: center;
+  //align-items: center;
+  //margin-left: 10px;
+  height: 101px;
+  // border-radius: 5px;
+  width: 111px;
+  // margin-right: 21px;
+}
+
+.semestre-header {
+  margin-right: 10px;
+  height: 50px;
+  line-height: 50px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  background-color: var(--colorIUT);
+  color: var(--colorIUTComplementaire);
+  font-size: 20px;
+  font-weight: bolder;
+  text-align: center;
+}
+
+.groupe {
+  display: flex;
+  height: 31px;
+  width: 938px;
+  border-radius: 5px;
+}
+
+/* /HEADER SEMESTRE */
+
+/* BANDEAU INFOS */
+.bandeau {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 220px;
+  width: 100%;
+}
+
+/* /BANDEAU INFOS */
+
+/* shadow */
+.shadow {
+  -moz-box-shadow: 3px 3px 5px 6px #ccc;
+  -webkit-box-shadow: 3px 3px 5px 6px #ccc;
+  box-shadow: 3px 3px 5px 6px #ccc;
+}
+
+/* COULEURS BANDEAU */
+.vertinfos {
+  background-color: #4caf50;
+}
+
+.orangeinfos {
+  background-color: #FF9800;
+}
+
+.rougeinfos {
+  background-color: #f44336;
+}
+
+.bleuinfos {
+  background-color: #03a9f4;
+}
+
+/* /COULEURS BANDEAU */
+
+/* Horloge */
+
+.clock {
+  margin: auto;
+  padding-top: 10px;
+  border-radius: 50%;
+  background: #fff url(ios_clock.svg) no-repeat center;
+  background-size: 88%;
+  height: 6em;
+  position: relative;
+  width: 6em;
+}
+
+.clock.simple:after {
+  background: #000;
+  border-radius: 50%;
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 5%;
+  height: 5%;
+  z-index: 10;
+}
+
+.minutes-container, .hours-container, .seconds-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.hours {
+  background: #000;
+  height: 20%;
+  left: 48.75%;
+  position: absolute;
+  top: 30%;
+  transform-origin: 50% 100%;
+  width: 2.5%;
+}
+
+.minutes {
+  background: #000;
+  height: 40%;
+  left: 49%;
+  position: absolute;
+  top: 10%;
+  transform-origin: 50% 100%;
+  width: 2%;
+}
+
+.seconds {
+  background: #000;
+  height: 45%;
+  left: 49.5%;
+  position: absolute;
+  top: 14%;
+  transform-origin: 50% 80%;
+  width: 1%;
+  z-index: 8;
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotateZ(360deg);
+  }
+}
+
+.hours-container {
+  animation: rotate 43200s infinite linear;
+}
+
+.minutes-container {
+  animation: rotate 3600s infinite steps(60);
+}
+
+.seconds-container {
+  animation: rotate 60s infinite steps(60);
+}
+
+.message_footer {
+  color: darkgray;
+  font-size: 10px;
+}
+
+

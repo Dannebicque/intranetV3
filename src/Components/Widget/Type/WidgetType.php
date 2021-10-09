@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Widget/Type/WidgetType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 14:37
+ * @lastUpdate 08/10/2021 19:11
  */
 
 namespace App\Components\Widget\Type;
@@ -13,6 +13,9 @@ use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use App\Components\Widget\DTO\WidgetView;
 use App\Components\Widget\WidgetBuilder;
+use function array_filter;
+use function array_map;
+use function is_string;
 
 class WidgetType
 {
@@ -59,13 +62,13 @@ class WidgetType
                 return $value;
             }
 
-            if (\is_string($value)) {
+            if (is_string($value)) {
                 $value = trim($value);
 
                 return $value ?? null;
             }
 
-            $a = \array_filter(\array_map('trim', $value));
+            $a = array_filter(array_map('trim', $value));
 
             return count($a) > 0 ? implode(' ', $a) : null;
         };

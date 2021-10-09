@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/GroupesController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/09/2021 11:21
+ * @lastUpdate 08/10/2021 19:11
  */
 
 namespace App\Controller\superAdministration;
@@ -44,7 +44,7 @@ class GroupesController extends BaseController
         return $this->render('super-administration/groupes/index.html.twig', [
             'departement' => $departement,
             'semestres' => $semestreRepository->findByDepartement($departement),
-            'afficheSemestre' => null !== $semestre ? $semestre->getId() : null,
+            'afficheSemestre' => $semestre?->getId(),
         ]);
     }
 

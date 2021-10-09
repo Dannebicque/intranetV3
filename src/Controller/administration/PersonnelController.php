@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/PersonnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 18:51
+ * @lastUpdate 08/10/2021 19:11
  */
 
 namespace App\Controller\administration;
@@ -27,7 +27,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/administration/personnel', name: 'administration_personnel_')]
 class PersonnelController extends BaseController
 {
-    #[Route('/', name: 'index', methods: ['GET', 'POST'], options: ['expose' => true])]
+    #[Route('/', name: 'index', options: ['expose' => true], methods: ['GET', 'POST'])]
     public function index(Request $request): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
@@ -80,9 +80,9 @@ class PersonnelController extends BaseController
 //    }
 
     #[Route('/export.{_format}', name: 'export',
-        methods: 'GET',
         requirements: ['_format' => 'csv|xlsx|pdf'],
-        options: ['expose' => true])]
+        options: ['expose' => true],
+        methods: 'GET')]
     public function export(MyExport $myExport, PersonnelRepository $personnelRepository, $type, $_format): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
@@ -107,8 +107,8 @@ class PersonnelController extends BaseController
     }
 
     #[Route('/create', name: 'create',
-        methods: ['GET', 'POST'],
-        options: ['expose' => true])]
+        options: ['expose' => true],
+        methods: ['GET', 'POST'])]
     public function create(
         Request $request
     ): Response {
@@ -146,8 +146,8 @@ class PersonnelController extends BaseController
     }
 
     #[Route('/{id}', name: 'show',
-        methods: ['GET'],
-        options: ['expose' => true])]
+        options: ['expose' => true],
+        methods: ['GET'])]
     public function show(Personnel $personnel): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
@@ -156,8 +156,8 @@ class PersonnelController extends BaseController
     }
 
     #[Route('/{id}/edit', name: 'edit',
-        methods: ['GET', 'POST'],
-        options: ['expose' => true])]
+        options: ['expose' => true],
+        methods: ['GET', 'POST'])]
     public function edit(Request $request, Personnel $personnel): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
@@ -203,8 +203,8 @@ class PersonnelController extends BaseController
 
     #[Route('/{id}',
         name: 'delete',
-        methods: ['DELETE', 'POST'],
-        options: ['expose' => true])]
+        options: ['expose' => true],
+        methods: ['DELETE', 'POST'])]
     public function delete(
         PersonnelDepartementRepository $personnelDepartementRepository,
         Request $request,

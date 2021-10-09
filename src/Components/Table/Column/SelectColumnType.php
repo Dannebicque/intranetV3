@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/Column/SelectColumnType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/09/2021 15:36
+ * @lastUpdate 08/10/2021 19:11
  */
 
 namespace App\Components\Table\Column;
@@ -17,6 +17,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use function is_callable;
 
 class SelectColumnType extends ColumnType
 {
@@ -57,7 +58,7 @@ class SelectColumnType extends ColumnType
             //on a une entity
             if (null !== $options['query_builder']) {
                 $queryBuilder = $options['query_builder'];
-                if (\is_callable($queryBuilder)) {
+                if (is_callable($queryBuilder)) {
                     $queryBuilder = $queryBuilder($em);
 
                     if (null !== $queryBuilder && !$queryBuilder instanceof QueryBuilder) {

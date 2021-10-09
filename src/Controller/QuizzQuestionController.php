@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/QuizzQuestionController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:48
+ * @lastUpdate 08/10/2021 19:44
  */
 
 namespace App\Controller;
@@ -12,7 +12,6 @@ namespace App\Controller;
 use App\Entity\Constantes;
 use App\Entity\QuestionnaireQuestion;
 use App\Entity\QuestionnaireReponse;
-use App\Form\QuizzQuestionType;
 use App\Repository\QuestionnaireQuestionRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,6 +20,7 @@ use function count;
 
 /**
  * @Route("/quizz/question")
+ * @deprecated
  */
 class QuizzQuestionController extends BaseController
 {

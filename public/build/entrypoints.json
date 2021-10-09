@@ -255,6 +255,13 @@
       "js": [
         "/build/runtime.js",
         "/build/vendors-node_modules_jquery_dist_jquery_js.js",
+        "/build/vendors-node_modules_core-js_internals_export_js.js",
+        "/build/vendors-node_modules_core-js_internals_array-iteration_js-node_modules_core-js_internals_arra-a68b23.js",
+        "/build/vendors-node_modules_core-js_modules_es_string_split_js.js",
+        "/build/vendors-node_modules_core-js_internals_array-method-is-strict_js-node_modules_core-js_interna-81f81c.js",
+        "/build/vendors-node_modules_core-js_internals_dom-iterables_js-node_modules_core-js_modules_es_symbol_js.js",
+        "/build/vendors-node_modules_core-js_modules_es_array_for-each_js-node_modules_core-js_modules_es_dat-47334b.js",
+        "/build/assets_js_util_js.js",
         "/build/adm.personnels.js"
       ]
     },

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/BlocNotesAbsencesController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2021 08:46
+ * @lastUpdate 08/10/2021 19:44
  */
 
 namespace App\Controller;
@@ -44,7 +44,7 @@ class BlocNotesAbsencesController extends BaseController
         $etudiantAbsences->setEtudiant($this->getConnectedUser());
         $matieres = $typeMatiereManager->findBySemestreArray($this->getEtudiantSemestre());
         $absences = $etudiantAbsences->getAbsencesParSemestresEtAnneeUniversitaire($matieres,
-            $this->getEtudiantAnneeUniversitaire());
+            $this->getAnneeUniversitaire());
         $statistiquesAbsences = $statsAbsences->calculStatistiquesAbsencesEtudiant($absences);
 
         return $this->render('bloc_notes_absences/etudiant_absences.html.twig', [
@@ -60,7 +60,7 @@ class BlocNotesAbsencesController extends BaseController
         $matieres = $typeMatiereManager->findBySemestreArray($this->getEtudiantSemestre());
         $etudiantNotes->setEtudiant($this->getConnectedUser());
         $notes = $etudiantNotes->getNotesParSemestresEtAnneeUniversitaire($matieres,
-            $this->getEtudiantAnneeUniversitaire());
+            $this->getAnneeUniversitaire());
 
         return $this->render('bloc_notes_absences/etudiant_notes.html.twig', [
             'notes' => $notes,

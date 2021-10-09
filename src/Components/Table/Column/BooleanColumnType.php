@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/Column/BooleanColumnType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 14:37
+ * @lastUpdate 08/10/2021 19:11
  */
 
 namespace App\Components\Table\Column;
@@ -34,23 +34,19 @@ class BooleanColumnType extends PropertyColumnType
             return '';
         }
 
-        switch ($value) {
-            case true:
-                return sprintf(
-                    '<span class="badge bg-success"><i class="%s"></i> %s</span>',
-                    $options['yes_icon'],
-                    $this->translator->trans($options['yes_value'])
-                );
-
-            case false:
-                return sprintf(
-                    '<span class="badge bg-danger"><i class="%s"></i> %s</span>',
-                    $options['no_icon'],
-                    $this->translator->trans($options['no_value'])
-                );
-            default:
-                return '';
-        }
+        return match ($value) {
+            true => sprintf(
+                '<span class="badge bg-success"><i class="%s"></i> %s</span>',
+                $options['yes_icon'],
+                $this->translator->trans($options['yes_value'])
+            ),
+            false => sprintf(
+                '<span class="badge bg-danger"><i class="%s"></i> %s</span>',
+                $options['no_icon'],
+                $this->translator->trans($options['no_value'])
+            ),
+            default => '',
+        };
     }
 
     /**

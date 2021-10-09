@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Absences/AbsenceEtatAppel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/09/2021 09:17
+ * @lastUpdate 08/10/2021 19:44
  */
 
 namespace App\Classes\Absences;
@@ -28,7 +28,10 @@ class AbsenceEtatAppel
         $this->entityManager = $entityManager;
     }
 
-    public function enregistreAppelFait(array $data)
+    /**
+     * @throws \Exception
+     */
+    public function enregistreAppelFait(array $data): bool
     {
         if (null === $this->verifieIfExist($data)) {
             $appel = new \App\Entity\AbsenceEtatAppel();
@@ -50,7 +53,10 @@ class AbsenceEtatAppel
         return false; //déjà présent
     }
 
-    private function verifieIfExist(array $data)
+    /**
+     * @throws \Exception
+     */
+    private function verifieIfExist(array $data): ?\App\Entity\AbsenceEtatAppel
     {
         return $this->absenceEtatAppelRepository->findOneBy([
             'personnel' => $data['personnel']->getId(),
@@ -62,7 +68,7 @@ class AbsenceEtatAppel
         ]);
     }
 
-    public function getBySemestre(Semestre $semestre)
+    public function getBySemestre(Semestre $semestre): array
     {
         $abs = $this->absenceEtatAppelRepository->findBy(['semestre' => $semestre->getId()]);
         $tab = [];

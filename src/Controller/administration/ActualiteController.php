@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/ActualiteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/10/2021 12:14
+ * @lastUpdate 09/10/2021 10:02
  */
 
 namespace App\Controller\administration;
@@ -23,7 +23,6 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/administration/actualites', name: 'administration_actualite_')]
 class ActualiteController extends BaseController
 {
-
     #[Route('/', name: 'index', options: ['expose' => true], methods: ['GET', 'POST'])]
     public function index(
         Request $request
@@ -47,7 +46,7 @@ class ActualiteController extends BaseController
         );
     }
 
-    #[Route('/export.{_format}', name: 'export', methods: ['GET'], requirements: ['_format' => 'csv|xlsx|pdf'])]
+    #[Route('/export.{_format}', name: 'export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: ['GET'])]
     public function export(MyExport $myExport, ActualiteRepository $actualiteRepository, $_format): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());

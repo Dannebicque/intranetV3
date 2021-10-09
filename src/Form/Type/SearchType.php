@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/Type/SearchType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/09/2021 19:35
+ * @lastUpdate 08/10/2021 19:11
  */
 
 namespace App\Form\Type;
@@ -16,6 +16,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use function is_string;
 
 class SearchType extends AbstractType implements DataTransformerInterface
 {
@@ -50,7 +51,7 @@ class SearchType extends AbstractType implements DataTransformerInterface
 
     public function reverseTransform($value)
     {
-        if (!\is_string($value)) {
+        if (!is_string($value)) {
             return null;
         }
 

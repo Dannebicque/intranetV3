@@ -1378,6 +1378,7 @@ matiere.edit.success.flash: 'Matière modifiée avec succès'
 mcc: 'Modalités de Contrôle des Connaissances'
 mentions-legales.heading: 'Mentions Légales'
 menu:
+  compta: 'Comptabilité'
   about: 'A propos'
   administration_abs: 'Adm. Abs.'
   administration_edt: 'Adm. Edt'

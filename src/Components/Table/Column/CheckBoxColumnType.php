@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/Column/CheckBoxColumnType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/09/2021 18:45
+ * @lastUpdate 08/10/2021 20:09
  */
 
 namespace App\Components\Table\Column;
@@ -24,9 +24,6 @@ class CheckBoxColumnType extends ColumnType
         $this->translator = $translator;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function render($rowData, array $options): string
     {
         return '<div class="form-check"><input class="form-check-input position-static" type="checkbox"></div>';
@@ -38,7 +35,7 @@ class CheckBoxColumnType extends ColumnType
     }
 
     /**
-     * {@inheritdoc}
+     * {}
      */
     public function configureOptions(OptionsResolver $resolver)
     {

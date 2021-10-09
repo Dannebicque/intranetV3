@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Borne.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 09:03
+ * @lastUpdate 07/10/2021 09:57
  */
 
 namespace App\Entity;
@@ -23,6 +23,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
  */
 class Borne extends BaseEntity
 {
+    //todo: lier au département pour gérer des news globales
+
     use LifeCycleTrait;
 
     public const ICONES = [

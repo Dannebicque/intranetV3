@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/StageSubscriber.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/07/2021 17:05
+ * @lastUpdate 08/10/2021 20:09
  */
 
 namespace App\EventSubscriber;
@@ -65,6 +65,7 @@ class StageSubscriber implements EventSubscriberInterface
      * @throws LoaderError
      * @throws NonUniqueResultException
      * @throws SyntaxError
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
      */
     public function onChgtEtatStageAutorise(StageEvent $event): void
     {
@@ -93,6 +94,7 @@ class StageSubscriber implements EventSubscriberInterface
      * @throws LoaderError
      * @throws NonUniqueResultException
      * @throws SyntaxError
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
      */
     public function onChgtEtatStageConventionEnvoyee(StageEvent $event): void
     {
@@ -104,6 +106,7 @@ class StageSubscriber implements EventSubscriberInterface
      * @throws LoaderError
      * @throws NonUniqueResultException
      * @throws SyntaxError
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
      */
     public function onChgtEtatStageConventionRecue(StageEvent $event): void
     {
@@ -115,6 +118,7 @@ class StageSubscriber implements EventSubscriberInterface
      * @throws LoaderError
      * @throws NonUniqueResultException
      * @throws SyntaxError
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
      */
     public function onChgtEtatStageDepose(StageEvent $event): void
     {
@@ -141,6 +145,7 @@ class StageSubscriber implements EventSubscriberInterface
      * @throws LoaderError
      * @throws NonUniqueResultException
      * @throws SyntaxError
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
      */
     public function onChgtEtatStageValide(StageEvent $event): void
     {
@@ -152,6 +157,7 @@ class StageSubscriber implements EventSubscriberInterface
      * @throws LoaderError
      * @throws NonUniqueResultException
      * @throws SyntaxError
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
      */
     public function onChgtEtatStageRefus(StageEvent $event): void
     {
@@ -163,6 +169,7 @@ class StageSubscriber implements EventSubscriberInterface
      * @throws LoaderError
      * @throws NonUniqueResultException
      * @throws SyntaxError
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
      */
     public function onChgtEtatStageIncomplet(StageEvent $event): void
     {
@@ -174,6 +181,7 @@ class StageSubscriber implements EventSubscriberInterface
      * @throws LoaderError
      * @throws NonUniqueResultException
      * @throws SyntaxError
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
      */
     public function onChgtEtatStageImprime(StageEvent $event): void
     {

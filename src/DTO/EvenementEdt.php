@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/EvenementEdt.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/09/2021 18:33
+ * @lastUpdate 04/10/2021 22:32
  */
 
 namespace App\DTO;
@@ -26,7 +26,7 @@ class EvenementEdt
     public ?CarbonInterface $heureFin;
     public ?CarbonInterface $dateObjet = null;
 
-    public ?string $matiere;
+    public ?string $matiere = '';
     public ?string $salle;
     public ?string $personnel;
     public ?string $groupe;
@@ -45,10 +45,16 @@ class EvenementEdt
     /** @deprecated */
     public ?string $display = '';
     public ?string $codeelement = '';
+    public ?int $ordreGroupe = 1;
 
     public function getDisplay()
     {
         //générer un affichage
+    }
+
+    public function getMatiere()
+    {
+        return $this->matiere;
     }
 
     public function getClassCss()

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/EvenementEdtCollection.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/07/2021 14:45
+ * @lastUpdate 04/10/2021 18:26
  */
 
 namespace App\DTO;
@@ -18,5 +18,13 @@ class EvenementEdtCollection
     public function add(EvenementEdt $event)
     {
         $this->evenements[] = $event;
+    }
+
+    /**
+     * @return \App\DTO\EvenementEdt[]
+     */
+    public function getEvents(): array
+    {
+        return $this->evenements;
     }
 }

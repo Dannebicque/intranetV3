@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Document.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/07/2021 11:50
+ * @lastUpdate 07/10/2021 09:57
  */
 
 namespace App\Entity;
@@ -29,6 +29,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  */
 class Document extends BaseEntity
 {
+    //todo: lier au département pour gérer personnel ou étudiant
     use UuidTrait;
     use LifeCycleTrait;
 

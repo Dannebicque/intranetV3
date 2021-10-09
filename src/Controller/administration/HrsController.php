@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/HrsController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 10:57
+ * @lastUpdate 08/10/2021 19:44
  */
 
 namespace App\Controller\administration;
@@ -103,7 +103,7 @@ class HrsController extends BaseController
         $annee_concerver = $request->request->get('annee_concerver');
 
         //on efface, sauf si la case est cochée.
-        if (null === $annee_concerver || 'true' !== $annee_concerver) {
+        if ('true' !== $annee_concerver) {
             $hrs = $hrsRepository->findByDepartement($this->getDepartement(), $annee_destination);
             foreach ($hrs as $hr) {
                 $this->entityManager->remove($hr);

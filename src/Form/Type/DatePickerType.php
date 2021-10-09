@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/Type/DatePickerType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/08/2021 18:51
+ * @lastUpdate 08/10/2021 19:11
  */
 
 namespace App\Form\Type;
@@ -12,6 +12,8 @@ namespace App\Form\Type;
 use App\Form\Transformer\CarbonToDateTimeTransformer;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
+use DateTime;
+use DateTimeInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -20,6 +22,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use function is_a;
 
 class DatePickerType extends AbstractType
 {
@@ -45,7 +48,7 @@ class DatePickerType extends AbstractType
     {
         $builder->addModelTransformer(new CallbackTransformer(
             function($value) use ($options) {
-                if (\is_a($value, CarbonInterface::class)) {
+                if (is_a($value, CarbonInterface::class)) {
                     return $value->format($options['format']);
                 }
 
@@ -70,9 +73,9 @@ class DatePickerType extends AbstractType
             ->setDefault('enable_time', false)
             ->setAllowedTypes('enable_time', 'bool')
             ->setDefault('min', null)
-            ->setAllowedTypes('min', [\DateTimeInterface::class, 'string', 'null'])
+            ->setAllowedTypes('min', [CarbonInterface::class, 'string', 'null'])
             ->setDefault('max', null)
-            ->setAllowedTypes('max', [\DateTimeInterface::class, 'string', 'null'])
+            ->setAllowedTypes('max', [CarbonInterface::class, 'string', 'null'])
             ->setDefault('allow_input', true)
             ->setAllowedTypes('allow_input', 'bool')
             ->setDefault('format', function(Options $options) {
@@ -92,10 +95,10 @@ class DatePickerType extends AbstractType
     private function toDate($value, string $outputFormat = 'Y-m-d')
     {
         if (is_string($value)) {
-            $value = new \DateTime($value);
+            $value = new DateTime($value);
         }
 
-        if (!\is_a($value, \DateTimeInterface::class)) {
+        if (!is_a($value, DateTimeInterface::class)) {//todo: CarbonInterface ?
             return null;
         }
 

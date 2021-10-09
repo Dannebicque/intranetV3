@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEntreprise.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 08/10/2021 19:44
  */
 
 /*
@@ -30,15 +30,14 @@ class MyEntreprise
 
     public function update(Entreprise $entreprise, $name, $value): bool
     {
-        if ($entreprise) {
-            $method = 'set' . $name;
-            if (method_exists($entreprise, $method)) {
-                $entreprise->$method($value);
-                $this->entityManager->flush();
+        $method = 'set' . $name;
+        if (method_exists($entreprise, $method)) {
+            $entreprise->$method($value);
+            $this->entityManager->flush();
 
-                return true;
-            }
+            return true;
         }
+
 
         return false;
     }

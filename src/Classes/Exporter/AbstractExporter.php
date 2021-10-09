@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Exporter/AbstractExporter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/05/2021 20:35
+ * @lastUpdate 08/10/2021 19:11
  */
 
 namespace App\Classes\Exporter;
@@ -16,7 +16,7 @@ class AbstractExporter
         if ('.' !== $format[0]) {
             $format = '.' . $format;
         }
-        if (false === strpos($nomFichier, $format)) {
+        if (!str_contains($nomFichier, $format)) {
             $nomFichier .= $format;
         }
 

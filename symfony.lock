@@ -305,6 +305,9 @@
     "phpspec/prophecy": {
         "version": "1.13.0"
     },
+    "phpstan/phpstan": {
+        "version": "0.12.99"
+    },
     "phpunit/php-code-coverage": {
         "version": "9.2.6"
     },
@@ -378,6 +381,9 @@
         "files": [
             "config/packages/ramsey_uuid_doctrine.yaml"
         ]
+    },
+    "rector/rector": {
+        "version": "0.11.57"
     },
     "sebastian/cli-parser": {
         "version": "1.0.1"

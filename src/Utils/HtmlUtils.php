@@ -4,20 +4,26 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Utils/HtmlUtils.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 14:37
+ * @lastUpdate 09/10/2021 10:02
  */
 
 namespace App\Utils;
 
+use RuntimeException;
+use function function_exists;
+use function is_object;
+use function is_string;
+use function ord;
+use function strlen;
+
 abstract class HtmlUtils
 {
-
     public static function type_class_to_id(string $typeClass): string
     {
         $ns = preg_replace('/Type$/', '', $typeClass);
         $name = str_replace('\\', '_', $ns);
 
-        return \function_exists('mb_strtolower') && preg_match('//u', $name) ? mb_strtolower($name,
+        return function_exists('mb_strtolower') && preg_match('//u', $name) ? mb_strtolower($name,
             'UTF-8') : strtolower($name);
     }
 
@@ -38,8 +44,8 @@ abstract class HtmlUtils
 
     public static function escape($string, string $strategy = 'html', string $charset = 'UTF-8')
     {
-        if (!\is_string($string)) {
-            if (\is_object($string) && method_exists($string, '__toString')) {
+        if (!is_string($string)) {
+            if (is_object($string) && method_exists($string, '__toString')) {
                 $string = (string)$string;
             } else {
                 return $string;
@@ -116,7 +122,7 @@ abstract class HtmlUtils
                 }
 
                 if (!preg_match('//u', $string)) {
-                    throw new \RuntimeException('The string to escape is not a valid UTF-8 string.');
+                    throw new RuntimeException('The string to escape is not a valid UTF-8 string.');
                 }
 
                 $string = preg_replace_callback('#[^a-zA-Z0-9,\._]#Su', function($matches) {
@@ -167,13 +173,13 @@ abstract class HtmlUtils
                 }
 
                 if (!preg_match('//u', $string)) {
-                    throw new \RuntimeException('The string to escape is not a valid UTF-8 string.');
+                    throw new RuntimeException('The string to escape is not a valid UTF-8 string.');
                 }
 
                 $string = preg_replace_callback('#[^a-zA-Z0-9]#Su', function($matches) {
                     $char = $matches[0];
 
-                    return sprintf('\\%X ', 1 === \strlen($char) ? \ord($char) : mb_ord($char, 'UTF-8'));
+                    return sprintf('\\%X ', 1 === strlen($char) ? ord($char) : mb_ord($char, 'UTF-8'));
                 }, $string);
 
                 if ('UTF-8' !== $charset) {
@@ -188,7 +194,7 @@ abstract class HtmlUtils
                 }
 
                 if (!preg_match('//u', $string)) {
-                    throw new \RuntimeException('The string to escape is not a valid UTF-8 string.');
+                    throw new RuntimeException('The string to escape is not a valid UTF-8 string.');
                 }
 
                 $string = preg_replace_callback('#[^a-zA-Z0-9,\.\-_]#Su', function($matches) {
@@ -199,7 +205,7 @@ abstract class HtmlUtils
                      * @license   https://framework.zend.com/license/new-bsd New BSD License
                      */
                     $chr = $matches[0];
-                    $ord = \ord($chr);
+                    $ord = ord($chr);
 
                     /*
                      * The following replaces characters undefined in HTML with the
@@ -213,7 +219,7 @@ abstract class HtmlUtils
                      * Check if the current character to escape has a name entity we should
                      * replace it with while grabbing the hex value of the character.
                      */
-                    if (1 === \strlen($chr)) {
+                    if (1 === strlen($chr)) {
                         /*
                          * While HTML supports far more named entities, the lowest common denominator
                          * has become HTML5's XML Serialisation which is restricted to the those named
@@ -252,7 +258,7 @@ abstract class HtmlUtils
                 return rawurlencode($string);
 
             default:
-                throw new \RuntimeException(sprintf('Invalid escaping strategy "%s".', $strategy));
+                throw new RuntimeException(sprintf('Invalid escaping strategy "%s".', $strategy));
         }
     }
 }
