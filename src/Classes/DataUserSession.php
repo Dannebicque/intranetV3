@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/DataUserSession.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/09/2021 22:03
+ * @lastUpdate 09/10/2021 10:02
  */
 
 /*
@@ -34,6 +34,7 @@ use function in_array;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
@@ -112,11 +113,9 @@ class DataUserSession
 
         if ($this->getUser() instanceof Etudiant) {
             $this->type_user = 'e';
-            //$this->messagesRepository = $messageDestinataireEtudiantRepository;
             $this->departement = $this->departementRepository->findDepartementEtudiant($this->getUser());
         } elseif ($this->getUser() instanceof Personnel) {
             $this->type_user = 'p';
-            // $this->messagesRepository = $messageDestinatairePersonnelRepository;
             if (null !== $session->get('departement')) {
                 $this->departement = $this->departementRepository->findOneBy(['uuid' => $session->get('departement')]);
             }
@@ -236,6 +235,27 @@ class DataUserSession
         }
 
         return false;
+    }
+
+    public function isGoodDepartementArray(array $roles): bool
+    {
+        if (null !== $this->getUser() && !($this->getUser() instanceof Etudiant)) {
+            $dptRoles = [];
+            /** @var PersonnelDepartement $rf */
+            foreach ($this->getUser()->getPersonnelDepartements() as $rf) {
+                if (null !== $rf->getDepartement() &&
+                    $rf->getDepartement()->getId() === $this->departement->getId()) {
+                    $dptRoles[] = $rf->getRoles();
+                }
+            }
+
+            if (is_array($dptRoles[0])) {
+                return count(array_intersect($roles,
+                    $dptRoles[0])) > 0 ? true : throw new AccessDeniedException('Vous n\'avez pas accès à ce semestre, ou vous n\'êtes pas dans le bon département, ou vous n\'avez pas les droit suffisants');
+            }
+        }
+
+        throw new AccessDeniedException('Vous n\'avez pas accès à ce semestre, ou vous n\'êtes pas dans le bon département, ou vous n\'avez pas les droit suffisants');
     }
 
     public function getDepartementMultiple(): bool

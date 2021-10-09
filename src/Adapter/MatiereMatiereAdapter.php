@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Adapter/MatiereMatiereAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/09/2021 18:28
+ * @lastUpdate 08/10/2021 19:11
  */
 
 namespace App\Adapter;
@@ -38,8 +38,8 @@ class MatiereMatiereAdapter extends AbstractMatiereAdapter implements MatiereAda
             $m->pac = $matiere->getPac();
             $m->ue_id = $matiere->getUe() ? $matiere->getUe()->getId() : 0;
             $m->ue_display = $matiere->getUe() ? $matiere->getUe()->getDisplay() : '-';
-            $m->ue_numero = $matiere->getUe() ? $matiere->getUe()->getNumeroUe() : null;
-            $m->semestre = $matiere->getUe() ? $matiere->getUe()->getSemestre() : null;
+            $m->ue_numero = $matiere->getUe()?->getNumeroUe();
+            $m->semestre = $matiere->getUe()?->getSemestre();
             $m->parcours = $matiere->getParcours();
             $m->coefficient = $matiere->getCoefficient();
         }

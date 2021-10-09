@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/ApcParcoursNiveauRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/03/2021 17:33
+ * @lastUpdate 08/10/2021 19:44
  */
 
 namespace App\Repository;
@@ -28,6 +28,9 @@ class ApcParcoursNiveauRepository extends ServiceEntityRepository
         parent::__construct($registry, ApcParcoursNiveau::class);
     }
 
+    /**
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
     public function findParcoursNiveau(ApcParcours $parcours, ApcNiveau $niveau)
     {
         return $this->createQueryBuilder('p')
@@ -39,7 +42,7 @@ class ApcParcoursNiveauRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    public function findNiveauByParcoursArray(ApcParcours $parcours)
+    public function findNiveauByParcoursArray(ApcParcours $parcours): array
     {
         $query = $this->createQueryBuilder('p')
             ->where('p.parcours = :parcours')

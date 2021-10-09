@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/PersonnelRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:48
+ * @lastUpdate 08/10/2021 20:09
  */
 
 namespace App\Repository;
@@ -150,11 +150,6 @@ class PersonnelRepository extends ServiceEntityRepository
         return null;
     }
 
-    /**
-     * @param      $data
-     *
-     * @return Query|mixed
-     */
     public function getAllPersonnel($data, int $page = 0, ?int $max = null, bool $getResult = true)
     {
         $qb = $this->_em->createQueryBuilder();

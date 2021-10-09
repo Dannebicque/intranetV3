@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Widget/Type/SelectChangeType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/09/2021 18:18
+ * @lastUpdate 08/10/2021 19:11
  */
 
 namespace App\Components\Widget\Type;
@@ -20,6 +20,7 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use function is_callable;
 
 class SelectChangeType extends WidgetType
 {
@@ -62,7 +63,7 @@ class SelectChangeType extends WidgetType
             //on a une entity
             if (null !== $options['query_builder']) {
                 $queryBuilder = $options['query_builder'];
-                if (\is_callable($queryBuilder)) {
+                if (is_callable($queryBuilder)) {
                     $queryBuilder = $queryBuilder($em);
 
                     if (null !== $queryBuilder && !$queryBuilder instanceof QueryBuilder) {

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/BCDemandeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/10/2021 12:14
+ * @lastUpdate 08/10/2021 19:11
  */
 
 namespace App\Controller\administration;
@@ -22,7 +22,7 @@ use Symfony\Component\Workflow\WorkflowInterface;
 #[Route('/administration/bon-commande', name: 'administration_bc_demande_')]
 class BCDemandeController extends BaseController
 {
-    #[Route('/', name: 'index', methods: ['GET', 'POST'], options: ['expose' => true])]
+    #[Route('/', name: 'index', options: ['expose' => true], methods: ['GET', 'POST'])]
     public function index(Request $request): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtRealiseController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/05/2021 08:21
+ * @lastUpdate 08/10/2021 19:44
  */
 
 namespace App\Controller\administration;
@@ -68,18 +68,14 @@ class EdtRealiseController extends BaseController
             throw new MatiereNotFoundException();
         }
 
-        if ($personnel) {
-            $t = $myEdtCompare->realise($mat, $personnel, $this->dataUserSession->getAnneePrevisionnel());
+        $t = $myEdtCompare->realise($mat, $personnel, $this->dataUserSession->getAnneePrevisionnel());
 
-            return $this->render('administration/edtRealise/_detailPersonnelMatiere.html.twig', [
-                'planning' => $myEdtCompare->getPlanning(),
-                'matiere' => $mat,
-                'calendrier' => $this->calendrierRepository->findByAnneeUniversitaire($this->dataUserSession->getAnneeUniversitaire()),
-                'personnel' => $personnel,
-                't' => $t,
-            ]);
-        }
-
-        return $this->redirect($this->generateUrl('erreur_666'));
+        return $this->render('administration/edtRealise/_detailPersonnelMatiere.html.twig', [
+            'planning' => $myEdtCompare->getPlanning(),
+            'matiere' => $mat,
+            'calendrier' => $this->calendrierRepository->findByAnneeUniversitaire($this->dataUserSession->getAnneeUniversitaire()),
+            'personnel' => $personnel,
+            't' => $t,
+        ]);
     }
 }

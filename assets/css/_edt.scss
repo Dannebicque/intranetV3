@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/css/_edt.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 23/09/2021 12:42
+// @lastUpdate 05/10/2021 06:27
 
 @media screen and (min-width:640px) {
   .schedule-individual {
@@ -77,6 +77,86 @@
     "time jour1w jour2w jour3w jour4w jour5w"
     "time jour1x jour2x jour3x jour4x jour5x"
     "time jour1y jour2y jour3y jour4y jour5y";
+  }
+  .schedule-semestre-8 {
+    display: grid;
+    grid-gap: 1em;
+    grid-template-rows:
+      [tracks] auto
+      [time-0800] 1fr
+      [time-0830] 1fr
+      [time-0900] 1fr
+      [time-0930] 1fr
+      [time-1000] 1fr
+      [time-1030] 1fr
+      [time-1100] 1fr
+      [time-1130] 1fr
+      [time-1200] 1fr
+      [time-1230] 1fr
+      [time-1300] 1fr
+      [time-1330] 1fr
+      [time-1400] 1fr
+      [time-1430] 1fr
+      [time-1500] 1fr
+      [time-1530] 1fr
+      [time-1600] 1fr
+      [time-1630] 1fr
+      [time-1700] 1fr
+      [time-1730] 1fr
+      [time-1800] 1fr
+      [time-1830] 1fr
+      [time-1900] 1fr
+      [time-1930] 1fr
+      [time-2000] 1fr;
+    align-self: center;
+    grid-template-columns:
+      [times] 4em
+      [track-1-start] 1fr
+      [track-1-end track-2-start] 1fr
+      [track-2-end track-3-start] 1fr
+      [track-3-end track-4-start] 1fr
+      [track-4-end track-5-start] 1fr
+      [track-5-end track-6-start] 1fr
+      [track-6-end track-7-start] 1fr
+      [track-7-end track-8-start] 1fr
+      [track-8-end];
+  }
+  .schedule-semestre-2 {
+    display: grid;
+    grid-gap: 1em;
+    grid-template-rows:
+      [tracks] auto
+      [time-0800] 1fr
+      [time-0830] 1fr
+      [time-0900] 1fr
+      [time-0930] 1fr
+      [time-1000] 1fr
+      [time-1030] 1fr
+      [time-1100] 1fr
+      [time-1130] 1fr
+      [time-1200] 1fr
+      [time-1230] 1fr
+      [time-1300] 1fr
+      [time-1330] 1fr
+      [time-1400] 1fr
+      [time-1430] 1fr
+      [time-1500] 1fr
+      [time-1530] 1fr
+      [time-1600] 1fr
+      [time-1630] 1fr
+      [time-1700] 1fr
+      [time-1730] 1fr
+      [time-1800] 1fr
+      [time-1830] 1fr
+      [time-1900] 1fr
+      [time-1930] 1fr
+      [time-2000] 1fr;
+    align-self: center;
+    grid-template-columns:
+      [times] 4em
+      [track-1-start] 1fr
+      [track-1-end track-2-start] 1fr
+      [track-2-end];
   }
 }
 

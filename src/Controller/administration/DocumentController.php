@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/DocumentController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/10/2021 12:14
+ * @lastUpdate 08/10/2021 19:11
  */
 
 namespace App\Controller\administration;
@@ -26,7 +26,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/administration/documents', name: 'administration_document_')]
 class DocumentController extends BaseController
 {
-    #[Route('/', name: 'index', methods: ['GET', 'POST'], options: ['expose' => true])]
+    #[Route('/', name: 'index', options: ['expose' => true], methods: ['GET', 'POST'])]
     public function index(Request $request): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $this->getDepartement());
@@ -44,7 +44,7 @@ class DocumentController extends BaseController
             ['table' => $table]);
     }
 
-    #[Route('/export.{_format}', name: 'export', methods: 'GET', requirements: ['_format' => 'csv|xlsx|pdf'])]
+    #[Route('/export.{_format}', name: 'export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
     public function export(MyExport $myExport, DocumentRepository $documentRepository, $_format): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $this->getDepartement());

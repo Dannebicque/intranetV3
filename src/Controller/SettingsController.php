@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/SettingsController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/09/2021 15:35
+ * @lastUpdate 08/10/2021 19:11
  */
 
 namespace App\Controller;
@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/settings', name: 'settings_')]
 class SettingsController extends BaseController
 {
-    #[Route('/change-annee-universitaire', name: 'change_annee_universitaire', methods: ['POST'], options: ['expose' => true])]
+    #[Route('/change-annee-universitaire', name: 'change_annee_universitaire', options: ['expose' => true], methods: ['POST'])]
     public function changeAnneeUniversitaire(
         AnneeUniversitaireRepository $anneeUniversitaireRepository,
         Request $request
@@ -39,7 +39,7 @@ class SettingsController extends BaseController
         return $this->json(false);
     }
 
-    #[Route('/change-configuration-personnel', name: 'configuration_personnel', methods: ['POST'], options: ['expose' => true])]
+    #[Route('/change-configuration-personnel', name: 'configuration_personnel', options: ['expose' => true], methods: ['POST'])]
     public function changeConfigurationPersonnel(
         Request $request
     ): Response {

@@ -4,26 +4,6 @@
     {{ group_class }}
 {%- endblock form_group_class %}
 
-{# {% block form_label_class -%} #}
-{# {{ label_class }} #}
-{# {%- endblock form_label_class %} #}
-
-{# {% block form_widget_simple -%} #}
-{# {% if input_prefix is defined or input_suffix is defined %} #}
-{# <div class="input-group"> #}
-{# {% if input_prefix %} #}
-{# {{ input_prefix | raw }} #}
-{# {% endif %} #}
-{# {{- parent() -}} #}
-{# {% if input_suffix %} #}
-{# {{ input_suffix | raw }} #}
-{# {% endif %} #}
-{# </div> #}
-{# {% else %} #}
-{# {{- parent() -}} #}
-{# {% endif %} #}
-{# {%- endblock form_widget_simple %} #}
-
 {%- block form_widget_simple -%}
     {% if input_prefix or input_suffix %}
         <div class="input-group">

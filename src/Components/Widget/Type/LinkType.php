@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Widget/Type/LinkType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/09/2021 22:04
+ * @lastUpdate 09/10/2021 09:55
  */
 
 namespace App\Components\Widget\Type;
@@ -48,7 +48,7 @@ class LinkType extends WidgetType
                 $view->vars['attr']['href'] = $options['url'];
 
                 if ($options['target']) {
-                    $view->vars['target'] = $options['target'];
+                    $view->vars['attr']['target'] = $options['target'];
                 }
             }
         } else {

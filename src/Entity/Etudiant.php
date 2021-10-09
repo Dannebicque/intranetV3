@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Etudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 18:15
+ * @lastUpdate 08/10/2021 19:44
  */
 
 namespace App\Entity;
@@ -37,7 +37,7 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private ?int $id;
+    private mixed $id;
 
     /**
      *

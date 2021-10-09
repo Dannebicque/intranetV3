@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/TableBuilder.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/09/2021 16:32
+ * @lastUpdate 08/10/2021 19:11
  */
 
 namespace App\Components\Table;
@@ -17,6 +17,7 @@ use App\Components\Table\DTO\Table;
 use App\Components\Table\DTO\Toolbar;
 use App\Components\Widget\WidgetBuilder;
 use App\Utils\HtmlUtils;
+use InvalidArgumentException;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -162,7 +163,7 @@ class TableBuilder
     public function useAdapter($type, array $options = []): self
     {
         if (!is_callable($type) && !is_string($type)) {
-            throw new \InvalidArgumentException('Invalid apadater type');
+            throw new InvalidArgumentException('Invalid apadater type');
         }
 
         if (is_callable($type)) {
@@ -197,7 +198,7 @@ class TableBuilder
 
         // resolve adapter
         if (null === $this->adaptaterData) {
-            throw new \InvalidArgumentException('You must configure an adapter.');
+            throw new InvalidArgumentException('You must configure an adapter.');
         }
 
         [$adapterType, $resolvedAdapterOptions] = $this->helper->createAdapter($this->adaptaterData['type'],

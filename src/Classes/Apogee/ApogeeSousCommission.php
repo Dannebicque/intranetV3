@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Apogee/ApogeeSousCommission.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 08/10/2021 19:11
  */
 
 namespace App\Classes\Apogee;
@@ -39,7 +39,7 @@ class ApogeeSousCommission extends Apogee
 
         $i = 0;
         foreach ($objPHPExcel->getNamedRanges() as $name => $namedRange) {
-            if (0 === strpos($name, 'APOL_')) {
+            if (str_starts_with($name, 'APOL_')) {
                 $G_tab_apoL[$i] = $namedRange->getName();
                 $G_tab_apoL_Coord[$i] = $namedRange->getRange();
                 ++$i;
@@ -48,7 +48,7 @@ class ApogeeSousCommission extends Apogee
 
         $i = 0;
         foreach ($objPHPExcel->getNamedRanges() as $name => $namedRange) {
-            if (0 === strpos($name, 'APOC_')) {
+            if (str_starts_with($name, 'APOC_')) {
                 $G_tab_apoC[$i] = $namedRange->getName();
                 $G_tab_apoC_Coord[$i] = $namedRange->getRange();
                 ++$i;

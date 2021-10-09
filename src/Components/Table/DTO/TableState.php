@@ -4,10 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/DTO/TableState.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/09/2021 16:34
+ * @lastUpdate 09/10/2021 10:02
  */
 
 namespace App\Components\Table\DTO;
+
+use function in_array;
 
 class TableState
 {
@@ -41,7 +43,7 @@ class TableState
         if (isset($parameters['order'])) {
             foreach ($parameters['order'] as $orderData) {
                 // invalid dir
-                if (!\in_array($orderData['order'], [Table::SORT_ASCENDING, Table::SORT_DESCENDING])) {
+                if (!in_array($orderData['order'], [Table::SORT_ASCENDING, Table::SORT_DESCENDING])) {
                     continue;
                 }
 
@@ -75,6 +77,7 @@ class TableState
     public function addOrderBy(Column $column, string $direction): self
     {
         $this->orderBy[] = [$column, $direction];
+
         return $this;
     }
 

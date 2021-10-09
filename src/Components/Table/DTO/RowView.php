@@ -4,12 +4,14 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/DTO/RowView.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/08/2021 13:40
+ * @lastUpdate 08/10/2021 19:11
  */
 
 namespace App\Components\Table\DTO;
 
-class RowView implements \JsonSerializable
+use JsonSerializable;
+
+class RowView implements JsonSerializable
 {
     public array $data = [];
 

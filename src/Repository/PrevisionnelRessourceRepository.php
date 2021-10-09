@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/PrevisionnelRessourceRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/10/2021 09:48
+ * @lastUpdate 08/10/2021 19:44
  */
 
 namespace App\Repository;
@@ -68,7 +68,7 @@ class PrevisionnelRessourceRepository extends PrevisionnelRepository
             ->getResult();
     }
 
-    public function findByDepartement(Departement $departement, $annee = 0)
+    public function findByDepartement(Departement $departement, int $annee = 0)
     {
         $query = $this->createQueryBuilder('p')
             ->innerJoin(ApcRessource::class, 'm', 'WITH', 'p.idMatiere = m.id')
@@ -82,14 +82,11 @@ class PrevisionnelRessourceRepository extends PrevisionnelRepository
             ->andWhere('d.departement = :departement')
             ->setParameter('departement', $departement->getId());
 
-        if (0 !== $annee) {
-            $query->andWhere('p.annee = :annee')
-                ->setParameter('annee', $annee);
-        } elseif (null !== $departement) {
+        if (0 === $annee) {
             $annee = $departement->getOptAnneePrevisionnel();
-            $query->andWhere('p.annee = :annee')
-                ->setParameter('annee', $annee);
         }
+        $query->andWhere('p.annee = :annee')
+            ->setParameter('annee', $annee);
 
         return $query->getQuery()
             ->getResult();
@@ -178,7 +175,7 @@ class PrevisionnelRessourceRepository extends PrevisionnelRepository
             ->getResult();
     }
 
-    public function findByDiplomeToDelete(Diplome $diplome, $annee = 0)
+    public function findByDiplomeToDelete(Diplome $diplome, int $annee = 0)
     {
         $query = $this->createQueryBuilder('p')
             ->innerJoin(ApcRessource::class, 'm', 'WITH', 'p.idMatiere = m.id')

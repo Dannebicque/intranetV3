@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/QuizzQuestionType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/05/2021 18:35
+ * @lastUpdate 09/10/2021 10:02
  */
 
 namespace App\Form;
@@ -16,6 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/** @deprecated */
 class QuizzQuestionType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void

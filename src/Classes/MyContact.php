@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyContact.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 08/10/2021 19:44
  */
 
 /*
@@ -30,14 +30,12 @@ class MyContact
 
     public function update(Contact $contact, $name, $value): bool
     {
-        if ($contact) {
-            $method = 'set' . $name;
-            if (method_exists($contact, $method)) {
-                $contact->$method($value);
-                $this->entityManager->flush();
+        $method = 'set' . $name;
+        if (method_exists($contact, $method)) {
+            $contact->$method($value);
+            $this->entityManager->flush();
 
-                return true;
-            }
+            return true;
         }
 
         return false;

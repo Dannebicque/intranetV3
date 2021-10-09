@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/Column/PropertyColumnType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 14:37
+ * @lastUpdate 08/10/2021 20:09
  */
 
 namespace App\Components\Table\Column;
@@ -27,7 +27,7 @@ class PropertyColumnType extends ColumnType
     }
 
     /**
-     * {@inheritdoc}
+     * {}
      */
     public function render($rowData, array $options): string
     {
@@ -35,7 +35,7 @@ class PropertyColumnType extends ColumnType
     }
 
     /**
-     * {@inheritdoc}
+     * {}
      */
     public function renderProperty($value, array $options): string
     {
@@ -43,7 +43,7 @@ class PropertyColumnType extends ColumnType
     }
 
     /**
-     * {@inheritdoc}
+     * {}
      */
     public function configureOptions(OptionsResolver $resolver)
     {

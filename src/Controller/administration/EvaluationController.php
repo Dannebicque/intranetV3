@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EvaluationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/10/2021 12:14
+ * @lastUpdate 08/10/2021 20:09
  */
 
 namespace App\Controller\administration;
@@ -67,6 +67,7 @@ class EvaluationController extends BaseController
      * @throws SyntaxError
      * @throws LoaderError
      * @throws RuntimeError
+     * @throws \App\Exception\MatiereNotFoundException
      */
     public function exportEvaluation(
         MyEvaluation $myEvaluation,

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEvaluation.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 18:02
+ * @lastUpdate 08/10/2021 20:09
  */
 
 /*
@@ -135,12 +135,7 @@ class MyEvaluation
         return $this;
     }
 
-    /**
-     * @param $donnees
-     *
-     * @return int|string
-     */
-    private function ecartType($donnees)
+    private function ecartType($donnees): float|int
     {
         //0 - Nombre d’éléments dans le tableau
         $population = count($donnees);

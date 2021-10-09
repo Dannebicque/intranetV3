@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/PersonnelDepartementTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 18:51
+ * @lastUpdate 09/10/2021 10:02
  */
 
 namespace App\Table;
@@ -15,9 +15,12 @@ use App\Components\Table\Column\WidgetColumnType;
 use App\Components\Table\TableBuilder;
 use App\Components\Table\TableType;
 use App\Components\Widget\Type\ButtonDropdownType;
+use App\Components\Widget\Type\ButtonType;
 use App\Components\Widget\Type\LinkType;
+use App\Components\Widget\Type\ModalLinkType;
 use App\Components\Widget\Type\RowDeleteLinkType;
 use App\Components\Widget\Type\RowEditLinkType;
+use App\Components\Widget\Type\RowLinkType;
 use App\Components\Widget\Type\RowShowLinkType;
 use App\Components\Widget\WidgetBuilder;
 use App\Entity\Departement;
@@ -28,18 +31,22 @@ use App\Table\ColumnType\TypePersonnelColumnType;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class PersonnelDepartementTableType extends TableType
 {
     private ?Departement $departement;
     private bool $autoriseToManageAccess;
-    private ?string $type = Personnel::PERMANENT;
+    private RouterInterface $router;
     private CsrfTokenManagerInterface $csrfToken;
 
-    public function __construct(CsrfTokenManagerInterface $csrfToken)
-    {
+    public function __construct(
+        RouterInterface $router,
+        CsrfTokenManagerInterface $csrfToken
+    ) {
         $this->csrfToken = $csrfToken;
+        $this->router = $router;
     }
 
     public function buildTable(TableBuilder $builder, array $options)
@@ -103,38 +110,43 @@ class PersonnelDepartementTableType extends TableType
             ['label' => 'table.mail_univ', 'translation_domain' => 'messages']);
 
         $builder->setLoadUrl('administration_personnel_index');
-
+        $autoriseToManageAccess = $this->autoriseToManageAccess;
         $builder->addColumn('links', WidgetColumnType::class, [
-            'build' => function(WidgetBuilder $builder, Personnel $s) {
-                if (true === $this->autoriseToManageAccess) {
-                    $builder->add('show', RowShowLinkType::class, [
-                        'route' => 'user_profil',
-                        'route_params' => [
-                            'slug' => $s->getSlug(),
-                            'type' => 'etudiant',
-                        ],
-                        'target' => '_blank',
+            'build' => function(WidgetBuilder $builder, Personnel $s) use ($autoriseToManageAccess) {
+                if (true === $autoriseToManageAccess) {
+                    $builder->add('droits', ButtonType::class, [
+                        'class' => 'btn btn-warning-outline mr-1',
+                        'icon' => 'fas fa-key',
+                        'attr' => [
+                            'data-size' => 'lg',
+                            'data-confirm-text' => 'Fermer',
+                            'data-placement' => 'bottom',
+                            'data-title' => 'Gestion des droits des utilisateurs',
+                            'data-provide' => 'modaler tooltip',
+                            'data-url' => $this->router->generate('administration_personnel_droit',
+                                ['personnel' => $s->getId()])
+                        ]
                     ]);
                 }
+
                 $builder->add('show', RowShowLinkType::class, [
                     'route' => 'user_profil',
                     'route_params' => [
                         'slug' => $s->getSlug(),
-                        'type' => 'etudiant',
+                        'type' => 'personnel',
                     ],
                     'target' => '_blank',
                 ]);
                 $builder->add('edit', RowEditLinkType::class, [
-                    'route' => 'administration_etudiant_edit',
+                    'route' => 'administration_personnel_edit',
                     'route_params' => [
                         'id' => $s->getId(),
-                        'origin' => 'semestre',
                     ],
                     'target' => '_blank',
                 ]);
                 $builder->add('delete', RowDeleteLinkType::class, [
                     'attr' => [
-                        'data-href' => 'administration_date_delete',
+                        'data-href' => 'administration_personnel_delete',
                         'data-uuid' => $s->getId(),
                         'data-csrf' => $this->csrfToken->getToken('delete' . $s->getId()),
                     ],

@@ -48,6 +48,30 @@
                 </div>
             </div>
         </div>
+
+        <div class="col-sm-12">
+            <div class="card">
+                <header class="card-header">
+                    <h2 class="card-title">{{ 'sa_quizz.heading'|trans }}</h2>
+                </header>
+
+                <div class="card-body">
+
+                    <div class="col-sm-12 col-md-4">
+                        <div><a href="{{ path('sadm_questionnaire_qualite_index') }}"
+                                class="btn btn-block btn-primary"> Gérer les questionnaires</a></div>
+                    </div>
+                    <div class="col-sm-12 col-md-4">
+                        <div><a href="{{ path('sadm_questionnaire_section_index') }}"
+                                class="btn btn-block btn-primary"> Gérer les sections</a></div>
+                    </div>
+                    <div class="col-sm-12 col-md-4">
+                        <div><a href="{{ path('sadm_questionnaire_question_index') }}"
+                                class="btn btn-block btn-primary"> Gérer les questions</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 

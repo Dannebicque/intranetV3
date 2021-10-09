@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Utilisateur.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 27/08/2021 09:18
+ * @lastUpdate 09/10/2021 09:51
  */
 
 namespace App\Entity;
@@ -164,7 +164,7 @@ abstract class Utilisateur implements UserInterface, Serializable
 
     public function getNom(): ?string
     {
-        return $this->nom;
+        return mb_strtoupper($this->nom);
     }
 
     public function setNom($nom): void
@@ -174,7 +174,7 @@ abstract class Utilisateur implements UserInterface, Serializable
 
     public function getPrenom(): ?string
     {
-        return $this->prenom;
+        return ucwords(mb_strtolower($this->prenom));
     }
 
     public function setPrenom($prenom): void
@@ -368,12 +368,12 @@ abstract class Utilisateur implements UserInterface, Serializable
 
     public function getDisplayPr(): string
     {
-        return ucfirst($this->prenom) . ' ' . mb_strtoupper($this->nom);
+        return $this->getPrenom() . ' ' . $this->getNom();
     }
 
     public function getDisplay(): string
     {
-        return mb_strtoupper($this->nom) . ' ' . ucfirst($this->prenom);
+        return $this->getNom() . ' ' . $this->getPrenom();
     }
 
     public function getMails(): array

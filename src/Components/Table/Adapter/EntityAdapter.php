@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/Adapter/EntityAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 14:37
+ * @lastUpdate 08/10/2021 19:11
  */
 
 namespace App\Components\Table\Adapter;
@@ -97,7 +97,7 @@ class EntityAdapter extends TableAdapter implements DoctrineAdapterInterface
         foreach ($state->getOrderBy() as [$column, $direction]) {
             foreach ($column->getOrderBy() as $path) {
                 // if path is not a sub property path, prefix it by alias
-                if (false === strpos($path, '.')) {
+                if (!str_contains($path, '.')) {
                     $path = sprintf('%s.%s', $options['query_alias'], $path);
                 }
 

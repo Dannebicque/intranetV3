@@ -4,14 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/AbsenceJustificatif.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/09/2021 18:22
+ * @lastUpdate 09/10/2021 10:02
  */
 
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\UuidTrait;
-use App\Utils\Tools;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -67,7 +66,7 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
     private string $etat;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Etudiant", inversedBy="absenceJustificatifs")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Etudiant", inversedBy="absenceJustificatifs", fetch="EAGER")
      * @Groups({"justificatif_administration"})
      */
     private ?Etudiant $etudiant;
@@ -105,7 +104,7 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
         $this->heureFin = Carbon::createFromTime(18, 30, 00);
         $this->etat = self::DEPOSE;
         $this->setUuid(Uuid::uuid4());
-        $this->anneeUniversitaire = null !== $etudiant ? $etudiant->getAnneeUniversitaire() : null;
+        $this->anneeUniversitaire = $etudiant->getAnneeUniversitaire();
         $this->setEtudiant($etudiant);
     }
 
@@ -309,7 +308,7 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
 
     public function getEtudiantGroupes()
     {
-        if ($this->getEtudiant() !== null) {
+        if (null !== $this->getEtudiant()) {
             return $this->getEtudiant()->getGroupes();
         }
 

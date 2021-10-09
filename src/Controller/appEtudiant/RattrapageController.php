@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appEtudiant/RattrapageController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2021 18:57
+ * @lastUpdate 08/10/2021 20:09
  */
 
 namespace App\Controller\appEtudiant;
@@ -57,7 +57,7 @@ class RattrapageController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
-            $rattrapage->setAnneeUniversitaire($this->getEtudiantAnneeUniversitaire());
+            $rattrapage->setAnneeUniversitaire($this->getAnneeUniversitaire());
             $rattrapage->setTypeMatiere(ToolsMatiere::getType($request->request->get('rattrapage')['typeIdMatiere']));
             $rattrapage->setIdMatiere(ToolsMatiere::getId($request->request->get('rattrapage')['typeIdMatiere']));
             $this->entityManager->persist($rattrapage);

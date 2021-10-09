@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/TableRenderer.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 21:15
+ * @lastUpdate 08/10/2021 21:32
  */
 
 namespace App\Components\Table;
@@ -125,6 +125,7 @@ class TableRenderer
             'order' => $column->getDefaultOrder(),
             'style' => $options['width'] ? sprintf('width:%s', $options['width']) : null,
         ];
+
 
         $vars['label'] = $options['label'];
         $vars['translation_domain'] = $options['translation_domain'];

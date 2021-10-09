@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Adapter/EdtIntranetAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/09/2021 18:46
+ * @lastUpdate 09/10/2021 10:02
  */
 
 namespace App\Adapter;
@@ -17,12 +17,15 @@ use Carbon\Carbon;
 
 class EdtIntranetAdapter extends AbstractEdtAdapter implements EdtAdapterInterface
 {
-    public function collection(array $matieres): EvenementEdtCollection
+    private array $matieres = [];
+
+    public function collection(array $events, array $matieres = []): EvenementEdtCollection
     {
+        $this->matieres = $matieres;
         $collection = new EvenementEdtCollection();
 
-        foreach ($matieres as $matiere) {
-            $collection->add($this->single($matiere));
+        foreach ($events as $event) {
+            $collection->add($this->single($event));
         }
 
         return $collection;
@@ -39,11 +42,16 @@ class EdtIntranetAdapter extends AbstractEdtAdapter implements EdtAdapterInterfa
 
         $evt->salle = $event->getSalle();
         $evt->personnel = $event->getIntervenant()?->getDisplay();
-        $evt->groupe = $event->getGroupe();
+        $evt->ordreGroupe = (int)$event->getGroupe();
+        $evt->groupe = $event->getDisplayGroupe();
         $evt->typeIdMatiere = $event->getTypeIdMatiere();
+        if (array_key_exists($evt->typeIdMatiere, $this->matieres)) {
+            $evt->matiere = $this->matieres[$evt->typeIdMatiere]->display;
+        }
         $evt->type_cours = $event->getType();
         $evt->semestre = $event->getSemestre();
         $evt->dateObjet = $event->getDate();
+        $evt->couleur = null !== $event->getSemestre() ? $event->getSemestre()->getAnnee()->getCouleur() : '';
 
         $evt->gridStart = Constantes::TAB_HEURES_EDT_2[$event->getDebut() - 1][0];
         $evt->gridEnd = Constantes::TAB_HEURES_EDT_2[$event->getFin() - 1][0];
