@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Widget/DependencyInjection/services.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/09/2021 16:50
+ * @lastUpdate 10/10/2021 11:29
  */
 
 namespace App\Components\Widget\DependencyInjection;
@@ -18,6 +18,7 @@ use App\Components\Widget\Type\RowDeleteLinkType;
 use App\Components\Widget\Type\RowDuplicateLinkType;
 use App\Components\Widget\Type\RowEditLinkType;
 use App\Components\Widget\Type\RowLinkType;
+use App\Components\Widget\Type\RowModalLinkType;
 use App\Components\Widget\Type\RowShowLinkType;
 use App\Components\Widget\Type\SelectChangeType;
 use App\Components\Widget\Type\WidgetType;
@@ -39,6 +40,7 @@ return static function(ContainerConfigurator $configurator): void {
     $services->set(RowDeleteLinkType::class)->tag(WidgetRegistry::TAG_TYPE);
     $services->set(RowEditLinkType::class)->tag(WidgetRegistry::TAG_TYPE);
     $services->set(RowLinkType::class)->tag(WidgetRegistry::TAG_TYPE);
+    $services->set(RowModalLinkType::class)->tag(WidgetRegistry::TAG_TYPE);
     $services->set(RowShowLinkType::class)->tag(WidgetRegistry::TAG_TYPE);
     $services->set(RowDuplicateLinkType::class)->tag(WidgetRegistry::TAG_TYPE);
     $services->set(WidgetType::class)->tag(WidgetRegistry::TAG_TYPE);
