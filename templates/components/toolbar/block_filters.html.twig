@@ -1,5 +1,12 @@
 {%- block base_widget -%}
-    <{{ element }}{{ block('attributes') }}>
+    <{{ element }}{{ block('attributes') }}
+    {% if stimulus is defined %}
+        {{ stimulus_controller(stimulus.controller, {
+            modalUrl: stimulus.route
+        }) }}
+        data-action="{{ stimulus.controller }}#{{ stimulus.action }}"
+    {% endif %}
+    >
     {{- block('icon') }}
     {%- if name != 'widget' -%}
         {{- block('text') }}
@@ -8,6 +15,7 @@
         {{- render_widget(child) -}}
     {%- endfor -%}
     </{{ element }}>
+
 {%- endblock -%}
 
 {%- block button_dropdown_widget -%}

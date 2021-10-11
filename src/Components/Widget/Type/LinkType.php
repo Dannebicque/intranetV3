@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Widget/Type/LinkType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/10/2021 09:55
+ * @lastUpdate 10/10/2021 12:36
  */
 
 namespace App\Components\Widget\Type;
@@ -52,7 +52,14 @@ class LinkType extends WidgetType
                 }
             }
         } else {
-            $view->vars['attr']['href'] = ''; // Link always have href even if not link specified
+            $view->vars['attr']['href'] = '#'; // Link always have href even if not link specified
+        }
+
+        if ($options['stimulus']) {
+            $view->vars['stimulus']['controller'] = $options['stimulus-controller'];
+            $view->vars['stimulus']['route'] = $this->router->generate($options['route'], $options['route_params']);
+            $view->vars['stimulus']['action'] = 'openModal';
+            $view->vars['attr']['href'] = '#';
         }
     }
 
@@ -66,7 +73,7 @@ class LinkType extends WidgetType
 
         $resolver
             ->setDefault('text', null); // enable text
-
+        $resolver->setDefault('stimulus', false); //désactive stimulus partout, par défaut
         $resolver
             ->define('route')
             ->default(null)
