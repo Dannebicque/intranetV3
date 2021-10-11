@@ -11,7 +11,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="card card-round card-shadowed px-50 py-30 w-400px mb-0 text-center" style="max-width: 100%">
+    <div class="card card-round card-shadowed px-50 py-30 w-600px mb-0 text-center" style="max-width: 100%">
         <div class="header-special" style="background-color: {{ settings('COLOR_IUT') }}">
             <img src="{{ asset('upload/logo/'~settings('LOGO_IUT')) }}" alt="Logo de
             l' {{ settings('NOM_IUT') }}" class="img-fluid" style="height: 100px">
@@ -33,28 +33,30 @@
             <small>Vous pourrez modifier ce choix dans vos paramètres.</small>
         </div>
 
-        <form class="form-type-material" method="post" action="{{ path('security_choix_departement') }}">
+        <form class="form" method="post" action="{{ path('security_choix_departement') }}">
             <div class="row">
                 {% for departement in departements %}
-                    <div class="col-sm-12 col-md-6">
-                        <div class="custom-control custom-control-lg custom-radio">
-                            <input type="radio" class="custom-control-input" id="departement_{{ departement.id }}"
-                                   value="{{ departement.departement.id }}"
-                                   name="departement">
-                            <label class="custom-control-label"
-                                   for="departement_{{ departement.id }}" style="padding: 5px; background-color: {{ departement.departement.couleur }}; color:white;display:block; width:100%">{{ departement
-                                .departement.libelle }}</label>
-                        </div>
+                    <div class="col-4 d-grid d-block mt-2">
+                        <input type="radio"
+                               class="btn-check"
+                               name="departement"
+                               value="{{ departement.departement.id }}"
+                               id="departement_{{ departement.id }}"
+                               autocomplete="off">
+                        <label class="btn btn-outline-primary" for="departement_{{ departement.id }}">
+                            {{ departement.departement.libelle }}
+                        </label>
                     </div>
                 {% endfor %}
             </div>
             <br>
             <p>Si le département n'apparaît pas dans la liste, merci de contacter le responsable de ce département
                .</p>
-            <br>
-            <button class="btn btn-bold btn-block btn-primary" type="submit"><i class="fas fa-save mr-2"></i>
-                Enregistrer
-            </button>
+            <div class="d-grid col-12 d-block mt-2">
+                <button class="btn btn-bold btn-primary" type="submit"><i class="fas fa-save mr-2"></i>
+                    Enregistrer
+                </button>
+            </div>
         </form>
 
         <p class="text-center text-muted fs-13 mt-20">Vous n'êtes pas {{ user.displayPr }}? <a class="text-primary
