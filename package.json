@@ -2,10 +2,11 @@
   "devDependencies": {
     "@babel/core": "^7.12.3",
     "@babel/preset-env": "^7.14.2",
+    "@popperjs/core": "^2.10.2",
     "@symfony/stimulus-bridge": "^2.0.0",
     "@symfony/ux-chartjs": "file:vendor/symfony/ux-chartjs/Resources/assets",
     "@symfony/webpack-encore": "^1.0.0",
-    "bootstrap": "^4.5.0",
+    "bootstrap": "^5.1.2",
     "chart.js": "^2.9.4",
     "core-js": "^3.0.0",
     "css-loader": "^5.0.1",
