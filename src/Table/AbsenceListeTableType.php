@@ -1,15 +1,16 @@
 <?php
 /*
  * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/AbsenceJustificatifTableType.php
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/AbsenceListeTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/10/2021 19:31
+ * @lastUpdate 11/10/2021 21:50
  */
 
 namespace App\Table;
 
 use App\Components\Table\Adapter\EntityAdapter;
+use App\Components\Table\Column\BadgeColumnType;
 use App\Components\Table\Column\CheckBoxColumnType;
 use App\Components\Table\Column\DateColumnType;
 use App\Components\Table\Column\PropertyColumnType;
@@ -20,7 +21,9 @@ use App\Components\Widget\Type\ButtonDropdownType;
 use App\Components\Widget\Type\ButtonType;
 use App\Components\Widget\Type\LinkType;
 use App\Components\Widget\Type\RowDeleteLinkType;
+use App\Components\Widget\Type\RowShowLinkType;
 use App\Components\Widget\WidgetBuilder;
+use App\Entity\Absence;
 use App\Entity\AbsenceJustificatif;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Etudiant;
@@ -29,9 +32,11 @@ use App\Entity\Semestre;
 use App\Form\Type\DatePickerType;
 use App\Form\Type\SearchType;
 use App\Repository\GroupeRepository;
+use App\Table\ColumnType\DatePeriodeColumnType;
 use App\Table\ColumnType\DatePeriodeJustificatifColumnType;
 use App\Table\ColumnType\EtudiantColumnType;
 use App\Table\ColumnType\GroupeEtudiantColumnType;
+use App\Table\ColumnType\GroupeFromEtudiantColumnType;
 use App\Table\ColumnType\StatusJustificatifAbsenceColumnType;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -40,7 +45,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
-class AbsenceJustificatifTableType extends TableType
+class AbsenceListeTableType extends TableType
 {
     private ?Semestre $semestre;
     private ?AnneeUniversitaire $anneeUniversitaire;
@@ -59,21 +64,6 @@ class AbsenceJustificatifTableType extends TableType
         $this->anneeUniversitaire = $options['anneeUniversitaire'];
 
         $builder->addFilter('search', SearchType::class);
-        $builder->addFilter('from', DatePickerType::class, [
-            'input_prefix_text' => 'Du',
-        ]);
-        $builder->addFilter('to', DatePickerType::class, [
-            'input_prefix_text' => 'au',
-        ]);
-        $builder->addFilter('etat_demande', ChoiceType::class, [
-            'choices' => [
-                'Acceptée' => AbsenceJustificatif::ACCEPTE,
-                'Refusée' => AbsenceJustificatif::REFUSE,
-                'En attente' => AbsenceJustificatif::DEPOSE
-            ],
-            'required' => false,
-            'placeholder' => 'Etat de la demande'
-        ]);
         $builder->addFilter('groupe', EntityType::class, [
             'class' => Groupe::class,
             'query_builder' => function(GroupeRepository $groupeRepository) {
@@ -104,39 +94,36 @@ class AbsenceJustificatifTableType extends TableType
                 ]);
             },
         ]);
-        $builder->addColumn('select', CheckBoxColumnType::class);
+
         $builder->addColumn('etudiant', EtudiantColumnType::class,
             ['label' => 'table.etudiant', 'translation_domain' => 'messages']);
         $builder->addColumn('etudiantGroupes', GroupeEtudiantColumnType::class,
             ['label' => 'table.groupe', 'translation_domain' => 'messages']);
-        $builder->addColumn('periodeAbsence', DatePeriodeJustificatifColumnType::class,
-            ['label' => 'table.periodeAbsence', 'translation_domain' => 'messages']);
-        $builder->addColumn('created', DateColumnType::class, [
-            'order' => 'DESC',
-            'format' => 'd/m/Y',
-            'label' => 'table.created',
-            'translation_domain' => 'messages',
-        ]);
-        $builder->addColumn('motif', PropertyColumnType::class,
-            ['label' => 'table.motif', 'translation_domain' => 'messages']);
-        $builder->addColumn('etat', StatusJustificatifAbsenceColumnType::class,
-            [
-                'label' => 'table.etat_justificatif_absence',
-                'translation_domain' => 'messages',
-            ]);
+        $builder->addColumn('nbCoursManques', BadgeColumnType::class, //ajouter des seuils?
+            ['label' => 'table.nb_cours_manques', 'translation_domain' => 'messages']);
+        $builder->addColumn('dureeCoursManques', BadgeColumnType::class, //ajouter des seuils?
+            ['label' => 'table.duree_cours_manques', 'translation_domain' => 'messages']);
+        $builder->addColumn('dureeDemiJournee', BadgeColumnType::class, //ajouter des seuils?
+            ['label' => 'table.duree_demi_journee', 'translation_domain' => 'messages']);
+        $builder->addColumn('nbNonJustifies', BadgeColumnType::class, //ajouter des seuils?
+            ['label' => 'table.nb_non_justifies', 'translation_domain' => 'messages']);
+        $builder->addColumn('nbJustifies', BadgeColumnType::class, //ajouter des seuils?
+            ['label' => 'table.nb_justifies', 'translation_domain' => 'messages']);
+
 
         $builder->setLoadUrl('administration_absences_justificatif_semestre_liste',
             ['semestre' => $this->semestre->getId()]);
 
         $builder->addColumn('apercu', WidgetColumnType::class, [
             'label' => 'apercu',
-            'build' => function(WidgetBuilder $builder, AbsenceJustificatif $s) {
+            'build' => function(WidgetBuilder $builder, Absence $s) {
                 $builder->add('voir.justificatif', ButtonType::class, [
                     'class' => 'btn btn-outline btn-info',
                     'icon' => 'fas fa-eye',
                     'text' => false,
                     'translation_domain' => 'messages',
-                    'attr' => ['data-provide' => 'modaler tooltip',
+                    'attr' => [
+                        'data-provide' => 'modaler tooltip',
                         'data-url' => $this->router->generate('administration_absence_justificatif_details',
                             ['uuid' => $s->getUuidString()]),
                         'data-title' => 'Détail du justificatif'
@@ -146,41 +133,10 @@ class AbsenceJustificatifTableType extends TableType
         ]);
 
         $builder->addColumn('links', WidgetColumnType::class, [
-            'build' => function(WidgetBuilder $builder, AbsenceJustificatif $s) {
-                switch ($s->getEtat()) {
-                    case AbsenceJustificatif::ACCEPTE:
-                        $builder->add('demande.acceptee', ButtonType::class, [
-                            'class' => 'btn btn-outline btn-success',
-                            'title' => 'demande.acceptee',
-                            'text' => 'demande.acceptee',
-                            'translation_domain' => 'messages',
-                        ]);
-                        break;
-                    case AbsenceJustificatif::REFUSE:
-                        $builder->add('demande.refusee', ButtonType::class, [
-                            'class' => 'btn btn-outline btn-danger',
-                            'title' => 'demande.refusee',
-                            'text' => 'demande.refusee',
-                            'translation_domain' => 'messages',
-                        ]);
-                        break;
-                    case AbsenceJustificatif::DEPOSE:
-                        $builder->add('accepter', ButtonType::class, [
-                            'class' => 'btn btn-outline btn-success justificatif-accepte bx_' . $s->getUuidString(),
-                            'title' => 'Accepter la demande',
-                            'icon' => 'fas fa-check',
-                            'attr' => ['data-justificatif' => $s->getUuidString()],
-                        ]);
-                        $builder->add('refuser', ButtonType::class, [
-                            'class' => 'btn btn-outline btn-danger justificatif-refuse bx_' . $s->getUuidString(),
-                            'title' => 'Refuser la demande',
-                            'icon' => 'fas fa-ban',
-                            'attr' => ['data-justificatif' => $s->getUuidString()],
-                        ]);
-                        break;
-                }
+            'build' => function(WidgetBuilder $builder, Absence $s) {
 
-                $builder->add('delete', RowDeleteLinkType::class, [
+
+                $builder->add('profil', RowShowLinkType::class, [
                     'attr' => [
                         'data-href' => 'administration_rattrapage_delete',
                         'data-uuid' => $s->getUuidString(),
@@ -191,7 +147,7 @@ class AbsenceJustificatifTableType extends TableType
         ]);
 
         $builder->useAdapter(EntityAdapter::class, [
-            'class' => AbsenceJustificatif::class,
+            'class' => Absence::class,
             'fetch_join_collection' => false,
             'query' => function(QueryBuilder $qb, array $formData) {
                 $qb->innerJoin(Etudiant::class, 'etu', 'WITH', 'e.etudiant = etu.id')
