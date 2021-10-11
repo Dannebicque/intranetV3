@@ -24,15 +24,15 @@
 {% block vich_file_widget %}
     <div class="vich-file">
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-8">
                 {{ form_widget(form.file) }}
             </div>
-            <div class="col-sm-2">
+            <div class="col-2">
                 {% if download_uri %}
                     <a href="{{ download_uri }}">{{ translation_domain is same as(false) ? download_label : download_label|trans({}, translation_domain) }}</a>
                 {% endif %}
             </div>
-            <div class="col-sm-4">
+            <div class="col-2">
                 {% if form.delete is defined %}
                     {{ form_row(form.delete) }}
                 {% endif %}
