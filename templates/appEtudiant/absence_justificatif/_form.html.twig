@@ -1,0 +1,21 @@
+{% form_theme form 'form/my-form.html.twig' %}
+{{ form_start(form) }}
+
+<div class="row">
+    <div class="col-6">{{ form_widget(form.dateDebut) }}</div>
+    <div class="col-6">{{ form_widget(form.heureDebut) }}</div>
+    <div class="col-6">{{ form_widget(form.dateFin) }}</div>
+    <div class="col-6">{{ form_widget(form.heureFin) }}</div>
+    <div class="col-6">{{ form_widget(form.motif) }}</div>
+    <div class="col-6">{{ form_widget(form.fichierFile) }}</div>
+</div>
+
+<button class="btn btn-success">{{ button_label|default('label.save'|trans) }}</button>
+
+{% if button_label is defined and button_label == 'update'|trans %}
+    <button class="btn btn-success" value="redirect_to_index" name="btn_update">{{ 'button_update_index'|trans }}</button>
+{% endif %}
+<div class="alert alert-info mt-2">
+    Tous les champs avec un <span class="text-red">*</span> sont obligatoires
+</div>
+{{ form_end(form) }}
