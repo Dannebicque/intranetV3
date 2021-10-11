@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/app.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 23/09/2021 12:40
+// @lastUpdate 11/10/2021 15:24
 
 import '@fortawesome/fontawesome-free/scss/fontawesome.scss'
 import '@fortawesome/fontawesome-free/scss/solid.scss'
@@ -10,14 +10,11 @@ import '@fortawesome/fontawesome-free/scss/solid.scss'
 import $ from 'jquery'
 
 import PerfectScrollbar from 'perfect-scrollbar'
-import './validator-bs4'
 import {getDataOptions, getParentByTagName} from './util'
-import './material'
 import './search'
 import './modaler'
 
-require('bootstrap')
-
+import * as bootstrap from 'bootstrap'
 
 import '../css/app.scss'
 
@@ -28,6 +25,7 @@ import SelectComplete from '../components/SelectComplete'
 import SelectChangeWidget from '../components/SelectChangeWidget'
 import DatePicker from '../components/DatePicker'
 import {post} from './fetch'
+import {modaler} from './modaler'
 
 export const LANG = document.querySelector('html').getAttribute('lang')
 
@@ -38,7 +36,7 @@ window.da = {
 customElements.define('my-table', Table)
 customElements.define('select-complete', SelectComplete, {extends: 'select'})
 customElements.define('select-live-update', SelectChangeWidget, {extends: 'select'})
-customElements.define('my-datepicker', DatePicker, {extends: 'input'})
+//customElements.define('my-datepicker', DatePicker, {extends: 'input'})
 
 $('input[type="file"]').on('change', function (e) {
   let filename = e.target.files[0].name
@@ -133,8 +131,6 @@ $(document).ready(function () {
 
   //tooltip
   updateInterface()
-
-  $('[data-provide="validation"]').validator()
 })
 
 $(document).ajaxComplete(function () {
@@ -162,7 +158,10 @@ $(document).on('click', '[data-provide~="modaler"]', function () {
 })
 
 function updateInterface () {
-  // $('.callout').delay(5000).slideUp('slow')
+  var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+  var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    return new bootstrap.Tooltip(tooltipTriggerEl)
+  })
 
   if (document.getElementsByClassName('datepicker-range').length > 0) {
     $('.datepicker-range').flatpickr({
@@ -171,7 +170,6 @@ function updateInterface () {
       format: 'd/M/Y'
     })
   }
-
 
   //notifications
   $(document).on('click', '#marquerNotificationsRead', function (e) {
@@ -182,21 +180,6 @@ function updateInterface () {
       success: function () {
         $('.notification').removeClass('media-new')
       }
-    })
-  })
-
-  //tooltip
-  $('[data-provide~="tooltip"]').each(function () {
-    var color = ''
-
-    if ($(this).hasDataAttr('tooltip-color')) {
-      color = ' tooltip-' + $(this).data('tooltip-color')
-    }
-
-    $(this).tooltip({
-      container: 'body',
-      trigger: 'hover',
-      template: '<div class="tooltip' + color + '" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>'
     })
   })
 }
@@ -281,9 +264,6 @@ $(document).on('click', '.sidebar-toggle-fold', function () {
   sidebar.toggleFold()
 })
 
-//}
-
-
 sidebar.toggleFold = function () {
   $('body').toggleClass('sidebar-folded')
   app.toggleState('sidebar.folded')
@@ -300,7 +280,6 @@ sidebar.unfold = function () {
   app.state('sidebar.folded', false)
 }
 
-
 sidebar.toggleHide = function () {
   $('body').toggleClass('sidebar-hidden')
   app.toggleState('sidebar.hidden')
@@ -316,7 +295,6 @@ sidebar.show = function () {
   app.state('sidebar.hidden', false)
 }
 
-
 sidebar.open = function () {
   $('body').addClass('sidebar-open').prepend('<div class="app-backdrop backdrop-sidebar"></div>')
 }
@@ -325,7 +303,6 @@ sidebar.close = function () {
   $('body').removeClass('sidebar-open')
   $('.backdrop-sidebar').remove()
 }
-
 
 // =====================
 // Quickview
