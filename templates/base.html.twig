@@ -37,9 +37,17 @@
     <meta name="msapplication-TileImage" content="{{ asset('ms-icon-144x144.png') }}">
     <meta name="theme-color" content="{{ settings('COLOR_IUT') }}">
 
+    <!-- Routing -->
+    <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}" defer></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}" defer></script>
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+    <script data-provide="sweetalert"></script>
+
     {% if app.environment == 'prod' %}
         <!-- Matomo -->
-        <script type="text/javascript">
+        <script type="text/javascript" defer>
           var _paq = window._paq = window._paq || []
           /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
           _paq.push(['trackPageView'])
@@ -61,189 +69,184 @@
 
 <body class="{{ settings('CODE_IUT') }}">
 {% block full_body %}
-
-<!-- Preloader -->
-<div class="preloader">
-    <div class="spinner-dots">
-        <span class="dot1"></span>
-        <span class="dot2"></span>
-        <span class="dot3"></span>
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="spinner-dots">
+            <span class="dot1"></span>
+            <span class="dot2"></span>
+            <span class="dot3"></span>
+        </div>
     </div>
-</div>
 
-
-<!-- Sidebar -->
-<aside class="sidebar sidebar-expand-lg sidebar-iconic">
-    <header class="sidebar-header" style="background-color: white">
+    <!-- Sidebar -->
+    <aside class="sidebar sidebar-expand-lg sidebar-iconic">
+        <header class="sidebar-header" style="background-color: white">
         <span class="logo text-cente">
           <a href="{% block link_homepage %}{{ path('default_homepage') }}{% endblock %}" class="div_logo">
               <img src="{{ asset('upload/logo/'~settings('LOGO_INTRANET_IUT')) }}"
                    alt="logo de l'intranet.">
           </a>
         </span>
-    </header>
+        </header>
 
-    <nav class="sidebar-navigation ps-container ps-theme-default" data-ps-id="9edea121-7e34-6d68-3caa-50294dffdd48">
-        <ul class="menu">
-            {% block sidebar_menu %}
-                <li class="menu-item active" id="menu-tableau-de-bord">
-                    <a class="menu-link" href="{{ path('default_homepage') }}">
-                        <i class="{{ iconDashboard }} fa-2x"><span class="sr-only">dashboard</span></i>
-                        <span class="title">{{ 'menu.dashboard'|trans }}</span>
-                    </a>
-                </li>
-
-                <li class="menu-item" id="menu-trombinoscope">
-                    <a class="menu-link" href="{{ path('trombinoscope_index') }}">
-                        <i class="fas fa-user-friends fa-2x"><span class="sr-only">group</span></i>
-                        <span class="title">{{ 'menu.trombinoscope'|trans }}</span>
-                    </a>
-                </li>
-
-                <li class="menu-item" id="menu-agenda">
-                    {% if user_data.departement.optEdt == true %}
-                        <a class="menu-link" href="{{ path('agenda_index') }}">
-                            <i class="fas fa-calendar-alt fa-2x"><span class="sr-only">calendar</span></i>
-                            <span class="title">{{ 'menu.agenda'|trans }}</span>
-                        </a>
-                    {% else %}
-                        <a class="menu-link" href="{{ path('planning_index', {annee:user_data.anneeUniversitaire
-                        .annee}) }}">
-                            <i class="fas fa-calendar-alt fa-2x"><span class="sr-only">calendar</span></i>
-                            <span class="title">{{ 'menu.agenda'|trans }}</span>
-                        </a>
-                    {% endif %}
-                </li>
-
-                <li class="menu-item" id="menu-application">
-                    <a class="menu-link" href="{{ path('application_index') }}">
-                        <i class="fas fa-toolbox fa-2x"><span class="sr-only">applications</span></i>
-                        <span class="title">{{ 'menu.applications'|trans }}</span>
-                    </a>
-                </li>
-
-                <li class="menu-item" id="menu-document">
-                    <a class="menu-link" href="{{ path('document_index') }}">
-                        <i class="fas fa-folder fa-2x"><span class="sr-only">Documents</span></i>
-                        <span class="title">{{ 'menu.documents'|trans }}</span>
-                    </a>
-                </li>
-
-                <li class="menu-item" id="menu-information">
-                    <a class="menu-link" href="{{ path('informations_index') }}">
-                        <i class="fas fa-file-alt fa-2x"><span class="sr-only">Informations</span></i>
-                        <span class="title">{{ 'menu.informations'|trans }}</span>
-                    </a>
-                </li>
-                {% if user_data.isGoodDepartement('ROLE_CDD') or
-                    user_data.isGoodDepartement('ROLE_RP') or
-                    user_data.isGoodDepartement('ROLE_DDE') or
-                    user_data.isGoodDepartement('ROLE_ASS') or
-                    user_data.isGoodDepartement('ROLE_STA') or
-                    user_data.isGoodDepartement('ROLE_ABS') or
-                    user_data.isGoodDepartement('ROLE_NOTES') or
-                    user_data.isGoodDepartement('ROLE_PRJ') or
-                    user_data.isGoodDepartement('ROLE_EDT') %}
-                    <li class="menu-item" id="menu-administration">
-                        <a class="menu-link" href="{{ path('administration_index') }}">
-                            <i class="{{ iconAdmin }} fa-2x"><span class="sr-only">Administration</span></i>
-                            <span class="title">{{ 'menu.administration'|trans }}</span>
+        <nav class="sidebar-navigation ps-container ps-theme-default" data-ps-id="9edea121-7e34-6d68-3caa-50294dffdd48">
+            <ul class="menu">
+                {% block sidebar_menu %}
+                    <li class="menu-item active" id="menu-tableau-de-bord">
+                        <a class="menu-link" href="{{ path('default_homepage') }}">
+                            <i class="{{ iconDashboard }} fa-2x"><span class="sr-only">dashboard</span></i>
+                            <span class="title">{{ 'menu.dashboard'|trans }}</span>
                         </a>
                     </li>
-                {% endif %}
-            {% endblock %}
 
-        </ul>
+                    <li class="menu-item" id="menu-trombinoscope">
+                        <a class="menu-link" href="{{ path('trombinoscope_index') }}">
+                            <i class="fas fa-user-friends fa-2x"><span class="sr-only">group</span></i>
+                            <span class="title">{{ 'menu.trombinoscope'|trans }}</span>
+                        </a>
+                    </li>
 
-        <div class="ps-scrollbar-x-rail" style="left: 0; bottom: 0;">
-            <div class="ps-scrollbar-x" tabindex="0" style="left: 0; width: 0;"></div>
-        </div>
-        <div class="ps-scrollbar-y-rail" style="top: 0; right: 2px;">
-            <div class="ps-scrollbar-y" tabindex="0" style="top: 0; height: 0;"></div>
-        </div>
-    </nav>
+                    <li class="menu-item" id="menu-agenda">
+                        {% if user_data.departement.optEdt == true %}
+                            <a class="menu-link" href="{{ path('agenda_index') }}">
+                                <i class="fas fa-calendar-alt fa-2x"><span class="sr-only">calendar</span></i>
+                                <span class="title">{{ 'menu.agenda'|trans }}</span>
+                            </a>
+                        {% else %}
+                            <a class="menu-link" href="{{ path('planning_index', {annee:user_data.anneeUniversitaire
+                            .annee}) }}">
+                                <i class="fas fa-calendar-alt fa-2x"><span class="sr-only">calendar</span></i>
+                                <span class="title">{{ 'menu.agenda'|trans }}</span>
+                            </a>
+                        {% endif %}
+                    </li>
 
-</aside>
-<!-- END Sidebar -->
+                    <li class="menu-item" id="menu-application">
+                        <a class="menu-link" href="{{ path('application_index') }}">
+                            <i class="fas fa-toolbox fa-2x"><span class="sr-only">applications</span></i>
+                            <span class="title">{{ 'menu.applications'|trans }}</span>
+                        </a>
+                    </li>
 
+                    <li class="menu-item" id="menu-document">
+                        <a class="menu-link" href="{{ path('document_index') }}">
+                            <i class="fas fa-folder fa-2x"><span class="sr-only">Documents</span></i>
+                            <span class="title">{{ 'menu.documents'|trans }}</span>
+                        </a>
+                    </li>
 
-<!-- Topbar -->
-<header class="topbar">
-    <div class="topbar-left">
-        <span class="topbar-btn sidebar-toggler"><i>&#9776;</i></span>
-        {% if is_granted('ROLE_PERMANENT') or is_granted('ROLE_ETUDIANT') %}
-            <a class="topbar-btn d-none d-md-block"
-               href="{{ block('link_homepage') }}"
-            >
-                Département {{ user_data.departement.libelle }}
-            </a>
-        {% endif %}
-        <a class="topbar-btn d-none d-md-block" href="#" data-provide="fullscreen"
-           data-bs-toggle="tooltip" data-bs-placement="bottom"
-           title="{{ 'fullscreen'|trans }}">
-            <i class="fas fa-expand fullscreen-default"></i>
-            <i class="fas fa-compress fullscreen-active"></i>
-            <span class="sr-only">Fullscreen</span>
-        </a>
+                    <li class="menu-item" id="menu-information">
+                        <a class="menu-link" href="{{ path('informations_index') }}">
+                            <i class="fas fa-file-alt fa-2x"><span class="sr-only">Informations</span></i>
+                            <span class="title">{{ 'menu.informations'|trans }}</span>
+                        </a>
+                    </li>
+                    {% if user_data.isGoodDepartement('ROLE_CDD') or
+                        user_data.isGoodDepartement('ROLE_RP') or
+                        user_data.isGoodDepartement('ROLE_DDE') or
+                        user_data.isGoodDepartement('ROLE_ASS') or
+                        user_data.isGoodDepartement('ROLE_STA') or
+                        user_data.isGoodDepartement('ROLE_ABS') or
+                        user_data.isGoodDepartement('ROLE_NOTES') or
+                        user_data.isGoodDepartement('ROLE_PRJ') or
+                        user_data.isGoodDepartement('ROLE_EDT') %}
+                        <li class="menu-item" id="menu-administration">
+                            <a class="menu-link" href="{{ path('administration_index') }}">
+                                <i class="{{ iconAdmin }} fa-2x"><span class="sr-only">Administration</span></i>
+                                <span class="title">{{ 'menu.administration'|trans }}</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                {% endblock %}
 
-        <div class="dropdown d-none d-md-block">
-            <span class="topbar-btn" data-bs-toggle="dropdown"><i class="fas fa-th-large"></i></span>
-            <div class="dropdown-menu dropdown-grid">
-                <a class="dropdown-item" href="{{ path('default_homepage') }}">
-                    <span class="fas fa-home fa-3x fa-color-home"></span>
-                    <span class="title">Dashboard</span>
-                </a>
-                <a class="dropdown-item" href="{{ path('trombinoscope_index') }}">
-                    <span class="fas fa-images fa-3x fa-color-trombi"></span>
-                    <span class="title">Trombinoscope</span>
-                </a>
-                <a class="dropdown-item" href="{{ path('agenda_index') }}">
-                    <span class="fas fa-calendar-alt fa-3x  fa-color-agenda"></span>
-                    <span class="title">Agenda</span>
-                </a>
-                <a class="dropdown-item" href="{{ path('application_index',{'onglet':'messagerie'}) }}">
-                    <span class="fas fa-envelope fa-3x  fa-color-messagerie"></span>
-                    <span class="title">Messagerie</span>
-                </a>
-                <a class="dropdown-item" href="{{ path('user_mon_profil') }}">
-                    <span class="fas fa-address-card fa-3x  fa-color-profil"></span>
-                    <span class="title">Profil</span>
-                </a>
+            </ul>
+
+            <div class="ps-scrollbar-x-rail" style="left: 0; bottom: 0;">
+                <div class="ps-scrollbar-x" tabindex="0" style="left: 0; width: 0;"></div>
             </div>
-        </div>
+            <div class="ps-scrollbar-y-rail" style="top: 0; right: 2px;">
+                <div class="ps-scrollbar-y" tabindex="0" style="top: 0; height: 0;"></div>
+            </div>
+        </nav>
+    </aside>
+    <!-- END Sidebar -->
 
-        {% if (is_granted('ROLE_PERMANENT') and user_data.departementMultiple == true) %}
+    <!-- Topbar -->
+    <header class="topbar">
+        <div class="topbar-left">
+            <span class="topbar-btn sidebar-toggler"><i>&#9776;</i></span>
+            {% if is_granted('ROLE_PERMANENT') or is_granted('ROLE_ETUDIANT') %}
+                <a class="topbar-btn d-none d-md-block"
+                   href="{{ block('link_homepage') }}">
+                    Département {{ user_data.departement.libelle }}
+                </a>
+            {% endif %}
+            <a class="topbar-btn d-none d-md-block" href="#" data-provide="fullscreen"
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
+               title="{{ 'fullscreen'|trans }}">
+                <i class="fas fa-expand fullscreen-default"></i>
+                <i class="fas fa-compress fullscreen-active"></i>
+                <span class="sr-only">Fullscreen</span>
+            </a>
+
             <div class="dropdown d-none d-md-block">
+                <span class="topbar-btn" data-bs-toggle="dropdown"><i class="fas fa-th-large"></i></span>
+                <div class="dropdown-menu dropdown-grid">
+                    <a class="dropdown-item" href="{{ path('default_homepage') }}">
+                        <span class="fas fa-home fa-3x fa-color-home"></span>
+                        <span class="title">Dashboard</span>
+                    </a>
+                    <a class="dropdown-item" href="{{ path('trombinoscope_index') }}">
+                        <span class="fas fa-images fa-3x fa-color-trombi"></span>
+                        <span class="title">Trombinoscope</span>
+                    </a>
+                    <a class="dropdown-item" href="{{ path('agenda_index') }}">
+                        <span class="fas fa-calendar-alt fa-3x  fa-color-agenda"></span>
+                        <span class="title">Agenda</span>
+                    </a>
+                    <a class="dropdown-item" href="{{ path('application_index',{'onglet':'messagerie'}) }}">
+                        <span class="fas fa-envelope fa-3x  fa-color-messagerie"></span>
+                        <span class="title">Messagerie</span>
+                    </a>
+                    <a class="dropdown-item" href="{{ path('user_mon_profil') }}">
+                        <span class="fas fa-address-card fa-3x  fa-color-profil"></span>
+                        <span class="title">Profil</span>
+                    </a>
+                </div>
+            </div>
+
+            {% if (is_granted('ROLE_PERMANENT') and user_data.departementMultiple == true) %}
+                <div class="dropdown d-none d-md-block">
                 <span class="topbar-btn" data-bs-toggle="dropdown">
                     <i class="fas fa-random"></i>
                 </span>
-                <div class="dropdown-menu dropdown-grid cols-4">
-                    {% for departement in user_data.user.getPersonnelDepartements %}
-                        <a class="dropdown-item {% if departement.defaut == true %}is-default{% endif %}"
-                           href="{{ path('security_change_departement',{departement:departement.departement.uuidString}) }}">
-                            <div class="avatar-departement"
-                                 style="background-color: {{ departement.departement.couleur }}">
-                                <span class="initials">{{ departement.departement.libelleInitiales|raw }}</span>
-                            </div>
-                        </a>
-                    {% endfor %}
+                    <div class="dropdown-menu dropdown-grid cols-4">
+                        {% for departement in user_data.user.getPersonnelDepartements %}
+                            <a class="dropdown-item {% if departement.defaut == true %}is-default{% endif %}"
+                               href="{{ path('security_change_departement',{departement:departement.departement.uuidString}) }}">
+                                <div class="avatar-departement"
+                                     style="background-color: {{ departement.departement.couleur }}">
+                                    <span class="initials">{{ departement.departement.libelleInitiales|raw }}</span>
+                                </div>
+                            </a>
+                        {% endfor %}
+                    </div>
                 </div>
-            </div>
-        {% endif %}
+            {% endif %}
 
-        <a class="topbar-btn d-none d-md-block" href="#" title="{{ 'rechercher'|trans }}"
-           data-bs-toggle="tooltip" data-bs-placement="bottom"
-           id="lookup"
-           data-original-title="{{ 'rechercher'|trans }}">
-            <i class="fas fa-search"></i>
-        </a>
-    </div>
+            <a class="topbar-btn d-none d-md-block" href="#" title="{{ 'rechercher'|trans }}"
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
+               id="lookup"
+               data-original-title="{{ 'rechercher'|trans }}">
+                <i class="fas fa-search"></i>
+            </a>
+        </div>
 
-    <div class="topbar-right">
-        <a class="topbar-btn" href="#qv-global" data-toggle="quickview" data-url="{% block quickViewUrl %}no-url{% endblock %}"><i class="fas fa-align-right"></i></a>
-        <div class="topbar-divider"></div>
-        <ul class="topbar-btns">
-            <li class="dropdown">
+        <div class="topbar-right">
+            <a class="topbar-btn" href="#qv-global" data-toggle="quickview" data-url="{% block quickViewUrl %}no-url{% endblock %}"><i class="fas fa-align-right"></i></a>
+            <div class="topbar-divider"></div>
+            <ul class="topbar-btns">
+                <li class="dropdown">
                     <span class="topbar-btn" data-bs-toggle="dropdown">
                         {% if user_data.user.photoName != null and user_data.user.photoName != 'noimage.png' %}
                             <img class="avatar" src="{% if user_data.user.typeUser == 'permanent' %}
@@ -254,177 +257,164 @@
                             {{ include('composants/_avatar.html.twig', {user:user_data.user, size:'sm'}) }}
                         {% endif %}
                     </span>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" href="{{ path('user_mon_profil') }}"><i class="fas fa-user"></i> {{ 'profil'|trans }}
-                    </a>
-                    <a class="dropdown-item" href="{{ path('user_settings') }}"><i class="fas fa-cogs"></i> {{ 'parametres'|trans }}
-                    </a>
-                    <a class="dropdown-item" href="#" id="darkMode"><i class="fas fa-adjust"></i> Dark Mode On</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="{{ path('security_logout') }}"><i class="fas fa-sign-out-alt"></i>
-                        {{ 'déconnexion'|trans }}</a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" href="{{ path('user_mon_profil') }}"><i class="fas fa-user"></i> {{ 'profil'|trans }}
+                        </a>
+                        <a class="dropdown-item" href="{{ path('user_settings') }}"><i class="fas fa-cogs"></i> {{ 'parametres'|trans }}
+                        </a>
+                        <a class="dropdown-item" href="#" id="darkMode"><i class="fas fa-adjust"></i> Dark Mode On</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{{ path('security_logout') }}"><i class="fas fa-sign-out-alt"></i>
+                            {{ 'déconnexion'|trans }}</a>
+                    </div>
+                </li>
+
+                <!-- Change language -->
+                {# <li> #}
+                {# {% if app.request.locale == 'en' %} #}
+                {# <a class="topbar-btn d-none d-md-block" href="{{ path #}
+                {# ('default_homepage',{'_locale':'fr'}) }}" data-bs-toggle="tooltip" data-bs-placement="bottom" #}
+                {# title="{{ 'passer.en.francais'|trans }}"><img src="{{ asset('assets/img/flag/fr.png') }}" #}
+                {# width="16px" alt="{{ 'passer.en.francais'|trans }}"></a> #}
+                {# {% else %} #}
+                {# <a href="{{ path('default_homepage',{'_locale':'en'}) }}" class="topbar-btn d-none d-md-block" data-bs-toggle="tooltip" data-bs-placement="bottom" #}
+                {# title="{{ 'passer.en.anglais'|trans }}" #}
+                {# ><img src="{{ asset('assets/img/flag/en.png') }}" width="16px" alt="{{ 'passer.en.anglais'|trans }}"></a> #}
+
+                {# {% endif %} #}
+                {# </li> #}
+                <!-- END Change language -->
+
+                <!-- Notifications -->
+                {{ render_esi(controller(
+                    'App\\Controller\\ToolBarController::notifications'
+                )) }}
+                <!-- END Notifications -->
+
+                <!-- Messagerie -->
+                {% if ((is_granted('ROLE_PERMANENT') or is_granted('ROLE_ETUDIANT')) and user_data.departement.optMessagerie == true) %}
+                    {{ render_esi(controller(
+                        'App\\Controller\\ToolBarController::messages'
+                    )) }}
+                {% endif %}
+                <!-- END Messagerie -->
+                {% if not is_granted('ROLE_ETUDIANT') %}
+                    {{ render_esi(controller(
+                        'App\\Controller\\ToolBarController::anneeUniversitairePermanent'
+                    )) }}
+                {% endif %}
+            </ul>
+        </div>
+    </header>
+    <!-- END Topbar -->
+
+
+    <!-- Main container -->
+    <main class="main-container">
+        <header class="header">
+            <div class="header-info">
+                <div class="left">
+                    <h1 class="header-title" id="header-title">
+                        {% block header %}
+                            <strong>No title</strong>
+                        {% endblock %}
+                    </h1>
                 </div>
-            </li>
+                {% block headerright %}
 
-            <!-- Change language -->
-            {# <li> #}
-            {# {% if app.request.locale == 'en' %} #}
-            {# <a class="topbar-btn d-none d-md-block" href="{{ path #}
-            {# ('default_homepage',{'_locale':'fr'}) }}" data-bs-toggle="tooltip" data-bs-placement="bottom" #}
-            {# title="{{ 'passer.en.francais'|trans }}"><img src="{{ asset('assets/img/flag/fr.png') }}" #}
-            {# width="16px" alt="{{ 'passer.en.francais'|trans }}"></a> #}
-            {# {% else %} #}
-            {# <a href="{{ path('default_homepage',{'_locale':'en'}) }}" class="topbar-btn d-none d-md-block" data-bs-toggle="tooltip" data-bs-placement="bottom" #}
-            {# title="{{ 'passer.en.anglais'|trans }}" #}
-            {# ><img src="{{ asset('assets/img/flag/en.png') }}" width="16px" alt="{{ 'passer.en.anglais'|trans }}"></a> #}
-
-            {# {% endif %} #}
-            {# </li> #}
-            <!-- END Change language -->
-
-            <!-- Notifications -->
-            {{ render_esi(controller(
-                'App\\Controller\\ToolBarController::notifications'
-            )) }}
-            <!-- END Notifications -->
-
-            <!-- Messagerie -->
-            {% if ((is_granted('ROLE_PERMANENT') or is_granted('ROLE_ETUDIANT')) and user_data.departement.optMessagerie == true) %}
-                {{ render_esi(controller(
-                    'App\\Controller\\ToolBarController::messages'
-                )) }}
-            {% endif %}
-            <!-- END Messagerie -->
-            {% if not is_granted('ROLE_ETUDIANT') %}
-                {{ render_esi(controller(
-                    'App\\Controller\\ToolBarController::anneeUniversitairePermanent'
-                )) }}
-            {% endif %}
-        </ul>
-    </div>
-</header>
-<!-- END Topbar -->
-
-
-<!-- Main container -->
-<main class="main-container">
-    <header class="header">
-        <div class="header-info">
-            <div class="left">
-                <h1 class="header-title" id="header-title">
-                    {% block header %}
-                        <strong>No title</strong>
-                    {% endblock %}
-                </h1>
+                {% endblock %}
             </div>
-            {% block headerright %}
+            {% block headeractions %}
 
             {% endblock %}
-        </div>
-        {% block headeractions %}
+        </header>
 
-        {% endblock %}
-    </header>
-
-    <div class="main-content" id="mainContent">
-
-        <div hidden="hidden">
-            {% for toast in app.session.flashbag.get('toast') %}
-                <div role="alert" aria-live="assertive" aria-atomic="true" {{ stimulus_controller('toast', {
-                    text: toast.text,
-                    title: toast.title,
-                    type: toast.type
-                }) }}></div>
-            {% endfor %}
-        </div>
-
-        {% block content %}
-
-
-        {% endblock %}
-
-        <!-- bouton fab en bas de chaque page -->
-        {% block fabactions %}
-
-        {% endblock %}
-        <!-- fin du bouton fab -->
-
-    </div><!--/.main-content -->
-
-
-          <!-- Footer -->
-    <footer class="site-footer">
-        <div class="row">
-            <div class="col-md-6">
-                <p class="text-md-left">Copyright © 2018-{{ 'now'|date('Y') }}
-                    <a href="https://www.davidannebicque.fr" target="_blank">@DavidAnnebicque</a>. All rights
-                                        reserved. | Version {{ version.version }}</p>
+        <div class="main-content" id="mainContent">
+            <div hidden="hidden">
+                {% for toast in app.session.flashbag.get('toast') %}
+                    <div role="alert" aria-live="assertive" aria-atomic="true" {{ stimulus_controller('toast', {
+                        text: toast.text,
+                        title: toast.title,
+                        type: toast.type
+                    }) }}></div>
+                {% endfor %}
             </div>
+            {% block content %}
 
-            <div class="col-md-6">
-                <ul class="nav nav-primary nav-dotted nav-dot-separated justify-content-center justify-content-md-end">
-                    <li class="nav-item">
-                        <a class="nav-link" href="https://documentation.iutranet.fr" target="_blank">
-                            {{ 'menu.documentation'|trans }}
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" target="_blank" href="{{ path('rgpd_index') }}">{{ 'menu.rgpd'|trans }}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" target="_blank" href="{{ path('mentions_about') }}">{{ 'menu.about'|trans }}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" target="_blank" href="{{ path('mentions_index') }}">{{ 'menu.mentions_legales'|trans }}</a>
-                    </li>
-                </ul>
+            {% endblock %}
+
+            <!-- bouton fab en bas de chaque page -->
+            {% block fabactions %}
+
+            {% endblock %}
+            <!-- fin du bouton fab -->
+        </div><!--/.main-content -->
+
+              <!-- Footer -->
+        <footer class="site-footer">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="text-md-left">Copyright © 2018-{{ 'now'|date('Y') }}
+                        <a href="https://www.davidannebicque.fr" target="_blank">@DavidAnnebicque</a>. All rights
+                                            reserved. | Version {{ version.version }}</p>
+                </div>
+
+                <div class="col-md-6">
+                    <ul class="nav nav-primary nav-dotted nav-dot-separated justify-content-center justify-content-md-end">
+                        <li class="nav-item">
+                            <a class="nav-link" href="https://documentation.iutranet.fr" target="_blank">
+                                {{ 'menu.documentation'|trans }}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" target="_blank" href="{{ path('rgpd_index') }}">{{ 'menu.rgpd'|trans }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" target="_blank" href="{{ path('mentions_about') }}">{{ 'menu.about'|trans }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" target="_blank" href="{{ path('mentions_index') }}">{{ 'menu.mentions_legales'|trans }}</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
-    </footer><!-- END Footer -->
-</main>
-<!-- END Main container -->
+        </footer><!-- END Footer -->
+    </main>
+    <!-- END Main container -->
 
-<!-- Global quickview -->
-<div id="qv-global" class="quickview {% block sizeQv %}quickview-lg{% endblock %}">
-    <div class="spinner-linear">
-        <div class="line"></div>
+    <!-- Global quickview -->
+    <div id="qv-global" class="quickview {% block sizeQv %}quickview-lg{% endblock %}">
+        <div class="spinner-linear">
+            <div class="line"></div>
+        </div>
     </div>
-</div>
-<!-- END Global quickview -->
+    <!-- END Global quickview -->
 
-<!-- modal confirme suppression -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Confirmation de suppression</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Veuillez confirmer la suppression de <strong id="exampleModalLabelTexte"></strong> ?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-                <button type="button" class="btn btn-danger">Confirmer</button>
+    <!-- modal confirme suppression -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Confirmation de suppression</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Veuillez confirmer la suppression de <strong id="exampleModalLabelTexte"></strong> ?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    <button type="button" class="btn btn-danger">Confirmer</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<!-- fin modal confirme suppression -->
-
-<!-- Fullscreen search -->
-{{ include('recherche/_resultat.html.twig') }}
-<!-- END Fullscreen search -->
-{% endblock  %}{# fin du block full body #}
-<!-- Routing -->
-<script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
-<script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
-{% block javascripts %}
-    {{ encore_entry_script_tags('app') }}
-{% endblock %}
-<script data-provide="sweetalert"></script>
-
+    <!-- fin modal confirme suppression -->
+    {{ include('_modal.html.twig') }}
+    <!-- Fullscreen search -->
+    {{ include('recherche/_resultat.html.twig') }}
+    <!-- END Fullscreen search -->
+{% endblock %}{# fin du block full body #}
 </body>
 </html>
