@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/app.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/10/2021 15:24
+// @lastUpdate 22/10/2021 13:01
 
 import '@fortawesome/fontawesome-free/scss/fontawesome.scss'
 import '@fortawesome/fontawesome-free/scss/solid.scss'
@@ -36,7 +36,7 @@ window.da = {
 customElements.define('my-table', Table)
 customElements.define('select-complete', SelectComplete, {extends: 'select'})
 customElements.define('select-live-update', SelectChangeWidget, {extends: 'select'})
-//customElements.define('my-datepicker', DatePicker, {extends: 'input'})
+customElements.define('my-datepicker', DatePicker, {extends: 'input'})
 
 $('input[type="file"]').on('change', function (e) {
   let filename = e.target.files[0].name
@@ -73,10 +73,10 @@ window.addEventListener('load', function () { //le dom est chargé
   document.querySelectorAll('.changeAnneeUniversitaire').forEach((elem) => {
     elem.addEventListener('click', (e) => {
       e.preventDefault()
-      console.log("coucou")
-      console.log(e.target.dataset.annee)
       const el = getParentByTagName(e.target, 'a')
-      post(Routing.generate('settings_change_annee_universitaire'), {'annee_universitaire' : el.dataset.annee})
+      post(Routing.generate('settings_change_annee_universitaire'), {'annee_universitaire': el.dataset.annee}).then(() => {
+        document.location.reload(true)
+      })
     })
   })
 
@@ -89,11 +89,11 @@ window.addEventListener('load', function () { //le dom est chargé
     menuDarkTheme.innerHTML = '<i class="fas fa-adjust"></i> Dark Mode On'
   }
 
-
 }, false)
 
 $(document).ready(function () {
   // script pour afficher le fichier selectionné avec bootstrap4
+  //todo: encore utilise avec BS5??
   $('.custom-file input').change(function () {
     const files = []
     for (let i = 0; i < $(this)[0].files.length; i++) {
