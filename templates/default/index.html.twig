@@ -155,15 +155,15 @@
                             <div class="tab-pane {% if loop.first %}fade active show{% endif %}" id="semgr_{{ semestre.id }}">
                                 <h4>Les listings du semestre {{ semestre.libelle }}</h4>
                                 <div class="row">
-                                    <div class="col-sm-12">
+                                    <div class="col-12">
                                         <div class="row">
                                             {% for typeGroupe in typegroupes|filter(typeGroupe => (typeGroupe.defaut
                                                 == true) and (typeGroupe.semestre == semestre)) %}
                                                 {% for groupe in typeGroupe.groupes %}
-                                                    <div class="col-sm-12 col-md-3 mb-2">
+                                                    <div class="col-md-3 col-sm-12 d-grid d-block mb-2">
                                                         <a href="{{ path('trombinoscope_etudiant_export_groupe',
                                                             {_format:'pdf', groupe:groupe.id}) }}"
-                                                           class="btn btn-block btn-cyan">
+                                                           class="btn btn-cyan">
                                                             {{ groupe.libelle }}
                                                         </a>
                                                     </div>
