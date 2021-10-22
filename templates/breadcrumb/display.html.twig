@@ -1,0 +1,8 @@
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ path('homepage') }}">Dashboard</a></li>
+    {% for pth in path %}
+        <li class="breadcrumb-item"><a href="">{{ pth.libelle }}</a></li>{# todo: gérer le path ou gérer avec un
+        block?? ... #}
+    {% endfor %}
+    <li class="breadcrumb-item active">{{ header|escapetitle|raw }}</li>
+</ol>
