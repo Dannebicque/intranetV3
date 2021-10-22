@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Kernel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 19:11
+ * @lastUpdate 12/10/2021 12:29
  */
 
 namespace App;
 
+use App\Components\Exporter\DependencyInjection\ExporterCompilerPass;
 use App\Components\Questionnaire\DependencyInjection\QuestionnaireCompilerPass;
 use App\Components\Table\Column\ColumnType;
 use App\Components\Table\DependencyInjection\TableCompilerPass;
@@ -31,6 +32,7 @@ class Kernel extends BaseKernel
         $container->addCompilerPass(new TableCompilerPass());
         $container->addCompilerPass(new WidgetCompilerPass());
         $container->addCompilerPass(new QuestionnaireCompilerPass());
+        $container->addCompilerPass(new ExporterCompilerPass());
         $container->registerForAutoconfiguration(TableType::class)->addTag(TableRegistry::TAG_TABLE_TYPE);
         $container->registerForAutoconfiguration(ColumnType::class)->addTag(TableRegistry::TAG_COLUMN_TYPE);
     }
@@ -51,6 +53,7 @@ class Kernel extends BaseKernel
         $container->import('../src/Components/Table/DependencyInjection/{services}.php');
         $container->import('../src/Components/Widget/DependencyInjection/{services}.php');
         $container->import('../src/Components/Questionnaire/DependencyInjection/{services}.php');
+        $container->import('../src/Components/Exporter/DependencyInjection/{services}.php');
     }
 
     protected function configureRoutes(RoutingConfigurator $routes): void
