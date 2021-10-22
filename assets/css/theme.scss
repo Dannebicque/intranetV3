@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/css/theme.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/10/2021 15:06
+// @lastUpdate 22/10/2021 13:36
 /* @file /Users/davidannebicque/htdocs/intranetV3/assets/css/theme.css */
 /* @author davidannebicque */
 /* @project intranetV3 */
@@ -11147,15 +11147,16 @@ input[type=number]::-webkit-outer-spin-button {
     background-color: #fff;
 }
 
-.form-control:focus {
-    border-color: #83e0d7;
-    color: #4d5259;
-    -webkit-box-shadow: 0 0 0 0.1rem rgba(51, 202, 187, 0.15);
-    box-shadow: 0 0 0 0.1rem rgba(51, 202, 187, 0.15);
+.form-control:focus, .form-select:focus {
+    color: #212529;
+    background-color: #fff;
+    border-color: var(--colorFocus);
+    border-width: 2px;
+    outline: 0;
 }
 
 .form-control:focus[readonly] {
-    border-color: #ebebeb;
+    border-color: var(--colorFocux);
     -webkit-box-shadow: none;
     box-shadow: none;
 }

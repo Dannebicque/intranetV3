@@ -6,6 +6,7 @@
 
 body.rcc {
   --colorIUT: #3EBFF0;
+  --colorFocus: #3EBFF0;
   --colorIUTComplementaire: #083153;
   --backgroundEdtVide: #bfbebb;
   --backgroundEdtVidePair: #eaeaea;
@@ -41,6 +42,7 @@ body.rcc {
 body.rcc.dark-theme {
   --colorIUT: #3EBFF0;
   --colorIUTComplementaire: #083153;
+  --colorFocus: #083153;
   --colorTextA: #3EBFF0;
   --policeDark: #202945;
   --backgroundEdtVide: #bfbebb;
