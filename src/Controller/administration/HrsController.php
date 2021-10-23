@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/HrsController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 19:44
+ * @lastUpdate 23/10/2021 11:51
  */
 
 namespace App\Controller\administration;
@@ -14,28 +14,31 @@ use App\Entity\Constantes;
 use App\Entity\Hrs;
 use App\Form\HrsType;
 use App\Repository\HrsRepository;
+use App\Table\ActualiteTableType;
+use App\Table\HrsTableType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * Class PrevisionnelController.
- *
- * @Route("/administration/service-previsionnel/hrs")
- */
+#[Route("/administration/service-previsionnel/hrs")]
 class HrsController extends BaseController
 {
     /**
      * @Route("/{annee}", name="administration_hrs_index", methods="GET|POST", options={"expose":true},
      *                    requirements={"annee":"\d+"})
      */
-    public function index(Request $request, HrsRepository $hrsRepository, int $annee = 0): Response
+    public function index(Request $request, ?int $annee = 0): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
 
-        if (0 === $annee && null !== $this->getDepartement()) {
-            $annee = $this->getDepartement()->getOptAnneePrevisionnel();
+        if (0 === $annee && $this->getAnneeUniversitaire() !== null && $this->getAnneeUniversitaire()->getAnnee() !== 0) {
+            $annee = $this->getAnneeUniversitaire()->getAnnee();
         }
+
+        $table = $this->createTable(HrsTableType::class, [
+            'departement' => $this->getDepartement(),
+            'annee' => $annee
+        ]);
 
         $hrs = new Hrs($this->getDepartement());
         $form = $this->createForm(HrsType::class, $hrs, [
@@ -44,6 +47,12 @@ class HrsController extends BaseController
                 'data-provide' => 'validation',
             ],
         ]);
+
+        $table->handleRequest($request);
+
+        if ($table->isCallback()) {
+            return $table->getCallbackResponse();
+        }
 
         $form->handleRequest($request);
 
@@ -54,9 +63,10 @@ class HrsController extends BaseController
         }
 
         return $this->render('administration/hrs/index.html.twig', [
-            'hrs'   => $hrsRepository->findByDepartement($this->dataUserSession->getDepartement(), $annee),
+//            'hrs'   => $hrsRepository->findByDepartement($this->dataUserSession->getDepartement(), $annee),
             'annee' => $annee,
-            'form'  => $form->createView(),
+            'table' => $table,
+            'form' => $form->createView(),
         ]);
     }
 

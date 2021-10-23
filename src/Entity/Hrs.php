@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Hrs.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 10:41
+ * @lastUpdate 23/10/2021 11:16
  */
 
 namespace App\Entity;
@@ -180,5 +180,19 @@ class Hrs extends BaseEntity
         $this->commentaire = $commentaire;
 
         return $this;
+    }
+
+    public function semestreOrDiplome()
+    {
+        if ($this->getDiplome() !== null && $this->getSemestre() === null) {
+            return $this->getDiplome()->getDisplay();
+        }
+
+        if ($this->getDiplome() === null && $this->getSemestre() !== null) {
+            return $this->getSemestre()->getLibelle();
+        }
+
+        return '-err-';
+
     }
 }
