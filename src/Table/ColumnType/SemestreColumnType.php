@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/ColumnType/SemestreColumnType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 09:32
+ * @lastUpdate 23/10/2021 12:18
  */
 
 namespace App\Table\ColumnType;
@@ -21,7 +21,7 @@ class SemestreColumnType extends PropertyColumnType
         }
         $html = '';
         foreach ($value as $semestre) {
-            $html .= '<span class="badge badge-success mr-2">' . $semestre->getLibelle() . '</span>';
+            $html .= '<span class="badge bg-success me-1">' . $semestre->getLibelle() . '</span>';
         }
 
         return $html;
