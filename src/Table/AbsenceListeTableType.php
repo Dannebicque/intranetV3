@@ -4,43 +4,32 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/AbsenceListeTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/10/2021 21:50
+ * @lastUpdate 23/10/2021 12:35
  */
 
 namespace App\Table;
 
 use App\Components\Table\Adapter\EntityAdapter;
 use App\Components\Table\Column\BadgeColumnType;
-use App\Components\Table\Column\CheckBoxColumnType;
-use App\Components\Table\Column\DateColumnType;
-use App\Components\Table\Column\PropertyColumnType;
 use App\Components\Table\Column\WidgetColumnType;
 use App\Components\Table\TableBuilder;
 use App\Components\Table\TableType;
 use App\Components\Widget\Type\ButtonDropdownType;
 use App\Components\Widget\Type\ButtonType;
 use App\Components\Widget\Type\LinkType;
-use App\Components\Widget\Type\RowDeleteLinkType;
 use App\Components\Widget\Type\RowShowLinkType;
 use App\Components\Widget\WidgetBuilder;
 use App\Entity\Absence;
-use App\Entity\AbsenceJustificatif;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Etudiant;
 use App\Entity\Groupe;
 use App\Entity\Semestre;
-use App\Form\Type\DatePickerType;
 use App\Form\Type\SearchType;
 use App\Repository\GroupeRepository;
-use App\Table\ColumnType\DatePeriodeColumnType;
-use App\Table\ColumnType\DatePeriodeJustificatifColumnType;
 use App\Table\ColumnType\EtudiantColumnType;
 use App\Table\ColumnType\GroupeEtudiantColumnType;
-use App\Table\ColumnType\GroupeFromEtudiantColumnType;
-use App\Table\ColumnType\StatusJustificatifAbsenceColumnType;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
@@ -162,19 +151,15 @@ class AbsenceListeTableType extends TableType
                     $qb->setParameter('search', '%' . $formData['search'] . '%');
                 }
 
-//                if (isset($formData['from'])) {
-//                    $qb->andWhere('e.dateEval >= :from');
-//                    $qb->setParameter('from', $formData['from']);
-//                }
-//
-//                if (isset($formData['to'])) {
-//                    $qb->andWhere('e.dateEval <= :to');
-//                    $qb->setParameter('to', $formData['to']);
-//                }
-
-                if (isset($formData['etat_demande'])) {
+                if (isset($formData['etat_demande']) && '' !== trim($formData['etat_demande'])) {
                     $qb->andWhere('e.etat_demande = :etat_demande');
                     $qb->setParameter('etat', $formData['etat_demande']);
+                }
+
+                if (isset($formData['groupe']) && '' !== trim($formData['groupe'])) {
+                    $qb->innerJoin('etu.groupes', 'g');
+                    $qb->andWhere('g.id = :groupe');
+                    $qb->setParameter('groupe', $formData['groupe']);
                 }
             },
         ]);
