@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/ColumnType/CategorieArticleColumnType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 09:32
+ * @lastUpdate 23/10/2021 12:17
  */
 
 namespace App\Table\ColumnType;
@@ -20,7 +20,7 @@ class CategorieArticleColumnType extends PropertyColumnType
             return 'err';
         }
 
-        return '<span class="badge badge-info mr-2">' . $value->getLibelle() . '</span>';
+        return '<span class="badge bg-info me-1">' . $value->getLibelle() . '</span>';
     }
 
     public function configureOptions(OptionsResolver $resolver): void
