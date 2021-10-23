@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/TypeHrs.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/06/2021 10:28
+ * @lastUpdate 23/10/2021 11:08
  */
 
 namespace App\Entity;
@@ -148,5 +148,10 @@ class TypeHrs extends BaseEntity
     public function setType($type): void
     {
         $this->type = $type;
+    }
+
+    public function __toString(): string
+    {
+        return $this->getLibelle();
     }
 }
