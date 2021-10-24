@@ -4,14 +4,19 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/AbsenceJustificatifType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/09/2021 21:26
+ * @lastUpdate 24/10/2021 10:38
  */
 
 namespace App\Form;
 
 use App\Entity\AbsenceJustificatif;
+use App\Entity\Etudiant;
+use App\Entity\Semestre;
 use App\Form\Type\DatePickerType;
+use App\Repository\EtudiantRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -20,8 +25,14 @@ use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class AbsenceJustificatifType extends AbstractType
 {
+    protected ?Semestre $semestre;
+    protected ?string $role;
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $this->semestre = $options['semestre'];
+        $this->role = $options['role'];
+
         $builder
             ->add('dateDebut', DatePickerType::class, ['label' => 'date_debut'])
             ->add('heureDebut', TimeType::class, ['label' => 'heure_debut'])
@@ -35,13 +46,32 @@ class AbsenceJustificatifType extends AbstractType
                 'allow_delete' => false,
                 'help' => 'Le justificatif ne peut être qu\'une convocation officielle ou un certificat médical',
             ]);
+
+        if ('admin' === $this->role) {
+            $builder
+                ->add('etudiant', EntityType::class, [
+                    'label' => 'etudiant',
+                    'class' => Etudiant::class,
+                    'choice_label' => 'display',
+                    'query_builder' => function(EtudiantRepository $etudiantRepository) {
+                        return $etudiantRepository->findBySemestreBuilder($this->semestre);
+                    },
+                ])
+                ->add('etat', ChoiceType::class, [
+                    'choices' => AbsenceJustificatif::TAB_ETAT,
+                    'label' => 'label.etat_justficatif',
+                    'expanded' => true
+                ]);
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class'         => AbsenceJustificatif::class,
+            'data_class' => AbsenceJustificatif::class,
             'translation_domain' => 'form',
+            'role' => null,
+            'semestre' => null,
         ]);
     }
 }
