@@ -15,7 +15,7 @@
                     <div class="col-2 d-grid d-block mb-2">
                         <a
                                 href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}"
-                                class="btn btn-primary">
+                                class="btn btn-primary h-100">
                             {{ semestre.diplome.displayCourt }} | {{ semestre.libelle }}
                         </a></div>
                 {% endfor %}
@@ -24,7 +24,7 @@
                     <div class="col-2 d-grid d-block mb-2">
                         <a
                                 href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}"
-                                class="btn btn-default">
+                                class="btn btn-default h-100">
                             {{ semestre.diplome.displayCourt }} | {{ semestre.libelle }}
                         </a></div>
                 {% endfor %}
