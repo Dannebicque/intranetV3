@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/BreadcrumbController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/10/2021 12:20
+ * @lastUpdate 24/10/2021 14:50
  */
 
 namespace App\Controller;
@@ -33,9 +33,11 @@ class BreadcrumbController extends AbstractController
             //plus que fr/ et la page en cours (donc header).
             //On construit un tableau pour le path.
             foreach ($partsOfUrl as $part) {
-                $t['route'] = $part; //faire un tableau des routes et URL ???
-                $t['libelle'] = $part;
-                $path[] = $t;
+                if (trim($part) !== '') {
+                    $t['route'] = $part; //faire un tableau des routes et URL ???
+                    $t['libelle'] = $part;
+                    $path[] = $t;
+                }
             }
         }
 
