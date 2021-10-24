@@ -2,29 +2,13 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/css/theme.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 22/10/2021 13:36
+// @lastUpdate 24/10/2021 16:10
 /* @file /Users/davidannebicque/htdocs/intranetV3/assets/css/theme.css */
 /* @author davidannebicque */
 /* @project intranetV3 */
 /* @lastUpdate 20/07/2020 10:15 */
 
 @charset "UTF-8";
-body {
-    font-family: Roboto, sans-serif;
-    color: var(--police);
-    font-weight: 300;
-    font-size: 13px;
-    line-height: 24px;
-}
-
-button, input, optgroup, select, textarea {
-    font-family: Roboto, sans-serif;
-    font-weight: 300;
-}
-
-canvas:focus {
-    outline: none;
-}
 
 ::-moz-selection {
     background: var(--colorIUT);

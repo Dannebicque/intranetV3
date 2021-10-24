@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/css/app.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/10/2021 07:02
+// @lastUpdate 24/10/2021 16:10
 
 @import "./theme-troyes.scss";
 @import "./theme-rcc.scss";
@@ -11,6 +11,7 @@
 
 
 @import "./theme.scss";
+@import "./_layout.scss";
 @import "./color.scss";
 @import "./apc.scss";
 @import "./_toolbar.scss";
@@ -699,4 +700,9 @@ td.td-edt.col-new-day {
 
 .text-red {
   color: var(--colorDanger);
+}
+
+.scrollable {
+  max-height: 300px;
+  overflow-y: auto;
 }
