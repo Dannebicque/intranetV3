@@ -88,7 +88,7 @@
                             <div class="btn-toolbar">
                                 {% if evaluations[matiere.typeIdMatiere] is defined %}
                                     {% for evaluation in evaluations[matiere.typeIdMatiere] %}
-                                        <div class="btn-group mt-2 mr-2">
+                                        <div class="btn-group mt-2 me-2">
                                             <a class="btn btn-success"
                                                href="{{ path('administration_evaluation_show', {uuid:evaluation.uuidString}) }}"
                                                data-bs-toggle="tooltip"

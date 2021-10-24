@@ -46,7 +46,7 @@
                                 {{ diplome.codeCelcatDepartement }}</a>
                         </td>
                         <td>{{ diplome.departement ? (diplome.departement.optUpdateCelcat == true ? '<span
-                        class="badge badge-primary">Synchronisé</span>' : 'Non') : 'Erreur' }}</td>
+                        class="badge bg-primary">Synchronisé</span>' : 'Non') : 'Erreur' }}</td>
                         <td>
                             <a href="{{ path('sa_diplome_edit', {'id': diplome.id}) }}"
                                class="btn btn-warning btn-outline btn-square" target="_blank"><i class="{{ iconEdit }}"

@@ -37,7 +37,7 @@
                 <table class="table table-striped table-hover">
                     <thead>
                     <tr>
-                        <th>Module</th>
+                        <th>Matière/Ressource/SAÉ</th>
                         <th>Commentaire/nom</th>
                         <th>Coefficient</th>
                         <th>Type de saisie</th>
@@ -49,7 +49,7 @@
                         {% if matiere.nbNotes>0 %}
                             {% set nbeval=1 %}
 
-                            {% for eval in evaluations|filter(eval =>  eval.idMatiere==matiere.id) %}
+                            {% for eval in evaluations|filter(eval =>  eval.typeIdMatiere==matiere.typeIdMatiere) %}
                                 <tr>
                                     <td>{{ matiere.display }}</td>
                                     <td colspan="4">Evaluation existante</td>

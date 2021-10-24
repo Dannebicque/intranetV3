@@ -21,19 +21,17 @@
             <div class="card">
                 <header class="card-header">
                     <h2 class="card-title">{{ 'sa_enquete.heading'|trans }}</h2>
-
                 </header>
 
                 <div class="card-body">
-
-                    <div class="col-sm-12 col-md-12">
-                        <div><a href="{{ path('administratif_enquete_index') }}"
-                                class="btn btn-block btn-primary"> {{ 'enquete.index'|trans }}</a></div>
+                    <div class="col-sm-12 col-md-12 d-grid d-block">
+                        <a href="{{ path('administratif_enquete_index') }}"
+                           class="btn btn-primary"> {{ 'enquete.index'|trans }}</a>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-6 col-lg-6  col-sm-12">
+        <div class="col-md-6 col-lg-6 col-sm-12">
             <div class="card">
                 <header class="card-header">
                     <h2 class="card-title">{{ 'sa_quizz.heading'|trans }}</h2>
@@ -41,9 +39,9 @@
 
                 <div class="card-body">
 
-                    <div class="col-sm-12 col-md-12">
-                        <div><a href="{{ path('quizz_question_index') }}"
-                                class="btn btn-block btn-primary"> {{ 'questions.index'|trans }}</a></div>
+                    <div class="col-sm-12 col-md-12 d-grid d-block">
+                        <a href="{{ path('quizz_question_index') }}"
+                           class="btn btn-primary"> {{ 'questions.index'|trans }}</a>
                     </div>
                 </div>
             </div>
@@ -56,23 +54,22 @@
                 </header>
 
                 <div class="card-body">
-
-                    <div class="col-sm-12 col-md-4">
-                        <div><a href="{{ path('sadm_questionnaire_qualite_index') }}"
-                                class="btn btn-block btn-primary"> Gérer les questionnaires</a></div>
-                    </div>
-                    <div class="col-sm-12 col-md-4">
-                        <div><a href="{{ path('sadm_questionnaire_section_index') }}"
-                                class="btn btn-block btn-primary"> Gérer les sections</a></div>
-                    </div>
-                    <div class="col-sm-12 col-md-4">
-                        <div><a href="{{ path('sadm_questionnaire_question_index') }}"
-                                class="btn btn-block btn-primary"> Gérer les questions</a></div>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-4 d-grid d-block mb-2">
+                            <a href="{{ path('sadm_questionnaire_qualite_index') }}"
+                               class="btn btn-block btn-primary"> Gérer les questionnaires</a>
+                        </div>
+                        <div class="col-sm-12 col-md-4  d-grid d-block mb-2">
+                            <a href="{{ path('sadm_questionnaire_section_index') }}"
+                               class="btn btn-block btn-primary"> Gérer les sections</a>
+                        </div>
+                        <div class="col-sm-12 col-md-4  d-grid d-block mb-2">
+                            <a href="{{ path('sadm_questionnaire_question_index') }}"
+                               class="btn btn-block btn-primary"> Gérer les questions</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-
 {% endblock %}

@@ -59,7 +59,8 @@
                     <header class="card-header">
                         <h4 class="card-title">{{ 'gestion.des.absences'|trans|raw }}</h4>
                         <div class="card-header-actions">
-                            <a class="btn btn-sm btn-primary btn-square"
+                            <a class="btn btn-primary btn-sm"
+                               type="button"
                                title="{{ 'saisir.absences'|trans }}"
                                data-bs-toggle="tooltip" data-bs-placement="bottom"
 
@@ -96,7 +97,7 @@
                             <a href="{{ path('administration_absences_justificatif_semestre_liste',{semestre:semestre.id}) }}"
                                class="btn btn-primary">
                                 {{ 'liste.justificatifs'|trans }}
-                                (<span class="badge badge-pill badge-info">{{ nbJustificatifs }}</span> nouveaux)</a>
+                                (<span class="badge rounded-pill bg-info">{{ nbJustificatifs }}</span> nouveaux)</a>
                         </div>
                         <div class="col-12 d-block d-grid mb-2">
                             <a href="{{ path('administration_absences_semestre_justifier',{semestre:semestre.id}) }}"
@@ -159,7 +160,7 @@
                             <a href="{{ path('administration_rattrapage_semestre_index',{semestre:semestre.id}) }}"
                                class="btn btn-primary">
                                 {{ 'demandes.rattrapages'|trans }}
-                                <span class="badge badge-pill badge-info">{{ nbRattrapages }}</span>
+                                <span class="badge rounded-pill bg-info">{{ nbRattrapages }}</span>
                             </a>
                         </div>
 
@@ -175,7 +176,7 @@
                     <header class="card-header"><h4 class="card-title">{{ 'gestion.des.etudiants'|trans|raw }}</h4>
                         <div class="card-header-actions">
                             <a href="{{ path('administration_etudiant_semestre_add', {semestre:semestre.id}) }}"
-                               class="btn btn-sm btn-primary btn-square"
+                               class="btn btn-primary btn-sm"
                                title="{{ 'Ajouter.des.etudiants'|trans }}"
                                data-bs-toggle="tooltip" data-bs-placement="bottom"
                             >
