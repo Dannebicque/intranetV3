@@ -1274,6 +1274,7 @@ jour.s: jour(s)
 juillet: Juillet
 juin: Juin
 justificatif.absence.semestre.heading: 'Justificatifs d''absence du semestre'
+justificatif.absence.semestre.ajout.heading: 'Ajout d''un justificatifs d''absence'
 justifiee: Justifiée
 justifier.absences.heading: 'Justifier des <strong>absences du semestre %semestre%</strong>'
 justifier.les.absences: 'Justifier des absences'

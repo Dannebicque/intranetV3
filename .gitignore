@@ -27,6 +27,7 @@ docker-compose.override.yml
 ###< symfony/phpunit-bridge ###
 
 /.idea/dataSources.xml
+/public/build/
 /public/upload/
 /public/rcc/
 ###> liip/imagine-bundle ###

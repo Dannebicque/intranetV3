@@ -1,5 +1,5 @@
 {
-  "version": "1.0",
+  "version": "1.1",
   "profiles": [
     {
       "id": "cd42c0ad-f2b2-4e3f-80a4-4030afb4386f",
@@ -7,7 +7,7 @@
       "keyNamingPattern": "SNAKE_CASE_PATTERN",
       "sink": {
         "id": "dfd00d48-3606-4ba0-b18a-ee2fd519eaf6",
-        "type": "symfony",
+        "type": "namespaced",
         "translationsDirectory": "$PROJECT_DIR$/translations",
         "fileType": "yaml",
         "defaultLocale": "fr",
@@ -30,8 +30,7 @@
           "type": "php",
           "scopeName": "i18n Ally: Symfony/PHP source",
           "scopePattern": "file[intranetV3]:src//*&&!file[intranetV3]:src/DataFixtures//*",
-          "functionName": "$this->translator->trans",
-          "argumentsTemplate": "'%key%', %map%, '%namespace%'",
+          "replacementTemplate": "$this->translator->trans('%key%', %map%, '%namespace%')",
           "skipDefaultNamespace": true,
           "sprintfMode": false
         },
@@ -40,8 +39,7 @@
           "type": "twig",
           "scopeName": "i18n Ally: Symfony/Twig templates",
           "scopePattern": "file[intranetV3]:templates//*",
-          "filterName": "trans",
-          "argumentsTemplate": "%map%, '%namespace%'",
+          "replacementTemplate": "trans(%map%, '%namespace%')",
           "inlineTagNames": [
             "a",
             "abbr",
