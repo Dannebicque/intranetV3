@@ -4,9 +4,11 @@
 // @project intranetV3
 // @lastUpdate 08/10/2021 07:02
 
-@import "~bootstrap/scss/bootstrap";
 @import "./theme-troyes.scss";
 @import "./theme-rcc.scss";
+
+@import "~bootstrap/scss/bootstrap";
+
 
 @import "./theme.scss";
 @import "./color.scss";

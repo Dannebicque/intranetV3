@@ -175,9 +175,6 @@
     "jasig/phpcas": {
         "version": "1.3.8"
     },
-    "jean85/pretty-package-versions": {
-        "version": "1.5.1"
-    },
     "jms/metadata": {
         "version": "2.4.0"
     },
@@ -375,6 +372,9 @@
         "files": [
             "config/packages/ramsey_uuid_doctrine.yaml"
         ]
+    },
+    "rector/rector": {
+        "version": "0.11.60"
     },
     "sebastian/cli-parser": {
         "version": "1.0.1"
