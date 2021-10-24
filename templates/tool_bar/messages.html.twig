@@ -1,4 +1,5 @@
 <!-- Messages -->
+{# todo: refaire la mise en page, avec juste du boostrap et nettoyer theme CSS #}
 <li class="dropdown d-none d-md-block">
     <span class="topbar-btn {% if nouveauxMessages == true %}has-new{% endif %}"
           data-bs-toggle="dropdown"><i class="fas fa-envelope"></i></span>
@@ -7,10 +8,10 @@
         <div class="media-list media-list-divided media-list-hover media-list-xs scrollable"
              style="height: 290px">
             {% for message in messages %}
-                <a class="media {% if message.etat == 'U' %}media-new{% endif %}"
+                <a class="media row {% if message.etat == 'U' %}media-new{% endif %}"
                    href="{{ path('application_index',{onglet:'messagerie', param:message.message
                    .id}) }}">
-                          <span class="avatar status-success">
+                          <span class="avatar status-success col-3">
                               {% if message.message.expediteur.photoName != null and message.message.expediteur.photoName != 'noimage.png' %}
                                   <img class="avatar" src="{{ asset('upload/personnels/'~message.message.expediteur.photoName)
                                   |imagine_filter('avatar') }}" alt="Avatar de l'expéditeur">
@@ -19,7 +20,7 @@
                               {% endif %}
                           </span>
 
-                    <div class="media-body">
+                    <div class="media-body col-9">
                         <p><strong>{{ message.message.expediteur.displayPr }}</strong>
                             <time class="float-right"
                                   datetime="{{ message.message.created|date('d/m/Y H:i') }}">{{ message.message.created|time_ago(app.request.locale) }}</time>
