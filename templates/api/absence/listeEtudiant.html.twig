@@ -19,8 +19,8 @@
                  id="groupe_{{ groupe.id }}">
                 {% if groupe.etudiants|length >0 %}
                     <div class="row">
-                        <div class="col-12">
-                            <button class="btn btn-block btn-primary pasabsent"
+                        <div class="col-12 d-grid d-block">
+                            <button class="btn btn-primary pasabsent"
                                     data-groupe="{{ groupe.id }}">
                                 Appel réalisé, aucun absent dans ce groupe ? ({{ groupe.etudiants|length }} étudiants
                                 présents)
@@ -53,8 +53,8 @@
                 </div>
                 {% if groupe.etudiants|length >0 %}
                     <div class="row">
-                        <div class="col-12">
-                            <button class="btn btn-block btn-primary pasabsent"
+                        <div class="col-12  d-grid d-block">
+                            <button class="btn btn-primary pasabsent"
                                     data-groupe="{{ groupe.id }}">
                                 Appel réalisé, aucun absent dans ce groupe ? ({{ groupe.etudiants|length }} étudiants
                                 présents)

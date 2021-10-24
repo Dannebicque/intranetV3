@@ -66,11 +66,4 @@
 {% block javascripts %}
     {{ parent() }}
     {{ encore_entry_script_tags('absences') }}
-    {# {% if event is defined %} #}
-    {# <script> #}
-    {# window.addEventListener('load', function () { //le dom est chargé #}
-    {# updateAffichage("{{ date|date('d/m/Y') }}", "{{ heure }}") #}
-    {# }) #}
-    {# </script> #}
-    {# {% endif %} #}
 {% endblock %}
