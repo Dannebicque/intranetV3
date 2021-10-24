@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/app.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/07/2021 12:18
+// @lastUpdate 24/10/2021 16:08
 
 /*
  * Welcome to your app's main JavaScript file!
@@ -14,5 +14,5 @@
 // any CSS you import will output into a single css file (app.css in this case)
 
 // start the Stimulus application
-//import './bootstrap'
+import './bootstrap'
 import './js/app'

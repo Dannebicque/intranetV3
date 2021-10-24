@@ -17,10 +17,10 @@
     "popper.js": "^1.16.1",
     "regenerator-runtime": "^0.13.2",
     "sass-loader": "^9.0.3",
-    "stimulus": "^3.0.1",
+    "@hotwired/stimulus": "^3.0.1",
     "stimulus-clipboard": "^1.0.0",
     "sweetalert2": "^9.17.0",
-    "tinymce": "^5.7.0",
+    "tinymce": "^5.9.0",
     "toastify-js": "^1.11.0"
   },
   "license": "MPL-2.0",
