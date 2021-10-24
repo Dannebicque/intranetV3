@@ -1,10 +1,10 @@
 <div class="row">
     <div class="col-md-3 col-sm-12 mt-2 ">
         <label for="semaine" class="sr-only">Choisir la semaine</label>
-        <select class="form-control selectpicker"
+        <select class="form-select"
                 id="semaine"
         >
-            <option value="">Choisir</option>
+            <option value="">Choisir une semaine</option>
             {% for sem in edt.semaines %}
                 <option value="{{ edt.filtre }}_{{ edt.valeur }}_{{ sem.semaineReelle }}">
                     du {{ sem.debut|format_date('short') }} au {{ sem.fin|format_date('short') }} | S{{ sem
@@ -13,23 +13,21 @@
 
         </select>
     </div>
-    <div class="col-md-6 col-sm-12">
-        <div class="btn-group btn-block  mt-2 hide-on-large">
-            <div class="btn-group" role="group">
-                <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Semestres
-                </button>
-                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                    {% for sem in user_data.semestresActifs %}
+    <div class="col-md-6 col-sm-12 mt-2 d-grid d-block">
+        <div class="btn-group hide-on-large">
+            <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Semestres
+            </button>
+            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                {% for sem in user_data.semestresActifs %}
                         <a class="dropdown-item" href="{{ path('agenda_index',{filtre:'promo',valeur:sem.id,semaine:edt.semaine}) }}">{{ sem.libelle }}</a>
                     {% endfor %}
                 </div>
-            </div>
             <a class="btn {% if edt.filtre=='prof' %} btn-primary{% else %}btn-secondary{% endif %}"
                href="{{ path('agenda_index',{filtre:'prof',valeur:user_data.user.id,semaine:edt.semaine}) }}"
                data-bs-toggle="tooltip" data-bs-placement="bottom" title="Votre emploi du temps">Perso.</a>
         </div>
-        <div class="btn-group btn-block mt-2 hide-on-small">
+        <div class="btn-group hide-on-small">
             {% for sem in user_data.semestresActifs %}
                 <a class="btn {% if filtre == 'promo' and semestre.id==sem.id %}btn-primary{% else %}btn-secondary{% endif %}"
                    href="{{ path('agenda_index',{filtre:'promo',valeur:sem.id,semaine:edt.semaine}) }}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Emploi du temps du semestre {{ sem.libelle }}">{{ sem.libelle }}</a>
@@ -51,8 +49,8 @@
                         class="fa fa-caret-right"></i><span class="sr-only">Semaine suivante</span></a>
         </div>
     </div>
-    <div class="col-sm-12 hide-on-large mt-2">
-        <div class="btn-group">
+    <div class="col-sm-12  mt-2 d-grid d-block">
+        <div class="btn-group hide-on-large">
             <a class="btn btn-primary w-25" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Jour précédent"
                id="jourPrecedent">
                 <i class="fa fa-caret-left"></i><span class="sr-only">Jour précédent</span>
