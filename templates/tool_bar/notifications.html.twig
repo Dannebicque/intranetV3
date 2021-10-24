@@ -1,5 +1,5 @@
 <li class="dropdown d-none d-md-block">
-                <span class="topbar-btn {% if newNotification == true %}has-new{% endif %}" data-toggle="dropdown"><i
+                <span class="topbar-btn {% if newNotification == true %}has-new{% endif %}" data-bs-toggle="dropdown"><i
                             class="fas fa-bell"></i><span
                             class="sr-only">Notifications</span></span>
     <div class="dropdown-menu dropdown-menu-right">
@@ -25,13 +25,13 @@
             </div>
 
             <div class="right">
-                <a href="#" data-provide="tooltip" title="{{ 'marquer.tout.comme.lu'|trans }}"
+                <a href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ 'marquer.tout.comme.lu'|trans }}"
                    id="marquerNotificationsRead">
                     <i class="fas fa-circle">
                         <span class="sr-only">Marquer comme lu</span>
                     </i>
                 </a>
-                <a href="#" data-provide="tooltip" title="{{ 'update'|trans }}">
+                <a href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ 'update'|trans }}">
                     <i class="fas fa-redo-alt">
                         <span class="sr-only">Marquer comme lu</span>
                     </i>

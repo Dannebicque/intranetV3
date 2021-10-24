@@ -4,14 +4,14 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/DTO/Toolbar.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 11:46
+ * @lastUpdate 23/10/2021 10:37
  */
 
 namespace App\Components\Table\DTO;
 
 use App\Components\Widget\DTO\Widget;
+use InvalidArgumentException;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\Request;
 
 class Toolbar
 {
@@ -60,8 +60,8 @@ class Toolbar
 
     public function handleRequest(array $data): self
     {
-        if (null !== $data && !is_array($data)) {
-            throw new \InvalidArgumentException('Toolbar can only handle array form::getData()');
+        if (!is_array($data)) {
+            throw new InvalidArgumentException('Toolbar can only handle array form::getData()');
         }
 
         $this->formData = $data ?? [];

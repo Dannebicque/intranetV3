@@ -8,12 +8,12 @@
     <div class="header-action">
         <div class="buttons">
             <a href="{{ path('application_index',{onglet:'previsionnel'}) }}" class="btn btn-primary btn-float"
-               data-provide="tooltip"
-               data-placement="bottom" title="{{ 'atitle.retour_applications'|trans }}"><i class="fas
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
+               title="{{ 'atitle.retour_applications'|trans }}"><i class="fas
                fa-arrow-left"></i>
                 <span class="sr-only">{{ 'atitle.retour_applications'|trans }}</span></a>
-            <a href="{{ path('default_homepage') }}" class="btn btn-primary btn-float" data-provide="tooltip"
-               data-placement="bottom" title="{{ 'atitle.retour_dashboard'|trans }}">
+            <a href="{{ path('default_homepage') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom"
+               title="{{ 'atitle.retour_dashboard'|trans }}">
                 <i class="{{ iconDashboard }}"><span class="sr-only">dashboard</span></i>
 
             </a>
@@ -29,7 +29,7 @@
                 : {{ user_data.departement.optAnneePrevisionnel }})</h4>
             <ul class="card-controls">
                 <li class="dropdown">
-                    <a data-toggle="dropdown" href="#"><i class="fas fa-ellipsis-h rotate-90"></i></a>
+                    <a data-bs-toggle="dropdown" href="#"><i class="fas fa-ellipsis-h rotate-90"></i></a>
                     <div class="dropdown-menu dropdown-menu-right">
                         <a class="dropdown-item" href="#"><i class="fas fa-file-export"></i> {{ 'export'|trans }}</a>
                     </div>

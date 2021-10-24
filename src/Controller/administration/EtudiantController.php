@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 10:52
+ * @lastUpdate 08/10/2021 19:11
  */
 
 namespace App\Controller\administration;
@@ -152,7 +152,7 @@ class EtudiantController extends BaseController
         return $this->redirectToRoute('trombinoscope_index');
     }
 
-    #[Route("/edit-ajax/{id}", name: "adm_etudiant_edit_ajax", methods: ["POST"], options: ["expose" => true])]
+    #[Route("/edit-ajax/{id}", name: "adm_etudiant_edit_ajax", options: ["expose" => true], methods: ["POST"])]
     public function editAjax(EtudiantUpdate $etudiantUpdate, Request $request, Etudiant $etudiant): JsonResponse
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $etudiant->getSemestre());
@@ -166,8 +166,8 @@ class EtudiantController extends BaseController
         return $this->json(true, Response::HTTP_OK);
     }
 
-    #[Route("/export.{_format}", name: "administration_all_etudiant_export", methods: ["GET"],
-        requirements: ["_format" => "csv|xlsx|pdf"])]
+    #[Route("/export.{_format}", name: "administration_all_etudiant_export", requirements: ["_format" => "csv|xlsx|pdf"],
+        methods: ["GET"])]
     public function export(MyExport $myExport, EtudiantRepository $etudiantRepository, $_format): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $this->getDepartement());

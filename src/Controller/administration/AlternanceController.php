@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/AlternanceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/10/2021 12:14
+ * @lastUpdate 08/10/2021 19:11
  */
 
 namespace App\Controller\administration;
@@ -53,7 +53,7 @@ class AlternanceController extends BaseController
             if (0 === count($exist)) {
                 $alternance = new Alternance();
                 $alternance->setEtudiant($etudiant);
-                $alternance->setAnneeUniversitaire(null !== $annee->getDiplome() ? $annee->getDiplome()->getAnneeUniversitaire() : null);
+                $alternance->setAnneeUniversitaire($annee->getDiplome()?->getAnneeUniversitaire());
                 $alternance->setAnnee($annee);
                 $alternance->setEtat('init');
                 $this->entityManager->persist($alternance);
@@ -76,7 +76,7 @@ class AlternanceController extends BaseController
 
         $alternance = new Alternance();
         $alternance->setEtudiant($etudiant);
-        $alternance->setAnneeUniversitaire(null !== $annee->getDiplome() ? $annee->getDiplome()->getAnneeUniversitaire() : null);
+        $alternance->setAnneeUniversitaire($annee->getDiplome()?->getAnneeUniversitaire());
         $alternance->setAnnee($annee);
 
         if ('init-false' === $action) {
@@ -107,7 +107,7 @@ class AlternanceController extends BaseController
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $annee);
 
         $actualites = $alternanceRepository->getByAnneeAndAnneeUniversitaire($annee,
-            null !== $annee->getDiplome() ? $annee->getDiplome()->getAnneeUniversitaire() : null);
+            $annee->getDiplome()?->getAnneeUniversitaire());
 
         return $myExport->genereFichierGenerique(
             $_format,
@@ -176,7 +176,7 @@ class AlternanceController extends BaseController
         return $this->render('administration/alternance/index.html.twig',
             [
                 'alternances' => $alternanceRepository->getByAnneeAndAnneeUniversitaireArray($annee,
-                    $annee->getDiplome() ? $annee->getDiplome()->getAnneeUniversitaire() : null),
+                    $annee->getDiplome()?->getAnneeUniversitaire()),
                 'annee' => $annee,
                 'etudiants' => $etudiants,
             ]);

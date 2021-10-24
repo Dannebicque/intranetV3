@@ -4,13 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/ColumnType/DatePeriodeJustificatifColumnType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/09/2021 17:00
+ * @lastUpdate 23/10/2021 10:34
  */
 
 namespace App\Table\ColumnType;
 
 use App\Components\Table\Column\PropertyColumnType;
-use App\Entity\Absence;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class DatePeriodeJustificatifColumnType extends PropertyColumnType

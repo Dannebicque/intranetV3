@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}QuestionnaireQualite{% endblock %}
+
+{% block body %}
+    <h1>QuestionnaireQualite</h1>
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ questionnaire_qualite.id }}</td>
+        </tr>
+        <tr>
+            <th>Libelle</th>
+            <td>{{ questionnaire_qualite.libelle }}</td>
+        </tr>
+        <tr>
+            <th>DateOuverture</th>
+            <td>{{ questionnaire_qualite.dateOuverture ? questionnaire_qualite.dateOuverture|date('Y-m-d H:i:s') : '' }}</td>
+        </tr>
+        <tr>
+            <th>DateFermeture</th>
+            <td>{{ questionnaire_qualite.dateFermeture ? questionnaire_qualite.dateFermeture|date('Y-m-d H:i:s') : '' }}</td>
+        </tr>
+        <tr>
+            <th>Titre</th>
+            <td>{{ questionnaire_qualite.titre }}</td>
+        </tr>
+        <tr>
+            <th>TexteExplication</th>
+            <td>{{ questionnaire_qualite.texteExplication }}</td>
+        </tr>
+        <tr>
+            <th>TexteDebut</th>
+            <td>{{ questionnaire_qualite.texteDebut }}</td>
+        </tr>
+        <tr>
+            <th>TextFin</th>
+            <td>{{ questionnaire_qualite.textFin }}</td>
+        </tr>
+        <tr>
+            <th>Uuid</th>
+            <td>{{ questionnaire_qualite.uuid }}</td>
+        </tr>
+        <tr>
+            <th>Created</th>
+            <td>{{ questionnaire_qualite.created ? questionnaire_qualite.created|date('Y-m-d H:i:s') : '' }}</td>
+        </tr>
+        <tr>
+            <th>Updated</th>
+            <td>{{ questionnaire_qualite.updated ? questionnaire_qualite.updated|date('Y-m-d H:i:s') : '' }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('questionnaire_qualite_index') }}">back to list</a>
+
+    <a href="{{ path('questionnaire_qualite_edit', {'id': questionnaire_qualite.id}) }}">edit</a>
+
+    {{ include('questionnaire_qualite/_delete_form.html.twig') }}
+{% endblock %}

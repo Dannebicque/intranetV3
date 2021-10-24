@@ -8,7 +8,7 @@
                 <ul class="nav nav-tabs">
                     {% for semestre in user_data.semestresActifs %}
                         <li class="nav-item">
-                            <a class="nav-link {% if loop.first %}active{% endif %}" data-toggle="tab"
+                            <a class="nav-link {% if loop.first %}active{% endif %}" data-bs-toggle="tab"
                                href="#sem{{ semestre.id }}">{{ semestre.libelle }}</a>
                         </li>
                     {% endfor %}
@@ -27,14 +27,14 @@
                             {% for matiere in previsionnel|filter(matiere => matiere.semestre_id ==
                                 semestre.id) %}
                                 <div>{{ matiere.display }}</div>
-                                <div>
-                                    <button data-provide="modaler tooltip"
+                                <div class="d-grid d-block">
+                                    <button data-provide="modaler"
                                             data-url="{{ path('api_previsionnel_matiere', {'matiere': matiere
                                             .matiere_id, type: matiere.type_matiere}) }}"
                                             data-size="lg"
                                             data-confirm-text="{{ 'fermer'|trans }}"
-                                            class="btn btn-block btn-cyan"
-                                            data-placement="bottom"
+                                            class="btn btn-cyan"
+                                            data-bs-toggle="tooltip" data-bs-placement="bottom"
                                             title="{{ 'previsionnel.et.intervenants.matiere'|trans
                                                 ({'%matiere%':matiere.display}) }}"
                                             data-title="{{ 'previsionnel.et.intervenants.matiere'|trans
@@ -43,34 +43,34 @@
                                         {{ 'voir.previsionnel.et.intervenants.matiere'|trans }}
                                     </button>
                                 </div>
-                                <div>
+                                <div class="d-grid d-block">
                                     <a href="{{ path('application_personnel_absence_index',{'matiere': matiere
                                     .typeIdMatiere}) }}"
-                                       class="btn btn-block btn-cyan"
+                                       class="btn btn-cyan"
                                        title="{{ 'saisir.voir.modifier.absences'|trans }}"
-                                       data-provide="tooltip"
-                                       data-placement="bottom"
+                                       data-bs-toggle="tooltip" data-bs-placement="bottom"
+
                                     >
                                         {{ 'saisir.voir.modifier.absences'|trans }}
                                     </a></div>
-                                <div>
+                                <div class="d-grid d-block">
                                     <a href="{{ path('application_personnel_note_index',{'matiere': matiere
                                     .typeIdMatiere}) }}"
-                                       class="btn btn-block btn-cyan"
+                                       class="btn btn-cyan"
                                        title="{{ 'saisir.voir.modifier.notes'|trans }}"
-                                       data-provide="tooltip"
-                                       data-placement="bottom"
+                                       data-bs-toggle="tooltip" data-bs-placement="bottom"
+
                                     >
                                         {{ 'saisir.voir.modifier.notes'|trans }}
                                     </a></div>
-                                <div>
-                                    <button data-provide="modaler tooltip"
+                                <div class="d-grid d-block">
+                                    <button data-provide="modaler"
                                             data-url="{{ path('api_export_document_matiere', {'matiere': matiere
                                             .matiere_id, typeMatiere:matiere.type_matiere}) }}"
                                             data-size="lg"
                                             data-confirm-text="{{ 'fermer'|trans }}"
-                                            class="btn btn-block btn-cyan"
-                                            data-placement="bottom"
+                                            class="btn btn-cyan"
+                                            data-bs-toggle="tooltip" data-bs-placement="bottom"
                                             title="{{ 'atitle.export'|trans }}"
                                             data-title="{{ 'export.heading'|trans }}"
                                     >

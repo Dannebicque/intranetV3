@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/EdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 27/09/2021 08:49
+ * @lastUpdate 08/10/2021 10:05
  */
 
 namespace App\Classes\Edt;
@@ -64,5 +64,12 @@ class EdtIntranet extends AbstractEdt implements EdtInterface
         $evt = $this->edtPlanningRepository->find($event);
 
         return $this->edtIntranetAdapter->single($evt);
+    }
+
+    public function recupereEdtJourBorne($semestre, $matieres, $jourSemaine, $semaineFormation)
+    {
+        $evts = $this->edtPlanningRepository->recupereEdtBorne($semaineFormation, $semestre, $jourSemaine);
+
+        return $this->edtIntranetAdapter->collection($evts, $matieres);
     }
 }

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Apc/ApcStructure.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:30
+ * @lastUpdate 08/10/2021 19:44
  */
 
 /*
@@ -26,7 +26,7 @@ class ApcStructure
             foreach ($parcours->getApcParcoursNiveaux() as $niveau) {
                 if (null !== $niveau && null !== $niveau->getNiveau()) {
                     $niv = $niveau->getNiveau();
-                    if (null !== $niv && null !== $niv->getCompetence() && !array_key_exists($niv->getCompetence()->getId(),
+                    if (null !== $niv->getCompetence() && !array_key_exists($niv->getCompetence()->getId(),
                             $tParcours[$parcours->getId()])) {
                         $tParcours[$parcours->getId()][$niv->getCompetence()->getId()] = [];
                     }

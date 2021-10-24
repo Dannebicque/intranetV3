@@ -1,8 +1,8 @@
 {% if not duplicate is defined or duplicate != false %}
 <a href="{{ path('administration_'~elt~'_duplicate', {'id': id}) }}"
    class="btn btn-success btn-outline btn-square"
-   data-provide="tooltip"
-   data-placement="bottom"
+   data-bs-toggle="tooltip" data-bs-placement="bottom"
+
    title="{{ 'atitle.dupliquer'|trans }}">
     <i class="{{ iconDuplicate }}"></i>
     <span class="sr-only">{{ 'atitle.dupliquer'|trans }}</span>
@@ -10,10 +10,10 @@
 {% endif %}
 
 {% if modal is defined and modal == true %}
-    <button data-provide="modaler tooltip"
+    <button data-provide="modaler"
             data-url="{{ path('administration_'~elt~'_show', {'id': id}) }}"
             class="btn btn-info btn-outline btn-square"
-            data-placement="bottom"
+            data-bs-toggle="tooltip" data-bs-placement="bottom"
             title="{{ 'atitle.details'|trans }}"
             data-title="{{ 'adm.'~elt~'.show.heading'|trans }}"
     >
@@ -23,8 +23,8 @@
 {% else %}
     <a href="{{ path('administration_'~elt~'_show', {'id': id}) }}"
        class="btn btn-info btn-outline btn-square"
-       data-provide="tooltip"
-       data-placement="bottom"
+       data-bs-toggle="tooltip" data-bs-placement="bottom"
+
        title="{{ 'atitle.details'|trans }}">
         <i class="{{ iconShow }}"></i>
         <span class="sr-only">{{ 'atitle.details'|trans }}</span>
@@ -32,8 +32,8 @@
 {% endif %}
 <a href="{{ path('administration_'~elt~'_edit', {'id': id}) }}"
    class="btn btn-warning btn-outline btn-square"
-   data-provide="tooltip"
-   data-placement="bottom"
+   data-bs-toggle="tooltip" data-bs-placement="bottom"
+
    title="{{ 'atitle.modifier'|trans }}">
     <i class="{{ iconEdit }}"></i>
     <span class="sr-only">{{ 'atitle.modifier'|trans }}</span>
@@ -41,8 +41,8 @@
 <a href="{{ path('administration_'~elt~'_delete', {id: id}) }}"
    data-csrf="{{ csrf_token('delete' ~ id) }}"
    class="btn btn-danger btn-outline btn-square supprimer"
-   data-provide="tooltip"
-   data-placement="bottom"
+   data-bs-toggle="tooltip" data-bs-placement="bottom"
+
    title="{{ 'atitle.supprimer'|trans }}">
     <i class="{{ iconDelete }}"></i>
     <span class="sr-only">{{ 'atitle.supprimer'|trans }}</span>

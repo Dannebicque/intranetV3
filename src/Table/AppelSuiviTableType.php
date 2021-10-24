@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/AppelSuiviTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/09/2021 08:35
+ * @lastUpdate 24/10/2021 11:51
  */
 
 namespace App\Table;
@@ -12,28 +12,19 @@ namespace App\Table;
 use App\Components\Table\Adapter\EntityAdapter;
 use App\Components\Table\Column\DateColumnType;
 use App\Components\Table\Column\EntityColumnType;
-use App\Components\Table\Column\PropertyColumnType;
-use App\Components\Table\Column\WidgetColumnType;
 use App\Components\Table\TableBuilder;
 use App\Components\Table\TableType;
 use App\Components\Widget\Type\ButtonDropdownType;
-use App\Components\Widget\Type\ButtonType;
 use App\Components\Widget\Type\LinkType;
-use App\Components\Widget\Type\RowDeleteLinkType;
 use App\Components\Widget\WidgetBuilder;
-use App\Entity\Absence;
 use App\Entity\AbsenceEtatAppel;
 use App\Entity\AnneeUniversitaire;
-use App\Entity\Etudiant;
 use App\Entity\Rattrapage;
 use App\Entity\Semestre;
 use App\Form\Type\DatePickerType;
 use App\Form\Type\SearchType;
-use App\Table\ColumnType\EtudiantColumnType;
-use App\Table\ColumnType\GroupeEtudiantColumnType;
 use App\Table\ColumnType\MatiereColumnType;
 use App\Table\ColumnType\PersonnelColumnType;
-use App\Table\ColumnType\StatusAbsenceColumnType;
 use App\Table\ColumnType\StatusAppelFaitColumnType;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -43,7 +34,6 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 class AppelSuiviTableType extends TableType
 {
     private ?Semestre $semestre;
-    private ?AnneeUniversitaire $anneeUniversitaire;
     private array $matieres;
     private array $statsAppel;
     private CsrfTokenManagerInterface $csrfToken;
@@ -136,14 +126,14 @@ class AppelSuiviTableType extends TableType
 //        ]);
 
         $builder->useAdapter(EntityAdapter::class, [
-            'class' => AbsenceEtatAppel::class,
+            'class' => AbsenceEtatAppel::class,//todo: doit être le planning... Passer par un DTO...
             'fetch_join_collection' => false,
-            'query' => function (QueryBuilder $qb, array $formData) {
-               // $qb->innerJoin(Etudiant::class, 'etu', 'WITH', 'e.etudiant = etu.id')
+            'query' => function(QueryBuilder $qb, array $formData) {
+                // $qb->innerJoin(Etudiant::class, 'etu', 'WITH', 'e.etudiant = etu.id')
                 //    ->where('etu.semestre = :semestre')
-                   // ->andWhere('e.anneeUniversitaire = :anneeuniversitaire')
-                    //->setParameter('semestre', $this->semestre->getId());
-                  //  ->setParameter('anneeuniversitaire', $this->anneeUniversitaire->getId());
+                // ->andWhere('e.anneeUniversitaire = :anneeuniversitaire')
+                //->setParameter('semestre', $this->semestre->getId());
+                //  ->setParameter('anneeuniversitaire', $this->anneeUniversitaire->getId());
 
 
             },

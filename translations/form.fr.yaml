@@ -129,6 +129,9 @@ initiales: Initiales
 j: Jour
 Jour: Jour
 label:
+  absence_justficatif.A: 'Accepté'
+  absence_justficatif.D: 'Déposé, en attente'
+  absence_justficatif.R: 'Refusé'
   typeGroupe: Type de groupe
   groupe_parent: Groupe parent
   annee_active: 'Année active'

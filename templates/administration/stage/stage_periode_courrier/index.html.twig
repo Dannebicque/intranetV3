@@ -8,8 +8,8 @@
     <div class="header-action">
         <div class="buttons">
             <a href="{{ path('administration_stage_periode_gestion', {uuid: stagePeriode.uuidString}) }}"
-               class="btn btn-primary btn-float" data-provide="tooltip"
-               data-placement="bottom" title="{{ 'atitle.retour.stage_periode_gestion'|trans }}"><i
+               class="btn btn-primary btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom"
+               title="{{ 'atitle.retour.stage_periode_gestion'|trans }}"><i
                         class="fas fa-arrow-left"></i></a>
 
         </div>
@@ -26,11 +26,11 @@
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs nav-tabs-success">
                     <li class="nav-item">
-                        <a class="nav-link active" data-toggle="tab" href="#courrier">Courrier d'accompagement</a>
+                        <a class="nav-link active" data-bs-toggle="tab" href="#courrier">Courrier d'accompagement</a>
                     </li>
                     {% for etat in etatsConvention %}
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#{{ etat }}">{{ etat|trans }}</a>
+                            <a class="nav-link" data-bs-toggle="tab" href="#{{ etat }}">{{ etat|trans }}</a>
                         </li>
                     {% endfor %}
                 </ul>

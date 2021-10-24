@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/bloc_saisie_absence/SaisieAbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 27/09/2021 17:49
+ * @lastUpdate 08/10/2021 19:11
  */
 
 namespace App\Controller\bloc_saisie_absence;
@@ -106,7 +106,7 @@ class SaisieAbsenceController extends BaseController
 
                     $absences = $absenceRepository->getByMatiereArray(
                         $mat,
-                        $mat->semestre ? $mat->semestre->getAnneeUniversitaire() : null
+                        $mat->semestre?->getAnneeUniversitaire()
                     );
 
                     return $this->json($absences);

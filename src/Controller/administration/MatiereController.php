@@ -4,16 +4,16 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/MatiereController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 10:52
+ * @lastUpdate 23/10/2021 10:36
  */
 
 namespace App\Controller\administration;
 
 use App\Classes\Configuration;
-use App\Classes\Exporter\ExporterManager;
-use App\Classes\Exporter\SourceIterator\DtoSourceIterator;
 use App\Classes\Matieres\MatiereDelete;
 use App\Classes\Matieres\TypeMatiereManager;
+use App\Components\Exporter\ExporterManager;
+use App\Components\Exporter\SourceIterator\DtoSourceIterator;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Diplome;
@@ -25,7 +25,6 @@ use App\Repository\ApcRessourceRepository;
 use App\Repository\ApcSaeRepository;
 use App\Repository\MatiereRepository;
 use App\Repository\ParcourRepository;
-use App\Utils\Tools;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/webpack.config.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 21/09/2021 10:25
+// @lastUpdate 24/10/2021 11:54
 
 var Encore = require('@symfony/webpack-encore')
 var path = require('path')
@@ -33,6 +33,7 @@ Encore
    * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
    */
   .addEntry('app', './assets/app.js')
+  .addEntry('borne', './assets/js/pages/borne.js')
   .addEntry('covid', './assets/js/pages/covid.js')
   .addEntry('tinyMce', './assets/js/tinyMce.js')
   .addEntry('apc', './assets/js/pages/apc.js')
@@ -77,7 +78,7 @@ Encore
 
   //VueJs
   //.enableVueLoader()
-  .enableStimulusBridge('./assets/controllers.json')
+  // .enableStimulusBridge('./assets/controllers.json')
 
   // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
   .splitEntryChunks()

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/EdtPlanning.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/07/2021 12:39
+ * @lastUpdate 08/10/2021 19:11
  */
 
 namespace App\Entity;
@@ -337,7 +337,7 @@ class EdtPlanning extends BaseEntity
             'typecours' => $this->getType(),
             'texte' => $this->getTexte(),
             'matiereId' => $this->getIdMatiere(),
-            'personnelId' => null !== $this->getIntervenant() ? $this->getIntervenant()->getId() : null,
+            'personnelId' => $this->getIntervenant()?->getId(),
             'groupe' => $this->getGroupe(),
             'groupeId' => $this->getGroupe(),
             'typeIdMatiere' => $this->getTypeMatiere() . '_' . $this->getIdMatiere(),

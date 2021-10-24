@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/RattrapageTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/09/2021 21:16
+ * @lastUpdate 23/10/2021 12:32
  */
 
 namespace App\Table;
@@ -68,8 +68,8 @@ class RattrapageTableType extends TableType
         $builder->addFilter('etat_demande', ChoiceType::class, [
             'choices' => [
                 'Acceptée' => Rattrapage::DEMANDE_ACCEPTEE,
+                'En attente' => Rattrapage::DEMANDE_FAITE,
                 'Refusée' => Rattrapage::DEMANDE_REFUSEE,
-                'En attente' => Rattrapage::DEMANDE_FAITE
             ],
             'required' => false,
             'placeholder' => 'Etat de la demande'
@@ -144,7 +144,7 @@ class RattrapageTableType extends TableType
                 switch ($s->getEtatDemande()) {
                     case Rattrapage::DEMANDE_ACCEPTEE:
                         $builder->add('demande.acceptee', ButtonType::class, [
-                            'class' => 'btn btn-outline btn-success rattrapage-accepte bx_'.$s->getUuidString(),
+                            'class' => 'btn btn-outline btn-success rattrapage-accepte me-1 bx_' . $s->getUuidString(),
                             'title' => 'demande.acceptee',
                             'text' => 'demande.acceptee',
                             'translation_domain' => 'messages',
@@ -152,7 +152,7 @@ class RattrapageTableType extends TableType
                         break;
                     case Rattrapage::DEMANDE_REFUSEE:
                         $builder->add('demande.refusee', ButtonType::class, [
-                            'class' => 'btn btn-outline btn-danger rattrapage-accepte bx_'.$s->getUuidString(),
+                            'class' => 'btn btn-outline btn-danger rattrapage-accepte me-1 bx_' . $s->getUuidString(),
                             'title' => 'demande.refusee',
                             'text' => 'demande.refusee',
                             'translation_domain' => 'messages',
@@ -160,13 +160,13 @@ class RattrapageTableType extends TableType
                         break;
                     case Rattrapage::DEMANDE_FAITE:
                         $builder->add('accepter', ButtonType::class, [
-                            'class' => 'btn btn-outline btn-success rattrapage-accepte bx_'.$s->getUuidString(),
+                            'class' => 'btn btn-outline btn-success rattrapage-accepte me-1 bx_' . $s->getUuidString(),
                             'title' => 'Accepter la demande',
                             'icon' => 'fas fa-check',
                             'attr' => ['data-rattrapage' => $s->getUuidString()],
                         ]);
                         $builder->add('refuser', ButtonType::class, [
-                            'class' => 'btn btn-outline btn-danger rattrapage-refuse bx_'.$s->getUuidString(),
+                            'class' => 'btn btn-outline btn-danger rattrapage-refuse me-1 bx_' . $s->getUuidString(),
                             'title' => 'Refuser la demande',
                             'icon' => 'fas fa-ban',
                             'attr' => ['data-rattrapage' => $s->getUuidString()],
@@ -210,9 +210,15 @@ class RattrapageTableType extends TableType
                     $qb->setParameter('to', $formData['to']);
                 }
 
-                if (isset($formData['etat_demande'])) {
-                    $qb->andWhere('e.etat_demande = :etat_demande');
+                if (isset($formData['etat_demande']) && '' !== trim($formData['etat_demande'])) {
+                    $qb->andWhere('e.etatDemande = :etat_demande');
                     $qb->setParameter('etat_demande', $formData['etat_demande']);
+                }
+
+                if (isset($formData['groupe']) && '' !== trim($formData['groupe'])) {
+                    $qb->innerJoin('etu.groupes', 'g');
+                    $qb->andWhere('g.id = :groupe');
+                    $qb->setParameter('groupe', $formData['groupe']);
                 }
             },
         ]);

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Configuration.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/07/2021 17:05
+ * @lastUpdate 23/10/2021 10:31
  */
 
 namespace App\Classes;
@@ -16,7 +16,7 @@ use Symfony\Component\Mime\Address;
 class Configuration
 {
     /**
-     * @var \App\Entity\Configuration[]
+     * @var string[]
      */
     private array $settings = [];
 
@@ -27,7 +27,7 @@ class Configuration
         $this->configurationRepository = $configurationRepository;
     }
 
-    public function get($name)
+    public function get($name): string
     {
         if (0 === count($this->settings)) {
             $this->getAllSettings();

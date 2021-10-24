@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Borne.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 09:03
+ * @lastUpdate 09/10/2021 10:33
  */
 
 namespace App\Entity;
@@ -85,6 +85,11 @@ class Borne extends BaseEntity
      * @Groups({"bornes_administration"})
      */
     private Collection $semestres;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Departement::class, inversedBy="bornes")
+     */
+    private ?Departement $departement;
 
     public function __construct()
     {
@@ -199,6 +204,18 @@ class Borne extends BaseEntity
         if ($this->semestres->contains($semestre)) {
             $this->semestres->removeElement($semestre);
         }
+
+        return $this;
+    }
+
+    public function getDepartement(): ?Departement
+    {
+        return $this->departement;
+    }
+
+    public function setDepartement(?Departement $departement): self
+    {
+        $this->departement = $departement;
 
         return $this;
     }

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyGroupes.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/09/2021 18:46
+ * @lastUpdate 23/10/2021 10:36
  */
 
 /*
@@ -14,7 +14,6 @@
 namespace App\Classes;
 
 use App\Classes\Apogee\ApogeeGroupe;
-use App\DTO\EvenementEdt;
 use App\Entity\Departement;
 use App\Entity\Etudiant;
 use App\Entity\Groupe;

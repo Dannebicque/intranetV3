@@ -10,13 +10,13 @@
             <a href="{{ path('sa_structure_index', {departement:departement.id}) }}"
                class="btn btn-primary btn-float"
                title="{{ 'atitle.retour_structure'|trans }}"
-               data-provide="tooltip"
-               data-placement="bottom">
+               data-bs-toggle="tooltip"
+               data-bs-placement="bottom">
                 <i class="fas fa-arrow-left"></i>
                 <span class="sr-only">{{ 'atitle.retour_structure'|trans }}</span>
             </a>
-            <a href="{{ path('super_admin_homepage') }}" class="btn btn-primary btn-float" data-provide="tooltip"
-               data-placement="bottom" title="{{ 'atitle.retour_super_administration'|trans }}"><i
+            <a href="{{ path('super_admin_homepage') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip"
+               data-bs-placement="bottom" title="{{ 'atitle.retour_super_administration'|trans }}"><i
                         class="{{ iconDashboard }}"></i></a>
 
         </div>

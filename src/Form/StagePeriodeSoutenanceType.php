@@ -4,13 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/StagePeriodeSoutenanceType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/09/2021 10:28
+ * @lastUpdate 23/10/2021 10:37
  */
 
 namespace App\Form;
 
 use App\Entity\StagePeriodeSoutenance;
-use App\Form\Type\CarbonDateTimeType;
 use App\Form\Type\DatePickerType;
 use App\Form\Type\DateRangeType;
 use Symfony\Component\Form\AbstractType;

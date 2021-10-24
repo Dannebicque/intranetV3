@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Personnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/09/2021 14:24
+ * @lastUpdate 23/10/2021 10:24
  */
 
 namespace App\Entity;
@@ -37,7 +37,8 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     public const PRCE = 'PRCE';
     public const ATER = 'ATER';
     public const ASSISTANTE = 'ASS';
-    public const ADMINISTRATIF = 'TEC';
+    public const ADMINISTRATIF = 'ADM';
+    public const TECHNICIEN = 'TEC';
 
     /**
      * @ORM\Id()
@@ -1464,5 +1465,22 @@ class Personnel extends Utilisateur implements UtilisateurInterface
         }
 
         return $this;
+    }
+
+    public function getType(): string
+    {
+        if (self::VACATAIRE === $this->typeUser) {
+            return self::VACATAIRE;
+        }
+
+        if (self::PERMANENT === $this->typeUser) {
+            if (self::ADMINISTRATIF === $this->statut || self::ASSISTANTE === $this->statut || self::TECHNICIEN === $this->statut) {
+                return self::ADMINISTRATIF;
+            }
+
+            return self::PERMANENT;
+        }
+
+        return '';
     }
 }

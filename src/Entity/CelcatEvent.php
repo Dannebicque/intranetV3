@@ -4,13 +4,14 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/CelcatEvent.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/09/2021 08:57
+ * @lastUpdate 08/10/2021 19:11
  */
 
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
 use Carbon\CarbonInterface;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -328,12 +329,12 @@ class CelcatEvent extends BaseEntity
         return $this->getLibModule() . ' ' . $this->getLibGroupe();
     }
 
-    public function getDateCours(): ?\DateTimeInterface
+    public function getDateCours(): ?DateTimeInterface
     {
         return $this->dateCours;
     }
 
-    public function setDateCours(?\DateTimeInterface $dateCours): self
+    public function setDateCours(?DateTimeInterface $dateCours): self
     {
         $this->dateCours = $dateCours;
 

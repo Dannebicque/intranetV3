@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Matieres/SaeManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/09/2021 18:29
+ * @lastUpdate 24/10/2021 11:36
  */
 
 namespace App\Classes\Matieres;
@@ -36,7 +36,7 @@ class SaeManager extends AbstractMatiereManager implements MatiereInterface
         $this->saeAdapter = $saeAdapter;
     }
 
-    public function find($id): Matiere
+    public function find($id): ?Matiere
     {
         $matiere = $this->apcSaeRepository->find($id);
 

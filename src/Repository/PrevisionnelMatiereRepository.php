@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/PrevisionnelMatiereRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/10/2021 09:45
+ * @lastUpdate 08/10/2021 19:44
  */
 
 namespace App\Repository;
@@ -70,7 +70,7 @@ class PrevisionnelMatiereRepository extends PrevisionnelRepository
             ->getResult();
     }
 
-    public function findByDepartement(Departement $departement, $annee)
+    public function findByDepartement(Departement $departement, int $annee = 0)
     {
         $query = $this->createQueryBuilder('p')
             ->leftJoin(Personnel::class, 'pers', 'WITH', 'p.personnel = pers.id')
@@ -85,14 +85,11 @@ class PrevisionnelMatiereRepository extends PrevisionnelRepository
             ->setParameter('type', self::TYPE)
             ->setParameter('departement', $departement->getId());
 
-        if (0 !== $annee) {
-            $query->andWhere('p.annee = :annee')
-                ->setParameter('annee', $annee);
-        } elseif (null !== $departement) {
+        if (0 === $annee) {
             $annee = $departement->getOptAnneePrevisionnel();
-            $query->andWhere('p.annee = :annee')
-                ->setParameter('annee', $annee);
         }
+        $query->andWhere('p.annee = :annee')
+            ->setParameter('annee', $annee);
 
         return $query->getQuery()
             ->getResult();

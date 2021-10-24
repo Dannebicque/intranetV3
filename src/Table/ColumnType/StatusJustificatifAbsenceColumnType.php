@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/ColumnType/StatusJustificatifAbsenceColumnType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/09/2021 16:47
+ * @lastUpdate 23/10/2021 12:14
  */
 
 namespace App\Table\ColumnType;
@@ -18,14 +18,14 @@ class StatusJustificatifAbsenceColumnType extends PropertyColumnType
     public function renderProperty($value, array $options): string
     {
         if (AbsenceJustificatif::REFUSE === $value) {
-            return '<span class="badge badge-danger">Justificatif refusé</span>';
+            return '<span class="badge bg-danger">Justificatif refusé</span>';
         }
 
         if (AbsenceJustificatif::ACCEPTE === $value) {
-            return '<span class="badge badge-success">Justificatif accepté</span>';
+            return '<span class="badge bg-success">Justificatif accepté</span>';
         }
 
-        return '<span class="badge badge-warning">En attente</span>';
+        return '<span class="badge bg-warning">En attente</span>';
     }
 
     public function configureOptions(OptionsResolver $resolver)

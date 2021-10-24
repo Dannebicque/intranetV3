@@ -14,7 +14,7 @@
 {#        <div class="card-header-actions" style="">#}
 {#            <button class="btn btn-sm btn-primary btn-square btn-round"#}
 {#                    id="add_carnet"#}
-{#                    title="{{ 'atitle.creer_nouveau'|trans }}" data-provide="tooltip" data-placement="bottom"><i#}
+{# title="{{ 'atitle.creer_nouveau'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom"  ><i #}
 {#                        class="fas fa-plus"></i><span class="sr-only">ajouter une demande de rattrapge</span></button>#}
 {#        </div>#}
 {#    </header>#}
@@ -69,28 +69,28 @@
 {#            </div>#}
 {#        </form>#}
 {#    </div>#}
-{#</div>#}
+{# </div> #}
 
-{#<div class="card">#}
-{#    <div class="card-body">#}
-{#        <div class="card">#}
-{#            <div class="media-list media-list-divided media-list-hover">#}
+{# <div class="card"> #}
+{# <div class="card-body"> #}
+{# <div class="card"> #}
+{# <div class="media-list media-list-divided media-list-hover"> #}
 
-{#                {% for carnet in carnets %}#}
-{#                    <div class="media">#}
-{#                        <a href="#" class="btn btn-primary btn-float" title="{{ 'atitle.retour_liste'|trans }}"#}
-{#                           data-provide="tooltip"#}
-{#                           data-placement="bottom"><i class="ti-sharethis"></i>#}
-{#                        </a>#}
+{# {% for carnet in carnets %} #}
+{# <div class="media"> #}
+{# <a href="#" class="btn btn-primary btn-float" title="{{ 'atitle.retour_liste'|trans }}" #}
+{# data-bs-toggle="tooltip" data-bs-placement="bottom" #}
+{# ><i class="ti-sharethis"></i> #}
+{# </a> #}
 
-{#                        #}{# <a class="avatar avatar-lg status-success" href="#">#}
-{#                             <img src="../assets/img/avatar/1.jpg" alt="...">#}
-{#                         </a>#}
+{# #}{# <a class="avatar avatar-lg status-success" href="#"> #}
+{# <img src="../assets/img/avatar/1.jpg" alt="..."> #}
+{# </a> #}
 
-{#                        <div class="media-body">#}
-{#                            <p>#}
-{#                                <a class="hover-primary" href="#"><strong>{{ carnet.libelle }}</strong></a>#}
-{#                                <small class="sidetitle">{{ carnet.dateRetour|localizeddate('long', 'short', app.request.getLocale()) }}</small>#}
+{# <div class="media-body"> #}
+{# <p> #}
+{# <a class="hover-primary" href="#"><strong>{{ carnet.libelle }}</strong></a> #}
+{# <small class="sidetitle">{{ carnet.dateRetour|localizeddate('long', 'short', app.request.getLocale()) }}</small> #}
 {#                            </p>#}
 {#                            <p>{{ carnet.description }}#}
 {#                                <small class="sidetitle">M1103</small>#}
@@ -105,9 +105,9 @@
 {#                        </div>#}
 
 {#                        <div class="media-right gap-items">#}
-{#                            <a class="media-action lead" href="#" data-provide="tooltip" title="Orders"><i#}
+{# <a class="media-action lead" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Orders"><i #}
 {#                                        class="ti-shopping-cart"></i></a>#}
-{#                            <a class="media-action lead" href="#" data-provide="tooltip" title="Receipts"><i#}
+{# <a class="media-action lead" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Receipts"><i #}
 {#                                        class="ti-receipt"></i></a>#}
 {#                            <div class="btn-group">#}
 {#                                <a class="media-action lead" href="#" data-toggle="dropdown"><i#}
@@ -118,28 +118,28 @@
 {#                                    <a class="dropdown-item" href="#"><i class="fa fa-fw fa-phone"></i> Call</a>#}
 {#                                    <div class="dropdown-divider"></div>#}
 {#                                    <a class="dropdown-item" href="#"><i class="fa fa-fw fa-remove"></i> Remove</a>#}
-{#                                </div>#}
-{#                            </div>#}
+{# </div> #}
+{# </div> #}
 
-{#                        </div>#}
-{#                    </div>#}
-{#                {% endfor %}#}
+{# </div> #}
+{# </div> #}
+{# {% endfor %} #}
 
 
-{#                <div class="media">#}
-{#                    <a href="#" class="btn btn-primary btn-float" title="{{ 'atitle.retour_liste'|trans }}"#}
-{#                       data-provide="tooltip"#}
-{#                       data-placement="bottom"><i class="ti-sharethis"></i></a>#}
+{# <div class="media"> #}
+{# <a href="#" class="btn btn-primary btn-float" title="{{ 'atitle.retour_liste'|trans }}" #}
+{# data-bs-toggle="tooltip" data-bs-placement="bottom" #}
+{# ><i class="ti-sharethis"></i></a> #}
 
-{#                    <div class="media-body">#}
-{#                        <p>#}
-{#                            <a class="hover-primary" href="#"><strong>Hossein Shams</strong></a>#}
-{#                            <small class="sidetitle">Last seen: 2 hours ago</small>#}
-{#                        </p>#}
-{#                        <p>Full Stack Developer</p>#}
+{# <div class="media-body"> #}
+{# <p> #}
+{# <a class="hover-primary" href="#"><strong>Hossein Shams</strong></a> #}
+{# <small class="sidetitle">Last seen: 2 hours ago</small> #}
+{# </p> #}
+{# <p>Full Stack Developer</p> #}
 
-{#                        <nav class="nav mt-2">#}
-{#                            <a class="nav-link" href="#"><i class="fa fa-facebook"></i></a>#}
+{# <nav class="nav mt-2"> #}
+{# <a class="nav-link" href="#"><i class="fa fa-facebook"></i></a> #}
 {#                            <a class="nav-link" href="#"><i class="fa fa-twitter"></i></a>#}
 {#                            <a class="nav-link" href="#"><i class="fa fa-github"></i></a>#}
 {#                            <a class="nav-link" href="#"><i class="fa fa-linkedin"></i></a>#}
@@ -147,9 +147,9 @@
 {#                    </div>#}
 
 {#                    <div class="media-right gap-items">#}
-{#                        <a class="media-action lead" href="#" data-provide="tooltip" title="Orders"><i#}
+{# <a class="media-action lead" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Orders"><i #}
 {#                                    class="ti-shopping-cart"></i></a>#}
-{#                        <a class="media-action lead" href="#" data-provide="tooltip" title="Receipts"><i#}
+{# <a class="media-action lead" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Receipts"><i #}
 {#                                    class="ti-receipt"></i></a>#}
 {#                        <div class="btn-group">#}
 {#                            <a class="media-action lead" href="#" data-toggle="dropdown"><i#}
@@ -159,28 +159,28 @@
 {#                                <a class="dropdown-item" href="#"><i class="fa fa-fw fa-comments"></i> Messages</a>#}
 {#                                <a class="dropdown-item" href="#"><i class="fa fa-fw fa-phone"></i> Call</a>#}
 {#                                <div class="dropdown-divider"></div>#}
-{#                                <a class="dropdown-item" href="#"><i class="fa fa-fw fa-remove"></i> Remove</a>#}
-{#                            </div>#}
-{#                        </div>#}
+{# <a class="dropdown-item" href="#"><i class="fa fa-fw fa-remove"></i> Remove</a> #}
+{# </div> #}
+{# </div> #}
 
-{#                    </div>#}
-{#                </div>#}
+{# </div> #}
+{# </div> #}
 
 
-{#                <div class="media">#}
-{#                    <a href="#" class="btn btn-primary btn-float" title="{{ 'atitle.retour_liste'|trans }}"#}
-{#                       data-provide="tooltip"#}
-{#                       data-placement="bottom"><i class="ti-briefcase"></i></a>#}
+{# <div class="media"> #}
+{# <a href="#" class="btn btn-primary btn-float" title="{{ 'atitle.retour_liste'|trans }}" #}
+{# data-bs-toggle="tooltip" data-bs-placement="bottom" #}
+{# ><i class="ti-briefcase"></i></a> #}
 
-{#                    <div class="media-body">#}
-{#                        <p>#}
-{#                            <a class="hover-primary" href="#"><strong>Sarah Conner</strong></a>#}
-{#                            <small class="sidetitle">Last seen: 12 min ago</small>#}
-{#                        </p>#}
-{#                        <p>Support Agent</p>#}
+{# <div class="media-body"> #}
+{# <p> #}
+{# <a class="hover-primary" href="#"><strong>Sarah Conner</strong></a> #}
+{# <small class="sidetitle">Last seen: 12 min ago</small> #}
+{# </p> #}
+{# <p>Support Agent</p> #}
 
-{#                        <nav class="nav mt-2">#}
-{#                            <a class="nav-link" href="#"><i class="fa fa-facebook"></i></a>#}
+{# <nav class="nav mt-2"> #}
+{# <a class="nav-link" href="#"><i class="fa fa-facebook"></i></a> #}
 {#                            <a class="nav-link" href="#"><i class="fa fa-twitter"></i></a>#}
 {#                            <a class="nav-link" href="#"><i class="fa fa-github"></i></a>#}
 {#                            <a class="nav-link" href="#"><i class="fa fa-linkedin"></i></a>#}
@@ -188,9 +188,9 @@
 {#                    </div>#}
 
 {#                    <div class="media-right gap-items">#}
-{#                        <a class="media-action lead" href="#" data-provide="tooltip" title="Orders"><i#}
+{# <a class="media-action lead" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Orders"><i #}
 {#                                    class="ti-shopping-cart"></i></a>#}
-{#                        <a class="media-action lead" href="#" data-provide="tooltip" title="Receipts"><i#}
+{# <a class="media-action lead" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Receipts"><i #}
 {#                                    class="ti-receipt"></i></a>#}
 {#                        <div class="btn-group">#}
 {#                            <a class="media-action lead" href="#" data-toggle="dropdown"><i#}
@@ -200,28 +200,28 @@
 {#                                <a class="dropdown-item" href="#"><i class="fa fa-fw fa-comments"></i> Messages</a>#}
 {#                                <a class="dropdown-item" href="#"><i class="fa fa-fw fa-phone"></i> Call</a>#}
 {#                                <div class="dropdown-divider"></div>#}
-{#                                <a class="dropdown-item" href="#"><i class="fa fa-fw fa-remove"></i> Remove</a>#}
-{#                            </div>#}
-{#                        </div>#}
+{# <a class="dropdown-item" href="#"><i class="fa fa-fw fa-remove"></i> Remove</a> #}
+{# </div> #}
+{# </div> #}
 
-{#                    </div>#}
-{#                </div>#}
+{# </div> #}
+{# </div> #}
 
 
-{#                <div class="media">#}
-{#                    <a href="#" class="btn btn-primary btn-float" title="{{ 'atitle.retour_liste'|trans }}"#}
-{#                       data-provide="tooltip"#}
-{#                       data-placement="bottom"><i class="ti-lock"></i></a>#}
+{# <div class="media"> #}
+{# <a href="#" class="btn btn-primary btn-float" title="{{ 'atitle.retour_liste'|trans }}" #}
+{# data-bs-toggle="tooltip" data-bs-placement="bottom" #}
+{# ><i class="ti-lock"></i></a> #}
 
-{#                    <div class="media-body">#}
-{#                        <p>#}
-{#                            <a class="hover-primary" href="#"><strong>Frank Camly</strong></a>#}
-{#                            <small class="sidetitle">Online</small>#}
-{#                        </p>#}
-{#                        <p>Support Agent</p>#}
+{# <div class="media-body"> #}
+{# <p> #}
+{# <a class="hover-primary" href="#"><strong>Frank Camly</strong></a> #}
+{# <small class="sidetitle">Online</small> #}
+{# </p> #}
+{# <p>Support Agent</p> #}
 
-{#                        <nav class="nav mt-2">#}
-{#                            <a class="nav-link" href="#"><i class="fa fa-facebook"></i></a>#}
+{# <nav class="nav mt-2"> #}
+{# <a class="nav-link" href="#"><i class="fa fa-facebook"></i></a> #}
 {#                            <a class="nav-link" href="#"><i class="fa fa-twitter"></i></a>#}
 {#                            <a class="nav-link" href="#"><i class="fa fa-github"></i></a>#}
 {#                            <a class="nav-link" href="#"><i class="fa fa-linkedin"></i></a>#}
@@ -229,9 +229,9 @@
 {#                    </div>#}
 
 {#                    <div class="media-right gap-items">#}
-{#                        <a class="media-action lead" href="#" data-provide="tooltip" title="Orders"><i#}
+{# <a class="media-action lead" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Orders"><i #}
 {#                                    class="ti-shopping-cart"></i></a>#}
-{#                        <a class="media-action lead" href="#" data-provide="tooltip" title="Receipts"><i#}
+{# <a class="media-action lead" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Receipts"><i #}
 {#                                    class="ti-receipt"></i></a>#}
 {#                        <div class="btn-group">#}
 {#                            <a class="media-action lead" href="#" data-toggle="dropdown"><i#}
@@ -270,9 +270,9 @@
 {#                    </div>#}
 
 {#                    <div class="media-right gap-items">#}
-{#                        <a class="media-action lead" href="#" data-provide="tooltip" title="Orders"><i#}
+{# <a class="media-action lead" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Orders"><i #}
 {#                                    class="ti-shopping-cart"></i></a>#}
-{#                        <a class="media-action lead" href="#" data-provide="tooltip" title="Receipts"><i#}
+{# <a class="media-action lead" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Receipts"><i #}
 {#                                    class="ti-receipt"></i></a>#}
 {#                        <div class="btn-group">#}
 {#                            <a class="media-action lead" href="#" data-toggle="dropdown"><i#}

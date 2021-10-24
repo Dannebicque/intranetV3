@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/AgendaController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 07:01
+ * @lastUpdate 08/10/2021 19:11
  */
 
 namespace App\Controller;
@@ -56,7 +56,7 @@ class AgendaController extends BaseController
         ]);
     }
 
-    #[Route(path: '/{semaine}/{filtre}/{valeur}', name: 'agenda_index', options: ['expose' => true], requirements: ['semaine' => '\d+'])]
+    #[Route(path: '/{semaine}/{filtre}/{valeur}', name: 'agenda_index', requirements: ['semaine' => '\d+'], options: ['expose' => true])]
     public function index(int $semaine = 0, string $filtre = 'prof', string $valeur = ''): Response
     {
         if (0 === $semaine) {

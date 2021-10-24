@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Matieres/MatiereManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/09/2021 18:29
+ * @lastUpdate 24/10/2021 11:35
  */
 
 namespace App\Classes\Matieres;
@@ -29,7 +29,7 @@ class MatiereManager extends AbstractMatiereManager implements MatiereInterface
         $this->matiereAdapter = $matiereAdapter;
     }
 
-    public function find($id): Matiere
+    public function find($id): ?Matiere
     {
         $matiere = $this->matiereRepository->find($id);
 

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/DataFixtures/AnneeUniversitaireFixture.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:40
+ * @lastUpdate 21/10/2021 18:13
  */
 
 namespace App\DataFixtures;
@@ -19,9 +19,9 @@ class AnneeUniversitaireFixture extends Fixture
     public function load(ObjectManager $manager): void
     {
         $td = new AnneeUniversitaire();
-        $td->setLibelle('2019-2020');
+        $td->setLibelle('2021-2022');
         $td->setActive(true);
-        $td->setAnnee(2019);
+        $td->setAnnee(2021);
         $td->setCreated(new DateTime('now'));
         $td->setUpdated(new DateTime('now'));
         $manager->persist($td);

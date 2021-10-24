@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/CovidAttestationPersonnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 27/09/2021 21:38
+ * @lastUpdate 23/10/2021 10:42
  */
 
 namespace App\Entity;
@@ -73,7 +73,7 @@ class CovidAttestationPersonnel extends BaseEntity
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $motifRefus;
+    private ?string $motifRefus;
 
     public function __construct(Personnel $personnel)
     {

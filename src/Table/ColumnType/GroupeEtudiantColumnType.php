@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/ColumnType/GroupeEtudiantColumnType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 09:32
+ * @lastUpdate 23/10/2021 12:17
  */
 
 namespace App\Table\ColumnType;
@@ -21,7 +21,7 @@ class GroupeEtudiantColumnType extends PropertyColumnType
         }
         $html = '';
         foreach ($value as $gr) {
-            $html .= '<span class="badge badge-success mr-2">' . $gr->getLibelle() . '</span>';
+            $html .= '<span class="badge bg-success me-1">' . $gr->getLibelle() . '</span>';
         }
 
         return $html;

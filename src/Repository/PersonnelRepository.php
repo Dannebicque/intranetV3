@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/PersonnelRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:48
+ * @lastUpdate 23/10/2021 10:36
  */
 
 namespace App\Repository;
@@ -16,7 +16,6 @@ use App\Entity\PersonnelDepartement;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
-use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Routing\RouterInterface;
@@ -150,11 +149,6 @@ class PersonnelRepository extends ServiceEntityRepository
         return null;
     }
 
-    /**
-     * @param      $data
-     *
-     * @return Query|mixed
-     */
     public function getAllPersonnel($data, int $page = 0, ?int $max = null, bool $getResult = true)
     {
         $qb = $this->_em->createQueryBuilder();

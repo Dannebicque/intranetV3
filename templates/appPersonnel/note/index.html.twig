@@ -8,7 +8,7 @@
             <ul class="nav nav-tabs" role="tablist">
                 {% for eval in evaluations.evaluations %}
                     <li class="nav-item">
-                        <a href="#eval{{ eval.id }}" data-toggle="tab"
+                        <a href="#eval{{ eval.id }}" data-bs-toggle="tab"
                            class="nav-link {% if (indexEval == 0 and loop.first) or (indexEval == eval.id) %}
                            active{% endif %}">
                             {{ 'evaluation'|trans }} N° {{ loop.index }} ({{ eval.libelle }})
@@ -19,7 +19,7 @@
                 {% if evaluations.evaluations|length < matiere.nbNotes %}
                     {% for i in evaluations.evaluations|length..matiere.nbNotes-1 %}
                         <li class="nav-item">
-                            <a href="#evalvide{{ i }}" data-toggle="tab"
+                            <a href="#evalvide{{ i }}" data-bs-toggle="tab"
                                class="nav-link {% if evaluations.evaluations|length == 0 and loop.first %} active {% endif %}">{{ 'evaluation'|trans }}
                                 N° {{ i+1 }} ({{ 'a.saisir'|trans }})
                             </a>
@@ -30,8 +30,8 @@
             </ul>
         {% endif %}
         <div class="buttons">
-            <a href="{{ path('default_homepage') }}" class="btn btn-primary btn-float" data-provide="tooltip"
-               data-placement="bottom" title="{{ 'atitle.retour_dashboard'|trans }}">
+            <a href="{{ path('default_homepage') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom"
+               title="{{ 'atitle.retour_dashboard'|trans }}">
                 <i class="{{ iconDashboard }}"><span class="sr-only">dashboard</span></i>
             </a>
         </div>
@@ -100,7 +100,7 @@
 
                                             <div class="btn-group  btn-block">
                                                 <button class="btn btn-label  btn-block btn-primary dropdown-toggle"
-                                                        data-toggle="dropdown">
+                                                        data-bs-toggle="dropdown">
                                                     <label><i class="fa fa-file-pdf"></i></label>
                                                     {{ 'exporter'|trans }}
                                                 </button>
@@ -120,7 +120,8 @@
                                     <td>
                                         <div class="btn-group  btn-block">
                                             <button class="btn btn-label  btn-block btn-primary dropdown-toggle"
-                                                    data-toggle="dropdown"><label><i class="fas fa-print"></i></label>
+                                                    data-bs-toggle="dropdown">
+                                                <label><i class="fas fa-print"></i></label>
                                                 {{ 'exporter'|trans }}
                                             </button>
                                             <div class="dropdown-menu">

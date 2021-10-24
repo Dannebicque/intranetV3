@@ -5,21 +5,21 @@
                                                  : {{ annee }})</h4>
         <ul class="card-controls">
             <li class="dropdown">
-                <a data-toggle="dropdown" href="#"><i class="fas fa-ellipsis-h rotate-90"></i></a>
+                <a data-bs-toggle="dropdown" href="#"><i class="fas fa-ellipsis-h rotate-90"></i></a>
                 <div class="dropdown-menu dropdown-menu-right">
                     <a class="dropdown-item" href="{{ path('previsionnel_chronologique') }}"><i
                                 class="fas fa-bell"></i> {{ 'chronologique'|trans }}</a>
                     {# todo: finaliser la partie export des prévisionnels et harmoniser. #}
-                    {#                    <a class="dropdown-item" href="{{ path('administration_previsionnel_export', {'annee': annee, '_format': 'csv'}) }}"><i#}
-                    {#                                class="ti-export"></i> {{ 'exporter.csv'|trans }}</a>#}
-                    {#                    <a class="dropdown-item" href="{{ path('administration_previsionnel_export', {'annee': annee, '_format': 'pdf'}) }}"><i#}
-                    {#                                class="ti-export"></i> {{ 'exporter.pdf'|trans }}</a>#}
-                    {#                    <a class="dropdown-item" href="{{ path('administration_previsionnel_export', {'annee': annee, '_format': 'xlsx'}) }}"><i#}
-                    {#                                class="ti-export"></i> {{ 'exporter.xlsx'|trans }}</a>#}
+                    {# <a class="dropdown-item" href="{{ path('administration_previsionnel_export', {'annee': annee, '_format': 'csv'}) }}"><i #}
+                    {# class="ti-export"></i> {{ 'exporter.csv'|trans }}</a> #}
+                    {# <a class="dropdown-item" href="{{ path('administration_previsionnel_export', {'annee': annee, '_format': 'pdf'}) }}"><i #}
+                    {# class="ti-export"></i> {{ 'exporter.pdf'|trans }}</a> #}
+                    {# <a class="dropdown-item" href="{{ path('administration_previsionnel_export', {'annee': annee, '_format': 'xlsx'}) }}"><i #}
+                    {# class="ti-export"></i> {{ 'exporter.xlsx'|trans }}</a> #}
                 </div>
             </li>
             <li><a class="card-btn-reload" href="#" id="saReloadPreviPersonnel" data-annee="{{ annee }}"
-                   data-personnel="{{ previsionnel.personnel.id }}" title="" data-provide="tooltip" data-original-title="{{ 'atitle.refresh'|trans }}"><i class="fa fa-refresh"></i></a>
+                   data-personnel="{{ previsionnel.personnel.id }}" title="" data-bs-toggle="tooltip" data-bs-placement="bottom" data-original-title="{{ 'atitle.refresh'|trans }}"><i class="fa fa-refresh"></i></a>
             </li>
         </ul>
     </header>
@@ -30,7 +30,7 @@
         <ul class="nav nav-tabs">
             {% for departement in previsionnel.departements %}
                 <li class="nav-item">
-                    <a class="nav-link {% if loop.first %} active{% endif %}" data-toggle="tab"
+                    <a class="nav-link {% if loop.first %} active{% endif %}" data-bs-toggle="tab"
                        href="#departement{{ departement.id }}">{{ departement.libelle }}</a>
                 </li>
             {% endfor %}
@@ -78,12 +78,12 @@
                                     <td colspan="1">
                                         {% if (user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE')) %}
                                             <a href="{{ path('administration_previsionnel_duplicate', {id: previsionnel.id}) }}"
-                                               class="btn btn-success btn-outline btn-square" data-provide="tooltip" data-placement="bottom"
+                                               class="btn btn-success btn-outline btn-square" data-bs-toggle="tooltip" data-bs-placement="bottom"
                                                title="{{ 'atitle.dupliquer'|trans }}"><i
                                                         class="{{ iconDuplicate }}"></i></a>
                                             <a href="{{ path('administration_previsionnel_delete', {id: previsionnel.id}) }}"
-                                               class="btn btn-danger btn-outline btn-square supprimer" data-provide="tooltip"
-                                               data-placement="bottom"
+                                               class="btn btn-danger btn-outline btn-square supprimer" data-bs-toggle="tooltip" data-bs-placement="bottom"
+
                                                title="{{ 'atitle.supprimer'|trans }}"><i
                                                         class="{{ iconDelete }}"></i></a>
                                         {% endif %}

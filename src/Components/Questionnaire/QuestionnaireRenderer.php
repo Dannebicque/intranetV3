@@ -4,12 +4,11 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Questionnaire/QuestionnaireRenderer.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/08/2021 08:00
+ * @lastUpdate 23/10/2021 10:37
  */
 
 namespace App\Components\Questionnaire;
 
-use App\Components\Questionnaire\Section;
 use Twig\Environment;
 
 class QuestionnaireRenderer

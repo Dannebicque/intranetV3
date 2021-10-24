@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/EtudiantSousCommission.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:48
+ * @lastUpdate 08/10/2021 19:44
  */
 
 namespace App\DTO;
@@ -186,7 +186,7 @@ class EtudiantSousCommission
             return '';
         }
 
-        if ($nbAbsences >= 5 && $nbAbsences < 10) {
+        if ($nbAbsences < 10) {
             return 'badge badge-warning';
         }
 

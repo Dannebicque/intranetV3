@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Covid/MyExportPresence.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 09:03
+ * @lastUpdate 09/10/2021 10:02
  */
 
 /*
@@ -114,22 +114,16 @@ class MyExportPresence
             },
             200,
             [
-                'Content-Type'        => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                 'Content-Disposition' => 'attachment;filename="presence' . $date->format('d-m-Y') . '.xlsx"',
             ]
         );
     }
 
-    /**
-     *
-     * @return bool|PdfResponse|string
-     * @throws SyntaxError
-     * @throws LoaderError
-     *
-     * @throws RuntimeError
-     */
-    public function genereAttestationPdf(CovidAttestationPersonnel $covidAttestationPersonnel, $sortie)
-    {
+    public function genereAttestationPdf(
+        CovidAttestationPersonnel $covidAttestationPersonnel,
+        $sortie
+    ): string|PdfResponse {
         if ('force' === $sortie) {
             return $this->myPdf::generePdf(
                 'pdf/covid/autorisationPersonnel.html.twig',
@@ -149,8 +143,6 @@ class MyExportPresence
         );
 
         return $this->dir . 'covid/attestation/' . 'attestation-' . $covidAttestationPersonnel->getCreated()->format('dmYHis') . '.pdf';
-
-        return true;
     }
 
     /**
@@ -175,7 +167,7 @@ class MyExportPresence
             'pdf/covid/autorisationEtudiant.html.twig',
             [
                 'covidAttestationEtudiant' => $covidAttestationEtudiant,
-                'etudiant'                 => $etudiant,
+                'etudiant' => $etudiant,
             ],
             'convocation-covid-' . $date->format('d-m-Y') . '-' . $etudiant->getNumEtudiant()
         );
@@ -194,7 +186,7 @@ class MyExportPresence
             'pdf/covid/autorisationEtudiant.html.twig',
             [
                 'covidAttestationEtudiant' => $covidAttestationEtudiant,
-                'etudiant'                 => $etudiant,
+                'etudiant' => $etudiant,
             ],
             $name,
             $this->dir . 'covid/convocations/'
@@ -203,7 +195,7 @@ class MyExportPresence
         $this->myMailer->initEmail();
         $this->myMailer->setTemplate('mails/covid/convocationEtudiant.html.twig', [
             'covidAttestationEtudiant' => $covidAttestationEtudiant,
-            'etudiant'                 => $etudiant,
+            'etudiant' => $etudiant,
         ]);
 
         //joindre le PDF
@@ -214,7 +206,7 @@ class MyExportPresence
             'Attestation de présence pour la période du ' . $covidAttestationEtudiant->getDateDebut()->format('d/m/Y') . '  au ' . $covidAttestationEtudiant->getDateFin()->format('d/m/Y'),
             [
                 'replyTo' => [$covidAttestationEtudiant->getDiplome()->getAssistantDiplome()->getMailUniv()],
-                'from'    => [$covidAttestationEtudiant->getDiplome()->getAssistantDiplome()->getMailUniv()],
+                'from' => [$covidAttestationEtudiant->getDiplome()->getAssistantDiplome()->getMailUniv()],
             ]
         );
     }
@@ -285,7 +277,7 @@ class MyExportPresence
             },
             200,
             [
-                'Content-Type'        => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                 'Content-Disposition' => 'attachment;filename="presence-etudiant-' . $date->format('d-m-Y') . '.xlsx"',
             ]
         );

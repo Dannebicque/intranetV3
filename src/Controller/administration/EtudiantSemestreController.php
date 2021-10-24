@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EtudiantSemestreController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/10/2021 12:14
+ * @lastUpdate 23/10/2021 10:34
  */
 
 namespace App\Controller\administration;
@@ -15,10 +15,7 @@ use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Semestre;
 use App\Repository\AnneeUniversitaireRepository;
-use App\Repository\BacRepository;
-use App\Repository\DepartementRepository;
 use App\Repository\EtudiantRepository;
-use App\Repository\SemestreRepository;
 use App\Table\EtudiantSemestreTableType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

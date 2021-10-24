@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/EtudiantSemestreTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/09/2021 15:56
+ * @lastUpdate 23/10/2021 12:35
  */
 
 namespace App\Table;
@@ -15,8 +15,6 @@ use App\Components\Table\Column\SelectColumnType;
 use App\Components\Table\Column\WidgetColumnType;
 use App\Components\Table\TableBuilder;
 use App\Components\Table\TableType;
-use App\Components\Widget\Type\ButtonDropdownType;
-use App\Components\Widget\Type\LinkType;
 use App\Components\Widget\Type\RowDeleteLinkType;
 use App\Components\Widget\Type\RowEditLinkType;
 use App\Components\Widget\Type\RowShowLinkType;
@@ -210,23 +208,14 @@ class EtudiantSemestreTableType extends TableType
                 if (isset($formData['search'])) {
                     $qb->andWhere('LOWER(e.nom) LIKE :search');
                     $qb->orWhere('LOWER(e.prenom) LIKE :search');
-                    $qb->setParameter('search', '%'.$formData['search'].'%');
+                    $qb->setParameter('search', '%' . $formData['search'] . '%');
                 }
-//
-//                if (isset($formData['from'])) {
-//                    $qb->andWhere('e.dateEval >= :from');
-//                    $qb->setParameter('from', $formData['from']);
-//                }
-//
-//                if (isset($formData['to'])) {
-//                    $qb->andWhere('e.dateEval <= :to');
-//                    $qb->setParameter('to', $formData['to']);
-//                }
-//
-//                if (isset($formData['etat_demande'])) {
-//                    $qb->andWhere('e.etat_demande = :etat_demande');
-//                    $qb->setParameter('etat_demande', $formData['etat_demande']);
-//                }
+
+                if (isset($formData['groupe']) && '' !== trim($formData['groupe'])) {
+                    $qb->innerJoin('e.groupes', 'g');
+                    $qb->andWhere('g.id = :groupe');
+                    $qb->setParameter('groupe', $formData['groupe']);
+                }
             },
         ]);
     }

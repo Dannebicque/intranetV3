@@ -4,13 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/AbsenceEtatAppelRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/07/2021 16:06
+ * @lastUpdate 23/10/2021 10:34
  */
 
 namespace App\Repository;
 
 use App\Entity\AbsenceEtatAppel;
-use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

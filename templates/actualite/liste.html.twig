@@ -7,8 +7,8 @@
 {% block headeractions %}
     <div class="header-action">
         <div class="buttons">
-            <a href="{{ path('default_homepage') }}" class="btn btn-primary btn-float" data-provide="tooltip"
-               data-placement="bottom" title="{{ 'atitle.retour_dashboard'|trans }}">
+            <a href="{{ path('default_homepage') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom"
+               title="{{ 'atitle.retour_dashboard'|trans }}">
                 <i class="{{ iconDashboard }}"><span class="sr-only">dashboard</span></i>
             </a>
         </div>
@@ -23,7 +23,7 @@
                 {% for actualite in actualites %}
                     <li class="timeline-block">
                         <div class="timeline-point timeline-point-primary">
-                            <span class="badge badge-ring badge-primary"></span>
+                            <span class="badge badge-ring bg-primary"></span>
                         </div>
                         <div class="timeline-content">
                             <time datetime="{{ actualite.updated|date('Y-m-d') }}">{{ actualite.updated|format_datetime

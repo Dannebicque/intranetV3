@@ -13,17 +13,17 @@
             {% for stage in stagesEnCours %}
                 <tr class="stage">
                     <td>{% if stage.stagePeriode != null %}{{ stage.stagePeriode.semestre.display }}{% else %} - {% endif %}</td>
-                    <td>{% if stage.stagePeriode != null %}<a href="#" data-provide="modaler tooltip"
+                    <td>{% if stage.stagePeriode != null %}<a href="#" data-provide="modaler"
                                                               data-url="{{ path('application_etudiant_stage_periode_info', {'id': stage.id}) }}"
                                                               class="btn btn-info btn-outline btn-xs"
-                                                              data-placement="bottom"
+                                                              data-bs-toggle="tooltip" data-bs-placement="bottom"
                                                               title="Informations sur la période"
                                                               data-title="Informations sur la période" >{{ stage.stagePeriode.libelle }}</a>{% else %} - {% endif %}
                     </td>
-                    <td>{% if stage.entreprise != null %}<a href="#" data-provide="modaler tooltip"
+                    <td>{% if stage.entreprise != null %}<a href="#" data-provide="modaler"
                                                             data-url="{{ path('application_etudiant_stage_entreprise_info', {'id': stage.id}) }}"
                                                             class="btn btn-info btn-outline btn-xs"
-                                                            data-placement="bottom"
+                                                            data-bs-toggle="tooltip" data-bs-placement="bottom"
                                                             title="Informations sur l'entreprise"
                                                             data-title="Informations sur l'entreprise" >{{ stage.entreprise.raisonSociale }}</a>{% else %} - {% endif %}
                     </td>
@@ -43,10 +43,10 @@
                     <td>
                         Du {{ alternance.dateDebut ? alternance.dateDebut|format_datetime('long', 'short') : 'non.defini'|trans }}
                         au {{ alternance.dateFin ? alternance.dateFin|format_datetime('long', 'short') : 'non.defini'|trans }}</td>
-                    <td>{% if alternance.entreprise != null %}<a href="#" data-provide="modaler tooltip"
+                    <td>{% if alternance.entreprise != null %}<a href="#" data-provide="modaler"
                                                                  data-url="{{ path('application_etudiant_alternance_entreprise_info', {'id': alternance.id}) }}"
                                                                  class="btn btn-info btn-outline btn-xs"
-                                                                 data-placement="bottom"
+                                                                 data-bs-toggle="tooltip" data-bs-placement="bottom"
                                                                  title="Informations sur l'entreprise"
                                                                  data-title="Informations sur l'entreprise" >{{ alternance.entreprise.raisonSociale }}</a>{% else %} - {% endif %}
                     </td>
@@ -83,17 +83,17 @@
                 <tr class="stage">
                     <td>{% if stage.stagePeriode != null %}{{ stage.stagePeriode.semestre.display }}{% else %} - {% endif %}</td>
                     <td>{{ stage.stagePeriode.anneeUniversitaire.annee }}</td>
-                    <td>{% if stage.stagePeriode != null %}<a href="#" data-provide="modaler tooltip"
+                    <td>{% if stage.stagePeriode != null %}<a href="#" data-provide="modaler"
                                                               data-url="{{ path('application_etudiant_stage_periode_info', {'id': stage.id}) }}"
                                                               class="btn btn-info btn-outline btn-xs"
-                                                              data-placement="bottom"
+                                                              data-bs-toggle="tooltip" data-bs-placement="bottom"
                                                               title="Informations sur la période"
                                                               data-title="Informations sur la période" >{{ stage.stagePeriode.libelle }}</a>{% else %} - {% endif %}
                     </td>
-                    <td>{% if stage.entreprise != null %}<a href="#" data-provide="modaler tooltip"
+                    <td>{% if stage.entreprise != null %}<a href="#" data-provide="modaler"
                                                             data-url="{{ path('application_etudiant_stage_entreprise_info', {'id': stage.id}) }}"
                                                             class="btn btn-info btn-outline btn-xs"
-                                                            data-placement="bottom"
+                                                            data-bs-toggle="tooltip" data-bs-placement="bottom"
                                                             title="Informations sur l'entreprise"
                                                             data-title="Informations sur l'entreprise" >{{ stage.entreprise.raisonSociale }}</a>{% else %} - {% endif %}
                     </td>
@@ -112,10 +112,10 @@
                     <td>
                         Du {{ alternance.dateDebut ? alternance.dateDebut|format_datetime('long', 'short') : 'non.defini'|trans }}
                         au {{ alternance.dateFin ? alternance.dateFin|format_datetime('long', 'short') : 'non.defini'|trans }}</td>
-                    <td>{% if alternance.entreprise != null %}<a href="#" data-provide="modaler tooltip"
+                    <td>{% if alternance.entreprise != null %}<a href="#" data-provide="modaler"
                                                                  data-url="{{ path('application_etudiant_alternance_entreprise_info', {'id': alternance.id}) }}"
                                                                  class="btn btn-info btn-outline btn-xs"
-                                                                 data-placement="bottom"
+                                                                 data-bs-toggle="tooltip" data-bs-placement="bottom"
                                                                  title="Informations sur l'entreprise"
                                                                  data-title="Informations sur l'entreprise" >{{ alternance.entreprise.raisonSociale }}</a>{% else %} - {% endif %}
                     </td>

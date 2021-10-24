@@ -4,7 +4,7 @@
   "type": "project",
   "license": "MPL-2.0",
   "require": {
-    "php": "^8.0.0",
+    "php": "^8.0",
     "ext-bcmath": "*",
     "ext-json": "*",
     "ext-zip": "*",
@@ -55,8 +55,7 @@
     "twig/extra-bundle": "^3.0",
     "twig/intl-extra": "^3.0",
     "twig/markdown-extra": "^3.3",
-    "vich/uploader-bundle": "^1.8",
-    "ext-odbc": "*"
+    "vich/uploader-bundle": "^1.8"
   },
   "config": {
     "preferred-install": {
@@ -108,8 +107,9 @@
   "require-dev": {
     "dealerdirect/phpcodesniffer-composer-installer": "^0.7",
     "doctrine/doctrine-fixtures-bundle": "^3.3",
-    "phpcompatibility/php-compatibility": "*",
-    "phpcompatibility/phpcompatibility-symfony": "*",
+    "phpstan/phpstan": "^0.12.99",
+    "phpstan/extension-installer": "^1.1.0",
+    "phpstan/phpstan-symfony": "^0.12.44",
     "phpunit/phpunit": "^9.5",
     "symfony/browser-kit": "^5.3",
     "symfony/css-selector": "^5.3",

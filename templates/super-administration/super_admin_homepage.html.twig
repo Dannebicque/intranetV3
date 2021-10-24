@@ -35,8 +35,7 @@
             <div class="card-header-actions">
                 <a class="btn btn-sm btn-primary"
                    title="{{ 'creation.departement.manuellement'|trans }}"
-                   data-provide="tooltip"
-                   data-placement="bottom"
+                   data-bs-toggle="tooltip" data-bs-placement="bottom"
                    href="{{ path('sa_departement_new') }}"
                 >
                     <i class="fas fa-plus"></i>
@@ -44,7 +43,7 @@
 
                 <ul class="card-controls">
                     <li class="dropdown">
-                        <a data-toggle="dropdown" href="#"><i
+                        <a data-bs-toggle="dropdown" href="#"><i
                                     class="fas fa-ellipsis-h rotate-90"></i></a>
                         <div class="dropdown-menu dropdown-menu-right">
                             <a href="#" class="dropdown-item"><i class="fas fa-file-export"></i>{{ 'exporter.xls'|trans }}
@@ -58,12 +57,12 @@
         </header>
 
         <div class="card-body">
-            <div class="row gap-y">
+            <div class="row">
                 {% for departement in departements %}
-                    <div class="col-md-4 col-sm-12">
-                        <div class="btn-group btn-block">
+                    <div class="col-md-4 col-sm-12 d-grid d-block mt-2">
+                        <div class="btn-group">
                             <button class="btn {% if departement.actif %}btn-primary{% else %} btn-default {% endif %} btn-block dropdown-toggle"
-                                    data-toggle="dropdown"> {{ departement.libelle }}</button>
+                                    data-bs-toggle="dropdown"> {{ departement.libelle }}</button>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item"
                                    href="{{ path('sa_structure_index', {departement:departement.id}) }}">Structure</a>
@@ -94,52 +93,53 @@
         </div>
     </div>
 
-    <div class="card"><h4 class="card-title"><strong>{{ 'sa_configuration.heading'|trans }}</strong></h4>
+    <div class="card">
+        <h4 class="card-title"><strong>{{ 'sa_configuration.heading'|trans }}</strong></h4>
         <div class="card-body">
-            <div class="row gap-y">
-                <div class="col-md-4 col-sm-12">
-                    <div><a href="{{ path('sa_materiel_commun_index') }}"
-                            class="btn btn-block btn-primary"> {{ 'gestion.materiel_commun'|trans }}</a></div>
+            <div class="row">
+                <div class="col-4 d-block d-grid mb-2">
+                    <a href="{{ path('sa_materiel_commun_index') }}"
+                       class="btn btn-primary"> {{ 'gestion.materiel_commun'|trans }}</a>
                 </div>
 
-                <div class="col-md-4 col-sm-12"><a href="{{ path('sa_site_index') }}"
-                                                   class="btn btn-block btn-primary"> {{ 'sites-geographiques'|trans }}
+                <div class="col-4 d-block d-grid mb-2"><a href="{{ path('sa_site_index') }}"
+                                                          class="btn btn-primary"> {{ 'sites-geographiques'|trans }}
                     </a></div>
-                <div class="col-md-4 col-sm-12"><a href="{{ path('sa_ufr_index') }}"
-                                                   class="btn btn-block btn-primary"> {{ 'ufr.menu'|trans }}
+                <div class="col-4 d-block d-grid mb-2"><a href="{{ path('sa_ufr_index') }}"
+                                                          class="btn btn-primary"> {{ 'ufr.menu'|trans }}
                     </a></div>
-                <div class="col-md-4 col-sm-12">
+                <div class="col-4 d-block d-grid mb-2">
                     <a href="{{ path('sa_type_diplome_index') }}"
-                       class="btn btn-block btn-primary"> {{ 'type_diplome'|trans }}</a>
+                       class="btn btn-primary"> {{ 'type_diplome'|trans }}</a>
                 </div>
 
-                <div class="col-md-4 col-sm-12">
+                <div class="col-4 d-block d-grid mb-2">
                     <a href="{{ path('sa_type_hrs_index') }}"
-                       class="btn btn-block btn-primary"> {{ 'type_hrs'|trans }}</a>
+                       class="btn btn-primary"> {{ 'type_hrs'|trans }}</a>
                 </div>
-                <div class="col-md-4 col-sm-12">
+                <div class="col-4 d-block d-grid mb-2">
                     <a href="{{ path('sa_statuts_index') }}"
-                       class="btn btn-block btn-primary"> Statuts</a>
+                       class="btn btn-primary"> Statuts</a>
                 </div>
-                <div class="col-md-4 col-sm-12">
-                    <a href="{{ path('sa_salle_index') }}" class="btn btn-block btn-primary"> {{ 'salle'|trans }}</a>
+                <div class="col-4 d-block d-grid mb-2">
+                    <a href="{{ path('sa_salle_index') }}" class="btn btn-primary"> {{ 'salle'|trans }}</a>
                 </div>
-                <div class="col-md-4 col-sm-12">
-                    <a href="{{ path('sa_bac_index') }}" class="btn btn-block btn-primary"> {{ 'bac.menu'|trans }}</a>
+                <div class="col-4 d-block d-grid mb-2">
+                    <a href="{{ path('sa_bac_index') }}" class="btn btn-primary"> {{ 'bac.menu'|trans }}</a>
                 </div>
-                <div class="col-md-4 col-sm-12">
-                    <div><a href="{{ path('sa_annee_universitaire_index') }}"
-                            class="btn btn-block btn-primary"> {{ 'annee.universitaire'|trans }}</a></div>
-                </div>
-
-                <div class="col-md-4 col-sm-12">
-                    <div><a href="{{ path('sa_celcat_calendrier_index') }}"
-                            class="btn btn-block btn-primary"> {{ 'edt.actions.calendrier'|trans }}</a></div>
+                <div class="col-4 d-block d-grid mb-2">
+                    <a href="{{ path('sa_annee_universitaire_index') }}"
+                       class="btn btn-primary"> {{ 'annee.universitaire'|trans }}</a>
                 </div>
 
-                <div class="col-md-4 col-sm-12">
-                    <div><a href="{{ path('sa_configuration_index') }}"
-                            class="btn btn-block btn-primary"> {{ 'variable.configuration'|trans }}</a></div>
+                <div class="col-4 d-block d-grid mb-2">
+                    <a href="{{ path('sa_celcat_calendrier_index') }}"
+                       class="btn btn-primary"> {{ 'edt.actions.calendrier'|trans }}</a>
+                </div>
+
+                <div class="col-4 d-block d-grid mb-2">
+                    <a href="{{ path('sa_configuration_index') }}"
+                       class="btn btn-primary"> {{ 'variable.configuration'|trans }}</a>
                 </div>
 
             </div>

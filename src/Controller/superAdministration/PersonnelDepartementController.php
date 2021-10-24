@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/PersonnelDepartementController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:48
+ * @lastUpdate 08/10/2021 19:44
  */
 
 namespace App\Controller\superAdministration;
@@ -67,7 +67,7 @@ class PersonnelDepartementController extends BaseController
     public function modifierDroits(Request $request, PersonnelDepartement $pf): Response
     {
         $droit = $request->request->get('droit');
-        if (null !== $pf && in_array($droit, Constantes::ROLE_LISTE, true)) {
+        if (in_array($droit, Constantes::ROLE_LISTE, true)) {
             $pf->clearRole();
             $pf->addRole($droit);
             $this->entityManager->flush();

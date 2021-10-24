@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtBorne.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/09/2021 09:09
+ * @lastUpdate 23/10/2021 10:36
  */
 
 /*
@@ -14,42 +14,34 @@
 namespace App\Classes\Edt;
 
 use App\Classes\Matieres\TypeMatiereManager;
-use App\Entity\AnneeUniversitaire;
-use App\Entity\Semestre;
+use App\Exception\SemestreNotFoundException;
 use App\Repository\CalendrierRepository;
-use App\Repository\CelcatEventsRepository;
-use App\Repository\EdtPlanningRepository;
 use App\Repository\GroupeRepository;
+use App\Repository\SemestreRepository;
 
 class MyEdtBorne
 {
-    public $data = [];
+    public array $data = [];
 
-    /** @var CalendrierRepository */
-    private $calendrierRepository;
+    private CalendrierRepository $calendrierRepository;
+    private GroupeRepository $groupeRepository;
 
-    /** @var EdtPlanningRepository */
-    private $edtPlanningRepository;
-
-    /** @var CelcatEventsRepository */
-    private $celcatEventRepository;
-
-    /** @var GroupeRepository */
-    private $groupeRepository;
+    private EdtManager $edtManager;
+    private SemestreRepository $semestreRepository;
 
     /**
      * MyEdtBorne constructor.
      */
     public function __construct(
         CalendrierRepository $calendrierRepository,
-        EdtPlanningRepository $edtPlanningRepository,
-        CelcatEventsRepository $celcatEventRepository,
-        GroupeRepository $groupeRepository
+        GroupeRepository $groupeRepository,
+        EdtManager $edtManager,
+        SemestreRepository $semestreRepository
     ) {
         $this->calendrierRepository = $calendrierRepository;
-        $this->edtPlanningRepository = $edtPlanningRepository;
-        $this->celcatEventRepository = $celcatEventRepository;
         $this->groupeRepository = $groupeRepository;
+        $this->edtManager = $edtManager;
+        $this->semestreRepository = $semestreRepository;
     }
 
     public function init(): void
@@ -59,42 +51,39 @@ class MyEdtBorne
         $this->data['jsem'] = date('N');
     }
 
-    public function calculSemestre(
-        Semestre $semestre1,
-        Semestre $semestre2,
-        AnneeUniversitaire $anneeUniversitaire,
-        TypeMatiereManager $typeMatiereManager
-    ): void {
+    public function getData(): array
+    {
+        return $this->data;
+    }
+
+    public function getAffichageBorneJourSemestre(mixed $intSemestre, TypeMatiereManager $typeMatiereManager)
+    {
+        $semestre = $this->semestreRepository->find($intSemestre);
+
+        if ($semestre === null) {
+            throw new SemestreNotFoundException();
+        }
+
         $semaine = $this->calendrierRepository->findOneBy([
             'semaineReelle' => $this->data['semaine'],
-            'anneeUniversitaire' => $anneeUniversitaire->getId()
+            'anneeUniversitaire' => $semestre->getAnneeUniversitaire()?->getId()
         ]);
 
-        $this->data['semestre1'] = $semestre1;
-        $this->data['semestre2'] = $semestre2;
+        $this->data['semestre'] = $semestre;
         if (null !== $semaine) {
-            if (null !== $semestre1->getDiplome() && null !== $semestre1->getDiplome()->getDepartement() && $semestre1->getDiplome()->getDepartement()->isOptUpdateCelcat()) {
-                $this->data['p1']['planning'] = $this->celcatEventRepository->recupereEDTBornes($semaine->getSemaineFormation(),
-                    $semestre1, $this->data['jsem']);
-                $this->data['p2']['planning'] = $this->celcatEventRepository->recupereEDTBornes($semaine->getSemaineFormation(),
-                    $semestre2, $this->data['jsem']);
-            } else {
-                $this->data['p1']['planning'] = $this->edtPlanningRepository->recupereEDTBornes($semaine->getSemaineFormation(),
-                    $semestre1, $this->data['jsem'], $typeMatiereManager->findBySemestreArray($semestre1));
-                $this->data['p2']['planning'] = $this->edtPlanningRepository->recupereEDTBornes($semaine->getSemaineFormation(),
-                    $semestre2, $this->data['jsem'], $typeMatiereManager->findBySemestreArray($semestre2));
+            $planning = $this->edtManager->recupereEDTBornes($semaine->getSemaineFormation(),
+                $semestre, $this->data['jsem'], $typeMatiereManager->findBySemestreArray($semestre));
+            $tab = [];
+            foreach ($planning->getEvents() as $pl) {
+                $tab[$pl->ordreGroupe][$pl->gridStart] = $pl;
             }
-
-            $this->data['p1']['groupes'] = $this->groupeRepository->findAllGroupes($semestre1);
-            $this->data['p2']['groupes'] = $this->groupeRepository->findAllGroupes($semestre2);
+            $this->data['planning'] = $tab;
+            $this->data['p1']['groupes'] = $this->groupeRepository->findAllGroupes($semestre);
             $this->data['jours'] = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
             $this->data['j1'] = $this->data['jours'][$this->data['jsem']] . ' ' . date('d/m/Y',
                     mktime(12, 30, 00, date('n'), $this->data['njour'], date('Y')));
         }
-    }
 
-    public function getData(): array
-    {
         return $this->data;
     }
 }

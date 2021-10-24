@@ -8,20 +8,20 @@
     <div class="header-action">
         <ul class="nav nav-tabs" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active show" data-toggle="tab"
+                <a class="nav-link active show" data-bs-toggle="tab"
                    href="#fichiersUrca">Fichiers URCA</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="tab"
+                <a class="nav-link" data-bs-toggle="tab"
                    href="#autresFichiers">Autres fichiers</a>
             </li>
         </ul>
         <div class="buttons">
             <a href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}"
-               class="btn btn-primary btn-float" data-provide="tooltip"
-               data-placement="bottom" title="{{ 'atitle.retour_semestres'|trans }}"><i class="fas fa-arrow-left"></i></a>
-            <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
-               data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="{{ iconAdmin }}"><span class="sr-only">Administration</span></i></a>
+               class="btn btn-primary btn-float" data-bs-toggle="tooltip"
+               data-bs-placement="bottom" title="{{ 'atitle.retour_semestres'|trans }}"><i class="fas fa-arrow-left"></i></a>
+            <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip"
+               data-bs-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="{{ iconAdmin }}"><span class="sr-only">Administration</span></i></a>
         </div>
     </div>
 {% endblock %}

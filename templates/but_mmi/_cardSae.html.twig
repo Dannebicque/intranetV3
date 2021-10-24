@@ -6,11 +6,11 @@
         <div class="card-body">
             <p>{{ sae.description != null ? sae.description|markdown_to_html : '' }}</p>
             <p>
-                <a data-provide="tooltip"
+                <a data-bs-toggle="tooltip" data-bs-placement="bottom"
                    href="{{ path('but_fiche_sae',
                        {'apcSae': sae.id, diplome:diplome.sigle|lower}) }}"
                    class="btn btn-info"
-                   data-placement="bottom"
+
                    title="Voir la fiche SAE"
                    target="_blank"
                 >

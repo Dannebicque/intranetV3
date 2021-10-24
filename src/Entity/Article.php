@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Article.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/06/2021 18:44
+ * @lastUpdate 09/10/2021 10:33
  */
 
 namespace App\Entity;
@@ -67,6 +67,11 @@ class Article extends BaseEntity
     private Collection $articleLikes;
 
     /**
+     * @ORM\Column(type="string", length=5)
+     */
+    private ?string $typeDestinataire;
+
+    /**
      * Article constructor.
      */
     public function __construct(?Personnel $personnel)
@@ -121,23 +126,22 @@ class Article extends BaseEntity
     {
         $nbreCar = 100;
         $texte = trim(strip_tags($this->texte)); // suppression des balises HTML
-        if (is_numeric($nbreCar)) {
-            $PointSuspension = '...'; // points de suspension (ou '' si vous n'en voulez pas)
-            // ---------------------
-            // COUPE DU TEXTE pour le RÉSUMÉ
-            // ajout d'un espace de fin au cas où le texte n'en contiendrait pas...
-            $texte .= ' ';
-            $LongueurAvant = mb_strlen($texte);
-            if ($LongueurAvant > $nbreCar) {
-                // pour ne pas couper un mot, on va à l'espace suivant
-                $texte = mb_substr($texte, 0, mb_strpos($texte, ' ', $nbreCar));
-                // On ajoute (ou pas) des points de suspension à la fin si le texte brut est plus long que $nbreCar
-                if (!empty($PointSuspension)) {
-                    $texte .= $PointSuspension;
-                }
+        $PointSuspension = '...'; // points de suspension (ou '' si vous n'en voulez pas)
+        // ---------------------
+        // COUPE DU TEXTE pour le RÉSUMÉ
+        // ajout d'un espace de fin au cas où le texte n'en contiendrait pas...
+        $texte .= ' ';
+        $LongueurAvant = mb_strlen($texte);
+        if ($LongueurAvant > $nbreCar) {
+            // pour ne pas couper un mot, on va à l'espace suivant
+            $texte = mb_substr($texte, 0, mb_strpos($texte, ' ', $nbreCar));
+            // On ajoute (ou pas) des points de suspension à la fin si le texte brut est plus long que $nbreCar
+            if (!empty($PointSuspension)) {
+                $texte .= $PointSuspension;
             }
-            // ---------------------
         }
+        // ---------------------
+
 
         // On renvoie le résumé du texte correctement formaté.
         return $texte;
@@ -220,6 +224,18 @@ class Article extends BaseEntity
                 $articleLike->setArticle(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTypeDestinataire(): ?string
+    {
+        return $this->typeDestinataire;
+    }
+
+    public function setTypeDestinataire(string $typeDestinataire): self
+    {
+        $this->typeDestinataire = $typeDestinataire;
 
         return $this;
     }

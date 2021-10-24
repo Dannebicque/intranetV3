@@ -1,6 +1,61 @@
 {
-  "base_url": "",
+  "base_url": "\/",
   "routes": {
+    "agenda_qv": {
+      "tokens": [
+        [
+          "text",
+          "\/agenda\/qv"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "agenda_qv_previ": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "previ",
+          true
+        ],
+        [
+          "text",
+          "\/agenda\/qv"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
     "agenda_index": {
       "tokens": [
         [
@@ -74,6 +129,30 @@
       "methods": [],
       "schemes": []
     },
+    "document_ajax_favori": {
+      "tokens": [
+        [
+          "text",
+          "\/document\/ajax\/document\/favori"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
     "document_ajax": {
       "tokens": [
         [
@@ -86,6 +165,37 @@
         [
           "text",
           "\/document\/ajax\/document"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "document_add_favori": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "document",
+          true
+        ],
+        [
+          "text",
+          "\/document\/ajax\/add-favori"
         ],
         [
           "variable",
@@ -175,8 +285,39 @@
       "methods": [],
       "schemes": []
     },
+    "ldap_search": {
+      "tokens": [
+        [
+          "text",
+          "\/ldap\/search-ldap"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
     "messagerie_nouveau": {
       "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "message",
+          true
+        ],
         [
           "text",
           "\/messagerie\/ecrire"
@@ -190,6 +331,7 @@
         ]
       ],
       "defaults": {
+        "message": null,
         "_locale": "fr"
       },
       "requirements": {
@@ -346,6 +488,37 @@
       ],
       "schemes": []
     },
+    "messagerie_message_envoye": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "message",
+          true
+        ],
+        [
+          "text",
+          "\/messagerie\/message-envoye"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
     "messagerie_message": {
       "tokens": [
         [
@@ -401,6 +574,65 @@
       "methods": [],
       "schemes": []
     },
+    "profil_etudiant_ajout_commentaire": {
+      "tokens": [
+        [
+          "text",
+          "\/ajout-commentaire"
+        ],
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "slug",
+          true
+        ],
+        [
+          "text",
+          "\/etudiant\/profil"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "quick_view": {
+      "tokens": [
+        [
+          "text",
+          "\/quick\/view"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
     "recherche": {
       "tokens": [
         [
@@ -429,6 +661,146 @@
         "_locale": "fr|en"
       },
       "hosttokens": [],
+      "methods": [
+        "GET"
+      ],
+      "schemes": []
+    },
+    "security_password_init": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "user",
+          true
+        ],
+        [
+          "text",
+          "\/connexion\/init-password"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "settings_change_annee_universitaire": {
+      "tokens": [
+        [
+          "text",
+          "\/settings\/change-annee-universitaire"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [
+        "POST"
+      ],
+      "schemes": []
+    },
+    "settings_configuration_personnel": {
+      "tokens": [
+        [
+          "text",
+          "\/settings\/change-configuration-personnel"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [
+        "POST"
+      ],
+      "schemes": []
+    },
+    "table_2": {
+      "tokens": [
+        [
+          "text",
+          "\/table-2"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "table_3": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "questionnaireQualite",
+          true
+        ],
+        [
+          "text",
+          "\/table-3"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
       "methods": [],
       "schemes": []
     },
@@ -437,7 +809,46 @@
         [
           "variable",
           "\/",
-          "[^\/]++",
+          "\\d+",
+          "semestre",
+          true
+        ],
+        [
+          "text",
+          "\/trombinoscope\/etudiant"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "semestre": "\\d+",
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "trombinoscope_etudiant_semestre_type_groupe": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "\\d+",
+          "typegroupe",
+          true
+        ],
+        [
+          "variable",
+          "\/",
+          "\\d+",
           "semestre",
           true
         ],
@@ -458,6 +869,8 @@
         "_locale": "fr"
       },
       "requirements": {
+        "semestre": "\\d+",
+        "typegroupe": "\\d+",
         "_locale": "fr|en"
       },
       "hosttokens": [],
@@ -550,6 +963,30 @@
       "methods": [],
       "schemes": []
     },
+    "user_change_password": {
+      "tokens": [
+        [
+          "text",
+          "\/utilisateur\/ajax\/change-password"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
     "user_change_semestre": {
       "tokens": [
         [
@@ -617,6 +1054,7 @@
         ]
       ],
       "defaults": {
+        "departement": null,
         "_locale": "fr"
       },
       "requirements": {
@@ -700,7 +1138,7 @@
         ]
       ],
       "defaults": {
-        "onglet": "timeline",
+        "onglet": "scolarite",
         "_locale": "fr"
       },
       "requirements": {
@@ -805,6 +1243,39 @@
       ],
       "schemes": []
     },
+    "administration_absence_delete": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "id",
+          true
+        ],
+        [
+          "text",
+          "\/administration\/absence"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [
+        "DELETE"
+      ],
+      "schemes": []
+    },
     "administration_absence_justificatif_change_etat": {
       "tokens": [
         [
@@ -843,6 +1314,33 @@
       "hosttokens": [],
       "methods": [
         "GET"
+      ],
+      "schemes": []
+    },
+    "administration_actualite_index": {
+      "tokens": [
+        [
+          "text",
+          "\/administration\/actualites\/"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [
+        "GET",
+        "POST"
       ],
       "schemes": []
     },
@@ -906,6 +1404,33 @@
       },
       "hosttokens": [],
       "methods": [],
+      "schemes": []
+    },
+    "administration_bc_demande_index": {
+      "tokens": [
+        [
+          "text",
+          "\/administration\/bon-commande\/"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [
+        "GET",
+        "POST"
+      ],
       "schemes": []
     },
     "administration_borne_visibilite": {
@@ -1044,6 +1569,60 @@
       },
       "hosttokens": [],
       "methods": [
+        "POST"
+      ],
+      "schemes": []
+    },
+    "administration_date_index": {
+      "tokens": [
+        [
+          "text",
+          "\/administration\/dates\/"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "schemes": []
+    },
+    "administration_document_index": {
+      "tokens": [
+        [
+          "text",
+          "\/administration\/documents\/"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [
+        "GET",
         "POST"
       ],
       "schemes": []
@@ -1196,13 +1775,6 @@
           true
         ],
         [
-          "variable",
-          "\/",
-          "[^\/]++",
-          "semestre",
-          true
-        ],
-        [
           "text",
           "\/administration\/emploi-du-temps\/realise\/service-realise"
         ],
@@ -1227,11 +1799,82 @@
       ],
       "schemes": []
     },
-    "administration_edt_realise_ajax_modules": {
+    "administration_etudiant_index": {
       "tokens": [
         [
           "text",
-          "\/administration\/emploi-du-temps\/realise\/ajax\/enseignant\/modules"
+          "\/administration\/etudiant\/"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "adm_etudiant_change_etat": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "etat",
+          true
+        ],
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "uuid",
+          true
+        ],
+        [
+          "text",
+          "\/administration\/etudiant\/change-etat"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [
+        "POST"
+      ],
+      "schemes": []
+    },
+    "adm_etudiant_edit_ajax": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "id",
+          true
+        ],
+        [
+          "text",
+          "\/administration\/etudiant\/edit-ajax"
         ],
         [
           "variable",
@@ -1374,18 +2017,129 @@
       ],
       "schemes": []
     },
-    "administration_groupe_refresh": {
+    "administration_groupe_ajax_edit": {
       "tokens": [
         [
           "variable",
           "\/",
           "[^\/]++",
-          "parent",
+          "id",
           true
         ],
         [
           "text",
-          "\/administration\/groupe\/refresh"
+          "\/administration\/groupe\/ajax\/update"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [
+        "POST"
+      ],
+      "schemes": []
+    },
+    "administration_groupe_change_parent": {
+      "tokens": [
+        [
+          "text",
+          "\/administration\/groupe\/ajax\/update-parent"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [
+        "POST"
+      ],
+      "schemes": []
+    },
+    "administration_groupe_change_typegroupe": {
+      "tokens": [
+        [
+          "text",
+          "\/administration\/groupe\/ajax\/update-typegroupe"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [
+        "POST"
+      ],
+      "schemes": []
+    },
+    "administration_groupe_change_parcours": {
+      "tokens": [
+        [
+          "text",
+          "\/administration\/groupe\/ajax\/update-parcours"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [
+        "POST"
+      ],
+      "schemes": []
+    },
+    "administration_groupe_liste_semestre": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "semestre",
+          true
+        ],
+        [
+          "text",
+          "\/administration\/groupe\/liste"
         ],
         [
           "variable",
@@ -1407,8 +2161,60 @@
       ],
       "schemes": []
     },
+    "administration_groupe_export": {
+      "tokens": [
+        [
+          "variable",
+          ".",
+          "csv|xlsx|pdf",
+          "_format",
+          true
+        ],
+        [
+          "text",
+          "\/export"
+        ],
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "semestre",
+          true
+        ],
+        [
+          "text",
+          "\/administration\/groupe"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_format": "csv|xlsx|pdf",
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [
+        "GET"
+      ],
+      "schemes": []
+    },
     "administration_groupe_new": {
       "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "semestre",
+          true
+        ],
         [
           "text",
           "\/administration\/groupe\/new"
@@ -1429,7 +2235,41 @@
       },
       "hosttokens": [],
       "methods": [
+        "GET",
         "POST"
+      ],
+      "schemes": []
+    },
+    "administration_groupe_duplicate": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "groupe",
+          true
+        ],
+        [
+          "text",
+          "\/administration\/groupe\/duplicate"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [
+        "GET"
       ],
       "schemes": []
     },
@@ -1499,6 +2339,318 @@
       "hosttokens": [],
       "methods": [
         "GET"
+      ],
+      "schemes": []
+    },
+    "administration_matiere_export": {
+      "tokens": [
+        [
+          "variable",
+          ".",
+          "csv|xlsx|pdf",
+          "_format",
+          true
+        ],
+        [
+          "text",
+          "\/export"
+        ],
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "diplome",
+          true
+        ],
+        [
+          "text",
+          "\/administration\/matiere"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_format": "csv|xlsx|pdf",
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [
+        "GET"
+      ],
+      "schemes": []
+    },
+    "administration_matiere_ajax_edit": {
+      "tokens": [
+        [
+          "text",
+          "\/ajax-edit"
+        ],
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "id",
+          true
+        ],
+        [
+          "text",
+          "\/administration\/matiere"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [
+        "POST"
+      ],
+      "schemes": []
+    },
+    "administration_matiere_change_parcours": {
+      "tokens": [
+        [
+          "text",
+          "\/change-parcours"
+        ],
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "parcours",
+          true
+        ],
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "id",
+          true
+        ],
+        [
+          "text",
+          "\/administration\/matiere"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "parcours": null,
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [
+        "POST"
+      ],
+      "schemes": []
+    },
+    "administration_matiere_change_ue": {
+      "tokens": [
+        [
+          "text",
+          "\/change-ue"
+        ],
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "ue",
+          true
+        ],
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "id",
+          true
+        ],
+        [
+          "text",
+          "\/administration\/matiere"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "ue": null,
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [
+        "POST"
+      ],
+      "schemes": []
+    },
+    "administration_note_corrige_ajax": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "action",
+          true
+        ],
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "note",
+          true
+        ],
+        [
+          "text",
+          "\/administration\/note\/ajax"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [
+        "POST"
+      ],
+      "schemes": []
+    },
+    "administration_personnel_load_liste": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "permanent|vacataire",
+          "type",
+          true
+        ],
+        [
+          "text",
+          "\/administration\/personnel\/ajax\/load-liste"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "type": "permanent|vacataire",
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "administration_personnel_export": {
+      "tokens": [
+        [
+          "variable",
+          ".",
+          "csv|xlsx|pdf",
+          "_format",
+          true
+        ],
+        [
+          "variable",
+          "_",
+          "[^\/\\.]++",
+          "type",
+          true
+        ],
+        [
+          "text",
+          "\/administration\/personnel\/export"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_format": "csv|xlsx|pdf",
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [
+        "GET"
+      ],
+      "schemes": []
+    },
+    "administration_personnel_create": {
+      "tokens": [
+        [
+          "text",
+          "\/administration\/personnel\/create"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [
+        "GET",
+        "POST"
       ],
       "schemes": []
     },
@@ -1602,11 +2754,12 @@
       },
       "hosttokens": [],
       "methods": [
-        "DELETE"
+        "DELETE",
+        "POST"
       ],
       "schemes": []
     },
-    "admin_personnel_departement_modifier_droit": {
+    "administration_personnel_departement_modifier_droit": {
       "tokens": [
         [
           "variable",
@@ -1676,6 +2829,13 @@
           "\/",
           "[^\/]++",
           "annee",
+          true
+        ],
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "type",
           true
         ],
         [
@@ -1817,12 +2977,43 @@
       "methods": [],
       "schemes": []
     },
+    "administration_rattrapage_semestre_index": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "semestre",
+          true
+        ],
+        [
+          "text",
+          "\/administration\/rattrapage\/semestre"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
     "administration_rattrapage_change_etat": {
       "tokens": [
         [
           "variable",
           "\/",
-          "A|R",
+          "[^\/]++",
           "etat",
           true
         ],
@@ -1849,12 +3040,44 @@
         "_locale": "fr"
       },
       "requirements": {
-        "etat": "A|R",
         "_locale": "fr|en"
       },
       "hosttokens": [],
       "methods": [
         "GET"
+      ],
+      "schemes": []
+    },
+    "administration_rattrapage_delete": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "uuid",
+          true
+        ],
+        [
+          "text",
+          "\/administration\/rattrapage"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [
+        "DELETE"
       ],
       "schemes": []
     },
@@ -1940,6 +3163,58 @@
       ],
       "schemes": []
     },
+    "administration_reservation_materiel_commun_add": {
+      "tokens": [
+        [
+          "text",
+          "\/administration\/materiel-commun\/reservation\/ajax\/add"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [
+        "POST"
+      ],
+      "schemes": []
+    },
+    "administration_reservation_materiel_commun_suppr": {
+      "tokens": [
+        [
+          "text",
+          "\/administration\/materiel-commun\/reservation\/ajax\/suppr"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [
+        "DELETE"
+      ],
+      "schemes": []
+    },
     "administration_scolarite_ues_semestre": {
       "tokens": [
         [
@@ -1971,8 +3246,15 @@
       "methods": [],
       "schemes": []
     },
-    "administration_type_groupe_new": {
+    "administration_scolarite_saisie_promo_ajax": {
       "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "anneeUniversitaire",
+          true
+        ],
         [
           "variable",
           "\/",
@@ -1982,7 +3264,7 @@
         ],
         [
           "text",
-          "\/administration\/type-groupe\/new"
+          "\/administration\/scolarite\/ajax-saisie\/promo"
         ],
         [
           "variable",
@@ -1999,12 +3281,86 @@
         "_locale": "fr|en"
       },
       "hosttokens": [],
-      "methods": [
-        "POST"
-      ],
+      "methods": [],
       "schemes": []
     },
-    "administration_type_groupe_refresh": {
+    "administration_scolarite_saisie_promo_import_ajax": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "anneeUniversitaire",
+          true
+        ],
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "semestre",
+          true
+        ],
+        [
+          "text",
+          "\/administration\/scolarite\/ajax-import\/promo"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "administration_ss_comm_ajax_edit": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "type",
+          true
+        ],
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "id",
+          true
+        ],
+        [
+          "text",
+          "\/administration\/sous-commission\/ajax\/semestre"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "administration_type_groupe_liste_semestre": {
       "tokens": [
         [
           "variable",
@@ -2015,7 +3371,7 @@
         ],
         [
           "text",
-          "\/administration\/type-groupe\/refresh"
+          "\/administration\/type-de-groupe\/liste"
         ],
         [
           "variable",
@@ -2037,11 +3393,18 @@
       ],
       "schemes": []
     },
-    "administration_type_groupe_defaut": {
+    "administration_type_groupe_new": {
       "tokens": [
         [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "semestre",
+          true
+        ],
+        [
           "text",
-          "\/administration\/type-groupe\/ajax\/groupe_defaut"
+          "\/administration\/type-de-groupe\/new"
         ],
         [
           "variable",
@@ -2061,6 +3424,438 @@
       "methods": [
         "POST"
       ],
+      "schemes": []
+    },
+    "administration_type_groupe_ajax_edit": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "id",
+          true
+        ],
+        [
+          "text",
+          "\/administration\/type-de-groupe\/ajax\/update"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [
+        "POST"
+      ],
+      "schemes": []
+    },
+    "administration_typegroupe_change_type": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "typeGroupe",
+          true
+        ],
+        [
+          "text",
+          "\/administration\/type-de-groupe\/ajax\/update-type"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [
+        "POST"
+      ],
+      "schemes": []
+    },
+    "administration_type_groupe_defaut": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "semestre",
+          true
+        ],
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "typegroupe",
+          true
+        ],
+        [
+          "text",
+          "\/administration\/type-de-groupe\/update-defaut"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [
+        "POST"
+      ],
+      "schemes": []
+    },
+    "administration_type_groupe_duplicate": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "typegroupe",
+          true
+        ],
+        [
+          "text",
+          "\/administration\/type-de-groupe\/duplicate"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [
+        "GET"
+      ],
+      "schemes": []
+    },
+    "administration_apc_parcours_niveau_ajax": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "niveau",
+          true
+        ],
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "etat",
+          true
+        ],
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "parcours",
+          true
+        ],
+        [
+          "text",
+          "\/apc\/parcours\/niveau\/ajax"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "administration_apc_referentiel_formation_ajax": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "type",
+          true
+        ],
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "competence",
+          true
+        ],
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "id",
+          true
+        ],
+        [
+          "text",
+          "\/administration\/referentiel-formation\/ajax-edit"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [
+        "POST"
+      ],
+      "schemes": []
+    },
+    "administration_apc_ressources_ajax_edit": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "id",
+          true
+        ],
+        [
+          "text",
+          "\/administration\/apc\/ressource\/ajax-edit"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [
+        "POST"
+      ],
+      "schemes": []
+    },
+    "administration_apc_ressources_ajax_ac": {
+      "tokens": [
+        [
+          "text",
+          "\/administration\/apc\/ressource\/ajax-ac"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [
+        "POST"
+      ],
+      "schemes": []
+    },
+    "administration_apc_sae_ajax": {
+      "tokens": [
+        [
+          "text",
+          "\/administration\/apc\/ressource\/ajax-sae"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [
+        "POST"
+      ],
+      "schemes": []
+    },
+    "administration_apc_sae_ajax_edit": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "id",
+          true
+        ],
+        [
+          "text",
+          "\/administration\/apc\/sae\/ajax-edit"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [
+        "POST"
+      ],
+      "schemes": []
+    },
+    "administration_apc_sae_ajax_ac": {
+      "tokens": [
+        [
+          "text",
+          "\/administration\/apc\/sae\/ajax-ac"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [
+        "POST"
+      ],
+      "schemes": []
+    },
+    "administration_apc_ressources_ajax": {
+      "tokens": [
+        [
+          "text",
+          "\/administration\/apc\/sae\/ajax-ressources"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [
+        "POST"
+      ],
+      "schemes": []
+    },
+    "administration_stage_etudiant_ajax_edit": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "id",
+          true
+        ],
+        [
+          "text",
+          "\/administration\/stage\/etudiant\/ajax\/edit"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [],
       "schemes": []
     },
     "administration_stage_etudiant_change_tuteur": {
@@ -2139,6 +3934,199 @@
       "methods": [],
       "schemes": []
     },
+    "administration_stage_periode_courrier_reset": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "etat",
+          true
+        ],
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "id",
+          true
+        ],
+        [
+          "text",
+          "\/administration\/stage\/periode\/courrier\/reset"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "adresse_ajax_edit": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "id",
+          true
+        ],
+        [
+          "text",
+          "\/ajax\/adresse\/edit"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "contact_ajax_edit": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "id",
+          true
+        ],
+        [
+          "text",
+          "\/ajax\/contact\/edit"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "entreprise_ajax_edit": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "id",
+          true
+        ],
+        [
+          "text",
+          "\/ajax\/entreprise\/edit"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "etudiant_ajax_edit_uuid": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "uuid",
+          true
+        ],
+        [
+          "text",
+          "\/ajax\/etudiant\/edit\/uuid"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "etudiant_ajax_edit": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "id",
+          true
+        ],
+        [
+          "text",
+          "\/ajax\/etudiant\/edit"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
     "api_absence_liste_etudiant": {
       "tokens": [
         [
@@ -2183,30 +4171,6 @@
         [
           "text",
           "\/api\/etudiant\/semestre"
-        ],
-        [
-          "variable",
-          "\/",
-          "fr|en",
-          "_locale",
-          true
-        ]
-      ],
-      "defaults": {
-        "_locale": "fr"
-      },
-      "requirements": {
-        "_locale": "fr|en"
-      },
-      "hosttokens": [],
-      "methods": [],
-      "schemes": []
-    },
-    "api_etudiant_departement": {
-      "tokens": [
-        [
-          "text",
-          "\/api\/etudiant\/departement"
         ],
         [
           "variable",
@@ -2356,6 +4320,13 @@
           "variable",
           "\/",
           "[^\/]++",
+          "typeMatiere",
+          true
+        ],
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
           "matiere",
           true
         ],
@@ -2410,44 +4381,6 @@
         [
           "text",
           "\/api\/matiere\/parcours\/listbysemestre"
-        ],
-        [
-          "variable",
-          "\/",
-          "fr|en",
-          "_locale",
-          true
-        ]
-      ],
-      "defaults": {
-        "_locale": "fr"
-      },
-      "requirements": {
-        "_locale": "fr|en"
-      },
-      "hosttokens": [],
-      "methods": [],
-      "schemes": []
-    },
-    "api_matieres_semestre_personnel": {
-      "tokens": [
-        [
-          "variable",
-          "\/",
-          "[^\/]++",
-          "personnel",
-          true
-        ],
-        [
-          "variable",
-          "\/",
-          "[^\/]++",
-          "semestre",
-          true
-        ],
-        [
-          "text",
-          "\/api\/matiere\/matiere\/semestre\/personnel"
         ],
         [
           "variable",
@@ -2622,6 +4555,13 @@
           "variable",
           "\/",
           "[^\/]++",
+          "type",
+          true
+        ],
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
           "matiere",
           true
         ],
@@ -2678,68 +4618,6 @@
       "methods": [],
       "schemes": []
     },
-    "app_etudiant_qualite_ajax_reponse": {
-      "tokens": [
-        [
-          "variable",
-          "\/",
-          "[^\/]++",
-          "questionnaire",
-          true
-        ],
-        [
-          "text",
-          "\/application\/etudiant\/qualite\/ajax\/reponse"
-        ],
-        [
-          "variable",
-          "\/",
-          "fr|en",
-          "_locale",
-          true
-        ]
-      ],
-      "defaults": {
-        "_locale": "fr"
-      },
-      "requirements": {
-        "_locale": "fr|en"
-      },
-      "hosttokens": [],
-      "methods": [],
-      "schemes": []
-    },
-    "app_etudiant_qualite_ajax_reponse_txt": {
-      "tokens": [
-        [
-          "variable",
-          "\/",
-          "[^\/]++",
-          "questionnaire",
-          true
-        ],
-        [
-          "text",
-          "\/application\/etudiant\/qualite\/ajax\/reponse-txt"
-        ],
-        [
-          "variable",
-          "\/",
-          "fr|en",
-          "_locale",
-          true
-        ]
-      ],
-      "defaults": {
-        "_locale": "fr"
-      },
-      "requirements": {
-        "_locale": "fr|en"
-      },
-      "hosttokens": [],
-      "methods": [],
-      "schemes": []
-    },
     "application_personnel_absence_get_ajax": {
       "tokens": [
         [
@@ -2773,51 +4651,11 @@
       ],
       "schemes": []
     },
-    "application_personnel_absence_saisie_ajax": {
-      "tokens": [
-        [
-          "variable",
-          "\/",
-          "[^\/]++",
-          "etudiant",
-          true
-        ],
-        [
-          "variable",
-          "\/",
-          "[^\/]++",
-          "matiere",
-          true
-        ],
-        [
-          "text",
-          "\/application\/personnel\/absence\/ajax\/saisie"
-        ],
-        [
-          "variable",
-          "\/",
-          "fr|en",
-          "_locale",
-          true
-        ]
-      ],
-      "defaults": {
-        "_locale": "fr"
-      },
-      "requirements": {
-        "_locale": "fr|en"
-      },
-      "hosttokens": [],
-      "methods": [
-        "POST"
-      ],
-      "schemes": []
-    },
-    "application_personnel_disponibilite_update": {
+    "app_personnel_absence_etat_appel": {
       "tokens": [
         [
           "text",
-          "\/application\/personnel\/disponibilite\/update"
+          "\/absence\/etat\/appel"
         ],
         [
           "variable",
@@ -2871,8 +4709,15 @@
       ],
       "schemes": []
     },
-    "application_personnel_progression_update": {
+    "application_personnel_absence_saisie_ajax": {
       "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "etudiant",
+          true
+        ],
         [
           "variable",
           "\/",
@@ -2882,7 +4727,85 @@
         ],
         [
           "text",
-          "\/application\/personnel\/progression\/update"
+          "\/application\/personnel\/absence\/ajax\/saisie"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [
+        "POST"
+      ],
+      "schemes": []
+    },
+    "app_etudiant_qualite_ajax_reponse": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "typeQuestionnaire",
+          true
+        ],
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "questionnaire",
+          true
+        ],
+        [
+          "text",
+          "\/api\/ajax\/reponse"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "app_etudiant_qualite_ajax_reponse_txt": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "typeQuestionnaire",
+          true
+        ],
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "questionnaire",
+          true
+        ],
+        [
+          "text",
+          "\/api\/ajax\/reponse-txt"
         ],
         [
           "variable",
@@ -2931,6 +4854,43 @@
       },
       "hosttokens": [],
       "methods": [],
+      "schemes": []
+    },
+    "sa_diplome_edit_ajax": {
+      "tokens": [
+        [
+          "text",
+          "\/edit-ajax"
+        ],
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "id",
+          true
+        ],
+        [
+          "text",
+          "\/administratif\/structure\/diplome"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [
+        "POST"
+      ],
       "schemes": []
     },
     "sa_etudiant_recherche": {
@@ -3135,11 +5095,73 @@
         "DELETE"
       ],
       "schemes": []
+    },
+    "administratif_enquete_config_ajax_save": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "section",
+          true
+        ],
+        [
+          "text",
+          "\/administratif\/enquete\/questionnaire\/ajax"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
+    },
+    "administratif_enquete_etudiant_deverouiller": {
+      "tokens": [
+        [
+          "variable",
+          "\/",
+          "[^\/]++",
+          "questionnaire",
+          true
+        ],
+        [
+          "text",
+          "\/administratif\/enquete\/etudiant\/deverouiller"
+        ],
+        [
+          "variable",
+          "\/",
+          "fr|en",
+          "_locale",
+          true
+        ]
+      ],
+      "defaults": {
+        "_locale": "fr"
+      },
+      "requirements": {
+        "_locale": "fr|en"
+      },
+      "hosttokens": [],
+      "methods": [],
+      "schemes": []
     }
   },
   "prefix": "",
-  "host": "localhost",
-  "port": "",
+  "host": "newintranet:8888",
+  "port": 8888,
   "scheme": "http",
   "locale": []
 }

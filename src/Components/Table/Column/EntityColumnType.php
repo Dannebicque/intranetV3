@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/Column/EntityColumnType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 10/09/2021 20:38
+ * @lastUpdate 08/10/2021 20:09
  */
 
 namespace App\Components\Table\Column;
@@ -27,7 +27,7 @@ class EntityColumnType extends ColumnType
     }
 
     /**
-     * {@inheritdoc}
+     * {}
      */
     public function render($rowData, array $options): string
     {
@@ -37,7 +37,7 @@ class EntityColumnType extends ColumnType
     }
 
     /**
-     * {@inheritdoc}
+     * {}
      */
     public function renderProperty($value, array $options): string
     {
@@ -45,7 +45,7 @@ class EntityColumnType extends ColumnType
     }
 
     /**
-     * {@inheritdoc}
+     * {}
      */
     public function configureOptions(OptionsResolver $resolver)
     {

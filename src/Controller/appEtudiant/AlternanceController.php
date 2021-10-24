@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appEtudiant/AlternanceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 09/10/2021 10:02
  */
 
 namespace App\Controller\appEtudiant;
@@ -37,7 +37,7 @@ class AlternanceController extends BaseController
     {
         /** @var Alternance $alternance */
         $alternance = $alternanceRepository->getOneByEtudiantAndAnneeUniversitaire($this->getConnectedUser(),
-            $this->getEtudiantAnneeUniversitaire());
+            $this->getAnneeUniversitaire());
         $form = null;
         if (null !== $alternance) {
             $form = $this->createForm(
@@ -55,7 +55,7 @@ class AlternanceController extends BaseController
 
         return $this->render('appEtudiant/alternance/index.html.twig', [
             'alternances' => $alternance,
-            'form'        => null !== $form ? $form->createView() : null,
+            'form' => $form?->createView(),
         ]);
     }
 

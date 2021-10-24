@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/MatiereRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 08/10/2021 18:45
  */
 
 namespace App\Repository;
@@ -108,26 +108,4 @@ class MatiereRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-
-//    public function tableauMatieres(Departement $departement): array
-//    {
-//        $query = $this->createQueryBuilder('m')
-//            ->innerJoin(Ue::class, 'u', 'with', 'u.id=m.ue')
-//            ->innerJoin(Semestre::class, 's', 'with', 's.id=u.semestre')
-//            ->innerJoin(Annee::class, 'a', 'with', 'a.id=s.annee')
-//            ->innerJoin(Diplome::class, 'd', 'with', 'd.id=a.diplome')
-//            ->where('d.departement= :departement')
-//            ->setParameter('departement', $departement->getId())
-//            ->getQuery()
-//            ->getResult();
-//
-//        $t = [];
-//
-//        /** @var $q Matiere */
-//        foreach ($query as $q) {
-//            $t[$q->getCodeMatiere()] = $q;
-//        }
-//
-//        return $t;
-//    }
 }

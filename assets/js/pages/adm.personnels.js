@@ -2,7 +2,9 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.personnels.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/09/2021 09:01
+// @lastUpdate 08/10/2021 22:00
+
+import {addCallout} from '../util'
 
 $(document).on('keyup', '#login_urca', function () {
   const $val = $(this).val()
@@ -38,43 +40,18 @@ $(document).on('click', '.addpersonnel', function () {
   $.ajax({
     url: Routing.generate('api_personnel_add_to_departement', {slug: $(this).data('slug')}),
     dataType: 'json',
-    success: function (data) {
+    success: function () {
       addCallout('Personnel ajouté au département !', 'success')
     }
   })
 })
 
-$(document).on('click', '.personnel_index_change', function () {
-  $('.personnel_index_change').removeClass('active show')
-  $(this).addClass('active show')
-  let $type = $(this).data('type')
-  $('#listePersonnel').load(Routing.generate('administration_personnel_load_liste', {type: $type}), function () {
-
-    $('#tableau').DataTable({
-      language: dataTableLangueFr
-    })
-
-    $('#export_csv').attr('href', Routing.generate('administration_personnel_export', {
-      type: $type,
-      '_format': 'csv'
-    }))
-    $('#export_xlsx').attr('href', Routing.generate('administration_personnel_export', {
-      type: $type,
-      '_format': 'xlsx'
-    }))
-    $('#export_pdf').attr('href', Routing.generate('administration_personnel_export', {
-      type: $type,
-      '_format': 'pdf'
-    }))
-  })
-})
-
 $(document).on('change', '.updateRole', function () {
   $.ajax({
-    url: Routing.generate('admin_personnel_departement_modifier_droit', {personnel: $('#personnel').val()}),
+    url: Routing.generate('administration_personnel_departement_modifier_droit', {personnel: $('#personnel').val()}),
     method: 'POST',
     data: {'droit': $(this).val()},
-    success: function (data) {
+    success: function () {
       addCallout('Droits modifiés !', 'success')
     }
   })

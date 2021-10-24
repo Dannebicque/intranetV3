@@ -12,28 +12,28 @@
         <ul class="nav nav-tabs" role="tablist">
             {% for semestre in user_data.semestresActifs %}
                 <li class="nav-item">
-                    <a class="nav-link {% if loop.first %}active show{% endif %} semestretrombi" data-toggle="tab"
+                    <a class="nav-link {% if loop.first %}active show{% endif %} semestretrombi" data-bs-toggle="tab"
                        href="#" data-sem="{{ semestre.id }}" role="tab">{{ semestre.libelle }}
                         <small>({{ semestre.etudiants|length }})</small>
                     </a>
                 </li>
             {% endfor %}
             <li class="nav-item">
-                <a class="nav-link enseignanttrombi" data-toggle="tab" href="#" data-type="permanent" role="tab"> {{ 'permanents.heading'|trans }}</a>
+                <a class="nav-link enseignanttrombi" data-bs-toggle="tab" href="#" data-type="permanent" role="tab"> {{ 'permanents.heading'|trans }}</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link enseignanttrombi" data-toggle="tab" href="#" data-type="vacataire" role="tab"> {{ 'vacataires.heading'|trans }}</a>
+                <a class="nav-link enseignanttrombi" data-bs-toggle="tab" href="#" data-type="vacataire" role="tab"> {{ 'vacataires.heading'|trans }}</a>
             </li>
             {% if settings('AFFICHAGE_TROMBI') == 'separation' %}
                 <li class="nav-item">
-                    <a class="nav-link enseignanttrombi" data-toggle="tab" href="#" data-type="administratif" role="tab">
+                    <a class="nav-link enseignanttrombi" data-bs-toggle="tab" href="#" data-type="administratif" role="tab">
                         {{ 'administratifs.et.techniques.heading'|trans }}</a>
                 </li>
             {% endif %}
         </ul>
         <div class="buttons">
-            <a href="{{ path('default_homepage') }}" class="btn btn-primary btn-float" data-provide="tooltip"
-               data-placement="bottom" title="{{ 'atitle.retour_dashboard'|trans }}">
+            <a href="{{ path('default_homepage') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom"
+               title="{{ 'atitle.retour_dashboard'|trans }}">
                 <i class="{{ iconDashboard }}"><span class="sr-only">dashboard</span></i>
             </a>
         </div>

@@ -13,15 +13,15 @@
                 <a href="{{ path('administration_departement_edit', {id: departement.id}) }}"
                    class="btn btn-warning btn-sm btn-float"
                    title="{{ 'atitle.modifier'|trans }}"
-                   data-provide="tooltip"
-                   data-placement="bottom">
+                   data-bs-toggle="tooltip" data-bs-placement="bottom"
+                >
                     <i class="{{ iconEdit }}"></i>
                     <span class="sr-only">{{ 'atitle.modifier'|trans }}</span>
                 </a>
                 <a href="{{ path('administration_structure_index') }}"
                    class="btn btn-primary btn-float"
-                   data-provide="tooltip"
-                   data-placement="bottom"
+                   data-bs-toggle="tooltip" data-bs-placement="bottom"
+
                    title="{{ 'atitle.retour_structure'|trans }}">
                     <i class="fas fa-arrow-left"></i>
                     <span class="sr-only">{{ 'atitle.retour_structure'|trans }}</span>

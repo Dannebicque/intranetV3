@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/api/EtudiantApiController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/09/2021 15:37
+ * @lastUpdate 23/10/2021 10:34
  */
 
 namespace App\Controller\api;
@@ -13,11 +13,7 @@ use App\Controller\BaseController;
 use App\Entity\Etudiant;
 use App\Entity\Semestre;
 use App\Repository\EtudiantRepository;
-use function count;
-use InvalidArgumentException;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -27,8 +23,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class EtudiantApiController extends BaseController
 {
-    /** @var EtudiantRepository */
-    protected $etudiantRepository;
+    protected EtudiantRepository $etudiantRepository;
 
     /**
      * EtudiantApiController constructor.
