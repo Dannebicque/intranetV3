@@ -29,9 +29,7 @@
                                    ('d/m/Y') }}
                                 {% else %}
                                 {{ date("now")|date('d/m/Y') }}{% endif %}">
-                        <div class="input-group-append">
-                            <span class="input-group-text"><i class="fa fa-calendar"></i></span>
-                        </div>
+                        <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                     </div>
                 </div>
             </div>
@@ -68,9 +66,9 @@
                     <div class="row">
                         {% if typeGroupes is defined %}
                             {% for typeGroupe in typeGroupes %}
-                                <div class="col-sm-2">
+                                <div class="col-sm-2 d-grid d-block">
                                     <button data-typegroupe="{{ typeGroupe.id }}"
-                                            class="btn btn-block {% if event != null and event.type_cours|upper ==
+                                            class="btn {% if event != null and event.type_cours|upper ==
                                                 typeGroupe.libelle|upper %}btn-primary{% endif %} absChangeTypeGroupe">{{ typeGroupe.libelle }}</button>
                                 </div>
                             {% else %}
@@ -92,9 +90,9 @@
                             {% endfor %}
                         {% else %}
                             {% for typeGroupe in groupes.typeGroupes %}
-                                <div class="col-sm-2">
+                                <div class="col-sm-2 d-grid d-block">
                                     <button data-typegroupe="{{ typeGroupe.id }}"
-                                            class="btn btn-block {% if event != null and event.type_cours|upper ==
+                                            class="btn {% if event != null and event.type_cours|upper ==
                                                 typeGroupe.libelle|upper %}btn-primary{% endif %} absChangeTypeGroupe">{{ typeGroupe.libelle }}</button>
                                 </div>
 
