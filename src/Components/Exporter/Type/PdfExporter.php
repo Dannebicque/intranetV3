@@ -4,17 +4,18 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Exporter/Type/PdfExporter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/10/2021 12:23
+ * @lastUpdate 23/10/2021 10:41
  */
 
 namespace App\Components\Exporter\Type;
 
 use App\Classes\Pdf\MyPDF;
+use App\Components\Exporter\SourceIterator\SourceInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 class PdfExporter extends AbstractExporter implements ExporterInterface
 {
-    protected SourceIterator\SourceInterface $datas;
+    protected SourceInterface $datas;
     protected string $nomFichier;
     private MyPDF $myPdf;
 
@@ -23,7 +24,7 @@ class PdfExporter extends AbstractExporter implements ExporterInterface
         $this->myPdf = $myPDF;
     }
 
-    public function export(SourceIterator\SourceInterface $datas, string $nomFichier): void
+    public function export(SourceInterface $datas, string $nomFichier): void
     {
         $this->nomFichier = $this->checkNomFichier($nomFichier, 'pdf');
         $this->datas = $datas;

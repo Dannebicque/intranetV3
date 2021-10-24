@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/questionnaire/administration/QuestionnaireQuestionController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/10/2021 11:05
+ * @lastUpdate 24/10/2021 11:53
  */
 
 namespace App\Controller\questionnaire\administration;
@@ -13,6 +13,7 @@ use App\Controller\BaseController;
 use App\Entity\QuestionnaireQuestion;
 use App\Form\QuestionnaireQuestionType;
 use App\Repository\QuestionnaireQuestionRepository;
+use App\Table\QuestionnaireQuestionTableType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,11 +22,19 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/administration/questionnaire/question', name: 'adm_questionnaire_question_')]
 class QuestionnaireQuestionController extends BaseController
 {
-    #[Route('/', name: 'index', methods: ['GET'])]
-    public function index(QuestionnaireQuestionRepository $questionnaireQuestionRepository): Response
+    #[Route('/', name: 'index', methods: ['GET', 'POST'], options: ['expose' => true])]
+    public function index(Request $request): Response
     {
+        $table = $this->createTable(QuestionnaireQuestionTableType::class);
+
+        $table->handleRequest($request);
+
+        if ($table->isCallback()) {
+            return $table->getCallbackResponse();
+        }
+
         return $this->render('questionnaire/administration/questionnaire_question/index.html.twig', [
-            'questionnaire_questions' => $questionnaireQuestionRepository->findAll(),
+            'table' => $table
         ]);
     }
 

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/questionnaire/administration/QuestionnaireSectionController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/10/2021 11:05
+ * @lastUpdate 24/10/2021 11:53
  */
 
 namespace App\Controller\questionnaire\administration;
@@ -13,6 +13,7 @@ use App\Controller\BaseController;
 use App\Entity\QuestionnaireSection;
 use App\Form\QuestionnaireSectionType;
 use App\Repository\QuestionnaireSectionRepository;
+use App\Table\QuestionnaireSectionTableType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,11 +22,19 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/administration/questionnaire/section', name: 'adm_questionnaire_section_')]
 class QuestionnaireSectionController extends BaseController
 {
-    #[Route('/', name: 'index', methods: ['GET'])]
-    public function index(QuestionnaireSectionRepository $questionnaireSectionRepository): Response
+    #[Route('/', name: 'index', methods: ['GET', 'POST'], options: ['expose' => true])]
+    public function index(Request $request): Response
     {
+        $table = $this->createTable(QuestionnaireSectionTableType::class);
+
+        $table->handleRequest($request);
+
+        if ($table->isCallback()) {
+            return $table->getCallbackResponse();
+        }
+
         return $this->render('questionnaire/administration/questionnaire_section/index.html.twig', [
-            'questionnaire_sections' => $questionnaireSectionRepository->findAll(),
+            'table' => $table
         ]);
     }
 
