@@ -2,6 +2,56 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.3.0](https://github.com/Dannebicque/intranetV3/compare/v3.2.1...v3.3.0) (2021-10-24)
+
+
+### Features
+
+* A11Y Amélioration de l'accessibilité avec focus sur les formulaire plus lisible ([d3fe415](https://github.com/Dannebicque/intranetV3/commit/d3fe41551834975066647d5b27b262e215d11027))
+* Ajout d'un fil d'ariane ([5cd62b7](https://github.com/Dannebicque/intranetV3/commit/5cd62b747111c9d2593fbdb3c8438aac348fe33e))
+* Amélioration des relations avec certaines tables pour faciliter les requêtes et manipulations avec le BUT (SAE/Ressources/Matires) et ne pas dépendre de la position de l'étudiant, mais bien du semestre associé. ([929ceb5](https://github.com/Dannebicque/intranetV3/commit/929ceb5bd3e635b87ee23efb3a134de88a1ff5b1))
+* Composant Exporter ([b5381ae](https://github.com/Dannebicque/intranetV3/commit/b5381ae38d0e983325ddc6674daa3fdfae732a7a))
+* Composant questionnaire + création en super Admin ([4c730f1](https://github.com/Dannebicque/intranetV3/commit/4c730f1a52fd23e35e5cbaa6dda074a0e8f06215))
+* Composant Table sur les HRS ([2afe995](https://github.com/Dannebicque/intranetV3/commit/2afe995a08cd03b5bb9b0c710e9cc34cac430488))
+* Début du table pour les justificatifs d'absence. ([7546aae](https://github.com/Dannebicque/intranetV3/commit/7546aaed4abf2fe9c5f0dc72fd745e6d09152cf2))
+* Détection de déconnexion Ajax ([37edc41](https://github.com/Dannebicque/intranetV3/commit/37edc41e32e5cf19cdb546e2c65afdfff95c3606))
+* Documentation BDD ([2875e00](https://github.com/Dannebicque/intranetV3/commit/2875e00d2c0964cc849cab46a956cdb53dbb10ba))
+* Nouvelle structure pour la partie création des quesitonnaires. Mise en place des fichiers controller/classe/CRUD ([057ccf6](https://github.com/Dannebicque/intranetV3/commit/057ccf64580b5f93269839c784b7258d77e7f559))
+* Possibilité d'ajouter un justificatif d'absence depuis l'administration ([722ce8d](https://github.com/Dannebicque/intranetV3/commit/722ce8da1c0e8ada075a43b23822b7d9ee594068))
+* Refresh de la page après changement d'année universitaire ([92e2f6e](https://github.com/Dannebicque/intranetV3/commit/92e2f6eba10161f254f4f6178f13b88b23912b9b))
+* Table pour les personnels + refonte de la mise en page ([bd50e56](https://github.com/Dannebicque/intranetV3/commit/bd50e56193da989c7352cd9ab4a5a14497ee8c00))
+
+
+### Bug Fixes
+
+* [BS5] Btn-block sur les pages administration, semestre et administratif ([565a14b](https://github.com/Dannebicque/intranetV3/commit/565a14b9c231d118889d4ea8dc9ac881c00c6c2c))
+* [BS5] Correction de l'usage de tooltip ([4d2324f](https://github.com/Dannebicque/intranetV3/commit/4d2324fefe2944297d04bfa18ab191d4eae73359))
+* [BS5] Correction de l'usage des dropdown et tab ([cbc4a13](https://github.com/Dannebicque/intranetV3/commit/cbc4a1311cd4a4bfd10a43a948d2b567eea4a84d))
+* [BS5] Formulaire de login et suppression de dépendance à matérial pour le float ([d6287c0](https://github.com/Dannebicque/intranetV3/commit/d6287c0c65a7423c35ab3141b21cfc41de087e63))
+* [BS5] Modification pour s'adapter à BS5 ([3eb8abd](https://github.com/Dannebicque/intranetV3/commit/3eb8abda99d24bd4a92d72427cac5d50f4e87758))
+* a11y de la liste du nombres d'éléments par page ([4b0caeb](https://github.com/Dannebicque/intranetV3/commit/4b0caeb425e7b4f97e967a2df8405d469bec4118))
+* Amélioration du formulaire de dépot d'un justificatif d'absence ([e044894](https://github.com/Dannebicque/intranetV3/commit/e04489404ed15741d605e787209091c72ffe2b56))
+* BS5 corrections de template ([07811bd](https://github.com/Dannebicque/intranetV3/commit/07811bd6e68f885a40eb14ed013d700b5a4ff4bc))
+* Comparaison du prévisionnel avec l'EDT ([4287f0d](https://github.com/Dannebicque/intranetV3/commit/4287f0dbde7e5459ac9ebf60db4d22a343855ea9))
+* Composant toolbar ([f91b5c2](https://github.com/Dannebicque/intranetV3/commit/f91b5c2027d5099ac71fdf4cf91780b8f5387dd8))
+* Configuration, traductions manquantes, typos CSS ([81d622d](https://github.com/Dannebicque/intranetV3/commit/81d622df3637dafd8f0ff163af2b278393a8b26b))
+* Correctifs de mise en page + filtre sur les groupes étudiants ([3629616](https://github.com/Dannebicque/intranetV3/commit/3629616813cf04c133d561bcfdd1eeb20dca8a0b))
+* Correctifs de mise en page + filtre sur les groupes étudiants ([6a1505a](https://github.com/Dannebicque/intranetV3/commit/6a1505ad7e691016d5a016af465b8634184ee133))
+* Dépendances + PHPStan ([54e77c2](https://github.com/Dannebicque/intranetV3/commit/54e77c262a8aad3ac348309848315179b2edd5e6))
+* Filtre sur les tableaux avec le composant table en JS ([0d09c12](https://github.com/Dannebicque/intranetV3/commit/0d09c120882d05e4cfb723f1f2d8d48f71cd8697))
+* gitignore ([2a3535f](https://github.com/Dannebicque/intranetV3/commit/2a3535f39fd84d355b093529a99734598f6ca119))
+* Mise à jour du script de déploiement pour générer les assets avec yarn ([cec5766](https://github.com/Dannebicque/intranetV3/commit/cec5766256988705b7ccd6bf74fcf4ee8d6e1409))
+* mise en page BS5 + nettoyage de code ([0640aa8](https://github.com/Dannebicque/intranetV3/commit/0640aa8d5f7a69409fa3634729036e772c59977d))
+* Modal avec BS5. Suppression de la dépendance à MatérialJs ([b4b996e](https://github.com/Dannebicque/intranetV3/commit/b4b996ebfd84740c24b455bf39dfcc5d28294366))
+* Navigation avec BS5 ([22fb272](https://github.com/Dannebicque/intranetV3/commit/22fb272b4c3b958475ca73e4e73295fecb86749c))
+* Ouverture des droits, trop restrictifs ([b9cadb0](https://github.com/Dannebicque/intranetV3/commit/b9cadb05f80341451b35e40cddfe1efe1aa26574))
+* Ouverture des droits, trop restrictifs ([2552b42](https://github.com/Dannebicque/intranetV3/commit/2552b420a85f77a365547f492fb57b1ee7a4762a))
+* Ouverture des droits, trop restrictifs et type dans un rôle ([0a1b2b6](https://github.com/Dannebicque/intranetV3/commit/0a1b2b6869f6e19b0a505c89dc5b4537f798f75b))
+* remove dépendance inutilisée ([34ee7d9](https://github.com/Dannebicque/intranetV3/commit/34ee7d97994ff97471363e08e47d0d398db1d37e))
+* remove fichiers configs inutiles ([ca9ade7](https://github.com/Dannebicque/intranetV3/commit/ca9ade7a5ce08602dcfad2fb680ee0f668899f30))
+* Suppression de build sur git ([1ad4378](https://github.com/Dannebicque/intranetV3/commit/1ad43787294e7e18b01710ab79408292a25b81ee))
+* Tentative d'utiliser Stimulus, mais erreur... A suivre. ([cbeb1c0](https://github.com/Dannebicque/intranetV3/commit/cbeb1c064d9c942a3fdb600151565900ad6fe641))
+
 ### [3.2.1](https://github.com/Dannebicque/intranetV3/compare/v3.2.0...v3.2.1) (2021-10-08)
 
 
