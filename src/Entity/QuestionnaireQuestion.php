@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/QuestionnaireQuestion.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/08/2021 08:01
+ * @lastUpdate 23/10/2021 17:03
  */
 
 namespace App\Entity;
@@ -29,11 +29,11 @@ class QuestionnaireQuestion extends BaseEntity
     public const QUESTION_TYPE_LIBRE = 'libre';
 
     public const LISTE_TYPE_QUESTION = [
-        self::QUESTION_TYPE_QCU => self::QUESTION_TYPE_QCU,
-        self::QUESTION_TYPE_QCM => self::QUESTION_TYPE_QCM,
-        self::QUESTION_TYPE_YESNO => self::QUESTION_TYPE_YESNO,
         self::QUESTION_TYPE_ECHELLE => self::QUESTION_TYPE_ECHELLE,
         self::QUESTION_TYPE_LIBRE => self::QUESTION_TYPE_LIBRE,
+        self::QUESTION_TYPE_QCM => self::QUESTION_TYPE_QCM,
+        self::QUESTION_TYPE_QCU => self::QUESTION_TYPE_QCU,
+        self::QUESTION_TYPE_YESNO => self::QUESTION_TYPE_YESNO,
     ];
 
     /**

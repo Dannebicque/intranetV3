@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Personnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 18:50
+ * @lastUpdate 23/10/2021 10:24
  */
 
 namespace App\Entity;
@@ -1480,5 +1480,7 @@ class Personnel extends Utilisateur implements UtilisateurInterface
 
             return self::PERMANENT;
         }
+
+        return '';
     }
 }

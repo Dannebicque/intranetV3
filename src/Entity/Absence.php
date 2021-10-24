@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Absence.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/10/2021 10:33
+ * @lastUpdate 23/10/2021 12:18
  */
 
 namespace App\Entity;
@@ -100,7 +100,7 @@ class Absence extends BaseEntity implements Serializable
     public static function getIconStatus(string $status): string
     {
         return isset(self::STATUS_COLORS[$status])
-            ? sprintf('<i class="fas fa-circle text-%s mr-1"></i> %s', self::STATUS_COLORS[$status], $status)
+            ? sprintf('<i class="fas fa-circle text-%s me-1"></i> %s', self::STATUS_COLORS[$status], $status)
             : $status;
     }
 

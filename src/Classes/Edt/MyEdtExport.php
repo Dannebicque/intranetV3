@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/09/2021 15:58
+ * @lastUpdate 23/10/2021 10:44
  */
 
 /*
@@ -43,10 +43,7 @@ class MyEdtExport
 
     private $calendrier;
 
-    /**
-     * @var string
-     */
-    private $dir;
+    private string $dir;
 
     private TypeMatiereManager $typeMatiereManager;
 

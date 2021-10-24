@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/PersonnelDepartementTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 10/10/2021 15:52
+ * @lastUpdate 23/10/2021 12:18
  */
 
 namespace App\Table;
@@ -17,11 +17,8 @@ use App\Components\Table\TableType;
 use App\Components\Widget\Type\ButtonDropdownType;
 use App\Components\Widget\Type\ButtonType;
 use App\Components\Widget\Type\LinkType;
-use App\Components\Widget\Type\ModalLinkType;
 use App\Components\Widget\Type\RowDeleteLinkType;
 use App\Components\Widget\Type\RowEditLinkType;
-use App\Components\Widget\Type\RowLinkType;
-use App\Components\Widget\Type\RowModalLinkType;
 use App\Components\Widget\Type\RowShowLinkType;
 use App\Components\Widget\WidgetBuilder;
 use App\Entity\Departement;
@@ -116,7 +113,7 @@ class PersonnelDepartementTableType extends TableType
             'build' => function(WidgetBuilder $builder, Personnel $s) use ($autoriseToManageAccess) {
                 if (true === $autoriseToManageAccess) {
                     $builder->add('droits', ButtonType::class, [
-                        'class' => 'btn btn-warning-outline mr-1',
+                        'class' => 'btn btn-warning-outline me-1',
                         'icon' => 'fas fa-key',
                         'attr' => [
                             'data-size' => 'lg',

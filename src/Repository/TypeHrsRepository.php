@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/TypeHrsRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:09
+ * @lastUpdate 23/10/2021 11:47
  */
 
 namespace App\Repository;
@@ -16,7 +16,6 @@ use Doctrine\Persistence\ManagerRegistry;
 /**
  * @method TypeHrs|null find($id, $lockMode = null, $lockVersion = null)
  * @method TypeHrs|null findOneBy(array $criteria, array $orderBy = null)
- * @method TypeHrs[]    findAll()
  * @method TypeHrs[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class TypeHrsRepository extends ServiceEntityRepository
@@ -27,5 +26,16 @@ class TypeHrsRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, TypeHrs::class);
+    }
+
+    public function findAll()
+    {
+        return $this->findBy([], ['libelle' => 'ASC']);
+    }
+
+    public function findAllBuilder()
+    {
+        return $this->createQueryBuilder('t')
+            ->orderBy('t.libelle', 'ASC');
     }
 }

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/DTO/Toolbar.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 19:44
+ * @lastUpdate 23/10/2021 10:37
  */
 
 namespace App\Components\Table\DTO;
@@ -12,7 +12,6 @@ namespace App\Components\Table\DTO;
 use App\Components\Widget\DTO\Widget;
 use InvalidArgumentException;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\Request;
 
 class Toolbar
 {

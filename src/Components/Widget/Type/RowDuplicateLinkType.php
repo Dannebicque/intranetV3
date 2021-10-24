@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Widget/Type/RowDuplicateLinkType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/08/2021 15:40
+ * @lastUpdate 23/10/2021 12:18
  */
 
 namespace App\Components\Widget\Type;
@@ -20,6 +20,6 @@ class RowDuplicateLinkType extends RowLinkType
         $resolver
             ->setDefault('title', 'action.duplicate')
             ->setDefault('icon', 'fas fa-copy')
-            ->setDefault('class', 'btn btn-square btn-success-outline mr-1');
+            ->setDefault('class', 'btn btn-square btn-success-outline me-1');
     }
 }

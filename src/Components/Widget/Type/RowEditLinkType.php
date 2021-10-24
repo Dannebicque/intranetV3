@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Widget/Type/RowEditLinkType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/08/2021 15:41
+ * @lastUpdate 23/10/2021 12:18
  */
 
 namespace App\Components\Widget\Type;
@@ -20,6 +20,6 @@ class RowEditLinkType extends RowLinkType
         $resolver
             ->setDefault('title', 'action.edit')
             ->setDefault('icon', 'fas fa-edit')
-            ->setDefault('class', 'btn btn-square btn-warning-outline  mr-1');
+            ->setDefault('class', 'btn btn-square btn-warning-outline  me-1');
     }
 }

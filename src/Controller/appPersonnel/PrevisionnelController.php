@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/PrevisionnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/08/2021 15:24
+ * @lastUpdate 24/10/2021 11:51
  */
 
 namespace App\Controller\appPersonnel;
@@ -16,6 +16,7 @@ use App\Classes\Previsionnel\PrevisionnelSynthese;
 use App\Classes\ServiceRealise\ServiceRealiseCelcat;
 use App\Classes\ServiceRealise\ServiceRealiseIntranet;
 use App\Controller\BaseController;
+use App\Exception\DepartementNotFoundException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -55,28 +56,31 @@ class PrevisionnelController extends BaseController
         ]);
     }
 
-
     /**
      * @Route("/chronologique", name="previsionnel_chronologique")
+     *
+     * @throws \App\Exception\DepartementNotFoundException
      */
     public function chronologique(
         TypeMatiereManager $typeMatiereManager,
         ServiceRealiseIntranet $serviceRealiseIntranet,
         ServiceRealiseCelcat $serviceRealiseCelcat
-    ): Response {
-        if (null !== $this->getDepartement()) {
-            $matieres = $typeMatiereManager->findByDepartementArray($this->getDepartement());
-            if (true === $this->getDepartement()->getOptUpdateCelcat()) {
-                $chronologique = $serviceRealiseCelcat;
-            } else {
-                $chronologique = $serviceRealiseIntranet;
-            }
-
-            return $this->render('appPersonnel/previsionnel/chronologique.html.twig', [
-                'chronologique' => $chronologique->getServiceRealiserParEnseignant($this->getConnectedUser()),
-                'matieres' => $matieres,
-            ]);
+    ): Response
+    {
+        if (null === $this->getDepartement()) {
+            throw new DepartementNotFoundException();
         }
+        $matieres = $typeMatiereManager->findByDepartementArray($this->getDepartement());
+        if (true === $this->getDepartement()->getOptUpdateCelcat()) {
+            $chronologique = $serviceRealiseCelcat;
+        } else {
+            $chronologique = $serviceRealiseIntranet;
+        }
+
+        return $this->render('appPersonnel/previsionnel/chronologique.html.twig', [
+            'chronologique' => $chronologique->getServiceRealiserParEnseignant($this->getConnectedUser()),
+            'matieres' => $matieres,
+        ]);
     }
 
     /**

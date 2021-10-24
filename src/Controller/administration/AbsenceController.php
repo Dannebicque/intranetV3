@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/AbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/10/2021 12:14
+ * @lastUpdate 24/10/2021 11:51
  */
 
 namespace App\Controller\administration;
@@ -23,27 +23,20 @@ use App\Event\AbsenceEvent;
 use App\Repository\AbsenceJustificatifRepository;
 use App\Repository\AbsenceRepository;
 use App\Repository\EtudiantRepository;
+use App\Table\AbsenceListeTableType;
 use App\Utils\Tools;
-use Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
-/**
- * Class AbsenceController.
- *
- * @Route("/administration/absence")
- */
+#[Route('/administration/absence')]
 class AbsenceController extends BaseController
 {
-    /**
-     * @Route("/semestre/etudiant/{etudiant}", name="administration_absences_liste_absence_etudiant",
-     *                                         options={"expose":true})
-     *
-     * @throws Exception
-     */
+    #[Route('/semestre/etudiant/{etudiant}',
+        name: 'administration_absences_liste_absence_etudiant',
+        options: ['expose' => true])]
     public function listeAbsenceEtudiant(
         TypeMatiereManager $typeMatiereManager,
         EtudiantAbsences $etudiantAbsences,
@@ -51,7 +44,6 @@ class AbsenceController extends BaseController
         Etudiant $etudiant
     ): Response {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $etudiant->getSemestre());
-
 
         $matieres = $typeMatiereManager->findBySemestreArray($etudiant->getSemestre());
         $etudiantAbsences->setEtudiant($etudiant);
@@ -68,31 +60,31 @@ class AbsenceController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/semestre/{semestre}/liste", name="administration_absences_semestre_liste")
-     *
-     * @throws Exception
-     */
+    #[Route('/semestre/{semestre}/liste', name: 'administration_absences_semestre_liste', options: ['expose' => true])]
     public function liste(
-        TypeMatiereManager $typeMatiereManager,
-        MyAbsences $myAbsences,
+        Request $request,
         Semestre $semestre
-    ): Response
-    {
+    ): Response {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $semestre);
+//todo: doit utiliser un dto...
+        $table = $this->createTable(AbsenceListeTableType::class, [
+            'semestre' => $semestre,
+            'anneeUniversitaire' => $this->getAnneeUniversitaire(),
+        ]);
 
-        $matieres = $typeMatiereManager->findBySemestreArray($semestre);
-        $myAbsences->getAbsencesSemestre($matieres, $semestre);
+        $table->handleRequest($request);
+
+        if ($table->isCallback()) {
+            return $table->getCallbackResponse();
+        }
 
         return $this->render('administration/absence/liste.html.twig', [
             'semestre' => $semestre,
-            'absences' => $myAbsences,
+            'table' => $table,
         ]);
     }
 
-    /**
-     * @Route("/semestre/{semestre}/justifier", name="administration_absences_semestre_justifier")
-     */
+    #[Route('/semestre/{semestre}/justifier', name: 'administration_absences_semestre_justifier')]
     public function justifier(Semestre $semestre): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $semestre);
@@ -102,9 +94,7 @@ class AbsenceController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/semestre/{semestre}/saisie", name="administration_absences_semestre_saisie")
-     */
+    #[Route('/semestre/{semestre}/saisie', name: 'administration_absences_semestre_saisie')]
     public function saisie(Semestre $semestre): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $semestre);
@@ -114,17 +104,15 @@ class AbsenceController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/semestre/{semestre}/justificatif/export.{_format}", name="administration_absences_semestre_justificatif_export",
-     *                                                              requirements={"_format"="csv|xlsx|pdf"})
-     */
+    #[Route('/semestre/{semestre}/justificatif/export.{_format}',
+        name: 'administration_absences_semestre_justificatif_export',
+        requirements: ['_format' => 'csv|xlsx|pdf'])]
     public function exportJustificatif(
         MyExport $myExport,
         AbsenceJustificatifRepository $absenceJustificatifRepository,
         Semestre $semestre,
         string $_format
-    ): Response
-    {
+    ): Response {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $semestre);
 
         $justificatifs = $absenceJustificatifRepository->findBySemestre($semestre);
@@ -132,20 +120,16 @@ class AbsenceController extends BaseController
         return $myExport->genereFichierAbsence($_format, $justificatifs, 'absences_' . $semestre->getLibelle());
     }
 
-    /**
-     * @Route("/semestre/{semestre}/export.{_format}", name="administration_absences_semestre_liste_export",
-     *                                                 requirements={"_format"="csv|xlsx|pdf"})
-     *
-     * @throws Exception
-     */
+    #[Route('/semestre/{semestre}/export.{_format}',
+        name: 'administration_absences_semestre_liste_export',
+        requirements: ['_format' => 'csv|xlsx|pdf'])]
     public function export(
         TypeMatiereManager $typeMatiereManager,
         MyExport $myExport,
         MyAbsences $myAbsences,
         Semestre $semestre,
         string $_format
-    ): Response
-    {
+    ): Response {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $semestre);
 
         $matieres = $typeMatiereManager->findBySemestreArray($semestre);
@@ -154,17 +138,15 @@ class AbsenceController extends BaseController
         return $myExport->genereFichierAbsence($_format, $myAbsences, 'absences_' . $semestre->getLibelle());
     }
 
-    /**
-     * @Route("/all/semestre/{semestre}/export.{_format}", name="administration_all_absences_semestre_export",
-     *                                                     requirements={"_format"="csv|xlsx|pdf"})
-     */
+    #[Route('/all/semestre/{semestre}/export.{_format}',
+        name: 'administration_all_absences_semestre_export',
+        requirements: ['_format' => 'csv|xlsx|pdf'])]
     public function exportAllAbsences(
         MyExport $myExport,
         AbsenceRepository $absenceRepository,
         Semestre $semestre,
         string $_format
-    ): Response
-    {
+    ): Response {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $semestre);
 
         $absences = $absenceRepository->getBySemestre($semestre, $semestre->getAnneeUniversitaire());
@@ -185,15 +167,12 @@ class AbsenceController extends BaseController
         );
     }
 
-    /**
-     * @Route("/ajax/justifie/{absence}/{etat}", name="administration_absences_justifie", options={"expose":true})
-     */
+    #[Route('/ajax/justifie/{absence}/{etat}', name: 'administration_absences_justifie', options: ['expose' => true])]
     public function justifie(
         EventDispatcherInterface $eventDispatcher,
         Absence $absence,
         bool $etat
-    ): JsonResponse
-    {
+    ): JsonResponse {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $absence->getEtudiant()?->getSemestre());
 
         $absence->setJustifie($etat);
@@ -207,13 +186,10 @@ class AbsenceController extends BaseController
         return $this->json($etat);
     }
 
-    /**
-     * @throws Exception
-     * @Route("/ajax/addabs",
-     *     name="administration_absences_ajax_add",
-     *     methods={"POST"},
-     *     options={"expose":true})
-     */
+    #[Route('/ajax/addabs',
+        name: 'administration_absences_ajax_add',
+        options: ['expose' => true],
+        methods: ['POST'])]
     public function ajaxAddAbsence(
         TypeMatiereManager $typeMatiereManager,
         Request $request,
@@ -244,9 +220,7 @@ class AbsenceController extends BaseController
         return $this->json('false', Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    /**
-     * @Route("/{id}", name="administration_absence_delete", methods="DELETE", options={"expose":true})
-     */
+    #[Route('/{id}', name: 'administration_absence_delete', options: ['expose' => true], methods: ['DELETE', 'POST'])]
     public function delete(Request $request, Absence $absence): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $absence->getEtudiant()?->getSemestre());

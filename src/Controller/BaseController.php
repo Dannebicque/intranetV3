@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/BaseController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 06:58
+ * @lastUpdate 23/10/2021 10:59
  */
 
 namespace App\Controller;
@@ -12,6 +12,7 @@ namespace App\Controller;
 use App\Classes\DataUserSession;
 use App\Components\Table\DTO\Table;
 use App\Components\Table\TableFactory;
+use App\Entity\AnneeUniversitaire;
 use App\Entity\Constantes;
 use App\Interfaces\UtilisateurInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -106,7 +107,7 @@ class BaseController extends AbstractController
         return null !== $this->getUser() ? $this->getUser()->getAnneeUniversitaire() : null;
     }
 
-    public function getAnneeUniversitaire()
+    public function getAnneeUniversitaire(): ?AnneeUniversitaire
     {
         return $this->dataUserSession->getAnneeUniversitaire();
     }
