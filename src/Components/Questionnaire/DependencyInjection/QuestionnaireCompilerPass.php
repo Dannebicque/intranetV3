@@ -4,13 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Questionnaire/DependencyInjection/QuestionnaireCompilerPass.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/08/2021 13:37
+ * @lastUpdate 23/10/2021 10:42
  */
 
 namespace App\Components\Questionnaire\DependencyInjection;
 
 use App\Components\Questionnaire\QuestionnaireRegistry;
-use App\Components\TableOld\TableRegistry;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;

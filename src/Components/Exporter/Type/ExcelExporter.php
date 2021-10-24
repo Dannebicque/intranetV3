@@ -4,12 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Exporter/Type/ExcelExporter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/10/2021 12:23
+ * @lastUpdate 23/10/2021 10:41
  */
 
 namespace App\Components\Exporter\Type;
 
 use App\Classes\Excel\MyExcelWriter;
+use App\Components\Exporter\SourceIterator\SourceInterface;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -19,7 +20,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ExcelExporter extends AbstractExporter implements ExporterInterface
 {
-    protected SourceIterator\SourceInterface $datas;
+    protected SourceInterface $datas;
     protected string $nomFichier;
     private MyExcelWriter $myExcelWriter;
     private TranslatorInterface $translatable;
@@ -30,7 +31,7 @@ class ExcelExporter extends AbstractExporter implements ExporterInterface
         $this->translatable = $translatable;
     }
 
-    public function export(SourceIterator\SourceInterface $datas, string $nomFichier)
+    public function export(SourceInterface $datas, string $nomFichier)
     {
         $this->nomFichier = $this->checkNomFichier($nomFichier, 'xlsx');
         $this->datas = $datas;

@@ -4,17 +4,18 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Exporter/Type/CsvExporter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/10/2021 12:23
+ * @lastUpdate 23/10/2021 10:41
  */
 
 namespace App\Components\Exporter\Type;
 
+use App\Components\Exporter\SourceIterator\SourceInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 
 class CsvExporter extends AbstractExporter implements ExporterInterface
 {
-    protected SourceIterator\SourceInterface $datas;
+    protected SourceInterface $datas;
     protected string $nomFichier;
     private Environment $environment;
     private string $file;
@@ -30,7 +31,7 @@ class CsvExporter extends AbstractExporter implements ExporterInterface
         $this->delimiter = $delimiter;
     }
 
-    public function export(SourceIterator\SourceInterface $datas, string $nomFichier): void
+    public function export(SourceInterface $datas, string $nomFichier): void
     {
         $this->nomFichier = $this->checkNomFichier($nomFichier, 'csv');
         $this->datas = $datas;
