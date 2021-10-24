@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appEtudiant/AbsenceJustificatifController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/07/2021 17:05
+ * @lastUpdate 24/10/2021 09:44
  */
 
 namespace App\Controller\appEtudiant;
@@ -42,7 +42,9 @@ class AbsenceJustificatifController extends BaseController
     public function depot(Request $request): Response
     {
         if (null !== $this->getConnectedUser()) {
-            $absenceJustificatif = new AbsenceJustificatif($this->getConnectedUser());
+            $absenceJustificatif = new AbsenceJustificatif();
+            $absenceJustificatif->setEtudiant($this->getConnectedUser());
+            $absenceJustificatif->setAnneeUniversitaire($this->getAnneeUniversitaire());
             $form = $this->createForm(AbsenceJustificatifType::class, $absenceJustificatif);
             $form->handleRequest($request);
 

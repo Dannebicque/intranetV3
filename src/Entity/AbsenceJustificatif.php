@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/AbsenceJustificatif.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/10/2021 10:33
+ * @lastUpdate 24/10/2021 10:38
  */
 
 namespace App\Entity;
@@ -37,8 +37,13 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
 
     public const ETATLONG = [
         self::ACCEPTE => 'Accepté, absences justifiées',
-        self::REFUSE => 'Refusé',
         self::DEPOSE => 'Déposé, en attente de validation',
+        self::REFUSE => 'Refusé',
+    ];
+    public const TAB_ETAT = [
+        'label.absence_justficatif.' . self::ACCEPTE => self::ACCEPTE,
+        'label.absence_justficatif.' . self::DEPOSE => self::DEPOSE,
+        'label.absence_justficatif.' . self::REFUSE => self::REFUSE,
     ];
 
     /**
@@ -101,7 +106,7 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
      *
      * @throws Exception
      */
-    public function __construct(Etudiant $etudiant)
+    public function __construct()
     {
         $this->dateDebut = Carbon::today();
         $this->dateFin = Carbon::today();
@@ -109,8 +114,6 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
         $this->heureFin = Carbon::createFromTime(18, 30, 00);
         $this->etat = self::DEPOSE;
         $this->setUuid(Uuid::uuid4());
-        $this->anneeUniversitaire = $etudiant->getAnneeUniversitaire();
-        $this->setEtudiant($etudiant);
     }
 
     public function __clone()

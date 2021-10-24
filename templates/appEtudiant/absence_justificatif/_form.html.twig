@@ -2,12 +2,16 @@
 {{ form_start(form) }}
 
 <div class="row">
-    <div class="col-6">{{ form_widget(form.dateDebut) }}</div>
-    <div class="col-6">{{ form_widget(form.heureDebut) }}</div>
-    <div class="col-6">{{ form_widget(form.dateFin) }}</div>
-    <div class="col-6">{{ form_widget(form.heureFin) }}</div>
-    <div class="col-6">{{ form_widget(form.motif) }}</div>
-    <div class="col-6">{{ form_widget(form.fichierFile) }}</div>
+    {% if not is_granted('ROLE_ETUDIANT') %}
+        <div class="col-md-6 col-sm-12 mb-3">{{ form_widget(form.etudiant) }}</div>
+        <div class="col-md-6 col-sm-12 mb-3">{{ form_widget(form.etat) }}</div>
+    {% endif %}
+    <div class="col-md-6 col-sm-12">{{ form_widget(form.dateDebut) }}</div>
+    <div class="col-md-6 col-sm-12">{{ form_widget(form.heureDebut) }}</div>
+    <div class="col-md-6 col-sm-12">{{ form_widget(form.dateFin) }}</div>
+    <div class="col-md-6 col-sm-12">{{ form_widget(form.heureFin) }}</div>
+    <div class="col-md-6 col-sm-12">{{ form_widget(form.motif) }}</div>
+    <div class="col-md-6 col-sm-12">{{ form_widget(form.fichierFile) }}</div>
 </div>
 
 <button class="btn btn-success">{{ button_label|default('label.save'|trans) }}</button>

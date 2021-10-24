@@ -20,10 +20,18 @@
 {% block headeractions %}
     <div class="header-action">
         <div class="buttons">
-            <a href="{{ path('administration_absence_justificatif_delete_all', {semestre: semestre.id}) }}"
-               class="btn btn-danger btn-sm btn-float supprimer" data-bs-toggle="tooltip"
-               data-bs-placement="bottom" title="Supprimer tous les justificatifs d'absence pour l'année {{ semestre
-            .annee.libelle }}"><i class="{{ iconDelete }}"></i></a>
+            <a href="{{ path('administration_absence_justificatif_new', {semestre: semestre.id}) }}"
+               class="btn btn-info btn-sm btn-float"
+               title="{{ 'atitle.creer_nouveau'|trans }}"
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
+            >
+                <i class="fas fa-plus"></i>
+                <span class="sr-only">{{ 'atitle.creer_nouveau'|trans }}</span>
+            </a>
+            {# <a href="{{ path('administration_absence_justificatif_delete_all', {semestre: semestre.id}) }}" #}
+            {# class="btn btn-danger btn-sm btn-float supprimer" data-bs-toggle="tooltip" #}
+            {# data-bs-placement="bottom" title="Supprimer tous les justificatifs d'absence pour l'année {{ semestre #}
+            {# .annee.libelle }}"><i class="{{ iconDelete }}"></i></a> #}
             <a href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}"
                class="btn btn-primary btn-float" data-bs-toggle="tooltip"
                data-bs-placement="bottom" title="{{ 'atitle.retour_semestres'|trans }}"><i class="fas fa-arrow-left"></i></a>
@@ -125,30 +133,10 @@
 {% endblock %}
 
 {% block fabactions %}
-    {{ include('composants/fab-buttons.html.twig', {boutons:[
-        {type: 'info',
-            href: path('administration_absences_justificatif_semestre_export', {semestre:semestre.id, _format: 'pdf'}),
-            title: 'exporter.pdf'|trans,
-            icone : "fa fa-file-pdf"},
-        {
-            type:'info',
-            href:path('administration_absences_justificatif_semestre_export', {semestre:semestre.id, _format: 'csv'}),
-            title: 'exporter.csv'|trans,
-            icone: 'fa fa-file-csv'
-        },
-        {
-            type:'info',
-            href:path('administration_absences_justificatif_semestre_export', {semestre:semestre.id, _format: 'xlsx'}),
-            title: 'exporter.xls'|trans,
-            icone: 'fa fa-file-excel'
-        },
-        {
-            type:'info',
-            href:path('help_article', {sujet: 'administration-absence-justificatif'}),
-            title: 'aide'|trans,
-            icone: 'fa fa-question'
-        }
-    ]}) }}
+    {{ include('composants/fab-button-help.html.twig', {
+        href:path('help_article', {sujet: 'administration-justificatif-absence'})
+    }
+    ) }}
 {% endblock %}
 
 {% block stylesheets %}

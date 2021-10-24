@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/AbsenceJustificatifController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/10/2021 12:14
+ * @lastUpdate 24/10/2021 10:30
  */
 
 namespace App\Controller\administration;
@@ -15,6 +15,7 @@ use App\Entity\AbsenceJustificatif;
 use App\Entity\Constantes;
 use App\Entity\Semestre;
 use App\Event\JustificatifEvent;
+use App\Form\AbsenceJustificatifType;
 use App\Repository\AbsenceJustificatifRepository;
 use App\Table\AbsenceJustificatifTableType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -23,16 +24,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
-/**
- * Class AbsenceController.
- *
- * @Route("/administration/absence/justificatif")
- */
+#[Route('/administration/absence/justificatif')]
 class AbsenceJustificatifController extends BaseController
 {
-    /**
-     * @Route("/semestre/{semestre}", name="administration_absences_justificatif_semestre_liste")
-     */
+    #[Route('/semestre/{semestre}', name: 'administration_absences_justificatif_semestre_liste')]
     public function justificatif(
         Request $request,
         Semestre $semestre
@@ -41,7 +36,7 @@ class AbsenceJustificatifController extends BaseController
 
         $table = $this->createTable(AbsenceJustificatifTableType::class, [
             'semestre' => $semestre,
-            'anneeUniversitaire' => $this->getAnneeUniversitaire()
+            'anneeUniversitaire' => $this->getAnneeUniversitaire(),
         ]);
 
         $table->handleRequest($request);
@@ -50,24 +45,51 @@ class AbsenceJustificatifController extends BaseController
             return $table->getCallbackResponse();
         }
 
-
         return $this->render('administration/absencejustificatif/justificatif.html.twig', [
             'semestre' => $semestre,
-            'table' => $table
+            'table' => $table,
         ]);
     }
 
-    /**
-     * @Route("/semestre/{semestre}/export.{_format}", name="administration_absences_justificatif_semestre_export",
-     *                                                 requirements={"_format"="csv|xlsx|pdf"})
-     */
+    #[Route('/semestre/{semestre}/ajout', name: "administration_absence_justificatif_new")]
+    public function depot(Request $request, EventDispatcherInterface $eventDispatcher, Semestre $semestre): Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $semestre);
+
+        $absenceJustificatif = new AbsenceJustificatif();
+        $absenceJustificatif->setSemestre($semestre);
+        $absenceJustificatif->setAnneeUniversitaire($this->getAnneeUniversitaire());
+
+        $form = $this->createForm(AbsenceJustificatifType::class, $absenceJustificatif,
+            ['role' => 'admin', 'semestre' => $semestre]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $absenceJustificatif->transformeData();
+            $this->entityManager->persist($absenceJustificatif);
+            $this->entityManager->flush();
+            $this->gereEtat($absenceJustificatif->getEtat(), $absenceJustificatif, $eventDispatcher);
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'absence_justificatif.add.success.flash');
+
+            return $this->redirectToRoute('administration_absences_justificatif_semestre_liste',
+                ['semestre' => $semestre->getId()]);
+        }
+
+        return $this->render('administration/absencejustificatif/ajout.html.twig', [
+            'semestre' => $semestre,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/semestre/{semestre}/export.{_format}',
+        name: 'administration_absences_justificatif_semestre_export',
+        requirements: ['_format' => 'csv|xlsx|pdf'])]
     public function exportJustificatif(
         MyExport $myExport,
         AbsenceJustificatifRepository $absenceJustificatifRepository,
         Semestre $semestre,
         $_format
-    ): Response
-    {
+    ): Response {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $semestre);
 
         $justificatifs = $absenceJustificatifRepository->findBySemestre(
@@ -82,14 +104,14 @@ class AbsenceJustificatifController extends BaseController
         );
     }
 
-    /**
-     * @Route("/supprimer-annee/{semestre}", name="administration_absence_justificatif_delete_all", methods="DELETE")
-     */
+    #[Route('/supprimer-annee/{semestre}', name: 'administration_absence_justificatif_delete_all', methods: [
+        'DELETE',
+        'POST'
+    ])]
     public function deleteAllAnnee(
         AbsenceJustificatifRepository $absenceJustificatifRepository,
         Semestre $semestre
-    ): Response
-    {
+    ): Response {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $semestre);
 
         $absenceJustificatifs = $absenceJustificatifRepository->findByAnnee($semestre->getAnnee());
@@ -106,15 +128,12 @@ class AbsenceJustificatifController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="administration_absence_justificatif_delete", methods="DELETE")
-     */
+    #[Route('/{id}', name: 'administration_absence_justificatif_delete', methods: ['DELETE', 'POST'])]
     public function delete(
         EventDispatcherInterface $eventDispatcher,
         Request $request,
         AbsenceJustificatif $absenceJustificatif
-    ): Response
-    {
+    ): Response {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $absenceJustificatif->getEtudiant()?->getSemestre());
 
         $id = $absenceJustificatif->getUuidString();
@@ -153,13 +172,21 @@ class AbsenceJustificatifController extends BaseController
         EventDispatcherInterface $eventDispatcher,
         AbsenceJustificatif $absenceJustificatif,
         $etat
-    ): Response
-    {
+    ): Response {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $absenceJustificatif->getEtudiant()?->getSemestre());
 
         $absenceJustificatif->setEtat($etat);
         $this->entityManager->flush();
+        $this->gereEtat($etat, $absenceJustificatif, $eventDispatcher);
 
+        return new Response('', Response::HTTP_OK);
+    }
+
+    private function gereEtat(
+        $etat,
+        AbsenceJustificatif $absenceJustificatif,
+        EventDispatcherInterface $eventDispatcher
+    ): void {
         if (AbsenceJustificatif::ACCEPTE === $etat) {
             $event = new JustificatifEvent($absenceJustificatif);
             // Justification des absences
@@ -171,7 +198,5 @@ class AbsenceJustificatifController extends BaseController
             $event = new JustificatifEvent($absenceJustificatif);
             $eventDispatcher->dispatch($event, JustificatifEvent::DECISION);
         }
-
-        return new Response('', Response::HTTP_OK);
     }
 }
