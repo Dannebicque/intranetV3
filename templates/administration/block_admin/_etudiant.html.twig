@@ -12,7 +12,8 @@
         <div class="card-body">
             <div class="row">
                 {% for semestre in user_data.semestres|filter(semestre => semestre.actif == true) %}
-                    <div class="col-2 d-grid d-block mb-2"><a
+                    <div class="col-2 d-grid d-block mb-2">
+                        <a
                                 href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}"
                                 class="btn btn-primary">
                             {{ semestre.diplome.displayCourt }} | {{ semestre.libelle }}

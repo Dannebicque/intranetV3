@@ -117,7 +117,7 @@
                                 <td class="matiere">
                                     {% if myEtudiant.moyenneMatieres[matiere.typeIdMatiere].optionFaite == false %}
 
-                                        <span class="badge badge-gray">N.C.</span>
+                                        <span class="badge bg-gray">N.C.</span>
                                     {% elseif matiere.pac == true %}
                                         {% if myEtudiant.moyenneMatieres[matiere.typeIdMatiere].moyenne != '-0.01'
                                             and myEtudiant.moyenneMatieres[matiere.typeIdMatiere]
@@ -127,7 +127,7 @@
                                                 (2) }}
 	                                        </span>
                                         {% else %}
-                                            <span class="badge badge-success">No PAC</span>
+                                            <span class="badge bg-success">No PAC</span>
                                         {% endif %}
                                     {% else %}
                                         <span class="{{ myEtudiant.moyenneMatieres[matiere.typeIdMatiere].style }}">
@@ -148,7 +148,7 @@
                                                 .moyennePenalisee|number_format(2) }}
                                                 </span>
                                         {% else %}
-                                            <span class="badge badge-gray">
+                                            <span class="badge bg-gray">
                                             N.C.
                                         </span>
                                         {% endif %}

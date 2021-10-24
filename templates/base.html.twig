@@ -319,6 +319,13 @@
                             <strong>No title</strong>
                         {% endblock %}
                     </h1>
+                    {% block breadcrumbs %}
+                        <!-- breadcrumb -->
+                        {{ render_esi(controller(
+                            'App\\Controller\\BreadcrumbController::display', {header: block('header')}
+                        )) }}
+                        <!-- END breadcrumb -->
+                    {% endblock %}
                 </div>
                 {% block headerright %}
 
