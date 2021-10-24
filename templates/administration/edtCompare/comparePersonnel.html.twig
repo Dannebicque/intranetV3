@@ -77,24 +77,24 @@
                                 </button>
                             <td>{{ ed.semestre_libelle }}</td>
                             <td>
-                                <span class="badge badge-pill {% if ed.nbCMEDT > ed.nbCMPrevi %} badge-danger {% elseif ed.nbCMEDT == ed.nbCMPrevi %} badge-success {% else %} badge-warning {% endif %}">{{ ed.nbCMEDT }}</span>
+                                <span class="badge rounded-pill {% if ed.nbCMEDT > ed.nbCMPrevi %} bg-danger {% elseif ed.nbCMEDT == ed.nbCMPrevi %} bg-success {% else %} bg-warning {% endif %}">{{ ed.nbCMEDT }}</span>
                             </td><!--CM -->
                             <td>
-                                <span class="badge badge-pill {% if ed.nbCMPrevi > ed.nbCMEDT %} badge-danger {% elseif ed.nbCMEDT == ed.nbCMPrevi %} badge-success {% else %} badge-warning {% endif %}">{{ ed.nbCMPrevi }}</span>
+                                <span class="badge rounded-pill {% if ed.nbCMPrevi > ed.nbCMEDT %} bg-danger {% elseif ed.nbCMEDT == ed.nbCMPrevi %} bg-success {% else %} bg-warning {% endif %}">{{ ed.nbCMPrevi }}</span>
                             </td>
 
                             <td>
-                                <span class="badge badge-pill {% if ed.nbTDEDT > ed.nbTDPrevi %} badge-danger {% elseif ed.nbTDEDT == ed.nbTDPrevi %} badge-success {% else %} badge-warning {% endif %}">{{ ed.nbTDEDT }}</span>
+                                <span class="badge rounded-pill {% if ed.nbTDEDT > ed.nbTDPrevi %} bg-danger {% elseif ed.nbTDEDT == ed.nbTDPrevi %} bg-success {% else %} bg-warning {% endif %}">{{ ed.nbTDEDT }}</span>
                             </td><!--TD -->
                             <td>
-                                <span class="badge badge-pill {% if ed.nbTDPrevi > ed.nbTDEDT %} badge-danger {% elseif ed.nbTDEDT == ed.nbTDPrevi %} badge-success {% else %} badge-warning {% endif %}">{{ ed.nbTDPrevi }}</span>
+                                <span class="badge rounded-pill {% if ed.nbTDPrevi > ed.nbTDEDT %} bg-danger {% elseif ed.nbTDEDT == ed.nbTDPrevi %} bg-success {% else %} bg-warning {% endif %}">{{ ed.nbTDPrevi }}</span>
                             </td>
 
                             <td>
-                                <span class="badge badge-pill {% if ed.nbTPEDT > ed.nbTPPrevi %} badge-danger {% elseif ed.nbTPEDT == ed.nbTPPrevi %} badge-success {% else %} badge-warning {% endif %}">{{ ed.nbTPEDT }}</span>
+                                <span class="badge rounded-pill {% if ed.nbTPEDT > ed.nbTPPrevi %} badge-danger {% elseif ed.nbTPEDT == ed.nbTPPrevi %} badge-success {% else %} badge-warning {% endif %}">{{ ed.nbTPEDT }}</span>
                             </td><!-- TP -->
                             <td>
-                                <span class="badge badge-pill {% if ed.nbTPPrevi > ed.nbTPEDT %} badge-danger {% elseif ed.nbTPEDT == ed.nbTPPrevi %} badge-success {% else %} badge-warning {% endif %}">{{ ed.nbTPPrevi }}</span>
+                                <span class="badge rounded-pill {% if ed.nbTPPrevi > ed.nbTPEDT %} badge-danger {% elseif ed.nbTPEDT == ed.nbTPPrevi %} badge-success {% else %} badge-warning {% endif %}">{{ ed.nbTPPrevi }}</span>
                             </td>
 
                         </tr>

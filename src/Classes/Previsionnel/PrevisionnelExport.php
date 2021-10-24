@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Previsionnel/PrevisionnelExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 22:39
+ * @lastUpdate 23/10/2021 10:36
  */
 
 namespace App\Classes\Previsionnel;
@@ -12,9 +12,7 @@ namespace App\Classes\Previsionnel;
 use App\Classes\Excel\MyExcelWriter;
 use App\DTO\Matiere;
 use App\Utils\Tools;
-use App\DTO\PrevisionnelCollection;
 use App\Entity\Departement;
-use App\Entity\Hrs;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
