@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Date.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/08/2021 12:37
+ * @lastUpdate 24/10/2021 13:44
  */
 
 namespace App\Entity;
@@ -34,14 +34,14 @@ class Date extends BaseEntity
     public const TYPE_VACANCES = 'type.vacances';
 
     public const COULEUR_BADGE = [
-        self::TYPE_STAGE => 'badge-primary',
-        self::TYPE_SOUTENANCE => 'badge-danger',
-        self::TYPE_PROJET => 'badge-purple',
-        self::TYPE_AUTRE => 'badge-pink',
-        self::TYPE_COMMISSION => 'badge-warning',
-        self::TYPE_REUNION => 'badge-yellow',
-        self::TYPE_RENTREE => 'badge-success',
-        self::TYPE_VACANCES => 'badge-info',
+        self::TYPE_STAGE => 'bg-primary',
+        self::TYPE_SOUTENANCE => 'bg-danger',
+        self::TYPE_PROJET => 'bg-purple',
+        self::TYPE_AUTRE => 'bg-pink',
+        self::TYPE_COMMISSION => 'bg-warning',
+        self::TYPE_REUNION => 'bg-yellow',
+        self::TYPE_RENTREE => 'bg-success',
+        self::TYPE_VACANCES => 'bg-info',
     ];
 
     public const QUI_ETUDIANT = 'E';
