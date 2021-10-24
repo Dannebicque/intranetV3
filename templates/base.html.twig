@@ -192,26 +192,28 @@
             <div class="dropdown d-none d-md-block">
                 <span class="topbar-btn" data-bs-toggle="dropdown"><i class="fas fa-th-large"></i></span>
                 <div class="dropdown-menu dropdown-grid">
-                    <a class="dropdown-item" href="{{ path('default_homepage') }}">
-                        <span class="fas fa-home fa-3x fa-color-home"></span>
-                        <span class="title">Dashboard</span>
-                    </a>
-                    <a class="dropdown-item" href="{{ path('trombinoscope_index') }}">
-                        <span class="fas fa-images fa-3x fa-color-trombi"></span>
-                        <span class="title">Trombinoscope</span>
-                    </a>
-                    <a class="dropdown-item" href="{{ path('agenda_index') }}">
-                        <span class="fas fa-calendar-alt fa-3x  fa-color-agenda"></span>
-                        <span class="title">Agenda</span>
-                    </a>
-                    <a class="dropdown-item" href="{{ path('application_index',{'onglet':'messagerie'}) }}">
-                        <span class="fas fa-envelope fa-3x  fa-color-messagerie"></span>
-                        <span class="title">Messagerie</span>
-                    </a>
-                    <a class="dropdown-item" href="{{ path('user_mon_profil') }}">
-                        <span class="fas fa-address-card fa-3x  fa-color-profil"></span>
-                        <span class="title">Profil</span>
-                    </a>
+                    <div class="row" style="max-height: 300px; overflow-y: auto">
+                        <a class="dropdown-item col-4" href="{{ path('default_homepage') }}">
+                            <span class="fas fa-home fa-3x fa-color-home"></span>
+                            <span class="title">Dashboard</span>
+                        </a>
+                        <a class="dropdown-item col-4" href="{{ path('trombinoscope_index') }}">
+                            <span class="fas fa-images fa-3x fa-color-trombi"></span>
+                            <span class="title">Trombinoscope</span>
+                        </a>
+                        <a class="dropdown-item col-4" href="{{ path('agenda_index') }}">
+                            <span class="fas fa-calendar-alt fa-3x  fa-color-agenda"></span>
+                            <span class="title">Agenda</span>
+                        </a>
+                        <a class="dropdown-item col-4" href="{{ path('application_index',{'onglet':'messagerie'}) }}">
+                            <span class="fas fa-envelope fa-3x  fa-color-messagerie"></span>
+                            <span class="title">Messagerie</span>
+                        </a>
+                        <a class="dropdown-item col-4" href="{{ path('user_mon_profil') }}">
+                            <span class="fas fa-address-card fa-3x  fa-color-profil"></span>
+                            <span class="title">Profil</span>
+                        </a>
+                    </div>
                 </div>
             </div>
 
@@ -220,16 +222,18 @@
                 <span class="topbar-btn" data-bs-toggle="dropdown">
                     <i class="fas fa-random"></i>
                 </span>
-                    <div class="dropdown-menu dropdown-grid cols-4">
-                        {% for departement in user_data.user.getPersonnelDepartements %}
-                            <a class="dropdown-item {% if departement.defaut == true %}is-default{% endif %}"
-                               href="{{ path('security_change_departement',{departement:departement.departement.uuidString}) }}">
-                                <div class="avatar-departement"
-                                     style="background-color: {{ departement.departement.couleur }}">
-                                    <span class="initials">{{ departement.departement.libelleInitiales|raw }}</span>
-                                </div>
-                            </a>
-                        {% endfor %}
+                    <div class="dropdown-menu dropdown-grid">
+                        <div class="row" style="max-height: 300px; overflow-y: auto">
+                            {% for departement in user_data.user.getPersonnelDepartements %}
+                                <a class="dropdown-item {% if departement.defaut == true %}is-default{% endif %} col-4"
+                                   href="{{ path('security_change_departement',{departement:departement.departement.uuidString}) }}">
+                                    <div class="avatar-departement"
+                                         style="background-color: {{ departement.departement.couleur }}">
+                                        <span class="initials">{{ departement.departement.libelleInitiales|raw }}</span>
+                                    </div>
+                                </a>
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
             {% endif %}
