@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Rattrapage.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/08/2021 12:39
+ * @lastUpdate 09/10/2021 10:33
  */
 
 namespace App\Entity;
@@ -100,6 +100,11 @@ class Rattrapage extends BaseEntity
      */
     private ?string $libelleMatiere;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Semestre::class, inversedBy="rattrapages")
+     */
+    private ?Semestre $semestre;
+
     public function getLibelleMatiere(): ?string
     {
         return $this->libelleMatiere;
@@ -115,7 +120,7 @@ class Rattrapage extends BaseEntity
         $this->setUuid(Uuid::uuid4());
         $this->etudiant = $etudiant;
         $this->etatDemande = self::DEMANDE_FAITE;
-        $this->anneeUniversitaire = null !== $etudiant ? $etudiant->getAnneeUniversitaire() : null;
+        $this->anneeUniversitaire = $etudiant?->getAnneeUniversitaire();
     }
 
     public function __clone()
@@ -265,7 +270,7 @@ class Rattrapage extends BaseEntity
 
     public function groupes(): Collection|array|null
     {
-        return null !== $this->getEtudiant() ? $this->getEtudiant()->getGroupes() : null;
+        return $this->getEtudiant()?->getGroupes();
     }
 
     public function absenceJustifiee(): ?string
@@ -275,5 +280,17 @@ class Rattrapage extends BaseEntity
         }
 
         return null;
+    }
+
+    public function getSemestre(): ?Semestre
+    {
+        return $this->semestre;
+    }
+
+    public function setSemestre(?Semestre $semestre): self
+    {
+        $this->semestre = $semestre;
+
+        return $this;
     }
 }

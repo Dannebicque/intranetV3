@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/CovidAttestationPersonnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 09:55
+ * @lastUpdate 23/10/2021 10:34
  */
 
 namespace App\Controller\superAdministration;
@@ -17,7 +17,6 @@ use App\Entity\CovidAttestationPersonnel;
 use App\Event\CovidEvent;
 use App\Repository\CovidAttestationPersonnelRepository;
 use Carbon\Carbon;
-use DateTime;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;

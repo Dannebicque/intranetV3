@@ -4,17 +4,18 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Utilisateur.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 27/08/2021 09:18
+ * @lastUpdate 24/10/2021 11:51
  */
 
 namespace App\Entity;
 
 use Carbon\CarbonInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use const JSON_THROW_ON_ERROR;
 use JsonException;
 use Serializable;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
@@ -23,7 +24,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * @ORM\HasLifecycleCallbacks()
  * @Vich\Uploadable
  */
-abstract class Utilisateur implements UserInterface, Serializable
+abstract class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface, Serializable
 {
     public const HOMME = 'M.';
     public const FEMME = 'Mme';
@@ -164,7 +165,7 @@ abstract class Utilisateur implements UserInterface, Serializable
 
     public function getNom(): ?string
     {
-        return $this->nom;
+        return mb_strtoupper($this->nom);
     }
 
     public function setNom($nom): void
@@ -174,7 +175,7 @@ abstract class Utilisateur implements UserInterface, Serializable
 
     public function getPrenom(): ?string
     {
-        return $this->prenom;
+        return ucwords(mb_strtolower($this->prenom));
     }
 
     public function setPrenom($prenom): void
@@ -368,12 +369,12 @@ abstract class Utilisateur implements UserInterface, Serializable
 
     public function getDisplayPr(): string
     {
-        return ucfirst($this->prenom) . ' ' . mb_strtoupper($this->nom);
+        return $this->getPrenom() . ' ' . $this->getNom();
     }
 
     public function getDisplay(): string
     {
-        return mb_strtoupper($this->nom) . ' ' . ucfirst($this->prenom);
+        return $this->getNom() . ' ' . $this->getPrenom();
     }
 
     public function getMails(): array
@@ -447,5 +448,10 @@ abstract class Utilisateur implements UserInterface, Serializable
         $this->lieuNaissance = $lieuNaissance;
 
         return $this;
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return (string)$this->username;
     }
 }

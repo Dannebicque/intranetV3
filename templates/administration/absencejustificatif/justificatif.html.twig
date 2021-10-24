@@ -10,8 +10,8 @@
             <a href="{{ path('administration_absences_justificatif_semestre_liste', {semestre:sem.id}) }}"
                class="btn btn-round {% if sem.id == semestre.id %}btn-primary{% endif %}"
                title="{{ 'atitle.changer.semestre'|trans }}"
-               data-provide="tooltip"
-               data-placement="bottom"
+               data-bs-toggle="tooltip"
+               data-bs-placement="bottom"
             >{{ sem.libelle }}</a>
         {% endfor %}
     </div>
@@ -20,15 +20,23 @@
 {% block headeractions %}
     <div class="header-action">
         <div class="buttons">
-            <a href="{{ path('administration_absence_justificatif_delete_all', {semestre: semestre.id}) }}"
-               class="btn btn-danger btn-sm btn-float supprimer" data-provide="tooltip"
-               data-placement="bottom" title="Supprimer tous les justificatifs d'absence pour l'année {{ semestre
-            .annee.libelle }}"><i class="{{ iconDelete }}"></i></a>
+            <a href="{{ path('administration_absence_justificatif_new', {semestre: semestre.id}) }}"
+               class="btn btn-info btn-sm btn-float"
+               title="{{ 'atitle.creer_nouveau'|trans }}"
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
+            >
+                <i class="fas fa-plus"></i>
+                <span class="sr-only">{{ 'atitle.creer_nouveau'|trans }}</span>
+            </a>
+            {# <a href="{{ path('administration_absence_justificatif_delete_all', {semestre: semestre.id}) }}" #}
+            {# class="btn btn-danger btn-sm btn-float supprimer" data-bs-toggle="tooltip" #}
+            {# data-bs-placement="bottom" title="Supprimer tous les justificatifs d'absence pour l'année {{ semestre #}
+            {# .annee.libelle }}"><i class="{{ iconDelete }}"></i></a> #}
             <a href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}"
-               class="btn btn-primary btn-float" data-provide="tooltip"
-               data-placement="bottom" title="{{ 'atitle.retour_semestres'|trans }}"><i class="fas fa-arrow-left"></i></a>
-            <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
-               data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="{{ iconAdmin }}"><span class="sr-only">Administration</span></i></a>
+               class="btn btn-primary btn-float" data-bs-toggle="tooltip"
+               data-bs-placement="bottom" title="{{ 'atitle.retour_semestres'|trans }}"><i class="fas fa-arrow-left"></i></a>
+            <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip"
+               data-bs-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="{{ iconAdmin }}"><span class="sr-only">Administration</span></i></a>
         </div>
     </div>
 {% endblock %}
@@ -70,7 +78,7 @@
 {#                                    data-provide="modaler tooltip"#}
 {#                                    data-url="{{ path('administration_absence_justificatif_details', {uuid: justificatif.uuidString}) }}"#}
 {#                                    data-title="{{ 'detail.absencejustificatif'|trans }}"#}
-{#                                    data-placement="bottom" title="{{ 'atitle.details'|trans }}"><i#}
+            {# title="{{ 'atitle.details'|trans }}"><i #}
 {#                                        class="fas fa-eye"></i></button>#}
 {#                            {% if justificatif.etat == 'A' %}#}
 {#                                <button#}
@@ -80,7 +88,7 @@
 {#                                </button>#}
 {#                                <button#}
 {#                                        data-justificatif="{{ justificatif.uuidString }}"#}
-{#                                        class="btn btn-danger btn-outline btn-square justificatif-annuler bx_{{ justificatif.uuidString }}" data-provide="tooltip" data-placement="bottom"#}
+            {# class="btn btn-danger btn-outline btn-square justificatif-annuler bx_{{ justificatif.uuidString }}" data-bs-toggle="tooltip" data-bs-placement="bottom" #}
 {#                                        title="{{ 'atitle.annuler'|trans }}">#}
 {#                                    <i class="fas fa-undo"></i>#}
 {#                                </button>#}
@@ -91,25 +99,25 @@
 {#                                </button>#}
 {#                                <button#}
 {#                                        data-justificatif="{{ justificatif.uuidString }}"#}
-{#                                        class="btn btn-danger btn-outline btn-square justificatif-annuler bx_{{ justificatif.uuidString }}" data-provide="tooltip" data-placement="bottom"#}
+            {# class="btn btn-danger btn-outline btn-square justificatif-annuler bx_{{ justificatif.uuidString }}" data-bs-toggle="tooltip" data-bs-placement="bottom" #}
 {#                                        title="{{ 'atitle.annuler'|trans }}">#}
 {#                                    <i class="fas fa-undo"></i>#}
 {#                                </button>#}
 {#                            {% else %}#}
 {#                                <a href="#"#}
-{#                                   class="btn btn-success btn-outline btn-square justificatif-accepte bx_{{ justificatif.uuidString }}" data-provide="tooltip"#}
+            {# class="btn btn-success btn-outline btn-square justificatif-accepte bx_{{ justificatif.uuidString }}" data-bs-toggle="tooltip" data-bs-placement="bottom" #}
 {#                                   data-justificatif="{{ justificatif.uuidString }}"#}
-{#                                   data-placement="bottom" title="{{ 'atitle.accepter.le.justificatif'|trans }}">#}
+            {# title="{{ 'atitle.accepter.le.justificatif'|trans }}"> #}
 {#                                    <i class="fas fa-check"></i></a>#}
 {#                                <a href="#"#}
-{#                                   class="btn btn-warning btn-outline btn-square justificatif-refuse bx_{{ justificatif.uuidString }}" data-provide="tooltip"#}
+            {# class="btn btn-warning btn-outline btn-square justificatif-refuse bx_{{ justificatif.uuidString }}" data-bs-toggle="tooltip" data-bs-placement="bottom" #}
 {#                                   data-justificatif="{{ justificatif.uuidString }}"#}
-{#                                   data-placement="bottom" title="{{ 'atitle.refuser.le.justificatif'|trans }}"><i#}
+            {# title="{{ 'atitle.refuser.le.justificatif'|trans }}"><i #}
 {#                                            class="fas fa-ban"></i></a>#}
 
 {#                                <a href="{{ path('administration_absence_justificatif_delete', {id: justificatif.id}) }}"#}
 {#                                   data-csrf="{{ csrf_token('delete' ~ justificatif.id) }}"#}
-{#                                   data-provide="tooltip" data-placement="bottom"#}
+            {# data-bs-toggle="tooltip" data-bs-placement="bottom" #}
 {#                                   title="{{ 'atitle.supprimer'|trans }}"#}
 {#                                   class="btn btn-danger btn-outline btn-square supprimer bx_{{ justificatif.uuidString }}"><i#}
 {#                                            class="{{ iconDelete }}"></i></a>#}
@@ -125,30 +133,10 @@
 {% endblock %}
 
 {% block fabactions %}
-    {{ include('composants/fab-buttons.html.twig', {boutons:[
-        {type: 'info',
-            href: path('administration_absences_justificatif_semestre_export', {semestre:semestre.id, _format: 'pdf'}),
-            title: 'exporter.pdf'|trans,
-            icone : "fa fa-file-pdf"},
-        {
-            type:'info',
-            href:path('administration_absences_justificatif_semestre_export', {semestre:semestre.id, _format: 'csv'}),
-            title: 'exporter.csv'|trans,
-            icone: 'fa fa-file-csv'
-        },
-        {
-            type:'info',
-            href:path('administration_absences_justificatif_semestre_export', {semestre:semestre.id, _format: 'xlsx'}),
-            title: 'exporter.xls'|trans,
-            icone: 'fa fa-file-excel'
-        },
-        {
-            type:'info',
-            href:path('help_article', {sujet: 'administration-absence-justificatif'}),
-            title: 'aide'|trans,
-            icone: 'fa fa-question'
-        }
-    ]}) }}
+    {{ include('composants/fab-button-help.html.twig', {
+        href:path('help_article', {sujet: 'administration-justificatif-absence'})
+    }
+    ) }}
 {% endblock %}
 
 {% block stylesheets %}

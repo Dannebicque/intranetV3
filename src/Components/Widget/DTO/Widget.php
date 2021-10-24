@@ -4,12 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Widget/DTO/Widget.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/08/2021 13:54
+ * @lastUpdate 08/10/2021 19:11
  */
 
 namespace App\Components\Widget\DTO;
 
 use App\Components\Widget\Type\WidgetType;
+use function str_ends_with;
 
 class Widget
 {
@@ -60,7 +61,7 @@ class Widget
             return 'base_widget';
         }
 
-        if (\str_ends_with($blockPrefix, '_widget')) {
+        if (str_ends_with($blockPrefix, '_widget')) {
             return $blockPrefix;
         }
 

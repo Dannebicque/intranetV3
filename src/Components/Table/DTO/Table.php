@@ -4,12 +4,14 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/DTO/Table.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/09/2021 16:29
+ * @lastUpdate 08/10/2021 19:11
  */
 
 namespace App\Components\Table\DTO;
 
 use Doctrine\ORM\QueryBuilder;
+use LogicException;
+use RuntimeException;
 use Symfony\Component\HttpFoundation\Request;
 use App\Components\Table\Adapter\AdapterException;
 use App\Components\Table\Adapter\TableAdapter;
@@ -153,7 +155,7 @@ class Table
     public function getCallbackResponse(): TableResponse
     {
         if (!$this->isCallback()) {
-            throw new \RuntimeException('Unable to get callback response, request is not valid');
+            throw new RuntimeException('Unable to get callback response, request is not valid');
         }
 
         if (null !== $this->response) {
@@ -200,6 +202,6 @@ class Table
             return $this->adapter->getQueryBuilder($this->state, $this->adapterOptions);
         }
 
-        throw new \LogicException('You must use a DoctrineAdapter if you want to retrieve a query builder.');
+        throw new LogicException('You must use a DoctrineAdapter if you want to retrieve a query builder.');
     }
 }

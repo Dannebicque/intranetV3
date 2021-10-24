@@ -4,12 +4,11 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/Column/LinkColumnType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 14:37
+ * @lastUpdate 23/10/2021 10:36
  */
 
 namespace App\Components\Table\Column;
 
-use PhpOffice\PhpWord\Shared\Html;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
 use App\Utils\HtmlUtils;

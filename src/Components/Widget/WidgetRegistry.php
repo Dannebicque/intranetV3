@@ -4,12 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Widget/WidgetRegistry.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 14:37
+ * @lastUpdate 08/10/2021 19:11
  */
 
 namespace App\Components\Widget;
 
 use App\Components\Widget\Type\WidgetType;
+use InvalidArgumentException;
 
 class WidgetRegistry
 {
@@ -28,7 +29,7 @@ class WidgetRegistry
     public function getType(string $name): WidgetType
     {
         if (!isset($this->types[$name])) {
-            throw new \InvalidArgumentException(sprintf('Widget "%s" doesn\'t exist, maybe you have forget to register it ?',
+            throw new InvalidArgumentException(sprintf('Widget "%s" doesn\'t exist, maybe you have forget to register it ?',
                 $name));
         }
 

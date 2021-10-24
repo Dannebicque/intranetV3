@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/ColumnType/StatusAbsenceColumnType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 09:32
+ * @lastUpdate 23/10/2021 12:14
  */
 
 namespace App\Table\ColumnType;
@@ -24,17 +24,17 @@ class StatusAbsenceColumnType extends PropertyColumnType
                     if (array_key_exists($data[1], $absences[$data[0]])) {
                         if (array_key_exists($data[2], $absences[$data[0]][$data[1]])) {
                             if (true === $absences[$data[0]][$data[1]][$data[2]]) {
-                                return '<span class="badge badge-success">Absence justifiée</span>';
+                                return '<span class="badge bg-success">Absence justifiée</span>';
                             }
 
-                            return '<span class="badge badge-danger">Absence non justifiée</span>';
+                            return '<span class="badge bg-danger">Absence non justifiée</span>';
                         }
                     }
                 }
             }
         }
 
-        return '<span class="badge badge-warning">Pas d\'absence saisie</span>';
+        return '<span class="badge bg-warning">Pas d\'absence saisie</span>';
 
     }
 

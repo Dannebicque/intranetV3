@@ -14,25 +14,25 @@
     <div class="header-action">
         <ul class="nav nav-tabs" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active" data-toggle="tab" href="#complet">Référentiel de compétences complet</a>
+                <a class="nav-link active" data-bs-toggle="tab" href="#complet">Référentiel de compétences complet</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#parcours">Référentiel par parcours</a>
+                <a class="nav-link" data-bs-toggle="tab" href="#parcours">Référentiel par parcours</a>
             </li>
             <li class="nav-item d-none d-sm-block">
-                <a class="nav-link" data-toggle="tab" href="#annee">Référentiel par année</a>
+                <a class="nav-link" data-bs-toggle="tab" href="#annee">Référentiel par année</a>
             </li>
         </ul>
 
         <div class="buttons">
             {% if is_granted('ROLE_SUPER_ADMIN') %}
-                <a href="{{ path('super_admin_homepage') }}" class="btn btn-primary btn-float" data-provide="tooltip"
-                   data-placement="bottom" title="{{ 'atitle.retour_super_administration'|trans }}">
+                <a href="{{ path('super_admin_homepage') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                   title="{{ 'atitle.retour_super_administration'|trans }}">
                     <i class="{{ iconDashboard }}"><span class="sr-only">dashboard</span></i>
                 </a>
             {% else %}
-                <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
-                   data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="{{ iconAdmin }}"><span class="sr-only">Administration</span></i></a>
+                <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                   title="{{ 'atitle.retour_administration'|trans }}"><i class="{{ iconAdmin }}"><span class="sr-only">Administration</span></i></a>
             {% endif %}
         </div>
     </div>
@@ -49,13 +49,13 @@
                 <span>
                     <a href="{{ path('administration_apc_niveau_annee_synchro', {diplome:diplome.id}) }}" class="btn
                     btn-sm btn btn-info"
-                       data-provide="tooltip"
-                       data-placement="bottom" title="Synchroniser les niveaux et les années"><i
+                       data-bs-toggle="tooltip" data-bs-placement="bottom"
+                       title="Synchroniser les niveaux et les années"><i
                                 class="fas fa-sync"></i></a>
                     <a href="{{ path('administration_apc_competence_new', {diplome:diplome.id}) }}" class="btn
                     btn-sm btn btn-info"
-                       data-provide="tooltip"
-                       data-placement="bottom" title="Ajouter une compétences"><i
+                       data-bs-toggle="tooltip" data-bs-placement="bottom"
+                       title="Ajouter une compétences"><i
                                 class="fas fa-plus"></i></a>
                 </span>
                     </div>
@@ -65,7 +65,7 @@
                         <ul class="nav nav-tabs">
                             {% for competence in competences %}
                                 <li class="nav-item">
-                                    <a class="nav-link {% if loop.first %}active{% endif %}" data-toggle="tab"
+                                    <a class="nav-link {% if loop.first %}active{% endif %}" data-bs-toggle="tab"
                                        href="#comptence_{{ competence.id }}">{{ competence.nomCourt }}</a>
                                 </li>
                             {% endfor %}
@@ -91,8 +91,8 @@
                 <span>
                     <a href="{{ path('administration_apc_parcours_new', {diplome:diplome.id}) }}" class="btn
                     btn-sm btn btn-info"
-                       data-provide="tooltip"
-                       data-placement="bottom" title="Ajouter un parcours"><i
+                       data-bs-toggle="tooltip" data-bs-placement="bottom"
+                       title="Ajouter un parcours"><i
                                 class="fas fa-plus"></i></a>
                 </span>
                     </div>
@@ -103,7 +103,7 @@
                         <ul class="nav nav-tabs">
                             {% for parcour in parcours %}
                                 <li class="nav-item">
-                                    <a class="nav-link {% if loop.first %}active{% endif %}" data-toggle="tab"
+                                    <a class="nav-link {% if loop.first %}active{% endif %}" data-bs-toggle="tab"
                                        href="#parcour_{{ parcour.id }}">{{ parcour.libelle }}</a>
                                 </li>
                             {% endfor %}
@@ -129,8 +129,8 @@
                 <span>
                     <a href="{{ path('administration_apc_parcours_new', {diplome:diplome.id}) }}" class="btn
                     btn-sm btn btn-info"
-                       data-provide="tooltip"
-                       data-placement="bottom" title="Ajouter un compétences"><i
+                       data-bs-toggle="tooltip" data-bs-placement="bottom"
+                       title="Ajouter un compétences"><i
                                 class="fas fa-plus"></i></a>
                 </span>
                     </div>
@@ -141,7 +141,7 @@
                         <ul class="nav nav-tabs">
                             {% for annee in 1..3 %}
                                 <li class="nav-item">
-                                    <a class="nav-link {% if loop.first %}active{% endif %}" data-toggle="tab"
+                                    <a class="nav-link {% if loop.first %}active{% endif %}" data-bs-toggle="tab"
                                        href="#annee_{{ annee }}">Année {{ annee }}</a>
                                 </li>
                             {% endfor %}

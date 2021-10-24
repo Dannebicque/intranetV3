@@ -9,14 +9,14 @@
         <div class="buttons">
             <a href="{{ path('administration_emprunt_historique') }}"
                class="btn btn-sm btn-info btn-float"
-               data-provide="tooltip"
-               data-placement="bottom"
+               data-bs-toggle="tooltip"
+               data-bs-placement="bottom"
                title="{{ 'atitle.historique.emprunt'|trans }}">
                 <i class="fas fa-history"></i></a>
             <a href="{{ path('administration_index') }}"
                class="btn btn-primary btn-float"
-               data-provide="tooltip"
-               data-placement="bottom"
+               data-bs-toggle="tooltip"
+               data-bs-placement="bottom"
                title="{{ 'atitle.retour_administration'|trans }}">
                 <i class="{{ iconAdmin }}"><span class="sr-only">Administration</span></i></a>
         </div>
@@ -30,9 +30,9 @@
             <ul class="nav nav-tabs">
                 {% for key, value in types %}
                     <li class="nav-item">
-                        <a class="nav-link {% if loop.first %} active{% endif %}" data-toggle="tab"
+                        <a class="nav-link {% if loop.first %} active{% endif %}" data-bs-toggle="tab"
                            href="#type{{ key }}">{{ value }}
-                            <span class="badge badge-pill badge-info">{{ statistiques[key] }}</span></a>
+                            <span class="badge rounded-pill bg-info">{{ statistiques[key] }}</span></a>
                     </li>
                 {% endfor %}
             </ul>
@@ -93,11 +93,12 @@
                                       <th>{{ emprunt.telephone|tel_format }}</th>
                                     {% endif %}
                                     <th>
-                                        <a data-provide="modaler tooltip"
+                                        <a data-provide="modaler"
                                            data-url="{{ path('administration_emprunt_show', {emprunt: emprunt
                                                .id}) }}"
                                            class="btn btn-info btn-outline btn-square"
-                                           data-placement="bottom"
+                                           data-bs-toggle="tooltip"
+                                           data-bs-placement="bottom"
                                            title="{{ 'atitle.details'|trans }}"
                                            data-title="{{ 'adm.emprunt.show.heading'|trans }}"
                                         >
@@ -108,8 +109,8 @@
                                             <a href="{{ path('administration_emprunt_change_etat', {emprunt: emprunt.id, etat:
                                                 constant('App\\Entity\\Emprunt::ACCEPTE')}) }}"
                                                class="btn btn-success btn-outline btn-square"
-                                               data-provide="tooltip"
-                                               data-placement="bottom"
+                                               data-bs-toggle="tooltip"
+                                               data-bs-placement="bottom"
                                                title="{{ 'atitle.emprunt_accepte'|trans }}">
                                                 <i class="fas fa-check"></i>
                                                 <span class="sr-only">{{ 'atitle.emprunt_accepte'|trans }}</span>
@@ -117,8 +118,8 @@
                                             <a href="{{ path('administration_emprunt_change_etat', {emprunt: emprunt.id, etat:
                                                 constant('App\\Entity\\Emprunt::REFUS')}) }}"
                                                class="btn btn-danger btn-outline btn-square"
-                                               data-provide="tooltip"
-                                               data-placement="bottom"
+                                               data-bs-toggle="tooltip"
+                                               data-bs-placement="bottom"
                                                title="{{ 'atitle.emprunt_refuse'|trans }}">
                                                 <i class="fas fa-ban"></i>
                                                 <span class="sr-only">{{ 'atitle.emprunt_refuse'|trans }}</span>
@@ -128,8 +129,8 @@
                                             <a href="{{ path('administration_emprunt_change_etat', {emprunt: emprunt.id, etat:
                                                 constant('App\\Entity\\Emprunt::SORTIE')}) }}"
                                                class="btn btn-success btn-outline btn-square"
-                                               data-provide="tooltip"
-                                               data-placement="bottom"
+                                               data-bs-toggle="tooltip"
+                                               data-bs-placement="bottom"
                                                title="{{ 'atitle.emprunt_sortie'|trans }}">
                                                 <i class="fas fa-check"></i>
                                                 <span class="sr-only">{{ 'atitle.emprunt_sortie'|trans }}</span>
@@ -139,8 +140,8 @@
                                             <a href="{{ path('administration_emprunt_change_etat', {emprunt: emprunt.id, etat:
                                                 constant('App\\Entity\\Emprunt::REVENU')}) }}"
                                                class="btn btn-success btn-outline btn-square"
-                                               data-provide="tooltip"
-                                               data-placement="bottom"
+                                               data-bs-toggle="tooltip"
+                                               data-bs-placement="bottom"
                                                title="{{ 'atitle.emprunt_revenu'|trans }}">
                                                 <i class="fas fa-check"></i>
                                                 <span class="sr-only">{{ 'atitle.emprunt_revenu'|trans }}</span>
@@ -149,8 +150,8 @@
                                         <a href="{{ path('administration_emprunt_imprimer_fiche', {emprunt: emprunt.id}) }}"
                                            data-csrf="{{ csrf_token('delete' ~ emprunt.id) }}"
                                            class="btn btn-primary btn-outline btn-square"
-                                           data-provide="tooltip"
-                                           data-placement="bottom"
+                                           data-bs-toggle="tooltip"
+                                           data-bs-placement="bottom"
                                            title="{{ 'atitle.imprimer'|trans }}">
                                             <i class="{{ iconPrint }}"></i>
                                             <span class="sr-only">{{ 'atitle.imprimer'|trans }}</span>
@@ -158,8 +159,8 @@
                                         <a href="{{ path('administration_emprunt_delete', {emprunt: emprunt.id}) }}"
                                            data-csrf="{{ csrf_token('delete' ~ emprunt.id) }}"
                                            class="btn btn-danger btn-outline btn-square supprimer"
-                                           data-provide="tooltip"
-                                           data-placement="bottom"
+                                           data-bs-toggle="tooltip"
+                                           data-bs-placement="bottom"
                                            title="{{ 'atitle.supprimer'|trans }}">
                                             <i class="{{ iconDelete }}"></i>
                                             <span class="sr-only">{{ 'atitle.supprimer'|trans }}</span>

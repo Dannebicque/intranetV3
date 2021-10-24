@@ -4,14 +4,13 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/AbsenceJustificatif.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/09/2021 18:22
+ * @lastUpdate 24/10/2021 10:38
  */
 
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\UuidTrait;
-use App\Utils\Tools;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -38,8 +37,13 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
 
     public const ETATLONG = [
         self::ACCEPTE => 'Accepté, absences justifiées',
-        self::REFUSE => 'Refusé',
         self::DEPOSE => 'Déposé, en attente de validation',
+        self::REFUSE => 'Refusé',
+    ];
+    public const TAB_ETAT = [
+        'label.absence_justficatif.' . self::ACCEPTE => self::ACCEPTE,
+        'label.absence_justficatif.' . self::DEPOSE => self::DEPOSE,
+        'label.absence_justficatif.' . self::REFUSE => self::REFUSE,
     ];
 
     /**
@@ -67,7 +71,7 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
     private string $etat;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Etudiant", inversedBy="absenceJustificatifs")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Etudiant", inversedBy="absenceJustificatifs", fetch="EAGER")
      * @Groups({"justificatif_administration"})
      */
     private ?Etudiant $etudiant;
@@ -93,11 +97,16 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
     private ?CarbonInterface $heureFin;
 
     /**
+     * @ORM\ManyToOne(targetEntity=Semestre::class, inversedBy="absenceJustificatifs")
+     */
+    private ?Semestre $semestre;
+
+    /**
      * AbsenceJustificatif constructor.
      *
      * @throws Exception
      */
-    public function __construct(Etudiant $etudiant)
+    public function __construct()
     {
         $this->dateDebut = Carbon::today();
         $this->dateFin = Carbon::today();
@@ -105,8 +114,6 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
         $this->heureFin = Carbon::createFromTime(18, 30, 00);
         $this->etat = self::DEPOSE;
         $this->setUuid(Uuid::uuid4());
-        $this->anneeUniversitaire = null !== $etudiant ? $etudiant->getAnneeUniversitaire() : null;
-        $this->setEtudiant($etudiant);
     }
 
     public function __clone()
@@ -309,10 +316,22 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
 
     public function getEtudiantGroupes()
     {
-        if ($this->getEtudiant() !== null) {
+        if (null !== $this->getEtudiant()) {
             return $this->getEtudiant()->getGroupes();
         }
 
         return null;
+    }
+
+    public function getSemestre(): ?Semestre
+    {
+        return $this->semestre;
+    }
+
+    public function setSemestre(?Semestre $semestre): self
+    {
+        $this->semestre = $semestre;
+
+        return $this;
     }
 }

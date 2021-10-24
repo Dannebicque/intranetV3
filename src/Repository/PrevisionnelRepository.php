@@ -4,18 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/PrevisionnelRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/08/2021 08:55
+ * @lastUpdate 23/10/2021 10:36
  */
 
 namespace App\Repository;
 
-use App\Entity\Annee;
-use App\Entity\Diplome;
-use App\Entity\Matiere;
-use App\Entity\Personnel;
 use App\Entity\Previsionnel;
-use App\Entity\Semestre;
-use App\Entity\Ue;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/EdtPlanningRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/09/2021 09:18
+ * @lastUpdate 09/10/2021 10:02
  */
 
 namespace App\Repository;
@@ -113,10 +113,12 @@ class EdtPlanningRepository extends ServiceEntityRepository
     private function groupes(Etudiant $user): void
     {
         foreach ($user->getGroupes() as $groupe) {
-            if ($groupe->getTypeGroupe()->isTD()) {
-                $this->groupetd = $groupe->getOrdre();
-            } elseif ($groupe->getTypegroupe()->isTP()) {
-                $this->groupetp = $groupe->getOrdre();
+            if (null !== $groupe->getTypeGroupe()) {
+                if ($groupe->getTypeGroupe()->isTD()) {
+                    $this->groupetd = $groupe->getOrdre();
+                } elseif ($groupe->getTypegroupe()->isTP()) {
+                    $this->groupetp = $groupe->getOrdre();
+                }
             }
         }
     }
@@ -159,6 +161,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
         return null;
     }
 
+    /** @deprecated */
     public function recupereEDTBornes(int $numSemaine, Semestre $semestre, int $jour, array $matieres): array
     {
         $creneaux = [
@@ -290,6 +293,23 @@ class EdtPlanningRepository extends ServiceEntityRepository
         return $planning;
     }
 
+    public function recupereEdtBorne(int $numSemaine, Semestre $semestre, int $jour): array
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.semaine = :semaine')
+            ->andWhere('p.jour = :jour ')
+            ->andWhere('p.semestre = :semestre')
+            ->setParameters([
+                'semaine' => $numSemaine,
+                'jour' => $jour,
+                'semestre' => $semestre->getId(),
+            ])
+            ->orderBy('p.jour', 'ASC')
+            ->addOrderBy('p.debut', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     public function getByPersonnelArray(Personnel $user, Departement $departement, $tabMatieresDepartement): array
     {
         $query = $this->createQueryBuilder('p')
@@ -334,7 +354,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
         return $t;
     }
 
-    public function getByEtudiantArray($user, $semaine, $tabMatieresSemestre)
+    public function getByEtudiantArray($user, $semaine, $tabMatieresSemestre): array
     {
         $query = $this->findEdtEtu($user, $semaine);
 

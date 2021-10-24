@@ -13,7 +13,7 @@
                     <li class="nav-item">
                         <a class="nav-link {% if (afficheSemestre != null and afficheSemestre == semestre.id) or
                             (afficheSemestre == null and loop.first) %}active show{% endif %} change-semestre"
-                           data-toggle="tab"
+                           data-bs-toggle="tab"
                            href="#semestre{{ semestre.id }}" role="tab" data-semestre="{{ semestre.id }}">{{ semestre
                             .libelle }}
                         </a>
@@ -23,8 +23,8 @@
         </nav>
 
         <div class="buttons">
-            <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
-               data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="{{ iconAdmin }}"><span class="sr-only">Administration</span></i></a>
+            <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip"
+               data-bs-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="{{ iconAdmin }}"><span class="sr-only">Administration</span></i></a>
         </div>
     </div>
 {% endblock %}

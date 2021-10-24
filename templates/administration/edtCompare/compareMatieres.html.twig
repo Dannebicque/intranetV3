@@ -9,20 +9,20 @@
         <div class="buttons">
             <a href="{{ path('administration_edt_compare_personnels', {source:source}) }}"
                class="btn btn-info btn-float btn-sm"
-               data-provide="tooltip"
-               data-placement="bottom"
+               data-bs-toggle="tooltip"
+               data-bs-placement="bottom"
                title="{{ 'atitle.comparer_par_personnels'|trans }}">
                 <i class="fas fa-random"></i></a>
             <a href="{{ path('administration_edt_index') }}"
                class="btn btn-primary btn-float"
-               data-provide="tooltip"
-               data-placement="bottom"
+               data-bs-toggle="tooltip"
+               data-bs-placement="bottom"
                title="{{ 'atitle.retour_administration'|trans }}">
                 <i class="fas fa-arrow-left"></i></a>
             <a href="{{ path('administration_index') }}"
                class="btn btn-primary btn-float"
-               data-provide="tooltip"
-               data-placement="bottom"
+               data-bs-toggle="tooltip"
+               data-bs-placement="bottom"
                title="{{ 'atitle.retour_administration'|trans }}">
                 <i class="{{ iconAdmin }}"><span class="sr-only">Administration</span></i></a>
         </div>
@@ -38,7 +38,7 @@
                     <li class="nav-item {% if loop.first %} active{% endif %}">
                         <a href="#semestre_{{ semestre.id }}"
                            class="nav-link {% if loop.first %} active{% endif %}"
-                           data-toggle="tab">{{ semestre.display }}</a>
+                           data-bs-toggle="tab">{{ semestre.display }}</a>
                     </li>
                 {% endfor %}
             </ul>
@@ -60,12 +60,13 @@
                             {% for matiere in matieres|filter(matiere => matiere.semestre.id == semestre.id) %}
                                 <tr style="background-color:#cccccc;">
                                     <td colspan="10" style="text-align:center;">
-                                        <button data-provide="modaler tooltip"
+                                        <button data-provide="modaler"
                                                 data-url="{{ path('administration_edt_compare_plus_info',
                                                     {'matiere': matiere.typeIdMatiere}) }}"
                                                 class="btn btn-info"
                                                 data-size="lg"
-                                                data-placement="bottom"
+                                                data-bs-toggle="tooltip"
+                                                data-bs-placement="bottom"
                                                 title="{{ 'compare.plusinfos.details'|trans }}"
                                                 data-title="{{ 'compare.plusinfos.details.title'|trans }}"
                                         >
@@ -86,25 +87,25 @@
                                         </tr>
                                 {% for ed in comparatifs[matiere.typeIdMatiere] %}
                                     <tr>
-                                        <td>{{ ed.personnel.displayPr }}</td>
+                                        <td>{{ ed.personnel_prenom }} {{ ed.personnel_nom }}</td>
                                         <td>
-                                                    <span class="badge badge-pill {% if ed.nbCMEDT > ed.nbCMPrevi %}
-                                                    badge-danger {% elseif ed.nbCMEDT == ed.nbCMPrevi %} badge-success {% else %} badge-warning {% endif %}">{{ ed.nbCMEDT }}</span>
+                                                    <span class="badge rounded-pill {% if ed.nbCMEDT > ed.nbCMPrevi %}
+                                                    bg-danger {% elseif ed.nbCMEDT == ed.nbCMPrevi %} bg-success {% else %} bg-warning {% endif %}">{{ ed.nbCMEDT }}</span>
                                         </td><!--CM -->
                                         <td>
-                                            <span class="badge badge-pill {% if ed.nbCMPrevi > ed.nbCMEDT %} badge-danger {% elseif ed.nbCMEDT == ed.nbCMPrevi %} badge-success {% else %} badge-warning {% endif %}">{{ ed.nbCMPrevi }}</span>
+                                            <span class="badge rounded-pill {% if ed.nbCMPrevi > ed.nbCMEDT %} bg-danger {% elseif ed.nbCMEDT == ed.nbCMPrevi %} bg-success {% else %} bg-warning {% endif %}">{{ ed.nbCMPrevi }}</span>
                                         </td>
                                         <td>
-                                            <span class="badge badge-pill {% if ed.nbTDEDT > ed.nbTDPrevi %} badge-danger {% elseif ed.nbTDEDT == ed.nbTDPrevi %} badge-success {% else %} badge-warning {% endif %}">{{ ed.nbTDEDT }}</span>
+                                            <span class="badge rounded-pill {% if ed.nbTDEDT > ed.nbTDPrevi %} bg-danger {% elseif ed.nbTDEDT == ed.nbTDPrevi %} bg-success {% else %} bg-warning {% endif %}">{{ ed.nbTDEDT }}</span>
                                         </td><!--TD -->
                                         <td>
-                                            <span class="badge badge-pill {% if ed.nbTDPrevi > ed.nbTDEDT %} badge-danger {% elseif ed.nbTDEDT == ed.nbTDPrevi %} badge-success {% else %} badge-warning {% endif %}">{{ ed.nbTDPrevi }}</span>
+                                            <span class="badge rounded-pill {% if ed.nbTDPrevi > ed.nbTDEDT %} bg-danger {% elseif ed.nbTDEDT == ed.nbTDPrevi %} bg-success {% else %} bg-warning {% endif %}">{{ ed.nbTDPrevi }}</span>
                                         </td>
                                         <td>
-                                            <span class="badge badge-pill {% if ed.nbTPEDT > ed.nbTPPrevi %} badge-danger {% elseif ed.nbTPEDT == ed.nbTPPrevi %} badge-success {% else %} badge-warning {% endif %}">{{ ed.nbTPEDT }}</span>
+                                            <span class="badge rounded-pill {% if ed.nbTPEDT > ed.nbTPPrevi %} bg-danger {% elseif ed.nbTPEDT == ed.nbTPPrevi %} bg-success {% else %} bg-warning {% endif %}">{{ ed.nbTPEDT }}</span>
                                         </td><!-- TP -->
                                         <td>
-                                            <span class="badge badge-pill {% if ed.nbTPPrevi > ed.nbTPEDT %} badge-danger {% elseif ed.nbTPEDT == ed.nbTPPrevi %} badge-success {% else %} badge-warning {% endif %}">{{ ed.nbTPPrevi }}</span>
+                                            <span class="badge rounded-pill {% if ed.nbTPPrevi > ed.nbTPEDT %} bg-danger {% elseif ed.nbTPEDT == ed.nbTPPrevi %} bg-success {% else %} bg-warning {% endif %}">{{ ed.nbTPPrevi }}</span>
                                         </td>
                                         <td></td>
                                     </tr>

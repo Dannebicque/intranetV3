@@ -4,13 +4,14 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/BCDemande.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/09/2021 11:41
+ * @lastUpdate 09/10/2021 10:02
  */
 
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
-use App\Repository\BCDemandRepository;
+use App\Repository\BCDemandeRepository;
+use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -18,6 +19,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=BCDemandeRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class BCDemande extends BaseEntity
 {
@@ -39,6 +41,16 @@ class BCDemande extends BaseEntity
         self::BC_AVIS_DIRECTION_FAVORABLE => self::BC_AVIS_DIRECTION_FAVORABLE,
         self::BC_AVIS_DIRECTION_DEFAVORABLE => self::BC_AVIS_DIRECTION_DEFAVORABLE,
         self::BC_AVIS_DIRECTION_COMPLEMENT => self::BC_AVIS_DIRECTION_COMPLEMENT,
+    ];
+
+    public const BC_SERVICE_SIA = 'sia';
+    public const BC_SERVICE_SG = 'sg';
+    public const BC_SERVICE_IUT = 'iut';
+
+    public const BC_TABS_SERVICES = [
+        self::BC_SERVICE_SIA => self::BC_SERVICE_SIA,
+        self::BC_SERVICE_SG => self::BC_SERVICE_SG,
+        self::BC_SERVICE_IUT => self::BC_SERVICE_IUT,
     ];
 
     use LifeCycleTrait;
@@ -69,12 +81,12 @@ class BCDemande extends BaseEntity
     private ?string $objet;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      */
     private ?float $montantTTC;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      */
     private ?float $montantHT;
 
@@ -119,9 +131,9 @@ class BCDemande extends BaseEntity
     private ?CarbonInterface $dateLivraisonEstimee;
 
     /**
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="string", length=20, nullable=true)
      */
-    private ?string $avisDirection;
+    private ?string $avisDirection = null;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -151,11 +163,17 @@ class BCDemande extends BaseEntity
     /**
      * @ORM\OneToMany(targetEntity=BCServiceFait::class, mappedBy="bCDemande")
      */
-    private ArrayCollection $migos;
+    private Collection $migos;
+
+    /**
+     * @ORM\Column(type="string", length=30)
+     */
+    private ?string $etat_process = 'demande_initiale';
 
     public function __construct()
     {
         $this->migos = new ArrayCollection();
+        $this->dateDemandeInitiale = Carbon::now();
     }
 
 
@@ -437,6 +455,29 @@ class BCDemande extends BaseEntity
                 $migo->setBCDemande(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getEtatProcess(): ?string
+    {
+        return $this->etat_process;
+    }
+
+    public function setEtatProcess(string $etat_process)
+    {
+        $this->etat_process = $etat_process;
+    }
+
+    //pour le workdlow
+    public function getEtat_process()
+    {
+        return $this->etat_process;
+    }
+
+    public function setEtat_Process(string $etat_process, $context = []): self
+    {
+        $this->etat_process = $etat_process;
 
         return $this;
     }

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyStageEtudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 09:03
+ * @lastUpdate 08/10/2021 19:44
  */
 
 namespace App\Classes;
@@ -162,15 +162,14 @@ class MyStageEtudiant
             $value = Tools::convertToFloat($value);
         }
 
-        if ($stageEtudiant) {
-            $method = 'set' . $name;
-            if (method_exists($stageEtudiant, $method)) {
-                $stageEtudiant->$method($value);
-                $this->entityManager->flush();
+        $method = 'set' . $name;
+        if (method_exists($stageEtudiant, $method)) {
+            $stageEtudiant->$method($value);
+            $this->entityManager->flush();
 
-                return true;
-            }
+            return true;
         }
+
 
         return false;
     }

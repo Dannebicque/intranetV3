@@ -5,18 +5,18 @@
 {% endblock %}
 
 {% block headeractions %}
-<div class="header-action">
-    <div class="buttons">
-        <a href="{{ path('administration_personnel_delete', {id: personnel.id}) }}" data-csrf="{{ csrf_token('delete' ~ personnel.id) }}" class="btn btn-danger btn-sm btn-float supprimer" title="Supprimer" data-provide="tooltip"
-           data-placement="bottom"><i class="fas fa-trash"></i></a>
-        <a href="{{ path('administration_personnel_edit', {id: personnel.id}) }}" class="btn btn-warning btn-sm btn-float" title="Modifier" data-provide="tooltip"
-           data-placement="bottom"><i class="{{ iconEdit }}"></i></a>
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('administration_personnel_delete', {id: personnel.id}) }}" data-csrf="{{ csrf_token('delete' ~ personnel.id) }}" class="btn btn-danger btn-sm btn-float supprimer" title="Supprimer" data-bs-toggle="tooltip" data-bs-placement="bottom"
+            ><i class="fas fa-trash"></i></a>
+            <a href="{{ path('administration_personnel_edit', {id: personnel.id}) }}" class="btn btn-warning btn-sm btn-float" title="Modifier" data-bs-toggle="tooltip" data-bs-placement="bottom"
+            ><i class="{{ iconEdit }}"></i></a>
 
-        <a href="{{ path('administration_personnel_index',{type:personnel.typeUser}) }}" class="btn btn-primary btn-float" title="{{ 'atitle.retour_liste'|trans }}" data-provide="tooltip"
-           data-placement="bottom"><i class="fas fa-arrow-left"></i></a>
+            <a href="{{ path('administration_personnel_index',{type:personnel.typeUser}) }}" class="btn btn-primary btn-float" title="{{ 'atitle.retour_liste'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
+            ><i class="fas fa-arrow-left"></i></a>
+        </div>
+
     </div>
-
-</div>
 {% endblock %}
 
 {% block content %}

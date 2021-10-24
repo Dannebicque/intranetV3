@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Absence.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 18:15
+ * @lastUpdate 23/10/2021 12:18
  */
 
 namespace App\Entity;
@@ -83,6 +83,11 @@ class Absence extends BaseEntity implements Serializable
     private ?AnneeUniversitaire $anneeUniversitaire;
 
     /**
+     * @ORM\ManyToOne(targetEntity=Semestre::class, inversedBy="absences")
+     */
+    private ?Semestre $semestre;
+
+    /**
      * Absence constructor.
      *
      * @throws Exception
@@ -95,7 +100,7 @@ class Absence extends BaseEntity implements Serializable
     public static function getIconStatus(string $status): string
     {
         return isset(self::STATUS_COLORS[$status])
-            ? sprintf('<i class="fas fa-circle text-%s mr-1"></i> %s', self::STATUS_COLORS[$status], $status)
+            ? sprintf('<i class="fas fa-circle text-%s me-1"></i> %s', self::STATUS_COLORS[$status], $status)
             : $status;
     }
 
@@ -216,5 +221,17 @@ class Absence extends BaseEntity implements Serializable
      */
     public function unserialize($data)
     {
+    }
+
+    public function getSemestre(): ?Semestre
+    {
+        return $this->semestre;
+    }
+
+    public function setSemestre(?Semestre $semestre): self
+    {
+        $this->semestre = $semestre;
+
+        return $this;
     }
 }

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/EvaluationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/10/2021 17:32
+ * @lastUpdate 08/10/2021 20:09
  */
 
 namespace App\Controller\appPersonnel;
@@ -84,14 +84,11 @@ class EvaluationController extends BaseController
         //mise à jour d'un champ d'une évaluation
         $name = $request->request->get('field');
         $value = $request->request->get('value');
-        if ($evaluation) {
-            $evaluation->updateData($name, $value);
-            $this->entityManager->flush();
 
-            return $this->json(true, Response::HTTP_OK);
-        }
+        $evaluation->updateData($name, $value);
+        $this->entityManager->flush();
 
-        return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
+        return $this->json(true, Response::HTTP_OK);
     }
 
     /**
@@ -104,6 +101,7 @@ class EvaluationController extends BaseController
      * @throws SyntaxError
      * @throws LoaderError
      * @throws RuntimeError
+     * @throws \App\Exception\MatiereNotFoundException
      */
     public function exportEvaluation(
         GroupeRepository $groupeRepository,

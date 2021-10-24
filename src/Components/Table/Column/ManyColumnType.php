@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/Column/ManyColumnType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 14:37
+ * @lastUpdate 08/10/2021 20:09
  */
 
 namespace App\Components\Table\Column;
 
+use InvalidArgumentException;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\PropertyAccess\PropertyAccess;
@@ -27,13 +28,13 @@ class ManyColumnType extends ColumnType
     }
 
     /**
-     * {@inheritdoc}
+     * {}
      */
     public function render($rowData, array $options): string
     {
         $many = $this->accessor->getValue($rowData, $options['many_path']);
         if (!is_iterable($many)) {
-            throw new \InvalidArgumentException("Attribute {$options['many_path']} must be iterable.");
+            throw new InvalidArgumentException("Attribute {$options['many_path']} must be iterable.");
         }
 
         $html = '';
@@ -58,7 +59,7 @@ class ManyColumnType extends ColumnType
     }
 
     /**
-     * {@inheritdoc}
+     * {}
      */
     public function configureOptions(OptionsResolver $resolver)
     {

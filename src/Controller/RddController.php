@@ -4,35 +4,26 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/RddController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 24/10/2021 11:51
  */
 
 namespace App\Controller;
 
-use App\Utils\Tools;
 use App\Form\RddType;
 use App\Repository\EtudiantRepository;
 use App\Repository\RddDiplomeRepository;
+use App\Utils\Tools;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-/**
- * Class RddController.
- *
- * @Route("rdd", name="rdd_")
- */
+#[Route("rdd", name: "rdd_")]
 class RddController extends AbstractController
 {
-    /**
-     * Creates a new candidatureAlternance entity.
-     *
-     * @Route("/", name="identification")
-     *
-     * @throws Exception
-     */
+    #[Route("/", name: "identification")]
     public function identification(
         Request $request,
         EtudiantRepository $etudiantRepository,
@@ -60,12 +51,7 @@ class RddController extends AbstractController
         return $this->render('rdd/identification.html.twig', ['erreur' => false]);
     }
 
-    /**
-     * Creates a new candidatureAlternance entity.
-     *
-     * @Route("/inscription/{numetudiant}/{diplome}", name="inscription")
-     *
-     */
+    #[Route("/inscription/{numetudiant}/{diplome}", name: "inscription")]
     public function inscription(
         EtudiantRepository $etudiantRepository,
         RddDiplomeRepository $rddDiplomeRepository,
@@ -88,15 +74,15 @@ class RddController extends AbstractController
                         $em->flush();
 
                         return $this->render('rdd/confirm.html.twig', [
-                            'etudiant'    => $etudiant,
-                            'rdd'         => $dip,
+                            'etudiant' => $etudiant,
+                            'rdd' => $dip,
                             'numetudiant' => md5('clerdd' . $etudiant->getNumEtudiant()),
-                            'diplome'     => $diplome,
+                            'diplome' => $diplome,
                         ]);
                     }
 
                     return $this->render('rdd/new.html.twig', [
-                        'form'     => $form->createView(),
+                        'form' => $form->createView(),
                         'etudiant' => $etudiant,
                     ]);
                 }
@@ -110,18 +96,14 @@ class RddController extends AbstractController
         return $this->render('rdd/identification.html.twig', ['erreur' => false]);
     }
 
-    /**
-     * Creates a new candidatureAlternance entity.
-     *
-     * @Route("/enquete/{numetudiant}/{diplome}", name="enquete_diplome")
-     *
-     */
+    #[Route("/enquete/{numetudiant}/{diplome}", name: "enquete_diplome")]
     public function enquete(
         EtudiantRepository $etudiantRepository,
         RddDiplomeRepository $rddDiplomeRepository,
         $numetudiant,
         $diplome
-    ): Response {
+    ): Response
+    {
         $dip = $rddDiplomeRepository->find($diplome);
         if ((null !== $dip) && md5('clerdd' . $dip->getNumetudiant()) === $numetudiant) {
             $etudiant = $etudiantRepository->findOneBy(['numEtudiant' => $dip->getNumetudiant()]);
@@ -130,5 +112,7 @@ class RddController extends AbstractController
                 'etudiant' => $etudiant,
             ]);
         }
+
+        throw new AccessDeniedException();
     }
 }

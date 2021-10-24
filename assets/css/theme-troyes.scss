@@ -2,11 +2,12 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/css/theme-troyes.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/10/2021 07:02
+// @lastUpdate 22/10/2021 13:36
 
 body.troyes {
   --colorIUT: #F7B000;
   --colorIUTComplementaire: #4D3677;
+  --colorFocus: #4D3677;
   --backgroundEdtVide: #f4f4f4;
   --backgroundEdtVidePair: #eaeaea;
   --colorTextA: #4D3677;
@@ -23,7 +24,6 @@ body.troyes {
 
   --colorPrimaryHover: #4D3677;
   --colorTextPrimaryHover: #F7B000;
-
   --colorSuccess: #15c377;
   --colorSecondary: #e4e7ea;
   --colorPrimary: #F7B000;
@@ -41,9 +41,11 @@ body.troyes {
 
 body.troyes.dark-theme {
   --colorIUT: #F7B000;
+  --colorFocus: #F7B000;
   --colorIUTComplementaire: #4D3677;
   --colorTextA: #F7B000;
   --policeDark: #202945;
+  --policeLight: #eaeaea;
   --backgroundEdtVide: #f4f4f4;
   --backgroundEdtVidePair: #eaeaea;
   --body: #202945;
@@ -64,9 +66,9 @@ body.troyes.dark-theme {
   --colorSecondary: #e4e7ea;
   --colorWarning: #F0730B;
   --colorDanger: #BF0000;
-  --colorPink: #f96197;
-  --colorPurple: #926dde;
-  --colorBrown: #8d6658;
+  --colorPink: #A2204E;
+  --colorPurple: #472490;
+  --colorBrown: #5c2e1d;
   --colorCyan: #1890A7;
   --colorYellow: #fcc525;
   --colorGray: #868e96;

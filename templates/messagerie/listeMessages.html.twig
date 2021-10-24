@@ -7,7 +7,8 @@
         <span class="divider-line mx-1"></span>
 
         <div class="btn-group">
-            <button class="btn" title="Trash" data-provide="tooltip"><i class="{{ iconDelete }}"></i>
+            <button class="btn" title="Trash" data-bs-toggle="tooltip" data-bs-placement="bottom">
+                <i class="{{ iconDelete }}"></i>
             </button>
         </div>
 
@@ -37,7 +38,7 @@
                 {# </label> #}
 
                 {% if message.important == true %}
-                    <span class="badge badge-dot badge-danger"></span>
+                    <span class="badge badge-dot bg-danger"></span>
                 {% else %}
                     <span class="badge badge-dot opacity-0"></span>
                 {% endif %}
@@ -84,7 +85,7 @@
                 </label>
 
                 {% if message.message.important == true %}
-                    <span class="badge badge-dot badge-danger"></span>
+                    <span class="badge badge-dot bg-danger"></span>
                 {% else %}
                     <span class="badge badge-dot opacity-0"></span>
                 {% endif %}

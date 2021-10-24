@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Utils/Tools.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/09/2021 10:55
+ * @lastUpdate 08/10/2021 19:11
  */
 
 /*
@@ -109,9 +109,8 @@ abstract class Tools
         /* Replace all the characters that are not in a-z or 0-9 by a hyphen */
         $texte = preg_replace('/[^a-z0-9]/', '-', $texte);
         /* Remove hyphen anywhere it's more than one */
-        $texte = preg_replace("/[\-]+/", '-', $texte);
 
-        return $texte;
+        return preg_replace("/[\-]+/", '-', $texte);
     }
 
     public static function personnaliseTexte($texte, $config)

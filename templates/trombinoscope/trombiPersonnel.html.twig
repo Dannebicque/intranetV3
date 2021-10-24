@@ -5,7 +5,7 @@
             {% if is_granted('ROLE_PERMANENT') %}
                 <ul class="card-controls">
                     <li class="dropdown">
-                        <a data-toggle="dropdown" href="#"><i class="fas fa-ellipsis-h rotate-90"></i></a>
+                        <a data-bs-toggle="dropdown" href="#"><i class="fas fa-ellipsis-h rotate-90"></i></a>
                         <div class="dropdown-menu dropdown-menu-right">
                             <a href="{{ path('trombinoscope_personnel_export', {_format:'pdf', type: type}) }}"
                                class="dropdown-item"><i class="fa fa-file-pdf"></i> {{ 'exporter.pdf'|trans }}</a>
@@ -42,33 +42,34 @@
 
                                 </a>
                                 <div class="flex-grow pl-20">
-                                    <h4><a class="text-dark trombinoscope_nom" data-provide="tooltip"
+                                    <h4>
+                                        <a class="text-dark trombinoscope_nom" data-bs-toggle="tooltip" data-bs-placement="bottom"
                                            target="_blank"
-                                           data-placement="bottom" title="Profil" href="{{ path('user_profil', {type: 'personnel', slug: personnel.slug}) }}">
+                                           title="Profil" href="{{ path('user_profil', {type: 'personnel', slug: personnel.slug}) }}">
                                             {{ personnel.displayPr }}
                                         </a></h4>
                                     <div><i class="fa fa-fw fa-map-marker w-20px"></i>
                                         {% if personnel.statut == 'VAC' %}
                                             {{ personnel.entreprise }}
                                         {% else %}
-                                        {{ personnel.bureau1 }} {{ personnel.bureau2 }}
-                                            {% endif %}
+                                            {{ personnel.bureau1 }} {{ personnel.bureau2 }}
+                                        {% endif %}
                                     </div>
                                     {% if personnel.siteUniv != '' or personnel.siteUniv != null %}
                                         <div>
                                             <i class="fa fa-fw fa-globe w-20px"></i>
                                             <a href="{{ personnel.siteUniv }}"
                                                class="text-dark"
-                                               target="_blank" title="Site Universitaire" data-provide="tooltip"
-                                               data-placement="bottom">Site Web</a>
+                                               target="_blank" title="Site Universitaire" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                            >Site Web</a>
                                         </div>
                                     {% endif %}
                                     <div>
                                         <i class="fa fa-fw fa-envelope w-20px"></i>
                                         <a href="mailto:{{ personnel.mailUniv }}" target="_blank"
                                            class="text-dark"
-                                           title="Contacter" data-provide="tooltip"
-                                           data-placement="bottom">Contacter
+                                           title="Contacter" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                        >Contacter
                                         </a>
                                     </div>
                                     {% if personnel.sitePerso != '' or personnel.sitePerso != null %}
@@ -76,8 +77,8 @@
                                             <i class="fa fa-fw fa-link"></i>
                                             <a href="{{ personnel.sitePerso }}"
                                                class="text-dark"
-                                               target="_blank" title="Site personnel" data-provide="tooltip"
-                                               data-placement="bottom">Site Perso
+                                               target="_blank" title="Site personnel" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                            >Site Perso
                                             </a>
 
                                         </div>

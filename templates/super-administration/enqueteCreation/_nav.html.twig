@@ -3,7 +3,7 @@
         step > 1 %}complete{% endif %}">
         <span class="nav-title">Paramètrage général</span>
         <a class="nav-link {% if step is not defined or step == 1 %}active{% endif %}"
-           data-toggle="tab" href="#wizard-1"></a>
+           data-bs-toggle="tab" href="#wizard-1"></a>
     </li>
 
     {# <li class="nav-item {% if step is defined and step == 2 %}processing{% elseif step is defined and #}
@@ -15,12 +15,12 @@
     <li class="nav-item {% if step is defined and step == 2 %}processing{% elseif step is defined and
         step > 2 %}complete{% endif %}">
         <span class="nav-title">Matières</span>
-        <a class="nav-link {% if step is defined and step == 2 %}active{% endif %}" data-toggle="tab" href="#wizard-3"></a>
+        <a class="nav-link {% if step is defined and step == 2 %}active{% endif %}" data-bs-toggle="tab" href="#wizard-3"></a>
     </li>
 
     <li class="nav-item {% if step is defined and step == 4 %}processing{% elseif step is defined and
         step > 4 %}complete{% endif %}">
         <span class="nav-title">Confirmation</span>
-        <a class="nav-link {% if step is defined and step == 2 %}active{% endif %}" data-toggle="tab" href="#wizard-4"></a>
+        <a class="nav-link {% if step is defined and step == 2 %}active{% endif %}" data-bs-toggle="tab" href="#wizard-4"></a>
     </li>
 </ul>

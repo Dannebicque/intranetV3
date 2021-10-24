@@ -4,11 +4,10 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Questionnaire/Questionnaire.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/08/2021 08:00
+ * @lastUpdate 11/10/2021 18:17
  */
 
 namespace App\Components\Questionnaire;
-
 
 use App\Components\Questionnaire\DTO\AbstractQuestionnaire;
 use App\Components\Questionnaire\Section\AbstractSection;
@@ -16,7 +15,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class Questionnaire
 {
-    const DEFAULT_TEMPLATE = 'components/questionnaire/questionnaire.html.twig';
+    private const DEFAULT_TEMPLATE = 'components/questionnaire/questionnaire.html.twig';
     protected Sections $sections;
     private AbstractQuestionnaire $questionnaire;
     private array $options = [];
@@ -45,7 +44,7 @@ class Questionnaire
     {
         $resolver->setDefaults([
             'template' => self::DEFAULT_TEMPLATE,
-            'mode' => AbstractQuestionnaire::MODE_APERCU
+            'mode' => AbstractQuestionnaire::MODE_APERCU,
         ]);
     }
 
@@ -87,6 +86,4 @@ class Questionnaire
         //ajouter dans la section concernée...
         $this->sections->getSection($ordreSection)->addQuestions($question);
     }
-
-
 }

@@ -10,7 +10,9 @@
     <tbody>
     {% for sae in saes %}
         <tr>
-            <td><a href="#" title="{{ sae.display }}" data-provde="tooltip">{{ sae.codeMatiere }}</a></td>
+            <td>
+                <a href="#" title="{{ sae.display }}" data-bs-toggle="tooltip" data-bs-placement="bottom">{{ sae.codeMatiere }}</a>
+            </td>
             {% for niveau in niveaux %}
                 <td>
                     <a class="myedit"
@@ -27,7 +29,9 @@
     {% endfor %}
     {% for ressource in ressources %}
         <tr>
-            <td><a href="#" title="{{ ressource.display }}" data-provde="tooltip">{{ ressource.codeMatiere }}</a></td>
+            <td>
+                <a href="#" title="{{ ressource.display }}" data-bs-toggle="tooltip" data-bs-placement="bottom">{{ ressource.codeMatiere }}</a>
+            </td>
             {% for niveau in niveaux %}
                 <td>
                     <a class="myedit"

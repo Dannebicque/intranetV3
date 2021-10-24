@@ -16,7 +16,7 @@
         <td colspan="3">
             {% for competence in apc_sae.apcSaeCompetences %}
                 <span class="badge badge-lg badge-{{ competence.competence.couleur }}"
-                      data-provide="tooltip"
+                      data-bs-toggle="tooltip" data-bs-placement="bottom"
                       title="{{ competence.competence.libelle }}">
                     {{ competence.competence.nomCourt }}
                 </span>
@@ -30,7 +30,7 @@
 
             {% for ac in apc_sae.apcSaeApprentissageCritiques %}
                 <span class="badge badge-{{ ac.apprentissageCritique.competence.couleur }}"
-                      data-provide="tooltip"
+                      data-bs-toggle="tooltip" data-bs-placement="bottom"
                       title="{{ ac.apprentissageCritique.libelle }}">
                     {{ ac.apprentissageCritique.code }}
                 </span>
@@ -69,8 +69,8 @@
         <th>Liste des ressources mobilisées et combinées</th>
         <td colspan="3">
             {% for ressource in apc_sae.apcSaeRessources %}
-                <span class="badge badge-primary"
-                      data-provide="tooltip"
+                <span class="badge bg-primary"
+                      data-bs-toggle="tooltip" data-bs-placement="bottom"
                       title="{{ ressource.ressource.libelle }}">
                     {{ ressource.ressource.display }}
                     </span>

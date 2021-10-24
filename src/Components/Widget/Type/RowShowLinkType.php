@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Widget/Type/RowShowLinkType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/09/2021 10:05
+ * @lastUpdate 23/10/2021 12:18
  */
 
 namespace App\Components\Widget\Type;
@@ -20,6 +20,6 @@ class RowShowLinkType extends RowLinkType
         $resolver
             ->setDefault('title', 'action.show')
             ->setDefault('icon', 'fas fa-info')
-            ->setDefault('class', 'btn btn-square btn-info-outline mr-1');
+            ->setDefault('class', 'btn btn-square btn-info-outline me-1');
     }
 }

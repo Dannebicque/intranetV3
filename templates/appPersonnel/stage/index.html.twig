@@ -4,25 +4,25 @@
     <div class="card-body">
         <ul class="nav nav-tabs nav-tabs-danger nav-justified" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active" data-toggle="tab" href="#onglet_stage_en_cours" role="tab">Stagiaires à
-                    suivre</a>
+                <a class="nav-link active" data-bs-toggle="tab" href="#onglet_stage_en_cours" role="tab">Stagiaires à
+                                                                                                         suivre</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#onglet_alternance_en_cours" role="tab">Alternants à
-                    suivre</a>
+                <a class="nav-link" data-bs-toggle="tab" href="#onglet_alternance_en_cours" role="tab">Alternants à
+                                                                                                       suivre</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#onglet_stage_historique" role="tab">Anciens stages</a>
+                <a class="nav-link" data-bs-toggle="tab" href="#onglet_stage_historique" role="tab">Anciens stages</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#onglet_alternance_historique" role="tab">Anciennes
-                    alternances</a>
+                <a class="nav-link" data-bs-toggle="tab" href="#onglet_alternance_historique" role="tab">Anciennes
+                                                                                                         alternances</a>
             </li>
         </ul>
         <div class="card-body tab-content">
             <div class="tab-pane fade active show" id="onglet_stage_en_cours">
                 <div class="btn-group pull-right">
-                    <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Exporter la liste</button>
+                    <button class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">Exporter la liste</button>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="{{ path('application_personnel_stage_export',
                             {periode:'courant', '_format':'xlsx'})
@@ -56,17 +56,19 @@
                                     title="Profil de l'étudiant"
                                     target="_blank">{{ stage.etudiant.displayPr }}</a>{% else %} - {% endif %}</td>
                             <td>{% if stage.stagePeriode != null %}{{ stage.stagePeriode.semestre.display }}{% else %} - {% endif %}</td>
-                            <td>{% if stage.stagePeriode != null %}<a href="#" data-provide="modaler tooltip"
+                            <td>{% if stage.stagePeriode != null %}<a href="#" data-provide="modaler"
+                                                                      data-bs-toggle="tooltip" data-bs-placement="bottom"
                                                                       data-url="{{ path('application_personnel_stage_periode_info', {'id': stage.id}) }}"
                                                                       class="btn btn-info btn-outline btn-xs"
-                                                                      data-placement="bottom"
+
                                                                       title="Informations sur la période"
                                                                       data-title="Informations sur la période" >{{ stage.stagePeriode.libelle }}</a>{% else %} - {% endif %}
                             </td>
-                            <td>{% if stage.entreprise != null %}<a href="#" data-provide="modaler tooltip"
+                            <td>{% if stage.entreprise != null %}<a href="#" data-provide="modaler"
+                                                                    data-bs-toggle="tooltip" data-bs-placement="bottom"
                                                                     data-url="{{ path('application_personnel_stage_entreprise_info', {'id': stage.id}) }}"
                                                                     class="btn btn-info btn-outline btn-xs"
-                                                                    data-placement="bottom"
+
                                                                     title="Informations sur l'entreprise"
                                                                     data-title="Informations sur l'entreprise" >{{ stage.entreprise.raisonSociale }}</a>{% else %} - {% endif %}
                             </td>
@@ -85,7 +87,7 @@
             </div>
             <div class="tab-pane" id="onglet_alternance_en_cours">
                 <div class="btn-group pull-right">
-                    <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Exporter la liste</button>
+                    <button class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">Exporter la liste</button>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="{{ path('application_personnel_alternance_export',
                             {periode:'courant', '_format':'xlsx'})
@@ -119,10 +121,10 @@
                                     target="_blank">{{ alternance.etudiant.displayPr }}</a>{% else %} - {% endif %}</td>
                             <td>{% if alternance.annee != null %}{{ alternance.annee.libelle }}{% else %} - {% endif %}</td>
                             {% if alternance.entreprise != null %}
-                                <td><a href="#" data-provide="modaler tooltip"
+                                <td><a href="#" data-provide="modaler"
                                        data-url="{{ path('application_personnel_alternance_entreprise_info', {'id': alternance.id}) }}"
                                        class="btn btn-info btn-outline btn-xs"
-                                       data-placement="bottom"
+                                       data-bs-toggle="tooltip" data-bs-placement="bottom"
                                        title="Informations sur l'entreprise"
                                        data-title="Informations sur l'entreprise">{{ alternance.entreprise.raisonSociale }}</a>
                                 </td>
@@ -135,8 +137,8 @@
                                     <a href="{{ path('application_personnel_alternance_fiche_suivi_alternance',{'alternance': alternance.id}) }}" class="btn btn-info">Suivi</a>
                                 {% else %}
                                     <a href="#" class="btn btn-warning" title="Attente de la saisie des informations
-                                    par le stagiaire" data-placement="bottom" data-provide="tooltip">Attente des
-                                                                                                     informations</a>
+                                    par le stagiaire" data-bs-toggle="tooltip" data-bs-placement="bottom">Attente des
+                                                                                                          informations</a>
                                 {% endif %}
                             </td>
                         </tr>
@@ -152,7 +154,7 @@
             </div>
             <div class="tab-pane" id="onglet_stage_historique">
                 <div class="btn-group pull-right">
-                    <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Exporter la liste</button>
+                    <button class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">Exporter la liste</button>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="{{ path('application_personnel_stage_export',
                             {periode:'ancien', '_format':'xlsx'})
@@ -188,17 +190,17 @@
                                     target="_blank">{{ stage.etudiant.displayPr }}</a>{% else %} - {% endif %}</td>
                             <td>{% if stage.stagePeriode != null %}{{ stage.stagePeriode.semestre.display }}{% else %} - {% endif %}</td>
                             <td>{% if stage.stagePeriode != null %}{{ stage.stagePeriode.anneeUniversitaire }}{% else %} - {% endif %}</td>
-                            <td>{% if stage.stagePeriode != null %}<a href="#" data-provide="modaler tooltip"
+                            <td>{% if stage.stagePeriode != null %}<a href="#" data-provide="modaler"
                                                                       data-url="{{ path('application_personnel_stage_periode_info', {'id': stage.id}) }}"
                                                                       class="btn btn-info btn-outline btn-xs"
-                                                                      data-placement="bottom"
+                                                                      data-bs-toggle="tooltip" data-bs-placement="bottom"
                                                                       title="Informations sur la période"
                                                                       data-title="Informations sur la période" >{{ stage.stagePeriode.libelle }}</a>{% else %} - {% endif %}
                             </td>
-                            <td>{% if stage.entreprise != null %}<a href="#" data-provide="modaler tooltip"
+                            <td>{% if stage.entreprise != null %}<a href="#" data-provide="modaler"
                                                                     data-url="{{ path('application_personnel_stage_entreprise_info', {'id': stage.id}) }}"
                                                                     class="btn btn-info btn-outline btn-xs"
-                                                                    data-placement="bottom"
+                                                                    data-bs-toggle="tooltip" data-bs-placement="bottom"
                                                                     title="Informations sur l'entreprise"
                                                                     data-title="Informations sur l'entreprise" >{{ stage.entreprise.raisonSociale }}</a>{% else %} - {% endif %}
                             </td>
@@ -217,7 +219,7 @@
             </div>
             <div class="tab-pane" id="onglet_alternance_historique">
                 <div class="btn-group pull-right">
-                    <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Exporter la liste</button>
+                    <button class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">Exporter la liste</button>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="{{ path('application_personnel_alternance_export',
                             {periode:'ancien', '_format':'xlsx'})
@@ -252,15 +254,14 @@
                                     target="_blank">{{ alternance.etudiant.displayPr }}</a>{% else %} - {% endif %}</td>
                             <td>{% if alternance.annee != null %}{{ alternance.annee.libelle }}{% else %} - {% endif %}</td>
                             <td>{{ alternance.anneeUniversitaire }}</td>
-                            <td>{% if alternance.entreprise != null %}<a href="#" data-provide="modaler tooltip"
+                            <td>{% if alternance.entreprise != null %}<a href="#" data-provide="modaler"
                                                                          data-url="{{ path('application_personnel_alternance_entreprise_info', {'id': alternance.id}) }}"
                                                                          class="btn btn-info btn-outline btn-xs"
-                                                                         data-placement="bottom"
+                                                                         data-bs-toggle="tooltip" data-bs-placement="bottom"
                                                                          title="Informations sur l'entreprise"
                                                                          data-title="Informations sur l'entreprise" >{{ alternance.entreprise.raisonSociale }}</a>{% else %} - {% endif %}
                             </td>
-                            <td>{% if alternance.entreprise != null and alternance.entreprise.adresse != null %}{{
-                                alternance.entreprise.adresse.ville }}
+                            <td>{% if alternance.entreprise != null and alternance.entreprise.adresse != null %}{{ alternance.entreprise.adresse.ville }}
                                     ({{ alternance.entreprise.adresse.codePostal }}){% else %} - {% endif %}</td>
                             <td></td>
                         </tr>

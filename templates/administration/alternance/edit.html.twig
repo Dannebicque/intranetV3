@@ -8,13 +8,13 @@
     <div class="header-action">
         <div class="buttons">
             <a href="{{ path('administration_alternance_delete', {id: alternance.id}) }}" data-csrf="{{ csrf_token('delete' ~ alternance.id) }}"
-               class="btn btn-danger btn-sm btn-float supprimer" title="{{ 'atitle.supprimer'|trans }}" data-provide="tooltip"
-               data-placement="bottom"><i class="fas fa-trash"></i></a>
-            <a href="{{ path('administration_alternance_show', {id: alternance.id}) }}" class="btn btn-info btn-sm btn-float" title="{{ 'atitle.voir'|trans }}" data-provide="tooltip"
-               data-placement="bottom"><i class="fas fa-eye"></i></a>
+               class="btn btn-danger btn-sm btn-float supprimer" title="{{ 'atitle.supprimer'|trans }}" data-bs-toggle="tooltip"
+               data-bs-placement="bottom"><i class="fas fa-trash"></i></a>
+            <a href="{{ path('administration_alternance_show', {id: alternance.id}) }}" class="btn btn-info btn-sm btn-float" title="{{ 'atitle.voir'|trans }}" data-bs-toggle="tooltip"
+               data-bs-placement="bottom"><i class="fas fa-eye"></i></a>
 
-            <a href="{{ path('administration_alternance_index', {annee:alternance.annee.id}) }}" class="btn btn-primary btn-float" title="{{ 'atitle.retour_liste'|trans }}" data-provide="tooltip"
-               data-placement="bottom"><i class="fas fa-arrow-left"></i></a>
+            <a href="{{ path('administration_alternance_index', {annee:alternance.annee.id}) }}" class="btn btn-primary btn-float" title="{{ 'atitle.retour_liste'|trans }}" data-bs-toggle="tooltip"
+               data-bs-placement="bottom"><i class="fas fa-arrow-left"></i></a>
 
         </div>
     </div>

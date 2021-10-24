@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/EvaluationRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/09/2021 14:25
+ * @lastUpdate 09/10/2021 10:33
  */
 
 namespace App\Repository;
@@ -30,6 +30,7 @@ class EvaluationRepository extends ServiceEntityRepository
         parent::__construct($registry, Evaluation::class);
     }
 
+    //todo: utiliser le semestre de Evaluation ? plutot que matière
     public function findBySemestre(array $matieres, AnneeUniversitaire $annee)
     {
         if (count($matieres) <= 0) {

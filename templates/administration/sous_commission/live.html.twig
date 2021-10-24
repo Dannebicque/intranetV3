@@ -10,8 +10,8 @@
             <a href="{{ path('administration_sous_commission_live', {semestre:sem.id}) }}"
                class="btn btn-round {% if sem.id == semestre.id %}btn-primary{% endif %}"
                title="{{ 'atitle.changer.semestre'|trans }}"
-               data-provide="tooltip"
-               data-placement="bottom"
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
+
             >{{ sem.libelle }}</a>
         {% endfor %}
     </div>
@@ -21,17 +21,17 @@
     <div class="header-action">
         <div class="buttons">
             <a href="{{ path('administration_sous_commission_exporter', {semestre:semestre.id}) }}" class="btn btn-info
-            btn-float btn-sm" data-provide="tooltip"
-               data-placement="bottom" title="{{ 'atitle.exporter'|trans }}"><i
+            btn-float btn-sm" data-bs-toggle="tooltip" data-bs-placement="bottom"
+               title="{{ 'atitle.exporter'|trans }}"><i
                         class="fas fa-download"></i></a>
             <a href="{{ path('administration_sous_commission_travail', {semestre:semestre.id}) }}" class="btn btn-info
-            btn-float btn-sm" data-provide="tooltip"
-               data-placement="bottom" title="{{ 'atitle.basculer.sous_comm_travail'|trans }}"><i
+            btn-float btn-sm" data-bs-toggle="tooltip" data-bs-placement="bottom"
+               title="{{ 'atitle.basculer.sous_comm_travail'|trans }}"><i
                         class="fas fa-pencil-ruler"></i></a>
-            <a href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}" class="btn btn-primary btn-float" data-provide="tooltip"
-               data-placement="bottom" title="{{ 'atitle.retour_semestres'|trans }}"><i class="fas fa-arrow-left"></i></a>
-            <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
-               data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="{{ iconAdmin }}"><span class="sr-only">Administration</span></i></a>
+            <a href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom"
+               title="{{ 'atitle.retour_semestres'|trans }}"><i class="fas fa-arrow-left"></i></a>
+            <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom"
+               title="{{ 'atitle.retour_administration'|trans }}"><i class="{{ iconAdmin }}"><span class="sr-only">Administration</span></i></a>
         </div>
     </div>
 {% endblock %}
@@ -107,7 +107,7 @@
                             <td>{{ loop.index }}</td>
                             <td><a href="{{ path('user_profil',{type:'etudiant', slug:etudiant.slug}) }}"
                                    target="_blank" title="Profil de l'étudiant"
-                                   data-toggle="tooltip">{{ etudiant.display }}</a></td>
+                                   data-bs-toggle="tooltip" data-bs-placement="bottom">{{ etudiant.display }}</a></td>
                             <td>{{ etudiant.bac ? etudiant.bac.libelle : 'N.C.' }}</td>
                             <td>{{ etudiant.numetudiant }}</td>
 
@@ -117,7 +117,7 @@
                                 <td class="matiere">
                                     {% if myEtudiant.moyenneMatieres[matiere.typeIdMatiere].optionFaite == false %}
 
-                                        <span class="badge badge-gray">N.C.</span>
+                                        <span class="badge bg-gray">N.C.</span>
                                     {% elseif matiere.pac == true %}
                                         {% if myEtudiant.moyenneMatieres[matiere.typeIdMatiere].moyenne != '-0.01'
                                             and myEtudiant.moyenneMatieres[matiere.typeIdMatiere]
@@ -127,11 +127,11 @@
                                                 (2) }}
 	                                        </span>
                                         {% else %}
-                                            <span class="badge badge-success">No PAC</span>
+                                            <span class="badge bg-success">No PAC</span>
                                         {% endif %}
                                     {% else %}
                                         <span class="{{ myEtudiant.moyenneMatieres[matiere.typeIdMatiere].style }}">
-	                                        <a href="#" rel="tooltip"
+	                                        <a href="#" data-bs-toggle="tooltip" data-bs-placement="bottom"
                                                title="{{ matiere.codeMatiere }}">{{ myEtudiant
                                                 .moyenneMatieres[matiere.typeIdMatiere].moyenne|number_format(2) }}</a>
 	                                    </span>
@@ -148,7 +148,7 @@
                                                 .moyennePenalisee|number_format(2) }}
                                                 </span>
                                         {% else %}
-                                            <span class="badge badge-gray">
+                                            <span class="badge bg-gray">
                                             N.C.
                                         </span>
                                         {% endif %}
@@ -177,7 +177,7 @@
                             {% endfor %}
                             <td><span class="{{ myEtudiant.styleMoyenneSemestre }}"><a
                                             href="#"
-                                            rel="tooltip"
+                                            data-bs-toggle="tooltip" data-bs-placement="bottom"
                                             title="{{ etudiant.display }}">{{ myEtudiant.moyenneSemestre|number_format(3) }}</a></span>
                             </td>
 
@@ -194,7 +194,7 @@
                             <td>{{ myEtudiant.bonif|number_format(3) }}</td>
                             <td>
                                         <span class="{{ myEtudiant.decisionStyle }}">
-                                            <a href="#" rel="tooltip" title="{{ etudiant.display }}">
+                                            <a href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ etudiant.display }}">
                                                 {{ myEtudiant.decision }}
                                             </a>
                                         </span>
@@ -203,7 +203,7 @@
                             <td>{{ myEtudiant.proposition }}</td>
                             <td><a href="{{ path('user_profil',{type:'etudiant', slug:etudiant.slug}) }}"
                                    target="_blank" title="Profil de l'étudiant"
-                                   data-toggle="tooltip">{{ etudiant.display }}</a></td>
+                                   data-bs-toggle="tooltip" data-bs-placement="bottom">{{ etudiant.display }}</a></td>
                             <td style="background: {{ myEtudiant.absencesStyle }}">{{ myEtudiant.nbAbsences }}</td>
                             {# decisions passées #}
                             {% for sem in sousCommission.semestresScolarite|filter(sem => sem.id != semestre.id) %}

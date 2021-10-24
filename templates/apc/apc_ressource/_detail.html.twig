@@ -17,7 +17,7 @@
             {% for competence in apc_ressource.apcRessourceCompetences|filter(competence => competence.competence !=
                 null) %}
                 <span class="badge badge-lg badge-{{ competence.competence.couleur }}"
-                      data-provide="tooltip"
+                      data-bs-toggle="tooltip" data-bs-placement="bottom"
                       title="{{ competence.competence.libelle }}">
                     {{ competence.competence.nomCourt }}
                 </span>
@@ -32,7 +32,7 @@
             {% for ac in apc_ressource.apcRessourceApprentissageCritiques|filter(ac => ac.apprentissageCritique !=
                 null) %}
                 <span class="badge badge-lg badge-{{ ac.apprentissageCritique.niveau.competence.couleur }}"
-                      data-provide="tooltip"
+                      data-bs-toggle="tooltip" data-bs-placement="bottom"
                       title="{{ ac.apprentissageCritique.libelle }}">
                     {{ ac.apprentissageCritique.code }}</span>
             {% endfor %}
@@ -44,8 +44,8 @@
         <td colspan="4">
             {% for sae in apc_ressource.apcSaeRessources|filter(sae => sae.sae !=
                 null) %}
-                <span class="badge badge-lg badge-primary"
-                      data-provide="tooltip"
+                <span class="badge badge-lg bg-primary"
+                      data-bs-toggle="tooltip" data-bs-placement="bottom"
                       title="{{ sae.sae.libelle }}"
                 >{{ sae.sae.codeMatiere }}</span>
             {% endfor %}

@@ -1,5 +1,11 @@
 [![SymfonyInsight](https://insight.symfony.com/projects/34e4f6d3-1531-45ba-bb3f-187e4fa054e1/mini.svg)](https://insight.symfony.com/projects/34e4f6d3-1531-45ba-bb3f-187e4fa054e1) [![Maintainability](https://api.codeclimate.com/v1/badges/78fd8b8fb668f9887a71/maintainability)](https://codeclimate.com/github/Dannebicque/intranetV3/maintainability)
 
+<div align="center">
+
+[![Symfony version](https://img.shields.io/badge/Symfony-5.3-red?style=for-the-badge)](https://symfony.com/)
+[![Bootstrap version](https://img.shields.io/badge/Bootstrap-5-purple?style=for-the-badge)](https://getbootstrap.com/)
+
+</div>
 
 # IntranetV3
 

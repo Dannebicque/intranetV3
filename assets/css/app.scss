@@ -4,11 +4,11 @@
 // @project intranetV3
 // @lastUpdate 08/10/2021 07:02
 
-@import "core.min.css";
-@import "~bootstrap/scss/functions";
-@import "~bootstrap/scss/bootstrap";
 @import "./theme-troyes.scss";
 @import "./theme-rcc.scss";
+
+@import "~bootstrap/scss/bootstrap";
+
 
 @import "./theme.scss";
 @import "./color.scss";
@@ -21,8 +21,17 @@
 @import "~flatpickr";
 
 @import "~toastify-js/src/toastify.css";
-@import '~tom-select/dist/css/tom-select.bootstrap4.min.css';
+@import '~tom-select/dist/css/tom-select.bootstrap5.min.css';
 
+/** Correction pour Bootstrap5 */
+a {
+  text-decoration: none;
+}
+
+.table > :not(:first-child) {
+  border-top: none;
+}
+/** Fin Correction pour Bootstrap5 */
 #planning thead {
   height: 30px;
 }

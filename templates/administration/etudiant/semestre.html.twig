@@ -10,8 +10,8 @@
             <a href="{{ path('administration_etudiant_semestre_index', {semestre:sem.id}) }}"
                class="btn btn-round {% if sem.id == semestre.id %}btn-primary{% endif %}"
                title="{{ 'atitle.changer.semestre'|trans }}"
-               data-provide="tooltip"
-               data-placement="bottom"
+               data-bs-toggle="tooltip"
+               data-bs-placement="bottom"
             >{{ sem.libelle }}</a>
         {% endfor %}
     </div>
@@ -20,10 +20,10 @@
 {% block headeractions %}
     <div class="header-action">
         <div class="buttons">
-            <a href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}" class="btn btn-primary btn-float" data-provide="tooltip"
-               data-placement="bottom" title="{{ 'atitle.retour_semestres'|trans }}"><i class="fas fa-arrow-left"></i></a>
-            <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
-               data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="{{ iconAdmin }}"><span class="sr-only">Administration</span></i></a>
+            <a href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip"
+               data-bs-placement="bottom" title="{{ 'atitle.retour_semestres'|trans }}"><i class="fas fa-arrow-left"></i></a>
+            <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip"
+               data-bs-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="{{ iconAdmin }}"><span class="sr-only">Administration</span></i></a>
         </div>
     </div>
 {% endblock %}
@@ -81,35 +81,35 @@
 {#                        <td>#}
 {#                            <select class="form-control editEtudiant" data-field="departement" data-etudiant="{{ etudiant.id }}">#}
 {#                                <option value="null" selected>Non défini</option>#}
-{#                                {% for departement in departements %}#}
-{#                                    <option value="{{ departement.id }}"#}
-{#                                            {% if etudiant.departement!=null and etudiant.departement.id == departement.id %}selected{% endif %}#}
-{#                                    >{{ departement.libelle }}</option>#}
-{#                                {% endfor %}#}
-{#                            </select>#}
-{#                        </td>#}
-{#                        <td>#}
-{#                            <a href="{{ path('user_profil', {type: 'etudiant', slug:etudiant.slug}) }}"#}
-{#                               class="btn btn-info btn-outline btn-square"#}
-{#                               data-provide="tooltip"#}
-{#                               data-placement="bottom"#}
-{#                               title="{{ 'atitle.profil'|trans }}">#}
-{#                                <i class="{{ iconShow }}"></i>#}
-{#                                <span class="sr-only">{{ 'atitle.profil'|trans }}</span>#}
-{#                            </a>#}
-{#                            <a href="{{ path('administration_etudiant_edit', {id: etudiant.id}) }}"#}
-{#                               class="btn btn-warning btn-outline btn-square"#}
-{#                               data-provide="tooltip"#}
-{#                               data-placement="bottom"#}
-{#                               title="{{ 'atitle.modifier'|trans }}">#}
-{#                                <i class="{{ iconEdit }}"></i>#}
-{#                                <span class="sr-only">{{ 'atitle.modifier'|trans }}</span>#}
-{#                            </a>#}
-{#                        </td>#}
-{#                    </tr>#}
-{#                {% endfor %}#}
-{#                </tbody>#}
-{#            </table>#}
+            {# {% for departement in departements %} #}
+            {# <option value="{{ departement.id }}" #}
+            {# {% if etudiant.departement!=null and etudiant.departement.id == departement.id %}selected{% endif %} #}
+            {# >{{ departement.libelle }}</option> #}
+            {# {% endfor %} #}
+            {# </select> #}
+            {# </td> #}
+            {# <td> #}
+            {# <a href="{{ path('user_profil', {type: 'etudiant', slug:etudiant.slug}) }}" #}
+            {# class="btn btn-info btn-outline btn-square" #}
+            {# data-bs-toggle="tooltip" data-bs-placement="bottom" #}
+            {# #}
+            {# title="{{ 'atitle.profil'|trans }}"> #}
+            {# <i class="{{ iconShow }}"></i> #}
+            {# <span class="sr-only">{{ 'atitle.profil'|trans }}</span> #}
+            {# </a> #}
+            {# <a href="{{ path('administration_etudiant_edit', {id: etudiant.id}) }}" #}
+            {# class="btn btn-warning btn-outline btn-square" #}
+            {# data-bs-toggle="tooltip" data-bs-placement="bottom" #}
+            {# #}
+            {# title="{{ 'atitle.modifier'|trans }}"> #}
+            {# <i class="{{ iconEdit }}"></i> #}
+            {# <span class="sr-only">{{ 'atitle.modifier'|trans }}</span> #}
+            {# </a> #}
+            {# </td> #}
+            {# </tr> #}
+            {# {% endfor %} #}
+            {# </tbody> #}
+            {# </table> #}
         </div>
     </div>
 

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Departement.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/09/2021 14:11
+ * @lastUpdate 24/10/2021 11:51
  */
 
 namespace App\Entity;
@@ -109,6 +109,7 @@ class Departement extends BaseEntity
     private ?Personnel $respri;
     /**
      * @ORM\Column(type="integer")
+     * @deprecated
      */
     private int $optAnneePrevisionnel;
     /**
@@ -186,6 +187,11 @@ class Departement extends BaseEntity
     private $bCDemandes;
 
     /**
+     * @ORM\OneToMany(targetEntity=Borne::class, mappedBy="departement")
+     */
+    private $bornes;
+
+    /**
      * Departement constructor.
      *
      * @throws Exception
@@ -206,6 +212,7 @@ class Departement extends BaseEntity
         $this->emprunts = new ArrayCollection();
         $this->etudiants = new ArrayCollection();
         $this->bCDemandes = new ArrayCollection();
+        $this->bornes = new ArrayCollection();
     }
 
     public function __clone()
@@ -369,11 +376,13 @@ class Departement extends BaseEntity
         $this->respri = $respri;
     }
 
+    /** @deprecated */
     public function getOptAnneePrevisionnel(): int
     {
         return $this->optAnneePrevisionnel;
     }
 
+    /** @deprecated */
     public function setOptAnneePrevisionnel(int $optAnneePrevisionnel): void
     {
         $this->optAnneePrevisionnel = $optAnneePrevisionnel;
@@ -877,6 +886,36 @@ class Departement extends BaseEntity
             // set the owning side to null (unless already changed)
             if ($bCDemand->getDepartement() === $this) {
                 $bCDemand->setDepartement(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Borne[]
+     */
+    public function getBornes(): Collection
+    {
+        return $this->bornes;
+    }
+
+    public function addBorne(Borne $borne): self
+    {
+        if (!$this->bornes->contains($borne)) {
+            $this->bornes[] = $borne;
+            $borne->setDepartement($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBorne(Borne $borne): self
+    {
+        if ($this->bornes->removeElement($borne)) {
+            // set the owning side to null (unless already changed)
+            if ($borne->getDepartement() === $this) {
+                $borne->setDepartement(null);
             }
         }
 

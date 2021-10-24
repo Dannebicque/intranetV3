@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/DateTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 21:51
+ * @lastUpdate 24/10/2021 11:51
  */
 
 namespace App\Table;
@@ -15,7 +15,6 @@ use App\Components\Table\Column\PropertyColumnType;
 use App\Components\Table\Column\WidgetColumnType;
 use App\Components\Table\TableBuilder;
 use App\Components\Table\TableType;
-use App\Components\Widget\Type\AddLinkType;
 use App\Components\Widget\Type\ButtonDropdownType;
 use App\Components\Widget\Type\LinkType;
 use App\Components\Widget\Type\RowDeleteLinkType;
@@ -28,11 +27,9 @@ use App\Entity\Date;
 use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Semestre;
-use App\Form\Type\CarbonDateTimePickerType;
 use App\Form\Type\DatePickerType;
 use App\Form\Type\SearchType;
 use Doctrine\ORM\QueryBuilder;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
@@ -52,7 +49,7 @@ class DateTableType extends TableType
 
         $builder->addFilter('search', SearchType::class);
         $builder->addFilter('from', DatePickerType::class, [
-            'input_prefix_text' => 'Du'
+            'input_prefix_text' => 'Du',
         ]);
         $builder->addFilter('to', DatePickerType::class, [
             'input_prefix_text' => 'Au',
@@ -86,13 +83,13 @@ class DateTableType extends TableType
             'order' => 'DESC',
             'format' => 'd/m/Y',
             'label' => 'table.dateDebut',
-            'translation_domain' => 'messages'
+            'translation_domain' => 'messages',
         ]);
         $builder->addColumn('heureDebut', DateColumnType::class, [
             'order' => 'DESC',
             'format' => 'H:i',
             'label' => 'table.heureDebut',
-            'translation_domain' => 'messages'
+            'translation_domain' => 'messages',
         ]);
         //$builder->add('semestres', SemestreColumnType::class, ['label' => 'semestres']);
 

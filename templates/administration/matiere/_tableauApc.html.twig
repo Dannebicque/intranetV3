@@ -6,18 +6,18 @@
                 <span>
                      <a href="{{ path('administration_apc_referentiel_formation_grille',{diplome:diplome.id}) }}"
                         class="btn btn-sm btn btn-success" title="Coefficients des ressources et des SAÉ"
-                        data-provide="tooltip"
-                        data-placement="bottom"><i class="fas fa-table"></i>
+                        ddata-bs-toggle="tooltip"
+                        data-bs-placement="bottom"><i class="fas fa-table"></i>
                          Coefficients des ressources et des SAÉ
                      </a>
                     <a href="{{ path('administration_apc_ressource_new',{diplome:diplome.id}) }}"
                        class="btn btn-sm btn btn-info" title="{{ 'atitle.creer_nouveau'|trans }}"
-                       data-provide="tooltip"
-                       data-placement="bottom"><i class="fas fa-plus"></i> Ajouter une ressource</a>
+                       data-bs-toggle="tooltip"
+                       data-bs-placement="bottom"><i class="fas fa-plus"></i> Ajouter une ressource</a>
                     <a href="{{ path('administration_apc_sae_new',{diplome:diplome.id}) }}"
                        class="btn btn-sm btn btn-info" title="{{ 'atitle.creer_nouveau'|trans }}"
-                       data-provide="tooltip"
-                       data-placement="bottom"><i class="fas fa-plus"></i> Ajouter une SAÉ</a>
+                       data-bs-toggle="tooltip"
+                       data-bs-placement="bottom"><i class="fas fa-plus"></i> Ajouter une SAÉ</a>
                 </span>
             {% endif %}
         </div>
@@ -29,11 +29,11 @@
 
             {% for semestre in user_data.semestresByDiplome(diplome.id) %}
                 <li class="nav-item">
-                    <a class="nav-link {% if loop.first %}active{% endif %}" data-toggle="tab"
+                    <a class="nav-link {% if loop.first %}active{% endif %}" data-bs-toggle="tab"
                        href="#sae{{ semestre.id }}">SAÉ {{ semestre.libelle }}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " data-toggle="tab"
+                    <a class="nav-link " data-bs-toggle="tab"
                        href="#semestre{{ semestre.id }}">Ress. {{ semestre.libelle }}</a>
                 </li>
             {% endfor %}

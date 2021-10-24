@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Evaluation.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/09/2021 16:16
+ * @lastUpdate 09/10/2021 10:33
  */
 
 namespace App\Entity;
@@ -100,6 +100,11 @@ class Evaluation extends BaseEntity
      * @ORM\ManyToOne(targetEntity="App\Entity\AnneeUniversitaire", inversedBy="evaluations")
      */
     private ?AnneeUniversitaire $anneeUniversitaire;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Semestre::class, inversedBy="evaluations")
+     */
+    private ?Semestre $semestre;
 
     /**
      * Evaluation constructor.
@@ -350,12 +355,24 @@ class Evaluation extends BaseEntity
         if ($datauser->isGoodDepartement('ROLE_CDD') || $datauser->isGoodDepartement('ROLE_DDE') || $datauser->isGoodDepartement('ROLE_ASS') || $datauser->isGoodDepartement('ROLE_RP') || $datauser->isGoodDepartement('ROLE_NOTES')) {
             return true;
         }
-        $personnels[] = null !== $this->getPersonnelAuteur() ? $this->getPersonnelAuteur()->getId() : null;
+        $personnels[] = $this->getPersonnelAuteur()?->getId();
         $autorises = $this->getPersonnelAutorise();
         foreach ($autorises as $autorise) {
             $personnels[] = $autorise->getId();
         }
 
         return in_array($personnelId, $personnels, true);
+    }
+
+    public function getSemestre(): ?Semestre
+    {
+        return $this->semestre;
+    }
+
+    public function setSemestre(?Semestre $semestre): self
+    {
+        $this->semestre = $semestre;
+
+        return $this;
     }
 }

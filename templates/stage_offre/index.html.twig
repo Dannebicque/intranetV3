@@ -5,14 +5,14 @@
 {% endblock %}
 
 {% block headeractions %}
-  <div class="header-action">
-    <div class="buttons">
-      <a href="{{ path('application_index', {onglet: 'stage'}) }}" class="btn btn-primary btn-float"
-         data-provide="tooltip"
-         data-placement="bottom" title="{{ 'atitle.retour_application_stage'|trans }}"><i
-                  class="fas fa-arrow-left"></i></a>
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('application_index', {onglet: 'stage'}) }}" class="btn btn-primary btn-float"
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
+               title="{{ 'atitle.retour_application_stage'|trans }}"><i
+                        class="fas fa-arrow-left"></i></a>
+        </div>
     </div>
-  </div>
 {% endblock %}
 
 {% block content %}
@@ -25,16 +25,16 @@
                 </span>
                     <div class="media-body">
                         <h5>{{ offre.libelle }} / {{ offre.entreprise }}</h5>
-                  <p class="gap-items">
-                    <small>{{ 'ville'|trans }}: {{ offre.ville }}</small>
-                  </p>
-                  <p>
-                    <small>{{ 'created'|trans }}: {{ offre.updated|format_datetime('long', 'short') }}</small>
-                  </p>
-                </div>
-                <a class="primary" href="{{ asset('upload/offre-stage/'~offre.documentName) }}" data-provide="tooltip"
-                   title="{{ 'telecharger'|trans }}"><i
-                            class="fas fa-save"></i></a>
+                        <p class="gap-items">
+                            <small>{{ 'ville'|trans }}: {{ offre.ville }}</small>
+                        </p>
+                        <p>
+                            <small>{{ 'created'|trans }}: {{ offre.updated|format_datetime('long', 'short') }}</small>
+                        </p>
+                    </div>
+                    <a class="primary" href="{{ asset('upload/offre-stage/'~offre.documentName) }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                       title="{{ 'telecharger'|trans }}"><i
+                                class="fas fa-save"></i></a>
                 </div>
             </div>
         </div>

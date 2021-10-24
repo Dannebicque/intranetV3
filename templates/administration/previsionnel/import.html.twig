@@ -33,11 +33,11 @@
     <div class="header-action">
         <div class="buttons">
             <a href="{{ path('administration_previsionnel_new') }}" class="btn btn-info btn-sm btn-float"
-               title="{{ 'atitle.creer_nouveau'|trans }}" data-provide="tooltip"
-               data-placement="bottom"><i class="fas fa-plus"></i></a>
+               title="{{ 'atitle.creer_nouveau'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
+            ><i class="fas fa-plus"></i></a>
             <a href="{{ path('administration_previsionnel_index') }}" class="btn btn-primary btn-float"
-               title="{{ 'atitle.retour_liste'|trans }}" data-provide="tooltip"
-               data-placement="bottom"><i class="fas fa-arrow-left"></i></a>
+               title="{{ 'atitle.retour_liste'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
+            ><i class="fas fa-arrow-left"></i></a>
         </div>
     </div>
 {% endblock %}

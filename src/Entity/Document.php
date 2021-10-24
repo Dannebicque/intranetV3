@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Document.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/07/2021 11:50
+ * @lastUpdate 09/10/2021 10:33
  */
 
 namespace App\Entity;
@@ -99,6 +99,11 @@ class Document extends BaseEntity
      * @ORM\OneToMany(targetEntity="App\Entity\DocumentFavori", mappedBy="document")
      */
     private Collection $documentsFavoris;
+
+    /**
+     * @ORM\Column(type="string", length=5)
+     */
+    private ?string $typeDestinataire;
 
     /**
      * Document constructor.
@@ -253,5 +258,17 @@ class Document extends BaseEntity
     public function tailleKo(): float
     {
         return $this->taille / 1024;
+    }
+
+    public function getTypeDestinataire(): ?string
+    {
+        return $this->typeDestinataire;
+    }
+
+    public function setTypeDestinataire(string $typeDestinataire): self
+    {
+        $this->typeDestinataire = $typeDestinataire;
+
+        return $this;
     }
 }

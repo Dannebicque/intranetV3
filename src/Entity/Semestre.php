@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Semestre.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/09/2021 18:50
+ * @lastUpdate 23/10/2021 15:04
  */
 
 namespace App\Entity;
@@ -261,9 +261,33 @@ class Semestre extends BaseEntity
      */
     private $celcatEvents;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Evaluation::class, mappedBy="semestre")
+     */
+    private $evaluations;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Rattrapage::class, mappedBy="semestre")
+     */
+    private $rattrapages;
+
+    /**
+     * @ORM\OneToMany(targetEntity=AbsenceJustificatif::class, mappedBy="semestre")
+     */
+    private $absenceJustificatifs;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Absence::class, mappedBy="semestre")
+     */
+    private $absences;
+
     public function __construct()
     {
         $this->init();
+        $this->evaluations = new ArrayCollection();
+        $this->rattrapages = new ArrayCollection();
+        $this->absenceJustificatifs = new ArrayCollection();
+        $this->absences = new ArrayCollection();
     }
 
     public function __clone()
@@ -1237,5 +1261,130 @@ class Semestre extends BaseEntity
         $this->apcSaes = new ArrayCollection();
         $this->absenceEtatAppels = new ArrayCollection();
         $this->celcatEvents = new ArrayCollection();
+    }
+
+    /**
+     * @return Collection|Evaluation[]
+     */
+    public function getEvaluations(): Collection
+    {
+        return $this->evaluations;
+    }
+
+    public function addEvaluation(Evaluation $evaluation): self
+    {
+        if (!$this->evaluations->contains($evaluation)) {
+            $this->evaluations[] = $evaluation;
+            $evaluation->setSemestre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEvaluation(Evaluation $evaluation): self
+    {
+        if ($this->evaluations->removeElement($evaluation)) {
+            // set the owning side to null (unless already changed)
+            if ($evaluation->getSemestre() === $this) {
+                $evaluation->setSemestre(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Rattrapage[]
+     */
+    public function getRattrapages(): Collection
+    {
+        return $this->rattrapages;
+    }
+
+    public function addRattrapage(Rattrapage $rattrapage): self
+    {
+        if (!$this->rattrapages->contains($rattrapage)) {
+            $this->rattrapages[] = $rattrapage;
+            $rattrapage->setSemestre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRattrapage(Rattrapage $rattrapage): self
+    {
+        if ($this->rattrapages->removeElement($rattrapage)) {
+            // set the owning side to null (unless already changed)
+            if ($rattrapage->getSemestre() === $this) {
+                $rattrapage->setSemestre(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|AbsenceJustificatif[]
+     */
+    public function getAbsenceJustificatifs(): Collection
+    {
+        return $this->absenceJustificatifs;
+    }
+
+    public function addAbsenceJustificatif(AbsenceJustificatif $absenceJustificatif): self
+    {
+        if (!$this->absenceJustificatifs->contains($absenceJustificatif)) {
+            $this->absenceJustificatifs[] = $absenceJustificatif;
+            $absenceJustificatif->setSemestre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAbsenceJustificatif(AbsenceJustificatif $absenceJustificatif): self
+    {
+        if ($this->absenceJustificatifs->removeElement($absenceJustificatif)) {
+            // set the owning side to null (unless already changed)
+            if ($absenceJustificatif->getSemestre() === $this) {
+                $absenceJustificatif->setSemestre(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Absence[]
+     */
+    public function getAbsences(): Collection
+    {
+        return $this->absences;
+    }
+
+    public function addAbsence(Absence $absence): self
+    {
+        if (!$this->absences->contains($absence)) {
+            $this->absences[] = $absence;
+            $absence->setSemestre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAbsence(Absence $absence): self
+    {
+        if ($this->absences->removeElement($absence)) {
+            // set the owning side to null (unless already changed)
+            if ($absence->getSemestre() === $this) {
+                $absence->setSemestre(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->getLibelle();
     }
 }

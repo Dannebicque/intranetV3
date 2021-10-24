@@ -7,8 +7,8 @@
 {% block headeractions %}
     <div class="header-action">
         <div class="buttons">
-            <a href="{{ path('informations_index') }}" class="btn btn-primary btn-float" data-provide="tooltip"
-               data-placement="bottom" title="{{ 'atitle.retour_informations'|trans }}"><i
+            <a href="{{ path('informations_index') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom"
+               title="{{ 'atitle.retour_informations'|trans }}"><i
                         class="fas fa-arrow-left"></i></a>
         </div>
     </div>
@@ -40,7 +40,7 @@
                     {# </li> #}
 
                     <li class="px-16 br-1 border-light">
-                        <label class="toggler toggler-danger fs-16 text-muted" data-provide="tooltip" title="{{ 'like'|trans }}">
+                        <label class="toggler toggler-danger fs-16 text-muted" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ 'like'|trans }}">
                             <input type="checkbox" class="addLike" data-article="{{ article.slug }}" {% if
                                 like == true %}checked{% endif %}>
                             <i class="fa fa-heart"></i> <span>{{ article.articleLikes|length }}</span>
@@ -49,7 +49,7 @@
 
                     {# <li class="px-16"> #}
                     {# <a class="text-muted" href="#"> #}
-                    {# <i class="fa fa-comment mr-1"></i> 3 #}
+                    {# <i class="fa fa-comment me-1"></i> 3 #}
                     {# </a> #}
                     {# </li> #}
                 </ul>

@@ -10,16 +10,16 @@
             <a href="{{ path('application_personnel_covid_attestation_personnel_new') }}"
                class="btn btn-info btn-sm btn-float"
                title="{{ 'atitle.creer_nouveau'|trans }}"
-               data-provide="tooltip"
-               data-placement="bottom">
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
+            >
                 <i class="fas fa-plus"></i>
                 <span class="sr-only">{{ 'atitle.creer_nouveau'|trans }}</span>
             </a>
 
             <a href="{{ path('default_homepage') }}"
                class="btn btn-primary btn-float"
-               data-provide="tooltip"
-               data-placement="bottom"
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
+
                title="{{ 'atitle.retour_dashboard'|trans }}">
                 <i class="{{ iconDashboard }}"><span class="sr-only">dashboard</span></i>
             </a>
@@ -61,16 +61,16 @@
                             <a href="{{ path('application_personnel_covid_attestation_personnel_duplicate', {'id':
                                 covid_attestation_personnel.id}) }}"
                                class="btn btn-success btn-outline btn-square"
-                               data-provide="tooltip"
-                               data-placement="bottom"
+                               data-bs-toggle="tooltip" data-bs-placement="bottom"
+
                                title="{{ 'atitle.dupliquer'|trans }}">
                                 <i class="{{ iconDuplicate }}"></i>
                                 <span class="sr-only">{{ 'atitle.dupliquer'|trans }}</span>
                             </a>
                             <a href="{{ path('application_personnel_covid_attestation_personnel_show', {'id': covid_attestation_personnel.id}) }}"
                                class="btn btn-info btn-outline btn-square"
-                               data-provide="tooltip"
-                               data-placement="bottom"
+                               data-bs-toggle="tooltip" data-bs-placement="bottom"
+
                                title="{{ 'atitle.details'|trans }}">
                                 <i class="{{ iconShow }}"></i>
                                 <span class="sr-only">{{ 'atitle.details'|trans }}</span>
@@ -80,8 +80,8 @@
                                 .validationDirection == false %}
                                 <a href="{{ path('application_personnel_covid_attestation_personnel_edit', {'id': covid_attestation_personnel.id}) }}"
                                    class="btn btn-warning btn-outline btn-square"
-                                   data-provide="tooltip"
-                                   data-placement="bottom"
+                                   data-bs-toggle="tooltip" data-bs-placement="bottom"
+
                                    title="{{ 'atitle.modifier'|trans }}">
                                     <i class="{{ iconEdit }}"></i>
                                     <span class="sr-only">{{ 'atitle.modifier'|trans }}</span>
@@ -89,8 +89,8 @@
                                 <a href="{{ path('application_personnel_covid_attestation_personnel_delete', {id: covid_attestation_personnel.id}) }}"
                                    data-csrf="{{ csrf_token('delete' ~ covid_attestation_personnel.id) }}"
                                    class="btn btn-danger btn-outline btn-square supprimer"
-                                   data-provide="tooltip"
-                                   data-placement="bottom"
+                                   data-bs-toggle="tooltip" data-bs-placement="bottom"
+
                                    title="{{ 'atitle.supprimer'|trans }}">
                                     <i class="{{ iconDelete }}"></i>
                                     <span class="sr-only">{{ 'atitle.supprimer'|trans }}</span>
@@ -100,8 +100,8 @@
                                 <a href="{{ path('application_personnel_covid_attestation_personnel_pdf', {'id':
                                     covid_attestation_personnel.id}) }}"
                                    class="btn btn-info btn-outline btn-square"
-                                   data-provide="tooltip"
-                                   data-placement="bottom"
+                                   data-bs-toggle="tooltip" data-bs-placement="bottom"
+
                                    title="{{ 'atitle.print'|trans }}">
                                     <i class="{{ iconPrint }}"></i>
                                     <span class="sr-only">{{ 'atitle.print'|trans }}</span>

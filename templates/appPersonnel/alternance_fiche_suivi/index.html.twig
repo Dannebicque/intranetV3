@@ -11,16 +11,16 @@
             <a href="{{ path('application_personnel_alternance_fiche_suivi_new',{alternance:alternance.id}) }}"
                class="btn btn-info btn-sm btn-float"
                title="{{ 'atitle.creer_nouveau'|trans }}"
-               data-provide="tooltip"
-               data-placement="bottom">
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
+            >
                 <i class="fas fa-plus"></i>
                 <span class="sr-only">{{ 'atitle.creer_nouveau'|trans }}</span>
             </a>
 
             <a href="{{ path('application_index',{onglet:'stage'}) }}"
                class="btn btn-primary btn-float"
-               data-provide="tooltip"
-               data-placement="bottom"
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
+
                title="{{ 'retour_applications'|trans }}">
                 <i class="fas fa-arrow-left"></i>
                 <span class="sr-only">{{ 'retour_applications'|trans }}</span>
@@ -61,23 +61,23 @@
                         <td>
                             <a href="{{ path('application_personnel_alternance_fiche_suivi_show', {'id': alternance_fiche_suivi.id}) }}"
                                class="btn btn-info btn-outline btn-square"
-                               data-provide="tooltip"
-                               data-placement="bottom"
+                               data-bs-toggle="tooltip" data-bs-placement="bottom"
+
                                title="{{ 'atitle.details'|trans }}">
                                 <i class="{{ iconShow }}"></i>
                                 <span class="sr-only">{{ 'atitle.details'|trans }}</span></a>
                             <a href="{{ path('application_personnel_alternance_fiche_suivi_edit', {'id': alternance_fiche_suivi
                                 .id}) }}"
                                class="btn btn-warning btn-outline btn-square"
-                               data-provide="tooltip"
-                               data-placement="bottom"
+                               data-bs-toggle="tooltip" data-bs-placement="bottom"
+
                                title="{{ 'atitle.modifier'|trans }}">
                                 <i class="{{ iconEdit }}"></i>
                                 <span class="sr-only">{{ 'atitle.modifier'|trans }}</span></a>
                             <a href="{{ path('application_personnel_alternance_fiche_suivi_print', {'id': alternance_fiche_suivi.id}) }}"
                                class="btn btn-info btn-outline btn-square"
-                               data-provide="tooltip"
-                               data-placement="bottom"
+                               data-bs-toggle="tooltip" data-bs-placement="bottom"
+
                                title="{{ 'atitle.print'|trans }}">
                                 <i class="{{ iconPrint }}"></i>
                                 <span class="sr-only">{{ 'atitle.print'|trans }}</span></a>
@@ -85,8 +85,8 @@
                                 alternance_fiche_suivi.id}) }}"
                                data-csrf="{{ csrf_token('delete' ~ alternance_fiche_suivi.id) }}"
                                class="btn btn-danger btn-outline btn-square supprimer"
-                               data-provide="tooltip"
-                               data-placement="bottom"
+                               data-bs-toggle="tooltip" data-bs-placement="bottom"
+
                                title="{{ 'atitle.supprimer'|trans }}">
                                 <i class="{{ iconDelete }}"></i>
                                 <span class="sr-only">{{ 'atitle.supprimer'|trans }}</span>

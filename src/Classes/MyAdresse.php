@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyAdresse.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 08/10/2021 19:44
  */
 
 /*
@@ -30,15 +30,14 @@ class MyAdresse
 
     public function update(Adresse $adresse, $name, $value): bool
     {
-        if ($adresse) {
-            $method = 'set' . $name;
-            if (method_exists($adresse, $method)) {
-                $adresse->$method($value);
-                $this->entityManager->flush();
+        $method = 'set' . $name;
+        if (method_exists($adresse, $method)) {
+            $adresse->$method($value);
+            $this->entityManager->flush();
 
-                return true;
-            }
+            return true;
         }
+
 
         return false;
     }

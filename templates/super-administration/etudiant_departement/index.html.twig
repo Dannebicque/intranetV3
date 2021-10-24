@@ -7,8 +7,8 @@
 {% block headeractions %}
     <div class="header-action">
         <div class="buttons">
-            <a href="{{ path('super_admin_homepage') }}" class="btn btn-primary btn-float" data-provide="tooltip"
-               data-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}">
+            <a href="{{ path('super_admin_homepage') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom"
+               title="{{ 'atitle.retour_administration'|trans }}">
                 <i class="{{ iconDashboard }}"><span class="sr-only">dashboard</span></i>
             </a>
         </div>
@@ -22,15 +22,15 @@
             <div class="card-header-actions">
                 <a class="btn btn-sm btn-primary"
                    title="{{ 'sa.ajouter.etudiant'|trans }}"
-                   data-provide="tooltip"
-                   data-placement="bottom"
+                   data-bs-toggle="tooltip" data-bs-placement="bottom"
+
                    href="{{ path('sa_apogee_index') }}"
                 >
                     <i class="fas fa-plus"></i>
                 </a>
                 <ul class="card-controls">
                     <li class="dropdown">
-                        <a data-toggle="dropdown" href="#"><i
+                        <a data-bs-toggle="dropdown" href="#"><i
                                     class="fas fa-ellipsis-h rotate-90"></i></a>
                         <div class="dropdown-menu dropdown-menu-right">
                             <a href="#" class="dropdown-item"><i class="fas fa-file-export"></i>{{ 'exporter.xls'|trans }}
@@ -63,15 +63,14 @@
                            <td>
                                {# todo: peut être créer des pages spécifiques pour show et edit... #}
                                <a href="{{ path('user_profil', {type:'etudiant', slug: etudiant.slug}) }}"
-                                  class="btn btn-info btn-outline btn-square" data-provide="tooltip"
-                                  data-placement="bottom" title="{{ 'atitle.details'|trans }}" target="_blank"><i class="{{ iconShow }}"></i></a>
+                                  class="btn btn-info btn-outline btn-square" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                  title="{{ 'atitle.details'|trans }}" target="_blank"><i class="{{ iconShow }}"></i></a>
                                <a href="{{ path('administration_etudiant_edit', {'id': etudiant.id}) }}"
-                                  class="btn btn-warning btn-outline btn-square" data-provide="tooltip"
-                                  data-placement="bottom" title="{{ 'atitle.modifier'|trans }}" target="_blank"><i
+                                  class="btn btn-warning btn-outline btn-square" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                  title="{{ 'atitle.modifier'|trans }}" target="_blank"><i
                                            class="{{ iconEdit }}"></i></a>
-                               <a href="{{ path('sa_etudiant_remove', {id: etudiant.id}) }}" data-csrf="{{
-                               csrf_token('delete' ~ etudiant.id) }}"
-                                  class="btn btn-danger btn-outline btn-square supprimer" data-provide="tooltip" data-placement="bottom"
+                               <a href="{{ path('sa_etudiant_remove', {id: etudiant.id}) }}" data-csrf="{{ csrf_token('delete' ~ etudiant.id) }}"
+                                  class="btn btn-danger btn-outline btn-square supprimer" data-bs-toggle="tooltip" data-bs-placement="bottom"
                                   title="{{ 'atitle.retirer_departement'|trans }}"><i class="{{ iconDelete }}"></i></a>
                            </td>
                        </tr>

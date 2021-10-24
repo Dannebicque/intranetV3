@@ -4,12 +4,16 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Widget/DTO/WidgetView.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/08/2021 13:54
+ * @lastUpdate 08/10/2021 19:11
  */
 
 namespace App\Components\Widget\DTO;
 
-class WidgetView implements \IteratorAggregate, \Countable
+use ArrayIterator;
+use Countable;
+use IteratorAggregate;
+
+class WidgetView implements IteratorAggregate, Countable
 {
     public array $vars = [
         'attr' => [],
@@ -33,7 +37,7 @@ class WidgetView implements \IteratorAggregate, \Countable
 
     public function getIterator(): iterable
     {
-        return new \ArrayIterator($this->children);
+        return new ArrayIterator($this->children);
     }
 
     public function count(): int

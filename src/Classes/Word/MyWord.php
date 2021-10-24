@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Word/MyWord.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/06/2021 10:28
+ * @lastUpdate 08/10/2021 19:11
  */
 
 namespace App\Classes\Word;
@@ -86,9 +86,7 @@ class MyWord
     private function prepareTexte($text)
     {
         $text = nl2br(trim($text));
-        $text = str_replace('<br />', '</w:t><w:br/><w:t>', $text);
-
-        return $text;
+        return str_replace('<br />', '</w:t><w:br/><w:t>', $text);
     }
 
     /**

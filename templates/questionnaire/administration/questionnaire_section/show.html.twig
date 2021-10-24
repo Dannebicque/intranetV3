@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}QuestionnaireSection{% endblock %}
+
+{% block body %}
+    <h1>QuestionnaireSection</h1>
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ questionnaire_section.id }}</td>
+        </tr>
+        <tr>
+            <th>Titre</th>
+            <td>{{ questionnaire_section.titre }}</td>
+        </tr>
+        <tr>
+            <th>TextExplicatif</th>
+            <td>{{ questionnaire_section.textExplicatif }}</td>
+        </tr>
+        <tr>
+            <th>Config</th>
+            <td>{{ questionnaire_section.config }}</td>
+        </tr>
+        <tr>
+            <th>TypeCalcul</th>
+            <td>{{ questionnaire_section.typeCalcul }}</td>
+        </tr>
+        <tr>
+            <th>Created</th>
+            <td>{{ questionnaire_section.created ? questionnaire_section.created|date('Y-m-d H:i:s') : '' }}</td>
+        </tr>
+        <tr>
+            <th>Updated</th>
+            <td>{{ questionnaire_section.updated ? questionnaire_section.updated|date('Y-m-d H:i:s') : '' }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('questionnaire_section_index') }}">back to list</a>
+
+    <a href="{{ path('questionnaire_section_edit', {'id': questionnaire_section.id}) }}">edit</a>
+
+    {{ include('questionnaire_section/_delete_form.html.twig') }}
+{% endblock %}

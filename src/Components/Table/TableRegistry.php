@@ -4,13 +4,14 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/TableRegistry.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 14:37
+ * @lastUpdate 08/10/2021 19:11
  */
 
 namespace App\Components\Table;
 
 use App\Components\Table\Adapter\TableAdapter;
 use App\Components\Table\Column\ColumnType;
+use InvalidArgumentException;
 
 /**
  * Registry used for Columns / adapter and DataTableType
@@ -46,7 +47,7 @@ class TableRegistry
     public function getType(string $name): TableType
     {
         if (!isset($this->types[$name])) {
-            throw new \InvalidArgumentException(sprintf('Table "%s" doesn\'t exist, maybe you have forget to register it ?',
+            throw new InvalidArgumentException(sprintf('Table "%s" doesn\'t exist, maybe you have forget to register it ?',
                 $name));
         }
 
@@ -63,7 +64,7 @@ class TableRegistry
     public function getColumnType(string $name): ColumnType
     {
         if (!isset($this->columnTypes[$name])) {
-            throw new \InvalidArgumentException(sprintf('Column "%s" doesn\'t exist, maybe you have forget to register it ?',
+            throw new InvalidArgumentException(sprintf('Column "%s" doesn\'t exist, maybe you have forget to register it ?',
                 $name));
         }
 
@@ -80,7 +81,7 @@ class TableRegistry
     public function getAdapter(string $name): TableAdapter
     {
         if (!isset($this->adapters[$name])) {
-            throw new \InvalidArgumentException(sprintf('Adapter "%s" doesn\'t exist, maybe you have forget to register it ?',
+            throw new InvalidArgumentException(sprintf('Adapter "%s" doesn\'t exist, maybe you have forget to register it ?',
                 $name));
         }
 

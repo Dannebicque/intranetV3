@@ -1,61 +1,84 @@
 framework:
-    workflows:
-        bon_commande:
-            type: workflow
-            audit_trail:
-                enabled: "%kernel.debug%"
-            marking_store:
-                type: 'method'
-                property: 'state'
-            supports:
-                - App\Entity\BCDemande
-            initial_marking: demande_initiale
-            places:
-                - demande_initiale
-                - attente_validation_direction
-                - avis_favorable
-                - avis_defavorable
-                - verification_compta
-                - validation_compta
-                - validation_csa
-                - validation_migo
-                - validation_migo_partiel
-                - validation_migo_complet
-                - cloture
-            transitions:
-                validation_responsable:
-                    from: demande_initiale
-                    to: attente_validation_direction
-                avis_direction_favorable:
-                    from: attente_validation_direction
-                    to: avis_favorable
-                avis_direction_defavorable:
-                    from: attente_validation_direction
-                    to: avis_defavorable
-                verification_compta:
-                    from: avis_favorable
-                    to: verification_compta
-                validation_compta:
-                    from: verification_compta
-                    to: validation_compta
-                validation_csa:
-                    from: validation_compta
-                    to: validation_csa
-                service_fait:
-                    from: validation_csa
-                    to: validation_migo
-                validation_service_fait_partiel:
-                    from: validation_migo
-                    to: validation_migo_partiel
-                validation_service_fait_compet:
-                    from: validation_migo
-                    to: validation_migo_complet
-                validation_service_fait_partiel_complement:
-                    from: validation_migo
-                    to: validation_migo_partiel
-                cloture_bc_demande:
-                    from: validation_migo_complet
-                    to: cloture
-                cloture_bc_demande_defavorable:
-                    from: avis_defavorable
-                    to: cloture
+  workflows:
+    bon_commande:
+      type: 'state_machine'
+      audit_trail:
+        enabled: "%kernel.debug%"
+      marking_store:
+        type: 'method'
+        property: 'etat_process'
+      supports:
+        - App\Entity\BCDemande
+      initial_marking: demande_initiale
+      places:
+        - demande_initiale
+        - attente_validation_responsable
+        - attente_validation_direction
+        - avis_favorable
+        - avis_defavorable
+        - avis_complement
+        - valide_compta
+        - valide_csa
+        - migo_partiel_valide
+        - migo_complet_valide
+        - service_fait
+        - cloture_bc
+      transitions:
+        creation_demande_initiale:
+          #Uniquement Chef de département ou RP?
+          from: demande_initiale
+          to: attente_validation_responsable
+        validation_responsable:
+          #Uniquement Chef de département ou RP?
+          from: attente_validation_responsable
+          to: attente_validation_direction
+        avis_direction_favorable:
+          #Uniquement directeur ou CSA
+          from: attente_validation_direction
+          to: avis_favorable
+        avis_direction_defavorable:
+          #Uniquement directeur ou CSA
+          from: attente_validation_direction
+          to: avis_defavorable
+        avis_direction_complement:
+          #Uniquement directeur ou CSA
+          from: attente_validation_direction
+          to: avis_complement
+        avis_complement:
+          #ASS ou CD ou RP
+          from: avis_complement
+          to: attente_validation_direction
+        validation_compta:
+          #Compta ou CSA
+          from: avis_favorable
+          to: valide_compta
+        validation_csa:
+          #CSA
+          from: valide_compta
+          to: valide_csa
+        service_fait:
+          #ASS ou Compta
+          from: valide_csa
+          to: service_fait
+        validation_service_fait_partiel:
+          #ASS ou Compta
+          from: service_fait
+          to: migo_partiel_valide
+        validation_service_fait_compet:
+          #ASS ou Compta
+          from: service_fait
+          to: migo_complet_valide
+        complement_service_fait_partiel:
+          #ASS ou Compta
+          from: migo_partiel_valide
+          to: service_fait
+        cloture_bc_demande:
+          #CAS
+          from: migo_complet_valide
+          to: cloture_bc
+        cloture_bc_demande_defavorable:
+          #CSA
+          from: avis_defavorable
+          to: cloture_bc
+
+

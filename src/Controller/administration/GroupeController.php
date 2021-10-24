@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/GroupeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/10/2021 12:14
+ * @lastUpdate 08/10/2021 19:11
  */
 
 namespace App\Controller\administration;
@@ -35,7 +35,7 @@ class GroupeController extends BaseController
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
 
         return $this->render('administration/groupe/index.html.twig', [
-            'afficheSemestre' => null !== $semestre ? $semestre->getId() : null,
+            'afficheSemestre' => $semestre?->getId(),
         ]);
     }
 
