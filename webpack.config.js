@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/webpack.config.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 24/10/2021 11:54
+// @lastUpdate 24/10/2021 16:05
 
 var Encore = require('@symfony/webpack-encore')
 var path = require('path')
@@ -78,7 +78,7 @@ Encore
 
   //VueJs
   //.enableVueLoader()
-  // .enableStimulusBridge('./assets/controllers.json')
+  .enableStimulusBridge('./assets/controllers.json')
 
   // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
   .splitEntryChunks()
