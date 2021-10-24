@@ -1,0 +1,18 @@
+// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/htdocs/intranetV3/assets/css/_layout.scss
+// @author davidannebicque
+// @project intranetV3
+// @lastUpdate 24/10/2021 16:10
+
+body {
+  font-family: Roboto, sans-serif;
+  color: var(--police);
+  font-weight: 300;
+  font-size: 0.8rem;
+  line-height: 1.2rem;
+}
+
+button, input, optgroup, select, textarea {
+  font-family: Roboto, sans-serif;
+  font-weight: 300;
+}
