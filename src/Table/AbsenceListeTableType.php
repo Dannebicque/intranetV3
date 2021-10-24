@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/AbsenceListeTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/10/2021 12:35
+ * @lastUpdate 24/10/2021 11:51
  */
 
 namespace App\Table;
@@ -83,6 +83,7 @@ class AbsenceListeTableType extends TableType
                 ]);
             },
         ]);
+//todo: doit utiliser un dto...
 
         $builder->addColumn('etudiant', EtudiantColumnType::class,
             ['label' => 'table.etudiant', 'translation_domain' => 'messages']);
@@ -99,8 +100,7 @@ class AbsenceListeTableType extends TableType
         $builder->addColumn('nbJustifies', BadgeColumnType::class, //ajouter des seuils?
             ['label' => 'table.nb_justifies', 'translation_domain' => 'messages']);
 
-
-        $builder->setLoadUrl('administration_absences_justificatif_semestre_liste',
+        $builder->setLoadUrl('administration_absences_semestre_liste',
             ['semestre' => $this->semestre->getId()]);
 
         $builder->addColumn('apercu', WidgetColumnType::class, [
@@ -115,16 +115,14 @@ class AbsenceListeTableType extends TableType
                         'data-provide' => 'modaler tooltip',
                         'data-url' => $this->router->generate('administration_absence_justificatif_details',
                             ['uuid' => $s->getUuidString()]),
-                        'data-title' => 'Détail du justificatif'
-                    ]
+                        'data-title' => 'Détail du justificatif',
+                    ],
                 ]);
             },
         ]);
 
         $builder->addColumn('links', WidgetColumnType::class, [
             'build' => function(WidgetBuilder $builder, Absence $s) {
-
-
                 $builder->add('profil', RowShowLinkType::class, [
                     'attr' => [
                         'data-href' => 'administration_rattrapage_delete',
@@ -136,11 +134,10 @@ class AbsenceListeTableType extends TableType
         ]);
 
         $builder->useAdapter(EntityAdapter::class, [
-            'class' => Absence::class,
+            'class' => Etudiant::class,
             'fetch_join_collection' => false,
             'query' => function(QueryBuilder $qb, array $formData) {
-                $qb->innerJoin(Etudiant::class, 'etu', 'WITH', 'e.etudiant = etu.id')
-                    ->where('e.semestre = :semestre')
+                $qb->where('e.semestre = :semestre')
                     ->andWhere('e.anneeUniversitaire = :anneeuniversitaire')
                     ->setParameter('semestre', $this->semestre->getId())
                     ->setParameter('anneeuniversitaire', $this->anneeUniversitaire->getId());
@@ -149,11 +146,6 @@ class AbsenceListeTableType extends TableType
                     $qb->andWhere('LOWER(etu.nom) LIKE :search');
                     $qb->orWhere('LOWER(etu.prenom) LIKE :search');
                     $qb->setParameter('search', '%' . $formData['search'] . '%');
-                }
-
-                if (isset($formData['etat_demande']) && '' !== trim($formData['etat_demande'])) {
-                    $qb->andWhere('e.etat_demande = :etat_demande');
-                    $qb->setParameter('etat', $formData['etat_demande']);
                 }
 
                 if (isset($formData['groupe']) && '' !== trim($formData['groupe'])) {

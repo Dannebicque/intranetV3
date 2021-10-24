@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcReferentielFormationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 12:39
+ * @lastUpdate 23/10/2021 10:34
  */
 
 namespace App\Controller\administration\apc;
@@ -13,7 +13,6 @@ use App\Classes\Apc\ApcCoefficient;
 use App\Controller\BaseController;
 use App\Entity\ApcCompetence;
 use App\Entity\ApcRessourceCompetence;
-use App\Entity\ApcSae;
 use App\Entity\ApcSaeCompetence;
 use App\Entity\Constantes;
 use App\Entity\Diplome;

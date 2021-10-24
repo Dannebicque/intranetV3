@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEvaluation.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 20:09
+ * @lastUpdate 23/10/2021 10:36
  */
 
 /*
@@ -30,12 +30,7 @@ use function count;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use function in_array;
-use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use PhpOffice\PhpSpreadsheet\IOFactory;
-use Symfony\Component\HttpFoundation\StreamedResponse;
-use Twig\Error\LoaderError;
-use Twig\Error\RuntimeError;
-use Twig\Error\SyntaxError;
 
 /**
  * Class MyEvaluation.
@@ -47,7 +42,7 @@ class MyEvaluation
     protected array $statistiques = [];
 
     /** @var Note[] */
-    protected $notes = [];
+    protected array $notes = [];
 
     protected array $classement = [];
 

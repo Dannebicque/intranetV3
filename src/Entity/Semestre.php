@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Semestre.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/10/2021 10:33
+ * @lastUpdate 23/10/2021 15:04
  */
 
 namespace App\Entity;
@@ -1381,5 +1381,10 @@ class Semestre extends BaseEntity
         }
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->getLibelle();
     }
 }

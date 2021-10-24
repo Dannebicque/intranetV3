@@ -1,7 +1,7 @@
 <?php
 /*
  * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/DateTableType.php
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/QuestionnaireQualiteTableType.php
  * @author davidannebicque
  * @project intranetV3
  * @lastUpdate 24/10/2021 11:51
@@ -22,21 +22,21 @@ use App\Components\Widget\Type\RowDuplicateLinkType;
 use App\Components\Widget\Type\RowEditLinkType;
 use App\Components\Widget\Type\RowShowLinkType;
 use App\Components\Widget\WidgetBuilder;
-use App\Entity\Annee;
-use App\Entity\Date;
-use App\Entity\Departement;
-use App\Entity\Diplome;
-use App\Entity\Semestre;
+use App\Entity\QuestionnaireQualite;
 use App\Form\Type\DatePickerType;
+use App\Table\ColumnType\CategorieArticleColumnType;
+use App\Table\ColumnType\SemestreColumnType;
+use App\Entity\Article;
+use App\Entity\ArticleCategorie;
+use App\Entity\Departement;
 use App\Form\Type\SearchType;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
-class DateTableType extends TableType
+class QuestionnaireQualiteTableType extends TableType
 {
     private CsrfTokenManagerInterface $csrfToken;
-    private ?Departement $departement;
 
     public function __construct(CsrfTokenManagerInterface $csrfToken)
     {
@@ -45,9 +45,9 @@ class DateTableType extends TableType
 
     public function buildTable(TableBuilder $builder, array $options): void
     {
-        $this->departement = $options['departement'];
 
         $builder->addFilter('search', SearchType::class);
+        $builder->addFilter('diplome', SearchType::class);
         $builder->addFilter('from', DatePickerType::class, [
             'input_prefix_text' => 'Du',
         ]);
@@ -55,60 +55,55 @@ class DateTableType extends TableType
             'input_prefix_text' => 'Au',
         ]);
 
-//        // Export button (use to export data)
+
         $builder->addWidget('export', ButtonDropdownType::class, [
             'icon' => 'fas fa-download',
             'attr' => ['data-toggle' => 'dropdown'],
             'build' => function(WidgetBuilder $builder) {
                 $builder->add('pdf', LinkType::class, [
-                    'route' => 'administration_date_export',
+                    'route' => 'administration_article_export',
                     'route_params' => ['_format' => 'pdf'],
                 ]);
                 $builder->add('csv', LinkType::class, [
-                    'route' => 'administration_date_export',
+                    'route' => 'administration_article_export',
                     'route_params' => ['_format' => 'csv'],
                 ]);
                 $builder->add('excel', LinkType::class, [
-                    'route' => 'administration_date_export',
+                    'route' => 'administration_article_export',
                     'route_params' => ['_format' => 'xlsx'],
                 ]);
             },
         ]);
 
-        $builder->addColumn('libelle', PropertyColumnType::class,
-            ['label' => 'table.libelle', 'translation_domain' => 'messages']);
-        $builder->addColumn('lieu', PropertyColumnType::class,
-            ['label' => 'table.lieu', 'translation_domain' => 'messages']);
-        $builder->addColumn('dateDebut', DateColumnType::class, [
+        $builder->addColumn('libelle', PropertyColumnType::class, ['label' => 'table.libelle']);
+        $builder->addColumn('dateOuverture', DateColumnType::class, [
             'order' => 'DESC',
             'format' => 'd/m/Y',
-            'label' => 'table.dateDebut',
-            'translation_domain' => 'messages',
+            'label' => 'table.dateOuverture',
         ]);
-        $builder->addColumn('heureDebut', DateColumnType::class, [
-            'order' => 'DESC',
-            'format' => 'H:i',
-            'label' => 'table.heureDebut',
-            'translation_domain' => 'messages',
+        $builder->addColumn('dateFermeture', DateColumnType::class, [
+            'format' => 'd/m/Y',
+            'label' => 'table.dateFermeture',
         ]);
-        //$builder->add('semestres', SemestreColumnType::class, ['label' => 'semestres']);
+        $builder->addColumn('semestre', PropertyColumnType::class, ['label' => 'table.semestre']);
+        $builder->setLoadUrl('sadm_questionnaire_qualite_index');
 
         $builder->addColumn('links', WidgetColumnType::class, [
-            'build' => function(WidgetBuilder $builder, Date $s) {
+            'build' => function(WidgetBuilder $builder, QuestionnaireQualite $s) {
                 $builder->add('duplicate', RowDuplicateLinkType::class, [
-                    'route' => 'administration_date_duplicate',
+                    'route' => 'administration_article_duplicate',
                     'route_params' => ['id' => $s->getId()],
                     'xhr' => false,
                 ]);
                 $builder->add('show', RowShowLinkType::class, [
-                    'route' => 'administration_date_show',
+                    'route' => 'administration_article_show',
                     'route_params' => [
                         'id' => $s->getId(),
                     ],
                     'xhr' => false,
                 ]);
                 $builder->add('edit', RowEditLinkType::class, [
-                    'route' => 'administration_date_edit',
+                    'route' => 'administration_article_edit',
                     'route_params' => [
                         'id' => $s->getId(),
                     ],
@@ -116,29 +111,23 @@ class DateTableType extends TableType
                 ]);
                 $builder->add('delete', RowDeleteLinkType::class, [
                     'attr' => [
-                        'data-href' => 'administration_date_delete',
+                        'data-href' => 'administration_article_delete',
                         'data-uuid' => $s->getId(),
                         'data-csrf' => $this->csrfToken->getToken('delete' . $s->getId()),
                     ],
                 ]);
             },
         ]);
-        $builder->setLoadUrl('administration_date_index');
 
         $builder->useAdapter(EntityAdapter::class, [
-            'class' => Date::class,
+            'class' => QuestionnaireQualite::class,
             'fetch_join_collection' => false,
             'query' => function(QueryBuilder $qb, array $formData) {
-                $qb->innerJoin('e.semestres', 'c')//récupération de la jointure dans la table dédiée
-                ->innerJoin(Semestre::class, 's', 'WITH', 'c.id = s.id')
-                    ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
-                    ->innerJoin(Diplome::class, 'd', 'WITH', 'a.diplome = d.id')
-                    ->where('d.departement = :departement')
-                    ->setParameter('departement', $this->departement->getId());
+                $qb;
 
                 if (isset($formData['search'])) {
-                    $qb->andWhere('LOWER(e.libelle) LIKE :search');
-                    $qb->orWhere('LOWER(e.lieu) LIKE :search');
+                    $qb->andWhere('LOWER(e.titre) LIKE :search');
+                    $qb->orWhere('LOWER(e.texte) LIKE :search');
                     $qb->setParameter('search', '%' . $formData['search'] . '%');
                 }
 
@@ -159,7 +148,6 @@ class DateTableType extends TableType
     {
         $resolver->setDefaults([
             'orderable' => true,
-            'departement' => null,
         ]);
     }
 }

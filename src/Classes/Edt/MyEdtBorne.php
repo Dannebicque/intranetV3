@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtBorne.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 19:44
+ * @lastUpdate 23/10/2021 10:36
  */
 
 /*
@@ -14,12 +14,8 @@
 namespace App\Classes\Edt;
 
 use App\Classes\Matieres\TypeMatiereManager;
-use App\Entity\AnneeUniversitaire;
-use App\Entity\Semestre;
 use App\Exception\SemestreNotFoundException;
 use App\Repository\CalendrierRepository;
-use App\Repository\CelcatEventsRepository;
-use App\Repository\EdtPlanningRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\SemestreRepository;
 

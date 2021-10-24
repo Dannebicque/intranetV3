@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/EtudiantRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/09/2021 16:01
+ * @lastUpdate 23/10/2021 12:28
  */
 
 namespace App\Repository;
@@ -29,15 +29,12 @@ use Symfony\Component\Routing\RouterInterface;
  */
 class EtudiantRepository extends ServiceEntityRepository
 {
-    private $router;
-
     /**
      * EtudiantRepository constructor.
      */
-    public function __construct(ManagerRegistry $registry, RouterInterface $router)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Etudiant::class);
-        $this->router = $router;
     }
 
     public function getData($getId): array

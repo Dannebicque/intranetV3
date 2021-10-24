@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Departement.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/10/2021 10:33
+ * @lastUpdate 24/10/2021 11:51
  */
 
 namespace App\Entity;
@@ -109,6 +109,7 @@ class Departement extends BaseEntity
     private ?Personnel $respri;
     /**
      * @ORM\Column(type="integer")
+     * @deprecated
      */
     private int $optAnneePrevisionnel;
     /**
@@ -375,11 +376,13 @@ class Departement extends BaseEntity
         $this->respri = $respri;
     }
 
+    /** @deprecated */
     public function getOptAnneePrevisionnel(): int
     {
         return $this->optAnneePrevisionnel;
     }
 
+    /** @deprecated */
     public function setOptAnneePrevisionnel(int $optAnneePrevisionnel): void
     {
         $this->optAnneePrevisionnel = $optAnneePrevisionnel;

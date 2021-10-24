@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Command/UpdateEtudiantApogeeCommand.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/09/2021 12:44
+ * @lastUpdate 23/10/2021 10:37
  */
 
 namespace App\Command;
@@ -14,7 +14,6 @@ use App\Repository\AnneeRepository;
 use App\Repository\BacRepository;
 use App\Repository\EtudiantRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Exception;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
