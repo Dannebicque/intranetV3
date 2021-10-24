@@ -337,6 +337,12 @@
         </header>
 
         <div class="main-content" id="mainContent">
+            {% if not is_granted('ROLE_ETUDIANT') and user_data.anneeUniversitaire.active == false %}
+                <div class="alert alert-danger">
+                    Attention ! Vous n'êtes pas sur l'année courante. Pour modifier, cliquer en haut, à droite sur la
+                    liste déroulante.
+                </div>
+            {% endif %}
             <div hidden="hidden">
                 {% for toast in app.session.flashbag.get('toast') %}
                     <div role="alert" aria-live="assertive" aria-atomic="true" {{ stimulus_controller('toast', {
