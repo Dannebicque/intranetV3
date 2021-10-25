@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/BorneController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/10/2021 10:02
+ * @lastUpdate 25/10/2021 11:36
  */
 
 namespace App\Controller;
@@ -13,7 +13,6 @@ use App\Classes\Edt\MyEdtBorne;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Entity\Borne;
 use App\Entity\Constantes;
-use App\Entity\Message;
 use App\Entity\Semestre;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -55,13 +54,14 @@ class BorneController extends AbstractController
     {
         $nbBornes = [
             1 => [
-                'zone1' => ['type' => 'semestre', 'valeur' => 1],
+                'zone1' => ['type' => 'semestre', 'valeur' => 79],
                 'zone2' => ['type' => 'semestre', 'valeur' => 10],
                 'zone3' => ['type' => 'message', 'valeur' => Borne::class],
             ],
             2 => [
-                'zone1' => ['type' => 'semestre', 'valeur' => 5],
-                'zone2' => ['type' => 'message', 'valeur' => Message::class],
+                'zone1' => ['type' => 'semestre', 'valeur' => 79],
+                'zone2' => ['type' => 'semestre', 'valeur' => 5],
+                // 'zone2' => ['type' => 'message', 'valeur' => Message::class],
                 'zone3' => ['type' => 'message', 'valeur' => Borne::class],
             ],
         ];
