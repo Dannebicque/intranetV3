@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Document.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/10/2021 10:33
+ * @lastUpdate 25/10/2021 12:02
  */
 
 namespace App\Entity;
@@ -103,7 +103,7 @@ class Document extends BaseEntity
     /**
      * @ORM\Column(type="string", length=5)
      */
-    private ?string $typeDestinataire;
+    private ?string $typeDestinataire = 'ETU'; //todo: a gérer
 
     /**
      * Document constructor.
