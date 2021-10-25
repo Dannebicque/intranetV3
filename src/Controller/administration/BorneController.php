@@ -4,18 +4,18 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/BorneController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/10/2021 09:47
+ * @lastUpdate 25/10/2021 11:00
  */
 
 namespace App\Controller\administration;
 
 use App\Classes\MyExport;
 use App\Controller\BaseController;
-use App\Table\BorneTableType;
 use App\Entity\Borne;
 use App\Entity\Constantes;
 use App\Form\BorneType;
 use App\Repository\BorneRepository;
+use App\Table\BorneTableType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -154,7 +154,7 @@ class BorneController extends BaseController
     }
 
     /**
-     * @Route("/{id}", name="administration_borne_delete", methods="DELETE")
+     * @Route("/{id}", name="administration_borne_delete", methods="DELETE|POST")
      */
     public function delete(Request $request, Borne $borne): Response
     {
