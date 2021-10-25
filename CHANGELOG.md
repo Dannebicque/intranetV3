@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.3.3](https://github.com/Dannebicque/intranetV3/compare/v3.3.2...v3.3.3) (2021-10-25)
+
+
+### Features
+
+* Personnalisation des icônes pour des events ([6dbf4d9](https://github.com/Dannebicque/intranetV3/commit/6dbf4d9e7f7c1aa8fe63962e59873f7179c5eaab))
+* Personnalisation des icônes pour des events ([8beb95a](https://github.com/Dannebicque/intranetV3/commit/8beb95aabd5931772f57becbe42fbe1390fbdcea))
+
+
+### Bug Fixes
+
+* [BS5] Correctif badge ([c0f1916](https://github.com/Dannebicque/intranetV3/commit/c0f19168db860c926d8dca7d3628f0d22d025e4e))
+* Avenant de stage et date vide ([83b187a](https://github.com/Dannebicque/intranetV3/commit/83b187a307865dc2df523df26b311622dc5765fb))
+* Colonnes dans l'export de toutes les notes ([786b230](https://github.com/Dannebicque/intranetV3/commit/786b2309646fb6dd369a0ee10675ae2eb8237760))
+* Gestion des étudiants (semestre/département) en super admin ([bb8d21a](https://github.com/Dannebicque/intranetV3/commit/bb8d21af68e2e009f85531857f187f15fd6744e3))
+* Nouvelles bornes ([16ff126](https://github.com/Dannebicque/intranetV3/commit/16ff12674ee16b82407d17d3099ac3020f411f86))
+* Retour ancienne page de liste des absences ([7ea0760](https://github.com/Dannebicque/intranetV3/commit/7ea076012b69a433de171c2824291a994c68a71f))
+* Retour anciennes bornes ([184ffec](https://github.com/Dannebicque/intranetV3/commit/184ffecc0f1bc65ca3f48b06b1b17e9fc851f300))
+* Script ClickClick ([f8a7502](https://github.com/Dannebicque/intranetV3/commit/f8a75021ca3fc1f2e5c4479879f6da2501fe944c))
+* selection du groupe lors de la saisie d'une absence depuis l'EDT ([08ec200](https://github.com/Dannebicque/intranetV3/commit/08ec200c2fd59697ccdd68a0f8b933f831d1f71b))
+* Type destinataire sur la création d'un document ([6e81e45](https://github.com/Dannebicque/intranetV3/commit/6e81e455237c789bc1c0e167e87883fd57023f5b))
+* Typo dans le role stage et projet ([d662ee3](https://github.com/Dannebicque/intranetV3/commit/d662ee33b3f7f3ae226c39347b8d6e8470e9afa1))
+
 ### [3.3.2](https://github.com/Dannebicque/intranetV3/compare/v3.3.1...v3.3.2) (2021-10-25)
 
 
