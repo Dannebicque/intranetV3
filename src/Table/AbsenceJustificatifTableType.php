@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/AbsenceJustificatifTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/10/2021 10:22
+ * @lastUpdate 25/10/2021 11:00
  */
 
 namespace App\Table;
@@ -195,7 +195,7 @@ class AbsenceJustificatifTableType extends TableType
             'fetch_join_collection' => false,
             'query' => function(QueryBuilder $qb, array $formData) {
                 $qb->innerJoin(Etudiant::class, 'etu', 'WITH', 'e.etudiant = etu.id')
-                    ->where('e.semestre = :semestre')
+                    ->where('etu.semestre = :semestre') //todo: mettre e.semestre
                     ->andWhere('e.anneeUniversitaire = :anneeuniversitaire')
                     ->setParameter('semestre', $this->semestre->getId())
                     ->setParameter('anneeuniversitaire', $this->anneeUniversitaire->getId());

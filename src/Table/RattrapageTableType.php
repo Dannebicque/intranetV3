@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/RattrapageTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/10/2021 12:32
+ * @lastUpdate 25/10/2021 11:00
  */
 
 namespace App\Table;
@@ -189,7 +189,7 @@ class RattrapageTableType extends TableType
             'fetch_join_collection' => false,
             'query' => function (QueryBuilder $qb, array $formData) {
                 $qb->innerJoin(Etudiant::class, 'etu', 'WITH', 'e.etudiant = etu.id')
-                    ->where('etu.semestre = :semestre')
+                    ->where('etu.semestre = :semestre') //todo: mettre e.semestre
                     ->andWhere('e.anneeUniversitaire = :anneeuniversitaire')
                     ->setParameter('semestre', $this->semestre->getId())
                     ->setParameter('anneeuniversitaire', $this->anneeUniversitaire->getId());
