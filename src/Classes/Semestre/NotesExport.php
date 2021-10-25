@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Semestre/NotesExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:48
+ * @lastUpdate 25/10/2021 15:30
  */
 
 /*
@@ -62,7 +62,10 @@ class NotesExport
         $colonne = 4;
         $this->myExcel->writeCellName('C2', 'Module');
         $this->myExcel->writeCellName('C3', 'Code Apogee');
-        $this->myExcel->writeCellName('C4', 'Libellé');
+        $this->myExcel->writeCellName('C4', 'Libellé Matière');
+        $this->myExcel->writeCellName('C5', 'libellé évaluation');
+        $this->myExcel->writeCellName('C6', 'Commentaire évaluation');
+        $this->myExcel->writeCellName('C7', 'Coefficient');
 
         foreach ($evaluations as $eval) {
             if (0 !== $eval->getIdMatiere()) {
@@ -73,12 +76,18 @@ class NotesExport
                     $this->myExcel->writeCellXY($colonne, $ligne, $matiere->codeElement);
                     ++$ligne;
                     $this->myExcel->writeCellXY($colonne, $ligne, $matiere->libelle);
+                    ++$ligne;
+                    $this->myExcel->writeCellXY($colonne, $ligne, $eval->getLibelle());
+                    ++$ligne;
+                    $this->myExcel->writeCellXY($colonne, $ligne, $eval->getCommentaire());
+                    ++$ligne;
+                    $this->myExcel->writeCellXY($colonne, $ligne, $eval->getCoefficient());
                     $ligne = 2;
                     ++$colonne;
                 }
             }
         }
-        $ligne = 5;
+        $ligne = 8;
 
         foreach ($etudiants as $etu) {
             ++$ligne;
