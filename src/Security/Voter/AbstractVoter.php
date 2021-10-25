@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Security/Voter/AbstractVoter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 12:09
+ * @lastUpdate 25/10/2021 15:15
  */
 
 namespace App\Security\Voter;
@@ -49,8 +49,8 @@ class AbstractVoter
         self::MINIMAL_ROLE_ASS => ['ROLE_ASS', 'ROLE_DDE', 'ROLE_RP', 'ROLE_CDD'],
         self::MINIMAL_ROLE_RP => ['ROLE_RP', 'ROLE_CDD'],
         self::MINIMAL_ROLE_DDE => ['ROLE_DDE', 'ROLE_CDD'],
-        self::MINIMAL_ROLE_STAGE => ['ROLE_STAGE', 'ROLE_ASS', 'ROLE_DDE', 'ROLE_RP', 'ROLE_CDD'],
-        self::MINIMAL_ROLE_PROJET => ['ROLE_PROJET', 'ROLE_ASS', 'ROLE_DDE', 'ROLE_RP', 'ROLE_CDD'],
+        self::MINIMAL_ROLE_STAGE => ['ROLE_STA', 'ROLE_ASS', 'ROLE_DDE', 'ROLE_RP', 'ROLE_CDD'],
+        self::MINIMAL_ROLE_PROJET => ['ROLE_PRJ', 'ROLE_ASS', 'ROLE_DDE', 'ROLE_RP', 'ROLE_CDD'],
         self::MINIMAL_ROLE_EDT => ['ROLE_EDT', 'ROLE_ASS', 'ROLE_DDE', 'ROLE_RP', 'ROLE_CDD'],
         self::MINIMAL_ROLE_CDD => ['ROLE_CDD'],
     ];
