@@ -21,26 +21,29 @@
         <div class="card-body">
             <form action="{{ path('administration_edt_export_script_ajax') }}" method="POST">
                 <div class="row">
-                    <div class="col-3">
+                    <div class="col-4">
                         <label for="semestre">Semestre</label>
-                        <select name="semestre" id="semestre">
+                        <select name="semestre" id="semestre" class="form-select">
                             <option>Choisir</option>
                             {% for semestre in semestres %}
                                 <option value="{{ semestre.id }}">{{ semestre.display }}</option>
                             {% endfor %}
                         </select>
                     </div>
-                    <div class="col-2">
+                    <div class="col-4">
                         <label for="semaine">Semaine MMI</label>
-                        <select name="semaine" id="semaine">
+                        <select name="semaine" id="semaine" class="form-select">
                             <option>Choisir</option>
-                            {% for semaine in 1..52 %}
-                                <option value="{{ semaine }}">{{ semaine }}</option>
+                            {% for semaine in semaines %}
+                                <option value="{{ semaine.semaineFormation }}">
+                                    Semaine {{ semaine.semaineReelle }}. Lundi {{ semaine.dateLundi|date('d/m/Y') }}
+                                    (MMI: {{ semaine.semaineFormation }})
+                                </option>
                             {% endfor %}
                         </select>
                     </div>
 
-                    <div class="col-2">
+                    <div class="col-4">
                         <button class="btn btn-success btn-block" type="submit">Générer</button>
                     </div>
                 </div>
