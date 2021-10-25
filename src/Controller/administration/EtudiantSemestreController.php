@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EtudiantSemestreController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/10/2021 10:34
+ * @lastUpdate 25/10/2021 11:21
  */
 
 namespace App\Controller\administration;
@@ -51,7 +51,6 @@ class EtudiantSemestreController extends BaseController
         AnneeUniversitaireRepository $anneeUniversitaireRepository,
         Semestre $semestre = null
     ): Response {
-
         if (null === $semestre) {
             $semestre = $this->dataUserSession->getSemestres()[0];
         }
@@ -71,7 +70,6 @@ class EtudiantSemestreController extends BaseController
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $semestre);
 
-
         return $this->render('administration/etudiant/import_photo.html.twig', [
             'semestre' => $semestre,
         ]);
@@ -86,7 +84,6 @@ class EtudiantSemestreController extends BaseController
     public function importPhotoZip(MyUpload $myUpload, Request $request, Semestre $semestre): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $semestre);
-
 
         $file = $request->files->get('fichierimport');
         $fichier = $myUpload->upload($file, 'temp/');
@@ -110,10 +107,8 @@ class EtudiantSemestreController extends BaseController
     public function semestre(
         Request $request,
         Semestre $semestre
-    ): Response
-    {
+    ): Response {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $semestre);
-
 
         $table = $this->createTable(EtudiantSemestreTableType::class, [
             'semestre' => $semestre,
@@ -146,8 +141,7 @@ class EtudiantSemestreController extends BaseController
         EtudiantRepository $etudiantRepository,
         Semestre $semestre,
         $_format
-    ): Response
-    {
+    ): Response {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $semestre);
 
         $etudiants = $etudiantRepository->findBySemestre($semestre);
