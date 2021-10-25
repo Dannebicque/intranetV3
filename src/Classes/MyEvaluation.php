@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEvaluation.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/10/2021 10:36
+ * @lastUpdate 25/10/2021 11:21
  */
 
 /*
@@ -24,13 +24,13 @@ use App\Entity\Note;
 use App\Entity\Semestre;
 use App\Exception\MatiereNotFoundException;
 use App\Utils\Tools;
+use Doctrine\ORM\EntityManagerInterface;
+use Exception;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 use function array_key_exists;
 use function chr;
 use function count;
-use Doctrine\ORM\EntityManagerInterface;
-use Exception;
 use function in_array;
-use PhpOffice\PhpSpreadsheet\IOFactory;
 
 /**
  * Class MyEvaluation.
@@ -42,7 +42,7 @@ class MyEvaluation
     protected array $statistiques = [];
 
     /** @var Note[] */
-    protected array $notes = [];
+    protected $notes = [];
 
     protected array $classement = [];
 
