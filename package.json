@@ -2,6 +2,8 @@
   "devDependencies": {
     "@babel/core": "^7.12.3",
     "@babel/preset-env": "^7.14.2",
+    "@fortawesome/fontawesome-pro": "^6.0.0-beta2",
+    "@hotwired/stimulus": "^3.0.1",
     "@popperjs/core": "^2.10.2",
     "@symfony/stimulus-bridge": "^2.1.0",
     "@symfony/ux-chartjs": "file:vendor/symfony/ux-chartjs/Resources/assets",
@@ -17,7 +19,6 @@
     "popper.js": "^1.16.1",
     "regenerator-runtime": "^0.13.2",
     "sass-loader": "^9.0.3",
-    "@hotwired/stimulus": "^3.0.1",
     "stimulus-clipboard": "^1.0.0",
     "sweetalert2": "^9.17.0",
     "tinymce": "^5.9.0",
@@ -32,7 +33,6 @@
     "build": "encore production --progress"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^6.0.0-beta2",
     "babel-core": "^6.26.3",
     "babel-loader": "^8.2.2",
     "babel-preset-es2015": "^6.24.1",

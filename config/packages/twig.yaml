@@ -7,13 +7,22 @@ twig:
         # the value is the service's id
         version: '@App\Classes\Version'
         user_data: '@App\Classes\DataUserSession'
-        iconShow: 'fas fa-info'
-        iconEdit: 'fas fa-edit'
-        iconDelete: 'fas fa-trash-alt'
-        iconPrint: 'fas fa-print'
-        iconDuplicate: 'fas fa-copy'
-        iconAdmin: 'fas fa-wrench'
-        iconDashboard: 'fas fa-home'
+        iconShow: '%env(resolve:ICON_SHOW)%'
+        iconEdit: '%env(resolve:ICON_EDIT)%'
+        iconDelete: '%env(resolve:ICON_DELETE)%'
+        iconPrint: '%env(resolve:ICON_PRINT)%'
+        iconDuplicate: '%env(resolve:ICON_DUPLICATE)%'
+        iconAdd: '%env(resolve:ICON_ADD)%'
+        iconHelp: '%env(resolve:ICON_HELP)%'
+        iconAdmin: '%env(resolve:ICON_ADMINISTRATION)%' #'fas fa-wrench'
+        iconDashboard: '%env(resolve:ICON_DASHBOARD)%' #fas fa-home'
+        iconTrombi: '%env(resolve:ICON_TROMBINOSCOPE)%' #fa-user-friends
+        iconAgenda: '%env(resolve:ICON_AGENDA)%' #ffa-calendar-alt
+        iconApplications: '%env(resolve:ICON_APPLICATIONS)%' #ffa-toolbox
+        iconDocuments: '%env(resolve:ICON_DOCUMENTS)%' #fa-folder
+        iconInformation: '%env(resolve:ICON_INFORMATION)%' #fa-file-alt
+        iconMessage: '%env(resolve:ICON_MESSAGE)%' #fas fa-home'
+        iconNotification: '%env(resolve:ICON_NOTIFCATION)%' #fas fa-home'
         linuxpath: '%env(resolve:BASE_URL)%'
 
         exception_controller: null # This is needed to fix the deprecation in Symfony 4.4

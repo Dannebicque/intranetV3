@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/css/theme.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 24/10/2021 16:10
+// @lastUpdate 25/10/2021 19:18
 /* @file /Users/davidannebicque/htdocs/intranetV3/assets/css/theme.css */
 /* @author davidannebicque */
 /* @project intranetV3 */
@@ -2680,7 +2680,7 @@ table tbody tr {
 
 .nav-process-circle .nav-link::after {
     content: "\f00c";
-    font-family: "Font Awesome 6 Free";
+    font-family: FontAwesome;
     width: 0;
     height: 0;
     text-align: center;
@@ -12559,7 +12559,7 @@ select.form-control-lg:not([size]):not([multiple]) {
 
 .lookup::before {
     content: "\f002";
-    font-family: "Font Awesome 6 Free";
+    font-family: FontAwesome;
     font-size: 16px;
     position: absolute;
     top: 52%;

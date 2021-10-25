@@ -2,14 +2,13 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/borne.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 09/10/2021 10:02
+// @lastUpdate 25/10/2021 19:37
 
-import '@fortawesome/fontawesome-free/scss/fontawesome.scss'
-import '@fortawesome/fontawesome-free/scss/solid.scss'
+import '@fortawesome/fontawesome-pro/scss/fontawesome.scss'
+import '@fortawesome/fontawesome-pro/scss/solid.scss'
+import '../../css/borne.scss'
 
 require('bootstrap')
-
-import '../../css/borne.scss'
 
 window.addEventListener('load', function () { //le dom est chargé
   initLocalClocks()
