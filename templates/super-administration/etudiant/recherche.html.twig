@@ -11,7 +11,7 @@
                 <div class="col-sm-9 search-info">
                     <a href="" data-bs-toggle="tooltip" data-bs-placement="bottom"
                        data-original-title="Accéder au profil"
-                       target="_blank">{{ etudiant.displayPr }}</a><br/>
+                       target="_blank">{{ etudiant.displayPr }} (N° {{ etudiant.numEtudiant }})</a><br/>
                     <a href="mailto:{{ etudiant.mailuniv }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
                        data-original-title="Ecrire" target="_blank">{{ etudiant.mailuniv }}</a><br/>
                     <a href="mailto:{{ etudiant.mailperso }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
@@ -36,32 +36,34 @@
             </div>
             <div class="row">
                 <div class="col-sm-4">
-                    <label for="chgt_etudiant_departement">Département actuel</label>
-                    <select id="chgt_etudiant_departement" class="form-control chgt_etudiant_departement"
+                    <label for="chgt_etudiant_departement_{{ loop.index }}">Département actuel</label>
+                    <select id="chgt_etudiant_departement_{{ loop.index }}" class="form-control chgt_etudiant_departement"
                             name="departement"
                             data-etudiant="{{ etudiant.id }}">
+                        <option value="null" selected>Aucune formation</option>
                         {% for departement in departements %}
                             <option value="{{ departement.id }}" {% if etudiant.departement != null and departement.id
                                 == etudiant.departement .id %} selected {% endif %}>{{ departement.libelle }}</option>
                         {% endfor %}
-                        <option value="null">Aucune formation</option>
+
                     </select>
                 </div>
                 <div class="col-sm-4">
-                    <label for="chgt_etudiant_departement">Semestre actuel</label>
-                    <select id="chgt_etudiant_departement" class="form-control chgt_etudiant_semestre"
+                    <label for="chgt_etudiant_departement_{{ loop.index }}">Semestre actuel</label>
+                    <select id="chgt_etudiant_departement_{{ loop.index }}" class="form-control chgt_etudiant_semestre"
                             name="semestre"
                             data-etudiant="{{ etudiant.id }}">
+                        <option value="null" selected>Aucune semestre</option>
                         {% for semestre in semestres %}
                             <option value="{{ semestre.id }}" {% if etudiant.semestre != null and semestre.id
                                 == etudiant.semestre .id %} selected {% endif %}>{{ semestre.display }}</option>
                         {% endfor %}
-                        <option value="null">Aucune semestre</option>
+
                     </select>
                 </div>
                 <div class="col-sm-4">
-                    <label for="chgt_etudiant_fin">Année sortie DUT/LP/IUT</label>
-                    <select id="chgt_etudiant_fin" class="form-control chgt_etudiant_fin" name="fin"
+                    <label for="chgt_etudiant_fin_{{ loop.index }}">Année sortie DUT/LP/IUT</label>
+                    <select id="chgt_etudiant_fin_{{ loop.index }}" class="form-control chgt_etudiant_fin" name="fin"
                             data-etudiant="{{ etudiant.id }}">
                         {% set thisYear = "now"|date('Y') %}
                         <option value="0" selected>Formation en cours</option>
