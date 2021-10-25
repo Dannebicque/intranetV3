@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.3.2](https://github.com/Dannebicque/intranetV3/compare/v3.3.1...v3.3.2) (2021-10-25)
+
+
+### Bug Fixes
+
+* Correctifs mineurs ([fae3a7d](https://github.com/Dannebicque/intranetV3/commit/fae3a7d0deba67356b827459ae23507607ed1b85))
+* Typage des notes problématique ([e988095](https://github.com/Dannebicque/intranetV3/commit/e98809553eecdd207129bd9a4dc781963c81b166))
+* Upload des photos. ([e85830b](https://github.com/Dannebicque/intranetV3/commit/e85830b0b264cdb7fa5603c876ed7e589ed95874))
+
 ### [3.3.1](https://github.com/Dannebicque/intranetV3/compare/v3.3.0...v3.3.1) (2021-10-25)
 
 
