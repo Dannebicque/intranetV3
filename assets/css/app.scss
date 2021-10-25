@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/css/app.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 24/10/2021 16:10
+// @lastUpdate 25/10/2021 19:18
 
 @import "./theme-troyes.scss";
 @import "./theme-rcc.scss";
@@ -360,7 +360,7 @@ thead {
 
 .myedit:after {
   content: '\f044';
-  font-family: "Font Awesome 6 Free", serif;
+  font-family: FontAwesome, serif;
   font-style: normal;
   font-weight: normal;
   text-decoration: inherit;
@@ -590,17 +590,17 @@ thead {
 //todo: encore utile ?
 .datepicker .next::before {
   content: "\f101";
-  font-family: "Font Awesome 6 Free", serif;
+  font-family: FontAwesome, serif;
 }
 
 .datepicker .prev::before {
   content: "\f100";
-  font-family: "Font Awesome 6 Free", serif;
+  font-family: FontAwesome, serif;
 }
 
 .custom-checkbox .custom-control-input:checked ~ .custom-control-label::after {
   content: "\f00c";
-  font-family: "Font Awesome 6 Free", serif;
+  font-family: FontAwesome, serif;
 }
 
 #sidebar_departement {

@@ -2,10 +2,10 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/js/app.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 22/10/2021 13:01
-
-import '@fortawesome/fontawesome-free/scss/fontawesome.scss'
-import '@fortawesome/fontawesome-free/scss/solid.scss'
+// @lastUpdate 25/10/2021 19:25
+import '@fortawesome/fontawesome-pro/scss/fontawesome.scss'
+import '@fortawesome/fontawesome-pro/scss/brands.scss'
+import '@fortawesome/fontawesome-pro/scss/solid.scss'
 
 import $ from 'jquery'
 

@@ -101,7 +101,7 @@
 
                     <li class="menu-item" id="menu-trombinoscope">
                         <a class="menu-link" href="{{ path('trombinoscope_index') }}">
-                            <i class="fas fa-user-friends fa-2x"><span class="sr-only">group</span></i>
+                            <i class="{{ iconTrombi}} fa-2x"><span class="sr-only">group</span></i>
                             <span class="title">{{ 'menu.trombinoscope'|trans }}</span>
                         </a>
                     </li>
@@ -109,13 +109,13 @@
                     <li class="menu-item" id="menu-agenda">
                         {% if user_data.departement.optEdt == true %}
                             <a class="menu-link" href="{{ path('agenda_index') }}">
-                                <i class="fas fa-calendar-alt fa-2x"><span class="sr-only">calendar</span></i>
+                                <i class="{{ iconAgenda }} fa-2x"><span class="sr-only">calendar</span></i>
                                 <span class="title">{{ 'menu.agenda'|trans }}</span>
                             </a>
                         {% else %}
                             <a class="menu-link" href="{{ path('planning_index', {annee:user_data.anneeUniversitaire
                             .annee}) }}">
-                                <i class="fas fa-calendar-alt fa-2x"><span class="sr-only">calendar</span></i>
+                                <i class="{{ iconAgenda }} fa-2x"><span class="sr-only">calendar</span></i>
                                 <span class="title">{{ 'menu.agenda'|trans }}</span>
                             </a>
                         {% endif %}
@@ -123,21 +123,21 @@
 
                     <li class="menu-item" id="menu-application">
                         <a class="menu-link" href="{{ path('application_index') }}">
-                            <i class="fas fa-toolbox fa-2x"><span class="sr-only">applications</span></i>
+                            <i class="{{ iconApplications }} fa-2x"><span class="sr-only">applications</span></i>
                             <span class="title">{{ 'menu.applications'|trans }}</span>
                         </a>
                     </li>
 
                     <li class="menu-item" id="menu-document">
                         <a class="menu-link" href="{{ path('document_index') }}">
-                            <i class="fas fa-folder fa-2x"><span class="sr-only">Documents</span></i>
+                            <i class="{{ iconDocuments }} fa-2x"><span class="sr-only">Documents</span></i>
                             <span class="title">{{ 'menu.documents'|trans }}</span>
                         </a>
                     </li>
 
                     <li class="menu-item" id="menu-information">
                         <a class="menu-link" href="{{ path('informations_index') }}">
-                            <i class="fas fa-file-alt fa-2x"><span class="sr-only">Informations</span></i>
+                            <i class="{{ iconInformation }} fa-2x"><span class="sr-only">Informations</span></i>
                             <span class="title">{{ 'menu.informations'|trans }}</span>
                         </a>
                     </li>
