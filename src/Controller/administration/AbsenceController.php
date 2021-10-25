@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/AbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/10/2021 11:51
+ * @lastUpdate 25/10/2021 12:17
  */
 
 namespace App\Controller\administration;
@@ -23,7 +23,6 @@ use App\Event\AbsenceEvent;
 use App\Repository\AbsenceJustificatifRepository;
 use App\Repository\AbsenceRepository;
 use App\Repository\EtudiantRepository;
-use App\Table\AbsenceListeTableType;
 use App\Utils\Tools;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -63,24 +62,28 @@ class AbsenceController extends BaseController
     #[Route('/semestre/{semestre}/liste', name: 'administration_absences_semestre_liste', options: ['expose' => true])]
     public function liste(
         Request $request,
+        TypeMatiereManager $typeMatiereManager,
+        MyAbsences $myAbsences,
         Semestre $semestre
     ): Response {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $semestre);
 //todo: doit utiliser un dto...
-        $table = $this->createTable(AbsenceListeTableType::class, [
-            'semestre' => $semestre,
-            'anneeUniversitaire' => $this->getAnneeUniversitaire(),
-        ]);
-
-        $table->handleRequest($request);
-
-        if ($table->isCallback()) {
-            return $table->getCallbackResponse();
-        }
+//        $table = $this->createTable(AbsenceListeTableType::class, [
+//            'semestre' => $semestre,
+//            'anneeUniversitaire' => $this->getAnneeUniversitaire(),
+//        ]);
+//
+//        $table->handleRequest($request);
+//
+//        if ($table->isCallback()) {
+//            return $table->getCallbackResponse();
+//        }
+        $matieres = $typeMatiereManager->findBySemestreArray($semestre);
+        $myAbsences->getAbsencesSemestre($matieres, $semestre);
 
         return $this->render('administration/absence/liste.html.twig', [
             'semestre' => $semestre,
-            'table' => $table,
+            'absences' => $myAbsences,
         ]);
     }
 
