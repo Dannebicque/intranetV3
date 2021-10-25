@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/StageAvenant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/06/2021 21:20
+ * @lastUpdate 25/10/2021 12:04
  */
 
 namespace App\Entity;
@@ -35,7 +35,7 @@ class StageAvenant extends BaseEntity
     /**
      * @ORM\Column(type="integer")
      */
-    private ?int $cas;
+    private ?int $cas = 0;
 
     /**
      * @ORM\Column(type="date", nullable=true)
