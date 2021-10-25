@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.3.1](https://github.com/Dannebicque/intranetV3/compare/v3.3.0...v3.3.1) (2021-10-25)
+
+
+### Features
+
+* Message d'information si l'utilisateur n'est pas sur la bonne année universitaire. ([d42ae4a](https://github.com/Dannebicque/intranetV3/commit/d42ae4a7d21f3da0d15da24fe70aa8e3c9d88e9b))
+
+
+### Bug Fixes
+
+* [BS5] Badge pour les dates ([93a97a6](https://github.com/Dannebicque/intranetV3/commit/93a97a6d50cd2571152af34e9747ef0729fc3e99))
+* [BS5] correctifs CSS ([52e9705](https://github.com/Dannebicque/intranetV3/commit/52e970598f463df62c3b3c7a1b56b97fb6bec68c))
+* [BS5] Fix mise en page absences ([a551580](https://github.com/Dannebicque/intranetV3/commit/a5515803bf2ced67699b0bb52b0ffab00ffcd2ed))
+* [BS5] Hauteurs des boutons ([0e3fc2b](https://github.com/Dannebicque/intranetV3/commit/0e3fc2b6c770727fc16adcf2b21ace9fb7c29358))
+* [BS5] Menu "grid" ([9728435](https://github.com/Dannebicque/intranetV3/commit/9728435ebdca0bb63b5708d4a6a4210c822ff36d))
+* [BS5] Menu "grid" et menu EDT ([2a7b0c4](https://github.com/Dannebicque/intranetV3/commit/2a7b0c488837151d6ff4ffffd47185d25f800680))
+* [SF-UX] Stimulus réparé en attendant la publication officielle ([25c0bc4](https://github.com/Dannebicque/intranetV3/commit/25c0bc444dec79f0e770b07ffa2648f96705ca23))
+* Amélioration du fil d'Ariane ([c0faa1b](https://github.com/Dannebicque/intranetV3/commit/c0faa1b9f91e37781482a89f89507dd3c2574db2))
+* Correctifs mineurs ([fef83bf](https://github.com/Dannebicque/intranetV3/commit/fef83bf69c28cfad285664c1ad251863f0be0b18))
+* L'nnée universitaire état en "dur" dans les conventions de stage ([c3b1caf](https://github.com/Dannebicque/intranetV3/commit/c3b1cafa657e8eeb4b3b831d467f52d93c74caa1))
+* Mise à jour des liens vers la documentation ([db1eb5e](https://github.com/Dannebicque/intranetV3/commit/db1eb5ee4fe217f1a9fbb9e26b7aad47a286c363))
+
 ## [3.3.0](https://github.com/Dannebicque/intranetV3/compare/v3.2.1...v3.3.0) (2021-10-24)
 
 
