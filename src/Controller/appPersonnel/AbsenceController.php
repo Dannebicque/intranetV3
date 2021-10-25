@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/AbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 06:57
+ * @lastUpdate 25/10/2021 15:12
  */
 
 namespace App\Controller\appPersonnel;
@@ -24,7 +24,6 @@ use App\Repository\AbsenceRepository;
 use App\Utils\Tools;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
-use function count;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -32,6 +31,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use function count;
 
 #[Route('/application/personnel/absence')]
 #[IsGranted('ROLE_PERMANENT')]
@@ -92,7 +92,6 @@ class AbsenceController extends BaseController
         if (null === $matiere) {
             throw new MatiereNotFoundException();
         }
-
         $this->denyAccessUnlessGranted('CAN_ADD_ABSENCE', $matiere);
         if (null !== $planning) {
             return $this->render('appPersonnel/absence/index.html.twig', [
