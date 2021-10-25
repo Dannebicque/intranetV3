@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Twig/AppExtension.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:48
+ * @lastUpdate 25/10/2021 12:19
  */
 
 namespace App\Twig;
@@ -59,7 +59,7 @@ class AppExtension extends AbstractExtension
     public function formatNote($note, $nbdecimales = 2, $seuil = 10)
     {
         if ($note < $seuil) {
-            return '<span class="badge badge-warning">' . number_format($note, $nbdecimales) . '</span>';
+            return '<span class="badge bg-warning">' . number_format($note, $nbdecimales) . '</span>';
         }
 
         return number_format($note, $nbdecimales);
@@ -68,10 +68,10 @@ class AppExtension extends AbstractExtension
     public function formatDifference($valeur)
     {
         if (0 !== $valeur) {
-            return '<span class="badge badge-warning">' . $valeur . '</span>';
+            return '<span class="badge bg-warning">' . $valeur . '</span>';
         }
 
-        return '<span class="badge badge-success">' . $valeur . '</span>';
+        return '<span class="badge bg-success">' . $valeur . '</span>';
     }
 
     public function getFunctions(): array
@@ -170,15 +170,15 @@ class AppExtension extends AbstractExtension
     public function badge($number): ?string
     {
         if ($number >= 5 && $number < 10) {
-            return 'badge badge-warning';
+            return 'badge bg-warning';
         }
 
         if ($number >= 10 && $number < 20) {
-            return 'badge badge-danger';
+            return 'badge bg-danger';
         }
 
         if ($number >= 20) {
-            return 'badge badge-dark';
+            return 'badge bg-dark';
         }
 
         return '';
@@ -190,7 +190,7 @@ class AppExtension extends AbstractExtension
         $html = '';
         foreach ($t as $word) {
             if ('' !== trim($word)) {
-                $html .= '<span class="badge badge-primary">' . $word . '</span>&nbsp;';
+                $html .= '<span class="badge bg-primary">' . $word . '</span>&nbsp;';
             }
         }
 
