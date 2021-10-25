@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyUpload.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/09/2021 08:44
+ * @lastUpdate 25/10/2021 11:21
  */
 
 /*
@@ -14,19 +14,19 @@
 namespace App\Classes;
 
 use App\Exception\ExtensionInterditeException;
-use function count;
 use Exception;
-use function in_array;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use ZipArchive;
+use function count;
+use function in_array;
 
 class MyUpload
 {
-    private ?String $dir;
+    private ?string $dir;
 
     public function __construct(ParameterBagInterface $parameterBag)
     {
-        $this->dir = $parameterBag->get('kernel.project_dir').'/public/upload/';
+        $this->dir = $parameterBag->get('kernel.project_dir') . '/public/upload/';
     }
 
     /**
@@ -90,7 +90,10 @@ class MyUpload
                 if ('jpg' === $t[1] || 'jpeg' === $t[1]) {
                     $f = explode('_', $fichier);
                     $name = $f[count($f) - 1];
-                    rename($vidage, $newdir.$name);
+                    if (true === file_exists($newdir . $name)) {
+                        unlink($newdir . $name);
+                    }
+                    rename($vidage, $newdir . $name);
                 } else {
                     unlink($vidage); //suppression du fichier
                 }
