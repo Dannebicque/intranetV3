@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/BlocNotesAbsencesController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 19:44
+ * @lastUpdate 26/10/2021 10:36
  */
 
 namespace App\Controller;
@@ -72,6 +72,7 @@ class BlocNotesAbsencesController extends BaseController
     {
         return $this->render('bloc_notes_absences/mcc.html.twig', [
             'matieres' => $typeMatiereManager->findBySemestre($this->getEtudiantSemestre()),
+            'apc' => $this->getUser()?->getSemestre()?->getDiplome()?->getTypeDiplome()?->getApc()
         ]);
     }
 }
