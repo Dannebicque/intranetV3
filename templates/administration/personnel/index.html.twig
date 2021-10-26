@@ -4,6 +4,12 @@
     {{ 'adm.personnel.index.heading'|trans }}
 {% endblock %}
 
+{% block headeractions %}
+    <div class="header-action">
+        {{ include('composants/adm-buttons-index.html.twig', {elt:'personnel'}) }}
+    </div>
+{% endblock %}
+
 {% block content %}
     <div class="card">
         <h4 class="card-title">{{ 'adm.personnel.index.heading'|trans }}</h4>
