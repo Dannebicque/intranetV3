@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/Matiere.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/08/2021 18:54
+ * @lastUpdate 26/10/2021 10:36
  */
 
 namespace App\DTO;
@@ -33,7 +33,7 @@ class Matiere
     public ?float $projetFormation = 0;
 
     public ?string $commentaire = '';
-
+    public bool $apc = false;
     public int $nbNotes = 2;
     public float $coefficient = 1;
     public float $nbEcts = 1;
@@ -41,13 +41,40 @@ class Matiere
     public bool $pac = false;
 
     /**  ne-pas-exporter */
-    public int $ue_id;
+    //todo: ce n'est vrai que pour matière (old school...) pour les SAE/Ressources, c'est potentiellement plusieurs UE...
+    /** @deprecated */
+    public int $ue_id = 0;
+    /** @deprecated */
     public string $ue_display;
+    /** @deprecated */
     public ?int $ue_numero;
+
+    public array $tab_ues = []; //tableau d'UE/Compétences
 
     public bool $suspendu = false;
     public ?Semestre $semestre;
     public $parcours;
+
+    public function getUeId()
+    {
+        if ($this->apc === true && count($this->tab_ues) === 1) {
+            return $this->tab_ues[0]->ue_id;
+        }
+    }
+
+    public function getUeDisplay()
+    {
+        if ($this->apc === true && count($this->tab_ues) === 1) {
+            return $this->tab_ues[0]->ue_display;
+        }
+    }
+
+    public function getUeNumero()
+    {
+        if ($this->apc === true && count($this->tab_ues) === 1) {
+            return $this->tab_ues[0]->ue_numero;
+        }
+    }
 
     /**  ne-pas-exporter */
     public function getJson()

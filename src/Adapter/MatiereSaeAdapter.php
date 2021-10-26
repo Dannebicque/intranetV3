@@ -4,13 +4,14 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Adapter/MatiereSaeAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/09/2021 18:28
+ * @lastUpdate 26/10/2021 10:36
  */
 
 namespace App\Adapter;
 
 use App\DTO\Matiere;
 use App\DTO\MatiereCollection;
+use App\DTO\Ue;
 
 class MatiereSaeAdapter extends AbstractMatiereAdapter implements MatiereAdapterInterface
 {
@@ -39,6 +40,17 @@ class MatiereSaeAdapter extends AbstractMatiereAdapter implements MatiereAdapter
             $m->projetFormation = $matiere->getProjetFormation();
             $m->projetPpn = $matiere->getProjetPpn();
             $m->semestre = $matiere->getSemestre();
+            $m->apc = true;
+
+            foreach ($matiere->getCompetences() as $competence) {
+                $ue = new Ue();
+                $ue->ue_id = $competence->getId();
+                $ue->ue_display = $competence->getNomCourt();
+                //$ue->ue_coefficient = $competence->getE();
+                $ue->ue_numero = (int)$competence->getCouleur()[1];
+                $ue->ue_couleur = $competence->getCouleur();
+                $m->tab_ues[] = $ue;
+            }
         }
 
         return $m;

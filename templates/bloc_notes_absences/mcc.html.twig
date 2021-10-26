@@ -15,7 +15,15 @@
                 {% for matiere in matieres %}
                     <tr>
                         <td>{{ matiere.display }}</td>
-                        <td class="hide">{{ matiere.ue_id != 0 ? matiere.ue_display : 'non.defini'|trans }}</td>
+                        {% if apc == true %}
+                            <td class="hide">
+                                {% for ue in matiere.tab_ues %}
+                                    <span class="badge badge-{{ ue.ue_couleur }}">{{ ue.ue_display }}</span>
+                                {% endfor %}
+                            </td>
+                        {% else %}
+                            <td class="hide">{{ matiere.ue_id != 0 ? matiere.ue_display : 'non.defini'|trans }}</td>
+                        {% endif %}
                         <td>{{ matiere.nbNotes }}</td>
                         <td>{{ matiere.coefficient }}</td>
                     </tr>
