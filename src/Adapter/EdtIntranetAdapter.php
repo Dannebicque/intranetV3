@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Adapter/EdtIntranetAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/10/2021 10:02
+ * @lastUpdate 26/10/2021 16:44
  */
 
 namespace App\Adapter;
@@ -47,6 +47,7 @@ class EdtIntranetAdapter extends AbstractEdtAdapter implements EdtAdapterInterfa
         $evt->typeIdMatiere = $event->getTypeIdMatiere();
         if (array_key_exists($evt->typeIdMatiere, $this->matieres)) {
             $evt->matiere = $this->matieres[$evt->typeIdMatiere]->display;
+            $evt->code_matiere = $this->matieres[$evt->typeIdMatiere]->codeMatiere;
         }
         $evt->type_cours = $event->getType();
         $evt->semestre = $event->getSemestre();

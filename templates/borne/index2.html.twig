@@ -81,7 +81,8 @@
                                                     <a href="{{ path('application_personnel_absence_from_planning',{
                                                         'event':zone.data.planning[j][tabHeures[ligne][0]].id,
                                                         'source': zone.data.planning[j][tabHeures[ligne][0]].source }) }}">
-                                                        <span class="session-title">{{ zone.data.planning[j][tabHeures[ligne][0]].matiere|raw }}</span>
+                                                        <span class="session-title">{{ zone.data
+                                                            .planning[j][tabHeures[ligne][0]].code_matiere }}</span>
                                                         <span class="session-presenter">{{ zone.data
                                                             .planning[j][tabHeures[ligne][0]].personnel }}</span>
                                                         <span class="session-time">
