@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/htdocs/intranetV3/assets/css/app.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/10/2021 19:18
+// @lastUpdate 26/10/2021 10:59
 
 @import "./theme-troyes.scss";
 @import "./theme-rcc.scss";
@@ -477,6 +477,20 @@ thead {
 /** FIN LOGO **/
 
 /** AVATAR **/
+.avatar-center {
+  margin: auto;
+  width: 100%;
+}
+
+.media .avatar {
+  margin: auto;
+  display: block;
+}
+
+.correctif-position {
+  top: 0;
+}
+
 @mixin avatar($sizeda) {
   width: $sizeda;
   height: $sizeda;

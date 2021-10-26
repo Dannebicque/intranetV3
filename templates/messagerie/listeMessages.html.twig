@@ -26,8 +26,8 @@
 <div class="media-list-body bg-white b-1">
     {% if filtre == 'sent' or filtre=='draft' %}
         {% for message in messages %}
-            <div class="media align-items-center message-read-auteur" data-message="{{ message.id }}">
-                <div class="custom-control custom-checkbox">
+            <div class="row media align-items-center message-read-auteur" data-message="{{ message.id }}">
+                <div class="col-1 custom-control custom-checkbox">
                     <input type="checkbox" class="custom-control-input">
                     <label class="custom-control-label"></label>
                 </div>
@@ -36,85 +36,101 @@
                 {# <input type="checkbox"> #}
                 {# <i class="fa fa-star"></i> #}
                 {# </label> #}
-
-                {% if message.important == true %}
-                    <span class="badge badge-dot bg-danger"></span>
-                {% else %}
-                    <span class="badge badge-dot opacity-0"></span>
-                {% endif %}
-                <a href="">
-                    <div class="avatar-circle-sm">
+                <div class="col-2">
+                    {% if message.important == true %}
+                        <span class="badge badge-dot bg-danger"></span>
+                    {% else %}
+                        <span class="badge badge-dot opacity-0"></span>
+                    {% endif %}
+                    <a href="">
+                        <div class="avatar-circle-sm">
                         <span class="initials">
                             {{ message.type|upper }}
                         </span>
-                    </div>
-                </a>
-                <a class="media-body text-truncate" href="#" data-message="{{ message.id }}">
+                        </div>
+                    </a>
+                </div>
+                <div class="col-6">
+                    <a class="media-body text-truncate" href="#" data-message="{{ message.id }}">
 
-                    <h6>{% if filtre=='sent' %}Envoyé à :{% endif %} {{ message.typeDestinataires }}</h6>
-                    <small>
-                        <strong>{{ message.sujet }}</strong>
-                        <span class="fw-300 opacity-80">{{ message.message }}</span>
-                    </small>
-                </a>
-
-                {% if message.messagePieceJointes|length > 0 %}
-                    <a class="text-lighter fs-18" href="#" data-message="{{ message.id }}"><i
-                                class="fas fa-clipboard"></i></a>
-                {% else %}
-                    <a class="text-lighter fs-18 opacity-0" href="#"><i class="fas fa-clipboard"></i></a>
-                {% endif %}
-                {% if filtre=='draft' %}
-                    <button class="btn btn-warning send_draft" data-message="{{ message.id }}">Modifier /
-                                                                                               envoyer
-                    </button>
-                {% else %}
-                    <time datetime="2018">{{ message.created|time_ago(app.request.locale) }}</time>
-                {% endif %}
+                        <h6>{% if filtre=='sent' %}Envoyé à :{% endif %} {{ message.typeDestinataires }}</h6>
+                        <small>
+                            <strong>{{ message.sujet }}</strong>
+                            <span class="fw-300 opacity-80">{{ message.message }}</span>
+                        </small>
+                    </a>
+                </div>
+                <div class="col-1">
+                    {% if message.messagePieceJointes|length > 0 %}
+                        <a class="text-lighter fs-18" href="#" data-message="{{ message.id }}"><i
+                                    class="fas fa-clipboard"></i></a>
+                    {% else %}
+                        <a class="text-lighter fs-18 opacity-0" href="#"><i class="fas fa-clipboard"></i></a>
+                    {% endif %}
+                </div>
+                <div class="col-2">
+                    {% if filtre=='draft' %}
+                        <button class="btn btn-warning send_draft" data-message="{{ message.id }}">Modifier /
+                                                                                                   envoyer
+                        </button>
+                    {% else %}
+                        <time datetime="2018">{{ message.created|time_ago(app.request.locale) }}</time>
+                    {% endif %}
+                </div>
             </div>
         {% endfor %}
     {% else %}
         {% for message in messages %}
-            <div class="media {% if message.etat == 'U' %}media-new{% endif %} align-items-center">
-                <div>
+            <div class="row media {% if message.etat == 'U' %}media-new{% endif %} align-items-center">
+                <div class="col-1">
                     <input type="checkbox">
-                </div>
-                <label class="toggler ml-20 fs-16">
-                    <input type="checkbox" class="starred" data-message="{{ message.id }}" {% if message.starred == true %}checked{% endif %}>
-                    <i class="fa fa-star"></i>
-                </label>
 
-                {% if message.message.important == true %}
-                    <span class="badge badge-dot bg-danger"></span>
-                {% else %}
-                    <span class="badge badge-dot opacity-0"></span>
-                {% endif %}
+                    <label class="toggler ml-20 fs-16">
+                        <input type="checkbox" class="starred" data-message="{{ message.id }}" {% if message.starred == true %}checked{% endif %}>
+                        <i class="fa fa-star"></i>
+                    </label>
 
-                <a href="#" class="message-read" data-message="{{ message.message.id }}">
-                    {% if message.message.expediteur.photoName != null and message.message.expediteur.photoName != 'noimage.png' %}
-                        <img class="avatar" src="{{ asset('upload/personnels/'~message.message.expediteur.photoName)
-                        |imagine_filter('avatar') }}" alt="Avatar de l'expéditeur">
+
+                    {% if message.message.important == true %}
+                        <span class="badge badge-dot bg-danger"></span>
                     {% else %}
-                        {{ include('composants/_avatar.html.twig', {user:message.message.expediteur, size:'sm'}) }}
+                        <span class="badge badge-dot opacity-0"></span>
                     {% endif %}
-                </a>
-                <a class="media-body text-truncate message-read" href="#" data-message="{{ message.message.id }}">
-                    <h6>{{ message.message.expediteur.displayPr }}</h6>
-                    <small>
-                        <strong>{{ message.message.sujet }}</strong>
-                        <span class="fw-300 opacity-80">{{ message.message.message }}</span>
-                    </small>
-                </a>
-
-                {% if message.message.messagePieceJointes|length > 0 %}
-                    <a class="text-lighter fs-18 message-read" href="#" data-message="{{ message.message.id }}"><i
-                                class="fas fa-clipboard"></i></a>
-                {% else %}
-                    <a class="text-lighter fs-18 opacity-0 message-read" href="#" data-message="{{ message
-                    .message.id }}"><i class="fas fa-clipboard"></i></a>
-                {% endif %}
-
-                <time datetime="2018">{{ message.message.created|time_ago(app.request.locale) }}</time>
+                </div>
+                <div class="col-1">
+                    <a href="#" class="message-read" data-message="{{ message.message.id }}">
+                        {% if message.message.expediteur.photoName != null and message.message.expediteur.photoName != 'noimage.png' %}
+                            <div class="avatar-center">
+                                <img class="avatar" src="{{ asset('upload/personnels/'~message.message.expediteur.photoName)
+                                |imagine_filter('avatar') }}" alt="Avatar de l'expéditeur">
+                            </div>
+                        {% else %}
+                            {{ include('composants/_avatar.html.twig', {user:message.message.expediteur, size:'sm',
+                                class:'correctif-position'
+                            }) }}
+                        {% endif %}
+                    </a>
+                </div>
+                <div class="col-6">
+                    <a class="media-body text-truncate message-read" href="#" data-message="{{ message.message.id }}">
+                        <h6>{{ message.message.expediteur.displayPr }}</h6>
+                        <small>
+                            <strong>{{ message.message.sujet }}</strong>
+                        </small>
+                    </a>
+                </div>
+                <div class="col-1">
+                    {% if message.message.messagePieceJointes|length > 0 %}
+                        <a class="text-lighter fs-18 message-read" href="#" data-message="{{ message.message.id }}"><i
+                                    class="fas fa-clipboard"></i></a>
+                    {% else %}
+                        <a class="text-lighter fs-18 opacity-0 message-read" href="#" data-message="{{ message
+                        .message.id }}"><i class="fas fa-clipboard"></i></a>
+                    {% endif %}
+                </div>
+                <div class="col-2">
+                    <time datetime="2018">{{ message.message.created|time_ago(app.request.locale) }}</time>
+                </div>
             </div>
         {% endfor %}
     {% endif %}
