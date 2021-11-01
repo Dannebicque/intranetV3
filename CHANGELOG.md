@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.3.4](https://github.com/Dannebicque/intranetV3/compare/v3.3.3...v3.3.4) (2021-11-01)
+
+
+### Features
+
+* Affichages des compétences dans les MCC des étudiants ([2925148](https://github.com/Dannebicque/intranetV3/commit/29251480786047f143681c641f900c8223e2145f))
+* Ajout du code matière dans le DTO d'EDT pour affichage sur les bornes ([3a20e16](https://github.com/Dannebicque/intranetV3/commit/3a20e1634e1195de8705d9dcb43beebd17d54df3))
+* Refonte de la page messagerie pour les étudiants ([44f4a3c](https://github.com/Dannebicque/intranetV3/commit/44f4a3c9299c456736d67cb2387282712bca00f8))
+
+
+### Bug Fixes
+
+* Amélioration du voter, lorsque plusieurs rôles cochés. ([ba5c25b](https://github.com/Dannebicque/intranetV3/commit/ba5c25be0fab4e5c784c1f61eadc7d9237dd6bce))
+* Bouton ajout enseignant supprimé par erreur ([7016390](https://github.com/Dannebicque/intranetV3/commit/7016390e04b4c1a62729861eccd9e126167e8740))
+
 ### [3.3.3](https://github.com/Dannebicque/intranetV3/compare/v3.3.2...v3.3.3) (2021-10-25)
 
 
