@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Security/Voter/AbstractVoter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/10/2021 15:15
+ * @lastUpdate 01/11/2021 18:14
  */
 
 namespace App\Security\Voter;
@@ -71,7 +71,7 @@ class AbstractVoter
                         $this->departementRoles[$rf->getDepartement()->getId()] = [];
                     }
                     if (null !== $rf->getDepartement()) {
-                        $this->departementRoles[$rf->getDepartement()->getId()][] = $rf->getRoles()[0];
+                        $this->departementRoles[$rf->getDepartement()->getId()] = $rf->getRoles();
                     }
                 }
             }
