@@ -1,5 +1,5 @@
 <div class="buttons">
-    <a href="{{ path('sa_'~ elt ~ '_new') }}" class="btn btn-info btn-sm btn-float" title="{{ 'atitle.creer_nouveau'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fas fa-plus"></i></a>
+    <a href="{{ path('sa_'~ elt ~ '_new') }}" class="btn btn-info btn-sm btn-float" title="{{ 'atitle.creer_nouveau'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="{{ iconAdd }}"></i></a>
     {% if retour is defined %}
         <a href="{{ path(retour.path) }}"
            class="btn btn-primary btn-float"

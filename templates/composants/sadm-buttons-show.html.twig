@@ -1,7 +1,7 @@
 <div class="buttons">
     <a href="{{ path('sa_'~ elt ~ '_delete', {id: id}) }}" data-csrf="{{ csrf_token('delete' ~ id) }}"
        class="btn btn-danger btn-sm btn-float supprimer" title="{{ 'atitle.supprimer'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
-    ><i class="fas fa-trash"></i></a>
+    ><i class="{{ iconDelete }}"></i></a>
     <a href="{{ path('sa_'~elt~'_edit', {id: id}) }}" class="btn btn-warning btn-sm btn-float" title="{{ 'atitle.modifier'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
     ><i class="{{ iconEdit }}"></i></a>
     {% if retour is defined %}
