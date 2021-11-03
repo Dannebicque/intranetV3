@@ -7,6 +7,14 @@
 {% block headeractions %}
     <div class="header-action">
         <div class="buttons">
+            <a href="{{ path('sadm_questionnaire_qualite_new', {semestre:semestre.id}) }}"
+               class="btn btn-info btn-sm btn-float"
+               title="{{ 'atitle.creer_nouveau'|trans }}"
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
+            >
+                <i class="{{ iconAdd }}"></i>
+                <span class="sr-only">{{ 'atitle.creer_nouveau'|trans }}</span>
+            </a>
             <a href="{{ path('administratif_enquete_index') }}"
                class="btn btn-primary btn-float"
                title="{{ 'atitle.retour_enquete'|trans }}"
@@ -77,8 +85,11 @@
                     <tr>
                         <td colspan="4">
                             Aucun questionnaire... En créer un ...
-                            <a href="{{ path('administratif_enquete_semestre_new',
-                                {semestre:semestre.id}) }}" class="btn btn-primary">Créer un questionnaire</a>
+                            <a href="{{ path('sadm_questionnaire_qualite_new',
+                                {semestre:semestre.id}) }}" class="btn btn-primary">
+                                <i class="{{ iconAdd }}"></i>
+                                Créer un questionnaire
+                            </a>
                         </td>
                     </tr>
                 {% endfor %}
@@ -166,19 +177,20 @@
                                     {% endif %}
 
                                 </tr>
-                            {% else %}
-                                <tr>
-                                    <td colspan="4">
-                                        Aucun questionnaire... En créer un ...
-                                        <a href="{{ path('administratif_enquete_semestre_new',
-                                            {semestre:semestre.id}) }}" class="btn btn-primary">Créer un
-                                                                                                questionnaire</a>
-                                    </td>
-                                </tr>
+
                             {% endfor %}
                             </tbody>
                         </table>
                     </div>
+                {% else %}
+
+                    Aucun questionnaire... En créer un ...
+                    <a href="{{ path('sadm_questionnaire_qualite_new',
+                        {semestre:semestre.id}) }}" class="btn btn-primary">
+                        <i class="{{ iconAdd }}"></i>
+                        Créer un questionnaire
+                    </a>
+
                 {% endfor %}
             </div>
         </div>

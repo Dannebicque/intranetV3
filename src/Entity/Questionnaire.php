@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Questionnaire.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/06/2021 21:20
+ * @lastUpdate 03/11/2021 10:19
  */
 
 namespace App\Entity;
@@ -29,12 +29,12 @@ abstract class Questionnaire extends BaseEntity
     private ?string $libelle;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private ?CarbonInterface $dateOuverture;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private ?CarbonInterface $dateFermeture;
 
@@ -85,7 +85,7 @@ abstract class Questionnaire extends BaseEntity
         return $this->dateOuverture;
     }
 
-    public function setDateOuverture(CarbonInterface $dateOuverture): self
+    public function setDateOuverture(?CarbonInterface $dateOuverture): self
     {
         $this->dateOuverture = $dateOuverture;
 
@@ -97,7 +97,7 @@ abstract class Questionnaire extends BaseEntity
         return $this->dateFermeture;
     }
 
-    public function setDateFermeture(CarbonInterface $dateFermeture): self
+    public function setDateFermeture(?CarbonInterface $dateFermeture): self
     {
         $this->dateFermeture = $dateFermeture;
 

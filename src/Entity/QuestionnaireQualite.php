@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/QuestionnaireQualite.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 08:52
+ * @lastUpdate 03/11/2021 09:29
  */
 
 namespace App\Entity;
@@ -33,10 +33,9 @@ class QuestionnaireQualite extends Questionnaire
      */
     private Collection $sections;
 
-    public function __construct(Semestre $semestre)
+    public function __construct()
     {
         parent::__construct();
-        $this->semestre = $semestre;
         $this->sections = new ArrayCollection();
     }
 
@@ -81,5 +80,10 @@ class QuestionnaireQualite extends Questionnaire
         }
 
         return $this;
+    }
+
+    public function getDiplome(): ?string
+    {
+        return $this->semestre?->getAnnee()?->getDiplome()?->getDisplayCourt();
     }
 }

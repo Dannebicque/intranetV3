@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/QuestionnaireQuestion.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/10/2021 17:03
+ * @lastUpdate 03/11/2021 17:38
  */
 
 namespace App\Entity;
@@ -22,6 +22,7 @@ class QuestionnaireQuestion extends BaseEntity
 {
     use LifeCycleTrait;
 
+    /** @var string A ne pas utiliser. utiliser QuestionnaireRegistry */
     public const QUESTION_TYPE_QCU = 'qcu';
     public const QUESTION_TYPE_QCM = 'qcm';
     public const QUESTION_TYPE_YESNO = 'yesno';
@@ -47,7 +48,7 @@ class QuestionnaireQuestion extends BaseEntity
     private ?string $help;
 
     /**
-     * @ORM\Column(type="string", length=10)
+     * @ORM\Column(type="string", length=255)
      */
     private ?string $type;
 
@@ -89,9 +90,24 @@ class QuestionnaireQuestion extends BaseEntity
     private string $alignement = 'HORIZONTAL_CENTER';
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
-    private ?string $parametre;
+    private ?string $parametre = '[]';
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private ?int $maxChoix = 1;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private ?string $configuration = '[]';
+
+    /**
+     * @ORM\ManyToMany(targetEntity=QuestionnaireQuestionTag::class, mappedBy="question", cascade={"persist"})
+     */
+    private $questionnaireQuestionTags;
 
     public function __construct(Personnel $personnel)
     {
@@ -99,6 +115,7 @@ class QuestionnaireQuestion extends BaseEntity
         $this->setAuteur($personnel);
         $this->qualiteSectionQuestions = new ArrayCollection();
         $this->questionsEnfants = new ArrayCollection();
+        $this->questionnaireQuestionTags = new ArrayCollection();
     }
 
     public function getLibelle(): ?string
@@ -303,6 +320,7 @@ class QuestionnaireQuestion extends BaseEntity
         return $this;
     }
 
+    /** @deprecated */
     public function getTypeQuestion()
     {
         $t = [
@@ -314,5 +332,60 @@ class QuestionnaireQuestion extends BaseEntity
         ];
 
         return $t[$this->type];
+    }
+
+    public function getMaxChoix(): int
+    {
+        return $this->maxChoix;
+    }
+
+    public function setMaxChoix(int $maxChoix = 1): self
+    {
+        $this->maxChoix = $maxChoix;
+
+        return $this;
+    }
+
+    public function getConfiguration(): ?array
+    {
+        if (null !== $this->configuration || '' !== $this->configuration) {
+            return json_decode($this->configuration, true);
+        }
+
+        return [];
+    }
+
+    public function setConfiguration(?array $configuration): self
+    {
+        $this->configuration = json_encode($configuration);;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|QuestionnaireQuestionTag[]
+     */
+    public function getQuestionnaireQuestionTags(): Collection
+    {
+        return $this->questionnaireQuestionTags;
+    }
+
+    public function addQuestionnaireQuestionTag(QuestionnaireQuestionTag $questionnaireQuestionTag): self
+    {
+        if (!$this->questionnaireQuestionTags->contains($questionnaireQuestionTag)) {
+            $this->questionnaireQuestionTags[] = $questionnaireQuestionTag;
+            $questionnaireQuestionTag->addQuestion($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuestionnaireQuestionTag(QuestionnaireQuestionTag $questionnaireQuestionTag): self
+    {
+        if ($this->questionnaireQuestionTags->removeElement($questionnaireQuestionTag)) {
+            $questionnaireQuestionTag->removeQuestion($this);
+        }
+
+        return $this;
     }
 }

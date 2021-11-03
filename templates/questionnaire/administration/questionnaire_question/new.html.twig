@@ -25,17 +25,25 @@
             {{ 'adm.questionnaire.question.new.heading'|trans }}
         </h4>
         <div class="card-body">
-            {% form_theme form 'form/my-form.html.twig' %}
-            {{ form_start(form) }}
-            {{ form_widget(form) }}
-            <h3>Réponses</h3>
-            <div id="reponses">
-                <div class="alert alert-info">Choisir d'abord le type de question</div>
+            <div {{ stimulus_controller('questionnaire_question', {url: path('sadm_questionnaire_question_type_question')}) }}>
+                <h4>Choisissez le type de question ?</h4>
+                <div class="row">
+                    {% for typeQuestion in typeQuestions %}
+                        <div class="col-sm-6 col-md-2 d-grid d-block">
+                            <button data-action="questionnaire-question#changeTypeQuestion" class="btn btn-primary"
+                                    data-value="{{ typeQuestion|fqn }}">
+                                <i class=" {{ constant('ICON', typeQuestion) }}"></i><br>
+                                {{ constant('LABEL', typeQuestion) }}
+                            </button>
+                        </div>
+                    {% endfor %}
+                </div>
+                <br>
+                <div data-questionnaire-question-target="reponses">
+                    <div class="alert alert-info">Choisir d'abord le type de question</div>
+                </div>
+
             </div>
-
-            <button class="btn btn-success mt-10">{{ button_label|default('label.save'|trans) }}</button>
-            {{ form_end(form) }}
-
         </div>
     </div>
 {% endblock %}

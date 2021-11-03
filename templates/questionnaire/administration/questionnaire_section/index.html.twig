@@ -12,7 +12,7 @@
                title="{{ 'atitle.creer_nouveau'|trans }}"
                data-bs-toggle="tooltip" data-bs-placement="bottom"
             >
-                <i class="fas fa-plus"></i>
+                <i class="{{ iconAdd }}"></i>
                 <span class="sr-only">{{ 'atitle.creer_nouveau'|trans }}</span>
             </a>
             {% if is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_QUALITE') %}
@@ -20,9 +20,17 @@
                    class="btn btn-primary btn-float"
                    data-bs-toggle="tooltip" data-bs-placement="bottom"
 
+                   title="{{ 'retour.qualite'|trans }}">
+                    <i class="fas fa-arrow-left"></i>
+                    <span class="sr-only">{{ 'retour.qualite'|trans }}</span>
+                </a>
+                <a href="{{ path('super_admin_homepage') }}"
+                   class="btn btn-primary btn-float"
+                   data-bs-toggle="tooltip" data-bs-placement="bottom"
+
                    title="{{ 'retour.administratif'|trans }}">
                     <i class="fas fa-home"></i>
-                    <span class="sr-only">{{ 'retour.qualite'|trans }}</span>
+                    <span class="sr-only">{{ 'retour.administratif'|trans }}</span>
                 </a>
             {% elseif is_granted('ROLE_PERMANENT') %}
                 <a href="{{ path('default_homepage') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom"
@@ -47,4 +55,11 @@
             {{ table_render(table) }}
         </div>
     </div>
+{% endblock %}
+
+{% block fabactions %}
+    {{ include('composants/fab-button-help.html.twig', {
+        href:path('help_article', {sujet: 'administration_questionnaire_section'})
+    }
+    ) }}
 {% endblock %}

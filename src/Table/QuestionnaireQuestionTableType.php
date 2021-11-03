@@ -4,13 +4,14 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/QuestionnaireQuestionTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/10/2021 11:51
+ * @lastUpdate 03/11/2021 17:38
  */
 
 namespace App\Table;
 
 use App\Components\Table\Adapter\EntityAdapter;
 use App\Components\Table\Column\BooleanColumnType;
+use App\Components\Table\Column\ManyColumnType;
 use App\Components\Table\Column\PropertyColumnType;
 use App\Components\Table\Column\WidgetColumnType;
 use App\Components\Table\TableBuilder;
@@ -23,8 +24,11 @@ use App\Components\Widget\Type\RowEditLinkType;
 use App\Components\Widget\Type\RowShowLinkType;
 use App\Components\Widget\WidgetBuilder;
 use App\Entity\QuestionnaireQuestion;
+use App\Entity\QuestionnaireQuestionTag;
+use App\Form\Type\EntityCompleteType;
 use App\Form\Type\SearchType;
 use App\Table\ColumnType\PersonnelColumnType;
+use App\Table\ColumnType\TypeQuestionColumnType;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -33,6 +37,7 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 class QuestionnaireQuestionTableType extends TableType
 {
     private CsrfTokenManagerInterface $csrfToken;
+    private array $typeQuestions;
 
     public function __construct(CsrfTokenManagerInterface $csrfToken)
     {
@@ -41,9 +46,13 @@ class QuestionnaireQuestionTableType extends TableType
 
     public function buildTable(TableBuilder $builder, array $options): void
     {
+        $this->typeQuestions = $options['typeQuestions'];
+
         $builder->addFilter('search', SearchType::class);
         $builder->addFilter('type', ChoiceType::class,
-            ['label' => 'Type de question', 'choices' => QuestionnaireQuestion::LISTE_TYPE_QUESTION]);
+            ['label' => 'Type de question', 'choices' => $this->typeQuestions, 'required' => false]);
+        $builder->addFilter('tag', EntityCompleteType::class,
+            ['label' => 'Tag', 'class' => QuestionnaireQuestionTag::class, 'choice_label' => 'libelle']);
 
 //        // Export button (use to export data)
         $builder->addWidget('export', ButtonDropdownType::class, [
@@ -65,10 +74,14 @@ class QuestionnaireQuestionTableType extends TableType
             },
         ]);
 
-        //système de panier de question?
-
         $builder->addColumn('libelle', PropertyColumnType::class, ['label' => 'table.libelle']);
-        $builder->addColumn('type', PropertyColumnType::class, ['label' => 'table.type']);
+        $builder->addColumn('type', TypeQuestionColumnType::class, ['label' => 'table.type']);
+        $builder->addColumn('questionnaireQuestionTags', ManyColumnType::class, [
+            'label' => 'table.questionnaireQuestionTags',
+            'one_renderer' => function($elem) {
+                return '<span class="badge bg-primary me-1">' . $elem->getLibelle() . '</span>';
+            }
+        ]);
         $builder->addColumn('auteur', PersonnelColumnType::class, ['label' => 'table.auteur']);
         $builder->addColumn('obligatoire', BooleanColumnType::class, ['label' => 'table.obligatoire']);
 
@@ -77,28 +90,30 @@ class QuestionnaireQuestionTableType extends TableType
         $builder->addColumn('links', WidgetColumnType::class, [
             'build' => function(WidgetBuilder $builder, QuestionnaireQuestion $s) {
                 $builder->add('duplicate', RowDuplicateLinkType::class, [
-                    'route' => 'administration_article_duplicate',
+                    'route' => 'sadm_questionnaire_question_duplicate',
                     'route_params' => ['id' => $s->getId()],
                     'xhr' => false,
                 ]);
                 $builder->add('show', RowShowLinkType::class, [
-                    'route' => 'administration_article_show',
+                    'route' => 'sadm_questionnaire_question_show',
                     'route_params' => [
                         'id' => $s->getId(),
                     ],
                     'xhr' => false,
                 ]);
                 $builder->add('edit', RowEditLinkType::class, [
-                    'route' => 'administration_article_edit',
+                    'route' => 'sadm_questionnaire_question_edit',
                     'route_params' => [
                         'id' => $s->getId(),
                     ],
                     'xhr' => false,
                 ]);
                 $builder->add('delete', RowDeleteLinkType::class, [
+                    'route' => 'sadm_questionnaire_question_delete',
+                    'route_params' => [
+                        'id' => $s->getId(),
+                    ],
                     'attr' => [
-                        'data-href' => 'administration_article_delete',
-                        'data-uuid' => $s->getId(),
                         'data-csrf' => $this->csrfToken->getToken('delete' . $s->getId()),
                     ],
                 ]);
@@ -132,6 +147,7 @@ class QuestionnaireQuestionTableType extends TableType
     {
         $resolver->setDefaults([
             'orderable' => true,
+            'typeQuestions' => null,
         ]);
     }
 }

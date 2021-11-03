@@ -1,20 +1,32 @@
-{% extends 'base.html.twig' %}
+{% extends (is_granted('ROLE_ADMINISTRATIF')) ? 'base-super_admin.html.twig' : 'base.html.twig' %}
 
 {% block header %}
-    {{ 'adm.questionnaire.questionnaire.modification.heading'|trans }}
+    {{ 'adm.questionnaire.qualite.edit.heading'|trans }}
 {% endblock %}
 
 {% block headeractions %}
     <div class="header-action">
-        {{ include('composants/adm-buttons-edit.html.twig', {elt:'questionnaire_qualite', id: questionnaire_qualite.id}) }}
+        <div class="buttons">
+            <a href="{{ path('questionnaire_qualite_show'|path_admin, {id:questionnaire_qualite.id}) }}"
+               class="btn btn-info btn-sm btn-float"
+               title="{{ 'atitle.voir'|trans }}"
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
+            >
+                <i class="{{ iconShow }}"></i>
+                <span class="sr-only">{{ 'atitle.voir'|trans }}</span>
+            </a>
+            <a href="{{ path('sadm_questionnaire_qualite_index') }}" class="btn
+                btn-primary btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom"
+               title="Retour aux questionnaires"><i class="fas fa-arrow-left"></i></a>
+        </div>
     </div>
 {% endblock %}
 
 {% block content %}
     <div class="card">
-        <h4 class="card-title">{{ 'adm.questionnaire.questionnaire.modification.heading'|trans }}</h4>
+        <h4 class="card-title">{{ 'adm.questionnaire.qualite.edit.heading'|trans }}</h4>
         <div class="card-body">
-            {{ include('composants/adm-form.html.twig', {'button_label': 'update'|trans}) }}
+            {{ include('composants/adm-form.html.twig', {button_label: 'update'|trans}) }}
         </div>
     </div>
 {% endblock %}

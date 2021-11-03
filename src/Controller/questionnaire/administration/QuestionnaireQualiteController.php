@@ -4,30 +4,27 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/questionnaire/administration/QuestionnaireQualiteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/10/2021 11:53
+ * @lastUpdate 03/11/2021 17:38
  */
 
 namespace App\Controller\questionnaire\administration;
 
 use App\Controller\BaseController;
 use App\Entity\QuestionnaireQualite;
+use App\Entity\Semestre;
 use App\Form\QuestionnaireQualiteType;
-use App\Form\QuestionnaireQuestionType;
-use App\Repository\QuestionnaireQualiteRepository;
 use App\Table\QuestionnaireQualiteTableType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/administratif/questionnaire/qualite', name: 'sadm_questionnaire_qualite_')]
-#[Route('/administration/questionnaire/qualite', name: 'adm_questionnaire_qualite_')]
 class QuestionnaireQualiteController extends BaseController
 {
-    #[Route('/', name: 'index', methods: ['GET', 'POST'], options: ['expose' => true])]
+    #[Route('/', name: 'index', options: ['expose' => true], methods: ['GET', 'POST'])]
     public function index(Request $request): Response
     {
         $table = $this->createTable(QuestionnaireQualiteTableType::class);
-
         $table->handleRequest($request);
 
         if ($table->isCallback()) {
@@ -35,14 +32,20 @@ class QuestionnaireQualiteController extends BaseController
         }
 
         return $this->render('questionnaire/administration/questionnaire_qualite/index.html.twig', [
-            'table' => $table
+            'table' => $table,
         ]);
     }
 
-    #[Route('/new', name: 'new', methods: ['GET', 'POST'])]
-    public function new(Request $request): Response
-    {
+    #[Route('/new/{semestre}', name: 'new', methods: ['GET', 'POST'])]
+    public function new(
+        Request $request,
+        ?Semestre $semestre = null
+    ): Response {
         $questionnaireQualite = new QuestionnaireQualite();
+        if (null !== $semestre) {
+            $questionnaireQualite->setSemestre($semestre);
+        }
+
         $form = $this->createForm(QuestionnaireQualiteType::class, $questionnaireQualite);
         $form->handleRequest($request);
 
@@ -52,7 +55,7 @@ class QuestionnaireQualiteController extends BaseController
             $entityManager->flush();
 
             //todo: ou sadm
-            return $this->redirectToRoute('adm_questionnaire_qualite_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('sadm_questionnaire_qualite_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('questionnaire/administration/questionnaire_qualite/new.html.twig', [
@@ -78,7 +81,7 @@ class QuestionnaireQualiteController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-//todo ou sadm
+            //todo ou sadm
             return $this->redirectToRoute('adm_questionnaire_qualite_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -97,7 +100,7 @@ class QuestionnaireQualiteController extends BaseController
             $entityManager->flush();
         }
 
-//ou sadm
+        //ou sadm
         return $this->redirectToRoute('adm_questionnaire_qualite_index', [], Response::HTTP_SEE_OTHER);
     }
 

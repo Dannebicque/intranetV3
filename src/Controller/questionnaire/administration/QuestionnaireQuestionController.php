@@ -4,28 +4,37 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/questionnaire/administration/QuestionnaireQuestionController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/10/2021 11:53
+ * @lastUpdate 03/11/2021 17:38
  */
 
 namespace App\Controller\questionnaire\administration;
 
+use App\Components\Questionnaire\QuestionnaireRegistry;
 use App\Controller\BaseController;
+use App\Entity\Constantes;
 use App\Entity\QuestionnaireQuestion;
-use App\Form\QuestionnaireQuestionType;
-use App\Repository\QuestionnaireQuestionRepository;
+use App\Entity\QuestionnaireQuestionTag;
+use App\Repository\QuestionnaireQuestionTagRepository;
 use App\Table\QuestionnaireQuestionTableType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/administratif/questionnaire/question', name: 'sadm_questionnaire_question_')]
-#[Route('/administration/questionnaire/question', name: 'adm_questionnaire_question_')]
 class QuestionnaireQuestionController extends BaseController
 {
-    #[Route('/', name: 'index', methods: ['GET', 'POST'], options: ['expose' => true])]
-    public function index(Request $request): Response
+    private QuestionnaireQuestionTagRepository $questionnaireQuestionTagRepository;
+
+    public function __construct(QuestionnaireQuestionTagRepository $questionnaireQuestionTagRepository)
     {
-        $table = $this->createTable(QuestionnaireQuestionTableType::class);
+        $this->questionnaireQuestionTagRepository = $questionnaireQuestionTagRepository;
+    }
+
+    #[Route('/', name: 'index', methods: ['GET', 'POST'], options: ['expose' => true])]
+    public function index(Request $request, QuestionnaireRegistry $questionnaireRegistry): Response
+    {
+        $table = $this->createTable(QuestionnaireQuestionTableType::class,
+            ['typeQuestions' => $questionnaireRegistry->getAllTypeQuestions()]);
 
         $table->handleRequest($request);
 
@@ -34,29 +43,48 @@ class QuestionnaireQuestionController extends BaseController
         }
 
         return $this->render('questionnaire/administration/questionnaire_question/index.html.twig', [
-            'table' => $table
+            'table' => $table,
         ]);
     }
 
     #[Route('/new', name: 'new', methods: ['GET', 'POST'])]
-    public function new(Request $request): Response
+    public function new(Request $request, QuestionnaireRegistry $questionnaireRegistry): Response
     {
-        $questionnaireQuestion = new QuestionnaireQuestion($this->getUser());
-        $form = $this->createForm(QuestionnaireQuestionType::class, $questionnaireQuestion);
-        $form->handleRequest($request);
+        if ($request->isMethod('POST')) {
+            $questionnaireQuestion = new QuestionnaireQuestion($this->getUser());
+            $typeQuestion = $questionnaireRegistry->getTypeQuestion($request->query->get('typeQuestion'));
+            $questionnaireQuestion->setType($typeQuestion::class);
+            $form = $this->createForm($typeQuestion::FORM, $questionnaireQuestion);
+            $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($questionnaireQuestion);
-            $entityManager->flush();
+            if ($form->isSubmitted()) {
+                $this->entityManager->persist($questionnaireQuestion);
+                $this->entityManager->flush();
+                $this->traitementTags($questionnaireQuestion,
+                    $request->request->get($request->request->keys()[0])['newQuestionnaireQuestionTags']);
+                $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'questionnaire_question.add.success.flash');
 
-//todo: sadm
-            return $this->redirectToRoute('adm_questionnaire_question_index', [], Response::HTTP_SEE_OTHER);
+                return $this->redirectToRoute('sadm_questionnaire_question_index', [], Response::HTTP_SEE_OTHER);
+            }
         }
 
         return $this->renderForm('questionnaire/administration/questionnaire_question/new.html.twig', [
-            'questionnaire_question' => $questionnaireQuestion,
-            'form' => $form,
+            'typeQuestions' => $questionnaireRegistry->getTypeQuestions(),
+        ]);
+    }
+
+    #[Route('/type_question', name: 'type_question', methods: ['GET', 'POST'])]
+    public function typeQuestion(Request $request, QuestionnaireRegistry $questionnaireRegistry): Response
+    {
+        $type = $request->query->get('q');
+        $typeQuestion = $questionnaireRegistry->getTypeQuestion($type);
+        $question = new QuestionnaireQuestion($this->getConnectedUser());
+        $form = $this->createForm($typeQuestion::FORM, $question, [
+            'action' => $this->generateUrl('sadm_questionnaire_question_new', ['typeQuestion' => $typeQuestion::class]),
+        ]);
+
+        return $this->render('questionnaire/administration/questionnaire_question/typeQuestion.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 
@@ -69,16 +97,27 @@ class QuestionnaireQuestionController extends BaseController
     }
 
     #[Route('/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, QuestionnaireQuestion $questionnaireQuestion): Response
-    {
-        $form = $this->createForm(QuestionnaireQuestionType::class, $questionnaireQuestion);
+    public function edit(
+        Request $request,
+        QuestionnaireRegistry $questionnaireRegistry,
+        QuestionnaireQuestion $questionnaireQuestion
+    ): Response {
+        $typeQuestion = $questionnaireRegistry->getTypeQuestion($questionnaireQuestion->getType());
+        $form = $this->createForm($typeQuestion::FORM, $questionnaireQuestion);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+        if ($form->isSubmitted()) {
+            $this->entityManager->flush();
+            $this->traitementTags($questionnaireQuestion,
+                $request->request->get($request->request->keys()[0])['newQuestionnaireQuestionTags']);
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'questionnaire_question.edit.success.flash');
 
-//todo: sadm
-            return $this->redirectToRoute('adm_questionnaire_question_index', [], Response::HTTP_SEE_OTHER);
+            if (null !== $request->request->get('btn_update')) {
+                return $this->redirectToRoute('sadm_questionnaire_question_index', [], Response::HTTP_SEE_OTHER);
+            }
+
+            return $this->redirectToRoute('sadm_questionnaire_question_edit', ['id' => $questionnaireQuestion->getId()],
+                Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('questionnaire/administration/questionnaire_question/edit.html.twig', [
@@ -87,18 +126,65 @@ class QuestionnaireQuestionController extends BaseController
         ]);
     }
 
-    #[Route('/{id}', name: 'delete', methods: ['POST'])]
-    public function delete(Request $request, QuestionnaireQuestion $questionnaireQuestion): Response
-    {
-        if ($this->isCsrfTokenValid('delete' . $questionnaireQuestion->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($questionnaireQuestion);
-            $entityManager->flush();
+    #[Route('/{id}/duplicate', name: 'duplicate', methods: ['GET', 'POST'])]
+    public function duplicate(
+        QuestionnaireQuestion $questionnaireQuestion
+    ): Response {
+        $newQuestionnaireQuestion = clone $questionnaireQuestion;
+
+        foreach ($questionnaireQuestion->getQuizzReponses() as $quizzReponse) {
+            $newQuizzReponse = clone $quizzReponse;
+            $newQuestionnaireQuestion->addQuizzReponse($newQuizzReponse);
+            $newQuizzReponse->setQuestion($newQuestionnaireQuestion);
+            $this->entityManager->persist($newQuizzReponse);
         }
 
-//todo: sadm
-        return $this->redirectToRoute('adm_questionnaire_question_index', [], Response::HTTP_SEE_OTHER);
+        $this->entityManager->persist($newQuestionnaireQuestion);
+        $this->entityManager->flush();
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'questionnaire_question.duplicate.success.flash');
+
+        return $this->redirectToRoute('sadm_questionnaire_question_edit', ['id' => $newQuestionnaireQuestion->getId()]);
     }
 
-    //todo: duplicate export
+    #[Route('/{id}', name: 'delete', methods: ['POST', 'DELETE'])]
+    public function delete(Request $request, QuestionnaireQuestion $questionnaireQuestion): Response
+    {
+        $id = $questionnaireQuestion->getId();
+        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+            foreach ($questionnaireQuestion->getQuizzReponses() as $quizzReponse) {
+                $this->entityManager->remove($quizzReponse);
+            }
+            $this->entityManager->remove($questionnaireQuestion);
+            $this->entityManager->flush();
+            $this->addFlashBag(
+                Constantes::FLASHBAG_SUCCESS,
+                'questionnaire_question.delete.success.flash'
+            );
+
+            return $this->json($id, Response::HTTP_OK);
+        }
+
+        $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'questionnaire_question.delete.error.flash');
+
+        return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
+
+    //todo:  export
+    private function traitementTags(QuestionnaireQuestion $questionnaireQuestion, string $tags)
+    {
+        $tabTags = explode(';', $tags);
+        foreach ($tabTags as $tag) {
+            $tag = mb_strtolower(trim($tag));
+            $t = $this->questionnaireQuestionTagRepository->findOneBy(['libelle' => $tag]);
+            if (null === $t) {
+                $t = new QuestionnaireQuestionTag();
+                $t->setLibelle($tag);
+                $this->entityManager->persist($t);
+            }
+
+            $questionnaireQuestion->addQuestionnaireQuestionTag($t);
+            $t->addQuestion($questionnaireQuestion);
+        }
+        $this->entityManager->flush();
+    }
 }
