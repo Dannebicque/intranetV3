@@ -129,6 +129,11 @@ initiales: Initiales
 j: Jour
 Jour: Jour
 label:
+  questionnaireQuestionTags: 'Tag(s) pour la question'
+  newQuestionnaireQuestionTags: 'Ajouter des tags manquant'
+  question.help: 'Texte d''aide de la question'
+  obligatoire: 'Question obligatoire'
+  question_parent: 'Question parent (optionnel)'
   absence_justficatif.A: 'Accepté'
   absence_justficatif.D: 'Déposé, en attente'
   absence_justficatif.R: 'Refusé'
@@ -421,6 +426,8 @@ label:
   texte_date: 'Description de l''événement'
   texte: Texte
   texteExplication: 'Texte d''explication'
+  texteDebut: 'Texte de début du questionnaire'
+  texteFin: 'Texte de fin du questionnaire'
   texteLibre: 'Commentaire libre'
   titre: 'Titre'
   titre_date: 'Titre de l''événement'
