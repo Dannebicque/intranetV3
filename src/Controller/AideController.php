@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/AideController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/10/2021 12:38
+ * @lastUpdate 02/11/2021 12:28
  */
 
 namespace App\Controller;
@@ -70,6 +70,9 @@ class AideController extends AbstractController
             'super_administration_type_diplome' => '05-super_administration/107-type_diplome',
             'super_administration_type_hrs' => '05-super_administration/108-type_hrs',
             'super_administration_ufr' => '05-super_administration/106-ufr',
+            'administration_questionnaire_question' => '',
+            'administration_questionnaire_section' => '',
+            'administration_questionnaire_questionnaire' => '',
         ];
         if (array_key_exists($sujet, $tab)) {
             return $this->redirect(self::BASE_URL_AIDE . $tab[$sujet]);
