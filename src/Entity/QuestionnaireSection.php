@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/QuestionnaireSection.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/08/2021 18:10
+ * @lastUpdate 03/11/2021 17:38
  */
 
 namespace App\Entity;
@@ -36,7 +36,8 @@ class QuestionnaireSection extends BaseEntity
     private ?string $textExplicatif;
 
     /**
-     * @ORM\OneToMany(targetEntity="QuestionnaireSectionQuestion", mappedBy="section", fetch="EAGER")
+     * @ORM\OneToMany(targetEntity="QuestionnaireSectionQuestion", mappedBy="section", fetch="EAGER",
+     *                                                             cascade={"persist", "remove"})
      * @ORM\OrderBy({"ordre"="ASC"})
      */
     private Collection $qualiteSectionQuestions;
@@ -47,14 +48,19 @@ class QuestionnaireSection extends BaseEntity
     private Collection $qualiteQuestionnaireSections;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
-    private ?string $config;
+    private ?string $config = null;
 
     /**
      * @ORM\Column(type="string", length=10, nullable=true)
      */
     private string $typeCalcul;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private ?string $typeSection;
 
     public function __construct()
     {
@@ -149,14 +155,14 @@ class QuestionnaireSection extends BaseEntity
         return $this;
     }
 
-    public function getConfig(): ?string
+    public function getConfig(): ?array
     {
-        return $this->config;
+        return json_decode($this->config, true);
     }
 
-    public function setConfig(?string $config): self
+    public function setConfig(array $config = []): self
     {
-        $this->config = $config;
+        $this->config = json_encode($config);
 
         return $this;
     }
@@ -173,8 +179,15 @@ class QuestionnaireSection extends BaseEntity
         return $this;
     }
 
-    public function getType()
+    public function getTypeSection(): ?string
     {
-        return 'App\Components\Questionnaire\Section\QuestionsSection'; //todo: pour les tests...
+        return $this->typeSection;
+    }
+
+    public function setTypeSection(?string $typeSection): self
+    {
+        $this->typeSection = $typeSection;
+
+        return $this;
     }
 }

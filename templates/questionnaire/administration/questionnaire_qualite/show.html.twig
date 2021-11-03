@@ -1,62 +1,122 @@
-{% extends 'base.html.twig' %}
+{% extends (is_granted('ROLE_ADMINISTRATIF')) ? 'base-super_admin.html.twig' : 'base.html.twig' %}
 
-{% block title %}QuestionnaireQualite{% endblock %}
+{% block header %}
+    {{ 'adm.questionnaire.qualite.show.heading'|trans }}
+{% endblock %}
 
-{% block body %}
-    <h1>QuestionnaireQualite</h1>
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('sadm_questionnaire_qualite_delete', {id: questionnaire_qualite.id}) }}" data-csrf="{{ csrf_token('delete' ~ questionnaire_qualite.id) }}"
+               class="btn btn-danger btn-sm btn-float supprimer" title="{{ 'atitle.supprimer'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
+            ><i class="{{ iconDelete }}"></i></a>
+            <a href="{{ path('sadm_questionnaire_qualite_edit', {id:questionnaire_qualite.id}) }}" class="btn
+                btn-warning btn-sm btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom"
+               title="{{ 'atitle.modifier'|trans }}"><i class="{{ iconEdit }}"></i></a>
+            <a href="{{ path('sadm_questionnaire_qualite_index') }}" class="btn
+                btn-primary btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom"
+               title="Retour aux questionnaires"><i class="fas fa-arrow-left"></i></a>
+        </div>
+    </div>
+{% endblock %}
 
-    <table class="table">
-        <tbody>
-        <tr>
-            <th>Id</th>
-            <td>{{ questionnaire_qualite.id }}</td>
-        </tr>
-        <tr>
-            <th>Libelle</th>
-            <td>{{ questionnaire_qualite.libelle }}</td>
-        </tr>
-        <tr>
-            <th>DateOuverture</th>
-            <td>{{ questionnaire_qualite.dateOuverture ? questionnaire_qualite.dateOuverture|date('Y-m-d H:i:s') : '' }}</td>
-        </tr>
-        <tr>
-            <th>DateFermeture</th>
-            <td>{{ questionnaire_qualite.dateFermeture ? questionnaire_qualite.dateFermeture|date('Y-m-d H:i:s') : '' }}</td>
-        </tr>
-        <tr>
-            <th>Titre</th>
-            <td>{{ questionnaire_qualite.titre }}</td>
-        </tr>
-        <tr>
-            <th>TexteExplication</th>
-            <td>{{ questionnaire_qualite.texteExplication }}</td>
-        </tr>
-        <tr>
-            <th>TexteDebut</th>
-            <td>{{ questionnaire_qualite.texteDebut }}</td>
-        </tr>
-        <tr>
-            <th>TextFin</th>
-            <td>{{ questionnaire_qualite.textFin }}</td>
-        </tr>
-        <tr>
-            <th>Uuid</th>
-            <td>{{ questionnaire_qualite.uuid }}</td>
-        </tr>
-        <tr>
-            <th>Created</th>
-            <td>{{ questionnaire_qualite.created ? questionnaire_qualite.created|date('Y-m-d H:i:s') : '' }}</td>
-        </tr>
-        <tr>
-            <th>Updated</th>
-            <td>{{ questionnaire_qualite.updated ? questionnaire_qualite.updated|date('Y-m-d H:i:s') : '' }}</td>
-        </tr>
-        </tbody>
-    </table>
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">
+            {{ 'adm.questionnaire.qualite.show.heading'|trans }}
+        </h4>
+        <div class="card-body">
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th>Libellé</th>
+                    <td>{{ questionnaire_qualite.libelle }}</td>
+                </tr>
+                <tr>
+                    <th>Titre</th>
+                    <td>{{ questionnaire_qualite.titre }}</td>
+                </tr>
+                <tr>
+                    <th>TextExplicatif</th>
+                    <td>{{ questionnaire_qualite.texteExplication }}</td>
+                </tr>
+                <tr>
+                    <th>texteDebut</th>
+                    <td>{{ questionnaire_qualite.texteDebut }}</td>
+                </tr>
+                <tr>
+                    <th>textFin</th>
+                    <td>{{ questionnaire_qualite.textFin }}</td>
+                </tr>
+                <tr>
+                    <th>Semestre</th>
+                    <td>{{ questionnaire_qualite.semestre != null ? questionnaire_qualite.Semestre.display : 'non.defini'|trans }}</td>
+                </tr>
+                <tr>
+                    <th>Created</th>
+                    <td>{{ questionnaire_qualite.created ? questionnaire_qualite.created|format_datetime('short',
+                            'short') :
+                        'non.defini'|trans }}</td>
+                </tr>
+                <tr>
+                    <th>Updated</th>
+                    <td>{{ questionnaire_qualite.updated ? questionnaire_qualite.updated|format_datetime('short',
+                            'short') :
+                        'non.defini'|trans }}</td>
+                </tr>
 
-    <a href="{{ path('questionnaire_qualite_index') }}">back to list</a>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-    <a href="{{ path('questionnaire_qualite_edit', {'id': questionnaire_qualite.id}) }}">edit</a>
+    <div class="card">
+        <h4 class="card-title">
+            {{ 'adm.questionnaire.qualite.show.sections.heading'|trans }}
+        </h4>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Ordre</th>
+                    <th>Section</th>
+                    <th>Configuration</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for question in questionnaire_qualite.sections %}
+                    <tr>
+                        <td>{{ question.ordre }}</td>
+                        <td>{{ question.section.titre }}</td>
+                        <td>{% if question.section.config == '' %}Pas de config{% else %}{{ question.section.config }}
+                                <button class="btn btn-primary"><i class="fas fa-gears"></i></button>{% endif %}</td>
+                        <td>
+                            <button class="btn btn-danger"><i class="fas fa-remove"></i></button>
+                            <button class="btn btn-info"><i class="fas fa-eye-slash"></i></button>
+                            {% if not loop.first %}
+                                <button class="btn btn-success"><i class="fas fa-up"></i></button>
+                            {% endif %}
+                            {% if not loop.last %}
+                                <button class="btn btn-success"><i class="fas fa-down"></i></button>
+                            {% endif %}
 
-    {{ include('questionnaire_qualite/_delete_form.html.twig') }}
+                        </td>
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <td colspan="3">
+                        <label for="">ajouter une section</label>
+                        <select class="form-select">
+                            <option value=""></option>
+                        </select>
+                    </td>
+                    <td>
+                        <button class="btn btn-success"><i class="fas fa-plus"></i> Ajouter</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 {% endblock %}

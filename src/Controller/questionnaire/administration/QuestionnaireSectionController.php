@@ -4,22 +4,23 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/questionnaire/administration/QuestionnaireSectionController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/10/2021 11:53
+ * @lastUpdate 03/11/2021 17:38
  */
 
 namespace App\Controller\questionnaire\administration;
 
+use App\Components\Questionnaire\QuestionnaireRegistry;
 use App\Controller\BaseController;
+use App\Entity\Constantes;
 use App\Entity\QuestionnaireSection;
 use App\Form\QuestionnaireSectionType;
-use App\Repository\QuestionnaireSectionRepository;
 use App\Table\QuestionnaireSectionTableType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/administratif/questionnaire/section', name: 'sadm_questionnaire_section_')]
-#[Route('/administration/questionnaire/section', name: 'adm_questionnaire_section_')]
+//#[Route('/administration/questionnaire/section', name: 'adm_questionnaire_section_')]
 class QuestionnaireSectionController extends BaseController
 {
     #[Route('/', name: 'index', methods: ['GET', 'POST'], options: ['expose' => true])]
@@ -34,24 +35,32 @@ class QuestionnaireSectionController extends BaseController
         }
 
         return $this->render('questionnaire/administration/questionnaire_section/index.html.twig', [
-            'table' => $table
+            'table' => $table,
         ]);
     }
 
     #[Route('/new', name: 'new', methods: ['GET', 'POST'])]
-    public function new(Request $request): Response
-    {
+    public function new(
+        QuestionnaireRegistry $questionnaireRegistry,
+        Request $request
+    ): Response {
         $questionnaireSection = new QuestionnaireSection();
-        $form = $this->createForm(QuestionnaireSectionType::class, $questionnaireSection);
+        $form = $this->createForm(QuestionnaireSectionType::class, $questionnaireSection, [
+            'listeSection' => $questionnaireRegistry->getAllTypeSections(),
+            'listeSectionAdapter' => $questionnaireRegistry->getAllSectionsAdapter(),
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($questionnaireSection);
-            $entityManager->flush();
+            $questionnaireSection->setConfig([
+                'sectionAdapter' => $request->request->get('questionnaire_section')['sectionAdapter'],
+                'valeurs' => []
+            ]);
+            $this->entityManager->persist($questionnaireSection);
+            $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'questionnaire.administration.section.add.success.flash');
 
-//todo: sadm
-            return $this->redirectToRoute('adm_questionnaire_section_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('sadm_questionnaire_section_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('questionnaire/administration/questionnaire_section/new.html.twig', [
@@ -69,15 +78,19 @@ class QuestionnaireSectionController extends BaseController
     }
 
     #[Route('/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, QuestionnaireSection $questionnaireSection): Response
-    {
-        $form = $this->createForm(QuestionnaireSectionType::class, $questionnaireSection);
+    public function edit(
+        QuestionnaireRegistry $questionnaireRegistry,
+        Request $request,
+        QuestionnaireSection $questionnaireSection
+    ): Response {
+        $form = $this->createForm(QuestionnaireSectionType::class, $questionnaireSection,
+            ['listeSection' => $questionnaireRegistry->getAllSectionsAdapter()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-//todo: sadm
+            //todo: sadm
             return $this->redirectToRoute('adm_questionnaire_section_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -87,17 +100,28 @@ class QuestionnaireSectionController extends BaseController
         ]);
     }
 
-    #[Route('/{id}', name: 'delete', methods: ['POST'])]
+    #[Route('/{id}', name: 'delete', methods: ['POST', 'DELETE'])]
     public function delete(Request $request, QuestionnaireSection $questionnaireSection): Response
     {
         if ($this->isCsrfTokenValid('delete' . $questionnaireSection->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($questionnaireSection);
-            $entityManager->flush();
-        }
+            $id = $questionnaireSection->getId();
+            foreach ($questionnaireSection->getQualiteSectionQuestions() as $questionnaire) {
+                $this->entityManager->remove($questionnaire);
+            }
+            foreach ($questionnaireSection->getQualiteQuestionnaireSections() as $questionnaire) {
+                $this->entityManager->remove($questionnaire);
+            }
+            $this->entityManager->remove($questionnaireSection);
+            $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS,
+                'questionnaire.administration.section.delete.success.flash');
 
-//todo: sadm
-        return $this->redirectToRoute('adm_questionnaire_section_index', [], Response::HTTP_SEE_OTHER);
+            return $this->json($id, Response::HTTP_OK);
+        }
+        $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'questionnaire.administration.section.delete.error.flash');
+
+        return $this->redirectToRoute('sadm_questionnaire_section_index', [], Response::HTTP_SEE_OTHER);
     }
+
     //todo: duplicate, export
 }

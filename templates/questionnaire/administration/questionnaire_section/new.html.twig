@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends (is_granted('ROLE_ADMINISTRATIF')) ? 'base-super_admin.html.twig' : 'base.html.twig' %}
 
 {% block header %}
     {{ 'adm.questionnaire.section.new.heading'|trans }}
@@ -6,7 +6,11 @@
 
 {% block headeractions %}
     <div class="header-action">
-        {{ include('composants/adm-buttons-new.html.twig', {elt:'questionnaire_section'}) }}
+        <div class="buttons">
+            <a href="{{ path('sadm_questionnaire_section_index') }}" class="btn
+                btn-primary btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom"
+               title="Retour aux questionnaires"><i class="fas fa-arrow-left"></i></a>
+        </div>
     </div>
 {% endblock %}
 
@@ -19,4 +23,12 @@
             {{ include('composants/adm-form.html.twig') }}
         </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('questionnaire') }}
+    <script defer>
+      document.querySelector('#fieldset_questionnaire_section_sectionAdapter').style.display = 'none'
+    </script>
 {% endblock %}

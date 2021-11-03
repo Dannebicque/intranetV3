@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/QuestionnaireSectionTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/10/2021 11:51
+ * @lastUpdate 03/11/2021 17:38
  */
 
 namespace App\Table;
@@ -17,12 +17,10 @@ use App\Components\Table\TableType;
 use App\Components\Widget\Type\ButtonDropdownType;
 use App\Components\Widget\Type\LinkType;
 use App\Components\Widget\Type\RowDeleteLinkType;
-use App\Components\Widget\Type\RowDuplicateLinkType;
 use App\Components\Widget\Type\RowEditLinkType;
 use App\Components\Widget\Type\RowShowLinkType;
 use App\Components\Widget\WidgetBuilder;
 use App\Entity\QuestionnaireSection;
-use App\Form\Type\DatePickerType;
 use App\Form\Type\SearchType;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -40,12 +38,6 @@ class QuestionnaireSectionTableType extends TableType
     public function buildTable(TableBuilder $builder, array $options): void
     {
         $builder->addFilter('search', SearchType::class);
-        $builder->addFilter('from', DatePickerType::class, [
-            'input_prefix_text' => 'Du',
-        ]);
-        $builder->addFilter('to', DatePickerType::class, [
-            'input_prefix_text' => 'Au',
-        ]);
 
 //        // Export button (use to export data)
         $builder->addWidget('export', ButtonDropdownType::class, [
@@ -72,28 +64,32 @@ class QuestionnaireSectionTableType extends TableType
 
         $builder->addColumn('links', WidgetColumnType::class, [
             'build' => function(WidgetBuilder $builder, QuestionnaireSection $s) {
-                $builder->add('duplicate', RowDuplicateLinkType::class, [
-                    'route' => 'adm_questionnaire_section_duplicate',
-                    'route_params' => ['id' => $s->getId()],
-                    'xhr' => false,
-                ]);
+//                $builder->add('duplicate', RowDuplicateLinkType::class, [
+//                    'route' => 'adm_questionnaire_section_duplicate',
+//                    'route_params' => ['id' => $s->getId()],
+//                    'xhr' => false,
+//                ]);
                 $builder->add('show', RowShowLinkType::class, [
-                    'route' => 'adm_questionnaire_section_show',
+                    'route' => 'sadm_questionnaire_section_show',
                     'route_params' => [
                         'id' => $s->getId(),
                     ],
                     'xhr' => false,
                 ]);
                 $builder->add('edit', RowEditLinkType::class, [
-                    'route' => 'adm_questionnaire_section_edit',
+                    'route' => 'sadm_questionnaire_section_edit',
                     'route_params' => [
                         'id' => $s->getId(),
                     ],
                     'xhr' => false,
                 ]);
                 $builder->add('delete', RowDeleteLinkType::class, [
+                    'route' => 'sadm_questionnaire_section_delete',
+                    'route_params' => [
+                        'id' => $s->getId(),
+                    ],
                     'attr' => [
-                        'data-href' => 'adm_questionnaire_section_delete',
+                        'data-href' => 'sadm_questionnaire_section_delete',
                         'data-uuid' => $s->getId(),
                         'data-csrf' => $this->csrfToken->getToken('delete' . $s->getId()),
                     ],

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/enquete/EnqueteCreationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 09:03
+ * @lastUpdate 03/11/2021 09:29
  */
 
 namespace App\Controller\superAdministration\enquete;
@@ -26,7 +26,6 @@ class EnqueteCreationController extends BaseController
 {
     /**
      * @Route("/wizard-1/{action}/{semestre}/{qualiteQuestionnaire}", name="administratif_enquete_wizard_1")
-     *
      */
     public function wizard1(
         Request $request,
@@ -35,17 +34,19 @@ class EnqueteCreationController extends BaseController
         QuestionnaireQualite $qualiteQuestionnaire = null
     ): Response {
         if (null === $qualiteQuestionnaire) {
-            $qualiteQuestionnaire = new QuestionnaireQualite($semestre);
+            $qualiteQuestionnaire = new QuestionnaireQualite();
+            $qualiteQuestionnaire->setSemestre($semestre);
+            //todo: encore utilisé ? A déprécier ?
         }
 
         $form = $this->createForm(QualiteQuestionnaireType::class, $qualiteQuestionnaire, [
-            'attr'   => [
+            'attr' => [
                 'data-provide' => 'validation',
             ],
             'action' => $this->generateUrl('administratif_enquete_wizard_1',
                 [
-                    'semestre'             => $semestre->getId(),
-                    'action'               => $action,
+                    'semestre' => $semestre->getId(),
+                    'action' => $action,
                     'qualiteQuestionnaire' => $qualiteQuestionnaire->getId(),
                 ]),
         ]);
@@ -72,7 +73,6 @@ class EnqueteCreationController extends BaseController
 
     /**
      * @Route("/wizard-2/{action}/{semestre}/{qualiteQuestionnaire}", name="administratif_enquete_wizard_2")
-     *
      */
     public function wizard2(
         QuestionnaireQuestionRepository $quizzQuestionRepository,
@@ -83,7 +83,7 @@ class EnqueteCreationController extends BaseController
 
         return $this->render('super-administration/enqueteCreation/wizard2.html.twig', [
             'questionnaire' => $qualiteQuestionnaire,
-            'questions'     => $questions,
+            'questions' => $questions,
         ]);
     }
 }
