@@ -334,6 +334,24 @@ adm:
     new.heading: 'Création d''une période de projet tutoré'
     show.heading: 'Détails d''une période de projet tutoré'
   projet: Projets
+  questionnaire:
+    qualite:
+      index.heading: 'Liste des questionnaires qualité'
+      new.heading: 'Création d''un questionnaire qualité'
+      edit.heading: 'Modification d''un questionnaire qualité'
+      show.heading: 'Détail d''un questionnaire qualité'
+      show.sections.heading: 'Liste des sections du questionnaire'
+    question:
+      index.heading: 'Liste des questions'
+      new.heading: 'Création d''une question'
+      edit.heading: 'Modification d''une question'
+      show.heading: 'Détail d''une question'
+    section:
+      index.heading: 'Liste des sections'
+      new.heading: 'Création d''une section'
+      edit.heading: 'Modification d''une section'
+      show.heading: 'Détail d''une section'
+      show.questions.heading: 'Liste des questions de la section'
   salle_examen:
     index.heading: 'Liste des salles d''évaluations'
     modification.heading: 'Modifier une salle d''examen'
