@@ -4,17 +4,23 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Questionnaire/TypeQuestion/TypeOuiNon.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/08/2021 08:00
+ * @lastUpdate 28/10/2021 19:08
  */
 
 namespace App\Components\Questionnaire\TypeQuestion;
 
 
+use App\Components\Questionnaire\Form\QuestionnaireQuestionTypeYesNo;
 use App\Components\Questionnaire\Reponse;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TypeOuiNon extends TypeQcu
 {
+    public const LABEL = 'type_oui_non';
+    public const BADGE = 'bg-purple';
+    public const ICON = 'fas fa-toggle-on';
+    public const FORM = QuestionnaireQuestionTypeYesNo::class;
+
     public function configureOptions(OptionsResolver $resolver)
     {
         parent::configureOptions($resolver);

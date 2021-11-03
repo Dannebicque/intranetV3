@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Questionnaire/Section/QuestionsSection.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/08/2021 19:27
+ * @lastUpdate 03/11/2021 12:20
  */
 
 namespace App\Components\Questionnaire\Section;
@@ -12,6 +12,6 @@ namespace App\Components\Questionnaire\Section;
 
 class QuestionsSection extends AbstractSection
 {
-    public array $config = [];
+    public const LABEL = 'question.section';
     public string $type_calcul = '';
 }

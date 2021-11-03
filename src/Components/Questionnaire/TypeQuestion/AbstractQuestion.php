@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Questionnaire/TypeQuestion/AbstractQuestion.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/08/2021 08:00
+ * @lastUpdate 28/10/2021 07:43
  */
 
 namespace App\Components\Questionnaire\TypeQuestion;
@@ -17,6 +17,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 abstract class AbstractQuestion
 {
+    public const LABEL = 'non_defini'; //ajouter constante de couleur et de nom de template ?
+    public const BADGE = 'non_defini'; //ajouter constante de couleur et de nom de template ?
+    public const ICON = 'non_defini'; //ajouter constante de couleur et de nom de template ?
+
     public string $libelle;
     public ?string $help;
     public int $id;
