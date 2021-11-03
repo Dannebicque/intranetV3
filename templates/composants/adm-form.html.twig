@@ -2,10 +2,12 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
 
-<button class="btn btn-success">{{ button_label|default('label.save'|trans) }}</button>
+<button class="btn btn-success"><i class="fas fa-floppy-disk"></i> {{ button_label|default('label.save'|trans) }}
+</button>
 
 {% if button_label is defined and button_label == 'update'|trans %}
-    <button class="btn btn-success" value="redirect_to_index" name="btn_update">{{ 'button_update_index'|trans }}</button>
+    <button class="btn btn-success" value="redirect_to_index" name="btn_update">
+        <i class="fas fa-floppy-disk-circle-arrow-right"></i> {{ 'button_update_index'|trans }}</button>
 {% endif %}
 <div class="alert alert-info mt-2">
     Tous les champs avec un <span class="text-red">*</span> sont obligatoires

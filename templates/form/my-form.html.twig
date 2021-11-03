@@ -1,4 +1,16 @@
 {% use "bootstrap_5_layout.html.twig" %}
+{% trans_default_domain 'form' %}
+
+{% macro collection_item(form) %}
+    <div data-form-collection-target="field">
+        {{ form_widget(form) }}
+        <button data-action="form-collection#removeItem" class="btn btn-danger">
+            <i class="{{ iconDelete }}"></i> Retirer un élément
+        </button>
+    </div>
+{% endmacro %}
+
+{% import _self as formMacros %}
 
 {% block choice_widget_expanded -%}
     <div {{ block('widget_container_attributes') }}>
@@ -84,6 +96,23 @@
     {{ block('form_widget') }}
 {% endblock collection_widget %}
 
+{% block collection_stimulus_widget %}
+    {% import _self as formMacros %}
+    <div data-controller="form-collection"
+         {% if max_items is defined %}data-form-collection-max-items-value="{{ max_items }}"{% endif %}
+         data-form-collection-prototype-value="{{ formMacros.collection_item(form.vars.prototype)|json_encode }}">
+        <div data-form-collection-target="fields">
+            {% do form.setRendered %}
+            {% for field in form %}
+                {{ formMacros.collection_item(field) }}
+            {% endfor %}
+        </div>
+        <button data-action="form-collection#addItem" class="btn btn-success">
+            <i class="{{ iconAdd }}"></i> Ajouter un élément
+        </button>
+    </div>
+{% endblock collection_stimulus_widget %}
+
 {%- block form_widget_simple -%}
     {% if input_prefix is defined or input_suffix is defined %}
         <div class="input-group mb-3">
@@ -152,4 +181,27 @@
         {%- endif -%}
     {%- endif -%}
 {%- endblock form_label %}
+
+{%- block form_row -%}
+    {%- if compound is defined and compound -%}
+        {%- set element = 'fieldset' -%}
+        {%- set element_id = 'fieldset_'~id -%}
+    {%- endif -%}
+    {%- set widget_attr = {} -%}
+    {%- if help is not empty -%}
+        {%- set widget_attr = {attr: {'aria-describedby': id ~"_help"}} -%}
+    {%- endif -%}
+    {%- set row_class = row_class|default(row_attr.class|default('mb-3')|trim) -%}
+    <{{ element|default('div') }}{% with {attr: row_attr|merge({class: row_class})} %}{{ block('attributes') }}{% endwith %} {% if element is defined and element == 'fieldset' %}id="{{ element_id }}"{% endif %}>
+    {%- if 'form-floating' in row_class -%}
+        {{- form_widget(form, widget_attr) -}}
+        {{- form_label(form) -}}
+    {%- else -%}
+        {{- form_label(form) -}}
+        {{- form_widget(form, widget_attr) -}}
+    {%- endif -%}
+    {{- form_help(form) -}}
+    {{- form_errors(form) -}}
+    </{{ element|default('div') }}>
+{%- endblock form_row %}
 
