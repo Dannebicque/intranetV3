@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtExportController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/10/2021 16:42
+ * @lastUpdate 03/11/2021 17:40
  */
 
 namespace App\Controller\administration;
@@ -73,7 +73,7 @@ class EdtExportController extends BaseController
         return $this->render('administration/edtExport/exportScript.html.twig', [
             'semestres' => $semestres,
             'groupes' => $groupes,
-            'semaines' => $semaines
+            'semaines' => $semaines,
         ]);
     }
 
@@ -93,7 +93,7 @@ class EdtExportController extends BaseController
         $semaine = $request->request->get('semaine');
         $calendrier = $calendrierRepository->findOneBy([
             'semaineFormation' => $semaine,
-            'anneeUniversitaire' => $this->getAnneeUniversitaire()->getId()
+            'anneeUniversitaire' => $this->getAnneeUniversitaire()->getId(),
         ]);
 
 //        $tabProf = [
@@ -231,7 +231,6 @@ class EdtExportController extends BaseController
             }
         }
 
-
         foreach ($pl as $p) {
             if (null !== $p->getIntervenant()) {
                 $codeprof = $p->getIntervenant()->getNumeroHarpege();
@@ -256,8 +255,8 @@ class EdtExportController extends BaseController
                 $codeMatiere = $matieres[$p->getTypeIdMatiere()]->codeElement;
                 $code[mb_strtoupper($p->getType())][$p->getGroupe()] .= './ajouter ' . $p->getJour() . ' ' . Constantes::TAB_HEURES[$p->getDebut()] . ' ' . Constantes::TAB_HEURES[$p->getFin()] . ' ' . $codeprof . ' ' . $tabSalles[$p->getSalle()] . ' ' . $tabMatieres[$semestre->getLibelle()][$codeMatiere] . ' ' . $tabType[mb_strtoupper($p->getType())] . "\n";
             }
-            if ('H018' === $p->getSalle()) // array_key_exists($p->getIntervenant()->getNumeroHarpege(), $tabProf))
-            {
+            if (0 !== $p->getIdMatiere() && 'H018' === $p->getSalle()) { // array_key_exists($p->getIntervenant()->getNumeroHarpege(), $tabProf))
+                $codeMatiere = $matieres[$p->getTypeIdMatiere()]->codeElement;
                 $code[mb_strtoupper($p->getType())][$p->getGroupe()] .= './ajouterh018 ' . $p->getJour() . ' ' . Constantes::TAB_HEURES[$p->getDebut()] . ' ' . Constantes::TAB_HEURES[$p->getFin()] . ' ' . $codeprof . ' 0 ' . $tabMatieres[$semestre->getLibelle()][$codeMatiere] . ' ' . $tabType[mb_strtoupper($p->getType())] . "\n";
             }
         }
