@@ -131,4 +131,15 @@ class SemestreRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+    public function findSemestresActifBuilder()
+    {
+        return $this->createQueryBuilder('s')
+            ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
+            ->innerJoin(Diplome::class, 'd', 'WITH', 'd.id = a.diplome')
+            ->where('s.actif = true')
+            ->orderBy('d.sigle', 'ASC')
+            ->addOrderBy('s.ordreLmd', 'ASC')
+            ;
+    }
 }
