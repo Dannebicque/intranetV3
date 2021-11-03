@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Questionnaire/Section/StartSection.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/08/2021 17:48
+ * @lastUpdate 03/11/2021 12:20
  */
 
 namespace App\Components\Questionnaire\Section;
@@ -12,5 +12,6 @@ namespace App\Components\Questionnaire\Section;
 
 class StartSection extends AbstractSection
 {
+    public const LABEL = 'start.section';
 
 }

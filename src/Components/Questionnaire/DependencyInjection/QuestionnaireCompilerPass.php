@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Questionnaire/DependencyInjection/QuestionnaireCompilerPass.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/10/2021 10:42
+ * @lastUpdate 03/11/2021 17:35
  */
 
 namespace App\Components\Questionnaire\DependencyInjection;
@@ -25,6 +25,8 @@ class QuestionnaireCompilerPass implements CompilerPassInterface
         $registry = $container->getDefinition(QuestionnaireRegistry::class);
         $this->addToRegistry($container, $registry, QuestionnaireRegistry::TAG_TYPE_QUESTION, 'registerTypeQuestion');
         $this->addToRegistry($container, $registry, QuestionnaireRegistry::TAG_TYPE_SECTION, 'registerTypeSection');
+        $this->addToRegistry($container, $registry, QuestionnaireRegistry::TAG_TYPE_SECTION_ADAPTER,
+            'registerSectionAdapter');
 
     }
 
