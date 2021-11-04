@@ -360,7 +360,7 @@ thead {
 
 .myedit:after {
   content: '\f044';
-  font-family: FontAwesome, serif;
+  font-family: "Font Awesome 6 Pro", serif;
   font-style: normal;
   font-weight: normal;
   text-decoration: inherit;
@@ -604,17 +604,17 @@ thead {
 //todo: encore utile ?
 .datepicker .next::before {
   content: "\f101";
-  font-family: FontAwesome, serif;
+  font-family: "Font Awesome 6 Pro", serif;
 }
 
 .datepicker .prev::before {
   content: "\f100";
-  font-family: FontAwesome, serif;
+  font-family: "Font Awesome 6 Pro", serif;
 }
 
 .custom-checkbox .custom-control-input:checked ~ .custom-control-label::after {
   content: "\f00c";
-  font-family: FontAwesome, serif;
+  font-family: "Font Awesome 6 Pro", serif;
 }
 
 #sidebar_departement {
