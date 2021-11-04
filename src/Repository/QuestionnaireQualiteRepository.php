@@ -40,4 +40,15 @@ class QuestionnaireQualiteRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findInDate(\DateTime $date)
+    {
+        return $this->createQueryBuilder('q')
+            ->innerJoin(Semestre::class, 's', 'with', 's.id=q.semestre')
+            ->innerJoin(Annee::class, 'a', 'with', 'a.id = s.annee')
+            ->where('q.dateOuverture = :date')
+            ->setParameter('date', $date)
+            ->getQuery()
+            ->getResult();
+    }
 }
