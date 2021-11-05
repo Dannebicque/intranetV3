@@ -58,6 +58,7 @@ class RattrapageController extends BaseController
 
         if ($form->isSubmitted()) {
             $rattrapage->setAnneeUniversitaire($this->getAnneeUniversitaire());
+            $rattrapage->setSemestre($this->getEtudiantSemestre());
             $rattrapage->setTypeMatiere(ToolsMatiere::getType($request->request->get('rattrapage')['typeIdMatiere']));
             $rattrapage->setIdMatiere(ToolsMatiere::getId($request->request->get('rattrapage')['typeIdMatiere']));
             $this->entityManager->persist($rattrapage);
