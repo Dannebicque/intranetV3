@@ -52,7 +52,7 @@ class DocumentController extends BaseController
     #[Route('/ajax/document/{typedocument}', name: 'document_ajax', options: ['expose' => true])]
     public function documents(MyDocument $myDocument, DocumentRepository $documentRepository, $typedocument): Response
     {
-        $documents = $documentRepository->findByTypeDocument($typedocument);
+        $documents = $documentRepository->findByTypeDocument($typedocument, $this->isEtudiant());
         $idDocuments = $myDocument->idMesDocumentsFavoris($this->getConnectedUser());
 
         return $this->render('document/documents.html.twig', [

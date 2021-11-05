@@ -9,6 +9,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Constantes;
 use App\Entity\Departement;
 use App\Entity\Document;
 use App\Entity\TypeDocument;
@@ -31,13 +32,19 @@ class DocumentRepository extends ServiceEntityRepository
         parent::__construct($registry, Document::class);
     }
 
-    public function findByTypeDocument($type)
+    public function findByTypeDocument($type, bool $isEtudiant = true)
     {
-        return $this->createQueryBuilder('d')
+        $query = $this->createQueryBuilder('d')
             ->where('d.typeDocument = :type')
             ->setParameter('type', $type)
-            ->orderBy('d.libelle', 'DESC')
-            ->getQuery()
+            ->orderBy('d.libelle', 'DESC');
+
+        if (true === $isEtudiant) {
+            $query->andWhere('d.typeDestinataire = :typeDestinataire')
+                ->setParameter('typeDestinataire', Constantes::TYPE_DESTINATAIRE_ETUDIANT);
+        }
+
+        return $query->getQuery()
             ->getResult();
     }
 

@@ -11,6 +11,7 @@ namespace App\Repository;
 
 use App\Entity\Article;
 use App\Entity\ArticleCategorie;
+use App\Entity\Constantes;
 use App\Entity\Departement;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
@@ -41,7 +42,6 @@ class ArticleRepository extends ServiceEntityRepository
     }
 
     /**
-     *
      * @throws NonUniqueResultException
      */
     public function findOneBySlug($slug)
@@ -54,15 +54,22 @@ class ArticleRepository extends ServiceEntityRepository
             ;
     }
 
-    public function findByTypeDepartementBuilder($type, $departement): QueryBuilder
+    public function findByTypeDepartementBuilder($type, $departement, bool $isEtudiant = true): QueryBuilder
     {
-        return $this->createQueryBuilder('a')
+        $query = $this->createQueryBuilder('a')
             ->innerJoin(ArticleCategorie::class, 'c', 'WITH', 'c.id = a.categorie')
             ->where('c.id = :idType')
             ->andWhere('c.departement = :departement')
             ->setParameter('idType', $type)
             ->setParameter('departement', $departement)
             ->orderBy('a.updated', 'DESC');
+
+        if (true === $isEtudiant) {
+            $query->andWhere('d.typeDestinataire = :typeDestinataire')
+                ->setParameter('typeDestinataire', Constantes::TYPE_DESTINATAIRE_ETUDIANT);
+        }
+
+        return $query;
     }
 
     /**

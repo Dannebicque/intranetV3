@@ -16,6 +16,7 @@ class Constantes
 {
 
     public const TYPE_DESTINATAIRE_PERMANENT = 'PERM';
+    public const TYPE_DESTINATAIRE_PERSONNEL = 'PERS';
     public const TYPE_DESTINATAIRE_ETUDIANT = 'ETU';
     public const TYPE_DESTINATAIRE_TOUS = 'ALL';
     public const TYPE_DESTINATAIRE_LISTE =
