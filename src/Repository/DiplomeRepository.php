@@ -67,4 +67,13 @@ class DiplomeRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findAllWithCelcat()
+    {
+        return $this->createQueryBuilder('d')
+            ->where('d.optUpdateCelcat = 1')
+            ->andWhere('d.codeCelcatDepartement <> 0')
+            ->getQuery()
+            ->getResult();
+    }
 }
