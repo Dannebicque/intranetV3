@@ -41,8 +41,10 @@ class ExportController extends AbstractController
     {
         $matiere = $request->request->get('matiere');
         $typeMatiere = $request->request->get('typeMatiere');
-        if (0 !== $matiere) {
+        if (0 !== (int)$matiere) {
             $mat = $typeMatiereManager->getMatiere($matiere, $typeMatiere);
+        } else {
+            $mat = null;
         }
 
         $exportTypeDocument = $request->request->get('exportTypeDocument');

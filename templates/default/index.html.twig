@@ -37,8 +37,7 @@
                         <div class="card-header-actions" style="">
                             <a href="{{ path('administration_actualite_new') }}" class="btn btn-sm btn-primary"
                                title="{{ 'atitle.deposer_nouvelle_actualite'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom"><i
-                                        class="{{ iconAdd }}"></i><span class="sr-only">{{ 'atitle
-                                                                                                                                                                .deposer_nouvelle_actualite'|trans }}</span></a>
+                                        class="{{ iconAdd }}"></i><span class="sr-only">{{ 'atitle.deposer_nouvelle_actualite'|trans }}</span></a>
                         </div>
                     {% endif %}
                 </header>
@@ -179,8 +178,8 @@
                                 </div>
                                 {% if not is_granted("ROLE_ETUDIANT") %}
                                     <div class="row">
-                                        <div class="col-sm-12 col-md-3">
-                                            <div class="btn-group" style="width:100%;">
+                                        <div class="col-sm-12 col-md-2">
+                                            <div class="dropdown d-grid d-block">
                                                 <button class="btn btn-primary dropdown-toggle"
                                                         data-bs-toggle="dropdown">Format PDF
                                                 </button>
@@ -194,8 +193,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-sm-12 col-md-3">
-                                            <div class="btn-group" style="width:100%;">
+                                        <div class="col-sm-12 col-md-2">
+                                            <div class="dropdown d-grid d-block">
                                                 <button class="btn btn-primary dropdown-toggle"
                                                         data-bs-toggle="dropdown">Format Excel
                                                 </button>
@@ -210,8 +209,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-sm-12 col-md-3">
-                                            <div class="btn-group" style="width:100%;">
+                                        <div class="col-sm-12 col-md-2">
+                                            <div class="dropdown d-grid d-block">
                                                 <button class="btn btn-primary dropdown-toggle"
                                                         data-bs-toggle="dropdown">Format Csv
                                                 </button>
@@ -226,8 +225,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-sm-12 col-md-3">
-                                            <div class="btn-group" style="width:100%;">
+                                        <div class="col-sm-12 col-md-2">
+                                            <div class="dropdown d-grid d-block">
                                                 <button class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
                                                     Trombinoscope (PDF)
                                                 </button>
@@ -243,6 +242,20 @@
                                                     {% endfor %}
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="col-sm-12 col-md-3 ms-4 d-grid d-block">
+                                            <button data-provide="modaler"
+                                                    data-url="{{ path('api_export_document_personnalise',
+                                                        {semestre:semestre.id}) }}"
+                                                    data-size="lg"
+                                                    data-confirm-text="{{ 'fermer'|trans }}"
+                                                    class="btn btn-primary"
+                                                    data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                    title="{{ 'atitle.export'|trans }}"
+                                                    data-title="{{ 'export.heading'|trans }}"
+                                            >
+                                               Export personnalisé
+                                            </button>
                                         </div>
                                     </div>
                                 {% endif %}
