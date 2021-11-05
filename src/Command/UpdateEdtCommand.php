@@ -13,32 +13,63 @@
 
 namespace App\Command;
 
+use App\Classes\Celcat\MyCelcat;
+use App\Repository\CalendrierRepository;
+use App\Repository\DiplomeRepository;
+use App\Repository\GroupeRepository;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+#[AsCommand(
+    name: 'app:update-edt',
+    description: 'Synchronisation de l\'emploi du temps avec Celcat',
+)]
 class UpdateEdtCommand extends Command
 {
-    protected static $defaultName = 'app:update-edt';
+    protected DiplomeRepository $diplomeRepository;
+    protected MyCelcat $myCelcat;
+    private CalendrierRepository $calendrierRepository;
+    private GroupeRepository $groupeRepository;
+
+    public function __construct(DiplomeRepository $diplomeRepository, MyCelcat $myCelcat, CalendrierRepository $calendrierRepository, GroupeRepository $groupeRepository)
+    {
+        parent::__construct();
+        $this->diplomeRepository = $diplomeRepository;
+        $this->myCelcat = $myCelcat;
+        $this->calendrierRepository = $calendrierRepository;
+        $this->groupeRepository = $groupeRepository;
+    }
 
     protected function configure()
     {
-        $this
-            ->setDescription('Synchronisation de l\'emploi du temps avec Celcat')
-            ->addOption('option1', null, InputOption::VALUE_NONE, 'Option description');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
 
-        if ($input->getOption('option1')) {
-            // ...
+        $diplomes = $this->diplomeRepository->findAllWithCelcat();
+        $calendriers = $this->calendrierRepository->findBy(['anneeUniversitaire' => 4]); //todo: en argument
+        $tCalendrier = [];
+        foreach ($calendriers as $calendrier) {
+            $tCalendrier[$calendrier->getSemaineFormation()] = $calendrier->getDateLundi();
         }
 
-        $io->success('You have a new command! Now make it your own! Pass --help to see your options.');
+        $groupes = $this->groupeRepository->findAll();
+        $tgroupes = [];
+        foreach ($groupes as $groupe) {
+            $tgroupes[$groupe->getCodeApogee()] = $groupe->getTypeGroupe()?->getSemestre();
+        }
+
+        foreach ($diplomes as $diplome) {
+            $io->text('Mise à jour du diplome '.$diplome->getLibelle());
+            $this->myCelcat->updateEventsDiplome($diplome, $tCalendrier, $tgroupes);
+        }
+
+        $io->success('Emplois du temps synchronisés avec Celcat');
 
         return 0;
     }
