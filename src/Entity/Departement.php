@@ -76,6 +76,7 @@ class Departement extends BaseEntity
     private ?string $description;
     /**
      * @ORM\Column(type="boolean")
+     * @deprecated
      */
     private bool $optUpdateCelcat = false;
     /**
@@ -296,11 +297,18 @@ class Departement extends BaseEntity
         $this->description = $description;
     }
 
+    /**
+     * @return bool
+     * @deprecated
+     */
     public function isOptUpdateCelcat(): bool
     {
         return $this->optUpdateCelcat;
     }
 
+    /**
+     * @deprecated
+     */
     public function setOptUpdateCelcat(bool $optUpdateCelcat): void
     {
         $this->optUpdateCelcat = $optUpdateCelcat;
