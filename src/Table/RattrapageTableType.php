@@ -72,11 +72,11 @@ class RattrapageTableType extends TableType
                 'Refusée' => Rattrapage::DEMANDE_REFUSEE,
             ],
             'required' => false,
-            'placeholder' => 'Etat de la demande'
+            'placeholder' => 'Etat de la demande',
         ]);
         $builder->addFilter('groupe', EntityType::class, [
             'class' => Groupe::class,
-            'query_builder' => function(GroupeRepository $groupeRepository) {
+            'query_builder' => function (GroupeRepository $groupeRepository) {
                 return $groupeRepository->findBySemestreBuilder($this->semestre);
             },
             'choice_label' => 'display',
@@ -144,7 +144,7 @@ class RattrapageTableType extends TableType
                 switch ($s->getEtatDemande()) {
                     case Rattrapage::DEMANDE_ACCEPTEE:
                         $builder->add('demande.acceptee', ButtonType::class, [
-                            'class' => 'btn btn-outline btn-success rattrapage-accepte me-1 bx_' . $s->getUuidString(),
+                            'class' => 'btn btn-outline btn-success rattrapage-accepte me-1 bx_'.$s->getUuidString(),
                             'title' => 'demande.acceptee',
                             'text' => 'demande.acceptee',
                             'translation_domain' => 'messages',
@@ -152,7 +152,7 @@ class RattrapageTableType extends TableType
                         break;
                     case Rattrapage::DEMANDE_REFUSEE:
                         $builder->add('demande.refusee', ButtonType::class, [
-                            'class' => 'btn btn-outline btn-danger rattrapage-accepte me-1 bx_' . $s->getUuidString(),
+                            'class' => 'btn btn-outline btn-danger rattrapage-accepte me-1 bx_'.$s->getUuidString(),
                             'title' => 'demande.refusee',
                             'text' => 'demande.refusee',
                             'translation_domain' => 'messages',
@@ -160,13 +160,13 @@ class RattrapageTableType extends TableType
                         break;
                     case Rattrapage::DEMANDE_FAITE:
                         $builder->add('accepter', ButtonType::class, [
-                            'class' => 'btn btn-outline btn-success rattrapage-accepte me-1 bx_' . $s->getUuidString(),
+                            'class' => 'btn btn-outline btn-success rattrapage-accepte me-1 bx_'.$s->getUuidString(),
                             'title' => 'Accepter la demande',
                             'icon' => 'fas fa-check',
                             'attr' => ['data-rattrapage' => $s->getUuidString()],
                         ]);
                         $builder->add('refuser', ButtonType::class, [
-                            'class' => 'btn btn-outline btn-danger rattrapage-refuse me-1 bx_' . $s->getUuidString(),
+                            'class' => 'btn btn-outline btn-danger rattrapage-refuse me-1 bx_'.$s->getUuidString(),
                             'title' => 'Refuser la demande',
                             'icon' => 'fas fa-ban',
                             'attr' => ['data-rattrapage' => $s->getUuidString()],

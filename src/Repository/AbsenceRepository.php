@@ -81,7 +81,6 @@ class AbsenceRepository extends ServiceEntityRepository
     public function findBySemestreRattrapage(Semestre $semestre, AnneeUniversitaire $anneeCourante): array
     {
         $absences = $this->getBySemestre($semestre, $anneeCourante);
-
         $trattrapages = [];
 
         /** @var Absence $absence */
@@ -109,11 +108,10 @@ class AbsenceRepository extends ServiceEntityRepository
     public function getBySemestre(Semestre $semestre, AnneeUniversitaire $anneeCourante)
     {
         return $this->createQueryBuilder('a')
-            ->innerJoin(AnneeUniversitaire::class, 'u', 'WITH', 'a.anneeUniversitaire = u.id')
             ->where('a.semestre = :semestre')
-            ->andWhere('u.annee = :annee')
+            ->andWhere('a.anneeUniversitaire = :annee')
             ->setParameter('semestre', $semestre->getId())
-            ->setParameter('annee', $anneeCourante->getAnnee())
+            ->setParameter('annee', $anneeCourante->getId())
             ->orderBy('a.dateHeure', 'DESC')
             ->getQuery()
             ->getResult();
