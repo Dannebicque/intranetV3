@@ -10,6 +10,7 @@
 namespace App\Table;
 
 use App\Components\Table\Adapter\EntityAdapter;
+use App\Components\Table\Column\BadgeColumnType;
 use App\Components\Table\Column\DateColumnType;
 use App\Components\Table\Column\PropertyColumnType;
 use App\Components\Table\Column\WidgetColumnType;
@@ -85,6 +86,8 @@ class DocumentTableType extends TableType
             ['label' => 'table.type_fichier', 'translation_domain' => 'messages']);
         $builder->addColumn('typeDocument', CategorieArticleColumnType::class,
             ['label' => 'table.categorie', 'translation_domain' => 'messages']);
+        $builder->addColumn('typeDestinataire', BadgeColumnType::class,
+            ['label' => 'table.typeDestinataire', 'translation_domain' => 'messages']);
         $builder->addColumn('semestres', SemestreColumnType::class,
             ['label' => 'table.semestres', 'translation_domain' => 'messages']);
         $builder->addColumn('updated', DateColumnType::class, [

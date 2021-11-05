@@ -10,6 +10,7 @@
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
+use App\Entity\Traits\TypeDestinataireTrait;
 use App\Entity\Traits\UuidTrait;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -31,6 +32,8 @@ class Document extends BaseEntity
 {
     use UuidTrait;
     use LifeCycleTrait;
+    use TypeDestinataireTrait;
+
 
     public const TYPE_DOCUMENT = [
         'application/vnd.openxmlformats-officedocument.presentationml.presentation' => 'Prés. PPT',
@@ -100,10 +103,6 @@ class Document extends BaseEntity
      */
     private Collection $documentsFavoris;
 
-    /**
-     * @ORM\Column(type="string", length=5)
-     */
-    private ?string $typeDestinataire = 'ETU'; //todo: a gérer
 
     /**
      * Document constructor.
@@ -258,17 +257,5 @@ class Document extends BaseEntity
     public function tailleKo(): float
     {
         return $this->taille / 1024;
-    }
-
-    public function getTypeDestinataire(): ?string
-    {
-        return $this->typeDestinataire;
-    }
-
-    public function setTypeDestinataire(string $typeDestinataire): self
-    {
-        $this->typeDestinataire = $typeDestinataire;
-
-        return $this;
     }
 }

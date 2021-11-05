@@ -10,6 +10,7 @@
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
+use App\Entity\Traits\TypeDestinataireTrait;
 use Carbon\CarbonInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -23,6 +24,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 class Date extends BaseEntity
 {
     use LifeCycleTrait;
+    use TypeDestinataireTrait;
 
     public const TYPE_STAGE = 'type.stage';
     public const TYPE_SOUTENANCE = 'type.soutenance';
@@ -44,7 +46,9 @@ class Date extends BaseEntity
         self::TYPE_VACANCES => 'bg-info',
     ];
 
+    /** @deprecated */
     public const QUI_ETUDIANT = 'E';
+    /** @deprecated */
     public const QUI_PERSONNEL = 'P';
 
     /**
@@ -98,8 +102,9 @@ class Date extends BaseEntity
     /**
      * @ORM\Column(type="string", length=1)
      * @Groups({"date_administration"})
+     * @deprecated
      */
-    private string $qui;
+    private string $qui = '-';
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Departement")
@@ -220,11 +225,13 @@ class Date extends BaseEntity
         $this->allday = $allday;
     }
 
+    /** @deprecated */
     public function getQui(): ?string
     {
         return $this->qui;
     }
 
+    /** @deprecated */
     public function setQui(string $qui): void
     {
         $this->qui = $qui;

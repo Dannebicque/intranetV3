@@ -12,6 +12,7 @@ namespace App\Form;
 use App\Entity\Date;
 use App\Entity\Semestre;
 use App\Form\Type\DateRangeType;
+use App\Form\Type\TypeDestinataireType;
 use App\Form\Type\YesNoType;
 use App\Repository\SemestreRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -38,29 +39,26 @@ class DatesType extends AbstractType
 
         $builder
             ->add('libelle', TextType::class, [
-                'label' => 'titre_date',
+                'label' => 'label.titre_date',
+            ])
+            ->add('typeDestinataire', TypeDestinataireType::class, [
+                'label' => 'label.typedestinataire',
             ])
             ->add('texte', TextType::class, [
-                'label' => 'texte_date',
+                'label' => 'label.texte_date',
                 'required' => false,
             ])
-            ->add('dateRange', DateRangeType::class, ['label' => 'dateRange', 'mapped' => false, 'required' => true])
-            ->add('heureDebut', TimeType::class, ['widget' => 'single_text', 'label' => 'heure_debut'])
-            ->add('heureFin', TimeType::class, ['widget' => 'single_text', 'label' => 'heure_fin'])
+            ->add('dateRange', DateRangeType::class, ['label' => 'label.date_evenement', 'mapped' => false, 'required' => true])
+            ->add('heureDebut', TimeType::class, ['widget' => 'single_text', 'label' => 'label.heure_debut'])
+            ->add('heureFin', TimeType::class, ['widget' => 'single_text', 'label' => 'label.heure_fin'])
             ->add('lieu', TextType::class, [
-                'label' => 'lieu_date',
+                'label' => 'label.lieu_date',
             ])
             ->add('allday', YesNoType::class, [
                 'label' => 'allday',
             ])
-            ->add('qui', ChoiceType::class, [
-                'label' => 'qui_concerne',
-                'expanded' => true,
-                'multiple' => false,
-                'choices' => [Date::QUI_ETUDIANT => Date::QUI_ETUDIANT, Date::QUI_PERSONNEL => Date::QUI_PERSONNEL],
-            ])
             ->add('type', ChoiceType::class, [
-                'label' => 'typedate',
+                'label' => 'label.typedate',
                 'expanded' => true,
                 'multiple' => false,
                 'choices' => [
@@ -75,28 +73,28 @@ class DatesType extends AbstractType
             ])
             ->add('semestres', EntityType::class, [
                 'class' => Semestre::class,
-                'label' => 'semestres_date',
+                'label' => 'label.semestres_date',
                 'choice_label' => 'libelle',
-                'query_builder' => function(SemestreRepository $semestreRepository) {
+                'query_builder' => function (SemestreRepository $semestreRepository) {
                     return $semestreRepository->findByDepartementBuilder($this->departement);
                 },
                 'required' => true,
                 'expanded' => true,
                 'multiple' => true,
             ])
-            ->addEventListener(FormEvents::POST_SUBMIT, static function(FormEvent $event) {
+            ->addEventListener(FormEvents::POST_SUBMIT, static function (FormEvent $event) {
                 $date = $event->getData();
                 $form = $event->getForm();
                 $dateRange = $form->get('dateRange')->getData();
                 $date->setDateDebut($dateRange['from_date']);
                 $date->setDateFin($dateRange['to_date']);
             })
-            ->addEventListener(FormEvents::PRE_SET_DATA, static function(FormEvent $event) {
+            ->addEventListener(FormEvents::PRE_SET_DATA, static function (FormEvent $event) {
                 $date = $event->getData();
                 $form = $event->getForm();
                 $form->add('dateRange', DateRangeType::class, [
-                    'label'     => 'dateRange',
-                    'mapped'    => false,
+                    'label' => 'dateRange',
+                    'mapped' => false,
                     'date_data' => ['from' => $date->getDateDebut(), 'to' => $date->getDateFin()],
                 ]);
             });
@@ -108,8 +106,8 @@ class DatesType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class'         => Date::class,
-            'departement'        => null,
+            'data_class' => Date::class,
+            'departement' => null,
             'translation_domain' => 'form',
         ]);
     }
