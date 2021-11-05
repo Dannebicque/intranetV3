@@ -94,22 +94,6 @@
 
                             <div class="media">
                                 <div class="media-body">
-                                    <p><strong>{{ 'table.opt_update_celcat'|trans }}</strong></p>
-                                    <p>{{ 'help.opt_update_celcat'|trans }}</p>
-                                </div>
-                                <label class="switch" for="optUpdateCelcat">
-                                    <input type="checkbox" {{ user_data.departement.optUpdateCelcat ? 'checked': '' }}
-                                           class="changeOption"
-                                           name="optUpdateCelcat"
-                                           id="optUpdateCelcat"
-                                           data-type="departement"
-                                           data-id="{{ user_data.departement.id }}">
-                                    <span class="switch-indicator"></span>
-                                </label>
-                            </div>
-
-                            <div class="media">
-                                <div class="media-body">
                                     <p><strong>{{ 'table.opt_messagerie'|trans }}</strong></p>
                                     <p>{{ 'help.opt_messagerie'|trans }}</p>
                                 </div>
@@ -125,8 +109,6 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-
-
                             <div class="media">
                                 <div class="media-body">
                                     <p><strong>{{ 'table.opt_agence'|trans }}</strong></p>
@@ -430,6 +412,21 @@
                                                             {% if diplome.optResponsableQualite != null and diplome.optResponsableQualite.id == personnel.id %}selected{% endif %}>{{ personnel.display }}</option>
                                                 {% endfor %}
                                             </select>
+                                        </div>
+                                        <div class="media">
+                                            <div class="media-body">
+                                                <p><strong>{{ 'table.opt_update_celcat'|trans }}</strong></p>
+                                                <p>{{ 'help.opt_update_celcat'|trans }}</p>
+                                            </div>
+                                            <label class="switch" for="optUpdateCelcat">
+                                                <input type="checkbox" {{ diplome.optUpdateCelcat ? 'checked': '' }}
+                                                       class="changeOption"
+                                                       name="optUpdateCelcat"
+                                                       id="optUpdateCelcat"
+                                                       data-type="diplome"
+                                                       data-id="{{ diplome.id }}">
+                                                <span class="switch-indicator"></span>
+                                            </label>
                                         </div>
                                     </div>
                                 </div>

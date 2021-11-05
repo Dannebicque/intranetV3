@@ -76,8 +76,8 @@ class EdtController extends BaseController
 
     public function personnelSemestre(Semestre $semestre, $semaine = 0): Response
     {
-        if (null !== $this->dataUserSession->getDepartement() && $this->dataUserSession->getDepartement()->isOptUpdateCelcat()) {
-            $this->myEdtCelcat->initSemestre($semaine, $semestre, $this->dataUserSession->getAnneeUniversitaire());
+        if (null !== $semestre->getDiplome() && $semestre->getDiplome()->isOptUpdateCelcat()) {
+            $this->myEdtCelcat->initSemestre($semaine, $semestre, $this->getAnneeUniversitaire());
 
             return $this->render('edt/_semestre.html.twig', [
                 'edt' => $this->myEdtCelcat,
@@ -88,7 +88,7 @@ class EdtController extends BaseController
             ]);
         }
 
-        $this->myEdtIntranet->initSemestre($semaine, $semestre, $this->dataUserSession->getAnneeUniversitaire());
+        $this->myEdtIntranet->initSemestre($semaine, $semestre, $this->getAnneeUniversitaire());
 
         return $this->render('edt/_semestre.html.twig', [
             'edt' => $this->myEdtIntranet,
@@ -107,9 +107,9 @@ class EdtController extends BaseController
         $matieres = $this->typeMatiereManager->tableauMatieresSemestreCodeApogee($this->getConnectedUser()->getSemestre());
 
         if (null !== $this->getConnectedUser()) {
-            if (null !== $this->dataUserSession->getDepartement() && $this->dataUserSession->getDepartement()->isOptUpdateCelcat()) {
+            if (null !== $this->getConnectedUser()->getDiplome() && $this->getConnectedUser()->getDiplome()->isOptUpdateCelcat()) {
                 $this->myEdtCelcat->initEtudiant($this->getConnectedUser(),
-                    $this->dataUserSession->getAnneeUniversitaire(), $semaine, $matieres);
+                    $this->getAnneeUniversitaire(), $semaine, $matieres);
 
                 return $this->render('edt/_etudiant2.html.twig', [
                     'edt' => $this->myEdtCelcat,
@@ -117,7 +117,7 @@ class EdtController extends BaseController
                 ]);
             }
             $this->myEdtIntranet->initEtudiant($this->getConnectedUser(),
-                $this->dataUserSession->getAnneeUniversitaire(),
+                $this->getAnneeUniversitaire(),
                 $semaine);
 
             return $this->render('edt/_etudiant.html.twig', [
@@ -198,12 +198,12 @@ class EdtController extends BaseController
         if ($semaine !== (int)date('W') && $semaine !== ((int)date('W') + 1)) {
             return $this->redirect($this->generateUrl('erreur_666'));
         }
-        if (null !== $this->dataUserSession->getDepartement() && $this->dataUserSession->getDepartement()->isOptUpdateCelcat()) {
+        if (null !== $this->getConnectedUser()->getDiplome() && $this->getConnectedUser()->getDiplome()->isOptUpdateCelcat()) {
             $edt = $this->myEdtCelcat->initEtudiant($this->getConnectedUser(),
-                $this->dataUserSession->getAnneeUniversitaire(), $semaine);
+                $this->getAnneeUniversitaire(), $semaine);
         } else {
             $edt = $this->myEdtIntranet->initEtudiant($this->getConnectedUser(),
-                $this->dataUserSession->getAnneeUniversitaire(), $semaine);
+                $this->getAnneeUniversitaire(), $semaine);
         }
 
         return $myPDF->generePdf('pdf/edt/edtPersoSemaine.html.twig',

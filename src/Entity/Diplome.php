@@ -163,6 +163,11 @@ class Diplome extends BaseEntity implements Serializable
      */
     private Collection $apcParcours;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private ?bool $optUpdateCelcat = false;
+
 
     public function __construct(Departement $departement)
     {
@@ -705,6 +710,18 @@ class Diplome extends BaseEntity implements Serializable
         if ($this->apcParcours->removeElement($apcParcour) && $apcParcour->getDiplome() === $this) {
             $apcParcour->setDiplome(null);
         }
+
+        return $this;
+    }
+
+    public function isOptUpdateCelcat(): ?bool
+    {
+        return $this->optUpdateCelcat;
+    }
+
+    public function setOptUpdateCelcat(bool $optUpdateCelcat): self
+    {
+        $this->optUpdateCelcat = $optUpdateCelcat;
 
         return $this;
     }
