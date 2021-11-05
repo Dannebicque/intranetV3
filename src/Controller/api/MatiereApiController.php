@@ -69,6 +69,16 @@ class MatiereApiController extends BaseController
     }
 
     /**
+     * @Route("/document/export/personnalise/{semestre}", name="api_export_document_personnalise", options={"expose":true})
+     */
+    public function exportDocumentPersonnalise(Semestre $semestre): Response
+    {
+        return $this->render('api/matiere/document/export.html.twig', [
+            'typeGroupes' => $semestre->getTypeGroupes(),
+        ]);
+    }
+
+    /**
      * @Route("/document/export/{matiere}/{typeMatiere}", name="api_export_document_matiere", options={"expose":true})
      */
     public function exportDocument(int $matiere, string $typeMatiere): Response
@@ -80,6 +90,8 @@ class MatiereApiController extends BaseController
             'typeGroupes' => $mat->semestre->getTypeGroupes(),
         ]);
     }
+
+
 
     /**
      * Returns a JSON string with the neighborhoods of the City with the providen id.

@@ -112,8 +112,9 @@
         {% endfor %}
     </div>
         <br/>
-        <input type="hidden" name="matiere" value="{{ matiere.id }}">
-        <input type="hidden" name="typeMatiere" value="{{ matiere.typeMatiere }}">
+
+        <input type="hidden" name="matiere" value="{% if matiere is defined %}{{ matiere.id }}{% else %}0{% endif %}">
+        <input type="hidden" name="typeMatiere" value="{% if matiere is defined %}{{ matiere.typeMatiere }}{% endif %}">
         <div class="col-md-12 col-sm-12">
             <button class="btn btn-block btn-primary" type="submit">{{ 'generer.fichier'|trans }}</button>
         </div>
