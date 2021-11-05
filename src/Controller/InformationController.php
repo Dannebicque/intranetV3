@@ -48,7 +48,7 @@ class InformationController extends BaseController
         int $page = 1
     ): Response {
         $articles = $articleRepository->findByTypeDepartementBuilder($categorie->getId(),
-            $this->dataUserSession->getDepartement());
+            $this->getDepartement(), $this->isEtudiant());
 
         $myPagination->calculPagination(
             $articles,

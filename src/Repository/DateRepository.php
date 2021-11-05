@@ -10,6 +10,7 @@
 namespace App\Repository;
 
 use App\Entity\Annee;
+use App\Entity\Constantes;
 use App\Entity\Date;
 use App\Entity\Departement;
 use App\Entity\Diplome;
@@ -37,7 +38,7 @@ class DateRepository extends ServiceEntityRepository
         parent::__construct($registry, Date::class);
     }
 
-    public function findByDepartementBuilder(Departement $departement, $nbResult = 0)
+    public function findByDepartementBuilder(Departement $departement, int $nbResult = 0, bool $isEtudiant = true)
     {
         $query = $this->createQueryBuilder('d')
             ->where('d.departement = :departement')
@@ -47,12 +48,17 @@ class DateRepository extends ServiceEntityRepository
             $query->setMaxResults($nbResult);
         }
 
+        if ($isEtudiant === true) {
+            $query->andWhere('d.typeDestinataire = :typeDestinataire')
+                ->setParameter('typeDestinataire', 'ETU');
+        }
+
         return $query;
     }
 
-    public function findByDepartement(Departement $departement, $nbResult = 0)
+    public function findByDepartement(Departement $departement, int $nbResult = 0, bool $isEtudiant = true)
     {
-        return $this->findByDepartementBuilder($departement, $nbResult)->getQuery()->getResult();
+        return $this->findByDepartementBuilder($departement, $nbResult, $isEtudiant)->getQuery()->getResult();
     }
 
     public function findByDepartementArray(Departement $departement, $nbResult = 0)
@@ -62,10 +68,9 @@ class DateRepository extends ServiceEntityRepository
     }
 
     /**
-     *
      * @throws Exception
      */
-    public function findByDepartementPlanning($departement, $annee): array
+    public function findByDepartementPlanning($departement, $annee, bool $isEtudiant = true): array
     {
         $datedebut = new DateTime($annee . '-09-01');
         $annee2 = $annee + 1;
@@ -81,8 +86,14 @@ class DateRepository extends ServiceEntityRepository
             ->setParameter('departement', $departement)
             ->setParameter('datedebut', $datedebut)
             ->setParameter('datefin', $datefin)
-            ->orderBy('d.dateDebut', 'ASC')
-            ->getQuery()
+            ->orderBy('d.dateDebut', 'ASC');
+
+        if ($isEtudiant === true) {
+            $query->andWhere('d.typeDestinataire = :typeDestinataire')
+                ->setParameter('typeDestinataire', Constantes::TYPE_DESTINATAIRE_ETUDIANT);
+        }
+
+        $query->getQuery()
             ->getResult();
 
         $tab = [];
@@ -102,13 +113,14 @@ class DateRepository extends ServiceEntityRepository
         return $tab;
     }
 
-
     public function findByDateForEtudiant(Etudiant $etudiant, int $nbResult)
     {
         $query = $this->createQueryBuilder('d')
             ->leftJoin('d.semestres', 's')
             ->where('s.id = :semestre')
-            ->setParameter('semestre', $etudiant->getSemestre()->getId())
+            ->andWhere('d.typeDestinataire = :typeDestinaire')
+            ->setParameter('semestre', $etudiant->getSemestre()?->getId())
+            ->setParameter('typeDestinataire', Constantes::TYPE_DESTINATAIRE_ETUDIANT)
             ->orderBy('d.dateDebut', 'DESC');
         if (0 !== $nbResult) {
             $query->setMaxResults($nbResult);
@@ -121,9 +133,9 @@ class DateRepository extends ServiceEntityRepository
     {
         $query = $this->createQueryBuilder('d')
             ->where('d.departement = :departement')
-            ->andWhere('d.qui = :qui')
+            ->andWhere('d.typeDestinataire = :typeDestinaire')
             ->setParameter('departement', $departement->getId())
-            ->setParameter('qui', Date::QUI_PERSONNEL)
+            ->setParameter('typeDestinaire', Constantes::TYPE_DESTINATAIRE_PERSONNEL)
             ->orderBy('d.dateDebut', 'DESC');
         if (0 !== $nbResult) {
             $query->setMaxResults($nbResult);
