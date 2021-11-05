@@ -67,14 +67,15 @@ class EtudiantAbsences
     public function addAbsence(
         CarbonInterface $dateHeure,
         Matiere $matiere,
-        ?Personnel $personnel,
+        Personnel $personnel,
         bool $justifie = false
     ): Absence {
         $absence = new Absence();
         $absence->setEtudiant($this->etudiant);
+        $absence->setSemestre($matiere->semestre);
         $absence->setPersonnel($personnel);
         $absence->setDateHeure($dateHeure);
-        $absence->setAnneeUniversitaire($matiere->semestre?->getAnneeUniversitaire());
+        $absence->setAnneeUniversitaire($personnel->getAnneeUniversitaire());
         $absence->setDuree(new Carbon('01:30'));
         $absence->setIdMatiere($matiere->id);
         $absence->setTypeMatiere($matiere->typeMatiere);
