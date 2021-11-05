@@ -11,26 +11,22 @@ namespace App\Controller\administration;
 
 use App\Classes\MyExport;
 use App\Controller\BaseController;
-use App\Table\ArticleTableType;
 use App\Entity\Article;
 use App\Entity\ArticleCategorie;
 use App\Entity\Constantes;
 use App\Form\ArticleType;
 use App\Repository\ArticleCategorieRepository;
 use App\Repository\ArticleRepository;
+use App\Table\ArticleTableType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/administration/articles")
- */
+#[Route('/administration/articles')]
 class ArticleController extends BaseController
 {
-    /**
-     * @Route("/", name="administration_article_index", methods="GET")
-     */
+    #[Route('/', name: 'administration_article_index', methods: ['GET', 'POST'], options: ['expose' => true])]
     public function index(Request $request): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
@@ -155,7 +151,7 @@ class ArticleController extends BaseController
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $article->getCategorie()?->getDepartement());
 
         $id = $article->getId();
-        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
             $this->entityManager->remove($article);
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'article.delete.success.flash');
@@ -201,8 +197,7 @@ class ArticleController extends BaseController
     public function addCategorie(
         ArticleCategorieRepository $categorieRepository,
         Request $request
-    ): JsonResponse
-    {
+    ): JsonResponse {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
 
         $libelle = $request->request->get('libelle');

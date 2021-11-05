@@ -10,6 +10,7 @@
 namespace App\Table;
 
 use App\Components\Table\Adapter\EntityAdapter;
+use App\Components\Table\Column\BadgeColumnType;
 use App\Components\Table\Column\DateColumnType;
 use App\Components\Table\Column\PropertyColumnType;
 use App\Components\Table\Column\WidgetColumnType;
@@ -78,7 +79,10 @@ class ArticleTableType extends TableType
         $builder->addColumn('titre', PropertyColumnType::class, ['label' => 'titre']);
         $builder->addColumn('texte', PropertyColumnType::class, ['label' => 'texte']);
         $builder->addColumn('categorie', CategorieArticleColumnType::class, ['label' => 'categorie']);
-        $builder->addColumn('semestres', SemestreColumnType::class, ['label' => 'semestres']);
+        $builder->addColumn('typeDestinataire', BadgeColumnType::class,
+            ['label' => 'table.typeDestinataire', 'translation_domain' => 'messages']);
+        $builder->addColumn('semestres', SemestreColumnType::class,
+            ['label' => 'table.semestres', 'translation_domain' => 'messages']);
         $builder->addColumn('updated', DateColumnType::class, [
             'order' => 'DESC',
             'format' => 'd/m/Y',
@@ -107,6 +111,10 @@ class ArticleTableType extends TableType
                     'xhr' => false,
                 ]);
                 $builder->add('delete', RowDeleteLinkType::class, [
+                    'route' => 'administration_article_delete',
+                    'route_params' => [
+                        'id' => $s->getId(),
+                    ],
                     'attr' => [
                         'data-href' => 'administration_article_delete',
                         'data-uuid' => $s->getId(),
@@ -115,6 +123,8 @@ class ArticleTableType extends TableType
                 ]);
             },
         ]);
+
+        $builder->setLoadUrl('administration_article_index');
 
         $builder->useAdapter(EntityAdapter::class, [
             'class' => Article::class,

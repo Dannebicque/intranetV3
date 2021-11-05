@@ -13,6 +13,7 @@ use App\Entity\Article;
 use App\Entity\ArticleCategorie;
 use App\Entity\Departement;
 use App\Entity\Semestre;
+use App\Form\Type\TypeDestinataireType;
 use App\Repository\ArticleCategorieRepository;
 use App\Repository\SemestreRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -36,17 +37,18 @@ class ArticleType extends AbstractType
 
         $builder
             ->add('titre', TextType::class, [
-                'label' => 'titre',
+                'label' => 'label.titre',
             ])
+            ->add('typeDestinataire', TypeDestinataireType::class, ['label' => 'label.typedestinataire'])
             ->add('texte', TextareaType::class, [
-                'label' => 'texte',
+                'label' => 'label.texte',
                 'attr' => ['rows' => 20, 'class' => 'tinyMce'],
             ])
             ->add('categorie', EntityType::class, [
                 'class' => ArticleCategorie::class,
-                'label' => 'article_categorie',
+                'label' => 'label.article_categorie',
                 'choice_label' => 'libelle',
-                'query_builder' => function(ArticleCategorieRepository $articleCategorieRepository) {
+                'query_builder' => function (ArticleCategorieRepository $articleCategorieRepository) {
                     return $articleCategorieRepository->findByDepartementBuilder($this->departement);
                 },
                 'required' => true,
@@ -55,9 +57,9 @@ class ArticleType extends AbstractType
             ])
             ->add('semestres', EntityType::class, [
                 'class' => Semestre::class,
-                'label' => 'semestres_article',
+                'label' => 'label.semestres_article',
                 'choice_label' => 'libelle',
-                'query_builder' => function(SemestreRepository $semestreRepository) {
+                'query_builder' => function (SemestreRepository $semestreRepository) {
                     return $semestreRepository->findByDepartementBuilder($this->departement);
                 },
                 'required' => true,

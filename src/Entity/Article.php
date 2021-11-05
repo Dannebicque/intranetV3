@@ -10,6 +10,7 @@
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
+use App\Entity\Traits\TypeDestinataireTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -23,6 +24,7 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
 class Article extends BaseEntity
 {
     use LifeCycleTrait;
+    use TypeDestinataireTrait;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -66,10 +68,7 @@ class Article extends BaseEntity
      */
     private Collection $articleLikes;
 
-    /**
-     * @ORM\Column(type="string", length=5)
-     */
-    private ?string $typeDestinataire;
+
 
     /**
      * Article constructor.
@@ -228,15 +227,5 @@ class Article extends BaseEntity
         return $this;
     }
 
-    public function getTypeDestinataire(): ?string
-    {
-        return $this->typeDestinataire;
-    }
 
-    public function setTypeDestinataire(string $typeDestinataire): self
-    {
-        $this->typeDestinataire = $typeDestinataire;
-
-        return $this;
-    }
 }

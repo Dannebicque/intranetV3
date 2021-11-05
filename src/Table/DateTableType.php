@@ -10,6 +10,7 @@
 namespace App\Table;
 
 use App\Components\Table\Adapter\EntityAdapter;
+use App\Components\Table\Column\BadgeColumnType;
 use App\Components\Table\Column\DateColumnType;
 use App\Components\Table\Column\PropertyColumnType;
 use App\Components\Table\Column\WidgetColumnType;
@@ -29,6 +30,7 @@ use App\Entity\Diplome;
 use App\Entity\Semestre;
 use App\Form\Type\DatePickerType;
 use App\Form\Type\SearchType;
+use App\Table\ColumnType\SemestreColumnType;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
@@ -79,6 +81,10 @@ class DateTableType extends TableType
             ['label' => 'table.libelle', 'translation_domain' => 'messages']);
         $builder->addColumn('lieu', PropertyColumnType::class,
             ['label' => 'table.lieu', 'translation_domain' => 'messages']);
+        $builder->addColumn('typeDestinataire', BadgeColumnType::class,
+            ['label' => 'table.typeDestinataire', 'translation_domain' => 'messages']);
+        $builder->addColumn('semestres', SemestreColumnType::class,
+            ['label' => 'table.semestres', 'translation_domain' => 'messages']);
         $builder->addColumn('dateDebut', DateColumnType::class, [
             'order' => 'DESC',
             'format' => 'd/m/Y',
@@ -91,7 +97,6 @@ class DateTableType extends TableType
             'label' => 'table.heureDebut',
             'translation_domain' => 'messages',
         ]);
-        //$builder->add('semestres', SemestreColumnType::class, ['label' => 'semestres']);
 
         $builder->addColumn('links', WidgetColumnType::class, [
             'build' => function(WidgetBuilder $builder, Date $s) {
