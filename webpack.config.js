@@ -34,6 +34,7 @@ Encore
    */
   .addEntry('app', './assets/app.js')
   .addEntry('borne', './assets/js/pages/borne.js')
+  .addEntry('questionnaire', './assets/js/pages/questionnaire.js')
   .addEntry('covid', './assets/js/pages/covid.js')
   .addEntry('tinyMce', './assets/js/tinyMce.js')
   .addEntry('apc', './assets/js/pages/apc.js')

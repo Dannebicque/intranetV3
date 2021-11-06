@@ -19,6 +19,7 @@
     "popper.js": "^1.16.1",
     "regenerator-runtime": "^0.13.2",
     "sass-loader": "^9.0.3",
+    "stimulus": "^2.0.0",
     "stimulus-clipboard": "^1.0.0",
     "sweetalert2": "^9.17.0",
     "tinymce": "^5.9.0",
