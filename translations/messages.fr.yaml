@@ -1835,6 +1835,7 @@ tab:
   vosParametres: 'Vos paramètres'
 
 table:
+  typeDestinataire: 'Destinataire'
   appelFait: 'Etat de l''appel'
   periodeAbsence: 'Période d''absence'
   etat_justificatif_absence: 'Etat du justificatif d''absence'

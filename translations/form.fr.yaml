@@ -27,6 +27,8 @@ apprentissage: 'En Apprentissage'
 bac: 'Bac obtenu'
 boursier: Boursier
 choice:
+  etudiant: 'Etudiants'
+  personnel: 'Personnels (permanents et vacataires)'
   ater: ATER
   autre: Autre
   c2i: C2I
@@ -129,6 +131,7 @@ initiales: Initiales
 j: Jour
 Jour: Jour
 label:
+  typedestinataire: 'Type de destinataire'
   questionnaireQuestionTags: 'Tag(s) pour la question'
   newQuestionnaireQuestionTags: 'Ajouter des tags manquant'
   question.help: 'Texte d''aide de la question'
@@ -253,6 +256,7 @@ label:
   couleur_tp: 'Couleur des TP (EDT)'
   couleur: Couleur
   cv: CV
+  date_evenement: 'Date ou période de l''événement'
   date_debut: 'Date de début'
   date_evaluation: 'Date de l''évaluation'
   date_fin: 'Date de fin'
@@ -396,9 +400,9 @@ label:
   semestre_stage_periode: 'Semestre pour lequel compte la période de stage'
   semestre_suivant: 'Semestre suivant'
   semestre: Semestre
-  semestres_article: 'Article visible pour les semestres'
-  semestres_date: 'Date visible pour les semestres'
-  semestres_document: 'Document visible pour les semestres'
+  semestres_article: 'Article visible pour les semestres (si visible des étudiants)'
+  semestres_date: 'Date visible pour les semestres (si visible des étudiants)'
+  semestres_document: 'Document visible pour les semestres (si visible des étudiants)'
   serviceStageEntreprise: 'Service dans l''entreprise'
   sexe: Sexe
   sigle: Sigle
