@@ -10,6 +10,7 @@
 namespace App\Components\Questionnaire\TypeQuestion;
 
 
+use App\Components\Questionnaire\DTO\Reponse;
 use App\Components\Questionnaire\Form\QuestionnaireQuestionTypeEchelle;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -24,11 +25,19 @@ class TypeEchelle extends TypeQcu
     {
         parent::configureOptions($resolver);
         $resolver
-            ->setDefault('block_name', 'type_qcu');
+            ->setDefault('block_name', 'type_qcu')
+            ->setDefault('type_question', 'radio')
+            ->setDefault('min', 1)
+            ->setDefault('max', 10)
+            ->setDefault('pas', 1);
     }
 
-    public function getOrGenereReponses()
+    public function getOrGenereReponses($question)
     {
-
+        for($i = $this->getOption('min'); $i <= $this->getOption('max'); $i += $this->getOption('pas')) {
+            $this->addReponse(new Reponse(
+                0,$i, $i, $i
+            ));
+        }
     }
 }

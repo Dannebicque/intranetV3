@@ -11,7 +11,7 @@ namespace App\Components\Questionnaire\TypeQuestion;
 
 use App\Components\Questionnaire\DTO\AbstractQuestionnaire;
 use App\Components\Questionnaire\DTO\Question;
-use App\Components\Questionnaire\Reponse;
+use App\Components\Questionnaire\DTO\Reponse;
 use App\Components\Questionnaire\Reponses;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -39,6 +39,7 @@ abstract class AbstractQuestion
     {
         $resolver
             ->setDefault('mode', AbstractQuestionnaire::MODE_APERCU)
+            ->setDefault('type_question', '')
             ->setDefault('parametres', [])
             ->setDefault('alignement', [])
             ->setDefault('block_name', '');
@@ -57,5 +58,10 @@ abstract class AbstractQuestion
     public function addReponse(Reponse $reponse)
     {
         $this->reponses->addReponse($reponse);
+    }
+
+    public function getReponses(): array
+    {
+        return $this->reponses->getReponses();
     }
 }

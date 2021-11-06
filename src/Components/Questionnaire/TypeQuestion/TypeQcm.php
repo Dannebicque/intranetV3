@@ -10,6 +10,7 @@
 namespace App\Components\Questionnaire\TypeQuestion;
 
 
+use App\Components\Questionnaire\Adapter\ReponseEntityAdapter;
 use App\Components\Questionnaire\Form\QuestionnaireQuestionTypeQcm;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -24,11 +25,15 @@ class TypeQcm extends AbstractQuestion
     {
         parent::configureOptions($resolver);
         $resolver
-            ->setDefault('block_name', 'type_qcm');
+            ->setDefault('block_name', 'type_qcm')
+            ->setDefault('type_question', 'checkbox');
     }
 
-    public function getOrGenereReponses()
+    public function getOrGenereReponses($question)
     {
-
+        $reponses = $question->getReponses();
+        foreach ($reponses as $reponse) {
+            $this->addReponse((new ReponseEntityAdapter($reponse))->getReponse());
+        }
     }
 }

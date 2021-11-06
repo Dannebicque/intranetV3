@@ -15,4 +15,16 @@ abstract class AbstractSectionAdapter
     public const FIELD_LIBELLE = 'libelle';
     public const FIELD_CODE = '';
     public const FIELD_ID = 'id';
+
+    public function getData(mixed $ordre)
+    {
+        dump($ordre);
+
+        return [
+            'libelle' => '',
+            'code' => '',
+            'ordre' => $ordre,
+            'id' => 0
+        ];
+    }
 }

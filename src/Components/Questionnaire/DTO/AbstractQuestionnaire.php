@@ -10,6 +10,7 @@
 namespace App\Components\Questionnaire\DTO;
 
 
+use App\Entity\Semestre;
 use Carbon\CarbonInterface;
 
 class AbstractQuestionnaire
@@ -19,13 +20,15 @@ class AbstractQuestionnaire
     public const MODE_ETUDIANT = 'mode.etudiant';
     public const MODE_LECTURE_REPONSES = 'mode.lecture_reponses';
 
-    public $semestre;
+    public Semestre $semestre;
     public string $libelle;
     public string $titre;
-    public string $textExplication;
+    public string $texteExplication;
+    public string $texteDebut;
+    public string $texteFin;
     public string $uuid;
     public CarbonInterface $dateOuverture;
-    public CarbonInterface $dateFermture;
+    public CarbonInterface $dateFermeture;
 
     public array $sections = [];
     public string $mode;

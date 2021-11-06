@@ -1,0 +1,8 @@
+<p class="text-center fs-35 text-muted"><strong class="text-primary">Bienvenue</strong>
+    sur le questionnaire {{ titre }}</p>
+<p class="text-center text-gray">{{ texteDebut|raw }}</p>
+<hr class="w-100px">
+<div class="alert alert-info">
+    Questionnaire à compléter entre le {{ dateOuverture|format_date
+        ('short') }} et le {{ dateFermeture|format_date('short') }}.
+</div>

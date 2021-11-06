@@ -9,6 +9,7 @@
 
 namespace App\Components\Questionnaire;
 
+use App\Components\Questionnaire\Section\AbstractSection;
 use Twig\Environment;
 
 class QuestionnaireRenderer
@@ -38,20 +39,17 @@ class QuestionnaireRenderer
         return $vars;
     }
 
-    public function sectionRender(Section $section): string
+    public function sectionRender(AbstractSection $section): string
     {
-        return $this->twig->render($section->getOption('template'), $this->viewSection($section));
+        return $this->twig->render($section->getTemplate(), $this->viewSection($section));
     }
 
-    private function viewSection(Section $section)
+    private function viewSection(AbstractSection $section)
     {
         $options = $section->getOptions();
 
-        $vars = $section->getSection()->getVars();
-        $vars['section'] = $section;
+        $vars = $section->getVars();
         $vars['options'] = $options;
-        $vars['questions'] = $section->getQuestions();
-
 
         return $vars;
     }

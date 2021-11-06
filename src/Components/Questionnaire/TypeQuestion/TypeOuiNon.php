@@ -11,7 +11,7 @@ namespace App\Components\Questionnaire\TypeQuestion;
 
 
 use App\Components\Questionnaire\Form\QuestionnaireQuestionTypeYesNo;
-use App\Components\Questionnaire\Reponse;
+use App\Components\Questionnaire\DTO\Reponse;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TypeOuiNon extends TypeQcu
@@ -26,13 +26,14 @@ class TypeOuiNon extends TypeQcu
         parent::configureOptions($resolver);
         $resolver
             ->setDefault('block_name', 'type_qcu')
+            ->setDefault('type_question', 'radio')
             ->setDefault('libelle_1', 'Oui')
             ->setDefault('valeur_1', '1')
             ->setDefault('libelle_2', 'Non')
             ->setDefault('valeur_2', '0');
     }
 
-    public function getOrGenereReponses()
+    public function getOrGenereReponses($question)
     {
         $reponse1 = new Reponse(1, $this->options['libelle_1'], $this->options['valeur_1'], 1);
         $this->addReponse($reponse1);

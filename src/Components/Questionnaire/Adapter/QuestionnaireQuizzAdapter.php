@@ -7,7 +7,7 @@
  * @lastUpdate 23/10/2021 10:37
  */
 
-namespace App\Components\Questionnaire\Adpapter;
+namespace App\Components\Questionnaire\Adapter;
 
 
 use App\Components\Questionnaire\DTO\Quizz;

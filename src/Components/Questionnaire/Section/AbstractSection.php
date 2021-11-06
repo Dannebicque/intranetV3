@@ -9,23 +9,86 @@
 
 namespace App\Components\Questionnaire\Section;
 
+use App\Components\Questionnaire\QuestionnaireRegistry;
+use App\Components\Questionnaire\Questions;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 abstract class AbstractSection
 {
+    public const DEFAULT_TEMPLATE = 'components/questionnaire/sections/section.html.twig';
+    public const INTRODUCTION = 'introduction';
+    public const END = 'end';
+
+    public ?int $arrayKey = 0;
     public ?int $id = null;
     public ?int $questionnaire_section_id = null;
-    public int $ordre = 1;
+    public string $ordre = '1';
     public ?string $titre;
     public ?string $text_explicatif;
+
+    public int $nbParties = 1;
+    public array $params = [];
+    public bool $configurable = false;
+    public AbstractSectionAdapter $abstractSectionAdapter;
+
+    public QuestionnaireRegistry $questionnaireRegistry;
+    public \App\Components\Questionnaire\DTO\Section $section;
+
+    protected Questions $questions;
+
+    public array $options = [];
+
+    public function __construct(QuestionnaireRegistry $questionnaireRegistry)
+    {
+        $this->questionnaireRegistry = $questionnaireRegistry;
+        $this->questions = new Questions();
+    }
+
+    public function setSection(\App\Components\Questionnaire\DTO\Section $section, array $options = [])
+    {
+        $this->setOptions($options);
+        $this->ordre = $section->ordre;
+        $this->titre = $section->titre;
+        $this->text_explicatif = $section->texte_explicatif;
+        $this->section = $section;
+    }
+
+    public function setOptions(array $options)
+    {
+        $resolver = new OptionsResolver();
+        $this->configureOptions($resolver);
+        $this->options = $resolver->resolve($options);
+    }
+
+    public function getOptions()
+    {
+        return $this->options;
+    }
+
+    protected function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'template' => self::DEFAULT_TEMPLATE,
+        ]);
+    }
+
+    public function getTemplate()
+    {
+        return $this->options['template'];
+    }
+
+    public function getOption(string $name): string
+    {
+        return $this->options[$name];
+    }
 
     public function getVars()
     {
         return [
-            'id' => $this->id,
-            'questionnaire_section_id' => $this->questionnaire_section_id,
-            'ordre' => $this->ordre,
-            'titre' => $this->titre,
-            'text_explicatif' => $this->text_explicatif,
+            'id' => null,
+            'questionnaire_section_id' => null,
+            'ordre' => 1,
+            'titre' => null,
         ];
     }
 }

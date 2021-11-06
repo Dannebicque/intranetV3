@@ -7,10 +7,12 @@
  * @lastUpdate 03/08/2021 15:29
  */
 
-namespace App\Components\Questionnaire\Adpapter;
+namespace App\Components\Questionnaire\Adapter;
 
 use App\Components\Questionnaire\QuestionnaireRegistry;
+use App\Components\Questionnaire\Section\AbstractSection;
 use App\Components\Questionnaire\TypeQuestion\AbstractQuestion;
+use App\Utils\Tools;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class QuestionnaireQuestionAdapter
@@ -23,21 +25,28 @@ class QuestionnaireQuestionAdapter
         $this->questionnaireRegistry = $questionnaireRegistry;
     }
 
-    public function createFromEntity($question, array $options = [])
+    public function createFromEntity(AbstractSection $abstractSection, $question, int $ordre = 1, array $options = [])
     {
-        $obj = $this->questionnaireRegistry->getTypeQuestion($question->getQuestion()->getTypeQuestion());
+        $obj = $this->questionnaireRegistry->getTypeQuestion($question->getQuestion()->getType());
+        $options = array_merge($options, $question->getQuestion()->getConfiguration());
         $this->question = new $obj();
-        $this->question->options = $options;
+
         $optionResolver = new OptionsResolver();
         $this->question->configureOptions($optionResolver);
         $this->question->options = $optionResolver->resolve($options);
 
-        $this->question->libelle = $question->getQuestion()->getLibelle();
+        if ($abstractSection->configurable === true) {
+            $data =  $abstractSection->abstractSectionAdapter->getData($abstractSection->params['valeurs'][$ordre]);
+            $this->question->libelle = Tools::personnaliseTexte($question->getQuestion()->getLibelle(), $data);
+        } else {
+            $this->question->libelle = $question->getQuestion()->getLibelle();
+        }
+
+
         $this->question->id = $question->getQuestion()->getId();
         $this->question->help = $question->getQuestion()->getHelp();
 
-        //get les réponses depuis question??
-        $this->question->getOrGenereReponses();
+        $this->question->getOrGenereReponses($question->getQuestion());
 
         return $this;
     }

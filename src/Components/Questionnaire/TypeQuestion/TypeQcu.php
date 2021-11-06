@@ -10,6 +10,7 @@
 namespace App\Components\Questionnaire\TypeQuestion;
 
 
+use App\Components\Questionnaire\Adapter\ReponseEntityAdapter;
 use App\Components\Questionnaire\Form\QuestionnaireQuestionTypeQcu;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -23,11 +24,15 @@ class TypeQcu extends AbstractQuestion
     public function configureOptions(OptionsResolver $resolver)
     {
         parent::configureOptions($resolver);
-        $resolver->setDefault('block_name', 'type_qcu');
+        $resolver->setDefault('block_name', 'type_qcu')
+            ->setDefault('type_question', 'radio');
     }
 
-    public function getOrGenereReponses()
+    public function getOrGenereReponses($question)
     {
-
+        $reponses = $question->getReponses();
+        foreach ($reponses as $reponse) {
+            $this->addReponse((new ReponseEntityAdapter($reponse))->getReponse());
+        }
     }
 }
