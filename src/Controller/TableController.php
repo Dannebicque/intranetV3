@@ -9,13 +9,17 @@
 
 namespace App\Controller;
 
-use App\Components\Questionnaire\Adpapter\QuestionnaireQualiteAdapter;
-use App\Components\Questionnaire\Adpapter\QuestionnaireQuestionAdapter;
-use App\Components\Questionnaire\Adpapter\QuestionnaireSectionAdapter;
+use App\Components\Questionnaire\Adapter\QuestionnaireQualiteAdapter;
+use App\Components\Questionnaire\Adapter\QuestionnaireQuestionAdapter;
+use App\Components\Questionnaire\Adapter\QuestionnaireSectionAdapter;
+use App\Components\Questionnaire\Adapter\SectionQualiteEntityAdapter;
 use App\Components\Questionnaire\DTO\AbstractQuestionnaire;
 use App\Components\Questionnaire\Questionnaire;
+use App\Components\Questionnaire\QuestionnaireRegistry;
+use App\Components\Questionnaire\Section\AbstractSection;
 use App\Entity\QuestionnaireQualite;
-use App\Table\TestTable;
+use App\Repository\QuestionnaireQualiteRepository;
+use App\Repository\QuestionnaireQuestionnaireSectionRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -29,43 +33,49 @@ class TableController extends BaseController
         ]);
     }
 
-    #[Route('/table-2', name: 'table_2', options: ['expose' => true])]
-    public function table2(Request $request): Response
-    {
-        $tableau = $this->createTable(TestTable::class);
-
-        $tableau->handleRequest($request);
-        if ($tableau->isCallback()) {
-            return $tableau->getCallbackResponse();
-        }
-
-        return $this->render('table/index-2.html.twig', [
-            'tableau' => $tableau->createView(),
-        ]);
-    }
-
     #[Route('/table-3/{questionnaireQualite}', name: 'table_3', options: ['expose' => true])]
     public function table3(
-        Request $request,
-        QuestionnaireQuestionAdapter $questionnaireQuestionAdapter,
         Questionnaire $questionnaire,
         QuestionnaireQualite $questionnaireQualite
     ): Response {
         $questionnaire->createQuestionnaire(QuestionnaireQualite::class,
             (new QuestionnaireQualiteAdapter($questionnaireQualite))->getQuestionnaire(),
             ['mode' => AbstractQuestionnaire::MODE_EDITION]);
-
+        $questionnaire->AddSpecialSection(AbstractSection::INTRODUCTION);
         foreach ($questionnaireQualite->getSections() as $section) {
-            $questionnaire->addSection((new QuestionnaireSectionAdapter($section))->getSection());
-
-            foreach ($section->getSection()->getQualiteSectionQuestions() as $question) {
-                $questionnaire->addQuestionSection($questionnaireQuestionAdapter->createFromEntity($question,
-                    ['mode' => AbstractQuestionnaire::MODE_EDITION])->getQuestion(), $section->getOrdre());
-            }
+            $questionnaire->addSection((new SectionQualiteEntityAdapter($section))->getSection());
         }
+        $questionnaire->AddSpecialSection(AbstractSection::END);
+
 
         return $this->render('table/index-3.html.twig', [
             'questionnaire' => $questionnaire->createView(),
         ]);
+    }
+
+    #[Route('/wizard-page/', name: 'wizard_page', options: ['expose' => true])]
+    public function wizardPage(
+        QuestionnaireQualiteRepository $qualiteRepository,
+        Questionnaire $questionnaire,
+        Request $request
+    ): Response {
+        $ordreSection = (int)$request->query->get('page');
+        $questionnaireQualite = $qualiteRepository->find($request->query->get('questionnaire'));
+        if ($questionnaireQualite !== null) {
+            $questionnaire->createQuestionnaire(QuestionnaireQualite::class,
+                (new QuestionnaireQualiteAdapter($questionnaireQualite))->getQuestionnaire(),
+                ['mode' => AbstractQuestionnaire::MODE_EDITION]);
+            $questionnaire->AddSpecialSection(AbstractSection::INTRODUCTION);
+            foreach ($questionnaireQualite->getSections() as $section) {
+                $questionnaire->addSection((new SectionQualiteEntityAdapter($section))->getSection());
+            }
+            $questionnaire->AddSpecialSection(AbstractSection::END);
+            $questionnaire->setQuestionsForSection($ordreSection);
+
+
+            return $this->render('table/wizard-page.html.twig', [
+                'section' => $questionnaire->getSection($ordreSection)
+            ]);
+        }
     }
 }

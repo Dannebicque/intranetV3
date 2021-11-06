@@ -26,7 +26,7 @@ class ApcRessource extends AbstractMatiere
     public const SOURCE = 'ressource';
 
     /**
-     * @ORM\ManyToOne(targetEntity=Semestre::class, inversedBy="apcRessources")
+     * @ORM\ManyToOne(targetEntity=Semestre::class, inversedBy="apcRessources", fetch="EAGER")
      */
     private ?Semestre $semestre;
 
@@ -41,7 +41,7 @@ class ApcRessource extends AbstractMatiere
     private ?string $motsCles;
 
     /**
-     * @ORM\OneToMany(targetEntity=ApcRessourceCompetence::class, mappedBy="ressource", cascade={"persist","remove"} )
+     * @ORM\OneToMany(targetEntity=ApcRessourceCompetence::class, mappedBy="ressource", cascade={"persist","remove"})
      */
     private Collection $apcRessourceCompetences;
 

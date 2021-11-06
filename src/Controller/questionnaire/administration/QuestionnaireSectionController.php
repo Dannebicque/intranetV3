@@ -53,8 +53,7 @@ class QuestionnaireSectionController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $questionnaireSection->setConfig([
-                'sectionAdapter' => $request->request->get('questionnaire_section')['sectionAdapter'],
-                'valeurs' => []
+                'sectionAdapter' => $request->request->get('questionnaire_section')['sectionAdapter']
             ]);
             $this->entityManager->persist($questionnaireSection);
             $this->entityManager->flush();

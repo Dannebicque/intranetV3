@@ -27,7 +27,7 @@ class ApcSae extends AbstractMatiere
     public const SOURCE = 'sae';
 
     /**
-     * @ORM\ManyToOne(targetEntity=Semestre::class, inversedBy="apcSaes")
+     * @ORM\ManyToOne(targetEntity=Semestre::class, inversedBy="apcSaes", fetch="EAGER")
      */
     private ?Semestre $semestre;
 
