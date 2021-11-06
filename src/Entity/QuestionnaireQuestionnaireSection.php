@@ -9,6 +9,8 @@
 
 namespace App\Entity;
 
+use App\Components\Questionnaire\DTO\Section;
+use App\Entity\Traits\ConfigTrait;
 use App\Entity\Traits\LifeCycleTrait;
 use Doctrine\ORM\Mapping as ORM;
 use function array_key_exists;
@@ -21,6 +23,8 @@ use function count;
 class QuestionnaireQuestionnaireSection extends BaseEntity
 {
     use LifeCycleTrait;
+    use ConfigTrait;
+
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\QuestionnaireQualite", inversedBy="sections")
@@ -41,11 +45,6 @@ class QuestionnaireQuestionnaireSection extends BaseEntity
      * @ORM\Column(type="integer")
      */
     private ?int $ordre;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private ?string $config;
 
     public function getSection(): ?QuestionnaireSection
     {
@@ -91,18 +90,6 @@ class QuestionnaireQuestionnaireSection extends BaseEntity
     public function setQuestionnaireQuizz(?QuestionnaireQuizz $questionnaireQuizz): self
     {
         $this->questionnaireQuizz = $questionnaireQuizz;
-
-        return $this;
-    }
-
-    public function getConfig(): ?string
-    {
-        return $this->config;
-    }
-
-    public function setConfig(?string $config): self
-    {
-        $this->config = $config;
 
         return $this;
     }
