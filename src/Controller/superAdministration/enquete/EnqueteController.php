@@ -161,6 +161,7 @@ class EnqueteController extends AbstractController
             ['questionnaire' => $newQuestionnaireQualite->getId()]);
     }
 
+    /** @deprecated */
     public function section(
         PrevisionnelManager $previsionnelManager,
         QuestionnaireQuestionnaireSection $qualiteQuestionnaireSection,
