@@ -9,13 +9,12 @@
 
 namespace App\Components\Questionnaire\DependencyInjection;
 
-use App\Components\Questionnaire\Section\ConfigurableSection;
 use App\Components\Questionnaire\Section\EndSection;
 use App\Components\Questionnaire\Section\MatiereSectionAdapter;
 use App\Components\Questionnaire\Section\PrevisionnelSectionAdapter;
-use App\Components\Questionnaire\Section\QuestionsSection;
 use App\Components\Questionnaire\Section\RessourceSectionAdapter;
 use App\Components\Questionnaire\Section\SaeSectionAdapter;
+use App\Components\Questionnaire\Section\Section;
 use App\Components\Questionnaire\Section\StartSection;
 use App\Components\Questionnaire\TypeQuestion\TypeEchelle;
 use App\Components\Questionnaire\TypeQuestion\TypeLibre;
@@ -42,8 +41,7 @@ return static function(ContainerConfigurator $configurator): void {
 
     $services->set(StartSection::class)->tag('da.questionnaire.typesection');
     $services->set(EndSection::class)->tag('da.questionnaire.typesection');
-    $services->set(QuestionsSection::class)->tag('da.questionnaire.typesection');
-    $services->set(ConfigurableSection::class)->tag('da.questionnaire.typesection');
+    $services->set(Section::class)->tag('da.questionnaire.typesection');
 
     $services->set(PrevisionnelSectionAdapter::class)->tag('da.questionnaire.section.adapter');
     $services->set(MatiereSectionAdapter::class)->tag('da.questionnaire.section.adapter');

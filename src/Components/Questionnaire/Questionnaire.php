@@ -9,13 +9,18 @@
 
 namespace App\Components\Questionnaire;
 
+use App\Components\Questionnaire\Adapter\QuestionnaireSectionAdapter;
 use App\Components\Questionnaire\DTO\AbstractQuestionnaire;
 use App\Components\Questionnaire\Section\AbstractSection;
+use App\Components\Questionnaire\Section\ConfigurableSection;
+use App\Components\Questionnaire\Section\EndSection;
+use App\Components\Questionnaire\Section\StartSection;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class Questionnaire
 {
     private const DEFAULT_TEMPLATE = 'components/questionnaire/questionnaire.html.twig';
+
     protected Sections $sections;
     private AbstractQuestionnaire $questionnaire;
     private array $options = [];
@@ -48,10 +53,22 @@ class Questionnaire
         ]);
     }
 
-    public function addSection(AbstractSection $abstractSection)
+    public function addSection(DTO\Section $section)
     {
-        $section = new Section($abstractSection, []);
-        $this->sections->addSection($section);
+        if (ConfigurableSection::class === $section->typeSection) {
+            //c'est configurable, potentiellement plusieurs sections à créer
+            $configSection = new ConfigurableSection($this->questionnaireRegistry);
+            $configSection->setSection($section);
+            $sections = $configSection->genereSections();
+            foreach ($sections as $cSection) {
+                //pour chaque "section configurable", on ajoute une section "classique"
+                $this->sections->addSection($cSection);
+            }
+        } else {
+            $abstractSection = new Section\Section($this->questionnaireRegistry);
+            $abstractSection->setSection($section);
+            $this->sections->addSection($abstractSection->getSection());
+        }
 
         return $this;
     }
@@ -81,9 +98,41 @@ class Questionnaire
         return $this->sections->getSections();
     }
 
-    public function addQuestionSection(TypeQuestion\AbstractQuestion $question, int $ordreSection)
+    public function getSection(int $ordreSection): ?AbstractSection
     {
-        //ajouter dans la section concernée...
-        $this->sections->getSection($ordreSection)->addQuestions($question);
+        foreach ($this->getSections() as $section) {
+            if ($section->arrayKey === $ordreSection) {
+                return $section;
+            }
+        }
+
+        return null;
+    }
+
+    public function AddSpecialSection($type)
+    {
+        switch ($type) {
+            case AbstractSection::INTRODUCTION:
+                $abstractSection = (new StartSection($this->questionnaireRegistry))->setQuestionnaire($this->questionnaire);
+                break;
+            case AbstractSection::END:
+                $abstractSection = (new EndSection($this->questionnaireRegistry))->setQuestionnaire(count($this->getSections()),
+                    $this->questionnaire);
+                break;
+        }
+        $this->sections->addSection($abstractSection);
+
+        return $this;
+    }
+
+    public function setQuestionsForSection(
+        int $ordreSection
+    ) {
+        foreach ($this->getSections() as $section) {
+            if ($section->arrayKey === $ordreSection) {
+                $section->prepareQuestions();
+                break;
+            }
+        }
     }
 }

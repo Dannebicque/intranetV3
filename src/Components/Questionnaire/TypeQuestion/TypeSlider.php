@@ -22,10 +22,11 @@ class TypeSlider extends TypeEchelle
     {
         parent::configureOptions($resolver);
         $resolver
-            ->setDefault('block_name', 'type_slider');
+            ->setDefault('block_name', 'type_slider')
+            ->setDefault('type_question', 'range');
     }
 
-    public function getOrGenereReponses()
+    public function getOrGenereReponses($question)
     {
 
     }

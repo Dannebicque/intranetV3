@@ -1,28 +1,40 @@
 {% block type_echelle %}
-    echelle
+    <fieldset class="form-group mt-2" {% if options.type is defined and options.type=='condition' %}style="display:none"{% endif %} id="field_{{ question.id }}">
+        {{ block('libelle') }}
+        <div aria-describedby="quizz_question_{{ id }}_help">
+            <small id="quizz_question_{{ id }}_help" class="form-text text-muted">{{ help }}</small>
+        </div>
+        <div class="row">
+            {{ block('liste_reponses') }}
+        </div>
+    </fieldset>
 {% endblock %}
 
 {% block type_libre %}
-    <fieldset class="form-group" {% if options.type is defined and options.type=='condition' %}style="display:none"{% endif %} id="field_{{ id }}">
+    <fieldset class="form-group mt-2" {% if options.type is defined and options.type=='condition' %}style="display:none"{% endif %} id="field_{{ id }}">
         {{ block('libelle') }}
 
         <div aria-describedby="quizz_question_{{ id }}_help">
             <small id="quizz_question_{{ id }}_help" class="form-text text-muted">{{ help }}</small>
         </div>
-        {# <div class="form-group"> #}
-        {# <label class="form-check-label {% if obligatoire %}required{% endif %}" #}
-        {# for="quizz_question_text_{{ name }}">Votre réponse</label> #}
-        {# <textarea id="quizz_question_text_{{ name }}" #}
-        {# name="quizz_question_text_{{ name }}" #}
-        {# data-typeQuestionnaire="{{ typeQuestionnaire }}" #}
-        {# {% if apercu is not defined or apercu == false %} #}
-        {# data-etudiant="{{ etudiant.id }}" #}
-        {# {% endif %} #}
-        {# {% if obligatoire %}required{% endif %} #}
-        {# class="form-control {% if apercu is not defined or apercu == false %}questionQualiteTextArea{% endif %}">{% if #}
-        {# reponses['quizz_question_text_'~name] is defined %}{{ reponses['quizz_question_text_'~name].valeur }}{% endif %}</textarea> #}
-        {# <div class="form-control-feedback"></div> #}
-        {# </div> #}
+        <div class="mb-3">
+            <label class="form-label {% if obligatoire %}required{% endif %}"
+                   for="quizz_question_text_{{ name }}">Votre réponse</label>
+            <textarea id="quizz_question_text_{{ name }}"
+                      name="quizz_question_text_{{ name }}"
+                      data-typeQuestionnaire="{{ type_question }}"
+{# {% if apercu is not defined or apercu == false %} #}
+                    {# data-etudiant="{{ etudiant.id }}" #}
+                    {# {% endif %} #}
+                    {% if obligatoire %}required{% endif %}
+         class="form-control
+{# {% if apercu is not defined or apercu == false %}questionQualiteTextArea{% endif %} #}
+">
+{# {% if reponses['quizz_question_text_'~name] is defined %}{{ reponses['quizz_question_text_'~name].valeur #}
+                {# }}{% endif %} #}
+         </textarea>
+            <div class="form-control-feedback"></div>
+        </div>
     </fieldset>
     {# {% if options.type is defined and options.type=='condition' %} #}
     {# <script> #}
@@ -46,17 +58,58 @@
 {% endblock %}
 
 {% block type_oui_non %}
-    oui_non
-{% endblock %}
-
-{% block type_qcm %}
-    <fieldset class="form-group" {% if options.type is defined and options.type=='condition' %}style="display:none"{% endif %} id="field_{{ question.id }}">
+    <fieldset class="form-group mt-2" {% if options.type is defined and options.type=='condition' %}style="display:none"{% endif %} id="field_{{ question.id }}">
         {{ block('libelle') }}
         <div aria-describedby="quizz_question_{{ id }}_help">
             <small id="quizz_question_{{ id }}_help" class="form-text text-muted">{{ help }}</small>
         </div>
         <div class="row">
+            <div class="col-sm-12 col-md-4">
+                <div class="form-check">
+                    <input type="radio" id="quizz_question_qcu_{{ name }}_{{ reponse.id }}"
+                           name="quizz_question_reponses_{{ name }}"
+                           data-typeQuestionnaire="{{ type_question }}"
+                            {# {% if apercu is not defined or apercu == false %} #}
+                            {# data-etudiant="{{ etudiant.id }}" #}
+                            {# {% endif %} #}
+                            {# {% if reponses['quizz_question_reponses_'~name] is defined and #}
+                            {# reponses['quizz_question_reponses_'~name].valeur == reponse.valeur %}checked{% endif %} #}
+                            {% if obligatoire %}required{% endif %}
+                           class="form-check-input  {% if apercu is not defined or apercu == false %}questionQualite{% endif %}"
+                           value="{{ reponse.valeur }}">
+                    <label class="form-check-label required" for="quizz_question_qcu_{{ name }}_{{ reponse.id }}">{{ reponse.libelle }}</label>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-4">
+                <div class="form-check">
+                    <input type="radio" id="quizz_question_qcu_{{ name }}_{{ reponse.id }}"
+                           name="quizz_question_reponses_{{ name }}"
+                           data-typeQuestionnaire="{{ type_question }}"
+                            {# {% if apercu is not defined or apercu == false %} #}
+                            {# data-etudiant="{{ etudiant.id }}" #}
+                            {# {% endif %} #}
+                            {# {% if reponses['quizz_question_reponses_'~name] is defined and #}
+                            {# reponses['quizz_question_reponses_'~name].valeur == reponse.valeur %}checked{% endif %} #}
+                            {% if obligatoire %}required{% endif %}
+                           class="form-check-input  {% if apercu is not defined or apercu == false %}questionQualite{% endif %}"
+                           value="{{ reponse.valeur }}">
+                    <label class="form-check-label required" for="quizz_question_qcu_{{ name }}_{{ reponse.id }}">{{ reponse.libelle }}</label>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+{% endblock %}
+
+{% block type_qcm %}
+    <fieldset class="form-group mt-2" {% if options.type is defined and options.type=='condition' %}style="display:none"{% endif %} id="field_{{ question.id }}">
+        {{ block('libelle') }}
+        <div aria-describedby="quizz_question_{{ id }}_help">
+            <small id="quizz_question_{{ id }}_help" class="form-text text-muted">{{ help }}</small>
+        </div>
+        <div class="row">
+            {{ block('liste_reponses') }}
             {# {% for reponse in question.quizzReponses %} #}
+            {# toto #}
             {# <div class="col-sm-12 col-md-2"> #}
             {# <div class="form-check"> #}
             {# <input type="checkbox" id="quizz_question_qcm_{{ name }}_{{ reponse.id }}" #}
@@ -116,12 +169,13 @@
 {% endblock %}
 
 {% block type_qcu %}
-    <fieldset class="form-group" {% if options.type is defined and options.type=='condition' %}style="display:none"{% endif %} id="field_{{ id }}">
+    <fieldset class="form-group mt-2" {% if options.type is defined and options.type=='condition' %}style="display:none"{% endif %} id="field_{{ id }}">
         {{ block('libelle') }}
         <div aria-describedby="quizz_question_{{ id }}_help">
             <small id="quizz_question_{{ id }}_help" class="form-text text-muted">{{ help }}</small>
         </div>
         <div class="row">
+            {{ block('liste_reponses') }}
             {# {% for reponse in question.quizzReponses %} #}
             {# <div class="col-sm-12 col-md-2"> #}
             {# <div class="form-check"> #}
@@ -205,4 +259,39 @@
             {{ libelle|personnalise(config) }}
         {% endif %}
     </legend>
+{% endblock %}
+
+{% block liste_reponses %}
+    {% for reponse in reponses %}
+        <div class="col-sm-12 col-md-2">
+            <div class="form-check">
+                <input type="radio" id="quizz_question_qcu_{{ name }}_{{ reponse.id }}"
+                       name="quizz_question_reponses_{{ name }}"
+                       data-typeQuestionnaire="{{ type_question }}"
+                        {# {% if apercu is not defined or apercu == false %} #}
+                        {# data-etudiant="{{ etudiant.id }}" #}
+                        {# {% endif %} #}
+                        {# {% if reponses['quizz_question_reponses_'~name] is defined and #}
+                        {# reponses['quizz_question_reponses_'~name].valeur == reponse.valeur %}checked{% endif %} #}
+                        {% if obligatoire %}required{% endif %}
+                       class="form-check-input  {% if apercu is not defined or apercu == false %}questionQualite{% endif %}"
+                       value="{{ reponse.valeur }}">
+                <label class="form-check-label required" for="quizz_question_qcu_{{ name }}_{{ reponse.id }}">{{ reponse.libelle }}</label>
+                {% if reponse.valeur == "CHX:OTHER" %}
+                    <input type="text" id="quizz_question_qcm_autre_{{ name }}_{{ reponse.id }}"
+                           name="quizz_question_reponses_{{ name }}_autre"
+                           data-typeQuestionnaire="{{ type_question }}"
+                            {# {% if mode is defined or mode == false %} #}
+                            {# data-etudiant="{{ etudiant.id }}" #}
+                            {# {% endif %} #}
+                           class="form-control {% if apercu is not defined or apercu == false %}questionQualiteTextArea{% endif %}"
+                            {# {% if reponses['quizz_question_reponses_'~name~'_autre'] is defined %} #}
+                            {# value="{{ reponses['quizz_question_reponses_'~name~'_autre'].valeur }}" #}
+                            {# {% endif %} #}
+                    >
+                {% endif %}
+            </div>
+            <div class="form-control-feedback"></div>
+        </div>
+    {% endfor %}
 {% endblock %}

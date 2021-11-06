@@ -7,7 +7,7 @@
  * @lastUpdate 02/08/2021 21:35
  */
 
-namespace App\Components\Questionnaire\Adpapter;
+namespace App\Components\Questionnaire\Adapter;
 
 
 use App\Components\Questionnaire\DTO\AbstractQuestionnaire;

@@ -7,7 +7,7 @@
  * @lastUpdate 03/08/2021 11:54
  */
 
-namespace App\Components\Questionnaire\Adpapter;
+namespace App\Components\Questionnaire\Adapter;
 
 
 use App\Components\Questionnaire\DTO\Qualite;
@@ -21,8 +21,12 @@ class QuestionnaireQualiteAdapter implements QuestionnaireAdapterInterface
         $this->questionnaire = new Qualite();
         $this->questionnaire->titre = $questionnaire->getTitre();
         $this->questionnaire->id = $questionnaire->getId();
-        $this->questionnaire->dateFermture = $questionnaire->getDateFermeture();
+        $this->questionnaire->uuid = $questionnaire->getUuidString();
+        $this->questionnaire->dateFermeture = $questionnaire->getDateFermeture();
         $this->questionnaire->dateOuverture = $questionnaire->getDateOuverture();
+        $this->questionnaire->texteExplication = $questionnaire->getTexteExplication();
+        $this->questionnaire->texteDebut = $questionnaire->getTexteDebut();
+        $this->questionnaire->texteFin = $questionnaire->getTextFin();
     }
 
     public function getQuestionnaire(): Qualite

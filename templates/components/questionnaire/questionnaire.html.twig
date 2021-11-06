@@ -1,11 +1,18 @@
 <h3>...Questionnaire...</h3>
-<form data-provide="wizard">
+<form {{ stimulus_controller('wizard', {
+    url: path('wizard_page'),
+    step: 0,
+    questionnaire: questionnaire.questionnaire.id,
+    maxStep: sections|length-1 }) }}>
     <input type="hidden" value="{{ id }}" id="questionnaire">
     <ul class="nav nav-process nav-process-circle">
         {% for section in sections %}
-            <li class="nav-item">
-                <span class="nav-title">Introduction</span>
-                <a class="nav-link" data-bs-toggle="tab" href="#wizard-{{ section.section.id }}"></a>
+            <li class="nav-item {% if loop.first %}processing{% endif %}" data-step="{{ loop.index0 }}">
+                <span class="nav-title">Section #{{ section.ordre }}</span>
+                <a class="nav-link {% if loop.first %}active{% endif %}" href="#"
+                   data-action="wizard#step"
+                   data-step="{{ loop.index0 }}"
+                ></a>
             </li>
         {% endfor %}
         {# {% for qualiteQuestionnaireSection in questionnaireSections %} #}
@@ -31,12 +38,19 @@
         {# </li> #}
     </ul>
 
-    {% for section in sections %}
-        <div class="tab-content">
-            {# todo: loop.first ou onglet préselectionné... a gérer #}
-            <div class="tab-pane fade {% if loop.first %}active show{% endif %}" id="wizard-{{ section.section.id }}">
-                {{ section_render(section) }}
-            </div>
-        </div>
-    {% endfor %}
+    <div data-wizard-target="page">
+        ... chargement ...
+    </div>
+
+    <div class="flexbox mt-2">
+        <button class="btn btn-secondary" data-action="wizard#prev" id="prev-button">
+            <i class="fas fa-left"></i> Précédent
+        </button>
+        <button class="btn btn-secondary" data-action="wizard#next" id="next-button">
+            Suivant <i class="fas fa-right"></i>
+        </button>
+        <button class="btn btn-primary d-none" data-action="wizard#finish" id="finish-button">
+            Terminer
+        </button>
+    </div>
 </form>

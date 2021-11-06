@@ -33,9 +33,10 @@ class TypeQuestionRenderer
         $template = $this->load();
 
         $params = $question->getOptions();
-        //init avec un tableau dans la classe ??
         $params['block_name'] = $question->getOption('block_name');
+        $params['name'] = 'name_question';//todo: a gérer
         $params['id'] = $question->id;
+        $params['reponses'] = $question->getReponses();
         $params['help'] = $question->help;
         $params['config'] = null;//todo a gérer
         $params['libelle'] = $question->libelle;

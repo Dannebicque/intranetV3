@@ -24,10 +24,11 @@ class TypeLibre extends AbstractQuestion
     {
         parent::configureOptions($resolver);
         $resolver
-            ->setDefault('block_name', 'type_libre');
+            ->setDefault('block_name', 'type_libre')
+            ->setDefault('type_question', 'text');
     }
 
-    public function getOrGenereReponses()
+    public function getOrGenereReponses($question)
     {
 
     }

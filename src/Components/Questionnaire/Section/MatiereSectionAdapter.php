@@ -17,4 +17,16 @@ class MatiereSectionAdapter extends AbstractSectionAdapter
     public const FIELD_LIBELLE = 'libelle';
     public const FIELD_CODE = 'ref_matiere';
     public const LABEL = 'matiere';
+
+    public function getData(mixed $ordre)
+    {
+        dump($ordre);
+
+        return [
+            'libelle' => '',
+            'code' => '',
+            'ordre' => $ordre,
+            'id' => 0
+        ];
+    }
 }

@@ -9,6 +9,8 @@
 
 namespace App\Components\Questionnaire;
 
+use App\Components\Questionnaire\DTO\Reponse;
+
 class Reponses
 {
     private array $reponses = [];

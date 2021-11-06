@@ -10,13 +10,16 @@
 namespace App\Components\Questionnaire;
 
 
+use App\Components\Questionnaire\Section\AbstractSection;
+
 class Sections
 {
     private array $sections = [];
 
-    public function addSection(Section $section)
+    public function addSection(AbstractSection $section)
     {
-        $this->sections[$section->getSection()->ordre] = $section;
+        $section->arrayKey = count($this->sections);
+        $this->sections[] = $section;
     }
 
     public function getSections(): array
