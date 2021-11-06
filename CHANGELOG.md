@@ -2,6 +2,43 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.4.0](https://github.com/Dannebicque/intranetV3/compare/v3.3.4...v3.4.0) (2021-11-06)
+
+
+### Features
+
+* Affichage des articles, dates et documents en fonction du destinaitaire. Un personnel peut tout voir, un étudiant juste ses éléments. ([121d068](https://github.com/Dannebicque/intranetV3/commit/121d068e5e837ed4e2539b4ef97558d65a4e3e11))
+* Ajout d'un filtre par semestre actif ([7dd3203](https://github.com/Dannebicque/intranetV3/commit/7dd3203ca4366e3f9186ad3da5dc6f0631f54f36))
+* Ajout des tags sur les questions ([259927c](https://github.com/Dannebicque/intranetV3/commit/259927c33e8089b3194212efdf784826aecddb3e))
+* Ajout du type de destinataire (personnel ou etudiant) sur les dates, articles et documents. Modification des formulaires et des tableaux d'admin. (pas fait: affichage.) ([5c7041a](https://github.com/Dannebicque/intranetV3/commit/5c7041aca6e7f5d40fae13a511976a7d4c58e7ce))
+* Commande de synchro Celcat->EDT avec récupération des modifications d'une journée. ([696e248](https://github.com/Dannebicque/intranetV3/commit/696e248ffdbf8db7f15bc286f6001da448a5f834))
+* Composant Questionnaire. Ajout des types de sections, divers correctifs ([65b36e5](https://github.com/Dannebicque/intranetV3/commit/65b36e5319df6eb03e733af24d854462fdb4a86f))
+* Composant Questionnaire. Traitement des différentes questions, des sections paramètrables, nombreux fix. ([6eba3d8](https://github.com/Dannebicque/intranetV3/commit/6eba3d8ce974398776faf0cdcdb1b05b5b868515))
+* Composant Stimulus pour gérer les collections Symfony ([391f57a](https://github.com/Dannebicque/intranetV3/commit/391f57adb49b807c39fcdfd563dbeda79ad3109f))
+* Export personnalisé (sur le modèle de "par matière") dans la partie trombinoscope ([aa71915](https://github.com/Dannebicque/intranetV3/commit/aa719150e5b76b929308e08af868d27dadd3d5e9))
+* Gestion de la synchro Celcat et de l'option au niveau du diplôme plutôt que du département. ([0e4cec6](https://github.com/Dannebicque/intranetV3/commit/0e4cec68eb94384ea097725173badd810bbc414a))
+* Gestion des sections et des réponses pour les questionnaires ([ec62750](https://github.com/Dannebicque/intranetV3/commit/ec62750b30188c17dc5e0d85c4049ee54c9d6b49))
+* Javascript et stimulus pour la création de questionnaire çou de section ([9cc8ced](https://github.com/Dannebicque/intranetV3/commit/9cc8cedc0c6a4f993ab1df9ab2531ea2722fc39c))
+* Mails automatiques à j-1 et j-2 pour les questionnaires qualités ([bc3cc7e](https://github.com/Dannebicque/intranetV3/commit/bc3cc7e80fd06c506c9d85731c835b1aaa8bdaa2))
+* Refonte partie questionnaire (gestion des questions, section, et questionnaire) + modification enquête ([05658ed](https://github.com/Dannebicque/intranetV3/commit/05658eda01bf6c599ffa6e951569b7dcf972ec4e))
+* Script de mise à jour de la structure d'absence, rattrapage et absence justificatif avec le semestre. ([e034fee](https://github.com/Dannebicque/intranetV3/commit/e034feee5260bc1bb38c4b4b77dc2f16cdf3e1f4))
+* Stimulus Wizard. ([08e585d](https://github.com/Dannebicque/intranetV3/commit/08e585d26544333dfcc77a98785d901653afe139))
+
+
+### Bug Fixes
+
+* Correctifs sur les composants Twig (icone, typo) ([bacc12d](https://github.com/Dannebicque/intranetV3/commit/bacc12d54853a145733e68b68979d9980a362172))
+* Divers correctifs et nettoyage de code ([a3c7378](https://github.com/Dannebicque/intranetV3/commit/a3c73780600d63a7c49ea1036829d61c9923dccc))
+* Export script celcat ([bb9c373](https://github.com/Dannebicque/intranetV3/commit/bb9c373c28fb159f1c62e5ebd78d8136f5d3971b))
+* Fichiers de configuration ([671df68](https://github.com/Dannebicque/intranetV3/commit/671df68c6e1ab697ef60527e321f134f3843acdd))
+* Icone de police FA6.Pro ([a377856](https://github.com/Dannebicque/intranetV3/commit/a37785617b14d090db6fe6a0780ab85f820d7fb4))
+* Liens pour l'aide ([900330f](https://github.com/Dannebicque/intranetV3/commit/900330f7b300c2252d338383cccb83d5043e1324))
+* Récupération des absences sur les demandes de rattrapage ([3ba22db](https://github.com/Dannebicque/intranetV3/commit/3ba22dbd9fc32a2928c9c46f1f38a60d9dca49b0))
+* Sauvegarde du semestre dans l'absence, pour ne pas dépendre de l'étudiant. Et l'année universitaire en fonction de l'utilisateur connecté ([d8483a5](https://github.com/Dannebicque/intranetV3/commit/d8483a54f6093da04e642a4ae023c6211d6af54f))
+* Sauvegarde du semestre dans la demande de rattrapage, pour ne pas dépendre de l'étudiant. ([759ea00](https://github.com/Dannebicque/intranetV3/commit/759ea00090c6d7bd123495a000bc40da20743ce3))
+* Traductions ([a61b2d7](https://github.com/Dannebicque/intranetV3/commit/a61b2d7eeda069d819c2d3843ce8f56bd3164a92))
+* Traductions ([a7575bd](https://github.com/Dannebicque/intranetV3/commit/a7575bd757f4d4fdffa465863cecb78793a0e197))
+
 ### [3.3.4](https://github.com/Dannebicque/intranetV3/compare/v3.3.3...v3.3.4) (2021-11-01)
 
 
