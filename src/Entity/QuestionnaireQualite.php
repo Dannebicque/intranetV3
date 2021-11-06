@@ -30,6 +30,7 @@ class QuestionnaireQualite extends Questionnaire
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\QuestionnaireQuestionnaireSection", mappedBy="questionnaireQualite",
      *                                                                             cascade={"persist", "remove"})
+     * @ORM\OrderBy({"ordre" = "ASC"})
      */
     private Collection $sections;
 

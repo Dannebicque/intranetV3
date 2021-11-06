@@ -156,8 +156,15 @@ class QuestionnaireQuestion extends BaseEntity
 
     /**
      * @return Collection|QuestionnaireReponse[]
+     *
+     * @deprecated
      */
     public function getQuizzReponses(): Collection
+    {
+        return $this->quizzReponses;
+    }
+
+    public function getReponses(): Collection
     {
         return $this->quizzReponses;
     }
@@ -286,7 +293,7 @@ class QuestionnaireQuestion extends BaseEntity
     public function getCle($config = ''): string
     {
         if (!('' !== $config && null !== $config)) {
-            return 'quizz_question_reponses_q' . $this->getId();
+            return 'quizz_question_reponses_q'.$this->getId();
         }
 
         return '';
@@ -348,7 +355,7 @@ class QuestionnaireQuestion extends BaseEntity
 
     public function getConfiguration(): ?array
     {
-        if (null !== $this->configuration || '' !== $this->configuration) {
+        if (null !== $this->configuration && '' !== $this->configuration) {
             return json_decode($this->configuration, true);
         }
 
@@ -357,7 +364,7 @@ class QuestionnaireQuestion extends BaseEntity
 
     public function setConfiguration(?array $configuration): self
     {
-        $this->configuration = json_encode($configuration);;
+        $this->configuration = json_encode($configuration);
 
         return $this;
     }

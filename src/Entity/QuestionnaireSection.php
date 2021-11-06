@@ -9,6 +9,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\ConfigTrait;
 use App\Entity\Traits\LifeCycleTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -21,6 +22,7 @@ use Doctrine\ORM\Mapping as ORM;
 class QuestionnaireSection extends BaseEntity
 {
     use LifeCycleTrait;
+    use ConfigTrait;
 
     public const DETAIL = 'DETAIL';
     public const GROUPE = 'GROUPE';
@@ -47,10 +49,7 @@ class QuestionnaireSection extends BaseEntity
      */
     private Collection $qualiteQuestionnaireSections;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private ?string $config = null;
+
 
     /**
      * @ORM\Column(type="string", length=10, nullable=true)
@@ -151,18 +150,6 @@ class QuestionnaireSection extends BaseEntity
                 $qualiteQuestionnaireSection->setSection(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getConfig(): ?array
-    {
-        return json_decode($this->config, true);
-    }
-
-    public function setConfig(array $config = []): self
-    {
-        $this->config = json_encode($config);
 
         return $this;
     }
