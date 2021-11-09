@@ -24,6 +24,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method EdtPlanning|null findOneBy(array $criteria, array $orderBy = null)
  * @method EdtPlanning[]    findAll()
  * @method EdtPlanning[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<EdtPlanning>
  */
 class EdtPlanningRepository extends ServiceEntityRepository
 {
@@ -363,6 +364,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
 
     private function transformeArray($data, $tabMatieresSemestre): array
     {
+        /** todo: passer par le DTO*/
         $t = [];
         /** @var EdtPlanning $event */
         foreach ($data as $event) {
@@ -378,7 +380,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
                 if (null !== $matiere) {
                     $pl['ical'] = $matiere->libelle . ' (' . $matiere->codeMatiere . ') ' . $event->getDisplayGroupe();
                 } else {
-                    $pl['ical'] = '';
+                    $pl['ical'] = $event->getTexte();
                 }
                 $pl['date'] = $event->getDate();
                 $pl['salle'] = $event->getSalle();
