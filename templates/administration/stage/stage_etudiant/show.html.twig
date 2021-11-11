@@ -29,11 +29,12 @@
         <div class="card-body">
             {{ include('composants/stage_timeline.html.twig',{stageEtudiant: stageEtudiant}) }}
 
-            <table class="table table-striped table-bordered">
+            <table class="table table-bordered">
                 <tbody>
-
                 <tr>
-                    <th colspan="2" class="th_titre">{{ 'table.etudiant'|trans }}</th>
+                    <th colspan="2" class="th_titre">
+                        {{ 'table.etudiant'|trans }}
+                    </th>
                 </tr>
                 <tr>
                     <th>{{ 'table.prenom_nom'|trans }}</th>
