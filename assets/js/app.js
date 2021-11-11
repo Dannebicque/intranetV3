@@ -11,14 +11,12 @@ import $ from 'jquery'
 
 import PerfectScrollbar from 'perfect-scrollbar'
 import {getDataOptions, getParentByTagName} from './util'
-import './search'
+
 import './modaler'
 
 import * as bootstrap from 'bootstrap'
 
 import '../css/app.scss'
-
-let lookup = {}
 
 import Table from '../components/table'
 import SelectComplete from '../components/SelectComplete'
@@ -108,27 +106,6 @@ $(document).ready(function () {
     preloader.fadeOut(speed)
   }
 
-  $(document).on('focus', '.topbar-search input', function () {
-    $(this).closest('.topbar-search').find('.lookup-placeholder span').css('opacity', '0')
-  })
-
-  $(document).on('blur', '.topbar-search input', function () {
-    $(this).closest('.topbar-search').find('.lookup-placeholder span').css('opacity', '1')
-  })
-
-  $(document).on('click', '#lookup', function (e) {
-    e.preventDefault()
-    var target = $('#lookup-full')
-
-    if (target !== false) {
-      lookup.toggle(target)
-    }
-  })
-
-  $(document).on('click', '#lookup-close', function () {
-    lookup.toggle($('#lookup-full'))
-  })
-
   //tooltip
   updateInterface()
 })
@@ -182,32 +159,6 @@ function updateInterface () {
       }
     })
   })
-}
-
-// Open fullscreen lookup
-//
-lookup.toggle = function (e) {
-  if ($(e).hasClass('reveal')) {
-    lookup.close(e)
-  } else {
-    lookup.open(e)
-  }
-}
-
-// Close fullscreen lookup
-//
-lookup.close = function (e) {
-  $(e).removeClass('reveal')
-  $('body').removeClass('no-scroll')
-}
-
-
-// Close fullscreen lookup
-//
-lookup.open = function (e) {
-  $(e).addClass('reveal')
-  $(e).find('.lookup-form input').focus()
-  $('body').addClass('no-scroll')
 }
 
 // =====================
