@@ -32,7 +32,7 @@ class EtudiantProfilType extends AbstractType
             ->add('tel2', TextType::class, ['required' => false, 'label' => 'tel2'])
             ->add('signature', TextType::class, ['required' => false, 'label' => 'signature'])
             ->add('adresse', AdresseType::class, ['label' => 'adresse'])
-            ->add('adresseParentale', AdresseType::class, ['label' => 'adresseParentale']);
+            ->add('adresseParentale', AdresseType::class, ['label' => 'adresseParentale', 'required' => false]);
     }
 
     /**
