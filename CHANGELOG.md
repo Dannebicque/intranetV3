@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.4.1](https://github.com/Dannebicque/intranetV3/compare/v3.4.0...v3.4.1) (2021-11-11)
+
+
+### Bug Fixes
+
+* Adresse parentale optionnelle ([14ab976](https://github.com/Dannebicque/intranetV3/commit/14ab97665e821d134a20d4cb77c4712dc7b2b66b))
+* En tête des tableaux ([1018410](https://github.com/Dannebicque/intranetV3/commit/1018410b38c8677fa24c7256ec9ddc465ed4da7e))
+* Lien vers la modification de ses données dans le profil. ([adc782f](https://github.com/Dannebicque/intranetV3/commit/adc782f5007580a37f63863d998d808c3affe48c))
+* Mise en page de la page de résumé du stage ([5365ab0](https://github.com/Dannebicque/intranetV3/commit/5365ab058ffe726b009949bf22fea962a8d8f4fc))
+* Texte vide si pas de matière. ([d58cf4c](https://github.com/Dannebicque/intranetV3/commit/d58cf4c75437a86f6841d1015079839def527ed9))
+* Typo ([40a85d5](https://github.com/Dannebicque/intranetV3/commit/40a85d5cb8c9657a40d48fc75cfec9c38a315d33))
+
 ## [3.4.0](https://github.com/Dannebicque/intranetV3/compare/v3.3.4...v3.4.0) (2021-11-06)
 
 
