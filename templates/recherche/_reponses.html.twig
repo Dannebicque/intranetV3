@@ -1,0 +1,83 @@
+<div class="row">
+    <div class="col-sm-12 col-md-4 col-lg-4">
+        <h5 class="text-uppercase fw-400">{{ 'etudiants'|trans }} ({{ etudiants|length }})</h5>
+
+        <div class="media-list media-list-hover">
+            {% for etudiant in etudiants %}
+                <div class="row mb-2 h-64px">
+                    {% if (etudiant.photo == 'noimage.png' or etudiant.photo == null) %}
+                        <div class="col-3">
+                            <a href="{{ path('user_profil', {slug: etudiant.slug, type:'etudiant'}) }}" target="_blank">
+                                <div class="avatar-circle-md">
+                                <span class="initials">{{ etudiant.avatarInitiales }}</span>
+                                </div>
+                            </a>
+                        </div>
+                    {% else %}
+                        <a href="{{ path('user_profil', {slug: etudiant.slug, type:'etudiant'}) }}" target="_blank">
+                            <img class="col-3 avatar avatar-sm" src="{{ asset('/uploads/etudiants/'~etudiant.photo) }}"
+                                 alt="Photo de profil de {{ etudiant.displayPr }}">
+                        </a>
+                    {% endif %}
+
+                    <div class="col-9 media-body">
+                        <a href="{{ path('user_profil', {slug: etudiant.slug, type:'etudiant'}) }}" target="_blank">
+                            <p>
+                                <strong>{{ etudiant.displayPr }} ({{ etudiant.semestre }})</strong><br>
+                                <span class="text-sm-end">{{ etudiant.groupes }}</span>
+                            </p>
+                        </a>
+                    </div>
+                </div>
+            {% else %}
+                <div class="alert alert-warning">Pas de résultats correspondant à la recherche
+                    <strong>{{ q }}</strong></div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="col-sm-12 col-md-4 col-lg-4">
+        <h5 class="text-uppercase fw-400">{{ 'permanents'|trans }} ({{ personnels|length }})</h5>
+
+        <div class="media-list media-list-divided media-list-hover">
+            {% for personnel in personnels %}
+                <div class="row mb-2 h-64px">
+                    {% if (personnel.photo == 'noimage.png' or personnel.photo == null) %}
+                        <div class="col-3">
+                            <a href="{{ path('user_profil', {slug: personnel.slug, type:'personnel'}) }}" target="_blank">
+                                <div class="avatar-circle-md">
+                                    <span class="initials">{{ personnel.avatarInitiales }}</span>
+                                </div>
+                            </a>
+                        </div>
+                    {% else %}
+                        <a href="{{ path('user_profil', {slug: personnel.slug, type:'personnel'}) }}" target="_blank">
+                            <img class="col-3 avatar avatar-sm" src="{{ asset('/uploads/personnels/'~personnel.photo) }}"
+                                 alt="Photo de profil de {{ personnel.displayPr }}">
+                        </a>
+                    {% endif %}
+
+                    <div class="col-9 media-body">
+                        <a href="{{ path('user_profil', {slug: personnel.slug, type:'personnel'}) }}" target="_blank">
+                            <p>
+                                <strong>{{ personnel.displayPr }}</strong><br>
+                            </p>
+                        </a>
+                    </div>
+                </div>
+            {% else %}
+                <div class="alert alert-warning">Pas de résultats correspondant à la recherche
+                    <strong>{{ q }}</strong></div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="col-sm-12 col-md-4 col-lg-4" id="search_reponse_autre">
+        <h5 class="text-uppercase fw-400">{{ 'autres'|trans }}</h5>
+        ou dernier éléménts recherchés
+
+        <div class="media-list media-list-hover">
+            <div class="alert alert-info">Saisir au moins 3 caractères</div>
+        </div>
+    </div>
+</div>

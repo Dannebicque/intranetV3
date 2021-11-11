@@ -11,7 +11,8 @@ namespace App\Controller;
 
 use App\Repository\EtudiantRepository;
 use App\Repository\PersonnelDepartementRepository;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -22,19 +23,22 @@ use Symfony\Component\Routing\Annotation\Route;
 class RechercheController extends BaseController
 {
     /**
-     * @Route("/{keyword}", name="recherche", options={"expose":true}, methods={"GET"})
+     * @Route("/", name="recherche", options={"expose":true}, methods={"GET"})
      *
      */
     public function index(
+        Request $request,
         EtudiantRepository $etudiantRepository,
         PersonnelDepartementRepository $personnelRepository,
-        $keyword
-    ): JsonResponse {
-        $t['etudiants'] = $etudiantRepository->search($keyword, $this->getDepartement());
-        $t['personnels'] = $personnelRepository->search($keyword, $this->getDepartement());
-        $t['autres'] = [];
-        $t['basepath'] = $this->getParameter('BASE_URL') . 'upload/';
+    ): Response {
+        $keyword = $request->query->get('q');
+        $etudiants = $etudiantRepository->search($keyword, $this->getDepartement());
+        $personnels = $personnelRepository->search($keyword, $this->getDepartement());
 
-        return $this->json($t);
+        return $this->render('recherche/_reponses.html.twig', [
+            'etudiants' => $etudiants,
+            'personnels' => $personnels,
+            'q' => $keyword
+        ]);
     }
 }

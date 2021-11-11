@@ -1,36 +1,21 @@
-<div class="lookup-fullscreen" id="lookup-full">
-    <span class="close" id="lookup-close" data-target="#lookup-full"><i class="fas fa-times"></i></span>
-
+<div class="lookup-fullscreen" id="lookup-full" style="width: 100%; height: 100%">
+    <a href="#" title="{{ 'fermer'|trans }}"
+       class="close"
+       data-bs-toggle="tooltip" data-bs-placement="bottom"
+       data-action="lookup-search#closeModal"
+       data-original-title="{{ 'fermer'|trans }}">
+        <i class="fas fa-times"></i>
+    </a>
     <div class="lookup-form">
         <label for="search"><span
                     class="sr-only">Rechercher</span></label>
-        <input type="text" placeholder="Recherche quelque chose" id="search">
+        <input type="text" placeholder="Recherche quelque chose" id="search" data-action="lookup-search#onSearchInput">
     </div>
 
-    <div class="lookup-results scrollable">
+    <div class="lookup-results scrollable" data-lookup-search-target="reponses">
         <div class="row">
-            <div class="col-sm-12 col-md-4 col-lg-4">
-                <h5 class="text-uppercase fw-400">{{ 'etudiants'|trans }}</h5>
-
-                <div class="media-list media-list-divided media-list-hover" id="search_reponse_etudiant">
-                    <div class="alert alert-info">Saisir au moins 3 caractères</div>
-                </div>
-            </div>
-
-
-            <div class="col-sm-12 col-md-4 col-lg-4">
-                <h5 class="text-uppercase fw-400">{{ 'permanents'|trans }}</h5>
-
-                <div class="media-list media-list-hover" id="search_reponse_personnel">
-                    <div class="alert alert-info">Saisir au moins 3 caractères</div>
-                </div>
-            </div>
-
-            <div class="col-sm-12 col-md-4 col-lg-4" id="search_reponse_autre">
-                <h5 class="text-uppercase fw-400">{{ 'autres'|trans }}</h5>
-                {# ou dernier éléménts recherchés
-                #}
-                <div class="media-list media-list-hover">
+            <div class="col-12">
+                <div class="media-list media-list-divided media-list-hover">
                     <div class="alert alert-info">Saisir au moins 3 caractères</div>
                 </div>
             </div>
