@@ -56,26 +56,12 @@
         <header class="card-header">
             <h4 class="card-title">{{ 'donnees.personnelles'|trans }}</h4>
             <div class="card-header-actions">
-                {% if user.typeUser|lower == 'etudiant' %}
-                    <a class="btn btn-sm btn-warning"
-                       title="{{ 'modifiez.vos.informations'|trans }}"
-                       data-bs-toggle="tooltip" data-bs-placement="bottom"
-
-                       href="{{ path('administration_etudiant_edit', {id: user.id, origin: 'profil'}) }}"
-                    >
-                        <i class="fas fa-edit"></i>
-                    </a>
-                {% else %}
-                    {# todo: renvoi vers mes settings quelque soit... #}
-                    <a class="btn btn-sm btn-warning"
-                       title="{{ 'modifiez.vos.informations'|trans }}"
-                       data-bs-toggle="tooltip" data-bs-placement="bottom"
-
-                       href="{{ path('user_settings') }}"
-                    >
-                        <i class="fas fa-edit"></i>
-                    </a>
-                {% endif %}
+                <a class="btn btn-sm btn-warning"
+                   title="{{ 'modifiez.vos.informations'|trans }}"
+                   data-bs-toggle="tooltip" data-bs-placement="bottom"
+                   href="{{ path('user_settings') }}">
+                    <i class="fas fa-edit"></i>
+                </a>
             </div>
         </header>
         <div class="card-body">
