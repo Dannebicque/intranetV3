@@ -33,32 +33,32 @@ class MyIcal
     {
         //todo: a tester si les données viennent de Celcat ?
         $this->tabheure = [];
-        $this->filevt = 'BEGIN:VCALENDAR' . chr(13) . chr(10);
-        $this->filevt .= 'VERSION:2.0' . chr(13) . chr(10);
-        $this->filevt .= 'CALSCALE:GREGORIAN' . chr(13) . chr(10);
-        $this->filevt .= 'METHOD:PUBLISH' . chr(13) . chr(10);
-        $this->filevt .= 'PRODID:-//MMI/handcal//NONSGML v1.0//FR' . chr(13) . chr(10);
-        $this->filevt .= 'BEGIN:VTIMEZONE' . chr(13) . chr(10);
-        $this->filevt .= 'TZID:Europe/Paris' . chr(13) . chr(10);
-        $this->filevt .= 'X-LIC-LOCATION:Europe/Paris' . chr(13) . chr(10);
-        $this->filevt .= 'BEGIN:DAYLIGHT' . chr(13) . chr(10);
-        $this->filevt .= 'TZOFFSETFROM:+0100' . chr(13) . chr(10);
-        $this->filevt .= 'TZOFFSETTO:+0200' . chr(13) . chr(10);
-        $this->filevt .= 'LAST-MODIFIED:' . gmdate('Ymd') . 'T' . gmdate('His') . 'Z' . chr(13) . chr(10);
-        $this->filevt .= 'TZNAME:CEST' . chr(13) . chr(10);
-        $this->filevt .= 'DTSTART:19700329T020000' . chr(13) . chr(10);
-        $this->filevt .= 'RRULE:FREQ=YEARLY;INTERVAL=1;BYDAY=-1SU;BYMONTH=3' . chr(13) . chr(10);
-        $this->filevt .= 'END:DAYLIGHT' . chr(13) . chr(10);
-        $this->filevt .= 'BEGIN:STANDARD' . chr(13) . chr(10);
-        $this->filevt .= 'TZOFFSETFROM:+0200' . chr(13) . chr(10);
-        $this->filevt .= 'TZOFFSETTO:+0100' . chr(13) . chr(10);
-        $this->filevt .= 'TZNAME:CET' . chr(13) . chr(10);
-        $this->filevt .= 'DTSTART:19701025T030000' . chr(13) . chr(10);
-        $this->filevt .= 'RRULE:FREQ=YEARLY;INTERVAL=1;BYDAY=-1SU;BYMONTH=10' . chr(13) . chr(10);
-        $this->filevt .= 'END:STANDARD' . chr(13) . chr(10);
-        $this->filevt .= 'X-WR-CALNAME: IUT3-Mescours' . chr(13) . chr(10);
-        $this->filevt .= 'X-WR-TIMEZONE:Europe/Paris' . chr(13) . chr(10);
-        $this->filevt .= 'END:VTIMEZONE' . chr(13) . chr(10);
+        $this->filevt = 'BEGIN:VCALENDAR'.chr(13).chr(10);
+        $this->filevt .= 'VERSION:2.0'.chr(13).chr(10);
+        $this->filevt .= 'CALSCALE:GREGORIAN'.chr(13).chr(10);
+        $this->filevt .= 'METHOD:PUBLISH'.chr(13).chr(10);
+        $this->filevt .= 'PRODID:-//MMI/handcal//NONSGML v1.0//FR'.chr(13).chr(10);
+        $this->filevt .= 'BEGIN:VTIMEZONE'.chr(13).chr(10);
+        $this->filevt .= 'TZID:Europe/Paris'.chr(13).chr(10);
+        $this->filevt .= 'X-LIC-LOCATION:Europe/Paris'.chr(13).chr(10);
+        $this->filevt .= 'BEGIN:DAYLIGHT'.chr(13).chr(10);
+        $this->filevt .= 'TZOFFSETFROM:+0100'.chr(13).chr(10);
+        $this->filevt .= 'TZOFFSETTO:+0200'.chr(13).chr(10);
+        $this->filevt .= 'LAST-MODIFIED:'.gmdate('Ymd').'T'.gmdate('His').'Z'.chr(13).chr(10);
+        $this->filevt .= 'TZNAME:CEST'.chr(13).chr(10);
+        $this->filevt .= 'DTSTART:19700329T020000'.chr(13).chr(10);
+        $this->filevt .= 'RRULE:FREQ=YEARLY;INTERVAL=1;BYDAY=-1SU;BYMONTH=3'.chr(13).chr(10);
+        $this->filevt .= 'END:DAYLIGHT'.chr(13).chr(10);
+        $this->filevt .= 'BEGIN:STANDARD'.chr(13).chr(10);
+        $this->filevt .= 'TZOFFSETFROM:+0200'.chr(13).chr(10);
+        $this->filevt .= 'TZOFFSETTO:+0100'.chr(13).chr(10);
+        $this->filevt .= 'TZNAME:CET'.chr(13).chr(10);
+        $this->filevt .= 'DTSTART:19701025T030000'.chr(13).chr(10);
+        $this->filevt .= 'RRULE:FREQ=YEARLY;INTERVAL=1;BYDAY=-1SU;BYMONTH=10'.chr(13).chr(10);
+        $this->filevt .= 'END:STANDARD'.chr(13).chr(10);
+        $this->filevt .= 'X-WR-CALNAME: IUT3-Mescours'.chr(13).chr(10);
+        $this->filevt .= 'X-WR-TIMEZONE:Europe/Paris'.chr(13).chr(10);
+        $this->filevt .= 'END:VTIMEZONE'.chr(13).chr(10);
 
         $this->tabheure = [
             '',
@@ -99,15 +99,15 @@ class MyIcal
     {
         $d = Carbon::now();
         $d = $d->format(DateTimeInterface::ATOM);
-        $uid = $d . '-' . mb_substr(md5($d . $id), 0, 12) . '-@IUT3Cours';
-        $this->filevt .= 'BEGIN:VEVENT' . chr(13) . chr(10);
-        $this->filevt .= 'UID:' . $uid . chr(13) . chr(10);
-        $this->filevt .= $this->dtstart . chr(13) . chr(10);
-        $this->filevt .= $this->dtend . chr(13) . chr(10);
-        $this->filevt .= $this->summary . chr(13) . chr(10);
-        $this->filevt .= $this->location . chr(13) . chr(10);
-        $this->filevt .= $this->description . chr(13) . chr(10);
-        $this->filevt .= 'END:VEVENT' . chr(13) . chr(10);
+        $uid = $d.'-'.mb_substr(md5($d.$id), 0, 12).'-@IUT3Cours';
+        $this->filevt .= 'BEGIN:VEVENT'.chr(13).chr(10);
+        $this->filevt .= 'UID:'.$uid.chr(13).chr(10);
+        $this->filevt .= $this->dtstart.chr(13).chr(10);
+        $this->filevt .= $this->dtend.chr(13).chr(10);
+        $this->filevt .= $this->summary.chr(13).chr(10);
+        $this->filevt .= $this->location.chr(13).chr(10);
+        $this->filevt .= $this->description.chr(13).chr(10);
+        $this->filevt .= 'END:VEVENT'.chr(13).chr(10);
     }
 
     /**
@@ -119,7 +119,7 @@ class MyIcal
         $h = explode(':', $this->tabheure[$creneau]);
 
         $timestamp = mktime($h[0], $h[1], '00', $date->month, $date->day, $date->year);
-        $this->dtstart = 'DTSTART:' . $this->calculHeureEte($timestamp);
+        $this->dtstart = 'DTSTART:'.$this->calculHeureEte($timestamp);
     }
 
     public function calculHeureEte(int $timestamp)
@@ -134,7 +134,7 @@ class MyIcal
             $decalage_horaire = 1 * 3600;
         } elseif (($mois_courant > 3) && ($mois_courant < 10)) {
             $decalage_horaire = 2 * 3600;
-        } elseif (3 === (int)$mois_courant) {
+        } elseif (3 === (int) $mois_courant) {
             if (!isset($num_dernier_dimanche[$annee_courante][$mois_courant])) {
                 $num_dernier_dimanche[$annee_courante][$mois_courant] = $this->getDernierDimancheDuMois2($mois_courant,
                     $annee_courante);
@@ -144,7 +144,7 @@ class MyIcal
             } else {
                 $decalage_horaire = 1 * 3600;
             }
-        } elseif (10 === (int)$mois_courant) {
+        } elseif (10 === (int) $mois_courant) {
             if (!isset($num_dernier_dimanche[$annee_courante][$mois_courant])) {
                 $num_dernier_dimanche[$annee_courante][$mois_courant] = $this->getDernierDimancheDuMois2($mois_courant,
                     $annee_courante);
@@ -182,7 +182,7 @@ class MyIcal
         $h = explode(':', $this->tabheure[$creneau]);
 
         $timestamp = mktime($h[0], $h[1], '00', $date->month, $date->day, $date->year);
-        $this->dtend = 'DTEND:' . $this->calculHeureEte($timestamp);
+        $this->dtend = 'DTEND:'.$this->calculHeureEte($timestamp);
     }
 
     /**
@@ -190,7 +190,7 @@ class MyIcal
      */
     public function setLocation($lieu): void
     {
-        $this->location = 'LOCATION:' . $lieu;
+        $this->location = 'LOCATION:'.$lieu;
     }
 
     /**
@@ -198,7 +198,7 @@ class MyIcal
      */
     public function setDescription($texte): void
     {
-        $this->description = 'DESCRIPTION:' . $texte;
+        $this->description = 'DESCRIPTION:'.$texte;
     }
 
     /**
@@ -206,12 +206,12 @@ class MyIcal
      */
     public function setSummary($titre): void
     {
-        $this->summary = 'SUMMARY:' . $titre;
+        $this->summary = 'SUMMARY:'.$titre;
     }
 
     public function getIcal(): string
     {
-        $this->filevt .= 'END:VCALENDAR' . chr(13) . chr(10);
+        $this->filevt .= 'END:VCALENDAR'.chr(13).chr(10);
 
         return $this->filevt;
     }
