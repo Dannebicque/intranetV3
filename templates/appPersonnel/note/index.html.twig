@@ -57,6 +57,7 @@
                                     {# todo: ajouter bouton on/off pour afficher masquer évaluation #}
                                 </div>
                             {% endif %}
+                            <div class="overflow-auto">
                             <table class="table table-striped table-bordered">
                                 <tr>
                                     <th>{{ 'table.groupe'|trans }}</th>
@@ -98,8 +99,8 @@
                                     {% for groupe in eval.typeGroupe.groupes %}
                                         <td>
 
-                                            <div class="btn-group  btn-block">
-                                                <button class="btn btn-label  btn-block btn-primary dropdown-toggle"
+                                            <div class="btn-group d-grid d-block mb-2">
+                                                <button class="btn btn-label btn-primary dropdown-toggle"
                                                         data-bs-toggle="dropdown">
                                                     <label><i class="fa fa-file-pdf"></i></label>
                                                     {{ 'exporter'|trans }}
@@ -114,7 +115,7 @@
                                                 </div>
                                             </div>
                                             <a href="{{ path('application_personnel_evaluation_show', {uuid:eval.uuidString}) }}"
-                                               class="btn btn-block btn-info">{{ 'voir.modifier'|trans }}</a>
+                                               class="btn d-grid d-block btn-info">{{ 'voir.modifier'|trans }}</a>
                                         </td>
                                     {% endfor %}
                                     <td>
@@ -136,6 +137,7 @@
                                     </td>
                                 </tr>
                             </table>
+                            </div>
                             {{ render_esi(controller(
                                 'App\\Controller\\GraphiqueController::evaluation', {
                                     evaluation: eval.id,
