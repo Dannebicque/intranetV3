@@ -74,13 +74,12 @@
                                     data-confirm-text="{{ 'fermer'|trans }}"
                                     data-url="{{ path('api_previsionnel_matiere', {'matiere': matiere.id, type:
                                         matiere.typeMatiere}) }}"
-                                    class="btn btn-info btn-outline btn-square btn-xs"
+                                    class="btn btn-info btn-outline btn-xs"
                                     data-bs-toggle="tooltip"
                                     data-bs-placement="bottom"
-                                    title="{{ 'previsionnel.et.intervenants.matiere'|trans }}"
-                                    data-title="{{ 'previsionnel.et.intervenants.matiere'|trans }}"
-                            >
-                                <i class="fas fa-user"></i>
+                                    title="{{ 'previsionnel.et.intervenants.matiere'|trans({'%matiere%':matiere.display}) }}"
+                                    data-title="{{ 'previsionnel.et.intervenants.matiere'|trans({'%matiere%':matiere.display}) }}"
+                            ><i class="fas fa-user"></i>
                             </button>
                         </td>
                         <td>
