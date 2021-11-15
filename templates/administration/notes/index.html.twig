@@ -32,21 +32,33 @@
 {% block content %}
     <div class="card">
         <div class="card-body">
-            <div class="pull-right">
-                <a href="{{ path('administration_evaluation_initialisation_index',{semestre:semestre.id}) }}"
-                   class="btn btn-primary">
-                    {{ 'initialiser.les.evaluations'|trans }}
-                </a>
-                <a href="{{ path('administration_semestre_export_tous_les_releves_provisoires',{'semestre':semestre.id}) }}"
-                   class="btn btn-primary"><i class="fa fa-print"></i> Imprimer tous les relevés provisoires</a>
-                <a href="{{ path('administration_evaluation_visibilite_all',{'etat':'visible', 'semestre':semestre.id}) }}"
-                   class="btn btn-info"><i class="fa fa-eye"></i> Afficher les notes</a>
-                <a href="{{ path('administration_evaluation_visibilite_all',{'etat':'nonvisible', 'semestre':semestre.id}) }}"
-                   class="btn btn-danger"><i class="fa fa-eye-slash"></i> Masquer les notes</a>
-                <a href="{{ path('administration_evaluation_modifiable_all',{'etat':'autorise', 'semestre':semestre.id}) }}"
-                   class="btn btn-warning"><i class="fa fa-unlock"></i> Autoriser la modification</a>
-                <a href="{{ path('administration_evaluation_modifiable_all',{'etat':'nonautorise', 'semestre':semestre.id}) }}"
-                   class="btn btn-danger"><i class="fa fa-lock"></i> Interdire la modification</a>
+            <div class="row">
+                <div class="d-grid d-block col-sm-12 col-md-6 mb-2">
+                    <a href="{{ path('administration_evaluation_initialisation_index',{semestre:semestre.id}) }}"
+                       class="btn btn-primary">
+                        {{ 'initialiser.les.evaluations'|trans }}
+                    </a>
+                </div>
+                <div class="d-grid d-block col-sm-12 col-md-6 mb-2">
+                    <a href="{{ path('administration_semestre_export_tous_les_releves_provisoires',{'semestre':semestre.id}) }}"
+                       class="btn btn-primary"><i class="fas fa-print"></i> Imprimer tous les relevés provisoires</a>
+                </div>
+                <div class="d-grid d-block col-sm-12 col-md-3">
+                    <a href="{{ path('administration_evaluation_visibilite_all',{'etat':'visible', 'semestre':semestre.id}) }}"
+                       class="btn btn-info"><i class="fas fa-eye"></i> Afficher les notes</a>
+                </div>
+                <div class="d-grid d-block col-sm-12 col-md-3">
+                    <a href="{{ path('administration_evaluation_visibilite_all',{'etat':'nonvisible', 'semestre':semestre.id}) }}"
+                       class="btn btn-danger"><i class="fas fa-eye-slash"></i> Masquer les notes</a>
+                </div>
+                <div class="d-grid d-block col-sm-12 col-md-3">
+                    <a href="{{ path('administration_evaluation_modifiable_all',{'etat':'autorise', 'semestre':semestre.id}) }}"
+                       class="btn btn-warning"><i class="fas fa-unlock"></i> Autoriser la modification</a>
+                </div>
+                <div class="d-grid d-block col-sm-12 col-md-3">
+                    <a href="{{ path('administration_evaluation_modifiable_all',{'etat':'nonautorise', 'semestre':semestre.id}) }}"
+                       class="btn btn-danger"><i class="fas fa-lock"></i> Interdire la modification</a>
+                </div>
             </div>
             <br>
             {{ render(controller('App\\Controller\\administration\\NoteController::analyse', {semestre:semestre
