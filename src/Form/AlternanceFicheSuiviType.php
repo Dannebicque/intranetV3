@@ -22,47 +22,47 @@ class AlternanceFicheSuiviType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('date', CarbonDateType::class, ['label' => 'date_entretien'])
+            ->add('date', CarbonDateType::class, ['label' => 'label.date_entretien'])
             ->add('methode', ChoiceType::class, [
-                'label' => 'methode_entretien',
+                'label' => 'label.methode_entretien',
                 'choices' => [
                     'telephone' => AlternanceFicheSuivi::VISITE_TELEPHONIQUE,
                     'visite' => AlternanceFicheSuivi::VISITE_PHYSIQUE
                 ],
                 'expanded' => true,
             ])
-            ->add('missions', TextareaType::class, ['label' => 'missions', 'attr' => ['rows' => 10]])
+            ->add('missions', TextareaType::class, ['label' => 'label.missions', 'attr' => ['rows' => 10]])
             ->add('integration', ChoiceType::class, [
-                'label' => 'integration_entreprise',
+                'label' => 'label.integration_entreprise',
                 'expanded' => true,
-                'choices' => ['faible' => 1, 'bonne' => 2, 'tres_bonne' => 3, 'excellente' => 4],
+                'choices' => ['label.faible' => 1, 'label.bonne' => 2, 'label.tres_bonne' => 3, 'label.excellente' => 4, 'Non applicable' => 0],
             ])
             ->add('initiative', ChoiceType::class, [
-                'label' => 'prise_initiative',
+                'label' => 'label.prise_initiative',
                 'expanded' => true,
-                'choices' => ['faible' => 1, 'bonne' => 2, 'tres_bonne' => 3, 'excellente' => 4],
+                'choices' => ['label.faible' => 1, 'label.bonne' => 2, 'label.tres_bonne' => 3, 'label.excellente' => 4, 'Non applicable' => 0],
             ])
             ->add('adaptation', ChoiceType::class, [
-                'label' => 'capacite_adaptation',
+                'label' => 'label.capacite_adaptation',
                 'expanded' => true,
-                'choices' => ['faible' => 1, 'bonne' => 2, 'tres_bonne' => 3, 'excellente' => 4],
+                'choices' => ['label.faible' => 1, 'label.bonne' => 2, 'label.tres_bonne' => 3, 'label.excellente' => 4, 'Non applicable' => 0],
             ])
             ->add('performance', ChoiceType::class, [
-                'label' => 'niveau_performance',
+                'label' => 'label.niveau_performance',
                 'expanded' => true,
-                'choices' => ['faible' => 1, 'bonne' => 2, 'tres_bonne' => 3, 'excellente' => 4],
+                'choices' => ['label.faible' => 1, 'label.bonne' => 2, 'label.tres_bonne' => 3, 'label.excellente' => 4, 'Non applicable' => 0],
             ])
             ->add('delais', ChoiceType::class, [
-                'label' => 'respect_delais',
+                'label' => 'label.respect_delais',
                 'expanded' => true,
-                'choices' => ['faible' => 1, 'bonne' => 2, 'tres_bonne' => 3, 'excellente' => 4],
+                'choices' => ['label.faible' => 1, 'label.bonne' => 2, 'label.tres_bonne' => 3, 'label.excellente' => 4, 'Non applicable' => 0],
             ])
             ->add('comportement', ChoiceType::class, [
-                'label' => 'comportement_maniere_globale',
+                'label' => 'label.comportement_maniere_globale',
                 'expanded' => true,
-                'choices' => ['faible' => 1, 'bonne' => 2, 'tres_bonne' => 3, 'excellente' => 4],
+                'choices' => ['label.faible' => 1, 'label.bonne' => 2, 'label.tres_bonne' => 3, 'label.excellente' => 4,'Non applicable' => 0],
             ])
-            ->add('commentaire', TextareaType::class, ['label' => 'commentaire_libre', 'attr' => ['rows' => 10]])
+            ->add('commentaire', TextareaType::class, ['label' => 'label.commentaire_libre', 'attr' => ['rows' => 10]])
         ;
     }
 
