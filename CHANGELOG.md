@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.4.2](https://github.com/Dannebicque/intranetV3/compare/v3.4.1...v3.4.2) (2021-11-16)
+
+
+### Bug Fixes
+
+* Affichage du texte si pas de matière ([fb288e2](https://github.com/Dannebicque/intranetV3/commit/fb288e2f5e9eb80c3c1b4c424aea70a73a06443b))
+* Bugs de CSS suite migration de BS5 ([e909023](https://github.com/Dannebicque/intranetV3/commit/e909023b3bc65a5ddcc8c0df65b9501a0643fb0f))
+* Bugs de CSS suite migration de BS5 ([432d796](https://github.com/Dannebicque/intranetV3/commit/432d796c11821085d927a48ac143ad9cdcf3fe72))
+* Bugs de CSS suite migration de BS5 ([f8f5a11](https://github.com/Dannebicque/intranetV3/commit/f8f5a114a8bafa05aaf1b33aac9c06949a5d3f4d))
+* Dépendances JS ([32357ac](https://github.com/Dannebicque/intranetV3/commit/32357ac33d2964ecf12e54d60caf016c08764d4d))
+* Dépendances JS ([809f4ac](https://github.com/Dannebicque/intranetV3/commit/809f4ac788d09d22c1837c337c2df6186701536c))
+* Export des absences (format dégradé) avec les SAE/Ressource. A améliorer. ([6e8a3da](https://github.com/Dannebicque/intranetV3/commit/6e8a3da3773b666a1b22d5e956565539c71d278d))
+* Export des absences (format dégradé) avec les SAE/Ressource. A améliorer. ([5342358](https://github.com/Dannebicque/intranetV3/commit/53423589acfcfe6098f0f00287b294dc4b74c3be))
+* Export EDT S3 et S4D ([bf24683](https://github.com/Dannebicque/intranetV3/commit/bf246832344fecec646f4eb32e24684c4b694f54))
+* Fiches suivi alternance. Problème de mise en page, ajout d'une option non applicable. Traductions. ([691b37c](https://github.com/Dannebicque/intranetV3/commit/691b37cf8df37ae489b049bad7c1a18d15b5a128))
+* Petites améliorations de mise en page ([7a96c6a](https://github.com/Dannebicque/intranetV3/commit/7a96c6a86af4d81c2f23aa9ee797e4d9ee49c9cc))
+* Refonte CSS des avatars ([513db4e](https://github.com/Dannebicque/intranetV3/commit/513db4e1817b7013455a046e0bf3ebfe2e2ca01f))
+* Refonte CSS des avatars ([2d4ca51](https://github.com/Dannebicque/intranetV3/commit/2d4ca5101823ce21c713c85cf03ffd97755b1885))
+
 ### [3.4.1](https://github.com/Dannebicque/intranetV3/compare/v3.4.0...v3.4.1) (2021-11-11)
 
 
