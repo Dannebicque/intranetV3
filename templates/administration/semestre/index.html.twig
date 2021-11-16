@@ -73,12 +73,12 @@
                                     <a data-bs-toggle="dropdown" href="#"><i
                                                 class="fas fa-ellipsis-h rotate-90"></i></a>
                                     <div class="dropdown-menu dropdown-menu-right">
-                                        <a href="{{ path('administration_all_absences_semestre_export', {semestre:semestre.id, _format:'pdf'}) }}"
-                                           class="dropdown-item"><i
-                                                    class="fa fa-file-pdf"></i>{{ 'exporter.pdf'|trans }}</a>
-                                        <a href="{{ path('administration_all_absences_semestre_export', {semestre:semestre.id, _format:'csv'}) }}"
-                                           class="dropdown-item"><i
-                                                    class="fas fa-file-export"></i>{{ 'exporter.csv'|trans }}</a>
+{#                                        <a href="{{ path('administration_all_absences_semestre_export', {semestre:semestre.id, _format:'pdf'}) }}"#}
+{#                                           class="dropdown-item"><i#}
+{#                                                    class="fa fa-file-pdf"></i>{{ 'exporter.pdf'|trans }}</a>#}
+{#                                        <a href="{{ path('administration_all_absences_semestre_export', {semestre:semestre.id, _format:'csv'}) }}"#}
+{#                                           class="dropdown-item"><i#}
+{#                                                    class="fas fa-file-export"></i>{{ 'exporter.csv'|trans }}</a>#}
                                         <a href="{{ path('administration_all_absences_semestre_export', {semestre:semestre.id, _format:'xlsx'}) }}"
                                            class="dropdown-item"><i
                                                     class="fas fa-file-export"></i>{{ 'exporter.xls'|trans }}</a>
