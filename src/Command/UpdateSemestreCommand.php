@@ -42,17 +42,17 @@ class UpdateSemestreCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $absences = $this->absenceRepository->findBy(['anneeUniversitaire' => 4]);
+        $absences = $this->absenceRepository->findBy(['anneeUniversitaire' => 2]);
         foreach ($absences as $absence) {
             $absence->setSemestre($absence->getEtudiant()?->getSemestre());
         }
 
-        $rattrapages = $this->rattrapageRepository->findBy(['anneeUniversitaire' => 4]);
+        $rattrapages = $this->rattrapageRepository->findBy(['anneeUniversitaire' => 2]);
         foreach ($rattrapages as $rattrapage) {
             $rattrapage->setSemestre($rattrapage->getEtudiant()?->getSemestre());
         }
 
-        $absences = $this->absenceJustificatifRepository->findBy(['anneeUniversitaire' => 4]);
+        $absences = $this->absenceJustificatifRepository->findBy(['anneeUniversitaire' => 2]);
         foreach ($absences as $absence) {
             $absence->setSemestre($absence->getEtudiant()?->getSemestre());
         }
