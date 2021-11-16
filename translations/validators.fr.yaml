@@ -119,3 +119,7 @@ cb31059: "Cette chaîne doit avoir exactement {{ limit }} caractère.|Cette cha�
 53702b7: "L'image est au format paysage ({{ width }}x{{ height }}px). Les images au format paysage ne sont\n                  pas autorisées.\n              "
 76fbcee: "L'image est au format portrait ({{ width }}x{{ height }}px). Les images au format portrait ne\n                  sont pas autorisées.\n              "
 0ac8877: "Ce mot de passe a été divulgué lors d'une fuite de données, il ne doit plus être utilisé.\n                  Veuillez utiliser un autre mot de passe.\n              "
+label:
+  absence_justificatif:
+    justificatif:
+      not_blank: 'Le motif du justificatif est obligatoire.'
