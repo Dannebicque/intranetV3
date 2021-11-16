@@ -58,7 +58,7 @@ export default class Table extends HTMLElement {
     let inputs = this.form[0].getElementsByTagName('input')
     let selects = this.form[0].getElementsByTagName('select')
 
-    inputs.forEach((input) => {
+    Array.from(inputs).forEach((input) => {
       if (input.type === 'text') {
         input.addEventListener('keyup', (event) => {
           if (event.target.type === 'text' && event.target.value.length < 3) {
@@ -79,7 +79,7 @@ export default class Table extends HTMLElement {
       }
     })
 
-    selects.forEach((select) => {
+    Array.from(selects).forEach((select) => {
       select.addEventListener('change', (elem) => {
         this._getFilterFromField(elem.target)
         this._filterArray()
@@ -101,14 +101,13 @@ export default class Table extends HTMLElement {
 
   _filterArray (event) {
     //this._getFilterFromField(event.target)
-    console.log(this.filter)
     this._buildArray()
   }
 
   _convertToFetch (tableau) {
     let obj = {}
 
-    Object.entries(tableau).forEach(entry => {
+    Array.from(tableau).forEach(entry => {
       const [key, item] = entry
       obj[key] = item
     })
