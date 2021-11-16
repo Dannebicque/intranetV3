@@ -64,7 +64,7 @@
                 <dt>Personne rencontrée :</dt>
                 <dd>{{ alternance_fiche_suivi.alternance.tuteur.display }}</dd>
                 <dt>Missions :</dt>
-                <dd>{{ alternance_fiche_suivi.missions }}</dd>
+                <dd>{{ alternance_fiche_suivi.missions|nl2br }}</dd>
                 <dt>Evaluation de l'alternance :</dt>
                 <dd>
                     <ul>
@@ -78,7 +78,7 @@
                 </dd>
 
                 <dt>Commentaire :</dt>
-                <dd>{{ alternance_fiche_suivi.commentaire }}</dd>
+                <dd>{{ alternance_fiche_suivi.commentaire|nl2br }}</dd>
             </dl>
         </div>
     </div>
