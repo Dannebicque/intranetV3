@@ -123,16 +123,16 @@
             {% if input_suffix %}
                 {{ input_suffix | raw }}
             {% endif %}
+            {{ form_errors(form) }}
         </div>
     {% else %}
         {{- parent() -}}
     {% endif %}
-    <div class="invalid-feedback"></div>
 {%- endblock form_widget_simple -%}
 
 {%- block form_widget_compound -%}
     {{ parent() }}
-    <div class="invalid-feedback"></div>
+{#    <div class="invalid-feedback"></div>#}
 {%- endblock form_widget_compound -%}
 
 {# Reprise de form_label de bootstrap pour déplacer le message d'erreur #}

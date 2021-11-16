@@ -266,7 +266,8 @@ adm:
     les.categories.de.document: 'Gérer les catégories de documents'
     les.competences: 'Gérer les compétences des diplômes'
     les.documents: 'Gérer les documents'
-  gestion.des.etudiants.departement: 'Gestion des étudiants du département'
+    questionnaire_qualite: 'Gérer les questionnaires qualités'
+    gestion.des.etudiants.departement: 'Gestion des étudiants du département'
   gestion.des.etudiants.formation: 'Gestion des étudiants de la formation'
   groupe:
     index.heading: 'Liste des groupes'
@@ -334,6 +335,10 @@ adm:
     new.heading: 'Création d''une période de projet tutoré'
     show.heading: 'Détails d''une période de projet tutoré'
   projet: Projets
+  qualite:
+    menu: Qualité
+    index.heading: 'Liste des questionnaires qualité du département'
+    show.heading: 'Détails d''un questionnaire qualité'
   questionnaire:
     qualite:
       index.heading: 'Liste des questionnaires qualité'
@@ -547,6 +552,8 @@ adm:
   statut.new.heading: 'Créer un statut de personnel'
   statut.show.heading: 'Détail d''un statut de personnel'
   statut.modification.heading: 'Modifier un statut de personnel'
+  creer:
+    questionnaire_qualite: 'Créer un questionnaire qualité'
 
 administratif_homepage.heading: 'Tableau de bord administratif'
 administratif.qualite.questionnaire.show.heading: 'Détails d''un questionnaire qualité'

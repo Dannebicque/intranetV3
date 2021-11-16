@@ -19,6 +19,7 @@ use Ramsey\Uuid\Uuid;
 use Serializable;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
@@ -61,6 +62,7 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
     /**
      * @ORM\Column(type="text")
      * @Groups({"justificatif_administration"})
+     * @Assert\NotBlank(message="label.absence_justificatif.justificatif.not_blank")
      */
     private ?string $motif;
 
