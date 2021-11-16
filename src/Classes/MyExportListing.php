@@ -257,6 +257,61 @@ class MyExportListing
     /**
      * @throws Exception
      */
+    public function exportExcelAbsence($absences, $matieres, $nom): StreamedResponse
+    {
+        $this->myExcelWriter->createSheet('Absences');
+        $this->myExcelWriter->writeCellName('A1','date Heure');
+        $this->myExcelWriter->writeCellName('B1','duree');
+        $this->myExcelWriter->writeCellName('C1','Nom');
+        $this->myExcelWriter->writeCellName('D1','Prénom');
+        $this->myExcelWriter->writeCellName('E1','Justifié?');
+        $this->myExcelWriter->writeCellName('F1','Matière (SAE/Ressource/Matière)');
+        $this->myExcelWriter->writeCellName('G1','Nom Enseignant');
+        $this->myExcelWriter->writeCellName('H1','Prénom Enseignant');
+        $ligne = 2;
+
+        /** @var \App\Entity\Absence $absence */
+        foreach ($absences as $absence) {
+
+            $this->myExcelWriter->writeCellXY(1, $ligne,$absence->getDateHeure()?->format('d/m/Y H:i'));
+            $this->myExcelWriter->writeCellXY(2, $ligne,$absence->getDuree()?->format('H:i'));
+            $this->myExcelWriter->writeCellXY(3, $ligne,$absence->getEtudiant()?->getNom());
+            $this->myExcelWriter->writeCellXY(4, $ligne,$absence->getEtudiant()?->getPrenom());
+            $this->myExcelWriter->writeCellXY(5, $ligne,$absence->getJustifie() === true ? 'Oui' : 'Non');
+            $this->myExcelWriter->writeCellXY(6, $ligne,$matieres[$absence->getTypeIdMatiere()]->libelle);
+            $this->myExcelWriter->writeCellXY(7, $ligne,$absence->getPersonnel()?->getNom());
+            $this->myExcelWriter->writeCellXY(8, $ligne,$absence->getPersonnel()?->getPrenom());
+
+          $ligne++;
+
+        }
+
+        $this->myExcelWriter->getColumnAutoSize('A');
+        $this->myExcelWriter->getColumnAutoSize('B');
+        $this->myExcelWriter->getColumnAutoSize('C');
+        $this->myExcelWriter->getColumnAutoSize('D');
+        $this->myExcelWriter->getColumnAutoSize('E');
+        $this->myExcelWriter->getColumnAutoSize('F');
+        $this->myExcelWriter->getColumnAutoSize('G');
+        $this->myExcelWriter->getColumnAutoSize('H');
+        $writer = new Xlsx($this->myExcelWriter->getSpreadsheet());
+
+        return new StreamedResponse(
+            static function() use ($writer) {
+                $writer->save('php://output');
+            },
+            200,
+            [
+                'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                'Content-Disposition' => 'attachment;filename="' . $nom . '.xlsx"',
+            ]
+        );
+    }
+
+
+    /**
+     * @throws Exception
+     */
     private function writeSpecialHeader(Groupe $groupe): void
     {
         //gérer les infos par le diplôme

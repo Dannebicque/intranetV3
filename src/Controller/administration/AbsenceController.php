@@ -13,6 +13,7 @@ use App\Classes\Etudiant\EtudiantAbsences;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\MyAbsences;
 use App\Classes\MyExport;
+use App\Classes\MyExportListing;
 use App\Classes\StatsAbsences;
 use App\Controller\BaseController;
 use App\Entity\Absence;
@@ -146,28 +147,31 @@ class AbsenceController extends BaseController
         requirements: ['_format' => 'csv|xlsx|pdf'])]
     public function exportAllAbsences(
         MyExport $myExport,
+        MyExportListing $myExportListing,
+        TypeMatiereManager $typeMatiereManager,
         AbsenceRepository $absenceRepository,
         Semestre $semestre,
-        string $_format
     ): Response {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $semestre);
-
+        $matieres = $typeMatiereManager->findBySemestreArray($semestre);
         $absences = $absenceRepository->getBySemestre($semestre, $semestre->getAnneeUniversitaire());
 
-        return $myExport->genereFichierGenerique(
-            $_format,
-            $absences,
-            'absences_' . $semestre->getLibelle(),
-            ['absences_administration', 'utilisateur', 'matiere'],
-            [
-                'dateHeure',
-                'duree',
-                'etudiant' => ['nom', 'prenom'],
-                'justifie',
-                'matiere' => ['libelle'],
-                'personnel' => ['nom', 'prenom'],
-            ]
-        );
+        return $myExportListing->exportExcelAbsence($absences, $matieres, 'absences_' . $semestre->getLibelle());
+
+//        return $myExport->genereFichierGenerique(
+//            $_format,
+//            $absences,
+//            'absences_' . $semestre->getLibelle(),
+//            ['absences_administration', 'utilisateur', 'matiere'],
+//            [
+//                'dateHeure',
+//                'duree',
+//                'etudiant' => ['nom', 'prenom'],
+//                'justifie',
+//                'matiere' => ['libelle'],
+//                'personnel' => ['nom', 'prenom'],
+//            ]
+//        );
     }
 
     #[Route('/ajax/justifie/{absence}/{etat}', name: 'administration_absences_justifie', options: ['expose' => true])]
