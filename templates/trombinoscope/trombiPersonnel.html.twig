@@ -22,7 +22,6 @@
         </div>
     </header>
     <div class="card-body">
-
         <div class="row">
             {% if personnels|length >0 %}
                 {% for personnel in personnels %}
@@ -37,9 +36,8 @@
                                             ('upload/personnels/'~personnel.photoName)|imagine_filter('thumb') }}"
                                              alt="photo de {{ personnel.displayPr }}">
                                     {% else %}
-                                        {{ include('composants/_avatar.html.twig', {user:personnel}) }}
+                                        {{ include('composants/_avatar.html.twig', {user:personnel, size:'xxl'}) }}
                                     {% endif %}
-
                                 </a>
                                 <div class="flex-grow pl-20">
                                     <h4>

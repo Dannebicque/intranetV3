@@ -507,6 +507,14 @@ th.th_titre {
   width: var(--avatar-size-md);
 }
 
+.avatar-circle-xxl {
+  background-color: var(--colorPrimary);
+  border-radius: 50%;
+  height: var(--avatar-size-xxl);
+  text-align: center;
+  width: var(--avatar-size-xxl);
+}
+
 .avatar-circle-sm .initials {
   color: var(--colorIUTComplementaire);
   font-weight: bold;
@@ -523,6 +531,15 @@ th.th_titre {
   line-height: 1;
   position: relative;
   top: calc(var(--avatar-size-md) / 4); /* 25% of parent */
+}
+
+.avatar-circle-xxl .initials {
+  color: var(--colorIUTComplementaire);
+  font-weight: bold;
+  font-size: calc(var(--avatar-size-xxl) / 2); /* 50% of parent */
+  line-height: 1;
+  position: relative;
+  top: calc(var(--avatar-size-xxl) / 4); /* 25% of parent */
 }
 
 .topbar-btn-avatar {

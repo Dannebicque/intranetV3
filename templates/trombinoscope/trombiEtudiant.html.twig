@@ -64,7 +64,8 @@
                                                             'noimage.png' %}
                                                             <img class="avatar avatar-xxxl avatar-bordered rounded" src="{{ asset('upload/etudiants/'~etudiant.photoName)|imagine_filter('thumb') }}" alt="photo de {{ etudiant.displayPr }}">
                                                         {% else %}
-                                                            {{ include('composants/_avatar.html.twig', {user:etudiant}) }}
+                                                            {{ include('composants/_avatar.html.twig',
+                                                                {user:etudiant, size:'xxl'}) }}
                                                         {% endif %}
                                                     </a>
                                                     <div class="flex-grow pl-20">
