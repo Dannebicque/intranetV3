@@ -23,6 +23,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class StageEtudiantEtudiantType extends AbstractType
 {
+    //todo: faire un input avec une zone jour/mois/heure : Développer un composant ? Commenter lier deux champs d'entité avec ?
+    //https://getbootstrap.com/docs/5.1/forms/input-group/#buttons-with-dropdowns
     protected $flexible = false;
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -32,61 +34,61 @@ class StageEtudiantEtudiantType extends AbstractType
         $builder
             ->add('entreprise', EntrepriseType::class, [
                 'label' => 'Contact et coordonnées du siège de l\'entreprise',
-                'help'  => 'Le siège de l\'entreprise n\'est pas forcément le lieu de stage',
+                'help' => 'Le siège de l\'entreprise n\'est pas forcément le lieu de stage',
             ])
             ->add('tuteur', ContactType::class)
             ->add('adresseStage', AdresseType::class, [
-                'label'    => 'Adresse du lieu où le stage sera effectué',
-                'help'     => 'Cette adresse peut être différente du siège de l\'entreprise.',
+                'label' => 'Adresse du lieu où le stage sera effectué',
+                'help' => 'Cette adresse peut être différente du siège de l\'entreprise.',
                 'required' => false,
             ])
             ->add(
                 'serviceStageEntreprise',
                 TextType::class,
                 [
-                    'label' => 'serviceStageEntreprise',
+                    'label' => 'label.serviceStageEntreprise',
                     'help' => 'help.serviceStageEntreprise',
                     'required' => false,
                 ]
             )
             ->add('sujetStage', TextareaType::class,
-                ['label' => 'sujetStage', 'help' => 'help.sujetStage', 'attr' => ['rows' => 8]])
-            ->add('activites', TextareaType::class, ['label' => 'activites', 'help' => 'help.activites'])
+                ['label' => 'label.sujetStage', 'help' => 'help.sujetStage', 'attr' => ['rows' => 8]])
+            ->add('activites', TextareaType::class, ['label' => 'label.activites', 'help' => 'help.activites'])
             ->add(
                 'dureeHebdomadaire',
                 TextType::class,
-                ['label' => 'dureeHebdomadaire', 'help' => 'help.dureeHebdomadaire']
+                ['label' => 'label.dureeHebdomadaire', 'help' => 'help.dureeHebdomadaire']
             )
             ->add(
                 'commentaireDureeHebdomadaire',
                 TextareaType::class,
                 [
-                    'label' => 'commentaireDureeHebdomadaire',
+                    'label' => 'label.commentaireDureeHebdomadaire',
                     'help' => 'help.commentaireDureeHebdomadaire',
-                    'required' => false
+                    'required' => false,
                 ]
             )
             ->add(
                 'periodesInterruptions',
                 TextareaType::class,
-                ['label' => 'periodesInterruptions', 'help' => 'help.periodesInterruptions', 'required' => false]
+                ['label' => 'label.periodesInterruptions', 'help' => 'help.periodesInterruptions', 'required' => false]
             )
             ->add(
                 'amenagementStage',
                 TextareaType::class,
-                ['label' => 'amenagementStage', 'help' => 'help.amenagementStage', 'required' => false]
+                ['label' => 'label.amenagementStage', 'help' => 'help.amenagementStage', 'required' => false]
             )
-            ->add('gratification', YesNoType::class, ['label' => 'gratification', 'help' => 'help.gratification'])
+            ->add('gratification', YesNoType::class, ['label' => 'label.gratification', 'help' => 'help.gratification'])
             ->add(
                 'gratificationMontant',
                 TextType::class,
-                ['label' => 'gratificationMontant', 'help' => 'help.gratificationMontant']
+                ['label' => 'label.gratificationMontant', 'help' => 'help.gratificationMontant']
             )
             ->add(
                 'gratificationPeriode',
                 ChoiceType::class,
                 [
-                    'label' => 'gratificationPeriode',
+                    'label' => 'label.gratificationPeriode',
                     'help' => 'help.gratificationPeriode',
                     'choices' => [
                         'Heure' => StageEtudiant::PERIODE_GRATIFICATION_HEURE,
@@ -96,18 +98,18 @@ class StageEtudiantEtudiantType extends AbstractType
                 ]
             )
             ->add('avantages', TextareaType::class,
-                ['label' => 'avantages', 'help' => 'help.avantages', 'required' => false]);
+                ['label' => 'label.avantages', 'help' => 'help.avantages', 'required' => false]);
 
         if (true === $this->flexible) {
             $builder
                 ->add('dateRange', DateRangeType::class,
-                    ['label' => 'dateRange.periode.stage.etudiant', 'mapped' => false, 'required' => true])
+                    ['label' => 'label.dateRange.periode.stage.etudiant', 'mapped' => false, 'required' => true])
                 ->add(
                     'dureeJoursStage',
                     TextType::class,
-                    ['label' => 'dureeJoursStage', 'help' => 'help.dureeJoursStage']
+                    ['label' => 'label.dureeJoursStage', 'help' => 'help.dureeJoursStage']
                 )
-                ->addEventListener(FormEvents::POST_SUBMIT, static function(FormEvent $event) {
+                ->addEventListener(FormEvents::POST_SUBMIT, static function (FormEvent $event) {
                     /** @var StageEtudiant $stageEtudiant */
                     $stageEtudiant = $event->getData();
                     $form = $event->getForm();
@@ -115,16 +117,16 @@ class StageEtudiantEtudiantType extends AbstractType
                     $stageEtudiant->setDateDebutStage($dateRange['from_date']);
                     $stageEtudiant->setDateFinStage($dateRange['to_date']);
                 })
-                ->addEventListener(FormEvents::PRE_SET_DATA, static function(FormEvent $event) {
+                ->addEventListener(FormEvents::PRE_SET_DATA, static function (FormEvent $event) {
                     /** @var StageEtudiant $stageEtudiant */
                     $stageEtudiant = $event->getData();
                     $form = $event->getForm();
                     $form->add('dateRange', DateRangeType::class, [
-                        'label'     => 'dateRange.periode',
-                        'mapped'    => false,
+                        'label' => 'label.dateRange.periode',
+                        'mapped' => false,
                         'date_data' => [
                             'from' => $stageEtudiant->getDateDebutStage(),
-                            'to'   => $stageEtudiant->getDateFinStage(),
+                            'to' => $stageEtudiant->getDateFinStage(),
                         ],
                     ]);
                 });
@@ -134,8 +136,8 @@ class StageEtudiantEtudiantType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class'         => StageEtudiant::class,
-            'flexible'           => false,
+            'data_class' => StageEtudiant::class,
+            'flexible' => false,
             'translation_domain' => 'form',
         ]);
     }
