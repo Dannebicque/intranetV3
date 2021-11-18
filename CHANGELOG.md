@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.4.3](https://github.com/Dannebicque/intranetV3/compare/v3.4.2...v3.4.3) (2021-11-18)
+
+
+### Bug Fixes
+
+* bug JS avec forEach ([5f07bbe](https://github.com/Dannebicque/intranetV3/commit/5f07bbe6b902116fb0e61d9ab2faee0925444178))
+* Commande pour RCC ([310bcb3](https://github.com/Dannebicque/intranetV3/commit/310bcb3fa4a157b8297a307316797e0909bd8f4c))
+* Erreur dans la requête ([606cab0](https://github.com/Dannebicque/intranetV3/commit/606cab0d7833b88ab6bd3eb792ae9ef7335e2fcc))
+* Suppression des Warning sur les 403 pour bugsnag.yaml ([11923bf](https://github.com/Dannebicque/intranetV3/commit/11923bf0a73868e757853eece38cd5b98d6bbc50))
+* Validation du formulaire de justificatif d'absence avec message d'erreur. ([465172d](https://github.com/Dannebicque/intranetV3/commit/465172da306b5ebfa7ba992daadb47887d28d094))
+
 ### [3.4.2](https://github.com/Dannebicque/intranetV3/compare/v3.4.1...v3.4.2) (2021-11-16)
 
 
