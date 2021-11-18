@@ -1,2 +1,4 @@
 bugsnag:
   api_key: '%env(BUGSNAG)%'
+  discard_classes:
+    - Symfony\Component\Security\Core\Exception\AccessDeniedException
