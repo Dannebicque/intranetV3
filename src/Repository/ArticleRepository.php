@@ -23,6 +23,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Article|null findOneBy(array $criteria, array $orderBy = null)
  * @method Article[]    findAll()
  * @method Article[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<Article>
  */
 class ArticleRepository extends ServiceEntityRepository
 {
@@ -65,7 +66,7 @@ class ArticleRepository extends ServiceEntityRepository
             ->orderBy('a.updated', 'DESC');
 
         if (true === $isEtudiant) {
-            $query->andWhere('d.typeDestinataire = :typeDestinataire')
+            $query->andWhere('a.typeDestinataire = :typeDestinataire')
                 ->setParameter('typeDestinataire', Constantes::TYPE_DESTINATAIRE_ETUDIANT);
         }
 
