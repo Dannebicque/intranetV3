@@ -106,7 +106,9 @@ Encore
   .configureBabel(function (babelConfig) {
   }, {})
   //optimisations
-  .addPlugin(
+
+if (!Encore.isProduction()) {
+  Encore.addPlugin(
     new BundleAnalyzerPlugin({
       /* Can be `server`, `static` or `disabled`. */
       /* In `server` mode analyzer will start HTTP server to show bundle report. */
@@ -139,6 +141,7 @@ Encore
       logLevel: 'info'
     })
   )
+}
 
 config = Encore.getWebpackConfig()
 config.resolve.extensions = ['.js', '.ts', '.svg']
