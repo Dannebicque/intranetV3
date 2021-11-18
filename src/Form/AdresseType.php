@@ -24,12 +24,12 @@ class AdresseType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('adresse1', TextType::class, ['label' => 'adresse1'])
-            ->add('adresse2', TextType::class, ['label' => 'adresse2', 'required' => false])
-            ->add('adresse3', TextType::class, ['label' => 'adresse3', 'required' => false])
-            ->add('code_postal', TextType::class, ['label' => 'code_postal'])
-            ->add('ville', TextType::class, ['label' => 'ville'])
-            ->add('pays', TextType::class, ['label' => 'pays', 'required' => false, 'data' => 'France']);
+            ->add('adresse1', TextType::class, ['label' => 'label.adresse1'])
+            ->add('adresse2', TextType::class, ['label' => 'label.adresse2', 'required' => false])
+            ->add('adresse3', TextType::class, ['label' => 'label.adresse3', 'required' => false])
+            ->add('code_postal', TextType::class, ['label' => 'label.code_postal'])
+            ->add('ville', TextType::class, ['label' => 'label.ville'])
+            ->add('pays', TextType::class, ['label' => 'label.pays', 'required' => false, 'data' => 'France']);
     }
 
     /**

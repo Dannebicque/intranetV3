@@ -21,14 +21,14 @@ class EntrepriseType extends AbstractType
     {
         $builder
             ->add('raisonSociale', TextType::class,
-                ['label' => 'raisonSociale', 'help' => 'La raison sociale est le nom de l\'entreprise'])
+                ['label' => 'label.raisonSociale', 'help' => 'La raison sociale est le nom de l\'entreprise'])
             ->add('siret', TextType::class, [
-                'label' => 'siret',
+                'label' => 'label.siret',
                 'required' => false,
                 'help' => 'Le siret est obligatoire pour toutes les entreprise, sauf pour les organismes public.',
             ])
-            ->add('adresse', AdresseType::class, ['label' => 'adresse'])
-            ->add('responsable', ContactType::class, ['label' => 'responsable'])
+            ->add('adresse', AdresseType::class, ['label' => 'label.adresse'])
+            ->add('responsable', ContactType::class, ['label' => 'label.responsable'])
         ;
     }
 
