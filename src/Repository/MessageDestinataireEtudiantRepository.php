@@ -13,6 +13,7 @@ use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Entity\Message;
 use App\Entity\MessageDestinataireEtudiant;
+use App\Entity\Personnel;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
@@ -23,6 +24,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method MessageDestinataireEtudiant|null findOneBy(array $criteria, array $orderBy = null)
  * @method MessageDestinataireEtudiant[]    findAll()
  * @method MessageDestinataireEtudiant[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<MessageDestinataireEtudiant>
  */
 class MessageDestinataireEtudiantRepository extends ServiceEntityRepository
 {
@@ -34,6 +36,8 @@ class MessageDestinataireEtudiantRepository extends ServiceEntityRepository
     public function findLast(Etudiant $user, $nbMessage = 0, $filtre = '', $page = 0)
     {
         $query = $this->createQueryBuilder('m')
+            ->innerJoin(Message::class, 'mes', 'WITH', 'mes.id = m.message')
+            ->innerJoin(Personnel::class, 'p', 'WITH', 'mes.expediteur = p.id')
             ->where('m.etudiant = :etudiant')
             ->setParameter('etudiant', $user->getId())
             ->orderBy('m.created', 'DESC');
@@ -76,6 +80,8 @@ class MessageDestinataireEtudiantRepository extends ServiceEntityRepository
     public function findDest(Etudiant $user, Message $message): ?MessageDestinataireEtudiant
     {
         return $this->createQueryBuilder('m')
+            ->innerJoin(Message::class, 'mes', 'WITH', 'mes.id = m.message')
+            ->innerJoin(Personnel::class, 'p', 'WITH', 'mes.expediteur = p.id')
             ->where('m.etudiant = :etudiant')
             ->andWhere('m.message = :message')
             ->setParameter('etudiant', $user->getId())

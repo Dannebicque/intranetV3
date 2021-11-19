@@ -23,6 +23,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method MessageDestinatairePersonnel|null findOneBy(array $criteria, array $orderBy = null)
  * @method MessageDestinatairePersonnel[]    findAll()
  * @method MessageDestinatairePersonnel[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<MessageDestinatairePersonnel>
  */
 class MessageDestinatairePersonnelRepository extends ServiceEntityRepository
 {
@@ -34,6 +35,8 @@ class MessageDestinatairePersonnelRepository extends ServiceEntityRepository
     public function findLast(Personnel $user, $nbMessage = 0, $filtre = '', $page = 0)
     {
         $query = $this->createQueryBuilder('m')
+            ->innerJoin(Message::class, 'mes', 'WITH', 'mes.id = m.message')
+            ->innerJoin(Personnel::class, 'p', 'WITH', 'mes.expediteur = p.id')
             ->where('m.personnel = :personnel')
             ->setParameter('personnel', $user->getId())
             ->orderBy('m.created', 'DESC');
@@ -76,6 +79,8 @@ class MessageDestinatairePersonnelRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('m')
             ->where('m.personnel = :personnel')
+            ->innerJoin(Message::class, 'mes', 'WITH', 'mes.id = m.message')
+            ->innerJoin(Personnel::class, 'p', 'WITH', 'mes.expediteur = p.id')
             ->andWhere('m.message = :message')
             ->setParameter('personnel', $user->getId())
             ->setParameter('message', $message->getId())
