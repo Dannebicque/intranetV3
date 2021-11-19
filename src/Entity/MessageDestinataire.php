@@ -40,7 +40,7 @@ abstract class MessageDestinataire extends BaseEntity
     private string $etat = self::UNREAD;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Message", inversedBy="messageDestinataires")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Message", inversedBy="messageDestinataires", fetch="EAGER")
      */
     private ?Message $message;
 

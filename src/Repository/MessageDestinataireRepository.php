@@ -18,6 +18,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method MessageDestinataire|null findOneBy(array $criteria, array $orderBy = null)
  * @method MessageDestinataire[]    findAll()
  * @method MessageDestinataire[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<MessageDestinataire>
  */
 class MessageDestinataireRepository extends ServiceEntityRepository
 {

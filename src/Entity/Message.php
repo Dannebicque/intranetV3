@@ -46,7 +46,7 @@ class Message extends BaseEntity
     private ?bool $important;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Personnel", inversedBy="messages")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Personnel", inversedBy="messages", fetch="EAGER")
      */
     private ?Personnel $expediteur;
 
@@ -56,7 +56,7 @@ class Message extends BaseEntity
     private Collection $messageDestinataires;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\MessagePieceJointe", mappedBy="message")
+     * @ORM\OneToMany(targetEntity="App\Entity\MessagePieceJointe", mappedBy="message", fetch="EAGER")
      */
     private Collection $messagePieceJointes;
 
