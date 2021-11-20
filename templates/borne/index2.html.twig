@@ -6,7 +6,7 @@
 
 {% block full_body %}
     <!-- CONTENEUR 1080PX -->
-    <div id="container">
+    <div id="container" style="font-size:.8rem">
         <!-- Date -->
         <div class="row">
             <div class="col-2">
@@ -45,14 +45,15 @@
                         </div>
                         <!-- /HEADER SEMESTRE -->
                         <div class="col-12">
-                            <div class="schedule-semestre-{{ zone.data.semestre.nbgroupeTPEDT }}" aria-labelledby="schedule-heading">
+                            <div class="schedule-semestre-{{ zone.data.semestre.nbgroupeTPEDT }} semestre_borne"
+                                 aria-labelledby="schedule-heading">
                                 {% for j in 1..zone.data.semestre.nbgroupeTPEDT %}
                                     <span class="track-slot col-edt-header jour"
                                           style="grid-column: track-{{ j }}; grid-row: tracks;">
                                         {{ zone.data.p1.groupes[j] }}
                                     </span>
                                 {% endfor %}
-                                {% for ligne in 0..24 %}
+                                {% for ligne in 0..22 %}
                                     <h2 class="time-slot" style="grid-row: time-{{ tabHeures[ligne][0] }};">{{ tabHeures[ligne][1] }}</h2>
                                     {% for j in 1..zone.data.semestre.nbgroupeTPEDT %}
                                         {% if zone.data.planning[j][tabHeures[ligne][0]] is defined %}
@@ -85,39 +86,9 @@
                                                             .planning[j][tabHeures[ligne][0]].code_matiere }}</span>
                                                         <span class="session-presenter">{{ zone.data
                                                             .planning[j][tabHeures[ligne][0]].personnel }}</span>
-                                                        <span class="session-time">
-                                                        {{ zone.data.planning[j][tabHeures[ligne][0]].heureDebut|format_time('short') }} -
-                                                        {{ zone.data.planning[j][tabHeures[ligne][0]].heureFin|format_time('short') }}
-                                                    </span>
-                                                        {# <span class="session-track">{{ zone.data.planning[j][tabHeures[ligne][0]].groupe }}</span> #}
                                                         <span class="session-room">{{ zone.data.planning[j][tabHeures[ligne][0]].salle }}</span>
                                                     </a>
                                                 </div>
-                                                {# <div class="session-footer"> #}
-                                                {# <div class="row no-gutters"> #}
-
-                                                {# <div class="col-4"> #}
-                                                {# <a href="" class="btn btn-block btn-purple no-radius" #}
-                                                {# title="Cahier de texte enseignant"> #}
-                                                {# <i class="fas fa-book-open"></i> #}
-                                                {# </a> #}
-                                                {# </div> #}
-                                                {# <div class="col-4"> #}
-                                                {# <a href="" class="btn btn-block btn-warning no-radius" #}
-                                                {# title="Appel fait, pas d'absents"> #}
-                                                {# <i class="fas fa-users-slash"></i> #}
-                                                {# </a> #}
-                                                {# </div> #}
-                                                {# <div class="col-4"> #}
-                                                {# <a href="" class="btn btn-block btn-danger no-radius"> #}
-                                                {# <i class="fas fa-times"></i> #}
-                                                {# </a> #}
-                                                {# #}{# <a href="" class="btn btn-block btn-success no-radius"> #}
-                                                {# #}{# <i class="fas fa-check"></i> #}
-                                                {# #}{# </a> #}
-                                                {# </div> #}
-                                                {# </div> #}
-                                                {# </div> #}
                                             </div>
                                         {% endif %}
                                     {% endfor %}
@@ -135,120 +106,7 @@
         {% endfor %}
 
 
-        {# <!-- HEADER SEMESTRE DECALE --> #}
-        {# <div class="semestre"> #}
-        {# <div class="heure"> #}
-        {# <article class="clock"> #}
-        {# <div class="hours-container"> #}
-        {# <div class="hours"></div> #}
-        {# </div> #}
-        {# <div class="minutes-container"> #}
-        {# <div class="minutes"></div> #}
-        {# </div> #}
-        {# <div class="seconds-container"> #}
-        {# <div class="seconds"></div> #}
-        {# </div> #}
-        {# </article> #}
-        {# </div> #}
-        {# <div class="s2d-header"> #}
-        {# <div class="s2"> #}
-        {# <span>{{ t.semestre2.display }}</span> #}
-        {# </div> #}
-        {# <div class="groupe"> #}
-        {# {% if t.semestre2.nbgroupeTpEdt|length > 2 %} #}
-        {# {% for j in 1..t.semestre2.nbgroupeTpEdt %} #}
-        {# <div class="item">{{ t.p2.groupes[j] }}</div> #}
-        {# {% endfor %} #}
-        {# {% else %} #}
-        {# {% for j in 1..t.semestre2.nbgroupeTpEdt %} #}
-        {# <div class="itemd">{{ t.p2.groupes[j] }}</div> #}
-        {# {% endfor %} #}
-        {# {% endif %} #}
-        {# </div> #}
-        {# </div> #}
-        {# </div> #}
-        {# <!-- /HEADER SEMESTRE DECALE --> #}
 
-        {# <!-- CONTENU SEMESTRE DECALE --> #}
-        {# {% for ligne, value in lignes %} #}
-
-        {# <section class="edt-content"> #}
-
-        {# <!-- TRANCHE HORAIRE --> #}
-        {# <div class="time {{ t.semestre2.annee.couleur }}cm"> #}
-        {# <div class="horaires"> #}
-        {# <p>{{ value[0] }}<br>-<br>{{ value[1] }}</p> #}
-        {# </div> #}
-        {# </div> #}
-
-        {# <!-- /TRANCHE HORAIRE --> #}
-        {# {% if (t.p2.planning[ligne][1] is defined and (t.p2.planning[ligne][1].type == "CM" or t.p2.planning[ligne][1].type == "cm")) %} #}
-        {# <div class="cm {{ t.semestre2.couleur }}cm"> #}
-        {# <div class="cours"> #}
-        {# <p>{{ t.p2.planning[ligne][1].module }} #}
-        {# {% if t.p2.planning[ligne][1].format == 'nok' %} #}
-        {# <br>{{ t.p2.planning[ligne][1].prof }} {{ t.p2.planning[ligne][1].salle }} #}
-        {# <br/> #}
-        {# <span style="background-color: #E65100">{{ convertHeureEdt(t.p2.planning[ligne][1].debut) }} à  {{ convertHeureEdt(t.p2.planning[ligne][1].fin) }}</span> #}
-        {# {% else %} #}
-        {# <br>{{ t.p2.planning[ligne][1].prof }} #}
-        {# <br>{{ t.p2.planning[ligne][1].salle }} #}
-        {# {% endif %} #}
-        {# </p> #}
-        {# </div> #}
-        {# </div> #}
-        {# {% else %} #}
-        {# <div class="cm white"> #}
-        {# {% for groupe in 1..t.semestre2.nbgroupeTPEDT %} #}
-        {# {% if t.p2.planning[ligne][groupe] is defined %} #}
-        {# {% if t.p2.planning[ligne][groupe].module != "xt" %} #}
-
-        {# {% if t.p2.planning[ligne][groupe].type == "TD" or t.p2.planning[ligne][groupe].type == "td" %} #}
-        {# <div class="{% if t.semestre2.nbgroupeTPEDT < 3 %}cm{% else %} td {% endif %} {{ t.semestre2.annee.couleur }}td"> #}{# TD #}
-        {# <div class="cours"> #}
-        {# <p>{{ t.p2.planning[ligne][groupe].module }} #}
-        {# {% if t.p2.planning[ligne][groupe].format == 'nok' %} #}
-        {# <br>{{ t.p2.planning[ligne][groupe].prof }} {{ t.p2.planning[ligne][groupe].salle }} #}
-        {# <br/> #}
-        {# <span style="background-color: #E65100">{{ convertHeureEdt(t.p2.planning[ligne][groupe].debut) }} à  {{ convertHeureEdt(t.p2.planning[ligne][groupe].fin) }}</span> #}
-        {# {% else %} #}
-        {# <br>{{ t.p2.planning[ligne][groupe].prof }} #}
-        {# <br>{{ t.p2.planning[ligne][groupe].salle }} #}
-        {# {% endif %} #}
-        {# </p> #}
-        {# </div> #}
-        {# </div> #}
-        {# {% else %} #}
-        {# <div class="{% if t.semestre2.nbgroupeTPEDT < 3 %}td-d{% else %} tp {% endif %} {{ t.semestre2.annee.couleur }}tp"> #}{# TP #}
-        {# <div class="cours"> #}
-        {# <p>{{ t.p2.planning[ligne][groupe].module }} #}
-        {# {% if t.p2.planning[ligne][groupe].format == 'nok' %} #}
-        {# <br>{{ t.p2.planning[ligne][groupe].prof }} {{ t.p2.planning[ligne][groupe].salle }} #}
-        {# <br/> #}
-        {# <span style="background-color: #E65100">{{ convertHeureEdt(t.p2.planning[ligne][groupe].debut) }} à  {{ convertHeureEdt(t.p2.planning[ligne][groupe].fin) }}</span> #}
-        {# {% else %} #}
-        {# <br>{{ t.p2.planning[ligne][groupe].prof }} #}
-        {# <br>{{ t.p2.planning[ligne][groupe].salle }} #}
-        {# {% endif %} #}
-        {# </p> #}
-        {# </div> #}
-        {# </div> #}
-        {# {% endif %} #}
-        {# {% endif %} #}
-        {# {% else %} #}
-        {# <div class="{% if t.semestre2.nbgroupeTPEDT < 3 %}td-d{% else %} tp {% endif %} white"> #}{# TP VIde #}
-        {# <div class="cours"> #}
-        {# &nbsp; #}
-        {# </div> #}
-        {# </div> #}
-        {# {% endif %} #}
-        {# {% endfor %} #}
-
-        {# </div> #}
-        {# {% endif %} #}
-        {# </section> #}
-        {# {% endfor %} #}
-        {# <!-- /CONTENU SEMESTRE DECALE --> #}
 
         {# <!-- BANDEAU INFOS --> #}
         {# <section class="bandeau"> #}
