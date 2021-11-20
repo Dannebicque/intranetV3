@@ -4,25 +4,26 @@
         <a class="nav-link" href="#"></a>
     </li>
     <li class="nav-item
-                            {% if ((projetEtudiant is  defined) and (projetEtudiant.etatProjet is not constant
+                            {% if ((projetEtudiant is defined) and (projetEtudiant.etatProjet is not constant
         ('App\\Entity\\ProjetEtudiant::ETAT_PROJET_AUTORISE') )) %}
                             complete
-                            {% elseif ((projetEtudiant is  defined) and (projetEtudiant.etatProjet is
+                            {% elseif ((projetEtudiant is defined) and (projetEtudiant.etatProjet is
         constant('App\\Entity\\ProjetEtudiant::ETAT_PROJET_AUTORISE') )) %}
                             processing
                             {% endif %}"
     >
         <span class="nav-title">Accès au formulaire</span>
         <a class="nav-link" href="#"></a>
-        {% if ((projetEtudiant is  defined) and (projetEtudiant.etatProjet is
-            constant('App\\Entity\\ProjetEtudiant::ETAT_PROJET_VALIDE') ) or projetEtudiant.etatProjet is
-            constant('App\\Entity\\ProjetEtudiant::ETAT_PROJET_DEPOSE') ) %}
+        {% if ((projetEtudiant is defined) and (projetEtudiant.etatProjet is
+            constant('App\\Entity\\ProjetEtudiant::ETAT_PROJET_VALIDE')) or ((projetEtudiant is defined) and
+            projetEtudiant.etatProjet is
+            constant('App\\Entity\\ProjetEtudiant::ETAT_PROJET_DEPOSE'))) %}
             <span>{{ projetEtudiant.dateAutorise|format_date('long') }}</span>
         {% endif %}
     </li>
     <li class="nav-item
                              {% if ((projetEtudiant is  defined) and (
-        (projetEtudiant.etatProjet is constant('App\\Entity\\ProjetEtudiant::ETAT_PROJET_VALIDE') )
+        (projetEtudiant.etatProjet is constant('App\\Entity\\ProjetEtudiant::ETAT_PROJET_VALIDE'))
         or (projetEtudiant.etatProjet is constant('App\\Entity\\ProjetEtudiant::ETAT_PROJET_IMPRIME') )
         )) %}
                             complete
