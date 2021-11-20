@@ -281,6 +281,11 @@ class Semestre extends BaseEntity
      */
     private $absences;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $optMailAssistanteJustificatifAbsence;
+
     public function __construct()
     {
         $this->init();
@@ -1386,5 +1391,17 @@ class Semestre extends BaseEntity
     public function __toString(): string
     {
         return $this->getLibelle();
+    }
+
+    public function getOptMailAssistanteJustificatifAbsence(): ?bool
+    {
+        return $this->optMailAssistanteJustificatifAbsence;
+    }
+
+    public function setOptMailAssistanteJustificatifAbsence(bool $optMailAssistanteJustificatifAbsence): self
+    {
+        $this->optMailAssistanteJustificatifAbsence = $optMailAssistanteJustificatifAbsence;
+
+        return $this;
     }
 }
