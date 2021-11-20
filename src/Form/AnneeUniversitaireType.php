@@ -24,23 +24,23 @@ class AnneeUniversitaireType extends AbstractType
     {
         $builder
             ->add('libelle', TextType::class, [
-                'label' => 'libelle',
+                'label' => 'label.libelle',
             ])
             ->add('annee', ChoiceType::class, [
-                'label' => 'annee_courante',
+                'label' => 'label.annee_courante',
                 'choices' => array_combine(range(date('Y') - 2, date('Y') + 4), range(date('Y') - 2, date('Y') + 4)),
             ])
             ->add('active', YesNoType::class, [
-                'label' => 'annee.par.defaut',
+                'label' => 'label.annee.par.defaut',
             ])
-            ->add('commentaire', TextareaType::class, ['label' => 'commentaire', 'required' => false])
+            ->add('commentaire', TextareaType::class, ['label' => 'label.commentaire', 'required' => false])
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class'         => AnneeUniversitaire::class,
+            'data_class' => AnneeUniversitaire::class,
             'translation_domain' => 'form',
         ]);
     }

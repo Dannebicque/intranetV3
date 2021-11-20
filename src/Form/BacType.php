@@ -21,10 +21,10 @@ class BacType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('libelle', TextType::class, ['label' => 'libelle'])
-            ->add('libelleLong', TextType::class, ['label' => 'libelle_long'])
-            ->add('codeApogee', TextType::class, ['label' => 'codeApogee'])
-            ->add('typeBac', ChoiceType::class, ['label' => 'typeBac', 'choices' => Bac::TAB_TYPE_BAC])
+            ->add('libelle', TextType::class, ['label' => 'label.libelle'])
+            ->add('libelleLong', TextType::class, ['label' => 'label.libelle_long'])
+            ->add('codeApogee', TextType::class, ['label' => 'label.codeApogee'])
+            ->add('typeBac', ChoiceType::class, ['label' => 'label.typeBac', 'choices' => Bac::TAB_TYPE_BAC])
         ;
     }
 
