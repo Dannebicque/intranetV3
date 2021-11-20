@@ -1305,6 +1305,12 @@ justifier.absences.heading: 'Justifier des <strong>absences du semestre %semestr
 justifier.les.absences: 'Justifier des absences'
 l.assistant.e: 'L''assistant(e)'
 label:
+  type_echelle: 'Echelle'
+  type_libre: 'Libre'
+  type_oui_non: 'Oui/Non'
+  type_qcm: 'QCM'
+  type_qcu: 'QCU'
+  type_slider: 'Slider / curseur'
   annee_previsionnel: 'Année du prévisionnel'
   annee_universitaire: 'Année universitaire'
   absence_justifiee: 'Absence justifée ?'

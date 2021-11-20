@@ -131,6 +131,14 @@ initiales: Initiales
 j: Jour
 Jour: Jour
 label:
+  text_explicatif: 'Texte explicatif'
+  ordre_question: 'Ordre de la question'
+  question_choix: 'Choix de la question'
+  sectionAdapter: 'Section configurable ?'
+  typeSection: 'Type de section'
+  end.section: 'Section de fin'
+  question.section: 'Section de questions'
+  start.section: 'Section de début'
   typedestinataire: 'Type de destinataire'
   questionnaireQuestionTags: 'Tag(s) pour la question'
   newQuestionnaireQuestionTags: 'Ajouter des tags manquant'
