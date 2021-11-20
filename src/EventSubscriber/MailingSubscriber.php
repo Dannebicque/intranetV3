@@ -51,6 +51,7 @@ class MailingSubscriber implements EventSubscriberInterface
             RattrapageEvent::DECISION => 'onMailDecisionRattrapage',
             JustificatifEvent::DECISION => 'onMailDecisionJustificatif',
             JustificatifEvent::DELETED => 'onMailDeleteJustificatif',
+            JustificatifEvent::ADDED => 'onMailAddedJustificatif',
         ];
     }
 
@@ -94,6 +95,24 @@ class MailingSubscriber implements EventSubscriberInterface
                 $this->myMailer->sendMessage(
                     $matiere->semestre->getOptDestMailAbsenceResp()->getMails(),
                     'Nouvelle absence enregistrée'
+                );
+            }
+        }
+    }
+
+    public function onMailAddedJustificatif(JustificatifEvent $event): void
+    {
+        $absence = $event->getAbsenceJustificatif();
+
+        if (null !== $absence && null !== $absence->getSemestre() && true === $absence->getSemestre()->getOptMailAssistanteJustificatifAbsence()) {
+            $diplome = $absence->getSemestre()->getDiplome();
+            if (null !== $diplome && null !== $diplome->getAssistantDiplome()) {
+                $this->myMailer->initEmail();
+                $this->myMailer->setTemplate('mails/justificatif_absence_added_responsable.txt.twig',
+                    ['absence' => $absence]);
+                $this->myMailer->sendMessage(
+                    $diplome->getAssistantDiplome()->getMails(),
+                    'Nouveau justificatif d\'absence déposé'
                 );
             }
         }

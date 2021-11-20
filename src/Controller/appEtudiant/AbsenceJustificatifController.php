@@ -12,6 +12,7 @@ namespace App\Controller\appEtudiant;
 use App\Controller\BaseController;
 use App\Entity\AbsenceJustificatif;
 use App\Entity\Constantes;
+use App\Event\JustificatifEvent;
 use App\Form\AbsenceJustificatifType;
 use App\Repository\AbsenceJustificatifRepository;
 use Exception;
@@ -19,6 +20,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
  * @Route("/application/etudiant/absence/justificatif")
@@ -39,7 +41,9 @@ class AbsenceJustificatifController extends BaseController
      *
      * @throws Exception
      */
-    public function depot(Request $request): Response
+    public function depot(
+        EventDispatcherInterface $eventDispatcher,
+        Request $request): Response
     {
         if (null !== $this->getConnectedUser()) {
             $absenceJustificatif = new AbsenceJustificatif();
@@ -52,6 +56,10 @@ class AbsenceJustificatifController extends BaseController
                 $absenceJustificatif->transformeData();
                 $this->entityManager->persist($absenceJustificatif);
                 $this->entityManager->flush();
+
+                $event = new JustificatifEvent($absenceJustificatif);
+                $eventDispatcher->dispatch($event, JustificatifEvent::ADDED);
+
                 $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'absence_justificatif.add.success.flash');
 
                 return $this->redirectToRoute('application_index', ['onglet' => 'justificatif']);

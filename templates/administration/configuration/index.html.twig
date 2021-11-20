@@ -620,7 +620,22 @@
                                                 {% endfor %}
                                             </select>
                                         </div>
-
+                                        <div class="media">
+                                            <div class="media-body">
+                                                <p><strong>{{ 'table.opt_mail_assistante_justificatif_absence'|trans }}</strong></p>
+                                                <p>{{ 'help.opt_mail_assistante_justificatif_absence'|trans }}</p>
+                                            </div>
+                                            <label class="switch" for="optMailAssistanteJustificatifAbsence_{{
+                                            semestre.id }}">
+                                                <input type="checkbox" {{ semestre.optMailAssistanteJustificatifAbsence ? 'checked': '' }}
+                                                       class="changeOption"
+                                                       name="optMailAssistanteJustificatifAbsence_{{ semestre.id }}"
+                                                       id="optMailAssistanteJustificatifAbsence_{{ semestre.id }}"
+                                                       data-type="semestre"
+                                                       data-id="{{ semestre.id }}">
+                                                <span class="switch-indicator"></span>
+                                            </label>
+                                        </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="media">
