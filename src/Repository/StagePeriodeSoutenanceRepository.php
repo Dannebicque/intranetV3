@@ -18,6 +18,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method StagePeriodeSoutenance|null findOneBy(array $criteria, array $orderBy = null)
  * @method StagePeriodeSoutenance[]    findAll()
  * @method StagePeriodeSoutenance[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<StagePeriodeSoutenance>
  */
 class StagePeriodeSoutenanceRepository extends ServiceEntityRepository
 {

@@ -18,6 +18,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Fichier|null findOneBy(array $criteria, array $orderBy = null)
  * @method Fichier[]    findAll()
  * @method Fichier[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<Fichier>
  */
 class FichierRepository extends ServiceEntityRepository
 {

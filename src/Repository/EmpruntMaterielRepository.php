@@ -18,6 +18,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method EmpruntMateriel|null findOneBy(array $criteria, array $orderBy = null)
  * @method EmpruntMateriel[]    findAll()
  * @method EmpruntMateriel[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<EmpruntMateriel>
  */
 class EmpruntMaterielRepository extends ServiceEntityRepository
 {
@@ -25,33 +26,4 @@ class EmpruntMaterielRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, EmpruntMateriel::class);
     }
-
-    // /**
-    //  * @return EmpruntMateriel[] Returns an array of EmpruntMateriel objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('e.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?EmpruntMateriel
-    {
-        return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

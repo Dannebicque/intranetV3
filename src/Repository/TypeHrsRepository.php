@@ -17,6 +17,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method TypeHrs|null find($id, $lockMode = null, $lockVersion = null)
  * @method TypeHrs|null findOneBy(array $criteria, array $orderBy = null)
  * @method TypeHrs[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<TypeHrs>
  */
 class TypeHrsRepository extends ServiceEntityRepository
 {

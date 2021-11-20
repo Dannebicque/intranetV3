@@ -19,6 +19,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Emprunt|null findOneBy(array $criteria, array $orderBy = null)
  * @method Emprunt[]    findAll()
  * @method Emprunt[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<Emprunt>
  */
 class EmpruntRepository extends ServiceEntityRepository
 {

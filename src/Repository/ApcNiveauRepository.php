@@ -22,6 +22,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method ApcNiveau|null findOneBy(array $criteria, array $orderBy = null)
  * @method ApcNiveau[]    findAll()
  * @method ApcNiveau[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<ApcNiveau>
  */
 class ApcNiveauRepository extends ServiceEntityRepository
 {
@@ -30,17 +31,17 @@ class ApcNiveauRepository extends ServiceEntityRepository
         parent::__construct($registry, ApcNiveau::class);
     }
 
-    public function findBySemestre(Semestre $semestre)
+    public function findBySemestre(Semestre $semestre): mixed
     {
         return $this->createQueryBuilder('n')
             ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = n.annee')
             ->where('a.id = :annee')
-            ->setParameter('annee', $semestre->getAnnee()->getId())
+            ->setParameter('annee', $semestre->getAnnee()?->getId())
             ->getQuery()
             ->getResult();
     }
 
-    public function findByDiplome(Diplome $diplome)
+    public function findByDiplome(Diplome $diplome): mixed
     {
         return $this->createQueryBuilder('n')
             ->innerJoin(ApcCompetence::class, 'a', 'WITH', 'a.id = n.competence')

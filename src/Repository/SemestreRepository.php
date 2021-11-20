@@ -22,6 +22,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Semestre|null findOneBy(array $criteria, array $orderBy = null)
  * @method Semestre[]    findAll()
  * @method Semestre[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<Semestre>
  */
 class SemestreRepository extends ServiceEntityRepository
 {

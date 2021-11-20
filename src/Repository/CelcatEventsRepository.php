@@ -27,6 +27,7 @@ use http\Exception\InvalidArgumentException;
  * @method CelcatEvent|null findOneBy(array $criteria, array $orderBy = null)
  * @method CelcatEvent[]    findAll()
  * @method CelcatEvent[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<CelcatEvent>
  */
 class CelcatEventsRepository extends ServiceEntityRepository
 {

@@ -18,6 +18,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method ApcParcours|null findOneBy(array $criteria, array $orderBy = null)
  * @method ApcParcours[]    findAll()
  * @method ApcParcours[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<ApcParcours>
  */
 class ApcParcoursRepository extends ServiceEntityRepository
 {
@@ -25,33 +26,4 @@ class ApcParcoursRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, ApcParcours::class);
     }
-
-    // /**
-    //  * @return ApcParcours[] Returns an array of ApcParcours objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?ApcParcours
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

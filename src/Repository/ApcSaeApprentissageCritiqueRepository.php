@@ -11,6 +11,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method ApcSaeApprentissageCritique|null findOneBy(array $criteria, array $orderBy = null)
  * @method ApcSaeApprentissageCritique[]    findAll()
  * @method ApcSaeApprentissageCritique[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<ApcSaeApprentissageCritique>
  */
 class ApcSaeApprentissageCritiqueRepository extends ServiceEntityRepository
 {

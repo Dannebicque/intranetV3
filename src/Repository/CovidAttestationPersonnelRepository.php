@@ -20,6 +20,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method CovidAttestationPersonnel|null find($id, $lockMode = null, $lockVersion = null)
  * @method CovidAttestationPersonnel|null findOneBy(array $criteria, array $orderBy = null)
  * @method CovidAttestationPersonnel[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<CovidAttestationPersonnel>
  */
 class CovidAttestationPersonnelRepository extends ServiceEntityRepository
 {

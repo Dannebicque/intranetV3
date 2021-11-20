@@ -21,6 +21,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method ArticleCategorie|null findOneBy(array $criteria, array $orderBy = null)
  * @method ArticleCategorie[]    findAll()
  * @method ArticleCategorie[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<ArticleCategorie>
  */
 class ArticleCategorieRepository extends ServiceEntityRepository
 {

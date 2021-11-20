@@ -25,6 +25,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Rattrapage|null findOneBy(array $criteria, array $orderBy = null)
  * @method Rattrapage[]    findAll()
  * @method Rattrapage[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<Rattrapage>
  */
 class RattrapageRepository extends ServiceEntityRepository
 {

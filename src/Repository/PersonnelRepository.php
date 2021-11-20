@@ -26,10 +26,11 @@ use function count;
  * @method Personnel|null findOneBy(array $criteria, array $orderBy = null)
  * @method Personnel[]    findAll()
  * @method Personnel[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<Personnel>
  */
 class PersonnelRepository extends ServiceEntityRepository
 {
-    private $router;
+    private $router;//todo: a supprimer???
 
     /**
      * PersonnelRepository constructor.

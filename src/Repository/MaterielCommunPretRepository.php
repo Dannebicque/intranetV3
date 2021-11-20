@@ -18,6 +18,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method MaterielCommunPret|null findOneBy(array $criteria, array $orderBy = null)
  * @method MaterielCommunPret[]    findAll()
  * @method MaterielCommunPret[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<MaterielCommunPret>
  */
 class MaterielCommunPretRepository extends ServiceEntityRepository
 {
@@ -25,33 +26,4 @@ class MaterielCommunPretRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, MaterielCommunPret::class);
     }
-
-    // /**
-    //  * @return MaterielCommunPret[] Returns an array of MaterielCommunPret objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('m.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?MaterielCommunPret
-    {
-        return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

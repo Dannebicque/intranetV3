@@ -25,6 +25,7 @@ use function array_key_exists;
  * @method QuestionnaireEtudiant|null findOneBy(array $criteria, array $orderBy = null)
  * @method QuestionnaireEtudiant[]    findAll()
  * @method QuestionnaireEtudiant[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<QuestionnaireEtudiant>
  */
 class QuestionnaireEtudiantRepository extends ServiceEntityRepository
 {

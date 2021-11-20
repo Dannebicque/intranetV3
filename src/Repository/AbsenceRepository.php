@@ -24,6 +24,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Absence|null findOneBy(array $criteria, array $orderBy = null)
  * @method Absence[]    findAll()
  * @method Absence[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<Absence>
  */
 class AbsenceRepository extends ServiceEntityRepository
 {

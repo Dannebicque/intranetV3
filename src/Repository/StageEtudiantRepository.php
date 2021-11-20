@@ -24,6 +24,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method StageEtudiant|null findOneBy(array $criteria, array $orderBy = null)
  * @method StageEtudiant[]    findAll()
  * @method StageEtudiant[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<StageEtudiant>
  */
 class StageEtudiantRepository extends ServiceEntityRepository
 {

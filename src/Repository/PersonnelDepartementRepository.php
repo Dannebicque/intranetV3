@@ -22,6 +22,7 @@ use Symfony\Component\Routing\RouterInterface;
  * @method PersonnelDepartement|null findOneBy(array $criteria, array $orderBy = null)
  * @method PersonnelDepartement[]    findAll()
  * @method PersonnelDepartement[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<PersonnelDepartement>
  */
 class PersonnelDepartementRepository extends ServiceEntityRepository
 {

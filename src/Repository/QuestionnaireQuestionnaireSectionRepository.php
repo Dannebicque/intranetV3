@@ -18,6 +18,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method QuestionnaireQuestionnaireSection|null findOneBy(array $criteria, array $orderBy = null)
  * @method QuestionnaireQuestionnaireSection[]    findAll()
  * @method QuestionnaireQuestionnaireSection[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<QuestionnaireQuestionnaireSection>
  */
 class QuestionnaireQuestionnaireSectionRepository extends ServiceEntityRepository
 {

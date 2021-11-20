@@ -23,6 +23,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Ue|null findOneBy(array $criteria, array $orderBy = null)
  * @method Ue[]    findAll()
  * @method Ue[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<Ue>
  */
 class UeRepository extends ServiceEntityRepository
 {

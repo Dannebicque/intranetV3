@@ -23,6 +23,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Parcour|null findOneBy(array $criteria, array $orderBy = null)
  * @method Parcour[]    findAll()
  * @method Parcour[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<Parcour>
  */
 class ParcourRepository extends ServiceEntityRepository
 {

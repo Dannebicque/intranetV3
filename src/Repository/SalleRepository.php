@@ -18,6 +18,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Salle|null findOneBy(array $criteria, array $orderBy = null)
  * @method Salle[]    findAll()
  * @method Salle[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<Salle>
  */
 class SalleRepository extends ServiceEntityRepository
 {

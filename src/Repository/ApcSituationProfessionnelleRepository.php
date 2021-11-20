@@ -18,6 +18,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method ApcSituationProfessionnelle|null findOneBy(array $criteria, array $orderBy = null)
  * @method ApcSituationProfessionnelle[]    findAll()
  * @method ApcSituationProfessionnelle[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<ApcSituationProfessionnelle>
  */
 class ApcSituationProfessionnelleRepository extends ServiceEntityRepository
 {
@@ -25,33 +26,4 @@ class ApcSituationProfessionnelleRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, ApcSituationProfessionnelle::class);
     }
-
-    // /**
-    //  * @return ApcSituationProfessionnelle[] Returns an array of ApcSituationProfessionnelle objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?ApcSituationProfessionnelle
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

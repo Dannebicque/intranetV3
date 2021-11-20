@@ -18,6 +18,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Previsionnel|null findOneBy(array $criteria, array $orderBy = null)
  * @method Previsionnel[]    findAll()
  * @method Previsionnel[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<Previsionnel>
  */
 class PrevisionnelRepository extends ServiceEntityRepository
 {

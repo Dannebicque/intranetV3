@@ -27,6 +27,7 @@ use Exception;
  * @method Date|null findOneBy(array $criteria, array $orderBy = null)
  * @method Date[]    findAll()
  * @method Date[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<Date>
  */
 class DateRepository extends ServiceEntityRepository
 {

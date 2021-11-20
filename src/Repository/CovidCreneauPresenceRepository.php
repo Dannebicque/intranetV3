@@ -18,6 +18,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method CovidCreneauPresence|null findOneBy(array $criteria, array $orderBy = null)
  * @method CovidCreneauPresence[]    findAll()
  * @method CovidCreneauPresence[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<CovidCreneauPresence>
  */
 class CovidCreneauPresenceRepository extends ServiceEntityRepository
 {
@@ -25,33 +26,4 @@ class CovidCreneauPresenceRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, CovidCreneauPresence::class);
     }
-
-    // /**
-    //  * @return CovidCreneauPresence[] Returns an array of CovidCreneauPresence objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?CovidCreneauPresence
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

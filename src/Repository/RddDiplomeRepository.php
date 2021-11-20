@@ -20,6 +20,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method RddDiplome|null findOneBy(array $criteria, array $orderBy = null)
  * @method RddDiplome[]    findAll()
  * @method RddDiplome[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<RddDiplome>
  */
 class RddDiplomeRepository extends ServiceEntityRepository
 {

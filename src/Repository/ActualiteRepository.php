@@ -19,6 +19,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Actualite|null findOneBy(array $criteria, array $orderBy = null)
  * @method Actualite[]    findAll()
  * @method Actualite[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<Actualite>
  */
 class ActualiteRepository extends ServiceEntityRepository
 {
@@ -33,7 +34,7 @@ class ActualiteRepository extends ServiceEntityRepository
     /**
      * @return Actualite[]
      */
-    public function getByDepartement(Departement $departement, int $nbResult = 0): array
+    public function getByDepartement(Departement $departement, int $nbResult = 0): mixed
     {
         $q = $this->createQueryBuilder('a')
             ->andWhere('a.departement = :departement')

@@ -18,6 +18,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method CodeInsee|null findOneBy(array $criteria, array $orderBy = null)
  * @method CodeInsee[]    findAll()
  * @method CodeInsee[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<CodeInsee>
  */
 class CodeInseeRepository extends ServiceEntityRepository
 {

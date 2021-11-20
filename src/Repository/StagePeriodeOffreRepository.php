@@ -22,6 +22,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method StagePeriodeOffre|null findOneBy(array $criteria, array $orderBy = null)
  * @method StagePeriodeOffre[]    findAll()
  * @method StagePeriodeOffre[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<StagePeriodeOffre>
  */
 class StagePeriodeOffreRepository extends ServiceEntityRepository
 {

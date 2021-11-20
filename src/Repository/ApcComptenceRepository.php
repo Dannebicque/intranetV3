@@ -12,6 +12,7 @@ namespace App\Repository;
 use App\Entity\ApcCompetence;
 use App\Entity\Diplome;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -19,6 +20,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method ApcCompetence|null findOneBy(array $criteria, array $orderBy = null)
  * @method ApcCompetence[]    findAll()
  * @method ApcCompetence[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<ApcCompetence>
  */
 class ApcComptenceRepository extends ServiceEntityRepository
 {
@@ -27,20 +29,26 @@ class ApcComptenceRepository extends ServiceEntityRepository
         parent::__construct($registry, ApcCompetence::class);
     }
 
-    public function findByDiplome(Diplome $diplome)
+    /**
+     * @return ApcCompetence[]
+     */
+    public function findByDiplome(Diplome $diplome): array
     {
         return $this->findByDiplomeBuilder($diplome)
             ->getQuery()
             ->getResult();
     }
 
-    public function findByDiplomeBuilder(Diplome $diplome)
+    public function findByDiplomeBuilder(Diplome $diplome): QueryBuilder
     {
         return $this->createQueryBuilder('c')
             ->where('c.diplome = :diplome')
             ->setParameter('diplome', $diplome->getId());
     }
 
+    /**
+     * @return ApcCompetence[]
+     */
     public function findOneByDiplomeArray(Diplome $diplome): array
     {
         $comps = $this->findByDiplome($diplome);
