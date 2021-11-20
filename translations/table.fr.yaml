@@ -1,0 +1,11 @@
+table:
+  libelle: 'Libellé'
+  type: 'Type'
+  questionnaireQuestionTags: 'Tags'
+  auteur: 'Auteur'
+  obligatoire: 'Obligatoire?'
+  titre: 'Titre'
+  dateOuverture: 'Date d''ouverture'
+  dateFermeture: 'Date de fermeture'
+  semestre: 'Semestre'
+  diplome: 'Diplôme'
