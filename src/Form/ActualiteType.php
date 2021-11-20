@@ -25,14 +25,13 @@ class ActualiteType extends AbstractType
     {
         $builder
             ->add('titre', TextType::class, [
-                'label' => 'titre',
-                'attr' => ['data-error' => 'Le titre est obligatoire'],
+                'label' => 'label.titre',
             ])
             ->add('texte', TextareaType::class, [
-                'label' => 'texte',
+                'label' => 'label.texte',
                 'required' => true,
                 'attr' => ['rows' => 10, 'class' => 'tinyMce'],
-            ]);
+            ]);//todo: tinyMce ne fonctionne plus
     }
 
     public function configureOptions(OptionsResolver $resolver): void

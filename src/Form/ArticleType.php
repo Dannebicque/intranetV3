@@ -42,7 +42,7 @@ class ArticleType extends AbstractType
             ->add('typeDestinataire', TypeDestinataireType::class, ['label' => 'label.typedestinataire'])
             ->add('texte', TextareaType::class, [
                 'label' => 'label.texte',
-                'attr' => ['rows' => 20, 'class' => 'tinyMce'],
+                'attr' => ['rows' => 20, 'class' => 'tinyMce'],//todo: tinyMce ne fonctionne plus
             ])
             ->add('categorie', EntityType::class, [
                 'class' => ArticleCategorie::class,

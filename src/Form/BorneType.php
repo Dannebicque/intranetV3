@@ -38,33 +38,33 @@ class BorneType extends AbstractType
 
         $builder
             ->add('icone', ChoiceCompleteType::class, [
-                'label' => 'icone',
+                'label' => 'label.icone',
                 'choices' => Borne::ICONES,
             ])
             ->add('couleur', ChoiceCompleteType::class, [
-                'label' => 'couleur',
+                'label' => 'label.couleur',
                 'choices' => Borne::COULEURS,
             ])
             ->add('message', TextareaType::class, [
-                'label' => 'message',
+                'label' => 'label.message',
             ])
             ->add('url', TextType::class, [
-                'label' => 'url',
+                'label' => 'label.url',
                 'required' => false,
                 'input_prefix' => '<div class="input-group-text">HTTPS://</div>',
             ])
             //->add('dateRange', DateRangeType::class, ['label' => 'dateRange', 'mapped' => false, 'required' => true])
-            ->add('dateRange', DateRangeType::class, ['label' => 'dateRange', 'mapped' => false, 'required' => true])
+            ->add('dateRange', DateRangeType::class, ['label' => 'label.dateRange', 'mapped' => false, 'required' => true])
             ->add(
                 'visible',
                 YesNoType::class,
                 [
-                    'label' => 'visible',
+                    'label' => 'label.visible',
                 ]
             )
             ->add('semestres', EntityType::class, [
                 'class' => Semestre::class,
-                'label' => 'semestres_date',
+                'label' => 'label.semestres_date',
                 'choice_label' => 'libelle',
                 'query_builder' => function(SemestreRepository $semestreRepository) {
                     return $semestreRepository->findByDepartementBuilder($this->departement);
@@ -84,7 +84,7 @@ class BorneType extends AbstractType
                 $borne = $event->getData();
                 $form = $event->getForm();
                 $form->add('dateRange', DateRangeType::class, [
-                    'label' => 'dateRange',
+                    'label' => 'label.dateRange',
                     'mapped' => false,
                     'date_data' => [
                         'from' => $borne->getDateDebutPublication(),

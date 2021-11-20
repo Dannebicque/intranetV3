@@ -24,18 +24,18 @@ class CelcatCalendrierType extends AbstractType
     {
         $builder
             ->add('anneeUniversitaire', EntityType::class, [
-                'label' => 'annee_universitaire',
+                'label' => 'label.annee_universitaire',
                 'class' => AnneeUniversitaire::class,
                 'choice_label' => 'displayAnneeUniversitaire',
             ])
             ->add('semaineFormation', TextType::class, [
-                'label' => 'semaineFormation',
+                'label' => 'label.semaineFormation',
             ])
             ->add('semaineReelle', TextType::class, [
-                'label' => 'semaineReelle',
+                'label' => 'label.semaineReelle',
             ])
             ->add('dateLundi', DatePickerType::class, [
-                'label' => 'dateLundi',
+                'label' => 'label.dateLundi',
             ]);
     }
 

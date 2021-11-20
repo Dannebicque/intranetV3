@@ -38,14 +38,14 @@ class AlternanceEtudiantType extends AbstractType
                     Alternance::ALTERNANCE_PROFESSIONALISATION => Alternance::ALTERNANCE_PROFESSIONALISATION,
                 ],
                 'expanded' => true,
-                'label' => 'contrat_alternance',
+                'label' => 'label.contrat_alternance',
             ])
             ->add('dateRange', DateRangeType::class,
-                ['label' => 'dateRange.periode.alternance', 'mapped' => false, 'required' => true])
-            ->add('entreprise', EntrepriseType::class, ['label' => 'entreprise'])
-            ->add('tuteur', ContactType::class, ['label' => 'tuteur'])
+                ['label' => 'label.dateRange.periode.alternance', 'mapped' => false, 'required' => true])
+            ->add('entreprise', EntrepriseType::class, ['label' => 'label.entreprise'])
+            ->add('tuteur', ContactType::class, ['label' => 'label.tuteur'])
             ->add('tuteurUniversitaire', EntityCompleteType::class, [
-                'label' => 'tuteur_universitaire',
+                'label' => 'label.tuteur_universitaire',
                 'expanded' => false,
                 'disabled' => true,
                 'multiple' => false,
@@ -57,9 +57,9 @@ class AlternanceEtudiantType extends AbstractType
                 },
                 'attr' => ['class' => 'form-control selectpicker'],
             ])
-            ->add('sujet', TextareaType::class, ['label' => 'sujet_altenance'])
+            ->add('sujet', TextareaType::class, ['label' => 'label.sujet_altenance'])
             ->add('adresseAlternance', AdresseType::class,
-                ['label' => 'adresse_lieu_alternance', 'help' => 'help.complete.meme.si.identique'])
+                ['label' => 'label.adresse_lieu_alternance', 'help' => 'help.complete.meme.si.identique'])
             ->addEventListener(FormEvents::POST_SUBMIT, static function(FormEvent $event) {
                 $alternance = $event->getData();
                 $form = $event->getForm();
@@ -71,7 +71,7 @@ class AlternanceEtudiantType extends AbstractType
                 $alternance = $event->getData();
                 $form = $event->getForm();
                 $form->add('dateRange', DateRangeType::class, [
-                    'label' => 'dateRange',
+                    'label' => 'label.dateRange',
                     'mapped' => false,
                     'date_data' => [
                         'from' => $alternance->getDateDebut(),
