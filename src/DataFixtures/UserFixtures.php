@@ -14,14 +14,15 @@ use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use JsonException;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserFixtures extends Fixture
 {
-    private $encoder;
+    private UserPasswordHasherInterface $encoder;
     public const PERMANENT_USER_REFERENCE = 'permanent-user';
 
-    public function __construct(UserPasswordEncoderInterface $encoder)
+    public function __construct(UserPasswordHasherInterface $encoder)
     {
         $this->encoder = $encoder;
     }
@@ -33,7 +34,7 @@ class UserFixtures extends Fixture
     {
         $user3 = new Personnel();
         $user3->setUsername('superAdmin');
-        $password = $this->encoder->encodePassword($user3, 'test');
+        $password = $this->encoder->hashPassword($user3, 'test');
         $user3->setPassword($password);
         $user3->setMailUniv('super_admin@gmail.com');
         $user3->setNom('Super');
@@ -48,7 +49,7 @@ class UserFixtures extends Fixture
 
         $user2 = new Personnel();
         $user2->setUsername('permanent');
-        $password = $this->encoder->encodePassword($user2, 'test');
+        $password = $this->encoder->hashPassword($user2, 'test');
         $user2->setPassword($password);
         $user2->setMailUniv('permanent@gmail.com');
         $user2->setNom('Doe');
