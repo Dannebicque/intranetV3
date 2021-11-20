@@ -2,9 +2,9 @@
 {% trans_default_domain 'form' %}
 
 {% macro collection_item(form) %}
-    <div data-form-collection-target="field">
+    <div data-form-collection-target="field" class="mb-2">
         {{ form_widget(form) }}
-        <button data-action="form-collection#removeItem" class="btn btn-danger">
+        <button data-action="form-collection#removeItem" class="btn btn-danger me-1">
             <i class="{{ iconDelete }}"></i> Retirer un élément
         </button>
     </div>
