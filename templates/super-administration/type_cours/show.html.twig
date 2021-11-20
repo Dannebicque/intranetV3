@@ -1,0 +1,44 @@
+{% extends 'base-super_admin.html.twig' %}
+
+{% block header %}
+    {{ 'adm.type_cours.show.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        {{ include('composants/sadm-buttons-show.html.twig', {elt: 'type_cours', id: type_crs.id}) }}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.type_cours.show.heading'|trans }}</h4>
+        <div class="card-body">
+
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th>{{ 'table.id'|trans }}</th>
+                    <td>{{ type_crs.id }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.libelle'|trans }}</th>
+                    <td>{{ type_crs.libelle }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.libelle_court'|trans }}</th>
+                    <td>{{ type_crs.libelle_court }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.ratio_eq_td'|trans }}</th>
+                    <td>{{ type_crs.ratioEqTd }}  {{ 'eq_td'|trans }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.commentaire'|trans }}</th>
+                    <td>{{ type_crs.commentaire }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
