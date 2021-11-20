@@ -30,7 +30,7 @@ class DepartementFixtures extends Fixture implements DependentFixtureInterface
         $personnelDepartement = new PersonnelDepartement($this->getReference(UserFixtures::PERMANENT_USER_REFERENCE),
             $departement);
         $personnelDepartement->setDefaut(true);
-        $personnelDepartement->setAnnee(2020);
+        $personnelDepartement->setAnnee(2021);
         $personnelDepartement->setRoles('ROLE_PERMANENT');
 
         $manager->flush();
