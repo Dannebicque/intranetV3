@@ -18,6 +18,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method QuestionnaireQuestionTag|null findOneBy(array $criteria, array $orderBy = null)
  * @method QuestionnaireQuestionTag[]    findAll()
  * @method QuestionnaireQuestionTag[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<QuestionnaireQuestionTag>
  */
 class QuestionnaireQuestionTagRepository extends ServiceEntityRepository
 {
@@ -25,33 +26,4 @@ class QuestionnaireQuestionTagRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, QuestionnaireQuestionTag::class);
     }
-
-    // /**
-    //  * @return QuestionnaireQuestionTag[] Returns an array of QuestionnaireQuestionTag objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('q')
-            ->andWhere('q.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('q.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?QuestionnaireQuestionTag
-    {
-        return $this->createQueryBuilder('q')
-            ->andWhere('q.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

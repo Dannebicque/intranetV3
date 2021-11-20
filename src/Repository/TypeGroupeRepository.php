@@ -24,6 +24,7 @@ use function array_key_exists;
  * @method TypeGroupe|null findOneBy(array $criteria, array $orderBy = null)
  * @method TypeGroupe[]    findAll()
  * @method TypeGroupe[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<TypeGroupe>
  */
 class TypeGroupeRepository extends ServiceEntityRepository
 {

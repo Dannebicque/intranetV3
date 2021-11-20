@@ -19,6 +19,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Evaluation|null findOneBy(array $criteria, array $orderBy = null)
  * @method Evaluation[]    findAll()
  * @method Evaluation[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<Evaluation>
  */
 class EvaluationRepository extends ServiceEntityRepository
 {

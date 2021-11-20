@@ -18,6 +18,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method ArticleLike|null findOneBy(array $criteria, array $orderBy = null)
  * @method ArticleLike[]    findAll()
  * @method ArticleLike[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<ArticleLike>
  */
 class ArticleLikeRepository extends ServiceEntityRepository
 {

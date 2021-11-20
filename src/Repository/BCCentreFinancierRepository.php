@@ -18,6 +18,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method BCCentreFinancier|null findOneBy(array $criteria, array $orderBy = null)
  * @method BCCentreFinancier[]    findAll()
  * @method BCCentreFinancier[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<BCCentreFinancier>
  */
 class BCCentreFinancierRepository extends ServiceEntityRepository
 {
@@ -25,33 +26,4 @@ class BCCentreFinancierRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, BCCentreFinancier::class);
     }
-
-    // /**
-    //  * @return BCCentreFinancier[] Returns an array of BCCentreFinancier objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('b')
-            ->andWhere('b.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('b.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?BCCentreFinancier
-    {
-        return $this->createQueryBuilder('b')
-            ->andWhere('b.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

@@ -24,6 +24,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Matiere|null findOneBy(array $criteria, array $orderBy = null)
  * @method Matiere[]    findAll()
  * @method Matiere[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<Matiere>
  */
 class MatiereRepository extends ServiceEntityRepository
 {

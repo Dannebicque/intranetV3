@@ -18,6 +18,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method AnneeUniversitaire|null find($id, $lockMode = null, $lockVersion = null)
  * @method AnneeUniversitaire|null findOneBy(array $criteria, array $orderBy = null)
  * @method AnneeUniversitaire[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<AnneeUniversitaire>
  */
 class AnneeUniversitaireRepository extends ServiceEntityRepository
 {
@@ -31,7 +32,7 @@ class AnneeUniversitaireRepository extends ServiceEntityRepository
         return $this->findBy([], ['annee' => 'DESC']);
     }
 
-    public function findActive()
+    public function findActive(): ?AnneeUniversitaire
     {
         try {
             return $this->createQueryBuilder('a')

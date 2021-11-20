@@ -22,6 +22,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method ApcSae|null findOneBy(array $criteria, array $orderBy = null)
  * @method ApcSae[]    findAll()
  * @method ApcSae[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<ApcSae>
  */
 class ApcSaeRepository extends ServiceEntityRepository
 {

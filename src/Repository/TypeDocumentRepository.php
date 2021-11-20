@@ -19,6 +19,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method TypeDocument|null findOneBy(array $criteria, array $orderBy = null)
  * @method TypeDocument[]    findAll()
  * @method TypeDocument[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<TypeDocument>
  */
 class TypeDocumentRepository extends ServiceEntityRepository
 {

@@ -18,6 +18,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method TypeDiplome|null findOneBy(array $criteria, array $orderBy = null)
  * @method TypeDiplome[]    findAll()
  * @method TypeDiplome[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<TypeDiplome>
  */
 class TypeDiplomeRepository extends ServiceEntityRepository
 {

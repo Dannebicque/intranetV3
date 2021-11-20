@@ -18,6 +18,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Courrier|null findOneBy(array $criteria, array $orderBy = null)
  * @method Courrier[]    findAll()
  * @method Courrier[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<Courrier>
  */
 class CourrierRepository extends ServiceEntityRepository
 {

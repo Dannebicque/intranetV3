@@ -15,17 +15,18 @@ use App\Entity\Annee;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Etudiant;
 use App\Entity\Semestre;
+use function count;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
-use function count;
 
 /**
  * @method AbsenceJustificatif|null find($id, $lockMode = null, $lockVersion = null)
  * @method AbsenceJustificatif|null findOneBy(array $criteria, array $orderBy = null)
  * @method AbsenceJustificatif[]    findAll()
  * @method AbsenceJustificatif[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<AbsenceJustificatif>
  */
 class AbsenceJustificatifRepository extends ServiceEntityRepository
 {
@@ -56,7 +57,7 @@ class AbsenceJustificatifRepository extends ServiceEntityRepository
     public function findBySemestreCount(Semestre $semestre, int $annee = 0)
     {
         if (0 === $annee) {
-            $annee = null !== $semestre->getAnneeUniversitaire() ? $semestre->getAnneeUniversitaire()->getAnnee() : (int)date('Y');
+            $annee = null !== $semestre->getAnneeUniversitaire() ? $semestre->getAnneeUniversitaire()->getAnnee() : (int) date('Y');
         }
 
         return $this->createQueryBuilder('j')

@@ -24,6 +24,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Alternance|null findOneBy(array $criteria, array $orderBy = null)
  * @method Alternance[]    findAll()
  * @method Alternance[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<Alternance>
  */
 class AlternanceRepository extends ServiceEntityRepository
 {

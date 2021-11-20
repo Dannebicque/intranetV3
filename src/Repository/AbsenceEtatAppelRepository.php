@@ -18,6 +18,8 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method AbsenceEtatAppel|null findOneBy(array $criteria, array $orderBy = null)
  * @method AbsenceEtatAppel[]    findAll()
  * @method AbsenceEtatAppel[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ *
+ * @extends ServiceEntityRepository<AbsenceEtatAppel>
  */
 class AbsenceEtatAppelRepository extends ServiceEntityRepository
 {

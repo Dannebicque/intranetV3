@@ -17,6 +17,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Bac|null find($id, $lockMode = null, $lockVersion = null)
  * @method Bac|null findOneBy(array $criteria, array $orderBy = null)
  * @method Bac[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<Bac>
  */
 class BacRepository extends ServiceEntityRepository
 {

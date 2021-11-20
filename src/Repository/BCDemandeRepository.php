@@ -18,6 +18,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method BCDemande|null findOneBy(array $criteria, array $orderBy = null)
  * @method BCDemande[]    findAll()
  * @method BCDemande[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<BCDemande>
  */
 class BCDemandeRepository extends ServiceEntityRepository
 {

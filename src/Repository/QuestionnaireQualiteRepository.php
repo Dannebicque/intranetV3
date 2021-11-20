@@ -21,6 +21,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method QuestionnaireQualite|null findOneBy(array $criteria, array $orderBy = null)
  * @method QuestionnaireQualite[]    findAll()
  * @method QuestionnaireQualite[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<QuestionnaireQualite>
  */
 class QuestionnaireQualiteRepository extends ServiceEntityRepository
 {

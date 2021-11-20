@@ -20,6 +20,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method TypeMateriel|null findOneBy(array $criteria, array $orderBy = null)
  * @method TypeMateriel[]    findAll()
  * @method TypeMateriel[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<TypeMateriel>
  */
 class TypeMaterielRepository extends ServiceEntityRepository
 {

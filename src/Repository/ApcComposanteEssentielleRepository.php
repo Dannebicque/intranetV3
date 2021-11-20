@@ -18,6 +18,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method ApcComposanteEssentielle|null findOneBy(array $criteria, array $orderBy = null)
  * @method ApcComposanteEssentielle[]    findAll()
  * @method ApcComposanteEssentielle[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<ApcComposanteEssentielle>
  */
 class ApcComposanteEssentielleRepository extends ServiceEntityRepository
 {
@@ -25,33 +26,4 @@ class ApcComposanteEssentielleRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, ApcComposanteEssentielle::class);
     }
-
-    // /**
-    //  * @return ApcComposanteEssentielle[] Returns an array of ApcComposanteEssentielle objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?ApcComposanteEssentielle
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

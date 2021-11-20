@@ -19,6 +19,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method CreneauCours|null findOneBy(array $criteria, array $orderBy = null)
  * @method CreneauCours[]    findAll()
  * @method CreneauCours[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<CreneauCours>
  */
 class CreneauCoursRepository extends ServiceEntityRepository
 {

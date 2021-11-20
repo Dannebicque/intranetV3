@@ -18,6 +18,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Configuration|null findOneBy(array $criteria, array $orderBy = null)
  * @method Configuration[]    findAll()
  * @method Configuration[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<Configuration>
  */
 class ConfigurationRepository extends ServiceEntityRepository
 {

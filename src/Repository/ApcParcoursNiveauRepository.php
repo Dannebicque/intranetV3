@@ -20,6 +20,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method ApcParcoursNiveau|null findOneBy(array $criteria, array $orderBy = null)
  * @method ApcParcoursNiveau[]    findAll()
  * @method ApcParcoursNiveau[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<ApcParcoursNiveau>
  */
 class ApcParcoursNiveauRepository extends ServiceEntityRepository
 {

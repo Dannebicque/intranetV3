@@ -26,6 +26,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Scolarite|null findOneBy(array $criteria, array $orderBy = null)
  * @method Scolarite[]    findAll()
  * @method Scolarite[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<Scolarite>
  */
 class ScolariteRepository extends ServiceEntityRepository
 {

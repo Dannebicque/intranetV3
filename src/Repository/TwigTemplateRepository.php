@@ -18,6 +18,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method TwigTemplate|null findOneBy(array $criteria, array $orderBy = null)
  * @method TwigTemplate[]    findAll()
  * @method TwigTemplate[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<TwigTemplate>
  */
 class TwigTemplateRepository extends ServiceEntityRepository
 {

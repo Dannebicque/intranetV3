@@ -18,6 +18,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method AlternanceFicheSuivi|null findOneBy(array $criteria, array $orderBy = null)
  * @method AlternanceFicheSuivi[]    findAll()
  * @method AlternanceFicheSuivi[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<AlternanceFicheSuivi>
  */
 class AlternanceFicheSuiviRepository extends ServiceEntityRepository
 {

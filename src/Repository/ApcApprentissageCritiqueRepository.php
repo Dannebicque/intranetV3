@@ -22,6 +22,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method ApcApprentissageCritique|null findOneBy(array $criteria, array $orderBy = null)
  * @method ApcApprentissageCritique[]    findAll()
  * @method ApcApprentissageCritique[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<ApcApprentissageCritique>
  */
 class ApcApprentissageCritiqueRepository extends ServiceEntityRepository
 {

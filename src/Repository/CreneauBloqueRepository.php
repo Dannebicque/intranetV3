@@ -18,6 +18,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method CreneauBloque|null findOneBy(array $criteria, array $orderBy = null)
  * @method CreneauBloque[]    findAll()
  * @method CreneauBloque[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<CreneauBloque>
  */
 class CreneauBloqueRepository extends ServiceEntityRepository
 {
@@ -25,33 +26,4 @@ class CreneauBloqueRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, CreneauBloque::class);
     }
-
-    // /**
-    //  * @return CreneauBloque[] Returns an array of CreneauBloque objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?CreneauBloque
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

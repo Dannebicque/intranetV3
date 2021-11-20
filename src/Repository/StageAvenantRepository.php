@@ -18,6 +18,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method StageAvenant|null findOneBy(array $criteria, array $orderBy = null)
  * @method StageAvenant[]    findAll()
  * @method StageAvenant[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<StageAvenant>
  */
 class StageAvenantRepository extends ServiceEntityRepository
 {
@@ -25,33 +26,4 @@ class StageAvenantRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, StageAvenant::class);
     }
-
-    // /**
-    //  * @return StageAvenant[] Returns an array of StageAvenant objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?StageAvenant
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

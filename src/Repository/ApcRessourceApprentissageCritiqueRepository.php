@@ -18,6 +18,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method ApcRessourceApprentissageCritique|null findOneBy(array $criteria, array $orderBy = null)
  * @method ApcRessourceApprentissageCritique[]    findAll()
  * @method ApcRessourceApprentissageCritique[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<ApcRessourceApprentissageCritique>
  */
 class ApcRessourceApprentissageCritiqueRepository extends ServiceEntityRepository
 {
@@ -26,7 +27,10 @@ class ApcRessourceApprentissageCritiqueRepository extends ServiceEntityRepositor
         parent::__construct($registry, ApcRessourceApprentissageCritique::class);
     }
 
-    public function findArrayIdAc($ressource)
+    /**
+     * @return int[]
+     */
+    public function findArrayIdAc(?int $ressource): array
     {
         $query = $this->createQueryBuilder('a')
             ->where('a.ressource = :ressource')
@@ -37,7 +41,7 @@ class ApcRessourceApprentissageCritiqueRepository extends ServiceEntityRepositor
         $t = [];
         /** @var ApcRessourceApprentissageCritique $q */
         foreach ($query as $q) {
-            $t[] = $q->getApprentissageCritique()->getId();
+            $t[] = $q->getApprentissageCritique()?->getId();
         }
 
         return $t;

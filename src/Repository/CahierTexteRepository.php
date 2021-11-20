@@ -19,6 +19,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method CahierTexte|null findOneBy(array $criteria, array $orderBy = null)
  * @method CahierTexte[]    findAll()
  * @method CahierTexte[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<CahierTexte>
  */
 class CahierTexteRepository extends ServiceEntityRepository
 {

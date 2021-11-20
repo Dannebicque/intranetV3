@@ -20,6 +20,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method DocumentFavoriEtudiant|null findOneBy(array $criteria, array $orderBy = null)
  * @method DocumentFavoriEtudiant[]    findAll()
  * @method DocumentFavoriEtudiant[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<DocumentFavoriEtudiant>
  */
 class DocumentFavoriEtudiantRepository extends ServiceEntityRepository
 {

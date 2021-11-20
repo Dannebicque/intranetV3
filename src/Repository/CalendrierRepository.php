@@ -19,6 +19,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Calendrier|null findOneBy(array $criteria, array $orderBy = null)
  * @method Calendrier[]    findAll()
  * @method Calendrier[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<Calendrier>
  */
 class CalendrierRepository extends ServiceEntityRepository
 {

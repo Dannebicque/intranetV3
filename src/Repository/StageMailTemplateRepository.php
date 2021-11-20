@@ -20,6 +20,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method StageMailTemplate|null findOneBy(array $criteria, array $orderBy = null)
  * @method StageMailTemplate[]    findAll()
  * @method StageMailTemplate[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<StageMailTemplate>
  */
 class StageMailTemplateRepository extends ServiceEntityRepository
 {
