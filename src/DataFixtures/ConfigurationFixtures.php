@@ -23,6 +23,41 @@ class ConfigurationFixtures extends Fixture
         $manager->persist($conf);
 
         $conf = new Configuration();
+        $conf->setCle('ENQUETE_DIPLOME');
+        $conf->setValeur(0);
+        $manager->persist($conf);
+
+        $conf = new Configuration();
+        $conf->setCle('MAIL_DEBUG');
+        $conf->setValeur('mail@debug.com');
+        $manager->persist($conf);
+
+        $conf = new Configuration();
+        $conf->setCle('SITE_UNIVERSITE');
+        $conf->setValeur('https://www.univ-reims.fr');
+        $manager->persist($conf);
+
+        $conf = new Configuration();
+        $conf->setCle('SITE_ENT');
+        $conf->setValeur('https://ebureau.univ-reims.fr');
+        $manager->persist($conf);
+
+        $conf = new Configuration();
+        $conf->setCle('CODE_IUT');
+        $conf->setValeur('troyes');
+        $manager->persist($conf);
+
+        $conf = new Configuration();
+        $conf->setCle('AFFICHAGE_TROMBI');
+        $conf->setValeur(0);
+        $manager->persist($conf);
+
+        $conf = new Configuration();
+        $conf->setCle('APPLICATION_COVID');
+        $conf->setValeur(0);
+        $manager->persist($conf);
+
+        $conf = new Configuration();
         $conf->setCle('NOM_IUT');
         $conf->setValeur('IUT de Troyes');
         $manager->persist($conf);
