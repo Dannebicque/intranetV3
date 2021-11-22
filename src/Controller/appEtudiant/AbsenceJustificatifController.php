@@ -48,6 +48,7 @@ class AbsenceJustificatifController extends BaseController
         if (null !== $this->getConnectedUser()) {
             $absenceJustificatif = new AbsenceJustificatif();
             $absenceJustificatif->setEtudiant($this->getConnectedUser());
+            $absenceJustificatif->setSemestre($this->getEtudiantSemestre());
             $absenceJustificatif->setAnneeUniversitaire($this->getAnneeUniversitaire());
             $form = $this->createForm(AbsenceJustificatifType::class, $absenceJustificatif);
             $form->handleRequest($request);
