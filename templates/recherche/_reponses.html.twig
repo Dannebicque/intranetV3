@@ -16,7 +16,7 @@
                     {% else %}
                         <a href="{{ path('user_profil', {slug: etudiant.slug, type:'etudiant'}) }}" target="_blank">
                             <img class="col-3 avatar avatar-sm"
-                                 src="{{ url(asset('/uploads/etudiants/'~etudiant.photo)|imagine_filter('avatar')) }}"
+                                 src="{{ absolute_url(asset('/uploads/etudiants/'~etudiant.photo)|imagine_filter('avatar')) }}"
                                  alt="Photo de profil de {{ etudiant.displayPr }}"
                             >
                         </a>
@@ -54,7 +54,7 @@
                         </div>
                     {% else %}
                         <a href="{{ path('user_profil', {slug: personnel.slug, type:'personnel'}) }}" target="_blank">
-                            <img class="col-3 avatar avatar-sm" src="{{ url(asset('/uploads/personnels/'~personnel
+                            <img class="col-3 avatar avatar-sm" src="{{ absolute_url(asset('/uploads/personnels/'~personnel
                             .photo)|imagine_filter('avatar')) }}"
                                  alt="Photo de profil de {{ personnel.displayPr }}">
                         </a>
