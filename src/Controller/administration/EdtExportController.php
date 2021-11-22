@@ -226,7 +226,7 @@ class EdtExportController extends BaseController
             $code[$tg->getType()] = [];
             $groupes = $groupeRepository->findBy(['typeGroupe' => $tg->getId()], ['ordre' => 'ASC']);
             foreach ($groupes as $groupe) {
-                $code[mb_strtoupper($tg->getType())][$groupe->getOrdre()] = 'sleep 5' . "\n";
+                $code[mb_strtoupper($tg->getType())][$groupe->getOrdre()] = 'call sleep 5' . "\n";
                 $codeGroupe[mb_strtoupper($tg->getType()) . '_' . $groupe->getOrdre()] = $groupe->getLibelle();
             }
         }
@@ -253,11 +253,11 @@ class EdtExportController extends BaseController
 # 7= type de cours (CM=1, TD=4, TP=6)
                  */
                 $codeMatiere = $matieres[$p->getTypeIdMatiere()]->codeElement;
-                $code[mb_strtoupper($p->getType())][$p->getGroupe()] .= './ajouter ' . $p->getJour() . ' ' . Constantes::TAB_HEURES[$p->getDebut()] . ' ' . Constantes::TAB_HEURES[$p->getFin()] . ' ' . $codeprof . ' ' . $tabSalles[$p->getSalle()] . ' ' . $tabMatieres[$semestre->getLibelle()][$codeMatiere] . ' ' . $tabType[mb_strtoupper($p->getType())] . "\n";
+                $code[mb_strtoupper($p->getType())][$p->getGroupe()] .= 'call  ajouter ' . $p->getJour() . ' ' . Constantes::TAB_HEURES[$p->getDebut()] . ' ' . Constantes::TAB_HEURES[$p->getFin()] . ' ' . $codeprof . ' ' . $tabSalles[$p->getSalle()] . ' ' . $tabMatieres[$semestre->getLibelle()][$codeMatiere] . ' ' . $tabType[mb_strtoupper($p->getType())] . "\n";
             }
             if (0 !== $p->getIdMatiere() && 'H018' === $p->getSalle()) { // array_key_exists($p->getIntervenant()->getNumeroHarpege(), $tabProf))
                 $codeMatiere = $matieres[$p->getTypeIdMatiere()]->codeElement;
-                $code[mb_strtoupper($p->getType())][$p->getGroupe()] .= './ajouterh018 ' . $p->getJour() . ' ' . Constantes::TAB_HEURES[$p->getDebut()] . ' ' . Constantes::TAB_HEURES[$p->getFin()] . ' ' . $codeprof . ' 0 ' . $tabMatieres[$semestre->getLibelle()][$codeMatiere] . ' ' . $tabType[mb_strtoupper($p->getType())] . "\n";
+                $code[mb_strtoupper($p->getType())][$p->getGroupe()] .= 'call  ajouterh018 ' . $p->getJour() . ' ' . Constantes::TAB_HEURES[$p->getDebut()] . ' ' . Constantes::TAB_HEURES[$p->getFin()] . ' ' . $codeprof . ' 0 ' . $tabMatieres[$semestre->getLibelle()][$codeMatiere] . ' ' . $tabType[mb_strtoupper($p->getType())] . "\n";
             }
         }
 
@@ -270,18 +270,18 @@ class EdtExportController extends BaseController
         $i = 0;
         foreach ($code as $type => $value) {
             foreach ($value as $groupe => $c) {
-                $codeComplet .= './groupe ' . $i . "\n";
+                $codeComplet .= 'call groupe ' . $i . "\n";
 
-                $n = $semestre->getLibelle() . '_S' . $calendrier->getSemaineReelle() . '_' . $type . '_' . $codeGroupe[$type . '_' . $groupe] . '.sh';
+                $n = $semestre->getLibelle() . '_S' . $calendrier->getSemaineReelle() . '_' . $type . '_' . $codeGroupe[$type . '_' . $groupe] . '.bat';
 
                 $zip->addFromString($n, $c);
-                $codeComplet .= './' . $n . " \n";
-                $codeComplet .= './fingroupe ' . "\n";
+                $codeComplet .= 'call ' . $n . " \n";
+                $codeComplet .= 'call fingroupe ' . "\n";
                 ++$i;
             }
         }
 
-        $zip->addFromString('script' . $calendrier->getSemaineReelle() . '.sh', $codeComplet);
+        $zip->addFromString('script' . $calendrier->getSemaineReelle() . '.bat', $codeComplet);
         $zip->close();
 
         $response = new Response(file_get_contents($zipName));
