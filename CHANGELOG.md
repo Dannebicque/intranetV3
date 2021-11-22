@@ -2,6 +2,39 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.4.4](https://github.com/Dannebicque/intranetV3/compare/v3.4.3...v3.4.4) (2021-11-22)
+
+
+### Features
+
+* Ajout d'un mail lors du dépot d'un justificatif d'absence ([b8c6d42](https://github.com/Dannebicque/intranetV3/commit/b8c6d424513e9bbbc62db550f9107f0484be8065))
+* Gestion des types de cours (partie gestion) à lier avec le prévsionnel ([786490a](https://github.com/Dannebicque/intranetV3/commit/786490ad198abd082f7d6dc2a1586990beb1f32a))
+
+
+### Bug Fixes
+
+* Affichage des boutons d'actions sur l'EDT correctements positionnés ([d518970](https://github.com/Dannebicque/intranetV3/commit/d5189702871269343c9016bd4cae426efc7818cd))
+* Boutons sur le choix des exports ([2a151d5](https://github.com/Dannebicque/intranetV3/commit/2a151d5591e13ab9054006ca69e615a4002c813c))
+* Bug timeline des projets ([e6da23a](https://github.com/Dannebicque/intranetV3/commit/e6da23a5ffe71bb97a8c0409b561c5ba2f84f58e))
+* Correctif avatar sur le trombinoscope + CSS ([f0a3af9](https://github.com/Dannebicque/intranetV3/commit/f0a3af9ec00eda6b8fc6d5bf01f6a2f178952597))
+* Correction des fixtures avec le nouvel encoder de mot de passe ([64bee77](https://github.com/Dannebicque/intranetV3/commit/64bee7763992aa3ddc5f5edafec674bf2d658427))
+* CSS et lisibilité des formulaires ([d5d3f11](https://github.com/Dannebicque/intranetV3/commit/d5d3f11cad43fd58202bae0c9c69bf82eb0f14ac))
+* datafixtures pour configuration ([4a96703](https://github.com/Dannebicque/intranetV3/commit/4a96703b2697bd76086c122d96651693f59b3074))
+* Desactive l'analyse de la structure JS en production ([c34164c](https://github.com/Dannebicque/intranetV3/commit/c34164c29663e428fd0f8197a1aa4c85080c1ace))
+* Formulaire de dépot des justificatifs ([b0766be](https://github.com/Dannebicque/intranetV3/commit/b0766be20890af9c79818149c4bfea624de04e15))
+* Lien vers les images ([54a9700](https://github.com/Dannebicque/intranetV3/commit/54a970026c64c7ffb64179ab96962076dd301f89))
+* Mise à jour des repository pour la CS ([919c9dd](https://github.com/Dannebicque/intranetV3/commit/919c9ddd320760fe7487f51572f8adc0befa7dbd))
+* Modification des scripts pour Celcat au format Windows ([1bf324e](https://github.com/Dannebicque/intranetV3/commit/1bf324ecdf84926de935384df2df56790e9c75e7))
+* Optimisations requetes messagerie ([240eebd](https://github.com/Dannebicque/intranetV3/commit/240eebdd48aba7e6c1871727605f43e812afb2d1))
+* Page d'aide sur la saisie des absences ([d13c9b6](https://github.com/Dannebicque/intranetV3/commit/d13c9b6d325162af414afc425d2e562e123ecbf0))
+* Taille de la borne contrainte en hauteur. Police adaptée, affichage optimisé ([48e36ac](https://github.com/Dannebicque/intranetV3/commit/48e36ac163755e0b8d00311eb6fd897711154f9e))
+* Traduction des formulaires pour les projets étudiants ([9db5d0a](https://github.com/Dannebicque/intranetV3/commit/9db5d0acf004c3d6e0b3c878ce85428538c67128))
+* Traduction des formulaires pour les projets étudiants ([14f0a01](https://github.com/Dannebicque/intranetV3/commit/14f0a016a287418ec9cae38ad941f3b6c4007f2c))
+* Traduction des tableaux ([6b10df2](https://github.com/Dannebicque/intranetV3/commit/6b10df260eabc82b90da278a52d9cdfa4ac49433))
+* Traduction sur les formulaires ([fb0fc68](https://github.com/Dannebicque/intranetV3/commit/fb0fc684bb81f5dc847ce13acd0b422cfbdf7cb1))
+* traductions ([3cfe18e](https://github.com/Dannebicque/intranetV3/commit/3cfe18eaa318b8fbbecf1d04428f0c7ec4c5ce50))
+* Traductions ([fb05577](https://github.com/Dannebicque/intranetV3/commit/fb055771b018987c263744b9c9de950a1ade0870))
+
 ### [3.4.3](https://github.com/Dannebicque/intranetV3/compare/v3.4.2...v3.4.3) (2021-11-18)
 
 
