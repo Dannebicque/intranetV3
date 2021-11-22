@@ -70,7 +70,7 @@
 <body class="{{ settings('CODE_IUT') }}">
 {% block full_body %}
     <!-- Preloader -->
-    <div class="preloader">
+    <div class="preloader" id="loader">
         <div class="spinner-dots">
             <span class="dot1"></span>
             <span class="dot2"></span>
@@ -101,7 +101,7 @@
 
                     <li class="menu-item" id="menu-trombinoscope">
                         <a class="menu-link" href="{{ path('trombinoscope_index') }}">
-                            <i class="{{ iconTrombi}} fa-2x"><span class="sr-only">group</span></i>
+                            <i class="{{ iconTrombi }} fa-2x"><span class="sr-only">group</span></i>
                             <span class="title">{{ 'menu.trombinoscope'|trans }}</span>
                         </a>
                     </li>
@@ -240,13 +240,13 @@
             <div {{ stimulus_controller('lookup-search', {
                 url: path('recherche')
             }) }}>
-            <a class="topbar-btn d-none d-md-block" href="#" title="{{ 'rechercher'|trans }}"
-               data-bs-toggle="tooltip" data-bs-placement="bottom"
-{#               id="lookup"#}
-               data-action="lookup-search#openModal"
-               data-original-title="{{ 'rechercher'|trans }}">
-                <i class="fas fa-search"></i>
-            </a>
+                <a class="topbar-btn d-none d-md-block" href="#" title="{{ 'rechercher'|trans }}"
+                   data-bs-toggle="tooltip" data-bs-placement="bottom"
+                        {# id="lookup" #}
+                   data-action="lookup-search#openModal"
+                   data-original-title="{{ 'rechercher'|trans }}">
+                    <i class="fas fa-search"></i>
+                </a>
                 <!-- Fullscreen search -->
                 {{ include('recherche/_resultat.html.twig') }}
                 <!-- END Fullscreen search -->
@@ -354,13 +354,24 @@
                     liste déroulante.
                 </div>
             {% endif %}
+
             <div hidden="hidden">
                 {% for toast in app.session.flashbag.get('toast') %}
-                    <div role="alert" aria-live="assertive" aria-atomic="true" {{ stimulus_controller('toast', {
-                        text: toast.text,
-                        title: toast.title,
-                        type: toast.type
-                    }) }}></div>
+                    <div class="position-fixed top-0 end-0 p-3" style="z-index:1000">
+                        <div class="toast align-items-center text-white bg-{{ toast.type }} border-0" role="alert"
+                             aria-live="assertive"
+                             aria-atomic="true"
+                                {{ stimulus_controller('toast') }}>
+                            <div class="d-flex">
+                                <div class="toast-body">
+                                    {{ toast.title }}
+                                    {{ toast.text }}
+                                </div>
+                                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close">
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 {% endfor %}
             </div>
             {% block content %}
