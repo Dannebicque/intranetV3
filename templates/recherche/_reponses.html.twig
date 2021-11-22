@@ -15,8 +15,10 @@
                         </div>
                     {% else %}
                         <a href="{{ path('user_profil', {slug: etudiant.slug, type:'etudiant'}) }}" target="_blank">
-                            <img class="col-3 avatar avatar-sm" src="{{ asset('/uploads/etudiants/'~etudiant.photo) }}"
-                                 alt="Photo de profil de {{ etudiant.displayPr }}">
+                            <img class="col-3 avatar avatar-sm"
+                                 src="{{ asset('/uploads/etudiants/'~etudiant.photo)|imagine_filter('avatar') }}"
+                                 alt="Photo de profil de {{ etudiant.displayPr }}"
+                            >
                         </a>
                     {% endif %}
 
@@ -52,7 +54,7 @@
                         </div>
                     {% else %}
                         <a href="{{ path('user_profil', {slug: personnel.slug, type:'personnel'}) }}" target="_blank">
-                            <img class="col-3 avatar avatar-sm" src="{{ asset('/uploads/personnels/'~personnel.photo) }}"
+                            <img class="col-3 avatar avatar-sm" src="{{ asset('/uploads/personnels/'~personnel.photo)|imagine_filter('avatar') }}"
                                  alt="Photo de profil de {{ personnel.displayPr }}">
                         </a>
                     {% endif %}
