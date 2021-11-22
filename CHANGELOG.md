@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.4.5](https://github.com/Dannebicque/intranetV3/compare/v3.4.4...v3.4.5) (2021-11-22)
+
+
+### Bug Fixes
+
+* Fix semestre pour le justificatif d'absence ([a86290d](https://github.com/Dannebicque/intranetV3/commit/a86290d6fedeaaa89d8b7a49fae1b4cc3de1b559))
+* Lien vers les images ([3d687e2](https://github.com/Dannebicque/intranetV3/commit/3d687e23ae68472de4e21ed74c6c41360e0f90b3))
+* Lien vers les images ([e9e3be1](https://github.com/Dannebicque/intranetV3/commit/e9e3be1290ff8e6e2462a15b02fdcfa101bb923c))
+* Lien vers les images ([b986cf5](https://github.com/Dannebicque/intranetV3/commit/b986cf5f8eb1a4d68feb76e64d6a3eb2143d0d70))
+
 ### [3.4.4](https://github.com/Dannebicque/intranetV3/compare/v3.4.3...v3.4.4) (2021-11-22)
 
 
