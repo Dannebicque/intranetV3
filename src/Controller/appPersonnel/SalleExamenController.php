@@ -14,6 +14,7 @@ use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Repository\PersonnelRepository;
 use App\Repository\SalleExamenRepository;
+use App\Repository\SemestreRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -34,17 +35,14 @@ class SalleExamenController extends BaseController
      * @Route("/", name="application_personnel_salle_examen_index")
      */
     public function index(
+        SemestreRepository $semestreRepository,
         SalleExamenRepository $salleExamenRepository,
         PersonnelRepository $personnelRepository
     ): Response {
         return $this->render('appPersonnel/salle_examen/index.html.twig', [
-            'salles' => $salleExamenRepository->findByDepartement($this->dataUserSession->getDepartement()),
-            'personnels' => $personnelRepository->findByDepartement($this->dataUserSession->getDepartement()),
-            'options' => [
-                'data-options' => [
-                    'dateFormat' => 'd/m/Y'
-                ]
-            ]
+            'semestres' => $semestreRepository->findByDepartementActif($this->getDepartement()),
+            'salles' => $salleExamenRepository->findByDepartement($this->getDepartement()),
+            'personnels' => $personnelRepository->findByDepartement($this->getDepartement())
         ]);
     }
 
