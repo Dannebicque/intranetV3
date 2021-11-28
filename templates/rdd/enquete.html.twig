@@ -10,7 +10,7 @@
             </div>
             <div class="col-sm-6 text-center">
                 <h1></h1>
-                <h2>Enquête à 6 mois diplômé 2020</h2>
+                <h2>Enquête à 6 mois diplômé 2021</h2>
             </div>
             <div class="col-sm-3 text-center">
                 <img src="{{ asset('upload/logo/'~settings('LOGO_UNIVERSITE')) }}" alt="logo" width="100px"/>
@@ -32,11 +32,11 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    {{ encore_entry_link_tags('quizzQualite') }}
+    {{ encore_entry_link_tags('quizzEnquete') }}
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    {{ encore_entry_script_tags('quizzQualite') }}
+    {{ encore_entry_script_tags('quizzEnquete') }}
 {% endblock %}
 
