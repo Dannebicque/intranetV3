@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.4.6](https://github.com/Dannebicque/intranetV3/compare/v3.4.5...v3.4.6) (2021-11-28)
+
+
+### Features
+
+* Ajout du numéro étudiant et du code matière/SAE/Ressource sur l'export des absences ([24e1dbb](https://github.com/Dannebicque/intranetV3/commit/24e1dbb3539e38dba333f093516590499cada68e))
+* RDD formulaire de confirmation d'adresse ([fb04d5b](https://github.com/Dannebicque/intranetV3/commit/fb04d5bf62b7375d7864e17b6f2d69b3562cdbe2))
+
+
+### Bug Fixes
+
+* affichage uniquement des semestres actifs pour les salles d'examens ([ae53fb7](https://github.com/Dannebicque/intranetV3/commit/ae53fb7475bf39211b5ca44a61d4f0bec50db6c1))
+
 ### [3.4.5](https://github.com/Dannebicque/intranetV3/compare/v3.4.4...v3.4.5) (2021-11-22)
 
 
