@@ -156,6 +156,7 @@ class EvaluationController extends BaseController
             'evaluation' => $evaluation,
             'notes' => $notes,
             'matiere' => $matiere,
+            'autorise' => true
         ]);
     }
 
