@@ -58,7 +58,7 @@
         <h4 class="card-title"><strong>Saisie</strong> des notes | {{ matiere.display }} | {{ evaluation.libelle }}
         </h4>
         <div class="card-body">
-            {{ include('composants/_saisie_notes.html.twig') }}
+            {{ include('composants/_saisie_notes.html.twig', {autorise:autorise}) }}
         </div>
     </div>
 {% endblock %}
