@@ -9,6 +9,8 @@
 
 namespace App\DTO;
 
+use App\Entity\Groupe;
+use App\Entity\Personnel;
 use App\Entity\Semestre;
 use Carbon\CarbonInterface;
 
@@ -31,6 +33,10 @@ class EvenementEdt
     public ?string $salle;
     public ?string $personnel;
     public ?string $groupe;
+
+    public ?Personnel $personnelObjet = null;
+    public ?Groupe $groupeObjet = null;
+
     public ?int $groupeId;
     public ?string $typeIdMatiere;
     public ?string $type_cours;
@@ -62,5 +68,17 @@ class EvenementEdt
     public function getClassCss()
     {
         return strtolower($this->type_cours) . '_' . $this->couleur;
+    }
+
+    public function getIdMatiere()
+    {
+        $t = explode('_', $this->typeIdMatiere);
+        return $t[1];
+    }
+
+    public function getTypeMatiere()
+    {
+        $t = explode('_', $this->typeIdMatiere);
+        return $t[0];
     }
 }
