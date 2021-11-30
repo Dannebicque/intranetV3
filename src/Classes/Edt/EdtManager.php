@@ -9,6 +9,7 @@
 
 namespace App\Classes\Edt;
 
+use App\DTO\EvenementEdt;
 use App\DTO\EvenementEdtCollection;
 use App\Entity\Semestre;
 
@@ -72,5 +73,20 @@ class EdtManager
     ): EvenementEdtCollection {
         return $this->getManager($this->getSourceEdt($semestre))->recupereEdtJourBorne($semestre, $matieres,
             $jourSemaine, $semaineFormation);
+    }
+
+    public function getEvent(string $idEvent): EvenementEdt
+    {
+        return $this->getManager($this->getSourceFromString($idEvent))?->find($this->getIdFromString($idEvent));
+    }
+
+    private function getSourceFromString(string $idEvent)
+    {
+        return explode('_', $idEvent)[0];
+    }
+
+    private function getIdFromString(string $idEvent)
+    {
+        return explode('_', $idEvent)[1];
     }
 }
