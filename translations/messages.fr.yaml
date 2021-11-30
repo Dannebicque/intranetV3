@@ -252,7 +252,6 @@ adm:
     import.photo.heading: 'Importer une photo'
     semestre.parcours.heading: 'Parcours d''un étudiant'
     edit.success.flash: 'Données de l''étudiant modifiées avec succès'
-
   etudiants: Etudiants
   examens: Examens
   gerer:
@@ -268,7 +267,7 @@ adm:
     les.documents: 'Gérer les documents'
     questionnaire_qualite: 'Gérer les questionnaires qualités'
     gestion.des.etudiants.departement: 'Gestion des étudiants du département'
-  gestion.des.etudiants.formation: 'Gestion des étudiants de la formation'
+  gestion.des.etudiants.departement: 'Gestion des étudiants de la formation'
   groupe:
     index.heading: 'Liste des groupes'
     modification.heading: 'Modification d''un groupe'
@@ -652,9 +651,9 @@ apc:
     duplicate.success.flash: 'Ressource dupliquée avec succès'
     edit.success.flash: 'Ressource modifiée avec succès'
 app:
-  #  alternance_fiche_suivi:
-  #    new.heading: 'Création d''une fiche de suivi d''alternance'
-  #    show.heading: 'Détail de la fiche de suivi d''alternance de %etudiant%'
+  alternance_fiche_suivi:
+    new.heading: 'Création d''une fiche de suivi d''alternance'
+    show.heading: 'Détail de la fiche de suivi d''alternance de %etudiant%'
   etudiant:
     absence:
       justificatif:
