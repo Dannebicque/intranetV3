@@ -28,24 +28,34 @@ class TypeQuestionRenderer
     /**
      * @throws \Throwable
      */
-    public function render(AbstractQuestion $question): string
+    public function render(AbstractQuestion $question, ?int $idEtudiant = null, ?int $idQuestionnaire = null): string
     {
         $template = $this->load();
 
         $params = $question->getOptions();
         $params['block_name'] = $question->getOption('block_name');
-        $params['name'] = 'name_question';//todo: a gérer
+        $params['name'] = 'q'.$question->id;
         $params['id'] = $question->id;
+        $params['visible'] = $this->isVisible($question->parametres);
+        $params['etudiant'] = $idEtudiant;
         $params['reponses'] = $question->getReponses();
         $params['help'] = $question->help;
-        $params['config'] = null;//todo a gérer
+        $params['config'] = $question->config;
+        $params['parametres'] = $question->parametres;
         $params['libelle'] = $question->libelle;
-        $params['numero'] = $question->numero;//todo: a gérer
+        $params['numero'] = $question->numero;
         $params['obligatoire'] = $question->obligatoire;
+        $params['typeQuestionnaire'] = 'quizz';//todo: a gérer
+        $params['questionnaireId'] = $idQuestionnaire;
 
         return $template->renderBlock($params['block_name'], $params);
     }
 
+    /**
+     * @throws \Twig\Error\SyntaxError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\LoaderError
+     */
     private function load(): TemplateWrapper
     {
         if (null === $this->templateWrapper) {
@@ -53,5 +63,17 @@ class TypeQuestionRenderer
         }
 
         return $this->templateWrapper;
+    }
+
+    private function isVisible(array $parametres)
+    {
+        foreach ($parametres as $param) {
+            if (array_key_exists('type', $param)) {
+                if ($param['type'] === 'condition') {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }

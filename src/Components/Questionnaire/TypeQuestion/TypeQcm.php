@@ -21,7 +21,7 @@ class TypeQcm extends AbstractQuestion
     public const ICON = 'fas fa-ballot-check';
     public const FORM = QuestionnaireQuestionTypeQcm::class;
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
         $resolver

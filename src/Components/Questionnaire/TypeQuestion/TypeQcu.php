@@ -21,7 +21,7 @@ class TypeQcu extends AbstractQuestion
     public const ICON = 'fas fa-ellipsis-vertical';
     public const FORM = QuestionnaireQuestionTypeQcu::class;
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
         $resolver->setDefault('block_name', 'type_qcu')

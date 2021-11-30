@@ -25,6 +25,9 @@ class QuestionnaireQuestionAdapter
         $this->questionnaireRegistry = $questionnaireRegistry;
     }
 
+    /**
+     * @throws \App\Components\Questionnaire\Exceptions\TypeQuestionNotFoundException
+     */
     public function createFromEntity(AbstractSection $abstractSection, $question, int $ordre = 1, array $options = [])
     {
         $obj = $this->questionnaireRegistry->getTypeQuestion($question->getQuestion()->getType());
@@ -35,16 +38,18 @@ class QuestionnaireQuestionAdapter
         $this->question->configureOptions($optionResolver);
         $this->question->options = $optionResolver->resolve($options);
 
-        if ($abstractSection->configurable === true) {
-            $data =  $abstractSection->abstractSectionAdapter->getData($abstractSection->params['valeurs'][$ordre]);
+        if (true === $abstractSection->configurable) {
+            $data = $abstractSection->abstractSectionAdapter->getData($abstractSection->params['valeurs'][$ordre]);
             $this->question->libelle = Tools::personnaliseTexte($question->getQuestion()->getLibelle(), $data);
         } else {
             $this->question->libelle = $question->getQuestion()->getLibelle();
         }
 
-
         $this->question->id = $question->getQuestion()->getId();
+        $this->question->numero = $question->getOrdre();
         $this->question->help = $question->getQuestion()->getHelp();
+        $this->question->parametres = $question->getQuestion()->getParametre();
+        $this->question->config = $question->getQuestion()->getConfiguration();
 
         $this->question->getOrGenereReponses($question->getQuestion());
 

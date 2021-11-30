@@ -18,15 +18,13 @@ class RessourceSectionAdapter extends AbstractSectionAdapter
     public const FIELD_CODE = 'codeMatiere';
     public const LABEL = 'ressources';
 
-    public function getData(mixed $ordre)
+    public function getData(mixed $id): ?array
     {
-        dump($ordre);
-
         return [
             'libelle' => '',
             'code' => '',
             'ordre' => $ordre,
-            'id' => 0
+            'id' => 0,
         ];
     }
 }

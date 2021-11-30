@@ -1,10 +1,10 @@
 <?php
 /*
  * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Questionnaire/Adpapter/QuestionnaireQuizzAdapter.php
+ * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Questionnaire/Adapter/QuestionnaireQuizzAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/10/2021 10:37
+ * @lastUpdate 28/11/2021 20:34
  */
 
 namespace App\Components\Questionnaire\Adapter;
@@ -15,8 +15,23 @@ use App\Components\Questionnaire\DTO\Quizz;
 class QuestionnaireQuizzAdapter implements QuestionnaireAdapterInterface
 {
 
+    protected Quizz $questionnaire;
+
+    public function __construct($questionnaire)
+    {
+        $this->questionnaire = new Quizz();
+        $this->questionnaire->titre = $questionnaire->getTitre();
+        $this->questionnaire->id = $questionnaire->getId();
+        $this->questionnaire->uuid = $questionnaire->getUuidString();
+        $this->questionnaire->dateFermeture = $questionnaire->getDateFermeture();
+        $this->questionnaire->dateOuverture = $questionnaire->getDateOuverture();
+        $this->questionnaire->texteExplication = $questionnaire->getTexteExplication();
+        $this->questionnaire->texteDebut = $questionnaire->getTexteDebut();
+        $this->questionnaire->texteFin = $questionnaire->getTextFin();
+    }
+
     public function getQuestionnaire(): Quizz
     {
-        // TODO: Implement getQuestionnaire() method.
+        return $this->questionnaire;
     }
 }

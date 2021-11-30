@@ -25,7 +25,7 @@ class ColumnType
                 return HtmlUtils::humanize($options['id']);
             })
             ->setAllowedTypes('label', ['null', 'string'])
-            ->setDefault('translation_domain', null)
+            ->setDefault('translation_domain', 'table')
             ->setAllowedTypes('translation_domain', ['null', 'string'])
             ->setDefault('order', false)
             ->setAllowedValues('order', [false, null, 'ASC', 'DESC'])

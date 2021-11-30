@@ -34,12 +34,12 @@ class AbstractQuestionnaire
     public string $mode;
     public int $id;
 
-    public function addSection($section)
+    public function addSection($section): void
     {
 
     }
 
-    public function getSections()
+    public function getSections(): void
     {
 
     }

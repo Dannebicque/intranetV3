@@ -9,7 +9,6 @@
 
 namespace App\Components\Questionnaire\TypeQuestion;
 
-
 use App\Components\Questionnaire\DTO\Reponse;
 use App\Components\Questionnaire\Form\QuestionnaireQuestionTypeEchelle;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -21,7 +20,7 @@ class TypeEchelle extends TypeQcu
     public const ICON = 'fas fa-escalator'; //ajouter constante de couleur et de nom de template ?
     public const FORM = QuestionnaireQuestionTypeEchelle::class; //ajouter constante de couleur et de nom de template ?
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
         $resolver
@@ -34,9 +33,9 @@ class TypeEchelle extends TypeQcu
 
     public function getOrGenereReponses($question)
     {
-        for($i = $this->getOption('min'); $i <= $this->getOption('max'); $i += $this->getOption('pas')) {
+        for ($i = $this->getOption('min'); $i <= $this->getOption('max'); $i += $this->getOption('pas')) {
             $this->addReponse(new Reponse(
-                0,$i, $i, $i
+                0, $i, $i, $i
             ));
         }
     }

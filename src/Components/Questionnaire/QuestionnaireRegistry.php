@@ -39,6 +39,9 @@ class QuestionnaireRegistry
         $this->sectionsAdapter[$name] = $abstractSection;
     }
 
+    /**
+     * @throws \App\Components\Questionnaire\Exceptions\TypeQuestionNotFoundException
+     */
     public function getTypeQuestion(string $name)
     {
         if (!array_key_exists($name, $this->typeQuestions)) {
@@ -48,6 +51,9 @@ class QuestionnaireRegistry
         return $this->typeQuestions[$name];
     }
 
+    /**
+     * @throws \App\Components\Questionnaire\Exceptions\TypeQuestionNotFoundException
+     */
     public function getTypeSection(string $name)
     {
         if (!array_key_exists($name, $this->typeSections)) {
@@ -57,6 +63,9 @@ class QuestionnaireRegistry
         return $this->typeSections[$name];
     }
 
+    /**
+     * @throws \App\Components\Questionnaire\Exceptions\TypeQuestionNotFoundException
+     */
     public function getSectionAdapter(string $name)
     {
         if (!array_key_exists($name, $this->sectionsAdapter)) {
@@ -70,7 +79,7 @@ class QuestionnaireRegistry
     {
         $typeQuestions = [];
         foreach ($this->typeQuestions as $typeQuestion) {
-            $typeQuestions['label.' . $typeQuestion::LABEL] = $typeQuestion::class;
+            $typeQuestions['label.'.$typeQuestion::LABEL] = $typeQuestion::class;
         }
 
         return $typeQuestions;
@@ -80,7 +89,7 @@ class QuestionnaireRegistry
     {
         $sectionsAdapter = [];
         foreach ($this->sectionsAdapter as $sectionAdapter) {
-            $sectionsAdapter['label.' . $sectionAdapter::LABEL] = $sectionAdapter::class;
+            $sectionsAdapter['label.'.$sectionAdapter::LABEL] = $sectionAdapter::class;
         }
 
         return $sectionsAdapter;
@@ -90,19 +99,14 @@ class QuestionnaireRegistry
     {
         $typeSections = [];
         foreach ($this->typeSections as $typeSection) {
-            $typeSections['label.' . $typeSection::LABEL] = $typeSection::class;
+            $typeSections['label.'.$typeSection::LABEL] = $typeSection::class;
         }
 
         return $typeSections;
     }
 
-    /**
-     * @return array
-     */
     public function getTypeQuestions(): array
     {
         return $this->typeQuestions;
     }
-
-
 }

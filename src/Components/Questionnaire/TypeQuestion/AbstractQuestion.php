@@ -24,6 +24,8 @@ abstract class AbstractQuestion
     public string $libelle;
     public ?string $help;
     public int $id;
+    public array $parametres;
+    public array $config;
     public bool $obligatoire = true;
     public array $options = [];
     public ?Question $questionParente = null;
@@ -35,7 +37,7 @@ abstract class AbstractQuestion
         $this->reponses = new Reponses();
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setDefault('mode', AbstractQuestionnaire::MODE_APERCU)
@@ -55,7 +57,7 @@ abstract class AbstractQuestion
         return $this->options;
     }
 
-    public function addReponse(Reponse $reponse)
+    public function addReponse(Reponse $reponse): void
     {
         $this->reponses->addReponse($reponse);
     }

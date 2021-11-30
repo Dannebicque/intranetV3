@@ -9,9 +9,8 @@
 
 namespace App\Components\Questionnaire\TypeQuestion;
 
-
-use App\Components\Questionnaire\Form\QuestionnaireQuestionTypeYesNo;
 use App\Components\Questionnaire\DTO\Reponse;
+use App\Components\Questionnaire\Form\QuestionnaireQuestionTypeYesNo;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TypeOuiNon extends TypeQcu
@@ -21,7 +20,7 @@ class TypeOuiNon extends TypeQcu
     public const ICON = 'fas fa-toggle-on';
     public const FORM = QuestionnaireQuestionTypeYesNo::class;
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
         $resolver

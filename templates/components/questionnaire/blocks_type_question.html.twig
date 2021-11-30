@@ -1,5 +1,13 @@
 {% block type_echelle %}
-    <fieldset class="form-group mt-2" {% if options.type is defined and options.type=='condition' %}style="display:none"{% endif %} id="field_{{ question.id }}">
+    <fieldset class="form-group mt-2" {% if visible == false %}style="display:none"{% endif %}
+            {{ stimulus_controller('enquete', {
+                parametres: parametres|json_encode,
+                idQuestion: id,
+                typeQuestionnaire: typeQuestionnaire,
+                questionnaireId: questionnaireId
+            }) }}
+              data-action="enquete:change-value->enquete#updateQuestion"
+              id="field_{{ id }}">
         {{ block('libelle') }}
         <div aria-describedby="quizz_question_{{ id }}_help">
             <small id="quizz_question_{{ id }}_help" class="form-text text-muted">{{ help }}</small>
@@ -11,7 +19,15 @@
 {% endblock %}
 
 {% block type_libre %}
-    <fieldset class="form-group mt-2" {% if options.type is defined and options.type=='condition' %}style="display:none"{% endif %} id="field_{{ id }}">
+    <fieldset class="form-group mt-2" {% if visible == false %}style="display:none"{% endif %}
+            {{ stimulus_controller('enquete', {
+                parametres: parametres|json_encode,
+                idQuestion: id,
+                typeQuestionnaire: typeQuestionnaire,
+                questionnaireId: questionnaireId
+            }) }}
+              data-action="enquete:change-value@window->enquete#updateQuestion"
+              id="field_{{ id }}">
         {{ block('libelle') }}
 
         <div aria-describedby="quizz_question_{{ id }}_help">
@@ -22,43 +38,30 @@
                    for="quizz_question_text_{{ name }}">Votre réponse</label>
             <textarea id="quizz_question_text_{{ name }}"
                       name="quizz_question_text_{{ name }}"
+                      data-action="change->enquete#onTextAreaChange"
                       data-typeQuestionnaire="{{ type_question }}"
-{# {% if apercu is not defined or apercu == false %} #}
-                    {# data-etudiant="{{ etudiant.id }}" #}
-                    {# {% endif %} #}
+                     {% if apercu is not defined or apercu == false %}
+                         data-etudiant="{{ etudiant }}"
+                     {% endif %}
                     {% if obligatoire %}required{% endif %}
          class="form-control
 {# {% if apercu is not defined or apercu == false %}questionQualiteTextArea{% endif %} #}
-">
-{# {% if reponses['quizz_question_text_'~name] is defined %}{{ reponses['quizz_question_text_'~name].valeur #}
-                {# }}{% endif %} #}
-         </textarea>
+">{% if reponses['quizz_question_text_'~name] is defined %}{{ reponses['quizz_question_text_'~name].valeur }}{% endif %}</textarea>
             <div class="form-control-feedback"></div>
         </div>
     </fieldset>
-    {# {% if options.type is defined and options.type=='condition' %} #}
-    {# <script> #}
-    {# function changeHandler (event) { #}
-    {# if (event.target.name === 'quizz_question_reponses_q{{ options.declenchement }}') { #}
-    {# var valeurs = [{% for critere in options.criteres %}"{{ critere }}"{% if not loop.last %}, {% endif %}{% #}
-    {# endfor %}] #}
-    {# document.getElementById('field_{{ .id }}').style.display = 'none' #}
-    {# for (var i = 0; i < valeurs.length; i++) { #}
-    {# if (event.target.value == valeurs[i]) { #}
-    {# document.getElementById('field_{{ question.id }}').style.display = 'block' #}
-    {# } #}
-    {# } #}
-    {# } #}
-    {# } #}
-
-    {# document.addEventListener('change', changeHandler, false) #}
-    {# </script> #}
-    {# {% endif %} #}
-
 {% endblock %}
 
 {% block type_oui_non %}
-    <fieldset class="form-group mt-2" {% if options.type is defined and options.type=='condition' %}style="display:none"{% endif %} id="field_{{ question.id }}">
+    <fieldset class="form-group mt-2" {% if visible == false %}style="display:none"{% endif %}
+            {{ stimulus_controller('enquete', {
+                parametres: parametres|json_encode,
+                idQuestion: id,
+                typeQuestionnaire: typeQuestionnaire,
+                questionnaireId: questionnaireId
+            }) }}
+              data-action="enquete:change-value->enquete#updateQuestion"
+              id="field_{{ id }}">
         {{ block('libelle') }}
         <div aria-describedby="quizz_question_{{ id }}_help">
             <small id="quizz_question_{{ id }}_help" class="form-text text-muted">{{ help }}</small>
@@ -69,11 +72,12 @@
                     <input type="radio" id="quizz_question_qcu_{{ name }}_{{ reponse.id }}"
                            name="quizz_question_reponses_{{ name }}"
                            data-typeQuestionnaire="{{ type_question }}"
-                            {# {% if apercu is not defined or apercu == false %} #}
-                            {# data-etudiant="{{ etudiant.id }}" #}
-                            {# {% endif %} #}
-                            {# {% if reponses['quizz_question_reponses_'~name] is defined and #}
-                            {# reponses['quizz_question_reponses_'~name].valeur == reponse.valeur %}checked{% endif %} #}
+                           data-action="change->enquete#change"
+                            {% if apercu is not defined or apercu == false %}
+                                data-etudiant="{{ etudiant }}"
+                            {% endif %}
+                            {% if reponses['quizz_question_reponses_'~name] is defined and
+                                reponses['quizz_question_reponses_'~name].valeur == reponse.valeur %}checked{% endif %}
                             {% if obligatoire %}required{% endif %}
                            class="form-check-input  {% if apercu is not defined or apercu == false %}questionQualite{% endif %}"
                            value="{{ reponse.valeur }}">
@@ -84,12 +88,13 @@
                 <div class="form-check">
                     <input type="radio" id="quizz_question_qcu_{{ name }}_{{ reponse.id }}"
                            name="quizz_question_reponses_{{ name }}"
+                           data-action="change->enquete#change"
                            data-typeQuestionnaire="{{ type_question }}"
-                            {# {% if apercu is not defined or apercu == false %} #}
-                            {# data-etudiant="{{ etudiant.id }}" #}
-                            {# {% endif %} #}
-                            {# {% if reponses['quizz_question_reponses_'~name] is defined and #}
-                            {# reponses['quizz_question_reponses_'~name].valeur == reponse.valeur %}checked{% endif %} #}
+                            {% if apercu is not defined or apercu == false %}
+                                data-etudiant="{{ etudiant }}"
+                            {% endif %}
+                            {% if reponses['quizz_question_reponses_'~name] is defined and
+                                reponses['quizz_question_reponses_'~name].valeur == reponse.valeur %}checked{% endif %}
                             {% if obligatoire %}required{% endif %}
                            class="form-check-input  {% if apercu is not defined or apercu == false %}questionQualite{% endif %}"
                            value="{{ reponse.valeur }}">
@@ -101,154 +106,46 @@
 {% endblock %}
 
 {% block type_qcm %}
-    <fieldset class="form-group mt-2" {% if options.type is defined and options.type=='condition' %}style="display:none"{% endif %} id="field_{{ question.id }}">
+    <fieldset class="form-group mt-2" {% if visible == false %}style="display:none"{% endif %}
+            {{ stimulus_controller('enquete', {
+                parametres: parametres|json_encode,
+                idQuestion: id,
+                typeQuestionnaire: typeQuestionnaire,
+                questionnaireId: questionnaireId
+            }) }}
+              data-action="enquete:change-value->enquete#updateQuestion"
+              id="field_{{ id }}"
+    >
         {{ block('libelle') }}
         <div aria-describedby="quizz_question_{{ id }}_help">
             <small id="quizz_question_{{ id }}_help" class="form-text text-muted">{{ help }}</small>
         </div>
         <div class="row">
             {{ block('liste_reponses') }}
-            {# {% for reponse in question.quizzReponses %} #}
-            {# toto #}
-            {# <div class="col-sm-12 col-md-2"> #}
-            {# <div class="form-check"> #}
-            {# <input type="checkbox" id="quizz_question_qcm_{{ name }}_{{ reponse.id }}" #}
-            {# name="quizz_question_reponses_{{ name }}" #}
-            {# data-typeQuestionnaire="{{ typeQuestionnaire }}" #}
-            {# {% if apercu is not defined or apercu == false %} #}
-            {# data-etudiant="{{ etudiant.id }}" #}
-            {# {% endif %} #}
-            {# {% if question.obligatoire %}required{% endif %} #}
-            {# {% if reponses['quizz_question_reponses_'~name] is defined and #}
-            {# reponses['quizz_question_reponses_'~name].valeur|has_reponse(reponse.valeur) %} #}
-            {# checked #}
-            {# {% endif %} #}
-            {# {% if question.obligatoire %}required{% endif %} #}
-            {# class="form-check-input {% if apercu is not defined or apercu == false %}questionQualite{% endif %}" #}
-            {# value="{{ reponse.valeur }}"> #}
-            {# <label class="form-check-label required" for="quizz_question_qcm_{{ name }}_{{ reponse.id }}">{{ reponse.libelle }}</label> #}
-            {# {% if reponse.valeur == "CHX:OTHER" %} #}
-            {# <input type="text" id="quizz_question_qcm_autre_{{ name }}_{{ reponse.id }}" #}
-            {# name="quizz_question_reponses_{{ name }}_autre" #}
-            {# data-typeQuestionnaire="{{ typeQuestionnaire }}" #}
-            {# {% if apercu is not defined or apercu == false %} #}
-            {# data-etudiant="{{ etudiant.id }}" #}
-            {# {% endif %} #}
-            {# class="form-control {% if apercu is not defined or apercu == false %}questionQualiteTextArea{% endif %}" #}
-            {# {% if reponses['quizz_question_reponses_'~name~'_autre'] is defined %} #}
-            {# value="{{ reponses['quizz_question_reponses_'~name~'_autre'].valeur }}" #}
-            {# {% endif %} #}
-            {# > #}
-            {# {% endif %} #}
-            {# </div> #}
-            {# </div> #}
-            {# <div class="form-control-feedback"></div> #}
-            {# {% endfor %} #}
         </div>
     </fieldset>
-
-    {% if options.type is defined and options.type=='condition' %}
-        <script>
-          function changeHandler (event) {
-            if (event.target.name === 'quizz_question_q{{ options.declenchement }}') {
-              console.log(event.target.value)
-              var valeurs = [{% for critere in options.criteres %}"{{ critere }}"{% if not loop.last %}, {% endif %}{% endfor %}]
-              console.log(valeurs)
-              document.getElementById('field_{{ question.id }}').style.display = 'none'
-              for (var i = 0; i < valeurs.length; i++) {
-                if (event.target.value == valeurs[i]) {
-                  document.getElementById('field_{{ question.id }}').style.display = 'block'
-                }
-              }
-            }
-          }
-
-          document.addEventListener('change', changeHandler, false)
-        </script>
-    {% endif %}
 {% endblock %}
 
 {% block type_qcu %}
-    <fieldset class="form-group mt-2" {% if options.type is defined and options.type=='condition' %}style="display:none"{% endif %} id="field_{{ id }}">
+    <fieldset class="form-group mt-2"
+              {% if visible == false %}style="display:none"{% endif %}
+              id="field_{{ id }}"
+            {{ stimulus_controller('enquete', {
+                parametres: parametres|json_encode,
+                idQuestion: id,
+                typeQuestionnaire: typeQuestionnaire,
+                questionnaireId: questionnaireId
+            }) }}
+              data-action="enquete:change-value@window->enquete#updateQuestion"
+    >
         {{ block('libelle') }}
         <div aria-describedby="quizz_question_{{ id }}_help">
             <small id="quizz_question_{{ id }}_help" class="form-text text-muted">{{ help }}</small>
         </div>
         <div class="row">
             {{ block('liste_reponses') }}
-            {# {% for reponse in question.quizzReponses %} #}
-            {# <div class="col-sm-12 col-md-2"> #}
-            {# <div class="form-check"> #}
-            {# <input type="radio" id="quizz_question_qcu_{{ name }}_{{ reponse.id }}" #}
-            {# name="quizz_question_reponses_{{ name }}" #}
-            {# data-typeQuestionnaire="{{ typeQuestionnaire }}" #}
-            {# {% if apercu is not defined or apercu == false %} #}
-            {# data-etudiant="{{ etudiant.id }}" #}
-            {# {% endif %} #}
-            {# {% if reponses['quizz_question_reponses_'~name] is defined and #}
-            {# reponses['quizz_question_reponses_'~name].valeur == reponse.valeur %}checked{% endif %} #}
-            {# {% if question.obligatoire %}required{% endif %} #}
-            {# class="form-check-input  {% if apercu is not defined or apercu == false %}questionQualite{% endif %}" #}
-            {# value="{{ reponse.valeur }}"> #}
-            {# <label class="form-check-label required" for="quizz_question_qcu_{{ name }}_{{ reponse.id }}">{{ reponse.libelle }}</label> #}
-            {# {% if reponse.valeur == "CHX:OTHER" %} #}
-            {# <input type="text" id="quizz_question_qcm_autre_{{ name }}_{{ reponse.id }}" #}
-            {# name="quizz_question_reponses_{{ name }}_autre" #}
-            {# data-typeQuestionnaire="{{ typeQuestionnaire }}" #}
-            {# {% if apercu is not defined or apercu == false %} #}
-            {# data-etudiant="{{ etudiant.id }}" #}
-            {# {% endif %} #}
-            {# class="form-control {% if apercu is not defined or apercu == false %}questionQualiteTextArea{% endif %}" #}
-            {# {% if reponses['quizz_question_reponses_'~name~'_autre'] is defined %} #}
-            {# value="{{ reponses['quizz_question_reponses_'~name~'_autre'].valeur }}" #}
-            {# {% endif %} #}
-            {# > #}
-            {# {% endif %} #}
-            {# </div> #}
-            {# <div class="form-control-feedback"></div> #}
-            {# </div> #}
-            {# {% endfor %} #}
         </div>
     </fieldset>
-
-    {% if options.type is defined and options.type=='condition' %}
-        <script>
-          function changeHandler{{ question.id }} (event) {
-            if (event.target.name === 'quizz_question_reponses_q{{ options.declenchement }}') {
-              var valeurs = [{% for critere in options.criteres %}"{{ critere }}"{% if not loop.last %}, {% endif %}{% endfor %}]
-              document.getElementById('field_{{ question.id }}').style.display = 'none'
-              for (var i = 0; i < valeurs.length; i++) {
-                if (event.target.value == valeurs[i]) {
-                  document.getElementById('field_{{ question.id }}').style.display = 'block'
-                }
-              }
-            }
-          }
-
-          document.addEventListener('change', changeHandler{{ question.id }}, false)
-        </script>
-    {% endif %}
-    {% if options is defined %}
-        {% for param in options %}
-            {% if param.type is defined and param.type == 'masquage' %}
-                <script>
-                  function changeHandlerMasquage{{ question.id }}_{{ loop.index }} (event) {
-                    var criteres = [{% for critere in param.criteres %}"{{ critere }}"{% if not loop.last %}, {% endif %}{% endfor %}]
-                    console.log(criteres)
-                    if (event.target.name === 'quizz_question_reponses_q{{ question.id }}' && criteres.includes(event.target.value)) {
-                      var questions = [{% for question in param.questions %}"{{ question }}"{% if not loop.last %}, {% endif %}{% endfor %}]
-                      console.log(questions)
-                      for (var i = 0; i < questions.length; i++) {
-                        document.getElementById('field_' + questions[i]).style.display = 'none'
-                      }
-                    }
-                  }
-
-                  document.addEventListener('change', changeHandlerMasquage{{ question.id }}_{{ loop.index }}, false)
-                </script>
-            {% endif %}
-        {% endfor %}
-    {% endif %}
 {% endblock %}
 
 {% block libelle %}
@@ -265,12 +162,14 @@
     {% for reponse in reponses %}
         <div class="col-sm-12 col-md-2">
             <div class="form-check">
-                <input type="radio" id="quizz_question_qcu_{{ name }}_{{ reponse.id }}"
+                <input type="{{ type_question }}" id="quizz_question_qcu_{{ name }}_{{ reponse.id }}"
                        name="quizz_question_reponses_{{ name }}"
+                       data-action="change->enquete#change"
+                       data-fieldset="{{ id }}"
                        data-typeQuestionnaire="{{ type_question }}"
-                        {# {% if apercu is not defined or apercu == false %} #}
-                        {# data-etudiant="{{ etudiant.id }}" #}
-                        {# {% endif %} #}
+                        {% if apercu is not defined or apercu == false %}
+                            data-etudiant="{{ etudiant }}"
+                        {% endif %}
                         {# {% if reponses['quizz_question_reponses_'~name] is defined and #}
                         {# reponses['quizz_question_reponses_'~name].valeur == reponse.valeur %}checked{% endif %} #}
                         {% if obligatoire %}required{% endif %}
@@ -281,9 +180,10 @@
                     <input type="text" id="quizz_question_qcm_autre_{{ name }}_{{ reponse.id }}"
                            name="quizz_question_reponses_{{ name }}_autre"
                            data-typeQuestionnaire="{{ type_question }}"
-                            {# {% if mode is defined or mode == false %} #}
-                            {# data-etudiant="{{ etudiant.id }}" #}
-                            {# {% endif %} #}
+                           data-action="change->enquete#onTextAreaChange"
+                            {% if mode is defined or mode == false %}
+                                data-etudiant="{{ etudiant }}"
+                            {% endif %}
                            class="form-control {% if apercu is not defined or apercu == false %}questionQualiteTextArea{% endif %}"
                             {# {% if reponses['quizz_question_reponses_'~name~'_autre'] is defined %} #}
                             {# value="{{ reponses['quizz_question_reponses_'~name~'_autre'].valeur }}" #}

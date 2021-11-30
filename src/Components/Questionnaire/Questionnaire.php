@@ -9,7 +9,6 @@
 
 namespace App\Components\Questionnaire;
 
-use App\Components\Questionnaire\Adapter\QuestionnaireSectionAdapter;
 use App\Components\Questionnaire\DTO\AbstractQuestionnaire;
 use App\Components\Questionnaire\Section\AbstractSection;
 use App\Components\Questionnaire\Section\ConfigurableSection;
@@ -25,7 +24,6 @@ class Questionnaire
     private AbstractQuestionnaire $questionnaire;
     private array $options = [];
     private QuestionnaireRegistry $questionnaireRegistry;
-    private OptionsResolver $resolver;
     private string $typeQuestionnaire;
 
     public function __construct(QuestionnaireRegistry $questionnaireRegistry)
@@ -34,18 +32,21 @@ class Questionnaire
         $this->questionnaireRegistry = $questionnaireRegistry;
     }
 
-    public function createQuestionnaire(string $type, AbstractQuestionnaire $abstractQuestionnaire, array $options = [])
-    {
-        $this->resolver = new OptionsResolver();
-        $this->configureOptions($this->resolver);
-        $this->options = $this->resolver->resolve($options);
+    public function createQuestionnaire(
+        string $type,
+        AbstractQuestionnaire $abstractQuestionnaire,
+        array $options = []
+    ): Questionnaire {
+        $resolver = new OptionsResolver();
+        $this->configureOptions($resolver);
+        $this->options = $resolver->resolve($options);
         $this->typeQuestionnaire = $type;
         $this->questionnaire = $abstractQuestionnaire;
 
         return $this;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'template' => self::DEFAULT_TEMPLATE,
@@ -53,7 +54,7 @@ class Questionnaire
         ]);
     }
 
-    public function addSection(DTO\Section $section)
+    public function addSection(DTO\Section $section): Questionnaire
     {
         if (ConfigurableSection::class === $section->typeSection) {
             //c'est configurable, potentiellement plusieurs sections à créer
@@ -88,7 +89,7 @@ class Questionnaire
         return $this->questionnaire;
     }
 
-    public function createView()
+    public function createView(): Questionnaire
     {
         return $this;
     }
@@ -109,27 +110,22 @@ class Questionnaire
         return null;
     }
 
-    public function AddSpecialSection($type)
+    public function AddSpecialSection($type): Questionnaire
     {
-        switch ($type) {
-            case AbstractSection::INTRODUCTION:
-                $abstractSection = (new StartSection($this->questionnaireRegistry))->setQuestionnaire($this->questionnaire);
-                break;
-            case AbstractSection::END:
-                $abstractSection = (new EndSection($this->questionnaireRegistry))->setQuestionnaire(count($this->getSections()),
-                    $this->questionnaire);
-                break;
-        }
+        $abstractSection = match ($type) {
+            AbstractSection::INTRODUCTION => (new StartSection($this->questionnaireRegistry))->setQuestionnaire($this->questionnaire),
+            AbstractSection::END => (new EndSection($this->questionnaireRegistry))->setQuestionnaire(count($this->getSections()),
+                $this->questionnaire),
+        };
         $this->sections->addSection($abstractSection);
 
         return $this;
     }
 
-    public function setQuestionsForSection(
-        int $ordreSection
-    ) {
+    public function setQuestionsForSection(int $ordreSection): void
+    {
         foreach ($this->getSections() as $section) {
-            if ($section->arrayKey === $ordreSection) {
+            if ($section instanceof Section\Section && $section->arrayKey === $ordreSection) {
                 $section->prepareQuestions();
                 break;
             }

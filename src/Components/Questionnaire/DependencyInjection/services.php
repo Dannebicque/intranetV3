@@ -24,8 +24,7 @@ use App\Components\Questionnaire\TypeQuestion\TypeQcu;
 use App\Components\Questionnaire\TypeQuestion\TypeSlider;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
-return static function(ContainerConfigurator $configurator): void {
-
+return static function (ContainerConfigurator $configurator): void {
     $services = $configurator->services();
     $services->defaults()
         ->private()
@@ -40,8 +39,8 @@ return static function(ContainerConfigurator $configurator): void {
     $services->set(TypeSlider::class)->tag('da.questionnaire.typequestion');
 
     $services->set(StartSection::class)->tag('da.questionnaire.typesection');
-    $services->set(EndSection::class)->tag('da.questionnaire.typesection');
     $services->set(Section::class)->tag('da.questionnaire.typesection');
+    $services->set(EndSection::class)->tag('da.questionnaire.typesection');
 
     $services->set(PrevisionnelSectionAdapter::class)->tag('da.questionnaire.section.adapter');
     $services->set(MatiereSectionAdapter::class)->tag('da.questionnaire.section.adapter');

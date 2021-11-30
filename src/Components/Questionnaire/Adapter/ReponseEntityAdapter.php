@@ -16,7 +16,8 @@ class ReponseEntityAdapter
 {
     protected Reponse $reponse;
 
-    public function __construct(QuestionnaireReponse $questionnaireReponse) {
+    public function __construct(QuestionnaireReponse $questionnaireReponse)
+    {
         $this->reponse = new Reponse($questionnaireReponse->getId(), $questionnaireReponse->getLibelle(), $questionnaireReponse->getValeur(), $questionnaireReponse->getOrdre(), ['alignement' => $questionnaireReponse->getAlignement()]);
     }
 

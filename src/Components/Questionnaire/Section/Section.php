@@ -18,14 +18,12 @@ class Section extends AbstractSection
     public const LABEL = 'question.section';
     public string $type_calcul = '';
 
-
-
     public function getQuestions(): array
     {
         return $this->questions->getQuestions();
     }
 
-    public function getVars()
+    public function getVars(): array
     {
         return array_merge(parent::getVars(), [
             'ordre' => $this->section->ordre,
@@ -34,10 +32,12 @@ class Section extends AbstractSection
         ]);
     }
 
-    public function initConfigGlobale(?array $config = []) {
+    public function initConfigGlobale(?array $config = [])
+    {
     }
 
-    public function initConfigSection(?array $config = []) {
+    public function initConfigSection(?array $config = [])
+    {
     }
 
     public function getSection()
@@ -45,10 +45,11 @@ class Section extends AbstractSection
         return $this;
     }
 
-    public function prepareQuestions() {
+    public function prepareQuestions()
+    {
         foreach ($this->section->questions as $question) {
             $questionnaireQuestionAdapter = new QuestionnaireQuestionAdapter($this->questionnaireRegistry);
-            for ($i=0; $i < $this->nbParties; $i++) {
+            for ($i = 0; $i < $this->nbParties; ++$i) {
                 $this->addQuestion(
                     $questionnaireQuestionAdapter->createFromEntity($this, $question, $i,
                     ['mode' => AbstractQuestionnaire::MODE_EDITION])->getQuestion());
