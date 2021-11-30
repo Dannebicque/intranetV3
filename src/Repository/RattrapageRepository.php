@@ -40,12 +40,13 @@ class RattrapageRepository extends ServiceEntityRepository
     public function findBySemestre(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire)
     {
         return $this->createQueryBuilder('r')
+            ->innerJoin(Etudiant::class, 'e', 'WITH', 'r.etudiant = e.id')
             ->where('r.semestre = :semestre')
             ->andWhere('r.anneeUniversitaire = :anneeuniversitaire')
             ->setParameter('semestre', $semestre->getId())
             ->setParameter('anneeuniversitaire', $anneeUniversitaire->getId())
             ->orderBy('e.nom', 'ASC')
-            ->orderBy('e.prenom', 'ASC')
+            ->addOrderBy('e.prenom', 'ASC')
             ->getQuery()
             ->getResult();
     }
