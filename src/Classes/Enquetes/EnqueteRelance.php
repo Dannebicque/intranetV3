@@ -9,6 +9,7 @@
 
 namespace App\Classes\Enquetes;
 
+use App\Entity\Etudiant;
 use App\Entity\QuestionnaireEtudiant;
 use App\Entity\QuestionnaireQualite;
 use App\Event\QualiteRelanceEvent;
@@ -16,19 +17,15 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class EnqueteRelance
 {
-
     private EventDispatcherInterface $eventDispatcher;
 
     /**
      * EnqueteRelance constructor.
-     *
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      */
     public function __construct(EventDispatcherInterface $eventDispatcher)
     {
         $this->eventDispatcher = $eventDispatcher;
     }
-
 
     public function envoyerRelance(QuestionnaireQualite $questionnaire, $reponses, array $etudiants)
     {
@@ -42,7 +39,7 @@ class EnqueteRelance
         $mailsAEnvoyes = [];
 
         foreach ($etudiants as $etudiant) {
-            if (!(array_key_exists($etudiant->getId(), $t) && $t[$etudiant->getId()]->getTermine() === true)) {
+            if (!(array_key_exists($etudiant->getId(), $t) && true === $t[$etudiant->getId()]->getTermine())) {
                 $event = new QualiteRelanceEvent($questionnaire);
                 $event->setEtudiant($etudiant);
                 $this->eventDispatcher->dispatch($event, QualiteRelanceEvent::SEND_RELANCE);
@@ -54,6 +51,12 @@ class EnqueteRelance
         $event->setEtudiants($mailsAEnvoyes);
         $this->eventDispatcher->dispatch($event, QualiteRelanceEvent::SEND_SYNTHESE);
         $mailsAEnvoyes[] = $etudiant;
+    }
 
+    public function envoyerRelanceIndividuelle(QuestionnaireQualite $questionnaire, Etudiant $etudiant)
+    {
+        $event = new QualiteRelanceEvent($questionnaire);
+        $event->setEtudiant($etudiant);
+        $this->eventDispatcher->dispatch($event, QualiteRelanceEvent::SEND_RELANCE);
     }
 }
