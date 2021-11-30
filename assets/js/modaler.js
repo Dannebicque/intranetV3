@@ -44,7 +44,7 @@ let configModaler = {
   // Private options
   modalId: null
 }
-//Todo: probablement à refaire au prore avec BS5 ?
+//Todo: probablement à refaire au prore avec BS5 et avec Stimulus
 const guid = (len) => {
   if (len == undefined) {
     len = 5
