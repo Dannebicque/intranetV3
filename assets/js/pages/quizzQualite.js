@@ -4,7 +4,7 @@
 // @project intranetV3
 // @lastUpdate 24/11/2020 12:54
 
-import '../wizard'
+// import '../wizard'
 
 $(document).on('change', '.questionQualite', function () {
   $.ajax({

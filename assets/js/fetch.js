@@ -24,7 +24,7 @@ export const get = (url, params) => request(url, params, 'GET')
 export const post = (url, params) => request(url, params, 'POST')
 
 export const load = (url, params, objet) => {
-  //loader?window.umbrella.Spinner.show()
+  //todo: a tester. window.da.loader.display = 'block'
   objet.innerHTML = ''
   fetch(Routing.generate(url, params))
     .then(function (response) {
@@ -32,7 +32,7 @@ export const load = (url, params, objet) => {
     })
     .then(function (body) {
       objet.innerHTML = body
-      //loader?window.umbrella.Spinner.hide()
+      //window.da.loader.display = 'none'
     })
 }
 

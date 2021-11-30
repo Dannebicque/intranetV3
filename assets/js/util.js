@@ -4,7 +4,6 @@
 // @project intranetV3
 // @lastUpdate 08/09/2021 12:08
 
-// import $ from 'jquery'
 import Swal from 'sweetalert2'
 import Toast from '../components/Toast'
 

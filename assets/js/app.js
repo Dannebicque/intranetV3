@@ -28,7 +28,8 @@ import {modaler} from './modaler'
 export const LANG = document.querySelector('html').getAttribute('lang')
 
 window.da = {
-  LANG: LANG
+  LANG: LANG,
+  loader: document.getElementById('loader'),
 }
 
 customElements.define('my-table', Table)
@@ -52,21 +53,32 @@ window.addEventListener('load', function () { //le dom est chargé
     console.log(el);
   })
 
-  menuDarkTheme.addEventListener('click', function () {
-    document.body.classList.toggle('dark-theme')
-    // Let's say the theme is equal to light
-    let theme = 'light'
-    // If the body contains the .dark-theme class...
-    if (document.body.classList.contains('dark-theme')) {
-      // ...then let's make the theme dark
-      theme = 'dark'
+  if (menuDarkTheme !== null) {
+    menuDarkTheme.addEventListener('click', function () {
+      document.body.classList.toggle('dark-theme')
+      // Let's say the theme is equal to light
+      let theme = 'light'
+      // If the body contains the .dark-theme class...
+      if (document.body.classList.contains('dark-theme')) {
+        // ...then let's make the theme dark
+        theme = 'dark'
+        menuDarkTheme.innerHTML = '<i class="fas fa-adjust"></i> Dark Mode Off'
+      } else {
+        menuDarkTheme.innerHTML = '<i class="fas fa-adjust"></i> Dark Mode On'
+      }
+      // Then save the choice in localStorage
+      localStorage.setItem('theme', theme)
+    })
+
+    // If the current theme in localStorage is "dark"...
+    if (currentTheme === 'dark') {
+      // ...then use the .dark-theme class
+      document.body.classList.add('dark-theme')
       menuDarkTheme.innerHTML = '<i class="fas fa-adjust"></i> Dark Mode Off'
     } else {
       menuDarkTheme.innerHTML = '<i class="fas fa-adjust"></i> Dark Mode On'
     }
-    // Then save the choice in localStorage
-    localStorage.setItem('theme', theme)
-  })
+  }
 
   document.querySelectorAll('.changeAnneeUniversitaire').forEach((elem) => {
     elem.addEventListener('click', (e) => {
@@ -78,28 +90,9 @@ window.addEventListener('load', function () { //le dom est chargé
     })
   })
 
-  // If the current theme in localStorage is "dark"...
-  if (currentTheme === 'dark') {
-    // ...then use the .dark-theme class
-    document.body.classList.add('dark-theme')
-    menuDarkTheme.innerHTML = '<i class="fas fa-adjust"></i> Dark Mode Off'
-  } else {
-    menuDarkTheme.innerHTML = '<i class="fas fa-adjust"></i> Dark Mode On'
-  }
-
 }, false)
 
 $(document).ready(function () {
-  // script pour afficher le fichier selectionné avec bootstrap4
-  //todo: encore utilise avec BS5??
-  $('.custom-file input').change(function () {
-    const files = []
-    for (let i = 0; i < $(this)[0].files.length; i++) {
-      files.push($(this)[0].files[i].name)
-    }
-    $(this).next('.custom-file-label').html(files.join(', '))
-  })
-
   var preloader = $('.preloader')
   if (preloader.length) {
     var speed = preloader.dataAttr('hide-spped', 600)
