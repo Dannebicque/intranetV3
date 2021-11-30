@@ -15,12 +15,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class QuestionnaireQuestionTypeLibre extends QuestionnaireQuestionType
 {
-
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        parent::buildForm($builder, $options);
-    }
-
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([

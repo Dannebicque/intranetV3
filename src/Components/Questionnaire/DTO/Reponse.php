@@ -15,11 +15,11 @@ class Reponse
 {
     public int $id;
     public string $libelle;
-    public string|int $valeur;
+    public string | int $valeur;
     public int $ordre = 1;
     protected array $options = [];
 
-    public function __construct(int $id, string $libelle, string|int $valeur, int $ordre = 1,  array $options = [])
+    public function __construct(int $id, string $libelle, string | int $valeur, int $ordre = 1, array $options = [])
     {
         $this->id = $id;
         $this->libelle = $libelle;
@@ -44,7 +44,7 @@ class Reponse
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'alignement' => null
+            'alignement' => null,
         ]);
     }
 

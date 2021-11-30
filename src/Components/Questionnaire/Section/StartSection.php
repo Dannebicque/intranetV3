@@ -9,9 +9,7 @@
 
 namespace App\Components\Questionnaire\Section;
 
-
 use App\Components\Questionnaire\DTO\AbstractQuestionnaire;
-use App\Components\Questionnaire\QuestionnaireRegistry;
 use Carbon\CarbonInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -30,15 +28,15 @@ class StartSection extends AbstractSection
         $this->ordre = $ordre;
     }
 
-    protected function configureOptions(OptionsResolver $resolver)
+    protected function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
         $resolver->setDefaults([
-            'template' => self::DEFAULT_TEMPLATE
+            'template' => self::DEFAULT_TEMPLATE,
         ]);
     }
 
-    public function getVars()
+    public function getVars(): array
     {
         return array_merge(parent::getVars(), [
             'ordre' => $this->ordre,
@@ -49,7 +47,7 @@ class StartSection extends AbstractSection
         ]);
     }
 
-    public function setQuestionnaire(AbstractQuestionnaire $questionnaire, array $options = [])
+    public function setQuestionnaire(AbstractQuestionnaire $questionnaire, array $options = []): StartSection
     {
         $this->setOptions($options);
         $this->ordre = 0;

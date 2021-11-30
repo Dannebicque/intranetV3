@@ -18,7 +18,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class QuestionnaireQuestionTypeQcm extends QuestionnaireQuestionType
 {
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
@@ -26,7 +25,7 @@ class QuestionnaireQuestionTypeQcm extends QuestionnaireQuestionType
             //->add('parametre', TextType::class)
             ->add('maxChoix', IntegerType::class, [
                 'label' => 'label.maxChoix',
-                'help' => 'Indiquez un nombre maximum de réponses acceptées. Laisser 0 si pas de limite.'
+                'help' => 'Indiquez un nombre maximum de réponses acceptées. Laisser 0 si pas de limite.',
             ])
             ->add('quizzReponses', CollectionStimulusType::class, [
                 'entry_type' => QuestionnaireReponseType::class,

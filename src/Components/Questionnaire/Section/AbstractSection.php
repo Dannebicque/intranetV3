@@ -44,7 +44,7 @@ abstract class AbstractSection
         $this->questions = new Questions();
     }
 
-    public function setSection(\App\Components\Questionnaire\DTO\Section $section, array $options = [])
+    public function setSection(\App\Components\Questionnaire\DTO\Section $section, array $options = []): void
     {
         $this->setOptions($options);
         $this->ordre = $section->ordre;
@@ -53,26 +53,26 @@ abstract class AbstractSection
         $this->section = $section;
     }
 
-    public function setOptions(array $options)
+    public function setOptions(array $options): void
     {
         $resolver = new OptionsResolver();
         $this->configureOptions($resolver);
         $this->options = $resolver->resolve($options);
     }
 
-    public function getOptions()
+    public function getOptions(): array
     {
         return $this->options;
     }
 
-    protected function configureOptions(OptionsResolver $resolver)
+    protected function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'template' => self::DEFAULT_TEMPLATE,
         ]);
     }
 
-    public function getTemplate()
+    public function getTemplate(): string
     {
         return $this->options['template'];
     }
@@ -82,7 +82,7 @@ abstract class AbstractSection
         return $this->options[$name];
     }
 
-    public function getVars()
+    public function getVars(): array
     {
         return [
             'id' => null,

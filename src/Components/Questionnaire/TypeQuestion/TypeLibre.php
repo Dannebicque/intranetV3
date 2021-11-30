@@ -16,11 +16,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class TypeLibre extends AbstractQuestion
 {
     public const LABEL = 'type_libre';
-    public const BADGE = 'bg-green';
+    public const BADGE = 'bg-success';
     public const ICON = 'fas fa-input-text';
     public const FORM = QuestionnaireQuestionTypeLibre::class;
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
         $resolver

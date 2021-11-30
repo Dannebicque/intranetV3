@@ -16,7 +16,7 @@ class Sections
 {
     private array $sections = [];
 
-    public function addSection(AbstractSection $section)
+    public function addSection(AbstractSection $section): void
     {
         $section->arrayKey = count($this->sections);
         $this->sections[] = $section;

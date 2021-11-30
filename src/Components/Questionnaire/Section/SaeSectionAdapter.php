@@ -19,15 +19,13 @@ class SaeSectionAdapter extends AbstractSectionAdapter
     public const FIELD_ID = 'id';
     public const LABEL = 'sae';
 
-    public function getData(mixed $ordre)
+    public function getData(mixed $id): ?array
     {
-        dump($ordre);
-
         return [
             'libelle' => '',
             'code' => '',
-            'ordre' => $ordre,
-            'id' => 0
+            'ordre' => $id,
+            'id' => 0,
         ];
     }
 }

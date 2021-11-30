@@ -18,7 +18,7 @@ class TypeSlider extends TypeEchelle
     public const BADGE = 'bg-yellow'; //ajouter constante de couleur et de nom de template ?
     public const ICON = 'fas fa-slider'; //ajouter constante de couleur et de nom de template ?
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
         $resolver

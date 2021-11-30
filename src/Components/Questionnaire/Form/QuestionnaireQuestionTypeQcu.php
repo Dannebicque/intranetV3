@@ -17,7 +17,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class QuestionnaireQuestionTypeQcu extends QuestionnaireQuestionType
 {
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         parent::buildForm($builder, $options);
@@ -31,7 +30,7 @@ class QuestionnaireQuestionTypeQcu extends QuestionnaireQuestionType
                 'allow_delete' => true,
                 'label' => 'Réponses pour la question',
                 'by_reference' => false,
-                'max_items' => 0
+                'max_items' => 0,
 
                 //'help' => 'Ajoutez les situations professionnelles de la compétence.',
             ]);
