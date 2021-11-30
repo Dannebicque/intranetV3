@@ -12,7 +12,8 @@ export default class extends Controller {
     url: String,
     step: Number,
     maxStep: Number,
-    questionnaire: String
+    questionnaire: String,
+    etudiant: String
   }
 
   prevButton = document.getElementById('prev-button')
@@ -90,7 +91,8 @@ export default class extends Controller {
     this.pageTarget.innerHTML = '... Chargement en cours ...'
     const params = new URLSearchParams({
       page: this.stepValue,
-      questionnaire: this.questionnaireValue
+      questionnaire: this.questionnaireValue,
+      etudiant: this.etudiantValue,
     })
     const response = await fetch(`${this.urlValue}?${params.toString()}`)
     this.pageTarget.innerHTML = await response.text()
