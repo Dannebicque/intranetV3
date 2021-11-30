@@ -35,14 +35,16 @@
             </ul>
         </div>
     </header>
-    <div class="card-body">
+    <div class="card-body" {{ stimulus_controller('edt-personnel', {
+        urlCarnetDeBord: path('application_personnel_absence_ajax_pas_absent'),
+        urlPasDAbsent: path('application_personnel_absence_ajax_pas_absent')
+    }) }}>
         {{ include('edt/_navpersonnel.html.twig') }}
         <br>
         <div class="row">
             <div class="col-sm-12">
                 <div class="schedule-individual" aria-labelledby="schedule-heading">
                     {{ include('edt/_header_edt2.html.twig') }}
-
                     {% for ligne in 0..24 %}
                         <h2 class="time-slot" style="grid-row: time-{{ tabHeures[ligne][0] }};">{{ tabHeures[ligne][1] }}</h2>
                         {% for j in 1..5 %}
@@ -61,33 +63,38 @@
                                             <span class="session-room">{{ edt.planning[j][ligne].salle }}</span>
                                         </a>
                                     </div>
-                                     <div class="session-footer">
-                                     <div class="row no-gutters ">
-                                     <div class="col-4 d-grid d-block">
-                                     <a href="" class="btn btn-purple no-radius"
-                                     data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                     title="Cahier de texte enseignant">
-                                     <i class="fas fa-book-open"></i>
-                                     </a>
-                                     </div>
-                                     <div class="col-4 d-grid d-block">
-                                     <a href="" class="btn btn-warning no-radius"
-                                     data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                     title="Appel fait, pas d'absents">
-                                     <i class="fas fa-users-slash"></i>
-                                     </a>
-                                     </div>
-                                     <div class="col-4 d-grid d-block">
-                                     <a href="" class="btn btn-danger no-radius" data-bs-toggle="tooltip"
-                                     data-bs-placement="bottom" title="Appel fait">
-                                     <i class="fas fa-times"></i>
-                                     </a>
-{#                                      <a href="" class="btn btn-block btn-success no-radius">#}
-{#                                      <i class="fas fa-check"></i>#}
-{#                                      </a>#}
-                                     </div>
-                                     </div>
-                                     </div>
+                                    <div class="session-footer">
+                                        <div class="row no-gutters ">
+                                            <div class="col-4 d-grid d-block">
+                                                <a href="#" class="btn btn-purple no-radius"
+                                                   data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                   data-action="edt-personnel#btnCahierTexte"
+                                                   title="Cahier de texte enseignant">
+                                                    <i class="fas fa-book-open"></i>
+                                                </a>
+                                            </div>
+                                            <div class="col-4 d-grid d-block">
+                                                <a href="#" class="btn btn-warning no-radius"
+                                                   data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                   data-action="edt-personnel#btnPasAbsent"
+                                                   data-event="intranet_{{ edt.planning[j][ligne].id }}" {# todo : gérer
+                                        _intranet _celcat _... autre comme pour matière ?? #}
+                                                   title="Appel fait, pas d'absents">
+                                                    <i class="fas fa-users-slash"></i>
+                                                </a>
+                                            </div>
+                                            <div class="col-4 d-grid d-block">
+                                                <a href="#" class="btn btn-danger no-radius" data-bs-toggle="tooltip"
+                                                   data-edt-personnel-target="etatAppel"
+                                                   data-bs-placement="bottom" title="Appel fait">
+                                                    <i class="fas fa-times"></i>
+                                                </a>
+                                                {# <a href="" class="btn btn-block btn-success no-radius"> #}
+                                                {# <i class="fas fa-check"></i> #}
+                                                {# </a> #}
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             {% endif %}
                         {% endfor %}

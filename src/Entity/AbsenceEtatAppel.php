@@ -9,6 +9,7 @@
 
 namespace App\Entity;
 
+use App\DTO\EvenementEdt;
 use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\MatiereTrait;
 use App\Repository\AbsenceEtatAppelRepository;
@@ -132,5 +133,18 @@ class AbsenceEtatAppel extends BaseEntity
     public function appelFait()
     {
         return $this->getDate()->format('dmY') . '_' . $this->getTypeIdMatiere() . '_' . $this->getHeure() . '_' . $this->getGroupe()->getId();
+    }
+
+    public function setEvent(EvenementEdt $event, $typeSaisie)
+    {
+        $this->setDate($event->dateObjet);
+        $this->setIdMatiere($event->getIdMatiere());
+        $this->setSemestre($event->semestre);
+        $this->setGroupe($event->groupeObjet);
+        $this->setHeure($event->heureDebut);
+        $this->setPersonnel($event->personnelObjet);
+        $this->setTypeSaisie($typeSaisie);
+        $this->setTypeMatiere($event->getTypeMatiere());
+        return $this;
     }
 }

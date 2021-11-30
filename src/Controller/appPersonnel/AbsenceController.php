@@ -16,11 +16,13 @@ use App\Classes\MyAbsences;
 use App\Classes\MyGroupes;
 use App\Controller\BaseController;
 use App\Entity\Absence;
+use App\Entity\AbsenceEtatAppel;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Exception\MatiereNotFoundException;
 use App\Exception\SemestreNotFoundException;
 use App\Repository\AbsenceRepository;
+use App\Utils\JsonRequest;
 use App\Utils\Tools;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
@@ -128,6 +130,18 @@ class AbsenceController extends BaseController
                 (null !== $mat->semestre) ? $mat->semestre->getAnneeUniversitaire() : 0
             ),
         ]);
+    }
+
+    #[Route('/ajax/pas-absent/', name: 'application_personnel_absence_ajax_pas_absent', methods: ['POST'], options: ['expose'=>true])]
+    public function pasAbsentEvent(Request $request, EdtManager $edtManager): JsonResponse
+    {
+        //todo: vérifier si autorisé, vérifié si pas déjà présent
+        $idEvent = JsonRequest::getFromRequest($request)['event'];
+        $event = $edtManager->getEvent($idEvent);
+        $appelFait = new AbsenceEtatAppel();
+        $appelFait->setEvent($event, AbsenceEtatAppel::SAISIE_SANS_ABSENT);
+
+        return $this->json(true);
     }
 
     /**
