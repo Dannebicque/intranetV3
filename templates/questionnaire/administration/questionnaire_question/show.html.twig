@@ -1,54 +1,73 @@
-{% extends 'base.html.twig' %}
+{% extends (is_granted('ROLE_ADMINISTRATIF')) ? 'base-super_admin.html.twig' : 'base.html.twig' %}
 
-{% block title %}QuestionnaireQuestion{% endblock %}
+{% block header %}
+    {{ 'adm.questionnaire.question.show.heading'|trans }}
+{% endblock %}
 
-{% block body %}
-    <h1>QuestionnaireQuestion</h1>
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('sadm_questionnaire_question_delete', {id: questionnaire_question.id}) }}" data-csrf="{{ csrf_token('delete' ~ questionnaire_question.id) }}"
+               class="btn btn-danger btn-sm btn-float supprimer" title="{{ 'atitle.supprimer'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
+            ><i class="{{ iconDelete }}"></i></a>
+            <a href="{{ path('sadm_questionnaire_question_edit', {id: questionnaire_question.id}) }}" class="btn
+            btn-warning btn-sm btn-float" title="{{ 'atitle.modifier'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
+            ><i class="{{ iconEdit }}"></i></a>
+            <a href="{{ path('sadm_questionnaire_question_index') }}"
+               class="btn btn-primary btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom"
+               title="Retour à la liste des questions"><i class="fas fa-arrow-left"></i></a>
+        </div>
+    </div>
+{% endblock %}
 
-    <table class="table">
-        <tbody>
-        <tr>
-            <th>Id</th>
-            <td>{{ questionnaire_question.id }}</td>
-        </tr>
-        <tr>
-            <th>Libelle</th>
-            <td>{{ questionnaire_question.libelle }}</td>
-        </tr>
-        <tr>
-            <th>Help</th>
-            <td>{{ questionnaire_question.help }}</td>
-        </tr>
-        <tr>
-            <th>Type</th>
-            <td>{{ questionnaire_question.type }}</td>
-        </tr>
-        <tr>
-            <th>Obligatoire</th>
-            <td>{{ questionnaire_question.obligatoire ? 'Yes' : 'No' }}</td>
-        </tr>
-        <tr>
-            <th>Alignement</th>
-            <td>{{ questionnaire_question.alignement }}</td>
-        </tr>
-        <tr>
-            <th>Parametre</th>
-            <td>{{ questionnaire_question.parametre }}</td>
-        </tr>
-        <tr>
-            <th>Created</th>
-            <td>{{ questionnaire_question.created ? questionnaire_question.created|date('Y-m-d H:i:s') : '' }}</td>
-        </tr>
-        <tr>
-            <th>Updated</th>
-            <td>{{ questionnaire_question.updated ? questionnaire_question.updated|date('Y-m-d H:i:s') : '' }}</td>
-        </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('questionnaire_question_index') }}">back to list</a>
-
-    <a href="{{ path('questionnaire_question_edit', {'id': questionnaire_question.id}) }}">edit</a>
-
-    {{ include('questionnaire_question/_delete_form.html.twig') }}
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.questionnaire.question.show.heading'|trans }}</h4>
+        <div class="card-body">
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ questionnaire_question.id }}</td>
+                </tr>
+                <tr>
+                    <th>Libelle</th>
+                    <td>{{ questionnaire_question.libelle }}</td>
+                </tr>
+                <tr>
+                    <th>Help</th>
+                    <td>{{ questionnaire_question.help }}</td>
+                </tr>
+                <tr>
+                    <th>Type</th>
+                    <td>{{ questionnaire_question.type }}</td>
+                </tr>
+                <tr>
+                    <th>Obligatoire</th>
+                    <td>{{ questionnaire_question.obligatoire ? 'Yes' : 'No' }}</td>
+                </tr>
+                <tr>
+                    <th>Alignement</th>
+                    <td>{{ questionnaire_question.alignement }}</td>
+                </tr>
+                <tr>
+                    <th>Parametre</th>
+                    <td>{{ questionnaire_question.parametre }}</td>
+                </tr>
+                <tr>
+                    <th>Created</th>
+                    <td>{{ questionnaire_question.created ? questionnaire_question.created|format_datetime('short',
+                            'short') :
+                        '' }}</td>
+                </tr>
+                <tr>
+                    <th>Updated</th>
+                    <td>{{ questionnaire_question.updated ? questionnaire_question.updated|format_datetime('short',
+                            'short') :
+                        '' }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 {% endblock %}

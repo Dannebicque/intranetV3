@@ -20,6 +20,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class QuestionnaireSectionType extends AbstractType
 {
+    //todo: ConfigurableSection doit être un type de section... sinon comment créer la section ?
+
     private array $listeSection;
     private array $listeSectionAdapter;
 
@@ -29,12 +31,12 @@ class QuestionnaireSectionType extends AbstractType
         $this->listeSectionAdapter = $options['listeSectionAdapter'];
         $builder
             ->add('titre', TextType::class, [
-                'label' => 'label.titre'
+                'label' => 'label.titre',
             ])
             ->add('textExplicatif', TextareaType::class, [
                 'label' => 'label.text_explicatif',
                 'help' => 'Texte introductif de la section, affiché en début de page',
-                'required' => false
+                'required' => false,
             ])
             ->add('typeSection', ChoiceType::class, [
                 'choices' => $this->listeSection,
@@ -45,7 +47,7 @@ class QuestionnaireSectionType extends AbstractType
                 'choices' => $this->listeSectionAdapter,
                 'label' => 'label.sectionAdapter',
                 'expanded' => true,
-                'mapped' => false
+                'mapped' => false,
             ])
             ->add('qualiteSectionQuestions', CollectionStimulusType::class, [
                 'entry_type' => QuestionnaireSectionQuestionType::class,
@@ -65,8 +67,8 @@ class QuestionnaireSectionType extends AbstractType
         $resolver->setDefaults([
             'data_class' => QuestionnaireSection::class,
             'listeSection' => null,
-            'listeSectionAdapter' => null
-
+            'listeSectionAdapter' => null,
+            'translation_domain' => 'form',
         ]);
     }
 }

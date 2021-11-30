@@ -22,7 +22,9 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-body">
-                        {{ render(path('embed_enquete', {questionnaireQuizz: 1, etudiant:etudiant.id})) }}
+                        {{ etudiant.id }}
+                        {{ questionnaire_render(questionnaire, etudiant.id) }}
+{#                        {{ render(path('embed_enquete', {questionnaireQuizz: 1, etudiant:etudiant.id})) }}#}
                     </div>
                 </div>
             </div>
@@ -32,11 +34,11 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    {{ encore_entry_link_tags('quizzEnquete') }}
+{#    {{ encore_entry_link_tags('quizzQualite') }}#}
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    {{ encore_entry_script_tags('quizzEnquete') }}
+{#    {{ encore_entry_script_tags('quizzQualite') }}#}
 {% endblock %}
 

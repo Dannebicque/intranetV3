@@ -22,6 +22,8 @@ use App\Repository\QuestionnaireQualiteRepository;
 use App\Repository\QuestionnaireQuestionRepository;
 use App\Repository\QuestionnaireQuizzRepository;
 use App\Repository\QuestionnaireReponseRepository;
+use App\Utils\JsonRequest;
+use App\Utils\Tools;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -115,9 +117,11 @@ class QuestionnaireController extends AbstractController
         $questionnaire,
         $typeQuestionnaire
     ): JsonResponse {
-        $cleReponse = $request->request->get('cleReponse');
-        $cleQuestion = $request->request->get('cleQuestion');
-        $etudiant = $etudiantRepository->find($request->request->get('etudiant'));
+        $donnees = JsonRequest::getFromRequest($request);
+
+        $cleReponse = $donnees['cleReponse'];
+        $cleQuestion = $donnees['cleQuestion'];
+        $etudiant = $etudiantRepository->find($donnees['etudiant']);
 
         if (null !== $etudiant) {
             switch ($typeQuestionnaire) {
@@ -217,8 +221,10 @@ class QuestionnaireController extends AbstractController
         $questionnaire,
         $typeQuestionnaire
     ): JsonResponse {
-        $cleQuestion = $request->request->get('cleQuestion');
-        $etudiant = $etudiantRepository->find($request->request->get('etudiant'));
+        $donnees = JsonRequest::getFromRequest($request);
+
+        $cleQuestion = $donnees['cleQuestion'];
+        $etudiant = $etudiantRepository->find($donnees['etudiant']);
 
         if (null !== $etudiant) {
             switch ($typeQuestionnaire) {
@@ -252,10 +258,10 @@ class QuestionnaireController extends AbstractController
                     $qr = new QuestionnaireEtudiantReponse($quizzEtudiant);
                     $qr->setCleQuestion($cleQuestion);
                     $qr->setCleReponse(null);
-                    $qr->setValeur($request->request->get('value'));
+                    $qr->setValeur($donnees['value']);
                     $this->entityManager->persist($qr);
                 } else {
-                    $exist->setValeur($request->request->get('value'));
+                    $exist->setValeur($donnees['value']);
                 }
                 $this->entityManager->flush();
 

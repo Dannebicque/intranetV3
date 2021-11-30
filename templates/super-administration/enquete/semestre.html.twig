@@ -113,74 +113,7 @@
                 {% for questionnaire in  semestre.qualiteQuestionnaires %}
                     <div class="tab-pane {% if loop.first %}fade active show{% endif %}"
                          id="questionnaire{{ questionnaire.id }}">
-                        <a href="{{ path('administratif_enquete_relance',{questionnaire:questionnaire.id}) }}" class="btn btn-warning
-                        btn-block">
-                            Relancer les questionnaires non complétés
-                        </a><br>
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th>Etudiant</th>
-                                <th>Répondu</th>
-                                <th>Le</th>
-                                <th>Actions</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for etudiant in  semestre.etudiants %}
-                                <tr>
-                                    <td>{{ etudiant.display }}</td>
-                                    {% if quizzEtudiant[questionnaire.id] is defined and quizzEtudiant[questionnaire.id][etudiant.id] is defined %}
-                                        {% if quizzEtudiant[questionnaire.id][etudiant.id].termine == true %}
-                                            <td id="termine_{{ quizzEtudiant[questionnaire.id][etudiant.id].id }}">
-                                                Terminé
-                                            </td>
-                                            <td id="valide_{{ quizzEtudiant[questionnaire.id][etudiant.id].id }}">Validé
-                                                                                                                  le {{ quizzEtudiant[questionnaire.id][etudiant.id]
-                                                .dateTermine|format_datetime('short', 'short') }}</td>
-                                        {% else %}
-                                            <td>En cours</td>
-                                            <td>Modifié
-                                                le {{ quizzEtudiant[questionnaire.id][etudiant.id].updated|format_datetime('short','short') }}</td>
-                                        {% endif %}
-                                        <td>
-                                            {% if quizzEtudiant[questionnaire.id][etudiant.id].termine == true %}
-                                                <a href="#"
-                                                   class="btn btn-info btn-outline btn-square deverouiller"
-                                                   data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                                   title="{{ 'atitle.deverouiller'|trans }}">
-                                                    <i class="fas fa-unlock" data-id="{{ quizzEtudiant[questionnaire.id][etudiant.id].id }}"></i>
-                                                </a>
-                                            {% endif %}
-                                            <a href="{{ path('administratif_enquete_etudiant_voir_modifier',
-                                                {questionnaire: quizzEtudiant[questionnaire.id][etudiant.id].id}) }}"
-                                               class="btn btn-warning btn-outline btn-square"
-                                               data-bs-toggle="tooltip" data-bs-placement="bottom"
-
-                                               title="{{ 'atitle.voir_modifier'|trans }}">
-                                                <i class="{{ iconEdit }}"></i>
-                                            </a>
-                                            <a href="{{ path('administratif_enquete_etudiant_supprimer',
-                                                {questionnaire: quizzEtudiant[questionnaire.id][etudiant.id].id}) }}" data-csrf="{{ csrf_token('delete' ~ quizzEtudiant[questionnaire.id][etudiant.id].id) }}"
-                                               class="btn btn-danger btn-outline btn-square supprimer"
-                                               data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                               title="{{ 'atitle.supprimer'|trans }}">
-                                                <i class="{{ iconDelete }}"></i>
-                                            </a>
-                                        </td>
-                                    {% else %}
-                                        <td>Non</td>
-                                        <td>-</td>
-                                        <td>
-                                            Relancer
-                                        </td>
-                                    {% endif %}
-
-                                </tr>
-
-                            {% endfor %}
-                            </tbody>
-                        </table>
+                                               {{ include('questionnaire/commun/_tableauReponses.html.twig') }}
                     </div>
                 {% else %}
 

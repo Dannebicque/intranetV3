@@ -38,11 +38,11 @@ class QuestionnaireSection extends BaseEntity
     private ?string $textExplicatif;
 
     /**
-     * @ORM\OneToMany(targetEntity="QuestionnaireSectionQuestion", mappedBy="section", fetch="EAGER",
+     * @ORM\OneToMany(targetEntity="QuestionnaireSectionQuestion", mappedBy="section",
      *                                                             cascade={"persist", "remove"})
      * @ORM\OrderBy({"ordre"="ASC"})
      */
-    private Collection $qualiteSectionQuestions;
+    private Collection $qualiteSectionQuestions;//todo: éventuellement faire une vraie requete ? pour éviter de multiplier les requetes
 
     /**
      * @ORM\OneToMany(targetEntity="QuestionnaireQuestionnaireSection", mappedBy="section")

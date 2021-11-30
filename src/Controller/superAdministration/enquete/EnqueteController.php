@@ -81,25 +81,7 @@ class EnqueteController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/questionnaire/relance/{questionnaire}", name="administratif_enquete_relance")
-     */
-    public function relance(
-        FlashBagInterface $flashBag,
-        EnqueteRelance $enqueteRelance,
-        EtudiantRepository $etudiantRepository,
-        QuestionnaireEtudiantRepository $quizzEtudiantRepository,
-        QuestionnaireQualite $questionnaire
-    ) {
-        $reponses = $quizzEtudiantRepository->findByQuestionnaireQualite($questionnaire);
-        $etudiants = $etudiantRepository->findBySemestre($questionnaire->getSemestre());
 
-        $enqueteRelance->envoyerRelance($questionnaire, $reponses, $etudiants);
-        $flashBag->add(Constantes::FLASHBAG_SUCCESS, 'Message de relance envoyé');
-
-        return $this->redirectToRoute('administratif_enquete_semestre',
-            ['semestre' => $questionnaire->getSemestre()->getId()]);
-    }
 
     /**
      * @Route("/questionnaire/create/{semestre}/{step}/{questionnaire}", name="administratif_enquete_semestre_new")

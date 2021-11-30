@@ -9,12 +9,11 @@
 
 namespace App\Entity;
 
-use App\Components\Questionnaire\DTO\Section;
 use App\Entity\Traits\ConfigTrait;
 use App\Entity\Traits\LifeCycleTrait;
-use Doctrine\ORM\Mapping as ORM;
 use function array_key_exists;
 use function count;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\QuestionnaireQuestionnaireSectionRepository")
@@ -24,7 +23,6 @@ class QuestionnaireQuestionnaireSection extends BaseEntity
 {
     use LifeCycleTrait;
     use ConfigTrait;
-
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\QuestionnaireQualite", inversedBy="sections")
@@ -46,6 +44,11 @@ class QuestionnaireQuestionnaireSection extends BaseEntity
      */
     private ?int $ordre;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private bool $enabled = true;
+
     public function getSection(): ?QuestionnaireSection
     {
         return $this->section;
@@ -66,6 +69,18 @@ class QuestionnaireQuestionnaireSection extends BaseEntity
     public function setOrdre(int $ordre): self
     {
         $this->ordre = $ordre;
+
+        return $this;
+    }
+
+    public function isEnabled(): bool
+    {
+        return $this->enabled;
+    }
+
+    public function setEnabled(bool $enabled): self
+    {
+        $this->enabled = $enabled;
 
         return $this;
     }
@@ -104,7 +119,7 @@ class QuestionnaireQuestionnaireSection extends BaseEntity
             $pre = explode(',', $t[1]);
             $tPre = [];
             for ($i = 0; $i < 3; ++$i) {
-                $key = (int)$onglet * 3 - (3 - $i);
+                $key = (int) $onglet * 3 - (3 - $i);
                 if (array_key_exists($key, $pre)) {
                     $tPre[] = $pre[$key];
                 }

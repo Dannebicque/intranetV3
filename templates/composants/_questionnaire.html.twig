@@ -6,28 +6,18 @@
     <ul class="nav nav-process nav-process-circle">
         <li class="nav-item">
             <span class="nav-title">Introduction</span>
-            <a class="nav-link" data-bs-toggle="tab" href="#wizard-intro"></a>
+            <a class="nav-link" data-toggle="tab" href="#wizard-intro"></a>
         </li>
         {% for qualiteQuestionnaireSection in questionnaireSections %}
             <li class="nav-item">
                 <span class="nav-title">Section {{ qualiteQuestionnaireSection.ordre }}</span>
-                <a class="nav-link" data-bs-toggle="tab" href="#wizard-section-{{ qualiteQuestionnaireSection.id }}"></a>
+                <a class="nav-link" data-toggle="tab" href="#wizard-section-{{ qualiteQuestionnaireSection.id }}"></a>
             </li>
-            {% if qualiteQuestionnaireSection.previs|length > 0 %}
-                {# todo: onglet doit être supérieur ou égale à 2... sinon plantage #}
-                {% set nbOnglet = (qualiteQuestionnaireSection.previs|length / 3)|round(0, 'ceil') %}
-                {% for onglet in 2..nbOnglet %}
-                    <li class="nav-item">
-                        <span class="nav-title">Section {{ qualiteQuestionnaireSection.ordre }}-{{ onglet }}</span>
-                        <a class="nav-link" data-bs-toggle="tab" href="#wizard-section-{{ qualiteQuestionnaireSection.ordre }}-{{ onglet }}"></a>
-                    </li>
-                {% endfor %}
-            {% endif %}
         {% endfor %}
 
         <li class="nav-item">
             <span class="nav-title">Confirmation</span>
-            <a class="nav-link" data-bs-toggle="tab" href="#wizard-fin"></a>
+            <a class="nav-link" data-toggle="tab" href="#wizard-fin"></a>
         </li>
     </ul>
 
@@ -48,49 +38,16 @@
         {% for qualiteQuestionnaireSection in questionnaireSections %}
             <div class="tab-pane fade"
                  id="wizard-section-{{ qualiteQuestionnaireSection.id }}">
-                {% if apercu==true %}
-                    {{ render_esi(controller(
-                        'App\\Controller\\superAdministration\\enquete\\EnqueteController::section',
-                        {qualiteQuestionnaireSection:qualiteQuestionnaireSection.id, semestre:semestre.id, apercu:true,
-                            type:typeQuestionnaire}
-                    )) }}
-                {% else %}
                     {{ render_esi(controller(
                         'App\\Controller\\questionnaire\\QuestionnaireController::section',
                         {questionnaireSection:qualiteQuestionnaireSection.id, type:typeQuestionnaire,
                             etudiant:etudiant.id, apercu:false}
                     )) }}
-                {% endif %}
                 <br>
                 <div class="alert alert-info">
                     Les questions qui affichent un <span class="required-etoile">*</span> sont obligatoires.
                 </div>
             </div>
-            {% if qualiteQuestionnaireSection.previs|length > 0 %}
-                {% set nbOnglet = (qualiteQuestionnaireSection.previs|length / 3)|round(0, 'ceil') %}
-                {% for onglet in 2..nbOnglet %}
-                    <div class="tab-pane fade"
-                         id="wizard-section-{{ qualiteQuestionnaireSection.ordre }}-{{ onglet }}">
-                        {% if apercu==true %}
-                            {{ render_esi(controller(
-                                'App\\Controller\\superAdministration\\enquete\\EnqueteController::section',
-                                {qualiteQuestionnaireSection:qualiteQuestionnaireSection.id, semestre:semestre.id,
-                                    type:typeQuestionnaire, onglet:onglet, apercu:true}
-                            )) }}
-                        {% else %}
-                            {{ render_esi(controller(
-                                'App\\Controller\\questionnaire\\QuestionnaireController::section',
-                                {questionnaireSection:qualiteQuestionnaireSection.id, type:typeQuestionnaire,
-                                    etudiant:etudiant.id, onglet:onglet, apercu:false}
-                            )) }}
-                        {% endif %}
-                        <br>
-                        <div class="alert alert-info">
-                            Les questions qui affichent un <span class="required-etoile">*</span> sont obligatoires.
-                        </div>
-                    </div>
-                {% endfor %}
-            {% endif %}
         {% endfor %}
 
 
@@ -98,16 +55,9 @@
             <p class="text-center fs-35 text-muted"><strong class="text-primary">Merci</strong></p>
             <p class="text-center text-gray">{{ questionnaire.textFin|raw }}</p>
             <hr class="w-100px">
-            {% if typeQuestionnaire == 'quizz' %}
                 <div class="alert alert-warning">Pour valider votre questionnaire, n'oubliez pas de cliquer
                                                  sur "terminer".
                 </div>
-            {% else %}
-                <div class="alert alert-warning">Pour compléter votre questionnaire, n'oubliez pas de cliquer
-                                                 sur "terminer" pour recevoir l'accusé de réception.
-                </div>
-            {% endif %}
-
         </div>
     </div>
 
@@ -116,16 +66,10 @@
     <div class="flexbox">
         <button class="btn btn-secondary" data-wizard="prev" type="button">Précédent</button>
         <button class="btn btn-secondary" data-wizard="next" type="button">Suivant</button>
-        {% if typeQuestionnaire == 'quizz' %}
+
             <a href="{{ path('enquete_questionnaire_complete', {uuid: questionnaire.uuidString, etudiant:etudiant.id }) }}"
                class="btn btn-primary d-none"
                data-wizard="finish"
                type="submit">Terminer</a>
-        {% else %}
-            <a href="{{ path('app_etudiant_qualite_questionnaire_complete', {uuid: questionnaire.uuidString }) }}"
-               class="btn btn-primary d-none"
-               data-wizard="finish"
-               type="submit">Terminer</a>
-        {% endif %}
     </div>
 </form>
