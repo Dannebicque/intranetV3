@@ -4,35 +4,54 @@
 // @project intranetV3
 // @lastUpdate 01/10/2021 13:06
 
-import Toastify from 'toastify-js'
-
+// import Toastify from 'toastify-js'
+import {Toast as ToastBs} from 'bootstrap'
 
 class Toast {
 
-  defaultOptions = {
-    close: true,
-    duration: 3000,
-    className: 'toast',
-    escapeMarkup: false,
-    gravity: 'top',
-    position: 'right',
-    stopOnFocus: true
+  createAndShow (type, text, title = null, options = {})
+  {
+    let html = '<div class="position-fixed top-0 end-0 p-3" style="z-index:1000">\n' +
+      '<div class="toast align-items-center text-white bg-'+type+' border-0" role="alert" aria-live="assertive" aria-atomic="true">\n' +
+      '  <div class="d-flex">\n' +
+      '    <div class="toast-body">\n' +
+      text + '\n'
+    '    </div>\n' +
+    '    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close">X</button>\n' +
+    '  </div>\n' +
+    '</div>\n' +
+    '</div>'
+    console.log(document.body.lastChild)
+
+    var div=document.createElement("div");
+    div.innerHTML=html;
+    document.body.append(div.children[0])
+
+    this.show(type, text, title, options)
   }
 
+  // defaultOptions = {
+  //   close: true,
+  //   duration: 3000,
+  //   className: 'toast',
+  //   //escapeMarkup: false,
+  //   gravity: 'top',
+  //   position: 'right',
+  //   stopOnFocus: true
+  // }
+
+  // todo: supprimer le code HTML après l'event.
+
   show (type, text, title = null, options = {}) {
-    options = {...this.defaultOptions, ...options}
+    //options = {...this.defaultOptions, ...options}
 //todo: Utiliser le type Alerte https://gouvfr.atlassian.net/wiki/spaces/DB/pages/736362500/Alertes+-+Alerts
-    options['className'] += ' toast-' + type
+    //options['className'] += ' toast-' + type
 
-    let html = '<div class="toast-wrapper">'
-    if (title) {
-      html += '<div class="toast-head">' + title + '</div>'
-    }
-    html += '<div class="toast-body">' + text + '</div>'
-    html += '</div>'
-
-    options['text'] = html
-    Toastify(options).showToast()
+    var toastElList = [].slice.call(document.querySelectorAll('.toast'))
+    toastElList.map(function (toastEl) {
+      var tst = new ToastBs(toastEl, options)
+      tst.show()
+    })
   }
 
   error (text, title = null, options = {}) {
@@ -44,6 +63,7 @@ class Toast {
   }
 
   success (text, title = null, options = {}) {
+    console.log(text)
     this.show('success', text, title, options)
   }
 

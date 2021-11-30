@@ -5,6 +5,7 @@
 // @lastUpdate 05/10/2021 15:05
 import {Controller} from 'stimulus'
 import Toast from '../components/Toast'
+import {Toast as ToastBs} from 'bootstrap'
 
 export default class extends Controller {
   static values = {
@@ -14,6 +15,10 @@ export default class extends Controller {
   }
 
   connect () {
-    Toast.show(this.typeValue, this.textValue, this.titleValue)
+    console.log(this.element)
+    const tst = new ToastBs(this.element, {})
+    console.log(tst)
+    tst.show()
+    //Toast.show(this.typeValue, this.textValue, this.titleValue)
   }
 }
