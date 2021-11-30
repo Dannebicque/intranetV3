@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.4.7](https://github.com/Dannebicque/intranetV3/compare/v3.4.6...v3.4.7) (2021-11-30)
+
+
+### Features
+
+* Composant Questionnaire. Affichage des questions. Administration des questions avec le formulaire. ([b602e37](https://github.com/Dannebicque/intranetV3/commit/b602e372cdf728ce1e712d6c772c255dfb484f6a))
+* Enquete et RDD en se basant sur le composant Questionnaire ([b088a7b](https://github.com/Dannebicque/intranetV3/commit/b088a7b0e955fae762e58b56950c5310df792fe9))
+* Suivi de l'appel depuis l'EDT ([3d0e7b6](https://github.com/Dannebicque/intranetV3/commit/3d0e7b694c020a0a587cd44486385b68eea032e9))
+* Tache cron pour l'envoi de mails de rappels dans le cadre de la démarche qualité ([c7cba7b](https://github.com/Dannebicque/intranetV3/commit/c7cba7be5c8aa1832d2cea556fca962f5ca85b68))
+* Wizard avec Stimulus ([ed709d7](https://github.com/Dannebicque/intranetV3/commit/ed709d7f1aa5617c8ecee9b9ec21de1c6a729afc))
+
+
+### Bug Fixes
+
+* Correctif JS et nettoyage ([0a42e72](https://github.com/Dannebicque/intranetV3/commit/0a42e7213cd24eeaf5e164aa336afade60629a46))
+* Edt et appel ([4e8d03d](https://github.com/Dannebicque/intranetV3/commit/4e8d03d8f9e8dc7f918000443dec3d03ea53753c))
+* EDT Manager ([8761971](https://github.com/Dannebicque/intranetV3/commit/8761971cd4dd56a22fef206384e8571882157826))
+* Enquete ([b66448e](https://github.com/Dannebicque/intranetV3/commit/b66448e9e05eb90a005d094ef30c929e46c51577))
+* Problème variable autorise dans la saisie depuis Admin. ([a49d176](https://github.com/Dannebicque/intranetV3/commit/a49d17676c75a53a49b0c713ddc5c63552b11c19))
+* Questionnaires ([f7bcbe4](https://github.com/Dannebicque/intranetV3/commit/f7bcbe4c9de6fcefa1b05d91e043a1b349fd1180))
+* Requête rattrapage ([97cf37c](https://github.com/Dannebicque/intranetV3/commit/97cf37c37293d8ce092b5cc960d81f047dd1e6ce))
+* Toast avec Stimulus ([72f3c14](https://github.com/Dannebicque/intranetV3/commit/72f3c14dc28395033712b69f382b9625c7df229c))
+* Traductions ([93ffbdd](https://github.com/Dannebicque/intranetV3/commit/93ffbdd5de15c5c80bf15b41ec21b94d144ef292))
+
 ### [3.4.6](https://github.com/Dannebicque/intranetV3/compare/v3.4.5...v3.4.6) (2021-11-28)
 
 
