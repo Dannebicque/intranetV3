@@ -35,6 +35,11 @@ class QuestionnaireSectionQuestion extends BaseEntity
      */
     private ?int $ordre;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private bool $enabled = true;
+
     public function getSection(): ?QuestionnaireSection
     {
         return $this->section;
@@ -67,6 +72,18 @@ class QuestionnaireSectionQuestion extends BaseEntity
     public function setOrdre(int $ordre): self
     {
         $this->ordre = $ordre;
+
+        return $this;
+    }
+
+    public function getEnabled(): ?bool
+    {
+        return $this->enabled;
+    }
+
+    public function setEnabled(bool $enabled): self
+    {
+        $this->enabled = $enabled;
 
         return $this;
     }

@@ -7,14 +7,9 @@
 {% block headeractions %}
     <div class="header-action">
         <div class="buttons">
-            <a href="{{ path('quizz_question_index') }}"
-               class="btn btn-primary btn-float"
-               title="{{ 'atitle.retour_liste'|trans }}"
-               data-bs-toggle="tooltip" data-bs-placement="bottom"
-            >
-                <i class="fas fa-arrow-left"></i>
-                <span class="sr-only">{{ 'atitle.retour_liste'|trans }}</span>
-            </a>
+            <a href="{{ path('sadm_questionnaire_question_index') }}"
+               class="btn btn-primary btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom"
+               title="Retour à la liste des questions"><i class="fas fa-arrow-left"></i></a>
         </div>
     </div>
 {% endblock %}

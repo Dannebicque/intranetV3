@@ -26,4 +26,15 @@ class QuestionnaireQuestionnaireSectionRepository extends ServiceEntityRepositor
     {
         parent::__construct($registry, QuestionnaireQuestionnaireSection::class);
     }
+
+    public function findMaxOrdreSection(?int $getId)
+    {
+        $qb = $this->createQueryBuilder('q');
+        $qb->select('MAX(q.ordre) as max');
+        if ($getId) {
+            $qb->andWhere('q.questionnaireQualite = :id')->setParameter('id', $getId);
+        }
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
 }

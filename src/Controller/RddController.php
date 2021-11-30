@@ -9,11 +9,17 @@
 
 namespace App\Controller;
 
+use App\Components\Questionnaire\Adapter\QuestionnaireQuizzAdapter;
+use App\Components\Questionnaire\Adapter\SectionQuizzEntityAdapter;
+use App\Components\Questionnaire\DTO\AbstractQuestionnaire;
+use App\Components\Questionnaire\Questionnaire;
+use App\Components\Questionnaire\Section\AbstractSection;
+use App\Entity\QuestionnaireQuizz;
 use App\Form\RddType;
 use App\Repository\EtudiantRepository;
+use App\Repository\QuestionnaireQuizzRepository;
 use App\Repository\RddDiplomeRepository;
 use App\Utils\Tools;
-use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -98,21 +104,64 @@ class RddController extends AbstractController
 
     #[Route("/enquete/{numetudiant}/{diplome}", name: "enquete_diplome")]
     public function enquete(
+        Questionnaire $questionnaire,
+        QuestionnaireQuizzRepository $questionnaireQuizzRepository,
         EtudiantRepository $etudiantRepository,
         RddDiplomeRepository $rddDiplomeRepository,
         $numetudiant,
         $diplome
-    ): Response
-    {
+    ): Response {
         $dip = $rddDiplomeRepository->find($diplome);
         if ((null !== $dip) && md5('clerdd' . $dip->getNumetudiant()) === $numetudiant) {
+            $questionnaireQuizz = $questionnaireQuizzRepository->find(1);
             $etudiant = $etudiantRepository->findOneBy(['numEtudiant' => $dip->getNumetudiant()]);
+
+            $questionnaire->createQuestionnaire(QuestionnaireQuizz::class,
+                (new QuestionnaireQuizzAdapter($questionnaireQuizz))->getQuestionnaire(),
+                ['mode' => AbstractQuestionnaire::MODE_EDITION]);
+            $questionnaire->AddSpecialSection(AbstractSection::INTRODUCTION);
+            foreach ($questionnaireQuizz->getSections() as $section) {
+                $questionnaire->addSection((new SectionQuizzEntityAdapter($section))->getSection());
+            }
+            $questionnaire->AddSpecialSection(AbstractSection::END);
 
             return $this->render('rdd/enquete.html.twig', [
                 'etudiant' => $etudiant,
+                'questionnaire' => $questionnaire->createView(),
             ]);
         }
 
         throw new AccessDeniedException();
+    }
+
+    #[Route('/enquete-page/', name: 'enquete_wizard_page', options: ['expose' => true])]
+    public function wizardPage(
+        QuestionnaireQuizzRepository $qualiteRepository,
+        Questionnaire $questionnaire,
+        Request $request
+    ): Response {
+        $ordreSection = (int)$request->query->get('page');
+        $etudiant = $request->query->get('etudiant');
+        $questionnaireQualite = $qualiteRepository->find($request->query->get('questionnaire'));
+        if ($questionnaireQualite !== null) {
+            $questionnaire->createQuestionnaire(QuestionnaireQuizz::class,
+                (new QuestionnaireQuizzAdapter($questionnaireQualite))->getQuestionnaire(),
+                [
+                    'mode' => AbstractQuestionnaire::MODE_EDITION
+                ]);//todo: prendre le parametre de la route du wizard... ? Gérer la vue du wizard en automatique?
+            $questionnaire->AddSpecialSection(AbstractSection::INTRODUCTION);
+            foreach ($questionnaireQualite->getSections() as $section) {
+                $questionnaire->addSection((new SectionQuizzEntityAdapter($section))->getSection());
+            }
+            $questionnaire->AddSpecialSection(AbstractSection::END);
+            $questionnaire->setQuestionsForSection($ordreSection);
+
+
+            return $this->render('table/wizard-page.html.twig', [
+                'section' => $questionnaire->getSection($ordreSection),
+                'etudiant' => $etudiant,
+                'idQuestionnaire' => $request->query->get('questionnaire')
+            ]);
+        }
     }
 }

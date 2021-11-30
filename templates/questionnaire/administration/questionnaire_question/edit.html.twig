@@ -1,7 +1,7 @@
 {% extends is_granted('ROLE_ADMINISTRATIF') ? 'base-super_admin.html.twig' : 'base.html.twig' %}
 
 {% block header %}
-    {{ 'adm.questionnaire.question.modification.heading'|trans }}
+    {{ 'adm.questionnaire.question.edit.heading'|trans }}
 {% endblock %}
 
 {% block headeractions %}
@@ -38,7 +38,7 @@
 
 {% block content %}
     <div class="card">
-        <h4 class="card-title">{{ 'adm.questionnaire.question.modification.heading'|trans }}</h4>
+        <h4 class="card-title">{{ 'adm.questionnaire.question.edit.heading'|trans }}</h4>
         <div class="card-body">
             {{ include('composants/adm-form.html.twig', {'button_label': 'update'|trans}) }}
         </div>

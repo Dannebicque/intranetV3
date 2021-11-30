@@ -9,10 +9,12 @@
 
 namespace App\Controller\questionnaire\administration;
 
+use App\Classes\Questionnaire\QuestionnaireQualiteSectionManage;
 use App\Controller\BaseController;
 use App\Entity\QuestionnaireQualite;
 use App\Entity\Semestre;
 use App\Form\QuestionnaireQualiteType;
+use App\Repository\QuestionnaireSectionRepository;
 use App\Table\QuestionnaireQualiteTableType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -54,7 +56,6 @@ class QuestionnaireQualiteController extends BaseController
             $entityManager->persist($questionnaireQualite);
             $entityManager->flush();
 
-            //todo: ou sadm
             return $this->redirectToRoute('sadm_questionnaire_qualite_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -65,10 +66,27 @@ class QuestionnaireQualiteController extends BaseController
     }
 
     #[Route('/{id}', name: 'show', methods: ['GET'])]
-    public function show(QuestionnaireQualite $questionnaireQualite): Response
+    public function show(QuestionnaireSectionRepository $questionnaireSectionRepository, QuestionnaireQualite $questionnaireQualite): Response
     {
         return $this->render('questionnaire/administration/questionnaire_qualite/show.html.twig', [
             'questionnaire_qualite' => $questionnaireQualite,
+            'sections' => $questionnaireSectionRepository->findAll(),
+        ]);
+    }
+
+    #[Route('/section/manage/{id}', name: 'section_manage', methods: ['GET'])]
+    public function questionManage(
+        Request $request,
+        QuestionnaireSectionRepository $questionnaireSectionRepository,
+        QuestionnaireQualiteSectionManage $questionManage,
+        QuestionnaireQualite $questionnaireSection
+    ): Response {
+        $questionManage->updateQuestionnaire($request->query->get('action'), (int) $request->query->get('question'),
+            $questionnaireSection);
+
+        return $this->render('questionnaire/administration/questionnaire_qualite/_tableauSection.html.twig', [
+            'qualiteSections' => $questionnaireSection->getSections(),
+            'sections' => $questionnaireSectionRepository->findAll(),
         ]);
     }
 
@@ -81,8 +99,7 @@ class QuestionnaireQualiteController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            //todo ou sadm
-            return $this->redirectToRoute('adm_questionnaire_qualite_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('sadm_questionnaire_qualite_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('questionnaire/administration/questionnaire_qualite/edit.html.twig', [
@@ -94,14 +111,13 @@ class QuestionnaireQualiteController extends BaseController
     #[Route('/{id}', name: 'delete', methods: ['POST'])]
     public function delete(Request $request, QuestionnaireQualite $questionnaireQualite): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $questionnaireQualite->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$questionnaireQualite->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($questionnaireQualite);
             $entityManager->flush();
         }
 
-        //ou sadm
-        return $this->redirectToRoute('adm_questionnaire_qualite_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('sadm_questionnaire_qualite_index', [], Response::HTTP_SEE_OTHER);
     }
 
     //todo: duplicate, export

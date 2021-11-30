@@ -42,7 +42,9 @@
                 </tr>
                 <tr>
                     <th>Config</th>
-                    <td>{{ questionnaire_section.config }}</td>
+                    <td>
+{#                        {{ questionnaire_section.config }}#}
+                    </td>
                 </tr>
                 <tr>
                     <th>TypeCalcul</th>
@@ -77,47 +79,12 @@
         <h4 class="card-title">
             {{ 'adm.questionnaire.section.show.questions.heading'|trans }}
         </h4>
-        <div class="card-body">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>Ordre</th>
-                    <th>Question</th>
-                    <th>Type</th>
-                    <th>Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for question in questionnaire_section.qualiteSectionQuestions %}
-                    <tr>
-                        <td>{{ question.ordre }}</td>
-                        <td>{{ question.question.libelle }}</td>
-                        <td>{{ question.question.typeQuestion }}</td>
-                        <td>
-                            <button class="btn btn-danger"><i class="fas fa-remove"></i></button>
-                            <button class="btn btn-info"><i class="fas fa-eye-slash"></i></button>
-                            {% if not loop.first %}
-                                <button class="btn btn-success"><i class="fas fa-up"></i></button>
-                            {% endif %}
-                            {% if not loop.last %}
-                                <button class="btn btn-success"><i class="fas fa-down"></i></button>
-                            {% endif %}
-                        </td>
-                    </tr>
-                {% endfor %}
-                <tr>
-                    <td colspan="3">
-                        <label for="">ajouter une question</label>
-                        <select class="form-select">
-                            <option value=""></option>
-                        </select>
-                    </td>
-                    <td>
-                        <button class="btn btn-success"><i class="fas fa-plus"></i> Ajouter</button>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+        <div class="card-body" {{ stimulus_controller('questionnaire_section', {
+            url: path('sadm_questionnaire_section_question_manage', {id:questionnaire_section.id})
+        }) }}
+             data-questionnaire-section-target="questions">
+            {{ include('questionnaire/administration/questionnaire_section/_tableauQuestion.html.twig',
+                {qualiteSectionQuestions:questionnaire_section.qualiteSectionQuestions}) }}
         </div>
     </div>
 {% endblock %}

@@ -33,7 +33,7 @@ class TypeQuestionColumnType extends PropertyColumnType
         if (array_key_exists($value, $this->questionnaireRegistry->getTypeQuestions())) {
             $obj = $this->questionnaireRegistry->getTypeQuestion($value);
 
-            return '<span class="badge ' . $obj::BADGE . '">' . $this->translator->trans('label_' . $obj::LABEL) . '</span>';
+            return '<span class="badge ' . $obj::BADGE . '">' . $this->translator->trans('label.' . $obj::LABEL) . '</span>';
         }
 
         return '<span class="badge bg-primary">' . $value . '</span>';

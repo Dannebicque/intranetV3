@@ -9,11 +9,13 @@
 
 namespace App\Controller\questionnaire\administration;
 
+use App\Classes\Questionnaire\QuestionnaireSectionQuestionManage;
 use App\Components\Questionnaire\QuestionnaireRegistry;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\QuestionnaireSection;
 use App\Form\QuestionnaireSectionType;
+use App\Repository\QuestionnaireQuestionRepository;
 use App\Table\QuestionnaireSectionTableType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -69,10 +71,31 @@ class QuestionnaireSectionController extends BaseController
     }
 
     #[Route('/{id}', name: 'show', methods: ['GET'])]
-    public function show(QuestionnaireSection $questionnaireSection): Response
-    {
+    public function show(
+        QuestionnaireQuestionRepository $questionnaireQuestionRepository,
+        QuestionnaireSection $questionnaireSection
+    ): Response {
+        $questions = $questionnaireQuestionRepository->findAll();
+
         return $this->render('questionnaire/administration/questionnaire_section/show.html.twig', [
             'questionnaire_section' => $questionnaireSection,
+            'questions' => $questions
+        ]);
+    }
+
+    #[Route('/question/manage/{id}', name: 'question_manage', methods: ['GET'])]
+    public function questionManage(
+        Request $request,
+        QuestionnaireQuestionRepository $questionnaireQuestionRepository,
+        QuestionnaireSectionQuestionManage $questionManage,
+        QuestionnaireSection $questionnaireSection
+    ): Response {
+        $questionManage->updateSection($request->query->get('action'), (int)$request->query->get('question'),
+            $questionnaireSection);
+
+        return $this->render('questionnaire/administration/questionnaire_section/_tableauQuestion.html.twig', [
+            'qualiteSectionQuestions' => $questionnaireSection->getQualiteSectionQuestions(),
+            'questions' => $questionnaireQuestionRepository->findAll()
         ]);
     }
 
