@@ -76,13 +76,13 @@ class StageEtudiant extends BaseEntity
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Groups({"stage_entreprise_administration", "stage_entreprise"})
      */
-    private ?string $serviceStageEntreprise;
+    private ?string $serviceStageEntreprise = '';
 
     /**
      * @ORM\Column(type="text", nullable=true)
      * @Groups({"stage_entreprise"})
      */
-    private ?string $sujetStage;
+    private ?string $sujetStage = '';
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -259,7 +259,7 @@ class StageEtudiant extends BaseEntity
         return $this->serviceStageEntreprise;
     }
 
-    public function setServiceStageEntreprise(string $serviceStageEntreprise): self
+    public function setServiceStageEntreprise(?string $serviceStageEntreprise): self
     {
         $this->serviceStageEntreprise = $serviceStageEntreprise;
 
@@ -271,7 +271,7 @@ class StageEtudiant extends BaseEntity
         return $this->sujetStage;
     }
 
-    public function setSujetStage(string $sujetStage): self
+    public function setSujetStage(?string $sujetStage): self
     {
         $this->sujetStage = $sujetStage;
 
