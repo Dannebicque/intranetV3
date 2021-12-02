@@ -1,6 +1,5 @@
 <h5><strong>{{ ordre }}.</strong> {{ titre }}</h5>
 
-#{{ idQuestionnaire }}#
 {% for question in questions %}
     {{ question_render(question, etudiant, idQuestionnaire) }}
 {% endfor %}

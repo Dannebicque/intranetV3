@@ -46,7 +46,7 @@ class EndSection extends AbstractSection
     {
         $this->setOptions($options);
         $this->ordre = $ordre;
-        $this->texteFin = $questionnaire->texteDebut;
+        $this->texteFin = $questionnaire->texteFin;
         $this->titre = $questionnaire->titre;
         $this->dateOuverture = $questionnaire->dateOuverture;
         $this->dateFermeture = $questionnaire->dateFermeture;
