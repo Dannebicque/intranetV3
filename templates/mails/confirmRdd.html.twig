@@ -1,0 +1,20 @@
+Bonjour {{ etudiant.civiliteLong }} {{ etudiant.displayPr }},<br>
+
+<p>Merci pour votre réponse. Votre diplôme vous sera envoyé dans les meilleurs délais à l'adresse indiquée, à partir du
+13/12.</p>
+
+<p>Nous vous confirmons l'enregistrement de vos informations pour pouvoir vous faire parvenir votre diplôme.
+Votre diplôme vous sera envoyé à l'adresse suivante :</p>
+<br>
+{{ etudiant.civiliteLong }} {{ etudiant.displayPr }}<br>
+{{ etudiant.adresse.display|raw }}<br><br>
+
+<p>Pour toutes questions vous pouvez contacter la scolarité de l'IUT de Troyes : scolarite.iut-troyes@univ-reims.fr ou
+03
+25 42 46 46.</p>
+
+<p>Bien cordialement,<br>
+La scolarité de l'IUT de Troyes.</p>
+<br>
+<p>Ce message est un message automatique envoyé depuis l'intranet de l'{{ settings('NOM_IUT') }}. Aucune réponse ne
+pourra être prise en compte.</p>

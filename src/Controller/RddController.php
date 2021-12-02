@@ -9,6 +9,7 @@
 
 namespace App\Controller;
 
+use App\Classes\Configuration;
 use App\Components\Questionnaire\Adapter\QuestionnaireQuizzAdapter;
 use App\Components\Questionnaire\Adapter\ReponsesEtudiantAdapter;
 use App\Components\Questionnaire\Adapter\SectionQuizzEntityAdapter;
@@ -22,24 +23,27 @@ use App\Repository\EtudiantRepository;
 use App\Repository\QuestionnaireQuizzRepository;
 use App\Repository\RddDiplomeRepository;
 use App\Utils\Tools;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-#[Route("rdd", name: "rdd_")]
+#[Route('rdd', name: 'rdd_')]
 class RddController extends AbstractController
 {
-    #[Route("/", name: "identification")]
+    #[Route('/', name: 'identification')]
     public function identification(
         Request $request,
         EtudiantRepository $etudiantRepository,
         RddDiplomeRepository $rddDiplomeRepository
     ): Response {
         if ('POST' === $request->getMethod()) {
-            $jour = $request->request->get('jour') < 10 ? '0' . $request->request->get('jour') : $request->request->get('jour');
-            $date = Tools::convertDateToObject($jour . '/' . $request->request->get('mois') . '/' . $request->request->get('annee'));
+            $jour = $request->request->get('jour') < 10 ? '0'.$request->request->get('jour') : $request->request->get('jour');
+            $date = Tools::convertDateToObject($jour.'/'.$request->request->get('mois').'/'.$request->request->get('annee'));
             $etudiant = $etudiantRepository->identificationRdd($request->request->get('login'), $date);
 
             if (null !== $etudiant) {
@@ -47,7 +51,7 @@ class RddController extends AbstractController
                 $diplome = $rddDiplomeRepository->findOneBy(['numEtudiant' => $etudiant['numEtudiant']]);
                 if (null !== $diplome) {
                     return $this->redirectToRoute('rdd_inscription',
-                        ['numetudiant' => md5('clerdd' . $etudiant['numEtudiant']), 'diplome' => $diplome->getId()]);
+                        ['numetudiant' => md5('clerdd'.$etudiant['numEtudiant']), 'diplome' => $diplome->getId()]);
                 }
 
                 return $this->render('rdd/identification.html.twig', ['erreur' => true]);
@@ -59,8 +63,10 @@ class RddController extends AbstractController
         return $this->render('rdd/identification.html.twig', ['erreur' => false]);
     }
 
-    #[Route("/inscription/{numetudiant}/{diplome}", name: "inscription")]
+    #[Route('/inscription/{numetudiant}/{diplome}', name: 'inscription')]
     public function inscription(
+        Configuration $configuration,
+        MailerInterface $mailer,
         EtudiantRepository $etudiantRepository,
         RddDiplomeRepository $rddDiplomeRepository,
         Request $request,
@@ -69,7 +75,7 @@ class RddController extends AbstractController
     ): Response {
         $dip = $rddDiplomeRepository->find($diplome);
         if (null !== $dip) {
-            if (md5('clerdd' . $dip->getNumetudiant()) === $numetudiant) {
+            if (md5('clerdd'.$dip->getNumetudiant()) === $numetudiant) {
                 $etudiant = $etudiantRepository->findOneBy(['numEtudiant' => $dip->getNumetudiant()]);
 
                 if (null !== $etudiant) {
@@ -81,10 +87,28 @@ class RddController extends AbstractController
                         $em = $this->getDoctrine()->getManager();
                         $em->flush();
 
+                        $email = (new TemplatedEmail())
+                            ->from($configuration->getExpediteurIntranet())
+                            ->to(new Address($dip->getMailperso()))
+                            ->subject('Confirmation d\'enregistrement de vos informations pour la remise de votre diplôme')
+
+                            // path of the Twig template to render
+                            ->htmlTemplate('mails/confirmRdd.html.twig')
+
+                            // pass variables (name => value) to the template
+                            ->context([
+                                'etudiant' => $etudiant,
+                                'rdd' => $dip,
+                                'diplome' => $diplome,
+                            ])
+                        ;
+
+                        $mailer->send($email);
+
                         return $this->render('rdd/confirm.html.twig', [
                             'etudiant' => $etudiant,
                             'rdd' => $dip,
-                            'numetudiant' => md5('clerdd' . $etudiant->getNumEtudiant()),
+                            'numetudiant' => md5('clerdd'.$etudiant->getNumEtudiant()),
                             'diplome' => $diplome,
                         ]);
                     }
@@ -104,7 +128,7 @@ class RddController extends AbstractController
         return $this->render('rdd/identification.html.twig', ['erreur' => false]);
     }
 
-    #[Route("/enquete/{numetudiant}/{diplome}", name: "enquete_diplome")]
+    #[Route('/enquete/{numetudiant}/{diplome}', name: 'enquete_diplome')]
     public function enquete(
         Questionnaire $questionnaire,
         QuestionnaireQuizzRepository $questionnaireQuizzRepository,
@@ -114,14 +138,14 @@ class RddController extends AbstractController
         $diplome
     ): Response {
         $dip = $rddDiplomeRepository->find($diplome);
-        if ((null !== $dip) && md5('clerdd' . $dip->getNumetudiant()) === $numetudiant) {
+        if ((null !== $dip) && md5('clerdd'.$dip->getNumetudiant()) === $numetudiant) {
             $questionnaireQuizz = $questionnaireQuizzRepository->find(1);
             $etudiant = $etudiantRepository->findOneBy(['numEtudiant' => $dip->getNumetudiant()]);
 
             $questionnaire->createQuestionnaire(QuestionnaireQuizz::class,
                 (new QuestionnaireQuizzAdapter($questionnaireQuizz))->getQuestionnaire(),
                 ['mode' => AbstractQuestionnaire::MODE_EDITION]);
-            $questionnaire->setIdEtudiant($etudiant->getId());//todo: pourrait être plus générique si c'est des questionnaires aux personnels
+            $questionnaire->setIdEtudiant($etudiant->getId()); //todo: pourrait être plus générique si c'est des questionnaires aux personnels
             $questionnaire->AddSpecialSection(AbstractSection::INTRODUCTION);
             foreach ($questionnaireQuizz->getSections() as $section) {
                 $questionnaire->addSection((new SectionQuizzEntityAdapter($section))->getSection());
@@ -145,16 +169,16 @@ class RddController extends AbstractController
         Request $request
     ): Response {
         $reponses = new ReponsesEtudiant();
-        $ordreSection = (int)$request->query->get('page');
+        $ordreSection = (int) $request->query->get('page');
         $etudiant = $request->query->get('etudiant');
         $questionnaireQualite = $qualiteRepository->find($request->query->get('questionnaire'));
-        if ($questionnaireQualite !== null) {
+        if (null !== $questionnaireQualite) {
             $questionnaire->createQuestionnaire(QuestionnaireQuizz::class,
                 (new QuestionnaireQuizzAdapter($questionnaireQualite))->getQuestionnaire(),
                 [
-                    'mode' => AbstractQuestionnaire::MODE_EDITION
-                ]);//todo: prendre le parametre de la route du wizard... ? Gérer la vue du wizard en automatique?
-            $questionnaire->setIdEtudiant($etudiant);//todo: pourrait être plus générique si c'est des questionnaires aux personnels
+                    'mode' => AbstractQuestionnaire::MODE_EDITION,
+                ]); //todo: prendre le parametre de la route du wizard... ? Gérer la vue du wizard en automatique?
+            $questionnaire->setIdEtudiant($etudiant); //todo: pourrait être plus générique si c'est des questionnaires aux personnels
             $questionnaire->AddSpecialSection(AbstractSection::INTRODUCTION);
             foreach ($questionnaireQualite->getSections() as $section) {
                 $sect = (new SectionQuizzEntityAdapter($section))->getSection();
@@ -167,7 +191,7 @@ class RddController extends AbstractController
             return $this->render('table/wizard-page.html.twig', [
                 'section' => $questionnaire->getSection($ordreSection),
                 'etudiant' => $etudiant,
-                'idQuestionnaire' => $request->query->get('questionnaire')
+                'idQuestionnaire' => $request->query->get('questionnaire'),
             ]);
         }
     }

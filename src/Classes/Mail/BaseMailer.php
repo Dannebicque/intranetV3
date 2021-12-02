@@ -58,6 +58,7 @@ class BaseMailer
 
     private function getFrom(array $options): Address
     {
+        //todo: ne sert plus ? tout passe par le mail générique ?
         if (array_key_exists('from', $options) && count($options['from']) > 0) {
             if ($options['from'][0] instanceof Address) {
                 return $options['from'][0];
