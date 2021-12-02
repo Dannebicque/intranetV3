@@ -10,6 +10,7 @@
 namespace App\Components\Questionnaire;
 
 use App\Components\Questionnaire\DTO\AbstractQuestionnaire;
+use App\Components\Questionnaire\DTO\ReponsesEtudiant;
 use App\Components\Questionnaire\Section\AbstractSection;
 use App\Components\Questionnaire\Section\ConfigurableSection;
 use App\Components\Questionnaire\Section\EndSection;
@@ -21,15 +22,23 @@ class Questionnaire
     private const DEFAULT_TEMPLATE = 'components/questionnaire/questionnaire.html.twig';
 
     protected Sections $sections;
+    protected ReponsesEtudiant  $reponses;
+    protected ?int $etudiant = null;
     private AbstractQuestionnaire $questionnaire;
     private array $options = [];
     private QuestionnaireRegistry $questionnaireRegistry;
     private string $typeQuestionnaire;
 
-    public function __construct(QuestionnaireRegistry $questionnaireRegistry)
-    {
+    public function __construct(
+        QuestionnaireRegistry $questionnaireRegistry
+    ) {
         $this->sections = new Sections();
         $this->questionnaireRegistry = $questionnaireRegistry;
+    }
+
+    public function setIdEtudiant(?int $etudiant)
+    {
+        $this->etudiant = $etudiant;
     }
 
     public function createQuestionnaire(
@@ -67,7 +76,10 @@ class Questionnaire
             }
         } else {
             $abstractSection = new Section\Section($this->questionnaireRegistry);
-            $abstractSection->setSection($section);
+            $abstractSection->setSection($section, [
+                'questionnaire_id' => $this->getQuestionnaire()->id,
+                'etudiant_id' => $this->etudiant,
+            ]);
             $this->sections->addSection($abstractSection->getSection());
         }
 
@@ -122,13 +134,27 @@ class Questionnaire
         return $this;
     }
 
-    public function setQuestionsForSection(int $ordreSection): void
+    public function setQuestionsForSection(int $ordreSection, ReponsesEtudiant $reponsesEtudiant): void
     {
         foreach ($this->getSections() as $section) {
             if ($section instanceof Section\Section && $section->arrayKey === $ordreSection) {
-                $section->prepareQuestions();
+                $section->prepareQuestions([
+                    'questionnaire_id' => $this->getQuestionnaire()->id,
+                    'etudiant_id' => $this->etudiant,
+                    'mode' => $this->getOption('mode'),
+                ], $reponsesEtudiant);
                 break;
             }
         }
+    }
+
+    public function getIdEtudiant()
+    {
+        return $this->etudiant;
+    }
+
+    public function setReponses(ReponsesEtudiant $reponses)
+    {
+        $this->reponses = $reponses;
     }
 }

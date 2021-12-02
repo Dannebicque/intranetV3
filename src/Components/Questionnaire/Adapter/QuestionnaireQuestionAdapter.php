@@ -9,6 +9,7 @@
 
 namespace App\Components\Questionnaire\Adapter;
 
+use App\Components\Questionnaire\DTO\ReponsesEtudiant;
 use App\Components\Questionnaire\QuestionnaireRegistry;
 use App\Components\Questionnaire\Section\AbstractSection;
 use App\Components\Questionnaire\TypeQuestion\AbstractQuestion;
@@ -28,7 +29,7 @@ class QuestionnaireQuestionAdapter
     /**
      * @throws \App\Components\Questionnaire\Exceptions\TypeQuestionNotFoundException
      */
-    public function createFromEntity(AbstractSection $abstractSection, $question, int $ordre = 1, array $options = [])
+    public function createFromEntity(AbstractSection $abstractSection, $question, int $ordre = 1, array $options = [], ReponsesEtudiant $reponsesEtudiant)
     {
         $obj = $this->questionnaireRegistry->getTypeQuestion($question->getQuestion()->getType());
         $options = array_merge($options, $question->getQuestion()->getConfiguration());
@@ -50,6 +51,11 @@ class QuestionnaireQuestionAdapter
         $this->question->help = $question->getQuestion()->getHelp();
         $this->question->parametres = $question->getQuestion()->getParametre();
         $this->question->config = $question->getQuestion()->getConfiguration();
+        $this->question->reponseEtudiant = $reponsesEtudiant->getReponse($question->getQuestion()->getCle());
+
+        if ($this->question->reponseEtudiant !== null && $this->question->reponseEtudiant->valeur === 'CHX:OTHER') {
+            $this->question->reponseEtudiant->complementValeur = $reponsesEtudiant->getReponse($question->getQuestion()->getCle().'_autre')?->valeur;
+        }
 
         $this->question->getOrGenereReponses($question->getQuestion());
 

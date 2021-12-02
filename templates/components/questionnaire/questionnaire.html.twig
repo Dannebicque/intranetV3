@@ -29,8 +29,9 @@
         <button class="btn btn-secondary" data-action="wizard#next" id="next-button">
             Suivant <i class="fas fa-right"></i>
         </button>
-        <button class="btn btn-primary d-none" data-action="wizard#finish" id="finish-button">
+        <a class="btn btn-primary d-none"  id="finish-button" href="{{ url
+            ('default_homepage') }}">{#  data-action="wizard#finish" #}
             Terminer
-        </button>
+        </a>
     </div>
 </form>

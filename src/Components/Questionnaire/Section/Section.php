@@ -11,6 +11,7 @@ namespace App\Components\Questionnaire\Section;
 
 use App\Components\Questionnaire\Adapter\QuestionnaireQuestionAdapter;
 use App\Components\Questionnaire\DTO\AbstractQuestionnaire;
+use App\Components\Questionnaire\DTO\ReponsesEtudiant;
 use App\Components\Questionnaire\TypeQuestion\AbstractQuestion;
 
 class Section extends AbstractSection
@@ -45,14 +46,17 @@ class Section extends AbstractSection
         return $this;
     }
 
-    public function prepareQuestions()
+    public function prepareQuestions(array $options = [], ReponsesEtudiant $reponsesEtudiant)
     {
         foreach ($this->section->questions as $question) {
             $questionnaireQuestionAdapter = new QuestionnaireQuestionAdapter($this->questionnaireRegistry);
             for ($i = 0; $i < $this->nbParties; ++$i) {
                 $this->addQuestion(
-                    $questionnaireQuestionAdapter->createFromEntity($this, $question, $i,
-                    ['mode' => AbstractQuestionnaire::MODE_EDITION])->getQuestion());
+                    $questionnaireQuestionAdapter->createFromEntity(
+                        $this,
+                        $question,
+                        $i,
+                    array_merge(['mode' => AbstractQuestionnaire::MODE_EDITION], $options), $reponsesEtudiant)->getQuestion());
             }
         }
     }

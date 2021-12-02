@@ -4,7 +4,7 @@
                 parametres: parametres|json_encode,
                 idQuestion: id,
                 typeQuestionnaire: typeQuestionnaire,
-                questionnaireId: questionnaireId
+                questionnaireId: questionnaire_id
             }) }}
               data-action="enquete:change-value->enquete#updateQuestion"
               id="field_{{ id }}">
@@ -24,7 +24,7 @@
                 parametres: parametres|json_encode,
                 idQuestion: id,
                 typeQuestionnaire: typeQuestionnaire,
-                questionnaireId: questionnaireId
+                questionnaireId: questionnaire_id
             }) }}
               data-action="enquete:change-value@window->enquete#updateQuestion"
               id="field_{{ id }}">
@@ -41,12 +41,11 @@
                       data-action="change->enquete#onTextAreaChange"
                       data-typeQuestionnaire="{{ type_question }}"
                      {% if apercu is not defined or apercu == false %}
-                         data-etudiant="{{ etudiant }}"
+                         data-etudiant="{{ etudiant_id }}"
                      {% endif %}
                     {% if obligatoire %}required{% endif %}
          class="form-control
-{# {% if apercu is not defined or apercu == false %}questionQualiteTextArea{% endif %} #}
-">{% if reponses['quizz_question_text_'~name] is defined %}{{ reponses['quizz_question_text_'~name].valeur }}{% endif %}</textarea>
+">{% if reponseEtudiant != null %}{{ reponseEtudiant.valeur }}{% endif %}</textarea>
             <div class="form-control-feedback"></div>
         </div>
     </fieldset>
@@ -58,7 +57,7 @@
                 parametres: parametres|json_encode,
                 idQuestion: id,
                 typeQuestionnaire: typeQuestionnaire,
-                questionnaireId: questionnaireId
+                questionnaireId: questionnaire_id
             }) }}
               data-action="enquete:change-value->enquete#updateQuestion"
               id="field_{{ id }}">
@@ -74,10 +73,10 @@
                            data-typeQuestionnaire="{{ type_question }}"
                            data-action="change->enquete#change"
                             {% if apercu is not defined or apercu == false %}
-                                data-etudiant="{{ etudiant }}"
+                                data-etudiant="{{ etudiant_id }}"
                             {% endif %}
-                            {% if reponses['quizz_question_reponses_'~name] is defined and
-                                reponses['quizz_question_reponses_'~name].valeur == reponse.valeur %}checked{% endif %}
+                            {% if reponseEtudiant != null and
+                                reponseEtudiant.valeur == reponse.valeur %}checked{% endif %}
                             {% if obligatoire %}required{% endif %}
                            class="form-check-input  {% if apercu is not defined or apercu == false %}questionQualite{% endif %}"
                            value="{{ reponse.valeur }}">
@@ -91,10 +90,10 @@
                            data-action="change->enquete#change"
                            data-typeQuestionnaire="{{ type_question }}"
                             {% if apercu is not defined or apercu == false %}
-                                data-etudiant="{{ etudiant }}"
+                                data-etudiant="{{ etudiant_id }}"
                             {% endif %}
-                            {% if reponses['quizz_question_reponses_'~name] is defined and
-                                reponses['quizz_question_reponses_'~name].valeur == reponse.valeur %}checked{% endif %}
+                            {% if reponseEtudiant != null and
+                                reponseEtudiant.valeur == reponse.valeur %}checked{% endif %}
                             {% if obligatoire %}required{% endif %}
                            class="form-check-input  {% if apercu is not defined or apercu == false %}questionQualite{% endif %}"
                            value="{{ reponse.valeur }}">
@@ -111,7 +110,7 @@
                 parametres: parametres|json_encode,
                 idQuestion: id,
                 typeQuestionnaire: typeQuestionnaire,
-                questionnaireId: questionnaireId
+                questionnaireId: questionnaire_id
             }) }}
               data-action="enquete:change-value->enquete#updateQuestion"
               id="field_{{ id }}"
@@ -134,7 +133,7 @@
                 parametres: parametres|json_encode,
                 idQuestion: id,
                 typeQuestionnaire: typeQuestionnaire,
-                questionnaireId: questionnaireId
+                questionnaireId: questionnaire_id
             }) }}
               data-action="enquete:change-value@window->enquete#updateQuestion"
     >
@@ -168,10 +167,10 @@
                        data-fieldset="{{ id }}"
                        data-typeQuestionnaire="{{ type_question }}"
                         {% if apercu is not defined or apercu == false %}
-                            data-etudiant="{{ etudiant }}"
+                            data-etudiant="{{ etudiant_id }}"
                         {% endif %}
-                        {# {% if reponses['quizz_question_reponses_'~name] is defined and #}
-                        {# reponses['quizz_question_reponses_'~name].valeur == reponse.valeur %}checked{% endif %} #}
+                         {% if reponseEtudiant != null and
+                             reponseEtudiant.valeur == reponse.valeur %}checked{% endif %}
                         {% if obligatoire %}required{% endif %}
                        class="form-check-input  {% if apercu is not defined or apercu == false %}questionQualite{% endif %}"
                        value="{{ reponse.valeur }}">
@@ -182,12 +181,12 @@
                            data-typeQuestionnaire="{{ type_question }}"
                            data-action="change->enquete#onTextAreaChange"
                             {% if mode is defined or mode == false %}
-                                data-etudiant="{{ etudiant }}"
+                                data-etudiant="{{ etudiant_id }}"
                             {% endif %}
                            class="form-control {% if apercu is not defined or apercu == false %}questionQualiteTextArea{% endif %}"
-                            {# {% if reponses['quizz_question_reponses_'~name~'_autre'] is defined %} #}
-                            {# value="{{ reponses['quizz_question_reponses_'~name~'_autre'].valeur }}" #}
-                            {# {% endif %} #}
+                             {% if reponseEtudiant != null and reponseEtudiant.valeur == 'CHX:OTHER' %}
+                             value="{{ reponseEtudiant.complementValeur }}"
+                             {% endif %}
                     >
                 {% endif %}
             </div>

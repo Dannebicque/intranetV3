@@ -10,6 +10,10 @@
 namespace App\Controller\questionnaire;
 
 use App\Classes\Previsionnel\PrevisionnelManager;
+use App\Components\Questionnaire\TypeQuestion\TypeEchelle;
+use App\Components\Questionnaire\TypeQuestion\TypeOuiNon;
+use App\Components\Questionnaire\TypeQuestion\TypeQcm;
+use App\Components\Questionnaire\TypeQuestion\TypeQcu;
 use App\Entity\Etudiant;
 use App\Entity\QuestionnaireEtudiant;
 use App\Entity\QuestionnaireEtudiantReponse;
@@ -23,7 +27,6 @@ use App\Repository\QuestionnaireQuestionRepository;
 use App\Repository\QuestionnaireQuizzRepository;
 use App\Repository\QuestionnaireReponseRepository;
 use App\Utils\JsonRequest;
-use App\Utils\Tools;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -104,7 +107,6 @@ class QuestionnaireController extends AbstractController
      * @Route("/api/ajax/reponse/{questionnaire}/{typeQuestionnaire}", name="app_etudiant_qualite_ajax_reponse",
      *                                                                 options={"expose"=true})
      *
-     *
      * @throws NonUniqueResultException
      */
     public function sauvegardeReponse(
@@ -172,10 +174,10 @@ class QuestionnaireController extends AbstractController
                     }
 
                     $this->entityManager->persist($qr);
-                } elseif (QuestionnaireQuestion::QUESTION_TYPE_QCU === $question->getType() || QuestionnaireQuestion::QUESTION_TYPE_ECHELLE === $question->getType() || QuestionnaireQuestion::QUESTION_TYPE_YESNO === $question->getType()) {
+                } elseif (TypeQcu::class === $question->getType() || TypeEchelle::class === $question->getType() || TypeOuiNon::class === $question->getType()) {
                     $exist->setCleReponse($cleReponse);
                     $exist->setValeur($reponse->getValeur());
-                } elseif (QuestionnaireQuestion::QUESTION_TYPE_QCM === $question->getType()) {
+                } elseif (TypeQcm::class === $question->getType()) {
                     //si c'est un QCM, on fait un tableau de réponse.
                     $cleReponses = json_decode($exist->getCleReponse(), false);
                     $valeurs = json_decode($exist->getValeur(), false);
@@ -208,7 +210,6 @@ class QuestionnaireController extends AbstractController
     /**
      * @Route("/api/ajax/reponse-txt/{questionnaire}/{typeQuestionnaire}", name="app_etudiant_qualite_ajax_reponse_txt",
      *                                             options={"expose"=true})
-     *
      *
      * @throws NonUniqueResultException
      */
@@ -248,24 +249,45 @@ class QuestionnaireController extends AbstractController
                 $quizzEtudiant = new QuestionnaireEtudiant($etudiant, $questionnaire, $typeQuestionnaire);
                 $this->entityManager->persist($quizzEtudiant);
             }
-            /** @var QuestionnaireEtudiantReponse $exist */
-            $exist = $quizzEtudiantReponseRepository->findExistQuestion($cleQuestion, $quizzEtudiant);
-
             $t = explode('_', $cleQuestion);
-            $question = $quizzQuestionRepository->find(mb_substr($t[3], 1, mb_strlen($t[0])));
-            if (null !== $question) {
+            if ('autre' === $t[3]) {
+                $cleQuestion = $t[0].'_'.$t[1].'_reponses_'.$t[4].'_autre';
+
+                //gesion du cas autre...
+                //on met à jour la question de base. On ajoute la réponse écrite
+
+                $exist = $quizzEtudiantReponseRepository->findOneBy(['questionnaireEtudiant' => $quizzEtudiant->getId(), 'cleQuestion' => $cleQuestion]);
                 if (null === $exist) {
                     $qr = new QuestionnaireEtudiantReponse($quizzEtudiant);
                     $qr->setCleQuestion($cleQuestion);
-                    $qr->setCleReponse(null);
+                    $qr->setCleReponse($cleQuestion);
                     $qr->setValeur($donnees['value']);
                     $this->entityManager->persist($qr);
                 } else {
                     $exist->setValeur($donnees['value']);
                 }
+
                 $this->entityManager->flush();
 
                 return $this->json(true, Response::HTTP_OK);
+            } else {
+                $question = $quizzQuestionRepository->find(mb_substr($t[3], 1, mb_strlen($t[0])));
+                $exist = $quizzEtudiantReponseRepository->findExistQuestion($cleQuestion, $quizzEtudiant);
+
+                if (null !== $question) {
+                    if (null === $exist) {
+                        $qr = new QuestionnaireEtudiantReponse($quizzEtudiant);
+                        $qr->setCleQuestion($cleQuestion);
+                        $qr->setCleReponse(null);
+                        $qr->setValeur($donnees['value']);
+                        $this->entityManager->persist($qr);
+                    } else {
+                        $exist->setValeur($donnees['value']);
+                    }
+                    $this->entityManager->flush();
+
+                    return $this->json(true, Response::HTTP_OK);
+                }
             }
 
             return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);

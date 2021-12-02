@@ -17,6 +17,7 @@ class Section
     public ?string $titre;
     public ?string $texte_explicatif;
     public string $id_section;
+    public string $questionnaire_id;
     public string $id_questionnaire_section;
     public string $ordre;
     public array $configGlobale;
@@ -31,7 +32,8 @@ class Section
         string $ordre,
         ?string $texte_explicatif = '',
         ?array $configGlobale = [],
-        ?array $configQuestionnaire = []
+        ?array $configQuestionnaire = [],
+        ?int $questionnaireId
     ) {
         $this->typeSection = $typeSection;
         $this->titre = $titre;
@@ -41,6 +43,7 @@ class Section
         $this->ordre = $ordre;
         $this->configGlobale = $configGlobale;
         $this->configQuestionnaire = $configQuestionnaire;
+        $this->questionnaire_id = $questionnaireId;
     }
 
     public function setQuestions(Collection | array $questions)

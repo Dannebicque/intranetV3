@@ -10,8 +10,10 @@
 namespace App\Controller;
 
 use App\Components\Questionnaire\Adapter\QuestionnaireQuizzAdapter;
+use App\Components\Questionnaire\Adapter\ReponsesEtudiantAdapter;
 use App\Components\Questionnaire\Adapter\SectionQuizzEntityAdapter;
 use App\Components\Questionnaire\DTO\AbstractQuestionnaire;
+use App\Components\Questionnaire\DTO\ReponsesEtudiant;
 use App\Components\Questionnaire\Questionnaire;
 use App\Components\Questionnaire\Section\AbstractSection;
 use App\Entity\QuestionnaireQuizz;
@@ -119,6 +121,7 @@ class RddController extends AbstractController
             $questionnaire->createQuestionnaire(QuestionnaireQuizz::class,
                 (new QuestionnaireQuizzAdapter($questionnaireQuizz))->getQuestionnaire(),
                 ['mode' => AbstractQuestionnaire::MODE_EDITION]);
+            $questionnaire->setIdEtudiant($etudiant->getId());//todo: pourrait être plus générique si c'est des questionnaires aux personnels
             $questionnaire->AddSpecialSection(AbstractSection::INTRODUCTION);
             foreach ($questionnaireQuizz->getSections() as $section) {
                 $questionnaire->addSection((new SectionQuizzEntityAdapter($section))->getSection());
@@ -136,10 +139,12 @@ class RddController extends AbstractController
 
     #[Route('/enquete-page/', name: 'enquete_wizard_page', options: ['expose' => true])]
     public function wizardPage(
+        ReponsesEtudiantAdapter $reponsesEtudiantAdapter,
         QuestionnaireQuizzRepository $qualiteRepository,
         Questionnaire $questionnaire,
         Request $request
     ): Response {
+        $reponses = new ReponsesEtudiant();
         $ordreSection = (int)$request->query->get('page');
         $etudiant = $request->query->get('etudiant');
         $questionnaireQualite = $qualiteRepository->find($request->query->get('questionnaire'));
@@ -149,13 +154,15 @@ class RddController extends AbstractController
                 [
                     'mode' => AbstractQuestionnaire::MODE_EDITION
                 ]);//todo: prendre le parametre de la route du wizard... ? Gérer la vue du wizard en automatique?
+            $questionnaire->setIdEtudiant($etudiant);//todo: pourrait être plus générique si c'est des questionnaires aux personnels
             $questionnaire->AddSpecialSection(AbstractSection::INTRODUCTION);
             foreach ($questionnaireQualite->getSections() as $section) {
-                $questionnaire->addSection((new SectionQuizzEntityAdapter($section))->getSection());
+                $sect = (new SectionQuizzEntityAdapter($section))->getSection();
+                $questionnaire->addSection($sect);
+                $reponses->merge($reponsesEtudiantAdapter->getReponsesEtudiant($sect, $etudiant));
             }
             $questionnaire->AddSpecialSection(AbstractSection::END);
-            $questionnaire->setQuestionsForSection($ordreSection);
-
+            $questionnaire->setQuestionsForSection($ordreSection, $reponses);
 
             return $this->render('table/wizard-page.html.twig', [
                 'section' => $questionnaire->getSection($ordreSection),

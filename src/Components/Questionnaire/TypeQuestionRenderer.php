@@ -28,7 +28,7 @@ class TypeQuestionRenderer
     /**
      * @throws \Throwable
      */
-    public function render(AbstractQuestion $question, ?int $idEtudiant = null, ?int $idQuestionnaire = null): string
+    public function render(AbstractQuestion $question): string
     {
         $template = $this->load();
 
@@ -37,7 +37,6 @@ class TypeQuestionRenderer
         $params['name'] = 'q'.$question->id;
         $params['id'] = $question->id;
         $params['visible'] = $this->isVisible($question->parametres);
-        $params['etudiant'] = $idEtudiant;
         $params['reponses'] = $question->getReponses();
         $params['help'] = $question->help;
         $params['config'] = $question->config;
@@ -45,8 +44,8 @@ class TypeQuestionRenderer
         $params['libelle'] = $question->libelle;
         $params['numero'] = $question->numero;
         $params['obligatoire'] = $question->obligatoire;
-        $params['typeQuestionnaire'] = 'quizz';//todo: a gérer
-        $params['questionnaireId'] = $idQuestionnaire;
+        $params['typeQuestionnaire'] = 'quizz';//todo: a gérer dans option...
+        $params['reponseEtudiant'] = $question->reponseEtudiant;
 
         return $template->renderBlock($params['block_name'], $params);
     }
