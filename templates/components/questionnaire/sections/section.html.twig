@@ -1,7 +1,7 @@
 <h5><strong>{{ ordre }}.</strong> {{ titre }}</h5>
 
 {% for question in questions %}
-    {{ question_render(question, etudiant, idQuestionnaire) }}
+    {{ question_render(question) }}
 {% endfor %}
 <br>
 <div class="alert alert-info">

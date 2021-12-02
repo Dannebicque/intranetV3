@@ -12,6 +12,7 @@ namespace App\Components\Questionnaire\TypeQuestion;
 use App\Components\Questionnaire\DTO\AbstractQuestionnaire;
 use App\Components\Questionnaire\DTO\Question;
 use App\Components\Questionnaire\DTO\Reponse;
+use App\Components\Questionnaire\DTO\ReponseEtudiant;
 use App\Components\Questionnaire\Reponses;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -31,6 +32,7 @@ abstract class AbstractQuestion
     public ?Question $questionParente = null;
     public string $numero = '1';
     private Reponses $reponses;
+    public ?ReponseEtudiant $reponseEtudiant = null;
 
     public function __construct()
     {
@@ -44,6 +46,8 @@ abstract class AbstractQuestion
             ->setDefault('type_question', '')
             ->setDefault('parametres', [])
             ->setDefault('alignement', [])
+            ->setDefault('questionnaire_id', null)
+            ->setDefault('etudiant_id', null)
             ->setDefault('block_name', '');
     }
 

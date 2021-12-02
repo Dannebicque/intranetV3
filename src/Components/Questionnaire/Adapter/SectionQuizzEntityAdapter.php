@@ -27,6 +27,8 @@ class SectionQuizzEntityAdapter
             $section->getSection()->getTextExplicatif(),
             $section->getSection()->getConfig(),
             $section->getConfig(),
+            $section->getQuestionnaireQuizz()->getId()
+
         );
 
         $this->section->setQuestions($section->getSection()->getQualiteSectionQuestions());

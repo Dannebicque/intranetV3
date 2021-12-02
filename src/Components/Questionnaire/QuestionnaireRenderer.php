@@ -28,20 +28,19 @@ class QuestionnaireRenderer
      * @throws \Twig\Error\SyntaxError
      * @throws \Twig\Error\LoaderError
      */
-    public function questionnaireRender(Questionnaire $questionnaire, ?int $idEtudiant = null): string
+    public function questionnaireRender(Questionnaire $questionnaire): string
     {
-        return $this->twig->render($questionnaire->getOption('template'), $this->view($questionnaire, $idEtudiant));
+        return $this->twig->render($questionnaire->getOption('template'), $this->view($questionnaire));
     }
 
-    protected function view(Questionnaire $questionnaire, ?int $idEtudiant = null): array
+    protected function view(Questionnaire $questionnaire): array
     {
         $options = $questionnaire->getOptions();
-        $this->idEtudiant = $idEtudiant;
         $this->idQuestionnaire = $questionnaire->getQuestionnaire()->id;
         $vars = [];
         $vars['sections'] = $questionnaire->getSections();
         $vars['questionnaire'] = $questionnaire;
-        $vars['etudiant'] = $idEtudiant;
+        $vars['etudiant'] = $questionnaire->getIdEtudiant();
         $vars['options'] = $options;
         $vars['id'] = $questionnaire->getQuestionnaire()->id;
 
@@ -53,19 +52,19 @@ class QuestionnaireRenderer
      * @throws \Twig\Error\SyntaxError
      * @throws \Twig\Error\LoaderError
      */
-    public function sectionRender(AbstractSection $section, ?int $idEtudiant = null, ?int $idQuestionnaire = null): string
+    public function sectionRender(AbstractSection $section): string
     {
-        return $this->twig->render($section->getTemplate(), $this->viewSection($section,$idEtudiant, $idQuestionnaire));
+        return $this->twig->render($section->getTemplate(), $this->viewSection($section));
     }
 
-    private function viewSection(AbstractSection $section, ?int $idEtudiant = null, ?int $idQuestionnaire = null)
+    private function viewSection(AbstractSection $section)
     {
         $options = $section->getOptions();
 
         $vars = $section->getVars();
         $vars['options'] = $options;
-        $vars['idQuestionnaire'] = $idQuestionnaire;
-        $vars['etudiant'] = $idEtudiant;
+        $vars['idQuestionnaire'] = $section->questionnaire_id;
+        $vars['etudiant'] = $section->etudiant_id;
         return $vars;
     }
 

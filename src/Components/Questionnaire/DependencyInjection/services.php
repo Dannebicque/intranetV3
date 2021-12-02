@@ -9,6 +9,7 @@
 
 namespace App\Components\Questionnaire\DependencyInjection;
 
+use App\Components\Questionnaire\Adapter\ReponsesEtudiantAdapter;
 use App\Components\Questionnaire\Section\EndSection;
 use App\Components\Questionnaire\Section\MatiereSectionAdapter;
 use App\Components\Questionnaire\Section\PrevisionnelSectionAdapter;
@@ -23,6 +24,7 @@ use App\Components\Questionnaire\TypeQuestion\TypeQcm;
 use App\Components\Questionnaire\TypeQuestion\TypeQcu;
 use App\Components\Questionnaire\TypeQuestion\TypeSlider;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
 return static function (ContainerConfigurator $configurator): void {
     $services = $configurator->services();

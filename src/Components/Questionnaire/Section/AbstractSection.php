@@ -9,9 +9,13 @@
 
 namespace App\Components\Questionnaire\Section;
 
+use App\Components\Questionnaire\Adapter\ReponsesEtudiantAdapter;
+use App\Components\Questionnaire\DTO\AbstractQuestionnaire;
+use App\Components\Questionnaire\Questionnaire;
 use App\Components\Questionnaire\QuestionnaireRegistry;
 use App\Components\Questionnaire\Questions;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Contracts\Service\Attribute\Required;
 
 abstract class AbstractSection
 {
@@ -37,16 +41,30 @@ abstract class AbstractSection
     protected Questions $questions;
 
     public array $options = [];
+    public ?int $questionnaire_id = null;
+    public ?int $etudiant_id = null;
 
-    public function __construct(QuestionnaireRegistry $questionnaireRegistry)
+//    #[Required]
+//    public ReponsesEtudiantAdapter $reponsesEtudiantAdapter;
+
+    public function __construct(
+        QuestionnaireRegistry $questionnaireRegistry)
     {
         $this->questionnaireRegistry = $questionnaireRegistry;
         $this->questions = new Questions();
     }
 
+//    #[Required]
+//    public function setReponsesEtudiantAdater(ReponsesEtudiantAdapter $reponsesEtudiantAdapter): void
+//    {
+//        $this->reponsesEtudiantAdapter = $reponsesEtudiantAdapter;
+//    }
+
     public function setSection(\App\Components\Questionnaire\DTO\Section $section, array $options = []): void
     {
         $this->setOptions($options);
+        $this->questionnaire_id = $options['questionnaire_id'];
+        $this->etudiant_id = $options['etudiant_id'];
         $this->ordre = $section->ordre;
         $this->titre = $section->titre;
         $this->text_explicatif = $section->texte_explicatif;
@@ -69,6 +87,9 @@ abstract class AbstractSection
     {
         $resolver->setDefaults([
             'template' => self::DEFAULT_TEMPLATE,
+            'mode' => AbstractQuestionnaire::MODE_APERCU,
+            'questionnaire_id' => null,
+            'etudiant_id' => null,
         ]);
     }
 
