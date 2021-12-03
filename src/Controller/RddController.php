@@ -65,7 +65,6 @@ class RddController extends AbstractController
 
     #[Route('/inscription/{numetudiant}/{diplome}', name: 'inscription')]
     public function inscription(
-        Configuration $configuration,
         MailerInterface $mailer,
         EtudiantRepository $etudiantRepository,
         RddDiplomeRepository $rddDiplomeRepository,
@@ -88,7 +87,7 @@ class RddController extends AbstractController
                         $em->flush();
 
                         $email = (new TemplatedEmail())
-                            ->from($configuration->getExpediteurIntranet())
+                            ->from(new Address('intranet.iut-troyes@univ-reims.fr'))
                             ->to(new Address($dip->getMailperso()))
                             ->subject('Confirmation d\'enregistrement de vos informations pour la remise de votre diplôme')
 
