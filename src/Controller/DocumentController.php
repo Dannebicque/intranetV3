@@ -13,7 +13,9 @@ use App\Classes\MyDocument;
 use App\Entity\Document;
 use App\Repository\DocumentRepository;
 use App\Repository\TypeDocumentRepository;
+use App\Utils\JsonRequest;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -31,7 +33,7 @@ class DocumentController extends BaseController
     {
         $typeDocuments = $typeDocumentRepository->findByDepartement($this->getDepartement());
 
-        return $this->render('document/typedocument.html.twig', [
+        return $this->render('document/_typedocument.html.twig', [
             'typedocuments' => $typeDocuments,
             'nbDocumentsFavoris' => count($this->getUser()?->getDocumentsFavoris()),
         ]);
@@ -43,19 +45,20 @@ class DocumentController extends BaseController
         $documents = $myDocument->mesDocumentsFavoris($this->getConnectedUser());
         $idDocuments = $myDocument->idMesDocumentsFavoris($this->getConnectedUser());
 
-        return $this->render('document/documents.html.twig', [
+        return $this->render('document/_documents.html.twig', [
             'documents' => $documents,
             'listesFavoris' => $idDocuments,
         ]);
     }
 
-    #[Route('/ajax/document/{typedocument}', name: 'document_ajax', options: ['expose' => true])]
-    public function documents(MyDocument $myDocument, DocumentRepository $documentRepository, $typedocument): Response
+    #[Route('/ajax/document', name: 'document_ajax', options: ['expose' => true])]
+    public function documents(Request $request, MyDocument $myDocument, DocumentRepository $documentRepository): Response
     {
+        $typedocument = $request->query->get('typedocument');
         $documents = $documentRepository->findByTypeDocument($typedocument, $this->isEtudiant());
         $idDocuments = $myDocument->idMesDocumentsFavoris($this->getConnectedUser());
 
-        return $this->render('document/documents.html.twig', [
+        return $this->render('document/_documents.html.twig', [
             'documents' => $documents,
             'listesFavoris' => $idDocuments,
         ]);

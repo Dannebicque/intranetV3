@@ -4,11 +4,26 @@
     {{ 'documents.heading'|trans }}
 {% endblock %}
 
+{% block stimulus %}
+{{ stimulus_controller('documents', {
+    'url': path('typedocument_ajax'),
+    'urlDocuments': path('document_ajax'),
+    'urlDocumentsFavori': path('document_ajax_favori')
+}) }}
+{% endblock %}
+
+
 {% block headeractions %}
     <div class="header-action">
         <div class="buttons">
-            <a href="#" class="btn btn-primary btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom" id="boutonBack" style="display: none"
-               title="{{ 'atitle.retour_categories'|trans }}"><i class="fas fa-arrow-left"></i></a>
+            <a href="#" class="btn btn-primary btn-float"
+               data-bs-toggle="tooltip"
+               data-bs-placement="bottom"
+               id="boutonBack" style="display: none"
+               data-action="click->documents#boutonBack"
+               title="{{ 'atitle.retour_categories'|trans }}">
+                <i class="fas fa-arrow-left"></i>
+            </a>
             <a href="{{ path('default_homepage') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom"
                title="{{ 'atitle.retour_dashboard'|trans }}">
                 <i class="{{ iconDashboard }}"><span class="sr-only">dashboard</span></i>
@@ -18,19 +33,8 @@
 {% endblock %}
 
 {% block content %}
-    <div class="row" id="zone_document">
-        {{ render(controller(
-            'App\\Controller\\DocumentController::typeDocument'
-        )) }}
+    <div class="row" data-documents-target="content">
+        ... chargement ...
     </div>
 {% endblock %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    {{ encore_entry_link_tags('documents') }}
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    {{ encore_entry_script_tags('documents') }}
-{% endblock %}
