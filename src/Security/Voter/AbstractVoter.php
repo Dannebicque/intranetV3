@@ -11,7 +11,7 @@ namespace App\Security\Voter;
 
 use App\Entity\Departement;
 use App\Entity\Personnel;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -55,11 +55,11 @@ class AbstractVoter
         self::MINIMAL_ROLE_CDD => ['ROLE_CDD'],
     ];
 
-    protected ?SessionInterface $session;
+    protected RequestStack $session;
     protected UserInterface|string $user;
     protected array $departementRoles;
 
-    public function __construct(SessionInterface $session, TokenStorageInterface $tokenStorage)
+    public function __construct(RequestStack $session, TokenStorageInterface $tokenStorage)
     {
         $this->session = $session;
         if ($tokenStorage->getToken() !== null) {
@@ -98,14 +98,14 @@ class AbstractVoter
             return false;
         }
 
-        if (null === $this->session->get('departement')) {
+        if (null === $this->session->getSession()->get('departement')) {
             return false;
         }
 
-        if (is_string($this->session->get('departement'))) {
-            return $this->session->get('departement') === $departement->getUuidString();
+        if (is_string($this->session->getSession()->get('departement'))) {
+            return $this->session->getSession()->get('departement') === $departement->getUuidString();
         }
 
-        return $this->session->get('departement')->equals($departement->getUuid());
+        return $this->session->getSession()->get('departement')->equals($departement->getUuid());
     }
 }

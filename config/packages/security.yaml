@@ -1,10 +1,8 @@
 security:
-  encoders:
-    App\Entity\Utilisateur: bcrypt
-  #  enable_authenticator_manager: true
-  #
-  #  password_hashers:
-  #    Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
+  enable_authenticator_manager: true
+
+  password_hashers:
+    Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
 
   role_hierarchy:
     ROLE_SUPER_ADMIN: ROLE_ADMINISTRATIF
@@ -12,7 +10,6 @@ security:
     ROLE_SCOLARITE: ROLE_ADMINISTRATIF
     ROLE_RH: ROLE_ADMINISTRATIF
     ROLE_FINANCE: ROLE_ADMINISTRATIF
-    #ROLE_ADMINISTRATIF: ROLE_PERMANENT #todo: si je laisse permament, les tests ne fonctionnent plus. Par contre quel effet pour Super_Admin ??
 
   providers:
     chain_provider:
@@ -28,31 +25,32 @@ security:
       pattern: ^/(_(profiler|wdt)|css|images|js)/
       security: false
     main:
-      anonymous: true
-      guard:
-        authenticators:
-          - App\Security\LoginFormAuthenticator
-          - App\Security\CasAuthenticator
-        entry_point: App\Security\LoginFormAuthenticator
-      # les urls auxquels s'appliquent ce firewall, dans ce cas, ce sont toutes les urls
+      lazy: true
+      provider: chain_provider
+      custom_authenticator:
+        - App\Security\LoginFormAuthenticator
+        - App\Security\LoginCasAuthenticator
+      entry_point: App\Security\LoginFormAuthenticator
       pattern: ^/
+      remember_me:
+        secret: '%kernel.secret%'
       logout:
         path: security_logout
         target: security_login
-      provider: chain_provider
+
 
 
   access_control:
     # Les regles de securité
     # Là dans ce cas seul les utilisateurs ayant le rôle ROLE_ADMIN
     # peuvent acceder à toutes les pages commençant par /admin
-    - { path: '^/[a-z]{2}/but', roles: IS_AUTHENTICATED_ANONYMOUSLY }
-    - { path: '^/[a-z]{2}/borne', roles: IS_AUTHENTICATED_ANONYMOUSLY }
-    - { path: '^/[a-z]{2}/rdd', roles: IS_AUTHENTICATED_ANONYMOUSLY }
-    - { path: '^/[a-z]{2}/sso/redirect/cas', roles: IS_AUTHENTICATED_ANONYMOUSLY }
-    - { path: '^/[a-z]{2}/connexion', roles: IS_AUTHENTICATED_ANONYMOUSLY }
-    - { path: '^/[a-z]{2}/mentions-legales/', roles: IS_AUTHENTICATED_ANONYMOUSLY }
-    - { path: '^/[a-z]{2}/login', roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: '^/[a-z]{2}/but', roles: PUBLIC_ACCESS }
+    - { path: '^/[a-z]{2}/borne', roles: PUBLIC_ACCESS }
+    - { path: '^/[a-z]{2}/rdd', roles: PUBLIC_ACCESS }
+    - { path: '^/[a-z]{2}/sso/redirect/cas', roles: PUBLIC_ACCESS }
+    - { path: '^/[a-z]{2}/connexion', roles: PUBLIC_ACCESS }
+    - { path: '^/[a-z]{2}/mentions-legales/', roles: PUBLIC_ACCESS }
+    - { path: '^/[a-z]{2}/login', roles: PUBLIC_ACCESS }
     - { path: '^/[a-z]{2}/api', roles: IS_AUTHENTICATED_ANONYMOUSLY }
     - { path: '^/[a-z]{2}/administration', roles: [ROLE_PERMANENT, ROLE_SUPER_ADMIN] }
     - { path: '^/[a-z]{2}/ldap', roles: [ ROLE_PERMANENT, ROLE_SUPER_ADMIN, ROLE_RH ] }

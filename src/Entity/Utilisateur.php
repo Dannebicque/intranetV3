@@ -307,6 +307,7 @@ abstract class Utilisateur implements UserInterface, PasswordAuthenticatedUserIn
         $this->adresse = $adresse;
     }
 
+    //     * This method can be removed in Symfony 6.0 - is not needed for apps that do not check user passwords.
     public function getPassword(): ?string
     {
         return $this->password;
@@ -317,12 +318,6 @@ abstract class Utilisateur implements UserInterface, PasswordAuthenticatedUserIn
         $this->password = $password;
     }
 
-    public function eraseCredentials(): void
-    {
-        // Nous n'avons pas besoin de cette methode car nous n'utilions pas de plainPassword
-        // Mais elle est obligatoire car comprise dans l'interface UserInterface
-    }
-
     public function getUsername(): ?string
     {
         return $this->username;
@@ -331,15 +326,6 @@ abstract class Utilisateur implements UserInterface, PasswordAuthenticatedUserIn
     public function setUsername(?string $username): void
     {
         $this->username = $username;
-    }
-
-    public function getSalt(): ?string
-    {
-        // See "Do you need to use a Salt?" at https://symfony.com/doc/current/cookbook/security/entity_provider.html
-        // we're using bcrypt in security.yml to encode the password, so
-        // the salt value is built-in and you don't have to generate one
-
-        return null;
     }
 
     /**
@@ -453,5 +439,25 @@ abstract class Utilisateur implements UserInterface, PasswordAuthenticatedUserIn
     public function getUserIdentifier(): string
     {
         return (string)$this->username;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials()
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
+    }
+
+
+    /**
+     * This method can be removed in Symfony 6.0 - is not needed for apps that do not check user passwords.
+     *
+     * @see UserInterface
+     */
+    public function getSalt(): ?string
+    {
+        return null;
     }
 }
