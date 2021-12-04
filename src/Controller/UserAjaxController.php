@@ -25,8 +25,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * Class UserController.
@@ -107,7 +107,7 @@ class UserAjaxController extends BaseController
      * @return JsonResponse
      */
     public function changePassword(
-        UserPasswordEncoderInterface $passwordEncoder,
+        UserPasswordHasherInterface $passwordEncoder,
         Request $request
     ): ?JsonResponse {
         if (null !== $this->getConnectedUser() && 'permanent' === $this->getConnectedUser()->getTypeUser()) {
@@ -118,7 +118,7 @@ class UserAjaxController extends BaseController
             if ($passwd1 === $passwd2 && $passwd1 !== '' && $passwordEncoder->isPasswordValid($this->getConnectedUser(),
                     $passwdActuel)) {
 
-                $passwordEncode = $passwordEncoder->encodePassword($this->getConnectedUser(), $passwd1);
+                $passwordEncode = $passwordEncoder->hashPassword($this->getConnectedUser(), $passwd1);
                 $this->getConnectedUser()->setPassword($passwordEncode);
                 $this->entityManager->flush();
 

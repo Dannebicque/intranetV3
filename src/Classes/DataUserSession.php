@@ -28,11 +28,11 @@ use App\Repository\DepartementRepository;
 use App\Repository\DiplomeRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
+use Symfony\Component\HttpFoundation\RequestStack;
 use function count;
 use Doctrine\ORM\NonUniqueResultException;
 use function in_array;
 use Symfony\Component\EventDispatcher\GenericEvent;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Security;
@@ -100,7 +100,7 @@ class DataUserSession
         TokenStorageInterface $user,
         Security $security,
         EventDispatcherInterface $eventDispatcher,
-        SessionInterface $session
+        RequestStack $requestStack
     ) {
         $this->semestreRepository = $semestreRepository;
         $this->anneeRepository = $anneeRepository;
@@ -116,8 +116,8 @@ class DataUserSession
             $this->departement = $this->departementRepository->findDepartementEtudiant($this->getUser());
         } elseif ($this->getUser() instanceof Personnel) {
             $this->type_user = 'p';
-            if (null !== $session->get('departement')) {
-                $this->departement = $this->departementRepository->findOneBy(['uuid' => $session->get('departement')]);
+            if (null !== $requestStack->getSession()->get('departement')) {
+                $this->departement = $this->departementRepository->findOneBy(['uuid' => $requestStack->getSession()->get('departement')]);
             }
         } else {
             //ni étudiant, ni personnel... étrange

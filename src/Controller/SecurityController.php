@@ -23,13 +23,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -110,13 +110,13 @@ class SecurityController extends AbstractController
      * @throws TransportExceptionInterface
      */
     public function initPassword(
-        UserPasswordEncoderInterface $passwordEncoder,
+        UserPasswordHasherInterface $passwordEncoder,
         EntityManagerInterface $entityManager,
         MailerFromTwig $mailerFromTwig,
         Personnel $user
     ): JsonResponse {
         $password = mb_substr(md5(mt_rand()), 0, 10);
-        $passwordEncode = $passwordEncoder->encodePassword($user, $password);
+        $passwordEncode = $passwordEncoder->hashPassword($user, $password);
 
         $user->setPassword($passwordEncode);
         $entityManager->flush();
@@ -124,7 +124,7 @@ class SecurityController extends AbstractController
         $mailerFromTwig->initEmail();
         $mailerFromTwig->setTemplate('mails/security/initPassword.txt.twig', [
             'personnel' => $user,
-            'password'  => $password,
+            'password' => $password,
         ]);
         $mailerFromTwig->sendMessage($user->getMails(), 'Initialisation de votre compte');
 
@@ -146,7 +146,7 @@ class SecurityController extends AbstractController
         string $token,
         PersonnelRepository $personnelRepository,
         EtudiantRepository $etudiantRepository,
-        UserPasswordEncoderInterface $passwordEncoder,
+        UserPasswordHasherInterface $passwordEncoder,
         EntityManagerInterface $entityManager
     ): Response {
         if ($request->isMethod('POST')) {
@@ -165,7 +165,7 @@ class SecurityController extends AbstractController
             }
 
             $user->setResetToken(null);
-            $user->setPassword($passwordEncoder->encodePassword($user, $request->request->get('inputPassword')));
+            $user->setPassword($passwordEncoder->hashPassword($user, $request->request->get('inputPassword')));
             $entityManager->flush();
 
             return $this->redirectToRoute('security_login', ['message' => 'Mot de passe mis à jour']);
@@ -180,10 +180,10 @@ class SecurityController extends AbstractController
      */
     public function changeDepartement(
         Request $request,
-        SessionInterface $session,
+        RequestStack $session,
         Departement $departement
     ): Response {
-        $session->set('departement', $departement->getUuidString());
+        $session->getSession()->set('departement', $departement->getUuidString());
 
         return $this->redirect($request->headers->get('referer'));
     }
@@ -194,7 +194,7 @@ class SecurityController extends AbstractController
     public function choixDepartement(
         TranslatorInterface $translator,
         FlashBagInterface $flashBag,
-        SessionInterface $session,
+        RequestStack $session,
         Request $request,
         PersonnelDepartementRepository $personnelDepartementRepository
     ): Response {
@@ -217,7 +217,7 @@ class SecurityController extends AbstractController
             $em->flush();
             if (null !== $update && null !== $update->getDepartement()) {
                 $flashBag->add(Constantes::FLASHBAG_SUCCESS, $translator->trans('formation.par.defaut.sauvegarde'));
-                $session->set('departement', $update->getDepartement()->getUuid()); //on sauvegarde
+                $session->getSession()->set('departement', $update->getDepartement()->getUuid()); //on sauvegarde
 
                 return $this->redirectToRoute('default_homepage');
             }
@@ -238,12 +238,11 @@ class SecurityController extends AbstractController
      */
     public function login(AuthenticationUtils $authenticationUtils, string $message = ''): Response
     {
-        // get the login error if there is one
-        $error = $authenticationUtils->getLastAuthenticationError();
-        // last username entered by the user
-        $lastUsername = $authenticationUtils->getLastUsername();
-
         return $this->render('security/login.html.twig',
-            ['message' => $message, 'last_username' => $lastUsername, 'error' => $error]);
+            [
+                'message' => $message,
+                'last_username' => $authenticationUtils->getLastUsername(),
+                'error' => $authenticationUtils->getLastAuthenticationError(),
+            ]);
     }
 }
