@@ -4,12 +4,8 @@
 // @project intranetV3
 // @lastUpdate 07/07/2020 16:18
 
-// const router = require('../../vendor/friensofsymfony/js-routing-bundle/Resources/public/js/router.min.js');
-// // dumped_routes.json is the output file for the fos:js-routing:dump command
-// const routerConfig = require('../../public/js/fos_js_routes.json');
-// router.setRoutingData(routerConfig);
-//
-// module.exports = router;
-const {router} = require('../../vendor/friendsofsymfony/jsrouting-bundle/Resources/public/js/router.js')
-require('../../public/js/fos_js_routes.json')
-module.exports = router
+const routes = require('../../public/js/fos_js_routes.json');
+import Routing from '../../vendor/friendsofsymfony/jsrouting-bundle/Resources/public/js/router.min.js';
+
+Routing.setRoutingData(routes);
+window.Routing = Routing

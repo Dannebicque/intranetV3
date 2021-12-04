@@ -20,8 +20,10 @@
                    title="{{ 'telecharger'|trans }}"><i
                             class="fas fa-save"></i></a>
                 <label class="toggler toggler-danger fs-16" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ 'favori'|trans }}">
-                    <input type="checkbox" class="addFavori" data-document="{{ document.uuidString }}" {% if
-                        document.id in listesFavoris %}checked{% endif %}>
+                    <input type="checkbox" class="addFavori" value="{{ document.uuidString }}"
+                           {% if document.id in listesFavoris %}checked{% endif %}
+                           data-action="click->documents#addFavori"
+                    >
                     <i class="fa fa-heart"></i>
                 </label>
             </div>
