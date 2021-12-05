@@ -42,7 +42,6 @@ Encore
   .addEntry('trombinoscope', './assets/js/pages/trombinoscope.js')
   .addEntry('absences', './assets/js/pages/absences.js')
   .addEntry('applications', './assets/js/pages/applications.js')
-  .addEntry('documents', './assets/js/pages/documents.js')
   .addEntry('profil', './assets/js/pages/profil.js')
   .addEntry('planning', './assets/js/pages/planning.js')
   .addEntry('quizzQualite', './assets/js/pages/quizzQualite.js')
