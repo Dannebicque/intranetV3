@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.4.8](https://github.com/Dannebicque/intranetV3/compare/v3.4.7...v3.4.8) (2021-12-05)
+
+
+### Features
+
+* [Questionnaire] reprise des réponses dans le questionnaire ([8c78d62](https://github.com/Dannebicque/intranetV3/commit/8c78d62ca264393600c91601048f1d35cfeaf71b))
+* [RDD] Mail de confirmation ([b21f5b0](https://github.com/Dannebicque/intranetV3/commit/b21f5b05c95316bad69349fc6bfb211899130d85))
+* Passage au nouveau système de sécurité de SF ([1e734fb](https://github.com/Dannebicque/intranetV3/commit/1e734fb57d753074dab8011ca7512c8ab450a4dd))
+* Suppression de Toastyfy, et utilisation du toast de BS. ([a4bbd47](https://github.com/Dannebicque/intranetV3/commit/a4bbd4734394c4792072a1d2da752519f84c37aa))
+
+
+### Bug Fixes
+
+* Assets. Nettoyages des dépendances inutiles ([0d335bf](https://github.com/Dannebicque/intranetV3/commit/0d335bf5741a3aa62746f904a18bedfde77f6ae7))
+* Bug sur la suppression rattrapage ou justificatig ([15d27c2](https://github.com/Dannebicque/intranetV3/commit/15d27c286a23676a4422426e6735088ede9cc1db))
+* Deprecation Session et HashPassword ([e94b822](https://github.com/Dannebicque/intranetV3/commit/e94b8226fb2d16c00afc31f08ec355cf58e5d0c7))
+* Email RDD ([4578020](https://github.com/Dannebicque/intranetV3/commit/4578020aa510a0f7c3e44b76c61b4def8bd77194))
+* Stage étudiant ([fb58451](https://github.com/Dannebicque/intranetV3/commit/fb58451a547b14c4e7226bb724597db00c0dc656))
+* Texte de fin des questionnaires ([f285579](https://github.com/Dannebicque/intranetV3/commit/f285579d0f3b6e0e70c47e05faafc709809d87b2))
+
 ### [3.4.7](https://github.com/Dannebicque/intranetV3/compare/v3.4.6...v3.4.7) (2021-11-30)
 
 
