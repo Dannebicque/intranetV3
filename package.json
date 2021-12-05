@@ -23,8 +23,7 @@
     "stimulus-clipboard": "^1.0.0",
     "stimulus-use": "^0.41.0",
     "sweetalert2": "^9.17.0",
-    "tinymce": "^5.9.0",
-    "toastify-js": "^1.11.0"
+    "tinymce": "^5.9.0"
   },
   "license": "MPL-2.0",
   "private": true,
