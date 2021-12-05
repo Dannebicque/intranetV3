@@ -31,6 +31,7 @@ export default class extends Controller {
   }
 
   async afficheDocumentsFavori () {
+    document.getElementById('boutonBack').style.display = 'inline-flex'
     this.contentTarget.innerHTML = '... Chargement en cours ...'
     const response = await fetch(`${this.urlDocumentsFavoriValue}`)
     this.contentTarget.innerHTML = await response.text()
@@ -51,11 +52,9 @@ export default class extends Controller {
   async addFavori (event) {
     let data = await post(Routing.generate('document_add_favori', {document: event.currentTarget.value}))
     if (data === 'add') {
-      addCallout('Document ajouté à vos favoris', 'success')
+      addCallout('Document ajouté à vos favoris', 'success')//gérer avec un event ? qui remonte sur le toast-controller?
     } else {
       addCallout('Document retiré de vos favoris', 'success')
     }
-
-
   }
 }
