@@ -175,6 +175,8 @@ class RattrapageTableType extends TableType
                 }
 
                 $builder->add('delete', RowDeleteLinkType::class, [
+                    'route' => 'administration_rattrapage_delete',
+                    'route_params' => ['uuid' => $s->getUuidString()],
                     'attr' => [
                         'data-href' => 'administration_rattrapage_delete',
                         'data-uuid' => $s->getUuidString(),

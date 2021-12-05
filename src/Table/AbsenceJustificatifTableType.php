@@ -181,9 +181,11 @@ class AbsenceJustificatifTableType extends TableType
                 }
 
                 $builder->add('delete', RowDeleteLinkType::class, [
+                    'route' => 'administration_absence_justificatif_delete',
+                    'route_params' => ['id' => $s->getId()],
                     'attr' => [
                         'data-href' => 'administration_absence_justificatif_delete',
-                        'data-uuid' => $s->getUuidString(),
+                        'data-uuid' => $s->getId(),
                         'data-csrf' => $this->csrfToken->getToken('delete' . $s->getUuidString()),
                     ],
                 ]);
