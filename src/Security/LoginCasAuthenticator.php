@@ -52,7 +52,7 @@ class LoginCasAuthenticator extends AbstractAuthenticator
     {
         $cas_host = $this->parameterBag->get('CAS_HOST');
         $cas_context = $this->parameterBag->get('CAS_CONTEXT');
-        $cas_port = $this->parameterBag->get('CAS_PORT');
+        $cas_port = (int)$this->parameterBag->get('CAS_PORT');
         //todo: ajouter le certificat ?
         phpCAS::setVerbose(true);
         phpCAS::client(CAS_VERSION_2_0, $cas_host, $cas_port, $cas_context);
