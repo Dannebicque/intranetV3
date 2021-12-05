@@ -15,6 +15,9 @@ parameters:
     LDAP_LOGIN: '%env(resolve:LDAP_LOGIN)%'
     LDAP_PASSWORD: '%env(resolve:LDAP_PASSWORD)%'
     LDAP_BASE_DN: '%env(resolve:LDAP_BASE_DN)%'
+    CAS_HOST: '%env(resolve:CAS_HOST)%'
+    CAS_PORT: '%env(resolve:CAS_PORT)%'
+    CAS_CONTEXT: '%env(resolve:CAS_CONTEXT)%'
 
 services:
     # default configuration for services in *this* file
