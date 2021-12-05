@@ -48,7 +48,7 @@ class LoginCasAuthenticator extends AbstractAuthenticator
         return new SelfValidatingPassport(new UserBadge($username));
     }
 
-    public function getCredentials(Request $request)
+    public function getCredentials()
     {
         $cas_host = $this->parameterBag->get('CAS_HOST');
         $cas_context = $this->parameterBag->get('CAS_CONTECT');
