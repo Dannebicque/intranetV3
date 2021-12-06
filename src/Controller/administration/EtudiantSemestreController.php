@@ -136,7 +136,7 @@ class EtudiantSemestreController extends BaseController
      *     "_format"="csv|xlsx|pdf"
      * })
      */
-    public function exportAllAbsences(
+    public function exportEtudiantsSemestre(
         MyExport $myExport,
         EtudiantRepository $etudiantRepository,
         Semestre $semestre,
@@ -154,11 +154,13 @@ class EtudiantSemestreController extends BaseController
             [
                 'nom',
                 'prenom',
-                'sexe',
+                'civilite',
                 'numEtudiant',
                 'bac',
                 'mailUniv',
                 'adresse' => ['adresse1', 'adresse2', 'codePostal', 'ville', 'pays'],
+                'tel1',
+                'tel2'
             ]
         );
     }
