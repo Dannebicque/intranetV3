@@ -91,7 +91,7 @@ class MyExportRdd
                         $etudiants[$diplome->getNumEtudiant()]->getAdresse()->getDisplay()) : '-',
                     true === $diplome->getConfirme() ? 'Oui' : 'Non',
                     $etudiants[$diplome->getNumEtudiant()]->getMailUniv(),
-                    $etudiants[$diplome->getNumEtudiant()]->getMailUniv(),
+                    $etudiants[$diplome->getNumEtudiant()]->getMailPerso(),
                     $diplome->getUpdated()->format('d/m/Y H:i'),
                 ];
             } else {
