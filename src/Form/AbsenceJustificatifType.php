@@ -14,8 +14,6 @@ use App\Entity\Etudiant;
 use App\Entity\Semestre;
 use App\Form\Type\DatePickerType;
 use App\Repository\EtudiantRepository;
-use Carbon\CarbonInterface;
-use DateTime;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -24,7 +22,6 @@ use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Type;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class AbsenceJustificatifType extends AbstractType
