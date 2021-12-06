@@ -95,11 +95,14 @@ abstract class Utilisateur implements UserInterface, PasswordAuthenticatedUserIn
 
     /**
      * @ORM\Column(type="string", length=20,nullable=true)
+     * @Groups({"etudiants_administration"})
+     *
      */
     protected ?string $tel1;
 
     /**
      * @ORM\Column(type="string", length=20,nullable=true)
+     * @Groups({"etudiants_administration"})
      */
     protected ?string $tel2;
 
