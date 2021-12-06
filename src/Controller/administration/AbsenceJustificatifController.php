@@ -95,13 +95,15 @@ class AbsenceJustificatifController extends BaseController
         $justificatifs = $absenceJustificatifRepository->findBySemestre(
             $semestre);
 
-        return $myExport->genereFichierGenerique(
-            $_format,
-            $justificatifs,
-            'justificatifs_' . $semestre->getLibelle(),
-            ['justificatif_administration', 'utilisateur'],
-            ['dateDebut', 'heureDebut', 'dateFin', 'heureFin', 'motif', 'etatLong', 'etudiant' => ['prenom', 'nom']]
-        );
+        return $myExport->genereFichierJustificatifAbsence($justificatifs, 'justificatifs_absences_' . $semestre->getLibelle());
+
+//        return $myExport->genereFichierGenerique(
+//            $_format,
+//            $justificatifs,
+//            'justificatifs_' . $semestre->getLibelle(),
+//            ['justificatif_administration', 'utilisateur'],
+//            ['dateDebut', 'heureDebut', 'dateFin', 'heureFin', 'motif', 'etatLong', 'etudiant' => ['prenom', 'nom']]
+//        );
     }
 
     #[Route('/supprimer-annee/{semestre}', name: 'administration_absence_justificatif_delete_all', methods: [

@@ -114,18 +114,14 @@ class MyExportListing
 
         $this->prepareColonnes();
 
-        switch ($exportFormat) {
-            case Constantes::FORMAT_CSV_POINT_VIRGULE:
-                return $this->exportCsv(';');
-            case Constantes::FORMAT_CSV_VIRGULE:
-                return $this->exportCsv(',');
-            case Constantes::FORMAT_EXCEL:
-                return $this->exportExcel();
-            case Constantes::FORMAT_PDF:
-                return $this->exportPdf();
-        }
+        return match ($exportFormat) {
+            Constantes::FORMAT_CSV_POINT_VIRGULE => $this->exportCsv(';'),
+            Constantes::FORMAT_CSV_VIRGULE => $this->exportCsv(','),
+            Constantes::FORMAT_EXCEL => $this->exportExcel(),
+            Constantes::FORMAT_PDF => $this->exportPdf(),
+            default => null,
+        };
 
-        return null;
     }
 
     private function prepareColonnes(): void
@@ -254,9 +250,6 @@ class MyExportListing
         );
     }
 
-    /**
-     * @throws Exception
-     */
     public function exportExcelAbsence($absences, $matieres, $nom): StreamedResponse
     {
         $this->myExcelWriter->createSheet('Absences');

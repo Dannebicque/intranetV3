@@ -14,6 +14,8 @@ use App\Entity\Etudiant;
 use App\Entity\Semestre;
 use App\Form\Type\DatePickerType;
 use App\Repository\EtudiantRepository;
+use Carbon\CarbonInterface;
+use DateTime;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -21,6 +23,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Type;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class AbsenceJustificatifType extends AbstractType
@@ -34,10 +38,34 @@ class AbsenceJustificatifType extends AbstractType
         $this->role = $options['role'];
 
         $builder
-            ->add('dateDebut', DatePickerType::class, ['label' => 'date_debut'])
-            ->add('heureDebut', TimeType::class, ['label' => 'heure_debut'])
-            ->add('dateFin', DatePickerType::class, ['label' => 'date_fin'])
-            ->add('heureFin', TimeType::class, ['label' => 'heure_fin'])
+            ->add('dateDebut', DatePickerType::class, [
+                'label' => 'date_debut',
+                'constraints' => [
+                    new NotBlank(),
+                    new Type(CarbonInterface::class),
+                ],
+            ])
+            ->add('heureDebut', TimeType::class, [
+                'label' => 'heure_debut',
+                'constraints' => [
+                    new NotBlank(),
+                    new Type(DateTime::class),
+                ],
+            ])
+            ->add('dateFin', DatePickerType::class, [
+                'label' => 'date_fin',
+                'constraints' => [
+                    new NotBlank(),
+                    new Type(CarbonInterface::class),
+                ],
+            ])
+            ->add('heureFin', TimeType::class, [
+                'label' => 'heure_fin',
+                'constraints' => [
+                    new NotBlank(),
+                    new Type(DateTime::class),
+                ],
+            ])
             ->add('motif', TextType::class, ['label' => 'motif'])
             ->add('fichierFile', VichFileType::class, [
                 'required' => false,
@@ -53,14 +81,14 @@ class AbsenceJustificatifType extends AbstractType
                     'label' => 'etudiant',
                     'class' => Etudiant::class,
                     'choice_label' => 'display',
-                    'query_builder' => function(EtudiantRepository $etudiantRepository) {
+                    'query_builder' => function (EtudiantRepository $etudiantRepository) {
                         return $etudiantRepository->findBySemestreBuilder($this->semestre);
                     },
                 ])
                 ->add('etat', ChoiceType::class, [
                     'choices' => AbsenceJustificatif::TAB_ETAT,
                     'label' => 'label.etat_justficatif',
-                    'expanded' => true
+                    'expanded' => true,
                 ]);
         }
     }
