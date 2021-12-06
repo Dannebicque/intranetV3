@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.4.9](https://github.com/Dannebicque/intranetV3/compare/v3.4.8...v3.4.9) (2021-12-06)
+
+
+### Bug Fixes
+
+* Export des justificatifs d'absences ([6248c67](https://github.com/Dannebicque/intranetV3/commit/6248c67c9c68b85f0bfbba31bc27ccac81c7c3c3))
+* Export données supplémentaires pour les étudiants ([161e9bb](https://github.com/Dannebicque/intranetV3/commit/161e9bb627d9536723ac703c1f2baeb399fdccd1))
+* Security avec Cas ([80cf7a7](https://github.com/Dannebicque/intranetV3/commit/80cf7a71c0d9a32b9e2c6893597daa79fc044a4d))
+* Security avec Cas ([7322f15](https://github.com/Dannebicque/intranetV3/commit/7322f1518de04d3226f75b275893ce6a14953a06))
+* Security avec Cas ([d3adf07](https://github.com/Dannebicque/intranetV3/commit/d3adf074b156afc9131a82b3e6aa46e960bd3cf8))
+* Security avec Cas ([97b9315](https://github.com/Dannebicque/intranetV3/commit/97b9315fa90bc9c265ab34455bef1de669c1d627))
+
 ### [3.4.8](https://github.com/Dannebicque/intranetV3/compare/v3.4.7...v3.4.8) (2021-12-05)
 
 
