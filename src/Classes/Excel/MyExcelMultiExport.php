@@ -306,7 +306,7 @@ class MyExcelMultiExport
                 if (array_key_exists($etudiant->getId(), $notes)) {
                     $this->myExcelWriter->writeCellXY($colonne, $ligne, $notes[$etudiant->getId()]->getNote());
                     ++$colonne;
-                    $this->myExcelWriter->writeCellXY($colonne, $ligne, '');
+                    $this->myExcelWriter->writeCellXY($colonne, $ligne);
                     ++$colonne;
                     $this->myExcelWriter->writeCellXY($colonne, $ligne,
                         $notes[$etudiant->getId()]->getCommentaire());
@@ -359,6 +359,77 @@ class MyExcelMultiExport
             $this->myExcelWriter->writeCellXY($colonne, $ligne, 1 === $absence->getJustifie() ? 'Oui' : 'Non');
             $colonne = 1;
             ++$ligne;
+        }
+    }
+
+    public function genereExcelJustificatifsAbsences(mixed $justificatifs)
+    {
+        $this->myExcelWriter->createSheet('absences');
+        $this->myExcelWriter->writeHeader([
+            'num_etudiant',
+            'nom',
+            'prenom',
+            'date debut',
+            'heure début',
+            'date fin',
+            'heure fin',
+            'motif',
+            'etat justificatif',
+            'date depot'
+        ]);
+        $ligne = 2;
+        $colonne = 1;
+        /** @var \App\Entity\AbsenceJustificatif $justificatif */
+        foreach ($justificatifs as $justificatif) {
+            $this->myExcelWriter->writeCellXY($colonne, $ligne, $justificatif->getEtudiant()?->getNumEtudiant());
+            ++$colonne;
+            $this->myExcelWriter->writeCellXY($colonne, $ligne, $justificatif->getEtudiant()?->getNom());
+            ++$colonne;
+            $this->myExcelWriter->writeCellXY($colonne, $ligne, $justificatif->getEtudiant()?->getPrenom());
+            ++$colonne;
+            $this->myExcelWriter->writeCellXY(
+                $colonne,
+                $ligne,
+                $justificatif->getDateHeureDebut()?->format('d/m/Y')
+            );
+            ++$colonne;
+            $this->myExcelWriter->writeCellXY(
+                $colonne,
+                $ligne,
+                $justificatif->getDateHeureDebut()?->format('H:i')
+            );
+            ++$colonne;
+            $this->myExcelWriter->writeCellXY(
+                $colonne,
+                $ligne,
+                $justificatif->getDateHeureFin()?->format('d/m/Y')
+            );
+            ++$colonne;
+            $this->myExcelWriter->writeCellXY(
+                $colonne,
+                $ligne,
+                $justificatif->getDateHeureFin()?->format('H:i')
+            );
+            ++$colonne;
+            $this->myExcelWriter->writeCellXY(
+                $colonne,
+                $ligne,
+                $justificatif->getMotif()
+            );
+            ++$colonne;
+            $this->myExcelWriter->writeCellXY(
+                $colonne,
+                $ligne,
+                $justificatif->etatLong()
+            );
+            ++$colonne;
+            $this->myExcelWriter->writeCellXY(
+                $colonne,
+                $ligne,
+                $justificatif->getCreated()?->format('d/m/Y H:i')
+            );
+            ++$ligne;
+            $colonne = 1;
         }
     }
 }

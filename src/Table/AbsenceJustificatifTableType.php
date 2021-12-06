@@ -90,16 +90,16 @@ class AbsenceJustificatifTableType extends TableType
             'text' => '',
             'attr' => ['data-toggle' => 'dropdown'],
             'build' => function(WidgetBuilder $builder) {
-                $builder->add('pdf', LinkType::class, [
-                    'route' => 'administration_rattrapage_export',
-                    'route_params' => ['semestre' => $this->semestre->getId(), '_format' => 'pdf'],
-                ]);
-                $builder->add('csv', LinkType::class, [
-                    'route' => 'administration_rattrapage_export',
-                    'route_params' => ['semestre' => $this->semestre->getId(), '_format' => 'csv'],
-                ]);
+//                $builder->add('pdf', LinkType::class, [
+//                    'route' => 'administration_absences_justificatif_semestre_export',
+//                    'route_params' => ['semestre' => $this->semestre->getId(), '_format' => 'pdf'],
+//                ]);
+//                $builder->add('csv', LinkType::class, [
+//                    'route' => 'administration_absences_justificatif_semestre_export',
+//                    'route_params' => ['semestre' => $this->semestre->getId(), '_format' => 'csv'],
+//                ]);
                 $builder->add('excel', LinkType::class, [
-                    'route' => 'administration_rattrapage_export',
+                    'route' => 'administration_absences_justificatif_semestre_export',
                     'route_params' => ['semestre' => $this->semestre->getId(), '_format' => 'xlsx'],
                 ]);
             },

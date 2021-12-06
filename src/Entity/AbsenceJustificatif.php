@@ -42,35 +42,35 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
         self::REFUSE => 'Refusé',
     ];
     public const TAB_ETAT = [
-        'label.absence_justficatif.' . self::ACCEPTE => self::ACCEPTE,
-        'label.absence_justficatif.' . self::DEPOSE => self::DEPOSE,
-        'label.absence_justficatif.' . self::REFUSE => self::REFUSE,
+        'label.absence_justficatif.'.self::ACCEPTE => self::ACCEPTE,
+        'label.absence_justficatif.'.self::DEPOSE => self::DEPOSE,
+        'label.absence_justficatif.'.self::REFUSE => self::REFUSE,
     ];
 
     /**
      * @ORM\Column(type="datetime")
      * @Groups({"justificatif_administration"})
      */
-    private ?CarbonInterface $dateHeureDebut;
+    private ?CarbonInterface $dateHeureDebut = null;
 
     /**
      * @ORM\Column(type="datetime")
      * @Groups({"justificatif_administration"})
      */
-    private ?CarbonInterface $dateHeureFin;
+    private ?CarbonInterface $dateHeureFin = null;
 
     /**
      * @ORM\Column(type="text")
      * @Groups({"justificatif_administration"})
      * @Assert\NotBlank(message="label.absence_justificatif.justificatif.not_blank")
      */
-    private ?string $motif;
+    private ?string $motif = '';
 
     /**
      * @ORM\Column(type="string", length=1)
      * @Groups({"justificatif_administration"})
      */
-    private string $etat;
+    private string $etat ;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Etudiant", inversedBy="absenceJustificatifs", fetch="EAGER")
@@ -93,10 +93,10 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
      */
     private ?AnneeUniversitaire $anneeUniversitaire;
 
-    private ?CarbonInterface $dateDebut;
-    private ?CarbonInterface $heureDebut;
-    private ?CarbonInterface $dateFin;
-    private ?CarbonInterface $heureFin;
+    private ?CarbonInterface $dateDebut= null;
+    private ?CarbonInterface $heureDebut= null;
+    private ?CarbonInterface $dateFin= null;
+    private ?CarbonInterface $heureFin= null;
 
     /**
      * @ORM\ManyToOne(targetEntity=Semestre::class, inversedBy="absenceJustificatifs")
@@ -128,7 +128,7 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
         return $this->dateHeureDebut;
     }
 
-    public function setDateHeureDebut(CarbonInterface $dateHeureDebut): self
+    public function setDateHeureDebut(?CarbonInterface $dateHeureDebut): self
     {
         $this->dateHeureDebut = $dateHeureDebut;
 
@@ -140,7 +140,7 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
         return $this->dateHeureFin;
     }
 
-    public function setDateHeureFin(CarbonInterface $dateHeureFin): self
+    public function setDateHeureFin(?CarbonInterface $dateHeureFin): self
     {
         $this->dateHeureFin = $dateHeureFin;
 
@@ -252,22 +252,22 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
         $this->uuid = unserialize($data, ['allowed_classes' => false]);
     }
 
-    public function getDateDebut(): CarbonInterface|null
+    public function getDateDebut(): CarbonInterface | null
     {
         return $this->dateDebut;
     }
 
-    public function getHeureDebut(): CarbonInterface|null
+    public function getHeureDebut(): CarbonInterface | null
     {
         return $this->heureDebut;
     }
 
-    public function getDateFin(): CarbonInterface|null
+    public function getDateFin(): CarbonInterface | null
     {
         return $this->dateFin;
     }
 
-    public function getHeureFin(): CarbonInterface|null
+    public function getHeureFin(): CarbonInterface | null
     {
         return $this->heureFin;
     }
@@ -302,13 +302,17 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
 
     public function transformeData(): void
     {
-        $this->setDateHeureDebut(Carbon::createFromFormat('Y-m-d H:i',
-            $this->getDateDebut()->format('Y-m-d') . ' ' . $this->getHeureDebut()->format('H:i')));
-        $this->setDateHeureFin(Carbon::createFromFormat('Y-m-d H:i',
-            $this->getDateFin()->format('Y-m-d') . ' ' . $this->getHeureFin()->format('H:i')));
+        if ($this->getDateDebut()?->isValid() && $this->getHeureDebut()?->isValid()) {
+            $this->setDateHeureDebut(Carbon::instance($this->getDateDebut()?->format('Y-m-d').' '.$this->getHeureDebut()?->format('H:i:s')));
+        }
+
+        if ($this->getDateFin()?->isValid() && $this->getHeureFin()?->isValid()) {
+            $this->setDateHeureFin(Carbon::createFromFormat('Y-m-d H:i',
+                $this->getDateFin()?->format('Y-m-d').' '.$this->getHeureFin()?->format('H:i')));
+        }
     }
 
-    public function getPeriodeAbsence()
+    public function getPeriodeAbsence(): array
     {
         return [
             'dateHeureDebut' => $this->getDateHeureDebut(),

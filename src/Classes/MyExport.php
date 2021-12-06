@@ -37,16 +37,12 @@ class MyExport
     {
         $this->excel->genereExcelFromSerialization($data, $groups, $colonne);
 
-        switch ($format) {
-            case 'csv':
-                return $this->excel->saveCsv($nomFichier);
-            case 'pdf':
-                return $this->excel->savePdf($nomFichier);
-            case 'xlsx':
-                return $this->excel->saveXlsx($nomFichier);
-        }
-
-        return null;
+        return match ($format) {
+            'csv' => $this->excel->saveCsv($nomFichier),
+            'pdf' => $this->excel->savePdf($nomFichier),
+            'xlsx' => $this->excel->saveXlsx($nomFichier),
+            default => null,
+        };
     }
 
     /**
@@ -60,16 +56,13 @@ class MyExport
     {
         $this->excel->genereExcelAbsence($myAbsences);
 
-        switch ($format) {
-            case 'csv':
-                return $this->excel->saveCsv($nomFichier);
-            case 'pdf':
-                return $this->excel->savePdf($nomFichier);
-            case 'xlsx':
-                return $this->excel->saveXlsx($nomFichier);
-        }
+        return match ($format) {
+            'csv' => $this->excel->saveCsv($nomFichier),
+            'pdf' => $this->excel->savePdf($nomFichier),
+            'xlsx' => $this->excel->saveXlsx($nomFichier),
+            default => false,
+        };
 
-        return false;
     }
 
     /**
@@ -83,6 +76,12 @@ class MyExport
 
         $this->excel->genereModeleExcel($semestre);
 
-        return $this->excel->saveXlsx('modele-import-note-' . $semestre->getLibelle());
+        return $this->excel->saveXlsx('modele-import-note-'.$semestre->getLibelle());
+    }
+
+    public function genereFichierJustificatifAbsence(mixed $justificatifs, string $nomFichier)
+    {
+        $this->excel->genereExcelJustificatifsAbsences($justificatifs);
+        return $this->excel->saveXlsx($nomFichier);
     }
 }
