@@ -42,28 +42,24 @@ class AbsenceJustificatifType extends AbstractType
                 'label' => 'date_debut',
                 'constraints' => [
                     new NotBlank(),
-                    new Type(CarbonInterface::class),
                 ],
             ])
             ->add('heureDebut', TimeType::class, [
                 'label' => 'heure_debut',
                 'constraints' => [
                     new NotBlank(),
-                    new Type(DateTime::class),
                 ],
             ])
             ->add('dateFin', DatePickerType::class, [
                 'label' => 'date_fin',
                 'constraints' => [
                     new NotBlank(),
-                    new Type(CarbonInterface::class),
                 ],
             ])
             ->add('heureFin', TimeType::class, [
                 'label' => 'heure_fin',
                 'constraints' => [
                     new NotBlank(),
-                    new Type(DateTime::class),
                 ],
             ])
             ->add('motif', TextType::class, ['label' => 'motif'])
