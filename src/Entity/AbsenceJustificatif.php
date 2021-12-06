@@ -302,14 +302,12 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
 
     public function transformeData(): void
     {
-        //if ($this->getDateDebut()?->isValid() && $this->getHeureDebut()?->isValid()) {
-            $this->setDateHeureDebut(Carbon::instance($this->getDateDebut()?->format('Y-m-d').' '.$this->getHeureDebut()?->format('H:i:s')));
-       // }
 
-        //if ($this->getDateFin()?->isValid() && $this->getHeureFin()?->isValid()) {
+            $this->setDateHeureDebut(Carbon::createFromFormat('Y-m-d H:i',$this->getDateDebut()?->format('Y-m-d').' '.$this->getHeureDebut()?->format('H:i')));
+
             $this->setDateHeureFin(Carbon::createFromFormat('Y-m-d H:i',
                 $this->getDateFin()?->format('Y-m-d').' '.$this->getHeureFin()?->format('H:i')));
-       // }
+
     }
 
     public function getPeriodeAbsence(): array
