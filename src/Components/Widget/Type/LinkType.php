@@ -9,6 +9,7 @@
 
 namespace App\Components\Widget\Type;
 
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
@@ -18,13 +19,15 @@ use App\Components\Widget\WidgetBuilder;
 class LinkType extends WidgetType
 {
     protected RouterInterface $router;
+    protected ParameterBagInterface $parameterBag;
 
     /**
      * LinkType constructor.
      */
-    public function __construct(RouterInterface $router)
+    public function __construct(RouterInterface $router, ParameterBagInterface $parameterBag)
     {
         $this->router = $router;
+        $this->parameterBag = $parameterBag;
     }
 
     public function buildView(WidgetView $view, array $options)
@@ -86,6 +89,7 @@ class LinkType extends WidgetType
                 if ($options['route']) {
                     return $this->router->generate($options['route'], $options['route_params']);
                 }
+                return null;
             });
 
         $resolver

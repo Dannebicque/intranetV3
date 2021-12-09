@@ -59,7 +59,7 @@ class WidgetType
     {
         $normalizer = function(Options $options, $value) {
             if (null === $value) {
-                return $value;
+                return null;
             }
 
             if (is_string($value)) {

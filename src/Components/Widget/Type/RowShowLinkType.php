@@ -19,7 +19,7 @@ class RowShowLinkType extends RowLinkType
 
         $resolver
             ->setDefault('title', 'action.show')
-            ->setDefault('icon', 'fas fa-info')
+            ->setDefault('icon', $this->parameterBag->get('iconShow'))
             ->setDefault('class', 'btn btn-square btn-info-outline me-1');
     }
 }
