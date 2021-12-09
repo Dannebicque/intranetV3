@@ -18,6 +18,22 @@ parameters:
     CAS_HOST: '%env(resolve:CAS_HOST)%'
     CAS_PORT: '%env(resolve:CAS_PORT)%'
     CAS_CONTEXT: '%env(resolve:CAS_CONTEXT)%'
+    iconShow: '%env(resolve:ICON_SHOW)%'
+    iconEdit: '%env(resolve:ICON_EDIT)%'
+    iconDelete: '%env(resolve:ICON_DELETE)%'
+    iconPrint: '%env(resolve:ICON_PRINT)%'
+    iconDuplicate: '%env(resolve:ICON_DUPLICATE)%'
+    iconAdd: '%env(resolve:ICON_ADD)%'
+    iconHelp: '%env(resolve:ICON_HELP)%'
+    iconAdmin: '%env(resolve:ICON_ADMINISTRATION)%' #'fas fa-wrench'
+    iconDashboard: '%env(resolve:ICON_DASHBOARD)%' #fas fa-home'
+    iconTrombi: '%env(resolve:ICON_TROMBINOSCOPE)%' #fa-user-friends
+    iconAgenda: '%env(resolve:ICON_AGENDA)%' #ffa-calendar-alt
+    iconApplications: '%env(resolve:ICON_APPLICATIONS)%' #ffa-toolbox
+    iconDocuments: '%env(resolve:ICON_DOCUMENTS)%' #fa-folder
+    iconInformation: '%env(resolve:ICON_INFORMATION)%' #fa-file-alt
+    iconMessage: '%env(resolve:ICON_MESSAGE)%' #fas fa-home'
+    iconNotification: '%env(resolve:ICON_NOTIFCATION)%' #fas fa-home'
 
 services:
     # default configuration for services in *this* file

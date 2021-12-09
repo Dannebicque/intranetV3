@@ -9,11 +9,12 @@
 
 namespace App\Components\Widget\Type;
 
+use App\Components\Widget\DTO\WidgetView;
+use App\Components\Widget\WidgetBuilder;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
-use App\Components\Widget\DTO\WidgetView;
-use App\Components\Widget\WidgetBuilder;
 
 class ButtonType extends WidgetType
 {
@@ -65,10 +66,11 @@ class ButtonType extends WidgetType
         $resolver
             ->define('url')
             ->allowedTypes('string', 'null')
-            ->default(function(Options $options) {
+            ->default(function (Options $options) {
                 if ($options['route']) {
                     return $this->router->generate($options['route'], $options['route_params']);
                 }
+                return null;
             });
 
         $resolver
