@@ -322,8 +322,8 @@
 
     <!-- Main container -->
     <main class="main-container"
-        {% block stimulus %}{% endblock %}
->
+            {% block stimulus %}{% endblock %}
+    >
         <header class="header">
             <div class="header-info">
                 <div class="left">
@@ -428,6 +428,7 @@
     <!-- END Global quickview -->
 
     <!-- modal confirme suppression -->
+
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -447,9 +448,11 @@
             </div>
         </div>
     </div>
-    <!-- fin modal confirme suppression -->
-    {{ include('_modal.html.twig') }}
 
+    <!-- fin modal confirme suppression -->
+    <div {{ stimulus_controller('base') }} data-action="modal:openModal@window->base#openModal">
+        {{ include('_modal.html.twig') }}
+    </div>
 {% endblock %}{# fin du block full body #}
 </body>
 </html>

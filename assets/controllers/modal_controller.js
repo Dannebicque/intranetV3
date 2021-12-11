@@ -5,32 +5,22 @@
 // @lastUpdate 11/10/2021 21:49
 
 import {Controller} from 'stimulus'
-import {Modal} from 'bootstrap'
+import {useDispatch} from 'stimulus-use'
 
 export default class extends Controller {
-  static targets = ['modal', 'modalBody']
   static values = {
-    modalUrl: String
+    modalUrl: String,
+    modalTitle: String,
+    size: String,
+    params: Array
   }
-  modal = null
 
   connect () {
-    console.log('modal')
-    console.log(self.targets)
-    console.log(self.values)
+    useDispatch(this, {debug: true})
   }
 
   openModal (event) {
-    console.log(event)
     event.preventDefault()
-    this.modalBodyTarget.innerHTML = 'Loading...'
-    this.modal = new Modal(this.modalTarget)
-    this.modal.show()
-
-    this.modalBodyTarget.innerHTML = 'hello///'
-  }
-
-  modalHidden () {
-    console.log('it was hidden!')
+    this.dispatch("openModal", { url: this.modalUrlValue, size: this.sizeValue, params: this.paramsValue, title: this.modalTitleValue })
   }
 }
