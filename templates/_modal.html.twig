@@ -1,17 +1,19 @@
 <div class="modal fade"
      tabindex="-1"
      aria-hidden="true"
-     data-modal-target="modal">
-    <div class="modal-dialog">
+     data-base-target="modal">
+    <div class="modal-dialog" id="stimulus_modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Chargement ...</h5>
+                <h5 class="modal-title"
+                data-base-target="modalTitle">... Chargement ...</h5>
                 <button type="button" class="btn-close"
                         data-bs-dismiss="modal"
+                        data-action="base#modalClose"
                         aria-label="Close"></button>
             </div>
             <div class="modal-body"
-                 data-modal-target="modalBody">
+                 data-base-target="modalBody">
                 Chargement...
             </div>
             <div class="modal-footer">
