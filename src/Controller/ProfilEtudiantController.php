@@ -9,6 +9,7 @@
 
 namespace App\Controller;
 
+use App\Classes\Apc\ApcCoefficient;
 use App\Classes\Calendrier;
 use App\Classes\Etudiant\EtudiantAbsences;
 use App\Classes\Etudiant\EtudiantNotes;
@@ -19,9 +20,11 @@ use App\Entity\Commentaire;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Repository\AlternanceRepository;
+use App\Repository\ApcNiveauRepository;
 use App\Repository\DepartementRepository;
 use App\Repository\ScolariteRepository;
 use App\Repository\StageEtudiantRepository;
+use App\Repository\UeRepository;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
@@ -135,6 +138,38 @@ class ProfilEtudiantController extends BaseController
                 'etudiant' => $etudiant,
                 'chart' => $chart,
                 'matieres' => $matieres,
+            ]);
+        }
+
+        return $this->render('user/composants/_semestre_vide.html.twig', [
+        ]);
+    }
+
+    /**
+     * @Route("/profil/{slug}/apc_notes", name="profil_etudiant_apc")
+     *
+     * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
+     */
+    public function apcNotes(
+        UeRepository $ueRepository,
+        TypeMatiereManager $typeMatiereManager,
+        EtudiantNotes $etudiantNotes,
+        Etudiant $etudiant
+    ): Response {
+        if (null !== $etudiant->getSemestre()) {
+            $ues = $ueRepository->findBySemestre($etudiant->getSemestre());
+            $etudiantNotes->setEtudiant($etudiant);
+            $matieres = $typeMatiereManager->findBySemestreArray($etudiant->getSemestre());
+            $moyennes = $etudiantNotes->getMoyenneParMatiereParSemestresEtAnneeUniversitaire($matieres, $etudiant->getSemestre(),
+                $this->getAnneeUniversitaire());
+            $moyennesSemestre = $etudiantNotes->calculMoyenneApcSemestre($etudiant->getSemestre(), $matieres, $ues, $moyennes);
+
+
+            return $this->render('user/composants/notes_apc.html.twig', [
+                'etudiant' => $etudiant,
+                'matieres' => $matieres,
+                'moyenneSemestre' => $moyennesSemestre,
+                'ues' => $ues,
             ]);
         }
 

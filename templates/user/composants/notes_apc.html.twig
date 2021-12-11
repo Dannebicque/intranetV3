@@ -1,0 +1,76 @@
+<div class="card">
+    <h4 class="card-title">{{ 'bloc.note.apc.etu.heading'|trans }}</h4>
+    <div class="card-body">
+        <table class="table">
+            <thead>
+            <tr>
+                <th rowspan="2" class="text-center">Ressource/SAÉ</th>
+                <th rowspan="2" class="text-center">Moyenne Obtenue</th>
+                <th rowspan="2">&nbsp;</th>
+                <th colspan="{{ ues|length }}" class="text-center">Coefficients</th>
+                <th rowspan="2">&nbsp;</th>
+                <th colspan="{{ ues|length }}" class="text-center">Moyenne / UE</th>
+            </tr>
+            <tr>
+                {% for ue in ues %}
+                    <th class="text-center">
+                        <abbr title="{{ ue.apcCompetence.nomCourt }} : {{ ue.apcCompetence.libelle }}">
+                            {{ ue.libelle }}
+                        </abbr>
+                    </th>
+                {% endfor %}
+                {% for ue in ues %}
+                    <th class="text-center">
+                        <abbr title="{{ ue.apcCompetence.nomCourt }} : {{ ue.apcCompetence.libelle }}">
+                            {{ ue.libelle }}
+                        </abbr>
+                    </th>
+                {% endfor %}
+            </tr>
+            </thead>
+            <tbody>
+            {% for matiere in matieres %}
+                <tr>
+                    <th>{{ matiere.display }}</th>
+                    <th class="text-center">{{ moyenneSemestre.matieres[matiere.codeElement].moyenne }}</th>
+                    <th>&nbsp;</th>
+                    {% for ue in ues %}
+                        <th class="text-center">{{ moyenneSemestre.ues[ue.id].matieres[matiere.codeElement].coefficient }}</th>
+                    {% endfor %}
+                    <th>&nbsp;</th>
+                    {% for ue in ues %}
+                        <th class="text-center">{{ moyenneSemestre.ues[ue.id].matieres[matiere.codeElement]
+                            .moyenne|number_format(2) }}</th>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="2">&nbsp;</td>
+                <td>&nbsp;</td>
+                {% for ue in ues %}
+                    <td class="text-center">{{ moyenneSemestre.ues[ue.id].totalCoefficients }}</td>
+                {% endfor %}
+                <td>&nbsp;</td>
+                {% for ue in ues %}
+                    <td class="text-center">{{ moyenneSemestre.ues[ue.id].totalMoyennes|number_format(2) }}</td>
+                {% endfor %}
+            </tr>
+            <tr>
+                <td colspan="{{ ues|length * 2 + 4 }}">&nbsp;</td>
+            </tr>
+            <tr>
+                <th>Bonus Pac/Sport/...</th>
+                <td>&nbsp;</td>
+                <th class="text-center">{{ moyenneSemestre.pac }}</th>
+                <th colspan="{{ ues|length }}" class="text-end">Moyenne bonifiée sur 20 / UE</th>
+                <td>&nbsp;</td>
+                {% for ue in ues %}
+                    <th class="text-center">{{ moyenneSemestre.ues[ue.id].moyennePac|badgeApcUe }}</th>
+                {% endfor %}
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>

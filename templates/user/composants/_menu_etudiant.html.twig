@@ -8,6 +8,11 @@
     <a class="nav-link changeprofil {% if onglet == 'notes' %}active{% endif %}"
        href="{{ path('profil_etudiant_notes', {slug: user.slug}) }}"
        id="profil-notes">{{ 'tab.notes'|trans }}</a>
+    {% if user.semestre.diplome.typeDiplome.apc == true %}
+        <a class="nav-link changeprofil {% if onglet == 'apc' %}active{% endif %}"
+           href="{{ path('profil_etudiant_apc', {slug: user.slug}) }}"
+           id="profil-notes">{{ 'tab.apc_notes'|trans }}</a>
+        {% endif %}
     <a class="nav-link changeprofil {% if onglet == 'absences' %}active{% endif %}"
        href="{{ path('profil_etudiant_absences', {slug: user.slug}) }}"
        id="profil-absences">{{ 'tab.absences'|trans }}</a>

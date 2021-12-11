@@ -10,6 +10,7 @@
 namespace App\DTO;
 
 use App\Entity\Constantes;
+use App\Entity\Parcour;
 use App\Entity\Semestre;
 
 class Matiere
@@ -19,8 +20,8 @@ class Matiere
     public string $typeMatiere;
     public string $libelle;
     public string $display;
-    public ?string $codeMatiere;
-    public ?string $codeElement;
+    public ?string $codeMatiere = '';
+    public ?string $codeElement = '';
 
     public ?float $cmPpn = 0;
     public ?float $tdPpn = 0;
@@ -47,7 +48,7 @@ class Matiere
     /** @deprecated */
     public string $ue_display;
     /** @deprecated */
-    public ?int $ue_numero;
+    public ?int $ue_numero = 0;
 
     public array $tab_ues = []; //tableau d'UE/Compétences
 
@@ -55,29 +56,35 @@ class Matiere
     public ?Semestre $semestre;
     public $parcours;
 
-    public function getUeId()
+    public function getUeId(): ?int
     {
-        if ($this->apc === true && count($this->tab_ues) === 1) {
+        if (true === $this->apc && 1 === count($this->tab_ues)) {
             return $this->tab_ues[0]->ue_id;
         }
+
+        return null;
     }
 
-    public function getUeDisplay()
+    public function getUeDisplay(): string
     {
-        if ($this->apc === true && count($this->tab_ues) === 1) {
+        if (true === $this->apc && 1 === count($this->tab_ues)) {
             return $this->tab_ues[0]->ue_display;
         }
+
+        return '';
     }
 
-    public function getUeNumero()
+    public function getUeNumero(): ?int
     {
-        if ($this->apc === true && count($this->tab_ues) === 1) {
+        if (true === $this->apc && 1 === count($this->tab_ues)) {
             return $this->tab_ues[0]->ue_numero;
         }
+
+        return null;
     }
 
     /**  ne-pas-exporter */
-    public function getJson()
+    public function getJson(): array
     {
         return [
             'id' => $this->id,
@@ -96,7 +103,7 @@ class Matiere
     }
 
     /**  ne-pas-exporter */
-    public function getParcours()
+    public function getParcours(): ?Parcour
     {
         if (\App\Entity\Matiere::SOURCE === $this->typeMatiere) {
             return $this->parcours;
@@ -111,9 +118,9 @@ class Matiere
     }
 
     /** ne-pas-exporter */
-    public function getTypeIdMatiere()
+    public function getTypeIdMatiere(): string
     {
-        return $this->typeMatiere . '_' . $this->id;
+        return $this->typeMatiere.'_'.$this->id;
     }
 
     /** ne-pas-exporter */
