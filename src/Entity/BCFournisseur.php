@@ -83,11 +83,9 @@ class BCFournisseur extends BaseEntity
 
     public function removeBCDemande(BCDemande $bCDemande): self
     {
-        if ($this->bCDemandes->removeElement($bCDemande)) {
-            // set the owning side to null (unless already changed)
-            if ($bCDemande->getFournisseur() === $this) {
-                $bCDemande->setFournisseur(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->bCDemandes->removeElement($bCDemande) && $bCDemande->getFournisseur() === $this) {
+            $bCDemande->setFournisseur(null);
         }
 
         return $this;

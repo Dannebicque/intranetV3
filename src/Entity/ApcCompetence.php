@@ -215,11 +215,9 @@ class ApcCompetence extends BaseEntity
 
     public function removeApcRessourceCompetence(ApcRessourceCompetence $apcRessourceCompetence): self
     {
-        if ($this->apcRessourceCompetences->removeElement($apcRessourceCompetence)) {
-            // set the owning side to null (unless already changed)
-            if ($apcRessourceCompetence->getCompetence() === $this) {
-                $apcRessourceCompetence->setCompetence(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->apcRessourceCompetences->removeElement($apcRessourceCompetence) && $apcRessourceCompetence->getCompetence() === $this) {
+            $apcRessourceCompetence->setCompetence(null);
         }
 
         return $this;
@@ -245,11 +243,9 @@ class ApcCompetence extends BaseEntity
 
     public function removeApcSaeCompetence(ApcSaeCompetence $apcSaeCompetence): self
     {
-        if ($this->apcSaeCompetences->removeElement($apcSaeCompetence)) {
-            // set the owning side to null (unless already changed)
-            if ($apcSaeCompetence->getCompetence() === $this) {
-                $apcSaeCompetence->setCompetence(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->apcSaeCompetences->removeElement($apcSaeCompetence) && $apcSaeCompetence->getCompetence() === $this) {
+            $apcSaeCompetence->setCompetence(null);
         }
 
         return $this;
@@ -275,11 +271,9 @@ class ApcCompetence extends BaseEntity
 
     public function removeApcSituationProfessionnelle(ApcSituationProfessionnelle $apcSituationProfessionnelle): self
     {
-        if ($this->apcSituationProfessionnelles->removeElement($apcSituationProfessionnelle)) {
-            // set the owning side to null (unless already changed)
-            if ($apcSituationProfessionnelle->getCompetence() === $this) {
-                $apcSituationProfessionnelle->setCompetence(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->apcSituationProfessionnelles->removeElement($apcSituationProfessionnelle) && $apcSituationProfessionnelle->getCompetence() === $this) {
+            $apcSituationProfessionnelle->setCompetence(null);
         }
 
         return $this;
@@ -305,11 +299,9 @@ class ApcCompetence extends BaseEntity
 
     public function removeUe(Ue $ue): self
     {
-        if ($this->ue->removeElement($ue)) {
-            // set the owning side to null (unless already changed)
-            if ($ue->getApcCompetence() === $this) {
-                $ue->setApcCompetence(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->ue->removeElement($ue) && $ue->getApcCompetence() === $this) {
+            $ue->setApcCompetence(null);
         }
 
         return $this;

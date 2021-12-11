@@ -234,11 +234,11 @@ class StageSubscriber implements EventSubscriberInterface
         );
 
         $destinataires = [];
-        foreach ($stageEtudiant->getStagePeriode()->getResponsables() as $destinataire) {
+        foreach ($stageEtudiant->getStagePeriode()?->getResponsables() as $destinataire) {
             $destinataires[] = $destinataire->getMailUniv();
         }
 
-        if (null !== $mailTemplate && null !== $stageEtudiant && $mailTemplate->getTwigTemplate()) {
+        if (null !== $mailTemplate && $mailTemplate->getTwigTemplate()) {
             //mail responsables
             $this->myMailer->setTemplateFromDatabase($mailTemplate->getTwigTemplate()->getName(),
                 ['stageEtudiant' => $stageEtudiant],

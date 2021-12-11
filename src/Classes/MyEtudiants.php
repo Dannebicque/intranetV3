@@ -44,7 +44,7 @@ class MyEtudiants
         $bacs = $this->entityManager->getRepository(Bac::class)->getApogeeArray();
         if (null !== $semestre) {
             $file = $this->myUpload->upload($fichier, 'temp');
-            $handle = fopen($file, 'r');
+            $handle = fopen($file, 'rb');
 
             /*Si on a réussi à ouvrir le fichier*/
             if ($handle) {

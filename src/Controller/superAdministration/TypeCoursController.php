@@ -13,15 +13,11 @@ use App\Classes\MyExport;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\TypeCours;
-use App\Entity\TypeHrs;
 use App\Form\TypeCoursType;
-use App\Form\TypeHrsType;
 use App\Repository\TypeCoursRepository;
-use App\Repository\TypeHrsRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use function count;
 
 /**
  * @Route("/administratif/type-cours")

@@ -26,6 +26,7 @@ use App\Utils\JsonRequest;
 use App\Utils\Tools;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
+use function count;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -33,7 +34,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use function count;
 
 #[Route('/application/personnel/absence')]
 #[IsGranted('ROLE_PERMANENT')]
@@ -132,7 +132,7 @@ class AbsenceController extends BaseController
         ]);
     }
 
-    #[Route('/ajax/pas-absent/', name: 'application_personnel_absence_ajax_pas_absent', methods: ['POST'], options: ['expose'=>true])]
+    #[Route('/ajax/pas-absent/', name: 'application_personnel_absence_ajax_pas_absent', options: ['expose' => true], methods: ['POST'])]
     public function pasAbsentEvent(Request $request, EdtManager $edtManager): JsonResponse
     {
         //todo: vérifier si autorisé, vérifié si pas déjà présent
@@ -167,7 +167,7 @@ class AbsenceController extends BaseController
     {
         //todo: tester...
         $id = $absence->getUuidString();
-        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
             $etudiantAbsences->removeAbsence($absence);
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'absence.delete.success.flash');
 
@@ -215,7 +215,7 @@ class AbsenceController extends BaseController
         Request $request,
         string $matiere,
         Etudiant $etudiant
-    ): JsonResponse|Response {
+    ): JsonResponse | Response {
         $dateHeure = Tools::convertDateHeureToObject($request->request->get('date'), $request->request->get('heure'));
         $mat = $typeMatiereManager->getMatiereFromSelect($matiere);
         $this->denyAccessUnlessGranted('CAN_ADD_ABSENCE', $mat);

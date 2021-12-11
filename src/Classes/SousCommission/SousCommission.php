@@ -237,21 +237,17 @@ class SousCommission
     private function updateScolariteUe(Scolarite $scolarite, $field, $value): void
     {
         [$code, $idUe] = explode('_', $field);
-        switch ($code) {
-            case 'moyenne':
-                $scolarite->getMoyennesUes()[$idUe]['moyenne'] = Tools::convertToFloat($value);
-                break;
-        }
+        $scolarite->getMoyennesUes()[$idUe]['moyenne'] = match ($code) {
+            'moyenne' => Tools::convertToFloat($value),
+        };
     }
 
     private function updateScolariteMatiere(Scolarite $scolarite, $field, $value): void
     {
         [$code, $idMatiere] = explode('_', $field);
-        switch ($code) {
-            case 'moyenne':
-                $scolarite->getMoyennesMatieres()[$idMatiere]['moyenne'] = Tools::convertToFloat($value);
-                break;
-        }
+        $scolarite->getMoyennesMatieres()[$idMatiere]['moyenne'] = match ($code) {
+            'moyenne' => Tools::convertToFloat($value),
+        };
     }
 
     public function getBySemestreAnneeUniversitaire(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire)

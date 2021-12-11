@@ -50,7 +50,7 @@ class MyExportPresence
         $this->myMailer = $myMailer;
         $this->myExcelWriter = $myExcelWriter;
         $this->myPdf = $myPdf;
-        $this->dir = $kernel->getProjectDir() . '/public/upload/';
+        $this->dir = $kernel->getProjectDir().'/public/upload/';
     }
 
     public function genereFichier(
@@ -109,13 +109,13 @@ class MyExportPresence
         $date = Carbon::now();
 
         return new StreamedResponse(
-            static function() use ($writer) {
+            static function () use ($writer) {
                 $writer->save('php://output');
             },
             200,
             [
                 'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                'Content-Disposition' => 'attachment;filename="presence' . $date->format('d-m-Y') . '.xlsx"',
+                'Content-Disposition' => 'attachment;filename="presence'.$date->format('d-m-Y').'.xlsx"',
             ]
         );
     }
@@ -123,14 +123,14 @@ class MyExportPresence
     public function genereAttestationPdf(
         CovidAttestationPersonnel $covidAttestationPersonnel,
         $sortie
-    ): string|PdfResponse {
+    ): string | PdfResponse {
         if ('force' === $sortie) {
             return $this->myPdf::generePdf(
                 'pdf/covid/autorisationPersonnel.html.twig',
                 [
                     'covidAttestationPersonnel' => $covidAttestationPersonnel,
                 ],
-                'attestation-' . $covidAttestationPersonnel->getPersonnel()->getNom()
+                'attestation-'.$covidAttestationPersonnel->getPersonnel()->getNom()
             );
         }
         $this->myPdf::genereAndSavePdf(
@@ -138,11 +138,11 @@ class MyExportPresence
             [
                 'covidAttestationPersonnel' => $covidAttestationPersonnel,
             ],
-            'attestation-' . $covidAttestationPersonnel->getCreated()->format('dmYHis'),
-            $this->dir . 'covid/attestation/'
+            'attestation-'.$covidAttestationPersonnel->getCreated()->format('dmYHis'),
+            $this->dir.'covid/attestation/'
         );
 
-        return $this->dir . 'covid/attestation/' . 'attestation-' . $covidAttestationPersonnel->getCreated()->format('dmYHis') . '.pdf';
+        return $this->dir.'covid/attestation/'.'attestation-'.$covidAttestationPersonnel->getCreated()->format('dmYHis').'.pdf';
     }
 
     /**
@@ -156,12 +156,10 @@ class MyExportPresence
     ): void {
         if (null !== $covidAttestationEtudiant->getDatePresence()) {
             $date = $covidAttestationEtudiant->getDatePresence();
+        } elseif (null !== $covidAttestationEtudiant->getDateDebut()) {
+            $date = $covidAttestationEtudiant->getDateDebut();
         } else {
-            if (null !== $covidAttestationEtudiant->getDateDebut()) {
-                $date = $covidAttestationEtudiant->getDateDebut();
-            } else {
-                $date = 'err-' . md5((Carbon::now())->format('dmYHis'));
-            }
+            $date = 'err-'.md5((Carbon::now())->format('dmYHis'));
         }
         $this->myPdf::generePdf(
             'pdf/covid/autorisationEtudiant.html.twig',
@@ -169,7 +167,7 @@ class MyExportPresence
                 'covidAttestationEtudiant' => $covidAttestationEtudiant,
                 'etudiant' => $etudiant,
             ],
-            'convocation-covid-' . $date->format('d-m-Y') . '-' . $etudiant->getNumEtudiant()
+            'convocation-covid-'.$date->format('d-m-Y').'-'.$etudiant->getNumEtudiant()
         );
     }
 
@@ -181,7 +179,7 @@ class MyExportPresence
      */
     public function sendOneConvocation(CovidAttestationEtudiant $covidAttestationEtudiant, Etudiant $etudiant): void
     {
-        $name = 'convocation-covid-' . $covidAttestationEtudiant->getDateDebut()->format('d-m-Y') . '-' . $etudiant->getNumEtudiant();
+        $name = 'convocation-covid-'.$covidAttestationEtudiant->getDateDebut()->format('d-m-Y').'-'.$etudiant->getNumEtudiant();
         $this->myPdf::genereAndSavePdf(
             'pdf/covid/autorisationEtudiant.html.twig',
             [
@@ -189,7 +187,7 @@ class MyExportPresence
                 'etudiant' => $etudiant,
             ],
             $name,
-            $this->dir . 'covid/convocations/'
+            $this->dir.'covid/convocations/'
         );
 
         $this->myMailer->initEmail();
@@ -199,11 +197,11 @@ class MyExportPresence
         ]);
 
         //joindre le PDF
-        $this->myMailer->attachFile($this->dir . 'covid/convocations/' . $name . '.pdf');
-        $this->myMailer->attachFile($this->dir . 'covid/Conditions accès  IUT  Troyes au 01.02.2021- Note aux étudiants.pdf');
+        $this->myMailer->attachFile($this->dir.'covid/convocations/'.$name.'.pdf');
+        $this->myMailer->attachFile($this->dir.'covid/Conditions accès  IUT  Troyes au 01.02.2021- Note aux étudiants.pdf');
         $this->myMailer->sendMessage(
             $etudiant->getMails(),
-            'Attestation de présence pour la période du ' . $covidAttestationEtudiant->getDateDebut()->format('d/m/Y') . '  au ' . $covidAttestationEtudiant->getDateFin()->format('d/m/Y'),
+            'Attestation de présence pour la période du '.$covidAttestationEtudiant->getDateDebut()->format('d/m/Y').'  au '.$covidAttestationEtudiant->getDateFin()->format('d/m/Y'),
             [
                 'replyTo' => [$covidAttestationEtudiant->getDiplome()->getAssistantDiplome()->getMailUniv()],
                 'from' => [$covidAttestationEtudiant->getDiplome()->getAssistantDiplome()->getMailUniv()],
@@ -272,13 +270,13 @@ class MyExportPresence
         $date = Carbon::now();
 
         return new StreamedResponse(
-            static function() use ($writer) {
+            static function () use ($writer) {
                 $writer->save('php://output');
             },
             200,
             [
                 'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                'Content-Disposition' => 'attachment;filename="presence-etudiant-' . $date->format('d-m-Y') . '.xlsx"',
+                'Content-Disposition' => 'attachment;filename="presence-etudiant-'.$date->format('d-m-Y').'.xlsx"',
             ]
         );
     }

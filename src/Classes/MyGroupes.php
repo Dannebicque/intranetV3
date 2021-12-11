@@ -67,6 +67,9 @@ class MyGroupes
         $this->apogeeGroupe = $apogeeGroupe;
     }
 
+    /**
+     * @throws \App\Exception\SemestreNotFoundException
+     */
     public function getGroupesSemestre(?Semestre $semestre, ?string $defaut = null): self
     {
         if (null === $semestre) {
@@ -83,6 +86,11 @@ class MyGroupes
             }
         }
 
+        if (null === $this->groupedefaut && count($this->typeGroupes) > 0) {
+            $this->groupedefaut = $this->typeGroupes[0];
+        } else {
+            throw new Exception('Aucun groupe par défaut trouvé');
+        }
         $this->groupes = $this->groupeRepository->findBy(['typeGroupe' => $this->groupedefaut->getId()]);
 
         return $this;
@@ -176,7 +184,7 @@ class MyGroupes
 
         $file = $this->myUpload->upload($fichier, 'temp');
 
-        $handle = fopen($file, 'r');
+        $handle = fopen($file, 'rb');
 
         /*Si on a réussi à ouvrir le fichier*/
         if ($handle) {
@@ -204,10 +212,8 @@ class MyGroupes
                     $groupe->setLibelle($ligne[0]);
                     $groupe->setOrdre($ligne[1]);
                     $groupe->setCodeApogee($ligne[2]);
-                    if ('' !== $ligne[3] || null !== $ligne[3]) {
-                        if (array_key_exists($ligne[3], $parcours)) {
-                            $groupe->setParcours($parcours[$ligne[3]]);
-                        }
+                    if ((null !== $ligne[3]) && array_key_exists($ligne[3], $parcours)) {
+                        $groupe->setParcours($parcours[$ligne[3]]);
                     }
 
                     $this->entityManager->persist($groupe);
@@ -241,7 +247,7 @@ class MyGroupes
 
         $file = $this->myUpload->upload($fichier, 'temp');
 
-        $handle = fopen($file, 'r');
+        $handle = fopen($file, 'rb');
 
         /*Si on a réussi à ouvrir le fichier*/
         if ($handle) {
@@ -270,7 +276,7 @@ class MyGroupes
 
     public function update(Groupe $groupe, string $name, $value): bool
     {
-        $method = 'set' . $name;
+        $method = 'set'.$name;
         if (method_exists($groupe, $method)) {
             $groupe->$method($value);
             $this->entityManager->flush();

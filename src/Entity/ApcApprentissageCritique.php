@@ -118,11 +118,9 @@ class ApcApprentissageCritique extends BaseEntity
     public function removeApcRessourceApprentissageCritique(
         ApcRessourceApprentissageCritique $apcRessourceApprentissageCritique
     ): self {
-        if ($this->apcRessourceApprentissageCritiques->removeElement($apcRessourceApprentissageCritique)) {
-            // set the owning side to null (unless already changed)
-            if ($apcRessourceApprentissageCritique->getApprentissageCritique() === $this) {
-                $apcRessourceApprentissageCritique->setApprentissageCritique(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->apcRessourceApprentissageCritiques->removeElement($apcRessourceApprentissageCritique) && $apcRessourceApprentissageCritique->getApprentissageCritique() === $this) {
+            $apcRessourceApprentissageCritique->setApprentissageCritique(null);
         }
 
         return $this;
@@ -148,11 +146,9 @@ class ApcApprentissageCritique extends BaseEntity
 
     public function removeApcSaeApprentissageCritique(ApcSaeApprentissageCritique $apcSaeApprentissageCritique): self
     {
-        if ($this->apcSaeApprentissageCritiques->removeElement($apcSaeApprentissageCritique)) {
-            // set the owning side to null (unless already changed)
-            if ($apcSaeApprentissageCritique->getApprentissageCritique() === $this) {
-                $apcSaeApprentissageCritique->setApprentissageCritique(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->apcSaeApprentissageCritiques->removeElement($apcSaeApprentissageCritique) && $apcSaeApprentissageCritique->getApprentissageCritique() === $this) {
+            $apcSaeApprentissageCritique->setApprentissageCritique(null);
         }
 
         return $this;

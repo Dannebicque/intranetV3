@@ -129,20 +129,11 @@ class MyEdtCelcat extends BaseEdt
                 $tab[$jour][$dbtEdt][$groupe]['couleur'] = $this->getCouleur($p);
                 $tab[$jour][$dbtEdt][$groupe]['couleurTexte'] = $this->annee->getCouleurTexte(); //todo: le code est dans le semestre...
 
-                switch ($p->getType()) {
-                    case 'CM':
-                    case 'cm':
-                        $tab[$jour][$dbtEdt][$groupe]['largeur'] = $this->semestre->getNbgroupeTPEDT();
-                        break;
-                    case 'TP':
-                    case 'tp':
-                        $tab[$jour][$dbtEdt][$groupe]['largeur'] = 1;
-                        break;
-                    case 'TD':
-                    case 'td':
-                        $tab[$jour][$dbtEdt][$groupe]['largeur'] = 2;
-                        break;
-                }
+                $tab[$jour][$dbtEdt][$groupe]['largeur'] = match ($p->getType()) {
+                    'CM', 'cm' => $this->semestre->getNbgroupeTPEDT(),
+                    'TP', 'tp' => 1,
+                    'TD', 'td' => 2,
+                };
 
                 $groupefin = $groupe + $tab[$jour][$dbtEdt][$groupe]['largeur'];
                 $fin = $p->getFin();

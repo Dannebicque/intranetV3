@@ -1313,11 +1313,9 @@ class Personnel extends Utilisateur implements UtilisateurInterface
 
     public function removeAbsenceEtatAppel(AbsenceEtatAppel $absenceEtatAppel): self
     {
-        if ($this->absenceEtatAppels->removeElement($absenceEtatAppel)) {
-            // set the owning side to null (unless already changed)
-            if ($absenceEtatAppel->getPersonnel() === $this) {
-                $absenceEtatAppel->setPersonnel(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->absenceEtatAppels->removeElement($absenceEtatAppel) && $absenceEtatAppel->getPersonnel() === $this) {
+            $absenceEtatAppel->setPersonnel(null);
         }
 
         return $this;
@@ -1367,11 +1365,9 @@ class Personnel extends Utilisateur implements UtilisateurInterface
 
     public function removeBcDemandesResponsable(BCDemande $bcDemandesResponsable): self
     {
-        if ($this->bcDemandesResponsable->removeElement($bcDemandesResponsable)) {
-            // set the owning side to null (unless already changed)
-            if ($bcDemandesResponsable->getResponsable() === $this) {
-                $bcDemandesResponsable->setResponsable(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->bcDemandesResponsable->removeElement($bcDemandesResponsable) && $bcDemandesResponsable->getResponsable() === $this) {
+            $bcDemandesResponsable->setResponsable(null);
         }
 
         return $this;
@@ -1397,11 +1393,9 @@ class Personnel extends Utilisateur implements UtilisateurInterface
 
     public function removeBcDemandeSignataireComptum(BCDemande $bcDemandeSignataireComptum): self
     {
-        if ($this->bcDemandeSignataireCompta->removeElement($bcDemandeSignataireComptum)) {
-            // set the owning side to null (unless already changed)
-            if ($bcDemandeSignataireComptum->getSignataireCompta() === $this) {
-                $bcDemandeSignataireComptum->setSignataireCompta(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->bcDemandeSignataireCompta->removeElement($bcDemandeSignataireComptum) && $bcDemandeSignataireComptum->getSignataireCompta() === $this) {
+            $bcDemandeSignataireComptum->setSignataireCompta(null);
         }
 
         return $this;
@@ -1427,11 +1421,9 @@ class Personnel extends Utilisateur implements UtilisateurInterface
 
     public function removeBcServiceFaitReceptionniste(BCServiceFait $bcServiceFaitReceptionniste): self
     {
-        if ($this->bcServiceFaitReceptionniste->removeElement($bcServiceFaitReceptionniste)) {
-            // set the owning side to null (unless already changed)
-            if ($bcServiceFaitReceptionniste->getReceptionnisteMigo() === $this) {
-                $bcServiceFaitReceptionniste->setReceptionnisteMigo(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->bcServiceFaitReceptionniste->removeElement($bcServiceFaitReceptionniste) && $bcServiceFaitReceptionniste->getReceptionnisteMigo() === $this) {
+            $bcServiceFaitReceptionniste->setReceptionnisteMigo(null);
         }
 
         return $this;
@@ -1457,11 +1449,9 @@ class Personnel extends Utilisateur implements UtilisateurInterface
 
     public function removeBcServiceFaitResponsableSignataire(BCServiceFait $bcServiceFaitResponsableSignataire): self
     {
-        if ($this->bcServiceFaitResponsableSignataire->removeElement($bcServiceFaitResponsableSignataire)) {
-            // set the owning side to null (unless already changed)
-            if ($bcServiceFaitResponsableSignataire->getResponsableSignataire() === $this) {
-                $bcServiceFaitResponsableSignataire->setResponsableSignataire(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->bcServiceFaitResponsableSignataire->removeElement($bcServiceFaitResponsableSignataire) && $bcServiceFaitResponsableSignataire->getResponsableSignataire() === $this) {
+            $bcServiceFaitResponsableSignataire->setResponsableSignataire(null);
         }
 
         return $this;

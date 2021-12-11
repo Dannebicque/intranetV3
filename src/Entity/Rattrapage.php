@@ -120,7 +120,7 @@ class Rattrapage extends BaseEntity
         $this->setUuid(Uuid::uuid4());
         $this->etudiant = $etudiant;
         $this->etatDemande = self::DEMANDE_FAITE;
-        $this->anneeUniversitaire = $etudiant?->getAnneeUniversitaire();
+        $this->anneeUniversitaire = $etudiant->getAnneeUniversitaire();
     }
 
     public function __clone()

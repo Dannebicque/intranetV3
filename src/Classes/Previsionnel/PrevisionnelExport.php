@@ -171,9 +171,9 @@ class PrevisionnelExport
                 $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
                     $previ->getDiplome()->getLibelle());
             } else {
-                $this->myExcelWriter->writeCellXY($colonne, $this->ligne, '');
+                $this->myExcelWriter->writeCellXY($colonne, $this->ligne);
                 ++$colonne;
-                $this->myExcelWriter->writeCellXY($colonne, $this->ligne, '');
+                $this->myExcelWriter->writeCellXY($colonne, $this->ligne);
             }
             ++$colonne;
             //CODE ELEMENT*

@@ -110,7 +110,7 @@ class PpnController extends BaseController
         }
 
         return $this->render('structure/ppn/new.html.twig', [
-            'ppn'  => $ppn,
+            'ppn' => $ppn,
             'form' => $form->createView(),
         ]);
     }
@@ -146,12 +146,10 @@ class PpnController extends BaseController
             if (null !== $request->request->get('btn_update')) {
                 return $this->redirectToRoute('administration_ppn_index');
             }
-
-            return $this->redirectToRoute('administration_ppn_index');
         }
 
         return $this->render('structure/ppn/edit.html.twig', [
-            'ppn'  => $ppn,
+            'ppn' => $ppn,
             'form' => $form->createView(),
         ]);
     }
@@ -166,7 +164,7 @@ class PpnController extends BaseController
         //suppression uniquement si vide.
         //feature: gérer une suppression plus complete en super-admin
         $id = $ppn->getId();
-        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
             $this->entityManager->remove($ppn);
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'ppn.delete.success.flash');

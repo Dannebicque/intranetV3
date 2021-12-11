@@ -110,7 +110,7 @@ abstract class HtmlUtils
                 }
 
                 $string = iconv($charset, 'UTF-8', $string);
-                $string = htmlspecialchars($string, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+                $string = htmlspecialchars($string, ENT_QUOTES | ENT_SUBSTITUTE);
 
                 return iconv($charset, 'UTF-8', $string);
 

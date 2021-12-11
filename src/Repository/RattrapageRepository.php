@@ -66,10 +66,10 @@ class RattrapageRepository extends ServiceEntityRepository
      * @throws NonUniqueResultException
      * @throws NoResultException
      */
-    public function findBySemestreCount(Semestre $semestre, int $annee = 0)
+    public function findBySemestreCount(Semestre $semestre, ?int $annee = 0)
     {
         if (0 === $annee) {
-            $annee = null !== $semestre->getAnneeUniversitaire() ? $semestre->getAnneeUniversitaire()->getAnnee() : (int)date('Y');
+            $annee = null !== $semestre->getAnneeUniversitaire() ? $semestre->getAnneeUniversitaire()->getAnnee() : (int) date('Y');
         }
 
         return $this->createQueryBuilder('r')

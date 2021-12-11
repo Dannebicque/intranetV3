@@ -2,9 +2,9 @@
 
 namespace App\Twig;
 
+use ReflectionClass;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
-use Twig\TwigFunction;
 
 class HtmlExtension extends AbstractExtension
 {
@@ -20,7 +20,7 @@ class HtmlExtension extends AbstractExtension
 
     public function fqn($value)
     {
-        $object = new \ReflectionClass($value);
+        $object = new ReflectionClass($value);
         return $object->getNamespaceName().'\\'.$object->getShortName();
 
     }

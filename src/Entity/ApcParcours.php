@@ -100,11 +100,9 @@ class ApcParcours extends BaseEntity
 
     public function removeApcParcoursNiveau(ApcParcoursNiveau $apcParcoursNiveaux): self
     {
-        if ($this->apcParcoursNiveaux->removeElement($apcParcoursNiveaux)) {
-            // set the owning side to null (unless already changed)
-            if ($apcParcoursNiveaux->getParcours() === $this) {
-                $apcParcoursNiveaux->setParcours(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->apcParcoursNiveaux->removeElement($apcParcoursNiveaux) && $apcParcoursNiveaux->getParcours() === $this) {
+            $apcParcoursNiveaux->setParcours(null);
         }
 
         return $this;

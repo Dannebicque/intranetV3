@@ -132,7 +132,7 @@ class AbsenceJustificatifTableType extends TableType
             'label' => 'apercu',
             'build' => function(WidgetBuilder $builder, AbsenceJustificatif $s) {
                 $builder->add('voir.justificatif', ButtonType::class, [
-                    'class' => 'btn btn-outline btn-info',
+                    'class' => 'btn btn-outline btn-info',//todo: utiliser avec Stimulus
                     'icon' => 'fas fa-eye',
                     'text' => false,
                     'translation_domain' => 'messages',

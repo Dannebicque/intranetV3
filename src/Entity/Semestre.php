@@ -1206,11 +1206,9 @@ class Semestre extends BaseEntity
 
     public function removeAbsenceEtatAppel(AbsenceEtatAppel $absenceEtatAppel): self
     {
-        if ($this->absenceEtatAppels->removeElement($absenceEtatAppel)) {
-            // set the owning side to null (unless already changed)
-            if ($absenceEtatAppel->getSemestre() === $this) {
-                $absenceEtatAppel->setSemestre(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->absenceEtatAppels->removeElement($absenceEtatAppel) && $absenceEtatAppel->getSemestre() === $this) {
+            $absenceEtatAppel->setSemestre(null);
         }
 
         return $this;
@@ -1236,11 +1234,9 @@ class Semestre extends BaseEntity
 
     public function removeCelcatEvent(CelcatEvent $celcatEvent): self
     {
-        if ($this->celcatEvents->removeElement($celcatEvent)) {
-            // set the owning side to null (unless already changed)
-            if ($celcatEvent->getSemestre() === $this) {
-                $celcatEvent->setSemestre(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->celcatEvents->removeElement($celcatEvent) && $celcatEvent->getSemestre() === $this) {
+            $celcatEvent->setSemestre(null);
         }
 
         return $this;
@@ -1288,11 +1284,9 @@ class Semestre extends BaseEntity
 
     public function removeEvaluation(Evaluation $evaluation): self
     {
-        if ($this->evaluations->removeElement($evaluation)) {
-            // set the owning side to null (unless already changed)
-            if ($evaluation->getSemestre() === $this) {
-                $evaluation->setSemestre(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->evaluations->removeElement($evaluation) && $evaluation->getSemestre() === $this) {
+            $evaluation->setSemestre(null);
         }
 
         return $this;
@@ -1318,11 +1312,9 @@ class Semestre extends BaseEntity
 
     public function removeRattrapage(Rattrapage $rattrapage): self
     {
-        if ($this->rattrapages->removeElement($rattrapage)) {
-            // set the owning side to null (unless already changed)
-            if ($rattrapage->getSemestre() === $this) {
-                $rattrapage->setSemestre(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->rattrapages->removeElement($rattrapage) && $rattrapage->getSemestre() === $this) {
+            $rattrapage->setSemestre(null);
         }
 
         return $this;
@@ -1348,11 +1340,9 @@ class Semestre extends BaseEntity
 
     public function removeAbsenceJustificatif(AbsenceJustificatif $absenceJustificatif): self
     {
-        if ($this->absenceJustificatifs->removeElement($absenceJustificatif)) {
-            // set the owning side to null (unless already changed)
-            if ($absenceJustificatif->getSemestre() === $this) {
-                $absenceJustificatif->setSemestre(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->absenceJustificatifs->removeElement($absenceJustificatif) && $absenceJustificatif->getSemestre() === $this) {
+            $absenceJustificatif->setSemestre(null);
         }
 
         return $this;
@@ -1378,11 +1368,9 @@ class Semestre extends BaseEntity
 
     public function removeAbsence(Absence $absence): self
     {
-        if ($this->absences->removeElement($absence)) {
-            // set the owning side to null (unless already changed)
-            if ($absence->getSemestre() === $this) {
-                $absence->setSemestre(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->absences->removeElement($absence) && $absence->getSemestre() === $this) {
+            $absence->setSemestre(null);
         }
 
         return $this;

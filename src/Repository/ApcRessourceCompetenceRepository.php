@@ -9,7 +9,9 @@
 
 namespace App\Repository;
 
+use App\Entity\ApcRessource;
 use App\Entity\ApcRessourceCompetence;
+use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -25,5 +27,27 @@ class ApcRessourceCompetenceRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, ApcRessourceCompetence::class);
+    }
+
+    public function findfBySemestre(Semestre $semestre)
+    {
+        return $this->createQueryBuilder('a')
+            ->innerJoin(ApcRessource::class, 'r', 'WITH', 'a.ressource = r.id')
+            ->where('r.semestre = :semestre')
+            ->setParameter('semestre', $semestre)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findBySemestreArray(Semestre $semestre)
+    {
+        $datas = $this->findfBySemestre($semestre);
+        $array =[];
+        /** @var ApcRessourceCompetence $data */
+        foreach ($datas as $data) {
+            $array[$data->getCompetence()->getId()][$data->getRessource()->getCodeElement()] = $data;
+        }
+
+        return $array;
     }
 }

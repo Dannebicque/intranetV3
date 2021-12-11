@@ -304,11 +304,9 @@ class Groupe extends BaseEntity
 
     public function removeAbsenceEtatAppel(AbsenceEtatAppel $absenceEtatAppel): self
     {
-        if ($this->absenceEtatAppels->removeElement($absenceEtatAppel)) {
-            // set the owning side to null (unless already changed)
-            if ($absenceEtatAppel->getGroupe() === $this) {
-                $absenceEtatAppel->setGroupe(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->absenceEtatAppels->removeElement($absenceEtatAppel) && $absenceEtatAppel->getGroupe() === $this) {
+            $absenceEtatAppel->setGroupe(null);
         }
 
         return $this;

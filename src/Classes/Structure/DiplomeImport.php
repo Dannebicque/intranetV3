@@ -88,7 +88,7 @@ class DiplomeImport
                 $niv = new ApcNiveau();
                 //todo: ajouter l'année
                 $niv->setLibelle($niveau['libelle']);
-                $niv->setOrdre((int)$niveau['ordre']);
+                $niv->setOrdre((int) $niveau['ordre']);
                 $niv->setCompetence($comp);
                 $tCompetences[$comp->getNomCourt()][$niv->getOrdre()] = $niv;
 
@@ -112,7 +112,7 @@ class DiplomeImport
             foreach ($parcour->annee as $annee) {
                 foreach ($annee->competence as $parcNiveau) {
                     $pn = new ApcParcoursNiveau();
-                    $pn->setNiveau($tCompetences[trim((string)$parcNiveau['nom'])][trim((string)$parcNiveau['niveau'])]);
+                    $pn->setNiveau($tCompetences[trim((string) $parcNiveau['nom'])][trim((string) $parcNiveau['niveau'])]);
                     $pn->setParcours($parc);
                     $this->entityManager->persist($pn);
                 }
@@ -145,24 +145,24 @@ class DiplomeImport
                     $ar = new ApcRessource();
                     $ar->setSemestre($semestre);
                     $ar->setLibelle($ressource->titre);
-                    $ar->setCodeMatiere((string)$ressource['code']);
-                    $ar->setCodeElement($this->diplome->getSigle() . (string)$ressource['code']);
-                    $ar->setTdPpn((float)$ressource['heuresCMTD']);
-                    $ar->setTpPpn((float)$ressource['heuresTP']);
-                    $ar->setDescription((string)$ressource->description);
-                    $ar->setMotsCles((string)$ressource->motsCles);
+                    $ar->setCodeMatiere((string) $ressource['code']);
+                    $ar->setCodeElement($this->diplome->getSigle(). $ressource['code']);
+                    $ar->setTdPpn((float) $ressource['heuresCMTD']);
+                    $ar->setTpPpn((float) $ressource['heuresTP']);
+                    $ar->setDescription((string) $ressource->description);
+                    $ar->setMotsCles((string) $ressource->motsCles);
                     $this->entityManager->persist($ar);
                     $tRessources[$ar->getCodeMatiere()] = $ar;
 
                     //acs
                     foreach ($ressource->acs->ac as $ac) {
-                        $rac = new ApcRessourceApprentissageCritique($ar, $tAcs[trim((string)$ac)]);
+                        $rac = new ApcRessourceApprentissageCritique($ar, $tAcs[trim((string) $ac)]);
                         $this->entityManager->persist($rac);
                     }
                     //competences
                     foreach ($ressource->competences->competence as $comp) {
-                        $rac = new ApcRessourceCompetence($ar, $tCompetences[trim((string)$comp['nom'])]);
-                        $rac->setCoefficient((float)$comp['coefficient']);
+                        $rac = new ApcRessourceCompetence($ar, $tCompetences[trim((string) $comp['nom'])]);
+                        $rac->setCoefficient((float) $comp['coefficient']);
                         $this->entityManager->persist($rac);
                     }
                     //les saes seront ajoutée par les SAE
@@ -172,31 +172,31 @@ class DiplomeImport
                     $ar = new ApcSae();
                     $ar->setSemestre($semestre);
                     $ar->setLibelle($sae->titre);
-                    $ar->setCodeMatiere((string)$sae['code']);
-                    $ar->setCodeElement($this->diplome->getSigle() . (string)$sae['code']);
-                    $ar->setTdPpn((float)$sae['heuresCMTD']);
-                    $ar->setTpPpn((float)$sae['heuresTP']);
-                    $ar->setProjetPpn((float)$sae['heuresProjet']);
-                    $ar->setDescription((string)$sae->description);
-                    $ar->setExemples((string)$sae->exemples);
-                    $ar->setLivrables((string)$sae->livrables);
+                    $ar->setCodeMatiere((string) $sae['code']);
+                    $ar->setCodeElement($this->diplome->getSigle().(string) $sae['code']);
+                    $ar->setTdPpn((float) $sae['heuresCMTD']);
+                    $ar->setTpPpn((float) $sae['heuresTP']);
+                    $ar->setProjetPpn((float) $sae['heuresProjet']);
+                    $ar->setDescription((string) $sae->description);
+                    $ar->setExemples((string) $sae->exemples);
+                    $ar->setLivrables((string) $sae->livrables);
                     $this->entityManager->persist($ar);
 
                     //acs
                     foreach ($sae->acs->ac as $ac) {
-                        $rac = new ApcSaeApprentissageCritique($ar, $tAcs[trim((string)$ac)]);
+                        $rac = new ApcSaeApprentissageCritique($ar, $tAcs[trim((string) $ac)]);
                         $this->entityManager->persist($rac);
                     }
 
                     //competences
                     foreach ($sae->competences->competence as $comp) {
-                        $rac = new ApcSaeCompetence($ar, $tCompetences[trim((string)$comp['nom'])]);
-                        $rac->setCoefficient((float)$comp['coefficient']);
+                        $rac = new ApcSaeCompetence($ar, $tCompetences[trim((string) $comp['nom'])]);
+                        $rac->setCoefficient((float) $comp['coefficient']);
                         $this->entityManager->persist($rac);
                     }
                     //Ressources
                     foreach ($sae->ressources->ressource as $comp) {
-                        $rac = new ApcSaeRessource($ar, $tRessources[trim((string)$comp)]);
+                        $rac = new ApcSaeRessource($ar, $tRessources[trim((string) $comp)]);
                         $this->entityManager->persist($rac);
                     }
                 }

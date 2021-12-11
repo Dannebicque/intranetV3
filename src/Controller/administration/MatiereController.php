@@ -139,9 +139,6 @@ class MatiereController extends BaseController
                 $this->entityManager->persist($matiere);
                 $this->entityManager->flush();
                 $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'matiere.add.success.flash');
-                if (null !== $request->request->get('btn_update')) {
-                    return $this->redirectToRoute('administration_matiere_index');
-                }
 
                 return $this->redirectToRoute('administration_matiere_index');
             }
@@ -228,7 +225,9 @@ class MatiereController extends BaseController
                 $this->entityManager->flush();
                 $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'matiere.edit.success.flash');
 
-                return $this->redirectToRoute('administration_matiere_index');
+                if (null !== $request->request->get('btn_update')) {
+                    return $this->redirectToRoute('administration_matiere_index');
+                }
             }
 
             return $this->render('administration/matiere/edit.html.twig', [
