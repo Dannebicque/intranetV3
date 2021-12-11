@@ -19,7 +19,6 @@ use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Component\Routing\RouterInterface;
 
 /**
  * @method Etudiant|null find($id, $lockMode = null, $lockVersion = null)
@@ -152,7 +151,7 @@ class EtudiantRepository extends ServiceEntityRepository
             $tt['mailUniv'] = $etudiant->getMailUniv();
             $tt['mailPerso'] = $etudiant->getMailPerso();
             $tt['semestre'] = null !== $etudiant->getSemestre() ? $etudiant->getSemestre()->getLibelle() : 'non défini';
-            $tt['semestreId'] = null !== $etudiant->getSemestre() ? $etudiant->getSemestre()->getId() : null;
+            $tt['semestreId'] = $etudiant->getSemestre()?->getId();
             $tt['diplomeId'] = null !== $etudiant->getSemestre() ? $etudiant->getDiplome()->getId() : null;
             $tt['promo'] = $etudiant->getPromotion();
             $tt['anneeSortie'] = $etudiant->getAnneeSortie();

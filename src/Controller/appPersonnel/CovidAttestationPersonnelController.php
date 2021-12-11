@@ -86,10 +86,6 @@ class CovidAttestationPersonnelController extends BaseController
 
     /**
      * @Route("/{id}/pdf", name="covid_attestation_personnel_pdf", methods={"GET"})
-     *
-     * @throws LoaderError
-     * @throws RuntimeError
-     * @throws SyntaxError
      */
     public function pdf(
         MyExportPresence $myExportPresence,

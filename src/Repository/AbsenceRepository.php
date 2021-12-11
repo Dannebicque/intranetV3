@@ -15,9 +15,9 @@ use App\Entity\AbsenceJustificatif;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Etudiant;
 use App\Entity\Semestre;
-use function array_key_exists;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use function array_key_exists;
 
 /**
  * @method Absence|null find($id, $lockMode = null, $lockVersion = null)
@@ -87,19 +87,20 @@ class AbsenceRepository extends ServiceEntityRepository
         /** @var Absence $absence */
         foreach ($absences as $absence) {
             if (null !== $absence->getEtudiant() &&
-                null !== $absence->getDateHeure() &&
-                array_key_exists($absence->getEtudiant()->getId(), $trattrapages) &&
-                array_key_exists($absence->getDateHeure()->format('Ymd'),
-                    $trattrapages[$absence->getEtudiant()->getId()]
-                )) {
-                if (!array_key_exists(
-                    $absence->getDateHeure()->format('Hi'),
-                    $trattrapages[$absence->getEtudiant()->getId()][$absence->getDateHeure()->format('Ymd')]
-                )) {
+                null !== $absence->getDateHeure()) {
+                if (array_key_exists($absence->getEtudiant()->getId(), $trattrapages) &&
+                    array_key_exists($absence->getDateHeure()->format('Ymd'),
+                        $trattrapages[$absence->getEtudiant()->getId()]
+                    )) {
+                    if (!array_key_exists(
+                        $absence->getDateHeure()->format('Hi'),
+                        $trattrapages[$absence->getEtudiant()->getId()][$absence->getDateHeure()->format('Ymd')]
+                    )) {
+                        $trattrapages[$absence->getEtudiant()->getId()][$absence->getDateHeure()->format('Ymd')][$absence->getDateHeure()->format('Hi')] = $absence->isJustifie();
+                    }
+                } else {
                     $trattrapages[$absence->getEtudiant()->getId()][$absence->getDateHeure()->format('Ymd')][$absence->getDateHeure()->format('Hi')] = $absence->isJustifie();
                 }
-            } else {
-                $trattrapages[$absence->getEtudiant()->getId()][$absence->getDateHeure()->format('Ymd')][$absence->getDateHeure()->format('Hi')] = $absence->isJustifie();
             }
         }
 

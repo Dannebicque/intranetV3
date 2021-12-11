@@ -65,10 +65,8 @@ class MyPpn
 
                     if (array_key_exists($ligne[0], $ues)) {
                         $matiere = new Matiere();
-                        if ('' !== $ligne[1] || null !== $ligne[1]) {
-                            if (array_key_exists($ligne[1], $parcours)) {
-                                $matiere->setParcours($parcours[$ligne[1]]);
-                            }
+                        if ((null !== $ligne[1]) && array_key_exists($ligne[1], $parcours)) {
+                            $matiere->setParcours($parcours[$ligne[1]]);
                         }
                         $matiere->setPpn($ppn);
                         $matiere->setUe($ues[$ligne[0]]);

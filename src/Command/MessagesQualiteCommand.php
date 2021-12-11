@@ -4,6 +4,7 @@ namespace App\Command;
 
 use App\Classes\Mail\MailerFromTwig;
 use App\Repository\QuestionnaireQualiteRepository;
+use DateTime;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -40,7 +41,7 @@ class MessagesQualiteCommand extends Command
         //todo: page RP identique à la page de Maud, sans les édit, et uniquement la formation.
         $io = new SymfonyStyle($input, $output);
         $nbMessages = 0;
-        $questionnaires = $this->questionnaireQualiteRepository->findInDate((new \DateTime())->modify('+2 days')); //tous les questionnaires dans deux jours
+        $questionnaires = $this->questionnaireQualiteRepository->findInDate((new DateTime())->modify('+2 days')); //tous les questionnaires dans deux jours
         foreach ($questionnaires as $questionnaire) {
             $this->mailer->initEmail();
             $this->mailer->setTemplate('mails/qualite/rappel-j2.html.twig', [
@@ -50,7 +51,7 @@ class MessagesQualiteCommand extends Command
             $nbMessages++;
         }
 
-        $questionnaires = $this->questionnaireQualiteRepository->findInDate((new \DateTime())->modify('+1 days')); //tous les questionnaires dans un jour
+        $questionnaires = $this->questionnaireQualiteRepository->findInDate((new DateTime())->modify('+1 days')); //tous les questionnaires dans un jour
         foreach ($questionnaires as $questionnaire) {
             $this->mailer->initEmail();
             $this->mailer->setTemplate('mails/qualite/rappel-j1.html.twig', [

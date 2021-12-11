@@ -18,7 +18,6 @@ use App\Components\Widget\Type\ButtonDropdownType;
 use App\Components\Widget\Type\LinkType;
 use App\Components\Widget\WidgetBuilder;
 use App\Entity\AbsenceEtatAppel;
-use App\Entity\AnneeUniversitaire;
 use App\Entity\Rattrapage;
 use App\Entity\Semestre;
 use App\Form\Type\DatePickerType;

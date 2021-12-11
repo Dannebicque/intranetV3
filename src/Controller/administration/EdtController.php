@@ -69,46 +69,41 @@ class EdtController extends BaseController
         $edt = $myEdt->initAdministration($this->getDepartement(), $semaine, $filtre,
             $valeur, $this->getAnneeUniversitaire(), $matieres);
 
-        switch ($filtre) {
-            case Constantes::FILTRE_EDT_PROF:
-                return $this->render('administration/edt/_edt-prof.html.twig', [
-                    'prof' => $personnelRepository->find($valeur),
-                    'filtre' => $filtre,
-                    'personnels' => $personnelRepository->findByDepartement($this->getDepartement()),
-                    'salles' => $salleRepository->findAll(),
-                    'matieres' => $matieres,
-                    'edt' => $myEdt,
-                    'tabHeures' => Constantes::TAB_HEURES_EDT_2,
-                ]);
-
-            case Constantes::FILTRE_EDT_MODULE:
-                return $this->render('administration/edt/_edt-matiere.html.twig', [
-                    'matiere' => $typeMatiereManager->getMatiereFromSelect($valeur), //todo: manque le type?
-                    'filtre' => $filtre,
-                    'personnels' => $personnelRepository->findByDepartement($this->dataUserSession->getDepartement()),
-                    'salles' => $salleRepository->findAll(),
-                    'matieres' => $typeMatiereManager->findByDepartement($this->dataUserSession->getDepartement()),
-                    'edt' => $edt,
-                ]);
-            case Constantes::FILTRE_EDT_SALLE:
-                return $this->render('administration/edt/_edt-salle.html.twig', [
-                    'salle' => $valeur,
-                    'filtre' => $filtre,
-                    'personnels' => $personnelRepository->findByDepartement($this->dataUserSession->getDepartement()),
-                    'salles' => $salleRepository->findAll(),
-                    'matieres' => $typeMatiereManager->findByDepartement($this->dataUserSession->getDepartement()),
-                    'edt' => $edt,
-                ]);
-            default:
-                return $this->render('administration/edt/_edt-intranet.html.twig', [
-                    'filtre' => $filtre,
-                    'personnels' => $personnelRepository->findByDepartement($this->dataUserSession->getDepartement()),
-                    'salles' => $salleRepository->findAll(),
-                    'matieres' => $typeMatiereManager->findByDepartement($this->dataUserSession->getDepartement()),
-                    'edt' => $edt,
-                    'groupes' => $groupeRepository->findGroupeSemestreEdt($edt->getSemestre()),
-                ]);
-        }
+        return match ($filtre) {
+            Constantes::FILTRE_EDT_PROF => $this->render('administration/edt/_edt-prof.html.twig', [
+                'prof' => $personnelRepository->find($valeur),
+                'filtre' => $filtre,
+                'personnels' => $personnelRepository->findByDepartement($this->getDepartement()),
+                'salles' => $salleRepository->findAll(),
+                'matieres' => $matieres,
+                'edt' => $myEdt,
+                'tabHeures' => Constantes::TAB_HEURES_EDT_2,
+            ]),
+            Constantes::FILTRE_EDT_MODULE => $this->render('administration/edt/_edt-matiere.html.twig', [
+                'matiere' => $typeMatiereManager->getMatiereFromSelect($valeur), //todo: manque le type?
+                'filtre' => $filtre,
+                'personnels' => $personnelRepository->findByDepartement($this->dataUserSession->getDepartement()),
+                'salles' => $salleRepository->findAll(),
+                'matieres' => $typeMatiereManager->findByDepartement($this->dataUserSession->getDepartement()),
+                'edt' => $edt,
+            ]),
+            Constantes::FILTRE_EDT_SALLE => $this->render('administration/edt/_edt-salle.html.twig', [
+                'salle' => $valeur,
+                'filtre' => $filtre,
+                'personnels' => $personnelRepository->findByDepartement($this->dataUserSession->getDepartement()),
+                'salles' => $salleRepository->findAll(),
+                'matieres' => $typeMatiereManager->findByDepartement($this->dataUserSession->getDepartement()),
+                'edt' => $edt,
+            ]),
+            default => $this->render('administration/edt/_edt-intranet.html.twig', [
+                'filtre' => $filtre,
+                'personnels' => $personnelRepository->findByDepartement($this->dataUserSession->getDepartement()),
+                'salles' => $salleRepository->findAll(),
+                'matieres' => $typeMatiereManager->findByDepartement($this->dataUserSession->getDepartement()),
+                'edt' => $edt,
+                'groupes' => $groupeRepository->findGroupeSemestreEdt($edt->getSemestre()),
+            ]),
+        };
     }
 
     public function edtCelcat(

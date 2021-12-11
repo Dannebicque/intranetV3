@@ -14,8 +14,6 @@ use App\Components\Table\Column\PropertyColumnType;
 use App\Components\Table\Column\WidgetColumnType;
 use App\Components\Table\TableBuilder;
 use App\Components\Table\TableType;
-use App\Components\Widget\Type\ButtonDropdownType;
-use App\Components\Widget\Type\LinkType;
 use App\Components\Widget\Type\RowDeleteLinkType;
 use App\Components\Widget\Type\RowDuplicateLinkType;
 use App\Components\Widget\Type\RowEditLinkType;

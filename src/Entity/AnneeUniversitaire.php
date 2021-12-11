@@ -470,11 +470,9 @@ class AnneeUniversitaire extends BaseEntity
 
     public function removePersonnel(Personnel $personnel): self
     {
-        if ($this->personnels->removeElement($personnel)) {
-            // set the owning side to null (unless already changed)
-            if ($personnel->getAnneeUniversitaire() === $this) {
-                $personnel->setAnneeUniversitaire(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->personnels->removeElement($personnel) && $personnel->getAnneeUniversitaire() === $this) {
+            $personnel->setAnneeUniversitaire(null);
         }
 
         return $this;

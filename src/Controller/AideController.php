@@ -15,13 +15,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AideController extends AbstractController
 {
-    const BASE_URL_AIDE = 'https://documentation.iutranet.fr/';
+    public const BASE_URL_AIDE = 'https://documentation.iutranet.fr/';
 
     #[Route('/aide/{sujet}', name: 'help_article')]
     public function index(
         string $sujet
     ): Response {
-
         $tab = [
             'administration_stage_periode' => 'url',
             'application_personnel_carnet' => 'url',
@@ -75,10 +74,9 @@ class AideController extends AbstractController
             'administration_questionnaire_questionnaire' => '',
         ];
         if (array_key_exists($sujet, $tab)) {
-            return $this->redirect(self::BASE_URL_AIDE . $tab[$sujet]);
+            return $this->redirect(self::BASE_URL_AIDE.$tab[$sujet]);
         }
 
         return $this->redirect(self::BASE_URL_AIDE);
-
     }
 }

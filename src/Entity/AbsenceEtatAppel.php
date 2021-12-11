@@ -22,11 +22,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class AbsenceEtatAppel extends BaseEntity
 {
-    public const SAISIE_SANS_ABSENT = 'pas-absent';
-    public const SAISIE_AVEC_ABSENT = 'des-absent';
-
     use LifeCycleTrait;
     use MatiereTrait;
+    public const SAISIE_SANS_ABSENT = 'pas-absent';
+    public const SAISIE_AVEC_ABSENT = 'des-absent';
 
     /**
      * @ORM\Column(type="date")
@@ -56,7 +55,7 @@ class AbsenceEtatAppel extends BaseEntity
     /**
      * @ORM\ManyToOne(targetEntity=Semestre::class, inversedBy="absenceEtatAppels")
      */
-    private $semestre;
+    private ?Semestre $semestre;
 
     public function getDate(): ?CarbonInterface
     {
@@ -132,7 +131,7 @@ class AbsenceEtatAppel extends BaseEntity
 
     public function appelFait()
     {
-        return $this->getDate()->format('dmY') . '_' . $this->getTypeIdMatiere() . '_' . $this->getHeure() . '_' . $this->getGroupe()->getId();
+        return $this->getDate()?->format('dmY').'_'.$this->getTypeIdMatiere().'_'.$this->getHeure().'_'.$this->getGroupe()?->getId();
     }
 
     public function setEvent(EvenementEdt $event, $typeSaisie)
@@ -145,6 +144,7 @@ class AbsenceEtatAppel extends BaseEntity
         $this->setPersonnel($event->personnelObjet);
         $this->setTypeSaisie($typeSaisie);
         $this->setTypeMatiere($event->getTypeMatiere());
+
         return $this;
     }
 }

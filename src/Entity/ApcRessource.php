@@ -118,11 +118,9 @@ class ApcRessource extends AbstractMatiere
 
     public function removeApcRessourceCompetence(ApcRessourceCompetence $apcRessourceCompetence): self
     {
-        if ($this->apcRessourceCompetences->removeElement($apcRessourceCompetence)) {
-            // set the owning side to null (unless already changed)
-            if ($apcRessourceCompetence->getRessource() === $this) {
-                $apcRessourceCompetence->setRessource(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->apcRessourceCompetences->removeElement($apcRessourceCompetence) && $apcRessourceCompetence->getRessource() === $this) {
+            $apcRessourceCompetence->setRessource(null);
         }
 
         return $this;
@@ -148,11 +146,9 @@ class ApcRessource extends AbstractMatiere
 
     public function removeApcRessourceApprentissageCritique(ApcRessourceApprentissageCritique $apcRessourceApprentissageCritique): self
     {
-        if ($this->apcRessourceApprentissageCritiques->removeElement($apcRessourceApprentissageCritique)) {
-            // set the owning side to null (unless already changed)
-            if ($apcRessourceApprentissageCritique->getRessource() === $this) {
-                $apcRessourceApprentissageCritique->setRessource(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->apcRessourceApprentissageCritiques->removeElement($apcRessourceApprentissageCritique) && $apcRessourceApprentissageCritique->getRessource() === $this) {
+            $apcRessourceApprentissageCritique->setRessource(null);
         }
 
         return $this;
@@ -178,11 +174,9 @@ class ApcRessource extends AbstractMatiere
 
     public function removeApcSaeRessource(ApcSaeRessource $apcSaeRessource): self
     {
-        if ($this->apcSaeRessources->removeElement($apcSaeRessource)) {
-            // set the owning side to null (unless already changed)
-            if ($apcSaeRessource->getRessource() === $this) {
-                $apcSaeRessource->setRessource(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->apcSaeRessources->removeElement($apcSaeRessource) && $apcSaeRessource->getRessource() === $this) {
+            $apcSaeRessource->setRessource(null);
         }
 
         return $this;

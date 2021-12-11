@@ -117,11 +117,9 @@ class ApcSae extends AbstractMatiere
 
     public function removeApcSaeCompetence(ApcSaeCompetence $apcSaeCompetence): self
     {
-        if ($this->apcSaeCompetences->removeElement($apcSaeCompetence)) {
-            // set the owning side to null (unless already changed)
-            if ($apcSaeCompetence->getSae() === $this) {
-                $apcSaeCompetence->setSae(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->apcSaeCompetences->removeElement($apcSaeCompetence) && $apcSaeCompetence->getSae() === $this) {
+            $apcSaeCompetence->setSae(null);
         }
 
         return $this;
@@ -147,11 +145,9 @@ class ApcSae extends AbstractMatiere
 
     public function removeApcSaeRessource(ApcSaeRessource $apcSaeRessource): self
     {
-        if ($this->apcSaeRessources->removeElement($apcSaeRessource)) {
-            // set the owning side to null (unless already changed)
-            if ($apcSaeRessource->getSae() === $this) {
-                $apcSaeRessource->setSae(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->apcSaeRessources->removeElement($apcSaeRessource) && $apcSaeRessource->getSae() === $this) {
+            $apcSaeRessource->setSae(null);
         }
 
         return $this;
@@ -225,11 +221,9 @@ class ApcSae extends AbstractMatiere
 
     public function removeApcSaeApprentissageCritique(ApcSaeApprentissageCritique $apcSaeApprentissageCritique): self
     {
-        if ($this->apcSaeApprentissageCritiques->removeElement($apcSaeApprentissageCritique)) {
-            // set the owning side to null (unless already changed)
-            if ($apcSaeApprentissageCritique->getSae() === $this) {
-                $apcSaeApprentissageCritique->setSae(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->apcSaeApprentissageCritiques->removeElement($apcSaeApprentissageCritique) && $apcSaeApprentissageCritique->getSae() === $this) {
+            $apcSaeApprentissageCritique->setSae(null);
         }
 
         return $this;

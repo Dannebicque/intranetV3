@@ -65,18 +65,14 @@ class MyConfiguration
 
     public function updateOption($type, $id, $name, $value): bool
     {
-        switch ($type) {
-            case 'departement':
-                return $this->updateDepartement($id, $name, $value);
-            case 'diplome':
-                return $this->updateDiplome($id, $name, $value);
-            case 'annee':
-                return $this->updateAnnee($id, $name, $value);
-            case 'semestre':
-                return $this->updateSemestre($id, $name, $value);
-        }
+        return match ($type) {
+            'departement' => $this->updateDepartement($id, $name, $value),
+            'diplome' => $this->updateDiplome($id, $name, $value),
+            'annee' => $this->updateAnnee($id, $name, $value),
+            'semestre' => $this->updateSemestre($id, $name, $value),
+            default => false,
+        };
 
-        return false;
     }
 
     private function updateDepartement($id, $name, $value): bool

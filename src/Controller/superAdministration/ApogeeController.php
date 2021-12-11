@@ -176,7 +176,7 @@ class ApogeeController extends BaseController
         }
         $this->entityManager->persist($pn);
 
-        if (true === $annee->getDiplome()->getTypeDiplome()->getApc()) {
+        if (true === $annee->getDiplome()?->getTypeDiplome()?->getApc()) {
             //BUT
             $t = [];
             $elementsAnnee = $apogeeImport->getElementsFromAnnee($annee);

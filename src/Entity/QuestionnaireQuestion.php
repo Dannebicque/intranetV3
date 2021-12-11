@@ -313,7 +313,7 @@ class QuestionnaireQuestion extends BaseEntity
 
     public function getParametre(): ?array
     {
-        if (null !== $this->parametre || '' !== $this->parametre) {
+        if (null !== $this->parametre) {
             return json_decode($this->parametre, true);
         }
 

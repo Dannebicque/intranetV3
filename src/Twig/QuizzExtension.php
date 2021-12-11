@@ -38,15 +38,11 @@ class QuizzExtension extends AbstractExtension
 
     public function typeQuestion($type): ?string
     {
-        switch ($type) {
-            case QuestionnaireQuestion::QUESTION_TYPE_YESNO:
-            case QuestionnaireQuestion::QUESTION_TYPE_QCU:
-            case QuestionnaireQuestion::QUESTION_TYPE_ECHELLE:
-                return 'radio';
-            case QuestionnaireQuestion::QUESTION_TYPE_QCM:
-                return 'checkbox';
-        }
-        return '';
+        return match ($type) {
+            QuestionnaireQuestion::QUESTION_TYPE_YESNO, QuestionnaireQuestion::QUESTION_TYPE_QCU, QuestionnaireQuestion::QUESTION_TYPE_ECHELLE => 'radio',
+            QuestionnaireQuestion::QUESTION_TYPE_QCM => 'checkbox',
+            default => '',
+        };
     }
 
     public function personnalise($texte, $config)

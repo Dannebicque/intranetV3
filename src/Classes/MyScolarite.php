@@ -55,30 +55,29 @@ class MyScolarite
             while (!feof($handle)) {
                 /*On lit la ligne courante*/
                 $ligne = fgetcsv($handle, 1024, ';');
-                if (false !== $ligne && count($ligne) > 1) {
-                    if (array_key_exists($ligne[1], $semestres) && array_key_exists($ligne[0], $etudiants)) {
-                        //numetudiant	codesemestre	semestre	ordre	moyenne	nbabsences	decision	suite ues
-                        $scol = new Scolarite($etudiants[$ligne[0]], $semestres[$ligne[1]]);
-                        $scol->setAnneeUniversitaire($anneeUniversitaire);
-                        $scol->setDecision($ligne[6]);
-                        $scol->setMoyenne(Tools::convertToFloat($ligne[4]));
-                        $scol->setOrdre($ligne[3]);
-                        $scol->setNbAbsences($ligne[5]);
-                        $scol->setProposition($ligne[7]);
-                        $scol->setDiffuse(true);
-                        $this->entityManager->persist($scol);
-                        $tues = explode('!', $ligne[8]);
-                        $tUe = [];
-                        foreach ($tues as $tue) {
-                            $ue = explode(':', $tue);
-                            if (array_key_exists($ue[0], $ues)) {
-                                $tUe[$ues[$ue[0]]->getId()]['moyenne'] = Tools::convertToFloat($ue[1]);
-                                $tUe[$ues[$ue[0]]->getId()]['rang'] = -1;
+                if (false !== $ligne && count($ligne) > 1 && array_key_exists($ligne[1],
+                        $semestres) && array_key_exists($ligne[0], $etudiants)) {
+                            //numetudiant	codesemestre	semestre	ordre	moyenne	nbabsences	decision	suite ues
+                            $scol = new Scolarite($etudiants[$ligne[0]], $semestres[$ligne[1]]);
+                            $scol->setAnneeUniversitaire($anneeUniversitaire);
+                            $scol->setDecision($ligne[6]);
+                            $scol->setMoyenne(Tools::convertToFloat($ligne[4]));
+                            $scol->setOrdre($ligne[3]);
+                            $scol->setNbAbsences($ligne[5]);
+                            $scol->setProposition($ligne[7]);
+                            $scol->setDiffuse(true);
+                            $this->entityManager->persist($scol);
+                            $tues = explode('!', $ligne[8]);
+                            $tUe = [];
+                            foreach ($tues as $tue) {
+                                $ue = explode(':', $tue);
+                                if (array_key_exists($ue[0], $ues)) {
+                                    $tUe[$ues[$ue[0]]->getId()]['moyenne'] = Tools::convertToFloat($ue[1]);
+                                    $tUe[$ues[$ue[0]]->getId()]['rang'] = -1;
+                                }
                             }
+                            $scol->setMoyennesUes($tUe);
                         }
-                        $scol->setMoyennesUes($tUe);
-                    }
-                }
             }
             $this->entityManager->flush();
 

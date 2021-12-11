@@ -42,7 +42,7 @@ class MaterielCommunReservationSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            MaterielCommunReservationEvent::ADDED   => 'onMaterielCommunReservationAdded',
+            MaterielCommunReservationEvent::ADDED => 'onMaterielCommunReservationAdded',
             MaterielCommunReservationEvent::REMOVED => 'onMaterielCommunReservationRemoved',
         ];
     }
@@ -58,8 +58,8 @@ class MaterielCommunReservationSubscriber implements EventSubscriberInterface
             $this->myMailer->sendMessage($reservation->getMaterielCommun()->getContact()->getMails(),
                 'Nouvelle demande de matériel commun',
                 [
-                    'replyTo' => null !== $reservation->getPersonnel() ? $reservation->getPersonnel()->getMailUniv() : null,
-                    'cc'      => null !== $reservation->getPersonnel() ? $reservation->getPersonnel()->getMails() : null,
+                    'replyTo' => $reservation->getPersonnel()?->getMailUniv(),
+                    'cc' => $reservation->getPersonnel()?->getMails(),
                 ]);
         }
     }

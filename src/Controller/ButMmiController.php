@@ -137,12 +137,13 @@ class ButMmiController extends AbstractController
         $saes = $apcSaeRepository->findByDiplomeToSemestreArray($diplome);
         $tab = [];
         foreach ($diplome->getSemestres() as $semestre) {
+            $semestreid = $semestre->getId();
             $tab[$semestre->getId()] = [];
             $tab[$semestre->getId()]['niveaux'] = $apcNiveauRepository->findBySemestre($semestre);
-            $tab[$semestre->getId()]['ressources'] = $ressources[$semestre->getId()];
-            $tab[$semestre->getId()]['saes'] = $saes[$semestre->getId()];
-            $tab[$semestre->getId()]['coefficients'] = $apcCoefficient->calculsCoefficients($tab[$semestre->getId()]['saes'],
-                $tab[$semestre->getId()]['ressources']);
+            $tab[$semestre->getId()]['ressources'] = $ressources[$semestreid];
+            $tab[$semestre->getId()]['saes'] = $saes[$semestreid];
+            $tab[$semestre->getId()]['coefficients'] = $apcCoefficient->calculsCoefficients($tab[$semestreid]['saes'],
+                $tab[$semestreid]['ressources']);
         }
 
         return $this->render('but_mmi/coefficients.html.twig', [

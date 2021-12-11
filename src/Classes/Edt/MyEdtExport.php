@@ -114,12 +114,11 @@ class MyEdtExport
 
         $edt = array_merge(...$temp);
 
-        switch ($_format) {
-            case 'ics':
-                return $this->genereIcal($edt);
-        }
+        return match ($_format) {
+            'ics' => $this->genereIcal($edt),
+            default => false,
+        };
 
-        return false;
     }
 
     private function genereIcal($edt): bool|string

@@ -26,7 +26,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/administration/articles')]
 class ArticleController extends BaseController
 {
-    #[Route('/', name: 'administration_article_index', methods: ['GET', 'POST'], options: ['expose' => true])]
+    #[Route('/', name: 'administration_article_index', options: ['expose' => true], methods: ['GET', 'POST'])]
     public function index(Request $request): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());

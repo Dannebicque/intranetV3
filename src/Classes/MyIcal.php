@@ -135,20 +135,18 @@ class MyIcal
         } elseif (($mois_courant > 3) && ($mois_courant < 10)) {
             $decalage_horaire = 2 * 3600;
         } elseif (3 === (int) $mois_courant) {
-            if (!isset($num_dernier_dimanche[$annee_courante][$mois_courant])) {
-                $num_dernier_dimanche[$annee_courante][$mois_courant] = $this->getDernierDimancheDuMois2($mois_courant,
+            $num_dernier_dimanche[$annee_courante][$mois_courant] = $this->getDernierDimancheDuMois2($mois_courant,
                     $annee_courante);
-            }
+
             if ($jour_courant >= $num_dernier_dimanche[$annee_courante][$mois_courant]) {
                 $decalage_horaire = 2 * 3600;
             } else {
                 $decalage_horaire = 1 * 3600;
             }
         } elseif (10 === (int) $mois_courant) {
-            if (!isset($num_dernier_dimanche[$annee_courante][$mois_courant])) {
-                $num_dernier_dimanche[$annee_courante][$mois_courant] = $this->getDernierDimancheDuMois2($mois_courant,
+            $num_dernier_dimanche[$annee_courante][$mois_courant] = $this->getDernierDimancheDuMois2($mois_courant,
                     $annee_courante);
-            }
+
             if ($jour_courant >= $num_dernier_dimanche[$annee_courante][$mois_courant]) {
                 $decalage_horaire = 1 * 3600;
             } else {

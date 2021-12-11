@@ -23,6 +23,10 @@ class ApcNiveau extends BaseEntity
 {
     use LifeCycleTrait;
 
+    public const NIVEAU_1 = 'Novice';
+    public const NIVEAU_2 = 'Intermédiaire';
+    public const NIVEAU_3 = 'Compétent';
+
     /**
      * @ORM\Column(type="string", length=255)
      */
@@ -159,24 +163,22 @@ class ApcNiveau extends BaseEntity
 
     public function removeApcParcoursNiveau(ApcParcoursNiveau $apcParcoursNiveaux): self
     {
-        if ($this->apcParcoursNiveaux->removeElement($apcParcoursNiveaux)) {
-            // set the owning side to null (unless already changed)
-            if ($apcParcoursNiveaux->getNiveau() === $this) {
-                $apcParcoursNiveaux->setNiveau(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->apcParcoursNiveaux->removeElement($apcParcoursNiveaux) && $apcParcoursNiveaux->getNiveau() === $this) {
+            $apcParcoursNiveaux->setNiveau(null);
         }
 
         return $this;
     }
 
-    public function display()
+    public function display(): string
     {
         $niv = match ($this->ordre) {
-            1 => 'Novice',
-            2 => 'Intermédiaire',
-            3 => 'Compétent',
+            1 => self::NIVEAU_1,
+            2 => self::NIVEAU_2,
+            3 => self::NIVEAU_3,
         };
 
-        return $this->getCompetence()->getNomCourt() . ' - Niveau ' . $niv . '(' . $this->ordre . ')';
+        return $this->getCompetence()->getNomCourt().' - Niveau '.$niv.'('.$this->ordre.')';
     }
 }

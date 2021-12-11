@@ -16,6 +16,7 @@ namespace App\Classes;
 use App\DTO\StatistiquesSemestre;
 use App\Entity\Etudiant;
 use App\Entity\Semestre;
+use App\Entity\Utilisateur;
 use function array_key_exists;
 use function count;
 
@@ -33,9 +34,9 @@ class StatsSemestre
         /** @var Etudiant $etudiant */
         foreach ($semestre->getEtudiants() as $etudiant) {
             //Homme/femme
-            if (Etudiant::HOMME === $etudiant->getCivilite()) {
+            if (Utilisateur::HOMME === $etudiant->getCivilite()) {
                 ++$stats->hommes;
-            } elseif (Etudiant::FEMME === $etudiant->getCivilite()) {
+            } elseif (Utilisateur::FEMME === $etudiant->getCivilite()) {
                 ++$stats->femmes;
             }
 

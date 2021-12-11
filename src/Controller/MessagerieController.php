@@ -208,18 +208,14 @@ class MessagerieController extends BaseController
 
     private function getDestinataires($typeDestinataire, Request $request)
     {
-        switch ($typeDestinataire) {
-            case 's':
-                return $request->request->get('messageToSemestre');
-            case 'g':
-                return $request->request->get('messageToGroupe');
-            case 'e':
-                return $request->request->get('messageToLibreEtudiant');
-            case 'p':
-                return $request->request->get('messageToLibrePersonnel');
-        }
+        return match ($typeDestinataire) {
+            's' => $request->request->get('messageToSemestre'),
+            'g' => $request->request->get('messageToGroupe'),
+            'e' => $request->request->get('messageToLibreEtudiant'),
+            'p' => $request->request->get('messageToLibrePersonnel'),
+            default => null,
+        };
 
-        return null;
     }
 
     /**

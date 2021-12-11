@@ -890,11 +890,9 @@ class Departement extends BaseEntity
 
     public function removeBCDemand(BCDemande $bCDemand): self
     {
-        if ($this->bCDemandes->removeElement($bCDemand)) {
-            // set the owning side to null (unless already changed)
-            if ($bCDemand->getDepartement() === $this) {
-                $bCDemand->setDepartement(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->bCDemandes->removeElement($bCDemand) && $bCDemand->getDepartement() === $this) {
+            $bCDemand->setDepartement(null);
         }
 
         return $this;
@@ -920,11 +918,9 @@ class Departement extends BaseEntity
 
     public function removeBorne(Borne $borne): self
     {
-        if ($this->bornes->removeElement($borne)) {
-            // set the owning side to null (unless already changed)
-            if ($borne->getDepartement() === $this) {
-                $borne->setDepartement(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->bornes->removeElement($borne) && $borne->getDepartement() === $this) {
+            $borne->setDepartement(null);
         }
 
         return $this;

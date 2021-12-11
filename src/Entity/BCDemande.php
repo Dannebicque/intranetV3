@@ -449,11 +449,9 @@ class BCDemande extends BaseEntity
 
     public function removeMigo(BCServiceFait $migo): self
     {
-        if ($this->migos->removeElement($migo)) {
-            // set the owning side to null (unless already changed)
-            if ($migo->getBCDemande() === $this) {
-                $migo->setBCDemande(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->migos->removeElement($migo) && $migo->getBCDemande() === $this) {
+            $migo->setBCDemande(null);
         }
 
         return $this;

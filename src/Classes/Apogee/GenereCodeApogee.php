@@ -31,11 +31,7 @@ class GenereCodeApogee
             'typeDiplome' => 4,
         ]);
 
-        if (null === $this->diplome) {
-            return false;
-        }
-
-        return true;
+        return null !== $this->diplome;
     }
 
     public function genereCodes(): bool

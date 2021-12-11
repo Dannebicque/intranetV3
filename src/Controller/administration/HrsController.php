@@ -14,13 +14,12 @@ use App\Entity\Constantes;
 use App\Entity\Hrs;
 use App\Form\HrsType;
 use App\Repository\HrsRepository;
-use App\Table\ActualiteTableType;
 use App\Table\HrsTableType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route("/administration/service-previsionnel/hrs")]
+#[Route('/administration/service-previsionnel/hrs')]
 class HrsController extends BaseController
 {
     /**
@@ -31,13 +30,13 @@ class HrsController extends BaseController
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
 
-        if (0 === $annee && $this->getAnneeUniversitaire() !== null && $this->getAnneeUniversitaire()->getAnnee() !== 0) {
+        if (0 === $annee && null !== $this->getAnneeUniversitaire() && 0 !== $this->getAnneeUniversitaire()->getAnnee()) {
             $annee = $this->getAnneeUniversitaire()->getAnnee();
         }
 
         $table = $this->createTable(HrsTableType::class, [
             'departement' => $this->getDepartement(),
-            'annee' => $annee
+            'annee' => $annee,
         ]);
 
         $hrs = new Hrs($this->getDepartement());
@@ -75,7 +74,7 @@ class HrsController extends BaseController
      */
     public function edit(Request $request, Hrs $hrs): Response
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $hrs->getDepartement());//todo: département parfois null??
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $hrs->getDepartement()); //todo: département parfois null??
 
         $form = $this->createForm(HrsType::class, $hrs, [
             'departement' => $this->getDepartement(),
@@ -92,12 +91,10 @@ class HrsController extends BaseController
             if (null !== $request->request->get('btn_update')) {
                 return $this->redirectToRoute('administration_hrs_index');
             }
-
-            return $this->redirectToRoute('administration_hrs_index');
         }
 
         return $this->render('administration/hrs/edit.html.twig', [
-            'hrs'  => $hrs,
+            'hrs' => $hrs,
             'form' => $form->createView(),
         ]);
     }
@@ -157,6 +154,7 @@ class HrsController extends BaseController
     public function show(Hrs $hrs): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $hrs->getDepartement());
+
         return $this->render('administration/hrs/show.html.twig', ['hrs' => $hrs]);
     }
 
@@ -167,7 +165,7 @@ class HrsController extends BaseController
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $hrs->getDepartement());
         $id = $hrs->getId();
-        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
             $this->entityManager->remove($hrs);
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'hrs.delete.success.flash');
