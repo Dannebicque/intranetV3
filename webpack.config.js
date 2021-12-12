@@ -65,6 +65,7 @@ Encore
   .addEntry('adm.matieres', './assets/js/pages/adm.matieres.js')
   .addEntry('adm.scolarite', './assets/js/pages/adm.scolarite.js')
   .addEntry('adm.stage', './assets/js/pages/adm.stage.js')
+  .addEntry('adm.qualite', './assets/js/pages/adm.qualite.js')
   .addEntry('creneaux', './assets/js/pages/creneaux.js')
   .addEntry('settings', './assets/js/pages/settings.js')
   .addEntry('notes', './assets/js/pages/notes.js')
