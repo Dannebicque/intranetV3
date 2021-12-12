@@ -136,7 +136,7 @@ class TypeGroupeController extends BaseController
      */
     public function delete(Request $request, TypeGroupe $typeGroupe): Response
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $typegroupe->getSemestre());
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $typeGroupe->getSemestre());
 
         $id = $typeGroupe->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
