@@ -13,6 +13,7 @@ use App\Entity\Annee;
 use App\Entity\Diplome;
 use App\Entity\QuestionnaireQualite;
 use App\Entity\Semestre;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -42,7 +43,7 @@ class QuestionnaireQualiteRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findInDate(\DateTime $date)
+    public function findInDate(DateTime $date)
     {
         return $this->createQueryBuilder('q')
             ->innerJoin(Semestre::class, 's', 'with', 's.id=q.semestre')

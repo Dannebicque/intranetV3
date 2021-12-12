@@ -16,34 +16,7 @@
     <div class="card">
         <h4 class="card-title">{{ 'enquete.index.heading'|trans }}</h4>
         <div class="card-body">
-            <table class="table table-bordered">
-                <thead>
-                <tr>
-                    <th>Formation</th>
-                    <th>Nb Etudiant</th>
-                    <th>Semestres</th>
-                    <th>Formateurs</th>
-                    <th>Entreprises</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for diplome in diplomes %}
-                  <tr>
-                    <td>{{ diplome.libelleLong }}</td>
-                    <td>{% if effectifs[diplome.id] is defined %}{{ effectifs[diplome.id] }}{% else %}-{% endif %}</td>
-                    <td>
-                        {% for semestre in diplome.semestres %}
-                            <a href="{{ path('administratif_enquete_semestre', {semestre:semestre.id}) }}" class="btn
-                        {% if semestre.actif == true %}btn-success{% else %}btn-secondary{% endif %}">{{ semestre
-                                .libelle }}</a>
-                        {% endfor %}
-                    </td>
-                      <td>Formateurs</td>
-                      <td>Entreprises</td>
-                  </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+            {{ table_render(table) }}
         </div>
     </div>
 {% endblock %}

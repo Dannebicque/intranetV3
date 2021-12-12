@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block header %}
-    {{ 'adm.qualite.show.heading'|trans }} | {{ semestre.display }}
+    {{ 'adm.qualite.apercu.heading'|trans }} | {{ semestre.display }}
 {% endblock %}
 
 {% block headeractions %}
@@ -21,9 +21,9 @@
 
 {% block content %}
     <div class="card">
-        <h4 class="card-title">{{ 'adm.qualite.show.heading'|trans }} | {{ semestre.display }}</h4>
+        <h4 class="card-title">{{ 'adm.qualite.apercu.heading'|trans }} | {{ semestre.display }}</h4>
         <div class="card-body">
-            {{ include('questionnaire/commun/_tableauReponses.html.twig') }}
+            {{ questionnaire_render(questionnaire) }}
         </div>
     </div>
 {% endblock %}
@@ -32,11 +32,6 @@
     {{ include('composants/fab-button-help.html.twig', {
         href:path('help_article', {sujet: 'administration_qualite'}),
     }) }}
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    {{ encore_entry_script_tags('adm.qualite') }}
 {% endblock %}
 
 

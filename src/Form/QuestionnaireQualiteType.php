@@ -35,14 +35,17 @@ class QuestionnaireQualiteType extends AbstractType
                 'help' => 'Titre du questionnaire affiché aux étudiants',
             ])
             ->add('texteExplication', TextareaType::class, [
+                'attr' => ['class' => 'tinyMce', 'rows' => 10],
                 'label' => 'label.texteExplication',
                 'help' => 'Texte d\'explication du questionnaire. Affiché dans la liste des questionnaires.',
             ])
             ->add('texteDebut', TextareaType::class, [
+                'attr' => ['class' => 'tinyMce', 'rows' => 10],
                 'label' => 'label.texteDebut',
                 'help' => 'Texte introductif du questionnaire, affiché au début de l\'enquête',
             ])
             ->add('textFin', TextareaType::class, [
+                'attr' => ['class' => 'tinyMce', 'rows' => 10],
                 'label' => 'label.texteFin',
                 'help' => 'Texte affiché à la fin du questionnaire, une fois l\'ensemble des sections complétées.',
             ])
@@ -76,7 +79,8 @@ class QuestionnaireQualiteType extends AbstractType
                 'max_items' => 0,
 
                 //'help' => 'Ajoutez les situations professionnelles de la compétence.',
-            ]);
+            ])
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

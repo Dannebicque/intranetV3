@@ -43,6 +43,8 @@ class QuestionnaireRenderer
         $vars['etudiant'] = $questionnaire->getIdEtudiant();
         $vars['options'] = $options;
         $vars['id'] = $questionnaire->getQuestionnaire()->id;
+        $vars['url'] = $questionnaire->getUrl();
+        $vars['urlEnd'] = $questionnaire->getUrlEnd();
 
         return $vars;
     }

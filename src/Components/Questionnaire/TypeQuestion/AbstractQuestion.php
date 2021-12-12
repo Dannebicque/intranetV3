@@ -30,6 +30,7 @@ abstract class AbstractQuestion
     public bool $obligatoire = true;
     public array $options = [];
     public ?Question $questionParente = null;
+    public bool $hasEnfants = false;
     public string $numero = '1';
     private Reponses $reponses;
     public ?ReponseEtudiant $reponseEtudiant = null;

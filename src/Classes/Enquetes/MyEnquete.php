@@ -44,15 +44,9 @@ class MyEnquete
     /** @var Previsionnel[] */
     private array $previsionnel;
 
-    /**
-     * @var float|int
-     */
-    private $nbReponses = 0;
+    private int|float $nbReponses = 0;
 
-    /**
-     * @var float|int
-     */
-    private $sommePourcentage = 0;
+    private int|float $sommePourcentage = 0;
 
     private Configuration $configuration;
 
@@ -128,9 +122,8 @@ class MyEnquete
                     $qualiteQuestionnaireSection->getOrdre() . '. ' . $qualiteQuestionnaireSection->getSection()->getTitre(),
                     ['color' => $this->configuration->get('COLOR_IUT'), 'font-size' => 10, 'font-weight' => 'bold']);
                 $this->ligne += 2;
-                if (null !== $qualiteQuestionnaireSection->getConfig() && '' !== $qualiteQuestionnaireSection->getConfig()) {
-                    $arrayConfig = explode('-', $qualiteQuestionnaireSection->getConfig());
-                    $arrayConfig = explode(',', $arrayConfig[1]);
+                if (null !== $qualiteQuestionnaireSection->getConfig() && array_key_exists('valeurs', $qualiteQuestionnaireSection->getConfig())) {
+                    $arrayConfig = $qualiteQuestionnaireSection->getConfig()['valeurs'];
                     foreach ($arrayConfig as $config) {
                         foreach ($qualiteQuestionnaireSection->getSection()->getQualiteSectionQuestions() as $qualiteSectionQuestion) {
                             $this->writeExcelQuestion($qualiteSectionQuestion->getQuestion(),
@@ -198,10 +191,12 @@ class MyEnquete
         QuestionnaireSection $section,
         string $config = ''
     ): void {
+        dump($config);
         if ('' === $config) {
             $libQuestion = $question->getLibelle();
         } else {
             $c = mb_substr($config, 2, mb_strlen($config));
+            dump($this->previsionnel);
             if (array_key_exists($c, $this->previsionnel)) {
                 $libQuestion = Tools::personnaliseTexte($question->getLibelle(),
                     $this->previsionnel[$c]);

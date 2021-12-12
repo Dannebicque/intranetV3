@@ -10,7 +10,6 @@
 namespace App\Components\Questionnaire\Form;
 
 use App\Entity\QuestionnaireQuestion;
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class QuestionnaireQuestionTypeLibre extends QuestionnaireQuestionType

@@ -10,6 +10,7 @@
 namespace App\Components\Questionnaire;
 
 use App\Components\Questionnaire\TypeQuestion\AbstractQuestion;
+use App\Components\Questionnaire\TypeQuestion\TypeChainee;
 use Twig\Environment;
 use Twig\TemplateWrapper;
 
@@ -34,7 +35,12 @@ class TypeQuestionRenderer
 
         $params = $question->getOptions();
         $params['block_name'] = $question->getOption('block_name');
-        $params['name'] = 'q'.$question->id;
+
+        if ($question::class=== TypeChainee::class) {
+            $params['questionsEnfants'] = $question->questions;
+        }
+
+        $params['name'] = 'q' . $question->id;
         $params['id'] = $question->id;
         $params['visible'] = $this->isVisible($question->parametres);
         $params['reponses'] = $question->getReponses();
@@ -44,7 +50,7 @@ class TypeQuestionRenderer
         $params['libelle'] = $question->libelle;
         $params['numero'] = $question->numero;
         $params['obligatoire'] = $question->obligatoire;
-        $params['typeQuestionnaire'] = 'quizz';//todo: a gérer dans option...
+        $params['typeQuestionnaire'] = 'qualite';//todo: a gérer dans option...
         $params['reponseEtudiant'] = $question->reponseEtudiant;
 
         return $template->renderBlock($params['block_name'], $params);
@@ -67,12 +73,11 @@ class TypeQuestionRenderer
     private function isVisible(array $parametres)
     {
         foreach ($parametres as $param) {
-            if (array_key_exists('type', $param)) {
-                if ($param['type'] === 'condition') {
-                    return false;
-                }
+            if (array_key_exists('type', $param) && $param['type'] === 'condition') {
+                return false;
             }
         }
+
         return true;
     }
 }

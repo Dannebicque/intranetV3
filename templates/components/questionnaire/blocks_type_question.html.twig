@@ -1,3 +1,48 @@
+{% block type_chainee %}
+    <fieldset class="form-group">
+        {{ block('libelle') }}
+        <div aria-describedby="quizz_question_{{ id }}_help">
+            <small id="quizz_question_{{ id }}_help" class="form-text text-muted">{{ help }}</small>
+        </div>
+
+        {% for subQuestion in questionsEnfants %}
+            <div class="sub-question {% if loop.index is odd %}row-striped{% endif %}">
+
+
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 sub-question-titre">
+                        # {{ subQuestion.libelle }}
+                    </div>
+                    {% if config == null %}
+                        {% set name = 'q'~subQuestion.id %}
+                    {% else %}
+                        {% set name = 'q'~subQuestion.id~'_c'~config.id %}
+                    {% endif %}
+                    {% for reponse in reponses %}
+                        <div class="col-sm-12 col-md-2">
+                            <div class="form-check">
+                                <input type="radio" id="quizz_question_qcu_{{ name }}_{{ reponse.id }}"
+                                       name="quizz_question_reponses_{{ name }}"
+                                       data-action="change->enquete#change"
+                                       data-fieldset="{{ id }}"
+                                       data-typeQuestionnaire="{{ type_question }}"
+                                        {% if apercu is not defined or apercu == false %}
+                                            data-etudiant="{{ etudiant_id }}"
+                                        {% endif %}
+                                        {% if reponseEtudiant != null and
+                                            reponseEtudiant.valeur == reponse.valeur %}checked{% endif %}
+                                        {% if obligatoire %}required{% endif %}
+                                       class="form-check-input  {% if apercu is not defined or apercu == false %}questionQualite{% endif %}"
+                                       value="{{ reponse.valeur }}">
+                                <label class="form-check-label required" for="quizz_question_qcu_{{ name }}_{{ reponse.id }}">{{ reponse.libelle }}</label>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </fieldset>
+{% endblock %}
 {% block type_echelle %}
     <fieldset class="form-group mt-2" {% if visible == false %}style="display:none"{% endif %}
             {{ stimulus_controller('enquete', {
@@ -169,8 +214,8 @@
                         {% if apercu is not defined or apercu == false %}
                             data-etudiant="{{ etudiant_id }}"
                         {% endif %}
-                         {% if reponseEtudiant != null and
-                             reponseEtudiant.valeur == reponse.valeur %}checked{% endif %}
+                        {% if reponseEtudiant != null and
+                            reponseEtudiant.valeur == reponse.valeur %}checked{% endif %}
                         {% if obligatoire %}required{% endif %}
                        class="form-check-input  {% if apercu is not defined or apercu == false %}questionQualite{% endif %}"
                        value="{{ reponse.valeur }}">
@@ -184,9 +229,9 @@
                                 data-etudiant="{{ etudiant_id }}"
                             {% endif %}
                            class="form-control {% if apercu is not defined or apercu == false %}questionQualiteTextArea{% endif %}"
-                             {% if reponseEtudiant != null and reponseEtudiant.valeur == 'CHX:OTHER' %}
-                             value="{{ reponseEtudiant.complementValeur }}"
-                             {% endif %}
+                            {% if reponseEtudiant != null and reponseEtudiant.valeur == 'CHX:OTHER' %}
+                                value="{{ reponseEtudiant.complementValeur }}"
+                            {% endif %}
                     >
                 {% endif %}
             </div>

@@ -30,7 +30,7 @@ class QuestionnaireQuestionController extends BaseController
         $this->questionnaireQuestionTagRepository = $questionnaireQuestionTagRepository;
     }
 
-    #[Route('/', name: 'index', methods: ['GET', 'POST'], options: ['expose' => true])]
+    #[Route('/', name: 'index', options: ['expose' => true], methods: ['GET', 'POST'])]
     public function index(Request $request, QuestionnaireRegistry $questionnaireRegistry): Response
     {
         $table = $this->createTable(QuestionnaireQuestionTableType::class,

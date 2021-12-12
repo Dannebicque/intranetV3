@@ -18,6 +18,7 @@ use App\Components\Table\TableType;
 use App\Components\Widget\Type\ButtonDropdownType;
 use App\Components\Widget\Type\LinkType;
 use App\Components\Widget\Type\RowDeleteLinkType;
+use App\Components\Widget\Type\RowDuplicateLinkType;
 use App\Components\Widget\Type\RowEditLinkType;
 use App\Components\Widget\Type\RowShowLinkType;
 use App\Components\Widget\WidgetBuilder;
@@ -88,11 +89,11 @@ class QuestionnaireQualiteTableType extends TableType
 
         $builder->addColumn('links', WidgetColumnType::class, [
             'build' => function(WidgetBuilder $builder, QuestionnaireQualite $s) {
-//                $builder->add('duplicate', RowDuplicateLinkType::class, [
-//                    'route' => 'sadm_questionnaire_qualite_duplicate',
-//                    'route_params' => ['id' => $s->getId()],
-//                    'xhr' => false,
-//                ]);
+                $builder->add('duplicate', RowDuplicateLinkType::class, [
+                    'route' => 'sadm_questionnaire_qualite_duplicate',
+                    'route_params' => ['id' => $s->getId()],
+                    'xhr' => false,
+                ]);
                 $builder->add('show', RowShowLinkType::class, [
                     'route' => 'sadm_questionnaire_qualite_show',
                     'route_params' => [

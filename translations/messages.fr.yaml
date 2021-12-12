@@ -338,6 +338,7 @@ adm:
     menu: Qualité
     index.heading: 'Liste des questionnaires qualité du département'
     show.heading: 'Détails d''un questionnaire qualité'
+    apercu.heading: 'Aperçu du questionnaire qualité'
   questionnaire:
     qualite:
       index.heading: 'Liste des questionnaires qualité'
@@ -868,6 +869,7 @@ bac:
   edit.success.flash: 'Diplôme de bac modifié avec succès'
 
 bloc:
+  note.apc.etu.heading: Bilan du semestre
   absence.etu.heading: 'Vos absences'
   actions.etu.heading: Actions
   actions.personnel.heading: Actions
@@ -1838,6 +1840,7 @@ synthese.previsionnel.heading: 'Synthèse du service prévisionnel'
 tab:
   a-propos: 'A propos'
   absences: Absences
+  apc_notes: Bilan Semestre
   actions: Actions
   notes: Notes
   previsionnel: Prévisionnel

@@ -110,7 +110,7 @@ class DataUserSession
 
         $this->user = $user;
         $this->security = $security;
-
+        //dump($this->getUser());
         if ($this->getUser() instanceof Etudiant) {
             $this->type_user = 'e';
             $this->departement = $this->departementRepository->findDepartementEtudiant($this->getUser());

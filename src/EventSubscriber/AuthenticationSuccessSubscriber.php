@@ -32,6 +32,7 @@ class AuthenticationSuccessSubscriber implements EventSubscriberInterface
 
     public function onSecurityAuthenticationSuccess(AuthenticationEvent $event)
     {
+
         $target = $this->getTargetPath($this->session->getSession(), $event->getAuthenticationToken()->getFirewallName());
         $user = $event->getAuthenticationToken()->getUser();
         if ($user instanceof Etudiant) {
@@ -39,12 +40,11 @@ class AuthenticationSuccessSubscriber implements EventSubscriberInterface
         }
 
         $rolesTab = $event->getAuthenticationToken()->getRoleNames();
-
         if (in_array('ROLE_SUPER_ADMIN', $rolesTab, true) || in_array('ROLE_ADMINISTRATIF', $rolesTab,
                 true) || in_array('ROLE_SCOLARITE', $rolesTab, true) || in_array('ROLE_QUALITE', $rolesTab,
                 true) || in_array('ROLE_RH', $rolesTab, true)) {
             // c'est un super administrateur : on le rediriger vers l'espace super-admin
-            return new RedirectResponse($target ?? $this->urlGenerator->generate('super_admin_homepage'));
+            return new RedirectResponse($this->urlGenerator->generate('super_admin_homepage'));
         }
 
         if (in_array('ROLE_PERMANENT', $rolesTab, true)) {

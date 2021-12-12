@@ -15,7 +15,11 @@ use App\Components\Questionnaire\Section\AbstractSection;
 use App\Components\Questionnaire\Section\ConfigurableSection;
 use App\Components\Questionnaire\Section\EndSection;
 use App\Components\Questionnaire\Section\StartSection;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Routing\RouterInterface;
+use Twig\Environment;
 
 class Questionnaire
 {
@@ -28,12 +32,19 @@ class Questionnaire
     private array $options = [];
     private QuestionnaireRegistry $questionnaireRegistry;
     private string $typeQuestionnaire;
+    private RouterInterface $router;
+    private Environment $twig;
+    private ?int $ordreSection;
 
     public function __construct(
+        Environment $twig,
+        RouterInterface $router,
         QuestionnaireRegistry $questionnaireRegistry
     ) {
         $this->sections = new Sections();
         $this->questionnaireRegistry = $questionnaireRegistry;
+        $this->router = $router;
+        $this->twig = $twig;
     }
 
     public function setIdEtudiant(?int $etudiant)
@@ -60,6 +71,10 @@ class Questionnaire
         $resolver->setDefaults([
             'template' => self::DEFAULT_TEMPLATE,
             'mode' => AbstractQuestionnaire::MODE_APERCU,
+            'route' => '',
+            'routeEnd' => '',
+            'params' => [],
+            'paramsEnd' => [],
         ]);
     }
 
@@ -68,7 +83,10 @@ class Questionnaire
         if (ConfigurableSection::class === $section->typeSection) {
             //c'est configurable, potentiellement plusieurs sections à créer
             $configSection = new ConfigurableSection($this->questionnaireRegistry);
-            $configSection->setSection($section);
+            $configSection->setSection($section,[
+                'questionnaire_id' => $this->getQuestionnaire()->id,
+                'etudiant_id' => $this->etudiant,
+            ]);
             $sections = $configSection->genereSections();
             foreach ($sections as $cSection) {
                 //pour chaque "section configurable", on ajoute une section "classique"
@@ -134,10 +152,10 @@ class Questionnaire
         return $this;
     }
 
-    public function setQuestionsForSection(int $ordreSection, ReponsesEtudiant $reponsesEtudiant): void
+    public function setQuestionsForSection(?ReponsesEtudiant $reponsesEtudiant = null): void
     {
         foreach ($this->getSections() as $section) {
-            if ($section instanceof Section\Section && $section->arrayKey === $ordreSection) {
+            if ($section instanceof Section\Section && $section->arrayKey === $this->ordreSection) {
                 $section->prepareQuestions([
                     'questionnaire_id' => $this->getQuestionnaire()->id,
                     'etudiant_id' => $this->etudiant,
@@ -156,5 +174,47 @@ class Questionnaire
     public function setReponses(ReponsesEtudiant $reponses)
     {
         $this->reponses = $reponses;
+    }
+
+    public function getUrl()
+    {
+        if (array_key_exists('route', $this->options) && array_key_exists('params', $this->options)) {
+            return $this->router->generate($this->options['route'], $this->options['params']);
+        }
+    }
+
+    public function handleRequest(Request $request)
+    {
+        if ($request->isMethod('POST')) {
+            $this->ordreSection = (int)$request->query->get('page');
+            return true;
+        }
+
+        return false;
+    }
+
+    public function wizardPage($template = 'components/questionnaire/_wizard.html.twig', array $options = []): Response
+    {
+        $params = array_merge([
+            'section' => $this->getSection($this->ordreSection),
+            'idQuestionnaire' => $this->questionnaire->id,
+        ], $options);
+        return new Response($this->twig->render($template, $params));
+    }
+
+    public function getOnlySectionConfigurable(DTO\Section $section)
+    {
+        if (ConfigurableSection::class === $section->typeSection) {
+            $this->addSection($section);
+        }
+    }
+
+    public function getUrlEnd()
+    {
+        if (array_key_exists('route', $this->options) && array_key_exists('params', $this->options)) {
+            return $this->router->generate($this->options['route'], $this->options['params']);
+        }
+
+        return '';
     }
 }

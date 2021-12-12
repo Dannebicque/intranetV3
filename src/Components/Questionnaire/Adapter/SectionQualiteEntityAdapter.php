@@ -31,6 +31,7 @@ class SectionQualiteEntityAdapter
         );
 
         $this->section->setQuestions($section->getSection()->getQualiteSectionQuestions());
+
     }
 
     public function getSection(): Section
