@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.4.10](https://github.com/Dannebicque/intranetV3/compare/v3.4.9...v3.4.10) (2021-12-12)
+
+
+### Features
+
+* Affichage du bilan de semestre dans le profil étudiant. ([f0339a3](https://github.com/Dannebicque/intranetV3/commit/f0339a3d259722229e80c0cd5dc79b6b52ce4b60))
+* Modal gérée avec Stimulus et BS5 ([1870ebe](https://github.com/Dannebicque/intranetV3/commit/1870ebe0f886980da9d1e63f680e0581b693c5eb))
+* Theme noel... ([96080ba](https://github.com/Dannebicque/intranetV3/commit/96080babfcc446974010b4ff2408048982d11922))
+* Utilisation des icônes définis globalements dans le tableau. ([8878a74](https://github.com/Dannebicque/intranetV3/commit/8878a749452e4bf56719f0dfb454737a2c6428cb))
+
+
+### Bug Fixes
+
+* Assets + composer ([aceb170](https://github.com/Dannebicque/intranetV3/commit/aceb170ee0e5c6db1c83e7ec415fc0b9b6851e25))
+* Bouton aperçu des justificatifs absence ([d58cd38](https://github.com/Dannebicque/intranetV3/commit/d58cd38ddb0f20d53dfefc4eae564ce27da33b18))
+* Config ([7efbd08](https://github.com/Dannebicque/intranetV3/commit/7efbd0874ddee1bf907e510d46c50849014af0be))
+* Export RDD et pourcentage ([6e7d3a0](https://github.com/Dannebicque/intranetV3/commit/6e7d3a0c86637c5d54072b5f719cb90fdbe5414e))
+* Justificatif absence, contraites trop fortes ([e067b8a](https://github.com/Dannebicque/intranetV3/commit/e067b8acd39e63b121fdd75feefc9b688f84d923))
+* Justificatif absence, contraites trop fortes ([7c2ca86](https://github.com/Dannebicque/intranetV3/commit/7c2ca868110f68dcc40b71fadf23dbebea84e1af))
+* Questionnaires qualités ([51e3ab4](https://github.com/Dannebicque/intranetV3/commit/51e3ab43aa75debe44339d18142ad607b50438f5))
+* Security ([48a3766](https://github.com/Dannebicque/intranetV3/commit/48a3766a21c4be6cc8486a59d82e9d3d5070cfa6))
+* Suppression du type de groupe. Typo. ([28e3b5f](https://github.com/Dannebicque/intranetV3/commit/28e3b5f718330af8fb7b01342fb1ced0d083d885))
+* Test sur les dates de justificatif ([f9d545c](https://github.com/Dannebicque/intranetV3/commit/f9d545caa389d89850c70efd1c0327900aad1fde))
+
 ### [3.4.9](https://github.com/Dannebicque/intranetV3/compare/v3.4.8...v3.4.9) (2021-12-06)
 
 
