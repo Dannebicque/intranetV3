@@ -17,8 +17,26 @@
     "composer/ca-bundle": {
         "version": "1.2.8"
     },
+    "composer/composer": {
+        "version": "2.1.11"
+    },
+    "composer/metadata-minifier": {
+        "version": "1.0.0"
+    },
     "composer/package-versions-deprecated": {
         "version": "1.11.99.1"
+    },
+    "composer/pcre": {
+        "version": "1.0.0"
+    },
+    "composer/semver": {
+        "version": "3.2.6"
+    },
+    "composer/spdx-licenses": {
+        "version": "1.5.5"
+    },
+    "composer/xdebug-handler": {
+        "version": "2.0.2"
     },
     "dasprid/enum": {
         "version": "1.0.3"
@@ -142,6 +160,18 @@
     "ezyang/htmlpurifier": {
         "version": "v4.13.0"
     },
+    "friendsofphp/php-cs-fixer": {
+        "version": "3.2",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "3.0",
+            "ref": "be2103eb4a20942e28a6dd87736669b757132435"
+        },
+        "files": [
+            ".php-cs-fixer.dist.php"
+        ]
+    },
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.3"
     },
@@ -178,6 +208,9 @@
     "jms/metadata": {
         "version": "2.4.0"
     },
+    "justinrainbow/json-schema": {
+        "version": "5.2.11"
+    },
     "khanamiryan/qrcode-detector-decoder": {
         "version": "1.0.4"
     },
@@ -204,6 +237,9 @@
     },
     "laminas/laminas-zendframework-bridge": {
         "version": "1.1.1"
+    },
+    "league/container": {
+        "version": "3.4.1"
     },
     "liip/imagine-bundle": {
         "version": "1.8",
@@ -245,6 +281,9 @@
     "ninsuo/symfony-collection": {
         "version": "2.1.33"
     },
+    "nunomaduro/phpinsights": {
+        "version": "v2.0.1"
+    },
     "phar-io/manifest": {
         "version": "2.0.3"
     },
@@ -253,6 +292,9 @@
     },
     "php": {
         "version": "7.4"
+    },
+    "php-cs-fixer/diff": {
+        "version": "v2.0.2"
     },
     "php-http/client-common": {
         "version": "2.3.0"
@@ -272,6 +314,9 @@
     "php-http/promise": {
         "version": "1.1.0"
     },
+    "php-parallel-lint/php-parallel-lint": {
+        "version": "v1.3.1"
+    },
     "phpdocumentor/reflection-common": {
         "version": "2.2.0"
     },
@@ -280,6 +325,9 @@
     },
     "phpdocumentor/type-resolver": {
         "version": "1.4.0"
+    },
+    "phploc/phploc": {
+        "version": "7.0.2"
     },
     "phpoffice/phpspreadsheet": {
         "version": "1.15.0"
@@ -290,11 +338,14 @@
     "phpspec/prophecy": {
         "version": "1.13.0"
     },
-    "phpstan/extension-installer": {
-        "version": "1.1.0"
+    "phpstan/phpdoc-parser": {
+        "version": "1.2.0"
     },
     "phpstan/phpstan": {
         "version": "0.12.99"
+    },
+    "phpstan/phpstan-doctrine": {
+        "version": "1.0.1"
     },
     "phpstan/phpstan-symfony": {
         "version": "0.12.44"
@@ -373,6 +424,9 @@
             "config/packages/ramsey_uuid_doctrine.yaml"
         ]
     },
+    "react/promise": {
+        "version": "v2.8.0"
+    },
     "rector/rector": {
         "version": "0.11.60"
     },
@@ -424,6 +478,12 @@
     "sebastian/version": {
         "version": "3.0.2"
     },
+    "seld/jsonlint": {
+        "version": "1.8.3"
+    },
+    "seld/phar-utils": {
+        "version": "1.1.2"
+    },
     "sensio/framework-extra-bundle": {
         "version": "5.2",
         "recipe": {
@@ -453,6 +513,9 @@
         "files": [
             "config/packages/sentry.yaml"
         ]
+    },
+    "slevomat/coding-standard": {
+        "version": "7.0.16"
     },
     "squizlabs/php_codesniffer": {
         "version": "3.0",
@@ -811,6 +874,9 @@
     },
     "symfony/ux-chartjs": {
         "version": "v1.2.0"
+    },
+    "symfony/ux-twig-component": {
+        "version": "v2.0.0"
     },
     "symfony/validator": {
         "version": "4.3",
