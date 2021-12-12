@@ -26,6 +26,7 @@ class ConfigurableSection
     private \App\Components\Questionnaire\DTO\Section $section;
     private Questions $questions;
     private QuestionnaireRegistry $questionnaireRegistry;
+    private array $options;
 
     public function __construct(QuestionnaireRegistry $questionnaireRegistry)
     {
@@ -62,8 +63,10 @@ class ConfigurableSection
 
     //todo: ajouter un libelle sur la section pour faciliter la gestion
 
-    public function setSection(\App\Components\Questionnaire\DTO\Section $section): void //peut être passer par un dto car on dépend de la BDD...
+    public function setSection(\App\Components\Questionnaire\DTO\Section $section, array $options= []): void //peut être passer par un dto car on dépend de la BDD...
     {
+        $this->options = $options;
+
         $this->section = $section;
         $this->initConfigGlobale($section->configGlobale);
         $this->initConfigSection($section->configQuestionnaire);
@@ -87,7 +90,7 @@ class ConfigurableSection
                 $this->sections[$numSection]->abstractSectionAdapter = $this->sectionAdapter;
 
                 $newSection->ordre = $numSection;
-                $this->sections[$numSection]->setSection($newSection);
+                $this->sections[$numSection]->setSection($newSection, $this->options);
             }
 
             return $this->sections;

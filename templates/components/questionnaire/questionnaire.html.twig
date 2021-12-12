@@ -1,6 +1,13 @@
 <h3>...Questionnaire...</h3>{# todo: doit être paramétrable ? #}
+{{ questionnaire.options.mode }}
+{% if questionnaire.options.mode == constant('App\\Components\\Questionnaire\\DTO\\AbstractQuestionnaire::MODE_APERCU') %}
+<div class="alert alert-info mt-2 mb-2">
+    Le questionnaire est en <strong>mode Aperçu</strong>. Aucune réponse n'est sauvegardée.
+</div>
+{% endif %}
 <form {{ stimulus_controller('wizard', {
-    url: path('rdd_enquete_wizard_page'),
+    url: url,
+    urlEnd: urlEnd,
     step: 0,
     etudiant: etudiant,
     questionnaire: questionnaire.questionnaire.id,
@@ -11,8 +18,10 @@
             <li class="nav-item {% if loop.first %}processing{% endif %}" data-step="{{ loop.index0 }}">
                 <span class="nav-title">Section #{{ section.ordre }}</span>
                 <a class="nav-link {% if loop.first %}active{% endif %}" href="#"
+                   {% if questionnaire.options.mode == constant('App\\Components\\Questionnaire\\DTO\\AbstractQuestionnaire::MODE_APERCU') %}
                    data-action="wizard#step"
                    data-step="{{ loop.index0 }}"
+                   {% endif %}
                 ></a>
             </li>
         {% endfor %}

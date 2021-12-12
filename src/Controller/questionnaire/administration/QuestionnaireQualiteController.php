@@ -11,6 +11,7 @@ namespace App\Controller\questionnaire\administration;
 
 use App\Classes\Questionnaire\QuestionnaireQualiteSectionManage;
 use App\Controller\BaseController;
+use App\Entity\Constantes;
 use App\Entity\QuestionnaireQualite;
 use App\Entity\Semestre;
 use App\Form\QuestionnaireQualiteType;
@@ -107,6 +108,29 @@ class QuestionnaireQualiteController extends BaseController
             'form' => $form,
         ]);
     }
+
+    #[Route('/{id}/duplicate', name: 'duplicate', methods: ['GET', 'POST'])]
+    public function duplicate(QuestionnaireQualite $questionnaire): Response
+    {
+        $newQuestionnaireQualite = clone $questionnaire;
+        $this->entityManager->persist($newQuestionnaireQualite);
+        foreach ($questionnaire->getSections() as $section) {
+            $nSection = clone $section;
+            $newQuestionnaireQualite->addSection($nSection);
+            if (null !== $nSection->getConfig()) {
+                $t = explode('-', $nSection->getConfig());
+                $nSection->setConfig($t[0] . '-');
+            }
+            $nSection->setQuestionnaireQualite($newQuestionnaireQualite);
+            $this->entityManager->persist($nSection);
+        }
+        $this->entityManager->flush();
+        $this->addFlash(Constantes::FLASHBAG_SUCCESS, 'questionnaire.duplicate.success.flashbag');
+
+        return $this->redirectToRoute('administratif_enquete_edit',
+            ['questionnaire' => $newQuestionnaireQualite->getId()]);
+    }
+
 
     #[Route('/{id}', name: 'delete', methods: ['POST'])]
     public function delete(Request $request, QuestionnaireQualite $questionnaireQualite): Response

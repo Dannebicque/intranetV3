@@ -9,9 +9,9 @@
 
 namespace App\Controller;
 
-use App\Classes\Configuration;
 use App\Components\Questionnaire\Adapter\QuestionnaireQuizzAdapter;
 use App\Components\Questionnaire\Adapter\ReponsesEtudiantAdapter;
+use App\Components\Questionnaire\Adapter\SectionQualiteEntityAdapter;
 use App\Components\Questionnaire\Adapter\SectionQuizzEntityAdapter;
 use App\Components\Questionnaire\DTO\AbstractQuestionnaire;
 use App\Components\Questionnaire\DTO\ReponsesEtudiant;
@@ -129,6 +129,8 @@ class RddController extends AbstractController
 
     #[Route('/enquete/{numetudiant}/{diplome}', name: 'enquete_diplome')]
     public function enquete(
+        ReponsesEtudiantAdapter $reponsesEtudiantAdapter,
+        Request $request,
         Questionnaire $questionnaire,
         QuestionnaireQuizzRepository $questionnaireQuizzRepository,
         EtudiantRepository $etudiantRepository,
@@ -136,6 +138,8 @@ class RddController extends AbstractController
         $numetudiant,
         $diplome
     ): Response {
+        $reponses = new ReponsesEtudiant();
+
         $dip = $rddDiplomeRepository->find($diplome);
         if ((null !== $dip) && md5('clerdd'.$dip->getNumetudiant()) === $numetudiant) {
             $questionnaireQuizz = $questionnaireQuizzRepository->find(1);
@@ -143,13 +147,27 @@ class RddController extends AbstractController
 
             $questionnaire->createQuestionnaire(QuestionnaireQuizz::class,
                 (new QuestionnaireQuizzAdapter($questionnaireQuizz))->getQuestionnaire(),
-                ['mode' => AbstractQuestionnaire::MODE_EDITION]);
+                ['mode' => AbstractQuestionnaire::MODE_EDITION,
+                    'route' => 'rdd_enquete_diplome',
+                    'params'=> [
+                        'numetudiant' => $numetudiant,
+                        'diplome' => $diplome,
+                    ]]);
             $questionnaire->setIdEtudiant($etudiant->getId()); //todo: pourrait être plus générique si c'est des questionnaires aux personnels
             $questionnaire->AddSpecialSection(AbstractSection::INTRODUCTION);
+
             foreach ($questionnaireQuizz->getSections() as $section) {
-                $questionnaire->addSection((new SectionQuizzEntityAdapter($section))->getSection());
+                $sect = (new SectionQuizzEntityAdapter($section))->getSection();
+                $questionnaire->addSection($sect);
+                $reponses->merge($reponsesEtudiantAdapter->getReponsesEtudiant($sect,$etudiant->getId()));//todo: on pourrait faire que sur la section concernée ?
             }
+
             $questionnaire->AddSpecialSection(AbstractSection::END);
+
+            if ($questionnaire->handleRequest($request)) {
+                $questionnaire->setQuestionsForSection($reponses);
+                return $questionnaire->wizardPage();
+            }
 
             return $this->render('rdd/enquete.html.twig', [
                 'etudiant' => $etudiant,
@@ -160,38 +178,38 @@ class RddController extends AbstractController
         throw new AccessDeniedException();
     }
 
-    #[Route('/enquete-page/', name: 'enquete_wizard_page', options: ['expose' => true])]
-    public function wizardPage(
-        ReponsesEtudiantAdapter $reponsesEtudiantAdapter,
-        QuestionnaireQuizzRepository $qualiteRepository,
-        Questionnaire $questionnaire,
-        Request $request
-    ): Response {
-        $reponses = new ReponsesEtudiant();
-        $ordreSection = (int) $request->query->get('page');
-        $etudiant = $request->query->get('etudiant');
-        $questionnaireQualite = $qualiteRepository->find($request->query->get('questionnaire'));
-        if (null !== $questionnaireQualite) {
-            $questionnaire->createQuestionnaire(QuestionnaireQuizz::class,
-                (new QuestionnaireQuizzAdapter($questionnaireQualite))->getQuestionnaire(),
-                [
-                    'mode' => AbstractQuestionnaire::MODE_EDITION,
-                ]); //todo: prendre le parametre de la route du wizard... ? Gérer la vue du wizard en automatique?
-            $questionnaire->setIdEtudiant($etudiant); //todo: pourrait être plus générique si c'est des questionnaires aux personnels
-            $questionnaire->AddSpecialSection(AbstractSection::INTRODUCTION);
-            foreach ($questionnaireQualite->getSections() as $section) {
-                $sect = (new SectionQuizzEntityAdapter($section))->getSection();
-                $questionnaire->addSection($sect);
-                $reponses->merge($reponsesEtudiantAdapter->getReponsesEtudiant($sect, $etudiant));
-            }
-            $questionnaire->AddSpecialSection(AbstractSection::END);
-            $questionnaire->setQuestionsForSection($ordreSection, $reponses);
-
-            return $this->render('table/wizard-page.html.twig', [
-                'section' => $questionnaire->getSection($ordreSection),
-                'etudiant' => $etudiant,
-                'idQuestionnaire' => $request->query->get('questionnaire'),
-            ]);
-        }
-    }
+//    #[Route('/enquete-page/', name: 'enquete_wizard_page', options: ['expose' => true])]
+//    public function wizardPage(
+//        ReponsesEtudiantAdapter $reponsesEtudiantAdapter,
+//        QuestionnaireQuizzRepository $qualiteRepository,
+//        Questionnaire $questionnaire,
+//        Request $request
+//    ): Response {
+//        $reponses = new ReponsesEtudiant();
+//        $ordreSection = (int) $request->query->get('page');
+//        $etudiant = $request->query->get('etudiant');
+//        $questionnaireQualite = $qualiteRepository->find($request->query->get('questionnaire'));
+//        if (null !== $questionnaireQualite) {
+//            $questionnaire->createQuestionnaire(QuestionnaireQuizz::class,
+//                (new QuestionnaireQuizzAdapter($questionnaireQualite))->getQuestionnaire(),
+//                [
+//                    'mode' => AbstractQuestionnaire::MODE_EDITION,
+//                ]); //todo: prendre le parametre de la route du wizard... ? Gérer la vue du wizard en automatique?
+//            $questionnaire->setIdEtudiant($etudiant); //todo: pourrait être plus générique si c'est des questionnaires aux personnels
+//            $questionnaire->AddSpecialSection(AbstractSection::INTRODUCTION);
+//            foreach ($questionnaireQualite->getSections() as $section) {
+//                $sect = (new SectionQuizzEntityAdapter($section))->getSection();//todo: update avec la nouvelle gestion
+//                $questionnaire->addSection($sect);
+//                $reponses->merge($reponsesEtudiantAdapter->getReponsesEtudiant($sect, $etudiant));
+//            }
+//            $questionnaire->AddSpecialSection(AbstractSection::END);
+//            $questionnaire->setQuestionsForSection($ordreSection, $reponses);
+//
+//            return $this->render('table/wizard-page.html.twig', [
+//                'section' => $questionnaire->getSection($ordreSection),
+//                'etudiant' => $etudiant,
+//                'idQuestionnaire' => $request->query->get('questionnaire'),
+//            ]);
+//        }
+ //   }
 }

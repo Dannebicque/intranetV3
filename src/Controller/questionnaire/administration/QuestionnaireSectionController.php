@@ -25,7 +25,7 @@ use Symfony\Component\Routing\Annotation\Route;
 //#[Route('/administration/questionnaire/section', name: 'adm_questionnaire_section_')]
 class QuestionnaireSectionController extends BaseController
 {
-    #[Route('/', name: 'index', methods: ['GET', 'POST'], options: ['expose' => true])]
+    #[Route('/', name: 'index', options: ['expose' => true], methods: ['GET', 'POST'])]
     public function index(Request $request): Response
     {
         $table = $this->createTable(QuestionnaireSectionTableType::class);

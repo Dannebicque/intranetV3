@@ -17,35 +17,21 @@
 
 {% block content %}
     <div class="row">
-        <div class="col-md-6 col-lg-6  col-sm-12">
+        <div class="col-sm-12">
             <div class="card">
                 <header class="card-header">
                     <h2 class="card-title">{{ 'sa_enquete.heading'|trans }}</h2>
                 </header>
 
                 <div class="card-body">
-                    <div class="col-sm-12 col-md-12 d-grid d-block">
+                    <div class="col-sm-12 col-md-6 d-grid d-block">
                         <a href="{{ path('administratif_enquete_index') }}"
                            class="btn btn-primary"> {{ 'enquete.index'|trans }}</a>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-6 col-lg-6 col-sm-12">
-            <div class="card">
-                <header class="card-header">
-                    <h2 class="card-title">{{ 'sa_quizz.heading'|trans }}</h2>
-                </header>
 
-                <div class="card-body">
-
-                    <div class="col-sm-12 col-md-12 d-grid d-block">
-                        <a href="{{ path('quizz_question_index') }}"
-                           class="btn btn-primary"> {{ 'questions.index'|trans }}</a>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <div class="col-sm-12">
             <div class="card">

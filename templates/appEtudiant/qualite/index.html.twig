@@ -24,7 +24,8 @@
                                                                           le {{ reponsesEtudiant[questionnaire
                                     .id].dateTermine|format_datetime('short', 'short') }}</button>
                             {% else %}
-                                <a href="{{ path('app_etudiant_qualite_questionnaire', {questionnaire:questionnaire.id}) }}">
+                                <a href="{{ path('app_etudiant_qualite_questionnaire', {questionnaireQualite:questionnaire
+                                .id}) }}" class="btn btn-warning btn-outline">
                                     Compléter le questionnaire
                                 </a>
                             {% endif %}

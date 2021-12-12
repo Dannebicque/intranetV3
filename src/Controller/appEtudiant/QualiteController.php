@@ -11,12 +11,21 @@ namespace App\Controller\appEtudiant;
 
 use App\Classes\Mail\MailerFromTwig;
 use App\Classes\Previsionnel\PrevisionnelManager;
+use App\Components\Questionnaire\Adapter\QuestionnaireQualiteAdapter;
+use App\Components\Questionnaire\Adapter\ReponsesEtudiantAdapter;
+use App\Components\Questionnaire\Adapter\SectionQualiteEntityAdapter;
+use App\Components\Questionnaire\Adapter\SectionQuizzEntityAdapter;
+use App\Components\Questionnaire\DTO\AbstractQuestionnaire;
+use App\Components\Questionnaire\DTO\ReponsesEtudiant;
+use App\Components\Questionnaire\Questionnaire;
+use App\Components\Questionnaire\Section\AbstractSection;
 use App\Controller\BaseController;
 use App\Entity\QuestionnaireQualite;
 use App\Repository\QuestionnaireEtudiantRepository;
 use App\Repository\QuestionnaireQualiteRepository;
 use Carbon\Carbon;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -89,19 +98,39 @@ class QualiteController extends BaseController
     }
 
     /**
-     * @Route("/{questionnaire}", name="app_etudiant_qualite_questionnaire")
+     * @Route("/{questionnaireQualite}", name="app_etudiant_qualite_questionnaire")
      */
     public function questionnaire(
-        PrevisionnelManager $previsionnelManager,
-        QuestionnaireQualite $questionnaire
+        ReponsesEtudiantAdapter $reponsesEtudiantAdapter,
+        Request $request,
+        Questionnaire $questionnaire,
+        QuestionnaireQualite $questionnaireQualite
     ): Response {
+        $reponses = new ReponsesEtudiant();//todo: créer dans Questionnaire selon le type de questionnaire...
+        $questionnaire->createQuestionnaire(QuestionnaireQualite::class,
+            (new QuestionnaireQualiteAdapter($questionnaireQualite))->getQuestionnaire(),
+            [
+                'mode' => AbstractQuestionnaire::MODE_EDITION,
+                'route' => 'app_etudiant_qualite_questionnaire',
+                'params' => ['questionnaireQualite' => $questionnaireQualite->getId()],
+            ]);
+        $questionnaire->AddSpecialSection(AbstractSection::INTRODUCTION);
+        foreach ($questionnaireQualite->getSections() as $section) {
+            $sect = (new SectionQualiteEntityAdapter($section))->getSection();//todo: tester si la section est visible
+            $questionnaire->addSection($sect);
+            $reponses->merge($reponsesEtudiantAdapter->getReponsesEtudiant($sect, $this->getConnectedUser()->getId()));//todo: on pourrait faire que sur la section concernée ?
+        }
+        $questionnaire->setIdEtudiant($this->getConnectedUser()->getId());//todo: passer l'étudiant aux réponses
+        $questionnaire->AddSpecialSection(AbstractSection::END);
+
+        if ($questionnaire->handleRequest($request)) {
+            $questionnaire->setQuestionsForSection($reponses);
+            return $questionnaire->wizardPage();
+        }
+
         return $this->render('appEtudiant/qualite/questionnaire.html.twig', [
-            'questionnaireSections' => $questionnaire->getSections(),
-            'questionnaire' => $questionnaire,
-            'etudiant' => $this->getConnectedUser(),
-            'typeQuestionnaire' => 'qualite',
-            'tPrevisionnel' => $previsionnelManager->getPrevisionnelAnneeArray($this->dataUserSession->getUser()->getSemestre()->getAnnee(),
-                $this->dataUserSession->getAnneeUniversitaire()->getAnnee()),
+            'questionnaire' => $questionnaire->createView(),
+            'semestre' => $questionnaireQualite->getSemestre(),
         ]);
     }
 }

@@ -18,23 +18,19 @@ use App\Components\Table\TableBuilder;
 use App\Components\Table\TableType;
 use App\Components\Widget\Type\ButtonDropdownType;
 use App\Components\Widget\Type\LinkType;
-use App\Components\Widget\Type\RowDeleteLinkType;
-use App\Components\Widget\Type\RowDuplicateLinkType;
-use App\Components\Widget\Type\RowEditLinkType;
+use App\Components\Widget\Type\RowLinkType;
 use App\Components\Widget\Type\RowShowLinkType;
 use App\Components\Widget\WidgetBuilder;
 use App\Entity\Annee;
 use App\Entity\Diplome;
 use App\Entity\QuestionnaireQualite;
 use App\Entity\Semestre;
+use App\Entity\TypeDiplome;
 use App\Form\Type\DatePickerType;
-use App\Table\ColumnType\CategorieArticleColumnType;
-use App\Table\ColumnType\SemestreColumnType;
-use App\Entity\Article;
-use App\Entity\ArticleCategorie;
 use App\Entity\Departement;
-use App\Form\Type\SearchType;
+use App\Repository\SemestreRepository;
 use Doctrine\ORM\QueryBuilder;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
@@ -58,40 +54,50 @@ class QualiteTableType extends TableType
         $builder->addFilter('to', DatePickerType::class, [
             'input_prefix_text' => 'Au',
         ]);
-
-//        // Export button (use to export data)
-        $builder->addWidget('export', ButtonDropdownType::class, [
-            'icon' => 'fas fa-download',
-            'attr' => ['data-toggle' => 'dropdown'],
-            'build' => function(WidgetBuilder $builder) {
-                $builder->add('pdf', LinkType::class, [
-                    'route' => 'administration_article_export',
-                    'route_params' => ['_format' => 'pdf'],
-                ]);
-                $builder->add('csv', LinkType::class, [
-                    'route' => 'administration_article_export',
-                    'route_params' => ['_format' => 'csv'],
-                ]);
-                $builder->add('excel', LinkType::class, [
-                    'route' => 'administration_article_export',
-                    'route_params' => ['_format' => 'xlsx'],
-                ]);
-            },
+        $builder->addFilter('semestre', EntityType::class,
+            ['class' => Semestre::class,
+                'choice_label' => 'libelle',
+                'required' => false,
+                'query_builder' => function(SemestreRepository $semestreRepository) {
+                    return $semestreRepository->findByDepartementBuilder($this->departement);
+                },
         ]);
 
-        $builder->addColumn('titre', PropertyColumnType::class, ['label' => 'titre']);
-        $builder->addColumn('dateOuverture', DateColumnType::class, ['label' => 'dateOuverture']);
-        $builder->addColumn('dateFermeture', DateColumnType::class, ['label' => 'dateFermeture']);
+////        // Export button (use to export data)
+//        $builder->addWidget('export', ButtonDropdownType::class, [
+//            'icon' => 'fas fa-download',
+//            'attr' => ['data-toggle' => 'dropdown'],
+//            'build' => function(WidgetBuilder $builder) {
+//                $builder->add('pdf', LinkType::class, [
+//                    'route' => 'administration_article_export',
+//                    'route_params' => ['_format' => 'pdf'],
+//                ]);
+//                $builder->add('csv', LinkType::class, [
+//                    'route' => 'administration_article_export',
+//                    'route_params' => ['_format' => 'csv'],
+//                ]);
+//                $builder->add('excel', LinkType::class, [
+//                    'route' => 'administration_article_export',
+//                    'route_params' => ['_format' => 'xlsx'],
+//                ]);
+//            },
+//        ]);
+
+        $builder->addColumn('titre', PropertyColumnType::class, ['label' => 'table.titre']);
+        $builder->addColumn('dateOuverture', DateColumnType::class, ['label' => 'table.dateOuverture']);
+        $builder->addColumn('dateFermeture', DateColumnType::class, ['label' => 'table.dateFermeture']);
         $builder->addColumn('semestre', BadgeColumnType::class,
-            ['label' => 'table.semestre', 'translation_domain' => 'messages']);
+            ['label' => 'table.semestre']);
 
         $builder->addColumn('links', WidgetColumnType::class, [
             'build' => function(WidgetBuilder $builder, QuestionnaireQualite $s) {
-//                $builder->add('duplicate', RowDuplicateLinkType::class, [
-//                    'route' => 'administration_article_duplicate',
-//                    'route_params' => ['id' => $s->getId()],
-//                    'xhr' => false,
-//                ]);
+                $builder->add('apercu', RowLinkType::class, [
+                    'route' => 'administration_qualite_apercu',
+                    'icon' => 'fas fa-eye',
+                    'attr' => ['class' => 'btn btn-square btn-info-outline me-1'],
+                    'route_params' => ['id' => $s->getId()],
+                    'xhr' => false,
+                ]);
                 $builder->add('show', RowShowLinkType::class, [
                     'route' => 'administration_qualite_show',
                     'route_params' => [
@@ -99,24 +105,6 @@ class QualiteTableType extends TableType
                     ],
                     'xhr' => false,
                 ]);
-//                $builder->add('edit', RowEditLinkType::class, [
-//                    'route' => 'administration_article_edit',
-//                    'route_params' => [
-//                        'id' => $s->getId(),
-//                    ],
-//                    'xhr' => false,
-//                ]);
-//                $builder->add('delete', RowDeleteLinkType::class, [
-//                    'route' => 'administration_article_delete',
-//                    'route_params' => [
-//                        'id' => $s->getId(),
-//                    ],
-//                    'attr' => [
-//                        'data-href' => 'administration_article_delete',
-//                        'data-uuid' => $s->getId(),
-//                        'data-csrf' => $this->csrfToken->getToken('delete' . $s->getId()),
-//                    ],
-//                ]);
             },
         ]);
 

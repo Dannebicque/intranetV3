@@ -46,7 +46,7 @@ class Section extends AbstractSection
         return $this;
     }
 
-    public function prepareQuestions(array $options = [], ReponsesEtudiant $reponsesEtudiant)
+    public function prepareQuestions(array $options = [], ?ReponsesEtudiant $reponsesEtudiant = null)
     {
         foreach ($this->section->questions as $question) {
             $questionnaireQuestionAdapter = new QuestionnaireQuestionAdapter($this->questionnaireRegistry);

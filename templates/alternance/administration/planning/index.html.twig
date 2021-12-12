@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.alternance.index.heading'|trans({'%annee%': annee.libelle}) }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active show" data-bs-toggle="tab"
+                   href="#semestre1">Septembre-Février</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab"
+                   href="#semestre2">Mars-Août</a>
+            </li>
+        </ul>
+        <div class="buttons">
+           <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip"
+               data-bs-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="{{ iconAdmin }}"><span class="sr-only">Administration</span></i></a>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="tab-content card">
+        <div class="tab-pane fade active show" id="semestre1">
+            {{ include('alternance/commun/_semestre.html.twig', {
+                title: 'Septembre-Février',
+                onglet: 1
+            }) }}
+        </div>
+        <div class="tab-pane" id="semestre2">
+            {{ include('alternance/commun/_semestre.html.twig', {
+                title: 'Mars-Août',
+                onglet: 2
+            }) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block fabactions %}
+    {{ include('composants/fab-buttons.html.twig', {boutons:[
+        {type: 'info',
+            href: path('administration_alternance_export', {annee:annee.id, _format:'pdf'}),
+            title: 'exporter.pdf'|trans,
+            icone : "fa fa-file-pdf"
+        },
+        {
+            type:'info',
+            href:path('administration_alternance_export', {annee:annee.id, _format:'csv'}),
+            title: 'exporter.csv'|trans,
+            icone: 'fa fa-file-csv'
+        },
+        {
+            type:'info',
+            href:path('administration_alternance_export', {annee:annee.id, _format:'xlsx'}),
+            title: 'exporter.xls'|trans,
+            icone: 'fa fa-file-excel'
+        },
+        {
+            type:'info',
+            href:path('help_article', {sujet: 'administration_alternance'}),
+            title: 'aide'|trans,
+            icone: 'fa fa-question'
+        }
+    ]}) }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('adm.alternances') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('adm.alternances') }}
+{% endblock %}

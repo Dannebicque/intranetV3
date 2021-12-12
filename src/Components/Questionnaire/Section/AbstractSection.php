@@ -9,13 +9,10 @@
 
 namespace App\Components\Questionnaire\Section;
 
-use App\Components\Questionnaire\Adapter\ReponsesEtudiantAdapter;
 use App\Components\Questionnaire\DTO\AbstractQuestionnaire;
-use App\Components\Questionnaire\Questionnaire;
 use App\Components\Questionnaire\QuestionnaireRegistry;
 use App\Components\Questionnaire\Questions;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Contracts\Service\Attribute\Required;
 
 abstract class AbstractSection
 {

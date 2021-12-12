@@ -52,7 +52,7 @@ class QualiteRelanceSubscriber implements EventSubscriberInterface
             ]);
 
             $this->mailer->sendMessage($etudiant->getMails(), 'URGENT - RAPPEL : ' . $titre,
-                ['replyTo' => [$rp ? $rp->getMailUniv() : null]]);
+                ['replyTo' => [$rp?->getMailUniv()]]);
         }
     }
 

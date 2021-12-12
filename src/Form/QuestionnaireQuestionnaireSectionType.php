@@ -25,12 +25,13 @@ class QuestionnaireQuestionnaireSectionType extends AbstractType
             ->add('ordre', IntegerType::class, [
                 'label' => 'label.ordre',
             ])
-            ->add('config')
             ->add('section', EntityType::class, [
                 'class' => QuestionnaireSection::class,
                 'choice_label' => 'titre',
                 'label' => 'label.section',
-            ]);
+            ])
+           // ->add('config')
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

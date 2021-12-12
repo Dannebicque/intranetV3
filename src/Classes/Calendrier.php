@@ -55,7 +55,7 @@ abstract class Calendrier
     {
         $year1 = $year + 1; //second "semestre"
 
-        $easter = easter_date($year1); //paque (dimanche)
+        $easter = easter_date($year1, CAL_FRENCH); //paque (dimanche)
         $easterDay = date('j', $easter);
         $easterMonth = date('n', $easter);
         $easterYear = date('Y', $easter);
@@ -76,8 +76,8 @@ abstract class Calendrier
             date('Y-m-d', $easter), //dimanche de pâque
             date('Y-m-d', $lundiPaque), //lundi de pâque
             date('Y-m-d', $jeudiAscension), //jeudi ascension
-            date('Y-m-d', $lundiPentecote),
-        ]; //lundi de pentecote
+            date('Y-m-d', $lundiPentecote),//lundi de pentecote
+        ];
     }
 
     public static function getTabPlanning(): array

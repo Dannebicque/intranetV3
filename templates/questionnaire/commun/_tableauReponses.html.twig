@@ -13,6 +13,7 @@
     </tr>
     </thead>
     <tbody>
+    {# todo: tableau tabletype... #}
     {% for etudiant in  etudiants %}
         <tr>
             <td>{{ etudiant.display }}</td>
@@ -38,6 +39,7 @@
                             <i class="fas fa-unlock" data-id="{{ quizzEtudiant[questionnaire.id][etudiant.id].id }}"></i>
                         </a>
                     {% endif %}
+                    {% if is_granted('ROLE_QUALITE') %}
                     <a href="{{ path('administratif_enquete_etudiant_voir_modifier',
                         {questionnaire: quizzEtudiant[questionnaire.id][etudiant.id].id}) }}"
                        class="btn btn-warning btn-outline btn-square"
@@ -53,13 +55,16 @@
                        title="{{ 'atitle.supprimer'|trans }}">
                         <i class="{{ iconDelete }}"></i>
                     </a>
+                        {% else %}
+                        -
+                    {% endif %}
                 </td>
             {% else %}
                 <td>Non</td>
                 <td>-</td>
                 <td>
                     <a href="{{ path('enquete_relance_individuelle',{questionnaire:questionnaire.id,
-                        etudiant:etudiant.id}) }}">
+                        etudiant:etudiant.id}) }}" class="btn btn-warning btn-outline relanceIndividuelle">
                         Relancer
                     </a>
                 </td>

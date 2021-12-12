@@ -47,12 +47,4 @@ class DefaultController extends BaseController
             'typegroupes' => $typesGroupes,
         ]);
     }
-
-    #[Route(path: '/administratif/', name: 'super_admin_homepage')]
-    public function superAdminHomepage(DepartementRepository $departementRepository): Response
-    {
-        return $this->render('super-administration/super_admin_homepage.html.twig', [
-            'departements' => $departementRepository->findAll(),
-        ]);
-    }
 }

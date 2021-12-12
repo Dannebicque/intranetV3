@@ -30,13 +30,20 @@ class ReponsesEtudiantAdapter
         $this->questionnaireEtudiantReponseRepository = $questionnaireEtudiantReponseRepository;
     }
 
-    public function getReponsesEtudiant(Section $section, mixed $etudiant_id): ReponsesEtudiant
+    public function getReponsesEtudiant(Section $section, mixed $etudiant_id, $type = 'qualite'): ReponsesEtudiant
     {
         $this->reponsesEtudiant = new ReponsesEtudiant();
-        $questionnaireEtudiant = $this->questionnaireEtudiantRepository->findOneBy([
-            'etudiant' => $etudiant_id,
-            'questionnaireQuizz' => $section->questionnaire_id,
-        ]); //todo: a gérer selon le type
+        if ($type === 'quizz') {
+            $questionnaireEtudiant = $this->questionnaireEtudiantRepository->findOneBy([
+                'etudiant' => $etudiant_id,
+                'questionnaireQuizz' => $section->questionnaire_id,
+            ]); //todo: a gérer selon le type avec le questionnaire...
+        } else {
+            $questionnaireEtudiant = $this->questionnaireEtudiantRepository->findOneBy([
+                'etudiant' => $etudiant_id,
+                'questionnaireQualite' => $section->questionnaire_id,
+            ]); //todo: a gérer selon le type
+        }
         if (null !== $questionnaireEtudiant) {
             $reponses = $this->questionnaireEtudiantReponseRepository->findBy(['questionnaireEtudiant' => $questionnaireEtudiant]);
             foreach ($reponses as $reponse) {
