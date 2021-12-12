@@ -4,7 +4,7 @@
 // @project intranetV3
 // @lastUpdate 21/05/2021 20:00
 
-import {Controller} from 'stimulus'
+import { Controller } from '@hotwired/stimulus'
 
 export default class extends Controller {
   static targets = ['totalCm']

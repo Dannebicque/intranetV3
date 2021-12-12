@@ -5,7 +5,6 @@
 // @lastUpdate 08/06/2021 08:24
 import {addCallout} from '../util'
 import '../../vendor/jquery.collection.min'
-// import $ from 'jquery'
 
 $(document).on('change', '.changetuteur', function () {
   $.ajax({

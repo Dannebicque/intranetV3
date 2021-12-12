@@ -3,7 +3,7 @@
 // @author davidannebicque
 // @project intranetV3
 // @lastUpdate 03/11/2021 17:37
-import {Controller} from 'stimulus'
+import { Controller } from '@hotwired/stimulus'
 import {useDebounce, useDispatch} from 'stimulus-use'
 import {post} from '../js/fetch'
 

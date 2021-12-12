@@ -32,8 +32,8 @@ security:
         - App\Security\LoginCasAuthenticator
       entry_point: App\Security\LoginFormAuthenticator
       pattern: ^/
-      remember_me:
-        secret: '%kernel.secret%'
+#      remember_me:
+#        secret: '%kernel.secret%'
       logout:
         path: security_logout
         target: security_login

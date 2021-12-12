@@ -3,7 +3,7 @@
 // @author davidannebicque
 // @project intranetV3
 // @lastUpdate 05/10/2021 15:05
-import {Controller} from 'stimulus'
+import { Controller } from '@hotwired/stimulus'
 import Toast from '../components/Toast'
 import {Toast as ToastBs} from 'bootstrap'
 

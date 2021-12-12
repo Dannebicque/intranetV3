@@ -4,7 +4,7 @@
 // @project intranetV3
 // @lastUpdate 11/10/2021 21:49
 
-import {Controller} from 'stimulus'
+import { Controller } from '@hotwired/stimulus'
 import {useDispatch} from 'stimulus-use'
 
 export default class extends Controller {

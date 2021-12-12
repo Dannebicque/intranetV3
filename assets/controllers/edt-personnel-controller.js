@@ -4,7 +4,7 @@
 // @project intranetV3
 // @lastUpdate 09/11/2021 14:33
 
-import {Controller} from 'stimulus'
+import { Controller } from '@hotwired/stimulus'
 import {post} from '../js/fetch'
 
 export default class extends Controller {

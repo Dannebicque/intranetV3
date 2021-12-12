@@ -4,7 +4,7 @@
 // @project intranetV3
 // @lastUpdate 04/11/2021 08:51
 
-import {Controller} from 'stimulus'
+import { Controller } from '@hotwired/stimulus'
 
 export default class extends Controller {
   static targets = ['page']
@@ -83,18 +83,23 @@ export default class extends Controller {
         }
       }
     })
-
-
   }
 
   async _getPage () {
     this.pageTarget.innerHTML = '... Chargement en cours ...'
+    var myHeaders = new Headers();
+
+    var myInit = { method: 'POST',
+      headers: myHeaders,
+      mode: 'cors',
+      cache: 'default' };
+
     const params = new URLSearchParams({
       page: this.stepValue,
       questionnaire: this.questionnaireValue,
       etudiant: this.etudiantValue,
     })
-    const response = await fetch(`${this.urlValue}?${params.toString()}`)
+    const response = await fetch(`${this.urlValue}?${params.toString()}`, myInit)
     this.pageTarget.innerHTML = await response.text()
   }
 }

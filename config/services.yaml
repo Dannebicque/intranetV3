@@ -63,16 +63,6 @@ services:
               arguments:
                   - '@App\Classes\Configuration'
 
-  #    App\Event\SlugGenerator:
-  #        tags:
-  #            - { name: 'doctrine.event_subscriber' }
-
-    App\Security\AbstractAuthenticator:
-      class: App\Security\AbstractAuthenticator
-      arguments:
-        - '@Symfony\Component\Routing\Generator\UrlGeneratorInterface'
-        - '@Symfony\Component\HttpFoundation\Session\SessionInterface'
-
     App\EventListener\LoggedOutAjaxListener:
       tags:
         - { name: kernel.event_listener, event: kernel.exception, priority: 8 }

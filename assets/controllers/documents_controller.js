@@ -4,7 +4,7 @@
 // @project intranetV3
 // @lastUpdate 11/10/2021 21:49
 
-import {Controller} from 'stimulus'
+import { Controller } from '@hotwired/stimulus'
 import {post} from '../js/fetch'
 import {addCallout} from '../js/util'
 
