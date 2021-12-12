@@ -4,7 +4,7 @@
 // @project intranetV3
 // @lastUpdate 03/11/2021 17:36
 
-import {Controller} from 'stimulus'
+import { Controller } from '@hotwired/stimulus'
 
 export default class extends Controller {
 

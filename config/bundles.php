@@ -1,11 +1,4 @@
 <?php
-/*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/config/bundles.php
- * @author davidannebicque
- * @project intranetV3
- * @lastUpdate 20/10/2021 20:07
- */
 
 return [
     Symfony\Bundle\FrameworkBundle\FrameworkBundle::class => ['all' => true],
@@ -27,4 +20,5 @@ return [
     Bugsnag\BugsnagBundle\BugsnagBundle::class => ['all' => true],
     Knp\Bundle\SnappyBundle\KnpSnappyBundle::class => ['all' => true],
     Symfony\UX\Chartjs\ChartjsBundle::class => ['all' => true],
+    Symfony\UX\TwigComponent\TwigComponentBundle::class => ['all' => true],
 ];
