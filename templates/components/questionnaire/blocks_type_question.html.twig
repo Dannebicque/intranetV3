@@ -11,7 +11,6 @@
         <div aria-describedby="quizz_question_{{ id }}_help">
             <small id="quizz_question_{{ id }}_help" class="form-text text-muted">{{ help }}</small>
         </div>
-        {{ dump(valeurs) }}
         {% for subQuestion in questionsEnfants %}
             <div class="sub-question {% if loop.index is odd %}row-striped{% endif %}">
                 <div class="row">
