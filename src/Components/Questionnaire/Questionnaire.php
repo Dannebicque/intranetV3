@@ -215,7 +215,7 @@ class Questionnaire
 
     public function getUrlEnd()
     {
-        if (array_key_exists('routeEnd', $this->options) && array_key_exists('paramsEnd', $this->options)) {
+        if ($this->options['routeEnd'] !== '') {
             return $this->router->generate($this->options['routeEnd'], $this->options['paramsEnd']);
         }
 
