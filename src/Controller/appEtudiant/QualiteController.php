@@ -111,8 +111,10 @@ class QualiteController extends BaseController
             (new QuestionnaireQualiteAdapter($questionnaireQualite))->getQuestionnaire(),
             [
                 'mode' => AbstractQuestionnaire::MODE_EDITION,
+                'routeEnd' => 'app_etudiant_qualite_questionnaire_complete',
                 'route' => 'app_etudiant_qualite_questionnaire',
                 'params' => ['questionnaireQualite' => $questionnaireQualite->getId()],
+                'paramsEnd' => ['uuid' => $questionnaireQualite->getUuidString()],
             ]);
         $questionnaire->AddSpecialSection(AbstractSection::INTRODUCTION);
         foreach ($questionnaireQualite->getSections() as $section) {

@@ -6,7 +6,6 @@
 {% endif %}
 <form {{ stimulus_controller('wizard', {
     url: url,
-    urlEnd: urlEnd,
     step: 0,
     etudiant: etudiant,
     questionnaire: questionnaire.questionnaire.id,
@@ -37,8 +36,7 @@
         <button class="btn btn-secondary" data-action="wizard#next" id="next-button">
             Suivant <i class="fas fa-right"></i>
         </button>
-        <a class="btn btn-primary d-none"  id="finish-button" href="{{ url
-            ('default_homepage') }}">{#  data-action="wizard#finish" #}
+        <a class="btn btn-primary d-none"  id="finish-button" href="{{ urlEnd }}">
             Terminer
         </a>
     </div>

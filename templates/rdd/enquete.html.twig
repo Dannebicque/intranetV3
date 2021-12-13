@@ -23,21 +23,10 @@
                 <div class="card">
                     <div class="card-body">
                         {{ questionnaire_render(questionnaire) }}
-{#                        {{ render(path('embed_enquete', {questionnaireQuizz: 1, etudiant:etudiant.id})) }}#}
                     </div>
                 </div>
             </div>
         </div>
     </div>
-{% endblock %}
-
-{% block stylesheets %}
-    {{ parent() }}
-{#    {{ encore_entry_link_tags('quizzQualite') }}#}
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-{#    {{ encore_entry_script_tags('quizzQualite') }}#}
 {% endblock %}
 
