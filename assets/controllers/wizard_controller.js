@@ -46,10 +46,6 @@ export default class extends Controller {
     this._updateButton()
   }
 
-  finish () {
-    console.log('finish')
-  }
-
   _updateButton () {
     this.finishButton.classList.add('d-none')
     this.nextButton.classList.remove('d-none')
