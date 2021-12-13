@@ -23,6 +23,7 @@ abstract class AbstractQuestion
     public const ICON = 'non_defini'; //ajouter constante de couleur et de nom de template ?
 
     public string $libelle;
+    public ?array $valeurs = null;
     public ?string $help;
     public int $id;
     public array $parametres;
@@ -48,6 +49,7 @@ abstract class AbstractQuestion
             ->setDefault('parametres', [])
             ->setDefault('alignement', [])
             ->setDefault('questionnaire_id', null)
+            ->setDefault('typeQuestionnaire', 'qualite')
             ->setDefault('etudiant_id', null)
             ->setDefault('block_name', '');
     }

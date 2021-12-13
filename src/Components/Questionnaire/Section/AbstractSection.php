@@ -86,6 +86,7 @@ abstract class AbstractSection
             'template' => self::DEFAULT_TEMPLATE,
             'mode' => AbstractQuestionnaire::MODE_APERCU,
             'questionnaire_id' => null,
+            'typeQuestionnaire' => 'qualite',
             'etudiant_id' => null,
         ]);
     }

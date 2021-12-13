@@ -191,12 +191,10 @@ class MyEnquete
         QuestionnaireSection $section,
         string $config = ''
     ): void {
-        dump($config);
         if ('' === $config) {
             $libQuestion = $question->getLibelle();
         } else {
             $c = mb_substr($config, 2, mb_strlen($config));
-            dump($this->previsionnel);
             if (array_key_exists($c, $this->previsionnel)) {
                 $libQuestion = Tools::personnaliseTexte($question->getLibelle(),
                     $this->previsionnel[$c]);

@@ -40,6 +40,7 @@ class ConfigurableSection
         if (is_array($this->config) && array_key_exists('valeurs', $this->config) && is_array($this->config['valeurs'])) {
             foreach ($this->config['valeurs'] as $valeur) {
                 $abstractQuestion->numero = $valeur; //pour tester
+                $abstractQuestion->config = $valeur;
                 $this->questions->addQuestion($abstractQuestion);
             }
         } else {
