@@ -82,12 +82,12 @@ class StageEtudiantController extends BaseController
      */
     public function edit(Request $request, StageEtudiant $stageEtudiant): Response
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stageEtudiant->getStagePeriode()?->getSemestre());
+        //$this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stageEtudiant->getStagePeriode()?->getSemestre());
 
         $form = $this->createForm(StageEtudiantType::class, $stageEtudiant);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted()) {
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'stage_etudiant.create.success.flash');
 
