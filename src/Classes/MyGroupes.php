@@ -34,7 +34,7 @@ class MyGroupes
 {
     protected EntityManagerInterface $entityManager;
 
-    protected ?string $groupedefaut = null;
+    protected ?TypeGroupe $groupedefaut = null;
 
     // type de groupes  pour un semestre
     protected $typeGroupes;
