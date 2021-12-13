@@ -150,101 +150,101 @@ export function addCallout (message, label) {
 }
 
 // //Editable
-// let myEditInitialContent = ''
-// let type = 'text'
-// let EditOnLine = false
-//
-// $(document).on('click', '.myedit', function (e) {
-//   e.preventDefault()
-//   myEditInitialContent = $(this)
-//   let html = ''
-//   EditOnLine = true
-//   if (typeof ($(this).data('type')) !== 'undefined') {
-//     type = $(this).data('type')
-//   }
-//
-//   if ($(this).data('type') === 'select') {
-//     //todo: A finaliser
-//   } else if ($(this).data('type') === 'textarea') {
-//     html = genereTextArea($(this))
-//   } else {
-//     html = genereInput($(this))
-//   }
-//   $(this).replaceWith(html)
-//   $('#myedit-input').focus()
-// })
-//
-// $(document).on('keyup', '#myedit-input', function (e) {
-//   if (e.keyCode === 13 && $stopCatchEnter === false) {
-//     updateData()
-//   } else if (e.keyCode === 27) {
-//     $('#myEdit-zone').replaceWith(myEditInitialContent)
-//   }
-// })
-//
-// $(document).on('click', '.myedit-valide', function (e) {
-//   $stopCatchEnter = false
-//   e.preventDefault()
-//   updateData($(this).data('key'))
-// })
-//
-// $(document).on('keypress', function (e) {
-//   if (EditOnLine === true && $stopCatchEnter === false && e.which === 13) {
-//     e.preventDefault()
-//     updateData($(this).data('key'))
-//   }
-//
-//   if (EditOnLine === true && $stopCatchEnter === false && e.which === 27) {
-//     e.preventDefault()
-//     $('#myEdit-zone-' + $(this).data('key')).replaceWith(myEditInitialContent)
-//   }
-// })
-//
-// $(document).on('click', '.myedit-annule', function (e) {
-//   e.preventDefault()
-//   $('#myEdit-zone-' + $(this).data('key')).replaceWith(myEditInitialContent)
-// })
-//
-// function updateData (key) {
-//   let val = $('#myedit-input-' + key).val()
-//   $.ajax({
-//     url: myEditInitialContent.attr('href'),
-//     data: {
-//       field: myEditInitialContent.data('field'),
-//       value: val,
-//       type: type
-//     },
-//     method: 'POST',
-//     success: function () {
-//       myEditInitialContent.html(val)
-//       $('#myEdit-zone-' + key).replaceWith(myEditInitialContent)
-//       EditOnLine = false
-//     }
-//   })
-// }
-//
-// function genereTextArea ($obj) {
-//   const key = Date.now()
-//   $stopCatchEnter = true
-//   return '<div id="myEdit-zone-' + key + '">\n' +
-//     '                      <textarea rows="5" class="form-control" id="myedit-input-' + key + '">' + $obj.html().trim() + '</textarea>\n' +
-//     '                      <span class="input-group-append">\n' +
-//     ' <button class="btn btn-success-outline myedit-valide" data-key="' + key + '"><i class="fas fa-check"></i></button>\n' +
-//     '                        <button class="btn btn-danger-outline myedit-annule"  data-key="' + key + '"><i class="fas fa-times"></i></button>\n' +
-//     '                      </span>\n' +
-//     '                    </div>'
-// }
-//
-// function genereInput ($obj) {
-//   const key = Date.now()
-//   return '<div id="myEdit-zone-' + key + '" class="input-group">\n' +
-//     '                      <input type="text" class="form-control" id="myedit-input-' + key + '" value="' + $obj.html().trim() + '" >\n' +
-//     '                      <span class="input-group-append">\n' +
-//     ' <button class="btn btn-success-outline myedit-valide"  data-key="' + key + '"><i class="fas fa-check"></i></button>\n' +
-//     '                        <button class="btn btn-danger-outline myedit-annule"  data-key="' + key + '"><i class="fas fa-times"></i></button>\n' +
-//     '                      </span>\n' +
-//     '                    </div>'
-// }
+let myEditInitialContent = ''
+let type = 'text'
+let EditOnLine = false
+
+$(document).on('click', '.myedit', function (e) {
+  e.preventDefault()
+  myEditInitialContent = $(this)
+  let html = ''
+  EditOnLine = true
+  if (typeof ($(this).data('type')) !== 'undefined') {
+    type = $(this).data('type')
+  }
+
+  if ($(this).data('type') === 'select') {
+    //todo: A finaliser
+  } else if ($(this).data('type') === 'textarea') {
+    html = genereTextArea($(this))
+  } else {
+    html = genereInput($(this))
+  }
+  $(this).replaceWith(html)
+  $('#myedit-input').focus()
+})
+
+$(document).on('keyup', '#myedit-input', function (e) {
+  if (e.keyCode === 13 && $stopCatchEnter === false) {
+    updateData()
+  } else if (e.keyCode === 27) {
+    $('#myEdit-zone').replaceWith(myEditInitialContent)
+  }
+})
+
+$(document).on('click', '.myedit-valide', function (e) {
+  $stopCatchEnter = false
+  e.preventDefault()
+  updateData($(this).data('key'))
+})
+
+$(document).on('keypress', function (e) {
+  if (EditOnLine === true && $stopCatchEnter === false && e.which === 13) {
+    e.preventDefault()
+    updateData($(this).data('key'))
+  }
+
+  if (EditOnLine === true && $stopCatchEnter === false && e.which === 27) {
+    e.preventDefault()
+    $('#myEdit-zone-' + $(this).data('key')).replaceWith(myEditInitialContent)
+  }
+})
+
+$(document).on('click', '.myedit-annule', function (e) {
+  e.preventDefault()
+  $('#myEdit-zone-' + $(this).data('key')).replaceWith(myEditInitialContent)
+})
+
+function updateData (key) {
+  let val = $('#myedit-input-' + key).val()
+  $.ajax({
+    url: myEditInitialContent.attr('href'),
+    data: {
+      field: myEditInitialContent.data('field'),
+      value: val,
+      type: type
+    },
+    method: 'POST',
+    success: function () {
+      myEditInitialContent.html(val)
+      $('#myEdit-zone-' + key).replaceWith(myEditInitialContent)
+      EditOnLine = false
+    }
+  })
+}
+
+function genereTextArea ($obj) {
+  const key = Date.now()
+  $stopCatchEnter = true
+  return '<div id="myEdit-zone-' + key + '">\n' +
+    '                      <textarea rows="5" class="form-control" id="myedit-input-' + key + '">' + $obj.html().trim() + '</textarea>\n' +
+    '                      <span class="input-group-append">\n' +
+    ' <button class="btn btn-success-outline myedit-valide" data-key="' + key + '"><i class="fas fa-check"></i></button>\n' +
+    '                        <button class="btn btn-danger-outline myedit-annule"  data-key="' + key + '"><i class="fas fa-times"></i></button>\n' +
+    '                      </span>\n' +
+    '                    </div>'
+}
+
+function genereInput ($obj) {
+  const key = Date.now()
+  return '<div id="myEdit-zone-' + key + '" class="input-group">\n' +
+    '                      <input type="text" class="form-control" id="myedit-input-' + key + '" value="' + $obj.html().trim() + '" >\n' +
+    '                      <span class="input-group-append">\n' +
+    ' <button class="btn btn-success-outline myedit-valide"  data-key="' + key + '"><i class="fas fa-check"></i></button>\n' +
+    '                        <button class="btn btn-danger-outline myedit-annule"  data-key="' + key + '"><i class="fas fa-times"></i></button>\n' +
+    '                      </span>\n' +
+    '                    </div>'
+}
 
 jQuery.fn.dataAttr = function (name, def) {
   return $(this)[0].getAttribute('data-' + name) || def
