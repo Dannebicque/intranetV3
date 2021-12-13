@@ -1,5 +1,12 @@
 {% block type_chainee %}
-    <fieldset class="form-group">
+    <fieldset class="form-group"
+            {{ stimulus_controller('enquete', {
+                parametres: parametres|json_encode,
+                idQuestion: id,
+                typeQuestionnaire: typeQuestionnaire,
+                questionnaireId: questionnaire_id
+            }) }}
+    >
         {{ block('libelle') }}
         <div aria-describedby="quizz_question_{{ id }}_help">
             <small id="quizz_question_{{ id }}_help" class="form-text text-muted">{{ help }}</small>
@@ -7,8 +14,6 @@
 
         {% for subQuestion in questionsEnfants %}
             <div class="sub-question {% if loop.index is odd %}row-striped{% endif %}">
-
-
                 <div class="row">
                     <div class="col-sm-12 col-md-12 sub-question-titre">
                         # {{ subQuestion.libelle }}
@@ -25,14 +30,14 @@
                                        name="quizz_question_reponses_{{ name }}"
                                        data-action="change->enquete#change"
                                        data-fieldset="{{ id }}"
-                                       data-typeQuestionnaire="{{ type_question }}"
+                                       data-typeQuestionnaire="radio" {# todo: pourrait être autre chose... #}
                                         {% if apercu is not defined or apercu == false %}
                                             data-etudiant="{{ etudiant_id }}"
                                         {% endif %}
                                         {% if reponseEtudiant != null and
                                             reponseEtudiant.valeur == reponse.valeur %}checked{% endif %}
                                         {% if obligatoire %}required{% endif %}
-                                       class="form-check-input  {% if apercu is not defined or apercu == false %}questionQualite{% endif %}"
+                                       class="form-check-input"
                                        value="{{ reponse.valeur }}">
                                 <label class="form-check-label required" for="quizz_question_qcu_{{ name }}_{{ reponse.id }}">{{ reponse.libelle }}</label>
                             </div>
@@ -217,7 +222,7 @@
                         {% if reponseEtudiant != null and
                             reponseEtudiant.valeur == reponse.valeur %}checked{% endif %}
                         {% if obligatoire %}required{% endif %}
-                       class="form-check-input  {% if apercu is not defined or apercu == false %}questionQualite{% endif %}"
+                       class="form-check-input"
                        value="{{ reponse.valeur }}">
                 <label class="form-check-label required" for="quizz_question_qcu_{{ name }}_{{ reponse.id }}">{{ reponse.libelle }}</label>
                 {% if reponse.valeur == "CHX:OTHER" %}
@@ -228,7 +233,7 @@
                             {% if mode is defined or mode == false %}
                                 data-etudiant="{{ etudiant_id }}"
                             {% endif %}
-                           class="form-control {% if apercu is not defined or apercu == false %}questionQualiteTextArea{% endif %}"
+                           class="form-control"
                             {% if reponseEtudiant != null and reponseEtudiant.valeur == 'CHX:OTHER' %}
                                 value="{{ reponseEtudiant.complementValeur }}"
                             {% endif %}
