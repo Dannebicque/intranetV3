@@ -29,7 +29,7 @@ class TypeQuestionRenderer
     /**
      * @throws \Throwable
      */
-    public function render(AbstractQuestion $question): string
+    public function render(AbstractQuestion $question, ?int $ordre = 0): string
     {
         $template = $this->load();
 
@@ -47,10 +47,12 @@ class TypeQuestionRenderer
         $params['help'] = $question->help;
         $params['config'] = $question->config;
         $params['parametres'] = $question->parametres;
+        $params['valeurs'] = $question->valeurs;
         $params['libelle'] = $question->libelle;
         $params['numero'] = $question->numero;
+        $params['ordre'] = $ordre;
         $params['obligatoire'] = $question->obligatoire;
-        $params['typeQuestionnaire'] = 'qualite';//todo: a gérer dans option...
+        $params['typeQuestionnaire'] = $question->getOption('typeQuestionnaire');
         $params['reponseEtudiant'] = $question->reponseEtudiant;
 
         return $template->renderBlock($params['block_name'], $params);

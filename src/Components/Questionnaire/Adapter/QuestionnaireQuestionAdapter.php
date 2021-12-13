@@ -41,6 +41,7 @@ class QuestionnaireQuestionAdapter
 
         if (true === $abstractSection->configurable) {
             $data = $abstractSection->abstractSectionAdapter->getData($abstractSection->params['valeurs'][$ordre]);
+            $this->question->valeurs = $abstractSection->params['valeurs'];
             $this->question->libelle = Tools::personnaliseTexte($question->getQuestion()->getLibelle(), $data);
         } else {
             $this->question->libelle = $question->getQuestion()->getLibelle();

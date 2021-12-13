@@ -75,6 +75,7 @@ class Questionnaire
             'routeEnd' => '',
             'params' => [],
             'paramsEnd' => [],
+            'typeQuestionnaire' => 'qualite'
         ]);
     }
 
@@ -86,6 +87,7 @@ class Questionnaire
             $configSection->setSection($section,[
                 'questionnaire_id' => $this->getQuestionnaire()->id,
                 'etudiant_id' => $this->etudiant,
+                'typeQuestionnaire' => $this->options['typeQuestionnaire']
             ]);
             $sections = $configSection->genereSections();
             foreach ($sections as $cSection) {
@@ -97,6 +99,7 @@ class Questionnaire
             $abstractSection->setSection($section, [
                 'questionnaire_id' => $this->getQuestionnaire()->id,
                 'etudiant_id' => $this->etudiant,
+                'typeQuestionnaire' => $this->options['typeQuestionnaire']
             ]);
             $this->sections->addSection($abstractSection->getSection());
         }
@@ -160,6 +163,7 @@ class Questionnaire
                     'questionnaire_id' => $this->getQuestionnaire()->id,
                     'etudiant_id' => $this->etudiant,
                     'mode' => $this->getOption('mode'),
+                    'typeQuestionnaire' => $this->getOption('typeQuestionnaire')
                 ], $reponsesEtudiant);
                 break;
             }

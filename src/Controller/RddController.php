@@ -148,6 +148,7 @@ class RddController extends AbstractController
             $questionnaire->createQuestionnaire(QuestionnaireQuizz::class,
                 (new QuestionnaireQuizzAdapter($questionnaireQuizz))->getQuestionnaire(),
                 ['mode' => AbstractQuestionnaire::MODE_EDITION,
+                    'typeQuestionnaire' => 'quizz',
                     'route' => 'rdd_enquete_diplome',
                     'params'=> [
                         'numetudiant' => $numetudiant,
