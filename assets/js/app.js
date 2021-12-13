@@ -21,7 +21,7 @@ import '../css/app.scss'
 
 
 import Table from '../components/table'
-import Editable from './editable'
+//import Editable from './editable'
 import SelectComplete from '../components/SelectComplete'
 import SelectChangeWidget from '../components/SelectChangeWidget'
 import DatePicker from '../components/DatePicker'
