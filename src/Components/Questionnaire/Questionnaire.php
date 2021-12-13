@@ -219,6 +219,6 @@ class Questionnaire
             return $this->router->generate($this->options['routeEnd'], $this->options['paramsEnd']);
         }
 
-        return '';
+        return 'https://univ-reims.fr';
     }
 }
