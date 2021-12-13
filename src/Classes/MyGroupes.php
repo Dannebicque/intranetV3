@@ -34,7 +34,7 @@ class MyGroupes
 {
     protected EntityManagerInterface $entityManager;
 
-    protected $groupedefaut;
+    protected ?string $groupedefaut = null;
 
     // type de groupes  pour un semestre
     protected $typeGroupes;
@@ -88,9 +88,10 @@ class MyGroupes
 
         if (null === $this->groupedefaut && count($this->typeGroupes) > 0) {
             $this->groupedefaut = $this->typeGroupes[0];
-        } else {
-            throw new Exception('Aucun groupe par défaut trouvé');
         }
+//        else {
+//            throw new Exception('Aucun groupe par défaut trouvé');
+//        }
         $this->groupes = $this->groupeRepository->findBy(['typeGroupe' => $this->groupedefaut->getId()]);
 
         return $this;
