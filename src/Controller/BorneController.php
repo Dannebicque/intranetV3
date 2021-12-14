@@ -50,7 +50,7 @@ class BorneController extends AbstractController
      * @throws \App\Exception\SemestreNotFoundException
      */
     #[Route(path: '/borne2/{nbBorne}', name: 'borne2')]
-    public function borne2(TypeMatiereManager $typeMatiereManager, MyEdtBorne $myEdtBorne, int $numBorne = 1): Response
+    public function borne(TypeMatiereManager $typeMatiereManager, MyEdtBorne $myEdtBorne, int $numBorne = 1): Response
     {
         $nbBornes = [
             1 => [
@@ -61,6 +61,12 @@ class BorneController extends AbstractController
             2 => [
                 'zone1' => ['type' => 'semestre', 'valeur' => 79],
                 'zone2' => ['type' => 'semestre', 'valeur' => 5],
+                // 'zone2' => ['type' => 'message', 'valeur' => Message::class],
+                'zone3' => ['type' => 'message', 'valeur' => Borne::class],
+            ],
+            3 => [
+                'zone1' => ['type' => 'semestre', 'valeur' => 1],
+                'zone2' => ['type' => 'semestre', 'valeur' => 2],
                 // 'zone2' => ['type' => 'message', 'valeur' => Message::class],
                 'zone3' => ['type' => 'message', 'valeur' => Borne::class],
             ],
@@ -79,9 +85,15 @@ class BorneController extends AbstractController
             }
         }
 
-        return $this->render('borne/index2.html.twig', [
+        $response = new Response();
+        $response->headers->set('Access-Control-Allow-Origin', '*');
+        $content = $this->render('borne/index2.html.twig', [
             'zones' => $zones,
             'tabHeures' => Constantes::TAB_HEURES_EDT_2,
         ]);
+
+        $response->setContent($content);
+
+        return $response;
     }
 }
