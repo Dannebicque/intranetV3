@@ -11,7 +11,7 @@ export default class extends Controller {
   static values = {
     modalUrl: String,
     modalTitle: String,
-    size: String,
+    size: {type: String, default:'md'},
     params: Array
   }
 
