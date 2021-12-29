@@ -17,6 +17,7 @@ use App\Components\Table\Column\WidgetColumnType;
 use App\Components\Table\TableBuilder;
 use App\Components\Table\TableType;
 use App\Components\Widget\Type\ButtonDropdownType;
+use App\Components\Widget\Type\ExportDropdownType;
 use App\Components\Widget\Type\LinkType;
 use App\Components\Widget\Type\RowDeleteLinkType;
 use App\Components\Widget\Type\RowDuplicateLinkType;
@@ -54,6 +55,10 @@ class ArticleTableType extends TableType
         ]);
         $builder->addFilter('to', DatePickerType::class, [
             'input_prefix_text' => 'Au',
+        ]);
+
+        $builder->addWidget('export', ExportDropdownType::class, [
+            'route' => 'administration_article_export',
         ]);
 
 //        // Export button (use to export data)
@@ -116,8 +121,6 @@ class ArticleTableType extends TableType
                         'id' => $s->getId(),
                     ],
                     'attr' => [
-                        'data-href' => 'administration_article_delete',
-                        'data-uuid' => $s->getId(),
                         'data-csrf' => $this->csrfToken->getToken('delete' . $s->getId()),
                     ],
                 ]);

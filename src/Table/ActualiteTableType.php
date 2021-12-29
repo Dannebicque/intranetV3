@@ -15,8 +15,7 @@ use App\Components\Table\Column\PropertyColumnType;
 use App\Components\Table\Column\WidgetColumnType;
 use App\Components\Table\TableBuilder;
 use App\Components\Table\TableType;
-use App\Components\Widget\Type\ButtonDropdownType;
-use App\Components\Widget\Type\LinkType;
+use App\Components\Widget\Type\ExportDropdownType;
 use App\Components\Widget\Type\RowDeleteLinkType;
 use App\Components\Widget\Type\RowDuplicateLinkType;
 use App\Components\Widget\Type\RowEditLinkType;
@@ -40,7 +39,7 @@ class ActualiteTableType extends TableType
         $this->csrfToken = $csrfToken;
     }
 
-    public function buildTable(TableBuilder $builder, array $options)
+    public function buildTable(TableBuilder $builder, array $options): void
     {
         $this->departement = $options['departement'];
 
@@ -52,24 +51,8 @@ class ActualiteTableType extends TableType
             'input_prefix_text' => 'Au',
         ]);
 
-//        // Export button (use to export data)
-        $builder->addWidget('export', ButtonDropdownType::class, [
-            'icon' => 'fas fa-download',
-            'attr' => ['data-toggle' => 'dropdown'],
-            'build' => function(WidgetBuilder $builder) {
-                $builder->add('pdf', LinkType::class, [
-                    'route' => 'administration_actualite_export',
-                    'route_params' => ['_format' => 'pdf'],
-                ]);
-                $builder->add('csv', LinkType::class, [
-                    'route' => 'administration_actualite_export',
-                    'route_params' => ['_format' => 'csv'],
-                ]);
-                $builder->add('excel', LinkType::class, [
-                    'route' => 'administration_actualite_export',
-                    'route_params' => ['_format' => 'xlsx'],
-                ]);
-            },
+        $builder->addWidget('export', ExportDropdownType::class, [
+            'route' => 'administration_actualite_export',
         ]);
 
         $builder->setLoadUrl('administration_actualite_index');
@@ -107,9 +90,9 @@ class ActualiteTableType extends TableType
                     'xhr' => false,
                 ]);
                 $builder->add('delete', RowDeleteLinkType::class, [
+                    'route' => 'administration_actualite_delete',
+                    'route_params' => ['id' => $s->getId()],
                     'attr' => [
-                        'data-href' => 'administration_actualite_delete',
-                        'data-uuid' => $s->getId(),
                         'data-csrf' => $this->csrfToken->getToken('delete' . $s->getId()),
                     ],
                 ]);
@@ -143,7 +126,7 @@ class ActualiteTableType extends TableType
         ]);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'orderable' => true,

@@ -16,8 +16,7 @@ use App\Components\Table\Column\PropertyColumnType;
 use App\Components\Table\Column\WidgetColumnType;
 use App\Components\Table\TableBuilder;
 use App\Components\Table\TableType;
-use App\Components\Widget\Type\ButtonDropdownType;
-use App\Components\Widget\Type\LinkType;
+use App\Components\Widget\Type\ExportDropdownType;
 use App\Components\Widget\Type\RowDeleteLinkType;
 use App\Components\Widget\Type\RowDuplicateLinkType;
 use App\Components\Widget\Type\RowEditLinkType;
@@ -58,23 +57,8 @@ class BorneTableType extends TableType
             'input_prefix_text' => 'Au',
         ]);
 
-        $builder->addWidget('export', ButtonDropdownType::class, [
-            'icon' => 'fas fa-download',
-            'attr' => ['data-toggle' => 'dropdown'],
-            'build' => function(WidgetBuilder $builder) {
-                $builder->add('pdf', LinkType::class, [
-                    'route' => 'administration_borne_export',
-                    'route_params' => ['_format' => 'pdf'],
-                ]);
-                $builder->add('csv', LinkType::class, [
-                    'route' => 'administration_borne_export',
-                    'route_params' => ['_format' => 'csv'],
-                ]);
-                $builder->add('excel', LinkType::class, [
-                    'route' => 'administration_borne_export',
-                    'route_params' => ['_format' => 'xlsx'],
-                ]);
-            },
+        $builder->addWidget('export', ExportDropdownType::class, [
+            'route' => 'administration_borne_export',
         ]);
 
         $builder->setLoadUrl('administration_borne_index');
@@ -118,9 +102,9 @@ class BorneTableType extends TableType
                     'xhr' => false,
                 ]);
                 $builder->add('delete', RowDeleteLinkType::class, [
+                    'route' => 'administration_borne_delete',
+                    'route_params' => ['id' => $s->getId()],
                     'attr' => [
-                        'data-href' => 'administration_borne_delete',
-                        'data-uuid' => $s->getId(),
                         'data-csrf' => $this->csrfToken->getToken('delete' . $s->getId()),
                     ],
                 ]);

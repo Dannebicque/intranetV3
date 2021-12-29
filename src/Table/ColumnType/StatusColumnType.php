@@ -20,7 +20,7 @@ class StatusColumnType extends PropertyColumnType
         return Absence::getIconStatus($value);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
         $resolver->setDefault('is_safe_html', true);

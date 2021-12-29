@@ -39,7 +39,7 @@ class TypeQuestionColumnType extends PropertyColumnType
         return '<span class="badge bg-primary">' . $value . '</span>';
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
         $resolver->setDefault('is_safe_html', true);

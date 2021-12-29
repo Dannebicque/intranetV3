@@ -19,7 +19,7 @@ class DatePeriodeJustificatifColumnType extends PropertyColumnType
         return 'Du '.$value['dateHeureDebut']->format('d/m/Y H:i').' au '.$value['dateHeureFin']->format('d/m/Y H:i');
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
         $resolver->setDefault('is_safe_html', true);

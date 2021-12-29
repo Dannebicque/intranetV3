@@ -42,7 +42,7 @@ class StatusAppelFaitColumnType extends PropertyColumnType
 
     public function configureOptions(
         OptionsResolver $resolver
-    ) {
+    ): void {
         parent::configureOptions($resolver);
         $resolver->setDefault('is_safe_html', true);
         $resolver->setDefault('statsAppel', []);
