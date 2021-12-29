@@ -81,7 +81,6 @@ class EdtCompareController extends BaseController
     public function comparePlusInfoAction(TypeMatiereManager $typeMatiereManager, string $matiere): Response
     {
 
-
         $mat = $typeMatiereManager->getMatiereFromSelect($matiere);
 
         if (null === $mat) {
@@ -90,7 +89,7 @@ class EdtCompareController extends BaseController
 
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_EDT', $mat->semestre);
         //tester si celcat ou intranet
-        $planning = $this->edtPlanningRepository->findBy(['matiere' => $mat->id]);
+        $planning = $this->edtPlanningRepository->findBy(['idMatiere' => $mat->id, 'typeMatiere'=> $mat->typeMatiere]);
 
         $calendrier = $this->calendrierRepository->findCalendrierArray();
 

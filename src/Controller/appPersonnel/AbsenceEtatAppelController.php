@@ -30,7 +30,7 @@ class AbsenceEtatAppelController extends BaseController
         $data = JsonRequest::getFromRequest($request);
         $data['type_saisie'] = \App\Entity\AbsenceEtatAppel::SAISIE_SANS_ABSENT;
         $data['groupe'] = $groupeRepository->find($data['groupe']);
-        $data['personnel'] = $this->getConnectedUser();
+        $data['personnel'] = $this->getUser();
 
         $rep = $absenceEtatAppel->enregistreAppelFait($data);
 

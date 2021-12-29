@@ -233,7 +233,7 @@ class AbsenceController extends BaseController
                 $etudiantAbsences->addAbsence(
                     $dateHeure,
                     $mat,
-                    $this->getConnectedUser()
+                    $this->getUser()
                 );
 
                 $absences = $absenceRepository->getByMatiereArray(

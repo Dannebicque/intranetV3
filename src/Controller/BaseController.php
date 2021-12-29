@@ -14,6 +14,8 @@ use App\Components\Table\DTO\Table;
 use App\Components\Table\TableFactory;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Constantes;
+use App\Entity\Etudiant;
+use App\Entity\Personnel;
 use App\Interfaces\UtilisateurInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -33,7 +35,7 @@ class BaseController extends AbstractController
 
     protected TranslatorInterface $translator;
 
-    public static function getSubscribedServices()
+    public static function getSubscribedServices(): array
     {
         return parent::getSubscribedServices() + [
                 TableFactory::class => TableFactory::class,
@@ -86,25 +88,20 @@ class BaseController extends AbstractController
         }
     }
 
-    public function getConnectedUser(): UtilisateurInterface
+    public function getUser(): UtilisateurInterface
     {
-        //todo: retourner un utilisateur interface ?
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $user = parent::getUser();
 
-        return $this->getUser();
+        if (! $user instanceof Personnel && ! $user instanceof Etudiant) {
+            throw $this->createAccessDeniedException('Vous n\'êtes pas connecté');
+        }
+        return $user;
     }
 
     public function isEtudiant(): bool
     {
         return $this->isGranted('ROLE_ETUDIANT');
-    }
-
-    /** @deprecated */
-    public function getEtudiantAnneeUniversitaire()
-    {
-        $this->denyAccessUnlessGranted('ROLE_ETUDIANT');
-
-        return null !== $this->getUser() ? $this->getUser()->getAnneeUniversitaire() : null;
     }
 
     public function getAnneeUniversitaire(): ?AnneeUniversitaire

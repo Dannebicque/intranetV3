@@ -31,7 +31,7 @@ class NotificationController extends BaseController
     public function index(NotificationRepository $notificationRepository): Response
     {
         return $this->render('notification/index.html.twig', [
-            'notifications' => $notificationRepository->findByUser($this->getConnectedUser()),
+            'notifications' => $notificationRepository->findByUser($this->getUser()),
         ]);
     }
 
@@ -52,7 +52,7 @@ class NotificationController extends BaseController
      */
     public function marquerCommeLu(NotificationRepository $notificationRepository): Response
     {
-        $notifications = $notificationRepository->findNonLuByUser($this->getConnectedUser());
+        $notifications = $notificationRepository->findNonLuByUser($this->getUser());
 
         /** @var Notification $notif */
         foreach ($notifications as $notif) {

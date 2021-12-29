@@ -46,7 +46,7 @@ class QualiteController extends BaseController
         if (null !== $this->dataUserSession->getUser()) {
             $questionnaires = $qualiteQuestionnaireRepository->findByDiplome($this->dataUserSession->getUser()->getDiplome());
 
-            $reponsesEtudiant = $questionnaireEtudiantRepository->findByEtudiantArray($this->getConnectedUser());
+            $reponsesEtudiant = $questionnaireEtudiantRepository->findByEtudiantArray($this->getUser());
 
             return $this->render('appEtudiant/qualite/index.html.twig', [
                 'questionnaires' => $questionnaires,
@@ -70,24 +70,24 @@ class QualiteController extends BaseController
     ): Response {
         $quizzEtudiant = $quizzEtudiantRepository->findOneBy([
             'questionnaireQualite' => $qualiteQuestionnaire->getId(),
-            'etudiant' => $this->getConnectedUser()->getId(),
+            'etudiant' => $this->getUser()->getId(),
         ]);
         if (null !== $quizzEtudiant) {
             $quizzEtudiant->setDateTermine(Carbon::now());
             $quizzEtudiant->setTermine(true);
             $this->entityManager->flush();
 
-            if (null !== $this->getConnectedUser() && null !== $this->getConnectedUser()->getDiplome() && null !== $this->getConnectedUser()->getDiplome()->getOptResponsableQualite()) {
+            if (null !== $this->getUser()->getDiplome() && null !== $this->getUser()->getDiplome()->getOptResponsableQualite()) {
                 $myMailer->initEmail();
                 $myMailer->setTemplate('mails/qualite-complete-etudiant.html.twig',
-                    ['questionnaire' => $qualiteQuestionnaire, 'etudiant' => $this->getConnectedUser()]);
-                $myMailer->sendMessage($this->getConnectedUser()->getMails(),
+                    ['questionnaire' => $qualiteQuestionnaire, 'etudiant' => $this->getUser()]);
+                $myMailer->sendMessage($this->getUser()->getMails(),
                     'Accusé réception questionnaire ' . $qualiteQuestionnaire->getLibelle());
 
                 $myMailer->initEmail();
                 $myMailer->setTemplate('mails/qualite-complete-responsable.html.twig',
-                    ['questionnaire' => $qualiteQuestionnaire, 'etudiant' => $this->getConnectedUser()]);
-                $myMailer->sendMessage($this->getConnectedUser()->getDiplome()->getOptResponsableQualite()->getMails(),
+                    ['questionnaire' => $qualiteQuestionnaire, 'etudiant' => $this->getUser()]);
+                $myMailer->sendMessage($this->getUser()->getDiplome()->getOptResponsableQualite()->getMails(),
                     'Accusé réception questionnaire ' . $qualiteQuestionnaire->getLibelle());
 
                 return $this->redirectToRoute('application_index', ['onglet' => 'qualite']);
@@ -120,9 +120,9 @@ class QualiteController extends BaseController
         foreach ($questionnaireQualite->getSections() as $section) {
             $sect = (new SectionQualiteEntityAdapter($section))->getSection();//todo: tester si la section est visible
             $questionnaire->addSection($sect);
-            $reponses->merge($reponsesEtudiantAdapter->getReponsesEtudiant($sect, $this->getConnectedUser()->getId()));//todo: on pourrait faire que sur la section concernée ?
+            $reponses->merge($reponsesEtudiantAdapter->getReponsesEtudiant($sect, $this->getUser()->getId()));//todo: on pourrait faire que sur la section concernée ?
         }
-        $questionnaire->setIdEtudiant($this->getConnectedUser()->getId());//todo: passer l'étudiant aux réponses
+        $questionnaire->setIdEtudiant($this->getUser()->getId());//todo: passer l'étudiant aux réponses
         $questionnaire->AddSpecialSection(AbstractSection::END);
 
         if ($questionnaire->handleRequest($request)) {

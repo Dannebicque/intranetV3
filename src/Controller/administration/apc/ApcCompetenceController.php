@@ -35,7 +35,7 @@ class ApcCompetenceController extends BaseController
         Diplome $diplome,
         $_format
     ): Response {
-        $actualites = $apcComptenceRepository->getByDiplome($diplome);
+        $actualites = $apcComptenceRepository->findByDiplome($diplome);
 
         return $myExport->genereFichierGenerique(
             $_format,

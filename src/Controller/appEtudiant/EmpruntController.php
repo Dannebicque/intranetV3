@@ -56,7 +56,7 @@ class EmpruntController extends BaseController
         MyEmprunts $emprunt,
         Request $request
     ): Response {
-        $emprunt->empruntDemande($request, $this->getConnectedUser());
+        $emprunt->empruntDemande($request, $this->getUser());
 
         return $this->redirectToRoute('application_index', ['onglet' => 'emprunt']);
     }

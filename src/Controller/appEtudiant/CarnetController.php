@@ -33,9 +33,9 @@ class CarnetController extends BaseController
         TypeMatiereManager $typeMatiereManager
     ): Response {
         return $this->render('appEtudiant/carnet/index.html.twig', [
-            'carnets' => $cahierTexteRepository->findBySemestre($this->getConnectedUser()->getSemestre()),
+            'carnets' => $cahierTexteRepository->findBySemestre($this->getUser()->getSemestre()),
             'personnels' => $this->dataUserSession->getPersonnels(),
-            'matieres' => $typeMatiereManager->findBySemestre($this->getConnectedUser()->getSemestre()),
+            'matieres' => $typeMatiereManager->findBySemestre($this->getUser()->getSemestre()),
         ]);
     }
 

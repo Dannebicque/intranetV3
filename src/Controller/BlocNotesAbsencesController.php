@@ -24,7 +24,7 @@ class BlocNotesAbsencesController extends BaseController
 {
     public function personnel(PrevisionnelManager $myPrevisionnel): Response
     {
-        $previsionnels = $myPrevisionnel->getPrevisionnelPersonnelDepartementAnnee($this->getConnectedUser(),
+        $previsionnels = $myPrevisionnel->getPrevisionnelPersonnelDepartementAnnee($this->getUser(),
             $this->dataUserSession->getDepartement(),
             $this->dataUserSession->getAnneePrevisionnel());
 
@@ -41,7 +41,7 @@ class BlocNotesAbsencesController extends BaseController
         EtudiantAbsences $etudiantAbsences,
         StatsAbsences $statsAbsences
     ): Response {
-        $etudiantAbsences->setEtudiant($this->getConnectedUser());
+        $etudiantAbsences->setEtudiant($this->getUser());
         $matieres = $typeMatiereManager->findBySemestreArray($this->getEtudiantSemestre());
         $absences = $etudiantAbsences->getAbsencesParSemestresEtAnneeUniversitaire($matieres,
             $this->getAnneeUniversitaire());
@@ -49,7 +49,7 @@ class BlocNotesAbsencesController extends BaseController
 
         return $this->render('bloc_notes_absences/etudiant_absences.html.twig', [
             'absences' => $absences,
-            'etudiant' => $this->getConnectedUser(),
+            'etudiant' => $this->getUser(),
             'statistiquesAbsences' => $statistiquesAbsences,
             'matieres' => $matieres,
         ]);
@@ -58,7 +58,7 @@ class BlocNotesAbsencesController extends BaseController
     public function etudiantNotes(TypeMatiereManager $typeMatiereManager, EtudiantNotes $etudiantNotes): Response
     {
         $matieres = $typeMatiereManager->findBySemestreArray($this->getEtudiantSemestre());
-        $etudiantNotes->setEtudiant($this->getConnectedUser());
+        $etudiantNotes->setEtudiant($this->getUser());
         $notes = $etudiantNotes->getNotesParSemestresEtAnneeUniversitaire($matieres,
             $this->getAnneeUniversitaire());
 

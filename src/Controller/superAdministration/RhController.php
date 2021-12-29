@@ -14,6 +14,7 @@ use App\Entity\Constantes;
 use App\Entity\Personnel;
 use App\Form\PersonnelType;
 use App\Repository\PersonnelDepartementRepository;
+use App\Table\PersonnelTableType;
 use JsonException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,9 +31,18 @@ class RhController extends BaseController
     /**
      * @Route("/", name="sa_rh_index")
      */
-    public function index(): Response
+    public function index(Request $request): Response
     {
+        $table = $this->createTable(PersonnelTableType::class, [
+
+        ]);
+        $table->handleRequest($request);
+
+        if ($table->isCallback()) {
+            return $table->getCallbackResponse();
+        }
         return $this->render('super-administration/rh/index.html.twig', [
+            'table' => $table,
         ]);
     }
 

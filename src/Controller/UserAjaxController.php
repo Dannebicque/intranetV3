@@ -48,7 +48,7 @@ class UserAjaxController extends BaseController
         $action = $request->request->get('etat');
         $user = $etudiantRepository->findOneBySlug($request->request->get('user'));
         if ($user && 'true' === $action) {
-            $fav = new Favori($this->getConnectedUser(), $user);
+            $fav = new Favori($this->getUser(), $user);
 
             $this->entityManager->persist($fav);
             $this->entityManager->flush();
@@ -58,7 +58,7 @@ class UserAjaxController extends BaseController
 
         if ($user && 'false' === $action) {
             $fav = $favoriRepository->findBy([
-                'etudiantDemandeur' => $this->getConnectedUser()->getId(),
+                'etudiantDemandeur' => $this->getUser()->getId(),
                 'etudiantDemande' => $user->getId(),
             ]);
             foreach ($fav as $f) {
@@ -82,8 +82,8 @@ class UserAjaxController extends BaseController
         PersonnelDepartementRepository $personnelDepartementRepository,
         Departement $departement
     ): ?JsonResponse {
-        if (null !== $this->getConnectedUser() && 'permanent' === $this->getConnectedUser()->getTypeUser()) {
-            $pf = $personnelDepartementRepository->findByPersonnel($this->getConnectedUser());
+        if (null !== $this->getUser() && 'permanent' === $this->getUser()->getTypeUser()) {
+            $pf = $personnelDepartementRepository->findByPersonnel($this->getUser());
             /** @var PersonnelDepartement $p */
             foreach ($pf as $p) {
                 if (null !== $p->getDepartement() && $p->getDepartement()->getId() === $departement->getId()) {
@@ -110,16 +110,16 @@ class UserAjaxController extends BaseController
         UserPasswordHasherInterface $passwordEncoder,
         Request $request
     ): ?JsonResponse {
-        if (null !== $this->getConnectedUser() && 'permanent' === $this->getConnectedUser()->getTypeUser()) {
+        if (null !== $this->getUser() && 'permanent' === $this->getUser()->getTypeUser()) {
             $passwd1 = trim($request->request->get('passwd1'));
             $passwd2 = trim($request->request->get('passwd2'));
             $passwdActuel = trim($request->request->get('passwdactuel'));
 
-            if ($passwd1 === $passwd2 && $passwd1 !== '' && $passwordEncoder->isPasswordValid($this->getConnectedUser(),
+            if ($passwd1 === $passwd2 && $passwd1 !== '' && $passwordEncoder->isPasswordValid($this->getUser(),
                     $passwdActuel)) {
 
-                $passwordEncode = $passwordEncoder->hashPassword($this->getConnectedUser(), $passwd1);
-                $this->getConnectedUser()->setPassword($passwordEncode);
+                $passwordEncode = $passwordEncoder->hashPassword($this->getUser(), $passwd1);
+                $this->getUser()->setPassword($passwordEncode);
                 $this->entityManager->flush();
 
                 return new JsonResponse(true, Response::HTTP_OK);

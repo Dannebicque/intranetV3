@@ -44,34 +44,30 @@ class EdtController extends BaseController
      */
     public function dashboardPersonnel(int $semaine = 0): Response
     {
-        if (null !== $this->getConnectedUser()) {
-            //todo: passer le lien semestre-> couleur plutôt que les matières ??
-            if (null !== $this->dataUserSession->getDepartement() && $this->dataUserSession->getDepartement()->isOptUpdateCelcat()) {
-                $matieres = $this->typeMatiereManager->tableauMatieresCodeApogee($this->getDepartement());
-                $this->myEdtCelcat->initPersonnel($this->getConnectedUser(),
-                    $this->dataUserSession->getAnneeUniversitaire(), $semaine, $matieres);
-
-                return $this->render('edt/_intervenant2.html.twig', [
-                    'edt' => $this->myEdtCelcat,
-                    'filtre' => 'prof',
-                    'valeur' => $this->getConnectedUser()->getId(),
-                    'tabHeures' => Constantes::TAB_HEURES_EDT_2,
-                ]);
-            }
-            $matieres = $this->typeMatiereManager->findByDepartementArray($this->getDepartement());
-            $this->myEdtIntranet->initPersonnel($this->getConnectedUser(),
-                $this->dataUserSession->getAnneeUniversitaire(),
-                $semaine, $matieres);
+        //todo: passer le lien semestre-> couleur plutôt que les matières ??
+        if (null !== $this->dataUserSession->getDepartement() && $this->dataUserSession->getDepartement()->isOptUpdateCelcat()) {
+            $matieres = $this->typeMatiereManager->tableauMatieresCodeApogee($this->getDepartement());
+            $this->myEdtCelcat->initPersonnel($this->getUser(),
+                $this->dataUserSession->getAnneeUniversitaire(), $semaine, $matieres);
 
             return $this->render('edt/_intervenant2.html.twig', [
-                'edt' => $this->myEdtIntranet,
+                'edt' => $this->myEdtCelcat,
                 'filtre' => 'prof',
-                'valeur' => $this->getConnectedUser()->getId(),
+                'valeur' => $this->getUser()->getId(),
                 'tabHeures' => Constantes::TAB_HEURES_EDT_2,
             ]);
         }
+        $matieres = $this->typeMatiereManager->findByDepartementArray($this->getDepartement());
+        $this->myEdtIntranet->initPersonnel($this->getUser(),
+            $this->dataUserSession->getAnneeUniversitaire(),
+            $semaine, $matieres);
 
-        return $this->render('bundles/TwigBundle/Exception/error500.html.twig');
+        return $this->render('edt/_intervenant2.html.twig', [
+            'edt' => $this->myEdtIntranet,
+            'filtre' => 'prof',
+            'valeur' => $this->getUser()->getId(),
+            'tabHeures' => Constantes::TAB_HEURES_EDT_2,
+        ]);
     }
 
     public function personnelSemestre(Semestre $semestre, $semaine = 0): Response
@@ -104,29 +100,25 @@ class EdtController extends BaseController
      */
     public function dashboardEtudiant(int $semaine = 0): Response
     {
-        $matieres = $this->typeMatiereManager->tableauMatieresSemestreCodeApogee($this->getConnectedUser()->getSemestre());
+        $matieres = $this->typeMatiereManager->tableauMatieresSemestreCodeApogee($this->getUser()->getSemestre());
 
-        if (null !== $this->getConnectedUser()) {
-            if (null !== $this->getConnectedUser()->getDiplome() && $this->getConnectedUser()->getDiplome()->isOptUpdateCelcat()) {
-                $this->myEdtCelcat->initEtudiant($this->getConnectedUser(),
-                    $this->getAnneeUniversitaire(), $semaine, $matieres);
+        if (null !== $this->getUser()->getDiplome() && $this->getUser()->getDiplome()?->isOptUpdateCelcat()) {
+            $this->myEdtCelcat->initEtudiant($this->getUser(),
+                $this->getAnneeUniversitaire(), $semaine, $matieres);
 
-                return $this->render('edt/_etudiant2.html.twig', [
-                    'edt' => $this->myEdtCelcat,
-                    'tabHeures' => Constantes::TAB_HEURES_EDT_2,
-                ]);
-            }
-            $this->myEdtIntranet->initEtudiant($this->getConnectedUser(),
-                $this->getAnneeUniversitaire(),
-                $semaine);
-
-            return $this->render('edt/_etudiant.html.twig', [
-                'edt' => $this->myEdtIntranet,
-                'tabHeures' => Constantes::TAB_HEURES_EDT,
+            return $this->render('edt/_etudiant2.html.twig', [
+                'edt' => $this->myEdtCelcat,
+                'tabHeures' => Constantes::TAB_HEURES_EDT_2,
             ]);
         }
+        $this->myEdtIntranet->initEtudiant($this->getUser(),
+            $this->getAnneeUniversitaire(),
+            $semaine);
 
-        return $this->render('bundles/TwigBundle/Exception/error500.html.twig');
+        return $this->render('edt/_etudiant.html.twig', [
+            'edt' => $this->myEdtIntranet,
+            'tabHeures' => Constantes::TAB_HEURES_EDT,
+        ]);
     }
 
     #[Route(path: '/intervenant/export/semaine/{semaine}', name: 'edt_intervenant_export_semaine_courante')]
@@ -153,7 +145,7 @@ class EdtController extends BaseController
     #[Route(path: '/intervenant/export/ical', name: 'edt_intervenant_export_ical')]
     public function exportIntervenantIcal(MyEdtExport $myEdtExport): Response
     {
-        $ical = $myEdtExport->export($this->getConnectedUser(), 'ics', 'personnel');
+        $ical = $myEdtExport->export($this->getUser(), 'ics', 'personnel');
 
         return new Response($ical, 200, [
             'Content-Type' => 'application/force-download',
@@ -167,7 +159,7 @@ class EdtController extends BaseController
         if ($this->isEtudiant()) {
             return $this->render('edt/modal_lien_ical.html.twig', [
                 'lienIcal' => $this->generateUrl('edt_etudiant_synchro_ical', [
-                    'code' => md5($this->getConnectedUser()->getSlug()),
+                    'code' => md5($this->getUser()->getSlug()),
                     '_format' => 'ics',
                 ],
                     UrlGeneratorInterface::ABSOLUTE_URL),
@@ -176,7 +168,7 @@ class EdtController extends BaseController
 
         return $this->render('edt/modal_lien_ical.html.twig', [
             'lienIcal' => $this->generateUrl('edt_intervenant_synchro_ical', [
-                'code' => md5($this->getConnectedUser()->getSlug()),
+                'code' => md5($this->getUser()->getSlug()),
                 '_format' => 'ics',
             ],
                 UrlGeneratorInterface::ABSOLUTE_URL),
@@ -198,11 +190,11 @@ class EdtController extends BaseController
         if ($semaine !== (int)date('W') && $semaine !== ((int)date('W') + 1)) {
             return $this->redirect($this->generateUrl('erreur_666'));
         }
-        if (null !== $this->getConnectedUser()->getDiplome() && $this->getConnectedUser()->getDiplome()->isOptUpdateCelcat()) {
-            $edt = $this->myEdtCelcat->initEtudiant($this->getConnectedUser(),
+        if (null !== $this->getUser()->getDiplome() && $this->getUser()->getDiplome()->isOptUpdateCelcat()) {
+            $edt = $this->myEdtCelcat->initEtudiant($this->getUser(),
                 $this->getAnneeUniversitaire(), $semaine);
         } else {
-            $edt = $this->myEdtIntranet->initEtudiant($this->getConnectedUser(),
+            $edt = $this->myEdtIntranet->initEtudiant($this->getUser(),
                 $this->getAnneeUniversitaire(), $semaine);
         }
 
@@ -215,7 +207,7 @@ class EdtController extends BaseController
     public function exportEtudiantIcal(MyEdtExport $myEdtExport): Response
     {
         //Le nombre de semaine selon la configuraiton
-        $ical = $myEdtExport->export($this->getConnectedUser(), 'ics', 'etudiant');
+        $ical = $myEdtExport->export($this->getUser(), 'ics', 'etudiant');
 
         return new Response($ical, 200, [
             'Content-Type' => 'application/force-download',

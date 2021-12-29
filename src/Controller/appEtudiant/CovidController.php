@@ -30,7 +30,7 @@ class CovidController extends BaseController
     public function index(CovidAttestationEtudiantRepository $covidAttestationEtudiantRepository): Response
     {
         return $this->render('appEtudiant/covid/_index.html.twig', [
-            'convocations' => $covidAttestationEtudiantRepository->findNext($this->getConnectedUser()),
+            'convocations' => $covidAttestationEtudiantRepository->findNext($this->getUser()),
         ]);
     }
 
@@ -48,7 +48,7 @@ class CovidController extends BaseController
         $autorise = false;
         foreach ($attestationEtudiant->getGroupes() as $groupe) {
             foreach ($groupe->getEtudiants() as $etudiant) {
-                if ($etudiant->getId() === $this->getConnectedUser()->getId()) {
+                if ($etudiant->getId() === $this->getUser()->getId()) {
                     $autorise = true;
                 }
             }
@@ -56,7 +56,7 @@ class CovidController extends BaseController
 
         if ($autorise) {
             //exporter le PDF
-            $myExportPresence->genereConvocationPdf($attestationEtudiant, $this->getConnectedUser());
+            $myExportPresence->genereConvocationPdf($attestationEtudiant, $this->getUser());
 
             return new Response();
         }

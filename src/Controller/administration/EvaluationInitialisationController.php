@@ -64,7 +64,7 @@ class EvaluationInitialisationController extends BaseController
                         if ($nbEnseignant > 0) {
                             $pers = $tPersonnels[$request->request->get('enseignant_' . $matiere->getTypeIdMatiere() . '_' . $i)[0]];
                         } else {
-                            $pers = $this->getConnectedUser();
+                            $pers = $this->getUser();
                         }
                         $eval = new Evaluation($pers, $matiere);
                         $eval->setCoefficient($request->request->get('coefficient_' . $matiere->getTypeIdMatiere() . '_' . $i));

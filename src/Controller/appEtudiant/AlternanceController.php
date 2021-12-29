@@ -36,7 +36,7 @@ class AlternanceController extends BaseController
     public function index(AlternanceRepository $alternanceRepository): Response
     {
         /** @var Alternance $alternance */
-        $alternance = $alternanceRepository->getOneByEtudiantAndAnneeUniversitaire($this->getConnectedUser(),
+        $alternance = $alternanceRepository->getOneByEtudiantAndAnneeUniversitaire($this->getUser(),
             $this->getAnneeUniversitaire());
         $form = null;
         if (null !== $alternance) {

@@ -25,7 +25,7 @@ class AgendaController extends BaseController
     #[Route(path: '/qv', name: 'agenda_qv', options: ['expose' => true])]
     public function qv(PrevisionnelManager $previsionnelManager): Response
     {
-        $previsionnel = $previsionnelManager->getPrevisionnelPersonnelDepartementAnnee($this->getConnectedUser(),
+        $previsionnel = $previsionnelManager->getPrevisionnelPersonnelDepartementAnnee($this->getUser(),
             $this->dataUserSession->getDepartement(), $this->dataUserSession->getAnneePrevisionnel());
 
         return $this->render('agenda/qv.html.twig', [
@@ -41,10 +41,10 @@ class AgendaController extends BaseController
     ): Response {
         //todo: a généraliser avec SAE, Ressources
         if (null !== $this->getDepartement() && true === $this->getDepartement()->getOptUpdateCelcat()) {
-            $chronologique = $serviceRealiseCelcat->getServiceRealiseParPersonnelMatiere($this->getConnectedUser(),
+            $chronologique = $serviceRealiseCelcat->getServiceRealiseParPersonnelMatiere($this->getUser(),
                 $previ->getIdMatiere(), $previ->getTypeMatiere());
         } else {
-            $chronologique = $serviceRealiseIntranet->getServiceRealiseParPersonnelMatiere($this->getConnectedUser(),
+            $chronologique = $serviceRealiseIntranet->getServiceRealiseParPersonnelMatiere($this->getUser(),
                 $previ->getIdMatiere(), $previ->getTypeMatiere());
         }
         $statistiques = $serviceRealiseIntranet->statistiques($chronologique);

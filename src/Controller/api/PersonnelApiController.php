@@ -9,7 +9,6 @@
 
 namespace App\Controller\api;
 
-use App\Classes\MyPersonnel;
 use App\Controller\BaseController;
 use App\Entity\Departement;
 use App\Entity\Personnel;
@@ -19,11 +18,9 @@ use App\Repository\PersonnelRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use InvalidArgumentException;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
-use function count;
 
 /**
  * Class AgendaController.
@@ -32,8 +29,7 @@ use function count;
  */
 class PersonnelApiController extends BaseController
 {
-    /** @var PersonnelRepository */
-    protected $personnelRepository;
+    protected PersonnelRepository $personnelRepository;
 
     /**
      * EtudiantApiController constructor.
@@ -148,49 +144,5 @@ class PersonnelApiController extends BaseController
         }
 
         return new Response('Erreur', Response::HTTP_INTERNAL_SERVER_ERROR);
-    }
-
-    /**
-     * @Route("/all", name="api_all_personnel", options={"expose":true})
-     */
-    public function getAllPersonnel(MyPersonnel $myPersonnel, Request $request): Response
-    {
-        $length = $request->get('length');
-        $length = $length && (-1 !== $length) ? $length : 0;
-
-        $start = $request->get('start');
-        $start = $length ? ($start && (-1 !== $start) ? $start : 0) / $length : 0;
-
-        $search = $request->get('search');
-
-        $order = $request->get('order');
-
-        $filters = [
-            'query' => $search['value'],
-            'order' => $order,
-        ];
-
-        $users = $myPersonnel->getArrayAllPersonnel(
-            $filters,
-            $start,
-            $length
-        );
-
-        $output = [
-            'draw'            => $request->get('draw'),
-            'data'            => $users,
-            'recordsFiltered' => count($this->personnelRepository->getAllPersonnel(
-                $filters,
-                0,
-                false
-            )),
-            'recordsTotal' => count($this->personnelRepository->getAllPersonnel(
-                [],
-                0,
-                false
-            )),
-        ];
-
-        return $this->json($output, Response::HTTP_OK);
     }
 }

@@ -40,7 +40,7 @@ class SemestreExportController extends BaseController
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $semestre);
 
         $this->dispatchMessage(new ExportReleve($semestre->getId(),
-            $this->dataUserSession->getAnneeUniversitaire()->getId(), $this->getConnectedUser()->getId()));
+            $this->dataUserSession->getAnneeUniversitaire()->getId(), $this->getUser()->getId()));
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS,
             'La génération des documents est en cours. Vous recevrez un mail pour télécharger les éléments dans quelques minutes.');
 
@@ -79,9 +79,9 @@ class SemestreExportController extends BaseController
         EtudiantExportReleve $etudiantExportReleve,
         Etudiant $etudiant,
         Scolarite $scolarite
-    ) {
+    ): PdfResponse {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $etudiant->getSemestre());
         $etudiantExportReleve->setEtudiant($etudiant);
-        $etudiantExportReleve->exportReleveDefinitif($scolarite);
+        return $etudiantExportReleve->exportReleveDefinitif($scolarite);
     }
 }

@@ -78,7 +78,7 @@ class QuestionnaireQuestionController extends BaseController
     {
         $type = $request->query->get('q');
         $typeQuestion = $questionnaireRegistry->getTypeQuestion($type);
-        $question = new QuestionnaireQuestion($this->getConnectedUser());
+        $question = new QuestionnaireQuestion($this->getUser());
         $form = $this->createForm($typeQuestion::FORM, $question, [
             'action' => $this->generateUrl('sadm_questionnaire_question_new', ['typeQuestion' => $typeQuestion::class]),
         ]);

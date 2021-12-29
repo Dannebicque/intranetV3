@@ -97,7 +97,7 @@ class EvaluationController extends BaseController
         }
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $mat->semestre);
 
-        $evaluation = new Evaluation($this->getConnectedUser(), $mat);
+        $evaluation = new Evaluation($this->getUser(), $mat);
         $form = $this->createForm(
             EvaluationType::class,
             $evaluation,

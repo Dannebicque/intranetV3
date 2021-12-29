@@ -10,6 +10,7 @@
 namespace App\Controller;
 
 use App\Repository\AnneeUniversitaireRepository;
+use App\Utils\JsonRequest;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,16 +25,16 @@ class SettingsController extends BaseController
     ): Response {
         $this->denyAccessUnlessGranted('ROLE_PERMANENT');
 
-        if ($content = $request->getContent()) {
-            $parametersAsArray = json_decode($content, true);
-        }
+        $parametersAsArray = JsonRequest::getFromRequest($request);
 
-        $anneeUniversitaire = $anneeUniversitaireRepository->find($parametersAsArray['annee_universitaire']);
-        if (null !== $anneeUniversitaire) {
-            $this->getUser()->setAnneeUniversitaire($anneeUniversitaire);
-            $this->entityManager->flush();
+        if (array_key_exists('annee_universitaire', $parametersAsArray)) {
+            $anneeUniversitaire = $anneeUniversitaireRepository->find($parametersAsArray['annee_universitaire']);
+            if (null !== $anneeUniversitaire) {
+                $this->getUser()->setAnneeUniversitaire($anneeUniversitaire);
+                $this->entityManager->flush();
 
-            return $this->json(true);
+                return $this->json(true);
+            }
         }
 
         return $this->json(false);
@@ -45,16 +46,16 @@ class SettingsController extends BaseController
     ): Response {
         $this->denyAccessUnlessGranted('ROLE_PERMANENT');
 
-        if ($content = $request->getContent()) {
-            $parametersAsArray = json_decode($content, true);
+        $parametersAsArray = JsonRequest::getFromRequest($request);
+        if (array_key_exists('field', $parametersAsArray) && array_key_exists('value', $parametersAsArray)) {
+            $configuration = $this->getUser()->getConfiguration();
+
+            $configuration[$parametersAsArray['field']] = $parametersAsArray['value'];
+            $this->getUser()->setConfiguration($configuration);
+            $this->entityManager->flush();
+
+            return $this->json(true);
         }
-
-        $configuration = $this->getUser()->getConfiguration();
-
-        $configuration[$parametersAsArray['field']] = $parametersAsArray['value'];
-        $this->getUser()->setConfiguration($configuration);
-        $this->entityManager->flush();
-
-        return $this->json(true);
+        return $this->json(false);
     }
 }

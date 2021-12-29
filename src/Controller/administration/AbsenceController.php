@@ -214,7 +214,7 @@ class AbsenceController extends BaseController
                 $absence = $etudiantAbsences->addAbsence(
                     Tools::convertDateHeureToObject($request->request->get('date'), $request->request->get('heure')),
                     $matiere,
-                    $this->getConnectedUser(),
+                    $this->getUser(),
                     Tools::convertToBool($request->request->get('justif'))
                 );
             } else {
