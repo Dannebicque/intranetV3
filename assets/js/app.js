@@ -12,13 +12,9 @@ import $ from 'jquery'
 import PerfectScrollbar from 'perfect-scrollbar'
 import {getDataOptions, getParentByTagName} from './util'
 
-import './modaler'
-
 import * as bootstrap from 'bootstrap'
 
 import '../css/app.scss'
-
-
 
 import Table from '../components/table'
 //import Editable from './editable'
@@ -26,7 +22,6 @@ import SelectComplete from '../components/SelectComplete'
 import SelectChangeWidget from '../components/SelectChangeWidget'
 import DatePicker from '../components/DatePicker'
 import {post} from './fetch'
-import {modaler} from './modaler'
 
 export const LANG = document.querySelector('html').getAttribute('lang')
 
@@ -123,11 +118,6 @@ $(document).on('click', '.card-btn-slide', function () {
 
 $(document).on('click', '.card-btn-slide-text', function () {
   $(this).closest('.card').find('.card-content').slideToggle()
-})
-
-//modaler
-$(document).on('click', '[data-provide~="modaler"]', function () {
-  modaler(getDataOptions($(this)))
 })
 
 function updateInterface () {

@@ -27,7 +27,7 @@ export default class Table extends HTMLElement {
     this.pageActive = this.options.pageActive //par défaut on récupère
     this.nbElementPerPage = this.options.pageLength
     this.order = []
-    this.filter = []
+    this.filter = {}
 
     this.tableBody.innerHTML = ''
 
@@ -57,7 +57,6 @@ export default class Table extends HTMLElement {
     //ajout des events sur le form
     let inputs = this.form[0].getElementsByTagName('input')
     let selects = this.form[0].getElementsByTagName('select')
-
     Array.from(inputs).forEach((input) => {
       if (input.type === 'text') {
         input.addEventListener('keyup', (event) => {
@@ -100,22 +99,10 @@ export default class Table extends HTMLElement {
   }
 
   _filterArray (event) {
-    //this._getFilterFromField(event.target)
     this._buildArray()
   }
 
-  _convertToFetch (tableau) {
-    let obj = {}
-
-    Array.from(tableau).forEach(entry => {
-      const [key, item] = entry
-      obj[key] = item
-    })
-    return obj
-  }
-
   _buildArray () {
-    console.log(this.order)
     this.tableBody.innerHTML = ''
     post(this.base_url, {
       paging: {
@@ -123,7 +110,7 @@ export default class Table extends HTMLElement {
         pageActive: this.pageActive
       },
       order: this.order,
-      filter: this._convertToFetch(this.filter)
+      filter: this.filter
     }).then((data) => {
       if (data.data.length > 0) {
         data.data.forEach((item) => {
@@ -252,13 +239,11 @@ export default class Table extends HTMLElement {
   }
 
   _extractNameFromForm (name) {
-    console.log(name)
     let t = name.split('[')
     return t[1].substr(0, t[1].length - 1)
   }
 
   _getFilterFromField (input) {
-    console.log(input)
     const name = this._extractNameFromForm(input.name)
     switch (input.type) {
       case 'text':
