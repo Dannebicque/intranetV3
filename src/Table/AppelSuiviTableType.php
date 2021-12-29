@@ -14,9 +14,7 @@ use App\Components\Table\Column\DateColumnType;
 use App\Components\Table\Column\EntityColumnType;
 use App\Components\Table\TableBuilder;
 use App\Components\Table\TableType;
-use App\Components\Widget\Type\ButtonDropdownType;
-use App\Components\Widget\Type\LinkType;
-use App\Components\Widget\WidgetBuilder;
+use App\Components\Widget\Type\ExportDropdownType;
 use App\Entity\AbsenceEtatAppel;
 use App\Entity\Rattrapage;
 use App\Entity\Semestre;
@@ -32,22 +30,11 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class AppelSuiviTableType extends TableType
 {
-    private ?Semestre $semestre;
-    private array $matieres;
-    private array $statsAppel;
-    private CsrfTokenManagerInterface $csrfToken;
 
-    public function __construct(CsrfTokenManagerInterface $csrfToken)
+    public function buildTable(TableBuilder $builder, array $options): void
     {
-        $this->csrfToken = $csrfToken;
-    }
-
-    public function buildTable(TableBuilder $builder, array $options)
-    {
-        $this->semestre = $options['semestre'];
-        $this->anneeUniversitaire = $options['anneeUniversitaire'];
-        $this->matieres = $options['matieres'];
-        $this->statsAppel = $options['statsAppel'];
+        $semestre = $options['semestre'];
+        $anneeUniversitaire = $options['anneeUniversitaire'];
 
         $builder->addFilter('search', SearchType::class);
         $builder->addFilter('from', DatePickerType::class, [
@@ -62,26 +49,13 @@ class AppelSuiviTableType extends TableType
             'placeholder' => 'Etat de l\'appel'
         ]);
 
-//        // Export button (use to export data)
-        $builder->addWidget('export', ButtonDropdownType::class, [
-            'icon' => 'fas fa-download',
-            'text' => '',
-            'attr' => ['data-toggle' => 'dropdown'],
-            'build' => function (WidgetBuilder $builder) {
-                $builder->add('pdf', LinkType::class, [
-                    'route' => 'administration_absence_appel_export',
-                    'route_params' => ['semestre' => $this->semestre->getId(), '_format' => 'pdf'],
-                ]);
-                $builder->add('csv', LinkType::class, [
-                    'route' => 'administration_absence_appel_export',
-                    'route_params' => ['semestre' => $this->semestre->getId(), '_format' => 'csv'],
-                ]);
-                $builder->add('excel', LinkType::class, [
-                    'route' => 'administration_absence_appel_export',
-                    'route_params' => ['semestre' => $this->semestre->getId(), '_format' => 'xlsx'],
-                ]);
-            },
+        $builder->addWidget('export', ExportDropdownType::class, [
+            'route' => 'administration_absence_appel_export',
+            'route_params' => [
+                'semestre' => $semestre->getId()
+            ],
         ]);
+
 
         $builder->addColumn('date', DateColumnType::class, [
             'order' => 'DESC',
@@ -96,7 +70,7 @@ class AppelSuiviTableType extends TableType
             'translation_domain' => 'messages',
         ]);
         $builder->addColumn('typeIdMatiere', MatiereColumnType::class,
-            ['label' => 'table.matiere', 'translation_domain' => 'messages', 'matieres' => $this->matieres]);
+            ['label' => 'table.matiere', 'translation_domain' => 'messages', 'matieres' => $options['matieres']]);
 
         $builder->addColumn('groupe', EntityColumnType::class,
             ['label' => 'table.groupe', 'translation_domain' => 'messages', 'display_field' => 'libelle']);
@@ -105,12 +79,12 @@ class AppelSuiviTableType extends TableType
 
         $builder->addColumn('appelFait', StatusAppelFaitColumnType::class,
             [
-                'statsAppel' => $this->statsAppel,
+                'statsAppel' => $options['statsAppel'],
                 'label' => 'table.appelFait',
                 'translation_domain' => 'messages',
             ]);
 
-        $builder->setLoadUrl('administration_absence_appel_index', ['semestre' => $this->semestre->getId()]);
+        $builder->setLoadUrl('administration_absence_appel_index', ['semestre' => $semestre->getId()]);
 
 //        $builder->addColumn('links', WidgetColumnType::class, [
 //            'build' => function (WidgetBuilder $builder, Rattrapage $s) {
@@ -139,7 +113,7 @@ class AppelSuiviTableType extends TableType
         ]);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'orderable' => true,

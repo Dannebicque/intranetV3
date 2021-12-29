@@ -17,7 +17,7 @@ use App\Components\Table\TableType;
 use App\Components\Widget\Type\RowDeleteLinkType;
 use App\Components\Widget\Type\RowDuplicateLinkType;
 use App\Components\Widget\Type\RowEditLinkType;
-use App\Components\Widget\Type\RowShowLinkType;
+use App\Components\Widget\Type\StimulusButtonModalType;
 use App\Components\Widget\WidgetBuilder;
 use App\Entity\Departement;
 use App\Entity\Hrs;
@@ -30,6 +30,7 @@ use App\Table\ColumnType\PersonnelColumnType;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class HrsTableType extends TableType
@@ -37,13 +38,17 @@ class HrsTableType extends TableType
     private ?Departement $departement;
     private ?int $annee;
     private CsrfTokenManagerInterface $csrfToken;
+    private RouterInterface $router;
 
-    public function __construct(CsrfTokenManagerInterface $csrfToken)
+    public function __construct(
+        RouterInterface $router,
+        CsrfTokenManagerInterface $csrfToken)
     {
         $this->csrfToken = $csrfToken;
+        $this->router = $router;
     }
 
-    public function buildTable(TableBuilder $builder, array $options)
+    public function buildTable(TableBuilder $builder, array $options): void
     {
         $this->departement = $options['departement'];
         $this->annee = $options['annee'];
@@ -68,28 +73,7 @@ class HrsTableType extends TableType
             },
         ]);
 
-//        // Export button (use to export data)
-        //todo: pourrait être un Widget spécifique avec en option les formats et la base de route...
-//        $builder->addWidget('export', ButtonDropdownType::class, [
-//            'icon' => 'fas fa-download',
-//            'attr' => ['data-toggle' => 'dropdown'],
-//            'build' => function(WidgetBuilder $builder) {
-//                $builder->add('pdf', LinkType::class, [
-//                    'route' => 'administration_hrs_export',
-//                    'route_params' => ['_format' => 'pdf'],
-//                ]);
-//                $builder->add('csv', LinkType::class, [
-//                    'route' => 'administration_hrs_export',
-//                    'route_params' => ['_format' => 'csv'],
-//                ]);
-//                $builder->add('excel', LinkType::class, [
-//                    'route' => 'administration_hrs_export',
-//                    'route_params' => ['_format' => 'xlsx'],
-//                ]);
-//            },
-//        ]);
-
-        $builder->setLoadUrl('administration_hrs_index');
+        $builder->setLoadUrl('administration_hrs_index', ['annee' => $this->annee]);
 
         $builder->addColumn('libelle', PropertyColumnType::class,
             ['label' => 'table.libelle', 'translation_domain' => 'messages']);
@@ -111,12 +95,13 @@ class HrsTableType extends TableType
                     'route_params' => ['id' => $s->getId()],
                     'xhr' => false,
                 ]);
-                $builder->add('show', RowShowLinkType::class, [
-                    'route' => 'administration_hrs_show', //todo: en modal ? Un composant avec la vue, généric?
-                    'route_params' => [
-                        'id' => $s->getId(),
-                    ],
-                    'xhr' => false,
+                $builder->add('show', StimulusButtonModalType::class, [
+                    'text' => false,
+                    'class' => 'btn btn-info-outline me-1',
+                    'icon' => 'fas fa-info',
+                    'modalTitle' => 'Détails de la prime/HRS',
+                    'modalUrl' => $this->router->generate('administration_hrs_show',
+                        ['id' => $s->getId()]),
                 ]);
                 $builder->add('edit', RowEditLinkType::class, [
                     'route' => 'administration_hrs_edit',
@@ -126,9 +111,9 @@ class HrsTableType extends TableType
                     'xhr' => false,
                 ]);
                 $builder->add('delete', RowDeleteLinkType::class, [
+                    'route' => 'administration_hrs_delete',
+                    'route_params' => ['id' => $s->getId()],
                     'attr' => [
-                        'data-href' => 'administration_hrs_delete',
-                        'data-uuid' => $s->getId(),
                         'data-csrf' => $this->csrfToken->getToken('delete' . $s->getId()),
                     ],
                 ]);
@@ -163,7 +148,7 @@ class HrsTableType extends TableType
         ]);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'orderable' => true,

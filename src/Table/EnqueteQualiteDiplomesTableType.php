@@ -18,7 +18,7 @@ use App\Entity\Diplome;
 use App\Entity\TypeDiplome;
 use App\Form\Type\SearchType;
 use App\Table\ColumnType\NbEtudiantsColumnType;
-use App\Table\ColumnType\SemestresAvecActifColumnType;
+use App\Table\ColumnType\DepartementsColumnType;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -36,7 +36,7 @@ class EnqueteQualiteDiplomesTableType extends TableType
         $builder->addColumn('typeDiplome', EntityColumnType::class, ['label' => 'table.typeDiplome', 'display_field' => 'libelle']);
         $builder->addColumn('libelle', PropertyColumnType::class, ['label' => 'table.libelle']);
         $builder->addColumn('id', NbEtudiantsColumnType::class, ['label' => 'table.nbEtudiants','effectifs' => $options['effectifs']]);
-        $builder->addColumn('semestres', SemestresAvecActifColumnType::class, ['label' => 'table.semestre']);
+        $builder->addColumn('semestres', DepartementsColumnType::class, ['label' => 'table.semestre']);
 
         $builder->setLoadUrl('administratif_enquete_index');
 

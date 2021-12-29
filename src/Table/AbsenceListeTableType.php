@@ -14,10 +14,9 @@ use App\Components\Table\Column\BadgeColumnType;
 use App\Components\Table\Column\WidgetColumnType;
 use App\Components\Table\TableBuilder;
 use App\Components\Table\TableType;
-use App\Components\Widget\Type\ButtonDropdownType;
-use App\Components\Widget\Type\ButtonType;
-use App\Components\Widget\Type\LinkType;
+use App\Components\Widget\Type\ExportDropdownType;
 use App\Components\Widget\Type\RowShowLinkType;
+use App\Components\Widget\Type\StimulusButtonModalType;
 use App\Components\Widget\WidgetBuilder;
 use App\Entity\Absence;
 use App\Entity\AnneeUniversitaire;
@@ -47,7 +46,7 @@ class AbsenceListeTableType extends TableType
         $this->router = $router;
     }
 
-    public function buildTable(TableBuilder $builder, array $options)
+    public function buildTable(TableBuilder $builder, array $options): void
     {
         $this->semestre = $options['semestre'];
         $this->anneeUniversitaire = $options['anneeUniversitaire'];
@@ -63,42 +62,29 @@ class AbsenceListeTableType extends TableType
             'placeholder' => 'Filtrer par groupe',
         ]);
 
-//        // Export button (use to export data)
-        $builder->addWidget('export', ButtonDropdownType::class, [
-            'icon' => 'fas fa-download',
-            'text' => '',
-            'attr' => ['data-toggle' => 'dropdown'],
-            'build' => function(WidgetBuilder $builder) {
-                $builder->add('pdf', LinkType::class, [
-                    'route' => 'administration_rattrapage_export',
-                    'route_params' => ['semestre' => $this->semestre->getId(), '_format' => 'pdf'],
-                ]);
-                $builder->add('csv', LinkType::class, [
-                    'route' => 'administration_rattrapage_export',
-                    'route_params' => ['semestre' => $this->semestre->getId(), '_format' => 'csv'],
-                ]);
-                $builder->add('excel', LinkType::class, [
-                    'route' => 'administration_rattrapage_export',
-                    'route_params' => ['semestre' => $this->semestre->getId(), '_format' => 'xlsx'],
-                ]);
-            },
+        $builder->addWidget('export', ExportDropdownType::class, [
+            'route' => 'administration_rattrapage_export',
+            'route_params' => [
+                'semestre' => $this->semestre->getId()
+            ],
         ]);
+
 //todo: doit utiliser un dto...
 
         $builder->addColumn('etudiant', EtudiantColumnType::class,
-            ['label' => 'table.etudiant', 'translation_domain' => 'messages']);
+            ['label' => 'table.etudiant']);
         $builder->addColumn('etudiantGroupes', GroupeEtudiantColumnType::class,
-            ['label' => 'table.groupe', 'translation_domain' => 'messages']);
+            ['label' => 'table.groupe']);
         $builder->addColumn('nbCoursManques', BadgeColumnType::class, //ajouter des seuils?
-            ['label' => 'table.nb_cours_manques', 'translation_domain' => 'messages']);
+            ['label' => 'table.nb_cours_manques']);
         $builder->addColumn('dureeCoursManques', BadgeColumnType::class, //ajouter des seuils?
-            ['label' => 'table.duree_cours_manques', 'translation_domain' => 'messages']);
+            ['label' => 'table.duree_cours_manques']);
         $builder->addColumn('dureeDemiJournee', BadgeColumnType::class, //ajouter des seuils?
-            ['label' => 'table.duree_demi_journee', 'translation_domain' => 'messages']);
+            ['label' => 'table.duree_demi_journee']);
         $builder->addColumn('nbNonJustifies', BadgeColumnType::class, //ajouter des seuils?
-            ['label' => 'table.nb_non_justifies', 'translation_domain' => 'messages']);
+            ['label' => 'table.nb_non_justifies']);
         $builder->addColumn('nbJustifies', BadgeColumnType::class, //ajouter des seuils?
-            ['label' => 'table.nb_justifies', 'translation_domain' => 'messages']);
+            ['label' => 'table.nb_justifies']);
 
         $builder->setLoadUrl('administration_absences_semestre_liste',
             ['semestre' => $this->semestre->getId()]);
@@ -106,17 +92,14 @@ class AbsenceListeTableType extends TableType
         $builder->addColumn('apercu', WidgetColumnType::class, [
             'label' => 'apercu',
             'build' => function(WidgetBuilder $builder, Absence $s) {
-                $builder->add('voir.justificatif', ButtonType::class, [
+                $builder->add('voir.justificatif', StimulusButtonModalType::class, [
                     'class' => 'btn btn-outline btn-info',
                     'icon' => 'fas fa-eye',
                     'text' => false,
-                    'translation_domain' => 'messages',
-                    'attr' => [
-                        'data-provide' => 'modaler tooltip',
-                        'data-url' => $this->router->generate('administration_absence_justificatif_details',
-                            ['uuid' => $s->getUuidString()]),
-                        'data-title' => 'Détail du justificatif',
-                    ],
+                    'modalSize' => 'lg',
+                    'modalTitle' => 'Détail du justificatif',
+                    'modalUrl' => $this->router->generate('administration_absence_justificatif_details',
+                        ['uuid' => $s->getUuidString()]),
                 ]);
             },
         ]);
@@ -157,7 +140,7 @@ class AbsenceListeTableType extends TableType
         ]);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'orderable' => true,

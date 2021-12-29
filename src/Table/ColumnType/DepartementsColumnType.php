@@ -9,19 +9,20 @@
 
 namespace App\Table\ColumnType;
 
-use App\Components\Table\Column\PropertyColumnType;
+use App\Components\Table\Column\ColumnType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class SemestreColumnType extends PropertyColumnType
+class DepartementsColumnType extends ColumnType
 {
-    public function renderProperty($value, array $options): string
+    public function render($rowData, array $options): string
     {
-        if (null === $value) {
+        if (null === $rowData) {
             return 'err';
         }
         $html = '';
-        foreach ($value as $semestre) {
-            $html .= '<span class="badge bg-success me-1">' . $semestre->getLibelle() . '</span>';
+        foreach ($rowData->getPersonnelDepartements() as $departement) {
+            $html .= '<span class="badge bg-primary me-1">' . $departement->getDepartement()?->getLibelle() . '</span>';
+
         }
 
         return $html;

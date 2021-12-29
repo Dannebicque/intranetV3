@@ -16,10 +16,10 @@ use App\Components\Table\Column\PropertyColumnType;
 use App\Components\Table\Column\WidgetColumnType;
 use App\Components\Table\TableBuilder;
 use App\Components\Table\TableType;
-use App\Components\Widget\Type\ButtonDropdownType;
 use App\Components\Widget\Type\ButtonType;
-use App\Components\Widget\Type\LinkType;
+use App\Components\Widget\Type\ExportDropdownType;
 use App\Components\Widget\Type\RowDeleteLinkType;
+use App\Components\Widget\Type\StimulusButtonModalType;
 use App\Components\Widget\WidgetBuilder;
 use App\Entity\AbsenceJustificatif;
 use App\Entity\AnneeUniversitaire;
@@ -53,7 +53,7 @@ class AbsenceJustificatifTableType extends TableType
         $this->router = $router;
     }
 
-    public function buildTable(TableBuilder $builder, array $options)
+    public function buildTable(TableBuilder $builder, array $options): void
     {
         $this->semestre = $options['semestre'];
         $this->anneeUniversitaire = $options['anneeUniversitaire'];
@@ -84,45 +84,31 @@ class AbsenceJustificatifTableType extends TableType
             'placeholder' => 'Filtrer par groupe',
         ]);
 
-//        // Export button (use to export data)
-        $builder->addWidget('export', ButtonDropdownType::class, [
-            'icon' => 'fas fa-download',
-            'text' => '',
-            'attr' => ['data-toggle' => 'dropdown'],
-            'build' => function(WidgetBuilder $builder) {
-//                $builder->add('pdf', LinkType::class, [
-//                    'route' => 'administration_absences_justificatif_semestre_export',
-//                    'route_params' => ['semestre' => $this->semestre->getId(), '_format' => 'pdf'],
-//                ]);
-//                $builder->add('csv', LinkType::class, [
-//                    'route' => 'administration_absences_justificatif_semestre_export',
-//                    'route_params' => ['semestre' => $this->semestre->getId(), '_format' => 'csv'],
-//                ]);
-                $builder->add('excel', LinkType::class, [
-                    'route' => 'administration_absences_justificatif_semestre_export',
-                    'route_params' => ['semestre' => $this->semestre->getId(), '_format' => 'xlsx'],
-                ]);
-            },
+        $builder->addWidget('export', ExportDropdownType::class, [
+            'route' => 'administration_absences_justificatif_semestre_export',
+            'route_params' => [
+                'semestre' => $this->semestre->getId()
+            ],
+            'formats' => ['xlsx'],
         ]);
+
         $builder->addColumn('select', CheckBoxColumnType::class);
         $builder->addColumn('etudiant', EtudiantColumnType::class,
-            ['label' => 'table.etudiant', 'translation_domain' => 'messages']);
+            ['label' => 'table.etudiant']);
         $builder->addColumn('etudiantGroupes', GroupeEtudiantColumnType::class,
-            ['label' => 'table.groupe', 'translation_domain' => 'messages']);
+            ['label' => 'table.groupe']);
         $builder->addColumn('periodeAbsence', DatePeriodeJustificatifColumnType::class,
-            ['label' => 'table.periodeAbsence', 'translation_domain' => 'messages']);
+            ['label' => 'table.periodeAbsence']);
         $builder->addColumn('created', DateColumnType::class, [
             'order' => 'DESC',
             'format' => 'd/m/Y',
             'label' => 'table.created',
-            'translation_domain' => 'messages',
         ]);
         $builder->addColumn('motif', PropertyColumnType::class,
-            ['label' => 'table.motif', 'translation_domain' => 'messages']);
+            ['label' => 'table.motif']);
         $builder->addColumn('etat', StatusJustificatifAbsenceColumnType::class,
             [
                 'label' => 'table.etat_justificatif_absence',
-                'translation_domain' => 'messages',
             ]);
 
         $builder->setLoadUrl('administration_absences_justificatif_semestre_liste',
@@ -131,16 +117,14 @@ class AbsenceJustificatifTableType extends TableType
         $builder->addColumn('apercu', WidgetColumnType::class, [
             'label' => 'apercu',
             'build' => function(WidgetBuilder $builder, AbsenceJustificatif $s) {
-                $builder->add('voir.justificatif', ButtonType::class, [
-                    'class' => 'btn btn-outline btn-info',//todo: utiliser avec Stimulus
+                $builder->add('voir.justificatif', StimulusButtonModalType::class, [
+                    'class' => 'btn btn-outline btn-info',
                     'icon' => 'fas fa-eye',
                     'text' => false,
-                    'translation_domain' => 'messages',
-                    'attr' => ['data-provide' => 'modaler tooltip',
-                        'data-url' => $this->router->generate('administration_absence_justificatif_details',
-                            ['uuid' => $s->getUuidString()]),
-                        'data-title' => 'Détail du justificatif'
-                    ]
+                    'modalSize' => 'lg',
+                    'modalTitle' => 'Détail du justificatif',
+                    'modalUrl' => $this->router->generate('administration_absence_justificatif_details',
+                        ['uuid' => $s->getUuidString()]),
                 ]);
             },
         ]);
@@ -153,7 +137,6 @@ class AbsenceJustificatifTableType extends TableType
                             'class' => 'btn btn-outline btn-success me-1',
                             'title' => 'demande.acceptee',
                             'text' => 'demande.acceptee',
-                            'translation_domain' => 'messages',
                         ]);
                         break;
                     case AbsenceJustificatif::REFUSE:
@@ -161,7 +144,6 @@ class AbsenceJustificatifTableType extends TableType
                             'class' => 'btn btn-outline btn-danger me-1',
                             'title' => 'demande.refusee',
                             'text' => 'demande.refusee',
-                            'translation_domain' => 'messages',
                         ]);
                         break;
                     case AbsenceJustificatif::DEPOSE:
@@ -184,8 +166,6 @@ class AbsenceJustificatifTableType extends TableType
                     'route' => 'administration_absence_justificatif_delete',
                     'route_params' => ['id' => $s->getId()],
                     'attr' => [
-                        'data-href' => 'administration_absence_justificatif_delete',
-                        'data-uuid' => $s->getId(),
                         'data-csrf' => $this->csrfToken->getToken('delete' . $s->getUuidString()),
                     ],
                 ]);
@@ -226,7 +206,7 @@ class AbsenceJustificatifTableType extends TableType
         ]);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'orderable' => true,

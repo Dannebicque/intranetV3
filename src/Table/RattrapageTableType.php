@@ -14,9 +14,8 @@ use App\Components\Table\Column\DateColumnType;
 use App\Components\Table\Column\WidgetColumnType;
 use App\Components\Table\TableBuilder;
 use App\Components\Table\TableType;
-use App\Components\Widget\Type\ButtonDropdownType;
 use App\Components\Widget\Type\ButtonType;
-use App\Components\Widget\Type\LinkType;
+use App\Components\Widget\Type\ExportDropdownType;
 use App\Components\Widget\Type\RowDeleteLinkType;
 use App\Components\Widget\WidgetBuilder;
 use App\Entity\AnneeUniversitaire;
@@ -41,9 +40,7 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 class RattrapageTableType extends TableType
 {
     private ?Semestre $semestre;
-    private array $matieres;
     private ?AnneeUniversitaire $anneeUniversitaire;
-    private $absences;
     private CsrfTokenManagerInterface $csrfToken;
 
     public function __construct(CsrfTokenManagerInterface $csrfToken)
@@ -51,12 +48,12 @@ class RattrapageTableType extends TableType
         $this->csrfToken = $csrfToken;
     }
 
-    public function buildTable(TableBuilder $builder, array $options)
+    public function buildTable(TableBuilder $builder, array $options): void
     {
         $this->semestre = $options['semestre'];
         $this->anneeUniversitaire = $options['anneeUniversitaire'];
-        $this->absences = $options['absences'];
-        $this->matieres = $options['matieres'];
+        $absences = $options['absences'];
+        $matieres = $options['matieres'];
 
         $builder->addFilter('search', SearchType::class);
         $builder->addFilter('from', DatePickerType::class, [
@@ -84,33 +81,19 @@ class RattrapageTableType extends TableType
             'placeholder' => 'Filtrer par groupe',
         ]);
 
-//        // Export button (use to export data)
-        $builder->addWidget('export', ButtonDropdownType::class, [
-            'icon' => 'fas fa-download',
-            'text' => '',
-            'attr' => ['data-toggle' => 'dropdown'],
-            'build' => function (WidgetBuilder $builder) {
-                $builder->add('pdf', LinkType::class, [
-                    'route' => 'administration_rattrapage_export',
-                    'route_params' => ['semestre' => $this->semestre->getId(), '_format' => 'pdf'],
-                ]);
-                $builder->add('csv', LinkType::class, [
-                    'route' => 'administration_rattrapage_export',
-                    'route_params' => ['semestre' => $this->semestre->getId(), '_format' => 'csv'],
-                ]);
-                $builder->add('excel', LinkType::class, [
-                    'route' => 'administration_rattrapage_export',
-                    'route_params' => ['semestre' => $this->semestre->getId(), '_format' => 'xlsx'],
-                ]);
-            },
+        $builder->addWidget('export', ExportDropdownType::class, [
+            'route' => 'administration_rattrapage_export',
+            'route_params' => [
+                'semestre' => $this->semestre->getId()
+            ],
         ]);
-//        $builder->add('select', CheckBoxColumnType::class);
+
         $builder->addColumn('etudiant', EtudiantColumnType::class,
             ['label' => 'table.etudiant', 'translation_domain' => 'messages']);
         $builder->addColumn('groupes', GroupeEtudiantColumnType::class,
             ['label' => 'table.groupe', 'translation_domain' => 'messages']);
         $builder->addColumn('typeIdMatiere', MatiereColumnType::class,
-            ['label' => 'table.matiere', 'translation_domain' => 'messages', 'matieres' => $this->matieres]);
+            ['label' => 'table.matiere', 'translation_domain' => 'messages', 'matieres' => $matieres]);
         $builder->addColumn('personnel', PersonnelColumnType::class);
         $builder->addColumn('dateEval', DateColumnType::class, [
             'order' => 'DESC',
@@ -132,7 +115,7 @@ class RattrapageTableType extends TableType
         ]);
         $builder->addColumn('absenceJustifiee', StatusAbsenceColumnType::class,
             [
-                'absences' => $this->absences,
+                'absences' => $absences,
                 'label' => 'table.absence_justifiee',
                 'translation_domain' => 'messages',
             ]);
@@ -178,8 +161,6 @@ class RattrapageTableType extends TableType
                     'route' => 'administration_rattrapage_delete',
                     'route_params' => ['uuid' => $s->getUuidString()],
                     'attr' => [
-                        'data-href' => 'administration_rattrapage_delete',
-                        'data-uuid' => $s->getUuidString(),
                         'data-csrf' => $this->csrfToken->getToken('delete'.$s->getUuidString()),
                     ],
                 ]);
@@ -191,7 +172,7 @@ class RattrapageTableType extends TableType
             'fetch_join_collection' => false,
             'query' => function (QueryBuilder $qb, array $formData) {
                 $qb->innerJoin(Etudiant::class, 'etu', 'WITH', 'e.etudiant = etu.id')
-                    ->where('etu.semestre = :semestre') //todo: mettre e.semestre
+                    ->where('e.semestre = :semestre')
                     ->andWhere('e.anneeUniversitaire = :anneeuniversitaire')
                     ->setParameter('semestre', $this->semestre->getId())
                     ->setParameter('anneeuniversitaire', $this->anneeUniversitaire->getId());
@@ -226,7 +207,7 @@ class RattrapageTableType extends TableType
         ]);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'orderable' => true,

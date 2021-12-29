@@ -15,8 +15,7 @@ use App\Components\Table\Column\SelectColumnType;
 use App\Components\Table\Column\WidgetColumnType;
 use App\Components\Table\TableBuilder;
 use App\Components\Table\TableType;
-use App\Components\Widget\Type\ButtonDropdownType;
-use App\Components\Widget\Type\LinkType;
+use App\Components\Widget\Type\ExportDropdownType;
 use App\Components\Widget\Type\RowDeleteLinkType;
 use App\Components\Widget\Type\RowEditLinkType;
 use App\Components\Widget\Type\RowShowLinkType;
@@ -43,7 +42,7 @@ class EtudiantDepartementTableType extends TableType
         $this->csrfToken = $csrfToken;
     }
 
-    public function buildTable(TableBuilder $builder, array $options)
+    public function buildTable(TableBuilder $builder, array $options): void
     {
         $this->departement = $options['departement'];
 
@@ -64,26 +63,10 @@ class EtudiantDepartementTableType extends TableType
             'placeholder' => 'Filtrer par bac',
         ]);
 
-        // Export button (use to export data)
-        $builder->addWidget('export', ButtonDropdownType::class, [
-            'icon' => 'fas fa-download',
-            'text' => '',
-            'attr' => ['data-toggle' => 'dropdown'],
-            'build' => function(WidgetBuilder $builder) {
-                $builder->add('pdf', LinkType::class, [
-                    'route' => 'administration_all_etudiant_export',
-                    'route_params' => ['_format' => 'pdf'],
-                ]);
-                $builder->add('csv', LinkType::class, [
-                    'route' => 'administration_all_etudiant_export',
-                    'route_params' => ['_format' => 'csv'],
-                ]);
-                $builder->add('excel', LinkType::class, [
-                    'route' => 'administration_all_etudiant_export',
-                    'route_params' => ['_format' => 'xlsx'],
-                ]);
-            },
+        $builder->addWidget('export', ExportDropdownType::class, [
+            'route' => 'administration_all_etudiant_export',
         ]);
+
 
         $builder->addColumn('numetudiant', PropertyColumnType::class,
             ['label' => 'table.numetudiant', 'translation_domain' => 'messages']);
@@ -144,9 +127,9 @@ class EtudiantDepartementTableType extends TableType
                     'target' => '_blank',
                 ]);
                 $builder->add('delete', RowDeleteLinkType::class, [
+                    'route' => 'administration_etudiant_delete',
+                    'route_params' => ['id' => $s->getId()],
                     'attr' => [
-                        'data-href' => 'administration_date_delete',
-                        'data-uuid' => $s->getId(),
                         'data-csrf' => $this->csrfToken->getToken('delete' . $s->getId()),
                     ],
                 ]);
@@ -172,7 +155,7 @@ class EtudiantDepartementTableType extends TableType
 
     public function configureOptions(
         OptionsResolver $resolver
-    ) {
+    ): void {
         $resolver->setDefaults([
             'orderable' => true,
             'departement' => null,

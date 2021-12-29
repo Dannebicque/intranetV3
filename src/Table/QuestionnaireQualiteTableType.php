@@ -15,8 +15,6 @@ use App\Components\Table\Column\PropertyColumnType;
 use App\Components\Table\Column\WidgetColumnType;
 use App\Components\Table\TableBuilder;
 use App\Components\Table\TableType;
-use App\Components\Widget\Type\ButtonDropdownType;
-use App\Components\Widget\Type\LinkType;
 use App\Components\Widget\Type\RowDeleteLinkType;
 use App\Components\Widget\Type\RowDuplicateLinkType;
 use App\Components\Widget\Type\RowEditLinkType;
@@ -54,24 +52,12 @@ class QuestionnaireQualiteTableType extends TableType
             'input_prefix_text' => 'Au',
         ]);
 
-        $builder->addWidget('export', ButtonDropdownType::class, [
-            'icon' => 'fas fa-download',
-            'attr' => ['data-toggle' => 'dropdown'],
-            'build' => function(WidgetBuilder $builder) {
-                $builder->add('pdf', LinkType::class, [
-                    'route' => 'administration_article_export',
-                    'route_params' => ['_format' => 'pdf'],
-                ]);
-                $builder->add('csv', LinkType::class, [
-                    'route' => 'administration_article_export',
-                    'route_params' => ['_format' => 'csv'],
-                ]);
-                $builder->add('excel', LinkType::class, [
-                    'route' => 'administration_article_export',
-                    'route_params' => ['_format' => 'xlsx'],
-                ]);
-            },
-        ]);
+//        $builder->addWidget('export', ExportDropdownType::class, [
+//            'route' => 'administration_absence_appel_export',
+//            'route_params' => [
+//                'semestre' => $this->semestre->getId()
+//            ],
+//        ]);
 
         $builder->addColumn('libelle', PropertyColumnType::class, ['label' => 'table.libelle']);
         $builder->addColumn('dateOuverture', DateColumnType::class, [

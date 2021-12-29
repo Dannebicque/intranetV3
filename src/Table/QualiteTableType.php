@@ -16,8 +16,6 @@ use App\Components\Table\Column\PropertyColumnType;
 use App\Components\Table\Column\WidgetColumnType;
 use App\Components\Table\TableBuilder;
 use App\Components\Table\TableType;
-use App\Components\Widget\Type\ButtonDropdownType;
-use App\Components\Widget\Type\LinkType;
 use App\Components\Widget\Type\RowLinkType;
 use App\Components\Widget\Type\RowShowLinkType;
 use App\Components\Widget\WidgetBuilder;
@@ -25,24 +23,16 @@ use App\Entity\Annee;
 use App\Entity\Diplome;
 use App\Entity\QuestionnaireQualite;
 use App\Entity\Semestre;
-use App\Entity\TypeDiplome;
 use App\Form\Type\DatePickerType;
 use App\Entity\Departement;
 use App\Repository\SemestreRepository;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class QualiteTableType extends TableType
 {
     private ?Departement $departement;
-    private CsrfTokenManagerInterface $csrfToken;
-
-    public function __construct(CsrfTokenManagerInterface $csrfToken)
-    {
-        $this->csrfToken = $csrfToken;
-    }
 
     public function buildTable(TableBuilder $builder, array $options): void
     {
@@ -62,26 +52,6 @@ class QualiteTableType extends TableType
                     return $semestreRepository->findByDepartementBuilder($this->departement);
                 },
         ]);
-
-////        // Export button (use to export data)
-//        $builder->addWidget('export', ButtonDropdownType::class, [
-//            'icon' => 'fas fa-download',
-//            'attr' => ['data-toggle' => 'dropdown'],
-//            'build' => function(WidgetBuilder $builder) {
-//                $builder->add('pdf', LinkType::class, [
-//                    'route' => 'administration_article_export',
-//                    'route_params' => ['_format' => 'pdf'],
-//                ]);
-//                $builder->add('csv', LinkType::class, [
-//                    'route' => 'administration_article_export',
-//                    'route_params' => ['_format' => 'csv'],
-//                ]);
-//                $builder->add('excel', LinkType::class, [
-//                    'route' => 'administration_article_export',
-//                    'route_params' => ['_format' => 'xlsx'],
-//                ]);
-//            },
-//        ]);
 
         $builder->addColumn('titre', PropertyColumnType::class, ['label' => 'table.titre']);
         $builder->addColumn('dateOuverture', DateColumnType::class, ['label' => 'table.dateOuverture']);
