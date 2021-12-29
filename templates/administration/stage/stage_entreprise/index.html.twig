@@ -39,12 +39,14 @@
                         <td>{{ entreprise.entreprise.responsable.email|mailto }}</td>
                         <td>{{ entreprise.nbstagiaire }}</td>
                         <td>
-                            <button data-provide="modaler"
-                                    data-size="lg"
-                                    data-confirm-text="{{ 'fermer'|trans }}"
-                                    data-url="{{ path('administration_stage_entreprise_detail', {entreprise:entreprise.entreprise.id}) }}"
+                            <button
+                                    {{ stimulus_controller('modal', {
+                                        size: 'lg',
+                                        modalTitle: 'Détails de l\'entreprise',
+                                        modalUrl:  path('administration_stage_entreprise_detail', {entreprise:entreprise.entreprise.id}) })}}
+                                    data-action="click->modal#openModal"
                                     class="btn btn-info btn-outline btn-square btn-xs"
-                                    data-title="Détails de l'entreprise"
+                                    title="Détails de l'entreprise"
                             >
                                 <i class="{{ iconShow }}"></i>
                             </button>

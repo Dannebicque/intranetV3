@@ -14,66 +14,70 @@
             </tr>
             </thead>
             <tbody>
-            {% for note in notes|filter(note => (note.evaluation.visible == true and note.evaluation.parent == null)) %}
-                <tr>
-                    <td>{{ matieres[note.evaluation.typeIdMatiere] is defined ? matieres[note.evaluation
-                        .typeIdMatiere].codeMatiere : '-' }}</td>
-                    <td>{{ note.evaluation.libelle is defined ? note.evaluation.libelle : note.evaluation.id }}</td>
-                    <td class="hide">{{ note.evaluation.dateEvaluation ? note.evaluation.dateEvaluation|format_date('long') : '' }}</td>
-                    <td class="hide">{{ note.evaluation.commentaire }}</td>
-                    <td>{{ note.note|format_note(2, 10) }}</td>
-                    <td class="hide">{{ note.evaluation.coefficient|number_format(2) }}</td>
-                    <td>
-                        <button data-provide="modaler"
-                                data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                data-url="{{ path('app_etudiant_note_detail', {'id': note.id}) }}"
-                                class="btn btn-info btn-outline btn-square btn-xs"
-
-                                title="{{ 'atitle.details'|trans }}"
-                                data-title="{{ 'detail.note'|trans }}"
-                        >
-                            <i class="fas fa-info"></i>
-                        </button>
-                    </td>
-                </tr>
-                {# notes enfants #}
-                {% for nnote in note.evaluation.enfants|filter(nnote => (nnote.evaluation.visible == true)) %}
+            {% if notes|length > 0 %}
+                {% for note in notes|filter(note => (note.evaluation.visible == true and note.evaluation.parent == null)) %}
                     <tr>
-                        <td>&nbsp;</td>
-                        <td>--> {{ nnote.evaluation.matiere.codeMatiere }}</td>
-                        <td class="hide">{{ nnote.evaluation.dateEvaluation ? nnote.evaluation.dateEvaluation|format_datetime('long',
-                                'short') : '' }}</td>
-                        <td class="hide">{{ nnote.evaluation.commentaire }}</td>
+                        <td>{{ matieres[note.evaluation.typeIdMatiere] is defined ? matieres[note.evaluation
+                            .typeIdMatiere].codeMatiere : '-' }}</td>
+                        <td>{{ note.evaluation.libelle is defined ? note.evaluation.libelle : note.evaluation.id }}</td>
+                        <td class="hide">{{ note.evaluation.dateEvaluation ? note.evaluation.dateEvaluation|format_date('long') : '' }}</td>
+                        <td class="hide">{{ note.evaluation.commentaire }}</td>
+                        <td>{{ note.note|format_note(2, 10) }}</td>
+                        <td class="hide">{{ note.evaluation.coefficient|number_format(2) }}</td>
                         <td>
-                            {% if nnote.absence_justifie == true %}
-                                Absence justifiée
-                            {% else %}
-                                {# todo: améliorer l'affichage. -0.01 absence de note #}
-                                {% if nnote.note == -0.01 and nnote.evaluation.matiere.pac == true %}
-                                    Pas d'option
-                                {% else %}
-                                    {% if nnote.note == -0.01 %}
-                                        Note non saisie
-                                    {% else %}
-                                        {{ nnote.note|format_note(2, 10) }}
-                                    {% endif %}
-                                {% endif %}
-                            {% endif %}
-                        </td>
-                        <td class="hide">{{ nnote.evaluation.coefficient|number_format(2) }}</td>
-                        <td>
-                            <button data-provide="modaler"
+                            <button
+                                    {{ stimulus_controller('modal', {
+                                        modalTitle: 'detail.note'|trans,
+                                        modalUrl:  path('app_etudiant_note_detail', {'id': note.id}) })}}
+                                    data-action="click->modal#openModal"
                                     data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                    data-url="{{ path('app_etudiant_note_detail', {'id': nnote.id}) }}"
                                     class="btn btn-info btn-outline btn-square btn-xs"
-
                                     title="{{ 'atitle.details'|trans }}"
-                                    data-title="{{ 'detail.note'|trans }}"
                             >
                                 <i class="fas fa-info"></i>
                             </button>
                         </td>
                     </tr>
+                    {# notes enfants #}
+                    {% for nnote in note.evaluation.enfants|filter(nnote => (nnote.evaluation.visible == true)) %}
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>--> {{ nnote.evaluation.matiere.codeMatiere }}</td>
+                            <td class="hide">{{ nnote.evaluation.dateEvaluation ? nnote.evaluation.dateEvaluation|format_datetime('long',
+                                    'short') : '' }}</td>
+                            <td class="hide">{{ nnote.evaluation.commentaire }}</td>
+                            <td>
+                                {% if nnote.absence_justifie == true %}
+                                    Absence justifiée
+                                {% else %}
+                                    {# todo: améliorer l'affichage. -0.01 absence de note #}
+                                    {% if nnote.note == -0.01 and nnote.evaluation.matiere.pac == true %}
+                                        Pas d'option
+                                    {% else %}
+                                        {% if nnote.note == -0.01 %}
+                                            Note non saisie
+                                        {% else %}
+                                            {{ nnote.note|format_note(2, 10) }}
+                                        {% endif %}
+                                    {% endif %}
+                                {% endif %}
+                            </td>
+                            <td class="hide">{{ nnote.evaluation.coefficient|number_format(2) }}</td>
+                            <td>
+                                <button
+                                        {{ stimulus_controller('modal', {
+                                            modalTitle: 'detail.note'|trans,
+                                            modalUrl:  path('app_etudiant_note_detail', {'id': nnote.id}) })}}
+                                        data-action="click->modal#openModal"
+                                        data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                        class="btn btn-info btn-outline btn-square btn-xs"
+                                        title="{{ 'atitle.details'|trans }}"
+                                >
+                                    <i class="fas fa-info"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    {% endfor %}
                 {% endfor %}
             {% else %}
                 <tr>
@@ -81,7 +85,7 @@
                         <div class="alert alert-info">Aucune note n'a été saisie</div>
                     </td>
                 </tr>
-            {% endfor %}
+            {% endif %}
             </tbody>
         </table>
         <br>

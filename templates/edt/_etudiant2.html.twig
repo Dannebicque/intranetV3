@@ -26,11 +26,12 @@
                         {# class="dropdown-item"><i #}
                         {# class="fas fa-file-export"></i>{{ 'edt.intervenant.export.ical'|trans }}</a> #}
                         <a href="#"
-                           data-provide="modaler"
-                           data-url="{{ path('edt_affiche_ical') }}"
+                                {{ stimulus_controller('modal', {
+                                    modalTitle: 'edt.intervenant.synchro.ical.heading'|trans,
+                                    modalUrl:  path('edt_affiche_ical') })}}
+                           data-action="click->modal#openModal"
                            data-bs-toggle="tooltip" data-bs-placement="bottom"
                            title="{{ 'atitle.lien_ical'|trans }}"
-                           data-title="{{ 'edt.intervenant.synchro.ical.heading'|trans }}"
                            class="dropdown-item"><i
                                     class="fas fa-file-export"></i>{{ 'edt.intervenant.synchro.ical'|trans }}
                         </a>

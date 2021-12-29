@@ -1,4 +1,3 @@
-
 <div class="card">
     <h4 class="card-title">{{ 'application.vos.stages.et.alternances.heading'|trans }}</h4>
     <div class="card-body">
@@ -25,15 +24,12 @@
                     <button class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">Exporter la liste</button>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="{{ path('application_personnel_stage_export',
-                            {periode:'courant', '_format':'xlsx'})
-                        }}">Excel (xlsx)
+                            {periode:'courant', '_format':'xlsx'}) }}">Excel (xlsx)
                         </a>
                         <a class="dropdown-item" href="{{ path('application_personnel_stage_export',
-                            {periode:'courant', '_format':'csv'})
-                        }}">Texte (csv)</a>
+                            {periode:'courant', '_format':'csv'}) }}">Texte (csv)</a>
                         <a class="dropdown-item" href="{{ path('application_personnel_stage_export',
-                            {periode:'courant', '_format':'pdf'})
-                        }}">Pdf</a>
+                            {periode:'courant', '_format':'pdf'}) }}">Pdf</a>
                     </div>
                 </div>
                 <br>
@@ -56,21 +52,35 @@
                                     title="Profil de l'étudiant"
                                     target="_blank">{{ stage.etudiant.displayPr }}</a>{% else %} - {% endif %}</td>
                             <td>{% if stage.stagePeriode != null %}{{ stage.stagePeriode.semestre.display }}{% else %} - {% endif %}</td>
-                            <td>{% if stage.stagePeriode != null %}<a href="#" data-provide="modaler"
-                                                                      data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                                                      data-url="{{ path('application_personnel_stage_periode_info', {'id': stage.id}) }}"
-                                                                      class="btn btn-info btn-outline btn-xs"
-
-                                                                      title="Informations sur la période"
-                                                                      data-title="Informations sur la période" >{{ stage.stagePeriode.libelle }}</a>{% else %} - {% endif %}
+                            <td>{% if stage.stagePeriode != null %}
+                                    <a href="#"
+                                            {{ stimulus_controller('modal', {
+                                                size: 'lg',
+                                                modalTitle: 'Informations sur la période',
+                                                modalUrl:  path('application_personnel_stage_periode_info', {'id': stage.id}) }) }}
+                                       data-action="click->modal#openModal"
+                                       data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                       class="btn btn-info btn-outline btn-xs"
+                                       title="Informations sur la période"
+                                    >
+                                        {{ stage.stagePeriode.libelle }}
+                                    </a>
+                                {% else %} - {% endif %}
                             </td>
-                            <td>{% if stage.entreprise != null %}<a href="#" data-provide="modaler"
-                                                                    data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                                                    data-url="{{ path('application_personnel_stage_entreprise_info', {'id': stage.id}) }}"
-                                                                    class="btn btn-info btn-outline btn-xs"
-
-                                                                    title="Informations sur l'entreprise"
-                                                                    data-title="Informations sur l'entreprise" >{{ stage.entreprise.raisonSociale }}</a>{% else %} - {% endif %}
+                            <td>{% if stage.entreprise != null %}
+                                    <a href="#"
+                                            {{ stimulus_controller('modal', {
+                                                size: 'lg',
+                                                modalTitle: 'Informations sur l\'entreprise',
+                                                modalUrl:  path('application_personnel_stage_entreprise_info', {'id': stage.id}) }) }}
+                                       data-action="click->modal#openModal"
+                                       data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                       class="btn btn-info btn-outline btn-xs"
+                                       title="Informations sur l'entreprise"
+                                    >
+                                        {{ stage.entreprise.raisonSociale }}
+                                    </a>
+                                {% else %} - {% endif %}
                             </td>
                             <td>{% if stage.adresseStage != null %}{{ stage.adresseStage.ville }} ({{ stage.adresseStage.codePostal }}){% else %} - {% endif %}</td>
                             <td></td>
@@ -90,15 +100,12 @@
                     <button class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">Exporter la liste</button>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="{{ path('application_personnel_alternance_export',
-                            {periode:'courant', '_format':'xlsx'})
-                        }}">Excel (xlsx)
+                            {periode:'courant', '_format':'xlsx'}) }}">Excel (xlsx)
                         </a>
                         <a class="dropdown-item" href="{{ path('application_personnel_alternance_export',
-                            {periode:'courant', '_format':'csv'})
-                        }}">Texte (csv)</a>
+                            {periode:'courant', '_format':'csv'}) }}">Texte (csv)</a>
                         <a class="dropdown-item" href="{{ path('application_personnel_alternance_export',
-                            {periode:'courant', '_format':'pdf'})
-                        }}">Pdf</a>
+                            {periode:'courant', '_format':'pdf'}) }}">Pdf</a>
                     </div>
                 </div>
                 <br>
@@ -114,21 +121,28 @@
                     </thead>
                     <tbody>
                     {% for alternance in alternancesEnCours %}
-                        <tr>
-                            <td>{% if alternance.etudiant != null %}<a
-                                    href="{{ path('user_profil', {slug:alternance.etudiant.slug, type: 'etudiant'}) }}"
-                                    title="Profil de l'étudiant"
-                                    target="_blank">{{ alternance.etudiant.displayPr }}</a>{% else %} - {% endif %}</td>
-                            <td>{% if alternance.annee != null %}{{ alternance.annee.libelle }}{% else %} - {% endif %}</td>
-                            {% if alternance.entreprise != null %}
-                                <td><a href="#" data-provide="modaler"
-                                       data-url="{{ path('application_personnel_alternance_entreprise_info', {'id': alternance.id}) }}"
-                                       class="btn btn-info btn-outline btn-xs"
-                                       data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                       title="Informations sur l'entreprise"
-                                       data-title="Informations sur l'entreprise">{{ alternance.entreprise.raisonSociale }}</a>
-                                </td>
-                                <td>{% if alternance.entreprise.adresse != null %}{{ alternance.entreprise.adresse.ville }} ({{ alternance.entreprise.adresse.codePostal }}){% else %} - {% endif %}</td>
+                    <tr>
+                        <td>{% if alternance.etudiant != null %}<a
+                                href="{{ path('user_profil', {slug:alternance.etudiant.slug, type: 'etudiant'}) }}"
+                                title="Profil de l'étudiant"
+                                target="_blank">{{ alternance.etudiant.displayPr }}</a>{% else %} - {% endif %}</td>
+                        <td>{% if alternance.annee != null %}{{ alternance.annee.libelle }}{% else %} - {% endif %}</td>
+                        {% if alternance.entreprise != null %}
+                        <td>
+                            <a href="#"
+                               {{ stimulus_controller('modal', {
+                                   size: 'lg',
+                                   modalTitle: 'Informations sur l\'entreprise',
+                                   modalUrl:  path('application_personnel_alternance_entreprise_info', {'id': alternance.id}) }}
+                                   data-action="click->modal#openModal"
+                                   class="btn btn-info btn-outline btn-xs"
+                                   data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                   title="Informations sur l'entreprise"
+                                   >
+                                   {{ alternance.entreprise.raisonSociale }}
+                                   </a>
+                                   </td>
+                                   <td>{% if alternance.entreprise.adresse != null %}{{ alternance.entreprise.adresse.ville }} ({{ alternance.entreprise.adresse.codePostal }}){% else %} - {% endif %}</td>
                             {% else %}
                                 <td>-</td>
                                 <td>-</td>{% endif %}
@@ -157,15 +171,12 @@
                     <button class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">Exporter la liste</button>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="{{ path('application_personnel_stage_export',
-                            {periode:'ancien', '_format':'xlsx'})
-                        }}">Excel (xlsx)
+                            {periode:'ancien', '_format':'xlsx'}) }}">Excel (xlsx)
                         </a>
                         <a class="dropdown-item" href="{{ path('application_personnel_stage_export',
-                            {periode:'ancien', '_format':'csv'})
-                        }}">Texte (csv)</a>
+                            {periode:'ancien', '_format':'csv'}) }}">Texte (csv)</a>
                         <a class="dropdown-item" href="{{ path('application_personnel_stage_export',
-                            {periode:'ancien', '_format':'pdf'})
-                        }}">Pdf</a>
+                            {periode:'ancien', '_format':'pdf'}) }}">Pdf</a>
                     </div>
                 </div>
                 <br>
@@ -187,24 +198,43 @@
                             <td>{% if stage.etudiant != null %}<a
                                     href="{{ path('user_profil', {slug:stage.etudiant.slug, type: 'etudiant'}) }}"
                                     title="Profil de l'étudiant"
-                                    target="_blank">{{ stage.etudiant.displayPr }}</a>{% else %} - {% endif %}</td>
-                            <td>{% if stage.stagePeriode != null %}{{ stage.stagePeriode.semestre.display }}{% else %} - {% endif %}</td>
-                            <td>{% if stage.stagePeriode != null %}{{ stage.stagePeriode.anneeUniversitaire }}{% else %} - {% endif %}</td>
-                            <td>{% if stage.stagePeriode != null %}<a href="#" data-provide="modaler"
-                                                                      data-url="{{ path('application_personnel_stage_periode_info', {'id': stage.id}) }}"
-                                                                      class="btn btn-info btn-outline btn-xs"
-                                                                      data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                                                      title="Informations sur la période"
-                                                                      data-title="Informations sur la période" >{{ stage.stagePeriode.libelle }}</a>{% else %} - {% endif %}
-                            </td>
-                            <td>{% if stage.entreprise != null %}<a href="#" data-provide="modaler"
-                                                                    data-url="{{ path('application_personnel_stage_entreprise_info', {'id': stage.id}) }}"
-                                                                    class="btn btn-info btn-outline btn-xs"
-                                                                    data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                                                    title="Informations sur l'entreprise"
-                                                                    data-title="Informations sur l'entreprise" >{{ stage.entreprise.raisonSociale }}</a>{% else %} - {% endif %}
-                            </td>
-                            <td>{% if stage.adresseStage != null %}{{ stage.adresseStage.ville }} ({{ stage.adresseStage.codePostal }}){% else %} - {% endif %}</td>
+                                                               target="_blank">{{ stage.etudiant.displayPr }}</a>{% else %} - {% endif %}
+                        </td>
+                        <td>{% if stage.stagePeriode != null %}{{ stage.stagePeriode.semestre.display }}{% else %} - {% endif %}</td>
+                        <td>{% if stage.stagePeriode != null %}{{ stage.stagePeriode.anneeUniversitaire }}{% else %} - {% endif %}</td>
+                        <td>
+                            {% if stage.stagePeriode != null %}
+                            <a href="#"
+                                    {{ stimulus_controller('modal', {
+                                    size: 'lg',
+                                    modalTitle: 'Informations sur la période',
+                                    modalUrl:  path('application_personnel_stage_periode_info', {'id': stage.id}) }}
+                               data-action="click->modal#openModal"
+                               class="btn btn-info btn-outline btn-xs"
+                               data-bs-toggle="tooltip" data-bs-placement="bottom"
+                               title="Informations sur la période"
+                            >
+                                {{ stage.stagePeriode.libelle }}
+                            </a>
+                            {% else %} - {% endif %}
+                        </td>
+                        <td>
+                            {% if stage.entreprise != null %}
+                            <a href="#"
+                               {{ stimulus_controller('modal', {
+                                   size: 'lg',
+                                   modalTitle: 'Informations sur l\'entreprise',
+                                   modalUrl:  path('application_personnel_stage_entreprise_info', {'id': stage.id}) }}
+                                   data-action="click->modal#openModal"
+                                   class="btn btn-info btn-outline btn-xs"
+                                   data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                   title="Informations sur l'entreprise"
+                                   >
+                                   {{ stage.entreprise.raisonSociale }}
+                                   </a>
+                                   {% else %} - {% endif %}
+                                   </td>
+                                   <td>{% if stage.adresseStage != null %}{{ stage.adresseStage.ville }} ({{ stage.adresseStage.codePostal }}){% else %} - {% endif %}</td>
                             <td></td>
                         </tr>
                     {% else %}
@@ -222,15 +252,12 @@
                     <button class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">Exporter la liste</button>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="{{ path('application_personnel_alternance_export',
-                            {periode:'ancien', '_format':'xlsx'})
-                        }}">Excel (xlsx)
+                            {periode:'ancien', '_format':'xlsx'}) }}">Excel (xlsx)
                         </a>
                         <a class="dropdown-item" href="{{ path('application_personnel_alternance_export',
-                            {periode:'ancien', '_format':'csv'})
-                        }}">Texte (csv)</a>
+                            {periode:'ancien', '_format':'csv'}) }}">Texte (csv)</a>
                         <a class="dropdown-item" href="{{ path('application_personnel_alternance_export',
-                            {periode:'ancien', '_format':'pdf'})
-                        }}">Pdf</a>
+                            {periode:'ancien', '_format':'pdf'}) }}">Pdf</a>
                     </div>
                 </div>
                 <br>
@@ -251,26 +278,36 @@
                             <td>{% if alternance.etudiant != null %}<a
                                     href="{{ path('user_profil', {slug:alternance.etudiant.slug, type: 'etudiant'}) }}"
                                     title="Profil de l'étudiant"
-                                    target="_blank">{{ alternance.etudiant.displayPr }}</a>{% else %} - {% endif %}</td>
-                            <td>{% if alternance.annee != null %}{{ alternance.annee.libelle }}{% else %} - {% endif %}</td>
-                            <td>{{ alternance.anneeUniversitaire }}</td>
-                            <td>{% if alternance.entreprise != null %}<a href="#" data-provide="modaler"
-                                                                         data-url="{{ path('application_personnel_alternance_entreprise_info', {'id': alternance.id}) }}"
-                                                                         class="btn btn-info btn-outline btn-xs"
-                                                                         data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                                                         title="Informations sur l'entreprise"
-                                                                         data-title="Informations sur l'entreprise" >{{ alternance.entreprise.raisonSociale }}</a>{% else %} - {% endif %}
-                            </td>
-                            <td>{% if alternance.entreprise != null and alternance.entreprise.adresse != null %}{{ alternance.entreprise.adresse.ville }}
-                                    ({{ alternance.entreprise.adresse.codePostal }}){% else %} - {% endif %}</td>
-                            <td></td>
-                        </tr>
+                                                               target="_blank">{{ alternance.etudiant.displayPr }}</a>{% else %}
+                                                               - {% endif %}</td>
+                        <td>{% if alternance.annee != null %}{{ alternance.annee.libelle }}{% else %} - {% endif %}</td>
+                        <td>{{ alternance.anneeUniversitaire }}</td>
+                        <td>
+                            {% if alternance.entreprise != null %}
+                            <a href="#"
+                                    {{ stimulus_controller('modal', {
+                                size: 'lg',
+                                modalTitle: 'Informations sur l\'entreprise',
+                                modalUrl:  path('application_personnel_alternance_entreprise_info', {'id': alternance.id}) }) }}
+                               data-action="click->modal#openModal"
+                               class="btn btn-info btn-outline btn-xs"
+                               data-bs-toggle="tooltip" data-bs-placement="bottom"
+                               title="Informations sur l'entreprise"
+                               >
+                                {{ alternance.entreprise.raisonSociale }}
+                            </a>
+                            {% else %} - {% endif %}
+                        </td>
+                        <td>{% if alternance.entreprise != null and alternance.entreprise.adresse != null %}{{ alternance.entreprise.adresse.ville }}
+                            ({{ alternance.entreprise.adresse.codePostal }}){% else %} - {% endif %}</td>
+                        <td></td>
+                    </tr>
                     {% else %}
-                        <tr>
-                            <td colspan="6">
-                                <div class="alert alert-info">Pas d'historique pour le moment</div>
-                            </td>
-                        </tr>
+                    <tr>
+                        <td colspan="6">
+                            <div class="alert alert-info">Pas d'historique pour le moment</div>
+                        </td>
+                    </tr>
                     {% endfor %}
                     </tbody>
                 </table>

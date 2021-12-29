@@ -226,33 +226,34 @@
                                                 </div>
                                             </div>
                                             <div class="col-sm-12 col-md-2">
-                                                    <div class="dropdown d-grid d-block">
-                                                        <button class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
-                                                            Trombi. (PDF)
-                                                        </button>
+                                                <div class="dropdown d-grid d-block">
+                                                    <button class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+                                                        Trombi. (PDF)
+                                                    </button>
 
-                                                        <div class="dropdown-menu">
-                                                            {% for typegroupe in typegroupes|filter(typegroupe => typegroupe
-                                                            .semestre == semestre) %}
-                                                                <li>
-                                                                    <a class="dropdown-item" href="{{ path
-                                                                        ('trombinoscope_etudiant_image',
-                                                                        {typeGroupe: typegroupe.id}) }}">{{ typegroupe.libelle }}</a>
-                                                                </li>
-                                                            {% endfor %}
-                                                        </div>
+                                                    <div class="dropdown-menu">
+                                                        {% for typegroupe in typegroupes|filter(typegroupe => typegroupe
+                                                        .semestre == semestre) %}
+                                                            <li>
+                                                                <a class="dropdown-item" href="{{ path
+                                                                    ('trombinoscope_etudiant_image',
+                                                                    {typeGroupe: typegroupe.id}) }}">{{ typegroupe.libelle }}</a>
+                                                            </li>
+                                                        {% endfor %}
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="col-sm-12 col-md-4 d-grid d-block">
-                                                <button data-provide="modaler"
-                                                        data-url="{{ path('api_export_document_personnalise',
-                                                            {semestre:semestre.id}) }}"
-                                                        data-size="lg"
-                                                        data-confirm-text="{{ 'fermer'|trans }}"
+                                                <button
+                                                        {{ stimulus_controller('modal', {
+                                                            size: 'lg',
+                                                            modalTitle: 'export.heading'|trans,
+                                                            modalUrl:  path('api_export_document_personnalise',
+                                                                {semestre:semestre.id}) }) }}
+                                                        data-action="click->modal#openModal"
                                                         class="btn btn-primary"
                                                         data-bs-toggle="tooltip" data-bs-placement="bottom"
                                                         title="{{ 'atitle.export'|trans }}"
-                                                        data-title="{{ 'export.heading'|trans }}"
                                                 >
                                                     Export personnalisé
                                                 </button>

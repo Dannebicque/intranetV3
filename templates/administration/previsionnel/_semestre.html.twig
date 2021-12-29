@@ -72,12 +72,14 @@
                                 </select>
                             </td>
                             <td colspan="3">
-                                <button data-provide="modaler"
-                                        data-url="{{ path('administration_previsionnel_matiere', {matiere: previ
-                                        .matiere_id, annee: annee, type: previ.type_matiere}) }}"
+                                <button
+                                        {{ stimulus_controller('modal', {
+                                            size: 'lg',
+                                            modalTitle: 'Service de la matière ' ~previ.matiere_code,
+                                            modalUrl:  path('administration_previsionnel_matiere', {matiere: previ
+                                            .matiere_id, annee: annee, type: previ.type_matiere}) })}}
+                                        data-action="click->modal#openModal"
                                         class="btn btn-primary btn-sm"
-                                        data-size="lg"
-                                        data-title="Service de la matière {{ previ.matiere_code }}"
                                 >
                                     Service de la matière {{ previ.matiere_code }}
                                 </button>
@@ -85,12 +87,15 @@
                             <td>&nbsp;</td>
                             <td colspan="3">
                                 {% if previ.personnel_id != 0 %}
-                                    <button data-provide="modaler"
-                                            data-url="{{ path('administration_previsionnel_personnel', {personnel:
-                                                previ.personnel_id, annee:annee}) }}"
+                                    <button
+                                            {{ stimulus_controller('modal', {
+                                                size: 'lg',
+                                                modalTitle: 'Service complet de '~ previ.personnel_prenom ~ ' ' ~
+                                                previ.personnel_nom,
+                                                modalUrl:  path('administration_previsionnel_personnel', {personnel:
+                                                    previ.personnel_id, annee:annee}) })}}
+                                            data-action="click->modal#openModal"
                                             class="btn btn-primary btn-sm"
-                                            data-size="lg"
-                                            data-title="Service complet de {{ previ.personnel_prenom }} {{ previ.personnel_nom }}"
                                     >
                                         Service complet de {{ previ.personnel_prenom }} {{ previ.personnel_nom }}
                                     </button>
