@@ -78,7 +78,7 @@ class AbstractVoter
         }
     }
 
-    public function userHasMinimalRoleInDepartement(string $attribute, ?Departement $departement)
+    public function userHasMinimalRoleInDepartement(string $attribute, ?Departement $departement): bool
     {
         if ($departement !== null && $this->userInGoodDepartement($departement)) {
             if (!array_key_exists($departement->getId(), $this->departementRoles)) {
