@@ -42,18 +42,18 @@
                         <div class="alert alert-info">
                             Dans cette partie vous pouvez éditer le contenu du courrier d'accompagnement
                             envoyés avec la convention. Si vous laissez la zone de texte vide le courrier
-                            par défaut sera généré. <a href="#" data-provide="modaler"
-                                                       data-url="{{ path
-                                                           ('administration_stage_periode_courrier_apercu_defaut',
-                                                           {'mail': 'courrier'}) }}"
+                            par défaut sera généré. <a href="#"
+                                    {{ stimulus_controller('modal', {
+                                        size: 'lg',
+                                        modalTitle: 'Courrier d\'accompagnement par défaut',
+                                        modalUrl:  path
+                                            ('administration_stage_periode_courrier_apercu_defaut',
+                                            {'mail': 'courrier'}) }) }}
+                                                       data-action="click->modal#openModal"
                                                        title="Courrier d'accompagnement par défaut"
-                                                       data-title="Courrier d'accompagnement par défaut">Vous
-                                                                                                         pouvez
-                                                                                                         consulter
-                                                                                                         le courrier
-                                                                                                         d'accompagnement
-                                                                                                         par défaut
-                                                                                                         ici</a>.
+                                                      >
+                                Vous pouvez consulter le courrier d'accompagnement par défaut ici
+                            </a>.
                             Vous avez à votre disposition tous les champs disponibles (équivalent aux champs de
                             fusion d'un publipostage word) pour générer votre mail.
                         </div>
@@ -61,32 +61,6 @@
                                value="courrier"
                                name="sujet_courrier"
                                id="sujet_courrier"/>
-                        {# <div id="toolbar_courrier" class="mt-10"> #}
-                        {# <span class="ql-formats"> #}
-                        {# <button class="ql-bold"></button> #}
-                        {# <button class="ql-italic"></button> #}
-                        {# <button class="ql-underline"></button> #}
-                        {# </span> #}
-                        {# <span class="ql-formats"> #}
-                        {# <button class="ql-list" value="ordered" type="button"></button> #}
-                        {# <button class="ql-list" value="bullet" type="button"></button> #}
-
-                        {# <button class="ql-align" type="button"></button> #}
-                        {# <button class="ql-align" value="center" type="button"></button> #}
-                        {# <button class="ql-align" value="right" type="button"></button> #}
-                        {# <button class="ql-align" value="justify" type="button"></button> #}
-                        {# </span> #}
-                        {# <span> #}
-                        {# <label for="custom-fields_courrier" class="sr-only">custom-fields_courrier</label> #}
-                        {# <select id="custom-fields_courrier" class="ql-customsfields"> #}
-                        {# <option selected>Choisir</option> #}
-                        {# {% for field in constant #}
-                        {# ('App\\Entity\\StageMailTemplate::CHAMPS_PUBLIPOSTAGE')|keys %} #}
-                        {# <option value="{{ field }}"></option> #}
-                        {# {% endfor %} #}
-                        {# </select> #}
-                        {# </span> #}
-                        {# </div> #}
                         <div class="editCourrier" id="text_courrier">
                             {% if courriers['courrier'] is defined %}
                                 {{ courriers['courrier'].twigTemplate.source|transformeFromTwig|raw }}
@@ -109,16 +83,17 @@
                                 </button>
                             </div>
                             <div class="col-sm-12 col-md-4">
-                                <a data-provide="modaler"
-                                   data-url="{{ path
-                                       ('administration_stage_periode_courrier_apercu_modele',
-                                       {mail: 'courrier', stagePeriode:stagePeriode.id}) }}"
+                                <a {{ stimulus_controller('modal', {
+                                            size: 'lg',
+                                            modalTitle: 'Courrier d\'accompagnement par défaut',
+                                            modalUrl:  path
+                                        ('administration_stage_periode_courrier_apercu_modele',
+                                        {mail: 'courrier', stagePeriode:stagePeriode.id}) }) }}
+                                   data-action="click->modal#openModal"
                                    title="Courrier d'accompagnement par défaut"
-                                   data-title="Courrier d'accompagnement par défaut" class="btn btn-info btn-block">Aperçu
-                                                                                                                    du
-                                                                                                                    mail</a>
-
-
+                                   class="btn btn-info btn-block">
+                                    Aperçu du mail
+                                </a>
                             </div>
                             <div class="col-sm-12 col-md-4">
                                 <button data-type="courrier" data-periode="{{ stagePeriode.uuidString }}" class="btn
@@ -129,61 +104,37 @@
                         <div class="editCourrier" id="editCourrier"></div>
                     </div>
                     {% for etat in etatsConvention %}
-                        <div class="tab-pane fade" id="{{ etat }}">
-                            <h4>{{ etat|trans }}</h4>
-                            <div class="alert alert-info">
-                                Dans cette partie vous pouvez éditer le contenu des emails
-                                envoyés lors des différentes phases de la gestion de la
-                                convetion. Si vous laissez la zone de texte vide le mail
-                                par défaut sera envoyé. <a href="#" data-provide="modaler"
-                                                           data-url="{{ path
-                                                               ('administration_stage_periode_courrier_apercu_defaut',
-                                                               {'mail': etat}) }}"
+                    <div class="tab-pane fade" id="{{ etat }}">
+                        <h4>{{ etat|trans }}</h4>
+                        <div class="alert alert-info">
+                            Dans cette partie vous pouvez éditer le contenu des emails
+                            envoyés lors des différentes phases de la gestion de la
+                            convetion. Si vous laissez la zone de texte vide le mail
+                            par défaut sera envoyé. <a href="#"
+                                                       {{ stimulus_controller('modal', {
+                                            size: 'lg',
+                                            modalTitle: 'Mail par défaut pour ' ~ etat|trans,
+                                            modalUrl:  path
+                                               ('administration_stage_periode_courrier_apercu_defaut',
+                                                {'mail': etat}) })}}
+                                                           data-action="click->modal#openModal"
                                                            title="Mail par défaut pour {{ etat|trans }}"
-                                                           data-title="Mail par défaut pour {{ etat|trans }}">Vous
-                                                                                                              pouvez
-                                                                                                              consulter
-                                                                                                              le mail
-                                                                                                              par défaut
-                                                                                                              ici</a>.
+                                                           >
+                                    Vous pouvez consulter le mail par défaut ici
+                                </a>.
                                 Vous avez à votre disposition tous les champs disponibles (équivalent aux champs de
                                 fusion d'un publipostage word) pour générer votre mail.
-                            </div>
+                        </div>
 
-                            <div>
-                                <label for="sujet_{{ etat }}">Sujet du message : </label>
+                        <div>
+                            <label for="sujet_{{ etat }}">Sujet du message : </label>
                                 <input type="text"
                                        class="form-control"
                                        value="{% if courriers[etat] is defined %}{{ courriers[etat].subject }}{% endif %}"
                                        name="sujet_{{ etat }}"
-                                       id="sujet_{{ etat }}"/>
+                                       id="sujet_{{ etat }}" />
                             </div>
-                            {# <div id="toolbar_{{ etat }}" class="mt-10"> #}
-                            {# <span class="ql-formats"> #}
-                            {# <button class="ql-bold"></button> #}
-                            {# <button class="ql-italic"></button> #}
-                            {# <button class="ql-underline"></button> #}
-                            {# </span> #}
-                            {# <span class="ql-formats"> #}
-                            {# <button class="ql-list" value="ordered" type="button"></button> #}
-                            {# <button class="ql-list" value="bullet" type="button"></button> #}
 
-                            {# <button class="ql-align" type="button"></button> #}
-                            {# <button class="ql-align" value="center" type="button"></button> #}
-                            {# <button class="ql-align" value="right" type="button"></button> #}
-                            {# <button class="ql-align" value="justify" type="button"></button> #}
-                            {# </span> #}
-                            {# <span> #}
-                            {# <label for="custom-fields_{{ etat }}" class="sr-only">custom-fields_{{ etat }}</label> #}
-                            {# <select id="custom-fields_{{ etat }}" class="ql-customsfields"> #}
-                            {# <option selected>Choisir</option> #}
-                            {# {% for field in constant #}
-                            {# ('App\\Entity\\StageMailTemplate::CHAMPS_PUBLIPOSTAGE')|keys %} #}
-                            {# <option value="{{ field }}"></option> #}
-                            {# {% endfor %} #}
-                            {# </select> #}
-                            {# </span> #}
-                            {# </div> #}
                             <div class="editCourrier" id="text_{{ etat }}">
                                 {% if courriers[etat] is defined %}
                                     {{ courriers[etat].twigTemplate.source|transformeFromTwig }}
@@ -205,26 +156,29 @@
                                     </button>
                                 </div>
                                 <div class="col-sm-12 col-md-4">
-                                    <a data-provide="modaler"
-                                       data-url="{{ path
-                                           ('administration_stage_periode_courrier_apercu_modele',
-                                           {mail: etat, stagePeriode:stagePeriode.id}) }}"
-                                       title="Courrier d'accompagnement par défaut"
-                                       data-title="Courrier d'accompagnement par défaut" class="btn btn-info btn-block">Aperçu
-                                                                                                                        du
-                                                                                                                        mail</a>
-                                </div>
-                                <div class="col-sm-12 col-md-4">
-                                    <button data-type="{{ etat }}" data-periode="{{ stagePeriode.uuidString }}" class="btn btn-success
-                                    btn-block enregistreModeleMail" data-ed="{{ etat }}">Enregistrer le modèle
-                                    </button>
-                                </div>
-                            </div>
+                                    <a {{ stimulus_controller('modal', {
+                                                size: 'lg',
+                                                modalTitle: 'Courrier d\'accompagnement par défaut',
+                                                modalUrl:  path
+                                                    ('administration_stage_periode_courrier_apercu_modele',
+                                                    {mail: etat, stagePeriode:stagePeriode.id}) })}}
+                                       data-action="click->modal#openModal"
+                                   title="Courrier d'accompagnement par défaut"
+                                   class="btn btn-info btn-block">
+                                Aperçu du mail
+                                </a>
                         </div>
-                    {% endfor %}
+                        <div class="col-sm-12 col-md-4">
+                            <button data-type="{{ etat }}" data-periode="{{ stagePeriode.uuidString }}" class="btn btn-success
+                                    btn-block enregistreModeleMail" data-ed="{{ etat }}">Enregistrer le modèle
+                            </button>
+                        </div>
+                    </div>
                 </div>
+                {% endfor %}
             </div>
         </div>
+    </div>
     </div>
 {% endblock %}
 

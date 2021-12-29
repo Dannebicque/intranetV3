@@ -30,14 +30,15 @@
                 </td>
 
                 <td colspan="2">
-                    <button data-provide="modaler"
-                            data-url="{{ path('api_previsionnel_matiere', {'matiere': previsionnel.matiere_id, type: previsionnel.type_matiere}) }}"
-                            data-size="lg"
-                            data-confirm-text="{{ 'fermer'|trans }}"
+                    <button
+                            {{ stimulus_controller('modal', {
+                                size: 'lg',
+                                modalTitle: 'previsionnel.et.intervenants.matiere'|trans,
+                                modalUrl:  path('api_previsionnel_matiere', {'matiere': previsionnel.matiere_id, type: previsionnel.type_matiere}) })}}
+                            data-action="click->modal#openModal"
                             class="btn btn-block btn-cyan"
                             data-bs-toggle="tooltip" data-bs-placement="bottom"
                             title="{{ 'previsionnel.et.intervenants.matiere'|trans }}"
-                            data-title="{{ 'previsionnel.et.intervenants.matiere'|trans }}"
                     >
                         {{ 'detail.du.module'|trans }}
                     </button>

@@ -38,12 +38,14 @@
                     <td>{{ absence.justifie ? 'Yes'|trans : 'No'|trans }}</td>
                     <td class="hide">{{ absence.personnel ? absence.personnel.display : 'non.defini'|trans }}</td>
                     <td>
-                        <button data-provide="modaler"
+                        <button
+                                {{ stimulus_controller('modal', {
+                                    modalTitle: 'detail.absence'|trans,
+                                    modalUrl:  path('app_etudiant_absence_detail', {'uuid': absence.uuidString}) })}}
+                                data-action="click->modal#openModal"
                                 data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                data-url="{{ path('app_etudiant_absence_detail', {'uuid': absence.uuidString}) }}"
                                 class="btn btn-info btn-outline btn-square btn-xs"
                                 title="{{ 'atitle.details'|trans }}"
-                                data-title="{{ 'detail.absence'|trans }}"
                         >
                             <i class="{{ iconShow }}"></i>
                         </button>

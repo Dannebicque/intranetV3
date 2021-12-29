@@ -2,7 +2,9 @@
     <{{ element }}{{ block('attributes') }}
     {% if stimulus is defined %}
         {{ stimulus_controller(stimulus.controller, {
-            modalUrl: stimulus.route
+            modalUrl: stimulus.modalUrl,
+            size: stimulus.size,
+            modalTitle: stimulus.title,
         }) }}
         data-action="{{ stimulus.controller }}#{{ stimulus.action }}"
     {% endif %}

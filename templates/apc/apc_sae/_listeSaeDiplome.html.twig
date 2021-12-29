@@ -5,6 +5,7 @@
         <th>{{ 'table.code_element'|trans }}</th>
         <th>{{ 'table.libelle'|trans }}</th>
         <th>Compétences</th>
+        <th>Bonification</th>
         <th>Heures CM</th>
         <th>Heures TD</th>
         <th>Heures TP</th>
@@ -15,7 +16,7 @@
     </thead>
     <tbody>
     {% for apc_sae in apc_saes|filter(apc_sae => apc_sae.semestre.id == semestre.id) %}
-        <tr id="ligne_{{ apc_sae.id }}">
+        <tr id="ligne_{{ apc_sae.id }}" {% if apc_sae.suspendu == true %}class="bg-pale-warning"{% endif %}>
             <td>{{ apc_sae.codeMatiere }}</td>
             <td>{{ apc_sae.codeElement }}</td>
             <td>{{ apc_sae.libelle }}</td>
@@ -25,6 +26,7 @@
                         {{ competence.competence.nomCourt }}
                     </span>
                 {% endfor %}</td>
+            <td>{{ apc_sae.bonification ? 'Yes'|trans : 'No'|trans }}</td>
             <td>
                 <a class="myedit"
                    data-field="CmPpn"

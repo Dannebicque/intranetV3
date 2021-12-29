@@ -42,7 +42,6 @@
             {{ include('administration/block_admin/_bornes.html.twig') }}
             {{ include('administration/block_admin/_structure.html.twig') }}
             {{ include('administration/block_admin/_salle.html.twig') }}
-            {{ include('administration/block_admin/_configuration.html.twig') }}
 
             {% if user_data.departement.optMateriel %}
                 {{ include('administration/block_admin/_materiel.html.twig') }}
@@ -64,7 +63,6 @@
                 {{ include('administration/block_admin/_bornes.html.twig') }}
                 {{ include('administration/block_admin/_structure.html.twig') }}
                 {{ include('administration/block_admin/_salle.html.twig') }}
-                {{ include('administration/block_admin/_configuration.html.twig') }}
             {% endif %}
             {% if user_data.isGoodDepartement('ROLE_ABS') or user_data.isGoodDepartement('ROLE_NOTES') %}
                 {{ include('administration/block_admin/_etudiant.html.twig') }}

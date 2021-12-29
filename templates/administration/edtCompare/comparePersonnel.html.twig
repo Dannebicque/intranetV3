@@ -37,11 +37,11 @@
             <table class="table table-hover">
                 <thead>
                 <tr>
-                    <th colspan>Matière</th>
+                    <th>Matière</th>
                     <th>Semestre</th>
-                    <th colspan="2">CM</th>
-                    <th colspan="2">TD</th>
-                    <th colspan="2">TP</th>
+                    <th colspan="2" class="text-center">CM</th>
+                    <th colspan="2" class="text-center">TD</th>
+                    <th colspan="2" class="text-center">TP</th>
                     <th>&nbsp;</th>
                 </tr>
                 </thead>
@@ -51,7 +51,7 @@
                             style="text-align:center;">{{ personnel.display }}</td>
                     </tr>
                     <tr>
-                        <td colspan>&nbsp;</td>
+                        <td>&nbsp;</td>
                         <td>Semestre</td>
                         <td>EDT.</td>
                         <td>Prévi.</td>
@@ -63,15 +63,17 @@
                     {% for ed in comparatifs[personnel.id] %}
                         <tr>
                             <td>
-                                <button data-provide="modaler"
-                                        data-url="{{ path('administration_edt_compare_plus_info',
-                                            {'matiere': ed.matiere_id}) }}"
+                                <button
+                                        {{ stimulus_controller('modal', {
+                                            size: 'lg',
+                                            modalTitle: 'compare.plusinfos.details.title'|trans,
+                                            modalUrl:  path('administration_edt_compare_plus_info',
+                                                {'matiere': ed.matiere_id}) })}}
+                                        data-action="click->modal#openModal"
                                         class="btn btn-info"
                                         data-bs-toggle="tooltip"
                                         data-bs-placement="bottom"
-                                        data-size="lg"
                                         title="{{ 'compare.plusinfos.details'|trans }}"
-                                        data-title="{{ 'compare.plusinfos.details.title'|trans }}"
                                 >
                                     <i class="{{ iconShow }}"></i> {{ ed.matiere_code }} | {{ ed.matiere_libelle }}
                                 </button>
@@ -91,10 +93,11 @@
                             </td>
 
                             <td>
-                                <span class="badge rounded-pill {% if ed.nbTPEDT > ed.nbTPPrevi %} badge-danger {% elseif ed.nbTPEDT == ed.nbTPPrevi %} badge-success {% else %} badge-warning {% endif %}">{{ ed.nbTPEDT }}</span>
+                                <span class="badge rounded-pill {% if ed.nbTPEDT > ed.nbTPPrevi %} bg-danger {% elseif
+                                    ed.nbTPEDT == ed.nbTPPrevi %} bg-success {% else %} bg-warning {% endif %}">{{ ed.nbTPEDT }}</span>
                             </td><!-- TP -->
                             <td>
-                                <span class="badge rounded-pill {% if ed.nbTPPrevi > ed.nbTPEDT %} badge-danger {% elseif ed.nbTPEDT == ed.nbTPPrevi %} badge-success {% else %} badge-warning {% endif %}">{{ ed.nbTPPrevi }}</span>
+                                <span class="badge rounded-pill {% if ed.nbTPPrevi > ed.nbTPEDT %} bg-danger {% elseif ed.nbTPEDT == ed.nbTPPrevi %} bg-success {% else %} bg-warning {% endif %}">{{ ed.nbTPPrevi }}</span>
                             </td>
 
                         </tr>
