@@ -79,6 +79,7 @@ Etat: Etat
 fichier_import: 'Fichier à importer'
 h: Heure
 help:
+  duree_evaluation: 'Durée de l''évaluation, en heures (ex: 1h30)'
   ficheRenseignement: 'Vous pouvez joindre un document à pré-remplir. Ce document sera accessible aux étudiants dans la partie Applications > Stages'
   personnel:
     entreprise: 'Nom de l''entreprise pour les intervenants professionnels. Information visible des étudiants'
@@ -87,7 +88,7 @@ help:
   avantages: 'Autres avantages (frais de transports, ...)'
   bonification: 'UE comptabilisée comme une bonification de semestre'
   coefficient: 'Coefficient de l''évaluation par rapport aux autres évaluations du module.'
-  commentaire_evaluation: 'Commentaire de l''évaluation'
+  commentaire_evaluation: 'Commentaire optionnel de l''évaluation (255 caractères maximum)'
   commentaireDureeHebdomadaire: 'Toutes précisions nécessaires sur la durée de travail'
   competencesVisees: 'Compétences visées pendant la période de stage'
   copieAssistant: "Permet de mettre en copie des envois automatique de l'intranet l'assistant(e) de la formation\n        "
@@ -103,7 +104,7 @@ help:
   gratification: 'Le stage sera-t-il rémunéré'
   gratificationMontant: 'En fonction de la période sélectionnée'
   gratificationPeriode: 'Choisissez la période de calcul de la gratification'
-  libelle_evaluation: 'Vous pouvez nommer vos évaluations. Ce nom sera visible des étudiants'
+  libelle_evaluation: 'Vous pouvez nommer vos évaluations. Ce nom sera visible des étudiants (100 caractères maximum)'
   libelle.enquete: 'Libellé de l''enquête affiché dans l''administration'
   libelleStagePeriode: 'Nom de la période de stage (affichée pour les étudiants)'
   modaliteEncadrement: 'Précisez comment sera effectué l''encadrement par le tuteur universitaire'
