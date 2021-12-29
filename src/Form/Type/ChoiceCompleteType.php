@@ -25,7 +25,7 @@ class ChoiceCompleteType extends AbstractType
         $this->translator = $translator;
     }
 
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['attr']['is'] = 'select-complete';
         $view->vars['attr']['placeholder'] = $options['placeholder'];
@@ -35,7 +35,7 @@ class ChoiceCompleteType extends AbstractType
         $view->vars['expanded'] = false;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'min_search_length' => 0,
@@ -48,7 +48,7 @@ class ChoiceCompleteType extends AbstractType
         $resolver->setAllowedTypes('placeholder', 'string');
     }
 
-    public function getParent()
+    public function getParent(): ?string
     {
         return ChoiceType::class;
     }

@@ -168,7 +168,7 @@ class BCDemande extends BaseEntity
     /**
      * @ORM\Column(type="string", length=30)
      */
-    private ?string $etat_process = 'demande_initiale';
+    private ?string $etatProcess = 'demande_initiale';
 
     public function __construct()
     {
@@ -459,24 +459,11 @@ class BCDemande extends BaseEntity
 
     public function getEtatProcess(): ?string
     {
-        return $this->etat_process;
+        return $this->etatProcess;
     }
 
-    public function setEtatProcess(string $etat_process)
+    public function setEtatProcess(string $etatProcess, $context = [])
     {
-        $this->etat_process = $etat_process;
-    }
-
-    //pour le workdlow
-    public function getEtat_process()
-    {
-        return $this->etat_process;
-    }
-
-    public function setEtat_Process(string $etat_process, $context = []): self
-    {
-        $this->etat_process = $etat_process;
-
-        return $this;
+        $this->etatProcess = $etatProcess;
     }
 }

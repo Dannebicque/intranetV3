@@ -10,18 +10,19 @@
 namespace App\Form\Transformer;
 
 use Carbon\Carbon;
+use Carbon\CarbonInterface;
 use DateTime;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
 
 class CarbonToDateTimeTransformer implements DataTransformerInterface
 {
-    public function transform($value)
+    public function transform($value): mixed
     {
         return $value; // No conversion required
     }
 
-    public function reverseTransform($value)
+    public function reverseTransform($value): ?CarbonInterface
     {
         if (null === $value) {
             return null;

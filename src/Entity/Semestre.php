@@ -101,12 +101,12 @@ class Semestre extends BaseEntity
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Personnel")
      */
-    private ?Personnel $optDestMailReleve;
+    private ?Personnel $optDestMailReleve = null;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Personnel")
      */
-    private ?Personnel $optDestMailModifNote;
+    private ?Personnel $optDestMailModifNote = null;
 
     /**
      * @ORM\Column(type="boolean")
@@ -131,7 +131,7 @@ class Semestre extends BaseEntity
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Personnel")
      */
-    private ?Personnel $optDestMailAbsenceResp;
+    private ?Personnel $optDestMailAbsenceResp = null;
 
     /**
      * @ORM\Column(type="boolean")
@@ -193,7 +193,7 @@ class Semestre extends BaseEntity
     /**
      * @ORM\Column(type="integer")
      */
-    private ?int $moisDebut;
+    private ?int $moisDebut = 9;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Annee", inversedBy="semestres", fetch="EAGER")
@@ -214,7 +214,7 @@ class Semestre extends BaseEntity
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Ppn", inversedBy="semestres")
      */
-    private ?Ppn $ppn_actif;
+    private ?Ppn $ppnActif;
 
     /**
      * @ORM\Column(type="string", length=20)
@@ -254,37 +254,37 @@ class Semestre extends BaseEntity
     /**
      * @ORM\OneToMany(targetEntity=AbsenceEtatAppel::class, mappedBy="semestre")
      */
-    private $absenceEtatAppels;
+    private Collection $absenceEtatAppels;
 
     /**
      * @ORM\OneToMany(targetEntity=CelcatEvent::class, mappedBy="semestre")
      */
-    private $celcatEvents;
+    private Collection $celcatEvents;
 
     /**
      * @ORM\OneToMany(targetEntity=Evaluation::class, mappedBy="semestre")
      */
-    private $evaluations;
+    private Collection $evaluations;
 
     /**
      * @ORM\OneToMany(targetEntity=Rattrapage::class, mappedBy="semestre")
      */
-    private $rattrapages;
+    private Collection $rattrapages;
 
     /**
      * @ORM\OneToMany(targetEntity=AbsenceJustificatif::class, mappedBy="semestre")
      */
-    private $absenceJustificatifs;
+    private Collection $absenceJustificatifs;
 
     /**
      * @ORM\OneToMany(targetEntity=Absence::class, mappedBy="semestre")
      */
-    private $absences;
+    private Collection $absences;
 
     /**
      * @ORM\Column(type="boolean")
      */
-    private $optMailAssistanteJustificatifAbsence;
+    private ?bool $optMailAssistanteJustificatifAbsence = false;
 
     public function __construct()
     {
@@ -722,11 +722,7 @@ class Semestre extends BaseEntity
         return $this;
     }
 
-    /**
-     * @param $name
-     * @param $value
-     */
-    public function update($name, $value): void
+    public function update(?string $name, mixed $value): void
     {
         Tools::updateFields($name, $value, $this);
     }
@@ -915,12 +911,12 @@ class Semestre extends BaseEntity
 
     public function getPpnActif(): ?Ppn
     {
-        return $this->ppn_actif;
+        return $this->ppnActif;
     }
 
-    public function setPpnActif(?Ppn $ppn_actif): self
+    public function setPpnActif(?Ppn $ppnActif): self
     {
-        $this->ppn_actif = $ppn_actif;
+        $this->ppnActif = $ppnActif;
 
         return $this;
     }

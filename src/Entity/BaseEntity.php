@@ -30,10 +30,6 @@ abstract class BaseEntity
         return $this->id;
     }
 
-    /**
-     * @param $name
-     * @param $value
-     */
     public function updateData(string $name, mixed $value): void
     {
         $field = 'set' . ucfirst($name);

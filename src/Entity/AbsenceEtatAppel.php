@@ -50,7 +50,7 @@ class AbsenceEtatAppel extends BaseEntity
     /**
      * @ORM\Column(type="string", length=10)
      */
-    private ?string $type_saisie;
+    private ?string $typeSaisie;
 
     /**
      * @ORM\ManyToOne(targetEntity=Semestre::class, inversedBy="absenceEtatAppels")
@@ -107,12 +107,12 @@ class AbsenceEtatAppel extends BaseEntity
 
     public function getTypeSaisie(): ?string
     {
-        return $this->type_saisie;
+        return $this->typeSaisie;
     }
 
-    public function setTypeSaisie(string $type_saisie): self
+    public function setTypeSaisie(string $typeSaisie): self
     {
-        $this->type_saisie = $type_saisie;
+        $this->typeSaisie = $typeSaisie;
 
         return $this;
     }
@@ -129,12 +129,12 @@ class AbsenceEtatAppel extends BaseEntity
         return $this;
     }
 
-    public function appelFait()
+    public function appelFait(): string
     {
         return $this->getDate()?->format('dmY').'_'.$this->getTypeIdMatiere().'_'.$this->getHeure().'_'.$this->getGroupe()?->getId();
     }
 
-    public function setEvent(EvenementEdt $event, $typeSaisie)
+    public function setEvent(EvenementEdt $event, $typeSaisie): AbsenceEtatAppel
     {
         $this->setDate($event->dateObjet);
         $this->setIdMatiere($event->getIdMatiere());

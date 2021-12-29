@@ -257,8 +257,8 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
         $this->articlesLike = new ArrayCollection();
         $this->documentsFavoris = new ArrayCollection();
 
-        $this->promotion = date('Y');
-        $this->anneeBac = date('Y');
+        $this->promotion = (int)date('Y');
+        $this->anneeBac = (int)date('Y');
         $this->typeUser = 'ETU';
         $this->emprunts = new ArrayCollection();
         $this->quizzEtudiants = new ArrayCollection();
@@ -552,15 +552,6 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
         return $this;
     }
 
-    /**
-     * String representation of object.
-     *
-     * @see   http://php.net/manual/en/serializable.serialize.php
-     *
-     * @return string the string representation of the object or null
-     *
-     * @since 5.1.0
-     */
     public function serialize(): string
     {
         // Ajouté pour le problème de connexion avec le usernametoken
@@ -571,17 +562,6 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
         ]);
     }
 
-    /**
-     * Constructs the object.
-     *
-     * @see   http://php.net/manual/en/serializable.unserialize.php
-     *
-     * @param string $serialized <p>
-     *                           The string representation of the object.
-     *                           </p>
-     *
-     * @since 5.1.0
-     */
     public function unserialize($data): void
     {
         // Ajouté pour le problème de connexion avec le usernametoken
@@ -913,12 +893,7 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
         return $this;
     }
 
-    /**
-     * @param $dataApogee
-     *
-     * @throws JsonException
-     */
-    public function updateFromApogee($dataApogee): void
+    public function updateFromApogee(?array $dataApogee): void
     {
         $this->setRoles(['ROLE_ETUDIANT']);
         foreach ($dataApogee as $key => $value) {
@@ -954,6 +929,7 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
 
     public function removeEmprunt(Emprunt $emprunt): self
     {
+        //Todo: revoir la partie emprunt
         if ($this->emprunts->contains($emprunt)) {
             $this->emprunts->removeElement($emprunt);
             // set the owning side to null (unless already changed)

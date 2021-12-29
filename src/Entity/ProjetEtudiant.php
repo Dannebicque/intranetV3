@@ -239,26 +239,26 @@ class ProjetEtudiant extends BaseEntity
         return $this->dateAutorise;
     }
 
-    public function setDateAutorise(?DateTimeInterface $dateAutorise): self
+    public function setDateAutorise(?CarbonInterface $dateAutorise): self
     {
         $this->dateAutorise = $dateAutorise;
 
         return $this;
     }
 
-    public function getDateDepose(): ?DateTimeInterface
+    public function getDateDepose(): ?CarbonInterface
     {
         return $this->dateDepose;
     }
 
-    public function setDateDepose(?DateTimeInterface $dateDepose): self
+    public function setDateDepose(?CarbonInterface $dateDepose): self
     {
         $this->dateDepose = $dateDepose;
 
         return $this;
     }
 
-    public function getDateValidation(): ?DateTimeInterface
+    public function getDateValidation(): ?CarbonInterface
     {
         return $this->dateValidation;
     }

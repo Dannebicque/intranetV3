@@ -20,6 +20,7 @@ use App\Entity\Constantes;
 use App\Entity\ScolaritePromo;
 use App\Entity\Semestre;
 use App\Entity\Ue;
+use App\Exception\SemestreNotFoundException;
 use Carbon\Carbon;
 use PhpOffice\PhpSpreadsheet\Exception;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -343,7 +344,9 @@ class SousCommissionExport
         AnneeUniversitaire $anneeUniversitaire
     ): StreamedResponse {
         $semestre = $scolaritePromo->getSemestre();
-        if (null !== $semestre) {
+        if (null === $semestre) {
+            throw new SemestreNotFoundException();
+        }
             $ues = $semestre->getUes();
             $etudiants = $semestre->getEtudiants();
             $matieres = $this->typeMatiereManager->findBySemestre($semestre);
@@ -516,7 +519,7 @@ class SousCommissionExport
                     'Content-Disposition' => 'attachment;filename="Export Grand Jury ' . $semestre->getLibelle() . '.xlsx"',
                 ]
             );
-        }
+
     }
 
     public function exportApogee(Semestre $semestre, $file, AnneeUniversitaire $anneeUniversitaire)

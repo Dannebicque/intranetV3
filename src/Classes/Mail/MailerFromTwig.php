@@ -42,11 +42,8 @@ class MailerFromTwig extends BaseMailer
         $this->mail = new TemplatedEmail();
     }
 
-    /**
-     * @param $template
-     * @param $data
-     */
-    public function setTemplate($template, $data): void
+
+    public function setTemplate(?string $template, ?array $data): void
     {
         if (false === mb_strpos($template, 'html')) {
             $this->mail->textTemplate($template)

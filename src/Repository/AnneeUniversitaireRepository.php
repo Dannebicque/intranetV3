@@ -27,7 +27,7 @@ class AnneeUniversitaireRepository extends ServiceEntityRepository
         parent::__construct($registry, AnneeUniversitaire::class);
     }
 
-    public function findAll()
+    public function findAll(): array
     {
         return $this->findBy([], ['annee' => 'DESC']);
     }

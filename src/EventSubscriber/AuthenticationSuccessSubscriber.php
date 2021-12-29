@@ -80,7 +80,7 @@ class AuthenticationSuccessSubscriber implements EventSubscriberInterface
             ['message' => 'erreur_role']));
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             'security.authentication.success' => 'onSecurityAuthenticationSuccess',

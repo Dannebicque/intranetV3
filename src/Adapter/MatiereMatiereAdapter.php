@@ -12,6 +12,9 @@ namespace App\Adapter;
 use App\DTO\Matiere;
 use App\DTO\MatiereCollection;
 use App\DTO\Ue;
+use App\Entity\ApcRessource;
+use App\Entity\ApcSae;
+use App\Interfaces\MatiereEntityInterface;
 
 class MatiereMatiereAdapter extends AbstractMatiereAdapter implements MatiereAdapterInterface
 {
@@ -26,10 +29,7 @@ class MatiereMatiereAdapter extends AbstractMatiereAdapter implements MatiereAda
         return $collection;
     }
 
-    /**
-     * @param \App\Entity\Matiere|null $matiere
-     */
-    public function single($matiere): ?Matiere
+    public function single(mixed $matiere): ?Matiere
     {
         $m = parent::single($matiere);
         if (null !== $m) {

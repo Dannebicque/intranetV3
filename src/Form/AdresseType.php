@@ -24,12 +24,12 @@ class AdresseType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('adresse1', TextType::class, ['label' => 'label.adresse1'])
-            ->add('adresse2', TextType::class, ['label' => 'label.adresse2', 'required' => false])
-            ->add('adresse3', TextType::class, ['label' => 'label.adresse3', 'required' => false])
-            ->add('code_postal', TextType::class, ['label' => 'label.code_postal'])
-            ->add('ville', TextType::class, ['label' => 'label.ville'])
-            ->add('pays', TextType::class, ['label' => 'label.pays', 'required' => false, 'data' => 'France']);
+            ->add('adresse1', TextType::class, ['label' => 'label.adresse1', 'attr' => ['maxlength' => 255]])
+            ->add('adresse2', TextType::class, ['label' => 'label.adresse2', 'required' => false, 'attr' => ['maxlength' => 255]])
+            ->add('adresse3', TextType::class, ['label' => 'label.adresse3', 'required' => false, 'attr' => ['maxlength' => 255]])
+            ->add('code_postal', TextType::class, ['label' => 'label.code_postal', 'attr' => ['maxlength' => 10], 'help'=> 'Uniquement le code postal, sans autre mention (cedex, ...)'])
+            ->add('ville', TextType::class, ['label' => 'label.ville', 'attr' => ['maxlength' => 100]])
+            ->add('pays', TextType::class, ['label' => 'label.pays', 'required' => false, 'data' => 'France', 'attr' => ['maxlength' => 100]]);
     }
 
     /**

@@ -49,7 +49,11 @@ class RattrapageType extends AbstractType
                 'attr' => ['data-options' => ['locale' => $locale]],
             ])
             ->add('heureEval', CarbonTimeType::class, ['label' => 'label.heure_evaluation', 'required' => false])
-            ->add('duree', TextType::class, ['label' => 'label.duree_evaluation', 'required' => false])
+            ->add('duree', TextType::class, [
+                'label' => 'label.duree_evaluation',
+                'required' => false,
+                'attr' => ['maxlength' => 20, 'placeholder' => 'Par ex. 1h30'],
+                'help' => 'help.duree_evaluation'])
             ->add('typeIdMatiere', ChoiceCompleteType::class, [
                 'choices' => $this->typeMatiereManager->findBySemestreChoiceType($this->semestre),
                 'label' => 'label.matiere',

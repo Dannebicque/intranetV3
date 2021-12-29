@@ -92,17 +92,6 @@ class TypeMatiereManager
         return $t;
     }
 
-    public function tableauMatieresEdt(): array
-    {
-        $matieres = $this->findAllArray();
-        $t = [];
-        foreach ($matieres as $matiere) {
-            $t[$matiere->codeMatiere] = $matiere;
-        }
-
-        return $t;
-    }
-
     public function findByDepartement(Departement $departement): array
     {
         $t = [];

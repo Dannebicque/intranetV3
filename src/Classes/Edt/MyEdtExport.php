@@ -47,6 +47,10 @@ class MyEdtExport
 
     private TypeMatiereManager $typeMatiereManager;
 
+    private MyEdtIntranet $myEdtIntranet;
+    private MyEdtCelcat $myEdtCelcat; //todo: passer par le DTO...
+    private MyPDF $myPDF;
+
     /**
      * MyEdtExport constructor.
      */

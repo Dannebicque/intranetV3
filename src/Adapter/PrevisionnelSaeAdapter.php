@@ -26,7 +26,7 @@ class PrevisionnelSaeAdapter extends AbstractPrevisionnelAdapter implements Prev
         return $collection;
     }
 
-    public function single($previ): Previsionnel
+    public function single(array $previ): Previsionnel
     {
         $p = parent::single($previ);
         $p->type_matiere = PrevisionnelSaeManager::TYPE;

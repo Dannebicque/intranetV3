@@ -13,6 +13,7 @@ use App\Entity\Adresse;
 use App\Entity\Bac;
 use App\Entity\Etudiant;
 use App\Entity\Semestre;
+use App\Repository\BacRepository;
 use App\Utils\Tools;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
@@ -23,16 +24,19 @@ use function is_array;
 class MyEtudiants
 {
     private EntityManagerInterface $entityManager;
-
     private MyUpload $myUpload;
+    private BacRepository $bacRepository;
 
     /**
      * MyEtudiants constructor.
      */
-    public function __construct(EntityManagerInterface $entityManager, MyUpload $myUpload)
+    public function __construct(EntityManagerInterface $entityManager,
+        BacRepository $bacRepository,
+        MyUpload $myUpload)
     {
         $this->entityManager = $entityManager;
         $this->myUpload = $myUpload;
+        $this->bacRepository = $bacRepository;
     }
 
     /**
@@ -41,7 +45,7 @@ class MyEtudiants
      */
     public function importListeCsv($fichier, ?Semestre $semestre): bool
     {
-        $bacs = $this->entityManager->getRepository(Bac::class)->getApogeeArray();
+        $bacs = $this->bacRepository->getApogeeArray();
         if (null !== $semestre) {
             $file = $this->myUpload->upload($fichier, 'temp');
             $handle = fopen($file, 'rb');

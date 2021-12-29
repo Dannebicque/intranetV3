@@ -43,7 +43,7 @@ class Ppn extends BaseEntity
     private ?Diplome $diplome;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Semestre", mappedBy="ppn_actif")
+     * @ORM\OneToMany(targetEntity="App\Entity\Semestre", mappedBy="ppnActif")
      */
     private Collection $semestres;
 

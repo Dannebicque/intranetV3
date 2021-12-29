@@ -10,10 +10,9 @@
 namespace App\DataFixtures;
 
 use App\Entity\Personnel;
-use DateTime;
+use Carbon\Carbon;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
-use JsonException;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserFixtures extends Fixture
@@ -26,9 +25,6 @@ class UserFixtures extends Fixture
         $this->encoder = $encoder;
     }
 
-    /**
-     * @throws JsonException
-     */
     public function load(ObjectManager $manager): void
     {
         $user3 = new Personnel();
@@ -38,11 +34,12 @@ class UserFixtures extends Fixture
         $user3->setMailUniv('super_admin@gmail.com');
         $user3->setNom('Super');
         $user3->setPrenom('Admin');
+        $user3->setSlug('super_admin');
         $user3->setStatut('MCF');
         $user3->setTypeUser('permanent');
         $user3->setRoles(['ROLE_SUPER_ADMIN']);
         $user3->setPhotoName('noimage.png');
-        $user3->setCreated(new DateTime('now'));
+        $user3->setCreated(Carbon::now());
         $user3->setUpdatedValue();
         $manager->persist($user3);
 
@@ -53,14 +50,24 @@ class UserFixtures extends Fixture
         $user2->setMailUniv('permanent@gmail.com');
         $user2->setNom('Doe');
         $user2->setPrenom('John');
+        $user2->setSlug('permanent');
         $user2->setStatut('MCF');
         $user2->setTypeUser('permanent');
         $user2->setRoles(['ROLE_PERMANENT']);
         $user2->setPhotoName('noimage.png');
-        $user2->setCreated(new DateTime('now'));
+        $user2->setCreated(Carbon::now());
+        $user2->setAnneeUniversitaire($this->getReference(AnneeUniversitaireFixture::ANNEE_UNIVERSITAIRE_REFERENCE));
         $user2->setUpdatedValue();
         $manager->persist($user2);
         $this->addReference(self::PERMANENT_USER_REFERENCE, $user2);
+
         $manager->flush();
+    }
+
+    public function getDependencies(): array
+    {
+        return [
+            AnneeUniversitaireFixture::class,
+        ];
     }
 }

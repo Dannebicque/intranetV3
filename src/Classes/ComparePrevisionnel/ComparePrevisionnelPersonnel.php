@@ -43,6 +43,8 @@ class ComparePrevisionnelPersonnel extends ComparePrevisionnel
         $previsionnels = $this->previsionnelManager->findByDepartement($departement, $annee);
         if ('intranet' === $source) {
             $planning = $this->edtPlanningRepository->findByDepartement($departement);
+        } else {
+            $planning = []; //todo: récupérer d'une autre source... et récupérer aussi du manager pour fusionner les deux ? Peut être pas indispensable ici
         }
         $t = [];
 

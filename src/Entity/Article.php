@@ -68,8 +68,6 @@ class Article extends BaseEntity
      */
     private Collection $articleLikes;
 
-
-
     /**
      * Article constructor.
      */
@@ -109,12 +107,7 @@ class Article extends BaseEntity
         return $this->slug;
     }
 
-    /**
-     * @param $slug
-     *
-     * @return Article
-     */
-    public function setSlug($slug): self
+    public function setSlug(?string $slug): self
     {
         $this->slug = $slug;
 
@@ -135,9 +128,7 @@ class Article extends BaseEntity
             // pour ne pas couper un mot, on va à l'espace suivant
             $texte = mb_substr($texte, 0, mb_strpos($texte, ' ', $nbreCar));
             // On ajoute (ou pas) des points de suspension à la fin si le texte brut est plus long que $nbreCar
-            if (!empty($PointSuspension)) {
-                $texte .= $PointSuspension;
-            }
+            $texte .= $PointSuspension;
         }
         // ---------------------
 

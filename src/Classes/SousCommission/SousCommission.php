@@ -29,58 +29,8 @@ use App\Utils\Tools;
 use Doctrine\ORM\EntityManagerInterface;
 use function array_key_exists;
 
-class SousCommission
+class SousCommission extends AbstractSousCommission implements SousCommissionInterface
 {
-    private EtudiantRepository $etudiantRepository;
-    private UeRepository $ueRepository;
-    private EtudiantNotes $etudiantNotes;
-    private EtudiantAbsences $etudiantAbsences;
-
-    private Semestre $semestre;
-
-    private TypeMatiereManager $typeMatiereManager;
-
-    private array $matieres;
-
-    /**
-     * @var Ue[]
-     */
-    private array $ues;
-
-    private AnneeUniversitaire $anneeUniversitaire;
-
-    /**
-     * @var Semestre[]
-     */
-    private array $semestresScolarite = [];
-
-    /**
-     * @var Etudiant[]|array
-     */
-    private array $etudiants;
-    private array $sousCommissionEtudiant;
-
-    private EntityManagerInterface $entityManager;
-
-    /**
-     * SousCommission constructor.
-     */
-    public function __construct(
-        EntityManagerInterface $entityManager,
-        EtudiantRepository $etudiantRepository,
-        UeRepository $ueRepository,
-        TypeMatiereManager $typeMatiereManager,
-        EtudiantNotes $etudiantNotes,
-        EtudiantAbsences $etudiantAbsences
-    ) {
-        $this->entityManager = $entityManager;
-        $this->etudiantRepository = $etudiantRepository;
-        $this->typeMatiereManager = $typeMatiereManager;
-        $this->ueRepository = $ueRepository;
-        $this->etudiantNotes = $etudiantNotes;
-        $this->etudiantAbsences = $etudiantAbsences;
-    }
-
     public function calcul(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): void
     {
         $this->semestre = $semestre;
@@ -123,24 +73,8 @@ class SousCommission
         }
     }
 
-    public function initDataSousCommission(): void
-    {
-        $this->matieres = $this->typeMatiereManager->findBySemestre($this->semestre);
-        $this->ues = $this->ueRepository->findBySemestre($this->semestre);
-        $this->etudiants = $this->etudiantRepository->findBySemestre($this->semestre);
-
-        //récupération des semestres précédents
-        $sem = $this->semestre;
-        while (null !== $sem->getPrecedent()) {
-            $this->semestresScolarite[] = $sem->getPrecedent();
-            $sem = $sem->getPrecedent();
-        }
-    }
-
     private function calculMoyenneUes(array $moyenneMatieres): array
     {
-        //todo: attention notion d'UE différente...
-
         $tabUes = [];
         foreach ($this->ues as $ue) {
             $tabUes[$ue->getNumeroUe()] = new MoyenneUe($ue, $this->semestre->getOptPointPenaliteAbsence());
@@ -162,45 +96,9 @@ class SousCommission
         return $this->matieres;
     }
 
-    /**
-     * @return Ue[]
-     */
-    public function getUes(): array
-    {
-        return $this->ues;
-    }
-
-    /**
-     * @return Etudiant[]|array
-     */
-    public function getEtudiants(): array
-    {
-        return $this->etudiants;
-    }
-
-    public function getSemestresScolarite(): array
-    {
-        return $this->semestresScolarite;
-    }
-
-    /**
-     * @param $idEtudiant
-     *
-     * @return EtudiantSousCommission
-     */
     public function getSousCommissionEtudiant($idEtudiant): ?EtudiantSousCommission
     {
         return $this->sousCommissionEtudiant[$idEtudiant];
-    }
-
-    public function getSemestre(): Semestre
-    {
-        return $this->semestre;
-    }
-
-    public function getAnneeUniversitaire(): AnneeUniversitaire
-    {
-        return $this->anneeUniversitaire;
     }
 
     public function updateScolarite(Scolarite $scolarite, $type, $field, $value): void

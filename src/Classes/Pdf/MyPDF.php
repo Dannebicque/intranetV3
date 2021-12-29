@@ -47,11 +47,7 @@ class MyPDF
         ]);
     }
 
-    /**
-     * @param $key
-     * @param $value
-     */
-    public static function addOptions($key, $value): void
+    public static function addOptions(string $key, string $value): void
     {
         //options disponibles : https://wkhtmltopdf.org/usage/wkhtmltopdf.txt
         self::$options[$key] = $value;

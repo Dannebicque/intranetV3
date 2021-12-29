@@ -179,12 +179,11 @@ class DataUserSession
     }
 
     /**
-     * @param $diplome
-     *
      * @return Semestre[]
      */
     public function semestresByDiplome($diplome): array
     {
+        //todo: utilisé ?
         return $this->semestreRepository->findByDiplome($diplome);
     }
 

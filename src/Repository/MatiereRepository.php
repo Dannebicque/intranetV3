@@ -51,7 +51,7 @@ class MatiereRepository extends ServiceEntityRepository
             ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
             ->innerJoin(Diplome::class, 'd', 'WITH', 'd.id = a.diplome')
             ->where('d.departement = :departement')
-            ->andWhere('s.ppn_actif = m.ppn')
+            ->andWhere('s.ppnActif = m.ppn')
             ->setParameter('departement', $departement->getId())
             ->orderBy('m.codeMatiere', 'ASC')
             ->addOrderBy('m.libelle', 'ASC');
@@ -63,7 +63,7 @@ class MatiereRepository extends ServiceEntityRepository
             ->innerJoin(Ue::class, 'u', 'WITH', 'u.id = m.ue')
             ->innerJoin(Semestre::class, 's', 'WITH', 'u.semestre = s.id')
             ->where('u.semestre = :semestre')
-            ->andWhere('s.ppn_actif = m.ppn')
+            ->andWhere('s.ppnActif = m.ppn')
             ->setParameter('semestre', $semestre->getId())
             ->orderBy('u.numeroUe', 'ASC')
             ->addOrderBy('m.codeMatiere', 'ASC');
@@ -87,7 +87,7 @@ class MatiereRepository extends ServiceEntityRepository
 
         $t = [];
 
-        /** @var $q Matiere */
+        /** @var Matiere $q  */
         foreach ($query as $q) {
             $t[$q->getCodeElement()] = $q;
         }
@@ -102,7 +102,7 @@ class MatiereRepository extends ServiceEntityRepository
             ->innerJoin(Semestre::class, 's', 'WITH', 's.id = u.semestre')
             ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
             ->where('a.diplome = :diplome')
-            ->andWhere('s.ppn_actif = m.ppn')
+            ->andWhere('s.ppnActif = m.ppn')
             ->setParameter('diplome', $diplome->getId())
             ->orderBy('m.codeMatiere', 'ASC')
             ->addOrderBy('m.libelle', 'ASC')

@@ -57,6 +57,6 @@ class Paging
     {
         $this->recordsFiltered = $tableResult->getNbResults();
         $this->recordsTotal = $tableResult->getCount();
-        $this->nbPages = ceil($this->recordsTotal / $this->pageLength);
+        $this->nbPages = (int)ceil($this->recordsTotal / $this->pageLength);
     }
 }

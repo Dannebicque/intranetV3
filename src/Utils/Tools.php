@@ -15,19 +15,17 @@ namespace App\Utils;
 
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
-use function chr;
-use DateTime;
 use Exception;
-use function is_array;
-use function ord;
 use RuntimeException;
+use function chr;
+use function ord;
 
 abstract class Tools
 {
     /**
      * @throws Exception
      */
-    public static function convertDateToObject($date): DateTime
+    public static function convertDateToObject(string $date): CarbonInterface
     {
         if (!str_contains($date, '/')) {
             $d = Carbon::createFromFormat('Y-m-d', $date);
@@ -41,7 +39,7 @@ abstract class Tools
     /**
      * @throws Exception
      */
-    public static function convertTimeToObject($heure): CarbonInterface
+    public static function convertTimeToObject(string $heure): CarbonInterface
     {
         return Carbon::createFromTimeString($heure);
     }
@@ -50,23 +48,24 @@ abstract class Tools
     {
         $value = trim($value);
         $value = str_replace([',', '.'], '.', $value);
+
         return (float)$value;
     }
 
-    public static function convertToBool($texte): bool
+    public static function convertToBool(string $texte): bool
     {
         return 'true' === $texte;
     }
 
-    public static function telFormat($number)
+    public static function telFormat(string $number): string
     {
         str_replace(['.', '-', ' '], '', $number);
 
-        if (0 === mb_strpos($number, '33')) {
+        if (str_starts_with($number, '33')) {
             $number = '0' . mb_substr($number, 2, mb_strlen($number));
         }
 
-        if (0 === mb_strpos($number, '+33')) {
+        if (str_starts_with($number, '+33')) {
             $number = '0' . mb_substr($number, 3, mb_strlen($number));
         }
 
@@ -93,7 +92,7 @@ abstract class Tools
         return str_replace($search, $replace, $texte);
     }
 
-    public static function slug(string $texte)
+    public static function slug(string $texte): array|string|null
     {
         /* Get rid of accented characters */
         $search = explode(',', 'ç,æ,œ,á,é,í,ó,ú,à,è,ì,ò,ù,ä,ë,ï,ö,ü,ÿ,â,ê,î,ô,û,å,e,i,ø,u');
@@ -108,17 +107,17 @@ abstract class Tools
 
         /* Replace all the characters that are not in a-z or 0-9 by a hyphen */
         $texte = preg_replace('/[^a-z0-9]/', '-', $texte);
+
         /* Remove hyphen anywhere it's more than one */
 
         return preg_replace("/[\-]+/", '-', $texte);
     }
 
-    public static function personnaliseTexte($texte, $config)
+    public static function personnaliseTexte(string $texte, array $config): string
     {
-        if (is_array($config)) {
-            foreach ($config as $key => $elt) {
-                $texte = str_replace('{{' . $key . '}}', $elt, $texte);
-            }
+
+        foreach ($config as $key => $elt) {
+            $texte = str_replace('{{' . $key . '}}', $elt, $texte);
         }
 
         return $texte;
@@ -126,7 +125,7 @@ abstract class Tools
 
     public static function convertDateHeureToObject(string $dateString, string $heureString): Carbon
     {
-        if (false === mb_strpos($dateString, '/')) {
+        if (!str_contains($dateString, '/')) {
             $date = Carbon::createFromFormat('Y-m-d', trim($dateString));
         } else {
             $date = Carbon::createFromFormat('d/m/Y', trim($dateString));
@@ -136,7 +135,7 @@ abstract class Tools
         return Carbon::create($date->year, $date->month, $date->day, $heure->hour, $heure->minute);
     }
 
-    public static function updateFields($name, $value, $obj): void
+    public static function updateFields(string $name, mixed $value, object $obj): void
     {
         $t = explode('_', $name);
         $name = $t[0];
@@ -148,7 +147,7 @@ abstract class Tools
         }
     }
 
-    public static function checkDirectoryExist(string $dir)
+    public static function checkDirectoryExist(string $dir): bool
     {
         if (!mkdir($dir) && !is_dir($dir)) {
             throw new RuntimeException(sprintf('Directory "%s" was not created', $dir));
@@ -157,17 +156,17 @@ abstract class Tools
         return true;
     }
 
-    public static function convertToInt($int)
+    public static function convertToInt(mixed $int): int|string
     {
         $int = trim($int);
-        if ('' === $int || null === $int) {
+        if ('' === $int) {
             $int = 0;
         }
 
         return $int;
     }
 
-    public static function convertApogeeDateToObject($date)
+    public static function convertApogeeDateToObject(string $date): CarbonInterface
     {
         if (!str_contains($date, '/')) {
             $d = Carbon::createFromFormat('y-m-d', $date);

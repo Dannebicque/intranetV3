@@ -73,6 +73,7 @@ class EvaluationType extends AbstractType
                     'help' => 'help.libelle_evaluation',
                     'required' => false,
                     'disabled' => $autorise,
+                    'attr' => ['maxlength' => 100],
                 ])
             ->add('dateEvaluation', DatePickerType::class, [
                 'label' => 'label.date_evaluation',
@@ -91,7 +92,8 @@ class EvaluationType extends AbstractType
                     'label' => 'label.commentaire',
                     'help' => 'help.commentaire_evaluation',
                     'disabled' => $autorise,
-                    'required' => false
+                    'required' => false,
+                    'attr' => ['maxlength' => 255],
                 ])
             ->add('visible', YesNoType::class,
                 ['label' => 'label.evaluation.visible', 'help' => 'help.evaluation.visible'])

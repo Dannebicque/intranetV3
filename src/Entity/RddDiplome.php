@@ -75,7 +75,7 @@ class RddDiplome extends BaseEntity
     /**
      * @ORM\Column(type="string", length=5)
      */
-    private ?string $code_postal;
+    private ?string $codePostal;
 
     /**
      * @ORM\Column(type="string", length=100)
@@ -90,7 +90,7 @@ class RddDiplome extends BaseEntity
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private ?string $adresse_complement;
+    private ?string $adresseComplement;
 
     public function getNumEtudiant(): ?string
     {
@@ -214,12 +214,12 @@ class RddDiplome extends BaseEntity
 
     public function getCodePostal(): ?string
     {
-        return $this->code_postal;
+        return $this->codePostal;
     }
 
-    public function setCodePostal(string $code_postal): self
+    public function setCodePostal(string $codePostal): self
     {
-        $this->code_postal = $code_postal;
+        $this->codePostal = $codePostal;
 
         return $this;
     }
@@ -250,12 +250,12 @@ class RddDiplome extends BaseEntity
 
     public function getAdresseComplement(): ?string
     {
-        return $this->adresse_complement;
+        return $this->adresseComplement;
     }
 
-    public function setAdresseComplement(string $adresse_complement): self
+    public function setAdresseComplement(string $adresseComplement): self
     {
-        $this->adresse_complement = $adresse_complement;
+        $this->adresseComplement = $adresseComplement;
 
         return $this;
     }

@@ -13,6 +13,7 @@ use App\Components\Widget\Type\AddLinkType;
 use App\Components\Widget\Type\ButtonDropdownType;
 use App\Components\Widget\Type\ButtonGroupType;
 use App\Components\Widget\Type\ButtonType;
+use App\Components\Widget\Type\ExportDropdownType;
 use App\Components\Widget\Type\LinkType;
 use App\Components\Widget\Type\RowDeleteLinkType;
 use App\Components\Widget\Type\RowDuplicateLinkType;
@@ -21,6 +22,7 @@ use App\Components\Widget\Type\RowLinkType;
 use App\Components\Widget\Type\RowModalLinkType;
 use App\Components\Widget\Type\RowShowLinkType;
 use App\Components\Widget\Type\SelectChangeType;
+use App\Components\Widget\Type\StimulusButtonModalType;
 use App\Components\Widget\Type\WidgetType;
 use App\Components\Widget\WidgetRegistry;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
@@ -45,5 +47,6 @@ return static function(ContainerConfigurator $configurator): void {
     $services->set(RowDuplicateLinkType::class)->tag(WidgetRegistry::TAG_TYPE);
     $services->set(WidgetType::class)->tag(WidgetRegistry::TAG_TYPE);
     $services->set(SelectChangeType::class)->tag(WidgetRegistry::TAG_TYPE);
-    //todo: ajotuer les manquants et reprendre Collection...
+    $services->set(StimulusButtonModalType::class)->tag(WidgetRegistry::TAG_TYPE);
+    $services->set(ExportDropdownType::class)->tag(WidgetRegistry::TAG_TYPE);
 };

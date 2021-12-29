@@ -25,17 +25,10 @@ use function count;
 
 class MyDocument
 {
-    /** @var Document */
-    protected $document;
-
-    /** @var EntityManagerInterface */
-    protected $entityManager;
-
-    /** @var DocumentFavoriEtudiantRepository */
-    protected $documentFavoriEtudiantRepository;
-
-    /** @var DocumentFavoriPersonnelRepository */
-    protected $documentFavoriPersonnelRepository;
+    protected Document $document;
+    protected EntityManagerInterface $entityManager;
+    protected DocumentFavoriEtudiantRepository $documentFavoriEtudiantRepository;
+    protected DocumentFavoriPersonnelRepository $documentFavoriPersonnelRepository;
 
     /**
      * MyArticle constructor.
@@ -50,12 +43,12 @@ class MyDocument
         $this->documentFavoriPersonnelRepository = $documentFavoriPersonnelRepository;
     }
 
-    public function setDocument(Document $document)
+    public function setDocument(Document $document): void
     {
         $this->document = $document;
     }
 
-    public function addOrRemoveFavori($getConnectedUser)
+    public function addOrRemoveFavori($getConnectedUser): string
     {
         $etat = '';
         if ($getConnectedUser instanceof Personnel) {
@@ -88,42 +81,53 @@ class MyDocument
         return $etat;
     }
 
-    private function remove($r)
+    private function remove($r): void
     {
         foreach ($r as $t) {
             $this->entityManager->remove($t);
         }
     }
 
-    public function mesDocumentsFavoris($getConnectedUser)
+    public function mesDocumentsFavoris($getConnectedUser): array
     {
+        $r = null;
         if ($getConnectedUser instanceof Personnel) {
             $r = $this->documentFavoriPersonnelRepository->findAllUserFavoris($getConnectedUser);
         } elseif ($getConnectedUser instanceof Etudiant) {
             $r = $this->documentFavoriEtudiantRepository->findAllUserFavoris($getConnectedUser);
         }
 
-        $tabDocuments = [];
-        foreach ($r as $document) {
-            $tabDocuments[] = $document->getDocument();
+        if ($r !== null) {
+            $tabDocuments = [];
+            foreach ($r as $document) {
+                $tabDocuments[] = $document->getDocument();
+            }
+
+            return $tabDocuments;
         }
 
-        return $tabDocuments;
+        return [];
     }
 
-    public function idMesDocumentsFavoris($getConnectedUser)
+    public function idMesDocumentsFavoris($getConnectedUser): array
     {
+        $r = null;
+
         if ($getConnectedUser instanceof Personnel) {
             $r = $this->documentFavoriPersonnelRepository->findAllUserFavoris($getConnectedUser);
         } elseif ($getConnectedUser instanceof Etudiant) {
             $r = $this->documentFavoriEtudiantRepository->findAllUserFavoris($getConnectedUser);
         }
 
-        $tabDocuments = [];
-        foreach ($r as $document) {
-            $tabDocuments[] = $document->getDocument()->getId();
+        if ($r !== null) {
+            $tabDocuments = [];
+            foreach ($r as $document) {
+                $tabDocuments[] = $document->getDocument()->getId();
+            }
+
+            return $tabDocuments;
         }
 
-        return $tabDocuments;
+        return [];
     }
 }

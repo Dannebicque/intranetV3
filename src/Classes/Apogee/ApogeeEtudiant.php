@@ -27,14 +27,9 @@ class ApogeeEtudiant extends Apogee
     }
 
     /**
-     * @param $data
-     * @param $tBac
-     *
-     * @return array[]
-     *
      * @throws \Exception
      */
-    public function transformeApogeeToArray($data, $tBac): array
+    public function transformeApogeeToArray(?array $data, ?array $tBac): array
     {
         // COD_ETU, COD_NNE_IND, DATE_NAI_IND, DAA_ENT_ETB, LIB_NOM_PAT_IND, LIB_PR1_IND, COD_SEX_ETU
         return [

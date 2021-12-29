@@ -57,7 +57,7 @@ class NoteRepository extends ServiceEntityRepository
 
     public function findByEtudiantSemestre(
         Etudiant $etudiant,
-        array $matieres,
+        ?array $matieres,
         AnneeUniversitaire $annee
     )
     {
@@ -89,7 +89,7 @@ class NoteRepository extends ServiceEntityRepository
 
         $t = [];
 
-        /** @var $etu Etudiant */
+        /** @var Etudiant $etu */
         foreach ($etudiants as $etu) {
             $t[$etu->getId()] = [];
 

@@ -11,10 +11,11 @@ namespace App\Adapter;
 
 use App\DTO\Matiere;
 use App\DTO\MatiereCollection;
+use App\Interfaces\MatiereEntityInterface;
 
 interface MatiereAdapterInterface
 {
     public function collection(array $matieres): MatiereCollection;
 
-    public function single($matiere): ?Matiere;
+    public function single(mixed $matiere): ?Matiere;
 }

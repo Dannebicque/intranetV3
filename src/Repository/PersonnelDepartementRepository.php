@@ -26,15 +26,13 @@ use Symfony\Component\Routing\RouterInterface;
  */
 class PersonnelDepartementRepository extends ServiceEntityRepository
 {
-    private RouterInterface $router;
 
     /**
      * PersonnelDepartementRepository constructor.
      */
-    public function __construct(ManagerRegistry $registry, RouterInterface $router)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, PersonnelDepartement::class);
-        $this->router = $router;
     }
 
     public function findByPersonnel($user)
@@ -100,6 +98,7 @@ class PersonnelDepartementRepository extends ServiceEntityRepository
 
     public function search($needle, Departement $departement): array
     {
+
         $query = $this->createQueryBuilder('d')
             ->innerJoin(Personnel::class, 'p', 'WITH', 'd.personnel = p.id')
             ->where('p.nom LIKE :needle')
@@ -116,32 +115,24 @@ class PersonnelDepartementRepository extends ServiceEntityRepository
 
         $t = [];
 
-        /** @var Personnel $personnel */
+        /** @var PersonnelDepartement $pers */
         foreach ($query as $pers) {
             $personnel = $pers->getPersonnel();
-            $tt = [];
-            $tt['displayPr'] = $personnel->getDisplayPr();
-            $tt['slug'] = $personnel->getSlug();
-            $tt['photo'] = $personnel->getPhotoName();
-            $tt['nom'] = $personnel->getNom();
-            $tt['numeroHarpege'] = $personnel->getNumeroHarpege();
-            $tt['prenom'] = $personnel->getPrenom();
-            $tt['username'] = $personnel->getUsername();
-            $tt['mail_univ'] = $personnel->getMailUniv();
-            $tt['mail_perso'] = $personnel->getMailPerso();
-            $tt['avatarInitiales'] = $personnel->getAvatarInitiales();
-            $tt['profil'] = '<a href="' . $this->router->generate('user_profil',
-                    ['type' => 'personnel', 'slug' => $personnel->getSlug()]) . '"
-       class="btn btn-info btn-outline btn-square"
-       data-provide="tooltip"
-       target="_blank"
-       data-placement="bottom"
-       title="Profil du personne">
-        <i class="fa fa-info"></i>
-        <span class="sr-only">Profil du personnel</span>
-    </a>';
+            if ($personnel !== null) {
+                $tt = [];
+                $tt['displayPr'] = $personnel->getDisplayPr();
+                $tt['slug'] = $personnel->getSlug();
+                $tt['photo'] = $personnel->getPhotoName();
+                $tt['nom'] = $personnel->getNom();
+                $tt['numeroHarpege'] = $personnel->getNumeroHarpege();
+                $tt['prenom'] = $personnel->getPrenom();
+                $tt['username'] = $personnel->getUsername();
+                $tt['mail_univ'] = $personnel->getMailUniv();//todo: mailUniv
+                $tt['mail_perso'] = $personnel->getMailPerso();
+                $tt['avatarInitiales'] = $personnel->getAvatarInitiales();
 
-            $t[] = $tt;
+                $t[] = $tt;
+            }
         }
 
         return $t;

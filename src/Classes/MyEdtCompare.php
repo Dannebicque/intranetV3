@@ -24,7 +24,7 @@ class MyEdtCompare
     private EdtPlanningRepository $edtPlanningRepository;
 
     /**
-     * @var Previsionnel[]
+     * @var \App\Entity\EdtPlanning[]
      */
     private array $planning;
 

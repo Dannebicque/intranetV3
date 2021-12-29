@@ -68,10 +68,6 @@ class MessageDestinatairePersonnelRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param $user
-     * @param $message
-     *
-     * @return mixed
      * @throws NonUniqueResultException
      *
      */

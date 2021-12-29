@@ -39,7 +39,7 @@ class EtudiantNotes
     private ApcRessourceCompetenceRepository $apcRessourceCompetenceRepository;
     private ApcSaeCompetenceRepository $apcSaeCompetenceRepository;
 
-    private array $notes;
+    private ?array $notes;
     private $tabGraphique;
 
     /**
@@ -199,6 +199,7 @@ class EtudiantNotes
         return $t;
     }
 
+    //todo: devrait pas être ici...
     public function calculMoyenneApcSemestre(Semestre $semestre, array $matieres, array $ues, array $moyennes): array
     {
         $tabs = [];

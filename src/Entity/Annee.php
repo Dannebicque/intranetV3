@@ -87,11 +87,17 @@ class Annee extends BaseEntity
      */
     private Collection $apcNiveaux;
 
+    /**
+     * @ORM\OneToMany(targetEntity=AlternancePlanning::class, mappedBy="annee")
+     */
+    private $alternancePlannings;
+
     public function __construct()
     {
         $this->semestres = new ArrayCollection();
         $this->alternances = new ArrayCollection();
         $this->apcNiveaux = new ArrayCollection();
+        $this->alternancePlannings = new ArrayCollection();
     }
 
     public function getLibelle(): ?string
@@ -300,5 +306,35 @@ class Annee extends BaseEntity
     public function setCodeVersion($codeVersion): void
     {
         $this->codeVersion = $codeVersion;
+    }
+
+    /**
+     * @return Collection|AlternancePlanning[]
+     */
+    public function getAlternancePlannings(): Collection
+    {
+        return $this->alternancePlannings;
+    }
+
+    public function addAlternancePlanning(AlternancePlanning $alternancePlanning): self
+    {
+        if (!$this->alternancePlannings->contains($alternancePlanning)) {
+            $this->alternancePlannings[] = $alternancePlanning;
+            $alternancePlanning->setAnnee($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAlternancePlanning(AlternancePlanning $alternancePlanning): self
+    {
+        if ($this->alternancePlannings->removeElement($alternancePlanning)) {
+            // set the owning side to null (unless already changed)
+            if ($alternancePlanning->getAnnee() === $this) {
+                $alternancePlanning->setAnnee(null);
+            }
+        }
+
+        return $this;
     }
 }

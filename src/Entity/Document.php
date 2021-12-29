@@ -79,7 +79,7 @@ class Document extends BaseEntity
      *      allowEmptyString = false
      * )
      */
-    private mixed $libelle;
+    private ?string $libelle;
 
     /**
      * @ORM\Column(type="string", length=50)
@@ -145,9 +145,6 @@ class Document extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return TypeDocument
-     */
     public function getTypeDocument(): ?TypeDocument
     {
         return $this->typeDocument;
@@ -160,39 +157,30 @@ class Document extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    public function setDescription(string $description): self
+    public function setDescription(?string $description): self
     {
         $this->description = $description;
 
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
     public function getLibelle(): ?string
     {
         return $this->libelle;
     }
 
-    public function setLibelle($libelle): self
+    public function setLibelle(?string $libelle): self
     {
         $this->libelle = $libelle;
 
         return $this;
     }
 
-    /**
-     * @throws Exception
-     */
     public function setDocumentFile(?File $documentFile = null): void
     {
         $this->documentFile = $documentFile;

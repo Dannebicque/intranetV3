@@ -29,7 +29,7 @@ class DetailsHandleColumnType extends ColumnType
         return sprintf(
             '<a href data-tag="details" data-init-state="%s" data-row-details="%s" class="row-details-handle"><i class="fas"></i></a>',
             $expanded ? 'expanded' : 'collapsed',
-            HtmlUtils::escape($details, 'html_attr')
+            $details
         );
     }
 

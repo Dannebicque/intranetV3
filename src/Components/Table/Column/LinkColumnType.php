@@ -67,7 +67,7 @@ class LinkColumnType extends PropertyColumnType
         }
 
         if (null === $options['text']) {
-            $text = HtmlUtils::escape($this->accessor->getValue($rowData, $options['property_path']));
+            $text = htmlspecialchars($this->accessor->getValue($rowData, $options['property_path']));
         } elseif (is_callable($options['text'])) {
             $text = (string)call_user_func($options['text'], $rowData);
         } else {

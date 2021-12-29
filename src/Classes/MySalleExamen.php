@@ -74,8 +74,6 @@ class MySalleExamen
     }
 
     /**
-     * @return PdfResponse
-     *
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -130,12 +128,7 @@ class MySalleExamen
         }
     }
 
-    /**
-     * @param $semestre
-     *
-     * @return Groupe[]|bool|Collection
-     */
-    private function groupeDefaut($semestre)
+    private function groupeDefaut($semestre): bool|Collection|array
     {
         $typegroupe = $this->typeGroupeRepository->findBySemestre($semestre);
 

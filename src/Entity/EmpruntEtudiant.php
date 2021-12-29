@@ -22,16 +22,12 @@ class EmpruntEtudiant extends Emprunt
      * @ORM\ManyToOne(targetEntity="App\Entity\Etudiant", inversedBy="emprunts")
      * @Groups({"emprunts_administration"})
      */
-    private $etudiant;
+    private ?Etudiant $etudiant;
 
     /**
      * EmpruntEtudiant constructor.
-     *
-     * @param $etudiant
-     *
-     * @throws Exception
      */
-    public function __construct($etudiant)
+    public function __construct(?Etudiant $etudiant)
     {
         parent::__construct();
         $this->etudiant = $etudiant;

@@ -32,7 +32,7 @@ class DiplomeRepository extends ServiceEntityRepository
         parent::__construct($registry, Diplome::class);
     }
 
-    public function findAll()
+    public function findAll(): array
     {
         return $this->createQueryBuilder('d')
             ->join(TypeDiplome::class, 't', 'WITH', 'd.typeDiplome = t.id')

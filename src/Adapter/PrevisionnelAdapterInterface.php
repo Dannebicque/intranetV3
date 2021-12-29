@@ -17,5 +17,5 @@ interface PrevisionnelAdapterInterface
 {
     public function collection(array $previsionnels): PrevisionnelCollection;
 
-    public function single($previ): Previsionnel;
+    public function single(array $previ): Previsionnel;
 }

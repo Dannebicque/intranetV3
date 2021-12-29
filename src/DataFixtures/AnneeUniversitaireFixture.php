@@ -10,22 +10,25 @@
 namespace App\DataFixtures;
 
 use App\Entity\AnneeUniversitaire;
+use Carbon\Carbon;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
 class AnneeUniversitaireFixture extends Fixture
 {
+    public const ANNEE_UNIVERSITAIRE_REFERENCE = 'annee-universitaire';
+
     public function load(ObjectManager $manager): void
     {
-        $td = new AnneeUniversitaire();
-        $td->setLibelle('2021-2022');
-        $td->setActive(true);
-        $td->setAnnee(2021);
-        $td->setCreated(new DateTime('now'));
-        $td->setUpdated(new DateTime('now'));
-        $manager->persist($td);
-
+        $anneeUniversitaire = new AnneeUniversitaire();
+        $anneeUniversitaire->setLibelle('2021-2022');
+        $anneeUniversitaire->setActive(true);
+        $anneeUniversitaire->setAnnee(2021);
+        $anneeUniversitaire->setCreated(Carbon::now());
+        $anneeUniversitaire->setUpdated(Carbon::now());
+        $manager->persist($anneeUniversitaire);
+        $this->addReference(self::ANNEE_UNIVERSITAIRE_REFERENCE, $anneeUniversitaire);
         $manager->flush();
     }
 }

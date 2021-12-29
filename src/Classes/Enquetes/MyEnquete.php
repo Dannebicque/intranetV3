@@ -191,6 +191,7 @@ class MyEnquete
         QuestionnaireSection $section,
         string $config = ''
     ): void {
+        $libQuestion = '';
         if ('' === $config) {
             $libQuestion = $question->getLibelle();
         } else {
@@ -323,11 +324,10 @@ class MyEnquete
                     $pourcentage = 0;
                 }
 
+                $retire = 0;
                 if ('Je n\'ai pas suivi ce cours' === $reponse->getLibelle()) {
                     --$nbProps;
                     $retire = $nbReponses;
-                } else {
-                    $retire = 0;
                 }
                 //version détaillée, on affiche tout.
                 if (QuestionnaireSection::DETAIL === $section->getTypeCalcul()) {

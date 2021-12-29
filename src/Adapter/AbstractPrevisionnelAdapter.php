@@ -13,8 +13,8 @@ use App\DTO\Previsionnel;
 
 class AbstractPrevisionnelAdapter
 {
-
-    public function single($previ)
+    /** @param array<int, mixed> $previ */
+    public function single(array $previ): Previsionnel
     {
         $p = new Previsionnel();
         $p->objPrevisionnel = $previ;

@@ -45,13 +45,6 @@ class MyExport
         };
     }
 
-    /**
-     * @param $format
-     * @param $myAbsences
-     * @param $nomFichier
-     *
-     * @return StreamedResponse|bool
-     */
     public function genereFichierAbsence($format, $myAbsences, $nomFichier): ?Response
     {
         $this->excel->genereExcelAbsence($myAbsences);

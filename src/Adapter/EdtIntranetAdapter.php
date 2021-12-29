@@ -31,8 +31,9 @@ class EdtIntranetAdapter extends AbstractEdtAdapter implements EdtAdapterInterfa
         return $collection;
     }
 
-    public function single($event): ?EvenementEdt
+    public function single(mixed $event): ?EvenementEdt
     {
+        //todo: pourrait être une interface ? mais après l'interface ?
         $evt = new EvenementEdt();
         $evt->source = EdtManager::EDT_INTRANET;
         $evt->id = $event->getId();

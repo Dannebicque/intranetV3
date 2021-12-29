@@ -89,12 +89,7 @@ class MyConfiguration
         return false;
     }
 
-    /**
-     * @param $value
-     *
-     * @return Personnel|bool|AnneeUniversitaire|null
-     */
-    private function transformeValue($value)
+    private function transformeValue($value): Personnel|bool|string|AnneeUniversitaire|null
     {
         if ('false' === $value) {
             return false;
@@ -104,11 +99,11 @@ class MyConfiguration
             return true;
         }
 
-        if (0 === mb_strpos($value, 'pers')) {
+        if (str_starts_with($value, 'pers')) {
             return $this->personnelRepository->find(mb_substr($value, 4, mb_strlen($value)));
         }
 
-        if (0 === mb_strpos($value, 'anneeuniv')) {
+        if (str_starts_with($value, 'anneeuniv')) {
             return $this->anneeUniversitaireRepository->find(mb_substr($value, 9, mb_strlen($value)));
         }
 

@@ -18,11 +18,11 @@ class EdtAde extends AbstractEdt implements EdtInterface
 {
     public function getPlanningSemestre(Semestre $semestre): EvenementEdtCollection
     {
-        // TODO: Implement getPlanningSemestre() method.
+        return new EvenementEdtCollection();
     }
 
     public function find($event): EvenementEdt
     {
-        // TODO: Implement find() method.
+        return new EvenementEdt();
     }
 }

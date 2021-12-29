@@ -214,6 +214,7 @@ class Absence extends BaseEntity implements Serializable
      */
     public function serialize()
     {
+        //todo: a ajouter ou retirer ?
     }
 
     /**
@@ -221,6 +222,7 @@ class Absence extends BaseEntity implements Serializable
      */
     public function unserialize($data)
     {
+        //todo: a ajouter ou retirer ?
     }
 
     public function getSemestre(): ?Semestre

@@ -64,7 +64,7 @@ class UeRepository extends ServiceEntityRepository
 
         $t = [];
 
-        /** @var $q Ue */
+        /** @var Ue $q */
         foreach ($query as $q) {
             $t[$q->getCodeElement()] = $q;
         }

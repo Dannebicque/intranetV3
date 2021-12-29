@@ -34,8 +34,8 @@ class DoctrineSourceIterator implements SourceInterface
 
     protected array $fields = [];
     protected array $datas = [];
-    private $dateFormat = 'd/m/Y';
-    private $timeFormat = 'H:i';
+    private string $dateFormat = 'd/m/Y';
+    private string $timeFormat = 'H:i';
 
     private PropertyInfoExtractor $propertyInfo;
     private string $classType;
@@ -55,14 +55,14 @@ class DoctrineSourceIterator implements SourceInterface
         }
     }
 
-    private function getHeader($datas)
+    private function getHeader($datas): void
     {
         foreach ($datas as $data) {
             $this->fields[$data] = $this->propertyInfo->getTypes($this->classType, $data);
         }
     }
 
-    private function prepareDatas(mixed $data)
+    private function prepareDatas(mixed $data): void
     {
         $d = [];
         foreach ($data as $key => $value) {
@@ -83,7 +83,6 @@ class DoctrineSourceIterator implements SourceInterface
                 if ('01/01/1970' === $value->format($this->dateFormat) || '00/00/0000' === $value->format($this->dateFormat)) {
                     return $value->format($this->timeFormat);
                 }
-
                 return $value->format($this->dateFormat . ' ' . $this->timeFormat);
             case $value instanceof DateInterval:
                 return $this->getDuration($value);

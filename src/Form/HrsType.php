@@ -45,16 +45,16 @@ class HrsType extends AbstractType
                 'query_builder' => function(PersonnelRepository $personnelRepository) {
                     return $personnelRepository->findByDepartementBuilder($this->departement);
                 },
-                'label' => 'personnel',
+                'label' => 'label.personnel',
             ])
             ->add('typeHrs', EntityCompleteType::class, [
                 'class' => TypeHrs::class,
                 'required' => true,
                 'choice_label' => 'libelle',
-                'label' => 'typehrs',
+                'label' => 'label.typehrs',
             ])
-            ->add('libelle', TextType::class, ['label' => 'libelle'])
-            ->add('nbHeuresTd', TextType::class, ['label' => 'nbHeuresTd'])
+            ->add('libelle', TextType::class, ['label' => 'label.libelle'])
+            ->add('nbHeuresTd', TextType::class, ['label' => 'label.nbHeuresTd'])
             ->add('semestre', EntityType::class, [
                 'class' => Semestre::class,
                 'required' => false,
@@ -62,7 +62,7 @@ class HrsType extends AbstractType
                 'query_builder' => function(SemestreRepository $semestreRepository) {
                     return $semestreRepository->findByDepartementBuilder($this->departement);
                 },
-                'label' => 'semestre',
+                'label' => 'label.semestre',
             ])
             ->add('diplome', EntityType::class, [
                 'class' => Diplome::class,
@@ -71,9 +71,9 @@ class HrsType extends AbstractType
                 'query_builder' => function(DiplomeRepository $diplomeRepository) {
                     return $diplomeRepository->findByDepartementBuilder($this->departement);
                 },
-                'label' => 'diplome',
+                'label' => 'label.diplome',
             ])
-            ->add('commentaire', TextareaType::class, ['label' => 'commentaire', 'required' => false]);
+            ->add('commentaire', TextareaType::class, ['label' => 'label.commentaire', 'required' => false]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -30,7 +30,7 @@ class ApogeeMaquette
         $this->entityManager = $entityManager;
     }
 
-    public function createSemestre($elpAnnee, Annee $annee, Ppn $pn)
+    public function createSemestre($elpAnnee, Annee $annee, Ppn $pn): Semestre
     {
         $semestre = new Semestre();
         $semestre->setCodeElement($elpAnnee['COD_ELP']);
@@ -46,7 +46,7 @@ class ApogeeMaquette
         return $semestre;
     }
 
-    public function createSemestreDut($elpAnnee, Annee $annee, Ppn $pn)
+    public function createSemestreDut($elpAnnee, Annee $annee, Ppn $pn): Semestre
     {
         $semestre = new Semestre();
         $semestre->setCodeElement($elpAnnee['COD_ELP']);
@@ -64,7 +64,7 @@ class ApogeeMaquette
         return $semestre;
     }
 
-    public function createElement($elp, Semestre $semestre)
+    public function createElement($elp, Semestre $semestre): ApcRessource|ApcSae|null
     {
         if ('R' === substr($elp['LIC_ELP'], 1, 1)) {
             //ressource
@@ -87,7 +87,10 @@ class ApogeeMaquette
             if ('TP' === $elp['COD_TYP_HEU']) {
                 $res->setTpPpn($elp['NBR_HEU_ELP']);
             }
-        } elseif ('S' === substr($elp['LIC_ELP'], 1, 1)) {
+            return $res;
+        }
+
+        if ('S' === substr($elp['LIC_ELP'], 1, 1)) {
             //Sae
             $res = new ApcSae();
             $c = explode(' ', $elp['LIC_ELP']);
@@ -107,12 +110,14 @@ class ApogeeMaquette
             if ('TP' === $elp['COD_TYP_HEU']) {
                 $res->setTpPpn($elp['NBR_HEU_ELP']);
             }
+
+            return $res;
         }
 
-        return $res;
+        return null;
     }
 
-    public function updateElement(ApcSae|ApcRessource $obj, $elpSemestre)
+    public function updateElement(ApcSae|ApcRessource $obj, $elpSemestre): ApcRessource|ApcSae
     {
         if ('CM' === $elpSemestre['COD_TYP_HEU']) {
             $obj->setCmPpn($elpSemestre['NBR_HEU_ELP']);
@@ -127,7 +132,7 @@ class ApogeeMaquette
         return $obj;
     }
 
-    public function createCompetence($elpAnnee, Annee $annee)
+    public function createCompetence($elpAnnee, Annee $annee): ApcCompetence
     {
         $competence = new ApcCompetence($annee->getDiplome());
         $competence->setLibelle($elpAnnee['LIB_ELP']);
@@ -143,7 +148,7 @@ class ApogeeMaquette
         return $competence;
     }
 
-    public function createUe($elpUe, ApcCompetence $competence, Annee $annee)
+    public function createUe($elpUe, ApcCompetence $competence, Annee $annee): void
     {
         $semestres = [];
         foreach ($annee->getSemestres() as $sem) {
@@ -158,7 +163,7 @@ class ApogeeMaquette
         $this->entityManager->persist($ue);
     }
 
-    public function createUeDut($elpUe, Semestre $objSemestre)
+    public function createUeDut($elpUe, Semestre $objSemestre): Ue
     {
         $ue = new Ue($objSemestre);
         $ue->setLibelle($elpUe['LIB_ELP']);
@@ -170,7 +175,7 @@ class ApogeeMaquette
         return $ue;
     }
 
-    public function createMatiere($elp, $ue, ?Ppn $pn)
+    public function createMatiere($elp, $ue, ?Ppn $pn): Matiere
     {
         //ressource
         $res = new Matiere();
@@ -206,7 +211,7 @@ class ApogeeMaquette
         return $res;
     }
 
-    public function updateMatiere(Matiere $obj, array $elpSemestre)
+    public function updateMatiere(Matiere $obj, array $elpSemestre): Matiere
     {
         if ('CM' === $elpSemestre['COD_TYP_HEU']) {
             $obj->setCmPpn($elpSemestre['NBR_HEU_ELP']);
