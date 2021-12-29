@@ -38,9 +38,6 @@ class ApcSaeCompetence extends BaseEntity
 
     /**
      * ApcSaeCompetence constructor.
-     *
-     * @param $sae
-     * @param $competence
      */
     public function __construct(ApcSae $sae, ApcCompetence $competence)
     {

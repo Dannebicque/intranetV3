@@ -16,5 +16,5 @@ interface EdtAdapterInterface
 {
     public function collection(array $events): EvenementEdtCollection;
 
-    public function single($event): ?EvenementEdt;
+    public function single(mixed $event): ?EvenementEdt;
 }

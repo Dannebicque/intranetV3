@@ -30,8 +30,8 @@ class CodeInseeRepository extends ServiceEntityRepository
     public function findVilles()
     {
         return $this->createQueryBuilder('c')
-            ->select('c.code_insee, c.ville')
-            ->orderBy('c.code_insee', 'ASC')
+            ->select('c.codeInsee, c.ville')
+            ->orderBy('c.codeInsee', 'ASC')
             ->getQuery()
             ->getResult();
     }

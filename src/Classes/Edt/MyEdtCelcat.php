@@ -64,9 +64,9 @@ class MyEdtCelcat extends BaseEdt
         Etudiant $etudiant,
         AnneeUniversitaire $anneeUniversitaire,
         int $semaine = 0,
-        array $matieres
+        array $matieres = []
     ): self {
-        $this->matieres = $matieres;
+        $this->matieres = $matieres;//todo: vériifer que pas vide
         $this->user = $etudiant;
         $this->init($anneeUniversitaire, 'etudiant', $etudiant->getId(), $semaine);
         $this->calculEdt();
@@ -74,8 +74,9 @@ class MyEdtCelcat extends BaseEdt
         return $this;
     }
 
-    public function initAdministration(): void
+    public function initAdministration(): self
     {
+        return $this;
     }
 
     public function calculEdt(): bool
@@ -119,6 +120,7 @@ class MyEdtCelcat extends BaseEdt
         $tab = [];
         /** @var CelcatEvent $p */
         foreach ($pl as $p) {
+            //todo: passer par le DTO???
             if (array_key_exists($p->getCodeGroupe(), $gr)) {
                 $groupe = $gr[$p->getCodeGroupe()];
                 $jour = $p->getJour() + 1;

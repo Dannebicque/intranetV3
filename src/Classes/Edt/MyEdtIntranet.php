@@ -308,11 +308,6 @@ class MyEdtIntranet extends BaseEdt
         return $tab;
     }
 
-    /**
-     * @param $p
-     *
-     * @return string
-     */
     private function getCouleur(EdtPlanning $p): ?string
     {
         return match (mb_strtolower($p->getType())) {
@@ -662,18 +657,6 @@ class MyEdtIntranet extends BaseEdt
                 }
             }
         } else {
-            //pas sur un créneau classique pour le début
-//            if (11 === $casedebut || 12 === $casedebut) {
-//                $casedebut = 10;
-//            } elseif (2 === $casedebut || 3 === $casedebut) {
-//                $casedebut = 1;
-//            } elseif (!\array_key_exists($casedebut, Constantes::TAB_CRENEAUX)) {
-//                $casedebut -= ($duree % 3);
-//            }
-
-//            if (null !== $idDebut) {
-//                $this->tab[$p->getJour()][$this->convertEdt($casedebut)] = $this->tab[$p->getJour()][$idDebut];
-//            }
             $this->tab[$p->getJour()][$idDebut]['debut'] = $p->getDebut();
             $this->tab[$p->getJour()][$idDebut]['format'] = 'nok';
             $this->tab[$p->getJour()][$idDebut]['fin'] = $casefin;

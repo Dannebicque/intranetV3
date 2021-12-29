@@ -95,13 +95,10 @@ class MyEvaluations
         return $tab;
     }
 
-    /**
-     * @param $annee
-     */
-    public function getEvaluationsMatiere($annee): void
+    public function getEvaluationsMatiere(?AnneeUniversitaire $anneeUniversitaire): void
     {
         $this->evaluations = $this->evaluationRespository->findByMatiere($this->matiere->id,
-            $this->matiere->typeMatiere, $annee);
+            $this->matiere->typeMatiere, $anneeUniversitaire);
 
         foreach ($this->getEvaluations() as $evaluation) {
             $this->statistiques[$evaluation->getId()] = $this->myEvaluation->setEvaluation($evaluation)->calculStatistiquesGlobales()->getStatistiques();

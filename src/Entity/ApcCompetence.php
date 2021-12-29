@@ -31,7 +31,7 @@ class ApcCompetence extends BaseEntity
     /**
      * @ORM\Column(type="string", length=50)
      */
-    private ?string $nom_court;
+    private ?string $nomCourt;
 
     /**
      * @ORM\Column(type="string", length=20)
@@ -99,12 +99,12 @@ class ApcCompetence extends BaseEntity
 
     public function getNomCourt(): ?string
     {
-        return $this->nom_court;
+        return $this->nomCourt;
     }
 
-    public function setNomCourt(string $nom_court): self
+    public function setNomCourt(string $nomCourt): self
     {
-        $this->nom_court = trim($nom_court);
+        $this->nomCourt = trim($nomCourt);
 
         return $this;
     }

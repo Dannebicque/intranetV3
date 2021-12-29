@@ -150,9 +150,6 @@ class PrevisionnelExport
         }
     }
 
-    /**
-     * @param $hrs
-     */
     private function ecritHRS(array $hrs): void
     {
         foreach ($hrs as $previ) {

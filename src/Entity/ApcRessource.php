@@ -10,6 +10,7 @@
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
+use App\Interfaces\MatiereEntityInterface;
 use App\Repository\ApcRessourceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -19,7 +20,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass=ApcRessourceRepository::class)
  * @ORM\HasLifecycleCallbacks()
  */
-class ApcRessource extends AbstractMatiere
+class ApcRessource extends AbstractMatiere implements MatiereEntityInterface
 {
     use LifeCycleTrait;
 

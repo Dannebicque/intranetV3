@@ -29,7 +29,7 @@ class TypeHrsRepository extends ServiceEntityRepository
         parent::__construct($registry, TypeHrs::class);
     }
 
-    public function findAll()
+    public function findAll(): array
     {
         return $this->findBy([], ['libelle' => 'ASC']);
     }

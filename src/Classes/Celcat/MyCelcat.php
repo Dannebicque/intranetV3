@@ -232,9 +232,10 @@ INNER JOIN CT_STUDENT ON CT_STUDENT.student_id=CT_GROUP_STUDENT.student_id WHERE
                 $event->setUpdateEvent(Tools::convertDateHeureToObject($dt[0], $dt[1]));
 
                 $this->entityManger->persist($event);
+
             } //endif
         }
 
-        return $event; //endfor
+        return $event; //todo: plusieurs event potentiellement ?
     }
 }

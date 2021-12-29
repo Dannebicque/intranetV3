@@ -84,8 +84,6 @@ class StageAvenant extends BaseEntity
 
     /**
      * StageAvenant constructor.
-     *
-     * @param $stageEtudiant
      */
     public function __construct($stageEtudiant)
     {

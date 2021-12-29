@@ -108,9 +108,6 @@ class EdtPlanningRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    /**
-     * @param $user
-     */
     private function groupes(Etudiant $user): void
     {
         foreach ($user->getGroupes() as $groupe) {

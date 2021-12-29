@@ -168,7 +168,6 @@ class Diplome extends BaseEntity implements Serializable
      */
     private ?bool $optUpdateCelcat = false;
 
-
     public function __construct(Departement $departement)
     {
         $this->departement = $departement;

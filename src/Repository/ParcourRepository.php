@@ -61,7 +61,7 @@ class ParcourRepository extends ServiceEntityRepository
 
         $t = [];
 
-        /** @var $q Parcour */
+        /** @var Parcour $q */
         foreach ($query as $q) {
             $t[$q->getCodeElement()] = $q;
         }

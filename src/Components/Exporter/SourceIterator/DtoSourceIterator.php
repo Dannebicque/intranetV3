@@ -32,8 +32,8 @@ class DtoSourceIterator implements SourceInterface
 
     protected array $fields = [];
     protected array $datas = [];
-    private $dateFormat = 'd/m/Y';
-    private $timeFormat = 'H:i';
+    private string $dateFormat = 'd/m/Y';
+    private string $timeFormat = 'H:i';
 
     private PropertyInfoExtractor $propertyInfo;
     private string $classType;
@@ -57,7 +57,7 @@ class DtoSourceIterator implements SourceInterface
         }
     }
 
-    private function getHeader($datas)
+    private function getHeader($datas): void
     {
         foreach ($datas as $data) {
             if ('ne-pas-exporter' !== $this->propertyInfo->getShortDescription($this->classType, $data)) {
@@ -66,7 +66,7 @@ class DtoSourceIterator implements SourceInterface
         }
     }
 
-    private function prepareDatas(mixed $data)
+    private function prepareDatas(mixed $data): void
     {
         $d = [];
         foreach ($data as $key => $value) {

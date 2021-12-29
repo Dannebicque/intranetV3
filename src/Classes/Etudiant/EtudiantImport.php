@@ -135,6 +135,7 @@ class EtudiantImport
 
     private function createEtudiantFromCsv(bool|array $ligne, Semestre $semestre)
     {
+        //todo: importer les bacs... Revoir cette partie.
         $adresse = new Adresse();
         $adresse->setAdresse1($ligne[10]);
         $adresse->setAdresse2($ligne[11]);

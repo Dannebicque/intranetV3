@@ -42,12 +42,10 @@ return static function(ContainerConfigurator $configurator): void {
     $services->set(CheckBoxColumnType::class)->tag(TableRegistry::TAG_COLUMN_TYPE);
     $services->set(ColumnType::class)->tag(TableRegistry::TAG_COLUMN_TYPE);
     $services->set(SelectColumnType::class)->tag(TableRegistry::TAG_COLUMN_TYPE);
-    //$services->set(BadgeCollectionColumnType::class)->tag(TableRegistry::TAG_COLUMN_TYPE);
     $services->set(BooleanColumnType::class)->tag(TableRegistry::TAG_COLUMN_TYPE);
     $services->set(DateColumnType::class)->tag(TableRegistry::TAG_COLUMN_TYPE);
     $services->set(DetailsHandleColumnType::class)->tag(TableRegistry::TAG_COLUMN_TYPE);
     $services->set(LinkColumnType::class)->tag(TableRegistry::TAG_COLUMN_TYPE);
     $services->set(ManyColumnType::class)->tag(TableRegistry::TAG_COLUMN_TYPE);
     $services->set(WidgetColumnType::class)->tag(TableRegistry::TAG_COLUMN_TYPE);
-    //todo: reprendre Collection...
 };

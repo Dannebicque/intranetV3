@@ -17,8 +17,6 @@ use App\Entity\Etudiant;
 use App\Entity\Semestre;
 use function count;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\NonUniqueResultException;
-use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -48,13 +46,7 @@ class AbsenceJustificatifRepository extends ServiceEntityRepository
             ;
     }
 
-    /**
-     * @param int|null $annee
-     *
-     * @throws NonUniqueResultException
-     * @throws NoResultException
-     */
-    public function findBySemestreCount(Semestre $semestre, int $annee = 0)
+    public function findBySemestreCount(Semestre $semestre, ?int $annee = 0)
     {
         if (0 === $annee) {
             $annee = null !== $semestre->getAnneeUniversitaire() ? $semestre->getAnneeUniversitaire()->getAnnee() : (int) date('Y');
@@ -83,7 +75,7 @@ class AbsenceJustificatifRepository extends ServiceEntityRepository
             ->andWhere('j.etudiant = :etudiant')
             ->setParameter('date', $absence->getDateHeure())
             ->setParameter('etat', AbsenceJustificatif::ACCEPTE)
-            ->setParameter('etudiant', $absence->getEtudiant()->getId())
+            ->setParameter('etudiant', $absence->getEtudiant()?->getId())
             ->getQuery()
             ->getResult();
 

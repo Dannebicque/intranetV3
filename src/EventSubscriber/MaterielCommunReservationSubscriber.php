@@ -11,8 +11,6 @@ namespace App\EventSubscriber;
 
 use App\Classes\Mail\MailerFromTwig;
 use App\Event\MaterielCommunReservationEvent;
-use App\Repository\MaterielCommunPretRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
@@ -20,22 +18,14 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class MaterielCommunReservationSubscriber implements EventSubscriberInterface
 {
-    private EntityManagerInterface $entityManager;
-
-    private MaterielCommunPretRepository $materielCommunPretRepository;
-
     private MailerFromTwig $myMailer;
 
     /**
      * RegistrationNotifySubscriber constructor.
      */
     public function __construct(
-        EntityManagerInterface $entityManager,
-        MaterielCommunPretRepository $materielCommunPretRepository,
         MailerFromTwig $myMailer
     ) {
-        $this->entityManager = $entityManager;
-        $this->materielCommunPretRepository = $materielCommunPretRepository;
         $this->myMailer = $myMailer;
     }
 

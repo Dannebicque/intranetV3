@@ -64,7 +64,7 @@ class Toolbar
             throw new InvalidArgumentException('Toolbar can only handle array form::getData()');
         }
 
-        $this->formData = $data ?? [];
+        $this->formData = $data;
 
         return $this;
     }

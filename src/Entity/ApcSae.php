@@ -10,6 +10,7 @@
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
+use App\Interfaces\MatiereEntityInterface;
 use App\Repository\ApcSaeRepository;
 use App\Utils\Tools;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -20,7 +21,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass=ApcSaeRepository::class)
  * @ORM\HasLifecycleCallbacks()
  */
-class ApcSae extends AbstractMatiere
+class ApcSae extends AbstractMatiere implements MatiereEntityInterface
 {
     use LifeCycleTrait;
 
@@ -65,6 +66,11 @@ class ApcSae extends AbstractMatiere
      * @ORM\Column(type="text", nullable=true)
      */
     private ?string $exemples;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private bool $bonification = false;
 
     public function __construct()
     {
@@ -269,6 +275,18 @@ class ApcSae extends AbstractMatiere
     public function setProjetFormation(mixed $projetFormation): self
     {
         $this->projetFormation = Tools::convertToFloat($projetFormation);
+
+        return $this;
+    }
+
+    public function getBonification(): ?bool
+    {
+        return $this->bonification;
+    }
+
+    public function setBonification(bool $bonification): self
+    {
+        $this->bonification = $bonification;
 
         return $this;
     }

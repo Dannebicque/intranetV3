@@ -56,10 +56,7 @@ class MyExcelWriter
         return $this->sheet;
     }
 
-    /**
-     * @param $libelle
-     */
-    public function createSheet($libelle): void
+    public function createSheet(string $libelle): void
     {
         $this->spreadsheet->createSheet()->setTitle($libelle);
 
@@ -183,11 +180,6 @@ class MyExcelWriter
         }
     }
 
-    /**
-     * @param $col
-     * @param $lig
-     * @param $couleur
-     */
     public function colorCellRange($col, $lig, $couleur): void
     {
         $cell = Coordinate::stringFromColumnIndex($col) . $lig;
@@ -202,10 +194,6 @@ class MyExcelWriter
         $this->sheet->getStyle(Coordinate::stringFromColumnIndex($col) . $lig)->getBorders()->getAllBorders()->setBorderStyle(Border::BORDER_THIN);
     }
 
-    /**
-     * @param $cells
-     * @param $couleur
-     */
     public function colorCells($cells, $couleur): void
     {
         $this->sheet->getStyle($cells)->getFill()
@@ -213,14 +201,6 @@ class MyExcelWriter
             ->getStartColor()->setARGB($couleur);
     }
 
-    /**
-     * @param $col1
-     * @param $lig1
-     * @param $col2
-     * @param $lig2
-     *
-     * @throws Exception
-     */
     public function borderCellsRange($col1, $lig1, $col2, $lig2): void
     {
         $cell1 = Coordinate::stringFromColumnIndex($col1) . $lig1;
@@ -228,11 +208,6 @@ class MyExcelWriter
         $this->borderCells($cell1 . ':' . $cell2);
     }
 
-    /**
-     * @param $cells
-     *
-     * @throws Exception
-     */
     public function borderCells($cells): void
     {
         $this->sheet->getStyle($cells)->getBorders()->getAllBorders()->setBorderStyle(Border::BORDER_THIN);
@@ -248,9 +223,6 @@ class MyExcelWriter
         $this->sheet->getColumnDimension($col)->setWidth($taille);
     }
 
-    /**
-     * @param $col
-     */
     public function getColumnAutoSize($col): void
     {
         if (is_numeric($col)) {
@@ -260,14 +232,6 @@ class MyExcelWriter
         $this->sheet->getColumnDimension($col)->setAutoSize(true);
     }
 
-    /**
-     * @param $col1
-     * @param $lig1
-     * @param $col2
-     * @param $lig2
-     *
-     * @throws Exception
-     */
     public function mergeCellsCaR($col1, $lig1, $col2, $lig2): void
     {
         $cell1 = Coordinate::stringFromColumnIndex($col1) . $lig1;
@@ -275,11 +239,6 @@ class MyExcelWriter
         $this->mergeCells($cell1 . ':' . $cell2);
     }
 
-    /**
-     * @param $cells
-     *
-     * @throws Exception
-     */
     public function mergeCells($cells): void
     {
         $this->sheet->mergeCells($cells);

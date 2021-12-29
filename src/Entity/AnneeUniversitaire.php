@@ -96,6 +96,11 @@ class AnneeUniversitaire extends BaseEntity
      */
     private $personnels;
 
+    /**
+     * @ORM\OneToMany(targetEntity=AlternancePlanning::class, mappedBy="anneeUniversitaire")
+     */
+    private $planningAlternances;
+
     public function __construct()
     {
         $this->setAnnee(date('Y'));
@@ -109,6 +114,7 @@ class AnneeUniversitaire extends BaseEntity
         $this->evaluations = new ArrayCollection();
         $this->projetPeriodes = new ArrayCollection();
         $this->personnels = new ArrayCollection();
+        $this->planningAlternances = new ArrayCollection();
     }
 
     public function getLibelle(): ?string
@@ -473,6 +479,36 @@ class AnneeUniversitaire extends BaseEntity
         // set the owning side to null (unless already changed)
         if ($this->personnels->removeElement($personnel) && $personnel->getAnneeUniversitaire() === $this) {
             $personnel->setAnneeUniversitaire(null);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|AlternancePlanning[]
+     */
+    public function getAlternancePlannings(): Collection
+    {
+        return $this->planningAlternances;
+    }
+
+    public function addAlternancePlanning(AlternancePlanning $planningAlternance): self
+    {
+        if (!$this->planningAlternances->contains($planningAlternance)) {
+            $this->planningAlternances[] = $planningAlternance;
+            $planningAlternance->setAnneeUniversitaire($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAlternancePlanning(AlternancePlanning $planningAlternance): self
+    {
+        if ($this->planningAlternances->removeElement($planningAlternance)) {
+            // set the owning side to null (unless already changed)
+            if ($planningAlternance->getAnneeUniversitaire() === $this) {
+                $planningAlternance->setAnneeUniversitaire(null);
+            }
         }
 
         return $this;

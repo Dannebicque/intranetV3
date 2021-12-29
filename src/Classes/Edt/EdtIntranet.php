@@ -43,7 +43,7 @@ class EdtIntranet extends AbstractEdt implements EdtInterface
             }
             $event->source = EdtManager::EDT_INTRANET;
             $event->date = $evt->getDate();
-            $event->jour = $evt->getJour();
+            $event->jour = (string) $evt->getJour();
             $event->heureDebut = Carbon::createFromTimeString($evt->getDebutTexte());
             $event->heureFin = Carbon::createFromTimeString($evt->getFinTexte());
             $event->matiere = $matiere;

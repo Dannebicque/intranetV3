@@ -217,7 +217,7 @@ abstract class Utilisateur implements UserInterface, PasswordAuthenticatedUserIn
         return $this->sitePerso;
     }
 
-    public function setSitePerso($sitePerso): void
+    public function setSitePerso(?string $sitePerso): void
     {
         $this->sitePerso = $sitePerso;
     }
@@ -232,10 +232,7 @@ abstract class Utilisateur implements UserInterface, PasswordAuthenticatedUserIn
         return 'M.' === $this->civilite ? 'Monsieur' : 'Madame';
     }
 
-    /**
-     * @param $civilite
-     */
-    public function setCivilite($civilite): void
+    public function setCivilite(?string $civilite): void
     {
         $this->civilite = $civilite;
     }
@@ -415,16 +412,6 @@ abstract class Utilisateur implements UserInterface, PasswordAuthenticatedUserIn
     public function getAvatarInitiales(): ?string
     {
         return mb_strtoupper(mb_substr(trim($this->getPrenom()), 0, 1) . '' . mb_substr(trim($this->getNom()), 0, 1));
-    }
-
-    public function serialize(): ?string
-    {
-        return serialize($this->getId());
-    }
-
-    public function unserialize($data): void
-    {
-        $this->id = unserialize($data);
     }
 
     public function getLieuNaissance(): ?string

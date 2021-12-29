@@ -48,10 +48,7 @@ abstract class Calendrier
         }
     }
 
-    /**
-     * @param $year
-     */
-    public static function joursFeries($year): void
+    public static function joursFeries(?int $year): void
     {
         $year1 = $year + 1; //second "semestre"
 

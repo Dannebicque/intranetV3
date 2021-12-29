@@ -12,16 +12,24 @@ namespace App\Classes\Apogee;
 use App\Entity\ApcRessource;
 use App\Entity\ApcSae;
 use App\Entity\Diplome;
+use App\Repository\ApcRessourceRepository;
+use App\Repository\ApcSaeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 class GenereCodeApogee
 {
     protected EntityManagerInterface $entityManager;
+    protected ApcRessourceRepository $apcRessourceRepository;
+    protected ApcSaeRepository $apcSaeRepository;
     private ?Diplome $diplome;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager,
+        ApcRessourceRepository $apcRessourceRepository,
+        ApcSaeRepository $apcSaeRepository)
     {
         $this->entityManager = $entityManager;
+        $this->apcSaeRepository = $apcSaeRepository;
+        $this->apcRessourceRepository = $apcRessourceRepository;
     }
 
     public function checkDiplome(string $arg1): bool
@@ -50,7 +58,7 @@ class GenereCodeApogee
                     $ue->setCodeElement($debut . $semestre->getOrdreLmd() . $ue->getNumeroUe());
                 }
 
-                $ressources = $this->entityManager->getRepository(ApcRessource::class)->findBySemestre($semestre);
+                $ressources = $this->apcRessourceRepository->findBySemestre($semestre);
                 foreach ($ressources as $ressource) {
                     if (1 === count($ressource->getApcRessourceCompetences())) {
                         $ue = $ressource->getApcRessourceCompetences()[0]->getCompetence()->getCouleur();
@@ -62,7 +70,7 @@ class GenereCodeApogee
                     }
                 }
 
-                $saes = $this->entityManager->getRepository(ApcSae::class)->findBySemestre($semestre);
+                $saes = $this->apcSaeRepository->findBySemestre($semestre);
                 foreach ($saes as $sae) {
                     if (1 === count($sae->getApcSaeCompetences())) {
                         $ue = $sae->getApcSaeCompetences()[0]->getCompetence()->getCouleur();

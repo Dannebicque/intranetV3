@@ -27,13 +27,13 @@ class EnqueteRelance
         $this->eventDispatcher = $eventDispatcher;
     }
 
-    public function envoyerRelance(QuestionnaireQualite $questionnaire, $reponses, array $etudiants)
+    public function envoyerRelance(QuestionnaireQualite $questionnaire, $reponses, array $etudiants): void
     {
         $t = [];
 
         /** @var QuestionnaireEtudiant $reponse */
         foreach ($reponses as $reponse) {
-            $t[$reponse->getEtudiant()->getId()] = $reponse;
+            $t[$reponse->getEtudiant()?->getId()] = $reponse;
         }
 
         $mailsAEnvoyes = [];
@@ -50,10 +50,9 @@ class EnqueteRelance
         $event = new QualiteRelanceEvent($questionnaire);
         $event->setEtudiants($mailsAEnvoyes);
         $this->eventDispatcher->dispatch($event, QualiteRelanceEvent::SEND_SYNTHESE);
-        $mailsAEnvoyes[] = $etudiant;
     }
 
-    public function envoyerRelanceIndividuelle(QuestionnaireQualite $questionnaire, Etudiant $etudiant)
+    public function envoyerRelanceIndividuelle(QuestionnaireQualite $questionnaire, Etudiant $etudiant): void
     {
         $event = new QualiteRelanceEvent($questionnaire);
         $event->setEtudiant($etudiant);

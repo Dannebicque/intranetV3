@@ -19,7 +19,7 @@ class BCDemandeSubscriber implements EventSubscriberInterface
     {
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             'workflow.bon_commande.validation_responsable' => 'onAttenteValidationResponsable',

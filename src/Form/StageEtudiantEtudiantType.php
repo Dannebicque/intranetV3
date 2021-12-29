@@ -25,7 +25,7 @@ class StageEtudiantEtudiantType extends AbstractType
 {
     //todo: faire un input avec une zone jour/mois/heure : Développer un composant ? Commenter lier deux champs d'entité avec ?
     //https://getbootstrap.com/docs/5.1/forms/input-group/#buttons-with-dropdowns
-    protected $flexible = false;
+    protected bool $flexible = false;
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

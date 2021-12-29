@@ -710,17 +710,6 @@ class Personnel extends Utilisateur implements UtilisateurInterface
         ]);
     }
 
-    /**
-     * Constructs the object.
-     *
-     * @see   http://php.net/manual/en/serializable.unserialize.php
-     *
-     * @param string $serialized <p>
-     *                           The string representation of the object.
-     *                           </p>
-     *
-     * @since 5.1.0
-     */
     public function unserialize($data): void
     {
         // Ajouté pour le problème de connexion avec le usernametoken

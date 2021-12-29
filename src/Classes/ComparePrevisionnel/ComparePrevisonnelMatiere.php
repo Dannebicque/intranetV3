@@ -47,6 +47,8 @@ class ComparePrevisonnelMatiere extends ComparePrevisionnel
 
         if ('intranet' === $source) {
             $planning = $this->edtPlanningRepository->findByDepartement($departement);
+        } else {
+            $planning = []; //todo: récupérer d'une autre source... et récupérer aussi du manager pour fusionner les deux ? Peut être pas indispensable ici
         }
 
         $t = [];
@@ -80,10 +82,11 @@ class ComparePrevisonnelMatiere extends ComparePrevisionnel
         }
 
         foreach ($planning as $pl) {
+            $ligne = $pl->getTypeIdMatiere();
             if (0 !== $pl->getIdMatiere() &&
                 null !== $pl->getIntervenant() &&
                 array_key_exists($ligne, $t)) {
-                $ligne = $pl->getTypeIdMatiere();
+
                 $col = $pl->getIntervenant()->getId();
                 if (array_key_exists($ligne, $t)) {
                     if (!array_key_exists($col, $t[$ligne])) {

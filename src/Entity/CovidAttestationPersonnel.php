@@ -28,17 +28,17 @@ class CovidAttestationPersonnel extends BaseEntity
     /**
      * @ORM\Column(type="string", length=150)
      */
-    private $moyenDeplacement;
+    private ?string $moyenDeplacement;
 
     /**
      * @ORM\Column(type="string", length=20)
      */
-    private $motif;
+    private ?string $motif;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
      */
-    private $validationDepartement;
+    private ?bool $validationDepartement;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -78,7 +78,6 @@ class CovidAttestationPersonnel extends BaseEntity
     public function __construct(Personnel $personnel)
     {
         $this->personnel = $personnel;
-        $this->creneaux = new ArrayCollection();
         $this->covidCreneauPresences = new ArrayCollection();
     }
 

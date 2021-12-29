@@ -25,7 +25,7 @@ class CarbonDateTimeType extends AbstractType
         $builder->addModelTransformer(new CarbonToDateTimeTransformer());
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefault('date_widget', 'single_text');
     }

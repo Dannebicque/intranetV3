@@ -26,12 +26,12 @@ class BacRepository extends ServiceEntityRepository
         parent::__construct($registry, Bac::class);
     }
 
-    public function findAll()
+    public function findAll(): array
     {
         return $this->findBy([], ['libelle' => 'ASC']);
     }
 
-    public function getApogeeArray()
+    public function getApogeeArray(): array
     {
         $data = $this->findAll();
         $t = [];

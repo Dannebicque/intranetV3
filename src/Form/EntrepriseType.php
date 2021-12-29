@@ -25,6 +25,7 @@ class EntrepriseType extends AbstractType
             ->add('siret', TextType::class, [
                 'label' => 'label.siret',
                 'required' => false,
+                'attr' => ['maxlength' => 30],
                 'help' => 'Le siret est obligatoire pour toutes les entreprise, sauf pour les organismes public.',
             ])
             ->add('adresse', AdresseType::class, ['label' => 'label.adresse'])

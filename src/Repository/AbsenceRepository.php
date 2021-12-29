@@ -125,6 +125,10 @@ class AbsenceRepository extends ServiceEntityRepository
         Etudiant $etudiant,
         AnneeUniversitaire $anneeUniversitaire
     ) {
+        if (count($matieres) === 0) {
+            return [];
+        }
+
         $query = $this->createQueryBuilder('a')
             ->innerJoin(AnneeUniversitaire::class, 'e', 'WITH', 'a.anneeUniversitaire = e.id')
             ->where('e.id = :annee')

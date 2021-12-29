@@ -20,12 +20,12 @@ class CodeInsee extends BaseEntity
     /**
      * @ORM\Column(type="string", length=6)
      */
-    private ?string $code_insee;
+    private ?string $codeInsee;
 
     /**
      * @ORM\Column(type="string", length=60)
      */
-    private ?string $code_postal;
+    private ?string $codePostal;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -34,24 +34,24 @@ class CodeInsee extends BaseEntity
 
     public function getCodeInsee(): ?string
     {
-        return $this->code_insee;
+        return $this->codeInsee;
     }
 
-    public function setCodeInsee(string $code_insee): self
+    public function setCodeInsee(string $codeInsee): self
     {
-        $this->code_insee = $code_insee;
+        $this->codeInsee = $codeInsee;
 
         return $this;
     }
 
     public function getCodePostal(): ?string
     {
-        return $this->code_postal;
+        return $this->codePostal;
     }
 
-    public function setCodePostal(string $code_postal): self
+    public function setCodePostal(string $codePostal): self
     {
-        $this->code_postal = $code_postal;
+        $this->codePostal = $codePostal;
 
         return $this;
     }

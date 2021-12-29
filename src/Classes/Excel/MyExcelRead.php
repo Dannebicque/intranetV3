@@ -27,13 +27,10 @@ class MyExcelRead
     protected $response;
 
     protected $phpExcelObject;
-    /**
-     * @var Worksheet
-     */
-    protected $sheet;
+    protected Worksheet $sheet;
 
-    protected $line = 1;
-    protected $nbColumns = -1; //on ne connait pas l nombre de colonne
+    protected int $line = 1;
+    protected int $nbColumns = -1; //on ne connait pas l nombre de colonne
 
     /**
      * MyExcelRead constructor.
@@ -98,11 +95,6 @@ class MyExcelRead
         return $this->sheet->getCellByColumnAndRow($col, $lig);
     }
 
-    /**
-     * @param $col
-     * @param $lig
-     * @param $valeur
-     */
     public function writeCellColLigne($col, $lig, $valeur): void
     {
         $cell = Coordinate::stringFromColumnIndex($col) . $lig;

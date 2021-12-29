@@ -11,7 +11,7 @@ namespace App\Utils;
 
 abstract class ToolsMatiere
 {
-    public static function getType($texte): string
+    public static function getType(string $texte): string
     {
         $d = explode('_', $texte);
         if (2 === count($d)) {
@@ -21,11 +21,11 @@ abstract class ToolsMatiere
         return '';
     }
 
-    public static function getId($texte): int
+    public static function getId(string $texte): int
     {
         $d = explode('_', $texte);
         if (2 === count($d)) {
-            return $d[1];
+            return (int)$d[1];
         }
 
         return 0;

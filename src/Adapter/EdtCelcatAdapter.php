@@ -15,6 +15,7 @@ use App\DTO\EvenementEdtCollection;
 
 class EdtCelcatAdapter extends AbstractEdtAdapter implements EdtAdapterInterface
 {
+    /** @param array<int, mixed> $events */
     public function collection(array $events): EvenementEdtCollection
     {
         $collection = new EvenementEdtCollection();
@@ -26,12 +27,12 @@ class EdtCelcatAdapter extends AbstractEdtAdapter implements EdtAdapterInterface
         return $collection;
     }
 
-    public function single($event): ?EvenementEdt
+    public function single(mixed $event): ?EvenementEdt
     {
         $evt = new EvenementEdt();
         $evt->source = EdtManager::EDT_CELCAT;
         $evt->id = $event->getId();
-        $evt->jour = $event->getJour() + 1;
+        $evt->jour = (string)($event->getJour() + 1);
         $evt->heureDebut = $event->getDebut();
         $evt->heureFin = $event->getFin();
         $evt->matiere = $event->getLibModule();

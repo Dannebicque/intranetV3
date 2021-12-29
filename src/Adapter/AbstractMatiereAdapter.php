@@ -10,18 +10,12 @@
 namespace App\Adapter;
 
 use App\DTO\Matiere;
+use App\Interfaces\MatiereEntityInterface;
 
 abstract class AbstractMatiereAdapter
 {
-    /**
-     * @param \App\Entity\Matiere|\App\Entity\ApcRessource|\App\Entity\ApcSae $matiere
-     */
-    public function single($matiere): ?Matiere
+    public function single(MatiereEntityInterface $matiere): ?Matiere
     {
-        if (null === $matiere) {
-            return null;
-        }
-
         $m = new Matiere();
         $m->typeMatiere = $matiere::SOURCE;
         $m->libelle = $matiere->getLibelle();

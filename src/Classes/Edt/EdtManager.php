@@ -71,7 +71,7 @@ class EdtManager
         string $jourSemaine,
         array $matieres
     ): EvenementEdtCollection {
-        return $this->getManager($this->getSourceEdt($semestre))->recupereEdtJourBorne($semestre, $matieres,
+        return $this->getManager($this->getSourceEdt($semestre))?->recupereEdtJourBorne($semestre, $matieres,
             $jourSemaine, $semaineFormation);
     }
 

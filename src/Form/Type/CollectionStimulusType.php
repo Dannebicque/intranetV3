@@ -26,7 +26,7 @@ class CollectionStimulusType extends AbstractType
             ]);
     }
 
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['max_items'] = $options['max_items'];
     }
@@ -36,7 +36,7 @@ class CollectionStimulusType extends AbstractType
         return 'collection_stimulus';
     }
 
-    public function getParent()
+    public function getParent(): ?string
     {
         return CollectionType::class;
     }

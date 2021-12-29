@@ -9,6 +9,7 @@
 
 namespace App\Entity;
 
+use App\Interfaces\MatiereEntityInterface;
 use App\Utils\Tools;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -19,7 +20,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ORM\Entity(repositoryClass="App\Repository\MatiereRepository")
  * @ORM\HasLifecycleCallbacks()
  */
-class Matiere extends AbstractMatiere
+class Matiere extends AbstractMatiere implements MatiereEntityInterface
 {
     public const SOURCE = 'matiere';
 

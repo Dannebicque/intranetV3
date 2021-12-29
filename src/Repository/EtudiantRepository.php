@@ -56,10 +56,7 @@ class EtudiantRepository extends ServiceEntityRepository
         return $tab;
     }
 
-    /**
-     * @return Query|mixed
-     */
-    public function getByDepartement($departement, $data, int $page = 0, ?int $max = null, bool $getResult = true)
+    public function getByDepartement($departement, $data, int $page = 0, ?int $max = null, bool $getResult = true): mixed
     {
         //todo: utile ?
         $qb = $this->createQueryBuilder('u');
@@ -266,7 +263,7 @@ class EtudiantRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function statistiquesEtudiants()
+    public function statistiquesEtudiants(): array
     {
         //SELECT count(etudiant.id) FROM `etudiant`
         //INNER JOIN semestre ON semestre.id=etudiant.semestre_id
@@ -295,14 +292,9 @@ class EtudiantRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param $login
-     * @param $date
-     *
-     * @return int|mixed|string|null
-     *
      * @throws NonUniqueResultException
      */
-    public function identificationRdd($login, $date)
+    public function identificationRdd($login, $date): ?Etudiant
     {
         return $this->createQueryBuilder('p')
             ->select('p.numEtudiant')

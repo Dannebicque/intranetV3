@@ -162,10 +162,7 @@ class Adresse extends BaseEntity
         return $this;
     }
 
-    /**
-     * @param $dataApogee
-     */
-    public function updateFromApogee($dataApogee): void
+    public function updateFromApogee(?array $dataApogee): void
     {
         foreach ($dataApogee as $key => $value) {
             if (method_exists($this, $key)) {

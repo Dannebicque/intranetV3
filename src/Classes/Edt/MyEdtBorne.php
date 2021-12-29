@@ -31,6 +31,7 @@ class MyEdtBorne
 
     private EdtManager $edtManager;
     private SemestreRepository $semestreRepository;
+    private EdtPlanningRepository $edtPlanningRepository;//todo: passer par EvenementCollection pour gérer tous les cas??
 
     /**
      * MyEdtBorne constructor.

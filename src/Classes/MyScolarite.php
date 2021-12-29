@@ -11,27 +11,36 @@ namespace App\Classes;
 
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Departement;
-use App\Entity\Etudiant;
 use App\Entity\Scolarite;
-use App\Entity\Semestre;
-use App\Entity\Ue;
+use App\Repository\EtudiantRepository;
+use App\Repository\SemestreRepository;
+use App\Repository\UeRepository;
 use App\Utils\Tools;
-use function array_key_exists;
-use function count;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
+use function array_key_exists;
+use function count;
 
 class MyScolarite
 {
     public MyUpload $myUpload;
     public EntityManagerInterface $entityManager;
+    public SemestreRepository $semestreRepository;
+    public UeRepository $ueRepository;
+    public EtudiantRepository $etudiantRepository;
 
     public function __construct(
         MyUpload $myUpload,
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
+         SemestreRepository $semestreRepository,
+         UeRepository $ueRepository,
+         EtudiantRepository $etudiantRepository
     ) {
         $this->myUpload = $myUpload;
         $this->entityManager = $entityManager;
+        $this->semestreRepository = $semestreRepository;
+        $this->ueRepository = $ueRepository;
+        $this->etudiantRepository = $etudiantRepository;
     }
 
     /**
@@ -41,9 +50,9 @@ class MyScolarite
     {
         $file = $this->myUpload->upload($data, 'temp');
 
-        $ues = $this->entityManager->getRepository(Ue::class)->tableauUeApogee($departement);
-        $semestres = $this->entityManager->getRepository(Semestre::class)->tableauSemestresApogee($departement);
-        $etudiants = $this->entityManager->getRepository(Etudiant::class)->findByDepartementArray($departement);
+        $ues = $this->ueRepository->tableauUeApogee($departement);
+        $semestres = $this->semestreRepository->tableauSemestresApogee($departement);
+        $etudiants = $this->etudiantRepository->findByDepartementArray($departement);
 
         $handle = fopen($file, 'rb');
 
@@ -57,27 +66,27 @@ class MyScolarite
                 $ligne = fgetcsv($handle, 1024, ';');
                 if (false !== $ligne && count($ligne) > 1 && array_key_exists($ligne[1],
                         $semestres) && array_key_exists($ligne[0], $etudiants)) {
-                            //numetudiant	codesemestre	semestre	ordre	moyenne	nbabsences	decision	suite ues
-                            $scol = new Scolarite($etudiants[$ligne[0]], $semestres[$ligne[1]]);
-                            $scol->setAnneeUniversitaire($anneeUniversitaire);
-                            $scol->setDecision($ligne[6]);
-                            $scol->setMoyenne(Tools::convertToFloat($ligne[4]));
-                            $scol->setOrdre($ligne[3]);
-                            $scol->setNbAbsences($ligne[5]);
-                            $scol->setProposition($ligne[7]);
-                            $scol->setDiffuse(true);
-                            $this->entityManager->persist($scol);
-                            $tues = explode('!', $ligne[8]);
-                            $tUe = [];
-                            foreach ($tues as $tue) {
-                                $ue = explode(':', $tue);
-                                if (array_key_exists($ue[0], $ues)) {
-                                    $tUe[$ues[$ue[0]]->getId()]['moyenne'] = Tools::convertToFloat($ue[1]);
-                                    $tUe[$ues[$ue[0]]->getId()]['rang'] = -1;
-                                }
-                            }
-                            $scol->setMoyennesUes($tUe);
+                    //numetudiant	codesemestre	semestre	ordre	moyenne	nbabsences	decision	suite ues
+                    $scol = new Scolarite($etudiants[$ligne[0]], $semestres[$ligne[1]]);
+                    $scol->setAnneeUniversitaire($anneeUniversitaire);
+                    $scol->setDecision($ligne[6]);
+                    $scol->setMoyenne(Tools::convertToFloat($ligne[4]));
+                    $scol->setOrdre($ligne[3]);
+                    $scol->setNbAbsences($ligne[5]);
+                    $scol->setProposition($ligne[7]);
+                    $scol->setDiffuse(true);
+                    $this->entityManager->persist($scol);
+                    $tues = explode('!', $ligne[8]);
+                    $tUe = [];
+                    foreach ($tues as $tue) {
+                        $ue = explode(':', $tue);
+                        if (array_key_exists($ue[0], $ues)) {
+                            $tUe[$ues[$ue[0]]->getId()]['moyenne'] = Tools::convertToFloat($ue[1]);
+                            $tUe[$ues[$ue[0]]->getId()]['rang'] = -1;
                         }
+                    }
+                    $scol->setMoyennesUes($tUe);
+                }
             }
             $this->entityManager->flush();
 
@@ -90,24 +99,4 @@ class MyScolarite
 
         return false;
     }
-
-//
-//    public function initSemestre(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire)
-//    {
-//        foreach ($semestre->getEtudiants() as $etudiant) {
-//            $parcour = $this->scolariteRepository->findBy([
-//                'semestre' => $semestre->getId(),
-//                'etudiant' => $etudiant->getId(),
-//                'decision' => Constantes::SEMESTRE_EN_COURS
-//            ]);
-//            if (count($parcour) === 0) {
-//                $maxOrdre = $this->scolariteRepository->findOrdreMax($etudiant);
-//                $scolarite = new Scolarite($etudiant, $semestre, $anneeUniversitaire);
-//                $scolarite->setOrdre($maxOrdre + 1);
-//                $scolarite->setDecision(Constantes::SEMESTRE_EN_COURS);
-//                $this->entityManager->persist($scolarite);
-//            }
-//        }
-//        $this->entityManager->flush();
-//    }
 }

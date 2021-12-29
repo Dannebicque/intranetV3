@@ -23,7 +23,9 @@ use App\Entity\Evaluation;
 use App\Entity\Note;
 use App\Entity\Semestre;
 use App\Exception\MatiereNotFoundException;
+use App\Repository\EtudiantRepository;
 use App\Utils\Tools;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use PhpOffice\PhpSpreadsheet\IOFactory;
@@ -38,21 +40,14 @@ use function in_array;
 class MyEvaluation
 {
     protected Evaluation $evaluation;
-
     protected array $statistiques = [];
-
-    /** @var Note[] */
-    protected $notes = [];
-
+    protected Collection $notes;
     protected array $classement = [];
-
     protected EntityManagerInterface $entityManager;
-
     private MyPDF $myPdf;
-
     private MyExcelMultiExport $myExcelMultiExport;
-
     private TypeMatiereManager $typeMatiereManager;
+    private EtudiantRepository $etudiantRepository;
 
     /**
      * MyEvaluation constructor.
@@ -61,12 +56,14 @@ class MyEvaluation
         TypeMatiereManager $typeMatiereManager,
         EntityManagerInterface $entityManager,
         MyPDF $myPdf,
-        MyExcelMultiExport $myExcelMultiExport
+        MyExcelMultiExport $myExcelMultiExport,
+        EtudiantRepository $etudiantRepository
     ) {
         $this->entityManager = $entityManager;
         $this->myPdf = $myPdf;
         $this->myExcelMultiExport = $myExcelMultiExport;
         $this->typeMatiereManager = $typeMatiereManager;
+        $this->etudiantRepository = $etudiantRepository;
     }
 
     public function setEvaluation(Evaluation $evaluation): self
@@ -306,7 +303,7 @@ class MyEvaluation
     {
         $evaluation->setVisible(false); //on masque l'évaluation le temps de l'import et de la vérification
         $notes = [];
-        $req = $this->entityManager->getRepository(Etudiant::class)->findBySemestre($semestre);
+        $req = $this->etudiantRepository->findBySemestre($semestre);
         $etudiants = [];
         /** @var Etudiant $etu */
         foreach ($req as $etu) {

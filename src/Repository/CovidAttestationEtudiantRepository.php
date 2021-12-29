@@ -42,7 +42,7 @@ class CovidAttestationEtudiantRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findAll()
+    public function findAll(): array
     {
         return $this->findBy([], ['created' => 'DESC']);
     }

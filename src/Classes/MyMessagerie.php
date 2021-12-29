@@ -21,6 +21,7 @@ use App\Interfaces\UtilisateurInterface;
 use App\Repository\EtudiantRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\PersonnelRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
@@ -44,7 +45,7 @@ class MyMessagerie
     private Personnel $expediteur;
 
     /** @var Etudiant[] */
-    private $etudiants = [];
+    private  $etudiants = [];
 
     private GroupeRepository $groupeRepository;
 
@@ -55,7 +56,7 @@ class MyMessagerie
     private string $typeDestinataires = '';
     private string $type;
     private $id;
-    private $pjs = [];
+    private array $pjs = [];
 
     /**
      * MyMessagerie constructor.
@@ -274,10 +275,7 @@ class MyMessagerie
         }
     }
 
-    /**
-     * @param $destinataires
-     */
-    private function prepareEtudiants($destinataires): void
+    private function prepareEtudiants(?array $destinataires): void
     {
         $this->etudiants = [];
         foreach ($destinataires as $destinatiare) {
@@ -290,6 +288,7 @@ class MyMessagerie
 
     public function saveDraft($sujet, $message, Personnel $expediteur, $copie, $destinataires, $typeDestinataire)
     {
+        //todo: a refaire
         $this->sujet = $sujet;
         $this->message = $message;
         $this->expediteur = $expediteur;
@@ -308,11 +307,6 @@ class MyMessagerie
         $this->pjs[] = $file;
     }
 
-    /**
-     * @param UtilisateurInterface $destinataire
-     *
-     * @return object|TemplatedEmail
-     */
     public function sendMessage(UtilisateurInterface $destinataire)
     {
         $message = (new TemplatedEmail())

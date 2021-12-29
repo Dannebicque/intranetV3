@@ -92,9 +92,6 @@ class MyIcal
         ];
     }
 
-    /**
-     * @param $id
-     */
     public function addEvent($id): void
     {
         $d = Carbon::now();
@@ -110,10 +107,6 @@ class MyIcal
         $this->filevt .= 'END:VEVENT'.chr(13).chr(10);
     }
 
-    /**
-     * @param $date
-     * @param $creneau
-     */
     public function setDtstart(CarbonInterface $date, $creneau): void
     {
         $h = explode(':', $this->tabheure[$creneau]);
@@ -183,25 +176,16 @@ class MyIcal
         $this->dtend = 'DTEND:'.$this->calculHeureEte($timestamp);
     }
 
-    /**
-     * @param $lieu
-     */
     public function setLocation($lieu): void
     {
         $this->location = 'LOCATION:'.$lieu;
     }
 
-    /**
-     * @param $texte
-     */
     public function setDescription($texte): void
     {
         $this->description = 'DESCRIPTION:'.$texte;
     }
 
-    /**
-     * @param $titre
-     */
     public function setSummary($titre): void
     {
         $this->summary = 'SUMMARY:'.$titre;

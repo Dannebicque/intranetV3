@@ -14,6 +14,7 @@ use App\Classes\MyUpload;
 use App\Entity\Diplome;
 use App\Entity\Personnel;
 use App\Entity\Previsionnel;
+use App\Repository\PersonnelRepository;
 use App\Utils\Tools;
 use Doctrine\ORM\EntityManagerInterface;
 use function array_key_exists;
@@ -26,6 +27,7 @@ class PrevisionnelImport
     private PrevisionnelManager $previsionnelManager;
 
     private EntityManagerInterface $entityManager;
+    private PersonnelRepository $personnelRepository;
 
     private MyUpload $myUpload;
     private TypeMatiereManager $typeMatiereManager;
@@ -34,11 +36,13 @@ class PrevisionnelImport
         TypeMatiereManager $typeMatiereManager,
         PrevisionnelManager $previsionnelManager,
         EntityManagerInterface $entityManager,
+        PersonnelRepository $personnelRepository,
         MyUpload $myUpload
     ) {
         $this->typeMatiereManager = $typeMatiereManager;
         $this->entityManager = $entityManager;
         $this->previsionnelManager = $previsionnelManager;
+        $this->personnelRepository = $personnelRepository;
         $this->myUpload = $myUpload;
     }
 
@@ -52,7 +56,7 @@ class PrevisionnelImport
 
         if (null !== $data['diplome']) {
             $matieres = $this->typeMatiereManager->tableauApogeeDiplome($data['diplome']);
-            $personnels = $this->entityManager->getRepository(Personnel::class)->tableauPersonnelHarpege($data['diplome']);
+            $personnels = $this->personnelRepository->tableauPersonnelHarpege($data['diplome']);
 
             $handle = fopen($file, 'rb');
 

@@ -20,7 +20,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class DateRangeType extends AbstractType
 {
-    //todo: a faire avec la librairie de Umlbrella ?
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('from_date', DatePickerType::class,
@@ -52,7 +51,7 @@ class DateRangeType extends AbstractType
         return 'my_date_range';
     }
 
-    public function getParent()
+    public function getParent(): ?string
     {
         return TextType::class;
     }

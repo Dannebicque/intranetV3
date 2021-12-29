@@ -15,11 +15,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
 use App\Components\Widget\DTO\WidgetView;
 use App\Components\Widget\WidgetBuilder;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class LinkType extends WidgetType
 {
     protected RouterInterface $router;
     protected ParameterBagInterface $parameterBag;
+
 
     /**
      * LinkType constructor.
@@ -76,7 +78,7 @@ class LinkType extends WidgetType
 
         $resolver
             ->setDefault('text', null); // enable text
-        $resolver->setDefault('stimulus', false); //todo: utilisé ? désactive stimulus partout, par défaut
+        $resolver->setDefault('stimulus', false); //désactive stimulus partout, par défaut
         $resolver
             ->define('route')
             ->default(null)

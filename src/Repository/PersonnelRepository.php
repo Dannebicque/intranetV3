@@ -30,15 +30,12 @@ use function count;
  */
 class PersonnelRepository extends ServiceEntityRepository
 {
-    private $router;//todo: a supprimer???
-
     /**
      * PersonnelRepository constructor.
      */
-    public function __construct(ManagerRegistry $registry, RouterInterface $router)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Personnel::class);
-        $this->router = $router;
     }
 
     public function findByType($type, $departement, $filtreAdm = 'commun')
@@ -95,16 +92,6 @@ class PersonnelRepository extends ServiceEntityRepository
             $tt['mail_univ'] = $personnel->getMailUniv();
             $tt['mail_perso'] = $personnel->getMailPerso();
             $tt['avatarInitiales'] = $personnel->getAvatarInitiales();
-            $tt['profil'] = '<a href="' . $this->router->generate('user_profil',
-                    ['type' => 'personnel', 'slug' => $personnel->getSlug()]) . '"
-       class="btn btn-info btn-outline btn-square"
-       data-provide="tooltip"
-       target="_blank"
-       data-placement="bottom"
-       title="Profil du personne">
-        <i class="fa fa-info"></i>
-        <span class="sr-only">Profil du personnel</span>
-    </a>';
 
             $t[] = $tt;
         }
@@ -150,63 +137,13 @@ class PersonnelRepository extends ServiceEntityRepository
         return null;
     }
 
-    public function getAllPersonnel($data, int $page = 0, ?int $max = null, bool $getResult = true)
-    {
-        $qb = $this->_em->createQueryBuilder();
-        $query = isset($data['query']) && $data['query'] ? $data['query'] : null;
-        $order = isset($data['order']) && $data['order'] ? $data['order'] : null;
-        $qb
-            ->select('u')
-            ->from(Personnel::class, 'u');
-
-        if (null !== $order && count($order) > 0) {
-            switch ($order[0]['column']) {
-                case 0:
-                    $qb->orderBy('u.numeroHarpege', $order[0]['dir']);
-                    break;
-                case 2:
-                    $qb->orderBy('u.prenom', $order[0]['dir']);
-                    $qb->addOrderBy('u.nom', $order[0]['dir']);
-                    break;
-                case 3:
-                    $qb->orderBy('u.username', $order[0]['dir']);
-                    break;
-                case 1:
-                    $qb->orderBy('u.nom', $order[0]['dir']);
-                    break;
-                case 5:
-                    $qb->orderBy('u.deleted', $order[0]['dir']);
-                    break;
-                default:
-                    $qb->addOrderBy('u.nom', $order[0]['dir']);
-            }
-        }
-
-        if ($query) {
-            $qb
-                ->andWhere('u.nom like :query')
-                ->orWhere('u.prenom like :query')
-                ->setParameter('query', '%' . $query . '%');
-        }
-
-        if ($max) {
-            $preparedQuery = $qb->getQuery()
-                ->setMaxResults($max)
-                ->setFirstResult($page * $max);
-        } else {
-            $preparedQuery = $qb->getQuery();
-        }
-
-        return $getResult ? $preparedQuery->getResult() : $preparedQuery;
-    }
-
     public function tableauPersonnelHarpege(Diplome $diplome): array
     {
         $p = $this->findByDepartement($diplome->getDepartement());
 
         $t = [];
 
-        /** @var $pers Personnel */
+        /** @var Personnel $pers */
         foreach ($p as $pers) {
             $t[$pers->getNumeroHarpege()] = $pers;
         }
@@ -226,7 +163,7 @@ class PersonnelRepository extends ServiceEntityRepository
 
         $t = [];
 
-        /** @var $q Personnel */
+        /** @var Personnel $q */
         foreach ($query as $q) {
             $t[$q->getInitiales()] = $q;
         }

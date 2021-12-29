@@ -10,18 +10,21 @@
 namespace App\DataFixtures;
 
 use App\Entity\TypeDiplome;
+use Carbon\Carbon;
 use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
 class TypeDiplomeFixtures extends Fixture
 {
+    public const TYPE_BUT_REFERENCE = 'type-but';
+
     public function load(ObjectManager $manager): void
     {
         $td = new TypeDiplome();
         $td->setLibelle('Diplôme Universitaire de Technologie');
-        $td->setCreated(new DateTime('now'));
-        $td->setUpdated(new DateTime('now'));
+        $td->setCreated(Carbon::now());
+        $td->setUpdated(Carbon::now());
         $td->setSigle('DUT');
         $td->setNbSemestres(4);
         $td->setNiveauEntree(0);
@@ -30,18 +33,19 @@ class TypeDiplomeFixtures extends Fixture
 
         $td = new TypeDiplome();
         $td->setLibelle('Bachelor Universitaire de Technologie');
-        $td->setCreated(new DateTime('now'));
-        $td->setUpdated(new DateTime('now'));
+        $td->setCreated(Carbon::now());
+        $td->setUpdated(Carbon::now());
         $td->setSigle('B.U.T.');
         $td->setNbSemestres(6);
         $td->setNiveauEntree(0);
         $td->setNiveauSortie(3);
+        $this->addReference(self::TYPE_BUT_REFERENCE, $td);
         $manager->persist($td);
 
         $td = new TypeDiplome();
         $td->setLibelle('Licence Professionnelle');
-        $td->setCreated(new DateTime('now'));
-        $td->setUpdated(new DateTime('now'));
+        $td->setCreated(Carbon::now());
+        $td->setUpdated(Carbon::now());
         $td->setSigle('LPro');
         $td->setNbSemestres(2);
         $td->setNiveauEntree(2);

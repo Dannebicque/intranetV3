@@ -26,7 +26,7 @@ class PrevisionnelMatiereAdapter extends AbstractPrevisionnelAdapter implements 
         return $collection;
     }
 
-    public function single($previ): Previsionnel
+    public function single(array $previ): Previsionnel
     {
         $p = parent::single($previ);
         $p->type_matiere = PrevisionnelMatiereManager::TYPE;

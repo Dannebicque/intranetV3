@@ -50,10 +50,8 @@ class ApcApprentissageCritique extends BaseEntity
 
     /**
      * ApcApprentissageCritique constructor.
-     *
-     * @param $niveau
      */
-    public function __construct($niveau = null)
+    public function __construct(?ApcNiveau $niveau = null)
     {
         $this->niveau = $niveau;
         $this->apcRessourceApprentissageCritiques = new ArrayCollection();

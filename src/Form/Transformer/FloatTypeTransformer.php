@@ -15,12 +15,12 @@ use Symfony\Component\Form\Exception\TransformationFailedException;
 
 class FloatTypeTransformer implements DataTransformerInterface
 {
-    public function transform($value)
+    public function transform($value): mixed
     {
         return $value; // No conversion required
     }
 
-    public function reverseTransform($value)
+    public function reverseTransform($value): float
     {
         $convert = Tools::convertToFloat($value);
         if (null === $convert) {

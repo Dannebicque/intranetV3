@@ -77,9 +77,6 @@ class CelcatEventsRepository extends ServiceEntityRepository
         return null;
     }
 
-    /**
-     * @param $user
-     */
     private function groupes(Etudiant $user): void
     {
         $i = 1;
@@ -142,7 +139,7 @@ class CelcatEventsRepository extends ServiceEntityRepository
 
         $planning = [];
 
-        /** @var $row CelcatEvent */
+        /** @var CelcatEvent $row  */
         foreach ($query as $row) {
             $casedebut = Constantes::TAB_HEURES_INDEX[$row->getDebut()->format('H:i:s')];
             $casefin = Constantes::TAB_HEURES_INDEX[$row->getFin()->format('H:i:s')];

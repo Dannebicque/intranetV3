@@ -60,6 +60,6 @@ class Column
             $value = $this->type->render($rowData, $this->options);
         }
 
-        return $this->options['is_safe_html'] ? $value : HtmlUtils::escape($value);
+        return $this->options['is_safe_html'] ? $value : htmlspecialchars($value);
     }
 }

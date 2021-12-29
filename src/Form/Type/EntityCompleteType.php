@@ -13,7 +13,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class EntityCompleteType extends ChoiceCompleteType
 {
-    public function getParent()
+    public function getParent(): ?string
     {
         return EntityType::class;
     }

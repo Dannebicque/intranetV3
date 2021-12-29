@@ -7,37 +7,41 @@
  * @lastUpdate 29/06/2021 17:48
  */
 
-/*
- * Pull your hearder here, for exemple, Licence header.
- */
 
 namespace App\Classes;
 
 use App\Entity\Departement;
 use App\Entity\Matiere;
-use App\Entity\Parcour;
-use App\Entity\Ppn;
-use App\Entity\Ue;
+use App\Repository\ParcourRepository;
+use App\Repository\PpnRepository;
+use App\Repository\UeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use function array_key_exists;
 
 class MyPpn
 {
-    /** @var MyUpload */
-    public $myUpload;
+    public MyUpload $myUpload;
+    public EntityManagerInterface $entityManager;
+    private UeRepository $ueRepository;
+    private ParcourRepository $parcourRepository;
+    private PpnRepository $ppnRepository;
 
-    /** @var EntityManagerInterface */
-    public $entityManager;
 
-    /**
-     * MyPpn constructor.
-     */
-    public function __construct(MyUpload $myUpload, EntityManagerInterface $entityManager)
-    {
+    public function __construct(
+        MyUpload $myUpload,
+        EntityManagerInterface $entityManager,
+        UeRepository $ueRepository,
+        PpnRepository $ppnRepository,
+        ParcourRepository $parcourRepository
+    ) {
         $this->myUpload = $myUpload;
         $this->entityManager = $entityManager;
+        $this->ueRepository = $ueRepository;
+        $this->ppnRepository = $ppnRepository;
+        $this->parcourRepository = $parcourRepository;
     }
+
 
     /**
      *
@@ -45,12 +49,12 @@ class MyPpn
      */
     public function importCsv($data, Departement $departement): bool
     {
-        $ppn = $this->entityManager->getRepository(Ppn::class)->find($data['ppn']);
+        $ppn = $this->ppnRepository->find($data['ppn']);
         if (null !== $ppn) {
             $file = $this->myUpload->upload($data['fichier'], 'temp');
 
-            $ues = $this->entityManager->getRepository(Ue::class)->tableauUeApogee($departement);
-            $parcours = $this->entityManager->getRepository(Parcour::class)->tableauParcourApogee($departement);
+            $ues = $this->ueRepository->tableauUeApogee($departement);
+            $parcours = $this->parcourRepository->tableauParcourApogee($departement);
 
             $handle = fopen($file, 'rb');
 

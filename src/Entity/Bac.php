@@ -50,7 +50,7 @@ class Bac extends BaseEntity
     /**
      * @ORM\Column(type="string", length=10, nullable=true)
      */
-    private ?string $code_apogee;
+    private ?string $codeApogee;
 
     /**
      * @ORM\Column(type="string", length=1, nullable=true)
@@ -83,12 +83,12 @@ class Bac extends BaseEntity
 
     public function getCodeApogee(): ?string
     {
-        return $this->code_apogee;
+        return $this->codeApogee;
     }
 
-    public function setCodeApogee(?string $code_apogee): self
+    public function setCodeApogee(?string $codeApogee): self
     {
-        $this->code_apogee = $code_apogee;
+        $this->codeApogee = $codeApogee;
 
         return $this;
     }

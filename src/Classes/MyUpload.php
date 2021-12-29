@@ -72,11 +72,7 @@ class MyUpload
         return $fichier->getClientOriginalExtension();
     }
 
-    /**
-     * @param $dossierTemp
-     * @param $dossierDest
-     */
-    public function traitePhoto($dossierTemp, $dossierDest): void
+    public function traitePhoto(?string $dossierTemp, ?string $dossierDest): void
     {
         $folder = $this->dir.$dossierTemp;
         $dossier = opendir($folder);

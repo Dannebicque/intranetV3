@@ -64,10 +64,7 @@ class MyExcelMultiExport
         );
     }
 
-    /**
-     * @param $name
-     */
-    public function pageSetup($name): void
+    public function pageSetup(string $name): void
     {
         $this->myExcelWriter->getSpreadsheet()->getProperties()->setTitle($name);
         $this->myExcelWriter->getSpreadsheet()->getActiveSheet()->getPageSetup()->setPaperSize(PageSetup::PAPERSIZE_A4);
@@ -84,7 +81,7 @@ class MyExcelMultiExport
             ->setOddFooter('&L&B' . $this->myExcelWriter->getSpreadsheet()->getProperties()->getTitle() . '&RPage &P of &N');
     }
 
-    public function saveCsv($name): StreamedResponse
+    public function saveCsv(string $name): StreamedResponse
     {
         $this->pageSetup($name);
         $writer = new Csv($this->myExcelWriter->getSpreadsheet());
@@ -101,7 +98,7 @@ class MyExcelMultiExport
         );
     }
 
-    public function savePdf($name): StreamedResponse
+    public function savePdf(string $name): StreamedResponse
     {
         $this->pageSetup($name);
 
@@ -119,12 +116,7 @@ class MyExcelMultiExport
         );
     }
 
-    /**
-     * @param $data
-     * @param $modele
-     * @param $colonne
-     */
-    public function genereExcelFromSerialization($data, $modele, $colonne): void
+    public function genereExcelFromSerialization(array $data, string $modele, array $colonne): void
     {
         $this->myExcelWriter->createSheet('onglet 1');
         //serialize les data
@@ -320,9 +312,6 @@ class MyExcelMultiExport
         }
     }
 
-    /**
-     * @param $absences
-     */
     public function genereReleveAbsencesMatiereExcel($absences): void
     {
         $this->myExcelWriter->createSheet('Absences');

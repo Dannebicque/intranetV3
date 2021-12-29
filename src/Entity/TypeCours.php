@@ -18,7 +18,7 @@ class TypeCours extends BaseEntity
     /**
      * @ORM\Column(type="string", length=5)
      */
-    private ?string $libelle_court;
+    private ?string $libelleCourt;
 
     /**
      * @ORM\Column(type="float")
@@ -44,12 +44,12 @@ class TypeCours extends BaseEntity
 
     public function getLibelleCourt(): ?string
     {
-        return $this->libelle_court;
+        return $this->libelleCourt;
     }
 
-    public function setLibelleCourt(string $libelle_court): self
+    public function setLibelleCourt(string $libelleCourt): self
     {
-        $this->libelle_court = $libelle_court;
+        $this->libelleCourt = $libelleCourt;
 
         return $this;
     }

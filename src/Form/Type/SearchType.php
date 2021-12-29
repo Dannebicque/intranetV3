@@ -20,7 +20,7 @@ use function is_string;
 
 class SearchType extends AbstractType implements DataTransformerInterface
 {
-    public function finishView(FormView $view, FormInterface $form, array $options)
+    public function finishView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['attr']['data-toolbar-type'] = 'search';
         $view->vars['type'] = 'text';
@@ -29,27 +29,28 @@ class SearchType extends AbstractType implements DataTransformerInterface
     /**
      * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'required' => false,
+            'input_prefix_text' => '<i class="fas fa-search"></i>',
             'attr' => [
                 'placeholder' => 'Rechercher ...',
             ],
         ]);
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->addModelTransformer($this);
     }
 
-    public function transform($value)
+    public function transform($value): mixed
     {
         return $value;
     }
 
-    public function reverseTransform($value)
+    public function reverseTransform($value): ?string
     {
         if (!is_string($value)) {
             return null;
@@ -63,7 +64,7 @@ class SearchType extends AbstractType implements DataTransformerInterface
     /**
      * {@inheritdoc}
      */
-    public function getParent()
+    public function getParent(): ?string
     {
         return TextType::class;
     }
