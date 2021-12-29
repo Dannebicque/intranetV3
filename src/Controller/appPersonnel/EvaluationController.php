@@ -51,7 +51,7 @@ class EvaluationController extends BaseController
             'evaluation' => $evaluation,
             'notes' => $notes,
             'matiere' => $matiere,
-            'autorise' => $evaluation->getAutorise($this->getConnectedUser()->getId(), $this->dataUserSession),
+            'autorise' => $evaluation->getAutorise($this->getUser()->getId(), $this->dataUserSession),
         ]);
     }
 
@@ -70,7 +70,7 @@ class EvaluationController extends BaseController
         return $this->render('appPersonnel/note/saisie_2.html.twig', [
             'evaluation' => $evaluation,
             'notes' => $notes,
-            'autorise' => $evaluation->getAutorise($this->getConnectedUser()->getId(), $this->dataUserSession),
+            'autorise' => $evaluation->getAutorise($this->getUser()->getId(), $this->dataUserSession),
         ]);
     }
 

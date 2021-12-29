@@ -70,7 +70,7 @@ class ArticleController extends BaseController
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
 
-        $article = new Article($this->getConnectedUser());
+        $article = new Article($this->getUser());
         $form = $this->createForm(
             ArticleType::class,
             $article,

@@ -35,7 +35,7 @@ class UserController extends BaseController
     public function monProfil(string $onglet = 'scolarite'): Response
     {
         return $this->render('user/profil.html.twig', [
-            'user' => $this->getConnectedUser(),
+            'user' => $this->getUser(),
             'onglet' => $onglet,
             'monprofil' => true,
         ]);
@@ -83,7 +83,7 @@ class UserController extends BaseController
      */
     public function settings(Request $request): Response
     {
-        $user = $this->getConnectedUser();
+        $user = $this->getUser();
         if ($user instanceof Personnel) {
             $form = $this->createForm(
                 PersonnelProfilType::class,

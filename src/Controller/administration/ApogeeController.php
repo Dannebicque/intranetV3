@@ -58,7 +58,7 @@ class ApogeeController extends BaseController
                     $etudiant = $etudiantImport->createEtudiant($semestre, $dataApogee);
                     $this->etudiants[$numEtudiant]['etat'] = 'force';
                     $this->etudiants[$numEtudiant]['data'] = $etudiant;
-                } elseif ($etudiant && 'force' === $type) {
+                } elseif ('force' === $type) {
                     //l'étudiant existe, et on force la mise à jour
                     $etudiant = $etudiantImport->updateEtudiant($etudiant, $semestre, $dataApogee);
                     $this->etudiants[$numEtudiant]['etat'] = 'maj';

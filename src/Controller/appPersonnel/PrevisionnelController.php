@@ -38,7 +38,7 @@ class PrevisionnelController extends BaseController
         HrsManager $hrsManager
     ): Response {
         $anneePrevisionnel = $this->dataUserSession->getAnneePrevisionnel();
-        $personnel = $this->getConnectedUser();
+        $personnel = $this->getUser();
         $departement = $this->getDepartement();
         $previsionnels = $myPrevisionnel->getPrevisionnelPersonnelDepartementAnnee($personnel, $departement,
             $anneePrevisionnel);
@@ -78,7 +78,7 @@ class PrevisionnelController extends BaseController
         }
 
         return $this->render('appPersonnel/previsionnel/chronologique.html.twig', [
-            'chronologique' => $chronologique->getServiceRealiserParEnseignant($this->getConnectedUser()),
+            'chronologique' => $chronologique->getServiceRealiserParEnseignant($this->getUser()),
             'matieres' => $matieres,
         ]);
     }

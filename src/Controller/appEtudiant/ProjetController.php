@@ -34,10 +34,10 @@ class ProjetController extends BaseController
      */
     public function index(ProjetPeriodeRepository $projetPeriodeRepository): Response
     {
-        $projetsPeriodes = $projetPeriodeRepository->findBySemestre($this->getConnectedUser()->getSemestre());
+        $projetsPeriodes = $projetPeriodeRepository->findBySemestre($this->getUser()->getSemestre());
         $projetsEtudiants = [];
 
-        foreach ($this->getConnectedUser()->getProjetEtudiants() as $projetEtudiant) {
+        foreach ($this->getUser()->getProjetEtudiants() as $projetEtudiant) {
             if (null !== $projetEtudiant->getProjetPeriode()) {
                 $projetsEtudiants[$projetEtudiant->getProjetPeriode()->getId()] = $projetEtudiant;
             }
@@ -73,7 +73,7 @@ class ProjetController extends BaseController
     ): Response {
         if (null !== $projetEtudiant->getProjetPeriode()) {
             $form = $this->createForm(ProjetEtudiantEtudiantType::class, $projetEtudiant, [
-                'semestre' => $this->getConnectedUser()->getSemestre(),
+                'semestre' => $this->getUser()->getSemestre(),
                 'attr' => [
                     'data-provide' => 'validation',
                 ],

@@ -16,6 +16,7 @@ use App\Classes\Etudiant\EtudiantNotes;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\NotesTri;
 use App\Classes\StatsAbsences;
+use App\DTO\EtudiantSousCommissionApc;
 use App\Entity\Commentaire;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
@@ -162,7 +163,7 @@ class ProfilEtudiantController extends BaseController
             $matieres = $typeMatiereManager->findBySemestreArray($etudiant->getSemestre());
             $moyennes = $etudiantNotes->getMoyenneParMatiereParSemestresEtAnneeUniversitaire($matieres, $etudiant->getSemestre(),
                 $this->getAnneeUniversitaire());
-            $moyennesSemestre = $etudiantNotes->calculMoyenneApcSemestre($etudiant->getSemestre(), $matieres, $ues, $moyennes);
+            $moyennesSemestre = $etudiantNotes->calculMoyenneApcSemestre($etudiant->getSemestre(), $matieres, $ues, $moyennes);//todo: cette méthode ne devrait pas être là...
 
 
             return $this->render('user/composants/notes_apc.html.twig', [

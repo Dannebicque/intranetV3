@@ -35,7 +35,7 @@ class CovidAttestationPersonnelController extends BaseController
     public function index(CovidAttestationPersonnelRepository $covidAttestationPersonnelRepository): Response
     {
         return $this->render('appPersonnel/covid_attestation_personnel/index.html.twig', [
-            'covid_attestation_personnels' => $covidAttestationPersonnelRepository->findByPersonnel($this->getConnectedUser()),
+            'covid_attestation_personnels' => $covidAttestationPersonnelRepository->findByPersonnel($this->getUser()),
         ]);
     }
 
@@ -44,7 +44,7 @@ class CovidAttestationPersonnelController extends BaseController
      */
     public function new(Request $request, EventDispatcherInterface $eventDispatcher): Response
     {
-        $covidAttestationPersonnel = new CovidAttestationPersonnel($this->getConnectedUser());
+        $covidAttestationPersonnel = new CovidAttestationPersonnel($this->getUser());
         $form = $this->createForm(CovidAttestationPersonnelType::class, $covidAttestationPersonnel,
             [
                 'departement' => $this->getDepartement(),
@@ -75,7 +75,7 @@ class CovidAttestationPersonnelController extends BaseController
      */
     public function show(CovidAttestationPersonnel $covidAttestationPersonnel): Response
     {
-        if ($covidAttestationPersonnel->getPersonnel()->getId() === $this->getConnectedUser()->getId()) {
+        if ($covidAttestationPersonnel->getPersonnel()->getId() === $this->getUser()->getId()) {
             return $this->render('appPersonnel/covid_attestation_personnel/show.html.twig', [
                 'covid_attestation_personnel' => $covidAttestationPersonnel,
             ]);
@@ -91,7 +91,7 @@ class CovidAttestationPersonnelController extends BaseController
         MyExportPresence $myExportPresence,
         CovidAttestationPersonnel $covidAttestationPersonnel
     ): Response {
-        if ($covidAttestationPersonnel->getPersonnel()->getId() === $this->getConnectedUser()->getId()) {
+        if ($covidAttestationPersonnel->getPersonnel()->getId() === $this->getUser()->getId()) {
             return $myExportPresence->genereAttestationPdf($covidAttestationPersonnel, 'force');
         }
 
@@ -106,7 +106,7 @@ class CovidAttestationPersonnelController extends BaseController
         EventDispatcherInterface $eventDispatcher,
         CovidAttestationPersonnel $covidAttestationPersonnel
     ): Response {
-        if ($covidAttestationPersonnel->getPersonnel()->getId() === $this->getConnectedUser()->getId()) {
+        if ($covidAttestationPersonnel->getPersonnel()->getId() === $this->getUser()->getId()) {
             $form = $this->createForm(CovidAttestationPersonnelType::class, $covidAttestationPersonnel, [
                 'departement' => $this->getDepartement(),
                 'attr' => [
@@ -162,7 +162,7 @@ class CovidAttestationPersonnelController extends BaseController
      */
     public function duplicate(CovidAttestationPersonnel $covidAttestationPersonnel): Response
     {
-        if ($covidAttestationPersonnel->getPersonnel()->getId() === $this->getConnectedUser()->getId()) {
+        if ($covidAttestationPersonnel->getPersonnel()->getId() === $this->getUser()->getId()) {
             $newCovidAttestationPersonnel = clone $covidAttestationPersonnel;
 
             $this->entityManager->persist($newCovidAttestationPersonnel);

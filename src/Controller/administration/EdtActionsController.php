@@ -65,7 +65,7 @@ class EdtActionsController extends BaseController
     ): RedirectResponse
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_EDT', $this->getDepartement());
-
+        $pl = null;
         if ('' !== $request->request->get('idEdtUpdate')) {
             $plann = $edtPlanningRepository->find($request->request->get('idEdtUpdate'));
             if (null !== $plann) {
@@ -78,7 +78,7 @@ class EdtActionsController extends BaseController
         return $this->redirectToRoute('administration_edt_index', [
             'semaine' => $request->request->get('semaine2'),
             'filtre' => 'promo',
-            'valeur' => $pl->getSemestre()->getId(),
+            'valeur' => $pl?->getSemestre()?->getId(),
         ]);
     }
 

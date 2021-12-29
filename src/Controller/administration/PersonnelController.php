@@ -33,7 +33,6 @@ class PersonnelController extends BaseController
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
 
         $table = $this->createTable(PersonnelDepartementTableType::class, [
-            'type' => Personnel::PERMANENT,
             'departement' => $this->getDepartement(),
             'autoriseToManageAccess' => $this->getDataUserSession()->isGoodDepartement('ROLE_CDD') || $this->getDataUserSession()->isGoodDepartement('ROLE_DDE'),
         ]);
@@ -46,38 +45,10 @@ class PersonnelController extends BaseController
         return $this->render(
             'administration/personnel/index.html.twig',
             [
-                'type' => 'permanent',
                 'table' => $table,
             ]
         );
     }
-
-//    #[Route('/ajax/load-liste/{type}',
-//        name: 'load_liste',
-//        requirements: ['type' => 'permanent|vacataire|administratif'],
-//        options: ['expose' => true])]
-//    public function loadListe(Request $request, $type): Response
-//    {
-//        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
-//
-//        $table = $this->createTable(PersonnelDepartementTableType::class, [
-//            'type' => $type,
-//            'departement' => $this->getDepartement()
-//        ]);
-//        $table->handleRequest($request);
-//
-//        if ($table->isCallback()) {
-//            return $table->getCallbackResponse();
-//        }
-//
-//        return $this->render(
-//            'administration/personnel/_listePersonnel.html.twig',
-//            [
-//                'table' => $table,
-//                'type' => $type,
-//            ]
-//        );
-//    }
 
     #[Route('/export.{_format}', name: 'export',
         requirements: ['_format' => 'csv|xlsx|pdf'],
@@ -215,7 +186,7 @@ class PersonnelController extends BaseController
         $id = $personnel->getId();
         if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
             $pf = $personnelDepartementRepository->findByPersonnelDepartement($personnel,
-                $this->dataUserSession->getDepartement());
+                $this->getDepartement());
             foreach ($pf as $p) {
                 $this->entityManager->remove($p);
             }
@@ -279,8 +250,8 @@ class PersonnelController extends BaseController
 
         if (0 === count($pf) && in_array($droit, Constantes::ROLE_LISTE, true)) {
             //etrangement pas dans un département, on ajoute.
-            $pf = new PersonnelDepartement($personnel, $this->dataUserSession->getDepartement());
-            $pf->setDepartement();
+            $pf = new PersonnelDepartement($personnel, $this->getDepartement());
+            $pf->setDepartement($this->getDepartement());
             $pf->setAnnee(date('Y'));
             $pf->addRole($droit);
         }

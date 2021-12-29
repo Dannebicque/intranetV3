@@ -12,6 +12,7 @@ namespace App\Controller\administration;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\SousCommission\SousCommission;
 use App\Classes\SousCommission\SousCommissionExport;
+use App\Classes\SousCommission\SousCommissionManager;
 use App\Classes\SousCommission\SousCommissionSauvegarde;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
@@ -38,16 +39,18 @@ class SousComissionController extends BaseController
     /**
      * @Route("/live/{semestre}", name="administration_sous_commission_live")
      */
-    public function live(BacRepository $bacRepository, SousCommission $sousCommission, Semestre $semestre): Response
+    public function live(BacRepository $bacRepository,
+        SousCommissionManager $sousCommissionManager, Semestre $semestre): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $semestre);
+        $sousCommission = $sousCommissionManager->getSousCommission($semestre);
+        $sousCommission->calcul($semestre, $this->getAnneeUniversitaire());
 
-        $sousCommission->calcul($semestre, $this->dataUserSession->getAnneeUniversitaire());
         $bacs = $bacRepository->findAll();
 
         return $this->render('administration/sous_commission/live.html.twig', [
             'semestre' => $semestre,
-            'sousCommission' => $sousCommission,
+            'sousCommission' => $sousCommission, //devrait etre un DTo?
             'bacs' => $bacs,
             'stats' => $sousCommission->calculStats($bacs),
         ]);

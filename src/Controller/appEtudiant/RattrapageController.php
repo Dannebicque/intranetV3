@@ -41,12 +41,12 @@ class RattrapageController extends BaseController
         RattrapageRepository $rattrapageRepository,
         Request $request
     ) {
-        $rattrapage = new Rattrapage($this->getConnectedUser());
+        $rattrapage = new Rattrapage($this->getUser());
         $form = $this->createForm(
             RattrapageType::class,
             $rattrapage,
             [
-                'semestre' => $this->getConnectedUser()->getSemestre(),
+                'semestre' => $this->getUser()->getSemestre(),
                 'locale'   => $request->getLocale(),
                 'attr'     => [
                     'data-provide' => 'validation',
@@ -69,7 +69,7 @@ class RattrapageController extends BaseController
 
         return $this->render('appEtudiant/rattrapage/index.html.twig', [
             'form' => $form->createView(),
-            'rattrapages' => $rattrapageRepository->findByEtudiant($this->getConnectedUser()),
+            'rattrapages' => $rattrapageRepository->findByEtudiant($this->getUser()),
             'matieres' => $typeMatiereManager->findBySemestreArray($this->getEtudiantSemestre()),
         ]);
     }

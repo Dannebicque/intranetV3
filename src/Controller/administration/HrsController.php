@@ -62,7 +62,6 @@ class HrsController extends BaseController
         }
 
         return $this->render('administration/hrs/index.html.twig', [
-//            'hrs'   => $hrsRepository->findByDepartement($this->dataUserSession->getDepartement(), $annee),
             'annee' => $annee,
             'table' => $table,
             'form' => $form->createView(),
@@ -149,13 +148,13 @@ class HrsController extends BaseController
     }
 
     /**
-     * @Route("/{id}", name="administration_hrs_show", methods="GET")
+     * @Route("/{id}/details", name="administration_hrs_show", methods="GET")
      */
     public function show(Hrs $hrs): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $hrs->getDepartement());
 
-        return $this->render('administration/hrs/show.html.twig', ['hrs' => $hrs]);
+        return $this->render('administration/hrs/_show.html.twig', ['hrs' => $hrs]);
     }
 
     /**

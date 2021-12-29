@@ -92,8 +92,6 @@ class TrombinoscopeController extends BaseController
     /**
      * @Route("/etudiant/export-image/{typeGroupe<\d+>}.pdf", name="trombinoscope_etudiant_image", methods="GET")
      *
-     * @return Response
-     *
      * @throws SyntaxError
      * @throws LoaderError
      * @throws RuntimeError

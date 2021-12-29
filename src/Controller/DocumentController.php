@@ -35,15 +35,15 @@ class DocumentController extends BaseController
 
         return $this->render('document/_typedocument.html.twig', [
             'typedocuments' => $typeDocuments,
-            'nbDocumentsFavoris' => count($this->getUser()?->getDocumentsFavoris()),
+            'nbDocumentsFavoris' => count($this->getUser()->getDocumentsFavoris()),
         ]);
     }
 
     #[Route('/ajax/document/favori', name: 'document_ajax_favori', options: ['expose' => true])]
     public function documentsFavoris(MyDocument $myDocument): Response
     {
-        $documents = $myDocument->mesDocumentsFavoris($this->getConnectedUser());
-        $idDocuments = $myDocument->idMesDocumentsFavoris($this->getConnectedUser());
+        $documents = $myDocument->mesDocumentsFavoris($this->getUser());
+        $idDocuments = $myDocument->idMesDocumentsFavoris($this->getUser());
 
         return $this->render('document/_documents.html.twig', [
             'documents' => $documents,
@@ -56,7 +56,7 @@ class DocumentController extends BaseController
     {
         $typedocument = $request->query->get('typedocument');
         $documents = $documentRepository->findByTypeDocument($typedocument, $this->isEtudiant());
-        $idDocuments = $myDocument->idMesDocumentsFavoris($this->getConnectedUser());
+        $idDocuments = $myDocument->idMesDocumentsFavoris($this->getUser());
 
         return $this->render('document/_documents.html.twig', [
             'documents' => $documents,
@@ -71,7 +71,7 @@ class DocumentController extends BaseController
     public function addFavori(MyDocument $myDocument, Document $document): Response
     {
         $myDocument->setDocument($document);
-        $etat = $myDocument->addOrRemoveFavori($this->getConnectedUser());
+        $etat = $myDocument->addOrRemoveFavori($this->getUser());
 
         return $this->json($etat, Response::HTTP_OK);
     }

@@ -57,7 +57,7 @@ class InformationController extends BaseController
         );
 
         $mesArticles = [];
-        foreach ($this->getConnectedUser()->getArticlesLike() as $like) {
+        foreach ($this->getUser()->getArticlesLike() as $like) {
             if (null !== $like->getArticle()) {
                 $mesArticles[] = $like->getArticle()->getId();
             }
@@ -77,7 +77,7 @@ class InformationController extends BaseController
     {
         $like = false;
         /** @var ArticleLike $like */
-        foreach ($this->getConnectedUser()->getArticlesLike() as $like) {
+        foreach ($this->getUser()->getArticlesLike() as $like) {
             if (null !== $like->getArticle() && $like->getArticle()->getId() === $article->getId()) {
                 $like = true;
             }
@@ -95,7 +95,7 @@ class InformationController extends BaseController
      */
     public function like(MyArticle $myArticle, Article $article): JsonResponse
     {
-        $myArticle->setArticle($article)->saveLike($this->getConnectedUser());
+        $myArticle->setArticle($article)->saveLike($this->getUser());
 
         return $this->json(count($article->getArticleLikes()), Response::HTTP_OK);
     }

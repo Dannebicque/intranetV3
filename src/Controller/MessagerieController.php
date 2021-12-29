@@ -74,10 +74,10 @@ class MessagerieController extends BaseController
         $etat = $request->request->get('etat');
 
         if (null !== $message) {
-            if ($this->getConnectedUser() instanceof Etudiant) {
-                $messaged = $messageEtudiantRepository->findDest($this->getConnectedUser(), $message);
-            } elseif ($this->getConnectedUser() instanceof Personnel) {
-                $messaged = $messagePersonnelRepository->findDest($this->getConnectedUser(), $message);
+            if ($this->getUser() instanceof Etudiant) {
+                $messaged = $messageEtudiantRepository->findDest($this->getUser(), $message);
+            } elseif ($this->getUser() instanceof Personnel) {
+                $messaged = $messagePersonnelRepository->findDest($this->getUser(), $message);
             } else {
                 return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
             }
@@ -105,14 +105,14 @@ class MessagerieController extends BaseController
         $filtre
     ): Response {
         if ('sent' === $filtre) {
-            $messages = $messageRepository->findBy(['expediteur' => $this->getConnectedUser()], ['updated' => 'DESC']);
+            $messages = $messageRepository->findBy(['expediteur' => $this->getUser()], ['updated' => 'DESC']);
         } elseif ('draft' === $filtre) {
-            $messages = $messageRepository->findBy(['expediteur' => $this->getConnectedUser(), 'etat' => 'D'],
+            $messages = $messageRepository->findBy(['expediteur' => $this->getUser(), 'etat' => 'D'],
                 ['updated' => 'DESC']);
-        } elseif ($this->getConnectedUser() instanceof Etudiant) {
-            $messages = $messageEtudiantRepository->findLast($this->getConnectedUser(), 0, $filtre);
-        } elseif ($this->getConnectedUser() instanceof Personnel) {
-            $messages = $messagePersonnelRepository->findLast($this->getConnectedUser(), 0, $filtre);
+        } elseif ($this->getUser() instanceof Etudiant) {
+            $messages = $messageEtudiantRepository->findLast($this->getUser(), 0, $filtre);
+        } elseif ($this->getUser() instanceof Personnel) {
+            $messages = $messagePersonnelRepository->findLast($this->getUser(), 0, $filtre);
         } else {
             $messages = null;
         }
@@ -135,13 +135,13 @@ class MessagerieController extends BaseController
         int $page = 0
     ): Response {
         if ('send' === $filtre) {
-            $messages = $messageRepository->findBy(['expediteur' => $this->getConnectedUser(), 'etat' => 'E']);
+            $messages = $messageRepository->findBy(['expediteur' => $this->getUser(), 'etat' => 'E']);
         } elseif ('draft' === $filtre) {
-            $messages = $messageRepository->findBy(['expediteur' => $this->getConnectedUser(), 'etat' => 'D']);
-        } elseif ($this->getConnectedUser() instanceof Etudiant) {
-            $messages = $messageEtudiantRepository->findLast($this->getConnectedUser(), 0, $filtre, $page);
-        } elseif ($this->getConnectedUser() instanceof Personnel) {
-            $messages = $messagePersonnelRepository->findLast($this->getConnectedUser(), 0, $filtre, $page);
+            $messages = $messageRepository->findBy(['expediteur' => $this->getUser(), 'etat' => 'D']);
+        } elseif ($this->getUser() instanceof Etudiant) {
+            $messages = $messageEtudiantRepository->findLast($this->getUser(), 0, $filtre, $page);
+        } elseif ($this->getUser() instanceof Personnel) {
+            $messages = $messagePersonnelRepository->findLast($this->getUser(), 0, $filtre, $page);
         } else {
             $messages = null;
         }
@@ -177,7 +177,7 @@ class MessagerieController extends BaseController
             }
         }
 
-        $messagerie->setMessage($sujet, $message, $this->getConnectedUser());
+        $messagerie->setMessage($sujet, $message, $this->getUser());
         $messagerie->sendToDestinataires($this->checkArray($destinataires), $typeDestinataire, $this->getDepartement());
 
         if (is_countable($copie) && count($copie) > 0) {
@@ -201,7 +201,7 @@ class MessagerieController extends BaseController
         $copie = $request->request->get('copie');
         $message = $request->request->get('message');
 
-        $messagerie->saveDraft($sujet, $message, $this->getConnectedUser(), $copie, $destinataires, $typeDestinataire);
+        $messagerie->saveDraft($sujet, $message, $this->getUser(), $copie, $destinataires, $typeDestinataire);
 
         return $this->json('ok');
     }
@@ -239,10 +239,10 @@ class MessagerieController extends BaseController
         MessageDestinataireEtudiantRepository $messageEtudiantRepository,
         Message $message
     ): Response {
-        if ($this->getConnectedUser() instanceof Etudiant) {
-            $messaged = $messageEtudiantRepository->findDest($this->getConnectedUser(), $message);
-        } elseif ($this->getConnectedUser() instanceof Personnel) {
-            $messaged = $messagePersonnelRepository->findDest($this->getConnectedUser(), $message);
+        if ($this->getUser() instanceof Etudiant) {
+            $messaged = $messageEtudiantRepository->findDest($this->getUser(), $message);
+        } elseif ($this->getUser() instanceof Personnel) {
+            $messaged = $messagePersonnelRepository->findDest($this->getUser(), $message);
         } else {
             return $this->redirectToRoute('erreur_666');
         }

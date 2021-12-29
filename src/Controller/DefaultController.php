@@ -9,6 +9,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Etudiant;
 use App\Repository\ActualiteRepository;
 use App\Repository\DateRepository;
 use App\Repository\DepartementRepository;
@@ -33,8 +34,8 @@ class DefaultController extends BaseController
         if (null === $this->getDepartement()) {
             return $this->redirectToRoute('security_choix_departement');
         }
-        if ($this->isGranted('ROLE_ETUDIANT')) {
-            $dates = $dateRepository->findByDateForEtudiant($this->getConnectedUser(), 2);
+        if ($this->getUser() instanceof Etudiant) {
+            $dates = $dateRepository->findByDateForEtudiant($this->getUser(), 2);
             $typesGroupes = $typeGroupeRepository->findBySemestre($this->getUser()->getSemestre());
         } else {
             $dates = $dateRepository->findByDateForPersonnel($this->getDepartement(), 2);

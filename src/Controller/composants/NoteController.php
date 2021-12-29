@@ -53,7 +53,7 @@ class NoteController extends BaseController
                 'departement' => $this->dataUserSession->getDepartement(),
                 'semestre' => $matiere->semestre,
                 'matiereDisabled' => !('app' === $source),
-                'autorise' => $evaluation->getAutorise($this->getConnectedUser()->getId(), $this->dataUserSession),
+                'autorise' => $evaluation->getAutorise($this->getUser()->getId(), $this->dataUserSession),
                 'locale' => $request->getLocale(),
                 'attr' => [
                     'data-provide' => 'validation',
@@ -77,7 +77,7 @@ class NoteController extends BaseController
         return $this->render('composants/_edit_eval.html.twig', [
             'evaluation' => $evaluation,
             'form' => $form->createView(),
-            'autorise' => $evaluation->getAutorise($this->getConnectedUser()->getId(), $this->dataUserSession),
+            'autorise' => $evaluation->getAutorise($this->getUser()->getId(), $this->dataUserSession),
             'source' => $source,
         ]);
     }

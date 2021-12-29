@@ -18,6 +18,7 @@ use App\Entity\Etudiant;
 use App\Form\EtudiantType;
 use App\Repository\EtudiantRepository;
 use App\Table\EtudiantDepartementTableType;
+use App\Utils\JsonRequest;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -156,14 +157,13 @@ class EtudiantController extends BaseController
     public function editAjax(EtudiantUpdate $etudiantUpdate, Request $request, Etudiant $etudiant): JsonResponse
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $etudiant->getSemestre());
+        $parametersAsArray = JsonRequest::getFromRequest($request);
+        if (array_key_exists('field', $parametersAsArray) && array_key_exists('value', $parametersAsArray)) {
+            $etudiantUpdate->update($etudiant, $parametersAsArray['field'], $parametersAsArray['value']);
 
-        if ($content = $request->getContent()) {
-            $parametersAsArray = json_decode($content, true);
+            return $this->json(true, Response::HTTP_OK);
         }
-
-        $etudiantUpdate->update($etudiant, $parametersAsArray['field'], $parametersAsArray['value']);
-
-        return $this->json(true, Response::HTTP_OK);
+        return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
     #[Route("/export.{_format}", name: "administration_all_etudiant_export", requirements: ["_format" => "csv|xlsx|pdf"],
@@ -171,7 +171,7 @@ class EtudiantController extends BaseController
     public function export(MyExport $myExport, EtudiantRepository $etudiantRepository, $_format): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $this->getDepartement());
-
+//todo: mettre un databtable et supprimer la requete ?
         $etudiants = $etudiantRepository->getByDepartement($this->getDepartement(), []);
 
         return $myExport->genereFichierGenerique(

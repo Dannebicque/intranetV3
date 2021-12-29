@@ -165,6 +165,7 @@ class ApcRessourceController extends BaseController
         $form = $this->createForm(ApcRessourceType::class, $apcRessource, [
             'diplome' => $diplome,
         ]);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

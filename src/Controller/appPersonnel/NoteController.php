@@ -55,7 +55,7 @@ class NoteController extends BaseController
         }
         $this->denyAccessUnlessGranted('CAN_ADD_NOTE', $mat);
 
-        $evaluation = new Evaluation($this->getConnectedUser(), $mat);
+        $evaluation = new Evaluation($this->getUser(), $mat);
         $form = $this->createForm(
             EvaluationType::class,
             $evaluation,
@@ -139,7 +139,7 @@ class NoteController extends BaseController
             $etudiant = $etudiantRepository->find($iValue['id']);
             if (null !== $etudiant) {
                 $etudiantNotes->setEtudiant($etudiant);
-                $etudiantNotes->addNote($evaluation, $iValue, $this->getConnectedUser());
+                $etudiantNotes->addNote($evaluation, $iValue, $this->getUser());
             }
         }
 

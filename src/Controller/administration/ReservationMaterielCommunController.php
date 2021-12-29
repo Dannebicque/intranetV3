@@ -59,7 +59,7 @@ class ReservationMaterielCommunController extends BaseController
 
 
         $t = explode('_', $request->request->get('id'));
-        $rep = $myReservationMaterielCommun->addReservation($t[2], $t[0], $t[1], $this->getConnectedUser());
+        $rep = $myReservationMaterielCommun->addReservation($t[2], $t[0], $t[1], $this->getUser());
 
         return new Response($rep, $rep ? Response::HTTP_OK : Response::HTTP_INTERNAL_SERVER_ERROR);
     }

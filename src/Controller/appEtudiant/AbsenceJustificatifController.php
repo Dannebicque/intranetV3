@@ -33,7 +33,7 @@ class AbsenceJustificatifController extends BaseController
     public function index(AbsenceJustificatifRepository $absenceJustificatifRepository): Response
     {
         return $this->render('appEtudiant/absence_justificatif/index.html.twig',
-            ['absence_justificatifs' => $absenceJustificatifRepository->findByEtudiant($this->getConnectedUser())]);
+            ['absence_justificatifs' => $absenceJustificatifRepository->findByEtudiant($this->getUser())]);
     }
 
     /**
@@ -45,9 +45,9 @@ class AbsenceJustificatifController extends BaseController
         EventDispatcherInterface $eventDispatcher,
         Request $request): Response
     {
-        if (null !== $this->getConnectedUser()) {
+        if (null !== $this->getUser()) {
             $absenceJustificatif = new AbsenceJustificatif();
-            $absenceJustificatif->setEtudiant($this->getConnectedUser());
+            $absenceJustificatif->setEtudiant($this->getUser());
             $absenceJustificatif->setSemestre($this->getEtudiantSemestre());
             $absenceJustificatif->setAnneeUniversitaire($this->getAnneeUniversitaire());
             $form = $this->createForm(AbsenceJustificatifType::class, $absenceJustificatif);

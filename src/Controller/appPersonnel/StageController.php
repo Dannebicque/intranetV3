@@ -36,13 +36,13 @@ class StageController extends BaseController
     ): Response {
         if (null !== $this->getConnectedUser()) {
             return $this->render('appPersonnel/stage/index.html.twig', [
-                'stagesEnCours'      => $stageEtudiantRepository->findByPersonnelAnnee($this->getConnectedUser(),
+                'stagesEnCours'      => $stageEtudiantRepository->findByPersonnelAnnee($this->getUser(),
                     $this->dataUserSession->getAnneeUniversitaire()),
-                'stagesHistorique'   => $stageEtudiantRepository->findByPersonnelHistorique($this->getConnectedUser(),
+                'stagesHistorique'   => $stageEtudiantRepository->findByPersonnelHistorique($this->getUser(),
                     $this->dataUserSession->getAnneeUniversitaire()),
-                'alternancesEnCours' => $alternanceRepository->getByPersonnelAndAnneeUniversitaire($this->getConnectedUser(),
+                'alternancesEnCours' => $alternanceRepository->getByPersonnelAndAnneeUniversitaire($this->getUser(),
                     $this->dataUserSession->getAnneeUniversitaire()),
-                'alternancesHistorique' => $alternanceRepository->getHistoriqueByPersonnelAndAnneeUniversitaire($this->getConnectedUser(),
+                'alternancesHistorique' => $alternanceRepository->getHistoriqueByPersonnelAndAnneeUniversitaire($this->getUser(),
                     $this->dataUserSession->getAnneeUniversitaire()),
             ]);
         }
@@ -57,10 +57,10 @@ class StageController extends BaseController
     public function exportStage(MyExport $myExport, StageEtudiantRepository $stageEtudiantRepository, $periode, $_format): Response
     {
         if ('courant' === $periode) {
-            $stages = $stageEtudiantRepository->findByPersonnelAnnee($this->getConnectedUser(),
+            $stages = $stageEtudiantRepository->findByPersonnelAnnee($this->getUser(),
                 $this->dataUserSession->getAnneeUniversitaire());
         } else {
-            $stages = $stageEtudiantRepository->findByPersonnelHistorique($this->getConnectedUser(),
+            $stages = $stageEtudiantRepository->findByPersonnelHistorique($this->getUser(),
                 $this->dataUserSession->getAnneeUniversitaire());
         }
 
@@ -89,10 +89,10 @@ class StageController extends BaseController
     public function exportAlternance(MyExport $myExport, AlternanceRepository $alternanceRepository, $periode, $_format): Response
     {
         if ('courant' === $periode) {
-            $alternances = $alternanceRepository->getByPersonnelAndAnneeUniversitaire($this->getConnectedUser(),
+            $alternances = $alternanceRepository->getByPersonnelAndAnneeUniversitaire($this->getUser(),
                 $this->dataUserSession->getAnneeUniversitaire());
         } else {
-            $alternances = $alternanceRepository->getHistoriqueByPersonnelAndAnneeUniversitaire($this->getConnectedUser(),
+            $alternances = $alternanceRepository->getHistoriqueByPersonnelAndAnneeUniversitaire($this->getUser(),
                 $this->dataUserSession->getAnneeUniversitaire());
         }
 

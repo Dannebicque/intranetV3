@@ -36,11 +36,11 @@ class StageController extends BaseController
      */
     public function index(StagePeriodeRepository $stagePeriodeRepository): Response
     {
-        $stagePeriodes = $stagePeriodeRepository->findStageEtudiant($this->getConnectedUser()->getSemestre(),
+        $stagePeriodes = $stagePeriodeRepository->findStageEtudiant($this->getUser()->getSemestre(),
             $this->getAnneeUniversitaire());
         $stageEtudiants = [];
 
-        foreach ($this->getConnectedUser()->getStageEtudiants() as $stage) {
+        foreach ($this->getUser()->getStageEtudiants() as $stage) {
             if (null !== $stage->getStagePeriode()) {
                 $stageEtudiants[$stage->getStagePeriode()->getId()] = $stage;
             }
