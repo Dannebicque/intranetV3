@@ -32,7 +32,7 @@ class StageExtension extends AbstractExtension
         ];
     }
 
-    public function transformeFromTwig($message)
+    public function transformeFromTwig(string $message): string
     {
         return str_replace(array_values(StageMailTemplate::CHAMPS_PUBLIPOSTAGE),
             array_keys(StageMailTemplate::CHAMPS_PUBLIPOSTAGE), $message);
