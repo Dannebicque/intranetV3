@@ -949,8 +949,8 @@ commentaire: Commentaire
 commentaire.evaluation: 'Commentaire évaluation'
 commission.des.absences: 'Commission des absences'
 compare:
-  plusinfos:
-    details: 'Plus d''informations'
+  plusinfos.details: 'Plus d''informations'
+  plusinfos.details.title: 'Plus d''informations sur la comparaison EDT/Prévisionnel'
 
 
 competence:
@@ -1736,7 +1736,7 @@ security:
     deverouiller: Déverrouiller
     forgot-password: 'Mot de passe oublié'
     heading: 'Connexion à l''intranet'
-    login: Login
+    login: Connexion "hors URCA"
     password: 'Mot de passe'
     remenber-me: 'Se souvenir de moi'
     sign-with: 'Compte invité'
@@ -1849,7 +1849,7 @@ tab:
   timeline: Timeline
   vosInformations: 'Vos informations'
   vosParametres: 'Vos paramètres'
-
+#Déplacé dans Table, encore utilie ici?
 table:
   typeDestinataire: 'Destinataire'
   appelFait: 'Etat de l''appel'
