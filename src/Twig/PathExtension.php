@@ -34,7 +34,7 @@ class PathExtension extends AbstractExtension
         ];
     }
 
-    public function pathAdmin($path): ?string
+    public function pathAdmin(string $path): ?string
     {
 
         if ($this->security->isGranted('ROLE_ADMINISTRATIF')) {

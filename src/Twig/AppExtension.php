@@ -51,12 +51,12 @@ class AppExtension extends AbstractExtension
         ];
     }
 
-    public function formatHeure($heure)
+    public function formatHeure(string $heure): string
     {
         return 1 === mb_strlen($heure) ? '0' . $heure : $heure;
     }
 
-    public function formatNote($note, $nbdecimales = 2, $seuil = 10)
+    public function formatNote(float $note, int $nbdecimales = 2, float $seuil = 10): string
     {
         if ($note < $seuil) {
             return '<span class="badge bg-warning">' . number_format($note, $nbdecimales) . '</span>';
@@ -65,7 +65,7 @@ class AppExtension extends AbstractExtension
         return number_format($note, $nbdecimales);
     }
 
-    public function formatDifference($valeur)
+    public function formatDifference($valeur): string
     {
         if (0 !== $valeur) {
             return '<span class="badge bg-warning">' . $valeur . '</span>';
@@ -83,7 +83,7 @@ class AppExtension extends AbstractExtension
         ];
     }
 
-    public function border($statut): string
+    public function border(string $statut): string
     {
         return match ($statut) {
             Personnel::ADMINISTRATIF, Personnel::ASSISTANTE => 'card-outline-warning',
@@ -94,7 +94,7 @@ class AppExtension extends AbstractExtension
 
     public function age($dateNaissance): string
     {
-        return Carbon::instance($dateNaissance)->age;
+        return (string)Carbon::instance($dateNaissance)->age;
     }
 
     public function bg($value): string
@@ -122,17 +122,17 @@ class AppExtension extends AbstractExtension
         return $html;
     }
 
-    public function mailto($email): string
+    public function mailto(string $email): string
     {
         return '<a href="mailto:' . $email . '" target="_blank">' . $email . '</a>';
     }
 
-    public function link($link): string
+    public function link(string $link): string
     {
         return '<a href="' . $link . '" target="_blank">' . $link . '</a>';
     }
 
-    public function upper($texte): string
+    public function upper(string $texte): string
     {
         return mb_strtoupper($texte);
     }
@@ -152,7 +152,7 @@ class AppExtension extends AbstractExtension
         $this->config = $config;
     }
 
-    public function getSetting($name): string
+    public function getSetting(string $name): string
     {
         return $this->config->get($name);
     }
@@ -167,7 +167,7 @@ class AppExtension extends AbstractExtension
         return str_replace(['<strong>', '</strong>'], '', $texte);
     }
 
-    public function badge($number): ?string
+    public function badge(float|int $number): ?string
     {
         if ($number >= 5 && $number < 10) {
             return 'badge bg-warning';
@@ -184,7 +184,7 @@ class AppExtension extends AbstractExtension
         return '';
     }
 
-    public function keyWords($text)
+    public function keyWords(string $text): string
     {
         $t = explode(',', $text);
         $html = '';
@@ -197,7 +197,7 @@ class AppExtension extends AbstractExtension
         return $html;
     }
 
-    public function telFormat($number): ?string
+    public function telFormat(string $number): ?string
     {
         return Tools::telFormat($number);
     }
