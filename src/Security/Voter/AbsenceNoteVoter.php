@@ -54,7 +54,7 @@ class AbsenceNoteVoter extends Voter
                     'typeMatiere' => $subject->typeMatiere,
                     'idMatiere' => $subject->id
                 ]);
-                if (null === $previ) {
+                if (count($previ) === 0) {
                     throw new AccessDeniedException('Vous ne pouvez pas saisir d\'absence dans cette matière/ressource/SAÉ');
                 }
                 break;
@@ -64,7 +64,7 @@ class AbsenceNoteVoter extends Voter
                     'typeMatiere' => $subject->typeMatiere,
                     'idMatiere' => $subject->id
                 ]);
-                if (null === $previ) {
+                if (count($previ) === 0) {
                     throw new AccessDeniedException('Vous ne pouvez pas saisir d\'évaluation dans cette matière/ressource/SAÉ');
                 }
                 break;

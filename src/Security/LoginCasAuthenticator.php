@@ -16,7 +16,7 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
 use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
-use Symfony\Component\Security\Http\Authenticator\Passport\PassportInterface;
+use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPassport;
 
 class LoginCasAuthenticator extends AbstractAuthenticator
@@ -36,7 +36,7 @@ class LoginCasAuthenticator extends AbstractAuthenticator
         return '/sso/cas' === $request->getPathInfo();
     }
 
-    public function authenticate(Request $request): PassportInterface
+    public function authenticate(Request $request): Passport
     {
         $username = $this->getCredentials();
         if (null === $username) {
@@ -48,12 +48,11 @@ class LoginCasAuthenticator extends AbstractAuthenticator
         return new SelfValidatingPassport(new UserBadge($username));
     }
 
-    public function getCredentials()
+    public function getCredentials(): ?string
     {
         $cas_host = $this->parameterBag->get('CAS_HOST');
         $cas_context = $this->parameterBag->get('CAS_CONTEXT');
         $cas_port = (int)$this->parameterBag->get('CAS_PORT');
-        //todo: ajouter le certificat ?
         phpCAS::setVerbose(true);
         phpCAS::client(CAS_VERSION_2_0, $cas_host, $cas_port, $cas_context);
         phpCAS::setFixedServiceURL($this->urlGenerator->generate('cas_return', [],
@@ -82,9 +81,8 @@ class LoginCasAuthenticator extends AbstractAuthenticator
         ];
 
         $def_response = new JsonResponse($data, 403);
-        $event = new CASAuthenticationFailureEvent($request, $exception, $def_response);
 
-        return $event->getResponse();
+        return (new CASAuthenticationFailureEvent($request, $exception, $def_response))->getResponse();
     }
 
     public function start(Request $request, AuthenticationException $authException = null): Response
