@@ -17,5 +17,7 @@ export const app = startStimulusApp(require.context(
 // app.register('some_controller_name', SomeImportedController);
 /* Stimulus controller */
 import Clipboard from 'stimulus-clipboard'
+import Notification from "stimulus-notification"
 
 app.register('clipboard', Clipboard)
+app.register('notification', Notification)
