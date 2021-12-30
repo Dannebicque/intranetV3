@@ -275,7 +275,7 @@ class MyEvaluation
     /**
      * @throws Exception
      */
-    public function importEvaluation(Evaluation $evaluation, string $fichier, Semestre $semestre): ?array
+    public function importEvaluation(Evaluation $evaluation, string $fichier, Semestre $semestre): bool
     {
         $t = explode('.', $fichier);
         $extension = $t[count($t) - 1];
@@ -283,23 +283,19 @@ class MyEvaluation
         switch ($extension) {
             case 'xlsx':
                 $data = $this->importXlsx($fichier);
-                $notes = $this->insertNotes($evaluation, $data, $semestre);
-                break;
+                return $this->insertNotes($evaluation, $data, $semestre);
             case 'csv':
                 $data = $this->importCsv($fichier);
-                $notes = $this->insertNotes($evaluation, $data, $semestre);
-                break;
+                return $this->insertNotes($evaluation, $data, $semestre);
             default:
-                return []; //erreur
+                return false; //erreur
         }
-
-        return $notes; //erreur
     }
 
     /**
      * @throws Exception
      */
-    private function insertNotes(Evaluation $evaluation, $data, Semestre $semestre): array
+    private function insertNotes(Evaluation $evaluation, $data, Semestre $semestre): bool
     {
         $evaluation->setVisible(false); //on masque l'évaluation le temps de l'import et de la vérification
         $notes = [];
@@ -315,19 +311,11 @@ class MyEvaluation
         }
 
         foreach ($data as $note) {
-            if (array_key_exists((string)$note['num_etudiant'], $etudiants)) {
-                if (array_key_exists((string)$note['num_etudiant'],
-                        $notes) && -0.01 !== $notes[$note['num_etudiant']]) {
-                    //déjà une note, on ne remplace pas. On récupère les éléments pour alimenter le tableau
-                    $newnote = [];
-                    $newnote['idetudiant'] = $notes[$note['num_etudiant']]->getEtudiant()->getId();
-                    $newnote['numetudiant'] = $note['num_etudiant'];
-                    $newnote['note'] = $notes[$note['num_etudiant']]->getNote();
-                    $newnote['commentaire'] = $notes[$note['num_etudiant']]->getCommentaire();
-                    $newnote['absenceJustifie'] = false;
-                    $newnote['dejapresente'] = true; //on indique qu'on ne remplace pas car déjà existante
-                    $notes[$etudiants[$note['num_etudiant']]->getId()] = $newnote;
-                } else {
+            if (array_key_exists($note['num_etudiant'], $etudiants)) {
+               if (array_key_exists($note['num_etudiant'], $notes) && -0.01 === $notes[$note['num_etudiant']]) {
+                  //une note = -0.01, on met à jour...
+                    $notes[$note['num_etudiant']]->setNote(Tools::convertToFloat($note['note']));
+                } elseif (!array_key_exists($note['num_etudiant'], $notes)) {
                     //pas de note, on ajoute
                     $nnnote = new Note();
                     $nnnote->setEvaluation($evaluation);
@@ -335,20 +323,12 @@ class MyEvaluation
                     $nnnote->setCommentaire($note['commentaire']);
                     $nnnote->setNote(Tools::convertToFloat($note['note']));
                     $this->entityManager->persist($nnnote);
-                    $newnote = [];
-                    $newnote['idetudiant'] = $etudiants[$note['num_etudiant']]->getId();
-                    $newnote['numetudiant'] = $note['num_etudiant'];
-                    $newnote['note'] = Tools::convertToFloat($note['note']);
-                    $newnote['commentaire'] = $note['commentaire'];
-                    $newnote['absenceJustifie'] = false;
-                    $newnote['dejapresente'] = false; //on indique qu'on remplace  car pas de notes
-                    $notes[$etudiants[$note['num_etudiant']]->getNumEtudiant()] = $newnote;
                 }
             }
         }
         $this->entityManager->flush();
 
-        return $notes;
+        return true;
     }
 
     private function importXlsx(string $fichier): array

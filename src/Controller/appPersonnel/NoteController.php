@@ -169,16 +169,10 @@ class NoteController extends BaseController
         }
 
         //traitement de l'import des notes.
-        $notes = $myEvaluation->importEvaluation($evaluation, $fichier, $matiere->semestre);
+        $myEvaluation->importEvaluation($evaluation, $fichier, $matiere->semestre);
         $this->addFlashBag('success', 'import_note_a_verifier');
 
-        return $this->render('appPersonnel/note/saisie_2.html.twig', [
-            'evaluation' => $evaluation,
-            'notes' => $notes,
-            'import' => true,
-            'autorise' => true,
-            'matiere' => $matiere,
-        ]);
+        return $this->redirectToRoute('administration_evaluation_show', ['uuid' => $evaluation->getUuidString()]);
     }
 
     /**

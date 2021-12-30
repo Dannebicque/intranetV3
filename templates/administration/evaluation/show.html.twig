@@ -37,9 +37,11 @@
             <h4 class="card-title"><strong>Détails</strong> de l'évaluation | {{ matiere.display }}
                                                             | {{ evaluation.libelle }}</h4>
             <ul class="card-controls">
-                <li><a class="card-btn-slide" href="#" title="Plus de détails et modifications" data-bs-toggle="tooltip"
+                <li><a class="card-btn-slide btn-warning text-white" href="#" title="Plus de détails et modifications"
+                       data-bs-toggle="tooltip"
                        data-bs-placement="bottom">
-                        Cliquez pour éditer l'évaluation <i class="fas fa-chevron-down"></i>
+                        <i class="{{ iconEdit }}"></i> Cliquez pour éditer l'évaluation <i class="fas
+                        fa-chevron-down"></i>
                     </a></li>
             </ul>
         </header>
