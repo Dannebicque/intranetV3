@@ -37,6 +37,7 @@
     "babel-preset-es2015": "^6.24.1",
     "flatpickr": "^4.6.9",
     "html-loader": "^3.0.1",
+    "stimulus-notification": "^2.0.0",
     "tom-select": "^2.0.0-rc.5",
     "webpack-bundle-analyzer": "^4.4.2",
     "webpack-notifier": "^1.6.0"
