@@ -334,9 +334,7 @@
                     </h1>
                     {% block breadcrumbs %}
                         <!-- breadcrumb -->
-                        {{ render_esi(controller(
-                            'App\\Controller\\BreadcrumbController::display', {header: block('header')}
-                        )) }}
+                        {{ breandcrumbs_render() }}
                         <!-- END breadcrumb -->
                     {% endblock %}
                 </div>

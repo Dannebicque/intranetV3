@@ -10,6 +10,7 @@
 namespace App\Controller;
 
 use App\Classes\DataUserSession;
+use App\Components\Breadcrumbs\BreadcrumbHelper;
 use App\Components\Table\DTO\Table;
 use App\Components\Table\TableFactory;
 use App\Entity\AnneeUniversitaire;
@@ -30,10 +31,9 @@ class BaseController extends AbstractController
 {
     public const BAG_TOAST = 'toast';
     protected DataUserSession $dataUserSession;
-
     protected EntityManagerInterface $entityManager;
-
     protected TranslatorInterface $translator;
+    protected BreadcrumbHelper $breadcrumbHelper;
 
     public static function getSubscribedServices(): array
     {
@@ -53,6 +53,8 @@ class BaseController extends AbstractController
         return $this->get(TableFactory::class)->create($type, $options);
     }
 
+
+
     #[Required]
     public function setEntityManager(EntityManagerInterface $entityManager): void
     {
@@ -63,6 +65,12 @@ class BaseController extends AbstractController
     public function setTranslator(TranslatorInterface $translator): void
     {
         $this->translator = $translator;
+    }
+
+    #[Required]
+    public function setBreadcrumbHelper(BreadcrumbHelper $breadcrumbHelper): void
+    {
+        $this->breadcrumbHelper = $breadcrumbHelper;
     }
 
     public function addFlashBag($niveau, $cleTraduction)

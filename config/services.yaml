@@ -66,3 +66,11 @@ services:
     App\EventListener\LoggedOutAjaxListener:
       tags:
         - { name: kernel.event_listener, event: kernel.exception, priority: 8 }
+
+    breadcrumbs_bundle.helper.breadcrumbs:
+        class: App\Components\Breadcrumbs\BreadcrumbHelper
+        arguments:
+            - "@router"
+
+    App\Components\Breadcrumbs\BreadcrumbHelper:
+        alias: breadcrumbs_bundle.helper.breadcrumbs
