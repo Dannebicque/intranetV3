@@ -1,0 +1,38 @@
+<ol class="breadcrumb">
+    {% if breadcrumbs|length > 0 %}
+        {% set lastIndex = breadcrumbs|length - 1 %}
+        {% set lastItem = breadcrumbs|last %}
+
+        {% for item in breadcrumbs|slice(0, lastIndex) %}
+            <li class="breadcrumb-item text-capitalize">
+                <a href="{{ item.url }}"
+                   title="{% if item.translatable %}{{ item.label|trans(item.transParameters, item.transDomain) }}{% else %}{{ item.label }}{% endif %}">
+                    {% if item.icone != '' %}
+                        <i class="{{ item.icone }}"></i>
+                        <span class="sr-only">
+                                {% if item.translatable %}
+                                    {{ item.label|trans(item.transParameters, item.transDomain) }}
+                                {% else %}
+                                    {{ item.label }}
+                                {% endif %}
+                            </span>
+                    {% else %}
+                        {% if item.translatable %}
+                            {{ item.label|trans(item.transParameters, item.transDomain) }}
+                        {% else %}
+                            {{ item.label }}
+                        {% endif %}
+                    {% endif %}
+                </a>
+            </li>
+        {% endfor %}
+
+        <li class="breadcrumb-item active text-capitalize" aria-current="page">
+            {% if lastItem.translatable %}
+                {{ lastItem.label|trans(lastItem.transParameters, lastItem.transDomain) }}
+            {% else %}
+                {{ lastItem.label }}
+            {% endif %}
+        </li>
+    {% endif %}
+</ol>
