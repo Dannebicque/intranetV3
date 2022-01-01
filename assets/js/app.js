@@ -27,6 +27,7 @@ export const LANG = document.querySelector('html').getAttribute('lang')
 
 window.da = {
   LANG: LANG,
+  loaderStimulus: '<div class="loader-stimulus text-center">... Chargement en cours ...</div>',
   loader: document.getElementById('loader'),
 }
 

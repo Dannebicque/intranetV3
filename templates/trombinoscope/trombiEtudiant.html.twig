@@ -5,7 +5,8 @@
                 <span id="trombifiltre">
                     {% for typegr in semestre.typeGroupes %}
                         <a href="#"
-                           class="btn btn-sm btn {% if (selectedTypeGroupe == null and typegr.defaut == false) or (selectedTypeGroupe != null and selectedTypeGroupe.id != typegr.id) %}btn-flat{% endif %} btn-info changeTypeGroupe"
+                           class="btn btn-sm btn {% if (selectedTypeGroupe == null and typegr.defaut == false) or (selectedTypeGroupe != null and selectedTypeGroupe.id != typegr.id) %}btn-flat{% endif %} btn-info"
+                           data-action="click->trombinoscope#changementTypegroupe"
                            data-semestre="{{ semestre.id }}" data-typegroupe="{{ typegr.id }}"> {{ typegr.libelle }}</a>
                     {% endfor %}
 
@@ -53,8 +54,8 @@
                     {% for groupe in groupes %}
                         <div class="tab-pane {% if loop.first %}fade active show{% endif %}" id="groupe_{{ groupe.id }}">
                             <div class="row">
-                                {% if groupe.etudiants|length >0 %}
-                                    {% for etudiant in groupe.etudiants %}
+                                {% if etudiants[groupe.id]|length >0 %}
+                                    {% for etudiant in etudiants[groupe.id] %}
                                         <div class="col-sm-6 col-md-4 col-lg-3 mb-30">
                                             <div class="text-white card-body bg-cyan py-20"
                                                  style="min-height: 230px">
@@ -70,33 +71,45 @@
                                                     </a>
                                                     <div class="flex-grow pl-20">
                                                         <div><i class="fa fa-fw fa-map-marker w-20px"></i>
-                                                            {% for grEtu in etudiant.groupes %}{{ grEtu.libelle }} {% endfor %}
+                                                            {% for grEtu in etudiantGroupes[etudiant.id] %}<span
+                                                                    class="badge bg-primary">{{ grEtu }}</span> {% endfor %}
                                                         </div>
                                                         <div>
                                                             <i class="fa fa-fw fa-envelope w-20px"></i>
                                                             <a href="mailto:{{ etudiant.mailUniv }}" target="_blank"
                                                                class="text-white"
-                                                               title="Contacter" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                                            >Contacter
+                                                               title="{{ 'contacter'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                            >
+                                                                {{ 'contacter'|trans }}
                                                             </a>
                                                         </div>
                                                         <div>
                                                             {% if etudiant.siteUniv != '' and etudiant.siteUniv != null %}
                                                                 <a href="{{ etudiant.siteUniv }}"
                                                                    class="text-white"
-                                                                   target="_blank" title="Site Universitaire" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                                   target="_blank" title="{{ 'site_universitaire'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
                                                                 >
                                                                     <i class="fa fa-fw fa-globe w-20px"></i>
-                                                                    <span class="sr-only">Site Universitaire</span>
+                                                                    <span class="sr-only">{{ 'site_universitaire'|trans }}</span>
                                                                 </a>
                                                             {% endif %}
                                                             {% if etudiant.sitePerso != '' and etudiant.sitePerso != null %}
                                                                 <a href="{{ etudiant.sitePerso }}"
                                                                    class="text-white"
-                                                                   target="_blank" title="Site personnel" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                                   target="_blank" title="{{ 'site_personnel'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
                                                                 >
                                                                     <i class="fa fa-fw fa-link"></i>
-                                                                    <span class="sr-only">Site personnel</span>
+                                                                    <span class="sr-only">{{ 'site_personnel'|trans }}</span>
+                                                                </a>
+                                                            {% endif %}
+                                                            {% if semestre.diplome.typeDiplome.apc == true %}
+                                                                <a href="#"
+                                                                   class="text-white"
+                                                                   target="_blank" title="{{ 'portfolio_de_comptences'|trans }}"
+                                                                   data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                                >
+                                                                    <i class="fa fa-fw fa-book-open"></i>
+                                                                    {{ 'portfolio_comptences'|trans }}
                                                                 </a>
                                                             {% endif %}
                                                         </div>
@@ -107,12 +120,12 @@
                                                                 <i class="fa fa-heart"></i>
                                                             </label>
                                                         {% endif %}
-                                                        {% if is_granted('ROLE_PERMANENT') and user_data.user.id == 1 %}
-                                                            <button class="removeEtudiantDepartement btn
-                                                        btn-danger" data-etudiant="{{ etudiant.id }}">
-                                                                Effacer département
-                                                            </button>
-                                                        {% endif %}
+{#                                                        {% if is_granted('ROLE_PERMANENT') and user_data.user.id == 1 %}#}
+{#                                                            <button class="removeEtudiantDepartement btn#}
+{#                                                        btn-danger" data-etudiant="{{ etudiant.id }}">#}
+{#                                                                Effacer département#}
+{#                                                            </button>#}
+{#                                                        {% endif %}#}
                                                     </div>
                                                 </div>
                                                 <h4>

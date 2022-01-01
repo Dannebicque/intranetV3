@@ -17,6 +17,7 @@ use App\Entity\Constantes;
 use App\Entity\Groupe;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
+use App\Repository\EtudiantRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\PersonnelRepository;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
@@ -35,11 +36,17 @@ use Twig\Error\SyntaxError;
  */
 class TrombinoscopeController extends BaseController
 {
+    public function __construct()
+    {
+
+    }
+
     /**
      * @Route("/", name="trombinoscope_index")
      */
     public function index(): Response
     {
+        $this->breadcrumbHelper->addItem('trombinoscope', 'trombinoscope_index');
         return $this->render('trombinoscope/index.html.twig', [
         ]);
     }
@@ -119,6 +126,7 @@ class TrombinoscopeController extends BaseController
      * @ParamConverter("typegroupe", options={"id" = "typegroupe"})
      */
     public function trombiEtudiantSemestre(
+        EtudiantRepository $etudiantRepository,
         GroupeRepository $groupeRepository,
         Semestre $semestre,
         ?TypeGroupe $typegroupe = null
@@ -139,6 +147,8 @@ class TrombinoscopeController extends BaseController
             'semestre' => $semestre,
             'selectedTypeGroupe' => $typegroupe,
             'groupes' => $groupes,
+            'etudiants' => $groupeRepository->getEtudiantsByGroupes($typegroupe),
+            'etudiantGroupes' => $etudiantRepository->getEtudiantGroupes($semestre),
         ]);
     }
 
