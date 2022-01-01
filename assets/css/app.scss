@@ -741,3 +741,12 @@ td.td-edt.col-new-day {
   max-height: 300px;
   overflow-y: auto;
 }
+
+.loader-stimulus {
+  padding: 5px;
+  background-color: var(--colorIUTComplementaire);
+  color:var(--colorIUT);
+  font-weight: bold;
+  font-size: 16px;
+  margin-bottom: 10px;
+}

@@ -16,7 +16,6 @@ use App\Entity\Etudiant;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
-use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -56,8 +55,13 @@ class EtudiantRepository extends ServiceEntityRepository
         return $tab;
     }
 
-    public function getByDepartement($departement, $data, int $page = 0, ?int $max = null, bool $getResult = true): mixed
-    {
+    public function getByDepartement(
+        $departement,
+        $data,
+        int $page = 0,
+        ?int $max = null,
+        bool $getResult = true
+    ): mixed {
         //todo: utile ?
         $qb = $this->createQueryBuilder('u');
         $query = isset($data['query']) && $data['query'] ? $data['query'] : null;
@@ -307,5 +311,27 @@ class EtudiantRepository extends ServiceEntityRepository
             ->setParameter('login', $login)
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    public function getEtudiantGroupes(Semestre $semestre)
+    {
+        $query = $this->createQueryBuilder('e')
+            ->select('e.id, g.libelle')
+            ->join('e.groupes', 'g')
+            ->where('e.semestre = :semestre')
+            ->setParameter('semestre', $semestre->getId())
+            ->getQuery()
+            ->getResult();
+
+        $t = [];
+        foreach ($query as $q) {
+            if (!array_key_exists($q['id'], $t)) {
+                $t[$q['id']] = [];
+            }
+            $t[$q['id']][] = $q['libelle'];
+        }
+
+        return $t;
+
     }
 }

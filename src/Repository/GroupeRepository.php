@@ -183,4 +183,23 @@ class GroupeRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function getEtudiantsByGroupes(mixed $typegroupe)
+    {
+
+        $query = $this->createQueryBuilder('g')
+            ->innerJoin('g.etudiants', 'e')
+            ->where('g.typeGroupe = :typegroupe')
+            ->setParameter('typegroupe', $typegroupe->getId())
+            ->getQuery()
+            ->getResult();
+
+        $t = [];
+        foreach ($query as $groupe) {
+            $t[$groupe->getId()] = $groupe->getEtudiants();
+        }
+
+        return $t;
+
+    }
 }

@@ -2327,3 +2327,7 @@ assistant:
     diplome: 'Assistant de création d''un diplôme'
 All: 'Tous'
 None: 'Aucun'
+portfolio_comptences: 'Portfolio Compétences'
+portfolio_de_comptences: 'Portfolio de compétences'
+site_personnel: 'Site personnel'
+site_universitaire: 'Site Universitaire'
