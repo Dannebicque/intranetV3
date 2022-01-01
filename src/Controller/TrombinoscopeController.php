@@ -143,11 +143,17 @@ class TrombinoscopeController extends BaseController
             }
         }
 
+        if ($typegroupe !== null) {
+            $etudiants = $groupeRepository->getEtudiantsByGroupes($typegroupe);
+        } else {
+            $etudiants = [];
+        }
+
         return $this->render('trombinoscope/trombiEtudiant.html.twig', [
             'semestre' => $semestre,
             'selectedTypeGroupe' => $typegroupe,
             'groupes' => $groupes,
-            'etudiants' => $groupeRepository->getEtudiantsByGroupes($typegroupe),
+            'etudiants' => $etudiants,
             'etudiantGroupes' => $etudiantRepository->getEtudiantGroupes($semestre),
         ]);
     }
