@@ -11,6 +11,11 @@ namespace App\Classes\Enquetes;
 
 use App\Classes\Configuration;
 use App\Classes\Excel\MyExcelWriter;
+use App\Components\Questionnaire\TypeQuestion\TypeEchelle;
+use App\Components\Questionnaire\TypeQuestion\TypeLibre;
+use App\Components\Questionnaire\TypeQuestion\TypeOuiNon;
+use App\Components\Questionnaire\TypeQuestion\TypeQcm;
+use App\Components\Questionnaire\TypeQuestion\TypeQcu;
 use App\Entity\Previsionnel;
 use App\Entity\QuestionnaireEtudiantReponse;
 use App\Entity\QuestionnaireQualite;
@@ -286,12 +291,11 @@ class MyEnquete
         }
         $satisfaction = 0;
         $nbProps = 0;
-
         if (in_array($question->getType(), [
-            QuestionnaireQuestion::QUESTION_TYPE_ECHELLE,
-            QuestionnaireQuestion::QUESTION_TYPE_QCM,
-            QuestionnaireQuestion::QUESTION_TYPE_QCU,
-            QuestionnaireQuestion::QUESTION_TYPE_YESNO,
+            TypeEchelle::class,
+            TypeQcm::class,
+            TypeQcu::class,
+            TypeOuiNon::class
         ], true)) {
             if (QuestionnaireSection::DETAIL === $section->getTypeCalcul()) {
                 $this->myExcelWriter->writeCellXY(1, $this->ligne, 'Réponse', ['style' => 'HORIZONTAL_CENTER']);
@@ -359,7 +363,7 @@ class MyEnquete
                     }
                 }
             }
-            if (QuestionnaireQuestion::QUESTION_TYPE_ECHELLE === $question->getType()) {
+            if (TypeEchelle::class === $question->getType()) {
                 //si échelle ... tôt de satisfaction
                 $total = $satisfaction / ($nbProps * ($nbTotalReponseQuestion - $retire));
                 if (QuestionnaireSection::DETAIL === $section->getTypeCalcul()) {
@@ -380,7 +384,7 @@ class MyEnquete
                         ['style' => 'HORIZONTAL_CENTER', 'number_format' => NumberFormat::FORMAT_PERCENTAGE]);
                 }
             }
-        } elseif (QuestionnaireQuestion::QUESTION_TYPE_LIBRE === $question->getType()) {
+        } elseif (TypeLibre::class === $question->getType()) {
             $this->myExcelWriter->writeCellXY(1, $this->ligne, 'Réponse', ['style' => 'HORIZONTAL_CENTER']);
 
             $lgRep = $this->ligne;
