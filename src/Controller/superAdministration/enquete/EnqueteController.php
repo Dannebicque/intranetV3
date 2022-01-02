@@ -180,8 +180,9 @@ class EnqueteController extends BaseController
         PrevisionnelManager $previsionnelManager,
         QuestionnaireQualite $questionnaire
     ): Response {
-        $previsionnel = $previsionnelManager->getPrevisionnelAnneeArray($questionnaire->getSemestre()->getAnnee(),
-            $questionnaire->getSemestre()->getDiplome()->getAnneeUniversitaire()->getAnnee());
+        //todo: utiliser le manager de questionnaire.
+        $previsionnel = $previsionnelManager->getPrevisionnelAnneeArray($questionnaire->getSemestre()?->getAnnee(),
+            $questionnaire->getSemestre()?->getAnneeUniversitaire()?->getAnnee());
 
         return $myEnquete->exportExcel($questionnaire, $previsionnel);
     }

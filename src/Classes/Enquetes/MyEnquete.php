@@ -52,6 +52,7 @@ class MyEnquete
 
     /**
      * MyEnquete constructor.
+     * todo: a revoir et exploiter le composant ?
      */
     public function __construct(
         QuestionnaireEtudiantReponseRepository $quizzEtudiantReponseRepository,
@@ -191,6 +192,7 @@ class MyEnquete
         QuestionnaireSection $section,
         string $config = ''
     ): void {
+
         $libQuestion = '';
         if ('' === $config) {
             $libQuestion = $question->getLibelle();

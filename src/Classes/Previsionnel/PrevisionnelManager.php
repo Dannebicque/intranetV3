@@ -106,6 +106,7 @@ class PrevisionnelManager
         $tPrevisionnel = [];
         foreach ($previsionnels as $p) {
             $tPrevisionnel[$p->id]['matiere'] = $p->matiere_libelle;
+            $tPrevisionnel[$p->id]['libelle'] = $p->matiere_libelle;
             $tPrevisionnel[$p->id]['personnel'] = $p->personnel_prenom . ' ' . $p->personnel_nom;
         }
 
