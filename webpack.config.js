@@ -39,7 +39,6 @@ Encore
   .addEntry('tinyMce', './assets/js/tinyMce.js')
   .addEntry('apc', './assets/js/pages/apc.js')
   .addEntry('agenda', './assets/js/pages/agenda.js')
-  .addEntry('trombinoscope', './assets/js/pages/trombinoscope.js')
   .addEntry('absences', './assets/js/pages/absences.js')
   .addEntry('applications', './assets/js/pages/applications.js')
   .addEntry('profil', './assets/js/pages/profil.js')
