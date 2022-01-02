@@ -52,7 +52,7 @@ class PrevisionnelSectionAdapter extends AbstractSectionAdapter
     public function getAllDataAnnee(Annee $annee, array $selectionnes): array
     {
         $data = [];
-        $previs = $this->previsionnelManager->getPrevisionnelAnnee($annee, 2019); //$annee->getAnneeUniversitaire()
+        $previs = $this->previsionnelManager->getPrevisionnelAnnee($annee, $annee->getAnneeUniversitaire());
         foreach ($previs as $previ) {
             $data[] = [
                 'libelle' => $previ->matiere_libelle,
