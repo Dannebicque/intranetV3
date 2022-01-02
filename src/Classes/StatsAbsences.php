@@ -15,6 +15,7 @@ namespace App\Classes;
 
 use App\DTO\StatisquesAbsences;
 use App\Entity\Absence;
+use Carbon\Carbon;
 use Exception;
 
 class StatsAbsences
@@ -26,17 +27,31 @@ class StatsAbsences
     public function calculStatistiquesAbsencesEtudiant($absences)
     {
         $statisquesAbsences = new StatisquesAbsences();
-
+        $prec = Carbon::createMidnightDate(2000,01,01);
         /** @var Absence $absence */
         foreach ($absences as $absence) {
             ++$statisquesAbsences->nbCoursManques;
+            if ($absence->getDateHeure() !== null) {
+                if ($absence->getDateHeure()->format('Y-m-d') !== $prec->format('Y-m-d')) {
+                    ++$statisquesAbsences->nbDemiJournee;
+                } else {
+                    if ((int)$prec->format('H') < 13 && (int)$absence->getDateHeure()->format('H') >= 13) {
+                        ++$statisquesAbsences->nbDemiJournee;
+                    }
+                }
+                $prec = $absence->getDateHeure();
+            }
+
 
             if (null !== $absence->getDuree()) {
                 $statisquesAbsences->addDuree($absence->getDuree());
             }
             $statisquesAbsences->incJustifieOrNotJutifie($absence->isJustifie());
+
+
         }
 
         return $statisquesAbsences;
+
     }
 }

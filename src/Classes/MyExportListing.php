@@ -274,8 +274,14 @@ class MyExportListing
             $this->myExcelWriter->writeCellXY(4, $ligne,$absence->getEtudiant()?->getNom());
             $this->myExcelWriter->writeCellXY(5, $ligne,$absence->getEtudiant()?->getPrenom());
             $this->myExcelWriter->writeCellXY(6, $ligne,$absence->getJustifie() === true ? 'Oui' : 'Non');
-            $this->myExcelWriter->writeCellXY(7, $ligne,$matieres[$absence->getTypeIdMatiere()]->codeMatiere);
-            $this->myExcelWriter->writeCellXY(8, $ligne,$matieres[$absence->getTypeIdMatiere()]->libelle);
+            if (array_key_exists($absence->getTypeIdMatiere(), $matieres)) {
+                $this->myExcelWriter->writeCellXY(7, $ligne, $matieres[$absence->getTypeIdMatiere()]->codeMatiere);
+                $this->myExcelWriter->writeCellXY(8, $ligne, $matieres[$absence->getTypeIdMatiere()]->libelle);
+            } else {
+                $this->myExcelWriter->writeCellXY(7, $ligne, 'Err');
+                $this->myExcelWriter->writeCellXY(8, $ligne, 'matière non trouvée');
+            }
+
             $this->myExcelWriter->writeCellXY(9, $ligne,$absence->getPersonnel()?->getNom());
             $this->myExcelWriter->writeCellXY(10, $ligne,$absence->getPersonnel()?->getPrenom());
 
