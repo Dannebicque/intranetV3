@@ -10,10 +10,8 @@ export default class extends Controller {
   static targets = ['totalCm']
 
   update () {
-    console.log(this.element)
     const element = this.totalcmTarget
     const totalCm = element.value
-    console.log(`Hello, ${totalCm}!`)
   }
 }
 

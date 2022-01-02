@@ -11,10 +11,6 @@ export default class extends Controller {
     url: String
   }
 
-  connect () {
-    console.log('coucou')
-  }
-
   btnHide(e) {
     this._manageQuestion('hide', e.currentTarget.dataset.question)
   }
@@ -36,7 +32,6 @@ export default class extends Controller {
   }
 
   btnAdd() {
-    console.log(this.selectedQuestionTarget.value)
     this._manageQuestion('add', this.selectedQuestionTarget.value)
 
   }
