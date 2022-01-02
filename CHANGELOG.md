@@ -2,6 +2,51 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.5.0](https://github.com/Dannebicque/intranetV3/compare/v3.4.10...v3.5.0) (2022-01-02)
+
+
+### Features
+
+* Nouveau composant de Breadcrumb ([03c2cba](https://github.com/Dannebicque/intranetV3/commit/03c2cba545c6a10e301ee385e9b853321e8b1ce3))
+
+
+### Bug Fixes
+
+* Affichage des bilans juste pour les permanents. ([25892ea](https://github.com/Dannebicque/intranetV3/commit/25892ea15d0b9ff7649a249d0294f45da81a1504))
+* Allégement secu trop restrictive StageEtudiantController.php ([15d26ae](https://github.com/Dannebicque/intranetV3/commit/15d26aead3d44f58cc0d3b570b688994847754d7))
+* Amélioration et optimisation de la page trombinoscope. Utilisation de Stimulus. ([e343aa2](https://github.com/Dannebicque/intranetV3/commit/e343aa24f686b1be12ca222b8e7372d6ebc0f216))
+* Améliorations import de notes ([15b2324](https://github.com/Dannebicque/intranetV3/commit/15b2324719f4dd39aa2acf5e388a47a17d291fd5))
+* ARetour ancien editjs. Nouveau pas suffisament testé ([508454a](https://github.com/Dannebicque/intranetV3/commit/508454a7595ed5c715eafe16a1e853d626b27413))
+* assets ([8ab6aa6](https://github.com/Dannebicque/intranetV3/commit/8ab6aa68ee2989c90e4569a640dd1a7e27d85bfb))
+* Borne et cross-origin ([4ef46e3](https://github.com/Dannebicque/intranetV3/commit/4ef46e3699b08a702cff5540f64de72434496f7d))
+* Bug sauvegarde réponse questionnaires ([e23b739](https://github.com/Dannebicque/intranetV3/commit/e23b7394bdcf19de9d9067fa990dab8d6e13e358))
+* Composants Tableau ([6ce3858](https://github.com/Dannebicque/intranetV3/commit/6ce3858765df28920bfaa9734cf2421ccd6fb118))
+* Configuration d'un questionnaire, et modal avec validation ([6960b08](https://github.com/Dannebicque/intranetV3/commit/6960b08796653fa003112e361bb7d3e008db0bf1))
+* Divers correctifs, améliorations, typos, code quality ([4c9ddf2](https://github.com/Dannebicque/intranetV3/commit/4c9ddf220af079f4d3d16c6de75884c507382aac))
+* Divers correctifs, améliorations, typos, code quality ([bb7f076](https://github.com/Dannebicque/intranetV3/commit/bb7f0763aaad0b2d5a9b7060f25a3bce764877b5))
+* Divers correctifs, améliorations, typos, code quality ([025514a](https://github.com/Dannebicque/intranetV3/commit/025514a038d217835fffc45552ff6310715c7025))
+* Export questionnaires ([4387abf](https://github.com/Dannebicque/intranetV3/commit/4387abf69e789371731051d1fc43cfd27e2b6ae9))
+* Export questionnaires ([2dcdea7](https://github.com/Dannebicque/intranetV3/commit/2dcdea7fb3595b7a4f02d9ca179f950f1236b9ff))
+* Fin de questionnaire avec redirection. ([362e908](https://github.com/Dannebicque/intranetV3/commit/362e9085297a733043ffde61876aef8b4b7ecf00))
+* Groupe par défaut pour l'appel ([1e8a6bd](https://github.com/Dannebicque/intranetV3/commit/1e8a6bde55f8cab41b52cccb0e999531b0c11be8))
+* Groupe par défaut pour l'appel ([aab4bd2](https://github.com/Dannebicque/intranetV3/commit/aab4bd270148c3fb1d9a23a7eec408036ea055f0))
+* Message RDD ([07f068b](https://github.com/Dannebicque/intranetV3/commit/07f068bdd7644d12159b36ad45c770dab5f60321))
+* Nettoyage des tests ([06eb837](https://github.com/Dannebicque/intranetV3/commit/06eb837a7ae2685478e57a2b4b8b764a9cef4e11))
+* Questions chainées et configurables ([1a4a90c](https://github.com/Dannebicque/intranetV3/commit/1a4a90cfbfe3acd41b4b8080c452c2b359cb8ff3))
+* Questions chainées et configurables ([aba41c5](https://github.com/Dannebicque/intranetV3/commit/aba41c58524568bb9d295c5a0921b1f32947fc32))
+* Questions chainées et configurables ([804beaf](https://github.com/Dannebicque/intranetV3/commit/804beafca465dc8f823460741c82615fcf0dc240))
+* Suppression de l'easter-eggs ([f5116c7](https://github.com/Dannebicque/intranetV3/commit/f5116c7c7c181fb323bb878de3939f8307e8c7e6))
+* Suppression des debugs ([48b1529](https://github.com/Dannebicque/intranetV3/commit/48b15291f6182f5acb1a24b5fb85cd558c1ee96e))
+* Suspension de la validation automatique pour le moment ([073f058](https://github.com/Dannebicque/intranetV3/commit/073f05849c491726bcb838969e887a27fe25908e))
+* Système de notification avec Stimulus ([ff4d901](https://github.com/Dannebicque/intranetV3/commit/ff4d901f0fafff0eb91bd462ba6c26d17095fa36))
+* Système de notification avec Stimulus ([56ea828](https://github.com/Dannebicque/intranetV3/commit/56ea82813d548c4bdf4aac853a8c8384fae3cd22))
+* traductions et typos ([7f6bd0a](https://github.com/Dannebicque/intranetV3/commit/7f6bd0a8b98a6685a413886839ddd9b49e8b0da7))
+* Trombinoscope sans type de groupe ([6dda073](https://github.com/Dannebicque/intranetV3/commit/6dda073ebf4fe45059dde17afa78c99bcceb02a9))
+* typos, améliorations, typage, code quality ([7bb1066](https://github.com/Dannebicque/intranetV3/commit/7bb10665f31488ff3ab99e091d0cc4b815071891))
+* typos, améliorations, typage, code quality ([a1fc231](https://github.com/Dannebicque/intranetV3/commit/a1fc2310e79568fa92ddd98692a183a01112b051))
+* typos, améliorations, typage, code quality ([431db7a](https://github.com/Dannebicque/intranetV3/commit/431db7a57c6657a775a315926b0593c539bc8037))
+* URL de retour après le questionnaire ([5645a3f](https://github.com/Dannebicque/intranetV3/commit/5645a3fc3a29362102d37c9cb1c6d3a52a0936e2))
+
 ### [3.4.10](https://github.com/Dannebicque/intranetV3/compare/v3.4.9...v3.4.10) (2021-12-12)
 
 
