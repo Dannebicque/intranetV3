@@ -82,7 +82,7 @@ export default class extends Controller {
   }
 
   async _getPage () {
-    this.pageTarget.innerHTML = '... Chargement en cours ...'
+    this.pageTarget.innerHTML = window.da.loaderStimulus
     var myHeaders = new Headers();
 
     var myInit = { method: 'POST',

@@ -19,6 +19,7 @@ use App\Entity\TypeDiplome;
 use App\Form\Type\SearchType;
 use App\Table\ColumnType\NbEtudiantsColumnType;
 use App\Table\ColumnType\DepartementsColumnType;
+use App\Table\ColumnType\SemestresAvecActifColumnType;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -29,14 +30,14 @@ class EnqueteQualiteDiplomesTableType extends TableType
     {
         $builder->addFilter('search', SearchType::class);
         $builder->addFilter('diplome', EntityType::class,
-            ['class' => Diplome::class, 'choice_label' => 'displayCourt', 'required' => false]);
+            ['class' => Diplome::class, 'choice_label' => 'displayCourt', 'required' => false, 'placeholder' => 'filtre.diplome', 'translation_domain' => 'table']);
         $builder->addFilter('typeDiplome', EntityType::class,
-            ['class' => TypeDiplome::class, 'choice_label' => 'libelle', 'required' => false]);
+            ['class' => TypeDiplome::class, 'choice_label' => 'libelle', 'required' => false,  'placeholder' => 'filtre.typeDiplome', 'translation_domain' => 'table']);
 
         $builder->addColumn('typeDiplome', EntityColumnType::class, ['label' => 'table.typeDiplome', 'display_field' => 'libelle']);
         $builder->addColumn('libelle', PropertyColumnType::class, ['label' => 'table.libelle']);
         $builder->addColumn('id', NbEtudiantsColumnType::class, ['label' => 'table.nbEtudiants','effectifs' => $options['effectifs']]);
-        $builder->addColumn('semestres', DepartementsColumnType::class, ['label' => 'table.semestre']);
+        $builder->addColumn('semestres', SemestresAvecActifColumnType::class, ['label' => 'table.semestre']);
 
         $builder->setLoadUrl('administratif_enquete_index');
 

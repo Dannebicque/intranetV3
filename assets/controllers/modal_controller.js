@@ -11,7 +11,9 @@ export default class extends Controller {
   static values = {
     modalUrl: String,
     modalTitle: String,
+    formAction: String,
     size: {type: String, default:'md'},
+    form: {type: Boolean, default:false},
     params: Array
   }
 
@@ -21,6 +23,12 @@ export default class extends Controller {
 
   openModal (event) {
     event.preventDefault()
-    this.dispatch("openModal", { url: this.modalUrlValue, size: this.sizeValue, params: this.paramsValue, title: this.modalTitleValue })
+    this.dispatch("openModal", {
+      url: this.modalUrlValue,
+      formAction: this.formActionValue,
+      form: this.formValue,
+      size: this.sizeValue,
+      params: this.paramsValue,
+      title: this.modalTitleValue })
   }
 }

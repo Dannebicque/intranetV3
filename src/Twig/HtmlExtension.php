@@ -12,6 +12,7 @@ class HtmlExtension extends AbstractExtension
     {
         return [
             new TwigFilter('fqn', [$this, 'fqn']),
+            new TwigFilter('deuxDigits', [$this, 'deuxDigits']),
         ];
     }
 
@@ -20,5 +21,10 @@ class HtmlExtension extends AbstractExtension
         $object = new ReflectionClass($value);
         return $object->getNamespaceName().'\\'.$object->getShortName();
 
+    }
+
+    public function deuxDigits(string $value): string
+    {
+        return sprintf('%02d', $value);
     }
 }

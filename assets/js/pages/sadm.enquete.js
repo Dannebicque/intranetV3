@@ -8,7 +8,6 @@ import {post} from '../fetch'
 import {addCallout} from '../util'
 
 window.addEventListener('load', function () {
-
   document.querySelectorAll('.validConfiguration').forEach((elem) => {
     elem.addEventListener('click', (e) => {
       e.preventDefault()

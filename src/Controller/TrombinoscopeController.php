@@ -29,21 +29,10 @@ use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
-/**
- * Class TrombinoscopeController.
- *
- * @Route("/trombinoscope")
- */
+#[Route("/trombinoscope")]
 class TrombinoscopeController extends BaseController
 {
-    public function __construct()
-    {
-
-    }
-
-    /**
-     * @Route("/", name="trombinoscope_index")
-     */
+    #[Route("/", name:"trombinoscope_index")]
     public function index(): Response
     {
         $this->breadcrumbHelper->addItem('trombinoscope', 'trombinoscope_index');

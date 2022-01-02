@@ -6,16 +6,33 @@
 
 import { Controller } from '@hotwired/stimulus'
 import {Modal} from 'bootstrap'
+import {addCallout} from '../js/util'
 
 export default class extends Controller {
   static targets = ['modal', 'modalBody', 'modalTitle', 'size']
   modal = null
 
+  submitForm (event) {
+    const form = this.element.getElementsByTagName('form')[0]
+    fetch(form.action, {
+      method: form.method,
+      body: new URLSearchParams(new FormData(form)),
+    }).then(() => {
+      addCallout( 'Modification effectuée','success')
+    })
+  }
+
   async openModal (event) {
-    this.modalBodyTarget.innerHTML = '... Chargement en cours ...'
+    this.modalBodyTarget.innerHTML = window.da.loaderStimulus
     this.modalTitleTarget.innerHTML = event.detail.title
 
-    document.getElementById('stimulus_modal').classList.add('modal-' + event.detail.size) //todo: gérer valeur par défaut
+    if (event.detail.form === true) {
+      document.getElementById('btn_modal_submit').classList.remove('d-none')
+      console.log(this.element)
+      this.element.getElementsByTagName('form')[0].action = event.detail.formAction
+    }
+
+    document.getElementById('stimulus_modal').classList.add('modal-' + event.detail.size)
 
     this.modal = new Modal(this.modalTarget)
     this.modal.show()

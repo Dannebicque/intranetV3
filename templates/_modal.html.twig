@@ -4,26 +4,33 @@
      data-base-target="modal">
     <div class="modal-dialog" id="stimulus_modal">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title"
-                data-base-target="modalTitle">... Chargement ...</h5>
-                <button type="button" class="btn-close"
-                        data-bs-dismiss="modal"
-                        data-action="base#modalClose"
-                        aria-label="Close"></button>
-            </div>
-            <div class="modal-body"
-                 data-base-target="modalBody">
-                Chargement...
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary"
-                        data-bs-dismiss="modal">Fermer
-                </button>
-                {# <button type="button" class="btn btn-primary" data-action="modal-form#submitForm"> #}
-                {# Save #}
-                {# </button> #}
-            </div>
+            <form action="#" method="post">
+                <div class="modal-header">
+                    <h5 class="modal-title"
+                        data-base-target="modalTitle">... Chargement ...</h5>
+                    <button type="button" class="btn-close"
+                            data-bs-dismiss="modal"
+                            data-action="base#modalClose"
+                            aria-label="Close"></button>
+                </div>
+                <div class="modal-body"
+                     data-base-target="modalBody">
+                    Chargement...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success float-start d-none"
+                            id="btn_modal_submit"
+                            data-action="base#submitForm">
+                        {{ 'label.save'|trans }}
+                    </button>
+
+                    <button type="button" class="btn btn-secondary"
+                            data-action="base#modalClose"
+                            data-bs-dismiss="modal">
+                        {{ 'fermer'|trans }}
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

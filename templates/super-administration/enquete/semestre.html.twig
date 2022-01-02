@@ -46,7 +46,6 @@
                         <td>{{ questionnaire.libelle }}</td>
                         <td>du {{ questionnaire.dateOuverture|format_datetime('long', 'short') }} au {{ questionnaire
                             .dateFermeture|format_datetime('long', 'short') }}</td>
-                        {# todo: pop up pour éditer les dates de début et de fin #}
                         <td>{{ nbReponses[questionnaire.id].nbReponses }} / {{ semestre.etudiants|length }}</td>
                         <td>
 
@@ -66,6 +65,8 @@
                             <a href="{{ path('sadm_questionnaire_qualite_edit', {id: questionnaire.id}) }}"
                                {{ stimulus_controller('modal', {
                                    size: 'lg',
+                                   form: true,
+                                   formAction: path('administratif_enquete_modal_config_submit', {id: questionnaire.id}),
                                    modalTitle: 'Configuration du questionnaire qualité',
                                    modalUrl:  path('administratif_enquete_modal_config', {id: questionnaire.id}) })}}
                                        data-action="click->modal#openModal"

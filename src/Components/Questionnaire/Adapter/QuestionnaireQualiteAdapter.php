@@ -27,6 +27,7 @@ class QuestionnaireQualiteAdapter implements QuestionnaireAdapterInterface
         $this->questionnaire->texteExplication = $questionnaire->getTexteExplication();
         $this->questionnaire->texteDebut = $questionnaire->getTexteDebut();
         $this->questionnaire->texteFin = $questionnaire->getTextFin();
+        $this->questionnaire->semestre = $questionnaire->getSemestre();
     }
 
     public function getQuestionnaire(): Qualite

@@ -184,7 +184,7 @@ class GroupeRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function getEtudiantsByGroupes(TypeGroupe $typegroupe)
+    public function getEtudiantsByGroupes(TypeGroupe $typegroupe): array
     {
 
         $query = $this->createQueryBuilder('g')

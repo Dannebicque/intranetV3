@@ -20,8 +20,8 @@ class Section
     public string $questionnaire_id;
     public string $id_questionnaire_section;
     public string $ordre;
-    public array $configGlobale;
-    public array $configQuestionnaire;
+    public ?array $configGlobale;
+    public ?array $configQuestionnaire;
     public Collection $questions;
 
     public function __construct(

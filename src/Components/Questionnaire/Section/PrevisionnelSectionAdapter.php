@@ -10,7 +10,10 @@
 namespace App\Components\Questionnaire\Section;
 
 use App\Classes\Matieres\TypeMatiereManager;
+use App\Classes\Previsionnel\PrevisionnelManager;
 use App\DTO\Previsionnel;
+use App\Entity\Annee;
+use App\Entity\Semestre;
 use App\Repository\PrevisionnelRepository;
 
 class PrevisionnelSectionAdapter extends AbstractSectionAdapter
@@ -21,13 +24,11 @@ class PrevisionnelSectionAdapter extends AbstractSectionAdapter
     public const FIELD_CODE = 'codeMatiere';
     public const LABEL = 'previsionnel';
 
-    protected PrevisionnelRepository $previsionnelRepository;
-    protected TypeMatiereManager $typeMatiereManager;
-
-    public function __construct(PrevisionnelRepository $previsionnelRepository, TypeMatiereManager $typeMatiereManager)
+    public function __construct(
+        protected PrevisionnelManager $previsionnelManager,
+        protected PrevisionnelRepository $previsionnelRepository,
+        protected TypeMatiereManager $typeMatiereManager)
     {
-        $this->previsionnelRepository = $previsionnelRepository;
-        $this->typeMatiereManager = $typeMatiereManager;
     }
 
     public function getData(mixed $id): ?array
@@ -46,5 +47,22 @@ class PrevisionnelSectionAdapter extends AbstractSectionAdapter
         }
 
         return null;
+    }
+
+    public function getAllDataAnnee(Annee $annee, array $selectionnes): array
+    {
+        $data = [];
+        $previs = $this->previsionnelManager->getPrevisionnelAnnee($annee, 2019); //$annee->getAnneeUniversitaire()
+        foreach ($previs as $previ) {
+            $data[] = [
+                'libelle' => $previ->matiere_libelle,
+                'code' => $previ->matiere_code,
+                'personnel' => $previ->personnel_prenom.' '.$previ->personnel_nom,
+                'id' => $previ->id,
+                'checked' => in_array($previ->id, $selectionnes),
+            ];
+        }
+
+        return $data;
     }
 }

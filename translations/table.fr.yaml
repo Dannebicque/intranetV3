@@ -1,3 +1,7 @@
+filtre:
+  diplome: Diplôme
+  typeDiplome: Type de diplôme
+
 table:
   contact_personnel: 'Contact/Entreprise'
   type: 'Type'
@@ -9,10 +13,11 @@ table:
   numero_harpege: Num. Administratif
   username: Login
   typeDestinataire: 'Destinataire'
+  typeDiplome: 'Type Diplôme'
+  nbEtudiants: 'Nb étudiants'
   appelFait: 'Etat de l''appel'
   periodeAbsence: 'Période d''absence'
   etat_justificatif_absence: 'Etat du justificatif d''absence'
-  absence_justificatif_etat: 'Etat du justificatif d''absence'
   absence_justifiee: 'Absence justifiée'
   absence: Absences
   absences: Absences
