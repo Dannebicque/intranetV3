@@ -24,7 +24,10 @@ use App\Entity\Semestre;
 use App\Repository\EtudiantRepository;
 use App\Repository\QuestionnaireEtudiantReponseRepository;
 use App\Repository\QuestionnaireEtudiantRepository;
+use App\Repository\QuestionnaireQuestionnaireSectionRepository;
 use App\Table\EnqueteQualiteDiplomesTableType;
+use App\Utils\Tools;
+use Carbon\Carbon;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -50,27 +53,50 @@ class EnqueteController extends BaseController
         ]);
     }
 
-    #[Route("/configuraiton/{id}", name: "administratif_enquete_modal_config", options: ['expose' => true])]
+    #[Route("/configuration/{id}", name: "administratif_enquete_modal_config", options: ['expose' => true], methods: ['GET'])]
     public function modalConfig(
         Questionnaire $questionnaire,
         QuestionnaireQualite $questionnaireQualite): Response
     {
         $questionnaire->createQuestionnaire(QuestionnaireQualite::class,
-            (new QuestionnaireQualiteAdapter($questionnaireQualite))->getQuestionnaire(),
-            [
-                'mode' => AbstractQuestionnaire::MODE_APERCU,
-                'route' => 'administratif_enquete_show',
-                'params' => ['questionnaireQualite' => $questionnaireQualite->getId()],
-            ]);
+            (new QuestionnaireQualiteAdapter($questionnaireQualite))->getQuestionnaire());
 
+        $data= [];
         foreach ($questionnaireQualite->getSections() as $section) {
-            $questionnaire->getOnlySectionConfigurable((new SectionQualiteEntityAdapter($section))->getSection());
+            $d = $questionnaire->getOnlySectionConfigurable((new SectionQualiteEntityAdapter($section))->getSection());
+            if ($d !== null) {
+                $data[] = $d;
+            }
         }
+
 
         return $this->render('super-administration/enquete/_modalConfig.html.twig', [
             'questionnaireQualite' => $questionnaireQualite,
-            'sections' => $questionnaire->getSections()
+            'datas' => $data
         ]);
+    }
+
+    #[Route('/configuration/{id}', name: 'administratif_enquete_modal_config_submit', options: ['expose' => true], methods: ['POST'])]
+    public function modalConfigSubmit(
+        QuestionnaireQuestionnaireSectionRepository $questionnaireQuestionnaireSectionRepository,
+        Request $request,
+        QuestionnaireQualite $questionnaireQualite
+    ): Response {
+        $questionnaireQualite->setDateOuverture(Carbon::createFromFormat('Y-m-d\TH:i', $request->request->get('dateOuverture')));
+        $questionnaireQualite->setDateFermeture(Carbon::createFromFormat('Y-m-d\TH:i', $request->request->get('dateFermeture')));
+
+        $sections = $request->request->get('sections');
+
+        foreach ($sections as $key => $values) {
+            $sect = $questionnaireQuestionnaireSectionRepository->find($key);
+            if ($sect !== null) {
+                $sect->setConfig(['valeurs' =>$values]);//todo: a voir si d'autres clés ensuite...
+            }
+        }
+
+        $this->entityManager->flush();
+
+        return $this->json(true);
     }
 
     #[Route("/questionnaire/semestre/{semestre}", name: "administratif_enquete_semestre")]

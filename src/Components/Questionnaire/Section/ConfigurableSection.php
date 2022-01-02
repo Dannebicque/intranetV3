@@ -12,6 +12,7 @@ namespace App\Components\Questionnaire\Section;
 use App\Components\Questionnaire\QuestionnaireRegistry;
 use App\Components\Questionnaire\Questions;
 use App\Components\Questionnaire\TypeQuestion\AbstractQuestion;
+use App\Entity\Annee;
 
 class ConfigurableSection
 {
@@ -107,5 +108,10 @@ class ConfigurableSection
         }
 
         return count($this->config['valeurs']) % self::NB_QUESTIONS_PAR_SECTION;
+    }
+
+    public function getDataPourConfiguration(Annee $annee)
+    {
+        return $this->sectionAdapter->getAllDataAnnee($annee, $this->config['valeurs']);
     }
 }

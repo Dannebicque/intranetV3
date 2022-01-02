@@ -26,7 +26,7 @@ class Questionnaire
     private const DEFAULT_TEMPLATE = 'components/questionnaire/questionnaire.html.twig';
 
     protected Sections $sections;
-    protected ReponsesEtudiant  $reponses;
+    protected ReponsesEtudiant $reponses;
     protected ?int $etudiant = null;
     private AbstractQuestionnaire $questionnaire;
     private array $options = [];
@@ -84,7 +84,7 @@ class Questionnaire
         if (ConfigurableSection::class === $section->typeSection) {
             //c'est configurable, potentiellement plusieurs sections à créer
             $configSection = new ConfigurableSection($this->questionnaireRegistry);
-            $configSection->setSection($section,[
+            $configSection->setSection($section, [
                 'questionnaire_id' => $this->getQuestionnaire()->id,
                 'etudiant_id' => $this->etudiant,
                 'typeQuestionnaire' => $this->options['typeQuestionnaire']
@@ -170,27 +170,28 @@ class Questionnaire
         }
     }
 
-    public function getIdEtudiant()
+    public function getIdEtudiant(): ?int
     {
         return $this->etudiant;
     }
 
-    public function setReponses(ReponsesEtudiant $reponses)
+    public function setReponses(ReponsesEtudiant $reponses): void
     {
         $this->reponses = $reponses;
     }
 
-    public function getUrl()
+    public function getUrl(): string
     {
         if (array_key_exists('route', $this->options) && array_key_exists('params', $this->options)) {
             return $this->router->generate($this->options['route'], $this->options['params']);
         }
     }
 
-    public function handleRequest(Request $request)
+    public function handleRequest(Request $request): bool
     {
         if ($request->isMethod('POST')) {
             $this->ordreSection = (int)$request->query->get('page');
+
             return true;
         }
 
@@ -203,17 +204,27 @@ class Questionnaire
             'section' => $this->getSection($this->ordreSection),
             'idQuestionnaire' => $this->questionnaire->id,
         ], $options);
+
         return new Response($this->twig->render($template, $params));
     }
 
-    public function getOnlySectionConfigurable(DTO\Section $section)
+    public function getOnlySectionConfigurable(DTO\Section $section): ?array
     {
         if (ConfigurableSection::class === $section->typeSection) {
-            $this->addSection($section);
+            $configSection = new ConfigurableSection($this->questionnaireRegistry);
+            $configSection->setSection($section);
+
+            return
+                [
+                    'section' => $section,
+                    'datas' => $configSection->getDataPourConfiguration($this->questionnaire->semestre->getAnnee())
+                ];
         }
+
+        return null;
     }
 
-    public function getUrlEnd()
+    public function getUrlEnd(): string
     {
         if ($this->options['routeEnd'] !== '') {
             return $this->router->generate($this->options['routeEnd'], $this->options['paramsEnd']);
@@ -221,4 +232,5 @@ class Questionnaire
 
         return 'https://univ-reims.fr';
     }
+
 }

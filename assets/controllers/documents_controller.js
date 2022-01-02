@@ -22,7 +22,7 @@ export default class extends Controller {
 
   async afficheDocuments (event) {
     document.getElementById('boutonBack').style.display = 'inline-flex'
-    this.contentTarget.innerHTML = '... Chargement en cours ...'
+    this.contentTarget.innerHTML = window.da.loaderStimulus
     const params = new URLSearchParams({
       typedocument: event.currentTarget.dataset.type
     })
@@ -32,7 +32,7 @@ export default class extends Controller {
 
   async afficheDocumentsFavori () {
     document.getElementById('boutonBack').style.display = 'inline-flex'
-    this.contentTarget.innerHTML = '... Chargement en cours ...'
+    this.contentTarget.innerHTML = window.da.loaderStimulus
     const response = await fetch(`${this.urlDocumentsFavoriValue}`)
     this.contentTarget.innerHTML = await response.text()
   }
@@ -44,7 +44,7 @@ export default class extends Controller {
 
   async _listeTypeDocuments () {
     document.getElementById('boutonBack').style.display = 'none'
-    this.contentTarget.innerHTML = '... Chargement en cours ...'
+    this.contentTarget.innerHTML = window.da.loaderStimulus
     const response = await fetch(`${this.urlValue}`)
     this.contentTarget.innerHTML = await response.text()
   }
