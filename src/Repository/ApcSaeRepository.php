@@ -80,6 +80,8 @@ class ApcSaeRepository extends ServiceEntityRepository
             ->innerJoin(Semestre::class, 's', 'WITH', 's.id = r.semestre')
             ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
             ->innerJoin(Diplome::class, 'd', 'WITH', 'd.id = a.diplome')
+            ->leftJoin('r.apcSaeCompetences', 'apcSaeCompetences')
+            ->addSelect('apcSaeCompetences')
             ->where('d.departement = :departement')
             //->andWhere('s.ppn_actif = m.ppn')
             ->setParameter('departement', $departement->getId())

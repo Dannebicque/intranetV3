@@ -57,6 +57,7 @@ class EdtController extends BaseController
                 'tabHeures' => Constantes::TAB_HEURES_EDT_2,
             ]);
         }
+
         $matieres = $this->typeMatiereManager->findByDepartementArray($this->getDepartement());
         $this->myEdtIntranet->initPersonnel($this->getUser(),
             $this->dataUserSession->getAnneeUniversitaire(),
