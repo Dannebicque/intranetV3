@@ -57,8 +57,12 @@ abstract class Tools
         return 'true' === $texte;
     }
 
-    public static function telFormat(string $number): string
+    public static function telFormat(?string $number): string
     {
+        if (null === $number) {
+            return '';
+        }
+
         str_replace(['.', '-', ' '], '', $number);
 
         if (str_starts_with($number, '33')) {

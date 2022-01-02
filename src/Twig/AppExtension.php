@@ -197,7 +197,7 @@ class AppExtension extends AbstractExtension
         return $html;
     }
 
-    public function telFormat(string $number): ?string
+    public function telFormat(?string $number): ?string
     {
         return Tools::telFormat($number);
     }
