@@ -15,14 +15,9 @@ export default class extends Controller {
     urlPasDAbsent: String
   }
 
-  connect () {
-    console.log('edt')
-  }
 
   btnPasAbsent (e) {
     e.preventDefault()
-    console.log('pas d\'absence')
-    console.log(e.currentTarget.dataset.event)
     post(this.urlPasDAbsentValue, {event: e.currentTarget.dataset.event}).then(() => {
       this.etatAppelTarget.classList.remove('btn-danger')
       this.etatAppelTarget.firstElementChild.classList.remove('fa-times')
@@ -34,6 +29,5 @@ export default class extends Controller {
   btnCahierTexte (e) {
     e.preventDefault()
     //ouvrir modal avec données du créneau + zone de saisie, pré-rempli si déjà existante.
-    console.log('pas d\'absence')
   }
 }

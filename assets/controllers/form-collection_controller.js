@@ -16,7 +16,6 @@ export default class extends Controller {
   }
 
   connect () {
-    console.log('form-collection')
     this.index = this.itemsCountValue = this.fieldTargets.length
   }
 

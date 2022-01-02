@@ -28,7 +28,6 @@ export default class extends Controller {
 
     if (event.detail.form === true) {
       document.getElementById('btn_modal_submit').classList.remove('d-none')
-      console.log(this.element)
       this.element.getElementsByTagName('form')[0].action = event.detail.formAction
     }
 
