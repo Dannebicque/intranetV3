@@ -116,7 +116,7 @@ class MyExcelMultiExport
         );
     }
 
-    public function genereExcelFromSerialization(array $data, string $modele, array $colonne): void
+    public function genereExcelFromSerialization(array $data, array $modele, array $colonne): void
     {
         $this->myExcelWriter->createSheet('onglet 1');
         //serialize les data
