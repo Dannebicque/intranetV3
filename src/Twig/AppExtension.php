@@ -127,13 +127,20 @@ class AppExtension extends AbstractExtension
         return '<a href="mailto:' . $email . '" target="_blank">' . $email . '</a>';
     }
 
-    public function link(string $link): string
+    public function link(?string $link): string
     {
+        if (null === $link) {
+            return '';
+        }
+
         return '<a href="' . $link . '" target="_blank">' . $link . '</a>';
     }
 
-    public function upper(string $texte): string
+    public function upper(?string $texte): string
     {
+        if (null === $texte) {
+            return '';
+        }
         return mb_strtoupper($texte);
     }
 
