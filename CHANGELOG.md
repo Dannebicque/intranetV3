@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.5.1](https://github.com/Dannebicque/intranetV3/compare/v3.5.0...v3.5.1) (2022-01-03)
+
+
+### Features
+
+* Planning d'altenance ([a391b03](https://github.com/Dannebicque/intranetV3/commit/a391b0347609455f09e2d6621d9cd40e8f4816ee))
+* Première version des sous-commissions en live avec le BUT ([33736a6](https://github.com/Dannebicque/intranetV3/commit/33736a676787d7500d10b467506640b028f27cce))
+
+
+### Bug Fixes
+
+* Amélioration d'une requete sur les ressources/SAE ([a597b65](https://github.com/Dannebicque/intranetV3/commit/a597b655b61ddcf0834006c160c9590fe3c61912))
+* demi-journée d'absence ([f7dfb8c](https://github.com/Dannebicque/intranetV3/commit/f7dfb8cc4d99c6006416356c9f228c8818653107))
+* Export des documents générés depuis les modal avec stimulus ([f67ffea](https://github.com/Dannebicque/intranetV3/commit/f67ffeaebb6a469af4750c0a0146d79f8f8c8439))
+* Format téléphone sur chaîne vide. ([4dbbd83](https://github.com/Dannebicque/intranetV3/commit/4dbbd83f0deb048dc5e101b31c33bbc29ce294be))
+* Import des notes ([526513d](https://github.com/Dannebicque/intranetV3/commit/526513d8aa33e7c5ee78bbcee247c044d3d760b9))
+* js ([3f67346](https://github.com/Dannebicque/intranetV3/commit/3f6734656733897f559bdcea1b5d1cf3526d1bdc))
+* Typo sur AppExtension ([6c23429](https://github.com/Dannebicque/intranetV3/commit/6c23429766e353e7bb0838e0cd590cd55a011478))
+* Typo sur AppExtension ([a6430c7](https://github.com/Dannebicque/intranetV3/commit/a6430c75704f353392118a696723fc4119632c33))
+
 ## [3.5.0](https://github.com/Dannebicque/intranetV3/compare/v3.4.10...v3.5.0) (2022-01-02)
 
 
