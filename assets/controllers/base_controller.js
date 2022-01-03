@@ -4,7 +4,7 @@
 // @project intranetV3
 // @lastUpdate 11/10/2021 21:49
 
-import { Controller } from '@hotwired/stimulus'
+import {Controller} from '@hotwired/stimulus'
 import {Modal} from 'bootstrap'
 import {addCallout} from '../js/util'
 
@@ -14,12 +14,34 @@ export default class extends Controller {
 
   submitForm (event) {
     const form = this.element.getElementsByTagName('form')[0]
-    fetch(form.action, {
+    let fileName;
+    return fetch(form.action, {
       method: form.method,
-      body: new URLSearchParams(new FormData(form)),
-    }).then(() => {
-      addCallout( 'Modification effectuée','success')
+      body: new URLSearchParams(new FormData(form))
     })
+      .then(async (response) => {
+        fileName = response.headers.get('content-disposition').split('=')[1].replace('"', '').replace('"', '')
+        if (response.headers.get('Content-Type') !== 'application/json' && response.headers.get('Content-Type') !== 'application/html') {
+          await response.blob().then(blob =>
+            URL.createObjectURL(blob)
+          )
+            .then(url => {
+              let link = document.createElement('a')
+              link.href = url
+              link.download=fileName
+              link.click()
+              setTimeout(function(){
+                //document.removeChild(link) todo: il faudrait supprimer, mais ca n'est pas a ce endroit qu'il est ajouté?
+                // For Firefox it is necessary to delay revoking the ObjectURL
+                window.URL.revokeObjectURL(url);
+              }, 100);
+            })
+          addCallout('Document généré', 'success')
+        } else {
+          addCallout('Modification effectuée', 'success')
+        }
+      })
+
   }
 
   async openModal (event) {
