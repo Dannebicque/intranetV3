@@ -17,6 +17,8 @@ use App\Entity\Semestre;
 
 class SousCommissionApc extends AbstractSousCommission implements SousCommissionInterface
 {
+    public const TEMPLATE_LIVE = 'liveApc.html.twig';
+
     public function calcul(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): void
     {
         $this->semestre = $semestre;
