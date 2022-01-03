@@ -122,8 +122,12 @@ class AppExtension extends AbstractExtension
         return $html;
     }
 
-    public function mailto(string $email): string
+    public function mailto(?string $email): string
     {
+        if (null === $email) {
+            return '';
+        }
+
         return '<a href="mailto:' . $email . '" target="_blank">' . $email . '</a>';
     }
 

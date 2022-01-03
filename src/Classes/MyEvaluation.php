@@ -312,9 +312,10 @@ class MyEvaluation
 
         foreach ($data as $note) {
             if (array_key_exists($note['num_etudiant'], $etudiants)) {
-               if (array_key_exists($note['num_etudiant'], $notes) && -0.01 == $notes[$note['num_etudiant']]) {
+               if (array_key_exists($note['num_etudiant'], $notes) && -0.01 === $notes[$note['num_etudiant']]->getNote()) {
                   //une note = -0.01, on met à jour...
                     $notes[$note['num_etudiant']]->setNote(Tools::convertToFloat($note['note']));
+                    $notes[$note['num_etudiant']]->setCommentaire($note['commentaire']);
                 } elseif (!array_key_exists($note['num_etudiant'], $notes)) {
                     //pas de note, on ajoute
                     $nnnote = new Note();
@@ -346,7 +347,7 @@ class MyEvaluation
                 if (is_array($sheetData[$i])) {
                     $nb = count($sheetData[$i]);
                     for ($j = 1; $j <= $nb; ++$j) {
-                        $t[$ordre[$j - 1]] = $sheetData[$i][chr($j + 64)];
+                        $t[$ordre[$j - 1]] = trim($sheetData[$i][chr($j + 64)]);
                     }
                     $data[] = $t;
                 }
