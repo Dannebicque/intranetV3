@@ -74,11 +74,11 @@ class MoyenneMatiere
         }
 
         if (0 === $note) {
-            return 'badge badge-danger';
+            return 'badge bg-danger';
         }
 
         if ($note < 10) {
-            return 'badge badge-warning';
+            return 'badge bg-warning';
         }
 
         return 'notenormale';

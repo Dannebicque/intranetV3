@@ -48,7 +48,7 @@ class SousComissionController extends BaseController
 
         $bacs = $bacRepository->findAll();
 
-        return $this->render('administration/sous_commission/live.html.twig', [
+        return $this->render('administration/sous_commission/'.$sousCommission::TEMPLATE_LIVE, [
             'semestre' => $semestre,
             'sousCommission' => $sousCommission, //devrait etre un DTo?
             'bacs' => $bacs,

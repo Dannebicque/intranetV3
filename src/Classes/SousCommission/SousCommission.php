@@ -31,6 +31,8 @@ use function array_key_exists;
 
 class SousCommission extends AbstractSousCommission implements SousCommissionInterface
 {
+    public const TEMPLATE_LIVE = 'live.html.twig';
+
     public function calcul(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): void
     {
         $this->semestre = $semestre;
