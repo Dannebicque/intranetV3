@@ -247,6 +247,8 @@
                                                 <button
                                                         {{ stimulus_controller('modal', {
                                                             size: 'lg',
+                                                            form: true,
+                                                            formAction: path('export_listing'),
                                                             modalTitle: 'export.heading'|trans,
                                                             modalUrl:  path('api_export_document_personnalise',
                                                                 {semestre:semestre.id}) }) }}
