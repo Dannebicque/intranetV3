@@ -298,7 +298,7 @@ class EtudiantRepository extends ServiceEntityRepository
     /**
      * @throws NonUniqueResultException
      */
-    public function identificationRdd($login, $date): ?Etudiant
+    public function identificationRdd($login, $date)
     {
         return $this->createQueryBuilder('p')
             ->select('p.numEtudiant')
