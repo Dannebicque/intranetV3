@@ -312,7 +312,7 @@ class MyEvaluation
 
         foreach ($data as $note) {
             if (array_key_exists($note['num_etudiant'], $etudiants)) {
-               if (array_key_exists($note['num_etudiant'], $notes) && -0.01 === $notes[$note['num_etudiant']]) {
+               if (array_key_exists($note['num_etudiant'], $notes) && -0.01 == $notes[$note['num_etudiant']]) {
                   //une note = -0.01, on met à jour...
                     $notes[$note['num_etudiant']]->setNote(Tools::convertToFloat($note['note']));
                 } elseif (!array_key_exists($note['num_etudiant'], $notes)) {
