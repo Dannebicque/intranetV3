@@ -50,6 +50,7 @@ Encore
   .addEntry('adm.groupe', './assets/js/pages/adm.groupe.js')
   .addEntry('adm.edt', './assets/js/pages/adm.edt.js')
   .addEntry('adm.etudiants', './assets/js/pages/adm.etudiants.js')
+  .addEntry('adm.apcCoefficients', './assets/js/pages/adm.apcCoefficients.js')
   .addEntry('adm.personnels', './assets/js/pages/adm.personnels.js')
   .addEntry('sadm.personnels', './assets/js/pages/sadm.personnels.js')
   .addEntry('adm.rattrapages', './assets/js/pages/adm.rattrapages.js')

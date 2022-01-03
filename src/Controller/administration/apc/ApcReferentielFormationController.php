@@ -22,6 +22,7 @@ use App\Repository\ApcRessourceCompetenceRepository;
 use App\Repository\ApcRessourceRepository;
 use App\Repository\ApcSaeCompetenceRepository;
 use App\Repository\ApcSaeRepository;
+use App\Utils\JsonRequest;
 use App\Utils\Tools;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -79,7 +80,7 @@ class ApcReferentielFormationController extends BaseController
         ApcCompetence $competence,
         string $type
     ): Response {
-        $value = $request->request->get('value');
+        $value = JsonRequest::getValueFromRequest($request, 'value');
 
         if ('ressource' === $type) {
             $ressource = $apcRessourceRepository->find($id);

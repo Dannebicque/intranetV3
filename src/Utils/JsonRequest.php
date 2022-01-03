@@ -23,6 +23,14 @@ abstract class JsonRequest
             $parametersAsArray = json_decode($content, true, 512, JSON_THROW_ON_ERROR);
         }
 
+
         return $parametersAsArray;
+    }
+
+    public static function getValueFromRequest(Request $request, string $value): mixed
+    {
+        $parametersAsArray = self::getFromRequest($request);
+
+        return $parametersAsArray[$value] ?? null;
     }
 }

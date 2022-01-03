@@ -8,22 +8,27 @@
     </tr>
     </thead>
     <tbody>
+    {% set tabIndex = 0 %}
     {% for sae in saes %}
         <tr>
             <td>
                 <a href="#" title="{{ sae.display }}" data-bs-toggle="tooltip" data-bs-placement="bottom">{{ sae.codeMatiere }}</a>
             </td>
+
             {% for niveau in niveaux %}
                 <td>
-                    <a class="myedit"
-                       data-field="coefficient"
-                       href="{{ path('administration_apc_referentiel_formation_ajax', {id:sae.id, competence: niveau
-                       .competence.id, type:'sae'}) }}"
-                       data-title="Corriger le coefficient">
-                        {{ coefficients.saes[sae.id][niveau.competence.id] is defined ? coefficients
-                        .saes[sae.id][niveau.competence.id] : 0 }}
-                    </a>
+{#                    <a class="myedit"#}
+{#                       data-field="coefficient"#}
+{#                       href="{{ path('administration_apc_referentiel_formation_ajax', {id:sae.id, competence: niveau#}
+{#                       .competence.id, type:'sae'}) }}"#}
+{#                       data-title="Corriger le coefficient">#}
+                    <input type="text" class="form-control changeCoefficientSae" tabindex="{{ tabIndex }}"
+                           data-matiere="{{ sae.id }}" data-competence="{{ niveau.competence.id }}"
+                        value="{{ coefficients.saes[sae.id][niveau.competence.id] is defined ? coefficients
+                        .saes[sae.id][niveau.competence.id] : 0 }}" />
+{#                    </a>#}
                 </td>
+                {% set tabIndex = tabIndex  + 1 %}
             {% endfor %}
         </tr>
     {% endfor %}
@@ -34,15 +39,20 @@
             </td>
             {% for niveau in niveaux %}
                 <td>
-                    <a class="myedit"
-                       data-field="coefficient"
-                       href="{{ path('administration_apc_referentiel_formation_ajax', {id:ressource.id, competence:
-                           niveau.competence.id, type:'ressource'}) }}"
-                       data-title="Corriger le coefficient">
-                        {{ coefficients.ressources[ressource.id][niveau.competence.id] is defined ? coefficients
-                        .ressources[ressource.id][niveau.competence.id] : 0 }}
-                    </a>
+                    <input type="text" class="form-control changeCoefficientRessource" tabindex="{{ tabIndex }}"
+                           data-matiere="{{ ressource.id }}" data-competence="{{ niveau.competence.id }}"
+                           value="{{ coefficients.ressources[ressource.id][niveau.competence.id] is defined ? coefficients
+                           .ressources[ressource.id][niveau.competence.id] : 0 }}" />
+{#                    <a class="myedit"#}
+{#                       data-field="coefficient"#}
+{#                       href="{{ path('administration_apc_referentiel_formation_ajax', {id:ressource.id, competence:#}
+{#                           niveau.competence.id, type:'ressource'}) }}"#}
+{#                       data-title="Corriger le coefficient">#}
+{#                        {{ coefficients.ressources[ressource.id][niveau.competence.id] is defined ? coefficients#}
+{#                        .ressources[ressource.id][niveau.competence.id] : 0 }}#}
+{#                    </a>#}
                 </td>
+                {% set tabIndex = tabIndex  + 1 %}
             {% endfor %}
         </tr>
     {% endfor %}
