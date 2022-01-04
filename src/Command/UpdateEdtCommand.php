@@ -43,10 +43,6 @@ class UpdateEdtCommand extends Command
         $this->groupeRepository = $groupeRepository;
     }
 
-    protected function configure()
-    {
-    }
-
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);

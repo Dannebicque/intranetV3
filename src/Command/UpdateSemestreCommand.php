@@ -36,9 +36,6 @@ class UpdateSemestreCommand extends Command
         $this->rattrapageRepository = $rattrapageRepository;
     }
 
-    protected function configure(): void
-    {
-    }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {

@@ -11,16 +11,19 @@ namespace App\Command;
 
 use App\Classes\Apogee\GenereCodeApogee;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+#[AsCommand(
+    name: 'app:genere-code-apogee',
+    description: 'Génére les codes Apogées pour les nouveaux diplôme du B.U.T.'
+)]
 class GenereCodeApogeeCommand extends Command
 {
-    protected static $defaultName = 'app:genere-code-apogee';
-    protected static $defaultDescription = 'Génére les codes Apogées pour les nouveaux diplôme du B.U.T.';
     protected EntityManagerInterface $entityManager;
 
     /**
@@ -36,7 +39,6 @@ class GenereCodeApogeeCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setDescription(self::$defaultDescription)
             ->addArgument('departement', InputArgument::REQUIRED, 'Sigle du diplôme')
         ;
     }

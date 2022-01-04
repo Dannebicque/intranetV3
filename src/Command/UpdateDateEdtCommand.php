@@ -13,14 +13,18 @@ use App\Repository\CalendrierRepository;
 use App\Repository\EdtPlanningRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(
+    name: 'app:update-date-edt',
+    description: 'Mets à jour les dates de l\'EDT MMI'
+)]
+//probablement plus nécessaire...
 class UpdateDateEdtCommand extends Command
 {
-    protected static $defaultName = 'app:update-date-edt';
-
     private CalendrierRepository $calendrierRepository;
 
     private EdtPlanningRepository $edtPlanningRepository;
@@ -40,11 +44,6 @@ class UpdateDateEdtCommand extends Command
         $this->entityManager = $entityManager;
 
         parent::__construct();
-    }
-
-    protected function configure()
-    {
-        $this->setDescription('Add a short description for your command');
     }
 
     /**

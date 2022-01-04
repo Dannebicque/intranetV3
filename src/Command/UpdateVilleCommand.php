@@ -15,16 +15,20 @@ namespace App\Command;
 
 use App\Repository\CodeInseeRepository;
 use App\Repository\EtudiantRepository;
+use Symfony\Component\Console\Attribute\AsCommand;
+use function array_key_exists;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use function array_key_exists;
 
+#[AsCommand(
+    name: 'app:update-ville',
+    description: 'Mise à jour des villes par rapport au code INSEE'
+)]
 class UpdateVilleCommand extends Command
 {
-    protected static $defaultName = 'app:update-ville';
     private EtudiantRepository $etudiantRepository;
     private EntityManagerInterface $entityManager;
     private CodeInseeRepository $codeInseeRepository;
@@ -42,11 +46,6 @@ class UpdateVilleCommand extends Command
         $this->entityManager = $entityManager;
 
         parent::__construct();
-    }
-
-    protected function configure()
-    {
-        $this->setDescription('Add a short description for your command');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

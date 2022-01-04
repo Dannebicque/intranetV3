@@ -11,7 +11,6 @@ namespace App\DataFixtures;
 
 use App\Entity\TypeDiplome;
 use Carbon\Carbon;
-use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 

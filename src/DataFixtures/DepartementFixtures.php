@@ -57,7 +57,6 @@ class DepartementFixtures extends Fixture implements DependentFixtureInterface
         $personnelDepartement->setRoles('["ROLE_CDD"]');
         $manager->persist($personnelDepartement);
 
-
         //Diplome
         $diplome = new Diplome($departement);
         $diplome->setLibelle('Métiers du Multimédia et de l\'Internet');
@@ -178,7 +177,6 @@ class DepartementFixtures extends Fixture implements DependentFixtureInterface
         $manager->persist($previ);
 
         $manager->flush();
-
     }
 
     public function getDependencies(): array

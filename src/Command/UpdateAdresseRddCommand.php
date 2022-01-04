@@ -40,7 +40,7 @@ class UpdateAdresseRddCommand extends Command
 
         foreach ($rdds as $rdd) {
             $etudiant = $this->etudiantRepository->findOneBy(['numEtudiant' => $rdd->getNumEtudiant()]);
-            if ($etudiant !== null && $etudiant->getAdresse() !== null) {
+            if (null !== $etudiant && null !== $etudiant->getAdresse()) {
                 $etudiant->getAdresse()->setAdresse1($rdd->getAdresse());
                 $etudiant->getAdresse()->setAdresse2($rdd->getAdresseComplement());
                 $etudiant->getAdresse()->setCodePostal($rdd->getCodePostal());

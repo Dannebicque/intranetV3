@@ -15,14 +15,18 @@ namespace App\Command;
 
 use App\Repository\NotificationRepository;
 use Exception;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+#[AsCommand(
+    name: 'app:clear-old-notification',
+    description: 'Commande qui nettoye de manière régulière les anciennes notifications'
+)]
 class ClearOldNotificationCommand extends Command
 {
-    protected static $defaultName = 'app:clear-old-notification';
     private NotificationRepository $notificationRepository;
 
     /**
@@ -33,11 +37,6 @@ class ClearOldNotificationCommand extends Command
         $this->notificationRepository = $notificationRepository;
 
         parent::__construct();
-    }
-
-    protected function configure()
-    {
-        $this->setDescription('Add a short description for your command');
     }
 
     /**

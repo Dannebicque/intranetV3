@@ -32,6 +32,6 @@ class MD5 extends FunctionNode
 
     public function getSql(SqlWalker $sqlWalker): string
     {
-        return 'MD5(' . $this->value->dispatch($sqlWalker) . ')';
+        return 'MD5('.$this->value->dispatch($sqlWalker).')';
     }
 }

@@ -14,14 +14,18 @@ use App\Repository\AnneeRepository;
 use App\Repository\BacRepository;
 use App\Repository\EtudiantRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(
+    name: 'app:update-etudiant-apogee',
+    description: 'Mise à jour de la date de naissance, du lieu de naissance, et du bac'
+)]
 class UpdateEtudiantApogeeCommand extends Command
 {
-    protected static $defaultName = 'app:update-etudiant-apogee';
     private AnneeRepository $anneeRepository;
     private EtudiantRepository $etudiantRepository;
     private ApogeeEtudiant $apogeeEtudiant;
@@ -46,7 +50,7 @@ class UpdateEtudiantApogeeCommand extends Command
 
     protected function configure()
     {
-        $this->setDescription('Mise à jour de la date de naissance, du lieu de naissance, et du bac')
+        $this
             ->addArgument('annee', InputArgument::REQUIRED, 'Code Etape annee');
     }
 
@@ -66,7 +70,7 @@ class UpdateEtudiantApogeeCommand extends Command
                     $etudiant->setDateNaissance($dataApogee['etudiant']['setDateNaissance']);
                     $etudiant->setBac($dataApogee['etudiant']['setBac']);
                     $etudiant->setLieuNaissance($dataApogee['etudiant']['setLieuNaissance']);
-                    $output->writeln('Mise à jour de ' . $etudiant->getDisplayPr());
+                    $output->writeln('Mise à jour de '.$etudiant->getDisplayPr());
                 }
             }
 

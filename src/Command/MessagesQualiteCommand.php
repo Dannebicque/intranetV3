@@ -48,7 +48,7 @@ class MessagesQualiteCommand extends Command
                 'questionnaire' => $questionnaire,
             ]);
             $this->mailer->sendMessage('david.annebicque@gmail.com', 'Rappel questionnaire qualité', ['replyTo' => 'david.annebicque@gmail.com']);
-            $nbMessages++;
+            ++$nbMessages;
         }
 
         $questionnaires = $this->questionnaireQualiteRepository->findInDate((new DateTime())->modify('+1 days')); //tous les questionnaires dans un jour
@@ -58,7 +58,7 @@ class MessagesQualiteCommand extends Command
                 'questionnaire' => $questionnaire,
             ]);
             $this->mailer->sendMessage('david.annebicque@gmail.com', 'Rappel questionnaire qualité', ['replyTo' => 'david.annebicque@gmail.com']);
-            $nbMessages++;
+            ++$nbMessages;
         }
 
         $io->success(sprintf('%d messages ont été envoyées', $nbMessages));
