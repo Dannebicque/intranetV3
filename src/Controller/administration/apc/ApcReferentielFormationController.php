@@ -29,14 +29,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/administration/referentiel-formation", name="administration_")
- */
+#[Route(path: '/administration/referentiel-formation', name: 'administration_')]
 class ApcReferentielFormationController extends BaseController
 {
-    /**
-     * @Route("/grille/{diplome}", name="apc_referentiel_formation_grille", methods="GET")
-     */
+    #[Route(path: '/grille/{diplome}', name: 'apc_referentiel_formation_grille', methods: 'GET')]
     public function grille(Diplome $diplome)
     {
         return $this->render('apc/referentiel-formation/grille.html.twig',
@@ -65,23 +61,10 @@ class ApcReferentielFormationController extends BaseController
             ]);
     }
 
-
-    /**
-     * @Route("/ajax-edit/{id}/{competence}/{type}", name="apc_referentiel_formation_ajax", methods={"POST"},
-     *                                               options={"expose":true})
-     */
-    public function ajaxEdit(
-        ApcSaeCompetenceRepository $apcSaeCompetenceRepository,
-        ApcSaeRepository $apcSaeRepository,
-        ApcRessourceRepository $apcRessourceRepository,
-        ApcRessourceCompetenceRepository $apcRessourceCompetenceRepository,
-        Request $request,
-        int $id,
-        ApcCompetence $competence,
-        string $type
-    ): Response {
+    #[Route(path: '/ajax-edit/{id}/{competence}/{type}', name: 'apc_referentiel_formation_ajax', options: ['expose' => true], methods: ['POST'])]
+    public function ajaxEdit(ApcSaeCompetenceRepository $apcSaeCompetenceRepository, ApcSaeRepository $apcSaeRepository, ApcRessourceRepository $apcRessourceRepository, ApcRessourceCompetenceRepository $apcRessourceCompetenceRepository, Request $request, int $id, ApcCompetence $competence, string $type): Response
+    {
         $value = JsonRequest::getValueFromRequest($request, 'value');
-
         if ('ressource' === $type) {
             $ressource = $apcRessourceRepository->find($id);
             if (null !== $ressource) {
@@ -89,12 +72,14 @@ class ApcReferentielFormationController extends BaseController
                     'ressource' => $id,
                     'competence' => $competence->getId(),
                 ]);
-                if (null === $obj) {
+                if (null === $obj && Tools::convertToFloat($value) > 0) { //n'eiste pas et > 0 on créé
                     $obj = new ApcRessourceCompetence($ressource, $competence);
                     $obj->setCoefficient(Tools::convertToFloat($value));
                     $this->entityManager->persist($obj);
-                } else {
+                } else if (Tools::convertToFloat($value) > 0) { //existe et > 0 on met à jour
                     $obj->setCoefficient(Tools::convertToFloat($value));
+                } else { //existe et <=0 on supprime
+                    $this->entityManager->remove($obj);
                 }
                 $this->entityManager->flush();
             } else {
@@ -106,17 +91,18 @@ class ApcReferentielFormationController extends BaseController
 
             return new JsonResponse(true, Response::HTTP_OK);
         }
-
         if ('sae' === $type) {
             $sae = $apcSaeRepository->find($id);
             if (null !== $sae) {
                 $obj = $apcSaeCompetenceRepository->findOneBy(['sae' => $id, 'competence' => $competence->getId()]);
-                if (null === $obj) {
+                if (null === $obj && Tools::convertToFloat($value)) {
                     $obj = new ApcSaeCompetence($sae, $competence);
                     $obj->setCoefficient(Tools::convertToFloat($value));
                     $this->entityManager->persist($obj);
-                } else {
+                } else if (Tools::convertToFloat($value) > 0) {
                     $obj->setCoefficient(Tools::convertToFloat($value));
+                } else {
+                    $this->entityManager->remove($obj);
                 }
                 $this->entityManager->flush();
             } else {
