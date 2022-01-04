@@ -15,7 +15,7 @@ namespace App\Classes\Enquetes;
 
 use App\Classes\Configuration;
 use App\Classes\Excel\MyExcelWriter;
-use App\Utils\Tools;
+use App\Components\Questionnaire\TypeQuestion\TypeLibre;
 use App\Entity\QuestionnaireQuestion;
 use App\Entity\QuestionnaireQuizz;
 use App\Repository\EtudiantRepository;
@@ -23,18 +23,14 @@ use App\Repository\QuestionnaireEtudiantReponseRepository;
 use App\Repository\QuestionnaireEtudiantRepository;
 use App\Repository\QuestionnaireQuizzRepository;
 use App\Repository\QuestionnaireReponseRepository;
+use App\Utils\Tools;
+use function array_key_exists;
 use Carbon\Carbon;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Component\HttpFoundation\StreamedResponse;
-use function array_key_exists;
 
 class MyEnqueteDiplome
 {
-    private MyExcelWriter $myExcelWriter;
-    private EtudiantRepository $etudiantRepository;
-    private QuestionnaireEtudiantReponseRepository $questionnaireEtudiantReponse;
-    private QuestionnaireReponseRepository $questionnaireReponseRepository;
-
     private ?QuestionnaireQuizz $questionnaire;
     private $etudiantsReponses;
     private $reponses;
@@ -44,17 +40,13 @@ class MyEnqueteDiplome
      */
     public function __construct(
         Configuration $configuration,
-        QuestionnaireReponseRepository $questionnaireReponseRepository,
+        private QuestionnaireReponseRepository $questionnaireReponseRepository,
         QuestionnaireQuizzRepository $questionnaireQuizzRepository,
         QuestionnaireEtudiantRepository $questionnaireEtudiantRepository,
-        QuestionnaireEtudiantReponseRepository $questionnaireEtudiantReponse,
-        MyExcelWriter $myExcelWriter,
-        EtudiantRepository $etudiantRepository
+        private QuestionnaireEtudiantReponseRepository $questionnaireEtudiantReponse,
+        private MyExcelWriter $myExcelWriter,
+        private EtudiantRepository $etudiantRepository
     ) {
-        $this->myExcelWriter = $myExcelWriter;
-        $this->questionnaireEtudiantReponse = $questionnaireEtudiantReponse;
-        $this->questionnaireReponseRepository = $questionnaireReponseRepository;
-        $this->etudiantRepository = $etudiantRepository;
         $this->questionnaire = $questionnaireQuizzRepository->find($configuration->get('ENQUETE_DIPLOME'));
         if (null !== $this->questionnaire) {
             $this->reponses = $questionnaireEtudiantRepository->findByQuestionnaire($this->questionnaire);
@@ -64,7 +56,6 @@ class MyEnqueteDiplome
     public function export()
     {
         $tReponses = $this->questionnaireReponseRepository->findByQuizzArray($this->questionnaire);
-
         $this->myExcelWriter->createSheet('enquete');
         $tEnTete = ['nom', 'prenom', 'Dernière mise à jour'];
         $tEnTeteId = [];
@@ -88,15 +79,15 @@ class MyEnqueteDiplome
                 $reponse->getUpdated()->format('d/m/Y H:i'),
             ];
             foreach ($tEnTeteId as $question) {
-                if (QuestionnaireQuestion::QUESTION_TYPE_LIBRE === $question->getType()) {
-                    $cle = 'quizz_question_text_q' . $question->getId();
+                if (TypeLibre::class === $question->getType()) {
+                    $cle = 'quizz_question_text_q'.$question->getId();
                     if (array_key_exists($cle, $reponses)) {
                         $t[] = $reponses[$cle]->getValeur();
                     } else {
                         $t[] = '';
                     }
                 } else {
-                    $cle = 'quizz_question_reponses_q' . $question->getId();
+                    $cle = 'quizz_question_reponses_q'.$question->getId();
                     if (array_key_exists($cle, $reponses)) {
                         if (array_key_exists($reponses[$cle]->getIdReponse(), $tReponses)) {
                             $t[] = $tReponses[$reponses[$cle]->getIdReponse()]->getLibelle();
@@ -114,13 +105,13 @@ class MyEnqueteDiplome
         $date = Carbon::now();
 
         return new StreamedResponse(
-            static function() use ($writer) {
+            static function () use ($writer) {
                 $writer->save('php://output');
             },
             200,
             [
-                'Content-Type'        => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                'Content-Disposition' => 'attachment;filename="synthese_reponse' . $date->format('d-m-Y') . '.xlsx"',
+                'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                'Content-Disposition' => 'attachment;filename="synthese_reponse'.$date->format('d-m-Y').'.xlsx"',
             ]
         );
     }
@@ -188,13 +179,13 @@ class MyEnqueteDiplome
         $date = Carbon::now();
 
         return new StreamedResponse(
-            static function() use ($writer) {
+            static function () use ($writer) {
                 $writer->save('php://output');
             },
             200,
             [
-                'Content-Type'        => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                'Content-Disposition' => 'attachment;filename="synthese_reponse' . $date->format('d-m-Y') . '.xlsx"',
+                'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                'Content-Disposition' => 'attachment;filename="synthese_reponse'.$date->format('d-m-Y').'.xlsx"',
             ]
         );
     }
