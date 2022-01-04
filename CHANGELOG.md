@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.5.2](https://github.com/Dannebicque/intranetV3/compare/v3.5.1...v3.5.2) (2022-01-04)
+
+
+### Features
+
+* Modification des coefficients des SAE/Ressources ([53c5d0a](https://github.com/Dannebicque/intranetV3/commit/53c5d0a05061cc2921eb80b36c8d407326c3b0f6))
+* Sous-commission pour le BUT ([8043603](https://github.com/Dannebicque/intranetV3/commit/804360340aef61021ae5fe96d705edd624b6237b))
+* Sous-commission pour le BUT ([b115ade](https://github.com/Dannebicque/intranetV3/commit/b115ade9c2996ec5c00ac3d1dadbb6e58fbc51fb))
+
+
+### Bug Fixes
+
+* Bug typage ([1277adb](https://github.com/Dannebicque/intranetV3/commit/1277adba60f93c1b5416473daa66ff4a0f8b0b69))
+* Correctifs sur la sous-commission du BUT et reprise des éléments sur le profil des étudiants ([dde3394](https://github.com/Dannebicque/intranetV3/commit/dde33944d0ae290496732d396b7e1690dfd7de4c))
+* Export RDD ([2b4885d](https://github.com/Dannebicque/intranetV3/commit/2b4885d0b31b8707f49a3db47b88104d6f185ee0))
+* Export RDD + ajout de données ([824e502](https://github.com/Dannebicque/intranetV3/commit/824e502e4dbed46b9cf4fd84df635b0e738f31b1))
+* Export RDD + ajout de données ([9219fb0](https://github.com/Dannebicque/intranetV3/commit/9219fb0af07e5051fb87b6ff405d3b7b2075e2e3))
+* Typage RDD ([a3064b4](https://github.com/Dannebicque/intranetV3/commit/a3064b4a3e78b725b714fcae897d98bde058f296))
+
 ### [3.5.1](https://github.com/Dannebicque/intranetV3/compare/v3.5.0...v3.5.1) (2022-01-03)
 
 
