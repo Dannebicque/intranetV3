@@ -85,11 +85,11 @@ class Previsionnel
 
     public function getDisplay(): string
     {
-        return $this->matiere_code . ' | ' . $this->matiere_libelle;
+        return $this->matiere_code.' | '.$this->matiere_libelle;
     }
 
     public function getTypeIdMatiere(): string
     {
-        return $this->type_matiere . '_' . $this->matiere_id;
+        return $this->type_matiere.'_'.$this->matiere_id;
     }
 }

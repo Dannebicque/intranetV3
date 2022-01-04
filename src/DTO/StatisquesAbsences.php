@@ -34,7 +34,7 @@ class StatisquesAbsences
      */
     public function addDuree(DateTime $duree): void
     {
-        $this->totalDuree->add(new DateInterval('PT' . $duree->format('G') . 'H' . $duree->format('i') . 'M'));
+        $this->totalDuree->add(new DateInterval('PT'.$duree->format('G').'H'.$duree->format('i').'M'));
     }
 
     public function incJustifieOrNotJutifie(bool $isJustifie)

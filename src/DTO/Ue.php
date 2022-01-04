@@ -16,5 +16,4 @@ class Ue
     public float $ue_coefficient;
     public int $ue_numero;
     public string $ue_couleur;
-
 }

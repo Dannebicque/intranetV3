@@ -29,6 +29,6 @@ class MatiereCollection
 
     public function toArray()
     {
-        return (array)$this->matieres;
+        return (array) $this->matieres;
     }
 }

@@ -22,7 +22,6 @@ class MoyenneUe
 
     /**
      * MoyenneUe constructor.
-     *
      */
     public function __construct(Ue $ue, $penalite)
     {

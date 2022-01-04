@@ -9,7 +9,6 @@
 
 namespace App\DTO;
 
-
 class EvenementEdtCollection
 {
     /** @var \App\DTO\EvenementEdt[] */

@@ -67,18 +67,20 @@ class EvenementEdt
 
     public function getClassCss()
     {
-        return strtolower($this->type_cours) . '_' . $this->couleur;
+        return strtolower($this->type_cours).'_'.$this->couleur;
     }
 
     public function getIdMatiere()
     {
         $t = explode('_', $this->typeIdMatiere);
+
         return $t[1];
     }
 
     public function getTypeMatiere()
     {
         $t = explode('_', $this->typeIdMatiere);
+
         return $t[0];
     }
 }

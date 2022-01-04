@@ -29,6 +29,6 @@ class PrevisionnelCollection
 
     public function toArray()
     {
-        return (array)$this->previsionnels;
+        return (array) $this->previsionnels;
     }
 }
