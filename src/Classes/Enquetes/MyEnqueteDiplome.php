@@ -16,13 +16,13 @@ namespace App\Classes\Enquetes;
 use App\Classes\Configuration;
 use App\Classes\Excel\MyExcelWriter;
 use App\Components\Questionnaire\TypeQuestion\TypeLibre;
-use App\Entity\QuestionnaireQuestion;
 use App\Entity\QuestionnaireQuizz;
 use App\Repository\EtudiantRepository;
 use App\Repository\QuestionnaireEtudiantReponseRepository;
 use App\Repository\QuestionnaireEtudiantRepository;
 use App\Repository\QuestionnaireQuizzRepository;
 use App\Repository\QuestionnaireReponseRepository;
+use App\Repository\RddDiplomeRepository;
 use App\Utils\Tools;
 use function array_key_exists;
 use Carbon\Carbon;
@@ -40,6 +40,7 @@ class MyEnqueteDiplome
      */
     public function __construct(
         Configuration $configuration,
+        private RddDiplomeRepository $rddDiplomeRepository,
         private QuestionnaireReponseRepository $questionnaireReponseRepository,
         QuestionnaireQuizzRepository $questionnaireQuizzRepository,
         QuestionnaireEtudiantRepository $questionnaireEtudiantRepository,
@@ -47,9 +48,14 @@ class MyEnqueteDiplome
         private MyExcelWriter $myExcelWriter,
         private EtudiantRepository $etudiantRepository
     ) {
+        $this->AllEtudiants = $this->rddDiplomeRepository->getEtudiantAvecQuestionnaire();
         $this->questionnaire = $questionnaireQuizzRepository->find($configuration->get('ENQUETE_DIPLOME'));
         if (null !== $this->questionnaire) {
-            $this->reponses = $questionnaireEtudiantRepository->findByQuestionnaire($this->questionnaire);
+            $reponses = $questionnaireEtudiantRepository->findByQuestionnaire($this->questionnaire);
+            $this->reponses = [];
+            foreach ($reponses as $reponse) {
+                $this->reponses[$reponse->getEtudiant()->getNumEtudiant()] = $reponse;
+            }
         }
     }
 
@@ -57,7 +63,7 @@ class MyEnqueteDiplome
     {
         $tReponses = $this->questionnaireReponseRepository->findByQuizzArray($this->questionnaire);
         $this->myExcelWriter->createSheet('enquete');
-        $tEnTete = ['nom', 'prenom', 'Dernière mise à jour'];
+        $tEnTete = ['nom', 'prenom', 'Dernière mise à jour', 'tel', 'mail', 'codeEtape', 'diplome', 'adresse', 'Complément', 'Code Postal', 'ville', 'pays'];
         $tEnTeteId = [];
 
         foreach ($this->questionnaire->getSections() as $section) {
@@ -71,30 +77,60 @@ class MyEnqueteDiplome
 
         $ligne = 2;
 
-        foreach ($this->reponses as $reponse) {
-            $reponses = $this->questionnaireEtudiantReponse->findByQuizzEtudiant($reponse);
-            $t = [
-                $reponse->getEtudiant()->getNom(),
-                $reponse->getEtudiant()->getPrenom(),
-                $reponse->getUpdated()->format('d/m/Y H:i'),
-            ];
-            foreach ($tEnTeteId as $question) {
-                if (TypeLibre::class === $question->getType()) {
-                    $cle = 'quizz_question_text_q'.$question->getId();
-                    if (array_key_exists($cle, $reponses)) {
-                        $t[] = $reponses[$cle]->getValeur();
-                    } else {
-                        $t[] = '';
-                    }
-                } else {
-                    $cle = 'quizz_question_reponses_q'.$question->getId();
-                    if (array_key_exists($cle, $reponses)) {
-                        if (array_key_exists($reponses[$cle]->getIdReponse(), $tReponses)) {
-                            $t[] = $tReponses[$reponses[$cle]->getIdReponse()]->getLibelle();
+        foreach ($this->AllEtudiants as $etudiant) {
+            if (array_key_exists($etudiant->getNumEtudiant(), $this->reponses)) {
+                $reponse = $this->reponses[$etudiant->getNumEtudiant()];
+                $reponses = $this->questionnaireEtudiantReponse->findByQuizzEtudiant($reponse);
+                $t = [
+                    $reponse->getEtudiant()->getNom(),
+                    $reponse->getEtudiant()->getPrenom(),
+                    $reponse->getUpdated()->format('d/m/Y H:i'),
+                    Tools::telFormat($reponse->getEtudiant()->getTel1()),
+                    $reponse->getEtudiant()->getMailPerso(),
+                    $etudiant->getCodeEtape(),
+                    $etudiant->getLibelleDiplome(),
+                    $reponse->getEtudiant()->getAdresse()->getAdresse1(),
+                    $reponse->getEtudiant()->getAdresse()->getAdresse2(),
+                    $reponse->getEtudiant()->getAdresse()->getCodePostal(),
+                    $reponse->getEtudiant()->getAdresse()->getVille(),
+                    $reponse->getEtudiant()->getAdresse()->getPays(),
+                ];
+                foreach ($tEnTeteId as $question) {
+                    if (TypeLibre::class === $question->getType()) {
+                        $cle = 'quizz_question_text_q'.$question->getId();
+                        if (array_key_exists($cle, $reponses)) {
+                            $t[] = $reponses[$cle]->getValeur();
+                        } else {
+                            $t[] = '';
                         }
                     } else {
-                        $t[] = '';
+                        $cle = 'quizz_question_reponses_q'.$question->getId();
+                        if (array_key_exists($cle, $reponses)) {
+                            if (array_key_exists($reponses[$cle]->getIdReponse(), $tReponses)) {
+                                $t[] = $tReponses[$reponses[$cle]->getIdReponse()]->getLibelle();
+                            }
+                        } else {
+                            $t[] = '';
+                        }
                     }
+                }
+            } else {
+                $etu = $this->etudiantRepository->findOneBy(['numEtudiant' => $etudiant->getNumEtudiant()]);
+                if (null !== $etu) {
+                    $t = [
+                        $etu->getNom(),
+                        $etu->getPrenom(),
+                        $etudiant->getUpdated()->format('d/m/Y H:i'),
+                        Tools::telFormat($etu->getTel1()),
+                        $etudiant->getMailPerso(),
+                        $etudiant->getCodeEtape(),
+                        $etudiant->getLibelleDiplome(),
+                        $etu->getAdresse()->getAdresse1(),
+                        $etu->getAdresse()->getAdresse2(),
+                        $etu->getAdresse()->getCodePostal(),
+                        $etu->getAdresse()->getVille(),
+                        $etu->getAdresse()->getPays(),
+                    ];
                 }
             }
             $this->myExcelWriter->ecritLigne($t, 1, $ligne);

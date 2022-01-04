@@ -9,6 +9,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Etudiant;
 use App\Entity\RddDiplome;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
@@ -42,5 +43,16 @@ class RddDiplomeRepository extends ServiceEntityRepository
             ->select('COUNT(p)')
             ->getQuery()
             ->getSingleScalarResult();
+    }
+
+    public function getEtudiantAvecQuestionnaire()
+    {
+        return $this->createQueryBuilder('r')
+            ->join(Etudiant::class, 'e', 'WITH', 'r.numEtudiant = e.numEtudiant')
+            ->where('r.enqueteAFaire = true')
+            ->orderBy('e.nom', 'ASC')
+            ->addOrderBy('e.prenom', 'ASC')
+            ->getQuery()
+            ->getResult();
     }
 }
