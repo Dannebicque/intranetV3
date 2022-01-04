@@ -12,7 +12,6 @@ namespace App\Classes\SousCommission;
 use App\Classes\Etudiant\EtudiantAbsences;
 use App\Classes\Etudiant\EtudiantNotes;
 use App\Classes\Matieres\TypeMatiereManager;
-use App\DTO\EtudiantSousCommission;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Etudiant;
 use App\Entity\Semestre;
@@ -93,8 +92,6 @@ abstract class AbstractSousCommission
     {
         return $this->anneeUniversitaire;
     }
-
-
 
     /**
      * @return \App\Classes\Matieres\MatiereInterface[]

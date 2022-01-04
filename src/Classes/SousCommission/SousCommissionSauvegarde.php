@@ -20,9 +20,9 @@ use App\Entity\ScolaritePromo;
 use App\Entity\Semestre;
 use App\Repository\ScolaritePromoRepository;
 use App\Repository\ScolariteRepository;
+use function array_key_exists;
 use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
-use function array_key_exists;
 
 class SousCommissionSauvegarde
 {
@@ -123,7 +123,7 @@ class SousCommissionSauvegarde
         AnneeUniversitaire $anneeUniversitaire
     ) {
         $ssEtudiant = $this->scolariteRepository->findOneBy([
-            'semestre'           => $semestre->getId(),
+            'semestre' => $semestre->getId(),
             'anneeUniversitaire' => $anneeUniversitaire->getId(),
         ]);
         if (null === $ssEtudiant) {

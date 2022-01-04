@@ -21,11 +21,10 @@ class SousCommissionManager
 
     public function getSousCommission(Semestre $semestre): SousCommissionInterface
     {
-        if ($semestre->getDiplome()?->getTypeDiplome()?->getApc() === true) {
+        if (true === $semestre->getDiplome()?->getTypeDiplome()?->getApc()) {
             return $this->sousCommissionApc;
         }
 
         return $this->sousCommission;
     }
-
 }

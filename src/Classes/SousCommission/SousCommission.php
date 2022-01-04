@@ -9,24 +9,16 @@
 
 namespace App\Classes\SousCommission;
 
-use App\Classes\Etudiant\EtudiantAbsences;
-use App\Classes\Etudiant\EtudiantNotes;
-use App\Classes\Matieres\TypeMatiereManager;
 use App\DTO\EtudiantSousCommission;
 use App\DTO\MoyenneMatiere;
 use App\DTO\MoyenneUe;
 use App\DTO\StatitiquesBac;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Constantes;
-use App\Entity\Etudiant;
 use App\Entity\Scolarite;
 use App\Entity\ScolaritePromo;
 use App\Entity\Semestre;
-use App\Entity\Ue;
-use App\Repository\EtudiantRepository;
-use App\Repository\UeRepository;
 use App\Utils\Tools;
-use Doctrine\ORM\EntityManagerInterface;
 use function array_key_exists;
 
 class SousCommission extends AbstractSousCommission implements SousCommissionInterface

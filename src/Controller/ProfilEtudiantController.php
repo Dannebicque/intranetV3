@@ -9,7 +9,6 @@
 
 namespace App\Controller;
 
-use App\Classes\Apc\ApcCoefficient;
 use App\Classes\Calendrier;
 use App\Classes\Etudiant\EtudiantAbsences;
 use App\Classes\Etudiant\EtudiantNotes;
@@ -21,7 +20,8 @@ use App\Entity\Commentaire;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Repository\AlternanceRepository;
-use App\Repository\ApcNiveauRepository;
+use App\Repository\ApcRessourceCompetenceRepository;
+use App\Repository\ApcSaeCompetenceRepository;
 use App\Repository\DepartementRepository;
 use App\Repository\ScolariteRepository;
 use App\Repository\StageEtudiantRepository;
@@ -36,15 +36,14 @@ use Symfony\UX\Chartjs\Model\Chart;
 
 /**
  * Class UserController.
- *
- * @Route("/etudiant")
  */
+#[Route(path: '/etudiant')]
 class ProfilEtudiantController extends BaseController
 {
     /**
-     * @Route("/profil/{slug}/timeline", name="profil_etudiant_timeline")
      * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
      */
+    #[Route(path: '/profil/{slug}/timeline', name: 'profil_etudiant_timeline')]
     public function timeline(Etudiant $etudiant): Response
     {
         return $this->render('user/composants/timeline.html.twig', [
@@ -53,14 +52,11 @@ class ProfilEtudiantController extends BaseController
     }
 
     /**
-     * @Route("/profil/{slug}/actions", name="profil_etudiant_action")
-     *
      * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
      */
-    public function actions(
-        DepartementRepository $departementRepository,
-        Etudiant $etudiant
-    ): Response {
+    #[Route(path: '/profil/{slug}/actions', name: 'profil_etudiant_action')]
+    public function actions(DepartementRepository $departementRepository, Etudiant $etudiant): Response
+    {
         return $this->render('user/composants/actions_etudiant.html.twig', [
             'etudiant' => $etudiant,
             'departements' => $departementRepository->findActifs(),
@@ -68,14 +64,11 @@ class ProfilEtudiantController extends BaseController
     }
 
     /**
-     * @Route("/profil/{slug}/scolarite", name="profil_etudiant_scolarite")
-     *
      * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
      */
-    public function scolarite(
-        ScolariteRepository $scolariteRepository,
-        Etudiant $etudiant
-    ): Response {
+    #[Route(path: '/profil/{slug}/scolarite', name: 'profil_etudiant_scolarite')]
+    public function scolarite(ScolariteRepository $scolariteRepository, Etudiant $etudiant): Response
+    {
         $scolarite = $scolariteRepository->findByEtudiant($etudiant);
 
         return $this->render('user/composants/scolarite.html.twig', [
@@ -85,17 +78,11 @@ class ProfilEtudiantController extends BaseController
     }
 
     /**
-     * @Route("/profil/{slug}/notes", name="profil_etudiant_notes")
-     *
      * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
      */
-    public function notes(
-        NotesTri $notesTri,
-        TypeMatiereManager $typeMatiereManager,
-        ChartBuilderInterface $chartBuilder,
-        EtudiantNotes $etudiantNotes,
-        Etudiant $etudiant
-    ): Response {
+    #[Route(path: '/profil/{slug}/notes', name: 'profil_etudiant_notes')]
+    public function notes(NotesTri $notesTri, TypeMatiereManager $typeMatiereManager, ChartBuilderInterface $chartBuilder, EtudiantNotes $etudiantNotes, Etudiant $etudiant): Response
+    {
         if (null !== $etudiant->getSemestre()) {
             $etudiantNotes->setEtudiant($etudiant);
             $matieres = $typeMatiereManager->findBySemestreArray($etudiant->getSemestre());
@@ -147,29 +134,34 @@ class ProfilEtudiantController extends BaseController
     }
 
     /**
-     * @Route("/profil/{slug}/apc_notes", name="profil_etudiant_apc")
-     *
      * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
      */
-    public function apcNotes(
-        UeRepository $ueRepository,
+    #[Route(path: '/profil/{slug}/apc_notes', name: 'profil_etudiant_apc')]
+    public function apcNotes(UeRepository $ueRepository,
+        ApcRessourceCompetenceRepository $apcRessourceCompetenceRepository,
+        ApcSaeCompetenceRepository $apcSaeCompetenceRepository,
         TypeMatiereManager $typeMatiereManager,
         EtudiantNotes $etudiantNotes,
-        Etudiant $etudiant
-    ): Response {
+        Etudiant $etudiant): Response
+    {
         if (null !== $etudiant->getSemestre()) {
-            $ues = $ueRepository->findBySemestre($etudiant->getSemestre());
+            $semestre = $etudiant->getSemestre();
+            $ressources = $apcRessourceCompetenceRepository->findBySemestreArray($semestre);
+            $saes = $apcSaeCompetenceRepository->findBySemestreArray($semestre);
+            $ues = $ueRepository->findBySemestre($semestre);
+
+            $etudiantSousCommissionApc = new EtudiantSousCommissionApc($etudiant, $semestre, $ues);
             $etudiantNotes->setEtudiant($etudiant);
             $matieres = $typeMatiereManager->findBySemestreArray($etudiant->getSemestre());
-            $moyennes = $etudiantNotes->getMoyenneParMatiereParSemestresEtAnneeUniversitaire($matieres, $etudiant->getSemestre(),
+            $etudiantSousCommissionApc->moyenneMatieres = $etudiantNotes->getMoyenneParMatiereParSemestresEtAnneeUniversitaire($matieres, $etudiant->getSemestre(),
                 $this->getAnneeUniversitaire());
-            $moyennesSemestre = $etudiantNotes->calculMoyenneApcSemestre($etudiant->getSemestre(), $matieres, $ues, $moyennes);//todo: cette méthode ne devrait pas être là...
-
+            $etudiantSousCommissionApc->calculMoyenneUes($matieres, $ressources, $saes);
 
             return $this->render('user/composants/notes_apc.html.twig', [
                 'etudiant' => $etudiant,
+                'semestre' => $semestre,
                 'matieres' => $matieres,
-                'moyenneSemestre' => $moyennesSemestre,
+                'moyenneSemestre' => $etudiantSousCommissionApc,
                 'ues' => $ues,
             ]);
         }
@@ -179,17 +171,13 @@ class ProfilEtudiantController extends BaseController
     }
 
     /**
-     * @Route("/profil/{slug}/absences", name="profil_etudiant_absences")
      * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
      *
      * @throws Exception
      */
-    public function absences(
-        TypeMatiereManager $typeMatiereManager,
-        EtudiantAbsences $etudiantAbsences,
-        StatsAbsences $statsAbsences,
-        Etudiant $etudiant
-    ): Response {
+    #[Route(path: '/profil/{slug}/absences', name: 'profil_etudiant_absences')]
+    public function absences(TypeMatiereManager $typeMatiereManager, EtudiantAbsences $etudiantAbsences, StatsAbsences $statsAbsences, Etudiant $etudiant): Response
+    {
         if (null !== $etudiant->getSemestre()) {
             Calendrier::calculPlanning($this->dataUserSession->getAnneeUniversitaire()->getAnnee(), 2,
                 Constantes::DUREE_SEMESTRE);
@@ -219,14 +207,11 @@ class ProfilEtudiantController extends BaseController
     }
 
     /**
-     * @Route("/profil/{slug}/stages", name="profil_etudiant_stages")
      * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
      */
-    public function stages(
-        StageEtudiantRepository $stageEtudiantRepository,
-        AlternanceRepository $alternanceRepository,
-        Etudiant $etudiant
-    ): Response {
+    #[Route(path: '/profil/{slug}/stages', name: 'profil_etudiant_stages')]
+    public function stages(StageEtudiantRepository $stageEtudiantRepository, AlternanceRepository $alternanceRepository, Etudiant $etudiant): Response
+    {
         return $this->render('user/composants/stages.html.twig', [
             //todo: si l'étudiant n'est plus dans un semestre, garder l'historique uniquemenent. Dans ce cas l'historique ne doit pas dépendre d'une année ?
             'stagesEnCours' => $stageEtudiantRepository->findByEtudiantAnnee($etudiant,
@@ -241,10 +226,9 @@ class ProfilEtudiantController extends BaseController
     }
 
     /**
-     * @Route("/profil/{slug}/about", name="profil_etudiant_about")
-     *
      * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
      */
+    #[Route(path: '/profil/{slug}/about', name: 'profil_etudiant_about')]
     public function about(Etudiant $etudiant): Response
     {
         return $this->render('user/composants/about.html.twig', [
@@ -253,13 +237,12 @@ class ProfilEtudiantController extends BaseController
     }
 
     /**
-     * @Route("/profil/{slug}/ajout-commentaire", name="profil_etudiant_ajout_commentaire", options={"expose"=true})
-     *
      * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
      */
+    #[Route(path: '/profil/{slug}/ajout-commentaire', name: 'profil_etudiant_ajout_commentaire', options: ['expose' => true])]
     public function ajoutCommentaire(Request $request, Etudiant $etudiant): Response
     {
-        $datas = json_decode($request->getContent(), true);
+        $datas = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
         $commentaire = new Commentaire($etudiant);
         $commentaire->setTexte($datas['commentaire']);
         $this->entityManager->persist($commentaire);

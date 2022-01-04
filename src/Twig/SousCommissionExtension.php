@@ -25,10 +25,10 @@ class SousCommissionExtension extends AbstractExtension
         }
 
         if ($nbAbsences < 10) {
-            return '<span class="badge badge-warning">'.$nbAbsences.'</span>';
+            return '<span class="badge bg-warning">'.$nbAbsences.'</span>';
         }
 
-        return '<span class="badge badge-danger">'.$nbAbsences.'</span>';
+        return '<span class="badge bg-danger">'.$nbAbsences.'</span>';
     }
 
     public function styleMoyenne($value): string
@@ -55,7 +55,7 @@ class SousCommissionExtension extends AbstractExtension
 
     public function styleDecision($value): string
     {
-        if ($value === null) {
+        if (null === $value) {
             return '-';
         }
 

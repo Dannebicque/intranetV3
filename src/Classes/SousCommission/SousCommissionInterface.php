@@ -15,5 +15,6 @@ use App\Entity\Semestre;
 interface SousCommissionInterface
 {
     public function calcul(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): void;
+
     public function calculStats(array $bacs): array;
 }
