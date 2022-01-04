@@ -31,21 +31,16 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class SousComissionController.
- *
- * @Route("/administration/sous-commission")
  */
+#[Route(path: '/administration/sous-commission')]
 class SousComissionController extends BaseController
 {
-    /**
-     * @Route("/live/{semestre}", name="administration_sous_commission_live")
-     */
-    public function live(BacRepository $bacRepository,
-        SousCommissionManager $sousCommissionManager, Semestre $semestre): Response
+    #[Route(path: '/live/{semestre}', name: 'administration_sous_commission_live')]
+    public function live(BacRepository $bacRepository, SousCommissionManager $sousCommissionManager, Semestre $semestre): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $semestre);
         $sousCommission = $sousCommissionManager->getSousCommission($semestre);
         $sousCommission->calcul($semestre, $this->getAnneeUniversitaire());
-
         $bacs = $bacRepository->findAll();
 
         return $this->render('administration/sous_commission/'.$sousCommission::TEMPLATE_LIVE, [
@@ -56,18 +51,10 @@ class SousComissionController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/travail/{semestre}", name="administration_sous_commission_travail")
-     */
-    public function travail(
-        TypeMatiereManager $typeMatiereManager,
-        SousCommission $sousCommission,
-        SousCommissionSauvegarde $sousCommissionSauvegarde,
-        Semestre $semestre
-    ): Response
+    #[Route(path: '/travail/{semestre}', name: 'administration_sous_commission_travail')]
+    public function travail(TypeMatiereManager $typeMatiereManager, SousCommission $sousCommission, SousCommissionSauvegarde $sousCommissionSauvegarde, Semestre $semestre): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $semestre);
-
         $matieres = $typeMatiereManager->findBySemestre($semestre);
         $sousCommission->calcul($semestre, $this->dataUserSession->getAnneeUniversitaire());
         $sousCommissionTravail = $sousCommissionSauvegarde->sauvegardeTravail($sousCommission, $matieres);
@@ -78,14 +65,9 @@ class SousComissionController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/purger/{scolaritePromo}", name="administration_sous_commission_purger")
-     */
-    public function purger(
-        TypeMatiereManager $typeMatiereManager,
-        NoteRepository $noteRepository,
-        ScolaritePromo $scolaritePromo
-    ): Response {
+    #[Route(path: '/purger/{scolaritePromo}', name: 'administration_sous_commission_purger')]
+    public function purger(TypeMatiereManager $typeMatiereManager, NoteRepository $noteRepository, ScolaritePromo $scolaritePromo): Response
+    {
         $semestre = $scolaritePromo->getSemestre();
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $semestre);
         if (null !== $semestre) {
@@ -110,9 +92,7 @@ class SousComissionController extends BaseController
         return $this->redirectToRoute('administration_sous_commission_travail', ['semestre' => $semestre->getId()]);
     }
 
-    /**
-     * @Route("/recalculer/{ssComm}", name="administration_sous_commission_recalculer")
-     */
+    #[Route(path: '/recalculer/{ssComm}', name: 'administration_sous_commission_recalculer')]
     public function recalculer(SousCommissionSauvegarde $sousCommissionSauvegarde, ScolaritePromo $ssComm): Response
     {
         $semestre = $ssComm->getSemestre();
@@ -123,32 +103,22 @@ class SousComissionController extends BaseController
         return $this->redirectToRoute('administration_sous_commission_travail', ['semestre' => $semestre->getId()]);
     }
 
-    /**
-     * @Route("/publier/{ssComm}", name="administration_sous_commission_publier")
-     */
-    public function publier(
-        EventDispatcherInterface $eventDispatcher,
-        SousCommissionSauvegarde $sousCommissionSauvegarde,
-        ScolaritePromo $ssComm
-    ): Response {
+    #[Route(path: '/publier/{ssComm}', name: 'administration_sous_commission_publier')]
+    public function publier(EventDispatcherInterface $eventDispatcher, SousCommissionSauvegarde $sousCommissionSauvegarde, ScolaritePromo $ssComm): Response
+    {
         $semestre = $ssComm->getSemestre();
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $semestre);
         $sousCommissionSauvegarde->visibilite($ssComm, true);
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'scolarite.publiee.success.flash');
-
         $publication = new SousCommissionEvent($ssComm);
         $eventDispatcher->dispatch($publication);
 
         return $this->redirectToRoute('administration_sous_commission_travail', ['semestre' => $semestre->getId()]);
     }
 
-    /**
-     * @Route("/depublier/{ssComm}", name="administration_sous_commission_depublier")
-     */
-    public function depublier(
-        SousCommissionSauvegarde $sousCommissionSauvegarde,
-        ScolaritePromo $ssComm
-    ): Response {
+    #[Route(path: '/depublier/{ssComm}', name: 'administration_sous_commission_depublier')]
+    public function depublier(SousCommissionSauvegarde $sousCommissionSauvegarde, ScolaritePromo $ssComm): Response
+    {
         $semestre = $ssComm->getSemestre();
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $semestre);
         $sousCommissionSauvegarde->visibilite($ssComm, false);
@@ -158,38 +128,28 @@ class SousComissionController extends BaseController
     }
 
     /**
-     * @Route("/exporter/{semestre}", name="administration_sous_commission_exporter")
-     *
      * @throws Exception
      */
+    #[Route(path: '/exporter/{semestre}', name: 'administration_sous_commission_exporter')]
     public function exporter(SousCommissionExport $sousCommission, Semestre $semestre): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $semestre);
+
         return $sousCommission->export($semestre, $this->dataUserSession->getAnneeUniversitaire());
     }
 
-    /**
-     * @Route("/grand-jury/{scolaritePromo}", name="administration_sous_commission_exporter_grand_jury")
-     */
+    #[Route(path: '/grand-jury/{scolaritePromo}', name: 'administration_sous_commission_exporter_grand_jury')]
     public function grandJury(SousCommissionExport $sousCommissionExport, ScolaritePromo $scolaritePromo): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $scolaritePromo->getSemestre());
+
         return $sousCommissionExport->exportGrandJury($scolaritePromo, $this->dataUserSession->getAnneeUniversitaire());
     }
 
-    /**
-     * @Route("/ajax/semestre/{id}/{type}", name="administration_ss_comm_ajax_edit", options={"expose"=true})
-     *
-     */
-    public function ajaxEditSsComm(
-        SousCommission $sousCommission,
-        Request $request,
-        Scolarite $scolarite,
-        $type
-    ): JsonResponse
+    #[Route(path: '/ajax/semestre/{id}/{type}', name: 'administration_ss_comm_ajax_edit', options: ['expose' => true])]
+    public function ajaxEditSsComm(SousCommission $sousCommission, Request $request, Scolarite $scolarite, $type): JsonResponse
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $sousCommission->getSemestre());
-
         $sousCommission->updateScolarite($scolarite,
             $type,
             $request->request->get('field'),

@@ -16,13 +16,16 @@ class MoyenneUeApc
     public array $matieres = [];
     public float $totalCoefficients = 0;
     public float $totalMoyennes = 0;
+    public float $totalMoyennesPenalisee = 0;
     public float $moyennePac = 0;
+    public float $moyennePacPenalisee = 0;
     public float $moyenne = 0;
+    public float $moyennePenalisee = 0;
+    public ?string $decision = null;
+    public ?string $decisionPenalisee = null;
 
-    public function __construct(\App\Entity\Ue $ue, array $matieres) {
+    public function __construct(\App\Entity\Ue $ue)
+    {
         $this->ue = $ue;
-        foreach ($matieres as $matiere) {
-            $this->matieres[$matiere->codeElement] = ['coefficient' => 0, 'moyenne' => 0];//objet
-        }
     }
 }

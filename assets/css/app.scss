@@ -750,3 +750,13 @@ td.td-edt.col-new-day {
   font-size: 16px;
   margin-bottom: 10px;
 }
+
+.tableFixHead {
+  overflow-y: auto;
+  height: 110px;
+}
+
+.tableFixHead thead th {
+  position: sticky;
+  top: 0;
+}

@@ -160,5 +160,13 @@ $colorsApcMedium: (
     background-color: $color-value;
     color: white;
   }
+
+  .carre-#{$color-key} {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background-color: $color-value;
+    color: white;
+  }
 }
 

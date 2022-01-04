@@ -12,9 +12,7 @@ namespace App\DTO;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Entity\Semestre;
-use function array_key_exists;
 use function count;
-use function in_array;
 
 class EtudiantSousCommissionApc
 {
@@ -25,62 +23,48 @@ class EtudiantSousCommissionApc
     private array $moyenneUes;
 
     public float $bonif = 0;
-    public string $decision = '';
-    public string $conseil = '';//todo: information sur les enjeux du S"pair"
-    public string $proposition = '';
+    public ?string $decision = null;
+    public ?string $conseil = null; //todo: information sur les enjeux du S"pair"
+    public ?string $proposition = null;
     public array $scolarite = [];
 
     /**
      * EtudiantSousCommissionApc constructor.
      */
     public function __construct(
-        public Etudiant $etudiant, public Semestre $semestre)
+        public Etudiant $etudiant,
+        public Semestre $semestre, array $ues)
     {
+        foreach ($ues as $ue) {
+            $this->moyenneUes[$ue->getId()] = new MoyenneUeApc($ue);
+        }
     }
-
 
     public function calculDecision(): void
     {
-
-    }
-
-    //todo: extension twig ?
-    private function styleMoyenne(float $note): string
-    {
-        if ($note <= Constantes::SEUIL_MOYENNE) {
-            return 'badge badge-danger';
+        $nbUes = count($this->moyenneUes);
+        $nbUesValidees = 0;
+        foreach ($this->moyenneUes as $ue) {
+            if (true === $this->semestre->getOptPenaliteAbsence() && Constantes::UE_VALIDE === $ue->decisionPenalisee) {
+                ++$nbUesValidees;
+            } elseif (false === $this->semestre->getOptPenaliteAbsence() && Constantes::UE_VALIDE === $ue->decision) {
+                ++$nbUesValidees;
+            }
         }
 
-        return '';
-    }
-//todo: extension twig ?
-    public function getStyleMoyenneSemestrePenalisee()
-    {
-        return $this->styleMoyenne($this->moyenneSemestrePenalisee);
-    }
-//todo: extension twig ?
-    public function getDecisionStyle(): string
-    {
-        return match ($this->decision) {
-            Constantes::SEMESTRE_VALIDE => 'badge badge-success',
-            Constantes::SEMESTRE_NON_VALIDE => 'badge badge-danger',
-            Constantes::SEMESTRE_VCA, Constantes::SEMESTRE_VCJ => 'badge badge-warning',
-            default => '',
-        };
-    }
-//todo: extension twig ?
-    public function getAbsencesStyle()
-    {
-        $nbAbsences = $this->nbAbsences();
-        if ($nbAbsences < 5) {
-            return '';
+        if ($nbUes === $nbUesValidees) {
+            $this->decision = Constantes::SEMESTRE_VALIDE; //cas simple, toutes les UE sont validées.
+            $this->conseil = 'RAS. Passage au semestre suivant, sans problème.';
+        } elseif (0 === $nbUesValidees) {
+            $this->decision = Constantes::SEMESTRE_NON_VALIDE;
+            $this->conseil = 'Attention, grandes difficultés pour le S2 avec l\'obligation de compenser les UE';
+        } elseif ($nbUesValidees < ($nbUes / 2)) {
+            $this->decision = Constantes::SEMESTRE_NON_VALIDE;
+            $this->conseil = 'Attention, moins de la moitié des UE est validé. Il faut compenser sur le semestre suivant';
+        } else {
+            $this->decision = Constantes::SEMESTRE_NON_VALIDE;
+            $this->conseil = 'La moitié des UE sont validées. Le passage en année suivante sera possible, mais il faudra compenser.';
         }
-
-        if ($nbAbsences < 10) {
-            return 'badge badge-warning';
-        }
-
-        return 'badge badge-danger';
     }
 
     public function nbAbsences()
@@ -115,11 +99,54 @@ class EtudiantSousCommissionApc
 
     public function getMoyenneUes(): array
     {
-        return $this->moyenneUes['ues'];
+        return $this->moyenneUes;
     }
 
-    public function setMoyenneUes(array $calculMoyenneApcSemestre)
+    public function calculMoyenneUes(array $matieres, $ressources, $saes)
     {
-        $this->moyenneUes = $calculMoyenneApcSemestre;
+        $tabs['pac'] = 0;
+        foreach ($matieres as $matiere) {
+            if (array_key_exists($matiere->getTypeIdMatiere(), $this->moyenneMatieres)) {
+                $tabs['matieres'][$matiere->codeElement]['moyenne'] = $this->moyenneMatieres[$matiere->getTypeIdMatiere()]->getMoyenne();
+                $tabs['matieres'][$matiere->codeElement]['moyennePenalisee'] = $this->moyenneMatieres[$matiere->getTypeIdMatiere()]->getMoyennePenalisee();
+            } else {
+                $tabs['matieres'][$matiere->codeElement]['moyenne'] = 0;
+                $tabs['matieres'][$matiere->codeElement]['moyennePenalisee'] = 0;
+            }
+        }
+
+        foreach ($this->moyenneUes as $ueId => $ue) {
+            $competenceId = $ue->ue->getApcCompetence()?->getId();
+
+            foreach ($matieres as $matiere) {
+                if (array_key_exists($ue->ue->getApcCompetence()->getId(),
+                        $ressources) && array_key_exists($matiere->codeElement,
+                        $ressources[$ue->ue->getApcCompetence()->getId()])) {
+                    $ue->matieres[$matiere->codeElement]['coefficient'] = $ressources[$competenceId][$matiere->codeElement]->getCoefficient(); //moyenne
+                    // officiellement du module.
+                    $ue->totalCoefficients += $ressources[$competenceId][$matiere->codeElement]->getCoefficient();
+                } elseif (array_key_exists($competenceId,
+                        $saes) && array_key_exists($matiere->codeElement,
+                        $saes[$competenceId])) {
+                    $ue->matieres[$matiere->codeElement]['coefficient'] = $saes[$competenceId][$matiere->codeElement]->getCoefficient(); //moyenne officiellement du module.
+                    $ue->totalCoefficients += $saes[$competenceId][$matiere->codeElement]->getCoefficient();
+                } else {
+                    $ue->matieres[$matiere->codeElement]['coefficient'] = 0;
+                }
+                $ue->matieres[$matiere->codeElement]['moyenne'] = $tabs['matieres'][$matiere->codeElement]['moyenne'] * $ue->matieres[$matiere->codeElement]['coefficient'];
+                $ue->matieres[$matiere->codeElement]['moyennePenalisee'] = $tabs['matieres'][$matiere->codeElement]['moyennePenalisee'] * $ue->matieres[$matiere->codeElement]['coefficient'];
+                $ue->totalMoyennes += $ue->matieres[$matiere->codeElement]['moyenne'];
+                $ue->totalMoyennesPenalisee += $ue->matieres[$matiere->codeElement]['moyennePenalisee'];
+                if ($ue->totalCoefficients > 0) {
+                    $ue->moyenne = $ue->totalMoyennes / $ue->totalCoefficients;
+                    $ue->moyennePenalisee = $ue->totalMoyennesPenalisee / $ue->totalCoefficients;
+                    $ue->moyennePac = $ue->moyenne + $tabs['pac'];
+                    $ue->moyennePacPenalisee = $ue->moyennePenalisee + $tabs['pac'];
+
+                    $ue->decision = $ue->moyenne < 10 ? Constantes::UE_NON_VALIDE : Constantes::UE_VALIDE;
+                    $ue->decisionPenalisee = $ue->moyennePenalisee < 10 ? Constantes::UE_NON_VALIDE : Constantes::UE_VALIDE;
+                }
+            }
+        }
     }
 }
