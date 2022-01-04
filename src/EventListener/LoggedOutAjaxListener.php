@@ -6,6 +6,7 @@
  * @project intranetV3
  * @lastUpdate 12/10/2021 20:44
  */
+
 namespace App\EventListener;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -46,4 +47,3 @@ class LoggedOutAjaxListener
         ]));
     }
 }
-

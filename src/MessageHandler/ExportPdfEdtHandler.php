@@ -77,7 +77,6 @@ class ExportPdfEdtHandler implements MessageHandlerInterface
                 ]);
 
             $this->mailer->send($mail);
-
         }
     }
 }

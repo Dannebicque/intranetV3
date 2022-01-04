@@ -15,10 +15,10 @@ namespace App\Utils;
 
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
-use Exception;
-use RuntimeException;
 use function chr;
+use Exception;
 use function ord;
+use RuntimeException;
 
 abstract class Tools
 {
@@ -49,7 +49,7 @@ abstract class Tools
         $value = trim($value);
         $value = str_replace([',', '.'], '.', $value);
 
-        return (float)$value;
+        return (float) $value;
     }
 
     public static function convertToBool(string $texte): bool
@@ -66,15 +66,15 @@ abstract class Tools
         str_replace(['.', '-', ' '], '', $number);
 
         if (str_starts_with($number, '33')) {
-            $number = '0' . mb_substr($number, 2, mb_strlen($number));
+            $number = '0'.mb_substr($number, 2, mb_strlen($number));
         }
 
         if (str_starts_with($number, '+33')) {
-            $number = '0' . mb_substr($number, 3, mb_strlen($number));
+            $number = '0'.mb_substr($number, 3, mb_strlen($number));
         }
 
         if (9 === mb_strlen($number)) {
-            $number = '0' . $number;
+            $number = '0'.$number;
         }
 
         if (10 === mb_strlen($number)) {
@@ -96,7 +96,7 @@ abstract class Tools
         return str_replace($search, $replace, $texte);
     }
 
-    public static function slug(string $texte): array|string|null
+    public static function slug(string $texte): array | string | null
     {
         /* Get rid of accented characters */
         $search = explode(',', 'ç,æ,œ,á,é,í,ó,ú,à,è,ì,ò,ù,ä,ë,ï,ö,ü,ÿ,â,ê,î,ô,û,å,e,i,ø,u');
@@ -119,9 +119,8 @@ abstract class Tools
 
     public static function personnaliseTexte(string $texte, array $config): string
     {
-
         foreach ($config as $key => $elt) {
-            $texte = str_replace('{{' . $key . '}}', $elt, $texte);
+            $texte = str_replace('{{'.$key.'}}', $elt, $texte);
         }
 
         return $texte;
@@ -145,7 +144,7 @@ abstract class Tools
         $name = $t[0];
         $name[0] = chr(ord($name[0]) - 32);
 
-        $method = 'set' . $name;
+        $method = 'set'.$name;
         if (method_exists($obj, $method)) {
             $obj->$method($value);
         }
@@ -160,7 +159,7 @@ abstract class Tools
         return true;
     }
 
-    public static function convertToInt(mixed $int): int|string
+    public static function convertToInt(mixed $int): int | string
     {
         $int = trim($int);
         if ('' === $int) {

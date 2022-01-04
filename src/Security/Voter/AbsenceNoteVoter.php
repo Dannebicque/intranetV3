@@ -52,9 +52,9 @@ class AbsenceNoteVoter extends Voter
                 //check if previsionnel exist...
                 $previ = $this->previsionnelRepository->findBy([
                     'typeMatiere' => $subject->typeMatiere,
-                    'idMatiere' => $subject->id
+                    'idMatiere' => $subject->id,
                 ]);
-                if (count($previ) === 0) {
+                if (0 === count($previ)) {
                     throw new AccessDeniedException('Vous ne pouvez pas saisir d\'absence dans cette matière/ressource/SAÉ');
                 }
                 break;
@@ -62,9 +62,9 @@ class AbsenceNoteVoter extends Voter
                 //check if previsionnel exist... Vérifier selon l'étape s'il peut agir sur l'évaluation
                 $previ = $this->previsionnelRepository->findBy([
                     'typeMatiere' => $subject->typeMatiere,
-                    'idMatiere' => $subject->id
+                    'idMatiere' => $subject->id,
                 ]);
-                if (count($previ) === 0) {
+                if (0 === count($previ)) {
                     throw new AccessDeniedException('Vous ne pouvez pas saisir d\'évaluation dans cette matière/ressource/SAÉ');
                 }
                 break;

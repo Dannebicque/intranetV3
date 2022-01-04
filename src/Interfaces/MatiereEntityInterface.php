@@ -35,4 +35,3 @@ interface MatiereEntityInterface
 
     public function isSuspendu();
 }
-

@@ -19,8 +19,8 @@ class HtmlExtension extends AbstractExtension
     public function fqn(object $value): string
     {
         $object = new ReflectionClass($value);
-        return $object->getNamespaceName().'\\'.$object->getShortName();
 
+        return $object->getNamespaceName().'\\'.$object->getShortName();
     }
 
     public function deuxDigits(string $value): string

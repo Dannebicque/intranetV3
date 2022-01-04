@@ -9,11 +9,11 @@
 
 namespace App\Event;
 
+use function get_class;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Contracts\EventDispatcher\Event;
-use function get_class;
 
 class CASAuthenticationFailureEvent extends Event
 {

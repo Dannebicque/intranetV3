@@ -9,12 +9,7 @@
 
 namespace App\Utils;
 
-use RuntimeException;
 use function function_exists;
-use function is_object;
-use function is_string;
-use function ord;
-use function strlen;
 
 abstract class HtmlUtils
 {

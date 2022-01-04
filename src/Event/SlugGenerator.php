@@ -9,9 +9,9 @@
 
 namespace App\Event;
 
-use App\Utils\Tools;
 use App\Entity\Article;
 use App\Entity\Utilisateur;
+use App\Utils\Tools;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Events;
 use Doctrine\Persistence\Event\LifecycleEventArgs;

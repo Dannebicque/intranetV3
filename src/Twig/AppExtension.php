@@ -16,11 +16,11 @@ use App\Entity\Personnel;
 use App\Utils\Tools;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
+use function chr;
+use function count;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
-use function chr;
-use function count;
 
 /**
  * Class AppExtension.
@@ -53,13 +53,13 @@ class AppExtension extends AbstractExtension
 
     public function formatHeure(string $heure): string
     {
-        return 1 === mb_strlen($heure) ? '0' . $heure : $heure;
+        return 1 === mb_strlen($heure) ? '0'.$heure : $heure;
     }
 
     public function formatNote(float $note, int $nbdecimales = 2, float $seuil = 10): string
     {
         if ($note < $seuil) {
-            return '<span class="badge bg-warning">' . number_format($note, $nbdecimales) . '</span>';
+            return '<span class="badge bg-warning">'.number_format($note, $nbdecimales).'</span>';
         }
 
         return number_format($note, $nbdecimales);
@@ -68,10 +68,10 @@ class AppExtension extends AbstractExtension
     public function formatDifference($valeur): string
     {
         if (0 !== $valeur) {
-            return '<span class="badge bg-warning">' . $valeur . '</span>';
+            return '<span class="badge bg-warning">'.$valeur.'</span>';
         }
 
-        return '<span class="badge bg-success">' . $valeur . '</span>';
+        return '<span class="badge bg-success">'.$valeur.'</span>';
     }
 
     public function getFunctions(): array
@@ -94,7 +94,7 @@ class AppExtension extends AbstractExtension
 
     public function age($dateNaissance): string
     {
-        return (string)Carbon::instance($dateNaissance)->age;
+        return (string) Carbon::instance($dateNaissance)->age;
     }
 
     public function bg($value): string
@@ -128,7 +128,7 @@ class AppExtension extends AbstractExtension
             return '';
         }
 
-        return '<a href="mailto:' . $email . '" target="_blank">' . $email . '</a>';
+        return '<a href="mailto:'.$email.'" target="_blank">'.$email.'</a>';
     }
 
     public function link(?string $link): string
@@ -137,7 +137,7 @@ class AppExtension extends AbstractExtension
             return '';
         }
 
-        return '<a href="' . $link . '" target="_blank">' . $link . '</a>';
+        return '<a href="'.$link.'" target="_blank">'.$link.'</a>';
     }
 
     public function upper(?string $texte): string
@@ -145,6 +145,7 @@ class AppExtension extends AbstractExtension
         if (null === $texte) {
             return '';
         }
+
         return mb_strtoupper($texte);
     }
 
@@ -173,12 +174,12 @@ class AppExtension extends AbstractExtension
         return chr($var);
     }
 
-    public function escapetitle($texte): ?string
+    public function escapetitle(?string $texte): ?string
     {
         return str_replace(['<strong>', '</strong>'], '', $texte);
     }
 
-    public function badge(float|int $number): ?string
+    public function badge(float | int $number): ?string
     {
         if ($number >= 5 && $number < 10) {
             return 'badge bg-warning';
@@ -201,7 +202,7 @@ class AppExtension extends AbstractExtension
         $html = '';
         foreach ($t as $word) {
             if ('' !== trim($word)) {
-                $html .= '<span class="badge bg-primary">' . $word . '</span>&nbsp;';
+                $html .= '<span class="badge bg-primary">'.$word.'</span>&nbsp;';
             }
         }
 

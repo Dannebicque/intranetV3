@@ -25,7 +25,7 @@ abstract class ToolsMatiere
     {
         $d = explode('_', $texte);
         if (2 === count($d)) {
-            return (int)$d[1];
+            return (int) $d[1];
         }
 
         return 0;

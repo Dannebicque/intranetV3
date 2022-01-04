@@ -67,9 +67,9 @@ class ExportReleveHandler implements MessageHandlerInterface
 
                     // pass variables (name => value) to the template
                     ->context([
-                        'semestre'  => $semestre,
+                        'semestre' => $semestre,
                         'personnel' => $personnel,
-                        'lien'      => $lien,
+                        'lien' => $lien,
                     ]);
 
                 $this->mailer->send($mail);

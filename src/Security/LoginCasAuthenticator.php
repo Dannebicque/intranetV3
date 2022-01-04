@@ -31,6 +31,7 @@ class LoginCasAuthenticator extends AbstractAuthenticator
         $this->parameterBag = $parameterBag;
         $this->urlGenerator = $urlGenerator;
     }
+
     public function supports(Request $request): ?bool
     {
         return '/sso/cas' === $request->getPathInfo();
@@ -52,7 +53,7 @@ class LoginCasAuthenticator extends AbstractAuthenticator
     {
         $cas_host = $this->parameterBag->get('CAS_HOST');
         $cas_context = $this->parameterBag->get('CAS_CONTEXT');
-        $cas_port = (int)$this->parameterBag->get('CAS_PORT');
+        $cas_port = (int) $this->parameterBag->get('CAS_PORT');
         phpCAS::setVerbose(true);
         phpCAS::client(CAS_VERSION_2_0, $cas_host, $cas_port, $cas_context);
         phpCAS::setFixedServiceURL($this->urlGenerator->generate('cas_return', [],

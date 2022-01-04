@@ -27,7 +27,6 @@ class QualiteRelanceEvent extends Event
         $this->questionnaireQualite = $questionnaireQualite;
     }
 
-
     public function getEtudiant(): ?Etudiant
     {
         return $this->etudiant;
@@ -38,17 +37,11 @@ class QualiteRelanceEvent extends Event
         $this->etudiant = $etudiant;
     }
 
-    /**
-     * @return \App\Entity\QuestionnaireQualite
-     */
     public function getQuestionnaireQualite(): QuestionnaireQualite
     {
         return $this->questionnaireQualite;
     }
 
-    /**
-     * @return array
-     */
     public function getEtudiants(): array
     {
         return $this->etudiants;
@@ -58,6 +51,4 @@ class QualiteRelanceEvent extends Event
     {
         $this->etudiants = $etudiants;
     }
-
-
 }

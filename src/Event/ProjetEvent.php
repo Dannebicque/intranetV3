@@ -21,9 +21,9 @@ class ProjetEvent extends Event
 
     public const EQ_ETATS = [
         self::CHGT_ETAT_PROJET_AUTORISE => ProjetEtudiant::ETAT_PROJET_AUTORISE,
-        self::CHGT_ETAT_PROJET_DEPOSE   => ProjetEtudiant::ETAT_PROJET_DEPOSE,
-        self::CHGT_ETAT_PROJET_VALIDE   => ProjetEtudiant::ETAT_PROJET_VALIDE,
-        self::CHGT_ETAT_PROJET_IMPRIME  => ProjetEtudiant::ETAT_PROJET_IMPRIME,
+        self::CHGT_ETAT_PROJET_DEPOSE => ProjetEtudiant::ETAT_PROJET_DEPOSE,
+        self::CHGT_ETAT_PROJET_VALIDE => ProjetEtudiant::ETAT_PROJET_VALIDE,
+        self::CHGT_ETAT_PROJET_IMPRIME => ProjetEtudiant::ETAT_PROJET_IMPRIME,
     ];
 
     protected ProjetEtudiant $projetEtudiant;

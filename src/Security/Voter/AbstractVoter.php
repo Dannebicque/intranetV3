@@ -56,13 +56,13 @@ class AbstractVoter
     ];
 
     protected RequestStack $session;
-    protected UserInterface|string $user;
+    protected UserInterface | string $user;
     protected array $departementRoles;
 
     public function __construct(RequestStack $session, TokenStorageInterface $tokenStorage)
     {
         $this->session = $session;
-        if ($tokenStorage->getToken() !== null) {
+        if (null !== $tokenStorage->getToken()) {
             $this->user = $tokenStorage->getToken()->getUser();
             if (!is_string($this->user) && $this->user instanceof Personnel) {
                 $this->departementRoles = [];
@@ -80,7 +80,7 @@ class AbstractVoter
 
     public function userHasMinimalRoleInDepartement(string $attribute, ?Departement $departement): bool
     {
-        if ($departement !== null && $this->userInGoodDepartement($departement)) {
+        if (null !== $departement && $this->userInGoodDepartement($departement)) {
             if (!array_key_exists($departement->getId(), $this->departementRoles)) {
                 throw new AccessDeniedException('Vous n\'avez pas accès à ce département');
             }

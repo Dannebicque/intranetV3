@@ -12,7 +12,10 @@ namespace App\Interfaces;
 interface UtilisateurInterface
 {
     public function getId();
+
     public function getMails();
+
     public function getTypeUser();
+
     public function setPassword(string $password): void;
 }
