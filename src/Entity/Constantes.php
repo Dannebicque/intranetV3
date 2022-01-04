@@ -197,6 +197,9 @@ class Constantes
     //Sous Commission
     public const PAS_OPTION = 'pasoption';
 
+    public const UE_VALIDE = 'V';
+    public const UE_NON_VALIDE = 'NV';
+
     public const SEUIL_UE = 8;
     public const SEUIL_MOYENNE = 10;
     public const SEMESTRE_VALIDE = 'V';
