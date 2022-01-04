@@ -1,0 +1,84 @@
+version: '3'
+
+networks:
+  nginx-php8-mysql8:
+
+services:
+
+  # nginx
+  nginx-service:
+    image: nginx
+    container_name: nginx-container
+    ports:
+      - "8080:80"
+    volumes:
+      - ./../:/var/www/project
+      - ./nginx/sites/default.conf:/etc/nginx/conf.d/default.conf
+      #- ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      #- ./logs:/var/log
+    depends_on:
+      - php8-service
+      - mysql8-service
+    networks:
+      - nginx-php8-mysql8
+
+  # php
+  php8-service:
+    build:
+      context: .
+      dockerfile: ./php-fpm/Dockerfile
+    container_name: php8-container
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./../:/var/www/project
+    networks:
+      - nginx-php8-mysql8
+    depends_on:
+      - mysql8-service
+    environment:
+      - APP_ENV=dev
+  # mysql
+  mysql8-service:
+    image: mysql:5.7
+    container_name: mysql8-container
+    ports:
+      - "4306:3306"
+    volumes:
+      - ./mysql:/var/lib/mysql
+    command: --default-authentication-plugin=mysql_native_password #--character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    restart: always # always restart unless stopped manually
+    environment:
+      MYSQL_USER: intranetv3
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: intranetv3
+      MYSQL_PASSWORD: root
+    networks:
+      - nginx-php8-mysql8
+
+  # PHPMyAdmin
+  phpmyadmin:
+    depends_on:
+      - mysql8-service
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    links:
+      - mysql8-service
+    restart: always
+    ports:
+      - "9090:80"
+    environment:
+      PMA_HOST: mysql8-service
+      MYSQL_ROOT_PASSWORD: root
+    networks:
+      - nginx-php8-mysql8
+
+#  # node
+#  node-service:
+#    image: node:latest
+#    container_name: node-container
+#    volumes:
+#      - ./app:/var/www/project
+#    working_dir: /var/www/project
+#    networks:
+#      - nginx-php74-mysql8-node
