@@ -136,7 +136,7 @@ class MyEnqueteDiplome
             $this->myExcelWriter->ecritLigne($t, 1, $ligne);
             ++$ligne;
         }
-        $this->myExcelWriter->getColumnsAutoSize('A', 'Z');
+        $this->myExcelWriter->getColumnsAutoSize('A', 'AJ');
         $writer = new Xlsx($this->myExcelWriter->getSpreadsheet());
         $date = Carbon::now();
 
