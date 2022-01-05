@@ -58,7 +58,7 @@ class Matiere
 
     public function getUeId(): ?int
     {
-        if (true === $this->apc && 1 === count($this->tab_ues)) {
+        if (false === $this->apc && 1 === count($this->tab_ues)) {
             return $this->tab_ues[0]->ue_id;
         }
 
@@ -67,7 +67,7 @@ class Matiere
 
     public function getUeDisplay(): string
     {
-        if (true === $this->apc && 1 === count($this->tab_ues)) {
+        if (false === $this->apc && 1 === count($this->tab_ues)) {
             return $this->tab_ues[0]->ue_display;
         }
 
@@ -76,7 +76,7 @@ class Matiere
 
     public function getUeNumero(): ?int
     {
-        if (true === $this->apc && 1 === count($this->tab_ues)) {
+        if (false === $this->apc && 1 === count($this->tab_ues)) {
             return $this->tab_ues[0]->ue_numero;
         }
 

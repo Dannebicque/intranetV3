@@ -74,9 +74,10 @@ class SousCommission extends AbstractSousCommission implements SousCommissionInt
             $tabUes[$ue->getNumeroUe()] = new MoyenneUe($ue, $this->semestre->getOptPointPenaliteAbsence());
         }
 
+
         /** @var MoyenneMatiere $matiere */
         foreach ($moyenneMatieres as $matiere) {
-            $idUe = $matiere->matiere->ue_numero;
+            $idUe = $matiere->matiere->getUeNumero();
             if (array_key_exists($idUe, $tabUes)) {
                 $tabUes[$idUe]->addMatiere($matiere);
             }
