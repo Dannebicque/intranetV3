@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.5.3](https://github.com/Dannebicque/intranetV3/compare/v3.5.2...v3.5.3) (2022-01-05)
+
+
+### Features
+
+* Gestion des Ressources/SAE suspendues ou de bonificaiton ([15c58a3](https://github.com/Dannebicque/intranetV3/commit/15c58a3a7d47dbdd8e512b06e1ae24ce3f5b0b5b))
+
+
+### Bug Fixes
+
+* Export sous-commission Excel APC + Amélioration lecture sous-comm DUT ([377e4ea](https://github.com/Dannebicque/intranetV3/commit/377e4ea506ec1007e1779d45d1ac736f574ff911))
+* Gestion des coefficients des SAE/Ressources si coefficient = 0 ([675d9b8](https://github.com/Dannebicque/intranetV3/commit/675d9b81dd04d5401ae235b81d032d4eaf6656e2))
+
 ### [3.5.2](https://github.com/Dannebicque/intranetV3/compare/v3.5.1...v3.5.2) (2022-01-04)
 
 
