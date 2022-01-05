@@ -13,6 +13,7 @@ use App\Entity\ApcCompetence;
 use App\Entity\ApcSae;
 use App\Entity\Diplome;
 use App\Entity\Semestre;
+use App\Form\Type\YesNoType;
 use App\Repository\ApcComptenceRepository;
 use App\Repository\SemestreRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -31,28 +32,28 @@ class ApcSaeType extends AbstractType
         $this->diplome = $options['diplome'];
 
         $builder
-            ->add('codeElement', TextType::class, ['label' => 'code_element'])
-            ->add('codeMatiere', TextType::class, ['label' => 'codeSae'])
-            ->add('libelle', TextType::class, ['label' => 'libelle'])
+            ->add('codeElement', TextType::class, ['label' => 'label.code_element'])
+            ->add('codeMatiere', TextType::class, ['label' => 'label.codeSae'])
+            ->add('libelle', TextType::class, ['label' => 'label.libelle'])
             ->add('libelleCourt', TextType::class,
-                ['label' => 'libelle.court', 'required' => false, 'attr' => ['maxlength' => 25]])
+                ['label' => 'label.libelle.court', 'required' => false, 'attr' => ['maxlength' => 25]])
             ->add('description', TextareaType::class,
                 [
                     'attr' => ['rows' => 20],
-                    'label' => 'description',
+                    'label' => 'label.description',
                     'required' => false,
                     'help' => 'Il est possible d\'utiliser la syntaxe Markdown dans ce bloc de texte',
                 ])
-            ->add('tdPpn', TextType::class, ['label' => 'cmtd_ppn'])
-            ->add('tpPpn', TextType::class, ['label' => 'tp_ppn'])
-            ->add('projetPpn', TextType::class, ['label' => 'projet_ppn'])
-            ->add('cmFormation', TextType::class, ['label' => 'cm_formation'])
-            ->add('tdFormation', TextType::class, ['label' => 'td_formation'])
-            ->add('tpFormation', TextType::class, ['label' => 'tp_formation'])
-            ->add('projetFormation', TextType::class, ['label' => 'projet_formation'])
+            ->add('tdPpn', TextType::class, ['label' => 'label.cmtd_ppn'])
+            ->add('tpPpn', TextType::class, ['label' => 'label.tp_ppn'])
+            ->add('projetPpn', TextType::class, ['label' => 'label.projet_ppn'])
+            ->add('cmFormation', TextType::class, ['label' => 'label.cm_formation'])
+            ->add('tdFormation', TextType::class, ['label' => 'label.td_formation'])
+            ->add('tpFormation', TextType::class, ['label' => 'label.tp_formation'])
+            ->add('projetFormation', TextType::class, ['label' => 'label.projet_formation'])
             ->add('livrables', TextareaType::class,
                 [
-                    'label' => 'livrables',
+                    'label' => 'label.livrables',
                     'attr' => ['rows' => 20],
                     'required' => false,
                     'help' => 'Il est possible d\'utiliser la syntaxe Markdown dans ce bloc de texte',
@@ -62,31 +63,39 @@ class ApcSaeType extends AbstractType
                 'attr' => ['class' => 'semestreSae'],
                 'required' => true,
                 'choice_label' => 'display',
-                'query_builder' => function(SemestreRepository $semestreRepository) {
+                'query_builder' => function (SemestreRepository $semestreRepository) {
                     return $semestreRepository->findByDiplomeBuilder($this->diplome);
                 },
-                'label' => 'semestre',
+                'label' => 'label.semestre',
                 'expanded' => true,
             ])
             ->add('competences', EntityType::class, [
                 'class' => ApcCompetence::class,
                 'choice_label' => 'nomCourt',
-                'label' => 'nomCourt.competence',
+                'label' => 'label.nomCourt.competence',
                 'attr' => ['class' => 'competencesSae'],
                 'expanded' => true,
                 'multiple' => true,
-                'query_builder' => function(ApcComptenceRepository $apcComptenceRepository) {
+                'query_builder' => function (ApcComptenceRepository $apcComptenceRepository) {
                     return $apcComptenceRepository->findByDiplomeBuilder($this->diplome);
                 },
                 'help' => 'Ajoutez les compétences couvertes par la SAÉ.',
             ])
             ->add('exemples', TextareaType::class,
                 [
-                    'label' => 'exemples',
+                    'label' => 'label.exemples',
                     'attr' => ['rows' => 20],
                     'required' => false,
                     'help' => 'Il est possible d\'utiliser la syntaxe Markdown dans ce bloc de texte',
                 ])
+            ->add('bonification', YesNoType::class,
+                [
+                    'label' => 'label.bonification',
+                    'required' => true,
+                    'help' => 'Indique si cette note dot être considérée comme une bonification (PAC, sport, ...).',
+                ])
+            ->add('suspendu', YesNoType::class, ['label' => 'label.suspendu', 'help' => 'Une matière suspendue n\'entre pas dans le calcul des moyennes.'])
+
         ;
     }
 

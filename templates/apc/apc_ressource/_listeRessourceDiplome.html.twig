@@ -6,6 +6,7 @@
         <th>{{ 'table.code_ressource'|trans }}</th>
         <th>{{ 'table.code_element'|trans }}</th>
         <th>{{ 'table.libelle'|trans }}</th>
+        <th>{{ 'table.suspendu'|trans }}</th>
         <th>{{ 'table.cm'|trans }}</th>
         <th>{{ 'table.td'|trans }}</th>
         <th>{{ 'table.tp'|trans }}</th>
@@ -20,6 +21,7 @@
             <td>{{ ressource.codeMatiere }}</td>
             <td>{{ ressource.codeElement }}</td>
             <td>{{ ressource.libelle }}</td>
+            <td>{{ ressource.suspendu ? 'Yes'|trans : 'No'|trans }}</td>
             <td>
                 <a class="myedit"
                    data-field="CmPpn"

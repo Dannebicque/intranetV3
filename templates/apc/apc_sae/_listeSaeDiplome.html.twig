@@ -5,6 +5,7 @@
         <th>{{ 'table.code_element'|trans }}</th>
         <th>{{ 'table.libelle'|trans }}</th>
         <th>Compétences</th>
+        <th>Suspendu?</th>
         <th>Bonification</th>
         <th>Heures CM</th>
         <th>Heures TD</th>
@@ -26,6 +27,7 @@
                         {{ competence.competence.nomCourt }}
                     </span>
                 {% endfor %}</td>
+            <td>{{ apc_sae.suspendu ? 'Yes'|trans : 'No'|trans }}</td>
             <td>{{ apc_sae.bonification ? 'Yes'|trans : 'No'|trans }}</td>
             <td>
                 <a class="myedit"
