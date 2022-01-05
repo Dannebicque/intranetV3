@@ -15,6 +15,7 @@ class SousCommissionExtension extends AbstractExtension
             new TwigFilter('styleMatiere', [$this, 'styleMatiere'], ['is_safe' => ['html']]),
             new TwigFilter('styleDecision', [$this, 'styleDecision'], ['is_safe' => ['html']]),
             new TwigFilter('styleAbsences', [$this, 'styleAbsences'], ['is_safe' => ['html']]),
+            new TwigFilter('styleBonification', [$this, 'styleBonification'], ['is_safe' => ['html']]),
         ];
     }
 
@@ -51,6 +52,15 @@ class SousCommissionExtension extends AbstractExtension
         }
 
         return '<span class="badge bg-success">'.number_format($value, 2).'</span>';
+    }
+
+    public function styleBonification($value): string
+    {
+        if ($value > 0) {
+            return '<span class="badge bg-success">'.number_format($value, 2).'</span>';
+        }
+
+        return '<span class="badge bg-primary">'.number_format($value, 2).'</span>';
     }
 
     public function styleDecision($value): string

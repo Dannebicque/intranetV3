@@ -91,7 +91,8 @@
         <br>
         {% if  user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ADMIN') %}
             <a href="{{ path('administration_semestre_export_releve_provisoire',{slug:etudiant.slug}) }}"
-               class="btn btn-info btn-block" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editer un relevé de notes
+               class="btn btn-info d-block" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editer un
+               relevé de notes
            provisoire"><i
                         class="fa fa-print"></i> Editer un relevé de notes provisoire</a>
         {% endif %}

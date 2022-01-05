@@ -12,9 +12,9 @@ namespace App\Entity;
 use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\UuidTrait;
 use App\Utils\Tools;
+use function array_key_exists;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
-use function array_key_exists;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ScolariteRepository")
@@ -296,11 +296,11 @@ class Scolarite extends BaseEntity
     public function getStyle($note)
     {
         if ($note < 8) {
-            return 'badge badge-danger';
+            return 'badge bg-danger';
         }
 
         if ($note < 10) {
-            return 'badge badge-warning';
+            return 'badge bg-warning';
         }
 
         return 'notenormale';

@@ -32,7 +32,7 @@
             </tr>
             </thead>
             <tbody>
-            {% for matiere in matieres %}
+            {% for matiere in matieres|filter(matiere => matiere.bonification == false) %}
                 {% if moyenneSemestre.moyenneMatieres[matiere.typeIdMatiere] is defined %}
                     <tr>
                         <th>{{ matiere.display }}</th>
@@ -92,7 +92,7 @@
                 <th>Bonus Pac/Sport/...</th>
                 <td>&nbsp;</td>
                 <th class="text-center">
-                    {{ moyenneSemestre.bonif }}
+                    {{ moyenneSemestre.bonification }}
                 </th>
                 <th colspan="{{ ues|length }}" class="text-end">Moyenne bonifiée sur 20 / UE</th>
                 <td>&nbsp;</td>

@@ -34,9 +34,9 @@ class Scolarite
     private function getStyle($decision): string
     {
         return match ($decision) {
-            Constantes::SEMESTRE_VALIDE => 'badge badge-success',
-            Constantes::SEMESTRE_NON_VALIDE => 'badge badge-danger',
-            Constantes::SEMESTRE_VCA, Constantes::SEMESTRE_VCJ => 'badge badge-warning',
+            Constantes::SEMESTRE_VALIDE => 'badge bg-success',
+            Constantes::SEMESTRE_NON_VALIDE => 'badge bg-danger',
+            Constantes::SEMESTRE_VCA, Constantes::SEMESTRE_VCJ => 'badge bg-warning',
             default => '',
         };
     }
@@ -44,7 +44,7 @@ class Scolarite
     public function getStyleNote($note)
     {
         if ($note < 10) {
-            return 'badge badge-danger';
+            return 'badge bg-danger';
         }
 
         return 'notenormale';

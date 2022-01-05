@@ -39,7 +39,7 @@ class Matiere
     public float $coefficient = 1;
     public float $nbEcts = 1;
 
-    public bool $pac = false;
+    public bool $bonification = false;
 
     /**  ne-pas-exporter */
     //todo: ce n'est vrai que pour matière (old school...) pour les SAE/Ressources, c'est potentiellement plusieurs UE...

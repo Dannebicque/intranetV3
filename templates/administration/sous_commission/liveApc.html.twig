@@ -53,26 +53,25 @@
                     voir la moyenne sans ces pénalités.
                 </div>
             {% endif %}
-            {# todo: bouton pour masquer les colonnes pénalités ou les colonnes modules #}
-            <button id="masqueMatieres">Masquer Matieres</button>
-            <div style="overflow: auto; width: 100%; height: 500px">
-                <table class=" table table-striped table-hover table-bordered"
+
+            <div class="table-responsive" style="height: 500px; overflow-y: auto">
+                <table class="table table-striped table-hover table-bordered"
                        style="font-size:10px;" cellpadding="2">
-                    <thead>
-                    <tr>
-                        <th colspan="4" rowspan="2" style="text-align: right">Matière</th>
+                    <thead >
+                    <tr>{# style="position: sticky; top: 0px;" #}
+                        <th colspan="4" rowspan="2" style="text-align: right" scope="col">Matière</th>
                         {% for matiere in sousCommission.matieres|filter(matiere => matiere.nbNotes!=0 and matiere
                         .suspendu == false) %}
-                            <th
+                            <th scope="col"
                                 class="matiere">
                                 <abbr title="{{ matiere.libelle }}">
                                     {{ matiere.codeMatiere }}</abbr></th>
                         {% endfor %}
-                        <th colspan="{{ (sousCommission.ues|length*2) + 5 }}" style="text-align: center">
+                        <th colspan="{{ (sousCommission.ues|length*2) + 5 }}" class="text-center" scope="col">
                             Semestre {{ semestre.libelle }}</th>
                         {# decision semestre #}
                         {% for sem in sousCommission.semestresScolarite|filter(sem => sem.id != semestre.id) %}
-                            <th colspan="{{ (sem.ues|length*2)+3 }}" style="text-align: center">
+                            <th colspan="{{ (sem.ues|length*2)+3 }}" class="text-center" scope="col">
                                 Semestre {{ sem.libelle }}</th>
                         {% endfor %}
                     </tr>
@@ -80,41 +79,41 @@
                     <tr>
                         {% for matiere in sousCommission.matieres|filter(matiere => matiere.nbNotes!=0 and matiere
                         .suspendu == false) %}
-                            <th class="matiere" rowspan="2">
+                            <th class="matiere" rowspan="2" scope="col">
                                 {% for comp in matiere.tab_ues %}
-                                <span class="carre-{{ comp.ue_couleur }}">&nbsp;</span>
+                                    <span class="carre-{{ comp.ue_couleur }}">&nbsp;</span>
                                 {% endfor %}
                             </th>
                         {% endfor %}
                         {% for u in sousCommission.ues %}
-                            <th colspan="2" class="text-center">
+                            <th colspan="2" class="text-center" scope="col">
                                 <span class="badge badge-{{ u.apcCompetence.couleur }}">
                                     <abbr title="{{ u.apcCompetence.nomCourt }}">UE {{ u.numeroue }}</abbr>
                                     </span>
                             </th>
                         {% endfor %}
-                        <th rowspan="2">Bonif</th>
-                        <th rowspan="2">Décis.</th>
-                        <th rowspan="2">Prop.</th>
-                        <th rowspan="2">Abs.</th>
-                        <th rowspan="2">Etudiant</th>
+                        <th rowspan="2" scope="col">Bonif</th>
+                        <th rowspan="2" scope="col">Décis.</th>
+                        <th rowspan="2" scope="col">Prop.</th>
+                        <th rowspan="2" scope="col">Abs.</th>
+                        <th rowspan="2" scope="col">Etudiant</th>
                     </tr>
                     <tr>
-                        <th>#</th>
-                        <th>Etudiant</th>
-                        <th>Bac</th>
-                        <th>Coeff.</th>
+                        <th scope="col">#</th>
+                        <th scope="col">Etudiant</th>
+                        <th scope="col">Bac</th>
+                        <th scope="col">Coeff.</th>
                         {% for u in sousCommission.ues %}
-                            <th>Moy.</th>
-                            <th>Décis.</th>
+                            <th scope="col">Moy.</th>
+                            <th scope="col">Décis.</th>
                         {% endfor %}
 
                         {% for sem in sousCommission.semestresScolarite|filter(sem => sem.id != semestre.id) %}
                             {% for ue in sem.ues %}
-                                <th>UE {{ ue.numeroue }} ({{ ue.coefficient }})</th>
-                                <th>Décis.</th>
+                                <th scope="col">UE {{ ue.numeroue }} ({{ ue.coefficient }})</th>
+                                <th scope="col">Décis.</th>
                             {% endfor %}
-                            <th>Décis.</th>
+                            <th scope="col">Décis.</th>
                         {% endfor %}
 
                     </tr>
@@ -123,26 +122,27 @@
                     {% for etudiant in sousCommission.etudiants %}
                         {% set myEtudiant = sousCommission.sousCommissionEtudiant(etudiant.id) %}
                         <tr>
-                            <td>{{ loop.index }}</td>
-                            <td><a href="{{ path('user_profil',{type:'etudiant', slug:etudiant.slug}) }}"
+                            <th>{{ loop.index }}</th>
+                            <th><a href="{{ path('user_profil',{type:'etudiant', slug:etudiant.slug}) }}"
                                    target="_blank" title="Profil de l'étudiant"
-                                   data-bs-toggle="tooltip" data-bs-placement="bottom">{{ etudiant.display }}</a></td>
+                                   data-bs-toggle="tooltip" data-bs-placement="bottom">{{ etudiant.display }}</a></th>
                             <td>{{ etudiant.bac ? etudiant.bac.libelle : 'N.C.' }}</td>
                             <td>{{ etudiant.numetudiant }}</td>
 
                             {# matieres #}
                             {% for matiere in sousCommission.matieres|filter(matiere => matiere.nbNotes!=0 and matiere
                             .suspendu == false) %}
-                                {% if matiere.pac == true %}
+                                {% if matiere.bonification == true %}
                                     {% if myEtudiant.moyenneMatieres[matiere.typeIdMatiere].moyenne != '-0.01'
                                         and myEtudiant.moyenneMatieres[matiere.typeIdMatiere]
                                     .moyenne > 0 %}
-                                        <span class="{{ myEtudiant.moyenneMatieres[matiere.typeIdMatiere].style }}">
-	                                        {{ myEtudiant.moyenneMatieres[matiere.typeIdMatiere].moyenne|number_format
-                                                (2) }}
-	                                        </span>
+                                        <td>
+                                            {{ myEtudiant.moyenneMatieres[matiere.typeIdMatiere].moyenne|styleMatiere }}
+                                        </td>
                                     {% else %}
-                                        <span class="badge bg-success">No PAC</span>
+                                        <td>
+                                            <span class="badge bg-primary">No PAC</span>
+                                        </td>
                                     {% endif %}
                                 {% else %}
                                     {% if semestre.optPenaliteAbsence == true %}
@@ -152,12 +152,12 @@
                                                    title="{{ matiere.codeMatiere }}, sans pénalité : {{ myEtudiant
                                                    .moyenneMatieres[matiere.typeIdMatiere].moyenne|number_format(2) }}">
                                                     {{ myEtudiant.moyenneMatieres[matiere.typeIdMatiere]
-                                                    .moyennePenalisee|number_format(2)|styleMatiere }}
+                                                    .moyennePenalisee|styleMatiere }}
                                                 </a>
                                             {% else %}
                                                 <span class="badge bg-gray">
-                                            N.C.
-                                        </span>
+                                                    N.C.
+                                                </span>
                                             {% endif %}
                                         </td>
                                     {% else %}
@@ -167,8 +167,7 @@
                                             {% else %}
                                                 <a href="#" data-bs-toggle="tooltip" data-bs-placement="bottom"
                                                    title="{{ matiere.codeMatiere }}">{{ myEtudiant
-                                                    .moyenneMatieres[matiere.typeIdMatiere].moyenne|number_format(2)
-                                                    |styleMatiere }}</a>
+                                                    .moyenneMatieres[matiere.typeIdMatiere].moyenne|styleMatiere }}</a>
                                             {% endif %}
                                         </td>
                                     {% endif %}
@@ -182,19 +181,20 @@
                                 {% if semestre.optPenaliteAbsence == true %}
                                     <td>
                                         <a href="#" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                           title="sans pénalité : {{ myEtudiant.moyenneUes[u.id].moyenne|number_format(3) }}">
-                                            {{ myEtudiant.moyenneUes[u.id].moyennePenalisee|number_format(3)|styleMoyenne }}
+                                           title="sans pénalité : {{ myEtudiant.moyenneUes[u.id]
+                                           .moyennePac|number_format(3) }}">
+                                            {{ myEtudiant.moyenneUes[u.id].moyennePacPenalisee|styleMoyenne }}
                                         </a>
                                     </td>
                                 {% else %}
                                     <td>
-                                        {{ myEtudiant.moyenneUes[u.id].moyenne|number_format(3)|styleMoyenne }}
+                                        {{ myEtudiant.moyenneUes[u.id].moyennePac|styleMoyenne }}
                                     </td>
                                 {% endif %}
                                 <td>{{ myEtudiant.moyenneUes[u.id].decision|styleDecision }}</td>
                             {% endfor %}
 
-                            <td>{{ myEtudiant.bonif|number_format(2) }}</td>
+                            <td>{{ myEtudiant.bonification|styleBonification }}</td>
                             <td>
                                 <a href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ etudiant.display }}">
                                     {{ myEtudiant.decision|styleDecision }}

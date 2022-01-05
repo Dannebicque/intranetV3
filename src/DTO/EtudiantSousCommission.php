@@ -53,7 +53,7 @@ class EtudiantSousCommission
         $totalMatieresPenalise = 0;
         $this->calculBonficiation();
         foreach ($this->moyenneMatieres as $moyenneMatiere) {
-            if (true === $moyenneMatiere->optionFaite && false === $moyenneMatiere->matiere->pac) {
+            if (true === $moyenneMatiere->optionFaite && false === $moyenneMatiere->matiere->bonification) {
                 $totalMatieres += $moyenneMatiere->getMoyenne() * $moyenneMatiere->matiere->coefficient;
                 $totalMatieresPenalise += $moyenneMatiere->getMoyennePenalisee() * $moyenneMatiere->matiere->coefficient;
                 $totcoeff += $moyenneMatiere->matiere->coefficient;
@@ -66,7 +66,7 @@ class EtudiantSousCommission
     private function calculBonficiation()
     {
         foreach ($this->moyenneMatieres as $moyenneMatiere) {
-            if (true === $moyenneMatiere->matiere->pac) {
+            if (true === $moyenneMatiere->matiere->bonification) {
                 $this->bonif += $moyenneMatiere->getBonification();
             }
         }
@@ -158,7 +158,7 @@ class EtudiantSousCommission
     private function styleMoyenne(float $note): string
     {
         if ($note <= Constantes::SEUIL_MOYENNE) {
-            return 'badge badge-danger';
+            return 'badge bg-danger';
         }
 
         return '';
@@ -172,9 +172,9 @@ class EtudiantSousCommission
     public function getDecisionStyle(): string
     {
         return match ($this->decision) {
-            Constantes::SEMESTRE_VALIDE => 'badge badge-success',
-            Constantes::SEMESTRE_NON_VALIDE => 'badge badge-danger',
-            Constantes::SEMESTRE_VCA, Constantes::SEMESTRE_VCJ => 'badge badge-warning',
+            Constantes::SEMESTRE_VALIDE => 'badge bg-success',
+            Constantes::SEMESTRE_NON_VALIDE => 'badge bg-danger',
+            Constantes::SEMESTRE_VCA, Constantes::SEMESTRE_VCJ => 'badge bg-warning',
             default => '',
         };
     }
@@ -187,10 +187,10 @@ class EtudiantSousCommission
         }
 
         if ($nbAbsences < 10) {
-            return 'badge badge-warning';
+            return 'badge bg-warning';
         }
 
-        return 'badge badge-danger';
+        return 'badge bg-danger';
     }
 
     public function nbAbsences()

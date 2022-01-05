@@ -20,9 +20,9 @@ class EtudiantSousCommissionApc
     public array $moyenneMatieres;
 
     /** @var \App\DTO\MoyenneUeApc[] */
-    private array $moyenneUes;
+    public array $moyenneUes;
 
-    public float $bonif = 0;
+    public float $bonification = 0;
     public ?string $decision = null;
     public ?string $conseil = null; //todo: information sur les enjeux du S"pair"
     public ?string $proposition = null;
@@ -33,8 +33,9 @@ class EtudiantSousCommissionApc
      */
     public function __construct(
         public Etudiant $etudiant,
-        public Semestre $semestre, array $ues)
-    {
+        public Semestre $semestre,
+        array $ues
+    ) {
         foreach ($ues as $ue) {
             $this->moyenneUes[$ue->getId()] = new MoyenneUeApc($ue);
         }
@@ -97,54 +98,61 @@ class EtudiantSousCommissionApc
         }
     }
 
-    public function getMoyenneUes(): array
-    {
-        return $this->moyenneUes;
-    }
+//    public function getMoyenneUes(): array
+//    {
+//        return $this->moyenneUes;
+//    }
 
     public function calculMoyenneUes(array $matieres, $ressources, $saes)
     {
-        $tabs['pac'] = 0;
         foreach ($matieres as $matiere) {
-            if (array_key_exists($matiere->getTypeIdMatiere(), $this->moyenneMatieres)) {
-                $tabs['matieres'][$matiere->codeElement]['moyenne'] = $this->moyenneMatieres[$matiere->getTypeIdMatiere()]->getMoyenne();
-                $tabs['matieres'][$matiere->codeElement]['moyennePenalisee'] = $this->moyenneMatieres[$matiere->getTypeIdMatiere()]->getMoyennePenalisee();
+            if ($matiere->bonification === true) {
+                $this->bonification += $this->moyenneMatieres[$matiere->getTypeIdMatiere()]->getBonification();
             } else {
-                $tabs['matieres'][$matiere->codeElement]['moyenne'] = 0;
-                $tabs['matieres'][$matiere->codeElement]['moyennePenalisee'] = 0;
+                if (array_key_exists($matiere->getTypeIdMatiere(), $this->moyenneMatieres)) {
+                    $tabs['matieres'][$matiere->codeElement]['moyenne'] = $this->moyenneMatieres[$matiere->getTypeIdMatiere()]->getMoyenne();
+                    $tabs['matieres'][$matiere->codeElement]['moyennePenalisee'] = $this->moyenneMatieres[$matiere->getTypeIdMatiere()]->getMoyennePenalisee();
+                } else {
+                    $tabs['matieres'][$matiere->codeElement]['moyenne'] = 0;
+                    $tabs['matieres'][$matiere->codeElement]['moyennePenalisee'] = 0;
+                }
             }
+
+
         }
 
         foreach ($this->moyenneUes as $ueId => $ue) {
             $competenceId = $ue->ue->getApcCompetence()?->getId();
 
             foreach ($matieres as $matiere) {
-                if (array_key_exists($ue->ue->getApcCompetence()->getId(),
-                        $ressources) && array_key_exists($matiere->codeElement,
-                        $ressources[$ue->ue->getApcCompetence()->getId()])) {
-                    $ue->matieres[$matiere->codeElement]['coefficient'] = $ressources[$competenceId][$matiere->codeElement]->getCoefficient(); //moyenne
-                    // officiellement du module.
-                    $ue->totalCoefficients += $ressources[$competenceId][$matiere->codeElement]->getCoefficient();
-                } elseif (array_key_exists($competenceId,
-                        $saes) && array_key_exists($matiere->codeElement,
-                        $saes[$competenceId])) {
-                    $ue->matieres[$matiere->codeElement]['coefficient'] = $saes[$competenceId][$matiere->codeElement]->getCoefficient(); //moyenne officiellement du module.
-                    $ue->totalCoefficients += $saes[$competenceId][$matiere->codeElement]->getCoefficient();
-                } else {
-                    $ue->matieres[$matiere->codeElement]['coefficient'] = 0;
-                }
-                $ue->matieres[$matiere->codeElement]['moyenne'] = $tabs['matieres'][$matiere->codeElement]['moyenne'] * $ue->matieres[$matiere->codeElement]['coefficient'];
-                $ue->matieres[$matiere->codeElement]['moyennePenalisee'] = $tabs['matieres'][$matiere->codeElement]['moyennePenalisee'] * $ue->matieres[$matiere->codeElement]['coefficient'];
-                $ue->totalMoyennes += $ue->matieres[$matiere->codeElement]['moyenne'];
-                $ue->totalMoyennesPenalisee += $ue->matieres[$matiere->codeElement]['moyennePenalisee'];
-                if ($ue->totalCoefficients > 0) {
-                    $ue->moyenne = $ue->totalMoyennes / $ue->totalCoefficients;
-                    $ue->moyennePenalisee = $ue->totalMoyennesPenalisee / $ue->totalCoefficients;
-                    $ue->moyennePac = $ue->moyenne + $tabs['pac'];
-                    $ue->moyennePacPenalisee = $ue->moyennePenalisee + $tabs['pac'];
+                if ($matiere->bonification === false) {
+                    if (array_key_exists($ue->ue->getApcCompetence()->getId(),
+                            $ressources) && array_key_exists($matiere->codeElement,
+                            $ressources[$ue->ue->getApcCompetence()->getId()])) {
+                        $ue->matieres[$matiere->codeElement]['coefficient'] = $ressources[$competenceId][$matiere->codeElement]->getCoefficient(); //moyenne
+                        // officiellement du module.
+                        $ue->totalCoefficients += $ressources[$competenceId][$matiere->codeElement]->getCoefficient();
+                    } elseif (array_key_exists($competenceId,
+                            $saes) && array_key_exists($matiere->codeElement,
+                            $saes[$competenceId])) {
+                        $ue->matieres[$matiere->codeElement]['coefficient'] = $saes[$competenceId][$matiere->codeElement]->getCoefficient(); //moyenne officiellement du module.
+                        $ue->totalCoefficients += $saes[$competenceId][$matiere->codeElement]->getCoefficient();
+                    } else {
+                        $ue->matieres[$matiere->codeElement]['coefficient'] = 0;
+                    }
+                    $ue->matieres[$matiere->codeElement]['moyenne'] = $tabs['matieres'][$matiere->codeElement]['moyenne'] * $ue->matieres[$matiere->codeElement]['coefficient'];
+                    $ue->matieres[$matiere->codeElement]['moyennePenalisee'] = $tabs['matieres'][$matiere->codeElement]['moyennePenalisee'] * $ue->matieres[$matiere->codeElement]['coefficient'];
+                    $ue->totalMoyennes += $ue->matieres[$matiere->codeElement]['moyenne'];
+                    $ue->totalMoyennesPenalisee += $ue->matieres[$matiere->codeElement]['moyennePenalisee'];
+                    if ($ue->totalCoefficients > 0) {
+                        $ue->moyenne = $ue->totalMoyennes / $ue->totalCoefficients;
+                        $ue->moyennePenalisee = $ue->totalMoyennesPenalisee / $ue->totalCoefficients;
+                        $ue->moyennePac = $ue->moyenne + $this->bonification;
+                        $ue->moyennePacPenalisee = $ue->moyennePenalisee + $this->bonification;
 
-                    $ue->decision = $ue->moyenne < 10 ? Constantes::UE_NON_VALIDE : Constantes::UE_VALIDE;
-                    $ue->decisionPenalisee = $ue->moyennePenalisee < 10 ? Constantes::UE_NON_VALIDE : Constantes::UE_VALIDE;
+                        $ue->decision = $ue->moyennePac < 10 ? Constantes::UE_NON_VALIDE : Constantes::UE_VALIDE;
+                        $ue->decisionPenalisee = $ue->moyennePacPenalisee < 10 ? Constantes::UE_NON_VALIDE : Constantes::UE_VALIDE;
+                    }
                 }
             }
         }

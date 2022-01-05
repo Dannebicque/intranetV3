@@ -73,7 +73,7 @@
         {% if  user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ADMIN') %}
             <a href="{{ path('administration_scolarite_etudiant_edit', {slug: etudiant.slug}) }}" class="btn
             btn-primary
-            btn-block">
+            d-block">
                 <i class="{{ iconAdd }}"></i>
                 Ajouter un élément dans la scolarité de {{ etudiant.displayPr }}</a>
         {% endif %}
