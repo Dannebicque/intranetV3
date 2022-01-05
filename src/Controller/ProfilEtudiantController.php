@@ -46,7 +46,7 @@ class ProfilEtudiantController extends BaseController
     #[Route(path: '/profil/{slug}/timeline', name: 'profil_etudiant_timeline')]
     public function timeline(Etudiant $etudiant): Response
     {
-        return $this->render('user/composants/timeline.html.twig', [
+        return $this->render('user/composants/_timeline.html.twig', [
             'etudiant' => $etudiant,
         ]);
     }
@@ -57,7 +57,7 @@ class ProfilEtudiantController extends BaseController
     #[Route(path: '/profil/{slug}/actions', name: 'profil_etudiant_action')]
     public function actions(DepartementRepository $departementRepository, Etudiant $etudiant): Response
     {
-        return $this->render('user/composants/actions_etudiant.html.twig', [
+        return $this->render('user/composants/_actions_etudiant.html.twig', [
             'etudiant' => $etudiant,
             'departements' => $departementRepository->findActifs(),
         ]);
@@ -71,7 +71,7 @@ class ProfilEtudiantController extends BaseController
     {
         $scolarite = $scolariteRepository->findByEtudiant($etudiant);
 
-        return $this->render('user/composants/scolarite.html.twig', [
+        return $this->render('user/composants/_scolarite.html.twig', [
             'etudiant' => $etudiant,
             'scolarites' => $scolarite,
         ]);
@@ -121,7 +121,7 @@ class ProfilEtudiantController extends BaseController
                 ]
             );
 
-            return $this->render('user/composants/notes.html.twig', [
+            return $this->render('user/composants/_notes.html.twig', [
                 'notes' => $notes,
                 'etudiant' => $etudiant,
                 'chart' => $chart,
@@ -157,7 +157,7 @@ class ProfilEtudiantController extends BaseController
                 $this->getAnneeUniversitaire());
             $etudiantSousCommissionApc->calculMoyenneUes($matieres, $ressources, $saes);
 
-            return $this->render('user/composants/notes_apc.html.twig', [
+            return $this->render('user/composants/_notes_apc.html.twig', [
                 'etudiant' => $etudiant,
                 'semestre' => $semestre,
                 'matieres' => $matieres,
@@ -212,7 +212,7 @@ class ProfilEtudiantController extends BaseController
     #[Route(path: '/profil/{slug}/stages', name: 'profil_etudiant_stages')]
     public function stages(StageEtudiantRepository $stageEtudiantRepository, AlternanceRepository $alternanceRepository, Etudiant $etudiant): Response
     {
-        return $this->render('user/composants/stages.html.twig', [
+        return $this->render('user/composants/_stages.html.twig', [
             //todo: si l'étudiant n'est plus dans un semestre, garder l'historique uniquemenent. Dans ce cas l'historique ne doit pas dépendre d'une année ?
             'stagesEnCours' => $stageEtudiantRepository->findByEtudiantAnnee($etudiant,
                 $this->dataUserSession->getAnneeUniversitaire()),
@@ -228,10 +228,10 @@ class ProfilEtudiantController extends BaseController
     /**
      * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
      */
-    #[Route(path: '/profil/{slug}/about', name: 'profil_etudiant_about')]
-    public function about(Etudiant $etudiant): Response
+    #[Route(path: '/profil/{slug}/a-propos', name: 'profil_etudiant_about')]
+    public function aPropos(Etudiant $etudiant): Response
     {
-        return $this->render('user/composants/about.html.twig', [
+        return $this->render('user/composants/_apropos.html.twig', [
             'user' => $etudiant,
         ]);
     }
