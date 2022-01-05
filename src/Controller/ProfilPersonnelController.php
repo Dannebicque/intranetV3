@@ -40,7 +40,7 @@ class ProfilPersonnelController extends BaseController
     #[Route(path: '/profil/{slug}/about', name: 'profil_personnel_about')]
     public function about(Personnel $personnel): Response
     {
-        return $this->render('user/composants/_about.html.twig', [
+        return $this->render('user/composants/_apropos.html.twig', [
             'user' => $personnel,
         ]);
     }
