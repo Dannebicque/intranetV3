@@ -22,23 +22,19 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Class StageController.
  *
- * @Route("/application/personnel")
  * @IsGranted("ROLE_PERMANENT")
  */
+#[Route(path: '/application/personnel')]
 class StageController extends BaseController
 {
-    /**
-     * @Route("/stage/", name="application_personnel_stage_index")
-     */
-    public function index(
-        StageEtudiantRepository $stageEtudiantRepository,
-        AlternanceRepository $alternanceRepository
-    ): Response {
-        if (null !== $this->getConnectedUser()) {
+    #[Route(path: '/stage/', name: 'application_personnel_stage_index')]
+    public function index(StageEtudiantRepository $stageEtudiantRepository, AlternanceRepository $alternanceRepository): Response
+    {
+        if (null !== $this->getUser()) {
             return $this->render('appPersonnel/stage/index.html.twig', [
-                'stagesEnCours'      => $stageEtudiantRepository->findByPersonnelAnnee($this->getUser(),
+                'stagesEnCours' => $stageEtudiantRepository->findByPersonnelAnnee($this->getUser(),
                     $this->dataUserSession->getAnneeUniversitaire()),
-                'stagesHistorique'   => $stageEtudiantRepository->findByPersonnelHistorique($this->getUser(),
+                'stagesHistorique' => $stageEtudiantRepository->findByPersonnelHistorique($this->getUser(),
                     $this->dataUserSession->getAnneeUniversitaire()),
                 'alternancesEnCours' => $alternanceRepository->getByPersonnelAndAnneeUniversitaire($this->getUser(),
                     $this->dataUserSession->getAnneeUniversitaire()),
@@ -50,10 +46,7 @@ class StageController extends BaseController
         return $this->render('bundles/TwigBundle/Exception/error500.html.twig');
     }
 
-    /**
-     * @Route("/stage/export/{periode}.{_format}", name="application_personnel_stage_export")
-     *
-     */
+    #[Route(path: '/stage/export/{periode}.{_format}', name: 'application_personnel_stage_export')]
     public function exportStage(MyExport $myExport, StageEtudiantRepository $stageEtudiantRepository, $periode, $_format): Response
     {
         if ('courant' === $periode) {
@@ -71,10 +64,10 @@ class StageController extends BaseController
             ['stage_entreprise', 'adresse'],
             [
                 'entreprise' => ['raisonSociale', 'responsable' => ['nom', 'prenom', 'fonction', 'telephone', 'email']],
-                'tuteur'     => ['nom', 'prenom', 'fonction', 'telephone', 'email'],
+                'tuteur' => ['nom', 'prenom', 'fonction', 'telephone', 'email'],
                 'serviceStageEntreprise',
                 'type',
-                'personnel'  => ['nom', 'prenom'],
+                'personnel' => ['nom', 'prenom'],
                 'sujetStage',
                 'dateDebutStage',
                 'dateFinStage',
@@ -82,10 +75,7 @@ class StageController extends BaseController
         );
     }
 
-    /**
-     * @Route("/alternance/export/{periode}.{_format}", name="application_personnel_alternance_export")
-     *
-     */
+    #[Route(path: '/alternance/export/{periode}.{_format}', name: 'application_personnel_alternance_export')]
     public function exportAlternance(MyExport $myExport, AlternanceRepository $alternanceRepository, $periode, $_format): Response
     {
         if ('courant' === $periode) {
@@ -102,9 +92,9 @@ class StageController extends BaseController
             'alternances',
             ['alternance_administration', 'utilisateur'],
             [
-                'entreprise'          => ['libelle'],
-                'tuteur'              => ['nom', 'prenom', 'fonction', 'telephone', 'email', 'portable'],
-                'etudiant'            => ['nom', 'prenom', 'mailUniv'],
+                'entreprise' => ['libelle'],
+                'tuteur' => ['nom', 'prenom', 'fonction', 'telephone', 'email', 'portable'],
+                'etudiant' => ['nom', 'prenom', 'mailUniv'],
                 'tuteurUniversitaire' => ['nom', 'prenom', 'mailUniv'],
                 'typeContrat',
                 'dateDebut',
@@ -113,20 +103,16 @@ class StageController extends BaseController
         );
     }
 
-    /**
-     * @Route("/stage/periode/info/{id}", name="application_personnel_stage_periode_info")
-     */
+    #[Route(path: '/stage/periode/info/{id}', name: 'application_personnel_stage_periode_info')]
     public function periodeInfo(StageEtudiant $stageEtudiant): Response
     {
         return $this->render('appPersonnel/stage/periodeInfo.html.twig', [
             'stageEtudiant' => $stageEtudiant,
-            'stagePeriode'  => $stageEtudiant->getStagePeriode(),
+            'stagePeriode' => $stageEtudiant->getStagePeriode(),
         ]);
     }
 
-    /**
-     * @Route("/stage/entreprise/info/{id}", name="application_personnel_stage_entreprise_info")
-     */
+    #[Route(path: '/stage/entreprise/info/{id}', name: 'application_personnel_stage_entreprise_info')]
     public function entrepriseInfo(StageEtudiant $stageEtudiant): Response
     {
         return $this->render('appPersonnel/stage/entrepriseInfo.html.twig', [
@@ -134,9 +120,7 @@ class StageController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/alternance/entreprise/info/{id}", name="application_personnel_alternance_entreprise_info")
-     */
+    #[Route(path: '/alternance/entreprise/info/{id}', name: 'application_personnel_alternance_entreprise_info')]
     public function alternanceEntrepriseInfo(Alternance $alternance): Response
     {
         return $this->render('appPersonnel/stage/alternanceEntrepriseInfo.html.twig', [
