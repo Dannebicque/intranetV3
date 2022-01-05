@@ -13,6 +13,8 @@
 
 namespace App\Classes\Excel;
 
+use function array_key_exists;
+use function is_array;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use PhpOffice\PhpSpreadsheet\Exception;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -23,8 +25,6 @@ use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use function array_key_exists;
-use function is_array;
 
 class MyExcelWriter
 {
@@ -58,11 +58,10 @@ class MyExcelWriter
 
     public function createSheet(string $libelle): void
     {
-        $this->spreadsheet->createSheet()->setTitle($libelle);
+        $this->spreadsheet->createSheet()->setTitle(substr($libelle, 0, 31));
 
         $this->sheet = $this->spreadsheet->getSheetByName($libelle);
         $this->sheet->getPageSetup()->setPaperSize(PageSetup::PAPERSIZE_A4);
-
     }
 
     public function setHeader(bool $logo = true): void
@@ -138,7 +137,7 @@ class MyExcelWriter
                         }
 
                         $this->sheet->getCellByColumnAndRow($col,
-                            $row)->getStyle()->getFont()->getColor()->setARGB('FF' . $valeur);
+                            $row)->getStyle()->getFont()->getColor()->setARGB('FF'.$valeur);
                         break;
                     case 'font-size':
                         $this->sheet->getCellByColumnAndRow($col, $row)->getStyle()->getFont()->setSize($valeur);
@@ -182,16 +181,16 @@ class MyExcelWriter
 
     public function colorCellRange($col, $lig, $couleur): void
     {
-        $cell = Coordinate::stringFromColumnIndex($col) . $lig;
+        $cell = Coordinate::stringFromColumnIndex($col).$lig;
         $this->colorCells($cell, $couleur);
     }
 
     public function setCellEnteteStyle($col, $lig): void
     {
         $this->colorCellRange($col, $lig, 'ffC4C6C6');
-        $this->sheet->getStyle(Coordinate::stringFromColumnIndex($col) . $lig)->getFont()->setBold(true);
-        $this->sheet->getStyle(Coordinate::stringFromColumnIndex($col) . $lig)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-        $this->sheet->getStyle(Coordinate::stringFromColumnIndex($col) . $lig)->getBorders()->getAllBorders()->setBorderStyle(Border::BORDER_THIN);
+        $this->sheet->getStyle(Coordinate::stringFromColumnIndex($col).$lig)->getFont()->setBold(true);
+        $this->sheet->getStyle(Coordinate::stringFromColumnIndex($col).$lig)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        $this->sheet->getStyle(Coordinate::stringFromColumnIndex($col).$lig)->getBorders()->getAllBorders()->setBorderStyle(Border::BORDER_THIN);
     }
 
     public function colorCells($cells, $couleur): void
@@ -203,9 +202,9 @@ class MyExcelWriter
 
     public function borderCellsRange($col1, $lig1, $col2, $lig2): void
     {
-        $cell1 = Coordinate::stringFromColumnIndex($col1) . $lig1;
-        $cell2 = Coordinate::stringFromColumnIndex($col2) . $lig2;
-        $this->borderCells($cell1 . ':' . $cell2);
+        $cell1 = Coordinate::stringFromColumnIndex($col1).$lig1;
+        $cell2 = Coordinate::stringFromColumnIndex($col2).$lig2;
+        $this->borderCells($cell1.':'.$cell2);
     }
 
     public function borderCells($cells): void
@@ -234,9 +233,9 @@ class MyExcelWriter
 
     public function mergeCellsCaR($col1, $lig1, $col2, $lig2): void
     {
-        $cell1 = Coordinate::stringFromColumnIndex($col1) . $lig1;
-        $cell2 = Coordinate::stringFromColumnIndex($col2) . $lig2;
-        $this->mergeCells($cell1 . ':' . $cell2);
+        $cell1 = Coordinate::stringFromColumnIndex($col1).$lig1;
+        $cell2 = Coordinate::stringFromColumnIndex($col2).$lig2;
+        $this->mergeCells($cell1.':'.$cell2);
     }
 
     public function mergeCells($cells): void
@@ -251,9 +250,9 @@ class MyExcelWriter
             $color = mb_substr($color, 1, mb_strlen($color));
         }
 
-        $cell1 = Coordinate::stringFromColumnIndex($col1) . $lig1;
-        $cell2 = Coordinate::stringFromColumnIndex($col2) . $lig2;
-        $this->sheet->getStyle($cell1 . ':' . $cell2)->getBorders()->getBottom()->setBorderStyle($array['size'])->getColor()->setARGB('FF' . $color);
+        $cell1 = Coordinate::stringFromColumnIndex($col1).$lig1;
+        $cell2 = Coordinate::stringFromColumnIndex($col2).$lig2;
+        $this->sheet->getStyle($cell1.':'.$cell2)->getBorders()->getBottom()->setBorderStyle($array['size'])->getColor()->setARGB('FF'.$color);
     }
 
     public function ecritLigne(array $tEnTete, int $colonne, int $ligne): void
