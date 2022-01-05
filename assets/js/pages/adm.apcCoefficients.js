@@ -17,3 +17,15 @@ document.querySelectorAll('.changeCoefficientSae').forEach((element) => {
     })
   })
 })
+
+document.querySelectorAll('.changeCoefficientRessource').forEach((element) => {
+  element.addEventListener('blur', (elem) => {
+    post(Routing.generate('administration_apc_referentiel_formation_ajax', {
+      id: element.dataset.matiere,
+      competence: element.dataset.competence,
+      type: 'ressource'
+    }), {
+      value: element.value
+    })
+  })
+})
