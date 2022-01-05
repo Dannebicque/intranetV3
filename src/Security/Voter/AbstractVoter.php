@@ -10,6 +10,7 @@
 namespace App\Security\Voter;
 
 use App\Entity\Departement;
+use App\Entity\Diplome;
 use App\Entity\Personnel;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -107,5 +108,18 @@ class AbstractVoter
         }
 
         return $this->session->getSession()->get('departement')->equals($departement->getUuid());
+    }
+
+    public function isResponsableDepartement(Departement $departement)
+    {
+        if (!array_key_exists($departement->getId(), $this->departementRoles)) {
+            throw new AccessDeniedException('Vous n\'avez pas accès à ce département');
+        }
+
+        if (in_array('ROLE_CDD', $this->departementRoles[$departement->getId()]) || in_array('ROLE_ASS', $this->departementRoles[$departement->getId()]) || in_array('ROLE_DDE', $this->departementRoles[$departement->getId()])) {
+            return true;
+        }
+
+        return false;
     }
 }

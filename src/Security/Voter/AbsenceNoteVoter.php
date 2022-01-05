@@ -47,6 +47,10 @@ class AbsenceNoteVoter extends Voter
             throw new AccessDeniedException('Vous n\'êtes pas dans le département associé à cette matière/ressource/SAÉ');
         }
 
+        if ($this->abstractVoter->isResponsableDepartement($subject->semestre?->getDiplome())) {
+            return true;
+        }
+
         switch ($attribute) {
             case 'CAN_ADD_ABSENCE':
                 //check if previsionnel exist...
