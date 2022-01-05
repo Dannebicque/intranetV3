@@ -17,10 +17,10 @@ use function count;
 class EtudiantSousCommissionApc
 {
     /** @var MoyenneMatiere[] */
-    public array $moyenneMatieres;
+    public array $moyenneMatieres = [];
 
     /** @var \App\DTO\MoyenneUeApc[] */
-    public array $moyenneUes;
+    public array $moyenneUes = [];
 
     public float $bonification = 0;
     public ?string $decision = null;
