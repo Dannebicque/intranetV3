@@ -19,15 +19,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class ProfilPersonnelController.
- *
- * @Route("/personnel")
  */
+#[Route(path: '/personnel')]
 class ProfilPersonnelController extends BaseController
 {
     /**
-     * @Route("/profil/{slug}/actions", name="profil_personnel_action")
      * @ParamConverter("personnel", options={"mapping": {"slug": "slug"}})
      */
+    #[Route(path: '/profil/{slug}/actions', name: 'profil_personnel_action')]
     public function actions(Personnel $personnel): Response
     {
         return $this->render('user/composants/actions_personnel.html.twig', [
@@ -36,26 +35,22 @@ class ProfilPersonnelController extends BaseController
     }
 
     /**
-     * @Route("/profil/{slug}/about", name="profil_personnel_about")
      * @ParamConverter("personnel", options={"mapping": {"slug": "slug"}})
      */
+    #[Route(path: '/profil/{slug}/about', name: 'profil_personnel_about')]
     public function about(Personnel $personnel): Response
     {
-        return $this->render('user/composants/about.html.twig', [
+        return $this->render('user/composants/_about.html.twig', [
             'user' => $personnel,
         ]);
     }
 
     /**
-     * @Route("/profil/{slug}/previsionnel", name="profil_personnel_previsionnel")
      * @ParamConverter("personnel", options={"mapping": {"slug": "slug"}})
      */
-    public function previsionnel(
-        PrevisionnelManager $myPrevisionnel,
-        PrevisionnelSynthese $previsionnelSynthese,
-        HrsManager $hrsManager,
-        Personnel $personnel
-    ): Response {
+    #[Route(path: '/profil/{slug}/previsionnel', name: 'profil_personnel_previsionnel')]
+    public function previsionnel(PrevisionnelManager $myPrevisionnel, PrevisionnelSynthese $previsionnelSynthese, HrsManager $hrsManager, Personnel $personnel): Response
+    {
         $anneePrevisionnel = $this->dataUserSession->getAnneePrevisionnel();
         $previsionnels = $myPrevisionnel->getPrevisionnelEnseignantAnnee($personnel,
             $anneePrevisionnel);
