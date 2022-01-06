@@ -4,15 +4,20 @@
 <div class="card">
     <h4 class="card-title">{{ 'bloc.note.apc.etu.heading'|trans }}</h4>
     <div class="card-body">
+        {% if semestre.optPenaliteAbsence == true %}
+        <div class="alert alert-info mb-2">
+            Les moyennes affichées, sont les moyennes pénalisées par les absences.
+        </div>
+        {% endif %}
         <table class="table">
             <thead>
             <tr>
                 <th rowspan="2" class="text-center">Ressource/SAÉ</th>
-                <th rowspan="2" class="text-center">Moyenne Obtenue</th>
+                <th rowspan="2" class="text-center">Moyenne <br>Ressource/SAE <br>Obtenue</th>
                 <th rowspan="2">&nbsp;</th>
                 <th colspan="{{ ues|length }}" class="text-center">Coefficients</th>
                 <th rowspan="2">&nbsp;</th>
-                <th colspan="{{ ues|length }}" class="text-center">Moyenne / UE</th>
+                <th colspan="{{ ues|length }}" class="text-center">Points / UE</th>
             </tr>
             <tr>
                 {% for ue in ues %}
@@ -38,8 +43,9 @@
                         <th>{{ matiere.display }}</th>
                         <th class="text-center">
                             {% if semestre.optPenaliteAbsence == true %}
-                                {{ moyenneSemestre.moyenneMatieres[matiere.typeIdMatiere]
-                                .moyennePenalisee|styleMatiere }}
+                            <a href="#" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                               title="sans pénalité : {{ moyenneSemestre.moyenneMatieres[matiere.typeIdMatiere].moyenne|number_format(2) }}">
+                                {{ moyenneSemestre.moyenneMatieres[matiere.typeIdMatiere].moyennePenalisee|styleMatiere }}</a>
                             {% else %}
                                 {{ moyenneSemestre.moyenneMatieres[matiere.typeIdMatiere].moyenne|styleMatiere }}
                             {% endif %}
@@ -67,7 +73,7 @@
             </tbody>
             <tfoot>
             <tr>
-                <td colspan="2">&nbsp;</td>
+                <td colspan="2" class="text-end">Total</td>
                 <td>&nbsp;</td>
                 {% for ue in ues %}
                     <td class="text-center">
@@ -89,7 +95,7 @@
                 <td colspan="{{ ues|length * 2 + 4 }}">&nbsp;</td>
             </tr>
             <tr>
-                <th>Bonus Pac/Sport/...</th>
+                <th>Bonification Pac/Sport/AHE...(ajouté sur chaque UE)</th>
                 <td>&nbsp;</td>
                 <th class="text-center">
                     {{ moyenneSemestre.bonification }}
