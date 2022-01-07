@@ -1,3 +1,4 @@
+{% if evaluation.modifiable == true %}
 <form action="{{ path('application_personnel_note_import',{evaluation:evaluation.id}) }}" method="post"
       enctype="multipart/form-data">
     <div class="form-group">
@@ -17,6 +18,13 @@
     </div>
     <button class="btn btn-success">{{ button_label|default('label.importer.les.notes'|trans) }}</button>
 </form>
+{% else %}
+<div class="alert alert-warning">
+    L'évaluation a été marquée comme non modifiable. Il n'est donc plus possible
+                                 d'importer ou de modifier une note. Vous pouvez contacter le responsable de la
+                                 formation en cas de besoin.
+</div>
+{% endif %}
 <br>
 <div class="alert alert-info">Dans le cas des modules optionnels (ou de parcours) seul les groupes ayant
                               suivis cette option sont affichés.
@@ -90,7 +98,7 @@
                         <td>
                             <label class="sr-only" for="no_{{ etudiant.id }}">Note
                                                                               pour {{ etudiant.display }}</label>
-                            {% if  autorise == true %}
+                            {% if  autorise == true and evaluation.modifiable == true %}
                                 <input type="text" name="no_{{ etudiant.id }}" tabindex="{{ tab }}"
                                        id="no_{{ etudiant.id }}" data-etudiant="{{ etudiant.id }}"
 
@@ -102,7 +110,7 @@
                         </td>
                         <td>
                             <div class="form-check">
-                                {% if  autorise == true %}
+                                {% if  autorise == true and evaluation.modifiable == true %}
                                     <input type="checkbox" name="abs_{{ etudiant.id }}"
                                            id="abs_{{ etudiant.id }}" data-etudiant="{{ etudiant.id }}"
                                            class="form-check-input absenceetudiant"
@@ -115,12 +123,12 @@
                                     </label>
                                 {% else %}
                                     {% if notes[etudiant.id] is defined and notes[etudiant.id]
-                                    .absenceJustifie == true %}'Absence justifiée{% else %}-{% endif %}
+                                    .absenceJustifie == true %}Absence justifiée{% else %}-{% endif %}
                                 {% endif %}
                             </div>
                         </td>
                         <td>
-                            {% if  autorise == true %}
+                            {% if  autorise == true and evaluation.modifiable == true %}
                                 <label class="sr-only" for="com_{{ etudiant.id }}">Commentaire pour {{ etudiant
                                     .display }}</label>
                                 <input type="text" name="com_{{ etudiant.id }}" id="com_{{ etudiant.id }}"
