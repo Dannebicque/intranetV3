@@ -25,8 +25,9 @@
             <div class="card">
                 <h4 class="card-title">{{ 'scolarite.rdd.heading'|trans }}</h4>
                 <div class="card-body">
-                    <a href="{{ path('sa_rdd_index') }}" class="btn btn-block btn-primary">Suivi des inscriptions
-                                                                                           RDD</a>
+                    <a href="{{ path('sa_rdd_index') }}" class="btn d-block btn-primary">
+                        Suivi des inscriptions RDD
+                    </a>
                 </div>
             </div>
         </div>
@@ -35,7 +36,7 @@
             <div class="card">
                 <h4 class="card-title">{{ 'scolarite.enquete.heading'|trans }}</h4>
                 <div class="card-body">
-                    <a href="{{ path('administratif_enquete_diplome_index') }}" class="btn btn-block btn-primary">
+                    <a href="{{ path('administratif_enquete_diplome_index') }}" class="btn d-block btn-primary">
                         Enquête des diplômés
                     </a>
                 </div>
@@ -46,37 +47,7 @@
     <div class="card">
         <h4 class="card-title">{{ 'scolarite.index.heading'|trans }}</h4>
         <div class="card-body">
-            <table class="table table-bordered">
-                <thead>
-                <tr>
-                    <th>Type</th>
-                    <th>Diplôme</th>
-                    <th>Actif</th>
-                    <th>Année en cours</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for diplome in diplomes %}
-                    <tr>
-                        <td>{{ diplome.typeDiplome.libelle }}</td>
-                        <td>{{ diplome.libelle }}</td>
-                        <td>{{ diplome.actif == true ? 'Actif' : 'Désactivé' }}</td>
-                        <td>{{ diplome.anneeUniversitaire.libelle }}</td>
-                        <td>
-                            <a href="{{ path('sa_scolarite_diplome', {'diplome': diplome.id}) }}"
-                               class="btn btn-info btn-outline btn-square"
-                               data-bs-toggle="tooltip" data-bs-placement="bottom"
-
-                               title="{{ 'atitle.details'|trans }}">
-                                <i class="{{ iconShow }}"></i>
-                                <span class="sr-only">{{ 'atitle.details'|trans }}</span>
-                            </a>
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+            {{ table_render(table) }}
         </div>
     </div>
 {% endblock %}

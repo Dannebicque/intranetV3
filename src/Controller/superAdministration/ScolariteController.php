@@ -10,48 +10,49 @@
 namespace App\Controller\superAdministration;
 
 use App\Classes\SousCommission\SousCommissionExport;
+use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Diplome;
 use App\Entity\Semestre;
 use App\Repository\AnneeUniversitaireRepository;
-use App\Repository\DiplomeRepository;
 use App\Repository\SemestreRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Table\ScolariteDiplomesTableType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class ScolariteController.
- *
- * @Route("/administratif/scolarite")
  */
-class ScolariteController extends AbstractController
+#[Route(path: '/administratif/scolarite')]
+class ScolariteController extends BaseController
 {
-    /**
-     * @Route("/", name="sa_scolarite_index")
-     */
-    public function index(DiplomeRepository $diplomeRepository): Response
+    #[Route(path: '/', name: 'sa_scolarite_index')]
+    public function index(
+        Request $request): Response
     {
+        $table = $this->createTable(ScolariteDiplomesTableType::class);
+        $table->handleRequest($request);
+
+        if ($table->isCallback()) {
+            return $table->getCallbackResponse();
+        }
+
         return $this->render('super-administration/scolarite/index.html.twig', [
-            'diplomes' => $diplomeRepository->findAll(),
+            'table' => $table,
         ]);
     }
 
-    /**
-     * @Route("/diplome/{diplome}", name="sa_scolarite_diplome")
-     */
+    #[Route(path: '/diplome/{diplome}', name: 'sa_scolarite_diplome')]
     public function diplomeShow(SemestreRepository $semestreRepository, Diplome $diplome): Response
     {
         return $this->render('super-administration/scolarite/diplome.html.twig', [
-            'diplome'   => $diplome,
+            'diplome' => $diplome,
             'semestres' => $semestreRepository->findByDiplome($diplome),
         ]);
     }
 
-    /**
-     * @Route("/semestre/{semestre}", name="sa_scolarite_semestre")
-     */
+    #[Route(path: '/semestre/{semestre}', name: 'sa_scolarite_semestre')]
     public function semestreShow(Semestre $semestre): Response
     {
         return $this->render('super-administration/scolarite/semestre.html.twig', [
@@ -59,9 +60,7 @@ class ScolariteController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/export-apogee/{semestre}", name="sa_scolarite_semestre_export_apogee")
-     */
+    #[Route(path: '/export-apogee/{semestre}', name: 'sa_scolarite_semestre_export_apogee')]
     public function exportApogee(Semestre $semestre): Response
     {
         return $this->render('super-administration/scolarite/export-apogee.html.twig', [
@@ -69,18 +68,9 @@ class ScolariteController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/genere-apogee/{semestre}",
-     *     name="sa_scolarite_semestre_genere_apogee",
-     *     methods={"POST"},
-     *     requirements={"semestre":"\d+"})
-     */
-    public function genereFichierApogee(
-        AnneeUniversitaireRepository $anneeUniversitaireRepository,
-        SousCommissionExport $sousCommissionExport,
-        Request $request,
-        Semestre $semestre
-    ) {
+    #[Route(path: '/genere-apogee/{semestre}', name: 'sa_scolarite_semestre_genere_apogee', methods: ['POST'], requirements: ['semestre' => '\d+'])]
+    public function genereFichierApogee(AnneeUniversitaireRepository $anneeUniversitaireRepository, SousCommissionExport $sousCommissionExport, Request $request, Semestre $semestre)
+    {
         $anneeUniersitaire = $anneeUniversitaireRepository->findOneBy(['active' => true]);
         $resultat = $sousCommissionExport->exportApogee($semestre, $request->files->get('fichier'), $anneeUniersitaire);
         if (Constantes::PAS_DE_SOUS_COMM === $resultat) {
@@ -88,6 +78,7 @@ class ScolariteController extends AbstractController
 
             return $this->redirectToRoute('sa_scolarite_semestre_export_apogee', ['semestre' => $semestre->getId()]);
         }
+
         return $resultat;
     }
 }
