@@ -41,7 +41,7 @@ class SousCommissionExport
                 '' => 'ffffff'
             ];
 
-    private SousCommissionInterface $sousCommission;
+    private ?SousCommissionInterface $sousCommission = null;
     private string $dir;
 
     /**
@@ -778,6 +778,8 @@ class SousCommissionExport
 
     public function exportApogee(Semestre $semestre, $file, AnneeUniversitaire $anneeUniversitaire)
     {
+        $this->sousCommission = $this->sousCommissionManager->getSousCommission($semestre);
+
         $fichier = $this->myUpload->upload($file, 'temp');
         $this->myExcelRead->readFile($fichier);
 
