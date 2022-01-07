@@ -18,6 +18,7 @@ use App\Entity\Scolarite;
 use App\Entity\Semestre;
 use App\Repository\NoteRepository;
 use App\Utils\Tools;
+use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Twig\Error\LoaderError;
@@ -55,10 +56,10 @@ class EtudiantExportReleve
         $this->etudiantNotes = $etudiantNotes;
         $this->myEvaluations = $myEvaluations;
         $this->myPdf = $myPdf;
-        $this->dir = $kernel->getProjectDir() . '/public/upload/temp/pdf/';
+        $this->dir = $kernel->getProjectDir().'/public/upload/temp/pdf/';
     }
 
-    public function setEtudiant(Etudiant $etudiant)
+    public function setEtudiant(Etudiant $etudiant): void
     {
         $this->etudiant = $etudiant;
     }
@@ -68,22 +69,23 @@ class EtudiantExportReleve
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function exportReleveProvisoire(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire)
+    public function exportReleveProvisoire(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): PdfResponse
     {
         $this->myEvaluations->getEvaluationsSemestre($semestre, $anneeUniversitaire);
         $matieres = $this->typeMatiereManager->findBySemestreArray($semestre);
+
         return $this->myPdf::generePdf('pdf/releveProvisoire.html.twig', [
             'etudiant' => $this->etudiant,
             'notes' => $this->getNotesEtudiantSemestre($semestre, $anneeUniversitaire),
             'syntheses' => $this->myEvaluations->getStatistiques(),
             'anneeUniversitaire' => $semestre->getAnneeUniversitaire(),
             'semestre' => $semestre,
-            'matieres' => $matieres
-        ], 'releveNoteProvisoire-' . Tools::slug($this->etudiant->getNom()) . '.pdf',
+            'matieres' => $matieres,
+        ], 'releveNoteProvisoire-'.Tools::slug($this->etudiant->getNom()).'.pdf',
             $this->etudiant->getDepartement()->getLibelle());
     }
 
-    public function getNotesEtudiantSemestre(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire)
+    public function getNotesEtudiantSemestre(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): array
     {
         $this->etudiantNotes->setEtudiant($this->etudiant);
         $matieres = $this->typeMatiereManager->findBySemestre($semestre);
@@ -91,26 +93,26 @@ class EtudiantExportReleve
         return $this->etudiantNotes->getNotesParSemestresEtAnneeUniversitaire($matieres, $anneeUniversitaire);
     }
 
-    public function exportReleveDefinitif(Scolarite $scolarite)
+    public function exportReleveDefinitif(Scolarite $scolarite): PdfResponse
     {
         return $this->myPdf::generePdf('pdf/releveDefinitif.html.twig', [
             'scolarite' => $scolarite,
-        ], 'releveNotedefinitif-' . Tools::slug($scolarite->getEtudiant()->getNom()) . '.pdf',
-            $scolarite->getEtudiant()->getDepartement()->getLibelle());
+        ], 'releveNotedefinitif-'.Tools::slug($scolarite->getEtudiant()?->getNom()).'.pdf',
+            $scolarite->getEtudiant()?->getDepartement()?->getLibelle());
     }
 
-    public function exportAllReleveProvisoire(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire)
+    public function exportAllReleveProvisoire(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): string
     {
         $this->myEvaluations->getEvaluationsSemestre($semestre, $anneeUniversitaire);
         $statistiques = $this->myEvaluations->getStatistiques();
         $matieres = $this->typeMatiereManager->findBySemestreArray($semestre);
-        $libelleDepartement = $semestre->getDiplome()->getDepartement()->getLibelle();
+        $libelleDepartement = $semestre->getDiplome()?->getDepartement()?->getLibelle();
 
         // Create new Zip Archive.
         $zip = new ZipArchive();
-        $fileName = $semestre->getLibelle() . '-' . date('YmdHis') . '.zip';
+        $fileName = $semestre->getLibelle().'-'.date('YmdHis').'.zip';
         // The name of the Zip documents.
-        $zipName = $this->dir . $fileName;
+        $zipName = $this->dir.$fileName;
 
         $zip->open($zipName, ZipArchive::CREATE);
         $tabFiles = [];
@@ -119,7 +121,7 @@ class EtudiantExportReleve
         foreach ($etudiants as $etudiant) {
             if (0 === $etudiant->getAnneeSortie()) {
                 $this->etudiant = $etudiant;
-                $nomFichier = 'releveNoteProvisoire-' . Tools::slug($this->etudiant->getNom()) . '-' . $this->etudiant->getNumEtudiant();
+                $nomFichier = 'releveNoteProvisoire-'.Tools::slug($this->etudiant->getNom()).'-'.$this->etudiant->getNumEtudiant();
                 $this->myPdf::genereAndSavePdf('pdf/releveProvisoire.html.twig', [
                     'etudiant' => $this->etudiant,
                     'notes' => $this->getNotesEtudiantSemestre($semestre, $anneeUniversitaire),
@@ -130,10 +132,10 @@ class EtudiantExportReleve
                 ], $nomFichier,
                     $this->dir,
                     $libelleDepartement);
-                $file = $this->dir . $nomFichier . '.pdf';
+                $file = $this->dir.$nomFichier.'.pdf';
                 $tabFiles[] = $file;
                 $zip->addFile($file,
-                    $semestre->getLibelle() . '/' . $nomFichier . '.pdf');
+                    $semestre->getLibelle().'/'.$nomFichier.'.pdf');
             }
         }
 
@@ -146,7 +148,7 @@ class EtudiantExportReleve
 
         $response = new Response(file_get_contents($zipName));
         $response->headers->set('Content-Type', 'application/zip');
-        $response->headers->set('Content-Disposition', 'attachment;filename="' . $zipName . '"');
+        $response->headers->set('Content-Disposition', 'attachment;filename="'.$zipName.'"');
         $response->headers->set('Content-length', filesize($zipName));
 
         return $fileName;

@@ -44,7 +44,7 @@ class EtudiantUpdate
         $this->etudiantGroupes = $etudiantGroupes;
     }
 
-    public function update(Etudiant $etudiant, $field, $value)
+    public function update(Etudiant $etudiant, $field, $value): bool
     {
         switch ($field) {
             case 'semestre':
@@ -52,8 +52,10 @@ class EtudiantUpdate
                     $etudiant->setSemestre(null);
                 } else {
                     $semestre = $this->semestreRepository->find($value);
-                    $etudiant->setSemestre($semestre);
-                    $etudiant->setDepartement($semestre->getDiplome()?->getDepartement());
+                    if (null !== $semestre) {
+                        $etudiant->setSemestre($semestre);
+                        $etudiant->setDepartement($semestre->getDiplome()?->getDepartement());
+                    }
                 }
                 $this->entityManager->flush();
                 $this->etudiantGroupes->setEtudiant($etudiant);
@@ -65,7 +67,7 @@ class EtudiantUpdate
                     $etudiant->setDepartement(null);
                 } else {
                     $departement = $this->departementRepository->find($value);
-                    if (null === $etudiant->getDepartement() || $etudiant->getDepartement()->getId() !== $departement->getId()) {
+                    if (null !== $departement && (null === $etudiant->getDepartement() || $etudiant->getDepartement()->getId() !== $departement->getId())) {
                         $etudiant->setDepartement($departement);
                         $etudiant->setSemestre(null);
                     }
@@ -81,7 +83,7 @@ class EtudiantUpdate
                 $this->entityManager->flush();
                 break;
             default:
-                $method = 'set' . $field;
+                $method = 'set'.$field;
                 if (method_exists($etudiant, $method)) {
                     $etudiant->$method($value);
                     $this->entityManager->flush();

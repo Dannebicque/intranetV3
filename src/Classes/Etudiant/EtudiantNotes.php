@@ -18,8 +18,6 @@ use App\Entity\ModificationNote;
 use App\Entity\Note;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
-use App\Repository\ApcRessourceCompetenceRepository;
-use App\Repository\ApcSaeCompetenceRepository;
 use App\Repository\NoteRepository;
 use App\Utils\Tools;
 use function array_key_exists;
@@ -36,8 +34,8 @@ class EtudiantNotes
 
     private TypeMatiereManager $typeMatiereManager;
 
-    private ?array $notes;
-    private $tabGraphique;
+    private ?array $notes = [];
+    private ?array $tabGraphique = [];
 
     /**
      * EtudiantNotes constructor.
@@ -60,7 +58,7 @@ class EtudiantNotes
     public function getNotesParSemestresEtAnneeUniversitaire(
         array $matieres,
         ?AnneeUniversitaire $anneeUniversitaire
-    ) {
+    ): array {
         if (null !== $anneeUniversitaire) {
             $this->notes = $this->noteRepository->findByEtudiantSemestre($this->etudiant, $matieres,
                 $anneeUniversitaire);
@@ -129,7 +127,7 @@ class EtudiantNotes
         array $matieres,
         Semestre $semestre,
         AnneeUniversitaire $anneeUniversitaire
-    ) {
+    ): array {
         $this->getNotesParSemestresEtAnneeUniversitaire($matieres, $anneeUniversitaire);
 
         $tabMatiere = [];
@@ -155,7 +153,7 @@ class EtudiantNotes
         return $tabMatiere;
     }
 
-    public function calculGraphique()
+    public function calculGraphique(): void
     {
         $matieres = $this->typeMatiereManager->findBySemestre($this->etudiant->getSemestre());
         $tabKey = [];
@@ -172,15 +170,15 @@ class EtudiantNotes
         }
     }
 
-    public function getLabelsGraphique()
+    public function getLabelsGraphique(): array
     {
         return array_keys($this->tabGraphique);
     }
 
-    public function getDataGraphique()
+    public function getDataGraphique(): array
     {
         $t = [];
-        foreach ($this->tabGraphique as $key => $matiere) {
+        foreach ($this->tabGraphique as $matiere) {
             if (0 === $matiere['coefficient']) {
                 $t[] = 0;
             } else {

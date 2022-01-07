@@ -18,9 +18,9 @@ use App\Entity\Adresse;
 use App\Entity\Etudiant;
 use App\Entity\Semestre;
 use App\Utils\Tools;
-use Doctrine\ORM\EntityManagerInterface;
 use function array_key_exists;
 use function count;
+use Doctrine\ORM\EntityManagerInterface;
 use function is_array;
 
 class EtudiantImport
@@ -37,18 +37,13 @@ class EtudiantImport
         $this->entity = $entity;
     }
 
-    /**
-     * @return Etudiant
-     * @throws \JsonException
-     *
-     */
     public function createEtudiant(?Semestre $semestre, array $dataApogee): ?Etudiant
     {
         $etudiant = new Etudiant();
         $etudiant->setSemestre($semestre);
         $etudiant->setDepartement($semestre->getDiplome()->getDepartement());
         $etudiant->updateFromApogee($dataApogee['etudiant']);
-        $etudiant->setPhotoName($etudiant->getNumEtudiant() . '.jpg');
+        $etudiant->setPhotoName($etudiant->getNumEtudiant().'.jpg');
         $update = $this->updateLdap($etudiant);
 
         $this->saveAdresse($dataApogee, $etudiant);
@@ -61,7 +56,7 @@ class EtudiantImport
         return null;
     }
 
-    private function updateLdap(Etudiant $etudiant)
+    private function updateLdap(Etudiant $etudiant): bool
     {
         $etuLdap = $this->myLdap->getInfoEtudiant($etudiant->getNumEtudiant());
         if (is_array($etuLdap) && 2 === count($etuLdap) && '' !== $etuLdap['mail'] && '' !== $etuLdap['login']) {
@@ -92,12 +87,12 @@ class EtudiantImport
         Etudiant $etudiant,
         Semestre $semestre,
         array $dataApogee
-    ) {
+    ): ?Etudiant {
         $etudiant->updateFromApogee($dataApogee['etudiant']);
         $etudiant->setSemestre($semestre);
         $ldap = $this->updateLdap($etudiant);
         $etudiant->getAdresse()->updateFromApogee($dataApogee['adresse']);
-        $etudiant->setPhotoName($etudiant->getNumEtudiant() . '.jpg');
+        $etudiant->setPhotoName($etudiant->getNumEtudiant().'.jpg');
         $this->saveAdresse($dataApogee, $etudiant);
 
         if ($ldap) {
@@ -111,7 +106,7 @@ class EtudiantImport
         return null;
     }
 
-    public function importFomCsv(?string $fichier, array $tabSemestres)
+    public function importFomCsv(?string $fichier, array $tabSemestres): void
     {
         $handle = fopen($fichier, 'rb');
 
@@ -133,7 +128,7 @@ class EtudiantImport
         }
     }
 
-    private function createEtudiantFromCsv(bool|array $ligne, Semestre $semestre)
+    private function createEtudiantFromCsv(bool | array $ligne, Semestre $semestre): void
     {
         //todo: importer les bacs... Revoir cette partie.
         $adresse = new Adresse();
@@ -163,6 +158,5 @@ class EtudiantImport
         $etudiant->setSemestre($semestre);
 
         $this->entity->persist($etudiant);
-
     }
 }

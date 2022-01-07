@@ -100,7 +100,7 @@ class EtudiantScolarite
 
     public function updateScolarite(
         $etat
-    ) {
+    ): void {
         if (null !== $this->semestre) {
             $scolarite = $this->scolariteRepository->findOneBy([
                 'semestre' => $this->semestre->getId(),
@@ -119,7 +119,7 @@ class EtudiantScolarite
         }
     }
 
-    private function getDecisionFromEtat($etat)
+    private function getDecisionFromEtat($etat): string
     {
         if (Constantes::SCOLARITE_DIPLOME === $etat) {
             return Constantes::SEMESTRE_VALIDE;

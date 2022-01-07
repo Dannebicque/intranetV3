@@ -31,10 +31,8 @@ class EtudiantAbsences
     private EntityManagerInterface $entityManager;
 
     private EventDispatcherInterface $eventDispatcher;
-    /**
-     * @var int|mixed|string
-     */
-    private $absences;
+
+    private mixed $absences;
 
     /**
      * EtudiantAbsences constructor.
@@ -49,7 +47,7 @@ class EtudiantAbsences
         $this->eventDispatcher = $eventDispatcher;
     }
 
-    public function setEtudiant(Etudiant $etudiant)
+    public function setEtudiant(Etudiant $etudiant): void
     {
         $this->etudiant = $etudiant;
     }
@@ -105,7 +103,7 @@ class EtudiantAbsences
         array $matieres,
         AnneeUniversitaire $anneeUniversitaire,
         &$tabMatiere
-    ) {
+    ): void {
         $this->getAbsencesParSemestresEtAnneeUniversitaire($matieres, $anneeUniversitaire);
 
         /** @var Absence $absence */

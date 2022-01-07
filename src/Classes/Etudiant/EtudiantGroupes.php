@@ -31,7 +31,7 @@ class EtudiantGroupes
         $this->entityManager = $entityManager;
     }
 
-    public function setEtudiant(Etudiant $etudiant)
+    public function setEtudiant(Etudiant $etudiant): void
     {
         $this->etudiant = $etudiant;
     }
