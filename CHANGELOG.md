@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.5.4](https://github.com/Dannebicque/intranetV3/compare/v3.5.3...v3.5.4) (2022-01-07)
+
+
+### Bug Fixes
+
+* blocage des notes si évaluation bloquée ([f36c88f](https://github.com/Dannebicque/intranetV3/commit/f36c88f683401e7a7c650d6fdf74be534557158c))
+* Calcul des UEs sur les semestres de DUT ([f9b6057](https://github.com/Dannebicque/intranetV3/commit/f9b6057442315b1d2ce0ad8b1e70fd33b6b5b90f))
+* Contrainte sur la taille d'un nom d'onglet dans Excel ([5a29bed](https://github.com/Dannebicque/intranetV3/commit/5a29bedc8f51d322fe4aaff314e17df09793ee65))
+* correctifs sur l'affichage du bilan étudiant ([0d31a9d](https://github.com/Dannebicque/intranetV3/commit/0d31a9dda2b31b99ac174bf364a26aca22a17a73))
+* Droits ([294e2e9](https://github.com/Dannebicque/intranetV3/commit/294e2e99697c0bbf920453f6185ca98ac950af4d))
+* Export sous-commission Excel APC + Amélioration lecture sous-comm DUT ([07e90b2](https://github.com/Dannebicque/intranetV3/commit/07e90b292839aa8e7ed2e7b326aacd490fcfe520))
+* Export sous-commission Excel APC + Amélioration lecture sous-comm DUT ([3c483df](https://github.com/Dannebicque/intranetV3/commit/3c483df14576d24dcbc70fabfc0c33dfb44613ac))
+* Gestion des stages ([1597fba](https://github.com/Dannebicque/intranetV3/commit/1597fba607c2b74d8d5fcd748147bfd8e55e316f))
+* Gestion des stages ([6346835](https://github.com/Dannebicque/intranetV3/commit/63468358a673fa3f668913c6f9216a0e967485a1))
+* Gestion des stages ([ab88a02](https://github.com/Dannebicque/intranetV3/commit/ab88a0296eb22be41edee6336ad139dd19a4c973))
+* Modification des coefficients des ressources ([bdcf79c](https://github.com/Dannebicque/intranetV3/commit/bdcf79cb05c8a737f55745a680a099316c4593f6))
+* Procédure d'installation ([9e08bd2](https://github.com/Dannebicque/intranetV3/commit/9e08bd2aecacedb3d9ebda146054335e3346348f))
+* Profil personnel ([2e72a2d](https://github.com/Dannebicque/intranetV3/commit/2e72a2d7d35e33350ad67878b7c42cb215096c24))
+* Typage ([c833e89](https://github.com/Dannebicque/intranetV3/commit/c833e896c5ec6e7182d0a5caac455e7cf264a51e))
+* Vue erronée ([598a8dd](https://github.com/Dannebicque/intranetV3/commit/598a8ddf44ae87d5286ccce083095384fd91d072))
+
 ### [3.5.3](https://github.com/Dannebicque/intranetV3/compare/v3.5.2...v3.5.3) (2022-01-05)
 
 
