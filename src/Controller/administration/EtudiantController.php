@@ -26,16 +26,16 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route("/administration/etudiant")]
+#[Route('/administration/etudiant')]
 class EtudiantController extends BaseController
 {
-    #[Route("/", name: "administration_etudiant_index", options: ['expose' => true])]
+    #[Route('/', name: 'administration_etudiant_index', options: ['expose' => true])]
     public function index(Request $request): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $this->getDepartement());
 
         $table = $this->createTable(EtudiantDepartementTableType::class, [
-            'departement' => $this->getDepartement()
+            'departement' => $this->getDepartement(),
         ]);
 
         $table->handleRequest($request);
@@ -45,11 +45,11 @@ class EtudiantController extends BaseController
         }
 
         return $this->render('administration/etudiant/index.html.twig', [
-            'table' => $table
+            'table' => $table,
         ]);
     }
 
-    #[Route("/edit/{id}/{origin}", name: "administration_etudiant_edit", methods: ['GET', 'POST'])]
+    #[Route('/edit/{id}/{origin}', name: 'administration_etudiant_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Etudiant $etudiant, string $origin = 'semestre'): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $etudiant->getSemestre());
@@ -92,7 +92,7 @@ class EtudiantController extends BaseController
         ]);
     }
 
-    #[Route("/add", name: "administration_etudiant_add", methods: ["POST"])]
+    #[Route('/add', name: 'administration_etudiant_add', methods: ['POST'])]
     public function create(Request $request): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $this->getDepartement());
@@ -123,13 +123,12 @@ class EtudiantController extends BaseController
     }
 
     /**
-     * @Route("/change-etat/{uuid}/{etat}", name="adm_etudiant_change_etat", methods="POST", options={"expose":true})
      * @ParamConverter("etudiant", options={"mapping": {"uuid": "uuid"}})
      */
+    #[Route(path: '/change-etat/{uuid}/{etat}', name: 'adm_etudiant_change_etat', methods: 'POST', options: ['expose' => true])]
     public function changeEtat(EtudiantScolarite $etudiantScolarite, Etudiant $etudiant, $etat): JsonResponse
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $etudiant->getSemestre());
-
         $etudiantScolarite->setEtudiant($etudiant);
         $etudiantScolarite->changeEtat($etat);
 
@@ -137,23 +136,32 @@ class EtudiantController extends BaseController
     }
 
     /**
-     * @Route("/demissionnaire/{uuid}", name="administration_etudiant_demissionnaire", methods="GET")
      * @ParamConverter("etudiant", options={"mapping": {"uuid": "uuid"}})
      */
-    public function demissionnaire(
-        EtudiantScolarite $etudiantScolarite,
-        Etudiant $etudiant
-    ): RedirectResponse
+    #[Route(path: '/demissionnaire/{uuid}', name: 'administration_etudiant_demissionnaire', methods: 'GET')]
+    public function demissionnaire(EtudiantScolarite $etudiantScolarite, Etudiant $etudiant): RedirectResponse
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $etudiant->getSemestre());
-
         $etudiantScolarite->setEtudiant($etudiant);
         $etudiantScolarite->changeEtat(Constantes::SEMESTRE_DEMISSIONNAIRE);
 
         return $this->redirectToRoute('trombinoscope_index');
     }
 
-    #[Route("/edit-ajax/{id}", name: "adm_etudiant_edit_ajax", options: ["expose" => true], methods: ["POST"])]
+    /**
+     * @ParamConverter("etudiant", options={"mapping": {"uuid": "uuid"}})
+     */
+    #[Route(path: '/supprimer/{uuid}', name: 'administration_etudiant_delete', methods: 'DELETE')]
+    public function delete(EtudiantScolarite $etudiantScolarite, Etudiant $etudiant): RedirectResponse
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $etudiant->getSemestre());
+        $etudiantScolarite->setEtudiant($etudiant);
+        $etudiantScolarite->changeEtat(Constantes::SUPPRIMER_FORMATION );
+
+        return $this->redirectToRoute('trombinoscope_index');
+    }
+
+    #[Route('/edit-ajax/{id}', name: 'adm_etudiant_edit_ajax', options: ['expose' => true], methods: ['POST'])]
     public function editAjax(EtudiantUpdate $etudiantUpdate, Request $request, Etudiant $etudiant): JsonResponse
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $etudiant->getSemestre());
@@ -163,21 +171,22 @@ class EtudiantController extends BaseController
 
             return $this->json(true, Response::HTTP_OK);
         }
+
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    #[Route("/export.{_format}", name: "administration_all_etudiant_export", requirements: ["_format" => "csv|xlsx|pdf"],
-        methods: ["GET"])]
+    #[Route('/export.{_format}', name: 'administration_all_etudiant_export', requirements: ['_format' => 'csv|xlsx|pdf'],
+        methods: ['GET'])]
     public function export(MyExport $myExport, EtudiantRepository $etudiantRepository, $_format): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $this->getDepartement());
-//todo: mettre un databtable et supprimer la requete ?
+        //todo: mettre un databtable et supprimer la requete ?
         $etudiants = $etudiantRepository->getByDepartement($this->getDepartement(), []);
 
         return $myExport->genereFichierGenerique(
             $_format,
             $etudiants,
-            'etudiants_' . $this->getDepartement()->getLibelle(),
+            'etudiants_'.$this->getDepartement()->getLibelle(),
             ['etudiants_administration', 'adresse'],
             [
                 'nom',

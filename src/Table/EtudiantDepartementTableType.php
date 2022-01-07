@@ -52,7 +52,7 @@ class EtudiantDepartementTableType extends TableType
             'choice_label' => 'displayAvecTypeDiplome',
             'required' => false,
             'placeholder' => 'Filtrer par semestre',
-            'query_builder' => function(SemestreRepository $semestreRepository) {
+            'query_builder' => function (SemestreRepository $semestreRepository) {
                 return $semestreRepository->findByDepartementBuilder($this->departement);
             },
         ]);
@@ -67,7 +67,6 @@ class EtudiantDepartementTableType extends TableType
             'route' => 'administration_all_etudiant_export',
         ]);
 
-
         $builder->addColumn('numetudiant', PropertyColumnType::class,
             ['label' => 'table.numetudiant', 'translation_domain' => 'messages']);
         $builder->addColumn('nom', PropertyColumnType::class,
@@ -77,7 +76,7 @@ class EtudiantDepartementTableType extends TableType
         $builder->addColumn('semestre', WidgetColumnType::class, [
             'label' => 'table.semestre',
             'translation_domain' => 'messages',
-            'build' => function(WidgetBuilder $builder, Etudiant $s) {
+            'build' => function (WidgetBuilder $builder, Etudiant $s) {
                 $builder->add('semestre', SelectChangeType::class, [
                     'route' => 'adm_etudiant_edit_ajax',
                     'route_params' => [
@@ -86,7 +85,7 @@ class EtudiantDepartementTableType extends TableType
                     'post_params' => [
                         'field' => 'semestre',
                     ],
-                    'query_builder' => function(SemestreRepository $semestreRepository) {
+                    'query_builder' => function (SemestreRepository $semestreRepository) {
                         return $semestreRepository->findByDepartementBuilder($this->departement);
                     },
                     'value' => $s->getSemestre()?->getId(),
@@ -109,7 +108,7 @@ class EtudiantDepartementTableType extends TableType
         $builder->setLoadUrl('administration_etudiant_index');
 
         $builder->addColumn('links', WidgetColumnType::class, [
-            'build' => function(WidgetBuilder $builder, Etudiant $s) {
+            'build' => function (WidgetBuilder $builder, Etudiant $s) {
                 $builder->add('show', RowShowLinkType::class, [
                     'route' => 'user_profil',
                     'route_params' => [
@@ -128,9 +127,9 @@ class EtudiantDepartementTableType extends TableType
                 ]);
                 $builder->add('delete', RowDeleteLinkType::class, [
                     'route' => 'administration_etudiant_delete',
-                    'route_params' => ['id' => $s->getId()],
+                    'route_params' => ['uuid' => $s->getUuidString()],
                     'attr' => [
-                        'data-csrf' => $this->csrfToken->getToken('delete' . $s->getId()),
+                        'data-csrf' => $this->csrfToken->getToken('delete'.$s->getId()),
                     ],
                 ]);
             },
@@ -139,7 +138,7 @@ class EtudiantDepartementTableType extends TableType
         $builder->useAdapter(EntityAdapter::class, [
             'class' => Etudiant::class,
             'fetch_join_collection' => false,
-            'query' => function(QueryBuilder $qb, array $formData) {
+            'query' => function (QueryBuilder $qb, array $formData) {
                 $qb
                     ->where('e.departement = :departement')
                     ->setParameter('departement', $this->departement->getId());
@@ -147,7 +146,7 @@ class EtudiantDepartementTableType extends TableType
                 if (isset($formData['search'])) {
                     $qb->andWhere('LOWER(e.nom) LIKE :search');
                     $qb->orWhere('LOWER(e.prenom) LIKE :search');
-                    $qb->setParameter('search', '%' . $formData['search'] . '%');
+                    $qb->setParameter('search', '%'.$formData['search'].'%');
                 }
             },
         ]);

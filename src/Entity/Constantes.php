@@ -14,7 +14,6 @@ namespace App\Entity;
  */
 class Constantes
 {
-
     public const TYPE_DESTINATAIRE_PERMANENT = 'PERM';
     public const TYPE_DESTINATAIRE_PERSONNEL = 'PERS';
     public const TYPE_DESTINATAIRE_ETUDIANT = 'ETU';
@@ -25,7 +24,6 @@ class Constantes
             self::TYPE_DESTINATAIRE_ETUDIANT => self::TYPE_DESTINATAIRE_ETUDIANT,
             self::TYPE_DESTINATAIRE_TOUS => self::TYPE_DESTINATAIRE_TOUS,
         ];
-
 
     public const ROLE_CDD = 'ROLE_CDD';
     public const ROLE_DDE = 'ROLE_DDE';
@@ -211,6 +209,7 @@ class Constantes
     public const SEMESTRE_DEMISSIONNAIRE = 'DEM';
     public const SEMESTRE_REORIENTE = 'REO';
     public const SEMESTRE_BLANCHIMENT = 'BL';
+    public const SUPPRIMER_FORMATION = 'SUPPRIMER_FORMATION';
     public const SCOLARITE_DIPLOME = 'DIPLOME';
 
     public const SS_COMM_DECISION_COULEUR = [

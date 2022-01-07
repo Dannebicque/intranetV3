@@ -76,6 +76,14 @@ class EtudiantScolarite
                 $this->etudiantsGroupes->setEtudiant($this->etudiant);
                 $this->etudiantsGroupes->suppressionGroupes();
                 break;
+            case Constantes::SUPPRIMER_FORMATION:
+                $this->etudiant->setSemestre(null);
+                $this->etudiant->setDepartement(null);
+                $this->etudiant->setAnneeSortie((int) date('Y'));
+                $this->etudiantsGroupes->setEtudiant($this->etudiant);
+                $this->etudiantsGroupes->suppressionGroupes();
+                //todo: supprimer les scolarités
+                break;
         }
 
         $this->entityManger->persist($this->etudiant);
@@ -95,9 +103,9 @@ class EtudiantScolarite
     ) {
         if (null !== $this->semestre) {
             $scolarite = $this->scolariteRepository->findOneBy([
-                'semestre'           => $this->semestre->getId(),
+                'semestre' => $this->semestre->getId(),
                 'anneeUniversitaire' => $this->anneeUniversitaire->getId(),
-                'etudiant'           => $this->etudiant->getId(),
+                'etudiant' => $this->etudiant->getId(),
             ]);
 
             if (null === $scolarite) {

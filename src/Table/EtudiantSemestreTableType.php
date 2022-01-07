@@ -54,7 +54,7 @@ class EtudiantSemestreTableType extends TableType
         $builder->addFilter('search', SearchType::class);
         $builder->addFilter('groupe', EntityType::class, [
             'class' => Groupe::class,
-            'query_builder' => function(GroupeRepository $groupeRepository) {
+            'query_builder' => function (GroupeRepository $groupeRepository) {
                 return $groupeRepository->findBySemestreBuilder($this->semestre);
             },
             'choice_label' => 'display',
@@ -71,7 +71,7 @@ class EtudiantSemestreTableType extends TableType
         $builder->addWidget('export', ExportDropdownType::class, [
             'route' => 'administration_absence_appel_export',
             'route_params' => [
-                'semestre' => $this->semestre->getId()
+                'semestre' => $this->semestre->getId(),
             ],
         ]);
 
@@ -99,7 +99,7 @@ class EtudiantSemestreTableType extends TableType
         $builder->addColumn('bac', WidgetColumnType::class, [
             'label' => 'table.bac',
             'translation_domain' => 'messages',
-            'build' => function(WidgetBuilder $builder, Etudiant $s) {
+            'build' => function (WidgetBuilder $builder, Etudiant $s) {
                 $builder->add('bac', SelectChangeType::class, [
                     'route' => 'adm_etudiant_edit_ajax',
                     'route_params' => [
@@ -118,7 +118,7 @@ class EtudiantSemestreTableType extends TableType
         $builder->addColumn('semestre', WidgetColumnType::class, [
             'label' => 'table.semestre',
             'translation_domain' => 'messages',
-            'build' => function(WidgetBuilder $builder, Etudiant $s) {
+            'build' => function (WidgetBuilder $builder, Etudiant $s) {
                 $builder->add('semestre', SelectChangeType::class, [
                     'route' => 'adm_etudiant_edit_ajax',
                     'route_params' => [
@@ -127,7 +127,7 @@ class EtudiantSemestreTableType extends TableType
                     'post_params' => [
                         'field' => 'semestre',
                     ],
-                    'query_builder' => function(SemestreRepository $semestreRepository) {
+                    'query_builder' => function (SemestreRepository $semestreRepository) {
                         return $semestreRepository->findByDepartementBuilder($this->departement);
                     },
                     'value' => $s->getSemestre()?->getId(),
@@ -140,7 +140,7 @@ class EtudiantSemestreTableType extends TableType
         $builder->addColumn('departement', WidgetColumnType::class, [
             'label' => 'table.departement',
             'translation_domain' => 'messages',
-            'build' => function(WidgetBuilder $builder, Etudiant $s) {
+            'build' => function (WidgetBuilder $builder, Etudiant $s) {
                 $builder->add('departement', SelectChangeType::class, [
                     'route' => 'adm_etudiant_edit_ajax',
                     'route_params' => [
@@ -157,7 +157,7 @@ class EtudiantSemestreTableType extends TableType
         ]);
 
         $builder->addColumn('links', WidgetColumnType::class, [
-            'build' => function(WidgetBuilder $builder, Etudiant $s) {
+            'build' => function (WidgetBuilder $builder, Etudiant $s) {
                 $builder->add('show', RowShowLinkType::class, [
                     'route' => 'user_profil',
                     'route_params' => [
@@ -176,7 +176,7 @@ class EtudiantSemestreTableType extends TableType
                 ]);
                 $builder->add('delete', RowDeleteLinkType::class, [
                     'route' => 'administration_etudiant_delete',
-                    'route_params' => ['id' => $s->getId()],
+                    'route_params' => ['uuid' => $s->getUuidString()],
                     'attr' => [
                         'data-csrf' => $this->csrfToken->getToken('delete'.$s->getId()),
                     ],
@@ -195,7 +195,7 @@ class EtudiantSemestreTableType extends TableType
                 if (isset($formData['search'])) {
                     $qb->andWhere('LOWER(e.nom) LIKE :search');
                     $qb->orWhere('LOWER(e.prenom) LIKE :search');
-                    $qb->setParameter('search', '%' . $formData['search'] . '%');
+                    $qb->setParameter('search', '%'.$formData['search'].'%');
                 }
 
                 if (isset($formData['groupe']) && '' !== trim($formData['groupe'])) {
