@@ -141,6 +141,7 @@ class ProfilEtudiantController extends BaseController
         ApcRessourceCompetenceRepository $apcRessourceCompetenceRepository,
         ApcSaeCompetenceRepository $apcSaeCompetenceRepository,
         TypeMatiereManager $typeMatiereManager,
+        EtudiantAbsences $etudiantAbsences,
         EtudiantNotes $etudiantNotes,
         Etudiant $etudiant): Response
     {
@@ -155,6 +156,9 @@ class ProfilEtudiantController extends BaseController
             $matieres = $typeMatiereManager->findBySemestreArray($etudiant->getSemestre());
             $etudiantSousCommissionApc->moyenneMatieres = $etudiantNotes->getMoyenneParMatiereParSemestresEtAnneeUniversitaire($matieres, $etudiant->getSemestre(),
                 $this->getAnneeUniversitaire());
+            $etudiantAbsences->setEtudiant($etudiant);
+            $etudiantAbsences->getPenalitesAbsencesParMatiere($matieres, $this->getAnneeUniversitaire(),
+                $etudiantSousCommissionApc->moyenneMatieres);
             $etudiantSousCommissionApc->calculMoyenneUes($matieres, $ressources, $saes);
 
             return $this->render('user/composants/_notes_apc.html.twig', [

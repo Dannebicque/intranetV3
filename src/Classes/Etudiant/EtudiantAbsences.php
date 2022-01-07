@@ -16,11 +16,11 @@ use App\Entity\Etudiant;
 use App\Entity\Personnel;
 use App\Event\AbsenceEvent;
 use App\Repository\AbsenceRepository;
+use function array_key_exists;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
-use function array_key_exists;
 
 class EtudiantAbsences
 {

@@ -22,10 +22,10 @@ use App\Repository\ApcRessourceCompetenceRepository;
 use App\Repository\ApcSaeCompetenceRepository;
 use App\Repository\NoteRepository;
 use App\Utils\Tools;
-use Doctrine\ORM\EntityManagerInterface;
-use Exception;
 use function array_key_exists;
 use function count;
+use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 
 class EtudiantNotes
 {
@@ -36,9 +36,6 @@ class EtudiantNotes
 
     private TypeMatiereManager $typeMatiereManager;
 
-    private ApcRessourceCompetenceRepository $apcRessourceCompetenceRepository;
-    private ApcSaeCompetenceRepository $apcSaeCompetenceRepository;
-
     private ?array $notes;
     private $tabGraphique;
 
@@ -48,15 +45,11 @@ class EtudiantNotes
     public function __construct(
         TypeMatiereManager $typeMatiereManager,
         NoteRepository $noteRepository,
-        EntityManagerInterface $entityManager,
-        ApcRessourceCompetenceRepository $apcRessourceCompetenceRepository,
-        ApcSaeCompetenceRepository $apcSaeCompetenceRepository
+        EntityManagerInterface $entityManager
     ) {
         $this->noteRepository = $noteRepository;
         $this->entityManager = $entityManager;
         $this->typeMatiereManager = $typeMatiereManager;
-        $this->apcRessourceCompetenceRepository = $apcRessourceCompetenceRepository;
-        $this->apcSaeCompetenceRepository = $apcSaeCompetenceRepository;
     }
 
     public function setEtudiant(Etudiant $etudiant): void
@@ -79,7 +72,6 @@ class EtudiantNotes
     }
 
     /**
-     *
      * @throws Exception
      */
     public function addNote(Evaluation $evaluation, $data, Personnel $personnel): bool
@@ -197,57 +189,5 @@ class EtudiantNotes
         }
 
         return $t;
-    }
-
-    //todo: devrait pas être ici...
-    public function calculMoyenneApcSemestre(Semestre $semestre, array $matieres, array $ues, array $moyennes): array
-    {
-        $tabs = [];
-        $ressources = $this->apcRessourceCompetenceRepository->findBySemestreArray($semestre);
-        $saes = $this->apcSaeCompetenceRepository->findBySemestreArray($semestre);
-        $tabs['pac'] = 0;
-        foreach ($ues as $ue) {
-            $ueId = $ue->getId();
-            $competenceId = $ue->getApcCompetence()->getId();
-            $tabs['ues'][$ueId]['totalCoefficients'] = 0;
-            $tabs['ues'][$ueId]['totalMoyennes'] = 0;
-            $tabs['ues'][$ueId]['totalMoyennesPenalisee'] = 0;
-            $tabs['ues'][$ueId]['moyenne'] = 0;
-            $tabs['ues'][$ueId]['moyennePenalisee'] = 0;
-            $tabs['ues'][$ueId]['moyennePac'] = 0;
-            foreach ($matieres as $matiere) {
-                if (array_key_exists($matiere->getTypeIdMatiere(), $moyennes)) {
-                    $tabs['matieres'][$matiere->codeElement]['moyenne'] = $moyennes[$matiere->getTypeIdMatiere()]->getMoyenne();
-                    $tabs['matieres'][$matiere->codeElement]['moyennePenalisee'] = $moyennes[$matiere->getTypeIdMatiere()]->getMoyennePenalisee();
-                } else {
-                    $tabs['matieres'][$matiere->codeElement]['moyenne'] = 0;
-                    $tabs['matieres'][$matiere->codeElement]['moyennePenalisee'] = 0;
-                }
-
-                if (array_key_exists($ue->getApcCompetence()->getId(),
-                        $ressources) && array_key_exists($matiere->codeElement,
-                        $ressources[$ue->getApcCompetence()->getId()])) {
-                    $tabs['ues'][$ueId]['matieres'][$matiere->codeElement]['coefficient'] = $ressources[$competenceId][$matiere->codeElement]->getCoefficient(); //moyenne
-                    // officiellement du module.
-                    $tabs['ues'][$ueId]['totalCoefficients'] += $ressources[$competenceId][$matiere->codeElement]->getCoefficient();
-                } elseif (array_key_exists($competenceId,
-                        $saes) && array_key_exists($matiere->codeElement,
-                        $saes[$competenceId])) {
-                    $tabs['ues'][$ueId]['matieres'][$matiere->codeElement]['coefficient'] = $saes[$competenceId][$matiere->codeElement]->getCoefficient(); //moyenne officiellement du module.
-                    $tabs['ues'][$ueId]['totalCoefficients'] += $saes[$competenceId][$matiere->codeElement]->getCoefficient();
-                } else {
-                    $tabs['ues'][$ueId]['matieres'][$matiere->codeElement]['coefficient'] = 0;
-                }
-                $tabs['ues'][$ueId]['matieres'][$matiere->codeElement]['moyenne'] = $tabs['matieres'][$matiere->codeElement]['moyenne'] * $tabs['ues'][$ueId]['matieres'][$matiere->codeElement]['coefficient'];
-                $tabs['ues'][$ueId]['totalMoyennes'] += $tabs['ues'][$ueId]['matieres'][$matiere->codeElement]['moyenne'];
-                if ($tabs['ues'][$ueId]['totalCoefficients'] > 0) {
-                    $tabs['ues'][$ueId]['moyenne'] = $tabs['ues'][$ueId]['totalMoyennes'] / $tabs['ues'][$ueId]['totalCoefficients'];
-                    $tabs['ues'][$ueId]['moyennePac'] = $tabs['ues'][$ueId]['moyenne'] + $tabs['pac'];
-                }
-
-            }
-
-        }
-        return $tabs;
     }
 }
