@@ -170,7 +170,7 @@ class StageEtudiant extends BaseEntity
     private ?Personnel $tuteurUniversitaire;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Entreprise", inversedBy="stageEtudiants", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\Entreprise", inversedBy="stageEtudiants", cascade={"persist", "remove"}, fetch="EAGER")
      * @Groups({"stage_entreprise_administration", "stage_periode_gestion"})
      */
     private ?Entreprise $entreprise;

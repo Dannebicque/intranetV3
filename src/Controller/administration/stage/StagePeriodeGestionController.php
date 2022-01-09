@@ -21,33 +21,29 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class StagePeriodeGestionController.
- *
- * @Route("/administration/stage/periode/gestion")
  */
+#[Route(path: '/administration/stage/periode/gestion')]
 class StagePeriodeGestionController extends BaseController
 {
     /**
-     * @Route("/{uuid}/export.{_format}", name="administration_stage_periode_gestion_export", methods="GET",
-     *                             requirements={"_format"="csv|pdf"})
      * @ParamConverter("stagePeriode", options={"mapping": {"uuid": "uuid"}})
-     *
      */
+    #[Route(path: '/{uuid}/export.{_format}', name: 'administration_stage_periode_gestion_export', requirements: ['_format' => 'csv|pdf'], methods: 'GET')]
     public function export(MyExport $myExport, StagePeriode $stagePeriode, $_format): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
-
         $stageEtudiants = $stagePeriode->getStageEtudiants();
 
         return $myExport->genereFichierGenerique(
             $_format,
             $stageEtudiants,
-            'periode_stage_' . $stagePeriode->getLibelle(),
+            'periode_stage_'.$stagePeriode->getLibelle(),
             ['stage_periode_gestion', 'utilisateur', 'stage_entreprise_administration', 'adresse'],
             [
                 'etudiant' => ['nom', 'prenom'],
-                'entreprise'          => ['raisonSociale'],
+                'entreprise' => ['raisonSociale'],
                 //'adresse' => ['adresse1','adresse2', 'cp', 'ville', 'pays']
-                'tuteur'              => ['nom', 'prenom', 'fonction', 'telephone', 'email'],
+                'tuteur' => ['nom', 'prenom', 'fonction', 'telephone', 'email'],
                 'tuteurUniversitaire' => ['nom', 'prenom', 'mailUniv'],
                 'dateDebutStage',
                 'dateFinStage',
@@ -56,9 +52,9 @@ class StagePeriodeGestionController extends BaseController
     }
 
     /**
-     * @Route("/{uuid}/export.xlsx", name="administration_stage_periode_gestion_export_xlsx", methods="GET")
      * @ParamConverter("stagePeriode", options={"mapping": {"uuid": "uuid"}})
      */
+    #[Route(path: '/{uuid}/export.xlsx', name: 'administration_stage_periode_gestion_export_xlsx', methods: 'GET')]
     public function exportXlsx(MyExportStage $myExport, StagePeriode $stagePeriode): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
@@ -67,17 +63,12 @@ class StagePeriodeGestionController extends BaseController
     }
 
     /**
-     * @Route("/{uuid}", name="administration_stage_periode_gestion")
      * @ParamConverter("stagePeriode", options={"mapping": {"uuid": "uuid"}})
      */
-    public function periode(
-        StagePeriodeRepository $stagePeriodeRepository,
-        MyStage $myStage,
-        StagePeriode $stagePeriode
-    ): Response
+    #[Route(path: '/{uuid}', name: 'administration_stage_periode_gestion')]
+    public function periode(StagePeriodeRepository $stagePeriodeRepository, MyStage $myStage, StagePeriode $stagePeriode): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
-
         $periodes = [];
         foreach ($this->dataUserSession->getDiplomes() as $diplome) {
             $pers = $stagePeriodeRepository->findByDiplome($diplome, $diplome->getAnneeUniversitaire());
@@ -88,8 +79,8 @@ class StagePeriodeGestionController extends BaseController
 
         return $this->render('administration/stage/stage_periode_gestion/index.html.twig', [
             'stagePeriode' => $stagePeriode,
-            'periodes'     => $periodes,
-            'myStage'      => $myStage->getDataPeriode($stagePeriode),
+            'periodes' => $periodes,
+            'myStage' => $myStage->getDataPeriode($stagePeriode),
         ]);
     }
 }

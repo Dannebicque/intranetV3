@@ -41,7 +41,7 @@ class Entreprise extends BaseEntity
     private ?string $raisonSociale;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Adresse", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Adresse", cascade={"persist", "remove"}, fetch="EAGER")
      * @Groups({ "stage_entreprise_administration"})
      */
     private ?Adresse $adresse;

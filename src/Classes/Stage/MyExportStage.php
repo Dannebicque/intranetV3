@@ -95,7 +95,7 @@ class MyExportStage
                 $adresse = [
                     $stage->getEntreprise()->getAdresse()->getAdresse1(),
                     $stage->getEntreprise()->getAdresse()->getAdresse2(),
-                    $stage->getEntreprise()->getAdresse()->getCodePostal() . ' ' . $stage->getEntreprise()->getAdresse()->getVille(),
+                    $stage->getEntreprise()->getAdresse()->getCodePostal().' '.$stage->getEntreprise()->getAdresse()->getVille(),
                 ];
             }
 
@@ -112,20 +112,20 @@ class MyExportStage
 
             $adresse2 = '';
             if (null !== $stage->getAdresseStage()) {
-                $adresse2 = $stage->getAdresseStage()->getAdresse1() . ' ' . $stage->getAdresseStage()->getAdresse2() . ' ' . $stage->getAdresseStage()->getCodePostal() . ' ' . $stage->getAdresseStage()->getVille();
+                $adresse2 = $stage->getAdresseStage()->getAdresse1().' '.$stage->getAdresseStage()->getAdresse2().' '.$stage->getAdresseStage()->getCodePostal().' '.$stage->getAdresseStage()->getVille();
             }
 
             $tuteurUniv = '-';
             if (null !== $stage->getTuteurUniversitaire()) {
-                $tuteurUniv = $stage->getTuteurUniversitaire()->getPrenom() . ' ' . $stage->getTuteurUniversitaire()->getNom();
+                $tuteurUniv = $stage->getTuteurUniversitaire()->getPrenom().' '.$stage->getTuteurUniversitaire()->getNom();
             }
             $groupes = '';
             $parcours = '';
             foreach ($stage->getEtudiant()->getGroupes() as $groupe) {
                 if (null !== $groupe->getParcours()) {
-                    $parcours .= $groupe->getParcours()->getLibelle() . ', ';
+                    $parcours .= $groupe->getParcours()->getLibelle().', ';
                 }
-                $groupes .= $groupe->getLibelle() . ', ';
+                $groupes .= $groupe->getLibelle().', ';
             }
 
             $t = [
@@ -183,13 +183,13 @@ class MyExportStage
         $writer = new Xlsx($this->myExcelWriter->getSpreadsheet());
 
         return new StreamedResponse(
-            static function() use ($writer) {
+            static function () use ($writer) {
                 $writer->save('php://output');
             },
             200,
             [
-                'Content-Type'        => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                'Content-Disposition' => 'attachment;filename="' . $stagePeriode->getLibelle() . '.xlsx"',
+                'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                'Content-Disposition' => 'attachment;filename="'.$stagePeriode->getLibelle().'.xlsx"',
             ]
         );
     }
