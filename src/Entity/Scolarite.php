@@ -154,7 +154,7 @@ class Scolarite extends BaseEntity
         return $this->proposition;
     }
 
-    public function setProposition(string $proposition): self
+    public function setProposition(?string $proposition = '?'): self
     {
         $this->proposition = $proposition;
 
@@ -293,7 +293,7 @@ class Scolarite extends BaseEntity
         return $this;
     }
 
-    public function getStyle($note)
+    public function getStyle($note): string
     {
         if ($note < 8) {
             return 'badge bg-danger';
@@ -306,7 +306,7 @@ class Scolarite extends BaseEntity
         return 'notenormale';
     }
 
-    public function getMoyennesUeSousComm($idUe)
+    public function getMoyennesUeSousComm($idUe): array
     {
         $ue = $this->getMoyennesUesById($idUe);
         if ([] !== $ue) {

@@ -29,7 +29,7 @@ class MoyenneUe
         $this->penalite = $penalite;
     }
 
-    public function addMatiere(MoyenneMatiere $moyenneMatiere)
+    public function addMatiere(MoyenneMatiere $moyenneMatiere): void
     {
         if ($moyenneMatiere->optionFaite && false === $moyenneMatiere->matiere->bonification) {
             $this->totalMatiere += $moyenneMatiere->getMoyenne() * $moyenneMatiere->matiere->coefficient;
