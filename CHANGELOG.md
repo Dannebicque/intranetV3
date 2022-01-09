@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.5.5](https://github.com/Dannebicque/intranetV3/compare/v3.5.4...v3.5.5) (2022-01-09)
+
+
+### Features
+
+* Composant table pour la scolarité ([7cb5ea2](https://github.com/Dannebicque/intranetV3/commit/7cb5ea215dec74db9d7982473ec03458f922fe92))
+* Envoi de la convention par mail aux étudiants ([0d1166a](https://github.com/Dannebicque/intranetV3/commit/0d1166a7c997f6016241453d116c211c998a358c))
+
+
+### Bug Fixes
+
+* [BS5] Bouton en "block" ([7887109](https://github.com/Dannebicque/intranetV3/commit/788710952fc2d8f4a0dd5f1c7898c3993cf3807f))
+* Affichage tableau des étudiants + suppression ([1b97f5f](https://github.com/Dannebicque/intranetV3/commit/1b97f5f3a60ee286c082d1b8284608c3eeeafb04))
+* Améliorations affichage notes partie étudiants + optimisations requetes ([4f6e673](https://github.com/Dannebicque/intranetV3/commit/4f6e673fc8a6b1dd3a080647d91ff851510b1ae1))
+* Améliorations des requetes pour la page stage ([2ec7d37](https://github.com/Dannebicque/intranetV3/commit/2ec7d37d1f5d161d275d54f0dc20cda7ec7ebe07))
+* export Apogee ([d2cc4bf](https://github.com/Dannebicque/intranetV3/commit/d2cc4bf3c8d2ec414fb954485cdc88027f429709))
+* Moyenne pénalisée sur le profil ([26af5f8](https://github.com/Dannebicque/intranetV3/commit/26af5f819187a44621690c259c94f3df00c92ab5))
+* Navigation sur EDT Etudiants ([4f294ee](https://github.com/Dannebicque/intranetV3/commit/4f294eee1cca28fc76f7fced513824cb27405fbb))
+* Select avec form-select [BS5] ([4f2933f](https://github.com/Dannebicque/intranetV3/commit/4f2933f4fcf3c20d89cc7dc5cce4f4a34b0d9b3e))
+* Sous commission et export Apogée B.U.T. ([4362206](https://github.com/Dannebicque/intranetV3/commit/4362206f4d857578d3347e444e2944ac0f4eeab5))
+* Typage ([bf7f9d9](https://github.com/Dannebicque/intranetV3/commit/bf7f9d9a1bbe40e5cf78a6a40e35a43197a804b5))
+
 ### [3.5.4](https://github.com/Dannebicque/intranetV3/compare/v3.5.3...v3.5.4) (2022-01-07)
 
 
