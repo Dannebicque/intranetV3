@@ -16,7 +16,7 @@
         <div class="card-body">
 
             <label class="sr-only" for="change_annee_universitiare_temp">{{ 'change_annee_universitiare_temp'|trans }}</label>
-            <select id="change_annee_universitiare_temp" class="form-control">
+            <select id="change_annee_universitiare_temp" class="form-select">
                 <option value="0">{{ 'change_annee_universitiare_temp'|trans }}</option>
                 {% for annee in annee_universitaires %}
                     <option value="{{ annee.id }}" {% if defaut != null %}{% if  annee.id == defaut.id %}selected{% endif %}{% endif %}>{{ annee.libelle }}</option>
@@ -46,7 +46,7 @@
                     <td><label for="creneau_jour" class="sr-only">Jour</label>
                         <select id="creneau_jour"
                                 name="creneau_jour"
-                                class="form-control"
+                                class="form-select"
                         >
                             <option value="1">Lundi</option>
                             <option value="2">Mardi</option>
@@ -84,7 +84,7 @@
                     <div class="col-md-6 col-sm-12">
                         <div class="form-group">
                             <label for="annee_depart">Année à copier</label>
-                            <select name="annee_depart" id="annee_depart" class="form-control">
+                            <select name="annee_depart" id="annee_depart" class="form-select">
                                 <option value="">Choisir</option>
                                 {% for annee in annee_universitaires %}
                                     <option value="{{ annee.id }}" {% if defaut != null %}{% if  annee.id == defaut.id %}selected{% endif %}{% endif %}>{{ annee.libelle }}</option>
@@ -95,7 +95,7 @@
                     <div class="col-md-6 col-sm-12">
                         <div class="form-group">
                             <label for="annee_destination">Année de destination</label>
-                            <select name="annee_destination" id="annee_destination" class="form-control">
+                            <select name="annee_destination" id="annee_destination" class="form-select">
                                 <option value="">Choisir</option>
                                 {% for annee in annee_universitaires %}
                                     <option value="{{ annee.id }}">{{ annee.libelle }}</option>

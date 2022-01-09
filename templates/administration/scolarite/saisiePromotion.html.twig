@@ -26,7 +26,7 @@
                     <div class="col-md-6 col-sm-12">
                         <div class="form-group">
                             <label for="semestre">Semestre</label>
-                            <select name="semestre" id="semestre" class="form-control">
+                            <select name="semestre" id="semestre" class="form-select">
                                 <option value="">Choisir</option>
                                 {% for semestre in semestres %}
                                     <option value="{{ semestre.id }}">{{ semestre.display }}</option>
@@ -36,7 +36,7 @@
                     </div>
                     <div class="col-md-6 col-sm-12">
                         <label for="anneeUniversitaire">Année Universitaire</label>
-                        <select name="anneeUniversitaire" id="anneeUniversitaire" class="form-control">
+                        <select name="anneeUniversitaire" id="anneeUniversitaire" class="form-select">
                             <option value="">Choisir</option>
                             {% for anneeUniversitaire in anneesUniversitaires %}
                                 <option value="{{ anneeUniversitaire.id }}">{{ anneeUniversitaire.displayAnneeUniversitaire }}</option>

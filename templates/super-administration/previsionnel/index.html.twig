@@ -24,7 +24,7 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label class="sr-only" for="sadm_previPersonnel">{{ 'choisir.intervenant'|trans }}</label>
-                        <select class="form-control selectpicker" data-annee="{{ annee }}"
+                        <select class="form-select selectpicker" data-annee="{{ annee }}"
                                 id="sadm_previPersonnel">
                             <option value="">{{ 'choisir.intervenant'|trans }}</option>
                             {% for personnel in personnels %}
@@ -34,7 +34,7 @@
                     </div>
                     <div class="form-group">
                         <label for="sadm_change_annee_temp_previsionnel">{{ 'change_annee_temp_previsionnel'|trans }}</label>
-                        <select id="sadm_change_annee_temp_previsionnel" class="form-control">
+                        <select id="sadm_change_annee_temp_previsionnel" class="form-select">
                             <option value="0">{{ 'change_annee_temp_previsionnel'|trans }}</option>
                             {% for anne in 2017..'now'|date('Y')+4 %}
                                 <option value="{{ anne }}" {% if annee == anne %}selected{% endif %}>{{ anne }}</option>

@@ -17,7 +17,7 @@
                 <thead>
                 <tr>
                     {% for column in columns %}
-                        <th {{ _self.attributes(column.attr) }}>
+                        <th {{ _self.attributes(column.attr) }} scope="col">
                             {%- if column.label is not empty %}
                                 {%- if column.translation_domain %}
                                     {{- (column.label)|trans([], column.translation_domain) | raw -}}

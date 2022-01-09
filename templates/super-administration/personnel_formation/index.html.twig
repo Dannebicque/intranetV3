@@ -67,7 +67,7 @@
                            <td>{{ personnel.personnel.username }}</td>
                            <td>
                                <label class="sr-only" for="droit_{{ personnel.id }}">Role(s)/droit(s)</label>
-                               <select class="form-control change_droit_pf" data-pf="{{ personnel.id }}" id="droit_{{ personnel.id }}">
+                               <select class="form-select change_droit_pf" data-pf="{{ personnel.id }}" id="droit_{{ personnel.id }}">
                                    {% for role in constant('App\\Entity\\Constantes::ROLE_LISTE') %}
                                        <option value="{{ role }}" {% if role in personnel.roles %}selected{% endif %}>{{ role|trans }}</option>
                                    {% endfor %}

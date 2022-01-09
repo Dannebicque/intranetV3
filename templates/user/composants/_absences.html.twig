@@ -21,7 +21,7 @@
                    <input placeholder="jj/mm/aaaa" name="jourabs" id="jourabs" class="form-control"
                           value="{{ date("now")|date('Y-m-d') }}" type="date">
                  </td>
-                 <td><select class="form-control heure" name="heureabs" id="heureabs">
+                 <td><select class="form-select heure" name="heureabs" id="heureabs">
                          {% for i in 08..19 %}
                            <option value="{{ i }}:00">{{ i }}h00</option>
                            <option value="{{ i }}:15">{{ i }}h15</option>
@@ -29,7 +29,7 @@
                            <option value="{{ i }}:45">{{ i }}h45</option>
                          {% endfor %}
                    </select></td>
-                 <td><select class="form-control" name="moduleabs" id="moduleabs">
+                 <td><select class="form-select" name="moduleabs" id="moduleabs">
                              <option value="0">Choisir</option>
                          {% for matiere in matieres %}
                              <option value="{{ matiere.typeIdMatiere }}">{{ matiere.display }}</option>

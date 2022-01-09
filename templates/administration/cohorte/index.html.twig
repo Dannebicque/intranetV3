@@ -25,7 +25,7 @@
                     <div class="col-6">
                         <div class="form-group">
                             <label for="annee">Annee Universitaire</label>
-                            <select name="annee" class="form-control" id="annee">
+                            <select name="annee" class="form-select" id="annee">
                                 {% for annee in anneesUniversitaires %}
                                     <option value="{{ annee.id }}">{{ annee.displayAnneeUniversitaire }}</option>
                                 {% endfor %}
@@ -53,7 +53,7 @@
             <div class="form-group">
                 <label class="control-label" for="annee">Choisissez une année</label>
 
-                <select name="annee" id="annee" class="form-control">
+                <select name="annee" id="annee" class="form-select">
                     {% for i in 2015..'now'|date('Y') %}
                         <option value="{{ i }}" {% if i == annee %}selected{% endif %}>{{ i }}</option>
                     {% endfor %}

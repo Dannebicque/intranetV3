@@ -150,7 +150,7 @@
                                 </label>
                                 <select
                                         id="etu_{{ etu.id }}_DEPARTEMENT"
-                                        class="form-control">
+                                        class="form-select">
                                     {% for departement in departements %}
                                         <option value="{{ departement.id }}" {% if departement.id == etu.departement.id %}selected{% endif %}>{% if departement.id != etu.departement.id %}=>{% else %}reste en {% endif %} {{ departement.libelle }}</option>
                                     {% endfor %}

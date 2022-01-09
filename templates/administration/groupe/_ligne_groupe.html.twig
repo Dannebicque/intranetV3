@@ -12,7 +12,7 @@
             {{ groupe.ordre }}</a></td>
     <td>
         <label class="sr-only" for="parent_{{ groupe.id }}"></label>
-        <select id="parent_{{ groupe.id }}" name="parent_{{ groupe.id }}" class="form-control change-parent"
+        <select id="parent_{{ groupe.id }}" name="parent_{{ groupe.id }}" class="form-select change-parent"
                 data-groupe="{{ groupe.id }}" data-semestre="{{ semestre.id }}">
             <option value="" selected>Groupe Parent</option>
             {% for gr in groupes|filter(gr => gr.typegroupe.id != groupe.typegroupe.id) %}
@@ -29,7 +29,7 @@
             {{ groupe.codeapogee }}</a></td>
     <td>
         <label class="sr-only" for="typegroupe_{{ groupe.id }}"></label>
-        <select id="typegroupe_{{ groupe.id }}" name="typegroupe_{{ groupe.id }}" class="form-control
+        <select id="typegroupe_{{ groupe.id }}" name="typegroupe_{{ groupe.id }}" class="form-select
         change-typegroupe" data-groupe="{{ groupe.id }}" data-semestre="{{ semestre.id }}">
             <option value="" selected>Type de Groupe</option>
             {% for tg in typeGroupes %}
@@ -42,7 +42,7 @@
     <td>
         {% if parcours is defined and parcours|length > 0 %}
             <label class="sr-only" for="parcours_{{ groupe.id }}"></label>
-            <select id="parcours_{{ groupe.id }}" name="parcours_{{ groupe.id }}" class="form-control
+            <select id="parcours_{{ groupe.id }}" name="parcours_{{ groupe.id }}" class="form-select
             change-parcours" data-groupe="{{ groupe.id }}" data-semestre="{{ semestre.id }}">
                 <option value="">Indiquer l'option</option>
                 {% for option in parcours %}

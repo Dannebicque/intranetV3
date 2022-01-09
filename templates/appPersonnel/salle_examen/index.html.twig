@@ -8,7 +8,7 @@
             <div class="form-group">
                 <label class="control-label required" for="selectsemestre">Choisir semestre</label>
                 <div>
-                    <select data-placeholder="Choisir le semestre" class="form-control" id="selectsemestre"
+                    <select data-placeholder="Choisir le semestre" class="form-select" id="selectsemestre"
                             name="selectsemestre" required="required" is="select-complete">
                         <option value="">Choisissez un semestre</option>
                         {% for semestre in semestres %}
@@ -21,7 +21,7 @@
             <div class="form-group">
                 <label class="control-label required" for="selectmatiere">Matière</label>
                 <div>
-                    <select class="form-control" id="selectmatiere" name="selectmatiere" required="required">
+                    <select class="form-select" id="selectmatiere" name="selectmatiere" required="required">
                         <option value="">Choisissez d'abord un semestre</option>
                     </select>
                 </div>
@@ -30,7 +30,7 @@
             <div class="form-group">
                 <label class="control-label required" for="selectgroupes">Groupes</label>
                 <div>
-                    <select class="form-control" id="selectgroupes" name="selectgroupes" required="required"
+                    <select class="form-select" id="selectgroupes" name="selectgroupes" required="required"
                     >{# is="select-complete" #}
                         <option value="">Choisissez d'abord un semestre</option>
                     </select>
@@ -50,7 +50,7 @@
             <div class="form-group">
                 <label class="control-label" for="enseignant1">Enseignant 1</label>
                 <div>
-                    <select class="form-control" id="enseignant1" name="enseignant1"
+                    <select class="form-select" id="enseignant1" name="enseignant1"
                             is="select-complete"
                     >
                         <option value="">Choisissez un enseignant</option>
@@ -64,7 +64,7 @@
             <div class="form-group">
                 <label class="control-label" for="enseignant2">Enseignant 2</label>
                 <div>
-                    <select class="form-control" id="enseignant2" name="enseignant2"
+                    <select class="form-select" id="enseignant2" name="enseignant2"
                             is="select-complete"
                     >
                         <option value="">Choisissez un enseignant</option>
@@ -80,7 +80,7 @@
             <div class="form-group">
                 <label class="control-label required" for="salle">Salle</label>
                 <div>
-                    <select class="form-control" id="salle" name="salle" required="required" is="select-complete">
+                    <select class="form-select" id="salle" name="salle" required="required" is="select-complete">
                         <option value="">Choisissez la salle</option>
                         {% for salle in salles %}
                                 <option value="{{ salle.id }}">{{ salle.salle.libelle }} </option>

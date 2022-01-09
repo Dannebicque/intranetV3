@@ -38,7 +38,7 @@
                 <select
                         multiple
                         is="select-complete"
-                        class="form-control"
+                        class="form-select"
                         id="messageToSemestre" name="messageToSemestre[]" data-size="10"
                         title="Choisir le(s) semestre(s)"
                 >
@@ -56,7 +56,7 @@
             <select
                     is="select-complete"
                     multiple
-                    class="form-control selectpicker"
+                    class="form-select selectpicker"
                     id="messageToGroupe" name="messageToGroupe[]" data-size="10"
                     title="Choisir le(s) groupe(s)"
             >
@@ -76,7 +76,7 @@
             <select
                     is="select-complete"
                     multiple
-                    class="form-control selectpicker"
+                    class="form-select selectpicker"
                     id="messageToLibreEtudiant" name="messageToLibreEtudiant[]"
                     title="Choisir le(s) étudiants(s)"
                     data-size="10"
@@ -115,7 +115,7 @@
         <br>
         <div class="form-group">
             <label for="messageCopy">Copie(s)</label>
-            <select class="form-control selectpicker" data-size="10"
+            <select class="form-select selectpicker" data-size="10"
                     is="select-complete"
                     title="{{ 'message.copy'|trans }}" id="messageCopy" name="messageCopy[]" multiple>
                 {% for personnel in user_data.personnels %}
@@ -127,7 +127,7 @@
             <label for="messageSubject">Sujet</label>
             <input class="form-control form-control-lg" type="text" maxlength="255"
                    placeholder="{{ 'message.subject'|trans }}" id="messageSubject" name="messageSubject"
-               {% if message != null %}value="{{ message.sujet }}"{% endif %}>
+                   {% if message != null %}value="{{ message.sujet }}"{% endif %}>
         </div>
         <div class="form-group">
             <label for="messageMessage">Message</label>

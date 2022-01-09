@@ -37,7 +37,7 @@
             <div class="row">
                 <div class="col-sm-4">
                     <label for="chgt_etudiant_departement_{{ loop.index }}">Département actuel</label>
-                    <select id="chgt_etudiant_departement_{{ loop.index }}" class="form-control chgt_etudiant_departement"
+                    <select id="chgt_etudiant_departement_{{ loop.index }}" class="form-select chgt_etudiant_departement"
                             name="departement"
                             data-etudiant="{{ etudiant.id }}">
                         <option value="null" selected>Aucune formation</option>
@@ -50,7 +50,7 @@
                 </div>
                 <div class="col-sm-4">
                     <label for="chgt_etudiant_departement_{{ loop.index }}">Semestre actuel</label>
-                    <select id="chgt_etudiant_departement_{{ loop.index }}" class="form-control chgt_etudiant_semestre"
+                    <select id="chgt_etudiant_departement_{{ loop.index }}" class="form-select chgt_etudiant_semestre"
                             name="semestre"
                             data-etudiant="{{ etudiant.id }}">
                         <option value="null" selected>Aucune semestre</option>
@@ -63,7 +63,7 @@
                 </div>
                 <div class="col-sm-4">
                     <label for="chgt_etudiant_fin_{{ loop.index }}">Année sortie DUT/LP/IUT</label>
-                    <select id="chgt_etudiant_fin_{{ loop.index }}" class="form-control chgt_etudiant_fin" name="fin"
+                    <select id="chgt_etudiant_fin_{{ loop.index }}" class="form-select chgt_etudiant_fin" name="fin"
                             data-etudiant="{{ etudiant.id }}">
                         {% set thisYear = "now"|date('Y') %}
                         <option value="0" selected>Formation en cours</option>

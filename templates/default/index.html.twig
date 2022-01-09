@@ -34,7 +34,7 @@
                 <header class="card-header">
                     <h4 class="card-title">{{ 'dernieres.actualites.departement.heading'|trans }}</h4>
                     {% if user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ASS') %}
-                        <div class="card-header-actions" style="">
+                        <div class="card-header-actions">
                             <a href="{{ path('administration_actualite_new') }}" class="btn btn-sm btn-primary"
                                title="{{ 'atitle.deposer_nouvelle_actualite'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom"><i
                                         class="{{ iconAdd }}"></i><span class="sr-only">{{ 'atitle.deposer_nouvelle_actualite'|trans }}</span></a>
@@ -49,7 +49,8 @@
                                     <span class="badge badge-ring bg-primary"></span>
                                 </div>
                                 <div class="timeline-content">
-                                    <time datetime="{{ actualite.updated|date('Y-m-d') }}">{{ actualite.updated|format_datetime('short', 'short') }}</time>
+                                    <time datetime="{{ actualite.updated|date('Y-m-d') }}" class="text-complementaire">{{ actualite
+                                        .updated|format_datetime('short', 'short') }}</time>
                                     <p><strong>{{ actualite.titre }}</strong> : {{ actualite.texte|striptags }}
                                     </p>
                                 </div>
@@ -83,7 +84,8 @@
                                     <span class="badge badge-ring {{ date.couleurBadge }}"></span>
                                 </div>
                                 <div class="timeline-content">
-                                    <time datetime="{{ date.dateDebut|date('Y-m-d') }}">{{ date.dateDebut|format_date('short') }} {{ date.heureDebut|format_time('short') }}</time>
+                                    <time datetime="{{ date.dateDebut|date('Y-m-d') }}" class="text-complementaire">{{ date
+                                        .dateDebut|format_date('short') }} {{ date.heureDebut|format_time('short') }}</time>
                                     <p>{{ date.libelle }} : {{ date.texte }}</p>
                                 </div>
                             </li>

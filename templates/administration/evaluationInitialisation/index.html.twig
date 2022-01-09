@@ -69,14 +69,14 @@
                                             <input type="text" class="form-control" name="coefficient_{{ matiere.typeIdMatiere }}_{{ i }}">
                                         </td>
                                         <td>
-                                            <select class="form-control" name="typeGroupe_{{ matiere.typeIdMatiere }}_{{ i }}">
+                                            <select class="form-select" name="typeGroupe_{{ matiere.typeIdMatiere }}_{{ i }}">
                                                 {% for tg in semestre.typeGroupes %}
                                                     <option value="{{ tg.id }}">{{ tg.libelle }}</option>
                                                 {% endfor %}
                                             </select>
                                         </td>
                                         <td>
-                                            <select class="form-control" multiple name="enseignant_{{ matiere.typeIdMatiere }}_{{ i }}[]">
+                                            <select class="form-select" multiple name="enseignant_{{ matiere.typeIdMatiere }}_{{ i }}[]">
                                                 {% for enseignant in user_data.personnels %}
                                                     <option value="{{ enseignant.id }}">{{ enseignant.display }}</option>
                                                 {% endfor %}

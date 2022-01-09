@@ -108,7 +108,7 @@
                 <form action="{{ path('administration_ppn_copie_integrale') }}" method="post">
                     <div class="form-group">
                         <label for="ppn_origine">PPN d'origine</label>
-                        <select class="form-control" name="ppn_origine" id="ppn_origine">
+                        <select class="form-select" name="ppn_origine" id="ppn_origine">
                             {% for ppn in ppns %}
                                 <option value="{{ ppn.id }}">{{ ppn.libelle }}</option>
                             {% endfor %}
@@ -116,7 +116,7 @@
                     </div>
                     <div class="form-group">
                         <label for="ppn_dest">PPN de destination</label>
-                        <select class="form-control" name="ppn_dest" id="ppn_dest">
+                        <select class="form-select" name="ppn_dest" id="ppn_dest">
                             {% for ppn in ppns %}
                                 <option value="{{ ppn.id }}">{{ ppn.libelle }}</option>
                             {% endfor %}

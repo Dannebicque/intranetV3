@@ -59,7 +59,7 @@
                                 <td>{{ matiere.codeMatiere }}</td>
                                 <td>{{ matiere.libelle }}</td>
                                 <td>
-                                    <select class="form-control changeUe" data-matiere="{{ matiere.id }}">
+                                    <select class="form-select changeUe" data-matiere="{{ matiere.id }}">
                                         {% for ue in semestre.ues %}
                                             <option value="{{ ue.id }}" {% if matiere.ue != null and ue.id == matiere.ue
                                             .id %}selected{% endif %}>{{ ue.display }}</option>
@@ -69,7 +69,7 @@
                                 {% if semestre.parcours|length > 0 %}
                                     <td>
 
-                                        <select class="form-control changeParcours" data-matiere="{{ matiere.id }}">
+                                        <select class="form-select changeParcours" data-matiere="{{ matiere.id }}">
                                             <option value="null" selected>Tous les parcours</option>
                                             {% for parcour in semestre.parcours %}
                                                 <option value="{{ parcour.id }}" {% if matiere.parcours != null

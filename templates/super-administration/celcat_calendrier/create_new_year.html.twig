@@ -24,7 +24,7 @@
                 <div id="annee_universitaire">
                     <div class="form-group">
                         <label class="required" for="annee_universitaire">Année universitaire</label>
-                        <select id="annee_universitaire" name="annee_universitaire" class="form-control">
+                        <select id="annee_universitaire" name="annee_universitaire" class="form-select">
                             <option value="">Choisir l'année concernée</option>
                             {% for annee in annees %}
                                 <option value="{{ annee.id }}">{{ annee.libelle }} ({{ annee.annee }})</option>
