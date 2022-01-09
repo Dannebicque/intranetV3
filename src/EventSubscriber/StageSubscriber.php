@@ -9,6 +9,7 @@
 
 namespace App\EventSubscriber;
 
+use App\Classes\Mail\MailerFromTwig;
 use App\Classes\Stage\MailerStage;
 use App\Entity\Notification;
 use App\Entity\StageMailTemplate;
@@ -17,6 +18,7 @@ use App\Repository\StageMailTemplateRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Error\LoaderError;
 use Twig\Error\SyntaxError;
@@ -24,6 +26,7 @@ use Twig\Error\SyntaxError;
 class StageSubscriber implements EventSubscriberInterface
 {
     protected MailerStage $myMailer;
+    protected MailerFromTwig $mailerFromTwig;
 
     private EntityManagerInterface $entityManager;
 
@@ -31,17 +34,22 @@ class StageSubscriber implements EventSubscriberInterface
 
     private StageMailTemplateRepository $stageMailTemplateRepository;
     private array $responsablesStagesMails = [];
+    private string $dir;
 
     /**
      * StageSubscriber constructor.
      */
     public function __construct(
+        KernelInterface $kernel,
         EntityManagerInterface $entityManager,
         RouterInterface $router,
         MailerStage $myMailer,
+        MailerFromTwig $mailerFromTwig,
         StageMailTemplateRepository $stageMailTemplateRepository
     ) {
+        $this->dir = $kernel->getProjectDir().'/public/upload/conventions/';
         $this->entityManager = $entityManager;
+        $this->mailerFromTwig = $mailerFromTwig;
         $this->stageMailTemplateRepository = $stageMailTemplateRepository;
         $this->router = $router;
         $this->myMailer = $myMailer;
@@ -58,6 +66,7 @@ class StageSubscriber implements EventSubscriberInterface
             StageEvent::CHGT_ETAT_STAGE_CONVENTION_IMPRIMEE => 'onChgtEtatStageImprime',
             StageEvent::CHGT_ETAT_STAGE_CONVENTION_ENVOYEE => 'onChgtEtatStageConventionEnvoyee',
             StageEvent::CHGT_ETAT_CONVENTION_RECUE => 'onChgtEtatStageConventionRecue',
+            StageEvent::CONVENTION_STAGE_ENVOYEE => 'onConventionStageEnvoyee',
         ];
     }
 
@@ -153,6 +162,17 @@ class StageSubscriber implements EventSubscriberInterface
         $this->sendMail($event, StageEvent::CHGT_ETAT_STAGE_VALIDE);
     }
 
+    public function onConventionStageEnvoyee(StageEvent $event)
+    {
+        $stageEtudiant = $event->getStageEtudiant();
+
+        $this->mailerFromTwig->initEmail();
+        $this->mailerFromTwig->setTemplate('mails/stages/stage_convention_envoyee.txt.twig', ['stageEtudiant' => $stageEtudiant]);
+        $this->mailerFromTwig->attachFile($this->dir.'Convention-'.$stageEtudiant->getEtudiant()->getNom().'.pdf');
+        $this->mailerFromTwig->sendMessage( $stageEtudiant->getEtudiant()->getMails(), 'Convention de stage pour signature', ['replyTo' => $this->responsablesStagesMails]);
+
+    }
+
     /**
      * @throws LoaderError
      * @throws NonUniqueResultException
@@ -219,7 +239,7 @@ class StageSubscriber implements EventSubscriberInterface
                 ['replyTo' => $this->responsablesStagesMails]);
         } else {
             //mail par défaut
-            $this->myMailer->setTemplate('mails/stages/stage_' . $codeEvent . '.txt.twig',
+            $this->myMailer->setTemplate('mails/stages/stage_'.$codeEvent.'.txt.twig',
                 ['stageEtudiant' => $stageEtudiant],
                 $stageEtudiant->getEtudiant()->getMails(),
                 $codeEvent,
@@ -229,7 +249,7 @@ class StageSubscriber implements EventSubscriberInterface
 
         //selon un modèle spécifique
         $mailTemplate = $this->stageMailTemplateRepository->findEventPeriode(
-            $codeEvent . '_COPIE',
+            $codeEvent.'_COPIE',
             $stageEtudiant->getStagePeriode()
         );
 
@@ -258,17 +278,17 @@ class StageSubscriber implements EventSubscriberInterface
             }
         } else {
             //sinon mail par défaut
-            $this->myMailer->setTemplate('mails/stages/stage_assistant_' . $codeEvent . '.txt.twig',
+            $this->myMailer->setTemplate('mails/stages/stage_assistant_'.$codeEvent.'.txt.twig',
                 ['stageEtudiant' => $stageEtudiant],
                 $destinataires,
-                'copie ' . $codeEvent,
+                'copie '.$codeEvent,
                 ['replyTo' => $this->responsablesStagesMails]);
 
             if (null !== $stageEtudiant->getStagePeriode() && $stageEtudiant->getStagePeriode()->getCopieAssistant() && null !== $stageEtudiant->getStagePeriode()->getMailAssistant()) {
-                $this->myMailer->setTemplate('mails/stages/stage_assistant_' . $codeEvent . '.txt.twig',
+                $this->myMailer->setTemplate('mails/stages/stage_assistant_'.$codeEvent.'.txt.twig',
                     ['stageEtudiant' => $stageEtudiant],
                     $stageEtudiant->getStagePeriode()->getMailAssistant(),
-                    'copie ' . $codeEvent,
+                    'copie '.$codeEvent,
                     ['replyTo' => $this->responsablesStagesMails]);
             }
         }

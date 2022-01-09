@@ -230,7 +230,7 @@ class StageEtudiant extends BaseEntity
         return $this;
     }
 
-    public function getEtudiant(): ?Etudiant
+    public function getEtudiant(): Etudiant
     {
         return $this->etudiant;
     }

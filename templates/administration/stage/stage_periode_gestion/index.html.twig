@@ -243,6 +243,14 @@
                                            class="btn
                                                     btn-success" data-bs-toggle="tooltip" data-bs-placement="bottom" data-placement="top"
                                            title="Convention imprimée"><i class="fa fa-check"></i></a>
+
+                                        <a href="#"
+                                           data-etudiant="{{ stageEtudiant.id }}"
+                                           class="btn btn-purple envoyerConvention" data-bs-toggle="tooltip"
+                                           data-bs-placement="bottom"
+                                           data-placement="top"
+                                           title="Envoyer à l'étudiant pour signature">
+                                            <i class="fa fa-signature"></i></a>
                                     </td>
                                 </tr>
                             {% else %}
@@ -405,7 +413,7 @@
                                     <td>
                                         <label for="tuteur_{{ stageEtudiant.etudiant.id }}" class="sr-only"></label>
                                         <select name="tuteur_{{ stageEtudiant.etudiant.id }}" id="tuteur_{{ stageEtudiant.etudiant.id }}" data-stage="{{ stageEtudiant.stage.id }}"
-                                                class="changetuteur form-control">
+                                                class="changetuteur form-select">
                                             <option>{{ 'table.tuteur_universitaire'|trans }}</option>
                                             {% for personnel in user_data.personnels %}
                                                 <option value="{{ personnel.id }}" {% if stageEtudiant.stage
@@ -493,7 +501,7 @@
                                     <td>
                                         <label for="tuteur_{{ stageEtudiant.etudiant.id }}" class="sr-only"></label>
                                         <select name="tuteur_{{ stageEtudiant.etudiant.id }}" id="tuteur_{{ stageEtudiant.etudiant.id }}" data-stage="{{ stageEtudiant.stage.id }}"
-                                                class="changetuteur form-control">
+                                                class="changetuteur form-select">
                                             <option>{{ 'table.tuteur_universitaire'|trans }}</option>
                                             {% for personnel in user_data.personnels %}
                                                 <option value="{{ personnel.id }}" {% if stageEtudiant.stage

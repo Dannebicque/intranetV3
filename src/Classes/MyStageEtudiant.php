@@ -145,7 +145,6 @@ class MyStageEtudiant
     }
 
     /**
-     *
      * @throws Exception
      */
     public function update(StageEtudiant $stageEtudiant, string $name, $value, string $type = 'text'): bool
@@ -162,14 +161,13 @@ class MyStageEtudiant
             $value = Tools::convertToFloat($value);
         }
 
-        $method = 'set' . $name;
+        $method = 'set'.$name;
         if (method_exists($stageEtudiant, $method)) {
             $stageEtudiant->$method($value);
             $this->entityManager->flush();
 
             return true;
         }
-
 
         return false;
     }

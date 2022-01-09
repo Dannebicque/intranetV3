@@ -37,7 +37,6 @@ class MyStageMailTemplate
     }
 
     /**
-     *
      * @throws NonUniqueResultException
      */
     public function updateTemplate($code, $sujet, $message, StagePeriode $stagePeriode): void
@@ -52,7 +51,7 @@ class MyStageMailTemplate
             if (null !== $template) {
                 $template->setSource($this->transformeFromEditeur($message));
             } else {
-                $template = new TwigTemplate($code . '_' . $stagePeriode->getUuidString(),
+                $template = new TwigTemplate($code.'_'.$stagePeriode->getUuidString(),
                     $this->transformeFromEditeur($message));
                 $this->entityManager->persist($template);
                 $modele->setTwigTemplate($template);
@@ -62,7 +61,7 @@ class MyStageMailTemplate
             $modele->setEvent($code);
             $modele->setStagePeriode($stagePeriode);
             $modele->setSubject($sujet);
-            $template = new TwigTemplate($code . '_' . $stagePeriode->getUuidString(),
+            $template = new TwigTemplate($code.'_'.$stagePeriode->getUuidString(),
                 $this->transformeFromEditeur($message));
             $this->entityManager->persist($template);
             $modele->setTwigTemplate($template);

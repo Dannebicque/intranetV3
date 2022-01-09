@@ -22,6 +22,7 @@ class StageEvent extends Event
     public const CHGT_ETAT_CONVENTION_RECUE = 'chgt.etat_stage_convention_recue';
     public const CHGT_ETAT_STAGE_INCOMPLET = 'chgt.etat_stage_incomplet';
     public const CHGT_ETAT_STAGE_REFUS = 'chgt.etat_stage_refuse';
+    public const CONVENTION_STAGE_ENVOYEE = 'envoyer.convention';
 
     public const EQ_ETATS = [
         self::CHGT_ETAT_STAGE_AUTORISE => StageEtudiant::ETAT_STAGE_AUTORISE,

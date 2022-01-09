@@ -43,7 +43,7 @@ class MailerStage
         ?array $destinataires,
         string $sujet,
         array $options = []
-    ) {
+    ): void {
         $this->mailerFromTwig->initEmail();
         $this->mailerFromTwig->setTemplate($template, $donnees);
         $this->mailerFromTwig->sendMessage($destinataires, $sujet, $options);
@@ -60,7 +60,7 @@ class MailerStage
         ?array $destinataires,
         string $sujet,
         array $options = []
-    ) {
+    ): void {
         $this->mailerFromDatabase->initEmail();
         $this->mailerFromDatabase->setTemplate($template, $donnees);
         $this->mailerFromDatabase->sendMessage($destinataires, $sujet, $options);

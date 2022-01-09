@@ -6,6 +6,19 @@
 import {addCallout} from '../util'
 import '../../vendor/jquery.collection.min'
 
+
+$(document).on('click', '.envoyerConvention', function (e) {
+  e.preventDefault()
+  $.ajax({
+    url: Routing.generate('administration_stage_etudiant_envoyer_convention_pdf', {
+      id: $(this).data('etudiant'),
+    }),
+    success: function () {
+      addCallout('Convention envoyée pour signature', 'success')
+    }
+  })
+})
+
 $(document).on('change', '.changetuteur', function () {
   $.ajax({
     url: Routing.generate('administration_stage_etudiant_change_tuteur', {
