@@ -18,46 +18,34 @@ use App\Entity\StageEtudiant;
 use App\Entity\StagePeriode;
 use App\Repository\EtudiantRepository;
 use App\Repository\StageEtudiantRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use function array_key_exists;
 use function count;
+use Doctrine\ORM\EntityManagerInterface;
 
 class MyStage
 {
-    /** @var EntityManagerInterface */
-    protected $entityManger;
+    protected array $dataEtudiants = [];
 
-    /** @var StageEtudiantRepository */
-    protected $stageEtudiantRepository;
-
-    /** @var EtudiantRepository */
-    protected $etudiantRepository;
-
-    protected $dataEtudiants = [];
-
-    protected $propositionsAValider = [];
-    protected $conventionAEnvoyer = [];
-    protected $conventionEnAttente = [];
-    protected $conventionComplete = [];
-    private $conventionAImprimer = [];
+    protected array $propositionsAValider = [];
+    protected array $conventionAEnvoyer = [];
+    protected array $conventionEnAttente = [];
+    protected array $conventionComplete = [];
+    private array $conventionAImprimer = [];
 
     /**
      * MyStage constructor.
      */
     public function __construct(
-        EntityManagerInterface $entityManger,
-        StageEtudiantRepository $stageEtudiantRepository,
-        EtudiantRepository $etudiantRepository
+        protected EntityManagerInterface $entityManger,
+        protected StageEtudiantRepository $stageEtudiantRepository,
+        protected EtudiantRepository $etudiantRepository
     ) {
-        $this->entityManger = $entityManger;
-        $this->stageEtudiantRepository = $stageEtudiantRepository;
-        $this->etudiantRepository = $etudiantRepository;
     }
 
     public function getDataPeriode(StagePeriode $stagePeriode, ?int $anneeUniversitaire = 0): self
     {
         if (0 === $anneeUniversitaire) {
-            $anneeUniversitaire = null !== $stagePeriode->getAnneeUniversitaire() ? $stagePeriode->getAnneeUniversitaire()->getAnnee() : (int)date('Y');
+            $anneeUniversitaire = null !== $stagePeriode->getAnneeUniversitaire() ? $stagePeriode->getAnneeUniversitaire()->getAnnee() : (int) date('Y');
         }
 
         $etudiants = $this->etudiantRepository->findBySemestre($stagePeriode->getSemestre());
