@@ -1603,7 +1603,7 @@ quizz:
   question.index.heading: 'Question disponible pour un Quizz'
   new.heading: quizz.question.new.heading
 
-rang: rang
+rang: Rang
 rapport.pour.le: 'Rapport pour le'
 rattrapage_all.delete.success.flash: 'Toutes les demandes de rattrapages ont été supprimées pour l''année concernée'
 
@@ -2295,7 +2295,7 @@ volume.matiere: 'Colume matière'
 vos.informations.identification: 'Vos informations d''identification'
 vos.modules.du.semestre: 'Vos Modules au semestre %semestre%'
 votre.message: 'Votre message'
-vous: vous
+vous: Vous
 vous.netes.pas: 'Vous n''êtes pas'
 Year: Année
 yesno: yesno

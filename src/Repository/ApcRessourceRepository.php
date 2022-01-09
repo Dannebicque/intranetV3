@@ -31,7 +31,7 @@ class ApcRessourceRepository extends ServiceEntityRepository
         parent::__construct($registry, ApcRessource::class);
     }
 
-    public function findByDiplome(Diplome $diplome)
+    public function findByDiplome(Diplome $diplome): array
     {
         return $this->createQueryBuilder('r')
             ->innerJoin(Semestre::class, 's', 'WITH', 's.id = r.semestre')
@@ -45,10 +45,12 @@ class ApcRessourceRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findBySemestre(Semestre $semestre)
+    public function findBySemestre(Semestre $semestre): array
     {
         return $this->createQueryBuilder('r')
             ->where('r.semestre = :semestre')
+            ->leftJoin('r.apcRessourceCompetences', 'apcRessourceCompetences')
+            ->addSelect('apcRessourceCompetences')
             //->andWhere('s.ppn_actif = m.ppn')
             ->setParameter('semestre', $semestre->getId())
             ->orderBy('r.codeMatiere', 'ASC')
@@ -57,7 +59,7 @@ class ApcRessourceRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function search(?string $search, Diplome $diplome)
+    public function search(?string $search, Diplome $diplome): array
     {
         return $this->createQueryBuilder('a')
             ->innerJoin(Semestre::class, 's', 'WITH', 'a.semestre=s.id')
@@ -67,13 +69,13 @@ class ApcRessourceRepository extends ServiceEntityRepository
             ->orWhere('a.motsCles LIKE :search')
             ->orWhere('a.libelle LIKE :search')
             ->andWhere('an.diplome = :diplome')
-            ->setParameter('search', '%' . $search . '%')
+            ->setParameter('search', '%'.$search.'%')
             ->setParameter('diplome', $diplome->getId())
             ->getQuery()
             ->getResult();
     }
 
-    public function findByDepartement(Departement $departement)
+    public function findByDepartement(Departement $departement): array
     {
         return $this->createQueryBuilder('r')
             ->innerJoin(Semestre::class, 's', 'WITH', 's.id = r.semestre')
@@ -90,7 +92,7 @@ class ApcRessourceRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findByDiplomeToSemestreArray(Diplome $diplome)
+    public function findByDiplomeToSemestreArray(Diplome $diplome): array
     {
         $tab = [];
         foreach ($diplome->getSemestres() as $semestre) {

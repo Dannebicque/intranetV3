@@ -1,34 +1,41 @@
 <dl class="row">
-    <dt class="col-md-5 col-sm-12">{{ 'matiere'|trans }}:</dt>
+    <dt class="col-md-5 col-sm-12">{{ 'matiere'|trans }} :</dt>
     <dd class="col-md-7 col-sm-12"> {{ matiere.display }}</dd>
     {% if matiere.ue_id != 0 %}
-        <dt class="col-md-5 col-sm-12">{{ 'ue'|trans }}:</dt>
+        <dt class="col-md-5 col-sm-12">{{ 'ue'|trans }} :</dt>
         <dd class="col-md-7 col-sm-12">{{ matiere.ue_display }}</dd>
+        {% else %}
+            <dt class="col-md-5 col-sm-12">{{ 'ue'|trans }} :</dt>
+            <dd class="col-md-7 col-sm-12">
+                {% for ue in matiere.tab_ues %}
+                <span class="badge badge-{{ ue.ue_couleur }}">{{ ue.ue_display }}</span>
+                {% endfor %}
+            </dd>
     {% endif %}
-    <dt class="col-md-5 col-sm-12">{{ 'coefficient.de.matiere'|trans }}:</dt>
+    <dt class="col-md-5 col-sm-12">{{ 'coefficient.de.matiere'|trans }} :</dt>
     <dd class="col-md-7 col-sm-12">{{ matiere.coefficient }}</dd>
-    <dt class="col-md-5 col-sm-12">{{ 'nb.note.matiere'|trans }}:</dt>
+    <dt class="col-md-5 col-sm-12">{{ 'nb.note.matiere'|trans }} :</dt>
     <dd class="col-md-7 col-sm-12">{{ matiere.nbNotes }}</dd>
-    <dt class="col-md-5 col-sm-12">{{ 'nb.saisie.par'|trans }}:</dt>
+    <dt class="col-md-5 col-sm-12">{{ 'nb.saisie.par'|trans }} :</dt>
     <dd class="col-md-7 col-sm-12">{{ note.evaluation.personnelAuteur != null ? note.evaluation.personnelAuteur
         .displayPr : 'non.defini'|trans }}</dd>
-    <dt class="col-md-5 col-sm-12">{{ 'commentaire.evaluation'|trans }}:</dt>
+    <dt class="col-md-5 col-sm-12">{{ 'commentaire.evaluation'|trans }} :</dt>
     <dd class="col-md-7 col-sm-12">{{ note.evaluation.commentaire }}</dd>
 </dl>
 <h4>{{ 'situation.par.rapport.promo'|trans }}</h4>
 <dl class="row">
-    <dt class="col-md-5 col-sm-12">{{ 'vous'|trans }}:</dt>
-    <dd class="col-md-7 col-sm-12">{{ note.note|number_format(2) }}</dd>
-    <dt class="col-md-5 col-sm-12">{{ 'coefficient.dans.la.matiere'|trans }}:</dt>
+    <dt class="col-md-5 col-sm-12">{{ 'vous'|trans }} :</dt>
+    <dd class="col-md-7 col-sm-12">{{ note.note|styleMatiere }}</dd>
+    <dt class="col-md-5 col-sm-12">{{ 'coefficient.dans.la.matiere'|trans }} :</dt>
     <dd class="col-md-7 col-sm-12">{{ note.evaluation.coefficient }}</dd>
-    <dt class="col-md-5 col-sm-12">{{ 'rang'|trans }}:</dt>
+    <dt class="col-md-5 col-sm-12">{{ 'rang'|trans }} :</dt>
     <dd class="col-md-7 col-sm-12">{{ classement }} / {{ statistiques.promo.rang|length }}</dd>
-    <dt class="col-md-5 col-sm-12">{{ 'commentaire'|trans }}:</dt>
+    <dt class="col-md-5 col-sm-12">{{ 'commentaire'|trans }} :</dt>
     <dd class="col-md-7 col-sm-12">{{ note.commentaire }}</dd>
-    <dt class="col-md-5 col-sm-12">{{ 'note.minimale'|trans }}:</dt>
+    <dt class="col-md-5 col-sm-12">{{ 'note.minimale'|trans }} :</dt>
     <dd class="col-md-7 col-sm-12">{{ statistiques.promo.min|number_format(2) }}</dd>
-    <dt class="col-md-5 col-sm-12">{{ 'note.maximale'|trans }}:</dt>
+    <dt class="col-md-5 col-sm-12">{{ 'note.maximale'|trans }} :</dt>
     <dd class="col-md-7 col-sm-12">{{ statistiques.promo.max|number_format(2) }}</dd>
-    <dt class="col-md-5 col-sm-12">{{ 'moyenne.promo'|trans }}:</dt>
-    <dd class="col-md-7 col-sm-12">{{ statistiques.promo.moyenne|number_format(2) }}</dd>
+    <dt class="col-md-5 col-sm-12">{{ 'moyenne.promo'|trans }} :</dt>
+    <dd class="col-md-7 col-sm-12">{{ statistiques.promo.moyenne|styleMatiere }}</dd>
 </dl>

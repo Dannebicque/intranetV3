@@ -20,15 +20,27 @@
                         <td>{{ matieres[note.evaluation.typeIdMatiere] is defined ? matieres[note.evaluation
                             .typeIdMatiere].codeMatiere : '-' }}</td>
                         <td>{{ note.evaluation.libelle is defined ? note.evaluation.libelle : note.evaluation.id }}</td>
-                        <td class="hide">{{ note.evaluation.dateEvaluation ? note.evaluation.dateEvaluation|format_date('long') : '' }}</td>
+                        <td class="hide">
+                            {{ note.evaluation.dateEvaluation ? note.evaluation.dateEvaluation|format_date('long') : '' }}
+                        </td>
                         <td class="hide">{{ note.evaluation.commentaire }}</td>
-                        <td>{{ note.note|format_note(2, 10) }}</td>
+                        <td>
+                            {% if note.note > -0.01 %}
+                                {{ note.note|styleMatiere }}
+                            {% elseif note.absenceJustifie == true %}
+                                <span class="badge bg-info">Abs. Justifiée</span>
+                            {% elseif note.note == -0.01 %}
+                                <span class="badge bg-warning">Pas de note ou pas de saisie ?</span>
+                            {% else %}
+                                <span class="badge bg-danger">Erreur</span>
+                            {% endif %}
+                        </td>
                         <td class="hide">{{ note.evaluation.coefficient|number_format(2) }}</td>
                         <td>
                             <button
                                     {{ stimulus_controller('modal', {
                                         modalTitle: 'detail.note'|trans,
-                                        modalUrl:  path('app_etudiant_note_detail', {'id': note.id}) })}}
+                                        modalUrl:  path('app_etudiant_note_detail', {'id': note.id}) }) }}
                                     data-action="click->modal#openModal"
                                     data-bs-toggle="tooltip" data-bs-placement="bottom"
                                     class="btn btn-info btn-outline btn-square btn-xs"
@@ -67,7 +79,7 @@
                                 <button
                                         {{ stimulus_controller('modal', {
                                             modalTitle: 'detail.note'|trans,
-                                            modalUrl:  path('app_etudiant_note_detail', {'id': nnote.id}) })}}
+                                            modalUrl:  path('app_etudiant_note_detail', {'id': nnote.id}) }) }}
                                         data-action="click->modal#openModal"
                                         data-bs-toggle="tooltip" data-bs-placement="bottom"
                                         class="btn btn-info btn-outline btn-square btn-xs"

@@ -8,7 +8,9 @@
                     <th>{{ 'table.matiere'|trans }}</th>
                     <th class="hide">{{ 'table.ue'|trans }}</th>
                     <th>{{ 'table.nombre.notes'|trans }}</th>
-                    <th>{{ 'table.coefficient'|trans }}</th>
+                    {% if apc == false %}
+                        <th>{{ 'table.coefficient'|trans }}</th>
+                    {% endif %}
                 </tr>
                 </thead>
                 <tbody>
@@ -25,7 +27,9 @@
                             <td class="hide">{{ matiere.ue_id != 0 ? matiere.ue_display : 'non.defini'|trans }}</td>
                         {% endif %}
                         <td>{{ matiere.nbNotes }}</td>
-                        <td>{{ matiere.coefficient }}</td>
+                        {% if apc == false %}
+                            <td>{{ matiere.coefficient }}</td>
+                        {% endif %}
                     </tr>
                 {% endfor %}
                 </tbody>

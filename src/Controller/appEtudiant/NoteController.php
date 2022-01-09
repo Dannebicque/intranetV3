@@ -20,30 +20,25 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class NotesController.
- *
- * @Route("/application/etudiant/note")
  */
+#[Route(path: '/application/etudiant/note')]
 class NoteController extends BaseController
 {
     /**
-     * @Route("/details/{id}", name="app_etudiant_note_detail")
+     * @throws \App\Exception\MatiereNotFoundException
+     * @throws \App\Exception\EvaluationNotFoundException
      */
-    public function details(
-        TypeMatiereManager $typeMatiereManager,
-        MyEvaluation $myEvaluation,
-        Note $note
-    ): Response {
-
+    #[Route(path: '/details/{id}', name: 'app_etudiant_note_detail')]
+    public function details(TypeMatiereManager $typeMatiereManager, MyEvaluation $myEvaluation, Note $note): Response
+    {
         if (null === $note->getEvaluation()) {
             throw new EvaluationNotFoundException();
         }
-
         $matiere = $typeMatiereManager->getMatiere($note->getEvaluation()->getIdMatiere(),
             $note->getEvaluation()->getTypeMatiere());
         if (null === $matiere) {
             throw new MatiereNotFoundException();
         }
-
         $myEvaluation->setEvaluation($note->getEvaluation())->calculStatistiquesGlobales();
 
         return $this->render('appEtudiant/note/detail.html.twig', [
@@ -52,6 +47,5 @@ class NoteController extends BaseController
             'note' => $note,
             'matiere' => $matiere,
         ]);
-
     }
 }

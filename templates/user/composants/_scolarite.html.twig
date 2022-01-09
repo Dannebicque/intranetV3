@@ -29,13 +29,13 @@
                             {% if parcour.decision != 'EC' %}
                                 {% for ue in parcour.semestre.ues %}
                                     <strong>UE {{ ue.numeroUe }}:</strong>
-                                    {{ parcour.moyennesUes[ue.id].moyenne|format_note(3,8) }}<br>
+                                    {{ parcour.moyennesUes[ue.id].moyenne|styleMoyenne }}<br>
                                 {% endfor %}
                             {% else %}
                                 EC
                             {% endif %}</td>
-                        <td>{{ parcour.moyenne|format_note(3, 10) }}</td>
-                        <td>{{ parcour.decision }}</td>
+                        <td>{{ parcour.moyenne|styleMoyenne }}</td>
+                        <td>{{ parcour.decision|styleDecision }}</td>
                         <td>{{ parcour.proposition }}</td>
                         <td><a href="{{ path('app_etudiant_scolarite_detail', {'id': parcour.id}) }}"
                                class="btn btn-info btn-outline btn-xs" data-bs-toggle="tooltip" data-bs-placement="bottom"

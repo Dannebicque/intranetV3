@@ -27,7 +27,7 @@ class Note extends BaseEntity
     use LifeCycleTrait;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Evaluation", inversedBy="notes")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Evaluation", inversedBy="notes", fetch="EAGER")
      */
     private ?Evaluation $evaluation;
 

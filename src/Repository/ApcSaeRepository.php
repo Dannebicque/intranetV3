@@ -49,6 +49,8 @@ class ApcSaeRepository extends ServiceEntityRepository
     public function findBySemestre(Semestre $semestre)
     {
         return $this->createQueryBuilder('r')
+            ->leftJoin('r.apcSaeCompetences', 'apcSaeCompetences')
+            ->addSelect('apcSaeCompetences')
             ->where('r.semestre = :semestre')
             //->andWhere('s.ppn_actif = m.ppn')
             ->setParameter('semestre', $semestre->getId())
@@ -69,7 +71,7 @@ class ApcSaeRepository extends ServiceEntityRepository
             ->orWhere('a.libelle LIKE :search')
             ->andWhere('an.diplome = :diplome')
             ->setParameter('diplome', $diplome->getId())
-            ->setParameter('search', '%' . $search . '%')
+            ->setParameter('search', '%'.$search.'%')
             ->getQuery()
             ->getResult();
     }
@@ -91,7 +93,7 @@ class ApcSaeRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findByDiplomeToSemestreArray(?Diplome $diplome)
+    public function findByDiplomeToSemestreArray(?Diplome $diplome): array
     {
         $tab = [];
         foreach ($diplome->getSemestres() as $semestre) {
