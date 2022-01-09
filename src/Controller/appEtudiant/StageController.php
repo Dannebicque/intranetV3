@@ -26,20 +26,17 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class StageController.
- *
- * @Route("/application/etudiant/stage")
  */
+#[isGranted('ROLE_ETUDIANT')]
+#[Route(path: '/application/etudiant/stage')]
 class StageController extends BaseController
 {
-    /**
-     * @Route("/", name="application_etudiant_stage_index")
-     */
+    #[Route(path: '/', name: 'application_etudiant_stage_index')]
     public function index(StagePeriodeRepository $stagePeriodeRepository): Response
     {
         $stagePeriodes = $stagePeriodeRepository->findStageEtudiant($this->getUser()->getSemestre(),
             $this->getAnneeUniversitaire());
         $stageEtudiants = [];
-
         foreach ($this->getUser()->getStageEtudiants() as $stage) {
             if (null !== $stage->getStagePeriode()) {
                 $stageEtudiants[$stage->getStagePeriode()->getId()] = $stage;
@@ -47,14 +44,12 @@ class StageController extends BaseController
         }
 
         return $this->render('appEtudiant/stage/index.html.twig', [
-            'stagePeriodes'  => $stagePeriodes,
+            'stagePeriodes' => $stagePeriodes,
             'stageEtudiants' => $stageEtudiants,
         ]);
     }
 
-    /**
-     * @Route("/details/{id}", name="application_etudiant_stage_detail", methods={"GET"}, requirements={"id"="\d+"})
-     */
+    #[Route(path: '/details/{id}', name: 'application_etudiant_stage_detail', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function detailsStage(StageEtudiant $stageEtudiant): Response
     {
         return $this->render('appEtudiant/stage/details.html.twig', [
@@ -63,16 +58,13 @@ class StageController extends BaseController
     }
 
     /**
-     * @Route("/formulaire/{stageEtudiant}", name="application_etudiant_stage_formulaire", methods="GET|POST")
      * @ParamConverter("stageEtudiant", options={"mapping": {"stageEtudiant": "uuid"}})
      *
      * @throws Exception
      */
-    public function create(
-        EventDispatcherInterface $eventDispatcher,
-        Request $request,
-        StageEtudiant $stageEtudiant
-    ): Response {
+    #[Route(path: '/formulaire/{stageEtudiant}', name: 'application_etudiant_stage_formulaire', methods: 'GET|POST')]
+    public function create(EventDispatcherInterface $eventDispatcher, Request $request, StageEtudiant $stageEtudiant): Response
+    {
         if (null !== $stageEtudiant->getStagePeriode()) {
             $form = $this->createForm(StageEtudiantEtudiantType::class, $stageEtudiant, [
                 'flexible' => $stageEtudiant->getStagePeriode()->getDatesFlexibles(),
@@ -97,27 +89,23 @@ class StageController extends BaseController
 
             return $this->render('appEtudiant/stage/formulaire.html.twig', [
                 'stageEtudiant' => $stageEtudiant,
-                'form'          => $form->createView(),
+                'form' => $form->createView(),
             ]);
         }
 
         return $this->render('bundles/TwigBundle/Exception/error500.html.twig');
     }
 
-    /**
-     * @Route("/periode/info/{id}", name="application_etudiant_stage_periode_info")
-     */
+    #[Route(path: '/periode/info/{id}', name: 'application_etudiant_stage_periode_info')]
     public function periodeInfo(StageEtudiant $stageEtudiant): Response
     {
         return $this->render('appEtudiant/stage/periodeInfo.html.twig', [
             'stageEtudiant' => $stageEtudiant,
-            'stagePeriode'  => $stageEtudiant->getStagePeriode(),
+            'stagePeriode' => $stageEtudiant->getStagePeriode(),
         ]);
     }
 
-    /**
-     * @Route("/entreprise/stage/info/{id}", name="application_etudiant_stage_entreprise_info")
-     */
+    #[Route(path: '/entreprise/stage/info/{id}', name: 'application_etudiant_stage_entreprise_info')]
     public function entrepriseInfo(StageEtudiant $stageEtudiant): Response
     {
         return $this->render('appEtudiant/stage/entrepriseInfo.html.twig', [
@@ -125,9 +113,7 @@ class StageController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/entreprise/alternance/info/{id}", name="application_etudiant_alternance_entreprise_info")
-     */
+    #[Route(path: '/entreprise/alternance/info/{id}', name: 'application_etudiant_alternance_entreprise_info')]
     public function entrepriseAlternanceInfo(Alternance $alternance): Response
     {
         return $this->render('appEtudiant/stage/entrepriseAlternanceInfo.html.twig', [
