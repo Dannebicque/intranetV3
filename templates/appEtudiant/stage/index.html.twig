@@ -82,16 +82,19 @@
                                         target="_blank">la fiche de stage</a> à faire compléter et signer par
                                                              l'entreprise.
                                 <strong>Ce document n'est pas la convention de stage !</strong></div>
-
-                            <a href="{{ path('stage_offre_stage_index') }}" class="btn btn-block btn-large
+<div class="d-grid">
+                            <a href="{{ path('stage_offre_stage_index') }}" class="btn d-block btn-large
                             btn-info">Consultez les offres de stage</a>
+</div>
                         {% endif %}
                         {% if ((stageEtudiants[stagePeriode.id] is  defined) and (stageEtudiants[stagePeriode.id].etatStage is constant('ETAT_STAGE_AUTORISE', stageEtudiants[stagePeriode.id]) )) %}
                             <div class="alert alert-warning"><p>Votre proposition a été acceptée le
                                     <strong>{{ stageEtudiants[stagePeriode.id].dateAutorise|format_date('long') }}</strong>.
                                                                 Vous devez maintenant remplir le formulaire.</p></div>
+                            <div class="d-grid">
                             <a href="{{ path('application_etudiant_stage_formulaire', {stageEtudiant:stageEtudiants[stagePeriode.id].uuidString}) }}"
-                               class="btn btn-block btn-large btn-info">Compléter la proposition de stage</a>
+                               class="btn d-block btn-large btn-info">Compléter la proposition de stage</a>
+                            </div>
                         {% elseif ((stageEtudiants[stagePeriode.id] is  defined) and (stageEtudiants[stagePeriode.id].etatStage is constant('ETAT_STAGE_DEPOSE', stageEtudiants[stagePeriode.id]) )) %}
                             <div class="alert alert-success">Vous avez complété le formulaire. Il est en cours de
                                                              validation

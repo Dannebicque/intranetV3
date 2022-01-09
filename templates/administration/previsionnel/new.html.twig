@@ -25,7 +25,7 @@
                 <div class="row">
                     <div class="col-md-6 col-sm-12">
                         <div class="form-group">
-                            <label class="form-control-label required" for="previsionnel_matiere">{{ 'choisir.matiere'|trans }}</label>
+                            <label class="form-label required" for="previsionnel_matiere">{{ 'choisir.matiere'|trans }}</label>
                             <select class="form-select selectpicker" id="previsionnel_matiere" name="previsionnel_matiere">
                                 <option value="">{{ 'choisir.matiere'|trans }}</option>
                                 {% for key, matiere in matieres %}
@@ -37,7 +37,7 @@
                         </div>
                     </div>
                     <div class="col-md-6 col-sm-12">
-                        <label class="form-control-label required"
+                        <label class="form-label required"
                                for="previsionnel_annee_previsionnel">{{ 'label.annee_previsionnel'|trans }}</label>
                         <select class="form-select selectpicker" id="previsionnel_annee_previsionnel"
                                 name="previsionnel_annee_previsionnel">
@@ -127,9 +127,11 @@
                             &nbsp;
                         </td>
                         <td colspan="4">
-                            <button class="btn btn-block btn-primary" id="addIntervenantPrevisionnel"><i
+                            <div class="d-grid">
+                            <button class="btn d-block btn-primary" id="addIntervenantPrevisionnel"><i
                                         class="fas fa-plus"></i>{{ 'ajouter.intervenant'|trans }}
                             </button>
+                            </div>
                         </td>
                     </tr>
                     </tbody>
@@ -175,7 +177,7 @@
                 </table>
 
                 <div class="form-group">
-                    <label class="form-control-label"
+                    <label class="form-label"
                            for="previsionnel_commentaire">{{ 'label.previsionnel_commentaire'|trans }}</label>
                     <textarea name="previsionnel_commentaire"
                               id="previsionnel_commentaire"

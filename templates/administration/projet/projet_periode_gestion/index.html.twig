@@ -91,7 +91,10 @@
                                 {% if projetEtudiant.projet.etatProjet == constant
                                     ('App\\Entity\\ProjetEtudiant::ETAT_PROJET_AUTORISE') %}
                                     <td colspan="3">
-                                        <button class="btn btn-block btn-primary">{{ 'saisie.autorise.formulaire.non.completee'|trans }}</button>
+                                        <div class="d-grid">
+                                            <button class="btn d-block btn-primary">
+                                                {{ 'saisie.autorise.formulaire.non.completee'|trans }}</button>
+                                        </div>
                                     </td>
                                     <td>
                                         ...
@@ -122,7 +125,7 @@
                                         {% else %}
                                             <a href="{{ path('administration_projet_etudiant_change_etat',
                                                 {projetPeriode: projetPeriode.uuidString, etudiant:projetEtudiant
-                                                    .etudiant.id, etat: constant
+                                                .etudiant.id, etat: constant
                                                     ('App\\Entity\\ProjetEtudiant::ETAT_PROJET_VALIDE')}) }}" class="btn
                                                     btn-success" data-bs-toggle="tooltip" data-bs-placement="bottom" data-placement="top"
                                                title="Valider le projet"><i class="fa fa-check"></i></a>
@@ -130,18 +133,18 @@
                                         {% endif %}
                                         <a href="{{ path
                                             ('administration_projet_etudiant_convention_pdf', {id:projetEtudiant
-                                                .projet.id}) }}"
+                                            .projet.id}) }}"
                                            class="btn btn-success" data-bs-toggle="tooltip" data-bs-placement="bottom" data-placement="top"
                                            title="Editer la convention" target="_blank"><i
                                                     class="fa fa-print"></i></a>
                                         <a href="{{ path('administration_projet_etudiant_edit', {id:projetEtudiant
-                                            .projet.id}) }}"
+                                        .projet.id}) }}"
                                            class="btn btn-warning btn-outline btn-square"
                                            data-bs-toggle="tooltip" data-bs-placement="bottom"
 
                                            title="{{ 'atitle.modifier'|trans }}"><i class="{{ iconEdit }}"></i></a>
                                         <a href="{{ path('administration_projet_etudiant_delete', {id:projetEtudiant
-                                            .projet.id}) }}"
+                                        .projet.id}) }}"
                                            data-csrf="{{ csrf_token('delete' ~ projetEtudiant.projet.id) }}"
                                            class="btn btn-danger btn-outline btn-square supprimer"
                                            data-bs-toggle="tooltip" data-bs-placement="bottom"
@@ -154,11 +157,14 @@
                                 <td>{{ 'pas.de.projet'|trans }}</td>
 
                                 <td>
+                                    <div class="d-grid">
                                     <a href="{{ path('administration_projet_etudiant_change_etat', {projetPeriode:
                                         projetPeriode.uuidString, etudiant:projetEtudiant.etudiant.id, etat: constant
                                             ('App\\Entity\\ProjetEtudiant::ETAT_PROJET_AUTORISE')}) }}"
-                                       class="btn btn-danger btn-block" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                       class="btn btn-danger d-block" data-bs-toggle="tooltip"
+                                       data-bs-placement="bottom"
                                        title="Cliquez pour autoriser la saisie des informations (proposition signée reçue)">{{ 'autoriser.la.saisie'|trans }}</a>
+                                    </div>
                                 </td>
                             {% endif %}
                             {% endfor %}
@@ -175,21 +181,21 @@
     {{ include('composants/fab-buttons.html.twig', {boutons:[
         {type: 'info',
             href: path('administration_projet_periode_gestion_export', {_format:'pdf', uuid: projetPeriode
-            .uuidString}),
+        .uuidString}),
             title: 'exporter.pdf'|trans,
             icone : "fa fa-file-pdf"
         },
         {
             type:'info',
             href:path('administration_projet_periode_gestion_export', {_format:'csv', uuid: projetPeriode
-            .uuidString}),
+        .uuidString}),
             title: 'exporter.csv'|trans,
             icone: 'fa fa-file-csv'
         },
         {
             type:'info',
             href:path('administration_projet_periode_gestion_export', {_format:'xlsx', uuid: projetPeriode
-            .uuidString}),
+        .uuidString}),
             title: 'exporter.xls'|trans,
             icone: 'fa fa-file-excel'
         },

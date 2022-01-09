@@ -158,8 +158,10 @@
                         <div class="card">
                             <h4 class="card-title">{{ 'evaluation'|trans }} N° {{ i+1 }} ({{ 'a.saisir'|trans }})</h4>
                             <div class="card-body">
+                                <div class="d-grid">
                                 <a href="{{ path('application_personnel_note_saisie', {matiere:matiere.typeIdMatiere}) }}"
-                                   class="btn btn-block btn-large btn-primary">{{ 'note.saisie'|trans }}</a>
+                                   class="btn d-block btn-large btn-primary">{{ 'note.saisie'|trans }}</a>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -40,21 +40,21 @@
 
             <form action="{{ path('sa_scolarite_semestre_genere_apogee', {semestre:semestre.id}) }}" method="post" enctype="multipart/form-data">
                 <div class="form-group">
-                    <label class="col-sm-2">
-                        Fichier type
+                    <label class="form-label">
+                        Fichier modèle Apogée
                     </label>
-                    <div class="col-sm-10">
-                        <input type="file" name="fichier" class="form-control"/>
-                    </div>
+                    <input type="file" name="fichier" class="form-control" accept=".xls,.xlsx" />
                 </div>
-                <button type="submit" class="btn btn-block btn-success">Export Apogée (va générer le fichier txt pour la
-                                                                        scolarité)
+                <div class="d-grid mt-2">
+                <button type="submit" class="btn d-block btn-success">
+                    Export Apogée (génére le fichier txt pour la scolarité)
                 </button>
+                </div>
             </form>
             <br/>
-            {#            <a href="{{ path('da_kernel_administration_sc_export_gj', {semestre:semestre.id}) }}" class="btn btn-block btn-success">#}
-            {#                Sauvegarde Excel / Fichier de Grand Jury#}
-            {#            </a>#}
+            {#            <a href="{{ path('da_kernel_administration_sc_export_gj', {semestre:semestre.id}) }}" class="btn btn-block btn-success"> #}
+            {#                Sauvegarde Excel / Fichier de Grand Jury #}
+            {#            </a> #}
         </div>
     </div>
 {% endblock %}

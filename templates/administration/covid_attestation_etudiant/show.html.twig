@@ -78,8 +78,8 @@
                                    data-bs-toggle="tooltip"
                                    data-bs-placement="bottom""
                                                              title="{{ 'atitle.print'|trans }}">
-                                    <i class="{{ iconPrint }}"></i>
-                                    <span class="sr-only">{{ 'atitle.print'|trans }}</span>
+                                <i class="{{ iconPrint }}"></i>
+                                <span class="sr-only">{{ 'atitle.print'|trans }}</span>
                                 </a>
 
                                 <a href="{{ path('administration_covid_attestation_etudiant_send_one', {'id':
@@ -88,8 +88,8 @@
                                    data-bs-toggle="tooltip"
                                    data-bs-placement="bottom""
                                                              title="{{ 'atitle.renvoyer'|trans }}">
-                                    <i class="fas fa-envelope"></i>
-                                    <span class="sr-only">{{ 'atitle.renvoyer'|trans }}</span>
+                                <i class="fas fa-envelope"></i>
+                                <span class="sr-only">{{ 'atitle.renvoyer'|trans }}</span>
                                 </a>
                             </td>
                         </tr>
@@ -102,14 +102,16 @@
                 {{ covid_attestation_etudiant.dateEnvoi != null ? covid_attestation_etudiant
                 .dateEnvoi|format_date('short') : '' }}
             {% else %}
-                <a href="{{ path('administration_covid_attestation_etudiant_send_all', {'id':
-                    covid_attestation_etudiant.id}) }}"
-                   class="btn btn-success btn-block"
-                   data-bs-toggle="tooltip"
-                   data-bs-placement="bottom"
-                   title="Envoyer toutes les convocations">
-                    <i class="fas fa-envelope"></i> Envoyer toutes les convocations aux étudiants
-                </a>
+                <div class="d-grid">
+                    <a href="{{ path('administration_covid_attestation_etudiant_send_all', {'id':
+                        covid_attestation_etudiant.id}) }}"
+                       class="btn btn-success d-block"
+                       data-bs-toggle="tooltip"
+                       data-bs-placement="bottom"
+                       title="Envoyer toutes les convocations">
+                        <i class="fas fa-envelope"></i> Envoyer toutes les convocations aux étudiants
+                    </a>
+                </div>
             {% endif %}
             <br>
             <div class="alert alert-warning">

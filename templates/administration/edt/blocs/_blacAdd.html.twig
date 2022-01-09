@@ -41,7 +41,7 @@
                         </div>
                         <div class="col-sm-4">
                             <div class="form-group">
-                                <label for="typecours" class="control-label">Type de cours</label>
+                                <label for="typecours" class="form-label">Type de cours</label>
                                 <select name="typecours" id="typecours" class="form-select selectpicker"
                                 >
                                     {% for groupe in groupes %}
@@ -52,7 +52,7 @@
                         </div>
                         <div class="col-sm-4">
                             <div class="form-group">
-                                <label for="salle" class="control-label">Salle</label>
+                                <label for="salle" class="form-label">Salle</label>
                                 <input class="form-control" name="salle" id="salle"
                                        type="text">
                             </div>
@@ -61,7 +61,7 @@
                     <div class="row">
                         <div class="col-sm-4">
                             <div class="form-group">
-                                <label for="hdbt" class="control-label">Heure de début</label>
+                                <label for="hdbt" class="form-label">Heure de début</label>
 
                                 <select name="hdbt" id="hdbt" class="form-select selectpicker">
                                     {% set k=1 %}
@@ -76,7 +76,7 @@
                         </div>
                         <div class="col-sm-4">
                             <div class="form-group">
-                                <label for="hfin" class="control-label">Heure de fin</label>
+                                <label for="hfin" class="form-label">Heure de fin</label>
 
                                 <select name="hfin" id="hfin" class="form-select selectpicker">
                                     {% set k=2 %}
@@ -105,7 +105,7 @@
                     <div class="row">
                         <div class="col-sm-4">
                             <div class="form-group">
-                                <label for="selectmatiere" class="control-label">Matière</label>
+                                <label for="selectmatiere" class="form-label">Matière</label>
 
                                 <select name="selectmatiere" id="selectmatiere" class="form-select selectpicker"
                                 >
@@ -118,7 +118,7 @@
                         </div>
                         <div class="col-sm-4">
                             <div class="form-group">
-                                <label for="selectenseignant" class="control-label">Enseignant</label>
+                                <label for="selectenseignant" class="form-label">Enseignant</label>
 
                                 <select name="selectenseignant" id="selectenseignant" class="form-select selectpicker"
 
@@ -146,16 +146,16 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <label for="texte" class="control-label">Texte</label>
+                                <label for="texte" class="form-label">Texte</label>
                                 <input type="text" name="texte" id="texte" class="form-control">
                                 <span class="help-block">Vous pouvez saisir un texte libre à la place d'un module</span>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-12">
+                        <div class="col-sm-12 d-grid">
                             <input type="hidden" name="idEdtUpdate" id="idEdtUpdate" value="">
-                            <button type="submit" class="btn btn-block btn-primary" id="btnAddEDT">
+                            <button type="submit" class="btn d-block btn-primary" id="btnAddEDT">
                                 Ajouter le créneau
                             </button>
                         </div>

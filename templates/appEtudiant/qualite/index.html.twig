@@ -18,20 +18,22 @@
                     <td>{{ questionnaire.dateOuverture|format_date('short') }} au {{ questionnaire
                         .dateFermeture|format_date('short') }}</td>
                     <td>
-                        {% if questionnaire.isOuvert %}
-                            {% if reponsesEtudiant[questionnaire.id] is defined and reponsesEtudiant[questionnaire.id].termine == true %}
-                                <button class="btn btn-success btn-block">Vous avez complété le questionnaire
-                                                                          le {{ reponsesEtudiant[questionnaire
-                                    .id].dateTermine|format_datetime('short', 'short') }}</button>
+                        <div class="d-grid">
+                            {% if questionnaire.isOuvert %}
+                                {% if reponsesEtudiant[questionnaire.id] is defined and reponsesEtudiant[questionnaire.id].termine == true %}
+                                    <button class="btn btn-success d-block">Vous avez complété le questionnaire
+                                                                            le {{ reponsesEtudiant[questionnaire
+                                        .id].dateTermine|format_datetime('short', 'short') }}</button>
+                                {% else %}
+                                    <a href="{{ path('app_etudiant_qualite_questionnaire', {questionnaireQualite:questionnaire
+                                    .id}) }}" class="btn btn-warning btn-outline">
+                                        Compléter le questionnaire
+                                    </a>
+                                {% endif %}
                             {% else %}
-                                <a href="{{ path('app_etudiant_qualite_questionnaire', {questionnaireQualite:questionnaire
-                                .id}) }}" class="btn btn-warning btn-outline">
-                                    Compléter le questionnaire
-                                </a>
+                                Complété ou hors délai
                             {% endif %}
-                        {% else %}
-                            Complété ou hors délai
-                        {% endif %}
+                        </div>
                     </td>
                 </tr>
             {% endfor %}

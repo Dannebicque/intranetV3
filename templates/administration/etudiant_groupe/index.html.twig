@@ -43,9 +43,10 @@
         <div class="card-body">
             <div class="row">
                 {% for typeGroupe in semestre.typeGroupes %}
-                    <div class="col-sm-2">
+                    <div class="col-sm-2 d-grid">
                         <button data-typegroupe="{{ typeGroupe.id }}"
-                                class="btn btn-block {% if selectedTypeGroupe is defined and selectedTypeGroupe.id == typeGroupe.id %}btn-primary{% endif %} admChangeTypeGroupe">{{ typeGroupe.libelle }}</button>
+                                class="btn d-block {% if selectedTypeGroupe is defined and selectedTypeGroupe.id ==
+                                    typeGroupe.id %}btn-primary{% endif %} admChangeTypeGroupe">{{ typeGroupe.libelle }}</button>
                     </div>
                 {% else %}
                     <div class="col-md-12">

@@ -173,30 +173,30 @@
             </div>
             <br>
             <div class="row gap-y">
-                <div class="col-sm-12 col-md-6">
+                <div class="col-sm-12 col-md-6 d-grid">
                     <a href="{{ path('administration_sous_commission_recalculer', {ssComm:sc.getSsComm.id}) }}"
-                       class="btn btn-block btn-warning">Recalculer la sous-commission (effectue un nouveau calcul
+                       class="btn d-block btn-warning">Recalculer la sous-commission (effectue un nouveau calcul
                                                          des moyennes (semestre et UE). Modifie les décisions en
                                                          fonction des résultats.</a>
                 </div>
-                <div class="col-sm-12 col-md-6">
+                <div class="col-sm-12 col-md-6 d-grid">
                     {% if sc.getSsComm.publie == true %}
                         <a href="{{ path('administration_sous_commission_depublier', {ssComm:sc.getSsComm.id}) }}"
-                           class="btn btn-block btn-info">Résultats publiés le {{ sc.getSsComm
+                           class="btn d-block btn-info">Résultats publiés le {{ sc.getSsComm
                             .datePublication|format_datetime('short', 'short') }}. Dépublier pour modifier.</a>
                     {% else %}
                         <a href="{{ path('administration_sous_commission_publier', {ssComm:sc.getSsComm.id}) }}"
-                           class="btn btn-block btn-success">Publier les résultats aux étudiants</a>
+                           class="btn d-block btn-success">Publier les résultats aux étudiants</a>
                     {% endif %}
                 </div>
-                <div class="col-sm-12 col-md-6">
+                <div class="col-sm-12 col-md-6 d-grid">
                     <a href="{{ path('administration_sous_commission_purger', {scolaritePromo:sc.getSsComm.id}) }}"
-                       class="btn btn-block btn-danger">Nettoyer les notes (remplace les -0.01 par des 0)
+                       class="btn d-block btn-danger">Nettoyer les notes (remplace les -0.01 par des 0)
                         <strong>Attention, opération irréversible !</strong></a>
                 </div>
-                <div class="col-sm-12 col-md-6">
+                <div class="col-sm-12 col-md-6 d-grid">
                     <a href="{{ path('administration_sous_commission_exporter_grand_jury', {scolaritePromo:sc.getSsComm.id}) }}"
-                       class="btn btn-block btn-success">Sauvegarde Excel / Fichier de Grand Jury</a>
+                       class="btn d-block btn-success">Sauvegarde Excel / Fichier de Grand Jury</a>
                 </div>
             </div>
         </div>

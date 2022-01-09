@@ -18,7 +18,10 @@
             </tr>
             <tr>
                 <td colspan="6">
-                    <button class="btn btn-success btn-block" id="addGroupe" data-semestre="{{ semestre.id }}">{{ button_label|default('label.save'|trans) }}</button>
+                    <div class="d-grid">
+                    <button class="btn btn-success d-block" id="addGroupe" data-semestre="{{ semestre.id }}">{{
+                        button_label|default('label.save'|trans) }}</button>
+                    </div>
                 </td>
             </tr>
             </tbody>

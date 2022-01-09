@@ -51,7 +51,7 @@
                                             {'mail': 'courrier'}) }) }}
                                                        data-action="click->modal#openModal"
                                                        title="Courrier d'accompagnement par défaut"
-                                                      >
+                            >
                                 Vous pouvez consulter le courrier d'accompagnement par défaut ici
                             </a>.
                             Vous avez à votre disposition tous les champs disponibles (équivalent aux champs de
@@ -73,8 +73,8 @@
                                     Laisser vide pour utiliser le mail par défaut.
                                 </div>
                             </div>
-                            <div class="col-sm-12 col-md-4">
-                                <button data-type="courrier" class="btn btn-danger btn-block resetDefaut"
+                            <div class="col-sm-12 col-md-4 d-grid">
+                                <button data-type="courrier" class="btn btn-danger d-block resetDefaut"
                                         data-periode="{{ stagePeriode.id }}">Revenir
                                                                              au
                                                                              courrier par défaut
@@ -82,57 +82,57 @@
                                                                              texte ci-dessus)
                                 </button>
                             </div>
-                            <div class="col-sm-12 col-md-4">
+                            <div class="col-sm-12 col-md-4 d-grid">
                                 <a {{ stimulus_controller('modal', {
-                                            size: 'lg',
-                                            modalTitle: 'Courrier d\'accompagnement par défaut',
-                                            modalUrl:  path
+                                    size: 'lg',
+                                    modalTitle: 'Courrier d\'accompagnement par défaut',
+                                    modalUrl:  path
                                         ('administration_stage_periode_courrier_apercu_modele',
                                         {mail: 'courrier', stagePeriode:stagePeriode.id}) }) }}
-                                   data-action="click->modal#openModal"
-                                   title="Courrier d'accompagnement par défaut"
-                                   class="btn btn-info btn-block">
+                                        data-action="click->modal#openModal"
+                                        title="Courrier d'accompagnement par défaut"
+                                        class="btn btn-info d-block">
                                     Aperçu du mail
                                 </a>
                             </div>
-                            <div class="col-sm-12 col-md-4">
+                            <div class="col-sm-12 col-md-4 d-grid">
                                 <button data-type="courrier" data-periode="{{ stagePeriode.uuidString }}" class="btn
-                                btn-success btn-block enregistreModeleMail" data-ed="courrier">Enregistrer le modèle
+                                btn-success d-block enregistreModeleMail" data-ed="courrier">Enregistrer le modèle
                                 </button>
                             </div>
                         </div>
                         <div class="editCourrier" id="editCourrier"></div>
                     </div>
                     {% for etat in etatsConvention %}
-                    <div class="tab-pane fade" id="{{ etat }}">
-                        <h4>{{ etat|trans }}</h4>
-                        <div class="alert alert-info">
-                            Dans cette partie vous pouvez éditer le contenu des emails
-                            envoyés lors des différentes phases de la gestion de la
-                            convetion. Si vous laissez la zone de texte vide le mail
-                            par défaut sera envoyé. <a href="#"
-                                                       {{ stimulus_controller('modal', {
+                        <div class="tab-pane fade" id="{{ etat }}">
+                            <h4>{{ etat|trans }}</h4>
+                            <div class="alert alert-info">
+                                Dans cette partie vous pouvez éditer le contenu des emails
+                                envoyés lors des différentes phases de la gestion de la
+                                convetion. Si vous laissez la zone de texte vide le mail
+                                par défaut sera envoyé. <a href="#"
+                                        {{ stimulus_controller('modal', {
                                             size: 'lg',
                                             modalTitle: 'Mail par défaut pour ' ~ etat|trans,
                                             modalUrl:  path
-                                               ('administration_stage_periode_courrier_apercu_defaut',
-                                                {'mail': etat}) })}}
+                                                ('administration_stage_periode_courrier_apercu_defaut',
+                                                {'mail': etat}) }) }}
                                                            data-action="click->modal#openModal"
                                                            title="Mail par défaut pour {{ etat|trans }}"
-                                                           >
+                                >
                                     Vous pouvez consulter le mail par défaut ici
                                 </a>.
                                 Vous avez à votre disposition tous les champs disponibles (équivalent aux champs de
                                 fusion d'un publipostage word) pour générer votre mail.
-                        </div>
+                            </div>
 
-                        <div>
-                            <label for="sujet_{{ etat }}">Sujet du message : </label>
+                            <div>
+                                <label for="sujet_{{ etat }}">Sujet du message : </label>
                                 <input type="text"
                                        class="form-control"
                                        value="{% if courriers[etat] is defined %}{{ courriers[etat].subject }}{% endif %}"
                                        name="sujet_{{ etat }}"
-                                       id="sujet_{{ etat }}" />
+                                       id="sujet_{{ etat }}"/>
                             </div>
 
                             <div class="editCourrier" id="text_{{ etat }}">
@@ -147,38 +147,38 @@
                                         Laisser vide pour utiliser le mail par défaut.
                                     </div>
                                 </div>
-                                <div class="col-sm-12 col-md-4">
+                                <div class="col-sm-12 col-md-4 d-grid">
                                     <button data-type="{{ etat }}" data-periode="{{ stagePeriode.id }}" class="btn
-                                 btn-danger btn-block resetDefaut">Revenir au mail par
-                                                                   défaut
-                                                                   (effacera le contenu du
-                                                                   texte ci-dessus)
+                                 btn-danger d-block resetDefaut">Revenir au mail par
+                                                                 défaut
+                                                                 (effacera le contenu du
+                                                                 texte ci-dessus)
                                     </button>
                                 </div>
-                                <div class="col-sm-12 col-md-4">
+                                <div class="col-sm-12 col-md-4 d-grid">
                                     <a {{ stimulus_controller('modal', {
-                                                size: 'lg',
-                                                modalTitle: 'Courrier d\'accompagnement par défaut',
-                                                modalUrl:  path
-                                                    ('administration_stage_periode_courrier_apercu_modele',
-                                                    {mail: etat, stagePeriode:stagePeriode.id}) })}}
-                                       data-action="click->modal#openModal"
-                                   title="Courrier d'accompagnement par défaut"
-                                   class="btn btn-info btn-block">
-                                Aperçu du mail
-                                </a>
+                                        size: 'lg',
+                                        modalTitle: 'Courrier d\'accompagnement par défaut',
+                                        modalUrl:  path
+                                            ('administration_stage_periode_courrier_apercu_modele',
+                                            {mail: etat, stagePeriode:stagePeriode.id}) }) }}
+                                            data-action="click->modal#openModal"
+                                            title="Courrier d'accompagnement par défaut"
+                                            class="btn btn-info d-block">
+                                        Aperçu du mail
+                                    </a>
+                                </div>
+                                <div class="col-sm-12 col-md-4 d-grid">
+                                    <button data-type="{{ etat }}" data-periode="{{ stagePeriode.uuidString }}" class="btn btn-success
+                                    d-block enregistreModeleMail" data-ed="{{ etat }}">Enregistrer le modèle
+                                    </button>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-sm-12 col-md-4">
-                            <button data-type="{{ etat }}" data-periode="{{ stagePeriode.uuidString }}" class="btn btn-success
-                                    btn-block enregistreModeleMail" data-ed="{{ etat }}">Enregistrer le modèle
-                            </button>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
             </div>
         </div>
-    </div>
     </div>
 {% endblock %}
 

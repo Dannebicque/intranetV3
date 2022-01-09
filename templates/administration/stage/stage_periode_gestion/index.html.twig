@@ -185,19 +185,19 @@
                                                     class="fa fa-print"></i></a>
                                         <a href="{{ path('administration_stage_etudiant_change_etat',
                                             {stagePeriode: stagePeriode.uuidString, etudiant:stageEtudiant
-                                                .etudiant.id, etat: constant
+                                            .etudiant.id, etat: constant
                                                 ('App\\Entity\\StageEtudiant::ETAT_STAGE_VALIDE')}) }}" class="btn
                                                     btn-success" data-bs-toggle="tooltip" data-bs-placement="bottom" data-placement="top"
                                            title="Valider le stage"><i class="fa fa-check"></i></a>
                                         <a href="{{ path('administration_stage_etudiant_change_etat',
                                             {stagePeriode: stagePeriode.uuidString, etudiant:stageEtudiant
-                                                .etudiant.id, etat: constant
+                                            .etudiant.id, etat: constant
                                                 ('App\\Entity\\StageEtudiant::ETAT_STAGE_INCOMPLET')}) }}" class="btn
                                                     btn-warning" data-bs-toggle="tooltip" data-bs-placement="bottom" data-placement="top"
                                            title="Proposition incomplète"><i class="fa fa-ban"></i></a>
                                         <a href="{{ path('administration_stage_etudiant_change_etat',
                                             {stagePeriode: stagePeriode.uuidString, etudiant:stageEtudiant
-                                                .etudiant.id, etat: constant
+                                            .etudiant.id, etat: constant
                                                 ('App\\Entity\\StageEtudiant::ETAT_STAGE_REFUS')}) }}" class="btn
                                                 btn-danger"
                                            data-bs-toggle="tooltip" data-bs-placement="bottom" data-placement="top" title="Refuser le stage"><i
@@ -329,7 +329,7 @@
                                            title="Imprimer la convention"><i class="fas fa-print"></i></a>
                                         <a href="{{ path('administration_stage_etudiant_change_etat',
                                             {stagePeriode: stagePeriode.uuidString, etudiant:stageEtudiant
-                                                .etudiant.id, etat: constant
+                                            .etudiant.id, etat: constant
                                                 ('App\\Entity\\StageEtudiant::ETAT_STAGE_CONVENTION_RECUE')}) }}"
                                            class="btn
                                                     btn-success" data-bs-toggle="tooltip" data-bs-placement="bottom" data-placement="top"
@@ -408,7 +408,11 @@
                                 {% if stageEtudiant.stage.etatStage == constant
                                     ('App\\Entity\\StageEtudiant::ETAT_STAGE_AUTORISE') %}
                                     <td colspan="4">
-                                        <button class="btn btn-block btn-primary">{{ 'saisie.autorise.formulaire.non.completee'|trans }}</button>
+                                        <div class="d-grid">
+                                            <button class="btn d-block btn-primary">
+                                                {{ 'saisie.autorise.formulaire.non.completee'|trans }}
+                                            </button>
+                                        </div>
                                     </td>
                                     <td>
                                         <label for="tuteur_{{ stageEtudiant.etudiant.id }}" class="sr-only"></label>
@@ -451,7 +455,11 @@
                                     stageEtudiant.stage.etatStage == constant
                                     ('App\\Entity\\StageEtudiant::ETAT_STAGE_ERASMUS') %}
                                     <td colspan="5">
-                                        <button class="btn btn-block btn-primary">{{ stageEtudiant.stage.etatStage|trans }}</button>
+                                        <div class="d-grid">
+                                            <button class="btn d-block btn-primary">
+                                                {{ stageEtudiant.stage.etatStage|trans }}
+                                            </button>
+                                        </div>
                                     </td>
                                     <td>
                                         <div class="dropdown table-action btn btn-primary btn-outline">
@@ -505,51 +513,60 @@
                                             <option>{{ 'table.tuteur_universitaire'|trans }}</option>
                                             {% for personnel in user_data.personnels %}
                                                 <option value="{{ personnel.id }}" {% if stageEtudiant.stage
-                                                    .tuteurUniversitaire != null and personnel.id ==
+                                                .tuteurUniversitaire != null and personnel.id ==
                                                     stageEtudiant.stage.tuteurUniversitaire.id %}selected{% endif %}>{{ personnel.displayPr }}</option>
                                             {% endfor %}
                                         </select>
                                     </td>
                                     <td>
-                                        {% if stageEtudiant.stage.etatStage ==constant
-                                            ('App\\Entity\\StageEtudiant::ETAT_STAGE_VALIDE') %}
-                                            <a href="{{ path('administration_stage_etudiant_show',{id:stageEtudiant.stage.id}) }}"
-                                               class="btn btn-success btn-block" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                               data-placement="top" title="Voir le stage">{{ 'stage.valide'|trans }}</a>
-                                        {% elseif stageEtudiant.stage.etatStage == constant
-                                            ('App\\Entity\\StageEtudiant::ETAT_STAGE_CONVENTION_ENVOYEE') %}
-                                            <a href="{{ path('administration_stage_etudiant_show',{id:stageEtudiant.stage.id}) }}"
-                                               class="btn btn-warning btn-block" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                               data-placement="top"
-                                               title="Voir le stage">{{ 'convention.envoyee'|trans }}</a>
-                                        {% elseif stageEtudiant.stage.etatStage ==constant
-                                            ('App\\Entity\\StageEtudiant::ETAT_STAGE_CONVENTION_RECUE') %}
-                                            <a href="{{ path('administration_stage_etudiant_show',{id:stageEtudiant.stage.id}) }}"
-                                               class="btn btn-success btn-block" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                               data-placement="top"
-                                               title="Voir le stage">{{ 'convention.complete'|trans }}</a>
-                                        {% elseif stageEtudiant.stage.etatStage == constant
-                                            ('App\\Entity\\StageEtudiant::ETAT_STAGE_DEPOSE') %}
-                                            <a href="{{ path('administration_stage_etudiant_show',{id:stageEtudiant.stage.id}) }}"
-                                               class="btn btn-warning btn-block" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                               data-placement="top"
-                                               title="Voir le stage">{{ 'proposition.effectuee'|trans }}</a>
-                                        {% elseif stageEtudiant.stage.etatStage ==constant
-                                            ('App\\Entity\\StageEtudiant::ETAT_STAGE_ETRANGER') %}
-                                            <a href="#" class="btn btn-success btn-block" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                               data-placement="top"
-                                               title="Stage à l'étranger">{{ 'valider.stage.etranger'|trans }}</a>
-                                        {% elseif stageEtudiant.stage.etatStage ==constant
-                                            ('App\\Entity\\StageEtudiant::ETAT_STAGE_ERASMUS') %}
-                                            <a href="#" class="btn btn-success btn-block" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                               data-placement="top"
-                                               title="ERASMUS">{{ 'semestre.erasmus'|trans }}</a>
-                                        {% elseif stageEtudiant.stage.etatStage ==constant
-                                            ('App\\Entity\\StageEtudiant::ETAT_STAGE_APPRENTISSAGE') %}
-                                            <a href="#" class="btn btn-success btn-block" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                               data-placement="top"
-                                               title="Apprentissage">{{ 'annee.en.apprentissage'|trans }}</a>
-                                        {% endif %}
+                                        <div class="d-grid">
+                                            {% if stageEtudiant.stage.etatStage ==constant
+                                                ('App\\Entity\\StageEtudiant::ETAT_STAGE_VALIDE') %}
+                                                <a href="{{ path('administration_stage_etudiant_show',{id:stageEtudiant.stage.id}) }}"
+                                                   class="btn btn-success d-block" data-bs-toggle="tooltip"
+                                                   data-bs-placement="bottom"
+                                                   data-placement="top" title="Voir le stage">{{ 'stage.valide'|trans }}</a>
+                                            {% elseif stageEtudiant.stage.etatStage == constant
+                                                ('App\\Entity\\StageEtudiant::ETAT_STAGE_CONVENTION_ENVOYEE') %}
+                                                <a href="{{ path('administration_stage_etudiant_show',{id:stageEtudiant.stage.id}) }}"
+                                                   class="btn btn-warning d-block" data-bs-toggle="tooltip"
+                                                   data-bs-placement="bottom"
+                                                   data-placement="top"
+                                                   title="Voir le stage">{{ 'convention.envoyee'|trans }}</a>
+                                            {% elseif stageEtudiant.stage.etatStage ==constant
+                                                ('App\\Entity\\StageEtudiant::ETAT_STAGE_CONVENTION_RECUE') %}
+                                                <a href="{{ path('administration_stage_etudiant_show',{id:stageEtudiant.stage.id}) }}"
+                                                   class="btn btn-success d-block" data-bs-toggle="tooltip"
+                                                   data-bs-placement="bottom"
+                                                   data-placement="top"
+                                                   title="Voir le stage">{{ 'convention.complete'|trans }}</a>
+                                            {% elseif stageEtudiant.stage.etatStage == constant
+                                                ('App\\Entity\\StageEtudiant::ETAT_STAGE_DEPOSE') %}
+                                                <a href="{{ path('administration_stage_etudiant_show',{id:stageEtudiant.stage.id}) }}"
+                                                   class="btn btn-warning d-block" data-bs-toggle="tooltip"
+                                                   data-bs-placement="bottom"
+                                                   data-placement="top"
+                                                   title="Voir le stage">{{ 'proposition.effectuee'|trans }}</a>
+                                            {% elseif stageEtudiant.stage.etatStage ==constant
+                                                ('App\\Entity\\StageEtudiant::ETAT_STAGE_ETRANGER') %}
+                                                <a href="#" class="btn btn-success d-block" data-bs-toggle="tooltip"
+                                                   data-bs-placement="bottom"
+                                                   data-placement="top"
+                                                   title="Stage à l'étranger">{{ 'valider.stage.etranger'|trans }}</a>
+                                            {% elseif stageEtudiant.stage.etatStage ==constant
+                                                ('App\\Entity\\StageEtudiant::ETAT_STAGE_ERASMUS') %}
+                                                <a href="#" class="btn btn-success d-block" data-bs-toggle="tooltip"
+                                                   data-bs-placement="bottom"
+                                                   data-placement="top"
+                                                   title="ERASMUS">{{ 'semestre.erasmus'|trans }}</a>
+                                            {% elseif stageEtudiant.stage.etatStage ==constant
+                                                ('App\\Entity\\StageEtudiant::ETAT_STAGE_APPRENTISSAGE') %}
+                                                <a href="#" class="btn btn-success d-block" data-bs-toggle="tooltip"
+                                                   data-bs-placement="bottom"
+                                                   data-placement="top"
+                                                   title="Apprentissage">{{ 'annee.en.apprentissage'|trans }}</a>
+                                            {% endif %}
+                                        </div>
                                     </td>
                                     <td>
 
@@ -597,14 +614,14 @@
                                                     ('administration_stage_etudiant_convention_pdf', {id:stageEtudiant.stage.id}) }}">{{ 'telecharger.la.convention'|trans }}</a>
                                                 <a class="dropdown-item" href="{{ path
                                                     ('administration_stage_avenant_index', {stageEtudiant:stageEtudiant.stage
-                                                        .id}) }}">{{ 'gerer.les.avenants'|trans }}</a>
+                                                    .id}) }}">{{ 'gerer.les.avenants'|trans }}</a>
                                                 {# <a class="dropdown-item" #}
                                                 {# href="#">{{ 'mettre.a.jour.la.convetion'|trans }}</a> #}
                                                 <a class="dropdown-item"
                                                    href="{{ path('administration_stage_etudiant_courrier_pdf', {id:stageEtudiant.stage.id}) }}">{{ 'editer.le.courrier'|trans }}</a>
                                                 <a class="dropdown-item" href="{{ path
                                                     ('administration_stage_etudiant_fiche_enseignant', {id:stageEtudiant
-                                                        .stage.id}) }}">{{ 'fiche.enseignant'|trans }}</a>
+                                                    .stage.id}) }}">{{ 'fiche.enseignant'|trans }}</a>
                                                 <a class="dropdown-item"
                                                    href="{{ path('administration_stage_etudiant_change_etat', {stagePeriode: stagePeriode.uuidString, etudiant:stageEtudiant.etudiant.id, etat: constant
                                                        ('App\\Entity\\StageEtudiant::ETAT_STAGE_ETRANGER')}) }}">
@@ -630,10 +647,13 @@
                                 <td>{{ 'pas.de.stage'|trans }}</td>
                                 <td>{{ 'pas.de.stage'|trans }}</td>
                                 <td>
-                                    <a href="{{ path('administration_stage_etudiant_change_etat', {stagePeriode: stagePeriode.uuidString, etudiant:stageEtudiant.etudiant.id, etat: constant
-                                        ('App\\Entity\\StageEtudiant::ETAT_STAGE_AUTORISE')}) }}"
-                                       class="btn btn-danger btn-block" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                       title="Cliquez pour autoriser la saisie des informations (proposition signée reçue)">{{ 'autoriser.la.saisie'|trans }}</a>
+                                    <div class="d-grid">
+                                        <a href="{{ path('administration_stage_etudiant_change_etat', {stagePeriode: stagePeriode.uuidString, etudiant:stageEtudiant.etudiant.id, etat: constant
+                                            ('App\\Entity\\StageEtudiant::ETAT_STAGE_AUTORISE')}) }}"
+                                           class="btn btn-danger d-block" data-bs-toggle="tooltip"
+                                           data-bs-placement="bottom"
+                                           title="Cliquez pour autoriser la saisie des informations (proposition signée reçue)">{{ 'autoriser.la.saisie'|trans }}</a>
+                                    </div>
                                 </td>
                                 <td>
                                     <div class="dropdown table-action btn btn-primary btn-outline">
@@ -674,21 +694,21 @@
     {{ include('composants/fab-buttons.html.twig', {boutons:[
         {type: 'info',
             href: path('administration_stage_periode_gestion_export', {_format:'pdf', uuid: stagePeriode
-            .uuidString}),
+        .uuidString}),
             title: 'exporter.pdf'|trans,
             icone : "fa fa-file-pdf"
         },
         {
             type:'info',
             href:path('administration_stage_periode_gestion_export', {_format:'csv', uuid: stagePeriode
-            .uuidString}),
+        .uuidString}),
             title: 'exporter.csv'|trans,
             icone: 'fa fa-file-csv'
         },
         {
             type:'info',
             href:path('administration_stage_periode_gestion_export_xlsx', {_format:'xlsx', uuid: stagePeriode
-            .uuidString}),
+        .uuidString}),
             title: 'exporter.xls'|trans,
             icone: 'fa fa-file-excel'
         },

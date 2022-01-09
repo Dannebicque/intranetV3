@@ -110,14 +110,15 @@
 
         <div class="card-body">
             <div class="form-group">
-                <label class="control-label" for="sa_login_urca">Login URCA, nom ou prénom du nouvel intervenant
+                <label class="form-label" for="sa_login_urca">Login URCA, nom ou prénom du nouvel intervenant
                                                                  :</label>
                 <input type="text" name="login_urca" id="sa_login_urca" class="form-control"
                        placeholder="Saisissez les premiers caractères" data-departement="{{ departement.id }}">
 
             </div>
-            <div>
-                <button type="submit" class="btn btn-block btn-warning">Vérifiez si l'intervenant est déjà présent dans un autre
+            <div class="d-grid">
+                <button type="submit" class="btn d-block btn-warning">
+                    Vérifiez si l'intervenant est déjà présent dans un autre
                                                                         département.
                 </button>
                 <br>

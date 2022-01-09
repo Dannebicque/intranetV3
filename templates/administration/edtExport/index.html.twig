@@ -40,37 +40,37 @@
                 <div class="row">
                     <div class="col-sm-6 col-md-3"></div>
                     <div class="col-sm-6 col-md-3"></div>
-                    <div class="col-sm-6 col-md-6">
-                        <button class="btn btn-success btn-block" type="submit">Exporter les éléments séléectionnés
+                    <div class="col-sm-6 col-md-6 d-grid">
+                        <button class="btn btn-success d-block" type="submit">Exporter les éléments séléectionnés
                         </button>
                     </div>
                 </div>
             </form>
             <br>
             <div class="row">
-                <div class="col-sm-4">
+                <div class="col-sm-4 g-grid">
                     <a href="{{ path('administration_edt_export_all', {source:source, _format: 'pdf'}) }}"
-                       class="btn btn-info btn-block">
+                       class="btn btn-info d-block">
                         Générer les PDF pour tous
                     </a>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-4 d-grid">
                     <a href="{{ path('administration_edt_export_all', {source:source, _format: 'xlsx'}) }}"
-                       class="btn btn-info btn-block">
+                       class="btn btn-info d-block">
                         Générer les XLSX (Excel) pour tous
                     </a>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-4 d-grid">
                     <a href="{{ path('administration_edt_export_all', {source:source, _format: 'csv'}) }}"
-                       class="btn btn-info btn-block">
+                       class="btn btn-info d-block">
                         Générer les CSV (;) pour tous
                     </a>
                 </div>
             </div>
             <br/>
             <div class="row">
-                <div class="col-sm-12">
-                    <a href="{{ path('administration_edt_export_voir') }}" class="btn btn-info btn-block">
+                <div class="col-sm-12 d-grid">
+                    <a href="{{ path('administration_edt_export_voir') }}" class="btn btn-info d-block">
                         Voir/Envoyer (mail) les PDF / Ical</a>
                 </div>
             </div>
