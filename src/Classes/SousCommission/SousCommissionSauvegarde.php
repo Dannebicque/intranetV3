@@ -20,9 +20,9 @@ use App\Entity\ScolaritePromo;
 use App\Entity\Semestre;
 use App\Repository\ScolaritePromoRepository;
 use App\Repository\ScolariteRepository;
-use function array_key_exists;
 use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
+use function array_key_exists;
 
 class SousCommissionSauvegarde
 {
@@ -45,7 +45,7 @@ class SousCommissionSauvegarde
         $this->entityManager = $entityManager;
     }
 
-    public function sauvegardeTravail(SousCommission $sousCommission, array $matieres)
+    public function sauvegardeTravail(SousCommissionInterface $sousCommission, array $matieres): SousCommissionTravail
     {
         $semestre = $sousCommission->getSemestre();
         $anneeUniversitaire = $sousCommission->getAnneeUniversitaire();
@@ -69,10 +69,12 @@ class SousCommissionSauvegarde
                 if (null !== $scEtudiant) {
                     $scSemestre = $this->getOrCreateScolariteEtudiant($etudiant, $semestre, $anneeUniversitaire);
                     $scSemestre->setScolaritePromo($ssComm);
-                    if (true === $semestre->isOptPenaliteAbsence()) {
-                        $scSemestre->setMoyenne($scEtudiant->moyenneSemestrePenalisee);
-                    } else {
-                        $scSemestre->setMoyenne($scEtudiant->moyenneSemestre);
+                    if ($sousCommission instanceof SousCommission) {
+                        if (true === $semestre->isOptPenaliteAbsence()) {
+                            $scSemestre->setMoyenne($scEtudiant->moyenneSemestrePenalisee);
+                        } else {
+                            $scSemestre->setMoyenne($scEtudiant->moyenneSemestre);
+                        }
                     }
 
                     $scSemestre->setDecision($scEtudiant->decision);
@@ -81,12 +83,22 @@ class SousCommissionSauvegarde
                     $tUe = [];
                     foreach ($ues as $ue) {
                         if (true === $semestre->isOptPenaliteAbsence()) {
-                            $tUe[$ue->getId()]['moyenne'] = $scEtudiant->moyenneUes[$ue->getNumeroUe()]->getMoyennePenalisee();
-                            $tUe[$ue->getId()]['rang'] = -1;
+
+                            if ($sousCommission instanceof SousCommissionApc) {
+                                $tUe[$ue->getId()]['decision'] = $scEtudiant->moyenneUes[$ue->getId()]->decisionPenalisee;
+                                $tUe[$ue->getId()]['moyenne'] = $scEtudiant->moyenneUes[$ue->getId()]->moyennePenalisee;
+                            } else {
+                                $tUe[$ue->getId()]['moyenne'] = $scEtudiant->moyenneUes[$ue->getNumeroUe()]->getMoyennePenalisee();
+                            }
                         } else {
-                            $tUe[$ue->getId()]['moyenne'] = $scEtudiant->moyenneUes[$ue->getNumeroUe()]->getMoyenne();
-                            $tUe[$ue->getId()]['rang'] = -1;
+                            if ($sousCommission instanceof SousCommissionApc) {
+                                $tUe[$ue->getId()]['decision'] = $scEtudiant->moyenneUes[$ue->getId()]->decision;
+                                $tUe[$ue->getId()]['moyenne'] = $scEtudiant->moyenneUes[$ue->getId()]->moyenne;
+                            } else {
+                                $tUe[$ue->getId()]['moyenne'] = $scEtudiant->moyenneUes[$ue->getNumeroUe()]->getMoyenne();
+                            }
                         }
+                        $tUe[$ue->getId()]['rang'] = -1;
                     }
                     $scSemestre->setMoyennesUes($tUe);
 
@@ -96,11 +108,10 @@ class SousCommissionSauvegarde
                             if (true === $scEtudiant->moyenneMatieres[$matiere->getTypeIdMatiere()]->optionFaite) {
                                 if (true === $semestre->isOptPenaliteAbsence()) {
                                     $tMatiere[$matiere->getTypeIdMatiere()]['moyenne'] = $scEtudiant->moyenneMatieres[$matiere->getTypeIdMatiere()]->getMoyennePenalisee();
-                                    $tMatiere[$matiere->getTypeIdMatiere()]['rang'] = -1;
                                 } else {
                                     $tMatiere[$matiere->getTypeIdMatiere()]['moyenne'] = $scEtudiant->moyenneMatieres[$matiere->getTypeIdMatiere()]->getMoyenne();
-                                    $tMatiere[$matiere->getTypeIdMatiere()]['rang'] = -1;
                                 }
+                                $tMatiere[$matiere->getTypeIdMatiere()]['rang'] = -1;
                             } else {
                                 $tMatiere[$matiere->getTypeIdMatiere()]['pasoption'] = true;
                                 $tMatiere[$matiere->getTypeIdMatiere()]['rang'] = -1;
@@ -121,7 +132,7 @@ class SousCommissionSauvegarde
         $etudiant,
         Semestre $semestre,
         AnneeUniversitaire $anneeUniversitaire
-    ) {
+    ): ?Scolarite {
         $ssEtudiant = $this->scolariteRepository->findOneBy([
             'semestre' => $semestre->getId(),
             'anneeUniversitaire' => $anneeUniversitaire->getId(),

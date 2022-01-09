@@ -21,13 +21,13 @@ use App\Entity\ScolaritePromo;
 use App\Entity\Semestre;
 use App\Entity\Ue;
 use App\Exception\SemestreNotFoundException;
+use function array_key_exists;
 use Carbon\Carbon;
+use function count;
 use PhpOffice\PhpSpreadsheet\Exception;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\HttpKernel\KernelInterface;
-use function array_key_exists;
-use function count;
 
 class SousCommissionExport
 {
@@ -38,7 +38,7 @@ class SousCommissionExport
                 'notenormale' => 'ffffffff',
                 'pasdenote' => 'ffbbbbbb',
                 Constantes::PAS_OPTION => 'ff000000',
-                '' => 'ffffff'
+                '' => 'ffffff',
             ];
 
     private ?SousCommissionInterface $sousCommission = null;
@@ -56,7 +56,7 @@ class SousCommissionExport
         private TypeMatiereManager $typeMatiereManager,
         private MyUpload $myUpload
     ) {
-        $this->dir = $kernel->getProjectDir() . '/public/upload/temp/';
+        $this->dir = $kernel->getProjectDir().'/public/upload/temp/';
     }
 
     /**
@@ -67,7 +67,7 @@ class SousCommissionExport
         $this->sousCommission = $this->sousCommissionManager->getSousCommission($semestre);
         $this->sousCommission->calcul($semestre, $anneeUniversitaire);
 
-        $this->myExcelWriter->createSheet('Sous Commission ' . $semestre->getLibelle());
+        $this->myExcelWriter->createSheet('Sous Commission '.$semestre->getLibelle());
         $this->myExcelWriter->setHeader();
 
         $ues = $this->sousCommission->getUes();
@@ -107,7 +107,7 @@ class SousCommissionExport
 
         foreach ($ues as $ue) {
             $this->myExcelWriter->writeCellXY($colonne, $ligne,
-                'UE ' . $ue->getNumeroUe());
+                'UE '.$ue->getNumeroUe());
             $this->myExcelWriter->writeCellXY($colonne, $ligne + 1,
                 $ue->getCoefficient());
             ++$colonne;
@@ -134,7 +134,7 @@ class SousCommissionExport
             $this->myExcelWriter->mergeCellsCaR($colonne, $ligne - 1, $colFin, $ligne - 1);
             /** @var Ue $ue */
             foreach ($s->getUes() as $ue) {
-                $this->myExcelWriter->writeCellXY($colonne, $ligne, 'UE ' . $ue->getNumeroUe());
+                $this->myExcelWriter->writeCellXY($colonne, $ligne, 'UE '.$ue->getNumeroUe());
                 $this->myExcelWriter->writeCellXY($colonne, $ligne + 1, $ue->getCoefficient());
                 ++$colonne;
             }
@@ -318,13 +318,13 @@ class SousCommissionExport
         $writer = new Xlsx($this->myExcelWriter->getSpreadsheet());
 
         return new StreamedResponse(
-            static function() use ($writer) {
+            static function () use ($writer) {
                 $writer->save('php://output');
             },
             200,
             [
                 'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                'Content-Disposition' => 'attachment;filename="Sous Commission ' . $semestre->getLibelle() . '.xlsx"',
+                'Content-Disposition' => 'attachment;filename="Sous Commission '.$semestre->getLibelle().'.xlsx"',
             ]
         );
     }
@@ -334,9 +334,8 @@ class SousCommissionExport
         $this->sousCommission = $this->sousCommissionManager->getSousCommission($semestre);
         $this->sousCommission->calcul($semestre, $anneeUniversitaire);
 
-        $this->myExcelWriter->createSheet('Sous Commission ' . $semestre->getLibelle());
+        $this->myExcelWriter->createSheet('Sous Commission '.$semestre->getLibelle());
         $this->myExcelWriter->setHeader();
-
 
         $ues = $this->sousCommission->getUes();
         $matieres = $this->sousCommission->getMatieres();
@@ -369,17 +368,17 @@ class SousCommissionExport
             }
         }
 
-        $this->myExcelWriter->mergeCellsCaR($colonne, $ligne - 1, $colonne + ($nbUes*2) + 4, $ligne - 1);
+        $this->myExcelWriter->mergeCellsCaR($colonne, $ligne - 1, $colonne + ($nbUes * 2) + 4, $ligne - 1);
         $this->myExcelWriter->writeCellXY($colonne, $ligne - 1, $semestre->getLibelle(),
             ['style' => 'HORIZONTAL_CENTER']);
 
         foreach ($ues as $ue) {
             $this->myExcelWriter->writeCellXY($colonne, $ligne,
-                'UE ' . $ue->getNumeroUe());
+                'UE '.$ue->getNumeroUe());
             $this->myExcelWriter->mergeCellsCaR($colonne, $ligne, $colonne + 1, $ligne);
             $this->myExcelWriter->writeCellXY($colonne, $ligne + 1,
                 'Moy.');
-            $this->myExcelWriter->writeCellXY($colonne+1, $ligne + 1,
+            $this->myExcelWriter->writeCellXY($colonne + 1, $ligne + 1,
                 'Dec.');
             ++$colonne;
             ++$colonne;
@@ -404,7 +403,7 @@ class SousCommissionExport
             $this->myExcelWriter->mergeCellsCaR($colonne, $ligne - 1, $colFin, $ligne - 1);
             /** @var Ue $ue */
             foreach ($s->getUes() as $ue) {
-                $this->myExcelWriter->writeCellXY($colonne, $ligne, 'UE ' . $ue->getNumeroUe());
+                $this->myExcelWriter->writeCellXY($colonne, $ligne, 'UE '.$ue->getNumeroUe());
                 $this->myExcelWriter->writeCellXY($colonne, $ligne + 1, $ue->getCoefficient());
                 ++$colonne;
             }
@@ -583,17 +582,20 @@ class SousCommissionExport
         $writer = new Xlsx($this->myExcelWriter->getSpreadsheet());
 
         return new StreamedResponse(
-            static function() use ($writer) {
+            static function () use ($writer) {
                 $writer->save('php://output');
             },
             200,
             [
                 'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                'Content-Disposition' => 'attachment;filename="Sous Commission ' . $semestre->getLibelle() . '.xlsx"',
+                'Content-Disposition' => 'attachment;filename="Sous Commission '.$semestre->getLibelle().'.xlsx"',
             ]
         );
     }
 
+    /**
+     * @throws \App\Exception\SemestreNotFoundException
+     */
     public function exportGrandJury(
         ScolaritePromo $scolaritePromo,
         AnneeUniversitaire $anneeUniversitaire
@@ -609,13 +611,13 @@ class SousCommissionExport
         $ssCommTravail = new SousCommissionTravail($semestre, $anneeUniversitaire,
             $ues->getValues(), $matieres, $etudiants->getValues(), $scolaritePromo);
 
-        $this->myExcelWriter->createSheet('Grand Jury ' . $semestre->getLibelle());
+        $this->myExcelWriter->createSheet('Grand Jury '.$semestre->getLibelle());
 
         $colonne = 1;
         $ligne = 4;
 
         $this->myExcelWriter->mergeCellsCaR(7, 3, 13, 3);
-        $this->myExcelWriter->writeCellXY(7, 3, 'Semestre ' . $semestre->getOrdreLmd());
+        $this->myExcelWriter->writeCellXY(7, 3, 'Semestre '.$semestre->getOrdreLmd());
         $this->myExcelWriter->borderCellsRange(7, 3, 13, 3);
         $this->myExcelWriter->ecritLigne([
             'N° APOGEE',
@@ -668,7 +670,7 @@ class SousCommissionExport
                 $colonne = 1;
                 $this->myExcelWriter->ecritLigne([
                     $etu->getNumEtudiant(),
-                    ucfirst($etu->getNom()) . ' ' . ucfirst($etu->getPrenom()),
+                    ucfirst($etu->getNom()).' '.ucfirst($etu->getPrenom()),
                     $etu->getDateNaissance()->format('d/m/Y'),
                     $etu->getCivilite(),
                     null !== $etu->getBac() ? $etu->getBac()->getLibelle() : 'err',
@@ -765,17 +767,22 @@ class SousCommissionExport
         $writer = new Xlsx($this->myExcelWriter->getSpreadsheet());
 
         return new StreamedResponse(
-            static function() use ($writer) {
+            static function () use ($writer) {
                 $writer->save('php://output');
             },
             200,
             [
                 'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                'Content-Disposition' => 'attachment;filename="Export Grand Jury ' . $semestre->getLibelle() . '.xlsx"',
+                'Content-Disposition' => 'attachment;filename="Export Grand Jury '.$semestre->getLibelle().'.xlsx"',
             ]
         );
     }
 
+    /**
+     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Reader\Exception
+     */
     public function exportApogee(Semestre $semestre, $file, AnneeUniversitaire $anneeUniversitaire)
     {
         $this->sousCommission = $this->sousCommissionManager->getSousCommission($semestre);
@@ -837,12 +844,12 @@ class SousCommissionExport
 
             //EXPORT
             unlink($fichier);
-            $this->myExcelRead->sauvegarde($this->dir . 'temp.xls');
+            $this->myExcelRead->sauvegarde($this->dir.'temp.xls');
 
             $nom = explode('.', $file->getClientOriginalName());
-            $stream = $this->apogeeSousCommission->transformeApogeeTexte($this->dir . 'temp.xls', $nom[0]);
+            $stream = $this->apogeeSousCommission->transformeApogeeTexte($this->dir.'temp.xls', $nom[0]);
 
-            unlink($this->dir . 'temp.xls');
+            unlink($this->dir.'temp.xls');
 
             return $stream;
         }
@@ -850,14 +857,16 @@ class SousCommissionExport
         return Constantes::PAS_DE_SOUS_COMM;
     }
 
-    private function getStyleMoyenneMatiere($moyenne)
+    private function getStyleMoyenneMatiere($moyenne): string
     {
         if ($moyenne < 10) {
             return self::COULEURS['badge bg-warning'];
         }
+
+        return '';
     }
 
-    private function getStyleMoyenneUe($moyenne)
+    private function getStyleMoyenneUe($moyenne): string
     {
         if ($moyenne < 8) {
             return self::COULEURS['badge bg-danger'];
@@ -870,14 +879,16 @@ class SousCommissionExport
         return self::COULEURS['badge bg-success'];
     }
 
-    private function getStyleDecisionUe($decision)
+    private function getStyleDecisionUe($decision): string
     {
-        if ($decision === Constantes::UE_NON_VALIDE) {
+        if (Constantes::UE_NON_VALIDE === $decision) {
             return self::COULEURS['badge bg-danger'];
         }
 
-        if ($decision === Constantes::UE_VALIDE) {
+        if (Constantes::UE_VALIDE === $decision) {
             return self::COULEURS['badge bg-success'];
         }
+
+        return '';
     }
 }

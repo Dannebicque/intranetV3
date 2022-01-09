@@ -46,7 +46,7 @@ class EtudiantSousCommission
         $this->semestre = $semestre;
     }
 
-    public function calculMoyenneSemestreMatiere()
+    public function calculMoyenneSemestreMatiere(): void
     {
         $totcoeff = 0;
         $totalMatieres = 0;
@@ -63,7 +63,7 @@ class EtudiantSousCommission
         0 !== $totcoeff ? $this->moyenneSemestrePenalisee = $totalMatieresPenalise / $totcoeff + $this->bonif : $this->moyenneSemestrePenalisee = 0;
     }
 
-    private function calculBonficiation()
+    private function calculBonficiation(): void
     {
         foreach ($this->moyenneMatieres as $moyenneMatiere) {
             if (true === $moyenneMatiere->matiere->bonification) {
@@ -72,7 +72,7 @@ class EtudiantSousCommission
         }
     }
 
-    public function calculMoyenneSemestreUes()
+    public function calculMoyenneSemestreUes(): void
     {
         $totcoeff = 0;
         $totalUes = 0;
@@ -150,7 +150,7 @@ class EtudiantSousCommission
         return false;
     }
 
-    public function getStyleMoyenneSemestre()
+    public function getStyleMoyenneSemestre(): string
     {
         return $this->styleMoyenne($this->moyenneSemestre);
     }
@@ -164,7 +164,7 @@ class EtudiantSousCommission
         return '';
     }
 
-    public function getStyleMoyenneSemestrePenalisee()
+    public function getStyleMoyenneSemestrePenalisee(): string
     {
         return $this->styleMoyenne($this->moyenneSemestrePenalisee);
     }
@@ -179,7 +179,7 @@ class EtudiantSousCommission
         };
     }
 
-    public function getAbsencesStyle()
+    public function getAbsencesStyle(): string
     {
         $nbAbsences = $this->nbAbsences();
         if ($nbAbsences < 5) {

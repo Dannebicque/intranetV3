@@ -52,14 +52,15 @@ class SousComissionController extends BaseController
     }
 
     #[Route(path: '/travail/{semestre}', name: 'administration_sous_commission_travail')]
-    public function travail(TypeMatiereManager $typeMatiereManager, SousCommission $sousCommission, SousCommissionSauvegarde $sousCommissionSauvegarde, Semestre $semestre): Response
+    public function travail(TypeMatiereManager $typeMatiereManager, SousCommissionManager $sousCommissionManager, SousCommissionSauvegarde $sousCommissionSauvegarde, Semestre $semestre): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $semestre);
+        $sousCommission = $sousCommissionManager->getSousCommission($semestre);
         $matieres = $typeMatiereManager->findBySemestre($semestre);
         $sousCommission->calcul($semestre, $this->dataUserSession->getAnneeUniversitaire());
         $sousCommissionTravail = $sousCommissionSauvegarde->sauvegardeTravail($sousCommission, $matieres);
 
-        return $this->render('administration/sous_commission/travail.html.twig', [
+        return $this->render('administration/sous_commission/'.$sousCommission::TEMPLATE_TRAVAIL, [
             'semestre' => $semestre,
             'sc' => $sousCommissionTravail,
         ]);
@@ -74,12 +75,10 @@ class SousComissionController extends BaseController
             $matieres = $typeMatiereManager->findBySemestre($semestre);
             $notes = $noteRepository->findBySemestre($matieres, $scolaritePromo->getAnneeUniversitaire());
 
-            $em = $this->getDoctrine()->getManager();
-
             foreach ($notes as $n) {
                 if (-0.01 === $n->getNote()) {
                     $n->setNote(0);
-                    $em->persist($n);
+                    $this->entityManager->persist($n);
                 }
             }
 
@@ -134,10 +133,15 @@ class SousComissionController extends BaseController
     public function exporter(SousCommissionExport $sousCommission, Semestre $semestre): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $semestre);
-
+        if ($semestre->getDiplome()->getTypeDiplome()->getApc() === true) {
+            return $sousCommission->exportApc($semestre, $this->dataUserSession->getAnneeUniversitaire());
+        }
         return $sousCommission->export($semestre, $this->dataUserSession->getAnneeUniversitaire());
     }
 
+    /**
+     * @throws \App\Exception\SemestreNotFoundException
+     */
     #[Route(path: '/grand-jury/{scolaritePromo}', name: 'administration_sous_commission_exporter_grand_jury')]
     public function grandJury(SousCommissionExport $sousCommissionExport, ScolaritePromo $scolaritePromo): Response
     {

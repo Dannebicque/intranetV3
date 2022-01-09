@@ -86,7 +86,7 @@ class SousCommissionTravail
         return $this->ssComm;
     }
 
-    public function recupereScolarite($etudiant)
+    public function recupereScolarite($etudiant): array
     {
         $tScolarite = [];
         //on ne récupère la scolarité que par rapport au diplôme en cours

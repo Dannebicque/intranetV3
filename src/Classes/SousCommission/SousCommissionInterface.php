@@ -17,4 +17,7 @@ interface SousCommissionInterface
     public function calcul(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): void;
 
     public function calculStats(array $bacs): array;
+
+    public function getBySemestreAnneeUniversitaire(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire);
+
 }

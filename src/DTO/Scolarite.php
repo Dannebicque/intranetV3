@@ -41,7 +41,7 @@ class Scolarite
         };
     }
 
-    public function getStyleNote($note)
+    public function getStyleNote($note): string
     {
         if ($note < 10) {
             return 'badge bg-danger';

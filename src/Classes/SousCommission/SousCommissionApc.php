@@ -15,6 +15,7 @@ use App\Classes\Matieres\TypeMatiereManager;
 use App\DTO\EtudiantSousCommissionApc;
 use App\DTO\StatitiquesBac;
 use App\Entity\AnneeUniversitaire;
+use App\Entity\ScolaritePromo;
 use App\Entity\Semestre;
 use App\Repository\ApcRessourceCompetenceRepository;
 use App\Repository\ApcSaeCompetenceRepository;
@@ -25,6 +26,7 @@ use Doctrine\ORM\EntityManagerInterface;
 class SousCommissionApc extends AbstractSousCommission implements SousCommissionInterface
 {
     public const TEMPLATE_LIVE = 'liveApc.html.twig';
+    public const TEMPLATE_TRAVAIL = 'travailApc.html.twig';
 
     public function __construct(
         EntityManagerInterface $entityManager,
@@ -88,4 +90,13 @@ class SousCommissionApc extends AbstractSousCommission implements SousCommission
     {
         return $this->sousCommissionEtudiant[$idEtudiant];
     }
+
+    public function getBySemestreAnneeUniversitaire(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire)
+    {
+        return $this->entityManager->getRepository(ScolaritePromo::class)->findOneBy([
+            'semestre' => $semestre->getId(),
+            'anneeUniversitaire' => $anneeUniversitaire->getId(),
+        ]);
+    }
+
 }

@@ -1,0 +1,206 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    Sous <strong>commission du semestre {{ semestre.libelle }}</strong>
+{% endblock %}
+
+{% block headerright %}
+    <div class="right gap-items-2">
+        {% for sem in user_data.semestresActifs %}
+            <a href="{{ path('administration_sous_commission_travail', {semestre:sem.id}) }}"
+               class="btn btn-round {% if sem.id == semestre.id %}btn-primary{% endif %}"
+               title="{{ 'atitle.changer.semestre'|trans }}"
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
+
+            >{{ sem.libelle }}</a>
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('administration_sous_commission_live', {semestre:semestre.id}) }}" class="btn btn-info
+            btn-float btn-sm" data-bs-toggle="tooltip" data-bs-placement="bottom"
+               title="{{ 'atitle.basculer.sous_comm_live'|trans }}"><i
+                        class="fas fa-chart-line"></i></a>
+            <a href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom"
+               title="{{ 'atitle.retour_semestres'|trans }}"><i class="fas fa-arrow-left"></i></a>
+            <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom"
+               title="{{ 'atitle.retour_administration'|trans }}"><i class="{{ iconDashboard }}"><span class="sr-only">dashboard</span></i></a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title"><strong>Sous commission</strong> | {{ semestre.display }}</h4>
+        </div>
+        <div class="card-body">
+            <div class="alert alert-info">
+                <strong>Information </strong>. Dans cette partie vous avez le résultat de la sous
+                                             commission {{ semestre.display }}. Les données sont sauvegardées et
+                                             peuvent être modifiée en fonction des décisions précises. A la fin
+                                             de la sous-commission il est possible de publier où non les
+                                             résultats aux étudiants. Un ensemble de fonctionnalités sont
+                                             disponibles à l'issue de cette sous-commission (courriers, relevé
+                                             de note, ...).
+            </div>
+            <br/>
+            <div class="alert alert-danger">
+                <strong>Attention</strong> Cette fonctionnalité est relativement gourmande en ressource, il est
+                                           préférable de l'utiliser à bon escient et non pour avoir des
+                                           simulations de l'année. Pour cela aller dans la rubrique application
+                                           > Sous-Commission
+            </div>
+            <div style="overflow: auto; width: 100%; height: 500px">
+                <table class="table table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th>Etudiant</th>
+                        {% for ue in sc.ues %}
+                            <th>Moy. UE {{ ue.numeroue }}</th>
+                            <th>Dec. UE {{ ue.numeroue }}</th>
+                        {% endfor %}
+                        <th>Dec. Sem.</th>
+                        <th>Proposition</th>
+                        <th>NbAbs</th>
+                        {% for matiere in sc.matieres %}
+                            {% if matiere.nbNotes > 0 and matiere.suspendu == false %}
+                                <td>{{ matiere.codeMatiere }}</td>
+                            {% endif %}
+                        {% endfor %}
+                    </tr>
+                    </thead>
+                    {% for etudiant in sc.etudiants %}
+                        <tr>
+                            {% if sc.ssComm.publie == false %}
+                                <td>{{ etudiant.nom|upper }} {{ etudiant.prenom|capitalize }}</td>
+                                {% if sc.etudiant(etudiant.id) != null %}
+                                    {% for ue in sc.ues %}
+                                        <td>
+                                            {% if sc.ue(etudiant.id, ue.id) != null %}
+                                                <a class="myedit"
+                                                   data-field="moyenne_{{ ue.id }}"
+                                                   href="{{ path('administration_ss_comm_ajax_edit', {id:sc.etudiant(etudiant.id).id, type:'ue'}) }}"
+                                                   data-title="Modifier la moyenne de l'UE">
+                                                    {{ sc.ue(etudiant.id, ue.id).moyenne|number_format(3) }}</a>
+
+                                            {% else %}
+                                                0
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if sc.ue(etudiant.id, ue.id) != null %}
+                                                <a class="myedit"
+                                                   data-field="decision_{{ ue.id }}"
+                                                   href="{{ path('administration_ss_comm_ajax_edit', {id:sc.etudiant(etudiant.id).id, type:'ue'}) }}"
+                                                   data-title="Modifier la décision de l'UE">
+                                                    {{ sc.ue(etudiant.id, ue.id).decision }}</a>
+                                            {% else %}
+                                                ??
+                                            {% endif %}
+                                        </td>
+                                    {% endfor %}
+                                    <td>
+                                        <a class="myedit"
+                                           data-field="decision"
+                                           href="{{ path('administration_ss_comm_ajax_edit', {id:sc.etudiant(etudiant.id).id, type:'semestre'}) }}"
+                                           data-title="Modifier la décision">
+                                            {{ sc.etudiant(etudiant.id).decision }}</a>
+                                    </td>
+                                    <td>
+                                        <a class="myedit"
+                                           data-field="proposition"
+                                           href="{{ path('administration_ss_comm_ajax_edit', {id:sc.etudiant(etudiant.id).id, type:'semestre'}) }}"
+                                           data-title="Modifier la proposition">
+                                            {{ sc.etudiant(etudiant.id).proposition }}</a>
+                                    </td>
+                                    <td>
+                                        <a class="myedit"
+                                           data-field="nbAbsences"
+                                           href="{{ path('administration_ss_comm_ajax_edit', {id:sc.etudiant(etudiant.id).id, type:'semestre'}) }}"
+                                           data-title="Modifier le nombre d'absence">
+                                            {{ sc.etudiant(etudiant.id).nbAbsences }}</a>
+                                    </td>
+                                    {% for matiere in sc.matieres %}
+                                        {% if matiere.nbNotes > 0 and matiere.suspendu == false %}
+                                            <td>
+                                                {% if sc.matiere(etudiant.id, matiere.typeIdMatiere) != null %}
+                                                    {% if sc.matiere(etudiant.id, matiere.typeIdMatiere).pasoption is defined %}
+                                                        N.C.
+                                                    {% else %}
+                                                        <a class="myedit"
+                                                           data-field="moyenne_{{ matiere.id }}"
+                                                           href="{{ path('administration_ss_comm_ajax_edit', {id:sc.etudiant(etudiant.id).id, type:'matiere'}) }}"
+                                                           data-title="Modifier la moyenne du module">
+                                                            {{ sc.matiere(etudiant.id, matiere.typeIdMatiere).moyenne|number_format(2) }}
+                                                        </a>
+                                                    {% endif %}
+                                                {% else %}
+                                                    0
+                                                {% endif %}
+                                            </td>
+                                        {% endif %}
+                                    {% endfor %}
+                                {% else %}
+                                    <td>...</td>
+                                {% endif %}
+                                {# todo: mettre parcours précédents #}
+                            {% else %}
+                                <td>{{ etudiant.nom|upper }} {{ etudiant.prenom|capitalize }}</td>
+                                <td>{{ sc.etudiant(etudiant.id).moyenne|number_format(3) }}</td>
+                                {% for ue in sc.ues %}
+                                    <td>{{ sc.ue(etudiant.id, ue.id).moyenne|number_format(3) }}</td>
+                                {% endfor %}
+                                <td>{{ sc.etudiant(etudiant.id).decision }}</td>
+                                <td>{{ sc.etudiant(etudiant.id).proposition }}</td>
+                                <td>{{ sc.etudiant(etudiant.id).nbAbsences }}</td>
+                                {% for matiere in sc.matieres %}
+                                    {% if sc.matiere(etudiant.id, matiere.typeIdMatiere) != null %}
+                                        {% if sc.matiere(etudiant.id, matiere.typeIdMatiere).pasoption is defined %}
+                                            <td>N.C.</td>
+                                        {% else %}
+                                            <td>{{ sc.matiere(etudiant.id, matiere.typeIdMatiere).moyenne|number_format(2) }}</td>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <br>
+            <div class="row gap-y">
+                <div class="col-sm-12 col-md-6">
+                    <a href="{{ path('administration_sous_commission_recalculer', {ssComm:sc.getSsComm.id}) }}"
+                       class="btn btn-block btn-warning">Recalculer la sous-commission (effectue un nouveau calcul
+                                                         des moyennes (semestre et UE). Modifie les décisions en
+                                                         fonction des résultats.</a>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    {% if sc.getSsComm.publie == true %}
+                        <a href="{{ path('administration_sous_commission_depublier', {ssComm:sc.getSsComm.id}) }}"
+                           class="btn btn-block btn-info">Résultats publiés le {{ sc.getSsComm
+                            .datePublication|format_datetime('short', 'short') }}. Dépublier pour modifier.</a>
+                    {% else %}
+                        <a href="{{ path('administration_sous_commission_publier', {ssComm:sc.getSsComm.id}) }}"
+                           class="btn btn-block btn-success">Publier les résultats aux étudiants</a>
+                    {% endif %}
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <a href="{{ path('administration_sous_commission_purger', {scolaritePromo:sc.getSsComm.id}) }}"
+                       class="btn btn-block btn-danger">Nettoyer les notes (remplace les -0.01 par des 0)
+                        <strong>Attention, opération irréversible !</strong></a>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <a href="{{ path('administration_sous_commission_exporter_grand_jury', {scolaritePromo:sc.getSsComm.id}) }}"
+                       class="btn btn-block btn-success">Sauvegarde Excel / Fichier de Grand Jury</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+

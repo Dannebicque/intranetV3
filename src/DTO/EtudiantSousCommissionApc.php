@@ -103,29 +103,25 @@ class EtudiantSousCommissionApc
 //        return $this->moyenneUes;
 //    }
 
-    public function calculMoyenneUes(array $matieres, $ressources, $saes)
+    public function calculMoyenneUes(array $matieres, $ressources, $saes): void
     {
         foreach ($matieres as $matiere) {
-            if ($matiere->bonification === true) {
+            if (true === $matiere->bonification) {
                 $this->bonification += $this->moyenneMatieres[$matiere->getTypeIdMatiere()]->getBonification();
+            } elseif (array_key_exists($matiere->getTypeIdMatiere(), $this->moyenneMatieres)) {
+                $tabs['matieres'][$matiere->codeElement]['moyenne'] = $this->moyenneMatieres[$matiere->getTypeIdMatiere()]->getMoyenne();
+                $tabs['matieres'][$matiere->codeElement]['moyennePenalisee'] = $this->moyenneMatieres[$matiere->getTypeIdMatiere()]->getMoyennePenalisee();
             } else {
-                if (array_key_exists($matiere->getTypeIdMatiere(), $this->moyenneMatieres)) {
-                    $tabs['matieres'][$matiere->codeElement]['moyenne'] = $this->moyenneMatieres[$matiere->getTypeIdMatiere()]->getMoyenne();
-                    $tabs['matieres'][$matiere->codeElement]['moyennePenalisee'] = $this->moyenneMatieres[$matiere->getTypeIdMatiere()]->getMoyennePenalisee();
-                } else {
-                    $tabs['matieres'][$matiere->codeElement]['moyenne'] = 0;
-                    $tabs['matieres'][$matiere->codeElement]['moyennePenalisee'] = 0;
-                }
+                $tabs['matieres'][$matiere->codeElement]['moyenne'] = 0;
+                $tabs['matieres'][$matiere->codeElement]['moyennePenalisee'] = 0;
             }
-
-
         }
 
-        foreach ($this->moyenneUes as $ueId => $ue) {
+        foreach ($this->moyenneUes as $ue) {
             $competenceId = $ue->ue->getApcCompetence()?->getId();
 
             foreach ($matieres as $matiere) {
-                if ($matiere->bonification === false) {
+                if (false === $matiere->bonification) {
                     if (array_key_exists($ue->ue->getApcCompetence()->getId(),
                             $ressources) && array_key_exists($matiere->codeElement,
                             $ressources[$ue->ue->getApcCompetence()->getId()])) {
