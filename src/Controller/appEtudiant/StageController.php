@@ -22,6 +22,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -52,6 +53,11 @@ class StageController extends BaseController
     #[Route(path: '/details/{id}', name: 'application_etudiant_stage_detail', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function detailsStage(StageEtudiant $stageEtudiant): Response
     {
+        if ($stageEtudiant->getEtudiant()->getId() !== $this->getUser()->getId()) {
+            //si incohérence entre l'utilisateur connecté et le stage
+            throw new AccessDeniedException('Vous n\'êtes pas l\'auteur de ce formulaire de stage');
+        }
+
         return $this->render('appEtudiant/stage/details.html.twig', [
             'stageEtudiant' => $stageEtudiant,
         ]);
@@ -65,6 +71,11 @@ class StageController extends BaseController
     #[Route(path: '/formulaire/{stageEtudiant}', name: 'application_etudiant_stage_formulaire', methods: 'GET|POST')]
     public function create(EventDispatcherInterface $eventDispatcher, Request $request, StageEtudiant $stageEtudiant): Response
     {
+        if ($stageEtudiant->getEtudiant()->getId() !== $this->getUser()->getId()) {
+            //si incohérence entre l'utilisateur connecté et le stage
+            throw new AccessDeniedException('Vous n\'êtes pas l\'auteur de ce formulaire de stage');
+        }
+
         if (null !== $stageEtudiant->getStagePeriode()) {
             $form = $this->createForm(StageEtudiantEtudiantType::class, $stageEtudiant, [
                 'flexible' => $stageEtudiant->getStagePeriode()->getDatesFlexibles(),
@@ -99,6 +110,11 @@ class StageController extends BaseController
     #[Route(path: '/periode/info/{id}', name: 'application_etudiant_stage_periode_info')]
     public function periodeInfo(StageEtudiant $stageEtudiant): Response
     {
+        if ($stageEtudiant->getEtudiant()->getId() !== $this->getUser()->getId()) {
+            //si incohérence entre l'utilisateur connecté et le stage
+            throw new AccessDeniedException('Vous n\'êtes pas l\'auteur de ce formulaire de stage');
+        }
+
         return $this->render('appEtudiant/stage/periodeInfo.html.twig', [
             'stageEtudiant' => $stageEtudiant,
             'stagePeriode' => $stageEtudiant->getStagePeriode(),
@@ -108,6 +124,11 @@ class StageController extends BaseController
     #[Route(path: '/entreprise/stage/info/{id}', name: 'application_etudiant_stage_entreprise_info')]
     public function entrepriseInfo(StageEtudiant $stageEtudiant): Response
     {
+        if ($stageEtudiant->getEtudiant()->getId() !== $this->getUser()->getId()) {
+            //si incohérence entre l'utilisateur connecté et le stage
+            throw new AccessDeniedException('Vous n\'êtes pas l\'auteur de ce formulaire de stage');
+        }
+
         return $this->render('appEtudiant/stage/entrepriseInfo.html.twig', [
             'stageEtudiant' => $stageEtudiant,
         ]);
