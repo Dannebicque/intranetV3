@@ -35,7 +35,7 @@ class ApogeeEtudiant extends Apogee
         return [
             'etudiant' => [
                 'setNumEtudiant' => $data['COD_ETU'],
-                'setNumIne' => $data['COD_NNE_IND'] . $data['COD_CLE_NNE_IND'],
+                'setNumIne' => $data['COD_NNE_IND'].$data['COD_CLE_NNE_IND'],
                 'setDateNaissance' => Tools::convertApogeeDateToObject($data['DATE_NAI_IND']),
                 'setLieuNaissance' => $data['LIB_VIL_NAI_ETU'],
                 'setPromotion' => $data['DAA_ETB'],

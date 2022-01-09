@@ -55,7 +55,7 @@ class ApogeeMaquette
         $semestre->setMoisDebut(9);
         $semestre->setAnnee($annee);
         $ordreLmd = $elpAnnee['COD_ELP'][3];
-        $ordreAnnee = $ordreLmd % 2 === 0 ? 2 : 1;
+        $ordreAnnee = 0 === $ordreLmd % 2 ? 2 : 1;
         $semestre->setOrdreAnnee($ordreAnnee);
         $semestre->setOrdreLmd($ordreLmd);
         $semestre->setPpnActif($pn);
@@ -64,7 +64,7 @@ class ApogeeMaquette
         return $semestre;
     }
 
-    public function createElement($elp, Semestre $semestre): ApcRessource|ApcSae|null
+    public function createElement($elp, Semestre $semestre): ApcRessource | ApcSae | null
     {
         if ('R' === substr($elp['LIC_ELP'], 1, 1)) {
             //ressource
@@ -87,6 +87,7 @@ class ApogeeMaquette
             if ('TP' === $elp['COD_TYP_HEU']) {
                 $res->setTpPpn($elp['NBR_HEU_ELP']);
             }
+
             return $res;
         }
 
@@ -117,7 +118,7 @@ class ApogeeMaquette
         return null;
     }
 
-    public function updateElement(ApcSae|ApcRessource $obj, $elpSemestre): ApcRessource|ApcSae
+    public function updateElement(ApcSae | ApcRessource $obj, $elpSemestre): ApcRessource | ApcSae
     {
         if ('CM' === $elpSemestre['COD_TYP_HEU']) {
             $obj->setCmPpn($elpSemestre['NBR_HEU_ELP']);
@@ -136,7 +137,7 @@ class ApogeeMaquette
     {
         $competence = new ApcCompetence($annee->getDiplome());
         $competence->setLibelle($elpAnnee['LIB_ELP']);
-        $competence->setCouleur('c' . substr($elpAnnee['COD_ELP'], -1));
+        $competence->setCouleur('c'.substr($elpAnnee['COD_ELP'], -1));
         $competence->setNomCourt($elpAnnee['LIC_ELP']);
         $this->entityManager->persist($competence);
         $niveau = new ApcNiveau($competence);
@@ -186,7 +187,7 @@ class ApogeeMaquette
         $res->setUe($ue);
         $coeff = explode('(', $elp['LIB_ELP']);
         $toto = substr($coeff[count($coeff) - 1], 0, -1);
-        $res->setNbEcts((float)(trim($toto)));
+        $res->setNbEcts((float) (trim($toto)));
         $res->setLibelleCourt($elp['LIC_ELP']);
         $res->setCoefficient($res->getNbEcts());
         $res->setPpn($pn);

@@ -105,16 +105,16 @@ class ApogeeSousCommission extends Apogee
             }
 
             // on est à la fin des codes on tague le fichier texte
-            if ($v_cell_occ == 2) {
+            if (2 == $v_cell_occ) {
                 $notesSheet->setCellValueByColumnAndRow(1, $j, 'APO_COL_VAL_FIN');
                 ++$j;
                 $v_cell_occ = 1;
             }
 
             // recopie de la ligne de codes
-            if ($v_cell_occ == 1) {
+            if (1 == $v_cell_occ) {
                 // copie les cellules de la selection deb:fin (colonne)
-                $cellValues = $maquetteSheet->rangeToArray($deb . ':' . $fin);
+                $cellValues = $maquetteSheet->rangeToArray($deb.':'.$fin);
 
                 // colle les cellules transposées (en ligne)
                 foreach ($cellValues as $cellValue) {
@@ -124,7 +124,7 @@ class ApogeeSousCommission extends Apogee
 
                 // conversion_adm_temoin
                 $cellule = $notesSheet->getCellByColumnAndRow(10, $j);
-                if (empty($cellule->getValue()) && $v_cell_apo_col_val_fin == 0) {
+                if (empty($cellule->getValue()) && 0 == $v_cell_apo_col_val_fin) {
                     $cellule->setValue(1);
                 }
                 if ('x' === $cellule->getValue()) {
@@ -175,9 +175,8 @@ class ApogeeSousCommission extends Apogee
             $fin = $this->getNewCoordinates($titre, 0, $v_nb_lig - $numLigne);
             // si on est pas a la derniere colonne
             if ($titre != $celluleFin) {
-
                 // copie les cellules de la selection deb:fin (colonne)
-                $cellValues = $maquetteSheet->rangeToArray($deb . ':' . $fin);
+                $cellValues = $maquetteSheet->rangeToArray($deb.':'.$fin);
 
                 // recupere le titre
                 $val_titre = $maquetteSheet->getCell($titre)->getValue();
@@ -192,7 +191,7 @@ class ApogeeSousCommission extends Apogee
                     }
 
                     if ('apol_a01_code' !== mb_strtolower($G_tab_apoL[$key]) && 'apol_a02_nom' !== mb_strtolower($G_tab_apoL[$key]) && 'apol_a03_prenom' !== mb_strtolower($G_tab_apoL[$key]) && 'apol_04_naissance' !== mb_strtolower($G_tab_apoL[$key])) {
-                        $cell = Coordinate::stringFromColumnIndex($i) . $j;
+                        $cell = Coordinate::stringFromColumnIndex($i).$j;
                         $notesSheet->getStyle($cell)->getNumberFormat()->setFormatCode('#,##0.00');
                     }
                     ++$j;
@@ -217,20 +216,20 @@ class ApogeeSousCommission extends Apogee
         $objWriter->setDelimiter("\t");
         $objWriter->setLineEnding("\r\n"); // cr lf (Windows)
         ob_start();
-        $excelOutput = ob_get_clean();
+//        $excelOutput = ob_get_clean();
 
-        // conversion en iso-8859-1, car PHPExcel genere de l'utf-8
-        $f = mb_convert_encoding($excelOutput, 'iso-8859-1');
-        $f = trim($f) . "\r\n";
+//        // conversion en iso-8859-1, car PHPExcel genere de l'utf-8
+//        $f = mb_convert_encoding($excelOutput, 'iso-8859-1');
+//        $f = trim($f)."\r\n";
 
         return new StreamedResponse(
-            function() use ($objWriter) {
+            function () use ($objWriter) {
                 $objWriter->save('php://output');
             },
             200,
             [
                 'Content-Type' => 'text/plain',
-                'Content-Disposition' => 'attachment;filename="' . $nomfichier . '.txt"',
+                'Content-Disposition' => 'attachment;filename="'.$nomfichier.'.txt"',
                 'Cache-Control' => 'max-age=0',
             ]
         );
@@ -238,16 +237,15 @@ class ApogeeSousCommission extends Apogee
 
     /**
      * Calcule les nouvelles coordonnées d'une cellule à partir des offsets x et y.
-     *
      */
     public function getNewCoordinates($cellCoordonate, int $offsetX = 0, int $offsetY = 0): string
     {
         if (2 === mb_strlen($cellCoordonate)) {
             $colonne = mb_substr($cellCoordonate, 0, 1);
-            $ligne = (int)mb_substr($cellCoordonate, 1, 5);
+            $ligne = (int) mb_substr($cellCoordonate, 1, 5);
         } else {
             $colonne = mb_substr($cellCoordonate, 0, 2);
-            $ligne = (int)mb_substr($cellCoordonate, 2, 5);
+            $ligne = (int) mb_substr($cellCoordonate, 2, 5);
         }
         if (0 !== $offsetX) { // decalage colonne
             $colonne += $offsetX;
@@ -256,6 +254,6 @@ class ApogeeSousCommission extends Apogee
             $ligne += $offsetY;
         }
 
-        return $colonne . $ligne;
+        return $colonne.$ligne;
     }
 }

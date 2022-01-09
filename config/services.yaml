@@ -6,9 +6,9 @@
 parameters:
     locale: fr
     BASE_URL: '%env(resolve:BASE_URL)%'
-    APOGEE_LOGIN: '%env(resolve:APOGEE_LOGIN)%'
-    APOGEE_PASSWORD: '%env(resolve:APOGEE_PASSWORD)%'
-    APOGEE_STRING: '%env(resolve:APOGEE_STRING)%'
+    apogee.login: '%env(resolve:APOGEE_LOGIN)%'
+    apogee.password: '%env(resolve:APOGEE_PASSWORD)%'
+    apogee.string: '%env(resolve:APOGEE_STRING)%'
     MSSQL_PASS: '%env(resolve:MSSQL_PASS)%'
     MSSQL_USER: '%env(resolve:MSSQL_USER)%'
     LDAP_HOST: '%env(resolve:LDAP_HOST)%'

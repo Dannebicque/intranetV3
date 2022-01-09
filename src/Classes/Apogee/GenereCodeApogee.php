@@ -9,8 +9,6 @@
 
 namespace App\Classes\Apogee;
 
-use App\Entity\ApcRessource;
-use App\Entity\ApcSae;
 use App\Entity\Diplome;
 use App\Repository\ApcRessourceRepository;
 use App\Repository\ApcSaeRepository;
@@ -51,21 +49,21 @@ class GenereCodeApogee
                 4); //je récupère le code étape de l'année, et je retire le 5 et le nuéro.
             $semestres = $annee->getSemestres();
             foreach ($semestres as $semestre) {
-                $semestre->setCodeElement($debut . $semestre->getOrdreLmd());
+                $semestre->setCodeElement($debut.$semestre->getOrdreLmd());
 
                 $ues = $semestre->getUes();
                 foreach ($ues as $ue) {
-                    $ue->setCodeElement($debut . $semestre->getOrdreLmd() . $ue->getNumeroUe());
+                    $ue->setCodeElement($debut.$semestre->getOrdreLmd().$ue->getNumeroUe());
                 }
 
                 $ressources = $this->apcRessourceRepository->findBySemestre($semestre);
                 foreach ($ressources as $ressource) {
                     if (1 === count($ressource->getApcRessourceCompetences())) {
                         $ue = $ressource->getApcRessourceCompetences()[0]->getCompetence()->getCouleur();
-                        $ressource->setCodeElement($debut . $semestre->getOrdreLmd() . $ue[1] . substr($ressource->getCodeMatiere(),
+                        $ressource->setCodeElement($debut.$semestre->getOrdreLmd().$ue[1].substr($ressource->getCodeMatiere(),
                                 -2));
                     } else {
-                        $ressource->setCodeElement($debut . $semestre->getOrdreLmd() . 'M' . substr($ressource->getCodeMatiere(),
+                        $ressource->setCodeElement($debut.$semestre->getOrdreLmd().'M'.substr($ressource->getCodeMatiere(),
                                 -2));
                     }
                 }
@@ -74,10 +72,10 @@ class GenereCodeApogee
                 foreach ($saes as $sae) {
                     if (1 === count($sae->getApcSaeCompetences())) {
                         $ue = $sae->getApcSaeCompetences()[0]->getCompetence()->getCouleur();
-                        $sae->setCodeElement($debut . $semestre->getOrdreLmd() . $ue[1] . ((int)substr($sae->getCodeMatiere(),
+                        $sae->setCodeElement($debut.$semestre->getOrdreLmd().$ue[1].((int) substr($sae->getCodeMatiere(),
                                     -2) + 50));
                     } else {
-                        $sae->setCodeElement($debut . $semestre->getOrdreLmd() . 'M' . ((int)substr($sae->getCodeMatiere(),
+                        $sae->setCodeElement($debut.$semestre->getOrdreLmd().'M'.((int) substr($sae->getCodeMatiere(),
                                     -2) + 50));
                     }
                 }

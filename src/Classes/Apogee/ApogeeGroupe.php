@@ -44,7 +44,7 @@ class ApogeeGroupe extends Apogee
             'SELECT INDIVIDU.COD_ETU, GROUPE.COD_EXT_GPE FROM IND_AFFECTE_GPE INNER JOIN GROUPE ON GROUPE.COD_GPE=IND_AFFECTE_GPE.COD_GPE INNER JOIN INDIVIDU ON INDIVIDU.COD_IND=IND_AFFECTE_GPE.COD_IND INNER JOIN GPE_OBJ ON GPE_OBJ.COD_GPE=IND_AFFECTE_GPE.COD_GPE INNER JOIN INS_ADM_ETP ON INDIVIDU.COD_IND = INS_ADM_ETP.COD_IND WHERE INS_ADM_ETP.COD_ETP=:semestre AND INS_ADM_ETP.COD_VRS_VET=:version');
         $stid->execute([
             ':semestre' => $semestre->getAnnee()->getCodeEtape(),
-            ':version' => $semestre->getAnnee()->getCodeVersion()
+            ':version' => $semestre->getAnnee()->getCodeVersion(),
         ]);
 
         return $stid;

@@ -31,9 +31,9 @@ abstract class Apogee
     protected function connect(): ?PDO
     {
         try {
-            $this->conn = new PDO('oci:dbname='.$this->parameterBag->get('APOGEE_STRING'),
-                $this->parameterBag->get('APOGEE_LOGIN'),
-                $this->parameterBag->get('APOGEE_PASSWORD'));
+            $this->conn = new PDO('oci:dbname='.$this->parameterBag->get('apogee.string'),
+                $this->parameterBag->get('apogee.login'),
+                $this->parameterBag->get('apogee.password'));
 
             return $this->conn;
         } catch (PDOException $e) {
