@@ -35,7 +35,7 @@
     <div class="card-body">
         <div class="row justify-content-end">
             <div class="col-md-3 col-sm-12 mt-2 d-grid">
-                <div class="btn-group d-block">
+                <div class="btn-group">
                     {% if user_data.user.diplome.optSemainesVisibles > 2 or user_data.user.diplome
                     .optSemainesVisibles == 0 %}
                         <a class="btn btn-primary" href="{{ path('agenda_index', {semaine:edt.semainePrecedente,
@@ -44,7 +44,8 @@
                            title="Semaine précédente"
                            id="semainePrecedente"><i
                                     class="fa fa-caret-left"></i><span class="sr-only">Semaine précédente</span></a>
-                        <a class="btn btn-secondary" href="{{ path('agenda_index', {semaine:'now'|date('W')}) }}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cette semaine"><i class="fa
+                        <a class="btn btn-secondary d-block" href="{{ path('agenda_index', {semaine:'now'|date('W')}) }}"
+                           data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cette semaine"><i class="fa
 	fa-calendar"></i> Semaine</a>
                         <a class="btn btn-primary" href="{{ path('agenda_index', {semaine:edt.semaineSuivante,filtre:'etudiant'}) }}"
                            data-bs-toggle="tooltip" data-bs-placement="bottom"
@@ -73,8 +74,8 @@
                     {% endif %}
                 </div>
             </div>
-            <div class="col-sm-12 hide-on-large mt-2 d-grid">
-                <div class="btn-group d-block">
+            <div class="col-sm-12 d-md-none d-md-block mt-2 d-grid">
+                <div class="btn-group" role="group">
                     <a class="btn btn-primary w-25" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Jour précédent"
                        id="jourPrecedent"><i
                                 class="fa fa-caret-left"></i><span class="sr-only">Jour précédent</span></a>
