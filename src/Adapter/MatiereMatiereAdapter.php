@@ -12,9 +12,6 @@ namespace App\Adapter;
 use App\DTO\Matiere;
 use App\DTO\MatiereCollection;
 use App\DTO\Ue;
-use App\Entity\ApcRessource;
-use App\Entity\ApcSae;
-use App\Interfaces\MatiereEntityInterface;
 
 class MatiereMatiereAdapter extends AbstractMatiereAdapter implements MatiereAdapterInterface
 {
@@ -37,7 +34,7 @@ class MatiereMatiereAdapter extends AbstractMatiereAdapter implements MatiereAda
             $m->id = $matiere->getId();
             $m->commentaire = $matiere->getCommentaire();
             $m->nbEcts = $matiere->getNbEcts();
-            $m->pac = $matiere->getPac();
+            $m->bonification = $matiere->getPac();
 //            $m->ue_id = $matiere->getUe() ? $matiere->getUe()->getId() : 0;
 //            $m->ue_display = $matiere->getUe() ? $matiere->getUe()->getDisplay() : '-';
 //            $m->ue_numero = $matiere->getUe()?->getNumeroUe();
