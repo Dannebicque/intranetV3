@@ -169,6 +169,7 @@ class StageSubscriber implements EventSubscriberInterface
         $this->mailerFromTwig->initEmail();
         $this->mailerFromTwig->setTemplate('mails/stages/stage_convention_envoyee.txt.twig', ['stageEtudiant' => $stageEtudiant]);
         $this->mailerFromTwig->attachFile($this->dir.'Convention-'.$stageEtudiant->getEtudiant()->getNom().'.pdf');
+        $this->mailerFromTwig->attachFile($this->dir.'modes_operatoires_signature_pdf.pdf');
         $this->mailerFromTwig->sendMessage( $stageEtudiant->getEtudiant()->getMails(), 'Convention de stage pour signature', ['replyTo' => $this->responsablesStagesMails]);
 
     }
