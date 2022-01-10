@@ -106,7 +106,7 @@ class SousCommissionSauvegarde
                     foreach ($matieres as $matiere) {
                         if (array_key_exists($matiere->getTypeIdMatiere(), $scEtudiant->moyenneMatieres)) {
                             if (true === $matiere->bonification) {
-                                $tMatiere[$matiere->getTypeIdMatiere()]['moyenne'] = ($scEtudiant->moyenneMatieres[$matiere->getTypeIdMatiere()]->getMoyenne() - 10) / 20;
+                                $tMatiere[$matiere->getTypeIdMatiere()]['moyenne'] = max(0, ($scEtudiant->moyenneMatieres[$matiere->getTypeIdMatiere()]->getMoyenne() - 10) / 20);
                             } elseif (true === $scEtudiant->moyenneMatieres[$matiere->getTypeIdMatiere()]->optionFaite) {
                                 if (true === $semestre->isOptPenaliteAbsence()) {
                                     $tMatiere[$matiere->getTypeIdMatiere()]['moyenne'] = $scEtudiant->moyenneMatieres[$matiere->getTypeIdMatiere()]->getMoyennePenalisee();
