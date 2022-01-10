@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.5.6](https://github.com/Dannebicque/intranetV3/compare/v3.5.5...v3.5.6) (2022-01-10)
+
+
+### Bug Fixes
+
+* Amélioration gestion des stages etudiant ([a24b026](https://github.com/Dannebicque/intranetV3/commit/a24b026b2d3e78c746f7c79de879b5769eba2ddd))
+* Amélioration gestion des stages etudiant ([3c0d476](https://github.com/Dannebicque/intranetV3/commit/3c0d476de813d4cb234c0e359a46f3c58645a25c))
+* Securité stage etudiant ([e18faf7](https://github.com/Dannebicque/intranetV3/commit/e18faf7b05c10e8983a8bfb2fc5e419d2d65a252))
+* Sous-Commission ([4a6f56a](https://github.com/Dannebicque/intranetV3/commit/4a6f56af88d5f1f37845ac1a2e42df74426fa3e2))
+* Sous-Commission ([d3e822b](https://github.com/Dannebicque/intranetV3/commit/d3e822bc1f1d256bd7ac62a4f99633d267c416f4))
+
 ### [3.5.5](https://github.com/Dannebicque/intranetV3/compare/v3.5.4...v3.5.5) (2022-01-09)
 
 
