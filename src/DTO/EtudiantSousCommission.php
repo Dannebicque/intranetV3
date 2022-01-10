@@ -81,9 +81,11 @@ class EtudiantSousCommission
 
         /* @var Ue $ue */
         foreach ($this->moyenneUes as $moyenneUe) {
-            $totalUes += $moyenneUe->getMoyenne() * $moyenneUe->ue->getCoefficient();
-            $totalUesPenalise += $moyenneUe->getMoyennePenalisee() * $moyenneUe->ue->getCoefficient();
-            $totcoeff += $moyenneUe->ue->getCoefficient();
+            if ($moyenneUe->ue->getBonification() === false) {
+                $totalUes += $moyenneUe->getMoyenne() * $moyenneUe->ue->getCoefficient();
+                $totalUesPenalise += $moyenneUe->getMoyennePenalisee() * $moyenneUe->ue->getCoefficient();
+                $totcoeff += $moyenneUe->ue->getCoefficient();
+            }
         }
 
         0 !== $totcoeff ? $this->moyenneSemestre = $totalUes / $totcoeff + $this->bonif : $this->moyenneSemestre = 0;
