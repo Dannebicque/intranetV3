@@ -31,7 +31,7 @@ class MoyenneMatiere
         $this->isOption($groupes);
     }
 
-    public function isOption($groupes)
+    public function isOption($groupes): bool
     {
         if (null === $this->matiere->getParcours()) {
             $this->optionFaite = true;
@@ -88,7 +88,7 @@ class MoyenneMatiere
     {
         $moy = $this->totalCoefficient > 0 ? $this->totalNotes / $this->totalCoefficient : 0;
 
-        return $moy < 0 ? 0 : $moy;
+        return max($moy, 0);
     }
 
     public function getStylePenalisee(): string
@@ -100,7 +100,7 @@ class MoyenneMatiere
     {
         $moy = $this->getMoyenne() - ($this->absences * $this->penalite);
 
-        return $moy < 0 ? 0 : $moy;
+        return max($moy, 0);
     }
 
     public function getBonification()

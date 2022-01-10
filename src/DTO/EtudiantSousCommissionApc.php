@@ -98,11 +98,6 @@ class EtudiantSousCommissionApc
         }
     }
 
-//    public function getMoyenneUes(): array
-//    {
-//        return $this->moyenneUes;
-//    }
-
     public function calculMoyenneUes(array $matieres, $ressources, $saes): void
     {
         foreach ($matieres as $matiere) {

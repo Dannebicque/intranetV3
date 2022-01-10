@@ -11,7 +11,6 @@
                class="btn btn-round {% if sem.id == semestre.id %}btn-primary{% endif %}"
                title="{{ 'atitle.changer.semestre'|trans }}"
                data-bs-toggle="tooltip" data-bs-placement="bottom"
-
             >{{ sem.libelle }}</a>
         {% endfor %}
     </div>
@@ -136,8 +135,7 @@
                             .suspendu == false) %}
                                 {% if matiere.bonification == true %}
                                     {% if myEtudiant.moyenneMatieres[matiere.typeIdMatiere].moyenne != '-0.01'
-                                        and myEtudiant.moyenneMatieres[matiere.typeIdMatiere]
-                                    .moyenne > 0 %}
+                                        and myEtudiant.moyenneMatieres[matiere.typeIdMatiere].moyenne > 0 %}
                                         <td>
                                             {{ myEtudiant.moyenneMatieres[matiere.typeIdMatiere].moyenne|styleMatiere }}
                                         </td>

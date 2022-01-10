@@ -14,7 +14,7 @@ class MatiereCollection
     /** @var \App\DTO\Matiere[] */
     public array $matieres = [];
 
-    public function add($matiere)
+    public function add($matiere): void
     {
         $this->matieres[] = $matiere;
     }
@@ -27,8 +27,8 @@ class MatiereCollection
         return $this->matieres;
     }
 
-    public function toArray()
+    public function toArray(): array
     {
-        return (array) $this->matieres;
+        return $this->matieres;
     }
 }
