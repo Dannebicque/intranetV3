@@ -86,14 +86,14 @@ class SousCommissionSauvegarde
 
                             if ($sousCommission instanceof SousCommissionApc) {
                                 $tUe[$ue->getId()]['decision'] = $scEtudiant->moyenneUes[$ue->getId()]->decisionPenalisee;
-                                $tUe[$ue->getId()]['moyenne'] = $scEtudiant->moyenneUes[$ue->getId()]->moyennePenalisee;
+                                $tUe[$ue->getId()]['moyenne'] = $scEtudiant->moyenneUes[$ue->getId()]->moyennePacPenalisee;
                             } else {
                                 $tUe[$ue->getId()]['moyenne'] = $scEtudiant->moyenneUes[$ue->getNumeroUe()]->getMoyennePenalisee();
                             }
                         } else {
                             if ($sousCommission instanceof SousCommissionApc) {
                                 $tUe[$ue->getId()]['decision'] = $scEtudiant->moyenneUes[$ue->getId()]->decision;
-                                $tUe[$ue->getId()]['moyenne'] = $scEtudiant->moyenneUes[$ue->getId()]->moyenne;
+                                $tUe[$ue->getId()]['moyenne'] = $scEtudiant->moyenneUes[$ue->getId()]->moyennePac;
                             } else {
                                 $tUe[$ue->getId()]['moyenne'] = $scEtudiant->moyenneUes[$ue->getNumeroUe()]->getMoyenne();
                             }
