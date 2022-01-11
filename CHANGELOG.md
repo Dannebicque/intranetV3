@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.5.7](https://github.com/Dannebicque/intranetV3/compare/v3.5.6...v3.5.7) (2022-01-11)
+
+
+### Bug Fixes
+
+* [SS Comm] Moyenne avec bonification dans les UE ([d65a233](https://github.com/Dannebicque/intranetV3/commit/d65a233b083973950ffb92124712622e2b3a1b44))
+* [STAGE] ajout des PJ pour la signature de convention ([1c7e027](https://github.com/Dannebicque/intranetV3/commit/1c7e027222839cc188df73689d9d77f797d6968b))
+* [Stage] Mail de reply sur convention ([302d415](https://github.com/Dannebicque/intranetV3/commit/302d415763d3f81f7564d3ea4c4aaebde7cd22bb))
+* Bonif codé sur 0.5 ([501b993](https://github.com/Dannebicque/intranetV3/commit/501b993f8d58c5ca61ef8fc86008d9a25b78d993))
+* Bonif codé sur 0.5 ([4e6f51f](https://github.com/Dannebicque/intranetV3/commit/4e6f51ff8f517be286644abfc93c77188a6d7c94))
+* Bonif codé sur 0.5 ([8996290](https://github.com/Dannebicque/intranetV3/commit/89962902121eddf2d5d0deb2201367f3f4968ad6))
+* Gestion des UE bonifiées ([712d230](https://github.com/Dannebicque/intranetV3/commit/712d230c0b271e8d40b0dad09dddfb30720224ec))
+* Gestion des UE bonifiées ([62155b8](https://github.com/Dannebicque/intranetV3/commit/62155b899f09d59d39b4ee09e2892876b6bc64e4))
+
 ### [3.5.6](https://github.com/Dannebicque/intranetV3/compare/v3.5.5...v3.5.6) (2022-01-10)
 
 
