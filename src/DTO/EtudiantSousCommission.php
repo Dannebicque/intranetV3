@@ -144,6 +144,9 @@ class EtudiantSousCommission
     private function hasPoleFaible(): bool
     {
         foreach ($this->moyenneUes as $moyenneUe) {
+            if ($moyenneUe->ue->getBonification() === true) {
+                return false; //on ne traite pas les UEs qui ont une bonification
+            }
             if ((true === $this->semestre->isOptPenaliteAbsence() && $moyenneUe->getMoyennePenalisee() < Constantes::SEUIL_UE) || (false === $this->semestre->isOptPenaliteAbsence() && $moyenneUe->getMoyenne() < Constantes::SEUIL_UE)) {
                 return true;
             }
