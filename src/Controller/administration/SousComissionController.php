@@ -147,6 +147,10 @@ class SousComissionController extends BaseController
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $scolaritePromo->getSemestre());
 
+        if ($scolaritePromo->getSemestre()->getDiplome()->getTypeDiplome()->getApc() === true) {
+            return $sousCommissionExport->exportGrandJuryApc($scolaritePromo, $this->dataUserSession->getAnneeUniversitaire());
+        }
+
         return $sousCommissionExport->exportGrandJury($scolaritePromo, $this->dataUserSession->getAnneeUniversitaire());
     }
 

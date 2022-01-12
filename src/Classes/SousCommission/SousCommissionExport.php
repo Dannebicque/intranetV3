@@ -596,11 +596,214 @@ class SousCommissionExport
     /**
      * @throws \App\Exception\SemestreNotFoundException
      */
-    public function exportGrandJury(
+    public function exportGrandJuryApc(
         ScolaritePromo $scolaritePromo,
         AnneeUniversitaire $anneeUniversitaire
     ): StreamedResponse {
         $semestre = $scolaritePromo->getSemestre();
+
+        if (null === $semestre) {
+            throw new SemestreNotFoundException();
+        }
+        $ues = $semestre->getUes();
+        $etudiants = $semestre->getEtudiants();
+        $matieres = $this->typeMatiereManager->findBySemestre($semestre);
+
+        $ssCommTravail = new SousCommissionTravail($semestre, $anneeUniversitaire,
+            $ues->getValues(), $matieres, $etudiants->getValues(), $scolaritePromo);
+
+        $this->myExcelWriter->createSheet('Grand Jury '.$semestre->getLibelle());
+
+        $ligne = 4;
+
+        $this->myExcelWriter->mergeCellsCaR(7, 3, 7+($nbUe * 2), 3);
+        $this->myExcelWriter->writeCellXY(7, 3, 'Semestre '.$semestre->getOrdreLmd());
+        $this->myExcelWriter->borderCellsRange(7, 3, 7+($nbUe * 2), 3);
+        $this->myExcelWriter->ecritLigne([
+            'N° APOGEE',
+            'Nom Prénom',
+            'D. de N.',
+            'Sexe',
+            'Bac',
+            'Année Bac',
+            'Nb Semestre', ], 1, 4);
+        $colonne = 7;
+        foreach ($ues as $ue) {
+            $this->myExcelWriter->writeCellXY($colonne, $ligne, 'Moy. '.$ue->getLibelle());
+            ++$colonne;
+            $this->myExcelWriter->writeCellXY($colonne, $ligne, 'Dec. '.$ue->getLibelle());
+            ++$colonne;
+        }
+
+        $this->myExcelWriter->writeCellXY($colonne, $ligne, 'Valid.');
+        ++$colonne;
+        $this->myExcelWriter->writeCellXY($colonne, $ligne, 'Décision');
+        ++$colonne;
+
+        foreach ($matieres as $m) {
+            $this->myExcelWriter->writeCellXY($colonne, $ligne, $m->codeMatiere);
+            ++$colonne;
+        }
+
+        ++$ligne;
+
+        foreach ($etudiants as $etu) {
+            if (0 === $etu->getAnneeSortie() && null !== $ssCommTravail->etudiant($etu->getId())) {
+                $colonne = 1;
+                $this->myExcelWriter->ecritLigne([
+                    $etu->getNumEtudiant(),
+                    ucfirst($etu->getNom()).' '.ucfirst($etu->getPrenom()),
+                    $etu->getDateNaissance()->format('d/m/Y'),
+                    $etu->getCivilite(),
+                    null !== $etu->getBac() ? $etu->getBac()->getLibelle() : 'err',
+                    $etu->getAnneeBac(),
+                ], $colonne, $ligne);
+                $colonne = 7;
+
+                $this->myExcelWriter->writeCellXY($colonne, $ligne,
+                    count($ssCommTravail->recupereScolarite($etu)));
+
+                foreach ($ues as $ue) {
+                    $this->myExcelWriter->writeCellXY($colonne, $ligne,
+                        number_format($ssCommTravail->ue($etu->getId(), $ue->getId())['moyenne'], 3),
+                        ['style' => 'numerique3']);
+                    ++$colonne;
+                    $this->myExcelWriter->writeCellXY($colonne, $ligne,
+                        $ssCommTravail->ue($etu->getId(), $ue->getId())['decision']);
+                    ++$colonne;
+                }
+                $this->myExcelWriter->writeCellXY($colonne, $ligne,
+                    $ssCommTravail->etudiant($etu->getId())->getDecision());
+                ++$colonne;
+                $this->myExcelWriter->writeCellXY($colonne, $ligne,
+                    $ssCommTravail->etudiant($etu->getId())->getProposition());
+
+                ++$colonne;
+
+                foreach ($matieres as $m) {
+                    if (null !== $ssCommTravail->matiere($etu->getId(), $m->getTypeIdMatiere())) {
+                        if (array_key_exists('pasoption',
+                            $ssCommTravail->matiere($etu->getId(), $m->getTypeIdMatiere()))) {
+                            $this->myExcelWriter->writeCellXY($colonne, $ligne, 'N.C.');
+                        } else {
+                            $this->myExcelWriter->writeCellXY($colonne, $ligne,
+                                number_format($ssCommTravail->matiere($etu->getId(),
+                                    $m->getTypeIdMatiere())['moyenne'], 2),
+                                ['style' => 'numerique']);
+                        }
+                    }
+                    ++$colonne;
+                }
+
+                ++$ligne;
+            }
+        }
+
+        for ($i = 0; $i < 100; ++$i) {
+            $this->myExcelWriter->getColumnAutoSize($i);
+        }
+
+        $this->myExcelWriter->writeCellName('A1', 'DUT : ');
+        $this->myExcelWriter->writeCellName('B1',
+            $semestre->getAnnee()->getDiplome()->getDepartement()->getLibelle());
+
+        $writer = new Xlsx($this->myExcelWriter->getSpreadsheet());
+
+        return new StreamedResponse(
+            static function () use ($writer) {
+                $writer->save('php://output');
+            },
+            200,
+            [
+                'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                'Content-Disposition' => 'attachment;filename="Export Grand Jury '.$semestre->getLibelle().'.xlsx"',
+            ]
+        );
+    }
+
+    /**
+     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Reader\Exception
+     */
+    public function exportApogee(Semestre $semestre, $file, AnneeUniversitaire $anneeUniversitaire)
+    {
+        $this->sousCommission = $this->sousCommissionManager->getSousCommission($semestre);
+
+        $fichier = $this->myUpload->upload($file, 'temp');
+        $this->myExcelRead->readFile($fichier);
+
+        $ligne = 18;
+
+        /* récupère les étudiants */
+        $tEtudiant = [];
+        while ('' != $this->myExcelRead->getCellColLigne(1, $ligne)) {
+            $tEtudiant[$ligne] = trim($this->myExcelRead->getCellColLigne(1, $ligne));
+            ++$ligne;
+        }
+
+        /* récupère les modules */
+        $tModule = [];
+        $colonne = 5;
+        while ('' != $this->myExcelRead->getCellColLigne($colonne, 14)) {
+            $val = explode('-', $this->myExcelRead->getCellColLigne($colonne, 14));
+            $tModule[$colonne] = trim($val[0]);
+            $colonne += 2; //3 si colonne résultat
+        }
+
+        $etudiants = $semestre->getEtudiants();
+        $ues = $semestre->getUes();
+        $matieres = $this->typeMatiereManager->findBySemestre($semestre);
+        $matApogee = [];
+        foreach ($matieres as $matiere) {
+            $matApogee[$matiere->codeElement] = $matiere->getTypeIdMatiere();
+        }
+        $etuApogee = [];
+        foreach ($etudiants as $etudiant) {
+            $etuApogee[$etudiant->getNumEtudiant()] = $etudiant->getId();
+        }
+
+        $ssComm = $this->sousCommission->getBySemestreAnneeUniversitaire($semestre, $anneeUniversitaire);
+        if (null !== $ssComm) {
+            $ssCommTravail = new SousCommissionTravail($semestre, $anneeUniversitaire,
+                $ues->getValues(), $matieres, $etudiants->getValues(), $ssComm);
+
+            foreach ($tEtudiant as $keyTe => $valueTe) {
+                foreach ($tModule as $keyTm => $valueTm) {
+                    if (array_key_exists($valueTe, $etuApogee) &&
+                        array_key_exists($valueTm, $matApogee)
+                    ) {
+                        if (null !== $ssCommTravail->matiere($etuApogee[$valueTe],
+                                $matApogee[$valueTm]) && array_key_exists('moyenne',
+                                $ssCommTravail->matiere($etuApogee[$valueTe], $matApogee[$valueTm]))) {
+                            $moyenne = $ssCommTravail->matiere($etuApogee[$valueTe], $matApogee[$valueTm])['moyenne'];
+                            $this->myExcelRead->writeCellColLigne($keyTm, $keyTe,
+                                number_format($moyenne, 2));
+                        }
+                        $this->myExcelRead->writeCellColLigne($keyTm + 1, $keyTe, 20);
+                    }
+                }
+            }
+
+            //EXPORT
+            unlink($fichier);
+            $this->myExcelRead->sauvegarde($this->dir.'temp.xls');
+
+            $nom = explode('.', $file->getClientOriginalName());
+            $stream = $this->apogeeSousCommission->transformeApogeeTexte($this->dir.'temp.xls', $nom[0]);
+
+            unlink($this->dir.'temp.xls');
+
+            return $stream;
+        }
+
+        return Constantes::PAS_DE_SOUS_COMM;
+    }
+
+    public function exportGrandJury(ScolaritePromo $scolaritePromo, AnneeUniversitaire $anneeUniversitaire)
+    {
+        $semestre = $scolaritePromo->getSemestre();
+
         if (null === $semestre) {
             throw new SemestreNotFoundException();
         }
@@ -776,85 +979,6 @@ class SousCommissionExport
                 'Content-Disposition' => 'attachment;filename="Export Grand Jury '.$semestre->getLibelle().'.xlsx"',
             ]
         );
-    }
-
-    /**
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
-     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
-     * @throws \PhpOffice\PhpSpreadsheet\Reader\Exception
-     */
-    public function exportApogee(Semestre $semestre, $file, AnneeUniversitaire $anneeUniversitaire)
-    {
-        $this->sousCommission = $this->sousCommissionManager->getSousCommission($semestre);
-
-        $fichier = $this->myUpload->upload($file, 'temp');
-        $this->myExcelRead->readFile($fichier);
-
-        $ligne = 18;
-
-        /* récupère les étudiants */
-        $tEtudiant = [];
-        while ('' != $this->myExcelRead->getCellColLigne(1, $ligne)) {
-            $tEtudiant[$ligne] = trim($this->myExcelRead->getCellColLigne(1, $ligne));
-            ++$ligne;
-        }
-
-        /* récupère les modules */
-        $tModule = [];
-        $colonne = 5;
-        while ('' != $this->myExcelRead->getCellColLigne($colonne, 14)) {
-            $val = explode('-', $this->myExcelRead->getCellColLigne($colonne, 14));
-            $tModule[$colonne] = trim($val[0]);
-            $colonne += 2; //3 si colonne résultat
-        }
-
-        $etudiants = $semestre->getEtudiants();
-        $ues = $semestre->getUes();
-        $matieres = $this->typeMatiereManager->findBySemestre($semestre);
-        $matApogee = [];
-        foreach ($matieres as $matiere) {
-            $matApogee[$matiere->codeElement] = $matiere->getTypeIdMatiere();
-        }
-        $etuApogee = [];
-        foreach ($etudiants as $etudiant) {
-            $etuApogee[$etudiant->getNumEtudiant()] = $etudiant->getId();
-        }
-
-        $ssComm = $this->sousCommission->getBySemestreAnneeUniversitaire($semestre, $anneeUniversitaire);
-        if (null !== $ssComm) {
-            $ssCommTravail = new SousCommissionTravail($semestre, $anneeUniversitaire,
-                $ues->getValues(), $matieres, $etudiants->getValues(), $ssComm);
-
-            foreach ($tEtudiant as $keyTe => $valueTe) {
-                foreach ($tModule as $keyTm => $valueTm) {
-                    if (array_key_exists($valueTe, $etuApogee) &&
-                        array_key_exists($valueTm, $matApogee)
-                    ) {
-                        if (null !== $ssCommTravail->matiere($etuApogee[$valueTe],
-                                $matApogee[$valueTm]) && array_key_exists('moyenne',
-                                $ssCommTravail->matiere($etuApogee[$valueTe], $matApogee[$valueTm]))) {
-                            $moyenne = $ssCommTravail->matiere($etuApogee[$valueTe], $matApogee[$valueTm])['moyenne'];
-                            $this->myExcelRead->writeCellColLigne($keyTm, $keyTe,
-                                number_format($moyenne, 2));
-                        }
-                        $this->myExcelRead->writeCellColLigne($keyTm + 1, $keyTe, 20);
-                    }
-                }
-            }
-
-            //EXPORT
-            unlink($fichier);
-            $this->myExcelRead->sauvegarde($this->dir.'temp.xls');
-
-            $nom = explode('.', $file->getClientOriginalName());
-            $stream = $this->apogeeSousCommission->transformeApogeeTexte($this->dir.'temp.xls', $nom[0]);
-
-            unlink($this->dir.'temp.xls');
-
-            return $stream;
-        }
-
-        return Constantes::PAS_DE_SOUS_COMM;
     }
 
     private function getStyleMoyenneMatiere($moyenne): string
