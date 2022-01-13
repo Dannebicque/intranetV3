@@ -29,8 +29,7 @@ class CarbonToDateTimeTransformer implements DataTransformerInterface
         }
 
         if ($value instanceof DateTime) {
-            //return Carbon::instance($value);
-            return Carbon::createFromTimestamp(strtotime($value));
+            return Carbon::instance($value);
         }
 
         throw new UnexpectedTypeException($value, 'The type of $value should be a DateTime or null.');
