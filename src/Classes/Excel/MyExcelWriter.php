@@ -58,7 +58,8 @@ class MyExcelWriter
 
     public function createSheet(string $libelle): void
     {
-        $this->spreadsheet->createSheet()->setTitle(substr($libelle, 0, 31));
+        $libelle = substr($libelle, 0, 31);
+        $this->spreadsheet->createSheet()->setTitle($libelle);
 
         $this->sheet = $this->spreadsheet->getSheetByName($libelle);
         $this->sheet->getPageSetup()->setPaperSize(PageSetup::PAPERSIZE_A4);
@@ -132,7 +133,7 @@ class MyExcelWriter
                             $row)->getStyle()->getNumberFormat()->setFormatCode($valeur);
                         break;
                     case 'color':
-                        if (0 === mb_strpos($valeur, '#')) {
+                        if (str_starts_with($valeur, '#')) {
                             $valeur = mb_substr($valeur, 1, mb_strlen($valeur));
                         }
 
@@ -185,6 +186,9 @@ class MyExcelWriter
         $this->colorCells($cell, $couleur);
     }
 
+    /**
+     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     */
     public function setCellEnteteStyle($col, $lig): void
     {
         $this->colorCellRange($col, $lig, 'ffC4C6C6');
@@ -207,6 +211,9 @@ class MyExcelWriter
         $this->borderCells($cell1.':'.$cell2);
     }
 
+    /**
+     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     */
     public function borderCells($cells): void
     {
         $this->sheet->getStyle($cells)->getBorders()->getAllBorders()->setBorderStyle(Border::BORDER_THIN);
@@ -238,15 +245,18 @@ class MyExcelWriter
         $this->mergeCells($cell1.':'.$cell2);
     }
 
+    /**
+     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     */
     public function mergeCells($cells): void
     {
         $this->sheet->mergeCells($cells);
     }
 
-    public function borderBottomCellsRange($col1, $lig1, $col2, $lig2, array $array)
+    public function borderBottomCellsRange($col1, $lig1, $col2, $lig2, array $array): void
     {
         $color = $array['color'];
-        if (0 === mb_strpos($color, '#')) {
+        if (str_starts_with($color, '#')) {
             $color = mb_substr($color, 1, mb_strlen($color));
         }
 
@@ -263,7 +273,7 @@ class MyExcelWriter
         }
     }
 
-    public function getColumnsAutoSize(string $depart, string $fin)
+    public function getColumnsAutoSize(string $depart, string $fin): void
     {
         foreach (range($depart, $fin) as $columnID) {
             $this->sheet->getColumnDimension($columnID)->setAutoSize(true);
