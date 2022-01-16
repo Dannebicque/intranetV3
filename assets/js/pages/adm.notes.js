@@ -74,7 +74,7 @@ $(document).on('click', '#voirDetailIncoherent', function (e) {
   $('#detailAbsent').hide()
 })
 
-$(document).on('click', '#remplacerParZero', function (e) {
+$(document).on('click', '.remplacerParZero', function (e) {
   e.preventDefault()
   updateNote($(this).data('note'), 'zero').then(
     data => {
@@ -83,7 +83,7 @@ $(document).on('click', '#remplacerParZero', function (e) {
   )
 })
 
-$(document).on('click', '#marquerAbsent', function (e) {
+$(document).on('click', '.marquerAbsent', function (e) {
   e.preventDefault()
   updateNote($(this).data('note'), 'absent').then(
     data => {

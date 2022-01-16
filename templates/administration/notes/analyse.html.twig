@@ -30,19 +30,19 @@
         </tr>
         </thead>
         <tbody>
-        {% for note in notesIncoherentes %}
+        {% for note in notesIncoherentes|filter(note => (note.absenceJustifie == false)) %}
             <tr id="ligne_{{ note.id }}">
                 <td>{{ note.etudiant.display }}</td>
                 <td id="note_{{ note.id }}">{{ note.note }}</td>
                 <td>{{ note.evaluation.dateEvaluation|format_date('short') }}</td>
                 <td><a href="" target="_blank">{{ note.evaluation.libelle }}</a></td>
                 <td>
-                    <button id="remplacerParZero" data-note="{{ note.id }}" class="btn btn-danger">Remplacer par
+                    <button data-note="{{ note.id }}" class="btn btn-danger remplacerParZero">Remplacer par
                                                                                                    0
                     </button>
                 </td>
                 <td>
-                    <button id="marquerAbsent" data-note="{{ note.id }}" class="btn btn-warning">Marquer
+                    <button data-note="{{ note.id }}" class="btn btn-warning marquerAbsent">Marquer
                                                                                                  Absent
                     </button>
                 </td>

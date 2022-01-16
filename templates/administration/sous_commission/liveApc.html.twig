@@ -42,8 +42,7 @@
         </div>
         <div class="card-body">
             <br>
-            {{ render(controller('App\\Controller\\administration\\NoteController::analyse', {semestre:semestre
-            .id})) }}
+            {{ render(controller('App\\Controller\\administration\\NoteController::analyse', {semestre:semestre.id})) }}
             <br>
             {% if semestre.optPenaliteAbsence == true %}
                 <div class="alert alert-info">
