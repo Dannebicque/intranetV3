@@ -24,17 +24,17 @@ class QuestionnaireRegistry
     private array $typeSections = [];
     private array $sectionsAdapter = [];
 
-    public function registerTypeQuestion(string $name, AbstractQuestion $abstractQuestion)
+    public function registerTypeQuestion(string $name, AbstractQuestion $abstractQuestion): void
     {
         $this->typeQuestions[$name] = $abstractQuestion;
     }
 
-    public function registerTypeSection(string $name, AbstractSection $abstractSection)
+    public function registerTypeSection(string $name, AbstractSection $abstractSection): void
     {
         $this->typeSections[$name] = $abstractSection;
     }
 
-    public function registerSectionAdapter(string $name, AbstractSectionAdapter $abstractSection)
+    public function registerSectionAdapter(string $name, AbstractSectionAdapter $abstractSection): void
     {
         $this->sectionsAdapter[$name] = $abstractSection;
     }
@@ -42,7 +42,7 @@ class QuestionnaireRegistry
     /**
      * @throws \App\Components\Questionnaire\Exceptions\TypeQuestionNotFoundException
      */
-    public function getTypeQuestion(string $name)
+    public function getTypeQuestion(string $name): mixed
     {
         if (!array_key_exists($name, $this->typeQuestions)) {
             throw new TypeQuestionNotFoundException();
@@ -54,7 +54,7 @@ class QuestionnaireRegistry
     /**
      * @throws \App\Components\Questionnaire\Exceptions\TypeQuestionNotFoundException
      */
-    public function getTypeSection(string $name)
+    public function getTypeSection(string $name): mixed
     {
         if (!array_key_exists($name, $this->typeSections)) {
             throw new TypeQuestionNotFoundException();
@@ -75,7 +75,7 @@ class QuestionnaireRegistry
         return $this->sectionsAdapter[$name];
     }
 
-    public function getAllTypeQuestions()
+    public function getAllTypeQuestions(): array
     {
         $typeQuestions = [];
         foreach ($this->typeQuestions as $typeQuestion) {
@@ -85,7 +85,7 @@ class QuestionnaireRegistry
         return $typeQuestions;
     }
 
-    public function getAllSectionsAdapter()
+    public function getAllSectionsAdapter(): array
     {
         $sectionsAdapter = [];
         foreach ($this->sectionsAdapter as $sectionAdapter) {
@@ -95,7 +95,7 @@ class QuestionnaireRegistry
         return $sectionsAdapter;
     }
 
-    public function getAllTypeSections()
+    public function getAllTypeSections(): array
     {
         $typeSections = [];
         foreach ($this->typeSections as $typeSection) {
