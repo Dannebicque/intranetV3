@@ -32,6 +32,9 @@ class MessagesQualiteCommand extends Command
         //pas d'argument ou de commande particulière
     }
 
+    /**
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         //todo: prendre en compte le WE/jours fériés....
@@ -42,22 +45,17 @@ class MessagesQualiteCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $nbMessages = 0;
         $questionnaires = $this->questionnaireQualiteRepository->findInDate((new DateTime())->modify('+2 days')); //tous les questionnaires dans deux jours
+        /** @var \App\Entity\QuestionnaireQualite $questionnaire */
         foreach ($questionnaires as $questionnaire) {
+            $dests = [
+                $questionnaire->getSemestre()->getDiplome()->getAssistantDiplome()->getMailUniv(),
+                $questionnaire->getSemestre()->getDiplome()->getResponsableDiplome()->getMailUniv(),
+            ];
             $this->mailer->initEmail();
-            $this->mailer->setTemplate('mails/qualite/rappel-j2.html.twig', [
+            $this->mailer->setTemplate('mails/qualite/rappel-j2-S1.html.twig', [
                 'questionnaire' => $questionnaire,
             ]);
-            $this->mailer->sendMessage('david.annebicque@gmail.com', 'Rappel questionnaire qualité', ['replyTo' => 'david.annebicque@gmail.com']);
-            ++$nbMessages;
-        }
-
-        $questionnaires = $this->questionnaireQualiteRepository->findInDate((new DateTime())->modify('+1 days')); //tous les questionnaires dans un jour
-        foreach ($questionnaires as $questionnaire) {
-            $this->mailer->initEmail();
-            $this->mailer->setTemplate('mails/qualite/rappel-j1.html.twig', [
-                'questionnaire' => $questionnaire,
-            ]);
-            $this->mailer->sendMessage('david.annebicque@gmail.com', 'Rappel questionnaire qualité', ['replyTo' => 'david.annebicque@gmail.com']);
+            $this->mailer->sendMessage($dests, 'Rappel questionnaire qualité', ['replyTo' => 'maud.briet@univ-reims.fr', 'cc' => 'maud.briet@univ-reims.fr']);
             ++$nbMessages;
         }
 
