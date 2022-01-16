@@ -31,12 +31,12 @@ class ScolariteDiplomesTableType extends TableType
     {
         $builder->addFilter('search', SearchType::class);
         $builder->addFilter('diplome', EntityType::class,
-            [
+            options: [
                 'class' => Diplome::class,
                 'choice_label' => 'displayCourt',
                 'required' => false,
                 'placeholder' => 'filtre.diplome',
-                'translation_domain' => 'table'
+                'translation_domain' => 'table',
             ]);
         $builder->addFilter('typeDiplome', EntityType::class,
             [
@@ -44,7 +44,7 @@ class ScolariteDiplomesTableType extends TableType
                 'choice_label' => 'libelle',
                 'required' => false,
                 'placeholder' => 'filtre.typeDiplome',
-                'translation_domain' => 'table'
+                'translation_domain' => 'table',
             ]);
 
         $builder->addColumn('typeDiplome', EntityColumnType::class,
@@ -57,28 +57,28 @@ class ScolariteDiplomesTableType extends TableType
         $builder->setLoadUrl('sa_scolarite_index');
 
         $builder->addColumn('links', WidgetColumnType::class, [
-            'build' => function(WidgetBuilder $builder, Diplome $s) {
+            'build' => function (WidgetBuilder $builder, Diplome $s) {
                 $builder->add('show', RowShowLinkType::class, [
                     'route' => 'sa_scolarite_diplome',
                     'route_params' => [
                         'diplome' => $s->getId(),
                     ],
                 ]);
-            }
+            },
         ]);
 
         $builder->useAdapter(EntityAdapter::class, [
             'class' => Diplome::class,
             'fetch_join_collection' => false,
-            'query' => function(QueryBuilder $qb, array $formData) {
+            'query' => function (QueryBuilder $qb, array $formData) {
                 if (isset($formData['diplome'])) {
                     $qb->andWhere('e.id = :diplome');
                     $qb->setParameter('diplome', $formData['diplome']);
                 }
 
                 if (isset($formData['typeDiplome'])) {
-                    $qb->andWhere('e.type_diplome = :type_diplome');
-                    $qb->setParameter('type_diplome', $formData['typeDiplome']);
+                    $qb->andWhere('e.typeDiplome = :typeDiplome');
+                    $qb->setParameter('typeDiplome', $formData['typeDiplome']);
                 }
             },
         ]);

@@ -18,7 +18,6 @@ use App\Entity\Diplome;
 use App\Entity\TypeDiplome;
 use App\Form\Type\SearchType;
 use App\Table\ColumnType\NbEtudiantsColumnType;
-use App\Table\ColumnType\DepartementsColumnType;
 use App\Table\ColumnType\SemestresAvecActifColumnType;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -36,7 +35,7 @@ class EnqueteQualiteDiplomesTableType extends TableType
 
         $builder->addColumn('typeDiplome', EntityColumnType::class, ['label' => 'table.typeDiplome', 'display_field' => 'libelle']);
         $builder->addColumn('libelle', PropertyColumnType::class, ['label' => 'table.libelle']);
-        $builder->addColumn('id', NbEtudiantsColumnType::class, ['label' => 'table.nbEtudiants','effectifs' => $options['effectifs']]);
+        $builder->addColumn('id', NbEtudiantsColumnType::class, ['label' => 'table.nbEtudiants', 'effectifs' => $options['effectifs']]);
         $builder->addColumn('semestres', SemestresAvecActifColumnType::class, ['label' => 'table.semestre']);
 
         $builder->setLoadUrl('administratif_enquete_index');
@@ -44,15 +43,15 @@ class EnqueteQualiteDiplomesTableType extends TableType
         $builder->useAdapter(EntityAdapter::class, [
             'class' => Diplome::class,
             'fetch_join_collection' => false,
-            'query' => function(QueryBuilder $qb, array $formData) {
+            'query' => function (QueryBuilder $qb, array $formData) {
                 if (isset($formData['diplome'])) {
                     $qb->andWhere('e.id = :diplome');
                     $qb->setParameter('diplome', $formData['diplome']);
                 }
 
                 if (isset($formData['typeDiplome'])) {
-                    $qb->andWhere('e.type_diplome = :type_diplome');
-                    $qb->setParameter('type_diplome', $formData['typeDiplome']);
+                    $qb->andWhere('e.typeDiplome = :typeDiplome');
+                    $qb->setParameter('typeDiplome', $formData['typeDiplome']);
                 }
             },
         ]);
@@ -63,7 +62,7 @@ class EnqueteQualiteDiplomesTableType extends TableType
         $resolver->setDefaults([
             'orderable' => true,
             'effectifs' => null,
-            'translation_domain' => 'table'
+            'translation_domain' => 'table',
         ]);
     }
 }
