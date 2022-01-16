@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.5.8](https://github.com/Dannebicque/intranetV3/compare/v3.5.7...v3.5.8) (2022-01-16)
+
+
+### Bug Fixes
+
+* [Excel] Taille limite du nom d'un onglet. ([5114d29](https://github.com/Dannebicque/intranetV3/commit/5114d29a0b97df1956ab9fe0b3d8d0500d7e814c))
+* [Rattrapage] PRoblème avec le Carbon Adapter sur les heures. ([71a42eb](https://github.com/Dannebicque/intranetV3/commit/71a42ebc6a56b371d1c541d133e5d71950b91f6f))
+* [Rattrapage] PRoblème avec le Carbon Adapter sur les heures. ([a47b850](https://github.com/Dannebicque/intranetV3/commit/a47b8503f9cd78903e073e012b35e1c4f5db4ae0))
+* [SSCom] Calcul de la décision si UE de bonification ([f8f1707](https://github.com/Dannebicque/intranetV3/commit/f8f170743fedc91baa2b49f0aef450b81ed11b49))
+* [SSCom] Export Grand Jury ([9358362](https://github.com/Dannebicque/intranetV3/commit/9358362d03c475d442ba5387001c8817ff90211a))
+* [SScom] Export live avec couleur manquante. ([7513c0f](https://github.com/Dannebicque/intranetV3/commit/7513c0f196af493fe27cf1535ed15fb23a1db1b0))
+* [Table] PSR sur les noms de champs dans les requetes ([3326cb8](https://github.com/Dannebicque/intranetV3/commit/3326cb8ef9052c883c54a3268b3c86410f8ac97e))
+* [TWIG] Suppression d'un filtre twig ([a91be1d](https://github.com/Dannebicque/intranetV3/commit/a91be1de255b37e50feddba9517ff70316c1d771))
+* [Typage] Correctifs ([aee760d](https://github.com/Dannebicque/intranetV3/commit/aee760d54ba313f885dc450060675a39d86d526e))
+
 ### [3.5.7](https://github.com/Dannebicque/intranetV3/compare/v3.5.6...v3.5.7) (2022-01-11)
 
 
