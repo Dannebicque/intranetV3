@@ -199,11 +199,7 @@
 
 {% block libelle %}
     <legend class="col-form-label {% if obligatoire %}required{% endif %}"><strong>{{ numero }}</strong>.
-        {% if config is null %}
-            {{ libelle }}
-        {% else %}
-            {{ libelle|personnalise(config) }}
-        {% endif %}
+        {{ libelle }}
     </legend>
 {% endblock %}
 
