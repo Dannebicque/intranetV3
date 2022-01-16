@@ -26,6 +26,6 @@
     {% endif %}
 {% else %}
     {{ render(controller(
-        'App\\Controller\\ProfilEtudiantController::about', {slug: user.slug}
+        'App\\Controller\\ProfilEtudiantController::aPropos', {slug: user.slug}
     )) }}
 {% endif %}
