@@ -25,14 +25,14 @@ use App\Entity\Semestre;
 use App\Exception\MatiereNotFoundException;
 use App\Repository\EtudiantRepository;
 use App\Utils\Tools;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\EntityManagerInterface;
-use Exception;
-use PhpOffice\PhpSpreadsheet\IOFactory;
 use function array_key_exists;
 use function chr;
 use function count;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use function in_array;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 
 /**
  * Class MyEvaluation.
@@ -105,16 +105,16 @@ class MyEvaluation
                     }
                 }
             }
-        }
 
-        arsort($this->classement);
+            arsort($this->classement);
 
-        foreach ($this->evaluation->getTypeGroupe()->getGroupes() as $groupe) {
-            $grid = $groupe->getId();
-            $this->statistiques[$grid]['min'] = count($tgroupes[$grid]) > 0 ? min($tgroupes[$grid]) : -0.01;
-            $this->statistiques[$grid]['max'] = count($tgroupes[$grid]) > 0 ? max($tgroupes[$grid]) : -0.01;
-            $this->statistiques[$grid]['moyenne'] = count($tgroupes[$grid]) > 0 ? array_sum($tgroupes[$grid]) / count($tgroupes[$grid]) : -0.01;
-            $this->statistiques[$grid]['ecart_type'] = count($tgroupes[$grid]) > 0 ? $this->ecartType($tgroupes[$grid]) : -0.01;
+            foreach ($this->evaluation->getTypeGroupe()->getGroupes() as $groupe) {
+                $grid = $groupe->getId();
+                $this->statistiques[$grid]['min'] = count($tgroupes[$grid]) > 0 ? min($tgroupes[$grid]) : -0.01;
+                $this->statistiques[$grid]['max'] = count($tgroupes[$grid]) > 0 ? max($tgroupes[$grid]) : -0.01;
+                $this->statistiques[$grid]['moyenne'] = count($tgroupes[$grid]) > 0 ? array_sum($tgroupes[$grid]) / count($tgroupes[$grid]) : -0.01;
+                $this->statistiques[$grid]['ecart_type'] = count($tgroupes[$grid]) > 0 ? $this->ecartType($tgroupes[$grid]) : -0.01;
+            }
         }
 
         $this->statistiques['promo']['min'] = count($t) > 0 ? min($t) : -0.01;
@@ -127,7 +127,7 @@ class MyEvaluation
         return $this;
     }
 
-    private function ecartType($donnees): float|int
+    private function ecartType($donnees): float | int
     {
         //0 - Nombre d’éléments dans le tableau
         $population = count($donnees);
@@ -225,7 +225,6 @@ class MyEvaluation
     }
 
     /**
-     *
      * @throws \App\Exception\MatiereNotFoundException
      * @throws \Twig\Error\LoaderError
      * @throws \Twig\Error\RuntimeError
@@ -240,7 +239,7 @@ class MyEvaluation
             throw new MatiereNotFoundException();
         }
 
-        $name = 'releve-' . $matiere->codeMatiere;
+        $name = 'releve-'.$matiere->codeMatiere;
         switch ($_format) {
             case Constantes::FORMAT_PDF:
                 return $this->myPdf::generePdf('pdf/releveEvaluation.html.twig', [
@@ -283,9 +282,11 @@ class MyEvaluation
         switch ($extension) {
             case 'xlsx':
                 $data = $this->importXlsx($fichier);
+
                 return $this->insertNotes($evaluation, $data, $semestre);
             case 'csv':
                 $data = $this->importCsv($fichier);
+
                 return $this->insertNotes($evaluation, $data, $semestre);
             default:
                 return false; //erreur
@@ -312,8 +313,9 @@ class MyEvaluation
 
         foreach ($data as $note) {
             if (array_key_exists($note['num_etudiant'], $etudiants)) {
-               if (array_key_exists($note['num_etudiant'], $notes) && -0.01 === $notes[$note['num_etudiant']]->getNote()) {
-                  //une note = -0.01, on met à jour...
+                if (array_key_exists($note['num_etudiant'],
+                        $notes) && -0.01 === $notes[$note['num_etudiant']]->getNote()) {
+                    //une note = -0.01, on met à jour...
                     $notes[$note['num_etudiant']]->setNote(Tools::convertToFloat($note['note']));
                     $notes[$note['num_etudiant']]->setCommentaire($note['commentaire']);
                 } elseif (!array_key_exists($note['num_etudiant'], $notes)) {
