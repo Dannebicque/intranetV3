@@ -196,7 +196,7 @@ class AppExtension extends AbstractExtension
         return '';
     }
 
-    public function keyWords(string $text): string
+    public function keyWords(?string $text): string
     {
         $t = explode(',', $text);
         $html = '';
