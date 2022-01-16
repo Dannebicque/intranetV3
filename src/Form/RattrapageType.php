@@ -46,14 +46,15 @@ class RattrapageType extends AbstractType
             ->add('dateEval', DatePickerType::class, [
                 'label' => 'label.date_evaluation',
                 'required' => true,
-                'attr' => ['data-options' => ['locale' => $locale]],
+                'help' => 'Le format attendu est jj/mm/aaaa',
+                'attr' => ['data-options' => ['locale' => $locale], 'placeholder' => 'jj/mm/aaaa'],
             ])
             ->add('heureEval', CarbonTimeType::class, ['label' => 'label.heure_evaluation', 'required' => false])
             ->add('duree', TextType::class, [
                 'label' => 'label.duree_evaluation',
                 'required' => false,
                 'attr' => ['maxlength' => 20, 'placeholder' => 'Par ex. 1h30'],
-                'help' => 'help.duree_evaluation'])
+                'help' => 'help.duree_evaluation', ])
             ->add('typeIdMatiere', ChoiceCompleteType::class, [
                 'choices' => $this->typeMatiereManager->findBySemestreChoiceType($this->semestre),
                 'label' => 'label.matiere',
@@ -66,7 +67,7 @@ class RattrapageType extends AbstractType
                 'class' => Personnel::class,
                 'label' => 'label.personnel',
                 'choice_label' => 'displayPr',
-                'query_builder' => function(PersonnelRepository $personnelRepository) {
+                'query_builder' => function (PersonnelRepository $personnelRepository) {
                     return $personnelRepository->findBySemestreBuilder($this->semestre);
                 },
                 'required' => true,
