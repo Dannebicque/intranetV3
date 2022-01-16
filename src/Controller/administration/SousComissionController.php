@@ -82,7 +82,7 @@ class SousComissionController extends BaseController
                 }
             }
 
-            $em->flush();
+            $this->entityManager->flush();
             $this->addFlash(Constantes::FLASHBAG_SUCCESS, 'Notes -0.01 remplacées par 0');
         } else {
             $this->addFlash(Constantes::FLASHBAG_ERROR, 'Erreur lors du rempalcement des -0.01 par 0');
