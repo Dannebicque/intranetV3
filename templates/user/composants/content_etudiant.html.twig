@@ -8,7 +8,7 @@
             'App\\Controller\\ProfilEtudiantController::absences', {slug: user.slug}
         )) }}
     {% elseif onglet == 'apc' and (is_granted('ROLE_PERMANENT')  or (is_granted('ROLE_ETUDIANT') and user.semestre
-    .optBilanSemestre == true) %}
+    .optBilanSemestre == true)) %}
         {{ render(controller(
             'App\\Controller\\ProfilEtudiantController::apcNotes', {slug: user.slug}
         )) }}
