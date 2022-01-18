@@ -37,7 +37,7 @@ class Semestre extends BaseEntity
     /**
      * @deprecated
      */
-    private ?string $couleur;
+    private ?string $couleur = '';
 
     /**
      * @ORM\Column(type="integer")
@@ -1263,4 +1263,6 @@ class Semestre extends BaseEntity
 
         return $this;
     }
+
+
 }
