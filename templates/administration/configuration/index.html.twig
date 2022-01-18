@@ -753,6 +753,25 @@
                                                 {% endfor %}
                                             </select>
                                         </div>
+
+                                        <div class="media">
+                                            <div class="media-body">
+                                                <p><strong>Afficher le bilan de semestre (uniquement en B.U .T.)</strong></p>
+                                                <p>Affiche un onglet, dans le profil, visible des étudiants avec le
+                                                   détail des notes et des moyennes pour le B.U.T. Par défaut les
+                                                   ensiegnants y ont toujours accès.</p>
+                                            </div>
+                                            <label class="switch" for="optBilanSemestre_{{ semestre.id }}">
+                                                <input type="checkbox" {{ semestre.optBilanSemestre ? 'checked': '' }}
+                                                       class="changeOption"
+                                                       name="optBilanSemestre_{{ semestre.id }}"
+                                                       id="optBilanSemestre_{{ semestre.id }}"
+                                                       data-type="semestre"
+                                                       data-id="{{ semestre.id }}">
+                                                <span class="switch-indicator"></span>
+                                            </label>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>

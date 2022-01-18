@@ -1,6 +1,6 @@
-{#<a class="nav-link changeprofil {% if onglet == 'timeline' %}active{% endif %}"#}
-{#   href="{{ path('profil_etudiant_timeline', {slug: user.slug}) }}"#}
-{#   id="profil-timeline">{{ 'tab.timeline'|trans }}</a>#}
+{# <a class="nav-link changeprofil {% if onglet == 'timeline' %}active{% endif %}" #}
+{#   href="{{ path('profil_etudiant_timeline', {slug: user.slug}) }}" #}
+{#   id="profil-timeline">{{ 'tab.timeline'|trans }}</a> #}
 {% if is_granted('ROLE_PERMANENT') or user.id == user_data.user.id %}
     <a class="nav-link changeprofil {% if onglet is not defined or onglet == 'scolarite' %}active{% endif %}"
        href="{{ path('profil_etudiant_scolarite', {slug: user.slug}) }}"
@@ -8,11 +8,12 @@
     <a class="nav-link changeprofil {% if onglet == 'notes' %}active{% endif %}"
        href="{{ path('profil_etudiant_notes', {slug: user.slug}) }}"
        id="profil-notes">{{ 'tab.notes'|trans }}</a>
-    {% if user.semestre.diplome.typeDiplome.apc == true and is_granted('ROLE_PERMANENT') %}
+    {% if (user.semestre.diplome.typeDiplome.apc == true and is_granted('ROLE_PERMANENT')) or (is_granted
+        ('ROLE_ETUDIANT') and user.semestre.optBilanSemestre == true ) %}
         <a class="nav-link changeprofil {% if onglet == 'apc' %}active{% endif %}"
            href="{{ path('profil_etudiant_apc', {slug: user.slug}) }}"
            id="profil-notes">{{ 'tab.apc_notes'|trans }}</a>
-        {% endif %}
+    {% endif %}
     <a class="nav-link changeprofil {% if onglet == 'absences' %}active{% endif %}"
        href="{{ path('profil_etudiant_absences', {slug: user.slug}) }}"
        id="profil-absences">{{ 'tab.absences'|trans }}</a>
