@@ -165,9 +165,10 @@ class StageSubscriber implements EventSubscriberInterface
     public function onConventionStageEnvoyee(StageEvent $event)
     {
         $stageEtudiant = $event->getStageEtudiant();
-        $mailAssistante = $stageEtudiant->getStagePeriode()?->getSemestre()?->getDiplome()?->getAssistantDiplome()?->getMailUniv();
+        $assistante = $stageEtudiant->getStagePeriode()?->getSemestre()?->getDiplome()?->getAssistantDiplome();
+        $mailAssistante = $assistante?->getMailUniv();
         $this->mailerFromTwig->initEmail();
-        $this->mailerFromTwig->setTemplate('mails/stages/stage_convention_envoyee.txt.twig', ['stageEtudiant' => $stageEtudiant]);
+        $this->mailerFromTwig->setTemplate('mails/stages/stage_convention_envoyee.txt.twig', ['stageEtudiant' => $stageEtudiant, 'assistante' => $assistante]);
         $this->mailerFromTwig->attachFile($this->dir.'Convention-'.$stageEtudiant->getEtudiant()->getNom().'.pdf');
         $this->mailerFromTwig->attachFile($this->dir.'modes_operatoires_signature_pdf.pdf');
         $this->mailerFromTwig->sendMessage( $stageEtudiant->getEtudiant()->getMails(), 'Convention de stage pour signature', ['replyTo' => $mailAssistante]);
