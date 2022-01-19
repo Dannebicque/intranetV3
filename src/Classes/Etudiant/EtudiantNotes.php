@@ -163,7 +163,7 @@ class EtudiantNotes
         }
 
         foreach ($this->notes as $note) {
-            if (null !== $note->getEvaluation() && 0 !== $note->getEvaluation()->getIdMatiere()) {
+            if (null !== $note->getEvaluation() && true === $note->getEvaluation()->getVisible() && 0 !== $note->getEvaluation()->getIdMatiere()) {
                 $this->tabGraphique[$tabKey[$note->getEvaluation()->getTypeIdMatiere()]]['notes'] += $note->getNote() * $note->getEvaluation()->getCoefficient();
                 $this->tabGraphique[$tabKey[$note->getEvaluation()->getTypeIdMatiere()]]['coefficient'] += $note->getEvaluation()->getCoefficient();
             }
