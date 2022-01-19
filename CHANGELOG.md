@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.5.9](https://github.com/Dannebicque/intranetV3/compare/v3.5.8...v3.5.9) (2022-01-19)
+
+
+### Features
+
+* [APC] Bilan de semestre affichable pour les étudiants ([bff84af](https://github.com/Dannebicque/intranetV3/commit/bff84af62bcd89280990be506493a8d3769328ff))
+* [APC] Bilan de semestre affichable pour les étudiants ([e6cfb28](https://github.com/Dannebicque/intranetV3/commit/e6cfb28703ebbf0130b51bf916325691809ec989))
+* [APC] Bilan de semestre affichable pour les étudiants ([efcdab3](https://github.com/Dannebicque/intranetV3/commit/efcdab3875c8a8ab12f1fab87a060532adde6298))
+
+
+### Bug Fixes
+
+* [APC] Améliortion lisibilité des listes Ressources et SAE ([1c3934d](https://github.com/Dannebicque/intranetV3/commit/1c3934d7c3e60827cfbfe558f66053d7ac38920f))
+* [Evaluation] Stats si pas de groupe ([e5b50d7](https://github.com/Dannebicque/intranetV3/commit/e5b50d70865d9451970b1544e676000c48b8ab07))
+* [Filtres] Typage ([7a3db38](https://github.com/Dannebicque/intranetV3/commit/7a3db38a7d1d749a0ee9be9e20b5990222f645cb))
+* [Profil Etudiant] Renommage partie "About" ([873bb9d](https://github.com/Dannebicque/intranetV3/commit/873bb9df3d9f9a7ef37491aba8dcfc7e8d8a1348))
+* [Qualite] Mail automatique à j-2 ([2d1986e](https://github.com/Dannebicque/intranetV3/commit/2d1986ec84a3940b71b5e46925fd9b602d43cfe9))
+* [Rattrapage] Bug "is" avec Safari.Ajout d'un placeholder et d'un texte d'aide en attendant de trouver la solution en JS ([e4098e1](https://github.com/Dannebicque/intranetV3/commit/e4098e109e8a2bc640ad6a87c021cac02db1851f))
+* [SSComm] Correctif EntityManager ([eabb984](https://github.com/Dannebicque/intranetV3/commit/eabb984ee29e9835095cbdc8f30e939cf10251d8))
+* [SScomm] Gestion du cas où toutes les notes d'une matière sont des absences justifiées ([209683b](https://github.com/Dannebicque/intranetV3/commit/209683b8919f2e4780eaec13e8f1998670a52418))
+* [SScomm] Problème affichage ([c67ff60](https://github.com/Dannebicque/intranetV3/commit/c67ff60a712d1edb838561dd8b2f0ada15ff93ad))
+* [Stage] Amélioration du mail de convetion envoyée. ([93fc80b](https://github.com/Dannebicque/intranetV3/commit/93fc80b70358a863f190507c34f7f4fa5a37d012))
+
 ### [3.5.8](https://github.com/Dannebicque/intranetV3/compare/v3.5.7...v3.5.8) (2022-01-16)
 
 
