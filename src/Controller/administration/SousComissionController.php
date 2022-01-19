@@ -157,7 +157,7 @@ class SousComissionController extends BaseController
     #[Route(path: '/ajax/semestre/{id}/{type}', name: 'administration_ss_comm_ajax_edit', options: ['expose' => true])]
     public function ajaxEditSsComm(SousCommission $sousCommission, Request $request, Scolarite $scolarite, $type): JsonResponse
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $sousCommission->getSemestre());
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $scolarite->getSemestre());
         $sousCommission->updateScolarite($scolarite,
             $type,
             $request->request->get('field'),

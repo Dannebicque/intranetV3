@@ -75,7 +75,6 @@ class SousCommission extends AbstractSousCommission implements SousCommissionInt
             $tabUes[$ue->getNumeroUe()] = new MoyenneUe($ue, $this->semestre->getOptPointPenaliteAbsence());
         }
 
-
         /** @var MoyenneMatiere $matiere */
         foreach ($moyenneMatieres as $matiere) {
             $idUe = $matiere->matiere->getUeNumero();
@@ -131,9 +130,19 @@ class SousCommission extends AbstractSousCommission implements SousCommissionInt
     private function updateScolariteUe(Scolarite $scolarite, $field, $value): void
     {
         [$code, $idUe] = explode('_', $field);
-        $scolarite->getMoyennesUes()[$idUe]['moyenne'] = match ($code) {
-            'moyenne' => Tools::convertToFloat($value),
-        };
+
+        $t = $scolarite->getMoyennesUes();
+        switch ($code) {
+            case 'decision':
+                $t[$idUe][$code] = $value;
+                break;
+            case 'moyenne':
+                $t[$idUe][$code] = Tools::convertToFloat($value);
+                break;
+        }
+        $scolarite->setMoyennesUes($t);
+
+
     }
 
     private function updateScolariteMatiere(Scolarite $scolarite, $field, $value): void
