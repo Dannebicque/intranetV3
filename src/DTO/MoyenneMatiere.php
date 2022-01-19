@@ -19,10 +19,12 @@ class MoyenneMatiere
     public array $coefficients = [];
     public float $totalNotes = 0;
     public float $totalCoefficient = 0;
-    public float $absences = 0; //nombre d'absences non justifiées impliquant une pénalité
+    public int $absences = 0; //nombre d'absences non justifiées impliquant une pénalité
+    public int $absencesJustifiee = 0; //nombre d'absences  justifiées impliquant
     public bool $optionFaite;
     private float $bonification = 0;
     private float $penalite;
+    public bool $matiereAAnnuler = false;
 
     public function __construct(Matiere $matiere, float $penalite, $groupes)
     {
@@ -60,6 +62,15 @@ class MoyenneMatiere
             $this->totalNotes += $note->getNote() * $note->getEvaluation()->getCoefficient();
             $this->totalCoefficient += $note->getEvaluation()->getCoefficient();
         }
+
+        if (true === $note->getAbsenceJustifie()) {
+            //j'ai une absence justifiée.
+            ++$this->absencesJustifiee;
+        }
+
+        if ($this->absencesJustifiee === $this->matiere->nbNotes) {
+            $this->matiereAAnnuler = true;
+        }
     }
 
     public function getStyle(): string
@@ -84,8 +95,10 @@ class MoyenneMatiere
         return 'notenormale';
     }
 
-    public function getMoyenne(): float
+    public function getMoyenne(): ?float
     {
+
+
         $moy = $this->totalCoefficient > 0 ? $this->totalNotes / $this->totalCoefficient : 0;
 
         return max($moy, 0);
@@ -96,14 +109,14 @@ class MoyenneMatiere
         return $this->style($this->getMoyennePenalisee());
     }
 
-    public function getMoyennePenalisee()
+    public function getMoyennePenalisee(): float
     {
         $moy = $this->getMoyenne() - ($this->absences * $this->penalite);
 
         return max($moy, 0);
     }
 
-    public function getBonification()
+    public function getBonification(): float
     {
         if ($this->getMoyenne() > 10) {
             $this->bonification += ($this->getMoyenne() - 10) / 20;
@@ -112,5 +125,10 @@ class MoyenneMatiere
         }
 
         return 0;
+    }
+
+    public function isAbsenceJustifie(): bool
+    {
+        return $this->absences > 0;
     }
 }

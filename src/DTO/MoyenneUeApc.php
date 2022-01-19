@@ -20,6 +20,7 @@ class MoyenneUeApc
     public float $moyennePac = 0;
     public float $moyennePacPenalisee = 0;
     public float $moyenne = 0;
+    public bool $ueAAnnuler = false;
     public float $moyennePenalisee = 0;
     public ?string $decision = null;
     public ?string $decisionPenalisee = null;

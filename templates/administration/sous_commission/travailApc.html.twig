@@ -130,6 +130,8 @@
                                                 {% if sc.matiere(etudiant.id, matiere.typeIdMatiere) != null %}
                                                     {% if sc.matiere(etudiant.id, matiere.typeIdMatiere).pasoption is defined %}
                                                         N.C.
+                                                    {% elseif sc.matiere(etudiant.id, matiere.typeIdMatiere).matiereAAnnuler is defined %}
+                                                        Abs. Just.
                                                     {% else %}
                                                         <a class="myedit"
                                                            data-field="moyenne_{{ matiere.id }}"
@@ -176,8 +178,8 @@
                 <div class="col-sm-12 col-md-6 d-grid">
                     <a href="{{ path('administration_sous_commission_recalculer', {ssComm:sc.getSsComm.id}) }}"
                        class="btn d-block btn-warning">Recalculer la sous-commission (effectue un nouveau calcul
-                                                         des moyennes (semestre et UE). Modifie les décisions en
-                                                         fonction des résultats.</a>
+                                                       des moyennes (semestre et UE). Modifie les décisions en
+                                                       fonction des résultats.</a>
                 </div>
                 <div class="col-sm-12 col-md-6 d-grid">
                     {% if sc.getSsComm.publie == true %}
