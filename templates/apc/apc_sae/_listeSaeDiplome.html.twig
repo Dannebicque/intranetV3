@@ -24,11 +24,11 @@
             <td>
                 {% for competence in apc_sae.apcSaeCompetences %}
                     <span class="badge badge-{{ competence.competence.couleur }}">
-                        {{ competence.competence.nomCourt }}
+                        {{ competence.competence.nomCourt }} ({{ competence.coefficient }})
                     </span>
                 {% endfor %}</td>
-            <td>{{ apc_sae.suspendu ? 'Yes'|trans : 'No'|trans }}</td>
-            <td>{{ apc_sae.bonification ? 'Yes'|trans : 'No'|trans }}</td>
+            <td>{{ apc_sae.suspendu|badgeYesNo }}</td>
+            <td>{{ apc_sae.bonification|badgeYesNo }}</td>
             <td>
                 <a class="myedit"
                    data-field="CmPpn"

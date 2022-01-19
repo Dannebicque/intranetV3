@@ -6,12 +6,12 @@
         <th>{{ 'table.code_ressource'|trans }}</th>
         <th>{{ 'table.code_element'|trans }}</th>
         <th>{{ 'table.libelle'|trans }}</th>
+        <th>{{ 'table.competence'|trans }}</th>
         <th>{{ 'table.suspendu'|trans }}</th>
         <th>{{ 'table.cm'|trans }}</th>
         <th>{{ 'table.td'|trans }}</th>
         <th>{{ 'table.tp'|trans }}</th>
         <th>{{ 'table.nb_notes'|trans }}</th>
-        <th>{{ 'table.suspendu'|trans }}</th>
         <th>{{ 'table.actions'|trans }}</th>
     </tr>
     </thead>
@@ -21,7 +21,13 @@
             <td>{{ ressource.codeMatiere }}</td>
             <td>{{ ressource.codeElement }}</td>
             <td>{{ ressource.libelle }}</td>
-            <td>{{ ressource.suspendu ? 'Yes'|trans : 'No'|trans }}</td>
+            <td>
+                {% for competence in ressource.apcRessourceCompetences %}
+                    <span class="badge badge-{{ competence.competence.couleur }}">
+                        {{ competence.competence.nomCourt }} ({{ competence.coefficient }})
+                    </span>
+                {% endfor %}</td>
+            <td>{{ ressource.suspendu|badgeYesNo }}</td>
             <td>
                 <a class="myedit"
                    data-field="CmPpn"
@@ -64,7 +70,6 @@
                    href="{{ path('administration_apc_ressources_ajax_edit', {id:ressource.id}) }}"
                    data-title="Corriger le nombre de notes">
                     {{ ressource.nbNotes }}</a></td>
-            <td>{{ ressource.suspendu ? 'Yes'|trans : 'No'|trans }}</td>
             <td>
                 {% if settings('MODIFICATION_PPN') == 1 %}
 
