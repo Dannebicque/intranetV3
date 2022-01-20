@@ -443,7 +443,7 @@ class SousCommissionExport
             $this->myExcelWriter->getColumnAutoSize($colonne);
             ++$colonne;
 
-            $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getDatenaissance()->format('d/m/Y'));
+            $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getDatenaissance() !== null ? $etudiant->getDatenaissance()->format('d/m/Y') : 'err');
             $this->myExcelWriter->getColumnAutoSize($colonne);
             ++$colonne;
 
