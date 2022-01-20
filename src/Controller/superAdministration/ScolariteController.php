@@ -14,11 +14,14 @@ use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Diplome;
 use App\Entity\Semestre;
+use App\Exception\AnneeUniversitaireNotFoundException;
 use App\Repository\AnneeUniversitaireRepository;
 use App\Repository\SemestreRepository;
 use App\Table\ScolariteDiplomesTableType;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -27,6 +30,9 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route(path: '/administratif/scolarite')]
 class ScolariteController extends BaseController
 {
+    /**
+     * @throws \JsonException
+     */
     #[Route(path: '/', name: 'sa_scolarite_index')]
     public function index(
         Request $request): Response
@@ -68,10 +74,20 @@ class ScolariteController extends BaseController
         ]);
     }
 
-    #[Route(path: '/genere-apogee/{semestre}', name: 'sa_scolarite_semestre_genere_apogee', methods: ['POST'], requirements: ['semestre' => '\d+'])]
-    public function genereFichierApogee(AnneeUniversitaireRepository $anneeUniversitaireRepository, SousCommissionExport $sousCommissionExport, Request $request, Semestre $semestre)
+    /**
+     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws \App\Exception\AnneeUniversitaireNotFoundException
+     * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
+     * @throws \PhpOffice\PhpSpreadsheet\Reader\Exception
+     */
+    #[Route(path: '/genere-apogee/{semestre}', name: 'sa_scolarite_semestre_genere_apogee', requirements: ['semestre' => '\d+'], methods: ['POST'])]
+    public function genereFichierApogee(AnneeUniversitaireRepository $anneeUniversitaireRepository, SousCommissionExport $sousCommissionExport, Request $request, Semestre $semestre): RedirectResponse | StreamedResponse | string | null
     {
-        $anneeUniersitaire = $anneeUniversitaireRepository->findOneBy(['active' => true]);
+        $anneeUniersitaire = $this->getUser()->getAnneeUniversitaire();
+        if (null === $anneeUniersitaire) {
+            throw new AnneeUniversitaireNotFoundException();
+        }
+
         $resultat = $sousCommissionExport->exportApogee($semestre, $request->files->get('fichier'), $anneeUniersitaire);
         if (Constantes::PAS_DE_SOUS_COMM === $resultat) {
             $this->addFlash(Constantes::FLASHBAG_ERROR, 'Pas de sous commission validée');
