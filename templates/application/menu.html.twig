@@ -23,15 +23,15 @@
                    href="{{ path('application_personnel_salle_examen_index') }}" role="tab">{{ 'menu.salle_examen'|trans }}</a>
             </li>
 
-            <li class="nav-item">
-                <a class="nav-link changeapplication {% if onglet == 'carnet' %}active{% endif %}"
-                   href="{{ path('application_personnel_carnet_index') }}" role="tab">{{ 'menu.carnet'|trans }}</a>
-            </li>
+{#            <li class="nav-item">#}
+{#                <a class="nav-link changeapplication {% if onglet == 'carnet' %}active{% endif %}"#}
+{#                   href="{{ path('application_personnel_carnet_index') }}" role="tab">{{ 'menu.carnet'|trans }}</a>#}
+{#            </li>#}
 
-            <li class="nav-item">
-                <a class="nav-link changeapplication {% if onglet == 'quizz' %}active{% endif %}"
-                   href="{{ path('application_personnel_quizz_index') }}" role="tab">{{ 'menu.quizz'|trans }}</a>
-            </li>
+{#            <li class="nav-item">#}
+{#                <a class="nav-link changeapplication {% if onglet == 'quizz' %}active{% endif %}"#}
+{#                   href="{{ path('application_personnel_quizz_index') }}" role="tab">{{ 'menu.quizz'|trans }}</a>#}
+{#            </li>#}
         {% else %}
             <li class="nav-item ">
                 <a class="nav-link changeapplication {% if onglet == 'messagerie' %}active{% endif %}"
@@ -64,10 +64,10 @@
                        role="tab">{{ 'menu.stages'|trans }}</a>
                 </li>
             {% endif %}
-            <li class="nav-item ">
-                <a class="nav-link changeapplication {% if onglet == 'carnet' %}active{% endif %}"
-                   href="{{ path('application_etudiant_carnet_index') }}" role="tab">{{ 'menu.carnet'|trans }}</a>
-            </li>
+{#            <li class="nav-item ">#}
+{#                <a class="nav-link changeapplication {% if onglet == 'carnet' %}active{% endif %}"#}
+{#                   href="{{ path('application_etudiant_carnet_index') }}" role="tab">{{ 'menu.carnet'|trans }}</a>#}
+{#            </li>#}
             <li class="nav-item ">
                 <a class="nav-link changeapplication {% if onglet == 'projet' %}active{% endif %}"
                    href="{{ path('application_etudiant_projet_index') }}" role="tab">{{ 'menu.projet'|trans }}</a>
@@ -79,16 +79,16 @@
                    role="tab">{{ 'menu.rattrapage'|trans }}</a>
             </li>
 
-            <li class="nav-item ">
-                <a class="nav-link changeapplication {% if onglet == 'quizz' %}active{% endif %}"
-                   href="{{ path('application_etudiant_quizz_index') }}" role="tab">{{ 'menu.quizz'|trans }}</a>
-            </li>
-            {% if user_data.departement.optMateriel == true %}
-                <li class="nav-item ">
-                    <a class="nav-link changeapplication {% if onglet == 'emprunt' %}active{% endif %}"
-                       href="{{ path('application_etudiant_emprunt_index') }}" role="tab">{{ 'menu.emprunt'|trans }}</a>
-                </li>
-            {% endif %}
+{#            <li class="nav-item ">#}
+{#                <a class="nav-link changeapplication {% if onglet == 'quizz' %}active{% endif %}"#}
+{#                   href="{{ path('application_etudiant_quizz_index') }}" role="tab">{{ 'menu.quizz'|trans }}</a>#}
+{#            </li>#}
+{#            {% if user_data.departement.optMateriel == true %}#}
+{#                <li class="nav-item ">#}
+{#                    <a class="nav-link changeapplication {% if onglet == 'emprunt' %}active{% endif %}"#}
+{#                       href="{{ path('application_etudiant_emprunt_index') }}" role="tab">{{ 'menu.emprunt'|trans }}</a>#}
+{#                </li>#}
+{#            {% endif %}#}
         {% endif %}
     </ul>
     <div class="buttons">
