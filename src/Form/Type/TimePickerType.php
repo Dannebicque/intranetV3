@@ -20,27 +20,26 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
-use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class DatePickerType extends AbstractType
+class TimePickerType extends AbstractType
 {
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['attr']['autocomplete'] = 'off';
-        $view->vars['attr']['class'] =  ' flatdatepicker';
+        $view->vars['attr']['class'] = ' flatdatepicker';
 
         $jsOptions = [
-            'dateFormat' => $options['format'],
-            'enableTime' => $options['enable_time'],
-
+            'dateFormat' => 'H:i',
+            'enableTime' => true,
+            'noCalendar' => true,
+            'time_24hr' => true,
             'allowInput' => $options['allow_input'],
             'minDate' => $this->toDate($options['min'], $options['format']),
             'maxDate' => $this->toDate($options['max'], $options['format']),
         ];
 
         $view->vars['attr']['data-options'] = json_encode($jsOptions);
-
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -73,18 +72,16 @@ class DatePickerType extends AbstractType
     {
         $resolver
             ->setDefault('data_class', null)
-            ->setDefault('enable_time', false)
+            ->setDefault('enable_time', true)
             ->setAllowedTypes('enable_time', 'bool')
             ->setDefault('min', null)
             ->setAllowedTypes('min', [CarbonInterface::class, 'string', 'null'])
             ->setDefault('max', null)
             ->setAllowedTypes('max', [CarbonInterface::class, 'string', 'null'])
             ->setDefault('allow_input', true)
-            ->setDefault('input_prefix_text', '<i class="fas fa-calendar-day"></i>')
+            ->setDefault('input_prefix_text', '<i class="fas fa-clock"></i>')
             ->setAllowedTypes('allow_input', 'bool')
-            ->setDefault('format', function (Options $options) {
-                return $options['enable_time'] ? 'd/m/Y H:i' : 'd/m/Y';
-            })
+            ->setDefault('format', 'H:i')
             ->setAllowedTypes('format', 'string');
     }
 
@@ -99,7 +96,7 @@ class DatePickerType extends AbstractType
     /**
      * @throws \Exception
      */
-    private function toDate($value, string $outputFormat = 'Y-m-d'): ?string
+    private function toDate($value, string $outputFormat = 'H:i'): ?string
     {
         if (is_string($value)) {
             $value = new DateTime($value);

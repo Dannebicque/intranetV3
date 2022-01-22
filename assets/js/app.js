@@ -16,11 +16,14 @@ import * as bootstrap from 'bootstrap'
 
 import '../css/app.scss'
 
+import flatpickr from 'flatpickr'
+import 'flatpickr/dist/l10n/fr.js'
+
+
 import Table from '../components/table'
 //import Editable from './editable'
 import SelectComplete from '../components/SelectComplete'
 import SelectChangeWidget from '../components/SelectChangeWidget'
-import DatePicker from '../components/DatePicker'
 import {post} from './fetch'
 
 export const LANG = document.querySelector('html').getAttribute('lang')
@@ -34,7 +37,7 @@ window.da = {
 customElements.define('my-table', Table)
 customElements.define('select-complete', SelectComplete, {extends: 'select'})
 customElements.define('select-live-update', SelectChangeWidget, {extends: 'select'})
-customElements.define('my-datepicker', DatePicker, {extends: 'input'})
+
 
 $('input[type="file"]').on('change', function (e) {
   let filename = e.target.files[0].name
@@ -127,11 +130,25 @@ function updateInterface () {
     return new bootstrap.Tooltip(tooltipTriggerEl)
   })
 
+  if ( document.querySelectorAll('.flatdatepicker').length > 0) {
+    document.querySelectorAll('.flatdatepicker').forEach(function (elem) {
+      let options
+      if (elem.dataset.options) {
+        options = JSON.parse(elem.dataset.options)
+      } else {
+        options = []
+        options['dateFormat'] = 'd/m/Y'
+      }
+      options['locale'] = da.LANG
+      flatpickr(elem, options)
+    })
+  }
+
   if (document.getElementsByClassName('datepicker-range').length > 0) {
     $('.datepicker-range').flatpickr({
       mode: 'range',
-      'locale': 'fr',
-      format: 'd/M/Y'
+      'locale': da.LANG,
+      dateFormat: 'd/m/Y'
     })
   }
 
