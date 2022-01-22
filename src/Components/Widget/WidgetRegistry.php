@@ -21,7 +21,7 @@ class WidgetRegistry
      */
     protected array $types = [];
 
-    public function registerType(string $name, WidgetType $type)
+    public function registerType(string $name, WidgetType $type): void
     {
         $this->types[$name] = $type;
     }
@@ -29,8 +29,7 @@ class WidgetRegistry
     public function getType(string $name): WidgetType
     {
         if (!isset($this->types[$name])) {
-            throw new InvalidArgumentException(sprintf('Widget "%s" doesn\'t exist, maybe you have forget to register it ?',
-                $name));
+            throw new InvalidArgumentException(sprintf('Widget "%s" doesn\'t exist, maybe you have forget to register it ?', $name));
         }
 
         return $this->types[$name];

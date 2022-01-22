@@ -13,6 +13,7 @@ use App\Components\Widget\DTO\WidgetView;
 use App\Components\Widget\WidgetBuilder;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
+use function is_callable;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -20,7 +21,6 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use function is_callable;
 
 class SelectChangeType extends WidgetType
 {
@@ -40,7 +40,7 @@ class SelectChangeType extends WidgetType
         $this->accessor = PropertyAccess::createPropertyAccessor();
     }
 
-    public function buildView(WidgetView $view, array $options)
+    public function buildView(WidgetView $view, array $options): void
     {
         parent::buildView($view, $options);
         $view->vars['attr']['is'] = 'select-live-update';
@@ -50,7 +50,7 @@ class SelectChangeType extends WidgetType
         $this->getDatas($view, $options);
     }
 
-    private function getDatas(WidgetView $view, array $options)
+    private function getDatas(WidgetView $view, array $options): void
     {
         $view->vars['attr']['required'] = $options['required'];
 
@@ -67,7 +67,7 @@ class SelectChangeType extends WidgetType
                     $queryBuilder = $queryBuilder($em);
 
                     if (null !== $queryBuilder && !$queryBuilder instanceof QueryBuilder) {
-                        throw new UnexpectedTypeException($queryBuilder, 'Doctrine\ORM\QueryBuilder');
+                        throw new UnexpectedTypeException($queryBuilder, QueryBuilder::class);
                     }
                 }
                 $datas = $queryBuilder->getQuery()->getResult();
@@ -83,16 +83,16 @@ class SelectChangeType extends WidgetType
         }
     }
 
-    public function buildWidget(WidgetBuilder $builder, array $options)
+    public function buildWidget(WidgetBuilder $builder, array $options): void
     {
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
 
         $resolver
-            ->setDefault('property_path', function(Options $options) {
+            ->setDefault('property_path', function (Options $options) {
                 return $options['id'];
             })
             ->setDefault('id', null)

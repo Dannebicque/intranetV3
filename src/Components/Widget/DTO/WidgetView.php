@@ -26,10 +26,10 @@ class WidgetView implements IteratorAggregate, Countable
      */
     public array $children = [];
 
-    public function addClass(string $class)
+    public function addClass(string $class): void
     {
         if (isset($this->vars['attr']['class'])) {
-            $this->vars['attr']['class'] .= ' ' . $class;
+            $this->vars['attr']['class'] .= ' '.$class;
         } else {
             $this->vars['attr']['class'] = $class;
         }

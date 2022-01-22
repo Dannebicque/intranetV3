@@ -9,13 +9,13 @@
 
 namespace App\Components\Widget\Type;
 
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use App\Components\Widget\DTO\WidgetView;
 use App\Components\Widget\WidgetBuilder;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ButtonGroupType extends WidgetType
 {
-    public function buildView(WidgetView $view, array $options)
+    public function buildView(WidgetView $view, array $options): void
     {
         parent::buildView($view, $options);
         $view->element = 'div';
@@ -24,14 +24,14 @@ class ButtonGroupType extends WidgetType
         $view->vars['icon'] = false;
     }
 
-    public function buildWidget(WidgetBuilder $builder, array $options)
+    public function buildWidget(WidgetBuilder $builder, array $options): void
     {
         if ($options['build']) {
             call_user_func($options['build'], $builder, $options);
         }
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
 

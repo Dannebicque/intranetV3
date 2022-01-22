@@ -9,9 +9,9 @@
 
 namespace App\Components\Widget;
 
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use App\Components\Widget\DTO\Widget;
 use App\Components\Widget\Type\WidgetType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class WidgetBuilder
 {
@@ -42,7 +42,7 @@ class WidgetBuilder
     {
         $this->childrenData[$name] = [
             'type' => $type,
-            'options' => $options
+            'options' => $options,
         ];
 
         return $this;

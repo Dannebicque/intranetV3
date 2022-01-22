@@ -9,20 +9,14 @@
 
 namespace App\Components\Widget\Type;
 
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use App\Components\Widget\DTO\WidgetView;
 use App\Components\Widget\WidgetBuilder;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ExportDropdownType extends ButtonDropdownType
 {
-    public function buildView(WidgetView $view, array $options)
+    public function buildWidget(WidgetBuilder $builder, array $options): void
     {
-        parent::buildView($view, $options);
-    }
-
-    public function buildWidget(WidgetBuilder $builder, array $options)
-    {
-        foreach($options['formats'] as $format) {
+        foreach ($options['formats'] as $format) {
             $builder->add($format, LinkType::class, [
                 'route' => $options['route'],
                 'route_params' => array_merge($options['route_params'], ['_format' => $format]),
@@ -30,7 +24,7 @@ class ExportDropdownType extends ButtonDropdownType
         }
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
 
@@ -43,10 +37,5 @@ class ExportDropdownType extends ButtonDropdownType
 
         $resolver
             ->setDefault('class', 'btn-light');
-    }
-
-    public function getBlockPrefix(): string
-    {
-        return 'button_dropdown';
     }
 }

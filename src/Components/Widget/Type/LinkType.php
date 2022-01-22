@@ -9,19 +9,17 @@
 
 namespace App\Components\Widget\Type;
 
+use App\Components\Widget\DTO\WidgetView;
+use App\Components\Widget\WidgetBuilder;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
-use App\Components\Widget\DTO\WidgetView;
-use App\Components\Widget\WidgetBuilder;
-use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class LinkType extends WidgetType
 {
     protected RouterInterface $router;
     protected ParameterBagInterface $parameterBag;
-
 
     /**
      * LinkType constructor.
@@ -32,7 +30,7 @@ class LinkType extends WidgetType
         $this->parameterBag = $parameterBag;
     }
 
-    public function buildView(WidgetView $view, array $options)
+    public function buildView(WidgetView $view, array $options): void
     {
         parent::buildView($view, $options);
         $view->element = 'a';
@@ -68,11 +66,11 @@ class LinkType extends WidgetType
         }
     }
 
-    public function buildWidget(WidgetBuilder $builder, array $options)
+    public function buildWidget(WidgetBuilder $builder, array $options): void
     {
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
 
@@ -87,10 +85,11 @@ class LinkType extends WidgetType
         $resolver
             ->define('url')
             ->allowedTypes('string', 'null')
-            ->default(function(Options $options) {
+            ->default(function (Options $options) {
                 if ($options['route']) {
                     return $this->router->generate($options['route'], $options['route_params']);
                 }
+
                 return null;
             });
 

@@ -9,23 +9,23 @@
 
 namespace App\Components\Widget\Type;
 
-use Symfony\Component\OptionsResolver\Options;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use App\Components\Widget\DTO\WidgetView;
 use App\Components\Widget\WidgetBuilder;
 use function array_filter;
 use function array_map;
 use function is_string;
+use Symfony\Component\OptionsResolver\Options;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class WidgetType
 {
-    public function buildView(WidgetView $view, array $options)
+    public function buildView(WidgetView $view, array $options): void
     {
         $view->vars['attr'] = $options['attr'];
 
         if ($options['class']) {
             if (isset($view->vars['attr']['class'])) {
-                $view->vars['attr']['class'] .= ' ' . $options['class'];
+                $view->vars['attr']['class'] .= ' '.$options['class'];
             } else {
                 $view->vars['attr']['class'] = $options['class'];
             }
@@ -46,7 +46,7 @@ class WidgetType
         // hack (used only by DataTable)
     }
 
-    public function buildWidget(WidgetBuilder $builder, array $options)
+    public function buildWidget(WidgetBuilder $builder, array $options): void
     {
     }
 
@@ -55,9 +55,9 @@ class WidgetType
         return 'base';
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        $normalizer = function(Options $options, $value) {
+        $normalizer = static function (Options $options, $value) {
             if (null === $value) {
                 return null;
             }

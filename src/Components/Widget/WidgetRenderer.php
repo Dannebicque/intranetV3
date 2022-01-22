@@ -9,9 +9,9 @@
 
 namespace App\Components\Widget;
 
+use App\Components\Widget\DTO\WidgetView;
 use Twig\Environment;
 use Twig\TemplateWrapper;
-use App\Components\Widget\DTO\WidgetView;
 
 class WidgetRenderer
 {
@@ -28,6 +28,12 @@ class WidgetRenderer
         $this->twig = $twig;
     }
 
+    /**
+     * @throws \Throwable
+     * @throws \Twig\Error\SyntaxError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\LoaderError
+     */
     public function render(WidgetView $view): string
     {
         $template = $this->load();
@@ -39,6 +45,11 @@ class WidgetRenderer
         return $template->renderBlock($params['block_name'], $params);
     }
 
+    /**
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
+     * @throws \Twig\Error\LoaderError
+     */
     private function load(): TemplateWrapper
     {
         if (null === $this->templateWrapper) {

@@ -9,13 +9,13 @@
 
 namespace App\Components\Widget\Type;
 
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use App\Components\Widget\DTO\WidgetView;
 use App\Components\Widget\WidgetBuilder;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ButtonDropdownType extends WidgetType
 {
-    public function buildView(WidgetView $view, array $options)
+    public function buildView(WidgetView $view, array $options): void
     {
         parent::buildView($view, $options);
         $view->vars['attr']['class'] .= ' btn';
@@ -27,14 +27,14 @@ class ButtonDropdownType extends WidgetType
         $view->vars['attr']['data-bs-toggle'] = 'dropdown';
     }
 
-    public function buildWidget(WidgetBuilder $builder, array $options)
+    public function buildWidget(WidgetBuilder $builder, array $options): void
     {
         if ($options['build']) {
             call_user_func($options['build'], $builder, $options);
         }
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
 

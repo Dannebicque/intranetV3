@@ -20,13 +20,13 @@ class WidgetCompilerPass implements CompilerPassInterface
     /**
      * You can modify the container here before it is dumped to PHP code.
      */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         $registry = $container->getDefinition(WidgetRegistry::class);
         $this->addToRegistry($container, $registry, WidgetRegistry::TAG_TYPE, 'registerType');
     }
 
-    private function addToRegistry(ContainerBuilder $container, Definition $registry, string $tag, string $method)
+    private function addToRegistry(ContainerBuilder $container, Definition $registry, string $tag, string $method): void
     {
         $taggedServices = $container->findTaggedServiceIds($tag);
 

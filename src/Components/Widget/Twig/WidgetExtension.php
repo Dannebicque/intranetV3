@@ -9,9 +9,9 @@
 
 namespace App\Components\Widget\Twig;
 
+use App\Components\Widget\WidgetRenderer;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
-use App\Components\Widget\WidgetRenderer;
 
 class WidgetExtension extends AbstractExtension
 {
@@ -28,7 +28,7 @@ class WidgetExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('render_widget', [$this->renderer, 'render'], ['is_safe' => ['html']])
+            new TwigFunction('render_widget', [$this->renderer, 'render'], ['is_safe' => ['html']]),
         ];
     }
 }

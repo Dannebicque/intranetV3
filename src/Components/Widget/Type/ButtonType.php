@@ -11,7 +11,6 @@ namespace App\Components\Widget\Type;
 
 use App\Components\Widget\DTO\WidgetView;
 use App\Components\Widget\WidgetBuilder;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
@@ -28,7 +27,7 @@ class ButtonType extends WidgetType
         $this->router = $router;
     }
 
-    public function buildView(WidgetView $view, array $options)
+    public function buildView(WidgetView $view, array $options): void
     {
         parent::buildView($view, $options);
         $view->element = 'button';
@@ -47,11 +46,11 @@ class ButtonType extends WidgetType
         $view->vars['attr']['class'] .= ' btn';
     }
 
-    public function buildWidget(WidgetBuilder $builder, array $options)
+    public function buildWidget(WidgetBuilder $builder, array $options): void
     {
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
 
@@ -70,6 +69,7 @@ class ButtonType extends WidgetType
                 if ($options['route']) {
                     return $this->router->generate($options['route'], $options['route_params']);
                 }
+
                 return null;
             });
 

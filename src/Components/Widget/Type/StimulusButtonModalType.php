@@ -11,8 +11,6 @@ namespace App\Components\Widget\Type;
 
 use App\Components\Widget\DTO\WidgetView;
 use App\Components\Widget\WidgetBuilder;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
 
@@ -28,7 +26,7 @@ class StimulusButtonModalType extends WidgetType
         $this->router = $router;
     }
 
-    public function buildView(WidgetView $view, array $options)
+    public function buildView(WidgetView $view, array $options): void
     {
         parent::buildView($view, $options);
         $view->element = 'button';
@@ -41,11 +39,11 @@ class StimulusButtonModalType extends WidgetType
         $view->vars['stimulus']['action'] = $options['action'];
     }
 
-    public function buildWidget(WidgetBuilder $builder, array $options)
+    public function buildWidget(WidgetBuilder $builder, array $options): void
     {
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
 
