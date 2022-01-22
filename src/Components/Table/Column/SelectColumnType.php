@@ -11,13 +11,13 @@ namespace App\Components\Table\Column;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
+use function is_callable;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use function is_callable;
 
 class SelectColumnType extends ColumnType
 {
@@ -45,7 +45,7 @@ class SelectColumnType extends ColumnType
         if (null !== $options['choices']) {
             //on a un tableau
             foreach ($options['choices'] as $key => $value) {
-                if ($obj !== null && $value === $obj->getId()) {
+                if (null !== $obj && $value === $obj->getId()) {
                     $selected = 'selected';
                 } else {
                     $selected = '';
@@ -62,7 +62,7 @@ class SelectColumnType extends ColumnType
                     $queryBuilder = $queryBuilder($em);
 
                     if (null !== $queryBuilder && !$queryBuilder instanceof QueryBuilder) {
-                        throw new UnexpectedTypeException($queryBuilder, 'Doctrine\ORM\QueryBuilder');
+                        throw new UnexpectedTypeException($queryBuilder, QueryBuilder::class);
                     }
                 }
                 $datas = $queryBuilder->getQuery()->getResult();
@@ -70,7 +70,7 @@ class SelectColumnType extends ColumnType
                 $datas = $em->findAll();
             }
             foreach ($datas as $data) {
-                if ($obj !== null && $data->getId() === $obj->getId()) {
+                if (null !== $obj && $data->getId() === $obj->getId()) {
                     $selected = 'selected';
                 } else {
                     $selected = '';
@@ -87,7 +87,7 @@ class SelectColumnType extends ColumnType
         return $html;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
 

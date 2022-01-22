@@ -28,7 +28,7 @@ class ManyColumnType extends ColumnType
     }
 
     /**
-     * {}
+     * {}.
      */
     public function render($rowData, array $options): string
     {
@@ -55,17 +55,14 @@ class ManyColumnType extends ColumnType
             ? $this->accessor->getValue($one, $options['one_path'])
             : $one;
 
-        return '<span class="badge bg-secondary mb-1 mt-1">' . $value . '</span>';
+        return '<span class="badge bg-secondary mb-1 mt-1">'.$value.'</span>';
     }
 
-    /**
-     * {}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
         $resolver
-            ->setDefault('many_path', function(Options $options) {
+            ->setDefault('many_path', function (Options $options) {
                 return $options['id'];
             })
             ->setAllowedTypes('many_path', 'string')

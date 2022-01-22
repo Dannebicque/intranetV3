@@ -23,7 +23,7 @@ class TableResult
     {
         $this->data = $data;
         $this->nbResults = count($data);
-        $this->count = null === $count ? count($data) : $count;
+        $this->count = $count ?? count($data);
     }
 
     public function getData(): iterable

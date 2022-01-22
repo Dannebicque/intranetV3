@@ -14,7 +14,7 @@ use App\Components\Table\Column\ColumnType;
 use InvalidArgumentException;
 
 /**
- * Registry used for Columns / adapter and DataTableType
+ * Registry used for Columns / adapter and DataTableType.
  */
 class TableRegistry
 {
@@ -39,7 +39,7 @@ class TableRegistry
 
     // DataTable Type
 
-    public function registerType(string $name, TableType $type)
+    public function registerType(string $name, TableType $type): void
     {
         $this->types[$name] = $type;
     }
@@ -47,8 +47,7 @@ class TableRegistry
     public function getType(string $name): TableType
     {
         if (!isset($this->types[$name])) {
-            throw new InvalidArgumentException(sprintf('Table "%s" doesn\'t exist, maybe you have forget to register it ?',
-                $name));
+            throw new InvalidArgumentException(sprintf('Table "%s" doesn\'t exist, maybe you have forget to register it ?', $name));
         }
 
         return $this->types[$name];
@@ -56,7 +55,7 @@ class TableRegistry
 
     // Column Type
 
-    public function registerColumnType(string $name, ColumnType $columnType)
+    public function registerColumnType(string $name, ColumnType $columnType): void
     {
         $this->columnTypes[$name] = $columnType;
     }
@@ -64,8 +63,7 @@ class TableRegistry
     public function getColumnType(string $name): ColumnType
     {
         if (!isset($this->columnTypes[$name])) {
-            throw new InvalidArgumentException(sprintf('Column "%s" doesn\'t exist, maybe you have forget to register it ?',
-                $name));
+            throw new InvalidArgumentException(sprintf('Column "%s" doesn\'t exist, maybe you have forget to register it ?', $name));
         }
 
         return $this->columnTypes[$name];
@@ -73,7 +71,7 @@ class TableRegistry
 
     // Adaptater (type)
 
-    public function registerAdapter(string $name, TableAdapter $adapter)
+    public function registerAdapter(string $name, TableAdapter $adapter): void
     {
         $this->adapters[$name] = $adapter;
     }
@@ -81,8 +79,7 @@ class TableRegistry
     public function getAdapter(string $name): TableAdapter
     {
         if (!isset($this->adapters[$name])) {
-            throw new InvalidArgumentException(sprintf('Adapter "%s" doesn\'t exist, maybe you have forget to register it ?',
-                $name));
+            throw new InvalidArgumentException(sprintf('Adapter "%s" doesn\'t exist, maybe you have forget to register it ?', $name));
         }
 
         return $this->adapters[$name];

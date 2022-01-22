@@ -9,9 +9,9 @@
 
 namespace App\Components\Table\Column;
 
+use App\Utils\HtmlUtils;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
-use App\Utils\HtmlUtils;
 
 class LinkColumnType extends PropertyColumnType
 {
@@ -69,9 +69,9 @@ class LinkColumnType extends PropertyColumnType
         if (null === $options['text']) {
             $text = htmlspecialchars($this->accessor->getValue($rowData, $options['property_path']));
         } elseif (is_callable($options['text'])) {
-            $text = (string)call_user_func($options['text'], $rowData);
+            $text = (string) call_user_func($options['text'], $rowData);
         } else {
-            $text = (string)$options['text'];
+            $text = (string) $options['text'];
         }
 
         return sprintf('<a %s>%s</a>', HtmlUtils::to_attr($attr), $text);
@@ -80,7 +80,7 @@ class LinkColumnType extends PropertyColumnType
     /**
      * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
 

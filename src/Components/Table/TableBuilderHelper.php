@@ -9,6 +9,8 @@
 
 namespace App\Components\Table;
 
+use App\Components\Table\Column\ColumnType;
+use App\Components\Table\DTO\Column;
 use App\Components\Widget\Type\WidgetType;
 use App\Components\Widget\WidgetBuilder;
 use App\Components\Widget\WidgetFactory;
@@ -18,9 +20,6 @@ use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
-use App\Components\Table\Column\ColumnType;
-use App\Components\Table\DTO\Column;
-
 
 class TableBuilderHelper
 {

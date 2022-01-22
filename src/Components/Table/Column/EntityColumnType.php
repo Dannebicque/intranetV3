@@ -27,7 +27,7 @@ class EntityColumnType extends ColumnType
     }
 
     /**
-     * {}
+     * {}.
      */
     public function render($rowData, array $options): string
     {
@@ -37,29 +37,26 @@ class EntityColumnType extends ColumnType
     }
 
     /**
-     * {}
+     * {}.
      */
     public function renderProperty($value, array $options): string
     {
-        return (string)$value;
+        return (string) $value;
     }
 
-    /**
-     * {}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
 
         $resolver
-            ->setDefault('property_path', function(Options $options) {
+            ->setDefault('property_path', function (Options $options) {
                 return $options['id'];
             })
             ->setRequired('display_field')
             ->setAllowedTypes('property_path', 'string')
             ->setAllowedTypes('display_field', 'string')
             ->setDefault('order', null)
-            ->setDefault('order_by', function(Options $options) {
+            ->setDefault('order_by', function (Options $options) {
                 return $options['property_path'];
             });
     }

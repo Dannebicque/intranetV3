@@ -9,9 +9,9 @@
 
 namespace App\Components\Table\Twig;
 
+use App\Components\Table\TableRenderer;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
-use App\Components\Table\TableRenderer;
 
 class TableExtension extends AbstractExtension
 {

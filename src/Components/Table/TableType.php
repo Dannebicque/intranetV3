@@ -15,7 +15,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class TableType
 {
     // FIXME : statically called to avoid to have add parent::configureOptions() on all inherit Type class
-    final public static function __configureOptions(OptionsResolver $resolver)
+    final public static function __configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired('id')
@@ -42,7 +42,7 @@ class TableType
             ->setAllowedTypes('rowreorder_url', ['string', 'null']);
 
         $resolver
-            ->setDefault('toolbar_form_name', function(Options $options) {
+            ->setDefault('toolbar_form_name', function (Options $options) {
                 return sprintf('%s_tbf', $options['id']);
             })
             ->setAllowedTypes('toolbar_form_name', 'string')
@@ -59,11 +59,11 @@ class TableType
             ->setDefault('toolbar_form_data', null);
     }
 
-    public function buildTable(TableBuilder $builder, array $options)
+    public function buildTable(TableBuilder $builder, array $options): void
     {
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
     }
 }

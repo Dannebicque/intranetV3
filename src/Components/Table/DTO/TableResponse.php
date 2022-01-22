@@ -18,7 +18,7 @@ class TableResponse extends JsonResponse
         return new self(['error' => $error], self::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    public static function createSuccess(array $rowViews = [], array $paging = [])
+    public static function createSuccess(array $rowViews = [], array $paging = []): TableResponse
     {
         return new self([
             'paging' => $paging,

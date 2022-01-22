@@ -29,7 +29,7 @@ class WidgetColumnType extends ColumnType
     }
 
     /**
-     * {}
+     * {}.
      */
     public function render($rowData, array $options): string
     {
@@ -44,9 +44,9 @@ class WidgetColumnType extends ColumnType
     }
 
     /**
-     * {}
+     * {}.
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
 

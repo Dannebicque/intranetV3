@@ -26,7 +26,7 @@ use App\Components\Table\Column\WidgetColumnType;
 use App\Components\Table\TableRegistry;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
-return static function(ContainerConfigurator $configurator): void {
+return static function (ContainerConfigurator $configurator): void {
     $services = $configurator->services();
     $services->defaults()
         ->private()

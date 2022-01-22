@@ -10,7 +10,6 @@
 namespace App\Components\Table\DTO;
 
 use App\Components\Table\Column\ColumnType;
-use App\Utils\HtmlUtils;
 
 class Column
 {
@@ -39,7 +38,7 @@ class Column
 
     public function getOrderBy(): array
     {
-        return null === $this->options['order_by'] ? [] : (array)$this->options['order_by'];
+        return null === $this->options['order_by'] ? [] : (array) $this->options['order_by'];
     }
 
     public function getOptions(): array
@@ -55,7 +54,7 @@ class Column
     public function render($rowData): string
     {
         if (is_callable($this->options['render'])) {
-            $value = (string)call_user_func($this->options['render'], $rowData, $this->options);
+            $value = (string) call_user_func($this->options['render'], $rowData, $this->options);
         } else {
             $value = $this->type->render($rowData, $this->options);
         }

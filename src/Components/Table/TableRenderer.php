@@ -27,11 +27,21 @@ class TableRenderer
         $this->twig = $twig;
     }
 
+    /**
+     * @throws \Twig\Error\SyntaxError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\LoaderError
+     */
     public function render(Table $table): string
     {
         return $this->twig->render($table->getOption('template'), $this->view($table));
     }
 
+    /**
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
+     * @throws \Twig\Error\LoaderError
+     */
     public function renderToolbar(Toolbar $toolbar): string
     {
         return $this->twig->render($toolbar->getOption('toolbar_template'), $this->toolbarView($toolbar));
@@ -64,12 +74,12 @@ class TableRenderer
             'id' => 'id_paging',
             'lengthChange' => $options['length_change'],
             'pageLength' => $options['page_length'],
-            'lengthMenu' => $options['length_menu']
+            'lengthMenu' => $options['length_menu'],
         ];
         $vars['table_attr'] = [
-            'class' => $options['class'] .= ' datable'
+            'class' => $options['class'] .= ' datable',
         ];
-        $vars['columns'] = array_map(function(Column $c) {
+        $vars['columns'] = array_map(function (Column $c) {
             return $this->columnView($c);
         }, $dataTable->getColumns());
 
@@ -125,7 +135,6 @@ class TableRenderer
             'order' => $column->getDefaultOrder(),
             'style' => $options['width'] ? sprintf('width:%s', $options['width']) : null,
         ];
-
 
         $vars['label'] = $options['label'];
         $vars['translation_domain'] = $options['translation_domain'];

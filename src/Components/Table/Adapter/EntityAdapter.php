@@ -9,13 +9,13 @@
 
 namespace App\Components\Table\Adapter;
 
+use App\Components\Table\DTO\TableResult;
+use App\Components\Table\DTO\TableState;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\CountWalker;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use App\Components\Table\DTO\TableResult;
-use App\Components\Table\DTO\TableState;
 
 class EntityAdapter extends TableAdapter implements DoctrineAdapterInterface
 {
@@ -29,7 +29,7 @@ class EntityAdapter extends TableAdapter implements DoctrineAdapterInterface
         $this->em = $em;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
 
@@ -75,9 +75,7 @@ class EntityAdapter extends TableAdapter implements DoctrineAdapterInterface
 
     public function getQueryBuilder(TableState $state, array $options): QueryBuilder
     {
-        $table = $state->getTable();
         $formData = $state->getFormData();
-
 
         $qb = $this->em->createQueryBuilder()
             ->select($options['query_alias'])
@@ -92,7 +90,6 @@ class EntityAdapter extends TableAdapter implements DoctrineAdapterInterface
         if ($state->getLength() >= 0) {
             $qb->setMaxResults($state->getLength());
         }
-
         // order by
         foreach ($state->getOrderBy() as [$column, $direction]) {
             foreach ($column->getOrderBy() as $path) {

@@ -9,8 +9,8 @@
 
 namespace App\Components\Table\Adapter;
 
-use Doctrine\ORM\QueryBuilder;
 use App\Components\Table\DTO\TableState;
+use Doctrine\ORM\QueryBuilder;
 
 interface DoctrineAdapterInterface
 {

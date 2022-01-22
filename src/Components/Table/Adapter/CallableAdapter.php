@@ -9,13 +9,13 @@
 
 namespace App\Components\Table\Adapter;
 
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use App\Components\Table\DTO\TableResult;
 use App\Components\Table\DTO\TableState;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CallableAdapter extends TableAdapter
 {
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
 

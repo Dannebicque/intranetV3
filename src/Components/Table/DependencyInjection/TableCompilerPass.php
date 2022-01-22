@@ -20,16 +20,15 @@ class TableCompilerPass implements CompilerPassInterface
     /**
      * You can modify the container here before it is dumped to PHP code.
      */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         $registry = $container->getDefinition(TableRegistry::class);
         $this->addToRegistry($container, $registry, TableRegistry::TAG_ADAPTER, 'registerAdapter');
         $this->addToRegistry($container, $registry, TableRegistry::TAG_COLUMN_TYPE, 'registerColumnType');
         $this->addToRegistry($container, $registry, TableRegistry::TAG_TABLE_TYPE, 'registerType');
-
     }
 
-    private function addToRegistry(ContainerBuilder $container, Definition $registry, string $tag, string $method)
+    private function addToRegistry(ContainerBuilder $container, Definition $registry, string $tag, string $method): void
     {
         $taggedServices = $container->findTaggedServiceIds($tag);
 

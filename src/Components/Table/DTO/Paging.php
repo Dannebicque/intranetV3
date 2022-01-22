@@ -26,11 +26,11 @@ class Paging
     public function handleRequest(array $paging): void
     {
         if (array_key_exists('pageLength', $paging)) {
-            $this->pageLength = is_int((int)$paging['pageLength']) ? (int)$paging['pageLength'] : 30;
+            $this->pageLength = is_int((int) $paging['pageLength']) ? (int) $paging['pageLength'] : 30;
         }
 
         if (array_key_exists('pageActive', $paging)) {
-            $this->pageActive = is_int((int)$paging['pageActive']) ? (int)$paging['pageActive'] : 1;
+            $this->pageActive = is_int((int) $paging['pageActive']) ? (int) $paging['pageActive'] : 1;
         }
     }
 
@@ -57,6 +57,6 @@ class Paging
     {
         $this->recordsFiltered = $tableResult->getNbResults();
         $this->recordsTotal = $tableResult->getCount();
-        $this->nbPages = (int)ceil($this->recordsTotal / $this->pageLength);
+        $this->nbPages = (int) ceil($this->recordsTotal / $this->pageLength);
     }
 }

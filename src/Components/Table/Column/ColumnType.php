@@ -16,12 +16,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class ColumnType
 {
     // FIXME : statically called to avoid to have add parent::configureOptions() on all inherit Type class
-    final public static function __configureOptions(OptionsResolver $resolver)
+    final public static function __configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired('id')
             ->setAllowedTypes('id', 'string')
-            ->setDefault('label', function(Options $options) {
+            ->setDefault('label', function (Options $options) {
                 return HtmlUtils::humanize($options['id']);
             })
             ->setAllowedTypes('label', ['null', 'string'])
@@ -37,24 +37,24 @@ class ColumnType
             ->setAllowedTypes('width', ['null', 'string'])
             ->setDefault('render', null)
             ->setAllowedTypes('render', ['null', 'callable'])
-            ->setNormalizer('render', function(Options $options, $value) {
+            ->setNormalizer('render', function (Options $options, $value) {
                 return $options['render_html'] ?? $value;
             })
             ->setDefault('render_html', null)
             ->setAllowedTypes('render_html', ['null', 'callable'])
             ->setDefault('is_safe_html', true)
             ->setAllowedTypes('is_safe_html', 'bool')
-            ->setNormalizer('is_safe_html', function(Options $options, $value) {
+            ->setNormalizer('is_safe_html', function (Options $options, $value) {
                 return $options['render_html'] ? true : $value;
             });
     }
 
     public function render($rowData, array $options): string
     {
-        return (string)$rowData;
+        return (string) $rowData;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
     }
 }

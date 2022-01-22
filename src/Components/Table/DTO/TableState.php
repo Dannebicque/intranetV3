@@ -33,7 +33,7 @@ class TableState
         $this->table = $table;
     }
 
-    public function applyParameters(array $parameters)
+    public function applyParameters(array $parameters): void
     {
         $this->isCallback = true;
 
@@ -53,7 +53,6 @@ class TableState
                 }
 
                 $c = $this->table->getColumn($orderData['column']);
-
                 // column not orderable
 
                 if (!$c->isOrderable()) {

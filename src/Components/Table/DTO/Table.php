@@ -9,34 +9,19 @@
 
 namespace App\Components\Table\DTO;
 
+use App\Components\Table\Adapter\DoctrineAdapterInterface;
+use App\Components\Table\Adapter\TableAdapter;
 use Doctrine\ORM\QueryBuilder;
 use LogicException;
 use RuntimeException;
 use Symfony\Component\HttpFoundation\Request;
-use App\Components\Table\Adapter\AdapterException;
-use App\Components\Table\Adapter\TableAdapter;
-use App\Components\Table\Adapter\DoctrineAdapterInterface;
 
 class Table
 {
     public const SORT_ASCENDING = 'ASC';
     public const SORT_DESCENDING = 'DESC';
 
-    protected Toolbar $toolbar;
-
-    /**
-     * @var Column[]
-     */
-    protected array $columns;
-
-    protected TableAdapter $adapter;
-
-    protected array $adapterOptions;
-
-    protected array $options;
-
     protected TableState $state;
-    protected Paging $paging;
 
     protected ?TableResponse $response = null;
 
@@ -44,20 +29,13 @@ class Table
      * DataTable constructor.
      */
     public function __construct(
-        Toolbar $toolbar,
-        array $columns,
-        TableAdapter $adapter,
-        array $adapterOptions,
-        array $options,
-        Paging $paging
+        protected Toolbar $toolbar,
+        protected array $columns,
+        protected TableAdapter $adapter,
+        protected array $adapterOptions,
+        protected array $options,
+        protected Paging $paging
     ) {
-        $this->toolbar = $toolbar;
-        $this->columns = $columns;
-        $this->adapter = $adapter;
-        $this->adapterOptions = $adapterOptions;
-        $this->options = $options;
-        $this->paging = $paging;
-
         $this->state = new TableState($this);
     }
 
@@ -111,6 +89,9 @@ class Table
         return $this->state;
     }
 
+    /**
+     * @throws \JsonException
+     */
     public function handleRequest(Request $httpRequest): self
     {
         $this->response = null;
@@ -119,7 +100,7 @@ class Table
         if ($isCallback) {
             $parametersAsArray = [];
             if ($content = $httpRequest->getContent()) {
-                $parametersAsArray = json_decode($content, true);
+                $parametersAsArray = json_decode($content, true, 512, JSON_THROW_ON_ERROR);
             }
             $this->state = new TableState($this);
             if (array_key_exists('paging', $parametersAsArray)) {
@@ -132,9 +113,7 @@ class Table
 
             $this->state->setPaging($this->paging->getData());
             $this->state->setFormData($this->toolbar->getFormData());
-
             $this->state->applyParameters($parametersAsArray);
-
         }
 
         return $this;
@@ -162,11 +141,7 @@ class Table
             return $this->response;
         }
 
-        try {
-            $result = $this->getAdapterResult();
-        } catch (AdapterException $exception) {
-            return TableResponse::createError($exception->getMessage());
-        }
+        $result = $this->getAdapterResult();
 
         // Create Row Views
         $rowViews = [];
@@ -191,6 +166,9 @@ class Table
 
     // Adapter helper
 
+    /**
+     * @throws \App\Components\Table\Adapter\AdapterException
+     */
     public function getAdapterResult(): TableResult
     {
         return $this->adapter->getResult($this->state, $this->adapterOptions);

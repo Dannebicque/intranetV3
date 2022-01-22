@@ -10,7 +10,6 @@
 namespace App\Components\Table\DTO;
 
 use App\Components\Widget\DTO\Widget;
-use InvalidArgumentException;
 use Symfony\Component\Form\FormInterface;
 
 class Toolbar
@@ -60,10 +59,6 @@ class Toolbar
 
     public function handleRequest(array $data): self
     {
-        if (!is_array($data)) {
-            throw new InvalidArgumentException('Toolbar can only handle array form::getData()');
-        }
-
         $this->formData = $data;
 
         return $this;

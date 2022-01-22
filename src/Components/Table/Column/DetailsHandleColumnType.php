@@ -9,7 +9,6 @@
 
 namespace App\Components\Table\Column;
 
-use App\Utils\HtmlUtils;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class DetailsHandleColumnType extends ColumnType
@@ -33,7 +32,7 @@ class DetailsHandleColumnType extends ColumnType
         );
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
 
