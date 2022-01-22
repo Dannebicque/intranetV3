@@ -6,7 +6,7 @@
     <dt class="col-md-5 col-sm-12">{{ 'heure'|trans }}:</dt>
     <dd class="col-md-7 col-sm-12"> {{ absence.dateHeure ? absence.dateHeure|format_time('short') : '' }} </dd>
     <dt class="col-md-5 col-sm-12">{{ 'justifiee'|trans }}:</dt>
-    <dd class="col-md-7 col-sm-12"> {{ absence.justifie ? 'Yes'|trans : 'No'|trans }} </dd>
+    <dd class="col-md-7 col-sm-12"> {{ absence.justifie|badgeYesNo }} </dd>
     <dt class="col-md-5 col-sm-12">{{ 'saisie_par'|trans }}:</dt>
     <dd class="col-md-7 col-sm-12"> {{ absence.personnel.displayPr }}</dd>
     <dt class="col-md-5 col-sm-12">{{ 'created'|trans }}:</dt>

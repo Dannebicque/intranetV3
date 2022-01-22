@@ -51,7 +51,7 @@
             </tr>
             <tr>
                 <th>{{ 'table.actif'|trans }}</th>
-                <td>{{ semestre.actif ? 'Yes'|trans : 'No'|trans }}</td>
+                <td>{{ semestre.actif|badgeYesNo }}</td>
             </tr>
             <tr>
                 <th>{{ 'table.nb_groupes_td'|trans }}</th>
@@ -63,7 +63,7 @@
             </tr>
             <tr>
                 <th>{{ 'table.opt_mail_releve'|trans }}</th>
-                <td>{{ semestre.optMailReleve ? 'Yes'|trans : 'No'|trans }}</td>
+                <td>{{ semestre.optMailReleve|badgeYesNo }}</td>
             </tr>
             <tr>
                 <th>{{ 'table.opt_destinataire_mail_releve'|trans }}</th>
@@ -71,11 +71,11 @@
             </tr>
             <tr>
                 <th>{{ 'table.opt_evaluation_modifiable'|trans }}</th>
-                <td>{{ semestre.optEvaluationModifiable ? 'Yes'|trans : 'No'|trans }}</td>
+                <td>{{ semestre.optEvaluationModifiable|badgeYesNo }}</td>
             </tr>
             <tr>
                 <th>{{ 'table.opt_mail_modification_note'|trans }}</th>
-                <td>{{ semestre.optMailModificationNote ? 'Yes'|trans : 'No'|trans }}</td>
+                <td>{{ semestre.optMailModificationNote|badgeYesNo }}</td>
             </tr>
             <tr>
                 <th>{{ 'table.opt_destinataure_mail_modification_note'|trans }}</th>
@@ -83,12 +83,12 @@
             </tr>
             <tr>
                 <th>{{ 'table.opt_evaluation_visible'|trans }}</th>
-                <td>{{ semestre.optEvaluationVisible ? 'Yes'|trans : 'No'|trans }}</td>
+                <td>{{ semestre.optEvaluationVisible|badgeYesNo }}</td>
             </tr>
 
             <tr>
                 <th>{{ 'table.opt_penalite_absence'|trans }}</th>
-                <td>{{ semestre.optPenaliteAbsence ? 'Yes'|trans : 'No'|trans }}</td>
+                <td>{{ semestre.optPenaliteAbsence|badgeYesNo }}</td>
             </tr>
             <tr>
                 <th>{{ 'table.opt_point_penalite_absence'|trans }}</th>
@@ -96,7 +96,7 @@
             </tr>
             <tr>
                 <th>{{ 'table.opt_mail_absence_responsable'|trans }}</th>
-                <td>{{ semestre.optMailAbsenceResp ? 'Yes'|trans : 'No'|trans }}</td>
+                <td>{{ semestre.optMailAbsenceResp|badgeYesNo }}</td>
             </tr>
             <tr>
                 <th>{{ 'table.opt_destinataure_mail_absence_responsable'|trans }}</th>
@@ -104,7 +104,7 @@
             </tr>
             <tr>
                 <th>{{ 'table.opt_mail_absence_etudiant'|trans }}</th>
-                <td>{{ semestre.optMailAbsenceEtudiant ? 'Yes'|trans : 'No'|trans }}</td>
+                <td>{{ semestre.optMailAbsenceEtudiant|badgeYesNo }}</td>
             </tr>
 
             <tr>

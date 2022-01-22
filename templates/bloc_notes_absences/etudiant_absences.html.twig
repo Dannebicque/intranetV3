@@ -35,7 +35,7 @@
                     <td>{{ absence.dateHeure ? absence.dateHeure|format_datetime('long', 'short') : '' }}</td>
                     <td>{{ matieres[absence.typeIdMatiere] is defined ? matieres[absence.typeIdMatiere].codeMatiere
                         : '-' }}</td>
-                    <td>{{ absence.justifie ? 'Yes'|trans : 'No'|trans }}</td>
+                    <td>{{ absence.justifie|badgeYesNo }}</td>
                     <td class="hide">{{ absence.personnel ? absence.personnel.display : 'non.defini'|trans }}</td>
                     <td>
                         <button

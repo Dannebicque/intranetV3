@@ -42,7 +42,7 @@
 
                 <tr>
                     <th>{{ 'table.message_visible'|trans }}</th>
-                    <td>{{ borne.visible ? 'Yes'|trans : 'No'|trans }}</td>
+                    <td>{{ borne.visible|badgeYesNo }}</td>
                 </tr>
                 <tr>
                     <th>{{ 'table.url'|trans }}</th>

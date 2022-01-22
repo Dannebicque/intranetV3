@@ -70,9 +70,9 @@
                   <td>
                     <ul>{% for stagePeriodeInterruption in stage_periode.stagePeriodeInterruptions %}
                         <li>
-                          Du {{ stagePeriodeInterruption.dateDebut? stagePeriodeInterruption
+                            Du {{ stagePeriodeInterruption.dateDebut? stagePeriodeInterruption
                             .dateDebut|format_date('long') : 'non.defini'|trans }}
-                          au {{ stagePeriodeInterruption.dateFin? stagePeriodeInterruption
+                            au {{ stagePeriodeInterruption.dateFin? stagePeriodeInterruption
                             .dateFin|format_date('long') : 'non.defini'|trans }} ({{ stagePeriodeInterruption.motif }})
                         </li>
                         {% else %}
@@ -129,11 +129,11 @@
                 </tr>
                 <tr>
                   <th>{{ 'table.datesFlexibles'|trans }}</th>
-                  <td>{{ stage_periode.datesFlexibles ? 'Yes'|trans : 'No'|trans }}</td>
+                  <td>{{ stage_periode.datesFlexibles|badgeYesNo }}</td>
                 </tr>
                 <tr>
                   <th>{{ 'table.copieAssistant'|trans }}</th>
-                  <td>{{ stage_periode.copieAssistant ? 'Yes'|trans : 'No'|trans }}</td>
+                  <td>{{ stage_periode.copieAssistant|badgeYesNo }}</td>
                 </tr>
                 <tr>
                   <th>{{ 'table.created'|trans }}</th>

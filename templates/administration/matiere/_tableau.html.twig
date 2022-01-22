@@ -135,8 +135,8 @@
                                        data-title="Corriger le volume horaire">
                                         {{ matiere.nbEcts }}</a>
                                 </td>
-                                <td>{{ matiere.suspendu ? 'Yes'|trans : 'No'|trans }}</td>
-                                <td>{{ matiere.pac ? 'Yes'|trans : 'No'|trans }}</td>
+                                <td>{{ matiere.suspendu|badgeYesNo }}</td>
+                                <td>{{ matiere.pac|badgeYesNo }}</td>
                                 <td>
                                     {% if settings('MODIFICATION_PPN') == 1 %}
 

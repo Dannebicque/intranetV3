@@ -66,8 +66,8 @@
                 {{ table.line('table.nb_notes', matiere.nbNotes) }}
                 {{ table.line('table.coefficient', matiere.coefficient) }}
                 {{ table.line('table.nb_ects', matiere.nbEcts) }}
-                {{ table.line('table.suspendu', matiere.suspendu ? 'Yes'|trans : 'No'|trans) }}
-                {{ table.line('table.pac', matiere.pac ? 'Yes'|trans : 'No'|trans) }}
+                {{ table.line('table.suspendu', matiere.suspendu|badgeYesNo) }}
+                {{ table.line('table.pac', matiere.pac|badgeYesNo) }}
                 {{ table.line('table.objectifs_module', matiere.objectifsModule) }}
                 {{ table.line('table.competences_visees', matiere.competencesVisees) }}
                 {{ table.line('table.contenu', matiere.contenu) }}

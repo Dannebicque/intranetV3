@@ -82,33 +82,30 @@
                     <th>{{ 'table.description'|trans }}</th>
                     <td>{{ departement.description }}</td>
                 </tr>
-                <tr>
-                    <th>{{ 'table.opt_update_celcat'|trans }}</th>
-                    <td>{{ departement.optUpdateCelcat ? 'Yes'|trans : 'No'|trans }}</td>
-                </tr>
+
                 <tr>
                     <th>{{ 'table.opt_agence'|trans }}</th>
-                    <td>{{ departement.optAgence ? 'Yes'|trans : 'No'|trans }}</td>
+                    <td>{{ departement.optAgence|badgeYesNo }}</td>
                 </tr>
                 <tr>
                     <th>{{ 'table.opt_materiel'|trans }}</th>
-                    <td>{{ departement.optMateriel ? 'Yes'|trans : 'No'|trans }}</td>
+                    <td>{{ departement.optMateriel|badgeYesNo }}</td>
                 </tr>
                 <tr>
                     <th>{{ 'table.opt_edt'|trans }}</th>
-                    <td>{{ departement.optEdt ? 'Yes'|trans : 'No'|trans }}</td>
+                    <td>{{ departement.optEdt|badgeYesNo }}</td>
                 </tr>
                 <tr>
                     <th>{{ 'table.opt_stage'|trans }}</th>
-                    <td>{{ departement.optStage ? 'Yes'|trans : 'No'|trans }}</td>
+                    <td>{{ departement.optStage|badgeYesNo }}</td>
                 </tr>
                 <tr>
                     <th>{{ 'table.opt_synthese'|trans }}</th>
-                    <td>{{ departement.optSynthese ? 'Yes'|trans : 'No'|trans }}</td>
+                    <td>{{ departement.optSynthese|badgeYesNo }}</td>
                 </tr>
                 <tr>
                     <th>{{ 'table.opt_messagerie'|trans }}</th>
-                    <td>{{ departement.optMessagerie ? 'Yes'|trans : 'No'|trans }}</td>
+                    <td>{{ departement.optMessagerie|badgeYesNo }}</td>
                 </tr>
                 <tr>
                     <th>{{ 'table.respRi'|trans }}</th>

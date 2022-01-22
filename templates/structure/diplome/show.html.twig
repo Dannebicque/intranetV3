@@ -68,11 +68,11 @@
             </tr>
             <tr>
                 <th>{{ 'table.opt_dilpome_decale'|trans }}</th>
-                <td>{{ diplome.optDilpomeDecale ? 'Yes'|trans : 'No'|trans }}</td>
+                <td>{{ diplome.optDilpomeDecale|badgeYesNo }}</td>
             </tr>
             <tr>
                 <th>{{ 'table.opt_suppr_absence'|trans }}</th>
-                <td>{{ diplome.optSupprAbsence ? 'Yes'|trans : 'No'|trans }}</td>
+                <td>{{ diplome.optSupprAbsence|badgeYesNo }}</td>
             </tr>
             <tr>
                 <th>{{ 'table.opt_methode_calcul'|trans }}</th>
@@ -80,15 +80,15 @@
             </tr>
             <tr>
                 <th>{{ 'table.opt_anonymat'|trans }}</th>
-                <td>{{ diplome.optAnonymat ? 'Yes'|trans : 'No'|trans }}</td>
+                <td>{{ diplome.optAnonymat|badgeYesNo }}</td>
             </tr>
             <tr>
                 <th>{{ 'table.opt_commentaires_releve'|trans }}</th>
-                <td>{{ diplome.optCommentairesReleve ? 'Yes'|trans : 'No'|trans }}</td>
+                <td>{{ diplome.optCommentairesReleve|badgeYesNo }}</td>
             </tr>
             <tr>
                 <th>{{ 'table.opt_espace_perso_visible'|trans }}</th>
-                <td>{{ diplome.optEspacePersoVisible ? 'Yes'|trans : 'No'|trans }}</td>
+                <td>{{ diplome.optEspacePersoVisible|badgeYesNo }}</td>
             </tr>
             <tr>
                 <th>{{ 'table.volume_horaire'|trans }}</th>

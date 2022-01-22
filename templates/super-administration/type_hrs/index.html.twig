@@ -31,7 +31,7 @@
                         <td>{{ type_hr.id }}</td>
                         <td>{{ type_hr.libelle }}</td>
                         <td>{{ type_hr.type }}</td>
-                        <td>{{ type_hr.incluService ? 'Yes'|trans : 'No'|trans }}</td>
+                        <td>{{ type_hr.incluService|badgeYesNo }}</td>
                         <td>{{ type_hr.maximum }} {{ 'heures'|trans }}</td>
                         <td>
                             {{ include('composants/sadm-buttons-table-index.html.twig', {elt:'type_hrs', id:type_hr.id}) }}

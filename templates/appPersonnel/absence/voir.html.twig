@@ -40,7 +40,7 @@
                         <td>{{ absence.dateHeure ? absence.dateHeure|format_datetime('long', 'short') : '' }}</td>
                         <td>{{ absence.duree ? absence.duree|format_time('short') : '' }}</td>
                         <td>{{ absence.personnel.display }}</td>
-                        <td>{{ absence.justifie ? 'Yes'|trans : 'No'|trans }}</td>
+                        <td>{{ absence.justifie|badgeYesNo }}</td>
                         <td>
                             <a href="{{ path('user_profil', {'type': 'etudiant', slug: absence.etudiant.slug, onglet: 'absences'}) }}"
                                class="btn btn-info btn-outline btn-square" data-bs-toggle="tooltip" data-bs-placement="bottom"
