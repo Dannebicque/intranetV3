@@ -132,6 +132,9 @@ initiales: Initiales
 j: Jour
 Jour: Jour
 label:
+  matiere: Matière
+  duree_evaluation: Durée de l'évaluation
+  heure_evaluation: Heure de l'évaluation
   text_explicatif: 'Texte explicatif'
   ordre_question: 'Ordre de la question'
   question_choix: 'Choix de la question'
