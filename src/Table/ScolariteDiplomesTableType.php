@@ -21,7 +21,9 @@ use App\Components\Widget\Type\RowShowLinkType;
 use App\Components\Widget\WidgetBuilder;
 use App\Entity\Diplome;
 use App\Entity\TypeDiplome;
+use App\Form\Type\DiplomeEntityType;
 use App\Form\Type\SearchType;
+use App\Form\Type\TypeDiplomeEntityType;
 use App\Repository\DiplomeRepository;
 use App\Repository\TypeDiplomeRepository;
 use Doctrine\ORM\QueryBuilder;
@@ -33,28 +35,8 @@ class ScolariteDiplomesTableType extends TableType
     public function buildTable(TableBuilder $builder, array $options): void
     {
         $builder->addFilter('search', SearchType::class);
-        $builder->addFilter('diplome', EntityType::class,
-            [
-                'class' => Diplome::class,
-                'choice_label' => 'displayCourt',
-                'required' => false,
-                'query_builder' => function (DiplomeRepository $er) {
-                    return $er->findAllBuilder();
-                },
-                'placeholder' => 'filtre.diplome',
-                'translation_domain' => 'table',
-            ]);
-        $builder->addFilter('typeDiplome', EntityType::class,
-            [
-                'class' => TypeDiplome::class,
-                'choice_label' => 'libelle',
-                'query_builder' => function (TypeDiplomeRepository $er) {
-                    return $er->findAllBuilder();
-                },
-                'required' => false,
-                'placeholder' => 'filtre.typeDiplome',
-                'translation_domain' => 'table',
-            ]);
+        $builder->addFilter('diplome', DiplomeEntityType::class);
+        $builder->addFilter('typeDiplome', TypeDiplomeEntityType::class);
 
         $builder->addColumn('typeDiplome', EntityColumnType::class,
             ['label' => 'table.typeDiplome', 'display_field' => 'libelle', 'order' => Table::SORT_ASCENDING]);

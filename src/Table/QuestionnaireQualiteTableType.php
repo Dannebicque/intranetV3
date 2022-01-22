@@ -25,6 +25,7 @@ use App\Entity\Diplome;
 use App\Entity\QuestionnaireQualite;
 use App\Entity\Semestre;
 use App\Form\Type\DatePickerType;
+use App\Form\Type\DiplomeEntityType;
 use App\Form\Type\SearchType;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -43,8 +44,7 @@ class QuestionnaireQualiteTableType extends TableType
     public function buildTable(TableBuilder $builder, array $options): void
     {
         $builder->addFilter('search', SearchType::class);
-        $builder->addFilter('diplome', EntityType::class,
-            ['class' => Diplome::class, 'choice_label' => 'displayCourt', 'required' => false]);
+        $builder->addFilter('diplome', DiplomeEntityType::class);
         $builder->addFilter('from', DatePickerType::class, [
             'input_prefix_text' => 'Du',
         ]);
@@ -74,7 +74,7 @@ class QuestionnaireQualiteTableType extends TableType
         $builder->setLoadUrl('sadm_questionnaire_qualite_index');
 
         $builder->addColumn('links', WidgetColumnType::class, [
-            'build' => function(WidgetBuilder $builder, QuestionnaireQualite $s) {
+            'build' => function (WidgetBuilder $builder, QuestionnaireQualite $s) {
                 $builder->add('duplicate', RowDuplicateLinkType::class, [
                     'route' => 'sadm_questionnaire_qualite_duplicate',
                     'route_params' => ['id' => $s->getId()],
@@ -98,7 +98,7 @@ class QuestionnaireQualiteTableType extends TableType
                     'attr' => [
                         'data-href' => 'sadm_questionnaire_qualite_delete',
                         'data-uuid' => $s->getId(),
-                        'data-csrf' => $this->csrfToken->getToken('delete' . $s->getId()),
+                        'data-csrf' => $this->csrfToken->getToken('delete'.$s->getId()),
                     ],
                 ]);
             },
@@ -107,11 +107,11 @@ class QuestionnaireQualiteTableType extends TableType
         $builder->useAdapter(EntityAdapter::class, [
             'class' => QuestionnaireQualite::class,
             'fetch_join_collection' => false,
-            'query' => function(QueryBuilder $qb, array $formData) {
+            'query' => function (QueryBuilder $qb, array $formData) {
                 if (isset($formData['search'])) {
                     $qb->andWhere('LOWER(e.titre) LIKE :search');
                     $qb->orWhere('LOWER(e.texte) LIKE :search');
-                    $qb->setParameter('search', '%' . $formData['search'] . '%');
+                    $qb->setParameter('search', '%'.$formData['search'].'%');
                 }
 
                 if (isset($formData['diplome'])) {
@@ -138,7 +138,7 @@ class QuestionnaireQualiteTableType extends TableType
     {
         $resolver->setDefaults([
             'orderable' => true,
-            'translation_domain' => 'table'
+            'translation_domain' => 'table',
         ]);
     }
 }

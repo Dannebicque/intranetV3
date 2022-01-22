@@ -16,11 +16,12 @@ use App\Components\Table\TableBuilder;
 use App\Components\Table\TableType;
 use App\Entity\Diplome;
 use App\Entity\TypeDiplome;
+use App\Form\Type\DiplomeEntityType;
 use App\Form\Type\SearchType;
+use App\Form\Type\TypeDiplomeEntityType;
 use App\Table\ColumnType\NbEtudiantsColumnType;
 use App\Table\ColumnType\SemestresAvecActifColumnType;
 use Doctrine\ORM\QueryBuilder;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class EnqueteQualiteDiplomesTableType extends TableType
@@ -28,10 +29,8 @@ class EnqueteQualiteDiplomesTableType extends TableType
     public function buildTable(TableBuilder $builder, array $options): void
     {
         $builder->addFilter('search', SearchType::class);
-        $builder->addFilter('diplome', EntityType::class,
-            ['class' => Diplome::class, 'choice_label' => 'displayCourt', 'required' => false, 'placeholder' => 'filtre.diplome', 'translation_domain' => 'table']);
-        $builder->addFilter('typeDiplome', EntityType::class,
-            ['class' => TypeDiplome::class, 'choice_label' => 'libelle', 'required' => false,  'placeholder' => 'filtre.typeDiplome', 'translation_domain' => 'table']);
+        $builder->addFilter('diplome', DiplomeEntityType::class);
+        $builder->addFilter('typeDiplome', TypeDiplomeEntityType::class);
 
         $builder->addColumn('typeDiplome', EntityColumnType::class, ['label' => 'table.typeDiplome', 'display_field' => 'libelle']);
         $builder->addColumn('libelle', PropertyColumnType::class, ['label' => 'table.libelle']);
