@@ -17,7 +17,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ApcParcoursType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('libelle', TextType::class, ['label' => 'libelle'])
@@ -27,7 +27,7 @@ class ApcParcoursType extends AbstractType
             ->add('codeDepartement', TextType::class, ['label' => 'code_departement', 'required' => false]);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => ApcParcours::class,

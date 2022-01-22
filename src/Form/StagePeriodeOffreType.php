@@ -45,7 +45,7 @@ class StagePeriodeOffreType extends AbstractType
                 'class' => StagePeriode::class,
                 'label' => 'stagePeriodes',
                 'choice_label' => 'libelle',
-                'query_builder' => function(StagePeriodeRepository $stagePeriodeRepository) {
+                'query_builder' => function (StagePeriodeRepository $stagePeriodeRepository) {
                     return $stagePeriodeRepository->findByDepartementBuilder($this->departement,
                         $this->annee);
                 },
@@ -58,9 +58,9 @@ class StagePeriodeOffreType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class'         => StagePeriodeOffre::class,
-            'departement'        => null,
-            'annee'              => null,
+            'data_class' => StagePeriodeOffre::class,
+            'departement' => null,
+            'annee' => null,
             'translation_domain' => 'form',
         ]);
     }

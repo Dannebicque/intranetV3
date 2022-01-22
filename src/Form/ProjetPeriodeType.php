@@ -27,7 +27,7 @@ class ProjetPeriodeType extends AbstractType
 {
     private $departement;
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->departement = $options['departement'];
         $builder
@@ -38,7 +38,7 @@ class ProjetPeriodeType extends AbstractType
                 'class' => Semestre::class,
                 'label' => 'semestre_stage_periode',
                 'choice_label' => 'libelle',
-                'query_builder' => function(SemestreRepository $semestreRepository) {
+                'query_builder' => function (SemestreRepository $semestreRepository) {
                     return $semestreRepository->findByDepartementBuilder($this->departement);
                 },
                 'required' => true,
@@ -52,7 +52,7 @@ class ProjetPeriodeType extends AbstractType
                 'class' => Personnel::class,
                 'help' => 'help.responsables',
                 'choice_label' => 'display',
-                'query_builder' => function(PersonnelRepository $personnelRepository) {
+                'query_builder' => function (PersonnelRepository $personnelRepository) {
                     return $personnelRepository->findByDepartementBuilder($this->departement);
                 },
             ])
@@ -61,29 +61,29 @@ class ProjetPeriodeType extends AbstractType
                 'choice_label' => 'displayAnneeUniversitaire',
                 'class' => AnneeUniversitaire::class,
             ])
-            ->addEventListener(FormEvents::POST_SUBMIT, static function(FormEvent $event) {
+            ->addEventListener(FormEvents::POST_SUBMIT, static function (FormEvent $event) {
                 $stagePeriode = $event->getData();
                 $form = $event->getForm();
                 $dateRange = $form->get('dateRange')->getData();
                 $stagePeriode->setDateDebut($dateRange['from_date']);
                 $stagePeriode->setDateFin($dateRange['to_date']);
             })
-            ->addEventListener(FormEvents::PRE_SET_DATA, static function(FormEvent $event) {
+            ->addEventListener(FormEvents::PRE_SET_DATA, static function (FormEvent $event) {
                 $stagePeriode = $event->getData();
                 $form = $event->getForm();
                 $form->add('dateRange', DateRangeType::class, [
-                    'label'     => 'dateRange.periode',
-                    'mapped'    => false,
+                    'label' => 'dateRange.periode',
+                    'mapped' => false,
                     'date_data' => ['from' => $stagePeriode->getDateDebut(), 'to' => $stagePeriode->getDateFin()],
                 ]);
             });
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class'         => ProjetPeriode::class,
-            'departement'        => null,
+            'data_class' => ProjetPeriode::class,
+            'departement' => null,
             'translation_domain' => 'form',
         ]);
     }

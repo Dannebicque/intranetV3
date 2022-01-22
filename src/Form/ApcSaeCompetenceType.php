@@ -22,15 +22,14 @@ class ApcSaeCompetenceType extends AbstractType
 {
     protected ?Diplome $diplome;
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-
         $this->diplome = $options['diplome'];
 
         $builder
             ->add('competence', EntityType::class, [
                 'class' => ApcCompetence::class,
-                'choice_label'=> 'nomCourt',
+                'choice_label' => 'nomCourt',
                 'query_builder' => function (ApcComptenceRepository $apcComptenceRepository) {
                     return $apcComptenceRepository->findByDiplomeBuilder($this->diplome);
                 },
@@ -38,12 +37,12 @@ class ApcSaeCompetenceType extends AbstractType
         ;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => ApcSaeCompetence::class,
             'translation_domain' => 'form',
-            'diplome' => null
+            'diplome' => null,
         ]);
     }
 }

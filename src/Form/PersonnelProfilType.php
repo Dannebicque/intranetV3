@@ -93,9 +93,9 @@ class PersonnelProfilType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class'         => Personnel::class,
+            'data_class' => Personnel::class,
             'translation_domain' => 'form',
-            'locale'             => 'fr',
+            'locale' => 'fr',
         ]);
     }
 }

@@ -40,13 +40,13 @@ class GroupeType extends AbstractType
             ->add('codeApogee', TextType::class, [
                 'label' => 'label.codeApogee',
                 'help' => 'Nécessaire pour synchroniser les groupes depuis Apogée.',
-                'required' => false
+                'required' => false,
             ])
             ->add('typeGroupe', EntityType::class, [
                 'class' => TypeGroupe::class,
                 'label' => 'label.typeGroupe',
                 'choice_label' => 'libelle',
-                'query_builder' => function(TypeGroupeRepository $typeGroupeRepository) {
+                'query_builder' => function (TypeGroupeRepository $typeGroupeRepository) {
                     return $typeGroupeRepository->findBySemestreBuilder($this->semestre);
                 },
                 'required' => true,
@@ -57,7 +57,7 @@ class GroupeType extends AbstractType
                 'class' => Groupe::class,
                 'label' => 'label.groupe_parent',
                 'choice_label' => 'libelle',
-                'query_builder' => function(GroupeRepository $groupeRepository) {
+                'query_builder' => function (GroupeRepository $groupeRepository) {
                     return $groupeRepository->findBySemestreBuilder($this->semestre);
                 },
                 'required' => false,
@@ -68,7 +68,7 @@ class GroupeType extends AbstractType
                 'class' => Parcour::class,
                 'label' => 'label.parcours',
                 'choice_label' => 'libelle',
-                'query_builder' => function(ParcourRepository $parcourRepository) {
+                'query_builder' => function (ParcourRepository $parcourRepository) {
                     return $parcourRepository->findBySemestreBuilder($this->semestre);
                 },
                 'required' => false,
@@ -81,8 +81,8 @@ class GroupeType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Groupe::class,
-            'semestre'   => null,
-            'translation_domain' => 'form'
+            'semestre' => null,
+            'translation_domain' => 'form',
         ]);
     }
 }

@@ -22,13 +22,10 @@ class QuestionnaireSectionType extends AbstractType
 {
     //todo: ConfigurableSection doit être un type de section... sinon comment créer la section ?
 
-    private array $listeSection;
-    private array $listeSectionAdapter;
-
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->listeSection = $options['listeSection'];
-        $this->listeSectionAdapter = $options['listeSectionAdapter'];
+        $listeSection = $options['listeSection'];
+        $listeSectionAdapter = $options['listeSectionAdapter'];
         $builder
             ->add('titre', TextType::class, [
                 'label' => 'label.titre',
@@ -39,12 +36,12 @@ class QuestionnaireSectionType extends AbstractType
                 'required' => false,
             ])
             ->add('typeSection', ChoiceType::class, [
-                'choices' => $this->listeSection,
+                'choices' => $listeSection,
                 'label' => 'label.typeSection',
                 'expanded' => true,
             ])
             ->add('sectionAdapter', ChoiceType::class, [
-                'choices' => $this->listeSectionAdapter,
+                'choices' => $listeSectionAdapter,
                 'label' => 'label.sectionAdapter',
                 'expanded' => true,
                 'mapped' => false,
@@ -62,7 +59,7 @@ class QuestionnaireSectionType extends AbstractType
             ]);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => QuestionnaireSection::class,

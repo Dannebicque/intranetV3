@@ -10,7 +10,7 @@
 namespace App\Form;
 
 use App\Entity\AlternanceFicheSuivi;
-use App\Form\Type\CarbonDateType;
+use App\Form\Type\DatePickerType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -22,12 +22,12 @@ class AlternanceFicheSuiviType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('date', CarbonDateType::class, ['label' => 'label.date_entretien'])
+            ->add('date', DatePickerType::class, ['label' => 'label.date_entretien'])
             ->add('methode', ChoiceType::class, [
                 'label' => 'label.methode_entretien',
                 'choices' => [
                     'telephone' => AlternanceFicheSuivi::VISITE_TELEPHONIQUE,
-                    'visite' => AlternanceFicheSuivi::VISITE_PHYSIQUE
+                    'visite' => AlternanceFicheSuivi::VISITE_PHYSIQUE,
                 ],
                 'expanded' => true,
             ])
@@ -60,7 +60,7 @@ class AlternanceFicheSuiviType extends AbstractType
             ->add('comportement', ChoiceType::class, [
                 'label' => 'label.comportement_maniere_globale',
                 'expanded' => true,
-                'choices' => ['label.faible' => 1, 'label.bonne' => 2, 'label.tres_bonne' => 3, 'label.excellente' => 4,'Non applicable' => 0],
+                'choices' => ['label.faible' => 1, 'label.bonne' => 2, 'label.tres_bonne' => 3, 'label.excellente' => 4, 'Non applicable' => 0],
             ])
             ->add('commentaire', TextareaType::class, ['label' => 'label.commentaire_libre', 'attr' => ['rows' => 10]])
         ;

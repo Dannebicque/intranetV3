@@ -46,7 +46,7 @@ class CahierTexteType extends AbstractType
                 'class' => Semestre::class,
                 'label' => 'semestre',
                 'choice_label' => 'libelle',
-                'query_builder' => function(SemestreRepository $semestreRepository) {
+                'query_builder' => function (SemestreRepository $semestreRepository) {
                     return $semestreRepository->findByDepartementBuilder($this->departement);
                 },
                 'required' => true,
@@ -58,8 +58,8 @@ class CahierTexteType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class'         => CahierTexte::class,
-            'departement'        => null,
+            'data_class' => CahierTexte::class,
+            'departement' => null,
             'translation_domain' => 'form',
         ]);
     }

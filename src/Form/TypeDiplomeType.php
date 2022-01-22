@@ -39,7 +39,7 @@ class TypeDiplomeType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class'         => TypeDiplome::class,
+            'data_class' => TypeDiplome::class,
             'translation_domain' => 'form',
         ]);
     }

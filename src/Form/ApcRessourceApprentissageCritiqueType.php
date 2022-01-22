@@ -22,15 +22,14 @@ class ApcRessourceApprentissageCritiqueType extends AbstractType
 {
     protected ?Diplome $diplome;
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-
         $this->diplome = $options['diplome'];
 
         $builder
             ->add('apprentissageCritique', EntityType::class, [
                 'class' => ApcApprentissageCritique::class,
-                'choice_label'=> 'libelle',
+                'choice_label' => 'libelle',
                 'query_builder' => function (ApcApprentissageCritiqueRepository $apcApprentissageCritiqueRepository) {
                     return $apcApprentissageCritiqueRepository->findByDiplomeBuilder($this->diplome);
                 },
@@ -38,12 +37,12 @@ class ApcRessourceApprentissageCritiqueType extends AbstractType
         ;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => ApcRessourceApprentissageCritique::class,
             'translation_domain' => 'form',
-            'diplome' => null
+            'diplome' => null,
         ]);
     }
 }

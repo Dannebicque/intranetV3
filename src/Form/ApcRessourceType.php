@@ -27,7 +27,7 @@ class ApcRessourceType extends AbstractType
 {
     protected ?Diplome $diplome;
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->diplome = $options['diplome'];
 
@@ -81,7 +81,7 @@ class ApcRessourceType extends AbstractType
         ;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => ApcRessource::class,

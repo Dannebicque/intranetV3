@@ -66,7 +66,7 @@ class StageEtudiantType extends AbstractType
                 ],
             ])
             ->add('avantages', TextareaType::class, ['label' => 'avantages', 'required' => false])
-            ->addEventListener(FormEvents::POST_SUBMIT, static function(FormEvent $event) {
+            ->addEventListener(FormEvents::POST_SUBMIT, static function (FormEvent $event) {
                 /** @var StageEtudiant $stageEtudiant */
                 $stageEtudiant = $event->getData();
                 $form = $event->getForm();
@@ -74,16 +74,16 @@ class StageEtudiantType extends AbstractType
                 $stageEtudiant->setDateDebutStage($dateRange['from_date']);
                 $stageEtudiant->setDateFinStage($dateRange['to_date']);
             })
-            ->addEventListener(FormEvents::PRE_SET_DATA, static function(FormEvent $event) {
+            ->addEventListener(FormEvents::PRE_SET_DATA, static function (FormEvent $event) {
                 /** @var StageEtudiant $stageEtudiant */
                 $stageEtudiant = $event->getData();
                 $form = $event->getForm();
                 $form->add('dateRange', DateRangeType::class, [
-                    'label'     => 'dateRange.periode',
-                    'mapped'    => false,
+                    'label' => 'dateRange.periode',
+                    'mapped' => false,
                     'date_data' => [
                         'from' => $stageEtudiant->getDateDebutStage(),
-                        'to'   => $stageEtudiant->getDateFinStage(),
+                        'to' => $stageEtudiant->getDateFinStage(),
                     ],
                 ]);
             })
@@ -94,7 +94,7 @@ class StageEtudiantType extends AbstractType
                 TextType::class,
                 ['label' => 'dureeJoursStage', 'help' => 'help.dureeJoursStage']
             )
-            ->addEventListener(FormEvents::POST_SUBMIT, static function(FormEvent $event) {
+            ->addEventListener(FormEvents::POST_SUBMIT, static function (FormEvent $event) {
                 /** @var StageEtudiant $stageEtudiant */
                 $stageEtudiant = $event->getData();
                 $form = $event->getForm();
@@ -102,16 +102,16 @@ class StageEtudiantType extends AbstractType
                 $stageEtudiant->setDateDebutStage($dateRange['from_date']);
                 $stageEtudiant->setDateFinStage($dateRange['to_date']);
             })
-            ->addEventListener(FormEvents::PRE_SET_DATA, static function(FormEvent $event) {
+            ->addEventListener(FormEvents::PRE_SET_DATA, static function (FormEvent $event) {
                 /** @var StageEtudiant $stageEtudiant */
                 $stageEtudiant = $event->getData();
                 $form = $event->getForm();
                 $form->add('dateRange', DateRangeType::class, [
-                    'label'     => 'dateRange.periode',
-                    'mapped'    => false,
+                    'label' => 'dateRange.periode',
+                    'mapped' => false,
                     'date_data' => [
                         'from' => $stageEtudiant->getDateDebutStage(),
-                        'to'   => $stageEtudiant->getDateFinStage(),
+                        'to' => $stageEtudiant->getDateFinStage(),
                     ],
                 ]);
             });
@@ -120,7 +120,7 @@ class StageEtudiantType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class'         => StageEtudiant::class,
+            'data_class' => StageEtudiant::class,
             'translation_domain' => 'form',
         ]);
     }

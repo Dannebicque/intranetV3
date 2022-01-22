@@ -37,7 +37,7 @@ class QuestionnaireSectionQuestionType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => QuestionnaireSectionQuestion::class,
-            'translation_domain' => 'form'
+            'translation_domain' => 'form',
         ]);
     }
 }

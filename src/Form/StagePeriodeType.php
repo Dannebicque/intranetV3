@@ -48,7 +48,7 @@ class StagePeriodeType extends AbstractType
                 'class' => Semestre::class,
                 'label' => 'label.semestre_stage_periode',
                 'choice_label' => 'libelle',
-                'query_builder' => function(SemestreRepository $semestreRepository) {
+                'query_builder' => function (SemestreRepository $semestreRepository) {
                     return $semestreRepository->findByDepartementBuilder($this->departement);
                 },
                 'required' => true,
@@ -62,7 +62,7 @@ class StagePeriodeType extends AbstractType
                 'class' => Personnel::class,
                 'help' => 'help.responsables',
                 'choice_label' => 'display',
-                'query_builder' => function(PersonnelRepository $personnelRepository) {
+                'query_builder' => function (PersonnelRepository $personnelRepository) {
                     return $personnelRepository->findByDepartementBuilder($this->departement);
                 },
             ])
@@ -122,14 +122,14 @@ class StagePeriodeType extends AbstractType
             ->add('documentRendre', TextareaType::class,
                 ['label' => 'label.documentRendre', 'help' => 'help.documentRendre'])
             ->add('nbEcts', TextType::class, ['label' => 'label.nbEcts', 'help' => 'help.nbEcts'])
-            ->addEventListener(FormEvents::POST_SUBMIT, static function(FormEvent $event) {
+            ->addEventListener(FormEvents::POST_SUBMIT, static function (FormEvent $event) {
                 $stagePeriode = $event->getData();
                 $form = $event->getForm();
                 $dateRange = $form->get('dateRange')->getData();
                 $stagePeriode->setDateDebut($dateRange['from_date']);
                 $stagePeriode->setDateFin($dateRange['to_date']);
             })
-            ->addEventListener(FormEvents::PRE_SET_DATA, static function(FormEvent $event) {
+            ->addEventListener(FormEvents::PRE_SET_DATA, static function (FormEvent $event) {
                 $stagePeriode = $event->getData();
                 $form = $event->getForm();
                 $form->add('dateRange', DateRangeType::class, [

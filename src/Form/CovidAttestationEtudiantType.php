@@ -27,7 +27,7 @@ class CovidAttestationEtudiantType extends AbstractType
 {
     protected ?Departement $departement;
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->departement = $options['departement'];
         $date = new Carbon();
@@ -38,7 +38,7 @@ class CovidAttestationEtudiantType extends AbstractType
                 'required' => true,
                 'choice_label' => 'libelle',
                 'expanded' => true,
-                'query_builder' => function(DiplomeRepository $diplomeRepository) {
+                'query_builder' => function (DiplomeRepository $diplomeRepository) {
                     return $diplomeRepository->findByDepartementBuilder($this->departement);
                 },
                 'label' => 'Diplôme concerné par votre demande',
@@ -46,7 +46,6 @@ class CovidAttestationEtudiantType extends AbstractType
             ->add('dateDebut', DatePickerType::class, [
                 'label' => 'Date du début de la période',
                 'data' => $date->addDays(2),
-
             ])
             ->add('dateFin', DatePickerType::class, [
                 'label' => 'Date de fin de la période',
@@ -60,18 +59,18 @@ class CovidAttestationEtudiantType extends AbstractType
                 'multiple' => true,
                 'class' => Groupe::class,
                 'choice_label' => 'displaySemestre',
-                'query_builder' => function(GroupeRepository $groupeRepository) {
+                'query_builder' => function (GroupeRepository $groupeRepository) {
                     return $groupeRepository->findByDepartementSemestreActifBuilder($this->departement);
                 },
             ]);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class'         => CovidAttestationEtudiant::class,
+            'data_class' => CovidAttestationEtudiant::class,
             'translation_domain' => 'form',
-            'departement'        => null,
+            'departement' => null,
         ]);
     }
 }

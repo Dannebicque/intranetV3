@@ -46,7 +46,7 @@ class DiplomeType extends AbstractType
             ])
             ->add('responsable_diplome', EntityCompleteType::class, [
                 'class' => Personnel::class,
-                'query_builder' => static function(PersonnelRepository $personnelRepository) {
+                'query_builder' => static function (PersonnelRepository $personnelRepository) {
                     return $personnelRepository->findAllOrder();
                 },
                 'choice_label' => 'display',
@@ -54,7 +54,7 @@ class DiplomeType extends AbstractType
             ])
             ->add('assistant_diplome', EntityCompleteType::class, [
                 'class' => Personnel::class,
-                'query_builder' => static function(PersonnelRepository $personnelRepository) {
+                'query_builder' => static function (PersonnelRepository $personnelRepository) {
                     return $personnelRepository->findAllOrder();
                 },
                 'choice_label' => 'display',
@@ -136,7 +136,7 @@ class DiplomeType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class'         => Diplome::class,
+            'data_class' => Diplome::class,
             'translation_domain' => 'form',
         ]);
     }

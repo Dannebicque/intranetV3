@@ -99,7 +99,7 @@ class MatiereType extends AbstractType
                 'label' => 'label.ppn',
                 'class' => Ppn::class,
                 'choice_label' => 'libelle',
-                'query_builder' => function(PpnRepository $ppnRepository) {
+                'query_builder' => function (PpnRepository $ppnRepository) {
                     return $ppnRepository->findByDiplomeBuilder($this->diplome);
                 },
             ]);

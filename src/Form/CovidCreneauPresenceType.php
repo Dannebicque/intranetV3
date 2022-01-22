@@ -10,7 +10,7 @@
 namespace App\Form;
 
 use App\Entity\CovidCreneauPresence;
-use App\Form\Type\CarbonDateType;
+use App\Form\Type\DatePickerType;
 use Carbon\Carbon;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
@@ -19,11 +19,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CovidCreneauPresenceType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $date = new Carbon();
         $builder
-            ->add('date', CarbonDateType::class, [
+            ->add('date', DatePickerType::class, [
                 'label' => 'date_evaluation',
                 'data' => $date->addDays(2),
             ])
@@ -31,10 +31,10 @@ class CovidCreneauPresenceType extends AbstractType
             ->add('heureDepart', TimeType::class, ['data' => new Carbon('12:00'), 'label' => 'Heure de départ']);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class'         => CovidCreneauPresence::class,
+            'data_class' => CovidCreneauPresence::class,
             'translation_domain' => 'form',
         ]);
     }

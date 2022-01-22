@@ -37,7 +37,7 @@ class ImportPrevisionnelType extends AbstractType
                 [
                     'class' => Diplome::class,
                     'choice_label' => 'display',
-                    'query_builder' => function(DiplomeRepository $diplomeRepository) {
+                    'query_builder' => function (DiplomeRepository $diplomeRepository) {
                         return $diplomeRepository->findByDepartementBuilder($this->departement);
                     },
                     'label' => 'diplome',
@@ -59,9 +59,9 @@ class ImportPrevisionnelType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class'         => null,
+            'data_class' => null,
             'translation_domain' => 'form',
-            'departement'        => null,
+            'departement' => null,
         ]);
     }
 }

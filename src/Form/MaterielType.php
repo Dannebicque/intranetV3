@@ -43,7 +43,7 @@ class MaterielType extends AbstractType
                 'class' => TypeMateriel::class,
                 'required' => true,
                 'choice_label' => 'libelle',
-                'query_builder' => function(TypeMaterielRepository $typeMaterielRepository) {
+                'query_builder' => function (TypeMaterielRepository $typeMaterielRepository) {
                     return $typeMaterielRepository->findByDepartementBuider($this->departement);
                 },
                 'label' => 'type_materiel',
@@ -55,9 +55,9 @@ class MaterielType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class'         => Materiel::class,
+            'data_class' => Materiel::class,
             'translation_domain' => 'form',
-            'departement'        => null,
+            'departement' => null,
         ]);
     }
 }

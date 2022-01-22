@@ -48,8 +48,8 @@ class DepartementType extends AbstractType
                 ChoiceType::class,
                 [
                     'choices' => array_combine(
-                        range((int)date('Y') - 2, (int)date('Y') + 4),
-                        range((int)date('Y') - 2, (int)date('Y') + 4)
+                        range((int) date('Y') - 2, (int) date('Y') + 4),
+                        range((int) date('Y') - 2, (int) date('Y') + 4)
                     ),
                     'label' => 'label.opt_annee_previsionnel',
                 ]
@@ -125,7 +125,7 @@ class DepartementType extends AbstractType
             ->add('respri', EntityCompleteType::class, [
                 'class' => Personnel::class,
                 'choice_label' => 'display',
-                'query_builder' => static function(PersonnelRepository $personnelRepository) {
+                'query_builder' => static function (PersonnelRepository $personnelRepository) {
                     return $personnelRepository->findAllOrder();
                 },
                 'label' => 'label.respri',

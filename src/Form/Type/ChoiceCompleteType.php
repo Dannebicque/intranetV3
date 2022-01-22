@@ -52,5 +52,4 @@ class ChoiceCompleteType extends AbstractType
     {
         return ChoiceType::class;
     }
-
 }

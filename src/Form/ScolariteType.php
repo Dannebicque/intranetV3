@@ -34,7 +34,7 @@ class ScolariteType extends AbstractType
         $builder
             ->add('ordre', ChoiceType::class, [
                 'choices' => [
-                    1  => 1,
+                    1 => 1,
                     2 => 2,
                     3 => 3,
                     4 => 4,
@@ -51,7 +51,7 @@ class ScolariteType extends AbstractType
                 'label' => 'semestre',
                 'placeholder' => 'Choisir le semestre',
                 'class' => Semestre::class,
-                'query_builder' => function(SemestreRepository $semestreRepository) {
+                'query_builder' => function (SemestreRepository $semestreRepository) {
                     return $semestreRepository->findByDepartementBuilder($this->departement);
                 },
                 'choice_label' => 'libelle',
@@ -95,9 +95,9 @@ class ScolariteType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class'         => Scolarite::class,
+            'data_class' => Scolarite::class,
             'translation_domain' => 'form',
-            'departement'        => null,
+            'departement' => null,
         ]);
     }
 }

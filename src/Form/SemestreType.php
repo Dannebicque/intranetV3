@@ -52,7 +52,7 @@ class SemestreType extends AbstractType
                 'required' => true,
                 'choice_label' => 'libelle',
                 'expanded' => true,
-                'query_builder' => function(AnneeRepository $anneeRepository) {
+                'query_builder' => function (AnneeRepository $anneeRepository) {
                     return $anneeRepository->findByDiplomeBuilder($this->diplome);
                 },
                 'label' => 'label.annee',
@@ -121,7 +121,7 @@ class SemestreType extends AbstractType
                 'choice_label' => 'display',
                 'label' => 'label.opt_destinataire_mail_releve',
                 'required' => false,
-                'query_builder' => static function(PersonnelRepository $personnelRepository) {
+                'query_builder' => static function (PersonnelRepository $personnelRepository) {
                     return $personnelRepository->findAllOrder();
                 },
             ])
@@ -144,7 +144,7 @@ class SemestreType extends AbstractType
                 'choice_label' => 'display',
                 'label' => 'label.opt_destinataire_mail_modification_note',
                 'required' => false,
-                'query_builder' => static function(PersonnelRepository $personnelRepository) {
+                'query_builder' => static function (PersonnelRepository $personnelRepository) {
                     return $personnelRepository->findAllOrder();
                 },
             ])
@@ -182,7 +182,7 @@ class SemestreType extends AbstractType
                 'choice_label' => 'display',
                 'label' => 'label.opt_destinataire_mail_absence_responsable',
                 'required' => false,
-                'query_builder' => static function(PersonnelRepository $personnelRepository) {
+                'query_builder' => static function (PersonnelRepository $personnelRepository) {
                     return $personnelRepository->findAllOrder();
                 },
             ])
@@ -204,7 +204,7 @@ class SemestreType extends AbstractType
                 'class' => Ppn::class,
                 'required' => false,
                 'choice_label' => 'libelle',
-                'query_builder' => function(PpnRepository $ppnRepository) {
+                'query_builder' => function (PpnRepository $ppnRepository) {
                     return $ppnRepository->findByDiplomeBuilder($this->diplome);
                 },
                 'label' => 'label.ppn_actif',
@@ -214,7 +214,7 @@ class SemestreType extends AbstractType
                 'class' => Semestre::class,
                 'required' => false,
                 'choice_label' => 'display',
-                'query_builder' => function(SemestreRepository $semestreRepository) {
+                'query_builder' => function (SemestreRepository $semestreRepository) {
                     return $semestreRepository->findByDiplomeBuilder($this->diplome);
                 },
                 'label' => 'label.semestre_precedent',
@@ -224,7 +224,7 @@ class SemestreType extends AbstractType
                 'class' => Semestre::class,
                 'required' => false,
                 'choice_label' => 'display',
-                'query_builder' => function(SemestreRepository $semestreRepository) {
+                'query_builder' => function (SemestreRepository $semestreRepository) {
                     return $semestreRepository->findByDiplomeBuilder($this->diplome);
                 },
                 'label' => 'label.semestre_suivant',
@@ -235,7 +235,7 @@ class SemestreType extends AbstractType
                 'class' => Semestre::class,
                 'required' => false,
                 'choice_label' => 'display',
-                'query_builder' => function(SemestreRepository $semestreRepository) {
+                'query_builder' => function (SemestreRepository $semestreRepository) {
                     return $semestreRepository->findByDiplomeBuilder($this->diplome);
                 },
                 'label' => 'label.semestre_decale',

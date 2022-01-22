@@ -26,23 +26,23 @@ class StagePeriodeInterruptionType extends AbstractType
             ->add('dateRange', DateRangeType::class,
                 ['label' => 'dateRange.interruption', 'mapped' => false, 'required' => true])
             ->add('motif', TextType::class, ['label' => 'motif'])
-            ->addEventListener(FormEvents::POST_SUBMIT, static function(FormEvent $event) {
+            ->addEventListener(FormEvents::POST_SUBMIT, static function (FormEvent $event) {
                 $stagePeriodeInterruption = $event->getData();
                 $form = $event->getForm();
                 $dateRange = $form->get('dateRange')->getData();
                 $stagePeriodeInterruption->setDateDebut($dateRange['from_date']);
                 $stagePeriodeInterruption->setDateFin($dateRange['to_date']);
             })
-            ->addEventListener(FormEvents::PRE_SET_DATA, static function(FormEvent $event) {
+            ->addEventListener(FormEvents::PRE_SET_DATA, static function (FormEvent $event) {
                 $stagePeriodeInterruption = $event->getData();
                 if (null !== $stagePeriodeInterruption) {
                     $form = $event->getForm();
                     $form->add('dateRange', DateRangeType::class, [
-                        'label'     => 'dateRange.interruption',
-                        'mapped'    => false,
+                        'label' => 'dateRange.interruption',
+                        'mapped' => false,
                         'date_data' => [
                             'from' => $stagePeriodeInterruption->getDateDebut(),
-                            'to'   => $stagePeriodeInterruption->getDateFin(),
+                            'to' => $stagePeriodeInterruption->getDateFin(),
                         ],
                     ]);
                 }

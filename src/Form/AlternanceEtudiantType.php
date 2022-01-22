@@ -52,7 +52,7 @@ class AlternanceEtudiantType extends AbstractType
                 'class' => Personnel::class,
                 'help' => 'help.tuteur_universitaire',
                 'choice_label' => 'display',
-                'query_builder' => function(PersonnelRepository $personnelRepository) {
+                'query_builder' => function (PersonnelRepository $personnelRepository) {
                     return $personnelRepository->findByDepartementBuilder($this->departement);
                 },
                 'attr' => ['class' => 'form-control selectpicker'],
@@ -60,14 +60,14 @@ class AlternanceEtudiantType extends AbstractType
             ->add('sujet', TextareaType::class, ['label' => 'label.sujet_altenance'])
             ->add('adresseAlternance', AdresseType::class,
                 ['label' => 'label.adresse_lieu_alternance', 'help' => 'help.complete.meme.si.identique'])
-            ->addEventListener(FormEvents::POST_SUBMIT, static function(FormEvent $event) {
+            ->addEventListener(FormEvents::POST_SUBMIT, static function (FormEvent $event) {
                 $alternance = $event->getData();
                 $form = $event->getForm();
                 $dateRange = $form->get('dateRange')->getData();
                 $alternance->setDateDebut($dateRange['from_date']);
                 $alternance->setDateFin($dateRange['to_date']);
             })
-            ->addEventListener(FormEvents::PRE_SET_DATA, static function(FormEvent $event) {
+            ->addEventListener(FormEvents::PRE_SET_DATA, static function (FormEvent $event) {
                 $alternance = $event->getData();
                 $form = $event->getForm();
                 $form->add('dateRange', DateRangeType::class, [

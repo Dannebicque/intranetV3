@@ -23,7 +23,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class QuestionnaireQualiteType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('libelle', TextType::class, [
@@ -53,7 +53,7 @@ class QuestionnaireQualiteType extends AbstractType
                 'label' => 'label.semestre',
                 'choice_label' => 'display',
                 'class' => Semestre::class,
-                'query_builder' => function(SemestreRepository $semestreRepository) {
+                'query_builder' => function (SemestreRepository $semestreRepository) {
                     return $semestreRepository->findSemestresActifBuilder();
                 },
                 'help' => 'Semestre concerné par l\'enquête.',
@@ -83,7 +83,7 @@ class QuestionnaireQualiteType extends AbstractType
         ;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => QuestionnaireQualite::class,

@@ -27,14 +27,14 @@ class ConfigurationType extends AbstractType
             ->add('cle', TextType::class)
             ->add('type', ChoiceType::class, ['choices' => ['Fichier' => 'F', 'Texte' => 'T'], 'expanded' => true]);
 
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
             $config = $event->getData();
             $form = $event->getForm();
 
             // checks if the Product object is "new"
             // If no data is passed to the form, the data is "null".
             // This should be considered a new "Product"
-            if ($config->getType() === 'F') {
+            if ('F' === $config->getType()) {
                 $form->add('fichier', FileType::class, ['mapped' => false]);
             } else {
                 $form->add('valeur', TextType::class);

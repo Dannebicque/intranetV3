@@ -25,7 +25,7 @@ class ProjetEtudiantType extends AbstractType
 {
     private $semestre;
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->semestre = $options['semestre'];
 
@@ -36,7 +36,7 @@ class ProjetEtudiantType extends AbstractType
             ->add('etudiants', EntityType::class, [
                 'class' => Etudiant::class,
                 'choice_label' => 'displayPr',
-                'query_builder' => function(EtudiantRepository $etudiantRepository) {
+                'query_builder' => function (EtudiantRepository $etudiantRepository) {
                     return $etudiantRepository->findBySemestreBuilder($this->semestre);
                 },
                 'multiple' => true,
@@ -56,12 +56,12 @@ class ProjetEtudiantType extends AbstractType
             ]);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class'         => ProjetEtudiant::class,
+            'data_class' => ProjetEtudiant::class,
             'translation_domain' => 'form',
-            'semestre'           => null,
+            'semestre' => null,
         ]);
     }
 }

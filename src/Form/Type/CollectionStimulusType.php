@@ -22,7 +22,7 @@ class CollectionStimulusType extends AbstractType
         $resolver
             ->setDefaults([
                 'prototype' => true,
-                'max_items' => null
+                'max_items' => null,
             ]);
     }
 

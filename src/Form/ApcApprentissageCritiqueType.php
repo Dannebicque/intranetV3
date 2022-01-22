@@ -16,14 +16,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ApcApprentissageCritiqueType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('code')
             ->add('libelle');
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => ApcApprentissageCritique::class,

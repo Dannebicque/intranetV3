@@ -17,14 +17,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class BCCentreFinancierType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('libelle', TextType::class, ['label' => 'label.libelle'])
             ->add('code', TextType::class, ['label' => 'label.code']);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => BCCentreFinancier::class,

@@ -35,7 +35,7 @@ class EvaluationsPersonnelsType extends AbstractType
                 'choice_label' => 'display',
                 'multiple' => true,
                 'expanded' => true,
-                'query_builder' => function(PersonnelRepository $repo) {
+                'query_builder' => function (PersonnelRepository $repo) {
                     return $repo->findBySemestreBuilder($this->semestre);
                 },
             ]);
@@ -45,7 +45,7 @@ class EvaluationsPersonnelsType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Evaluation::class,
-            'semestre'   => null,
+            'semestre' => null,
         ]);
     }
 }

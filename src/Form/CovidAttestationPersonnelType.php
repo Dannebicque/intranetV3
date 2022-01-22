@@ -23,7 +23,7 @@ class CovidAttestationPersonnelType extends AbstractType
 {
     protected $departement;
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->departement = $options['departement'];
 
@@ -33,7 +33,7 @@ class CovidAttestationPersonnelType extends AbstractType
                 'required' => true,
                 'choice_label' => 'getDisplay',
                 'expanded' => true,
-                'query_builder' => function(DiplomeRepository $diplomeRepository) {
+                'query_builder' => function (DiplomeRepository $diplomeRepository) {
                     return $diplomeRepository->findByDepartementBuilder($this->departement);
                 },
                 'label' => 'Diplôme concerné par votre demande (pour validation par le responsable)',
@@ -73,7 +73,7 @@ class CovidAttestationPersonnelType extends AbstractType
             ]);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => CovidAttestationPersonnel::class,

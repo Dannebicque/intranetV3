@@ -41,7 +41,7 @@ class EtudiantProfilType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class'         => Etudiant::class,
+            'data_class' => Etudiant::class,
             'translation_domain' => 'form',
         ]);
     }

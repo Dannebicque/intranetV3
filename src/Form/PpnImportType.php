@@ -30,9 +30,9 @@ class PpnImportType extends AbstractType
 
         $builder
             ->add('ppn', EntityType::class, [
-                'choice_label'  => 'libelle',
-                'class'         => Ppn::class,
-                'query_builder' => function(PpnRepository $ppnRepository) {
+                'choice_label' => 'libelle',
+                'class' => Ppn::class,
+                'query_builder' => function (PpnRepository $ppnRepository) {
                     return $ppnRepository->findByDepartementBuilder($this->departement);
                 },
             ])
@@ -44,9 +44,9 @@ class PpnImportType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class'         => null,
+            'data_class' => null,
             'translation_domain' => 'form',
-            'departement'        => null,
+            'departement' => null,
         ]);
     }
 }

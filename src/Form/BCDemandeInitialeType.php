@@ -26,7 +26,7 @@ class BCDemandeInitialeType extends AbstractType
 {
     protected Departement $departement;
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->departement = $options['departement'];
 
@@ -40,12 +40,12 @@ class BCDemandeInitialeType extends AbstractType
             ->add('montantTTC', TextType::class, [
                 'label' => 'label.bc.montantTTC',
                 'input_suffix' => '<span class="input-group-text">€</span>',
-                'required' => false
+                'required' => false,
             ])
             ->add('montantHT', TextType::class, [
                 'label' => 'label.bc.montantHT',
                 'input_suffix' => '<span class="input-group-text">€</span>',
-                'required' => false
+                'required' => false,
             ])
             ->add('commandeMarche', YesNoType::class, ['label' => 'label.bc.commandeMarche'])
             ->add('numeroBC', TextType::class, ['label' => 'label.bc.numeroBC'])
@@ -53,20 +53,20 @@ class BCDemandeInitialeType extends AbstractType
                 'label' => 'label.departement',
                 'class' => Departement::class,
                 'choice_label' => 'libelle',
-                'required' => false
+                'required' => false,
             ])
             ->add('responsable', EntityType::class, [
                 'label' => 'label.bc.responsable',
                 'class' => Personnel::class,
                 'choice_label' => 'displayPr',
-                'query_builder' => function(PersonnelRepository $personnelRepository) {
+                'query_builder' => function (PersonnelRepository $personnelRepository) {
                     return $personnelRepository->findByDepartementBuilder($this->departement);
-                }
+                },
             ])
             ->add('fournisseur');
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => BCDemande::class,

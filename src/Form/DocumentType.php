@@ -37,7 +37,7 @@ class DocumentType extends AbstractType
 
         $builder
             ->add('libelle', TextType::class, ['label' => 'label.libelle', 'help' => '100 caractères maximum'])
-            ->add('typeDestinataire', TypeDestinataireType::class, ['label' => 'label.typedestinataire',])
+            ->add('typeDestinataire', TypeDestinataireType::class, ['label' => 'label.typedestinataire'])
             ->add('description', TextareaType::class, ['label' => 'label.description', 'required' => false])
             ->add('documentFile', VichFileType::class, [
                 'required' => false,

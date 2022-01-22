@@ -28,8 +28,8 @@ class QuizzQuestionType extends AbstractType
                 [
                     'expanded' => true,
                     'multiple' => false,
-                    'choices'  => QuestionnaireQuestion::LISTE_TYPE_QUESTION,
-                    'help'     => 'texte d\'aide',
+                    'choices' => QuestionnaireQuestion::LISTE_TYPE_QUESTION,
+                    'help' => 'texte d\'aide',
                 ]);
     }
 

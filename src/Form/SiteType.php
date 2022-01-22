@@ -34,7 +34,7 @@ class SiteType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class'         => Site::class,
+            'data_class' => Site::class,
             'translation_domain' => 'form',
         ]);
     }

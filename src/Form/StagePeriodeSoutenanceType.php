@@ -27,14 +27,14 @@ class StagePeriodeSoutenanceType extends AbstractType
                 ['label' => 'label.dateRange.soutenance', 'mapped' => false, 'required' => true])
             ->add('dateRenduRapport', DatePickerType::class,
                 ['label' => 'label.dateRenduRapport', 'required' => false])
-            ->addEventListener(FormEvents::POST_SUBMIT, static function(FormEvent $event) {
+            ->addEventListener(FormEvents::POST_SUBMIT, static function (FormEvent $event) {
                 $stagePeriodeSoutenance = $event->getData();
                 $form = $event->getForm();
                 $dateRange = $form->get('dateRange')->getData();
                 $stagePeriodeSoutenance->setDateDebut($dateRange['from_date']);
                 $stagePeriodeSoutenance->setDateFin($dateRange['to_date']);
             })
-            ->addEventListener(FormEvents::PRE_SET_DATA, static function(FormEvent $event) {
+            ->addEventListener(FormEvents::PRE_SET_DATA, static function (FormEvent $event) {
                 $stagePeriodeSoutenance = $event->getData();
                 $form = $event->getForm();
                 if (null !== $stagePeriodeSoutenance) {

@@ -40,7 +40,7 @@ class FormTypeExtension extends AbstractTypeExtension
         return [FormType::class];
     }
 
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $this->setView($view, $form, 'label_class', $this->defaultLabelClass);
         $this->setView($view, $form, 'group_class', $this->defaultGroupClass);
@@ -48,7 +48,7 @@ class FormTypeExtension extends AbstractTypeExtension
         $view->vars['input_suffix'] = $options['input_suffix'];
     }
 
-    protected function setView(FormView $view, FormInterface $form, string $attributeName, $defaultValue)
+    protected function setView(FormView $view, FormInterface $form, string $attributeName, $defaultValue): void
     {
         if ($form->getConfig()->hasAttribute($attributeName)) { // if attribute is defined -> set it to view
             $view->vars[$attributeName] = $form->getConfig()->getAttribute($attributeName);
@@ -59,7 +59,7 @@ class FormTypeExtension extends AbstractTypeExtension
         }
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->setAttribute($builder, $options, 'label_class');
         $this->setAttribute($builder, $options, 'group_class');
@@ -67,14 +67,14 @@ class FormTypeExtension extends AbstractTypeExtension
 
     /* Helper */
 
-    protected function setAttribute(FormBuilderInterface $builder, array $options, string $optionName)
+    protected function setAttribute(FormBuilderInterface $builder, array $options, string $optionName): void
     {
         if (isset($options[$optionName])) {
             $builder->setAttribute($optionName, $options[$optionName]);
         }
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setDefault('label_class', null)
@@ -83,7 +83,7 @@ class FormTypeExtension extends AbstractTypeExtension
             ->setAllowedTypes('group_class', ['string', 'null'])
             ->setDefault('input_prefix', null)
             ->setAllowedTypes('input_prefix', ['null', 'string'])
-            ->setNormalizer('input_prefix', function(Options $options, $value) {
+            ->setNormalizer('input_prefix', function (Options $options, $value) {
                 if ($options['input_prefix_text']) {
                     return sprintf('<span class="input-group-text">%s</span>', $options['input_prefix_text']);
                 }
@@ -92,7 +92,7 @@ class FormTypeExtension extends AbstractTypeExtension
             })
             ->setDefault('input_suffix', null)
             ->setAllowedTypes('input_suffix', ['null', 'string'])
-            ->setNormalizer('input_suffix', function(Options $options, $value) {
+            ->setNormalizer('input_suffix', function (Options $options, $value) {
                 if ($options['input_suffix_text']) {
                     return sprintf('<span class="input-group-text">%s</span>', $options['input_suffix_text']);
                 }

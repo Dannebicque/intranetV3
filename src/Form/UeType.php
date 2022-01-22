@@ -41,7 +41,7 @@ class UeType extends AbstractType
                 'class' => Semestre::class,
                 'required' => true,
                 'choice_label' => 'display',
-                'query_builder' => function(SemestreRepository $semestreRepository) {
+                'query_builder' => function (SemestreRepository $semestreRepository) {
                     return $semestreRepository->findByDiplomeBuilder($this->diplome);
                 },
                 'label' => 'label.semestre',
@@ -52,17 +52,17 @@ class UeType extends AbstractType
             ->add('coefficient', TextType::class, ['label' => 'label.coefficient'])
             ->add('nbEcts', TextType::class, ['label' => 'label.nb_ects']);
 
-        if ($this->diplome->getTypeDiplome()->getApc() === true) {
+        if (true === $this->diplome->getTypeDiplome()->getApc()) {
             $builder->add('apcCompetence', EntityType::class, [
                 'class' => ApcCompetence::class,
                 'required' => false,
                 'choice_label' => 'nomCourt',
-                'query_builder' => function(ApcComptenceRepository $apcComptenceRepository) {
+                'query_builder' => function (ApcComptenceRepository $apcComptenceRepository) {
                     return $apcComptenceRepository->findByDiplomeBuilder($this->diplome);
                 },
                 'label' => 'label.apc.competence',
                 'expanded' => true,
-                'help' => 'Le diplôme étant au format APC, vous pouvez attacher une compétence à cette UE'
+                'help' => 'Le diplôme étant au format APC, vous pouvez attacher une compétence à cette UE',
             ]);
         }
     }

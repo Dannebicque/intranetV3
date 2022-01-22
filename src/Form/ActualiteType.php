@@ -31,7 +31,7 @@ class ActualiteType extends AbstractType
                 'label' => 'label.texte',
                 'required' => true,
                 'attr' => ['rows' => 10, 'class' => 'tinyMce'],
-            ]);//todo: tinyMce ne fonctionne plus
+            ]); //todo: tinyMce ne fonctionne plus
     }
 
     public function configureOptions(OptionsResolver $resolver): void

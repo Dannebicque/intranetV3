@@ -63,7 +63,7 @@ class EvaluationType extends AbstractType
                     'disabled' => $personnelDisabled,
                     'class' => Personnel::class,
                     'choice_label' => 'displayPr',
-                    'query_builder' => function(PersonnelRepository $personnelRepository) {
+                    'query_builder' => function (PersonnelRepository $personnelRepository) {
                         return $personnelRepository->findByDepartementBuilder($this->semestre->getAnnee()->getDiplome()->getDepartement());
                     },
                 ])
@@ -85,7 +85,7 @@ class EvaluationType extends AbstractType
                     'label' => 'label.coefficient',
                     'help' => 'help.coefficient',
                     'disabled' => $autorise,
-                    'constraints' => new Positive()
+                    'constraints' => new Positive(),
                 ])
             ->add('commentaire', TextType::class,
                 [
@@ -112,7 +112,7 @@ class EvaluationType extends AbstractType
                 'label' => 'label.evaluation_type_groupe',
                 'choice_label' => 'libelle',
                 'disabled' => $autorise,
-                'query_builder' => function(TypeGroupeRepository $typeGroupeRepository) {
+                'query_builder' => function (TypeGroupeRepository $typeGroupeRepository) {
                     return $typeGroupeRepository->findBySemestreBuilder($this->semestre);
                 },
                 'required' => true,
@@ -126,7 +126,7 @@ class EvaluationType extends AbstractType
                 'disabled' => $autorise,
                 'choice_label' => 'display',
                 'attr' => ['class' => ''],
-                'query_builder' => function(PersonnelRepository $personnelRepository) {
+                'query_builder' => function (PersonnelRepository $personnelRepository) {
                     return $personnelRepository->findByDepartementBuilder($this->departement);
                 },
                 'required' => true,

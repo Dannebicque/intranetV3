@@ -22,7 +22,7 @@ use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class MaterielCommunType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('designation', TextType::class, ['label' => 'designation'])
@@ -35,7 +35,7 @@ class MaterielCommunType extends AbstractType
             ])
             ->add('contact', EntityCompleteType::class, [
                 'class' => Personnel::class,
-                'query_builder' => static function(PersonnelRepository $personnelRepository) {
+                'query_builder' => static function (PersonnelRepository $personnelRepository) {
                     return $personnelRepository->findAllOrder();
                 },
                 'choice_label' => 'display',
@@ -43,7 +43,7 @@ class MaterielCommunType extends AbstractType
             ]);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => MaterielCommun::class,

@@ -17,6 +17,7 @@ use App\Form\Type\CarbonTimeType;
 use App\Form\Type\ChoiceCompleteType;
 use App\Form\Type\DatePickerType;
 use App\Form\Type\EntityCompleteType;
+use App\Form\Type\TimePickerType;
 use App\Repository\PersonnelRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -29,7 +30,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class RattrapageType extends AbstractType
 {
     private ?Semestre $semestre;
-
     private TypeMatiereManager $typeMatiereManager;
 
     public function __construct(TypeMatiereManager $typeMatiereManager)
@@ -49,7 +49,7 @@ class RattrapageType extends AbstractType
                 'help' => 'Le format attendu est jj/mm/aaaa',
                 'attr' => ['data-options' => ['locale' => $locale], 'placeholder' => 'jj/mm/aaaa'],
             ])
-            ->add('heureEval', CarbonTimeType::class, ['label' => 'label.heure_evaluation', 'required' => false])
+            ->add('heureEval', TimePickerType::class, ['label' => 'label.heure_evaluation', 'required' => false])
             ->add('duree', TextType::class, [
                 'label' => 'label.duree_evaluation',
                 'required' => false,
@@ -82,7 +82,6 @@ class RattrapageType extends AbstractType
             'data_class' => Rattrapage::class,
             'semestre' => null,
             'translation_domain' => 'form',
-            'locale' => 'fr',
-        ]);
+            'locale' => 'fr', ]);
     }
 }

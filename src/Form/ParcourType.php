@@ -33,7 +33,7 @@ class ParcourType extends AbstractType
                 'class' => Semestre::class,
                 'required' => true,
                 'choice_label' => 'display',
-                'query_builder' => function(SemestreRepository $semestreRepository) {
+                'query_builder' => function (SemestreRepository $semestreRepository) {
                     return $semestreRepository->findByDiplomeBuilder($this->diplome);
                 },
                 'label' => 'label.semestre',
@@ -45,8 +45,8 @@ class ParcourType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class'         => Parcour::class,
-            'diplome'            => null,
+            'data_class' => Parcour::class,
+            'diplome' => null,
             'translation_domain' => 'form',
         ]);
     }

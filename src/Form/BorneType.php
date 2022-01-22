@@ -66,21 +66,21 @@ class BorneType extends AbstractType
                 'class' => Semestre::class,
                 'label' => 'label.semestres_date',
                 'choice_label' => 'libelle',
-                'query_builder' => function(SemestreRepository $semestreRepository) {
+                'query_builder' => function (SemestreRepository $semestreRepository) {
                     return $semestreRepository->findByDepartementBuilder($this->departement);
                 },
                 'required' => true,
                 'expanded' => true,
                 'multiple' => true,
             ])
-            ->addEventListener(FormEvents::POST_SUBMIT, static function(FormEvent $event) {
+            ->addEventListener(FormEvents::POST_SUBMIT, static function (FormEvent $event) {
                 $borne = $event->getData();
                 $form = $event->getForm();
                 $dateRange = $form->get('dateRange')->getData();
                 $borne->setDateDebutPublication($dateRange['from_date']);
                 $borne->setDateFinPublication($dateRange['to_date']);
             })
-            ->addEventListener(FormEvents::PRE_SET_DATA, static function(FormEvent $event) {
+            ->addEventListener(FormEvents::PRE_SET_DATA, static function (FormEvent $event) {
                 $borne = $event->getData();
                 $form = $event->getForm();
                 $form->add('dateRange', DateRangeType::class, [
