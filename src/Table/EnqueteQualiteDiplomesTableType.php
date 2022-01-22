@@ -12,6 +12,7 @@ namespace App\Table;
 use App\Components\Table\Adapter\EntityAdapter;
 use App\Components\Table\Column\EntityColumnType;
 use App\Components\Table\Column\PropertyColumnType;
+use App\Components\Table\DTO\Table;
 use App\Components\Table\TableBuilder;
 use App\Components\Table\TableType;
 use App\Entity\Diplome;
@@ -32,7 +33,7 @@ class EnqueteQualiteDiplomesTableType extends TableType
         $builder->addFilter('diplome', DiplomeEntityType::class);
         $builder->addFilter('typeDiplome', TypeDiplomeEntityType::class);
 
-        $builder->addColumn('typeDiplome', EntityColumnType::class, ['label' => 'table.typeDiplome', 'display_field' => 'libelle']);
+        $builder->addColumn('typeDiplome', EntityColumnType::class, ['label' => 'table.typeDiplome', 'display_field' => 'libelle', 'order' => Table::SORT_ASCENDING]);
         $builder->addColumn('libelle', PropertyColumnType::class, ['label' => 'table.libelle']);
         $builder->addColumn('id', NbEtudiantsColumnType::class, ['label' => 'table.nbEtudiants', 'effectifs' => $options['effectifs']]);
         $builder->addColumn('semestres', SemestresAvecActifColumnType::class, ['label' => 'table.semestre']);
