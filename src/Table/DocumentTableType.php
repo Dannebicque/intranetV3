@@ -81,7 +81,7 @@ class DocumentTableType extends TableType
         ]);
 
         $builder->addColumn('links', WidgetColumnType::class, [
-            'build' => function(WidgetBuilder $builder, Document $s) {
+            'build' => function (WidgetBuilder $builder, Document $s) {
                 $builder->add('duplicate', RowDuplicateLinkType::class, [
                     'route' => 'administration_document_duplicate',
                     'route_params' => ['id' => $s->getUuidString()],
@@ -105,7 +105,7 @@ class DocumentTableType extends TableType
                     'route' => 'administration_document_delete',
                     'route_params' => ['id' => $s->getUuidString()],
                     'attr' => [
-                        'data-csrf' => $this->csrfToken->getToken('delete' . $s->getUuidString()),
+                        'data-csrf' => $this->csrfToken->getToken('delete'.$s->getUuidString()),
                     ],
                 ]);
             },
@@ -114,7 +114,7 @@ class DocumentTableType extends TableType
         $builder->useAdapter(EntityAdapter::class, [
             'class' => Document::class,
             'fetch_join_collection' => false,
-            'query' => function(QueryBuilder $qb, array $formData) {
+            'query' => function (QueryBuilder $qb, array $formData) {
                 $qb->innerJoin('e.semestres', 'c')//récupération de la jointure dans la table dédiée
                 ->innerJoin(Semestre::class, 's', 'WITH', 'c.id = s.id')
                     ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
@@ -123,9 +123,9 @@ class DocumentTableType extends TableType
                     ->setParameter('departement', $this->departement->getId());
 
                 if (isset($formData['search'])) {
-                    $qb->andWhere('LOWER(e.titre) LIKE :search');
-                    $qb->orWhere('LOWER(e.texte) LIKE :search');
-                    $qb->setParameter('search', '%' . $formData['search'] . '%');
+                    $qb->andWhere('LOWER(e.libelle) LIKE :search');
+                    $qb->orWhere('LOWER(e.libelle) LIKE :search');
+                    $qb->setParameter('search', '%'.$formData['search'].'%');
                 }
 
                 if (isset($formData['from'])) {
