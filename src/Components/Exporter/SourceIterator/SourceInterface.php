@@ -9,9 +9,7 @@
 
 namespace App\Components\Exporter\SourceIterator;
 
-
 interface SourceInterface
 {
-
     public function toArray(): array;
 }

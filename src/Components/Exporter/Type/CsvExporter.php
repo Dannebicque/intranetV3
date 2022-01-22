@@ -31,6 +31,11 @@ class CsvExporter extends AbstractExporter implements ExporterInterface
         $this->delimiter = $delimiter;
     }
 
+    /**
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
+     * @throws \Twig\Error\LoaderError
+     */
     public function export(SourceInterface $datas, string $nomFichier): void
     {
         $this->nomFichier = $this->checkNomFichier($nomFichier, 'csv');

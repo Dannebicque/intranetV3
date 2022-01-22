@@ -13,19 +13,16 @@ use App\Components\Exporter\SourceIterator\SourceInterface;
 use App\Components\Exporter\Type\CsvExporter;
 use App\Components\Exporter\Type\ExcelExporter;
 use App\Components\Exporter\Type\PdfExporter;
+use App\Exception\FormatNotFoundException;
 use Symfony\Component\HttpFoundation\Response;
 
 class ExporterManager
 {
-
-    protected ExporterRegistry $exportRegistry;
-
-    public function __construct(ExporterRegistry $exportRegistry)
+    public function __construct(protected ExporterRegistry $exportRegistry)
     {
-        $this->exportRegistry = $exportRegistry;
     }
 
-    public function export(SourceInterface $datas, $_format, string $nomFichier, array $options = []): Response
+    public function export(SourceInterface $datas, $_format, string $nomFichier, array $options = []): ?Response
     {
         switch ($_format) {
             case 'pdf':
@@ -46,8 +43,22 @@ class ExporterManager
 
                 return $this->getExporter($_format)->genereFichier();
         }
+
+        return null;
     }
 
+    /**
+     * @throws \App\Exception\FormatNotFoundException
+     */
+    /**
+     * @throws \App\Components\Questionnaire\Exceptions\TypeQuestionNotFoundException
+     */
+    /**
+     * @throws \App\Exception\FormatNotFoundException
+     */
+    /**
+     * @throws \App\Components\Questionnaire\Exceptions\TypeQuestionNotFoundException
+     */
     public function getExporter($_format)
     {
         switch ($_format) {
@@ -58,5 +69,7 @@ class ExporterManager
             case 'xlsx':
                 return $this->exportRegistry->getTypeExporter(ExcelExporter::class);
         }
+
+        throw new FormatNotFoundException();
     }
 }

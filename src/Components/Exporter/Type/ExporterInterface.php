@@ -9,7 +9,6 @@
 
 namespace App\Components\Exporter\Type;
 
-
 use App\Components\Exporter\SourceIterator\SourceInterface;
 
 interface ExporterInterface

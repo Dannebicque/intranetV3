@@ -81,13 +81,13 @@ class ExcelExporter extends AbstractExporter implements ExporterInterface
         $writer = new Xlsx($this->myExcelWriter->getSpreadsheet());
 
         return new StreamedResponse(
-            static function() use ($writer) {
+            static function () use ($writer) {
                 $writer->save('php://output');
             },
             200,
             [
                 'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                'Content-Disposition' => 'attachment;filename="' . $this->nomFichier . '"',
+                'Content-Disposition' => 'attachment;filename="'.$this->nomFichier.'"',
             ]
         );
     }
@@ -106,6 +106,6 @@ class ExcelExporter extends AbstractExporter implements ExporterInterface
         $this->myExcelWriter->getSpreadsheet()->getActiveSheet()->getHeaderFooter()
             ->setOddHeader('&C&HDocument généré depuis l\'Intranet !');
         $this->myExcelWriter->getSpreadsheet()->getActiveSheet()->getHeaderFooter()
-            ->setOddFooter('&L&B' . $this->myExcelWriter->getSpreadsheet()->getProperties()->getTitle() . '&RPage &P of &N');
+            ->setOddFooter('&L&B'.$this->myExcelWriter->getSpreadsheet()->getProperties()->getTitle().'&RPage &P of &N');
     }
 }

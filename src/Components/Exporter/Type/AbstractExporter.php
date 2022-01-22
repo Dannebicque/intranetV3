@@ -11,10 +11,10 @@ namespace App\Components\Exporter\Type;
 
 class AbstractExporter
 {
-    protected function checkNomFichier(string $nomFichier, string $format)
+    protected function checkNomFichier(string $nomFichier, string $format): string
     {
         if ('.' !== $format[0]) {
-            $format = '.' . $format;
+            $format = '.'.$format;
         }
         if (!str_contains($nomFichier, $format)) {
             $nomFichier .= $format;

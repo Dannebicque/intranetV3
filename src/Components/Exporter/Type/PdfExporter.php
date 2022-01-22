@@ -35,12 +35,17 @@ class PdfExporter extends AbstractExporter implements ExporterInterface
         $this->myPdf::addOptions('orientation', $orientation);
     }
 
+    /**
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
+     * @throws \Twig\Error\LoaderError
+     */
     public function genereFichier(): Response
     {
         return $this->myPdf::generePdf('exporter/pdf.html.twig', $this->datas->toArray(), $this->nomFichier);
     }
 
-    public function setOptions(array $options)
+    public function setOptions(array $options): void
     {
     }
 }

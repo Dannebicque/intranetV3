@@ -13,11 +13,11 @@ use Carbon\CarbonInterface;
 use DateInterval;
 use DateTimeInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use function is_array;
+use function is_object;
 use Symfony\Bridge\Doctrine\PropertyInfo\DoctrineExtractor;
 use Symfony\Component\PropertyInfo\PropertyInfoExtractor;
 use Traversable;
-use function is_array;
-use function is_object;
 
 class DoctrineSourceIterator implements SourceInterface
 {
@@ -75,19 +75,20 @@ class DoctrineSourceIterator implements SourceInterface
     {
         switch (true) {
             case is_array($value):
-                return '[' . implode(', ', array_map([$this, 'getValue'], $value)) . ']';
+                return '['.implode(', ', array_map([$this, 'getValue'], $value)).']';
             case $value instanceof Traversable:
-                return '[' . implode(', ', array_map([$this, 'getValue'], iterator_to_array($value))) . ']';
+                return '['.implode(', ', array_map([$this, 'getValue'], iterator_to_array($value))).']';
             case $value instanceof DateTimeInterface:
             case $value instanceof CarbonInterface:
                 if ('01/01/1970' === $value->format($this->dateFormat) || '00/00/0000' === $value->format($this->dateFormat)) {
                     return $value->format($this->timeFormat);
                 }
-                return $value->format($this->dateFormat . ' ' . $this->timeFormat);
+
+                return $value->format($this->dateFormat.' '.$this->timeFormat);
             case $value instanceof DateInterval:
                 return $this->getDuration($value);
             case is_object($value):
-                return method_exists($value, '__toString') ? (string)$value : null;
+                return method_exists($value, '__toString') ? (string) $value : null;
             case is_bool($value):
                 return true === $value ? 'Oui' : 'Non';
             default:
@@ -100,14 +101,14 @@ class DoctrineSourceIterator implements SourceInterface
         $datePart = '';
         foreach (self::DATE_PARTS as $datePartAttribute => $datePartAttributeString) {
             if ($interval->$datePartAttribute !== 0) {
-                $datePart .= $interval->$datePartAttribute . $datePartAttributeString;
+                $datePart .= $interval->$datePartAttribute.$datePartAttributeString;
             }
         }
 
         $timePart = '';
         foreach (self::TIME_PARTS as $timePartAttribute => $timePartAttributeString) {
             if ($interval->$timePartAttribute !== 0) {
-                $timePart .= $interval->$timePartAttribute . $timePartAttributeString;
+                $timePart .= $interval->$timePartAttribute.$timePartAttributeString;
             }
         }
 
@@ -115,7 +116,7 @@ class DoctrineSourceIterator implements SourceInterface
             return 'P0Y';
         }
 
-        return 'P' . $datePart . ('' !== $timePart ? 'T' . $timePart : '');
+        return 'P'.$datePart.('' !== $timePart ? 'T'.$timePart : '');
     }
 
     public function toArray(): array

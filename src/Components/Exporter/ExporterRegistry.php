@@ -12,7 +12,6 @@ namespace App\Components\Exporter;
 use App\Components\Exporter\Type\AbstractExporter;
 use App\Components\Questionnaire\Exceptions\TypeQuestionNotFoundException;
 
-
 class ExporterRegistry
 {
     public const TAG_TYPE_EXPORTER = 'da.exporter.typeexporter';
@@ -23,6 +22,9 @@ class ExporterRegistry
         $this->typeExporter[$name] = $abstractExporter;
     }
 
+    /**
+     * @throws \App\Components\Questionnaire\Exceptions\TypeQuestionNotFoundException
+     */
     public function getTypeExporter(string $name)
     {
         if (!array_key_exists($name, $this->typeExporter)) {
