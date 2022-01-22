@@ -12,7 +12,6 @@ namespace App\Components\Breadcrumbs\Twig;
 use App\Components\Breadcrumbs\BreadcrumbHelper;
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;
-use Twig\TemplateWrapper;
 use Twig\TwigFunction;
 
 class BreadcrumbsExtension extends AbstractExtension
@@ -37,6 +36,11 @@ class BreadcrumbsExtension extends AbstractExtension
         ];
     }
 
+    /**
+     * @throws \Twig\Error\SyntaxError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\LoaderError
+     */
     public function breadcrumbsRender(): string
     {
         return $this->twig->render($this->template, ['breadcrumbs' => $this->breadcrumbHelper->getBreadcrumbs()]);

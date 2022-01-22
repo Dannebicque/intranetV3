@@ -19,8 +19,7 @@ class BreadcrumbHelper
 
     public function __construct(
         private RouterInterface $router
-    )
-    {
+    ) {
         $this->breadcrumbs[] = new Breadcrumb('dashboard', $this->router->generate('default_homepage'), 'fas fa-home');
     }
 
@@ -38,6 +37,4 @@ class BreadcrumbHelper
     {
         return $this->breadcrumbs;
     }
-
-
 }
