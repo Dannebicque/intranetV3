@@ -17,7 +17,6 @@ use App\Components\Table\TableType;
 use App\Components\Widget\Type\ExportDropdownType;
 use App\Entity\AbsenceEtatAppel;
 use App\Entity\Rattrapage;
-use App\Entity\Semestre;
 use App\Form\Type\DatePickerType;
 use App\Form\Type\SearchType;
 use App\Table\ColumnType\MatiereColumnType;
@@ -26,11 +25,9 @@ use App\Table\ColumnType\StatusAppelFaitColumnType;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class AppelSuiviTableType extends TableType
 {
-
     public function buildTable(TableBuilder $builder, array $options): void
     {
         $semestre = $options['semestre'];
@@ -46,16 +43,15 @@ class AppelSuiviTableType extends TableType
         $builder->addFilter('etat_appel', ChoiceType::class, [
             'choices' => ['Fait' => Rattrapage::DEMANDE_ACCEPTEE, 'Non fait' => Rattrapage::DEMANDE_REFUSEE, 'cours à venir' => Rattrapage::DEMANDE_FAITE],
             'required' => false,
-            'placeholder' => 'Etat de l\'appel'
+            'placeholder' => 'Etat de l\'appel',
         ]);
 
         $builder->addWidget('export', ExportDropdownType::class, [
             'route' => 'administration_absence_appel_export',
             'route_params' => [
-                'semestre' => $semestre->getId()
+                'semestre' => $semestre->getId(),
             ],
         ]);
-
 
         $builder->addColumn('date', DateColumnType::class, [
             'order' => 'DESC',
@@ -99,16 +95,14 @@ class AppelSuiviTableType extends TableType
 //        ]);
 
         $builder->useAdapter(EntityAdapter::class, [
-            'class' => AbsenceEtatAppel::class,//todo: doit être le planning... Passer par un DTO...
+            'class' => AbsenceEtatAppel::class, //todo: doit être le planning... Passer par un DTO...
             'fetch_join_collection' => false,
-            'query' => function(QueryBuilder $qb, array $formData) {
+            'query' => static function (QueryBuilder $qb, array $formData) {
                 // $qb->innerJoin(Etudiant::class, 'etu', 'WITH', 'e.etudiant = etu.id')
                 //    ->where('etu.semestre = :semestre')
                 // ->andWhere('e.anneeUniversitaire = :anneeuniversitaire')
                 //->setParameter('semestre', $this->semestre->getId());
                 //  ->setParameter('anneeuniversitaire', $this->anneeUniversitaire->getId());
-
-
             },
         ]);
     }

@@ -21,7 +21,7 @@ class GroupeEtudiantColumnType extends PropertyColumnType
         }
         $html = '';
         foreach ($value as $gr) {
-            $html .= '<span class="badge bg-success me-1">' . $gr->getLibelle() . '</span>';
+            $html .= '<span class="badge bg-success me-1">'.$gr->getLibelle().'</span>';
         }
 
         return $html;

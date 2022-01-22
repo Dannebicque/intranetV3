@@ -79,8 +79,8 @@ class PersonnelDepartementTableType extends TableType
         $builder->addColumn('contact_personnel', ColumnType::class,
             [
                 'label' => 'table.contact_personnel',
-                'render' => function(Personnel $personnel) {
-                    return $personnel->getType() === Personnel::VACATAIRE ? $personnel->getEntreprise() : $personnel->getPosteInterne();
+                'render' => function (Personnel $personnel) {
+                    return Personnel::VACATAIRE === $personnel->getType() ? $personnel->getEntreprise() : $personnel->getPosteInterne();
                 },
             ]);
         $builder->addColumn('numero_harpege', PropertyColumnType::class,
@@ -90,7 +90,7 @@ class PersonnelDepartementTableType extends TableType
 
         $builder->setLoadUrl('administration_personnel_index');
         $builder->addColumn('links', WidgetColumnType::class, [
-            'build' => function(WidgetBuilder $builder, Personnel $s) use ($autoriseToManageAccess) {
+            'build' => function (WidgetBuilder $builder, Personnel $s) use ($autoriseToManageAccess) {
                 if (true === $autoriseToManageAccess) {
                     $builder->add('droits', StimulusButtonModalType::class, [
                         'class' => 'btn btn-warning-outline me-1',
@@ -123,7 +123,7 @@ class PersonnelDepartementTableType extends TableType
                         'id' => $s->getId(),
                     ],
                     'attr' => [
-                        'data-csrf' => $this->csrfToken->getToken('delete' . $s->getId()),
+                        'data-csrf' => $this->csrfToken->getToken('delete'.$s->getId()),
                     ],
                 ]);
             },
@@ -132,7 +132,7 @@ class PersonnelDepartementTableType extends TableType
         $builder->useAdapter(EntityAdapter::class, [
             'class' => Personnel::class,
             'fetch_join_collection' => true,
-            'query' => function(QueryBuilder $qb, array $formData) {
+            'query' => function (QueryBuilder $qb, array $formData) {
                 $qb
                     ->innerJoin(PersonnelDepartement::class, 'pf', 'WITH', 'pf.personnel = e.id')
                     ->where('pf.departement = :departement')
@@ -141,12 +141,12 @@ class PersonnelDepartementTableType extends TableType
                 if (isset($formData['search'])) {
                     $qb->andWhere('LOWER(e.nom) LIKE :search');
                     $qb->orWhere('LOWER(e.prenom) LIKE :search');
-                    $qb->setParameter('search', '%' . $formData['search'] . '%');
+                    $qb->setParameter('search', '%'.$formData['search'].'%');
                 }
 
                 if (isset($formData['type']) && '' !== $formData['type']) {
                     if (Personnel::ADMINISTRATIF === $formData['type']) {
-                        $q = 'e.statut = ' . $qb->expr()->literal(Personnel::ADMINISTRATIF) . ' OR e.statut = ' . $qb->expr()->literal(Personnel::TECHNICIEN) . ' OR e.statut = ' . $qb->expr()->literal(Personnel::ASSISTANTE);
+                        $q = 'e.statut = '.$qb->expr()->literal(Personnel::ADMINISTRATIF).' OR e.statut = '.$qb->expr()->literal(Personnel::TECHNICIEN).' OR e.statut = '.$qb->expr()->literal(Personnel::ASSISTANTE);
                         $qb->andWhere($q);
                     } else {
                         $qb->andWhere('e.typeUser = :type');

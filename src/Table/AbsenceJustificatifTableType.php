@@ -69,14 +69,14 @@ class AbsenceJustificatifTableType extends TableType
             'choices' => [
                 'Acceptée' => AbsenceJustificatif::ACCEPTE,
                 'Refusée' => AbsenceJustificatif::REFUSE,
-                'En attente' => AbsenceJustificatif::DEPOSE
+                'En attente' => AbsenceJustificatif::DEPOSE,
             ],
             'required' => false,
-            'placeholder' => 'Etat de la demande'
+            'placeholder' => 'Etat de la demande',
         ]);
         $builder->addFilter('groupe', EntityType::class, [
             'class' => Groupe::class,
-            'query_builder' => function(GroupeRepository $groupeRepository) {
+            'query_builder' => function (GroupeRepository $groupeRepository) {
                 return $groupeRepository->findBySemestreBuilder($this->semestre);
             },
             'choice_label' => 'display',
@@ -87,7 +87,7 @@ class AbsenceJustificatifTableType extends TableType
         $builder->addWidget('export', ExportDropdownType::class, [
             'route' => 'administration_absences_justificatif_semestre_export',
             'route_params' => [
-                'semestre' => $this->semestre->getId()
+                'semestre' => $this->semestre->getId(),
             ],
             'formats' => ['xlsx'],
         ]);
@@ -116,7 +116,7 @@ class AbsenceJustificatifTableType extends TableType
 
         $builder->addColumn('apercu', WidgetColumnType::class, [
             'label' => 'apercu',
-            'build' => function(WidgetBuilder $builder, AbsenceJustificatif $s) {
+            'build' => function (WidgetBuilder $builder, AbsenceJustificatif $s) {
                 $builder->add('voir.justificatif', StimulusButtonModalType::class, [
                     'class' => 'btn btn-outline btn-info',
                     'icon' => 'fas fa-eye',
@@ -130,7 +130,7 @@ class AbsenceJustificatifTableType extends TableType
         ]);
 
         $builder->addColumn('links', WidgetColumnType::class, [
-            'build' => function(WidgetBuilder $builder, AbsenceJustificatif $s) {
+            'build' => function (WidgetBuilder $builder, AbsenceJustificatif $s) {
                 switch ($s->getEtat()) {
                     case AbsenceJustificatif::ACCEPTE:
                         $builder->add('demande.acceptee', ButtonType::class, [
@@ -148,13 +148,13 @@ class AbsenceJustificatifTableType extends TableType
                         break;
                     case AbsenceJustificatif::DEPOSE:
                         $builder->add('accepter', ButtonType::class, [
-                            'class' => 'btn btn-outline btn-success me-1 justificatif-accepte bx_' . $s->getUuidString(),
+                            'class' => 'btn btn-outline btn-success me-1 justificatif-accepte bx_'.$s->getUuidString(),
                             'title' => 'Accepter la demande',
                             'icon' => 'fas fa-check',
                             'attr' => ['data-justificatif' => $s->getUuidString()],
                         ]);
                         $builder->add('refuser', ButtonType::class, [
-                            'class' => 'btn btn-outline btn-danger me-1 justificatif-refuse bx_' . $s->getUuidString(),
+                            'class' => 'btn btn-outline btn-danger me-1 justificatif-refuse bx_'.$s->getUuidString(),
                             'title' => 'Refuser la demande',
                             'icon' => 'fas fa-ban',
                             'attr' => ['data-justificatif' => $s->getUuidString()],
@@ -166,7 +166,7 @@ class AbsenceJustificatifTableType extends TableType
                     'route' => 'administration_absence_justificatif_delete',
                     'route_params' => ['id' => $s->getId()],
                     'attr' => [
-                        'data-csrf' => $this->csrfToken->getToken('delete' . $s->getUuidString()),
+                        'data-csrf' => $this->csrfToken->getToken('delete'.$s->getUuidString()),
                     ],
                 ]);
             },
@@ -175,7 +175,7 @@ class AbsenceJustificatifTableType extends TableType
         $builder->useAdapter(EntityAdapter::class, [
             'class' => AbsenceJustificatif::class,
             'fetch_join_collection' => false,
-            'query' => function(QueryBuilder $qb, array $formData) {
+            'query' => function (QueryBuilder $qb, array $formData) {
                 $qb->innerJoin(Etudiant::class, 'etu', 'WITH', 'e.etudiant = etu.id')
                     ->where('etu.semestre = :semestre') //todo: mettre e.semestre
                     ->andWhere('e.anneeUniversitaire = :anneeuniversitaire')
@@ -185,7 +185,7 @@ class AbsenceJustificatifTableType extends TableType
                 if (isset($formData['search'])) {
                     $qb->andWhere('LOWER(etu.nom) LIKE :search');
                     $qb->orWhere('LOWER(etu.prenom) LIKE :search');
-                    $qb->setParameter('search', '%' . $formData['search'] . '%');
+                    $qb->setParameter('search', '%'.$formData['search'].'%');
                 }
 
 //                if (isset($formData['from'])) {

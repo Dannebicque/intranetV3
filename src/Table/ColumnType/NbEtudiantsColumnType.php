@@ -20,8 +20,8 @@ class NbEtudiantsColumnType extends PropertyColumnType
         if (array_key_exists($value, $effectifs)) {
             return '<span class="badge bg-info"> '.$effectifs[$value].'</span> ';
         }
-        return '<span class="badge bg-warning">0</span>';
 
+        return '<span class="badge bg-warning">0</span>';
     }
 
     public function configureOptions(OptionsResolver $resolver): void

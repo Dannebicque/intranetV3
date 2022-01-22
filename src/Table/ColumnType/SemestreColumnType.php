@@ -21,7 +21,7 @@ class SemestreColumnType extends PropertyColumnType
         }
         $html = '';
         foreach ($value as $semestre) {
-            $html .= '<span class="badge bg-success me-1">' . $semestre->getLibelle() . '</span>';
+            $html .= '<span class="badge bg-success me-1">'.$semestre->getLibelle().'</span>';
         }
 
         return $html;

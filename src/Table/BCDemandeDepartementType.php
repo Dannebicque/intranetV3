@@ -87,7 +87,7 @@ class BCDemandeDepartementType extends TableType
         //todo: autres dates/étapes
 
         $builder->addColumn('links', WidgetColumnType::class, [
-            'build' => function(WidgetBuilder $builder, BCDemande $s) {
+            'build' => function (WidgetBuilder $builder, BCDemande $s) {
                 $builder->add('duplicate', RowDuplicateLinkType::class, [
                     'route' => 'administration_actualite_duplicate',
                     'route_params' => ['id' => $s->getId()],
@@ -111,7 +111,7 @@ class BCDemandeDepartementType extends TableType
                     'route' => 'administration_actualite_delete',
                     'route_params' => ['id' => $s->getId()],
                     'attr' => [
-                        'data-csrf' => $this->csrfToken->getToken('delete' . $s->getId()),
+                        'data-csrf' => $this->csrfToken->getToken('delete'.$s->getId()),
                     ],
                 ]);
             },
@@ -120,7 +120,7 @@ class BCDemandeDepartementType extends TableType
         $builder->useAdapter(EntityAdapter::class, [
             'class' => BCDemande::class,
             'fetch_join_collection' => false,
-            'query' => function(QueryBuilder $qb, array $formData) {
+            'query' => function (QueryBuilder $qb, array $formData) {
                 $qb->where('e.departement = :departement')
                     ->setParameter('departement', $this->departement->getId())
                     ->orderBy('e.updated', 'DESC');

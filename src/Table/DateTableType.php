@@ -82,7 +82,7 @@ class DateTableType extends TableType
         ]);
 
         $builder->addColumn('links', WidgetColumnType::class, [
-            'build' => function(WidgetBuilder $builder, Date $s) {
+            'build' => function (WidgetBuilder $builder, Date $s) {
                 $builder->add('duplicate', RowDuplicateLinkType::class, [
                     'route' => 'administration_date_duplicate',
                     'route_params' => ['id' => $s->getId()],
@@ -106,7 +106,7 @@ class DateTableType extends TableType
                     'route' => 'administration_date_delete',
                     'route_params' => ['id' => $s->getId()],
                     'attr' => [
-                        'data-csrf' => $this->csrfToken->getToken('delete' . $s->getId()),
+                        'data-csrf' => $this->csrfToken->getToken('delete'.$s->getId()),
                     ],
                 ]);
             },
@@ -116,7 +116,7 @@ class DateTableType extends TableType
         $builder->useAdapter(EntityAdapter::class, [
             'class' => Date::class,
             'fetch_join_collection' => false,
-            'query' => function(QueryBuilder $qb, array $formData) {
+            'query' => function (QueryBuilder $qb, array $formData) {
                 $qb->innerJoin('e.semestres', 'c')//récupération de la jointure dans la table dédiée
                 ->innerJoin(Semestre::class, 's', 'WITH', 'c.id = s.id')
                     ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
@@ -127,7 +127,7 @@ class DateTableType extends TableType
                 if (isset($formData['search'])) {
                     $qb->andWhere('LOWER(e.libelle) LIKE :search');
                     $qb->orWhere('LOWER(e.lieu) LIKE :search');
-                    $qb->setParameter('search', '%' . $formData['search'] . '%');
+                    $qb->setParameter('search', '%'.$formData['search'].'%');
                 }
 
                 if (isset($formData['from'])) {

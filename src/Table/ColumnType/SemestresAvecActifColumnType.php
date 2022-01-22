@@ -30,11 +30,10 @@ class SemestresAvecActifColumnType extends ColumnType
         $html = '';
         foreach ($rowData->getSemestres() as $semestre) {
             if ($semestre->getActif()) {
-                $html .= '<a class="btn btn-success me-1" href="'.$this->router->generate('administratif_enquete_semestre', ['semestre' => $semestre->getId()]).'">' . $semestre->getLibelle() . '</a>';
+                $html .= '<a class="btn btn-success me-1" href="'.$this->router->generate('administratif_enquete_semestre', ['semestre' => $semestre->getId()]).'">'.$semestre->getLibelle().'</a>';
             } else {
-                $html .= '<a href="#" disabled="disabled" class="btn btn-outline-default me-1">' . $semestre->getLibelle() . '</a>';
+                $html .= '<a href="#" disabled="disabled" class="btn btn-outline-default me-1">'.$semestre->getLibelle().'</a>';
             }
-
         }
 
         return $html;

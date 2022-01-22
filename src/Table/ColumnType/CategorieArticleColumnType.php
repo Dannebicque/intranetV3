@@ -20,7 +20,7 @@ class CategorieArticleColumnType extends PropertyColumnType
             return 'err';
         }
 
-        return '<span class="badge bg-info me-1">' . $value->getLibelle() . '</span>';
+        return '<span class="badge bg-info me-1">'.$value->getLibelle().'</span>';
     }
 
     public function configureOptions(OptionsResolver $resolver): void

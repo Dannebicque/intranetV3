@@ -22,15 +22,15 @@ use App\Components\Widget\Type\RowDuplicateLinkType;
 use App\Components\Widget\Type\RowEditLinkType;
 use App\Components\Widget\Type\RowShowLinkType;
 use App\Components\Widget\WidgetBuilder;
-use App\Form\Type\DatePickerType;
-use App\Table\ColumnType\IconeColumnType;
-use App\Table\ColumnType\SemestreColumnType;
 use App\Entity\Annee;
 use App\Entity\Borne;
 use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Semestre;
+use App\Form\Type\DatePickerType;
 use App\Form\Type\SearchType;
+use App\Table\ColumnType\IconeColumnType;
+use App\Table\ColumnType\SemestreColumnType;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
@@ -81,7 +81,7 @@ class BorneTableType extends TableType
         ]);
 
         $builder->addColumn('links', WidgetColumnType::class, [
-            'build' => function(WidgetBuilder $builder, Borne $s) {
+            'build' => function (WidgetBuilder $builder, Borne $s) {
                 $builder->add('duplicate', RowDuplicateLinkType::class, [
                     'route' => 'administration_borne_duplicate',
                     'route_params' => ['id' => $s->getId()],
@@ -105,7 +105,7 @@ class BorneTableType extends TableType
                     'route' => 'administration_borne_delete',
                     'route_params' => ['id' => $s->getId()],
                     'attr' => [
-                        'data-csrf' => $this->csrfToken->getToken('delete' . $s->getId()),
+                        'data-csrf' => $this->csrfToken->getToken('delete'.$s->getId()),
                     ],
                 ]);
             },
@@ -114,7 +114,7 @@ class BorneTableType extends TableType
         $builder->useAdapter(EntityAdapter::class, [
             'class' => Borne::class,
             'fetch_join_collection' => false,
-            'query' => function(QueryBuilder $qb, array $formData) {
+            'query' => function (QueryBuilder $qb, array $formData) {
                 $qb->innerJoin('e.semestres', 'c')//récupération de la jointure dans la table dédiée
                 ->innerJoin(Semestre::class, 's', 'WITH', 'c.id = s.id')
                     ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
@@ -124,7 +124,7 @@ class BorneTableType extends TableType
 
                 if (isset($formData['search'])) {
                     $qb->andWhere('LOWER(e.message) LIKE :search');
-                    $qb->setParameter('search', '%' . $formData['search'] . '%');
+                    $qb->setParameter('search', '%'.$formData['search'].'%');
                 }
 
                 if (isset($formData['from'])) {

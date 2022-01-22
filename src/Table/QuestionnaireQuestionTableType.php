@@ -62,9 +62,9 @@ class QuestionnaireQuestionTableType extends TableType
         $builder->addColumn('type', TypeQuestionColumnType::class, ['label' => 'table.type']);
         $builder->addColumn('questionnaireQuestionTags', ManyColumnType::class, [
             'label' => 'table.questionnaireQuestionTags',
-            'one_renderer' => function($elem) {
-                return '<span class="badge bg-primary me-1">' . $elem->getLibelle() . '</span>';
-            }
+            'one_renderer' => function ($elem) {
+                return '<span class="badge bg-primary me-1">'.$elem->getLibelle().'</span>';
+            },
         ]);
         $builder->addColumn('auteur', PersonnelColumnType::class, ['label' => 'table.auteur']);
         $builder->addColumn('obligatoire', BooleanColumnType::class, ['label' => 'table.obligatoire']);
@@ -72,7 +72,7 @@ class QuestionnaireQuestionTableType extends TableType
         $builder->setLoadUrl('sadm_questionnaire_question_index');
 
         $builder->addColumn('links', WidgetColumnType::class, [
-            'build' => function(WidgetBuilder $builder, QuestionnaireQuestion $s) {
+            'build' => function (WidgetBuilder $builder, QuestionnaireQuestion $s) {
                 $builder->add('duplicate', RowDuplicateLinkType::class, [
                     'route' => 'sadm_questionnaire_question_duplicate',
                     'route_params' => ['id' => $s->getId()],
@@ -98,7 +98,7 @@ class QuestionnaireQuestionTableType extends TableType
                         'id' => $s->getId(),
                     ],
                     'attr' => [
-                        'data-csrf' => $this->csrfToken->getToken('delete' . $s->getId()),
+                        'data-csrf' => $this->csrfToken->getToken('delete'.$s->getId()),
                     ],
                 ]);
             },
@@ -107,11 +107,11 @@ class QuestionnaireQuestionTableType extends TableType
         $builder->useAdapter(EntityAdapter::class, [
             'class' => QuestionnaireQuestion::class,
             'fetch_join_collection' => false,
-            'query' => function(QueryBuilder $qb, array $formData) {
+            'query' => function (QueryBuilder $qb, array $formData) {
                 if (isset($formData['search'])) {
                     $qb->andWhere('LOWER(e.titre) LIKE :search');
                     $qb->orWhere('LOWER(e.texte) LIKE :search');
-                    $qb->setParameter('search', '%' . $formData['search'] . '%');
+                    $qb->setParameter('search', '%'.$formData['search'].'%');
                 }
 
                 if (isset($formData['from'])) {

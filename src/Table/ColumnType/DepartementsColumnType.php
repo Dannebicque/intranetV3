@@ -21,8 +21,7 @@ class DepartementsColumnType extends ColumnType
         }
         $html = '';
         foreach ($rowData->getPersonnelDepartements() as $departement) {
-            $html .= '<span class="badge bg-primary me-1">' . $departement->getDepartement()?->getLibelle() . '</span>';
-
+            $html .= '<span class="badge bg-primary me-1">'.$departement->getDepartement()?->getLibelle().'</span>';
         }
 
         return $html;

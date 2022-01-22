@@ -70,23 +70,23 @@ class PersonnelTableType extends TableType
         $builder->addColumn('nom', PropertyColumnType::class,
             ['label' => 'table.nom', 'order' => 'ASC']);
         $builder->addColumn('prenom', PropertyColumnType::class,
-            ['label' => 'table.prenom',]);
+            ['label' => 'table.prenom']);
         $builder->addColumn('type', TypePersonnelColumnType::class,
-            ['label' => 'table.typeUser',]);
+            ['label' => 'table.typeUser']);
         $builder->addColumn('departements', DepartementsColumnType::class,
             [
                 'label' => 'table.departements',
             ]);
         $builder->addColumn('numero_harpege', PropertyColumnType::class,
-            ['label' => 'table.numero_harpege',]);
+            ['label' => 'table.numero_harpege']);
         $builder->addColumn('username', PropertyColumnType::class,
-            ['label' => 'table.username',]);
+            ['label' => 'table.username']);
         $builder->addColumn('mail_univ', PropertyColumnType::class,
-            ['label' => 'table.mail_univ',]);
+            ['label' => 'table.mail_univ']);
 
         $builder->setLoadUrl('sa_rh_index');
         $builder->addColumn('links', WidgetColumnType::class, [
-            'build' => function(WidgetBuilder $builder, Personnel $s) {
+            'build' => function (WidgetBuilder $builder, Personnel $s) {
                 $builder->add('show', RowShowLinkType::class, [
                     'route' => 'user_profil',
                     'route_params' => [
@@ -106,7 +106,7 @@ class PersonnelTableType extends TableType
                     'route' => 'administration_personnel_delete',
                     'route_params' => ['id' => $s->getId()],
                     'attr' => [
-                        'data-csrf' => $this->csrfToken->getToken('delete' . $s->getId()),
+                        'data-csrf' => $this->csrfToken->getToken('delete'.$s->getId()),
                     ],
                 ]);
             },
@@ -115,11 +115,11 @@ class PersonnelTableType extends TableType
         $builder->useAdapter(EntityAdapter::class, [
             'class' => Personnel::class,
             'fetch_join_collection' => true,
-            'query' => function(QueryBuilder $qb, array $formData) {
+            'query' => function (QueryBuilder $qb, array $formData) {
                 if (isset($formData['search'])) {
                     $qb->andWhere('LOWER(e.nom) LIKE :search');
                     $qb->orWhere('LOWER(e.prenom) LIKE :search');
-                    $qb->setParameter('search', '%' . $formData['search'] . '%');
+                    $qb->setParameter('search', '%'.$formData['search'].'%');
                 }
 
                 if (isset($formData['departement'])) {
@@ -130,7 +130,7 @@ class PersonnelTableType extends TableType
 
                 if (isset($formData['type']) && '' !== $formData['type']) {
                     if (Personnel::ADMINISTRATIF === $formData['type']) {
-                        $q = 'e.statut = ' . $qb->expr()->literal(Personnel::ADMINISTRATIF) . ' OR e.statut = ' . $qb->expr()->literal(Personnel::TECHNICIEN) . ' OR e.statut = ' . $qb->expr()->literal(Personnel::ASSISTANTE);
+                        $q = 'e.statut = '.$qb->expr()->literal(Personnel::ADMINISTRATIF).' OR e.statut = '.$qb->expr()->literal(Personnel::TECHNICIEN).' OR e.statut = '.$qb->expr()->literal(Personnel::ASSISTANTE);
                         $qb->andWhere($q);
                     } else {
                         $qb->andWhere('e.typeUser = :type');

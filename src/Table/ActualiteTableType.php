@@ -65,11 +65,11 @@ class ActualiteTableType extends TableType
             'order' => 'DESC',
             'format' => 'd/m/Y',
             'label' => 'table.updated',
-            'translation_domain' => 'messages'
+            'translation_domain' => 'messages',
         ]);
 
         $builder->addColumn('links', WidgetColumnType::class, [
-            'build' => function(WidgetBuilder $builder, Actualite $s) {
+            'build' => function (WidgetBuilder $builder, Actualite $s) {
                 $builder->add('duplicate', RowDuplicateLinkType::class, [
                     'route' => 'administration_actualite_duplicate',
                     'route_params' => ['id' => $s->getId()],
@@ -93,7 +93,7 @@ class ActualiteTableType extends TableType
                     'route' => 'administration_actualite_delete',
                     'route_params' => ['id' => $s->getId()],
                     'attr' => [
-                        'data-csrf' => $this->csrfToken->getToken('delete' . $s->getId()),
+                        'data-csrf' => $this->csrfToken->getToken('delete'.$s->getId()),
                     ],
                 ]);
             },
@@ -102,7 +102,7 @@ class ActualiteTableType extends TableType
         $builder->useAdapter(EntityAdapter::class, [
             'class' => Actualite::class,
             'fetch_join_collection' => false,
-            'query' => function(QueryBuilder $qb, array $formData) {
+            'query' => function (QueryBuilder $qb, array $formData) {
                 $qb->where('e.departement = :departement')
                     ->setParameter('departement', $this->departement->getId())
                     ->orderBy('e.updated', 'DESC');
@@ -110,7 +110,7 @@ class ActualiteTableType extends TableType
                 if (isset($formData['search'])) {
                     $qb->andWhere('LOWER(e.titre) LIKE :search');
                     $qb->orWhere('LOWER(e.texte) LIKE :search');
-                    $qb->setParameter('search', '%' . $formData['search'] . '%');
+                    $qb->setParameter('search', '%'.$formData['search'].'%');
                 }
 
                 if (isset($formData['from'])) {

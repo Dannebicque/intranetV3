@@ -28,15 +28,18 @@ class TypeQuestionColumnType extends PropertyColumnType
         $this->translator = $translator;
     }
 
+    /**
+     * @throws \App\Components\Questionnaire\Exceptions\TypeQuestionNotFoundException
+     */
     public function renderProperty($value, array $options): string
     {
         if (array_key_exists($value, $this->questionnaireRegistry->getTypeQuestions())) {
             $obj = $this->questionnaireRegistry->getTypeQuestion($value);
 
-            return '<span class="badge ' . $obj::BADGE . '">' . $this->translator->trans('label.' . $obj::LABEL) . '</span>';
+            return '<span class="badge '.$obj::BADGE.'">'.$this->translator->trans('label.'.$obj::LABEL).'</span>';
         }
 
-        return '<span class="badge bg-primary">' . $value . '</span>';
+        return '<span class="badge bg-primary">'.$value.'</span>';
     }
 
     public function configureOptions(OptionsResolver $resolver): void

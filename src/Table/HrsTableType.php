@@ -59,7 +59,7 @@ class HrsTableType extends TableType
             'choice_label' => 'libelle',
             'required' => false,
             'placeholder' => 'Filtrer par type de HRS/Prime',
-            'query_builder' => function(TypeHrsRepository $typeHrsRepository) {
+            'query_builder' => function (TypeHrsRepository $typeHrsRepository) {
                 return $typeHrsRepository->findAllBuilder();
             },
         ]);
@@ -68,7 +68,7 @@ class HrsTableType extends TableType
             'choice_label' => 'displayPr',
             'required' => false,
             'placeholder' => 'Filtrer par personnel',
-            'query_builder' => function(PersonnelRepository $personnelRepository) {
+            'query_builder' => function (PersonnelRepository $personnelRepository) {
                 return $personnelRepository->findByDepartementBuilder($this->departement);
             },
         ]);
@@ -89,7 +89,7 @@ class HrsTableType extends TableType
             ['label' => 'table.commentaire', 'translation_domain' => 'messages']);
 
         $builder->addColumn('links', WidgetColumnType::class, [
-            'build' => function(WidgetBuilder $builder, Hrs $s) {
+            'build' => function (WidgetBuilder $builder, Hrs $s) {
                 $builder->add('duplicate', RowDuplicateLinkType::class, [
                     'route' => 'administration_hrs_duplicate',
                     'route_params' => ['id' => $s->getId()],
@@ -114,7 +114,7 @@ class HrsTableType extends TableType
                     'route' => 'administration_hrs_delete',
                     'route_params' => ['id' => $s->getId()],
                     'attr' => [
-                        'data-csrf' => $this->csrfToken->getToken('delete' . $s->getId()),
+                        'data-csrf' => $this->csrfToken->getToken('delete'.$s->getId()),
                     ],
                 ]);
             },
@@ -123,7 +123,7 @@ class HrsTableType extends TableType
         $builder->useAdapter(EntityAdapter::class, [
             'class' => Hrs::class,
             'fetch_join_collection' => false,
-            'query' => function(QueryBuilder $qb, array $formData) {
+            'query' => function (QueryBuilder $qb, array $formData) {
                 $qb->where('e.departement = :departement')
                     ->andWhere('e.annee = :annee')
                     ->setParameter('departement', $this->departement->getId())
@@ -132,7 +132,7 @@ class HrsTableType extends TableType
 
                 if (isset($formData['search'])) {
                     $qb->andWhere('LOWER(e.libelle) LIKE :search');
-                    $qb->setParameter('search', '%' . $formData['search'] . '%');
+                    $qb->setParameter('search', '%'.$formData['search'].'%');
                 }
 
                 if (isset($formData['type']) && '' !== $formData['type']) {

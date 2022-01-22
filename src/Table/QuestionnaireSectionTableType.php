@@ -48,7 +48,7 @@ class QuestionnaireSectionTableType extends TableType
         $builder->setLoadUrl('sadm_questionnaire_section_index');
 
         $builder->addColumn('links', WidgetColumnType::class, [
-            'build' => function(WidgetBuilder $builder, QuestionnaireSection $s) {
+            'build' => function (WidgetBuilder $builder, QuestionnaireSection $s) {
 //                $builder->add('duplicate', RowDuplicateLinkType::class, [
 //                    'route' => 'adm_questionnaire_section_duplicate',
 //                    'route_params' => ['id' => $s->getId()],
@@ -76,7 +76,7 @@ class QuestionnaireSectionTableType extends TableType
                     'attr' => [
                         'data-href' => 'sadm_questionnaire_section_delete',
                         'data-uuid' => $s->getId(),
-                        'data-csrf' => $this->csrfToken->getToken('delete' . $s->getId()),
+                        'data-csrf' => $this->csrfToken->getToken('delete'.$s->getId()),
                     ],
                 ]);
             },
@@ -85,11 +85,11 @@ class QuestionnaireSectionTableType extends TableType
         $builder->useAdapter(EntityAdapter::class, [
             'class' => QuestionnaireSection::class,
             'fetch_join_collection' => false,
-            'query' => function(QueryBuilder $qb, array $formData) {
+            'query' => function (QueryBuilder $qb, array $formData) {
                 if (isset($formData['search'])) {
                     $qb->andWhere('LOWER(e.titre) LIKE :search');
                     $qb->orWhere('LOWER(e.texte) LIKE :search');
-                    $qb->setParameter('search', '%' . $formData['search'] . '%');
+                    $qb->setParameter('search', '%'.$formData['search'].'%');
                 }
 
                 if (isset($formData['from'])) {

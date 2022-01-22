@@ -24,13 +24,13 @@ use App\Components\Widget\Type\RowDuplicateLinkType;
 use App\Components\Widget\Type\RowEditLinkType;
 use App\Components\Widget\Type\RowShowLinkType;
 use App\Components\Widget\WidgetBuilder;
-use App\Form\Type\DatePickerType;
-use App\Table\ColumnType\CategorieArticleColumnType;
-use App\Table\ColumnType\SemestreColumnType;
 use App\Entity\Article;
 use App\Entity\ArticleCategorie;
 use App\Entity\Departement;
+use App\Form\Type\DatePickerType;
 use App\Form\Type\SearchType;
+use App\Table\ColumnType\CategorieArticleColumnType;
+use App\Table\ColumnType\SemestreColumnType;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
@@ -65,7 +65,7 @@ class ArticleTableType extends TableType
         $builder->addWidget('export', ButtonDropdownType::class, [
             'icon' => 'fas fa-download',
             'attr' => ['data-toggle' => 'dropdown'],
-            'build' => function(WidgetBuilder $builder) {
+            'build' => function (WidgetBuilder $builder) {
                 $builder->add('pdf', LinkType::class, [
                     'route' => 'administration_article_export',
                     'route_params' => ['_format' => 'pdf'],
@@ -95,7 +95,7 @@ class ArticleTableType extends TableType
         ]);
 
         $builder->addColumn('links', WidgetColumnType::class, [
-            'build' => function(WidgetBuilder $builder, Article $s) {
+            'build' => function (WidgetBuilder $builder, Article $s) {
                 $builder->add('duplicate', RowDuplicateLinkType::class, [
                     'route' => 'administration_article_duplicate',
                     'route_params' => ['id' => $s->getId()],
@@ -121,7 +121,7 @@ class ArticleTableType extends TableType
                         'id' => $s->getId(),
                     ],
                     'attr' => [
-                        'data-csrf' => $this->csrfToken->getToken('delete' . $s->getId()),
+                        'data-csrf' => $this->csrfToken->getToken('delete'.$s->getId()),
                     ],
                 ]);
             },
@@ -132,7 +132,7 @@ class ArticleTableType extends TableType
         $builder->useAdapter(EntityAdapter::class, [
             'class' => Article::class,
             'fetch_join_collection' => false,
-            'query' => function(QueryBuilder $qb, array $formData) {
+            'query' => function (QueryBuilder $qb, array $formData) {
                 $qb
                     ->innerJoin(ArticleCategorie::class, 'c', 'WITH', 'c.id = e.categorie')
                     ->where('c.departement = :departement')
@@ -141,7 +141,7 @@ class ArticleTableType extends TableType
                 if (isset($formData['search'])) {
                     $qb->andWhere('LOWER(e.titre) LIKE :search');
                     $qb->orWhere('LOWER(e.texte) LIKE :search');
-                    $qb->setParameter('search', '%' . $formData['search'] . '%');
+                    $qb->setParameter('search', '%'.$formData['search'].'%');
                 }
 
                 if (isset($formData['from'])) {

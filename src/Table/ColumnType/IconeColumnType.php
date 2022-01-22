@@ -16,7 +16,7 @@ class IconeColumnType extends PropertyColumnType
 {
     public function renderProperty($value, array $options): string
     {
-        return '<i class="' . $value . '"></i>';
+        return '<i class="'.$value.'"></i>';
     }
 
     public function configureOptions(OptionsResolver $resolver): void

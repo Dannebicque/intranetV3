@@ -54,7 +54,7 @@ class AbsenceListeTableType extends TableType
         $builder->addFilter('search', SearchType::class);
         $builder->addFilter('groupe', EntityType::class, [
             'class' => Groupe::class,
-            'query_builder' => function(GroupeRepository $groupeRepository) {
+            'query_builder' => function (GroupeRepository $groupeRepository) {
                 return $groupeRepository->findBySemestreBuilder($this->semestre);
             },
             'choice_label' => 'display',
@@ -65,11 +65,11 @@ class AbsenceListeTableType extends TableType
         $builder->addWidget('export', ExportDropdownType::class, [
             'route' => 'administration_rattrapage_export',
             'route_params' => [
-                'semestre' => $this->semestre->getId()
+                'semestre' => $this->semestre->getId(),
             ],
         ]);
 
-//todo: doit utiliser un dto...
+        //todo: doit utiliser un dto...
 
         $builder->addColumn('etudiant', EtudiantColumnType::class,
             ['label' => 'table.etudiant']);
@@ -91,7 +91,7 @@ class AbsenceListeTableType extends TableType
 
         $builder->addColumn('apercu', WidgetColumnType::class, [
             'label' => 'apercu',
-            'build' => function(WidgetBuilder $builder, Absence $s) {
+            'build' => function (WidgetBuilder $builder, Absence $s) {
                 $builder->add('voir.justificatif', StimulusButtonModalType::class, [
                     'class' => 'btn btn-outline btn-info',
                     'icon' => 'fas fa-eye',
@@ -105,12 +105,12 @@ class AbsenceListeTableType extends TableType
         ]);
 
         $builder->addColumn('links', WidgetColumnType::class, [
-            'build' => function(WidgetBuilder $builder, Absence $s) {
+            'build' => function (WidgetBuilder $builder, Absence $s) {
                 $builder->add('profil', RowShowLinkType::class, [
                     'attr' => [
                         'data-href' => 'administration_rattrapage_delete',
                         'data-uuid' => $s->getUuidString(),
-                        'data-csrf' => $this->csrfToken->getToken('delete' . $s->getUuidString()),
+                        'data-csrf' => $this->csrfToken->getToken('delete'.$s->getUuidString()),
                     ],
                 ]);
             },
@@ -119,7 +119,7 @@ class AbsenceListeTableType extends TableType
         $builder->useAdapter(EntityAdapter::class, [
             'class' => Etudiant::class,
             'fetch_join_collection' => false,
-            'query' => function(QueryBuilder $qb, array $formData) {
+            'query' => function (QueryBuilder $qb, array $formData) {
                 $qb->where('e.semestre = :semestre')
                     ->andWhere('e.anneeUniversitaire = :anneeuniversitaire')
                     ->setParameter('semestre', $this->semestre->getId())
@@ -128,7 +128,7 @@ class AbsenceListeTableType extends TableType
                 if (isset($formData['search'])) {
                     $qb->andWhere('LOWER(etu.nom) LIKE :search');
                     $qb->orWhere('LOWER(etu.prenom) LIKE :search');
-                    $qb->setParameter('search', '%' . $formData['search'] . '%');
+                    $qb->setParameter('search', '%'.$formData['search'].'%');
                 }
 
                 if (isset($formData['groupe']) && '' !== trim($formData['groupe'])) {

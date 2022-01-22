@@ -84,7 +84,7 @@ class RattrapageTableType extends TableType
         $builder->addWidget('export', ExportDropdownType::class, [
             'route' => 'administration_rattrapage_export',
             'route_params' => [
-                'semestre' => $this->semestre->getId()
+                'semestre' => $this->semestre->getId(),
             ],
         ]);
 

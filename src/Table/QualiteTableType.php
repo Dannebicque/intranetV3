@@ -20,11 +20,11 @@ use App\Components\Widget\Type\RowLinkType;
 use App\Components\Widget\Type\RowShowLinkType;
 use App\Components\Widget\WidgetBuilder;
 use App\Entity\Annee;
+use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\QuestionnaireQualite;
 use App\Entity\Semestre;
 use App\Form\Type\DatePickerType;
-use App\Entity\Departement;
 use App\Repository\SemestreRepository;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -48,7 +48,7 @@ class QualiteTableType extends TableType
             ['class' => Semestre::class,
                 'choice_label' => 'libelle',
                 'required' => false,
-                'query_builder' => function(SemestreRepository $semestreRepository) {
+                'query_builder' => function (SemestreRepository $semestreRepository) {
                     return $semestreRepository->findByDepartementBuilder($this->departement);
                 },
         ]);
@@ -60,7 +60,7 @@ class QualiteTableType extends TableType
             ['label' => 'table.semestre']);
 
         $builder->addColumn('links', WidgetColumnType::class, [
-            'build' => function(WidgetBuilder $builder, QuestionnaireQualite $s) {
+            'build' => function (WidgetBuilder $builder, QuestionnaireQualite $s) {
                 $builder->add('apercu', RowLinkType::class, [
                     'route' => 'administration_qualite_apercu',
                     'icon' => 'fas fa-eye',
@@ -83,7 +83,7 @@ class QualiteTableType extends TableType
         $builder->useAdapter(EntityAdapter::class, [
             'class' => QuestionnaireQualite::class,
             'fetch_join_collection' => false,
-            'query' => function(QueryBuilder $qb, array $formData) {
+            'query' => function (QueryBuilder $qb, array $formData) {
                 $qb
                     ->innerJoin(Semestre::class, 's', 'WITH', 'e.semestre = s.id')
                     ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
