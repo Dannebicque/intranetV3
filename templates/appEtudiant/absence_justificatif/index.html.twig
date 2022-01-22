@@ -25,15 +25,21 @@
             {% for absence_justificatif in absence_justificatifs %}
                 <tr id="ligne_{{ absence_justificatif.uuidString }}">
 
-                    <td>{{ absence_justificatif.dateHeureDebut ? absence_justificatif.dateHeureDebut|format_date('long') :
-                        '' }}
-                        , {{ absence_justificatif.dateHeureDebut ?
-                        absence_justificatif.dateHeureDebut|format_time('short') : '' }}</td>
-                    <td>{{ absence_justificatif.dateHeureFin ? absence_justificatif.dateHeureFin|format_date('long') : '' }}
-                        , {{ absence_justificatif.dateHeureFin ? absence_justificatif
-                        .dateHeureFin|format_time('short') : '' }}</td>
+                    <td>
+                        {{ absence_justificatif.dateHeureDebut ? absence_justificatif.dateHeureDebut|format_datetime
+                            ('long', 'short') : '' }}
+                    </td>
+                    <td>
+                        {{ absence_justificatif.dateHeureFin ? absence_justificatif.dateHeureFin|format_datetime
+                            ('long', 'short') : '' }}
+                    </td>
                     <td>{{ absence_justificatif.motif }}</td>
-                    <td>{{ absence_justificatif.etatLong }}</td>
+                    <td>
+                        <span class="badge bg-{% if absence_justificatif.etat == 'R' %}danger{% elseif
+                absence_justificatif.etat == 'A' %}success{% else %}info{% endif %}">
+                        {{ absence_justificatif.etatLong }}
+                    </span>
+                    </td>
                     <td>{{ absence_justificatif.created ? absence_justificatif.created|format_datetime('long', 'short') : '' }}</td>
                     <td>
                         <a href="{{ asset('upload/justificatif/'~absence_justificatif.fichierName) }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
