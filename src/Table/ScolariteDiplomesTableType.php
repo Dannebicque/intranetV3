@@ -14,6 +14,7 @@ use App\Components\Table\Column\BooleanColumnType;
 use App\Components\Table\Column\EntityColumnType;
 use App\Components\Table\Column\PropertyColumnType;
 use App\Components\Table\Column\WidgetColumnType;
+use App\Components\Table\DTO\Table;
 use App\Components\Table\TableBuilder;
 use App\Components\Table\TableType;
 use App\Components\Widget\Type\RowShowLinkType;
@@ -21,6 +22,8 @@ use App\Components\Widget\WidgetBuilder;
 use App\Entity\Diplome;
 use App\Entity\TypeDiplome;
 use App\Form\Type\SearchType;
+use App\Repository\DiplomeRepository;
+use App\Repository\TypeDiplomeRepository;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -31,10 +34,13 @@ class ScolariteDiplomesTableType extends TableType
     {
         $builder->addFilter('search', SearchType::class);
         $builder->addFilter('diplome', EntityType::class,
-            options: [
+            [
                 'class' => Diplome::class,
                 'choice_label' => 'displayCourt',
                 'required' => false,
+                'query_builder' => function (DiplomeRepository $er) {
+                    return $er->findAllBuilder();
+                },
                 'placeholder' => 'filtre.diplome',
                 'translation_domain' => 'table',
             ]);
@@ -42,13 +48,16 @@ class ScolariteDiplomesTableType extends TableType
             [
                 'class' => TypeDiplome::class,
                 'choice_label' => 'libelle',
+                'query_builder' => function (TypeDiplomeRepository $er) {
+                    return $er->findAllBuilder();
+                },
                 'required' => false,
                 'placeholder' => 'filtre.typeDiplome',
                 'translation_domain' => 'table',
             ]);
 
         $builder->addColumn('typeDiplome', EntityColumnType::class,
-            ['label' => 'table.typeDiplome', 'display_field' => 'libelle']);
+            ['label' => 'table.typeDiplome', 'display_field' => 'libelle', 'order' => Table::SORT_ASCENDING]);
         $builder->addColumn('libelle', PropertyColumnType::class, ['label' => 'table.libelle']);
         $builder->addColumn('actif', BooleanColumnType::class, ['label' => 'table.actif']);
         $builder->addColumn('anneeUniversitaire', EntityColumnType::class,
@@ -71,6 +80,8 @@ class ScolariteDiplomesTableType extends TableType
             'class' => Diplome::class,
             'fetch_join_collection' => false,
             'query' => function (QueryBuilder $qb, array $formData) {
+                $qb->join('e.typeDiplome', 't');
+
                 if (isset($formData['diplome'])) {
                     $qb->andWhere('e.id = :diplome');
                     $qb->setParameter('diplome', $formData['diplome']);
