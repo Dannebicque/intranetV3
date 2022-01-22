@@ -18,13 +18,14 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/settings', name: 'settings_')]
 class SettingsController extends BaseController
 {
+    /**
+     * @throws \JsonException
+     */
     #[Route('/change-annee-universitaire', name: 'change_annee_universitaire', options: ['expose' => true], methods: ['POST'])]
     public function changeAnneeUniversitaire(
         AnneeUniversitaireRepository $anneeUniversitaireRepository,
         Request $request
     ): Response {
-        $this->denyAccessUnlessGranted('ROLE_PERMANENT');
-
         $parametersAsArray = JsonRequest::getFromRequest($request);
 
         if (array_key_exists('annee_universitaire', $parametersAsArray)) {
@@ -40,6 +41,9 @@ class SettingsController extends BaseController
         return $this->json(false);
     }
 
+    /**
+     * @throws \JsonException
+     */
     #[Route('/change-configuration-personnel', name: 'configuration_personnel', options: ['expose' => true], methods: ['POST'])]
     public function changeConfigurationPersonnel(
         Request $request
@@ -56,6 +60,7 @@ class SettingsController extends BaseController
 
             return $this->json(true);
         }
+
         return $this->json(false);
     }
 }
