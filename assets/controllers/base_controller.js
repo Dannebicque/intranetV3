@@ -20,8 +20,9 @@ export default class extends Controller {
       body: new URLSearchParams(new FormData(form))
     })
       .then(async (response) => {
-        fileName = response.headers.get('content-disposition').split('=')[1].replace('"', '').replace('"', '')
         if (response.headers.get('Content-Type') !== 'application/json' && response.headers.get('Content-Type') !== 'application/html') {
+          fileName = response.headers.get('content-disposition').split('=')[1].replace('"', '').replace('"', '')
+
           await response.blob().then(blob =>
             URL.createObjectURL(blob)
           )

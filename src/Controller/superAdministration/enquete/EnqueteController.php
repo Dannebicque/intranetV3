@@ -26,16 +26,18 @@ use App\Repository\QuestionnaireEtudiantReponseRepository;
 use App\Repository\QuestionnaireEtudiantRepository;
 use App\Repository\QuestionnaireQuestionnaireSectionRepository;
 use App\Table\EnqueteQualiteDiplomesTableType;
-use App\Utils\Tools;
 use Carbon\Carbon;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route("/administratif/enquete")]
+#[Route('/administratif/enquete')]
 class EnqueteController extends BaseController
 {
-    #[Route("/", name: "administratif_enquete_index", options: ['expose' => true])]
+    /**
+     * @throws \JsonException
+     */
+    #[Route('/', name: 'administratif_enquete_index', options: ['expose' => true])]
     public function index(Request $request, EtudiantRepository $etudiantRepository): Response
     {
         $effectifs = $etudiantRepository->statistiquesEtudiants();
@@ -53,26 +55,25 @@ class EnqueteController extends BaseController
         ]);
     }
 
-    #[Route("/configuration/{id}", name: "administratif_enquete_modal_config", options: ['expose' => true], methods: ['GET'])]
+    #[Route('/configuration/{id}', name: 'administratif_enquete_modal_config', options: ['expose' => true], methods: ['GET'])]
     public function modalConfig(
         Questionnaire $questionnaire,
-        QuestionnaireQualite $questionnaireQualite): Response
-    {
+        QuestionnaireQualite $questionnaireQualite
+    ): Response {
         $questionnaire->createQuestionnaire(QuestionnaireQualite::class,
             (new QuestionnaireQualiteAdapter($questionnaireQualite))->getQuestionnaire());
 
-        $data= [];
+        $data = [];
         foreach ($questionnaireQualite->getSections() as $section) {
             $d = $questionnaire->getOnlySectionConfigurable((new SectionQualiteEntityAdapter($section))->getSection());
-            if ($d !== null) {
+            if (null !== $d) {
                 $data[] = $d;
             }
         }
 
-
         return $this->render('super-administration/enquete/_modalConfig.html.twig', [
             'questionnaireQualite' => $questionnaireQualite,
-            'datas' => $data
+            'datas' => $data,
         ]);
     }
 
@@ -82,24 +83,28 @@ class EnqueteController extends BaseController
         Request $request,
         QuestionnaireQualite $questionnaireQualite
     ): Response {
-        $questionnaireQualite->setDateOuverture(Carbon::createFromFormat('Y-m-d\TH:i', $request->request->get('dateOuverture')));
-        $questionnaireQualite->setDateFermeture(Carbon::createFromFormat('Y-m-d\TH:i', $request->request->get('dateFermeture')));
-
+        $questionnaireQualite->setDateOuverture(Carbon::createFromFormat('Y-m-d\TH:i',
+            $request->request->get('dateOuverture')));
+        $questionnaireQualite->setDateFermeture(Carbon::createFromFormat('Y-m-d\TH:i',
+            $request->request->get('dateFermeture')));
         $sections = $request->request->get('sections');
 
-        foreach ($sections as $key => $values) {
-            $sect = $questionnaireQuestionnaireSectionRepository->find($key);
-            if ($sect !== null) {
-                $sect->setConfig(['valeurs' =>$values]);//todo: a voir si d'autres clés ensuite...
+        if (null !== $sections) {
+            foreach ($sections as $key => $values) {
+                $sect = $questionnaireQuestionnaireSectionRepository->findOneBy(['questionnaireQualite' => $questionnaireQualite->getId(), 'section' => $key]);
+                $sect?->setConfig(['valeurs' => $values]);
             }
         }
-
         $this->entityManager->flush();
 
         return $this->json(true);
     }
 
-    #[Route("/questionnaire/semestre/{semestre}", name: "administratif_enquete_semestre")]
+    /**
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Doctrine\ORM\NoResultException
+     */
+    #[Route('/questionnaire/semestre/{semestre}', name: 'administratif_enquete_semestre')]
     public function semestre(
         EtudiantRepository $etudiantRepository,
         QuestionnaireEtudiantRepository $quizzEtudiantRepository,
@@ -120,7 +125,7 @@ class EnqueteController extends BaseController
         ]);
     }
 
-    #[Route("/questionnaire/duplicate/{questionnaire}", name: "administratif_enquete_duplicate")]
+    #[Route('/questionnaire/duplicate/{questionnaire}', name: 'administratif_enquete_duplicate')]
     public function duplicate(QuestionnaireQualite $questionnaire): Response
     {
         $newQuestionnaireQualite = clone $questionnaire;
@@ -130,7 +135,7 @@ class EnqueteController extends BaseController
             $newQuestionnaireQualite->addSection($nSection);
             if (null !== $nSection->getConfig()) {
                 $t = explode('-', $nSection->getConfig());
-                $nSection->setConfig($t[0] . '-');
+                $nSection->setConfig($t[0].'-');
             }
             $nSection->setQuestionnaireQualite($newQuestionnaireQualite);
             $this->entityManager->persist($nSection);
@@ -142,7 +147,7 @@ class EnqueteController extends BaseController
             ['id' => $newQuestionnaireQualite->getId()]);
     }
 
-    #[Route("/questionnaire/apercu/{questionnaireQualite}", name: "administratif_enquete_show")]
+    #[Route('/questionnaire/apercu/{questionnaireQualite}', name: 'administratif_enquete_show')]
     public function show(
         Request $request,
         Questionnaire $questionnaire,
@@ -164,6 +169,7 @@ class EnqueteController extends BaseController
 
         if ($questionnaire->handleRequest($request)) {
             $questionnaire->setQuestionsForSection();
+
             return $questionnaire->wizardPage();
         }
 
@@ -173,8 +179,10 @@ class EnqueteController extends BaseController
         ]);
     }
 
-
-    #[Route("/questionnaire/export/{questionnaire}", name: "administratif_enquete_export")]
+    /**
+     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     */
+    #[Route('/questionnaire/export/{questionnaire}', name: 'administratif_enquete_export')]
     public function export(
         MyEnquete $myEnquete,
         PrevisionnelManager $previsionnelManager,
@@ -187,16 +195,16 @@ class EnqueteController extends BaseController
         return $myEnquete->exportExcel($questionnaire, $previsionnel);
     }
 
-    #[Route("/questionnaire/{questionnaire}", name: "administratif_enquete_delete", methods: ["DELETE"])]
+    #[Route('/questionnaire/{questionnaire}', name: 'administratif_enquete_delete', methods: ['DELETE'])]
     public function delete(
         QuestionnaireEtudiantReponseRepository $quizzEtudiantReponseRepository,
         Request $request,
         QuestionnaireQualite $questionnaire
     ): Response {
         $id = $questionnaire->getId();
-        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
             //suppression des réponses
-            $reponses = $reponsesEtudiants = $quizzEtudiantReponseRepository->findByQuestionnaire($questionnaire);
+            $reponses = $quizzEtudiantReponseRepository->findByQuestionnaire($questionnaire);
             foreach ($reponses as $reponse) {
                 $this->entityManager->remove($reponse);
             }
@@ -214,14 +222,14 @@ class EnqueteController extends BaseController
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    #[Route("/questionnaire/ajax/{section}", name: "administratif_enquete_config_ajax_save", options: ["expose" => true])]
+    #[Route('/questionnaire/ajax/{section}', name: 'administratif_enquete_config_ajax_save', options: ['expose' => true])]
     public function saveConfig(
         Request $request,
         QuestionnaireQuestionnaireSection $section
     ): Response {
         $previs = $request->request->get('previs');
         $str = implode(',', $previs);
-        $section->setConfig('BCL:MATIERE-' . $str);
+        $section->setConfig('BCL:MATIERE-'.$str);
         $this->entityManager->flush();
 
         return $this->json(true);
