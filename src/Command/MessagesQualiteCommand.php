@@ -48,14 +48,15 @@ class MessagesQualiteCommand extends Command
         /** @var \App\Entity\QuestionnaireQualite $questionnaire */
         foreach ($questionnaires as $questionnaire) {
             $dests = [
-                $questionnaire->getSemestre()->getDiplome()->getAssistantDiplome()->getMailUniv(),
-                $questionnaire->getSemestre()->getDiplome()->getResponsableDiplome()->getMailUniv(),
+                $questionnaire->getSemestre()?->getDiplome()?->getAssistantDiplome()?->getMailUniv(),
+                $questionnaire->getSemestre()?->getDiplome()?->getResponsableDiplome()?->getMailUniv(),
             ];
+
             $this->mailer->initEmail();
             $this->mailer->setTemplate('mails/qualite/rappel-j2-S1.html.twig', [
                 'questionnaire' => $questionnaire,
             ]);
-            $this->mailer->sendMessage($dests, 'Rappel questionnaire qualité', ['replyTo' => 'maud.briet@univ-reims.fr', 'cc' => 'maud.briet@univ-reims.fr']);
+            $this->mailer->sendMessage($dests, 'Rappel questionnaire qualité', ['replyTo' => 'maud.briet@univ-reims.fr', 'cc' => ['maud.briet@univ-reims.fr']]);
             ++$nbMessages;
         }
 

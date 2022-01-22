@@ -48,8 +48,9 @@ class QuestionnaireQualiteRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('q')
             ->innerJoin(Semestre::class, 's', 'with', 's.id=q.semestre')
             ->innerJoin(Annee::class, 'a', 'with', 'a.id = s.annee')
-            ->where('q.dateOuverture = :date')
-            ->setParameter('date', $date)
+            ->where('q.dateOuverture  BETWEEN :matin AND :soir')
+            ->setParameter('matin', $date->format('Y-m-d 00:00:00'))
+            ->setParameter('soir', $date->format('Y-m-d 23:59:59'))
             ->getQuery()
             ->getResult();
     }
