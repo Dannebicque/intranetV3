@@ -15,6 +15,7 @@ use App\Entity\ApcCompetence;
 use App\Entity\ApcNiveau;
 use App\Entity\Diplome;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -38,7 +39,7 @@ class ApcApprentissageCritiqueRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findByDiplomeBuilder(Diplome $diplome)
+    public function findByDiplomeBuilder(Diplome $diplome): QueryBuilder
     {
         return $this->createQueryBuilder('a')
             ->innerJoin(ApcNiveau::class, 'n', 'WITH', 'a.niveau = n.id')
@@ -58,7 +59,7 @@ class ApcApprentissageCritiqueRepository extends ServiceEntityRepository
 
         $ors = [];
         foreach ($idCompetences as $comp) {
-            $ors[] = $query->expr()->orx('n.competence = ' . $query->expr()->literal($comp));
+            $ors[] = $query->expr()->orx('n.competence = '.$query->expr()->literal($comp));
         }
 
         return $query->andWhere(implode(' OR ', $ors))

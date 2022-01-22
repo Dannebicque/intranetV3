@@ -15,7 +15,6 @@ use App\Entity\PersonnelDepartement;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Component\Routing\RouterInterface;
 
 /**
  * @method PersonnelDepartement|null find($id, $lockMode = null, $lockVersion = null)
@@ -26,7 +25,6 @@ use Symfony\Component\Routing\RouterInterface;
  */
 class PersonnelDepartementRepository extends ServiceEntityRepository
 {
-
     /**
      * PersonnelDepartementRepository constructor.
      */
@@ -98,7 +96,6 @@ class PersonnelDepartementRepository extends ServiceEntityRepository
 
     public function search($needle, Departement $departement): array
     {
-
         $query = $this->createQueryBuilder('d')
             ->innerJoin(Personnel::class, 'p', 'WITH', 'd.personnel = p.id')
             ->where('p.nom LIKE :needle')
@@ -106,7 +103,7 @@ class PersonnelDepartementRepository extends ServiceEntityRepository
             ->orWhere('p.username LIKE :needle')
             ->orWhere('p.mailUniv LIKE :needle')
             ->andWhere('d.departement = :departement')
-            ->setParameter('needle', '%' . $needle . '%')
+            ->setParameter('needle', '%'.$needle.'%')
             ->setParameter('departement', $departement->getId())
             ->orderBy('p.nom', 'ASC')
             ->addOrderBy('p.prenom', 'ASC')
@@ -118,7 +115,7 @@ class PersonnelDepartementRepository extends ServiceEntityRepository
         /** @var PersonnelDepartement $pers */
         foreach ($query as $pers) {
             $personnel = $pers->getPersonnel();
-            if ($personnel !== null) {
+            if (null !== $personnel) {
                 $tt = [];
                 $tt['displayPr'] = $personnel->getDisplayPr();
                 $tt['slug'] = $personnel->getSlug();
@@ -127,7 +124,7 @@ class PersonnelDepartementRepository extends ServiceEntityRepository
                 $tt['numeroHarpege'] = $personnel->getNumeroHarpege();
                 $tt['prenom'] = $personnel->getPrenom();
                 $tt['username'] = $personnel->getUsername();
-                $tt['mail_univ'] = $personnel->getMailUniv();//todo: mailUniv
+                $tt['mail_univ'] = $personnel->getMailUniv(); //todo: mailUniv
                 $tt['mail_perso'] = $personnel->getMailPerso();
                 $tt['avatarInitiales'] = $personnel->getAvatarInitiales();
 

@@ -31,7 +31,6 @@ class QuestionnaireEtudiantReponseRepository extends ServiceEntityRepository
     }
 
     /**
-     *
      * @throws NonUniqueResultException
      */
     public function findExistQuestion(

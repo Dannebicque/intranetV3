@@ -11,6 +11,7 @@ namespace App\Repository;
 
 use App\Entity\TypeHrs;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -34,7 +35,7 @@ class TypeHrsRepository extends ServiceEntityRepository
         return $this->findBy([], ['libelle' => 'ASC']);
     }
 
-    public function findAllBuilder()
+    public function findAllBuilder(): QueryBuilder
     {
         return $this->createQueryBuilder('t')
             ->orderBy('t.libelle', 'ASC');

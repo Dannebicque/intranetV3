@@ -14,11 +14,11 @@ use App\Entity\QuestionnaireEtudiant;
 use App\Entity\QuestionnaireQualite;
 use App\Entity\QuestionnaireQuizz;
 use App\Entity\Semestre;
+use function array_key_exists;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
-use function array_key_exists;
 
 /**
  * @method QuestionnaireEtudiant|null find($id, $lockMode = null, $lockVersion = null)
@@ -75,7 +75,7 @@ class QuestionnaireEtudiantRepository extends ServiceEntityRepository
         return $t;
     }
 
-    public function findByEtudiantArray(Etudiant $etudiant)
+    public function findByEtudiantArray(Etudiant $etudiant): array
     {
         $r = $this->createQueryBuilder('q')
             ->where('q.etudiant = :etudiant')
@@ -111,5 +111,4 @@ class QuestionnaireEtudiantRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-
 }

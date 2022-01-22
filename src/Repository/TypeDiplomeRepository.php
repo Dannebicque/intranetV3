@@ -16,17 +16,30 @@ use Doctrine\Persistence\ManagerRegistry;
 /**
  * @method TypeDiplome|null find($id, $lockMode = null, $lockVersion = null)
  * @method TypeDiplome|null findOneBy(array $criteria, array $orderBy = null)
- * @method TypeDiplome[]    findAll()
  * @method TypeDiplome[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  * @extends ServiceEntityRepository<TypeDiplome>
  */
 class TypeDiplomeRepository extends ServiceEntityRepository
 {
+
     /**
      * TypeDiplomeRepository constructor.
      */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, TypeDiplome::class);
+    }
+
+    public function findAllBuilder()
+    {
+        return $this->createQueryBuilder('t')
+            ->orderBy('t.libelle', 'ASC');
+    }
+
+    public function findAll()
+    {
+        return $this->findAllBuilder()
+            ->getQuery()
+            ->getResult();
     }
 }

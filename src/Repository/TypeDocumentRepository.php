@@ -12,6 +12,7 @@ namespace App\Repository;
 use App\Entity\Departement;
 use App\Entity\TypeDocument;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -38,7 +39,7 @@ class TypeDocumentRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findByDepartementBuilder($departement)
+    public function findByDepartementBuilder($departement): QueryBuilder
     {
         return $this->createQueryBuilder('t')
             ->where('t.departement = :departement')

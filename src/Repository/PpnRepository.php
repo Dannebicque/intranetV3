@@ -41,7 +41,7 @@ class PpnRepository extends ServiceEntityRepository
             ->orderBy('p.annee', 'ASC');
     }
 
-    public function findByDepartementBuilder(Departement $departement)
+    public function findByDepartementBuilder(Departement $departement): QueryBuilder
     {
         return $this->createQueryBuilder('p')
             ->innerJoin(Diplome::class, 'd', 'WITH', 'd.id = p.diplome')

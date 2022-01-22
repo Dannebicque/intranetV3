@@ -87,7 +87,7 @@ class MatiereRepository extends ServiceEntityRepository
 
         $t = [];
 
-        /** @var Matiere $q  */
+        /** @var Matiere $q */
         foreach ($query as $q) {
             $t[$q->getCodeElement()] = $q;
         }

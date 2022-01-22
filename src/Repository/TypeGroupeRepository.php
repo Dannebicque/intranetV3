@@ -14,10 +14,10 @@ use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
+use function array_key_exists;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
-use function array_key_exists;
 
 /**
  * @method TypeGroupe|null find($id, $lockMode = null, $lockVersion = null)
@@ -75,7 +75,7 @@ class TypeGroupeRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function tableauDepartementSemestre(Departement $departement)
+    public function tableauDepartementSemestre(Departement $departement): array
     {
         $req = $this->findByDepartement($departement);
         $t = [];

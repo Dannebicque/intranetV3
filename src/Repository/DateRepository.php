@@ -15,6 +15,7 @@ use App\Entity\Date;
 use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Etudiant;
+use Doctrine\ORM\QueryBuilder;
 use function array_key_exists;
 use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -39,7 +40,7 @@ class DateRepository extends ServiceEntityRepository
         parent::__construct($registry, Date::class);
     }
 
-    public function findByDepartementBuilder(Departement $departement, int $nbResult = 0, bool $isEtudiant = true)
+    public function findByDepartementBuilder(Departement $departement, int $nbResult = 0, bool $isEtudiant = true): QueryBuilder
     {
         $query = $this->createQueryBuilder('d')
             ->where('d.departement = :departement')

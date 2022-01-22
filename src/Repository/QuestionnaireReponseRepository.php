@@ -32,7 +32,7 @@ class QuestionnaireReponseRepository extends ServiceEntityRepository
         parent::__construct($registry, QuestionnaireReponse::class);
     }
 
-    public function findByQuizzArray(QuestionnaireQuizz $questionnaire)
+    public function findByQuizzArray(QuestionnaireQuizz $questionnaire): array
     {
         /*
          * SELECT * FROM questionnaire_reponse
@@ -55,7 +55,7 @@ WHERE questionnaire_questionnaire_section.questionnaire_quizz_id = 1
         return $this->arrayReponse($query);
     }
 
-    private function arrayReponse($reponses)
+    private function arrayReponse($reponses): array
     {
         $t = [];
         foreach ($reponses as $reponse) {

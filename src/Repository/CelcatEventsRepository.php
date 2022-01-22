@@ -85,9 +85,9 @@ class CelcatEventsRepository extends ServiceEntityRepository
                 if ($i > 1) {
                     $this->chaine .= ' OR ';
                 }
-                $this->chaine .= 'p.codeGroupe = :gr' . $i;
+                $this->chaine .= 'p.codeGroupe = :gr'.$i;
 
-                $this->params['gr' . $i] = $groupe->getCodeApogee();
+                $this->params['gr'.$i] = $groupe->getCodeApogee();
                 ++$i;
             }
         }
@@ -139,7 +139,7 @@ class CelcatEventsRepository extends ServiceEntityRepository
 
         $planning = [];
 
-        /** @var CelcatEvent $row  */
+        /** @var CelcatEvent $row */
         foreach ($query as $row) {
             $casedebut = Constantes::TAB_HEURES_INDEX[$row->getDebut()->format('H:i:s')];
             $casefin = Constantes::TAB_HEURES_INDEX[$row->getFin()->format('H:i:s')];

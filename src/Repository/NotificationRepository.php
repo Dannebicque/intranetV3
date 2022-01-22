@@ -51,7 +51,7 @@ class NotificationRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('n')
             ->where('n.created < :date')
-            ->setParameter('date', new DateTime(-self::DAYS_BEFORE_REMOVE . 'days'));
+            ->setParameter('date', new DateTime(-self::DAYS_BEFORE_REMOVE.'days'));
     }
 
     public function findNonLuByUser($user)

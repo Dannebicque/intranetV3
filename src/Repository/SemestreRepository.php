@@ -96,7 +96,7 @@ class SemestreRepository extends ServiceEntityRepository
             $index = mb_substr($semestre->getLibelle(), 1);
 
             if (1 === mb_strlen($index)) {
-                $index = '0' . $index;
+                $index = '0'.$index;
             }
             $tabsemestre[$index] = $semestre;
         }
@@ -118,6 +118,9 @@ class SemestreRepository extends ServiceEntityRepository
         return $tabsemestre;
     }
 
+    /**
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
     public function findOneByDiplomeEtNumero(Diplome $diplome, string $numero, string $ordreAnnee)
     {
         return $this->createQueryBuilder('s')
@@ -133,7 +136,7 @@ class SemestreRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    public function findSemestresActifBuilder()
+    public function findSemestresActifBuilder(): QueryBuilder
     {
         return $this->createQueryBuilder('s')
             ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')

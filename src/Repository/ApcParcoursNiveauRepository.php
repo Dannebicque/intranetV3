@@ -54,7 +54,7 @@ class ApcParcoursNiveauRepository extends ServiceEntityRepository
         $t = [];
         /** @var ApcParcoursNiveau $q */
         foreach ($query as $q) {
-            if ($q->getNiveau() !== null) {
+            if (null !== $q->getNiveau()) {
                 $t[$q->getNiveau()->getId()] = $q;
             }
         }

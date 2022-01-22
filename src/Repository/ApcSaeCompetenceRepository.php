@@ -39,10 +39,10 @@ class ApcSaeCompetenceRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findBySemestreArray(Semestre $semestre)
+    public function findBySemestreArray(Semestre $semestre): array
     {
         $datas = $this->findfBySemestre($semestre);
-        $array =[];
+        $array = [];
         foreach ($datas as $data) {
             $array[$data->getCompetence()->getId()][$data->getSae()->getCodeElement()] = $data;
         }

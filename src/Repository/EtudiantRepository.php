@@ -14,6 +14,7 @@ use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Etudiant;
 use App\Entity\Semestre;
+use App\Entity\StagePeriode;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\QueryBuilder;
@@ -313,7 +314,7 @@ class EtudiantRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    public function getEtudiantGroupes(Semestre $semestre)
+    public function getEtudiantGroupes(Semestre $semestre): array
     {
         $query = $this->createQueryBuilder('e')
             ->select('e.id, g.libelle')
@@ -332,6 +333,5 @@ class EtudiantRepository extends ServiceEntityRepository
         }
 
         return $t;
-
     }
 }

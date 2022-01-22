@@ -69,7 +69,6 @@ class MessageDestinatairePersonnelRepository extends ServiceEntityRepository
 
     /**
      * @throws NonUniqueResultException
-     *
      */
     public function findDest(Personnel $user, Message $message): ?MessageDestinatairePersonnel
     {

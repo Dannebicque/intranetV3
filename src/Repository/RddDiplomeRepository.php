@@ -32,8 +32,8 @@ class RddDiplomeRepository extends ServiceEntityRepository
 
     /**
      * @return int|mixed|string
-     * @throws NoResultException
      *
+     * @throws NoResultException
      * @throws NonUniqueResultException
      */
     public function countComplet()

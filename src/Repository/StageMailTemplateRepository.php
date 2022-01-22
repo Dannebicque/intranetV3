@@ -30,7 +30,6 @@ class StageMailTemplateRepository extends ServiceEntityRepository
     }
 
     /**
-     *
      * @throws NonUniqueResultException
      */
     public function findEventPeriode($codeEvent, StagePeriode $stagePeriode): ?StageMailTemplate
@@ -53,7 +52,7 @@ class StageMailTemplateRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findByStagePeriodeArray(StagePeriode $stagePeriode)
+    public function findByStagePeriodeArray(StagePeriode $stagePeriode): array
     {
         $mails = $this->findByStagePeriode($stagePeriode);
         $t = [];
@@ -65,7 +64,7 @@ class StageMailTemplateRepository extends ServiceEntityRepository
         return $t;
     }
 
-    public function findByDefautArray()
+    public function findByDefautArray(): array
     {
         $mails = $this->createQueryBuilder('s')
             ->where('s.defaut = true')

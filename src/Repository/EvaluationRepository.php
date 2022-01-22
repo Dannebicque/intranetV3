@@ -46,7 +46,7 @@ class EvaluationRepository extends ServiceEntityRepository
 
         $ors = [];
         foreach ($matieres as $matiere) {
-            $ors[] = '(' . $query->expr()->orx('e.idMatiere = ' . $query->expr()->literal($matiere->id)) . ' AND ' . $query->expr()->andX('e.typeMatiere = ' . $query->expr()->literal($matiere->typeMatiere)) . ')';
+            $ors[] = '('.$query->expr()->orx('e.idMatiere = '.$query->expr()->literal($matiere->id)).' AND '.$query->expr()->andX('e.typeMatiere = '.$query->expr()->literal($matiere->typeMatiere)).')';
         }
 
         return $query->andWhere(implode(' OR ', $ors))

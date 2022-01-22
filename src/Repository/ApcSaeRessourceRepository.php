@@ -27,7 +27,7 @@ class ApcSaeRessourceRepository extends ServiceEntityRepository
         parent::__construct($registry, ApcSaeRessource::class);
     }
 
-    public function findArrayIdRessources($sae)
+    public function findArrayIdRessources($sae): array
     {
         $query = $this->createQueryBuilder('a')
             ->where('a.sae = :sae')
@@ -44,7 +44,7 @@ class ApcSaeRessourceRepository extends ServiceEntityRepository
         return $t;
     }
 
-    public function findArrayIdSae($ressource)
+    public function findArrayIdSae($ressource): array
     {
         $query = $this->createQueryBuilder('a')
             ->where('a.ressource = :ressource')

@@ -139,16 +139,16 @@ class GroupeRepository extends ServiceEntityRepository
 
         /** @var Groupe $g */
         foreach ($gtp as $g) {
-            $groupes[$i]['id'] = 'TP-' . $g->getOrdre();
-            $groupes[$i]['display'] = 'TP' . $g->getLibelle() . ' | TP ' . $g->getLibelle();
+            $groupes[$i]['id'] = 'TP-'.$g->getOrdre();
+            $groupes[$i]['display'] = 'TP'.$g->getLibelle().' | TP '.$g->getLibelle();
             ++$i;
         }
 
         /** @var Groupe $g */
         foreach ($gtd as $g) {
             $or = $g->getOrdre();
-            $groupes[$i]['id'] = 'TD-' . $or;
-            $groupes[$i]['display'] = 'TD' . $g->getLibelle() . ' | TD ' . $g->getLibelle();
+            $groupes[$i]['id'] = 'TD-'.$or;
+            $groupes[$i]['display'] = 'TD'.$g->getLibelle().' | TD '.$g->getLibelle();
             ++$i;
         }
 
@@ -186,7 +186,6 @@ class GroupeRepository extends ServiceEntityRepository
 
     public function getEtudiantsByGroupes(TypeGroupe $typegroupe): array
     {
-
         $query = $this->createQueryBuilder('g')
             ->innerJoin('g.etudiants', 'e')
             ->where('g.typeGroupe = :typegroupe')
@@ -200,6 +199,5 @@ class GroupeRepository extends ServiceEntityRepository
         }
 
         return $t;
-
     }
 }

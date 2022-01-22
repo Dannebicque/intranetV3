@@ -46,6 +46,10 @@ class AbsenceJustificatifRepository extends ServiceEntityRepository
             ;
     }
 
+    /**
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Doctrine\ORM\NoResultException
+     */
     public function findBySemestreCount(Semestre $semestre, ?int $annee = 0)
     {
         if (0 === $annee) {

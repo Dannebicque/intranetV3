@@ -176,7 +176,6 @@ class PrevisionnelSaeRepository extends PrevisionnelRepository
             ->getResult();
     }
 
-
     public function findByDiplomeToDelete(Diplome $diplome, $annee = 0)
     {
         $query = $this->createQueryBuilder('p')

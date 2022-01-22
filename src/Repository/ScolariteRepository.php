@@ -86,8 +86,8 @@ class ScolariteRepository extends ServiceEntityRepository
 
     /**
      * @return int|mixed|string
-     * @throws NoResultException
      *
+     * @throws NoResultException
      * @throws NonUniqueResultException
      */
     public function findOrdreMax(Etudiant $etudiant)
@@ -100,7 +100,7 @@ class ScolariteRepository extends ServiceEntityRepository
             ->getSingleScalarResult();
     }
 
-    public function findBySemestreArray(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire)
+    public function findBySemestreArray(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): array
     {
         $result = $this->createQueryBuilder('s')
             ->where('s.semestre = :semestre')

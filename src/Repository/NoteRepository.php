@@ -14,6 +14,7 @@ use App\Entity\Etudiant;
 use App\Entity\Evaluation;
 use App\Entity\Note;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -45,12 +46,7 @@ class NoteRepository extends ServiceEntityRepository
             ->setParameter('annee', $annee->getAnnee())
             ->orderBy('e.id');
 
-        $ors = [];
-        foreach ($matieres as $matiere) {
-            $ors[] = '('.$query->expr()->orx('e.idMatiere = '.$query->expr()->literal($matiere->id)).' AND '.$query->expr()->andX('e.typeMatiere = '.$query->expr()->literal($matiere->typeMatiere)).')';
-        }
-
-        return $query->andWhere(implode(' OR ', $ors))
+        return $query->andWhere(implode(' OR ', $this->getOrs($matieres, $query)))
             ->getQuery()
             ->getResult();
     }
@@ -72,12 +68,7 @@ class NoteRepository extends ServiceEntityRepository
             ->setParameter('etudiant', $etudiant->getId())
             ->addOrderBy('e.dateEvaluation', 'ASC');
 
-        $ors = [];
-        foreach ($matieres as $matiere) {
-            $ors[] = '('.$query->expr()->orx('e.idMatiere = '.$query->expr()->literal($matiere->id)).' AND '.$query->expr()->andX('e.typeMatiere = '.$query->expr()->literal($matiere->typeMatiere)).')';
-        }
-
-        return $query->andWhere(implode(' OR ', $ors))
+        return $query->andWhere(implode(' OR ', $this->getOrs($matieres, $query)))
             ->getQuery()
             ->getResult();
     }
@@ -119,12 +110,7 @@ class NoteRepository extends ServiceEntityRepository
             ->setParameter('annee', $annee->getAnnee())
             ->orderBy('e.id');
 
-        $ors = [];
-        foreach ($matieres as $matiere) {
-            $ors[] = '('.$query->expr()->orx('e.idMatiere = '.$query->expr()->literal($matiere->id)).' AND '.$query->expr()->andX('e.typeMatiere = '.$query->expr()->literal($matiere->typeMatiere)).')';
-        }
-
-        return $query->andWhere(implode(' OR ', $ors))
+        return $query->andWhere(implode(' OR ', $this->getOrs($matieres, $query)))
             ->getQuery()
             ->getResult();
     }
@@ -143,13 +129,18 @@ class NoteRepository extends ServiceEntityRepository
             ->setParameter('annee', $annee->getAnnee())
             ->orderBy('e.id');
 
+        return $query->andWhere(implode(' OR ', $this->getOrs($matieres, $query)))
+            ->getQuery()
+            ->getResult();
+    }
+
+    private function getOrs(?array $matieres, QueryBuilder $query): array
+    {
         $ors = [];
         foreach ($matieres as $matiere) {
             $ors[] = '('.$query->expr()->orx('e.idMatiere = '.$query->expr()->literal($matiere->id)).' AND '.$query->expr()->andX('e.typeMatiere = '.$query->expr()->literal($matiere->typeMatiere)).')';
         }
 
-        return $query->andWhere(implode(' OR ', $ors))
-            ->getQuery()
-            ->getResult();
+        return $ors;
     }
 }

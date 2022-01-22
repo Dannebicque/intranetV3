@@ -18,8 +18,6 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Component\Routing\RouterInterface;
-use function count;
 
 /**
  * @method Personnel|null find($id, $lockMode = null, $lockVersion = null)
@@ -48,10 +46,10 @@ class PersonnelRepository extends ServiceEntityRepository
 
         if ('separation' === $filtreAdm) {
             if ('administratif' === $type) {
-                $query->andWhere('(' . $query->expr()->orX('p.statut = ' . $query->expr()->literal('TEC')) . ' OR ' . $query->expr()->orX('p.statut = ' . $query->expr()->literal('ASS')) . ')')
+                $query->andWhere('('.$query->expr()->orX('p.statut = '.$query->expr()->literal('TEC')).' OR '.$query->expr()->orX('p.statut = '.$query->expr()->literal('ASS')).')')
                     ->setParameter('type', 'permanent');
             } else {
-                $query->andWhere('(' . $query->expr()->andX('p.statut <> ' . $query->expr()->literal('TEC')) . ' AND ' . $query->expr()->andX('p.statut <> ' . $query->expr()->literal('ASS')) . ')')
+                $query->andWhere('('.$query->expr()->andX('p.statut <> '.$query->expr()->literal('TEC')).' AND '.$query->expr()->andX('p.statut <> '.$query->expr()->literal('ASS')).')')
                     ->setParameter('type', $type);
             }
         } else {
@@ -71,7 +69,7 @@ class PersonnelRepository extends ServiceEntityRepository
             ->orWhere('p.prenom LIKE :needle')
             ->orWhere('p.username LIKE :needle')
             ->orWhere('p.mailUniv LIKE :needle')
-            ->setParameter('needle', '%' . $needle . '%')
+            ->setParameter('needle', '%'.$needle.'%')
             ->orderBy('p.nom', 'ASC')
             ->addOrderBy('p.prenom', 'ASC')
             ->getQuery()

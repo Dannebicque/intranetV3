@@ -27,6 +27,10 @@ class QuestionnaireQuestionnaireSectionRepository extends ServiceEntityRepositor
         parent::__construct($registry, QuestionnaireQuestionnaireSection::class);
     }
 
+    /**
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Doctrine\ORM\NoResultException
+     */
     public function findMaxOrdreSection(?int $getId)
     {
         $qb = $this->createQueryBuilder('q');

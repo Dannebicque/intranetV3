@@ -33,9 +33,6 @@ class HrsRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param \App\Entity\Personnel $personnel
-     * @param int                   $annee
-     *
      * @return int|mixed|string
      */
     public function getPersonnelAnnee(Personnel $personnel, int $annee = 0)
@@ -46,7 +43,7 @@ class HrsRepository extends ServiceEntityRepository
             ->orderBy('h.typeHrs', 'ASC')
             ->orderBy('h.semestre', 'ASC');
 
-        if ($annee !== 0) {
+        if (0 !== $annee) {
             $query->andWhere('h.annee = :annee')
                 ->setParameter('annee', $annee);
         }
@@ -69,7 +66,6 @@ class HrsRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-
 
     public function findByDepartement(Departement $departement, $annee)
     {

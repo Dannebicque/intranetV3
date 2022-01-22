@@ -198,6 +198,4 @@ class PrevisionnelRessourceRepository extends PrevisionnelRepository
         return $query->getQuery()
             ->getResult();
     }
-
-
 }

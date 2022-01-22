@@ -15,9 +15,9 @@ use App\Entity\AbsenceJustificatif;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Etudiant;
 use App\Entity\Semestre;
+use function array_key_exists;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use function array_key_exists;
 
 /**
  * @method Absence|null find($id, $lockMode = null, $lockVersion = null)
@@ -125,7 +125,7 @@ class AbsenceRepository extends ServiceEntityRepository
         Etudiant $etudiant,
         AnneeUniversitaire $anneeUniversitaire
     ) {
-        if (count($matieres) === 0) {
+        if (0 === count($matieres)) {
             return [];
         }
 
@@ -139,7 +139,7 @@ class AbsenceRepository extends ServiceEntityRepository
 
         $ors = [];
         foreach ($matieres as $matiere) {
-            $ors[] = '(' . $query->expr()->orx('a.idMatiere = ' . $query->expr()->literal($matiere->id)) . ' AND ' . $query->expr()->andX('a.typeMatiere = ' . $query->expr()->literal($matiere->typeMatiere)) . ')';
+            $ors[] = '('.$query->expr()->orx('a.idMatiere = '.$query->expr()->literal($matiere->id)).' AND '.$query->expr()->andX('a.typeMatiere = '.$query->expr()->literal($matiere->typeMatiere)).')';
         }
 
         return $query->andWhere(implode(' OR ', $ors))
@@ -149,16 +149,20 @@ class AbsenceRepository extends ServiceEntityRepository
 
     public function getAJustifier(AbsenceJustificatif $justificatif)
     {
+        if (null === $justificatif->getEtudiant()) {
+            return null;
+        }
+
         //recherche toutes les absences sur la période du justificatif
         return $this->createQueryBuilder('a')
-            ->where('a.dateHeure >= :dateDebut')
-            ->andWhere('a.etudiant = :etudiant')
-            ->andWhere('a.dateHeure <= :dateFin')
-            ->setParameter('dateDebut', $justificatif->getDateHeureDebut())
-            ->setParameter('dateFin', $justificatif->getDateHeureFin())
-            ->setParameter('etudiant', $justificatif->getEtudiant()->getId())
-            ->getQuery()
-            ->getResult();
+                ->where('a.dateHeure >= :dateDebut')
+                ->andWhere('a.etudiant = :etudiant')
+                ->andWhere('a.dateHeure <= :dateFin')
+                ->setParameter('dateDebut', $justificatif->getDateHeureDebut())
+                ->setParameter('dateFin', $justificatif->getDateHeureFin())
+                ->setParameter('etudiant', $justificatif->getEtudiant()->getId())
+                ->getQuery()
+                ->getResult();
     }
 
     public function findByMatiere(int $matiere, string $type, ?AnneeUniversitaire $annee = null)

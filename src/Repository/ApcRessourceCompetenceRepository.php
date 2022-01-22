@@ -29,7 +29,7 @@ class ApcRessourceCompetenceRepository extends ServiceEntityRepository
         parent::__construct($registry, ApcRessourceCompetence::class);
     }
 
-    public function findfBySemestre(Semestre $semestre)
+    public function findfBySemestre(Semestre $semestre): array
     {
         return $this->createQueryBuilder('a')
             ->innerJoin(ApcRessource::class, 'r', 'WITH', 'a.ressource = r.id')
@@ -39,10 +39,10 @@ class ApcRessourceCompetenceRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findBySemestreArray(Semestre $semestre)
+    public function findBySemestreArray(Semestre $semestre): array
     {
         $datas = $this->findfBySemestre($semestre);
-        $array =[];
+        $array = [];
         /** @var ApcRessourceCompetence $data */
         foreach ($datas as $data) {
             $array[$data->getCompetence()->getId()][$data->getRessource()->getCodeElement()] = $data;
