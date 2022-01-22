@@ -6,8 +6,8 @@
 
 import {post} from '../js/fetch'
 
-const ASC = 'asc'
-const DESC = 'desc'
+const ASC = 'ASC'
+const DESC = 'DESC'
 
 const ICON_ASC = '&#9660;'
 const ICON_DESC = '&#9650;'
@@ -30,8 +30,9 @@ export default class Table extends HTMLElement {
     this.filter = {}
 
     this.tableBody.innerHTML = ''
-
+    console.log(this.options.columns)
     this.options.columns.forEach((column) => {
+      console.log(column)
       if (column.orderable === true) {
         if (column.order != null) {
           this.order = [{
