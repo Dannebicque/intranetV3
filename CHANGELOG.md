@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.5.10](https://github.com/Dannebicque/intranetV3/compare/v3.5.9...v3.5.10) (2022-01-22)
+
+
+### Bug Fixes
+
+* [Breadcrumbs] Refactoring ([38b1c1c](https://github.com/Dannebicque/intranetV3/commit/38b1c1cf05ea0ad01990de9013a9f05c4d5a6838))
+* [Document] Typo requete Table admin ([758e56b](https://github.com/Dannebicque/intranetV3/commit/758e56bea90498f1854bec4cf8976524570a488f))
+* [Enquete] Tableau amélioré ([fd3e441](https://github.com/Dannebicque/intranetV3/commit/fd3e441dcb304a1dd8a009b80948adc5cf61152f))
+* [Exporter] Refactoring ([6992796](https://github.com/Dannebicque/intranetV3/commit/6992796353203cf5a2969a3d88685a4c21b010b4))
+* [Profil] Non prise en compte des notes dont l'évaluation est masquée ([8591be7](https://github.com/Dannebicque/intranetV3/commit/8591be7dfcbb943799b687eeaa7385b056ff6d53))
+* [Scolarite] Table avec tri par défaut ([3871e57](https://github.com/Dannebicque/intranetV3/commit/3871e5726555134719024c879c011a267d10f391))
+* [Scolarite] Typo nom du template suite refactoring ([e2dee0a](https://github.com/Dannebicque/intranetV3/commit/e2dee0a4d2d4c7b9cb9a87f9dad472d4ca1a002e))
+* [SScom] Année universitaire pour l'export Apogée ([866008d](https://github.com/Dannebicque/intranetV3/commit/866008dece4ca59f3a031e4a14e998687f9cb15c))
+* [SScom] Bug si pas de date de naissance dans l'export ([deac6b6](https://github.com/Dannebicque/intranetV3/commit/deac6b65987be18a8fdd0c4f92f10083d66119cd))
+* [SScomm] Modification de la SScom de travail ([be8f1a9](https://github.com/Dannebicque/intranetV3/commit/be8f1a97db55e05a97545d5b86a48c02db13b876))
+* [Table] Correctif pour les tris ([62136cd](https://github.com/Dannebicque/intranetV3/commit/62136cdb5a0dbae6054dd1b46d19c12ab280dc10))
+* [Table] Refactoring + tris ([4c6a98c](https://github.com/Dannebicque/intranetV3/commit/4c6a98c0c6838eca7d03a49a40ce5b9295fecaff))
+* [Table] Refactoring et création de filtre spécifiques ([18adcb8](https://github.com/Dannebicque/intranetV3/commit/18adcb8bcb9d3fc5b4e80cf5c70734c4457e1265))
+* [TableType] Refactoring ([eb477e2](https://github.com/Dannebicque/intranetV3/commit/eb477e2b32cdddb84123ebfaf4702951e3c46a60))
+* [templates] Utilisation de BadgeYesNo sur les affichages booleens ([9d51d2e](https://github.com/Dannebicque/intranetV3/commit/9d51d2e0fcac6de4dcf70043c5f10e8257117b7a))
+* [Widget] Refactoring ([aa1bb75](https://github.com/Dannebicque/intranetV3/commit/aa1bb75e7c59a77a4d4e79ea49e86f1ce4d62703))
+
 ### [3.5.9](https://github.com/Dannebicque/intranetV3/compare/v3.5.8...v3.5.9) (2022-01-19)
 
 
