@@ -28,6 +28,10 @@
         {% endfor %}
 
         <li class="breadcrumb-item active text-capitalize" aria-current="page">
+            {% if lastItem.icone != '' %}
+            <i class="{{ lastItem.icone }}"></i>
+            {% endif %}
+
             {% if lastItem.translatable %}
                 {{ lastItem.label|trans(lastItem.transParameters, lastItem.transDomain) }}
             {% else %}
