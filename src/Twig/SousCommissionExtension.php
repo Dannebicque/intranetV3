@@ -3,6 +3,7 @@
 namespace App\Twig;
 
 use App\Entity\Constantes;
+use App\Utils\Tools;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
@@ -34,6 +35,8 @@ class SousCommissionExtension extends AbstractExtension
 
     public function styleMoyenne($value): string
     {
+        $value = Tools::convertToFloat($value);
+
         if ($value < 8) {
             return '<span class="badge bg-danger">'.number_format($value, 3).'</span>';
         }
@@ -47,6 +50,7 @@ class SousCommissionExtension extends AbstractExtension
 
     public function styleMatiere($value): string
     {
+        $value = Tools::convertToFloat($value);
         if ($value < 10) {
             return '<span class="badge bg-warning">'.number_format($value, 2).'</span>';
         }
@@ -56,6 +60,8 @@ class SousCommissionExtension extends AbstractExtension
 
     public function styleBonification($value): string
     {
+        $value = Tools::convertToFloat($value);
+
         if ($value > 0) {
             return '<span class="badge bg-success">'.number_format($value, 2).'</span>';
         }
