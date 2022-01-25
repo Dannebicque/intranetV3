@@ -24,9 +24,10 @@ use App\Repository\CalendrierRepository;
 use App\Repository\EdtPlanningRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
+use function array_key_exists;
+use Carbon\CarbonImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
-use function array_key_exists;
 use function ord;
 
 class MyEdtImport
@@ -76,7 +77,6 @@ class MyEdtImport
     }
 
     /**
-     *
      * @throws Exception
      */
     public function init($file, DataUserSession $dataUserSession): self
@@ -120,7 +120,7 @@ class MyEdtImport
                         $tSemaineClear[$semestre] = true;
                     }
                     $this->calendrier = $this->calendrierRepository->findOneBy([
-                        'semaineFormation'   => $this->semaine,
+                        'semaineFormation' => $this->semaine,
                         'anneeUniversitaire' => $this->dataUserSession->getAnneeUniversitaire()->getId(),
                     ]);
                     $date = $this->convertToDate($jour);
@@ -157,19 +157,27 @@ class MyEdtImport
                     } else {
                         $prof = mb_substr($phrase, 8, 3);
 
-                        if ('D' === $semestre[1]) {
-                            $matiere = mb_substr($phrase, 11, 6);
-                            $typecours = mb_substr($phrase, 17, 2);
-                            if ('T' !== $typecours[0] && 'C' !== $typecours[0]) {
-                                $matiere .= $typecours[0];
-                                $typecours = mb_substr($phrase, 18, 2);
-                                $ordre = mb_substr($phrase, 20, 2);
-                                $salle = mb_substr($phrase, 22);
-                            } else {
-                                $ordre = mb_substr($phrase, 19, 2);
-                                $salle = mb_substr($phrase, 21);
-                            }
+//                        if ('D' === $semestre[1]) {
+//                            $matiere = mb_substr($phrase, 11, 6);
+//                            $typecours = mb_substr($phrase, 17, 2);
+//                            if ('T' !== $typecours[0] && 'C' !== $typecours[0]) {
+//                                $matiere .= $typecours[0];
+//                                $typecours = mb_substr($phrase, 18, 2);
+//                                $ordre = mb_substr($phrase, 20, 2);
+//                                $salle = mb_substr($phrase, 22);
+//                            } else {
+//                                $ordre = mb_substr($phrase, 19, 2);
+//                                $salle = mb_substr($phrase, 21);
+//                            }
+//                        } else {
+                        if ('S' === $phrase[11] || 'R' === $phrase[11]) {
+                            //code sur 4
+                            $matiere = mb_substr($phrase, 11, 4);
+                            $typecours = mb_substr($phrase, 15, 2);
+                            $ordre = mb_substr($phrase, 17, 2);
+                            $salle = mb_substr($phrase, 19);
                         } else {
+                            //code sur 5
                             $matiere = mb_substr($phrase, 11, 5);
                             $typecours = mb_substr($phrase, 16, 2);
                             if ('T' !== $typecours[0] && 'C' !== $typecours[0]) {
@@ -182,6 +190,7 @@ class MyEdtImport
                                 $salle = mb_substr($phrase, 20);
                             }
                         }
+                        // }
 
                         if (array_key_exists($matiere, $tabMatieres)) {
                             $pl = new EdtPlanning();
@@ -189,8 +198,8 @@ class MyEdtImport
                             $this->semestre = $pl->getSemestre()->getId();
                             $pl->setIdMatiere($tabMatieres[$matiere]->id);
                             $pl->setTypeMatiere($tabMatieres[$matiere]->typeMatiere);
-                            if ($prof !== 'PRJ' && array_key_exists($prof, $tabIntervenants)) {
-                                $pl->setIntervenant($tabIntervenants[$prof]);//todo: pourrait être NULL  équivalent à john doe?? gérer affichage
+                            if ('PRJ' !== $prof && array_key_exists($prof, $tabIntervenants)) {
+                                $pl->setIntervenant($tabIntervenants[$prof]); //todo: pourrait être NULL  équivalent à john doe?? gérer affichage
                             } else {
                                 $pl->setIntervenant(null);
                             }
@@ -231,7 +240,7 @@ class MyEdtImport
         return $this->semestre;
     }
 
-    public function getCalendrier()
+    public function getCalendrier(): Calendrier
     {
         return $this->calendrier;
     }
@@ -239,7 +248,7 @@ class MyEdtImport
     private function clearSemaine($semaine, Semestre $semestre): void
     {
         $sem = $this->edtPlanningRepository->findBy([
-            'semaine'  => $semaine,
+            'semaine' => $semaine,
             'semestre' => $semestre,
         ]);
 
@@ -249,7 +258,7 @@ class MyEdtImport
         $this->entityManager->flush();
     }
 
-    private function convertToDate($jour)
+    private function convertToDate($jour): CarbonImmutable
     {
         return $this->calendrier->getDateLundi()->addDays($jour - 1);
     }
