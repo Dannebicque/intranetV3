@@ -20,9 +20,9 @@ use App\Entity\ScolaritePromo;
 use App\Entity\Semestre;
 use App\Repository\ScolaritePromoRepository;
 use App\Repository\ScolariteRepository;
+use function array_key_exists;
 use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
-use function array_key_exists;
 
 class SousCommissionSauvegarde
 {
@@ -83,7 +83,6 @@ class SousCommissionSauvegarde
                     $tUe = [];
                     foreach ($ues as $ue) {
                         if (true === $semestre->isOptPenaliteAbsence()) {
-
                             if ($sousCommission instanceof SousCommissionApc) {
                                 $tUe[$ue->getId()]['decision'] = $scEtudiant->moyenneUes[$ue->getId()]->decisionPenalisee;
                                 $tUe[$ue->getId()]['moyenne'] = $scEtudiant->moyenneUes[$ue->getId()]->moyennePacPenalisee;
@@ -107,9 +106,11 @@ class SousCommissionSauvegarde
                         if (array_key_exists($matiere->getTypeIdMatiere(), $scEtudiant->moyenneMatieres)) {
                             if (true === $matiere->bonification) {
                                 $tMatiere[$matiere->getTypeIdMatiere()]['moyenne'] = max(0,
-                                    ($scEtudiant->moyenneMatieres[$matiere->getTypeIdMatiere()]->getMoyenne() - 10) / 20);
+                                    $scEtudiant->moyenneMatieres[$matiere->getTypeIdMatiere()]->getMoyenne());//todo: gérer avec une variable de configuration global.
+//                                $tMatiere[$matiere->getTypeIdMatiere()]['moyenne'] = max(0,
+//                                    ($scEtudiant->moyenneMatieres[$matiere->getTypeIdMatiere()]->getMoyenne() - 10) / 20);
                             } elseif (true === $scEtudiant->moyenneMatieres[$matiere->getTypeIdMatiere()]->matiereAAnnuler) {
-                                    $tMatiere[$matiere->getTypeIdMatiere()]['matiereAAnnuler'] = true;
+                                $tMatiere[$matiere->getTypeIdMatiere()]['matiereAAnnuler'] = true;
                             } elseif (true === $scEtudiant->moyenneMatieres[$matiere->getTypeIdMatiere()]->optionFaite) {
                                 if (true === $semestre->isOptPenaliteAbsence()) {
                                     $tMatiere[$matiere->getTypeIdMatiere()]['moyenne'] = $scEtudiant->moyenneMatieres[$matiere->getTypeIdMatiere()]->getMoyennePenalisee();
