@@ -110,7 +110,7 @@ class SousComissionController extends BaseController
         $sousCommissionSauvegarde->visibilite($ssComm, true);
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'scolarite.publiee.success.flash');
         $publication = new SousCommissionEvent($ssComm);
-        $eventDispatcher->dispatch($publication);
+        $eventDispatcher->dispatch($publication, SousCommissionEvent::PUBLISHED);
 
         return $this->redirectToRoute('administration_sous_commission_travail', ['semestre' => $semestre->getId()]);
     }

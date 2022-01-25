@@ -161,10 +161,15 @@
                                 <td>{{ sc.etudiant(etudiant.id).nbAbsences }}</td>
                                 {% for matiere in sc.matieres %}
                                     {% if sc.matiere(etudiant.id, matiere.typeIdMatiere) != null %}
-                                        {% if sc.matiere(etudiant.id, matiere.typeIdMatiere).pasoption is defined %}
+                                        {% if sc.matiere(etudiant.id, matiere.typeIdMatiere).pasoption is defined  %}
                                             <td>N.C.</td>
                                         {% else %}
+                                            {% if sc.matiere(etudiant.id, matiere.typeIdMatiere).matiereAAnnuler is
+                                                defined %}
+                                                <td>Abs.Just</td>
+                                                {% else %}
                                             <td>{{ sc.matiere(etudiant.id, matiere.typeIdMatiere).moyenne|number_format(2) }}</td>
+                                        {% endif %}
                                         {% endif %}
                                     {% endif %}
                                 {% endfor %}

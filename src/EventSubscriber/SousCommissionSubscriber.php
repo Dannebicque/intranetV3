@@ -45,18 +45,21 @@ class SousCommissionSubscriber implements EventSubscriberInterface
         ];
     }
 
+    /**
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     */
     public function onSousCommissionPubliee(SousCommissionEvent $event): void
     {
         $ssComm = $event->getScolaritePromo();
         foreach ($ssComm->getScolarites() as $scolarite) {
             $this->addNotification($scolarite, SousCommissionEvent::PUBLISHED);
-            $this->sendMail($scolarite, SousCommissionEvent::PUBLISHED);
+           // $this->sendMail($scolarite, SousCommissionEvent::PUBLISHED);
         }
 
         $this->entityManager->flush();
     }
 
-    private function addNotification(Scolarite $scolarite, $codeEvent): void
+    private function addNotification(Scolarite $scolarite, string $codeEvent): void
     {
         $notif = new Notification();
         $notif->setEtudiant($scolarite->getEtudiant());
@@ -70,16 +73,15 @@ class SousCommissionSubscriber implements EventSubscriberInterface
     }
 
     /**
-     *
      * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
      */
-    public function sendMail(Scolarite $scolarite, $codeEvent): void
+    public function sendMail(Scolarite $scolarite, string $codeEvent): void
     {
         $this->myMailer->initEmail();
-        $this->myMailer->
         //mail par défaut
-        $this->myMailer->setTemplate('mails/sousCommission_' . $codeEvent . '.txt.twig',
-            ['scolarite' => $scolarite]);
+        $this->myMailer->setTemplate('mails/sousCommission_'.$codeEvent.'.txt.twig',
+            ['scolarite' => $scolarite,
+            'etudiant' => $scolarite->getEtudiant()]);
         $this->myMailer->sendMessage($scolarite->getEtudiant()->getMails(),
             $codeEvent);
     }
