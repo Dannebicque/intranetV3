@@ -80,10 +80,30 @@
 {% endblock %}
 
 {% block fabactions %}
-    {{ include('composants/fab-button-help.html.twig', {
-        href:path('help_article', {sujet: 'administration_absence_liste'})
-    }
-    ) }}
+{#    {{ include('composants/fab-button-help.html.twig', {#}
+{#        href:path('help_article', {sujet: 'administration_absence_liste'})#}
+{#    }#}
+{#    ) }}#}
+    {{ include('composants/fab-buttons.html.twig', {boutons:[
+        {
+            type:'info',
+            href:path('administration_absences_semestre_liste_export', {semestre:semestre.id, _format: 'csv'}),
+            title: 'exporter.csv'|trans,
+            icone: 'fa fa-file-csv'
+        },
+        {
+            type:'info',
+            href:path('administration_absences_semestre_liste_export', {semestre:semestre.id, _format: 'xlsx'}),
+            title: 'exporter.xls'|trans,
+            icone: 'fa fa-file-excel'
+        },
+        {
+            type:'info',
+            href:path('help_article', {sujet: 'administration-absence-liste'}),
+            title: 'aide'|trans,
+            icone: 'fa fa-question'
+        }
+    ]}) }}
 {% endblock %}
 
 
