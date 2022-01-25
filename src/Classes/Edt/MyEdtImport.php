@@ -24,10 +24,10 @@ use App\Repository\CalendrierRepository;
 use App\Repository\EdtPlanningRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
-use function array_key_exists;
 use Carbon\CarbonImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
+use function array_key_exists;
 use function ord;
 
 class MyEdtImport
@@ -198,7 +198,8 @@ class MyEdtImport
                             $this->semestre = $pl->getSemestre()->getId();
                             $pl->setIdMatiere($tabMatieres[$matiere]->id);
                             $pl->setTypeMatiere($tabMatieres[$matiere]->typeMatiere);
-                            if ('PRJ' !== $prof && array_key_exists($prof, $tabIntervenants)) {
+                            if ('DOA' !== $prof && 'DOB' !== $prof && 'DOC' !== $prof && 'DOD' !== $prof && 'PRJ' !== $prof && array_key_exists($prof,
+                                    $tabIntervenants)) {
                                 $pl->setIntervenant($tabIntervenants[$prof]); //todo: pourrait être NULL  équivalent à john doe?? gérer affichage
                             } else {
                                 $pl->setIntervenant(null);
