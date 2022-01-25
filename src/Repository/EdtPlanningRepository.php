@@ -15,9 +15,9 @@ use App\Entity\Etudiant;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
-use function array_key_exists;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use function array_key_exists;
 
 /**
  * @method EdtPlanning|null find($id, $lockMode = null, $lockVersion = null)
@@ -320,7 +320,9 @@ class EdtPlanningRepository extends ServiceEntityRepository
 
         foreach ($departement->getDiplomes() as $diplome) {
             foreach ($diplome->getSemestres() as $semestre) {
-                $ors[] = '('.$query->expr()->orx('p.semestre = '.$query->expr()->literal($semestre->getId())).')';
+                if ($semestre->isActif() === true) {
+                    $ors[] = '(' . $query->expr()->orx('p.semestre = ' . $query->expr()->literal($semestre->getId())) . ')';
+                }
             }
         }
 
@@ -341,7 +343,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
             $pl['fin'] = $event->getFin();
             $pl['commentaire'] = $event->getCommentaire();
             if (null !== $matiere) {
-                $pl['ical'] = $matiere->libelle.' ('.$matiere->codeMatiere.') '.$event->getDisplayGroupe();
+                $pl['ical'] = $matiere->libelle . ' (' . $matiere->codeMatiere . ') ' . $event->getDisplayGroupe();
             } else {
                 $pl['ical'] = '';
             }
@@ -375,7 +377,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
                 $pl['fin'] = $event->getFin();
                 $pl['commentaire'] = '';
                 if (null !== $matiere) {
-                    $pl['ical'] = $matiere->libelle.' ('.$matiere->codeMatiere.') '.$event->getDisplayGroupe();
+                    $pl['ical'] = $matiere->libelle . ' (' . $matiere->codeMatiere . ') ' . $event->getDisplayGroupe();
                 } else {
                     $pl['ical'] = $event->getTexte();
                 }
@@ -394,8 +396,8 @@ class EdtPlanningRepository extends ServiceEntityRepository
         $i = 0;
         foreach ($departement->getDiplomes() as $diplome) {
             foreach ($diplome->getSemestres() as $semestre) {
-                $quer = $quer->orWhere('p.semestre = :anne'.$i)
-                    ->setParameter('anne'.$i, $semestre->getId());
+                $quer = $quer->orWhere('p.semestre = :anne' . $i)
+                    ->setParameter('anne' . $i, $semestre->getId());
                 ++$i;
             }
         }
