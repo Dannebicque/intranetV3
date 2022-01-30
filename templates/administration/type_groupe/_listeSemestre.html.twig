@@ -69,6 +69,9 @@
                 <td>
                     <label class="sr-only" for="typegroupe_libelle">Libellé</label>
                     <input type="text" name="typegroupe_libelle" id="typegroupe_libelle" class="form-control">
+                    <div class="invalid-feedback" id="error_typegroupe_libelle">
+                        Libellé du type de groupe obligatoire</div>
+
                 </td>
                 <td>
                     <label class="sr-only" for="typegroupe_type">Type</label>
@@ -80,6 +83,8 @@
                             </option>
                         {% endfor %}
                     </select>
+                    <div class="invalid-feedback" id="error_typegroupe_type">
+                        Type de type de groupe obligatoire</div>
                 </td>
                 <td>
                     <label class="switch" for="typegroupe_defaut">

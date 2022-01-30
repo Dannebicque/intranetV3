@@ -119,41 +119,85 @@ $(document).on('click', '.duplicate-type_groupe', function (e) {
 })
 
 $(document).on('click', '#addGroupe', function (e) {
-  //todo: vérifier que les champs obligatoires sont remplis.
   e.preventDefault()
-  const semestre = $(this).data('semestre')
-  let data = new FormData($('#form_groupe')[0])
-  $.ajax({
-    url: Routing.generate('administration_groupe_new', {semestre: semestre}),
-    data: data,
-    processData: false,
-    contentType: false,
-    method: 'POST',
-    success: function () {
-      $('#groupes_semestre').empty().load(Routing.generate('administration_groupe_liste_semestre', {semestre: semestre}))
-      addCallout('Mise à jour du parcours associé au groupe', 'success')
+
+  if (document.getElementById('groupe_libelle').value.trim() !== '' &&
+    document.getElementById('groupe_ordre').value.trim() !== '') {
+
+    const semestre = $(this).data('semestre')
+    let data = new FormData($('#form_groupe')[0])
+    console.log(data)
+    $.ajax({
+      url: Routing.generate('administration_groupe_new', {semestre: semestre}),
+      data: data,
+      processData: false,
+      contentType: false,
+      method: 'POST',
+      success: function () {
+        $('#groupes_semestre').empty().load(Routing.generate('administration_groupe_liste_semestre', {semestre: semestre}))
+        addCallout('Mise à jour du parcours associé au groupe', 'success')
+      }
+    })
+  } else {
+    addCallout('Veuillez remplir tous les champs obligatoires', 'danger')
+    if (document.getElementById('groupe_libelle').value.trim() === '') {
+      document.getElementById('groupe_libelle').classList.add('is-invalid')
+      document.getElementById('error_groupe_libelle').display = 'block'
+    } else {
+      document.getElementById('groupe_libelle').classList.remove('is-invalid')
+      document.getElementById('error_groupe_libelle').display = 'none'
     }
-  })
+    if (document.getElementById('groupe_ordre').value.trim() === '') {
+      document.getElementById('groupe_ordre').classList.add('is-invalid')
+      document.getElementById('error_groupe_ordre').display = 'block'
+
+    } else {
+      document.getElementById('groupe_ordre').classList.remove('is-invalid')
+      document.getElementById('error_groupe_ordre').display = 'none'
+
+    }
+  }
+
 })
 
 $(document).on('click', '#addTypeGroupe', function (e) {
   e.preventDefault()
-  const semestre = $(this).data('semestre')
-  $.ajax({
-    url: Routing.generate('administration_type_groupe_new', {semestre: semestre}),
-    data: {
-      libelle: $('#typegroupe_libelle').val(),
-      type: $('#typegroupe_type').val(),
-      defaut: $('#typegroupe_defaut').prop('checked')
-    },
-    method: 'POST',
-    success: function () {
-      $('#groupes_semestre').empty().load(Routing.generate('administration_groupe_liste_semestre', {semestre: semestre}))
-      $('#type_groupes_semestre').empty().load(Routing.generate('administration_type_groupe_liste_semestre', {semestre: semestre}))
-      addCallout('Ajout d\'un type de groupe', 'success')
-
+  if (document.getElementById('typegroupe_libelle').value.trim() !== '' &&
+    document.getElementById('typegroupe_type').value.trim() !== '') {
+    const semestre = $(this).data('semestre')
+    $.ajax({
+      url: Routing.generate('administration_type_groupe_new', {semestre: semestre}),
+      data: {
+        libelle: $('#typegroupe_libelle').val(),
+        type: $('#typegroupe_type').val(),
+        defaut: $('#typegroupe_defaut').prop('checked')
+      },
+      method: 'POST',
+      success: function () {
+        $('#groupes_semestre').empty().load(Routing.generate('administration_groupe_liste_semestre', {semestre: semestre}))
+        $('#type_groupes_semestre').empty().load(Routing.generate('administration_type_groupe_liste_semestre', {semestre: semestre}))
+        addCallout('Ajout d\'un type de groupe', 'success')
+      }
+    })
+  } else {
+    console.log(document.getElementById('typegroupe_type').value.trim())
+    addCallout('Veuillez remplir tous les champs obligatoires', 'danger')
+    if (document.getElementById('typegroupe_libelle').value.trim() === '') {
+      document.getElementById('typegroupe_libelle').classList.add('is-invalid')
+      document.getElementById('error_typegroupe_libelle').display = 'block'
+    } else {
+      document.getElementById('typegroupe_libelle').classList.remove('is-invalid')
+      document.getElementById('error_typegroupe_libelle').display = 'none'
     }
-  })
+    if (document.getElementById('typegroupe_type').value.trim() === '') {
+      document.getElementById('typegroupe_type').classList.add('is-invalid')
+      document.getElementById('error_typegroupe_type').display = 'block'
+
+    } else {
+      document.getElementById('typegroupe_type').classList.remove('is-invalid')
+      document.getElementById('error_typegroupe_type').display = 'none'
+    }
+  }
 })
 
 $(document).on('change', '.changeDefaut', function (e) {

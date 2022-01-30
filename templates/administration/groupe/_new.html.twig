@@ -9,10 +9,17 @@
         <table class="table table-borderless">
             <tbody>
             <tr>
-                <td>{{ form_row(form.libelle) }}</td>
-                <td>{{ form_row(form.ordre) }}</td>
+                <td>
+                    {{ form_row(form.libelle) }}
+                    <div class="invalid-feedback" id="error_groupe_libelle">Libellé du groupe obligatoire</div>
+                </td>
+                <td>{{ form_row(form.ordre) }}
+                    <div class="invalid-feedback" id="error_groupe_ordre">Ordre du groupe obligatoire</div>
+
+                </td>
                 <td>{{ form_row(form.parent) }}</td>
-                <td>{{ form_row(form.codeApogee) }}</td>
+                <td>{{ form_row(form.codeApogee) }}
+                </td>
                 <td>{{ form_row(form.typeGroupe) }}</td>
                 <td>{{ form_row(form.parcours) }}</td>
             </tr>
