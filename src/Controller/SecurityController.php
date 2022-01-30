@@ -36,38 +36,26 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SecurityController extends AbstractController
 {
-    /**
-     * @Route("/sso/redirect/cas", name="sso_cas")
-     */
+    #[Route(path: '/sso/redirect/cas', name: 'sso_cas')]
     public function redirectToCas(): RedirectResponse
     {
-        return $this->redirect('https://cas.univ-reims.fr/cas?service=' . $this->generateUrl('cas_return', [],
+        return $this->redirect('https://cas.univ-reims.fr/cas?service='.$this->generateUrl('cas_return', [],
                 UrlGeneratorInterface::ABSOLUTE_URL));
     }
 
-    /**
-     * @Route("/deconnexion", name="security_logout")
-     */
+    #[Route(path: '/deconnexion', name: 'security_logout')]
     public function logout(): RedirectResponse
     {
         return $this->redirectToRoute('security_login');
     }
 
     /**
-     * @Route("/connexion/mot-de-passe-perdu", name="security_password_lost")
-     *
      * @throws TransportExceptionInterface
      */
-    public function passwordLost(
-        Request $request,
-        TokenGeneratorInterface $tokenGenerator,
-        EntityManagerInterface $entityManager,
-        MailerFromTwig $myMailer,
-        PersonnelRepository $personnelRepository,
-        EtudiantRepository $etudiantRepository
-    ): Response {
+    #[Route(path: '/connexion/mot-de-passe-perdu', name: 'security_password_lost')]
+    public function passwordLost(Request $request, TokenGeneratorInterface $tokenGenerator, EntityManagerInterface $entityManager, MailerFromTwig $myMailer, PersonnelRepository $personnelRepository, EtudiantRepository $etudiantRepository): Response
+    {
         $submittedToken = $request->request->get('token');
-
         if ($request->isMethod('POST') && $this->isCsrfTokenValid('password-lost', $submittedToken)) {
             $email = $request->request->get('email');
 
@@ -95,7 +83,7 @@ class SecurityController extends AbstractController
             $url = $this->generateUrl('security_reset_password', ['token' => $token],
                 UrlGeneratorInterface::ABSOLUTE_URL);
             $myMailer->initEmail();
-            $myMailer->setTemplate('mails/passwordLost.txt.twig', ['url' => $url, 'user' => $user]);
+            $myMailer->setTemplate('mails/security/passwordLost.html.twig', ['url' => $url, 'user' => $user]);
             $myMailer->sendMessage([$user->getMailUniv()], 'Mot de passe perdu');
 
             return $this->render('security/passwordLostConfirm.html.twig');
@@ -105,50 +93,35 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/connexion/init-password/{user}", name="security_password_init", options={"expose"=true})
-     *
      * @throws TransportExceptionInterface
+     * @throws \Exception
      */
-    public function initPassword(
-        UserPasswordHasherInterface $passwordEncoder,
-        EntityManagerInterface $entityManager,
-        MailerFromTwig $mailerFromTwig,
-        Personnel $user
-    ): JsonResponse {
-        $password = mb_substr(md5(mt_rand()), 0, 10);
+    #[Route(path: '/connexion/init-password/{user}', name: 'security_password_init', options: ['expose' => true])]
+    public function initPassword(UserPasswordHasherInterface $passwordEncoder, EntityManagerInterface $entityManager, MailerFromTwig $mailerFromTwig, Personnel $user): JsonResponse
+    {
+        $password = mb_substr(md5(time()), 0, 10);
         $passwordEncode = $passwordEncoder->hashPassword($user, $password);
-
         $user->setPassword($passwordEncode);
         $entityManager->flush();
-
         $mailerFromTwig->initEmail();
-        $mailerFromTwig->setTemplate('mails/security/initPassword.txt.twig', [
-            'personnel' => $user,
-            'password' => $password,
-        ]);
-        $mailerFromTwig->sendMessage($user->getMails(), 'Initialisation de votre compte');
-
-        $mailerFromTwig->initEmail();
-        $mailerFromTwig->setTemplate('mails/security/initLogin.txt.twig', [
-            'personnel' => $user,
-        ]);
-
-        $mailerFromTwig->sendMessage($user->getMails(), 'Confirmation de votre Login');
+//        $mailerFromTwig->setTemplate('mails/security/initPassword.txt.twig', [
+//            'personnel' => $user,
+//            'password' => $password,
+//        ]);
+//        $mailerFromTwig->sendMessage($user->getMails(), 'Initialisation de votre compte');
+//
+//        $mailerFromTwig->initEmail();
+//        $mailerFromTwig->setTemplate('mails/security/initLogin.txt.twig', [
+//            'personnel' => $user,
+//        ]);
+//        $mailerFromTwig->sendMessage($user->getMails(), 'Confirmation de votre Login');
 
         return $this->json(true);
     }
 
-    /**
-     * @Route("/connexion/reset-password/{token}", name="security_reset_password")
-     */
-    public function resetPassword(
-        Request $request,
-        string $token,
-        PersonnelRepository $personnelRepository,
-        EtudiantRepository $etudiantRepository,
-        UserPasswordHasherInterface $passwordEncoder,
-        EntityManagerInterface $entityManager
-    ): Response {
+    #[Route(path: '/connexion/reset-password/{token}', name: 'security_reset_password')]
+    public function resetPassword(Request $request, string $token, PersonnelRepository $personnelRepository, EtudiantRepository $etudiantRepository, UserPasswordHasherInterface $passwordEncoder, EntityManagerInterface $entityManager): Response
+    {
         if ($request->isMethod('POST')) {
             $etudiant = $etudiantRepository->findOneBy(['resetToken' => $token]);
             $personnel = $personnelRepository->findOneBy(['resetToken' => $token]);
@@ -175,46 +148,37 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/change-departement/{departement}", name="security_change_departement")
      * @ParamConverter("departement", options={"mapping": {"departement": "uuid"}})
      */
-    public function changeDepartement(
-        Request $request,
-        RequestStack $session,
-        Departement $departement
-    ): Response {
+    #[Route(path: '/change-departement/{departement}', name: 'security_change_departement')]
+    public function changeDepartement(Request $request, RequestStack $session, Departement $departement): Response
+    {
         $session->getSession()->set('departement', $departement->getUuidString());
 
         return $this->redirect($request->headers->get('referer'));
     }
 
-    /**
-     * @Route("/choix-departement", name="security_choix_departement")
-     */
+    #[Route(path: '/choix-departement', name: 'security_choix_departement')]
     public function choixDepartement(
-        TranslatorInterface $translator,
-        FlashBagInterface $flashBag,
-        RequestStack $session,
-        Request $request,
-        PersonnelDepartementRepository $personnelDepartementRepository
-    ): Response {
+        EntityManagerInterface $entityManager,
+        TranslatorInterface $translator, FlashBagInterface $flashBag, RequestStack $session, Request $request, PersonnelDepartementRepository $personnelDepartementRepository): Response
+    {
         $user = $this->getUser();
         $departements = $personnelDepartementRepository->findByPersonnel($user);
         $update = null;
         if ('POST' === $request->getMethod()) {
             foreach ($departements as $departement) {
                 if (null !== $departement->getDepartement()) {
-                    if ($departement->getDepartement()->getId() !== (int)$request->request->get('departement')) {
+                    if ($departement->getDepartement()->getId() !== (int) $request->request->get('departement')) {
                         $departement->setDefaut(false);
-                    } elseif ($departement->getDepartement()->getId() === (int)$request->request->get('departement')) {
+                    } elseif ($departement->getDepartement()->getId() === (int) $request->request->get('departement')) {
                         $departement->setDefaut(true);
                         $update = $departement;
                     }
                 }
             }
 
-            $em = $this->getDoctrine()->getManager();
-            $em->flush();
+            $entityManager->flush();
             if (null !== $update && null !== $update->getDepartement()) {
                 $flashBag->add(Constantes::FLASHBAG_SUCCESS, $translator->trans('formation.par.defaut.sauvegarde'));
                 $session->getSession()->set('departement', $update->getDepartement()->getUuid()); //on sauvegarde
@@ -232,10 +196,7 @@ class SecurityController extends AbstractController
             ['departements' => $departements, 'user' => $user]);
     }
 
-    /**
-     * @Route("/connexion/{message}", name="security_login")
-     *
-     */
+    #[Route(path: '/connexion/{message}', name: 'security_login')]
     public function login(AuthenticationUtils $authenticationUtils, string $message = ''): Response
     {
         return $this->render('security/login.html.twig',
