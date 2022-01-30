@@ -104,17 +104,17 @@ class SecurityController extends AbstractController
         $user->setPassword($passwordEncode);
         $entityManager->flush();
         $mailerFromTwig->initEmail();
-//        $mailerFromTwig->setTemplate('mails/security/initPassword.txt.twig', [
-//            'personnel' => $user,
-//            'password' => $password,
-//        ]);
-//        $mailerFromTwig->sendMessage($user->getMails(), 'Initialisation de votre compte');
-//
-//        $mailerFromTwig->initEmail();
-//        $mailerFromTwig->setTemplate('mails/security/initLogin.txt.twig', [
-//            'personnel' => $user,
-//        ]);
-//        $mailerFromTwig->sendMessage($user->getMails(), 'Confirmation de votre Login');
+        $mailerFromTwig->setTemplate('mails/security/initPassword.txt.twig', [
+            'personnel' => $user,
+            'password' => $password,
+        ]);
+        $mailerFromTwig->sendMessage($user->getMails(), 'Initialisation de votre compte');
+
+        $mailerFromTwig->initEmail();
+        $mailerFromTwig->setTemplate('mails/security/initLogin.txt.twig', [
+            'personnel' => $user,
+        ]);
+        $mailerFromTwig->sendMessage($user->getMails(), 'Confirmation de votre Login');
 
         return $this->json(true);
     }
