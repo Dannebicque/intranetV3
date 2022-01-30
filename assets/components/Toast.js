@@ -44,7 +44,7 @@ class Toast {
   }
 
   error (text, title = null, options = {}) {
-    this.createAndShow('error', text, title, options)
+    this.createAndShow('danger', text, title, options)
   }
 
   warning (text, title = null, options = {}) {
