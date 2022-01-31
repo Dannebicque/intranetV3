@@ -13,6 +13,7 @@ use App\Entity\QuestionnaireQualite;
 use App\Entity\Semestre;
 use App\Form\Type\CarbonDateTimeType;
 use App\Form\Type\CollectionStimulusType;
+use App\Form\Type\DatePickerType;
 use App\Form\Type\EntityCompleteType;
 use App\Repository\SemestreRepository;
 use Symfony\Component\Form\AbstractType;
@@ -58,13 +59,15 @@ class QuestionnaireQualiteType extends AbstractType
                 },
                 'help' => 'Semestre concerné par l\'enquête.',
             ])
-            ->add('dateOuverture', CarbonDateTimeType::class, [
+            ->add('dateOuverture', DatePickerType::class, [
                 'label' => 'label.dateOuverture',
+                'enable_time' => true,
                 'required' => false,
                 'help' => 'Date d\'ouverture du questionnaire. Peut être complété par la suite.',
             ])
-            ->add('dateFermeture', CarbonDateTimeType::class, [
+            ->add('dateFermeture', DatePickerType::class, [
                 'label' => 'label.dateFermeture',
+                'enable_time' => true,
                 'required' => false,
                 'help' => 'Date de fermeture du questionnaire. Peut être complété par la suite.',
             ])
