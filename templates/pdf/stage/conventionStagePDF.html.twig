@@ -133,7 +133,7 @@
                 <p>Dates du stage : Du {{ proposition.dateDebutStage|date('d/m/Y') }}
                    Au {{ proposition.dateFinStage|date('d/m/Y') }}</p>
                 <p>Représentant une <strong>durée totale</strong> de : {{ (proposition.dureeJoursStage/5)
-                    |number_format(0) }}
+                    |round(0, 'ceil') }}
                    semaines/
                     <s>mois</s>
                    (rayer la
