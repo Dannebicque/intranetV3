@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.5.11](https://github.com/Dannebicque/intranetV3/compare/v3.5.10...v3.5.11) (2022-01-31)
+
+
+### Bug Fixes
+
+* [Abs. Justificatifs] Amélioration lisibilité ([6c4eac2](https://github.com/Dannebicque/intranetV3/commit/6c4eac2fb7824b825e565aecfa151c229bdf4340))
+* [Absences] Bouton d'export ([2420063](https://github.com/Dannebicque/intranetV3/commit/2420063a0fb8f51db0ac9219c18a78e2a6f0f69d))
+* [Applications] Nettoyage menu avec les fonctionnalités non implémentées ([880d571](https://github.com/Dannebicque/intranetV3/commit/880d57106f8ae186bf003b64ce8dff848db6eddf))
+* [Breadcrumbs] Ajout du picto sur le premier lien ([fb893c6](https://github.com/Dannebicque/intranetV3/commit/fb893c6b134b1c3e08d2965549bdee293ad4b302))
+* [EDT] Cas du BUT ([1b89bcb](https://github.com/Dannebicque/intranetV3/commit/1b89bcb780a1122701f5cb1849902566e106e33b))
+* [EDT] Export uniqument des semestres actifs ([0b13c43](https://github.com/Dannebicque/intranetV3/commit/0b13c4376488becf745bd62618f5d5702c650662))
+* [EDT] Import ([6a12053](https://github.com/Dannebicque/intranetV3/commit/6a1205368f2956555a203e7df101971fead3707c))
+* [Enquete] Correctif enregistrement du prévisionnel ([5b6881a](https://github.com/Dannebicque/intranetV3/commit/5b6881a8db7c520002d7c3cccb15bb60682c47d3))
+* [Enquete] Division par 0 ([5ca7353](https://github.com/Dannebicque/intranetV3/commit/5ca7353e66f1190f8574c3bac088c53200a3c5b4))
+* [Enquete] Mail automatique à J-2 ([68e15c0](https://github.com/Dannebicque/intranetV3/commit/68e15c07150a079d6bb52963820819da0f4a23b1))
+* [Extension TWIG] Problème de conversion ([a75f09d](https://github.com/Dannebicque/intranetV3/commit/a75f09de7c4e60c2af2464845c7739f383665966))
+* [FinSemestre] Bouton pour tout cocher. ([65744a2](https://github.com/Dannebicque/intranetV3/commit/65744a2db5fef73dba8a6eec9690984490dc54d9))
+* [Groupe] Amélioration des messages d'erreurs et des formulaires ([9866f2a](https://github.com/Dannebicque/intranetV3/commit/9866f2abaa1b27cbb238300128a68d40b3ec9103))
+* [JS] Nettoyage des Date/TimeType, et suppression du composant pour compatibilité avec Safari (is ne fonctionne pas) ([c2cfe14](https://github.com/Dannebicque/intranetV3/commit/c2cfe14dea58a6d0ffa0a7109842a868c4dbd739))
+* [Password] Correctifs sur l'initialisation d'un compte ([f938b75](https://github.com/Dannebicque/intranetV3/commit/f938b756dd2ecc0d9406c75c4e6ced54e5fe02f1))
+* [Password] Correctifs sur la gestion du mot de passe perdu. ([4e85e71](https://github.com/Dannebicque/intranetV3/commit/4e85e71918eb271a3dd8aef2620869c9b2ab2e62))
+* [Repository] Refactoring ([776cfa3](https://github.com/Dannebicque/intranetV3/commit/776cfa3bd635853c59142a03e52ec2fe62f10070))
+* [Settings] Changement d'année également pour le super Admin ([3111a64](https://github.com/Dannebicque/intranetV3/commit/3111a6472eb2315eeb187101341ac3e5d03d07b4))
+* [SousComm] Correctif de la publication ([4f9fa0d](https://github.com/Dannebicque/intranetV3/commit/4f9fa0d598d6a3116bc7e53ea07fa470391bb937))
+* [SScomm] Bonification sur 20 ([1b0e8d0](https://github.com/Dannebicque/intranetV3/commit/1b0e8d075100e35456db06cf339cbcc329433a91))
+* [Toast] Couleur pour "danger" ([5dff45a](https://github.com/Dannebicque/intranetV3/commit/5dff45a355e49fdd7aeec52124b0e1049694cf16))
+* [Traduction] Ajout de trad manquantes ([a9f581d](https://github.com/Dannebicque/intranetV3/commit/a9f581dc960ad95fc884bf5473d11763a30e8806))
+
 ### [3.5.10](https://github.com/Dannebicque/intranetV3/compare/v3.5.9...v3.5.10) (2022-01-22)
 
 
