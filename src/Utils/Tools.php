@@ -27,6 +27,7 @@ abstract class Tools
      */
     public static function convertDateToObject(string $date): CarbonInterface
     {
+        $date = trim($date);
         if (!str_contains($date, '/')) {
             $d = Carbon::createFromFormat('Y-m-d', $date);
         } else {
@@ -41,6 +42,8 @@ abstract class Tools
      */
     public static function convertTimeToObject(string $heure): CarbonInterface
     {
+        $heure = trim($heure);
+
         return Carbon::createFromTimeString($heure);
     }
 
