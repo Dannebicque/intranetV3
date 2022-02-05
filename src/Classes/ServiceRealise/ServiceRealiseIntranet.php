@@ -30,7 +30,7 @@ class ServiceRealiseIntranet implements ServiceRealiseInterface
 
     public function getServiceRealiseParMatiere(int $idMatiere, string $type): array
     {
-        $events = $this->edtPlanningRepository->findBy(['matiere' => $idMatiere, 'typeMatiere' => $type],
+        $events = $this->edtPlanningRepository->findBy(['idMatiere' => $idMatiere, 'typeMatiere' => $type],
             ['semaine' => 'ASC', 'jour' => 'ASC', 'debut' => 'ASC']);
         $tabEvent = [];
         foreach ($events as $event) {
@@ -81,7 +81,7 @@ class ServiceRealiseIntranet implements ServiceRealiseInterface
         $ev->jour = $date->dayName;
         $ev->duree = $event->getDureeInt();
         $ev->date = $date->isoFormat('L');
-        $ev->heure = Constantes::TAB_HEURES[$event->getDebut()] . ' à ' . Constantes::TAB_HEURES[$event->getFin()];//todo: gérer la convesion... et pas l'affichage ici. Vérifier le template
+        $ev->heure = Constantes::TAB_HEURES[$event->getDebut()].' à '.Constantes::TAB_HEURES[$event->getFin()]; //todo: gérer la convesion... et pas l'affichage ici. Vérifier le template
         //$ev->matiere = null !== $event->getMatiere() ? $event->getMatiere()->getDisplay() : $event->getTexte();
         $ev->typeIdMatiere = $event->getTypeIdMatiere();
         $ev->type_cours = $event->getType();
@@ -90,7 +90,7 @@ class ServiceRealiseIntranet implements ServiceRealiseInterface
         return $ev;
     }
 
-    public function statistiques(array $chronologique)
+    public function statistiques(array $chronologique): array
     {
         $tab['nbCM'] = 0;
         $tab['nbTD'] = 0;
@@ -103,8 +103,8 @@ class ServiceRealiseIntranet implements ServiceRealiseInterface
 
         /** @var EvenementEdt $event */
         foreach ($chronologique as $event) {
-            ++$tab['nb' . $event->type_cours];
-            $tab['nbH' . $event->type_cours] += $event->duree;
+            ++$tab['nb'.$event->type_cours];
+            $tab['nbH'.$event->type_cours] += $event->duree;
             ++$tab['total'];
             $tab['totalH'] += $event->duree;
         }
