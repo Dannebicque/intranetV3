@@ -199,7 +199,7 @@ class AbsenceJustificatifTableType extends TableType
 //                }
 
                 if (isset($formData['etat_demande'])) {
-                    $qb->andWhere('e.etat_demande = :etat_demande');
+                    $qb->andWhere('e.etat = :etat');
                     $qb->setParameter('etat', $formData['etat_demande']);
                 }
             },
