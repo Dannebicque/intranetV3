@@ -44,7 +44,7 @@ class ServiceRealiseIntranet implements ServiceRealiseInterface
     {
         $events = $this->edtPlanningRepository->findBy([
             'intervenant' => $personnel->getId(),
-            'matiere' => $idMatiere,
+            'idMatiere' => $idMatiere,
             'typeMatiere' => $type,
         ],
             ['semaine' => 'ASC', 'jour' => 'ASC', 'debut' => 'ASC']);
