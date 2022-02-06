@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.5.12](https://github.com/Dannebicque/intranetV3/compare/v3.5.11...v3.5.12) (2022-02-06)
+
+
+### Bug Fixes
+
+* [Absence Justificat] Typo dans le filtre ([a5c94ca](https://github.com/Dannebicque/intranetV3/commit/a5c94ca3c2daf50700fef5d21ee8b00773a254e2))
+* [Borne] CM ne s'affiche pas ([64cf3b7](https://github.com/Dannebicque/intranetV3/commit/64cf3b753c9c98ceb0a2393737eb51865c569958))
+* [Enquete] Changement du picker DateTime ([4718b75](https://github.com/Dannebicque/intranetV3/commit/4718b752f015ce61cc72b6f39a49964765b9c1fa))
+* [Previ] Typo dans l'id matiere ([046c61b](https://github.com/Dannebicque/intranetV3/commit/046c61bf004937e83d4db1f2d5d9aa9388ac807c))
+* [Stage] Arrondi supérieur nombre de semaines ([97f75f3](https://github.com/Dannebicque/intranetV3/commit/97f75f34e32c76d83e0125d42273bff8bc3d98e7))
+* [tools] trim des datas ([ce191a2](https://github.com/Dannebicque/intranetV3/commit/ce191a29807528b3fddacdb5059356048e17b8a0))
+
 ### [3.5.11](https://github.com/Dannebicque/intranetV3/compare/v3.5.10...v3.5.11) (2022-01-31)
 
 
