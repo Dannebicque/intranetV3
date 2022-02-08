@@ -58,7 +58,9 @@ class SecurityController extends AbstractController
         $submittedToken = $request->request->get('token');
         if ($request->isMethod('POST') && $this->isCsrfTokenValid('password-lost', $submittedToken)) {
             $email = $request->request->get('email');
-
+            if ('' === trim($email) || false === filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                return $this->redirectToRoute('security_login', ['message' => 'Vous devez saisir un email valide']);
+            }
             $etudiant = $etudiantRepository->findOneBy(['mailUniv' => $email]);
             $personnel = $personnelRepository->findOneBy(['mailUniv' => $email]);
             $user = null;
