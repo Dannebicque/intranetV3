@@ -22,13 +22,11 @@
                 <div class="form-group">
                     <label for="absence-date">{{ 'date_'|trans }}</label>
                     <div class="input-group">
-                        <input type="text" class="form-control"
-                               is="my-datepicker"
+                        <input type="date" class="form-control"
                                id="absence-date"
-                               value="{% if event != null and event.dateObjet != null %}{{ event.dateObjet|date
-                                   ('d/m/Y') }}
-                                {% else %}
-                                {{ date("now")|date('d/m/Y') }}{% endif %}">
+                               value="{%- if event != null and event.dateObjet != null -%}{{- event.dateObjet|date('Y-m-d') -}}
+{%- else -%}
+{{- date("now")|date('Y-m-d') -}}{%- endif -%}">
                         <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                     </div>
                 </div>
@@ -43,12 +41,12 @@
                         {% for i in 08..19 %}
                             <option value="{{ i|formatHeure }}:00" {% if event != null and i|formatHeure~':00' ==
                                 event.heureDebut|date('H:i') %} selected {% endif %}>
-                                {{ i|formatHeure }}h00
+                                {{- i|formatHeure }}h00
                             </option>
                             <option value="{{ i|formatHeure }}:15" {% if event != null and
                                 i|formatHeure~':15'
                                 == event.heureDebut|date('H:i') %} selected {% endif %}>
-                                {{ i|formatHeure }}h15
+                                {{- i|formatHeure }}h15
                             </option>
                             <option value="{{ i|formatHeure }}:30" {% if event != null and  i|formatHeure~':30' == event.heureDebut|date('H:i') %} selected {% endif %}>
                                 {{ i|formatHeure }}h30
