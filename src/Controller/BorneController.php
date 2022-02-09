@@ -50,7 +50,7 @@ class BorneController extends AbstractController
     /**
      * @throws \App\Exception\SemestreNotFoundException
      */
-    #[Route(path: '/borne2/{nbBorne}', name: 'borne2')]
+    #[Route(path: '/borne-edt/{numBorne}', name: 'borne2')]
     public function borne(TypeMatiereManager $typeMatiereManager, MyEdtBorne $myEdtBorne, int $numBorne = 1): Response
     {
         $nbBornes = [
