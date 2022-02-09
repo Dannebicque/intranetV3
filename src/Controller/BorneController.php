@@ -21,6 +21,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class BorneController extends AbstractController
 {
     #[Route(path: '/borne/{semestre1}/{semestre2}', name: 'borne')]
+
     /** @deprecated */
     public function index(
         TypeMatiereManager $typeMatiereManager,
@@ -54,13 +55,13 @@ class BorneController extends AbstractController
     {
         $nbBornes = [
             1 => [
-                'zone1' => ['type' => 'semestre', 'valeur' => 79],
-                'zone2' => ['type' => 'semestre', 'valeur' => 10],
+                'zone1' => ['type' => 'semestre', 'valeur' => 80],
+               // 'zone2' => ['type' => 'semestre', 'valeur' => 10],
                 'zone3' => ['type' => 'message', 'valeur' => Borne::class],
             ],
             2 => [
-                'zone1' => ['type' => 'semestre', 'valeur' => 79],
-                'zone2' => ['type' => 'semestre', 'valeur' => 5],
+                'zone1' => ['type' => 'semestre', 'valeur' => 6],
+               // 'zone2' => ['type' => 'semestre', 'valeur' => 5],
                 // 'zone2' => ['type' => 'message', 'valeur' => Message::class],
                 'zone3' => ['type' => 'message', 'valeur' => Borne::class],
             ],
@@ -87,7 +88,7 @@ class BorneController extends AbstractController
 
         $response = new Response();
         $response->headers->set('Access-Control-Allow-Origin', '*');
-        $content = $this->render('borne/index2.html.twig', [
+        $content = $this->renderView('borne/index2.html.twig', [
             'zones' => $zones,
             'tabHeures' => Constantes::TAB_HEURES_EDT_2,
         ]);

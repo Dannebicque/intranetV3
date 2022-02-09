@@ -1,8 +1,4 @@
-{% extends 'base.html.twig' %}
-
-{% block meta %}
-    <meta http-equiv="refresh" content="900">
-{% endblock %}
+{% extends 'base-bornes.html.twig' %}
 
 {% block full_body %}
     <!-- CONTENEUR 1080PX -->
@@ -150,10 +146,12 @@
         <!--Footer-->
         <section style="width:100%; text-align: center">
             <div style="width:25%; text-align: center; float: left">
-                <img src="{{ asset('upload/logo/'~settings('LOGO_IUT')) }}" alt="logo IUT" width="100px"/>
+                <img src="{{ absolute_url(asset('upload/logo/'~settings('LOGO_IUT'))) }}" alt="logo IUT"
+                     width="100px"/>
             </div>
             <div style="width:25%; text-align: center; float: left">
-                <img src="{{ asset('upload/logo/'~settings('LOGO_UNIVERSITE')) }}" alt="logo Université" width="100px"/>
+                <img src="{{ absolute_url(asset('upload/logo/'~settings('LOGO_UNIVERSITE'))) }}" alt="logo Université"
+                     width="100px"/>
             </div>
             <div style="width:25%; text-align: center; float: left; padding-top: 20px">
                 <svg version="1.1" id="Calque_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
@@ -549,9 +547,13 @@
 {% endblock %}
 
 {% block javascripts %}
-    {{ encore_entry_script_tags('borne') }}
+    {% for path in encore_entry_js_files('borne') %}
+        <script src="{{ absolute_url(path) }}"></script>
+    {% endfor %}
 {% endblock %}
 
 {% block stylesheets %}
-    {{ encore_entry_link_tags('borne') }}
+    {% for path in encore_entry_css_files('borne') %}
+        <link rel="stylesheet" href="{{ absolute_url(path) }}">
+    {% endfor %}
 {% endblock %}
