@@ -14,7 +14,7 @@
     "css-loader": "^6.5.1",
     "file-loader": "^6.0.0",
     "jquery": "^3.5.1",
-    "node-sass": "^6.0.1",
+    "node-sass": "^7.0.0",
     "perfect-scrollbar": "^1.5.0",
     "regenerator-runtime": "^0.13.9",
     "sass-loader": "^12.3.0",
