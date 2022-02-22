@@ -26,7 +26,7 @@
                     </p>
                 </div>
                 <div class="col-sm-3">
-                    <a href="" class="btn btn-info"
+                    <a href="{{ path('user_profil', {type: 'etudiant', slug: etudiant.slug}) }}" class="btn btn-info"
                        data-bs-toggle="tooltip" data-bs-placement="bottom" title="Voir le profil" target="_blank"><i
                                 class="fa fa-eye"></i></a>
                     <a href="{{ path('sadm_etudiant_edit', {id:etudiant.id}) }}" class="btn btn-warning" data-bs-toggle="tooltip" data-bs-placement="bottom"

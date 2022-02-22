@@ -25,29 +25,22 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class ScolariteController.
- *
- * @Route("/administratif/etudiants")
  */
+#[Route(path: '/administratif/etudiants')]
 class EtudiantController extends BaseController
 {
-    /**
-     * @Route("/", name="sa_etudiant_index")
-     */
+    #[Route(path: '/', name: 'sa_etudiant_index')]
     public function index(): Response
     {
         return $this->render('super-administration/etudiant/index.html.twig', []);
     }
 
     /**
-     * @Route("/importer", name="sa_etudiant_importer")
-     *
      * @throws Exception
      */
-    public function importerListeEtudiant(
-        SemestreRepository $semestreRepository,
-        MyEtudiants $myEtudiants,
-        Request $request
-    ): RedirectResponse {
+    #[Route(path: '/importer', name: 'sa_etudiant_importer')]
+    public function importerListeEtudiant(SemestreRepository $semestreRepository, MyEtudiants $myEtudiants, Request $request): RedirectResponse
+    {
         $semestre = $semestreRepository->find($request->request->get('importer_etudiant_semestre'));
         if (null !== $semestre) {
             $myEtudiants->importListeCsv($request->files->get('fichier_import'), $semestre);
@@ -55,25 +48,17 @@ class EtudiantController extends BaseController
 
             return $this->redirectToRoute('sa_etudiant_index');
         }
-
         $this->addFlashBag('error', 'import.fichier.csv.error');
 
         return $this->redirectToRoute('sa_etudiant_index');
     }
 
-    /**
-     * @Route("/recherche/{needle}", name="sa_etudiant_recherche", options={"expose"=true})
-     *
-     */
-    public function rechercheEtudiants(
-        SemestreRepository $semestreRepository,
-        DepartementRepository $departementRepository,
-        EtudiantRepository $etudiantRepository,
-        string $needle
-    ): Response {
+    #[Route(path: '/recherche/{needle}', name: 'sa_etudiant_recherche', options: ['expose' => true])]
+    public function rechercheEtudiants(SemestreRepository $semestreRepository, DepartementRepository $departementRepository, EtudiantRepository $etudiantRepository, string $needle): Response
+    {
         $etudiants = $etudiantRepository->searchScolarite($needle);
 
-        return $this->render('super-administration/etudiant/recherche.html.twig', [
+        return $this->render('super-administration/etudiant/_recherche.html.twig', [
             'etudiants' => $etudiants,
             'departements' => $departementRepository->findActifs(),
             'semestres' => $semestreRepository->findAll(),
