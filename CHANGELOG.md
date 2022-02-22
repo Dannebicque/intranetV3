@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.5.13](https://github.com/Dannebicque/intranetV3/compare/v3.5.12...v3.5.13) (2022-02-22)
+
+
+### Features
+
+* [Borne] Nouvelles bornes ([439e1af](https://github.com/Dannebicque/intranetV3/commit/439e1af46697c7084c3fd591030a29f417cf004b))
+* [Borne] Nouvelles bornes ([0c3c403](https://github.com/Dannebicque/intranetV3/commit/0c3c403d50c55360114da242473af544ac3a7ea9))
+
+
+### Bug Fixes
+
+* [Absence] Datepicker corrigé + espaces ([0a14b9c](https://github.com/Dannebicque/intranetV3/commit/0a14b9c71593f9cfd5a000a83bcc54ecbef0c714))
+* [Log] Suppression des deprecated des logs ([2ea1c93](https://github.com/Dannebicque/intranetV3/commit/2ea1c93c9f0048772b77ac3149e8ddaef18cb2fc))
+* [PasswordLost] Bug erreur de mail. ([c91e5f4](https://github.com/Dannebicque/intranetV3/commit/c91e5f482b60c908ac7cb1098c8b6828de8322f9))
+* [Previ] fix typo ([d9a467e](https://github.com/Dannebicque/intranetV3/commit/d9a467e91d47e90de5ae4aad175aa253ee3ad784))
+* [Scolarite] Profil des étudiants depuis le super Admin ([59e9433](https://github.com/Dannebicque/intranetV3/commit/59e94334f8f8ef62663441a5451cce5ab799760e))
+
 ### [3.5.12](https://github.com/Dannebicque/intranetV3/compare/v3.5.11...v3.5.12) (2022-02-06)
 
 

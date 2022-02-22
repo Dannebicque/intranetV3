@@ -2,7 +2,7 @@
   "devDependencies": {
     "@babel/core": "^7.12.3",
     "@babel/preset-env": "^7.14.2",
-    "@fortawesome/fontawesome-pro": "^6.0.0-beta2",
+    "@fortawesome/fontawesome-pro": "^6.0.0",
     "@hotwired/stimulus": "^3.0.0",
     "@popperjs/core": "^2.10.2",
     "@symfony/stimulus-bridge": "^3.0",
@@ -47,7 +47,7 @@
     "unreleased": true,
     "commitLimit": false
   },
-  "version": "3.5.12",
+  "version": "3.5.13",
   "author": "David Annebicque",
   "name": "intranetv3",
   "repository": {
