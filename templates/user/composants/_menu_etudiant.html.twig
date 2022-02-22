@@ -9,8 +9,8 @@
     <a class="nav-link changeprofil {% if onglet == 'notes' %}active{% endif %}"
        href="{{ path('profil_etudiant_notes', {slug: user.slug}) }}"
        id="profil-notes">{{ 'tab.notes'|trans }}</a>
-    {% if (user.semestre.diplome.typeDiplome.apc == true and is_granted('ROLE_PERMANENT')) or (is_granted
-        ('ROLE_ETUDIANT') and user.semestre.optBilanSemestre == true ) %}
+    {% if (user.semestre.diplome.typeDiplome.apc == true and (is_granted('ROLE_PERMANENT') or is_granted
+        ('ROLE_SCOLARITE') or is_granted('ROLE_SUPER_ADMIN'))) or (is_granted('ROLE_ETUDIANT') and user.semestre.optBilanSemestre == true ) %}
         <a class="nav-link changeprofil {% if onglet == 'apc' %}active{% endif %}"
            href="{{ path('profil_etudiant_apc', {slug: user.slug}) }}"
            id="profil-notes">{{ 'tab.apc_notes'|trans }}</a>
@@ -29,8 +29,7 @@
     <a class="nav-link changeprofil" href="{{ path('profil_etudiant_about', {slug: user.slug}) }}"
        id="profil-about">{{ 'tab.a-propos'|trans }}</a>
 
-    {% if (user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE')  or user_data
-        .isGoodDepartement('ROLE_ASS')) %}
+    {% if (user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE')  or user_data.isGoodDepartement('ROLE_ASS')) %}
         <a class="nav-link changeprofil" href="{{ path('profil_etudiant_action', {slug: user.slug}) }}"
            id="profil-actions">{{ 'tab.actions'|trans }}</a>
     {% endif %}
