@@ -746,10 +746,13 @@ atitle:
   agenda: 'Retour à l''emploi du temps'
   ajouter_article: __ ajouter_article
   annuler: Annuler
+  apercu: Aperçu
   basculer.sous_comm_travail: 'Basculer vers la sous-commission de travail (editable)'
   board: Board
   changer.semestre: 'Changer de semestre'
   code_celcat: 'Code Ceclat'
+  configurer: 'Configurer'
+  vider: 'Vider les réponses'
   comparer_par_matiere: 'Comparer par matière'
   comparer_par_personnels: 'Comparer par enseignant'
   creer_nouveau_document: 'Créer un nouveau document'
@@ -758,6 +761,7 @@ atitle:
   deposer_nouvel_evenement: 'Déposer un nouvel événement'
   deposer_nouvelle_actualite: 'Déposer une nouvelle actualité'
   desactiver: Désactiver
+  deverouiller: Dévérouiller
   details: Détails
   dupliquer: Dupliquer
   emprunt_accepte: 'Emprunt accepté'
@@ -843,6 +847,7 @@ atitle:
   update_events: 'Forcer la Mise à jour les événements depuis Celcat'
   voir_fichier: 'Voir fichier'
   voir: Voir
+  voir_modifier: Voir et Modifier
   service_chronologique: 'Service Chronologique'
   basculer.sous_comm_live: 'Basculer vers la sous-commission en temps réel'
   referentiel: 'messages'
