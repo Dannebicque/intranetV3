@@ -24,7 +24,7 @@ class CheckBoxColumnType extends ColumnType
         $this->translator = $translator;
     }
 
-    public function render($rowData, array $options): string
+    public function render(mixed $rowData, array $options): string
     {
         return '<div class="form-check"><input class="form-check-input position-static" type="checkbox"></div>';
     }

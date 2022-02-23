@@ -22,7 +22,7 @@ class SemestresAvecActifColumnType extends ColumnType
         $this->router = $router;
     }
 
-    public function render($rowData, array $options): string
+    public function render(mixed $rowData, array $options): string
     {
         if (null === $rowData) {
             return 'err';

@@ -24,20 +24,18 @@ class SectionQualiteEntityAdapter
             $section->getSection()->getId(),
             $section->getId(),
             $section->getOrdre(),
+            $section->getQuestionnaireQualite()->getId(),
             $section->getSection()->getTextExplicatif(),
             $section->getSection()->getConfig(),
-            $section->getConfig(),
-            $section->getQuestionnaireQualite()->getId()
+            $section->getConfig()
+
         );
 
         $this->section->setQuestions($section->getSection()->getQualiteSectionQuestions());
-
     }
 
     public function getSection(): Section
     {
         return $this->section;
     }
-
-
 }

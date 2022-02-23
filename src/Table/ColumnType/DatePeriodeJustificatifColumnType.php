@@ -14,7 +14,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class DatePeriodeJustificatifColumnType extends PropertyColumnType
 {
-    public function renderProperty($value, array $options): string
+    public function renderProperty(mixed $value, array $options): string
     {
         return 'Du '.$value['dateHeureDebut']->format('d/m/Y H:i').' au '.$value['dateHeureFin']->format('d/m/Y H:i');
     }

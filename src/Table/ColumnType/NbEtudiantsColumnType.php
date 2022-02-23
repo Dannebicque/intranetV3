@@ -14,7 +14,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class NbEtudiantsColumnType extends PropertyColumnType
 {
-    public function renderProperty($value, array $options): string
+    public function renderProperty(mixed $value, array $options): string
     {
         $effectifs = $options['effectifs'];
         if (array_key_exists($value, $effectifs)) {

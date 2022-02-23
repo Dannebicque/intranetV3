@@ -59,7 +59,7 @@ class QuestionnaireRenderer
         return $this->twig->render($section->getTemplate(), $this->viewSection($section));
     }
 
-    private function viewSection(AbstractSection $section)
+    private function viewSection(AbstractSection $section): array
     {
         $options = $section->getOptions();
 
@@ -67,7 +67,7 @@ class QuestionnaireRenderer
         $vars['options'] = $options;
         $vars['idQuestionnaire'] = $section->questionnaire_id;
         $vars['etudiant'] = $section->etudiant_id;
+
         return $vars;
     }
-
 }

@@ -9,9 +9,8 @@
 
 namespace App\Components\Questionnaire\TypeQuestion;
 
-
 use App\Components\Questionnaire\Adapter\ReponseEntityAdapter;
-use App\Components\Questionnaire\Form\QuestionnaireQuestionTypeQcu;
+use App\Entity\QuestionnaireQuestion;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TypeChainee extends AbstractQuestion
@@ -29,13 +28,14 @@ class TypeChainee extends AbstractQuestion
         $resolver->setDefault('block_name', 'type_chainee');
     }
 
-    public function getQuestions($question) {
+    public function getQuestions(QuestionnaireQuestion $question): void
+    {
         foreach ($question->getQuestionsEnfants() as $quest) {
             $this->questions[] = $quest;
         }
     }
 
-    public function getOrGenereReponses($question)
+    public function getOrGenereReponses(QuestionnaireQuestion $question): void
     {
         $this->getQuestions($question);
         $reponses = $question->getReponses();

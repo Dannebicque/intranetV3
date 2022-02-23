@@ -11,6 +11,7 @@ namespace App\Components\Questionnaire\TypeQuestion;
 
 use App\Components\Questionnaire\DTO\Reponse;
 use App\Components\Questionnaire\Form\QuestionnaireQuestionTypeYesNo;
+use App\Entity\QuestionnaireQuestion;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TypeOuiNon extends TypeQcu
@@ -32,7 +33,7 @@ class TypeOuiNon extends TypeQcu
             ->setDefault('valeur_2', '0');
     }
 
-    public function getOrGenereReponses($question)
+    public function getOrGenereReponses(QuestionnaireQuestion $question): void
     {
         $reponse1 = new Reponse(1, $this->options['libelle_1'], $this->options['valeur_1'], 1);
         $this->addReponse($reponse1);

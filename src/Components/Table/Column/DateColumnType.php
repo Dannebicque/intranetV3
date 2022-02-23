@@ -17,7 +17,7 @@ class DateColumnType extends PropertyColumnType
     /**
      * {@inheritdoc}
      */
-    public function renderProperty($value, array $options): string
+    public function renderProperty(mixed $value, array $options): string
     {
         return $value instanceof DateTimeInterface ? $value->format($options['format']) : (string) $value;
     }

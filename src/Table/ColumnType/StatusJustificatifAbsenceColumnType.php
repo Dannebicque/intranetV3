@@ -15,7 +15,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class StatusJustificatifAbsenceColumnType extends PropertyColumnType
 {
-    public function renderProperty($value, array $options): string
+    public function renderProperty(mixed $value, array $options): string
     {
         if (AbsenceJustificatif::REFUSE === $value) {
             return '<span class="badge bg-danger">Justificatif refusé</span>';

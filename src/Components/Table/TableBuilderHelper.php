@@ -51,7 +51,7 @@ class TableBuilderHelper
     public function createNamedFormBuilder(
         string $name,
         string $type = FormType::class,
-        $data = null,
+        mixed $data = null,
         array $options = []
     ): FormBuilderInterface {
         return $this->formFactory->createNamedBuilder($name, $type, $data, $options);

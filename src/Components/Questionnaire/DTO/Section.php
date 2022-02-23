@@ -16,10 +16,10 @@ class Section
     public string $typeSection;
     public ?string $titre;
     public ?string $texte_explicatif;
-    public string $id_section;
-    public string $questionnaire_id;
-    public string $id_questionnaire_section;
-    public string $ordre;
+    public int $id_section;
+    public int $questionnaire_id;
+    public int $id_questionnaire_section;
+    public int $ordre;
     public ?array $configGlobale;
     public ?array $configQuestionnaire;
     public Collection $questions;
@@ -27,13 +27,13 @@ class Section
     public function __construct(
         string $typeSection,
         string $titre,
-        string $id_section,
-        string $id_questionnaire_section,
-        string $ordre,
-        ?string $texte_explicatif = '',
-        ?array $configGlobale = [],
-        ?array $configQuestionnaire = [],
-        ?int $questionnaireId
+        int $id_section,
+        int $id_questionnaire_section,
+        int $ordre,
+        ?int $questionnaireId,
+        string $texte_explicatif = '',
+        array $configGlobale = [],
+        array $configQuestionnaire = []
     ) {
         $this->typeSection = $typeSection;
         $this->titre = $titre;
@@ -46,7 +46,7 @@ class Section
         $this->questionnaire_id = $questionnaireId;
     }
 
-    public function setQuestions(Collection | array $questions)
+    public function setQuestions(Collection | array $questions): void
     {
         $this->questions = $questions;
     }

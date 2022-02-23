@@ -9,7 +9,6 @@
 
 namespace App\Components\Questionnaire\DTO;
 
-
 use App\Entity\Semestre;
 use Carbon\CarbonInterface;
 
@@ -36,11 +35,9 @@ class AbstractQuestionnaire
 
     public function addSection($section): void
     {
-
     }
 
     public function getSections(): void
     {
-
     }
 }

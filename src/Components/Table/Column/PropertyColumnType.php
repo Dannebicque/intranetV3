@@ -26,18 +26,12 @@ class PropertyColumnType extends ColumnType
         $this->accessor = PropertyAccess::createPropertyAccessor();
     }
 
-    /**
-     * {}.
-     */
-    public function render($rowData, array $options): string
+    public function render(mixed $rowData, array $options): string
     {
         return $this->renderProperty($this->accessor->getValue($rowData, $options['property_path']), $options);
     }
 
-    /**
-     * {}.
-     */
-    public function renderProperty($value, array $options): string
+    public function renderProperty(mixed $value, array $options): string
     {
         return (string) $value;
     }

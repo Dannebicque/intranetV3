@@ -66,7 +66,7 @@ class QuestionnaireRegistry
     /**
      * @throws \App\Components\Questionnaire\Exceptions\TypeQuestionNotFoundException
      */
-    public function getSectionAdapter(string $name)
+    public function getSectionAdapter(string $name): mixed
     {
         if (!array_key_exists($name, $this->sectionsAdapter)) {
             throw new TypeQuestionNotFoundException();

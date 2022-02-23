@@ -23,7 +23,7 @@ class StatusAppelFaitColumnType extends PropertyColumnType
         $this->translator = $translator;
     }
 
-    public function renderProperty($value, array $options): string
+    public function renderProperty(mixed $value, array $options): string
     {
         $statsAppel = $options['statsAppel'];
         $elt = explode('_', $value); //'dmY_typeIdMatiere_heure_groupeId'

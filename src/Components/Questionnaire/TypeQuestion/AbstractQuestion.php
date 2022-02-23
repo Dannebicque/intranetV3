@@ -54,7 +54,7 @@ abstract class AbstractQuestion
             ->setDefault('block_name', '');
     }
 
-    public function getOption(string $name)
+    public function getOption(string $name): mixed
     {
         return $this->options[$name];
     }

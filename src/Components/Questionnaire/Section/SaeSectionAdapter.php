@@ -24,8 +24,8 @@ class SaeSectionAdapter extends AbstractSectionAdapter
         return [
             'libelle' => '',
             'code' => '',
-            'ordre' => $id,
-            'id' => 0,
+            'ordre' => 1,
+            'id' => $id,
         ];
     }
 }

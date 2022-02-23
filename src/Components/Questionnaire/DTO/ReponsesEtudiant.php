@@ -25,14 +25,13 @@ class ReponsesEtudiant
 
     public function getReponse($cle)
     {
-        return array_key_exists($cle, $this->reponses) ? $this->reponses[$cle] : null;
+        return $this->reponses[$cle] ?? null;
     }
 
-    public function merge(ReponsesEtudiant $reponsesEtudiant)
+    public function merge(ReponsesEtudiant $reponsesEtudiant): void
     {
         foreach ($reponsesEtudiant->getReponses() as $rep) {
             $this->addReponse($rep);
         }
     }
-
 }

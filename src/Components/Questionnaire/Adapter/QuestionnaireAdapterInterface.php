@@ -9,7 +9,6 @@
 
 namespace App\Components\Questionnaire\Adapter;
 
-
 use App\Components\Questionnaire\DTO\AbstractQuestionnaire;
 
 interface QuestionnaireAdapterInterface

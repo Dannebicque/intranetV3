@@ -9,11 +9,9 @@
 
 namespace App\Components\Questionnaire\Exceptions;
 
-
 use Exception;
 
 class TypeQuestionNotFoundException extends Exception
 {
     protected $message = 'Le type de question n\'existe pas';
-
 }

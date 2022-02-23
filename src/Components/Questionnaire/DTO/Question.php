@@ -9,8 +9,6 @@
 
 namespace App\Components\Questionnaire\DTO;
 
-
 class Question
 {
-
 }

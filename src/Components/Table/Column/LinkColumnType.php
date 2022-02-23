@@ -29,7 +29,7 @@ class LinkColumnType extends PropertyColumnType
     /**
      * {@inheritdoc}
      */
-    public function render($rowData, array $options): string
+    public function render(mixed $rowData, array $options): string
     {
         $attr = [];
 

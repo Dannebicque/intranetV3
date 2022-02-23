@@ -16,8 +16,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class QuestionnaireQuestionTypeYesNo extends QuestionnaireQuestionType
 {
-
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         parent::buildForm($builder, $options);
         $builder
@@ -32,7 +31,7 @@ class QuestionnaireQuestionTypeYesNo extends QuestionnaireQuestionType
                 ['mapped' => false, 'label' => 'label.valeur_2', 'help' => 'help.valeur_2', 'data' => 0]);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => QuestionnaireQuestion::class,

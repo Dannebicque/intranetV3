@@ -15,7 +15,7 @@ class Reponses
 {
     private array $reponses = [];
 
-    public function addReponse(Reponse $reponse)
+    public function addReponse(Reponse $reponse): void
     {
         $this->reponses[] = $reponse;
     }

@@ -9,8 +9,8 @@
 
 namespace App\Components\Questionnaire\TypeQuestion;
 
-
 use App\Components\Questionnaire\Form\QuestionnaireQuestionTypeLibre;
+use App\Entity\QuestionnaireQuestion;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TypeLibre extends AbstractQuestion
@@ -28,8 +28,7 @@ class TypeLibre extends AbstractQuestion
             ->setDefault('type_question', 'text');
     }
 
-    public function getOrGenereReponses($question)
+    public function getOrGenereReponses(QuestionnaireQuestion $question): void
     {
-
     }
 }

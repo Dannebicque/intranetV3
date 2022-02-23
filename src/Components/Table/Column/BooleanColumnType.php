@@ -28,7 +28,7 @@ class BooleanColumnType extends PropertyColumnType
     /**
      * {@inheritdoc}
      */
-    public function renderProperty($value, array $options): string
+    public function renderProperty(mixed $value, array $options): string
     {
         if ($options['strict_comparison'] && !is_bool($value)) {
             return '';

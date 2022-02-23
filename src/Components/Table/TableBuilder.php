@@ -91,7 +91,7 @@ class TableBuilder
 
     // Toolbar Api
 
-    public function addFilter($child, string $type = null, array $options = []): self
+    public function addFilter(string | FormBuilderInterface $child, string $type = null, array $options = []): self
     {
         $this->formBuilder->add($child, $type, $options);
 
@@ -110,7 +110,7 @@ class TableBuilder
         return $this->formBuilder->has($name);
     }
 
-    public function addWidget($child, string $type = null, array $options = []): self
+    public function addWidget(string $child, string $type = null, array $options = []): self
     {
         $this->widgetBuilder->add($child, $type, $options);
 
@@ -155,12 +155,12 @@ class TableBuilder
 
     // Adapter Api
 
-    public function useEntityAdapter($options = []): self
+    public function useEntityAdapter(array $options = []): self
     {
         return $this->useAdapter(EntityAdapter::class, $options);
     }
 
-    public function useAdapter($type, array $options = []): self
+    public function useAdapter(mixed $type, array $options = []): self
     {
         if (!is_callable($type) && !is_string($type)) {
             throw new InvalidArgumentException('Invalid apadater type');

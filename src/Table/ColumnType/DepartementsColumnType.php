@@ -14,7 +14,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class DepartementsColumnType extends ColumnType
 {
-    public function render($rowData, array $options): string
+    public function render(mixed $rowData, array $options): string
     {
         if (null === $rowData) {
             return 'err';

@@ -9,9 +9,9 @@
 
 namespace App\Components\Questionnaire\TypeQuestion;
 
-
 use App\Components\Questionnaire\Adapter\ReponseEntityAdapter;
 use App\Components\Questionnaire\Form\QuestionnaireQuestionTypeQcm;
+use App\Entity\QuestionnaireQuestion;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TypeQcm extends AbstractQuestion
@@ -29,7 +29,7 @@ class TypeQcm extends AbstractQuestion
             ->setDefault('type_question', 'checkbox');
     }
 
-    public function getOrGenereReponses($question)
+    public function getOrGenereReponses(QuestionnaireQuestion $question): void
     {
         $reponses = $question->getReponses();
         foreach ($reponses as $reponse) {

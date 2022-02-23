@@ -16,7 +16,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class QuestionnaireQuestionTypeEchelle extends QuestionnaireQuestionType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         parent::buildForm($builder, $options);
         $builder->add('min', TextType::class,
@@ -27,7 +27,7 @@ class QuestionnaireQuestionTypeEchelle extends QuestionnaireQuestionType
                 ['mapped' => false, 'label' => 'label.question.pas', 'help' => 'hel.question.pas']);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => QuestionnaireQuestion::class,

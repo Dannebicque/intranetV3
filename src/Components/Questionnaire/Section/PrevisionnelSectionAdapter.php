@@ -13,7 +13,6 @@ use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\Previsionnel\PrevisionnelManager;
 use App\DTO\Previsionnel;
 use App\Entity\Annee;
-use App\Entity\Semestre;
 use App\Repository\PrevisionnelRepository;
 
 class PrevisionnelSectionAdapter extends AbstractSectionAdapter

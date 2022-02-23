@@ -14,7 +14,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class IconeColumnType extends PropertyColumnType
 {
-    public function renderProperty($value, array $options): string
+    public function renderProperty(mixed $value, array $options): string
     {
         return '<i class="'.$value.'"></i>';
     }

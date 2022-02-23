@@ -9,14 +9,14 @@
 
 namespace App\Components\Questionnaire\Adapter;
 
-
 use App\Components\Questionnaire\DTO\Qualite;
+use App\Entity\QuestionnaireQualite;
 
 class QuestionnaireQualiteAdapter implements QuestionnaireAdapterInterface
 {
     protected Qualite $questionnaire;
 
-    public function __construct($questionnaire)
+    public function __construct(QuestionnaireQualite $questionnaire)
     {
         $this->questionnaire = new Qualite();
         $this->questionnaire->titre = $questionnaire->getTitre();

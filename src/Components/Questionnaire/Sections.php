@@ -9,7 +9,6 @@
 
 namespace App\Components\Questionnaire;
 
-
 use App\Components\Questionnaire\Section\AbstractSection;
 
 class Sections
@@ -27,7 +26,7 @@ class Sections
         return $this->sections;
     }
 
-    public function getSection(int $ordre)
+    public function getSection(int $ordre): AbstractSection
     {
         return $this->sections[$ordre];
     }

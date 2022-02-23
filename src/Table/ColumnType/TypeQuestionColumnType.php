@@ -31,7 +31,7 @@ class TypeQuestionColumnType extends PropertyColumnType
     /**
      * @throws \App\Components\Questionnaire\Exceptions\TypeQuestionNotFoundException
      */
-    public function renderProperty($value, array $options): string
+    public function renderProperty(mixed $value, array $options): string
     {
         if (array_key_exists($value, $this->questionnaireRegistry->getTypeQuestions())) {
             $obj = $this->questionnaireRegistry->getTypeQuestion($value);

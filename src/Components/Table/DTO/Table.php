@@ -79,7 +79,7 @@ class Table
         return $this->options;
     }
 
-    public function getOption(string $name)
+    public function getOption(string $name): mixed
     {
         return $this->options[$name];
     }

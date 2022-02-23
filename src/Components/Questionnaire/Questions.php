@@ -9,14 +9,13 @@
 
 namespace App\Components\Questionnaire;
 
-
 use App\Components\Questionnaire\TypeQuestion\AbstractQuestion;
 
 class Questions
 {
     private array $questions = [];
 
-    public function addQuestion(AbstractQuestion $question)
+    public function addQuestion(AbstractQuestion $question): void
     {
         $this->questions[] = $question;
     }

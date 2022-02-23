@@ -47,7 +47,7 @@ class Questionnaire
         $this->twig = $twig;
     }
 
-    public function setIdEtudiant(?int $etudiant)
+    public function setIdEtudiant(?int $etudiant): void
     {
         $this->etudiant = $etudiant;
     }
@@ -75,7 +75,7 @@ class Questionnaire
             'routeEnd' => '',
             'params' => [],
             'paramsEnd' => [],
-            'typeQuestionnaire' => 'qualite'
+            'typeQuestionnaire' => 'qualite',
         ]);
     }
 
@@ -87,7 +87,7 @@ class Questionnaire
             $configSection->setSection($section, [
                 'questionnaire_id' => $this->getQuestionnaire()->id,
                 'etudiant_id' => $this->etudiant,
-                'typeQuestionnaire' => $this->options['typeQuestionnaire']
+                'typeQuestionnaire' => $this->options['typeQuestionnaire'],
             ]);
             $sections = $configSection->genereSections();
             foreach ($sections as $cSection) {
@@ -99,7 +99,7 @@ class Questionnaire
             $abstractSection->setSection($section, [
                 'questionnaire_id' => $this->getQuestionnaire()->id,
                 'etudiant_id' => $this->etudiant,
-                'typeQuestionnaire' => $this->options['typeQuestionnaire']
+                'typeQuestionnaire' => $this->options['typeQuestionnaire'],
             ]);
             $this->sections->addSection($abstractSection->getSection());
         }
@@ -143,7 +143,7 @@ class Questionnaire
         return null;
     }
 
-    public function AddSpecialSection($type): Questionnaire
+    public function AddSpecialSection(string $type): Questionnaire
     {
         $abstractSection = match ($type) {
             AbstractSection::INTRODUCTION => (new StartSection($this->questionnaireRegistry))->setQuestionnaire($this->questionnaire),
@@ -163,7 +163,7 @@ class Questionnaire
                     'questionnaire_id' => $this->getQuestionnaire()->id,
                     'etudiant_id' => $this->etudiant,
                     'mode' => $this->getOption('mode'),
-                    'typeQuestionnaire' => $this->getOption('typeQuestionnaire')
+                    'typeQuestionnaire' => $this->getOption('typeQuestionnaire'),
                 ], $reponsesEtudiant);
                 break;
             }
@@ -185,12 +185,14 @@ class Questionnaire
         if (array_key_exists('route', $this->options) && array_key_exists('params', $this->options)) {
             return $this->router->generate($this->options['route'], $this->options['params']);
         }
+
+        return '';
     }
 
     public function handleRequest(Request $request): bool
     {
         if ($request->isMethod('POST')) {
-            $this->ordreSection = (int)$request->query->get('page');
+            $this->ordreSection = (int) $request->query->get('page');
 
             return true;
         }
@@ -198,7 +200,12 @@ class Questionnaire
         return false;
     }
 
-    public function wizardPage($template = 'components/questionnaire/_wizard.html.twig', array $options = []): Response
+    /**
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
+     * @throws \Twig\Error\LoaderError
+     */
+    public function wizardPage(string $template = 'components/questionnaire/_wizard.html.twig', array $options = []): Response
     {
         $params = array_merge([
             'section' => $this->getSection($this->ordreSection),
@@ -217,7 +224,7 @@ class Questionnaire
             return
                 [
                     'section' => $section,
-                    'datas' => $configSection->getDataPourConfiguration($this->questionnaire->semestre->getAnnee())
+                    'datas' => $configSection->getDataPourConfiguration($this->questionnaire->semestre->getAnnee()),
                 ];
         }
 
@@ -226,11 +233,10 @@ class Questionnaire
 
     public function getUrlEnd(): string
     {
-        if ($this->options['routeEnd'] !== '') {
+        if ('' !== $this->options['routeEnd']) {
             return $this->router->generate($this->options['routeEnd'], $this->options['paramsEnd']);
         }
 
         return 'https://univ-reims.fr';
     }
-
 }

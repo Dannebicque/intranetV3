@@ -30,7 +30,7 @@ class ManyColumnType extends ColumnType
     /**
      * {}.
      */
-    public function render($rowData, array $options): string
+    public function render(mixed $rowData, array $options): string
     {
         $many = $this->accessor->getValue($rowData, $options['many_path']);
         if (!is_iterable($many)) {
@@ -49,7 +49,7 @@ class ManyColumnType extends ColumnType
         return $html;
     }
 
-    public function renderOne($one, array $options): string
+    public function renderOne(mixed $one, array $options): string
     {
         $value = isset($options['one_path']) && !empty($options['one_path'])
             ? $this->accessor->getValue($one, $options['one_path'])

@@ -13,6 +13,7 @@ use App\Components\Questionnaire\DTO\ReponsesEtudiant;
 use App\Components\Questionnaire\QuestionnaireRegistry;
 use App\Components\Questionnaire\Section\AbstractSection;
 use App\Components\Questionnaire\TypeQuestion\AbstractQuestion;
+use App\Entity\QuestionnaireSectionQuestion;
 use App\Utils\Tools;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -29,10 +30,10 @@ class QuestionnaireQuestionAdapter
     /**
      * @throws \App\Components\Questionnaire\Exceptions\TypeQuestionNotFoundException
      */
-    public function createFromEntity(AbstractSection $abstractSection, $question, int $ordre = 1, array $options = [], ?ReponsesEtudiant $reponsesEtudiant= null)
+    public function createFromEntity(AbstractSection $abstractSection, QuestionnaireSectionQuestion $question, int $ordre = 1, array $options = [], ?ReponsesEtudiant $reponsesEtudiant = null): self
     {
-        $obj = $this->questionnaireRegistry->getTypeQuestion($question->getQuestion()->getType());
-        $options = array_merge($options, $question->getQuestion()->getConfiguration());
+        $obj = $this->questionnaireRegistry->getTypeQuestion($question->getQuestion()?->getType());
+        $options = array_merge($options, $question->getQuestion()?->getConfiguration());
         $this->question = new $obj();
 
         $optionResolver = new OptionsResolver();
@@ -53,10 +54,10 @@ class QuestionnaireQuestionAdapter
         $this->question->parametres = $question->getQuestion()->getParametre();
         $this->question->config = $question->getQuestion()->getConfiguration();
 
-        if ($reponsesEtudiant !== null) {
+        if (null !== $reponsesEtudiant) {
             $this->question->reponseEtudiant = $reponsesEtudiant->getReponse($question->getQuestion()->getCle());
 
-            if ($this->question->reponseEtudiant !== null && $this->question->reponseEtudiant->valeur === 'CHX:OTHER') {
+            if (null !== $this->question->reponseEtudiant && 'CHX:OTHER' === $this->question->reponseEtudiant->valeur) {
                 $this->question->reponseEtudiant->complementValeur = $reponsesEtudiant->getReponse($question->getQuestion()->getCle().'_autre')?->valeur;
             }
         }

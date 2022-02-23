@@ -29,7 +29,7 @@ class EntityColumnType extends ColumnType
     /**
      * {}.
      */
-    public function render($rowData, array $options): string
+    public function render(mixed $rowData, array $options): string
     {
         $obj = $this->accessor->getValue($rowData, $options['property_path']); //on récupère l'objet de la liaison
 
@@ -39,7 +39,7 @@ class EntityColumnType extends ColumnType
     /**
      * {}.
      */
-    public function renderProperty($value, array $options): string
+    public function renderProperty(mixed $value, array $options): string
     {
         return (string) $value;
     }

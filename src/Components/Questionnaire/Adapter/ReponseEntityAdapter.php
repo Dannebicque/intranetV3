@@ -21,7 +21,7 @@ class ReponseEntityAdapter
         $this->reponse = new Reponse($questionnaireReponse->getId(), $questionnaireReponse->getLibelle(), $questionnaireReponse->getValeur(), $questionnaireReponse->getOrdre(), ['alignement' => $questionnaireReponse->getAlignement()]);
     }
 
-    public function getReponse()
+    public function getReponse(): Reponse
     {
         return $this->reponse;
     }

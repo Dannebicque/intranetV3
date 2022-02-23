@@ -14,12 +14,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class StatusAbsenceColumnType extends PropertyColumnType
 {
-    public function renderProperty($value, array $options): string
+    public function renderProperty(mixed $value, array $options): string
     {
         $absences = $options['absences'];
         $data = explode('_', $value);
-        if ((null !== $value) && (count($absences) > 0) && array_key_exists($data[0],
-                $absences) && array_key_exists($data[1], $absences[$data[0]]) && array_key_exists($data[2],
+        if ((null !== $value) && (count($absences) > 0) &&
+            array_key_exists($data[0], $absences) &&
+            array_key_exists($data[1], $absences[$data[0]]) &&
+            array_key_exists($data[2],
                 $absences[$data[0]][$data[1]])) {
             if (true === $absences[$data[0]][$data[1]][$data[2]]) {
                 return '<span class="badge bg-success">Absence justifiée</span>';

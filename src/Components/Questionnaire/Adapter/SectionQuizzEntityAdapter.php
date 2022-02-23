@@ -24,11 +24,10 @@ class SectionQuizzEntityAdapter
             $section->getSection()->getId(),
             $section->getId(),
             $section->getOrdre(),
+            $section->getQuestionnaireQuizz()->getId(),
             $section->getSection()->getTextExplicatif(),
             $section->getSection()->getConfig(),
-            $section->getConfig(),
-            $section->getQuestionnaireQuizz()->getId()
-
+            $section->getConfig()
         );
 
         $this->section->setQuestions($section->getSection()->getQualiteSectionQuestions());
@@ -38,6 +37,4 @@ class SectionQuizzEntityAdapter
     {
         return $this->section;
     }
-
-
 }

@@ -65,7 +65,10 @@ class ConfigurableSection
 
     //todo: ajouter un libelle sur la section pour faciliter la gestion
 
-    public function setSection(\App\Components\Questionnaire\DTO\Section $section, array $options= []): void //peut être passer par un dto car on dépend de la BDD...
+    /**
+     * @throws \App\Components\Questionnaire\Exceptions\TypeQuestionNotFoundException
+     */
+    public function setSection(\App\Components\Questionnaire\DTO\Section $section, array $options = []): void //peut être passer par un dto car on dépend de la BDD...
     {
         $this->options = $options;
 
@@ -110,7 +113,7 @@ class ConfigurableSection
         return count($this->config['valeurs']) % self::NB_QUESTIONS_PAR_SECTION;
     }
 
-    public function getDataPourConfiguration(Annee $annee)
+    public function getDataPourConfiguration(Annee $annee): array
     {
         return $this->sectionAdapter->getAllDataAnnee($annee, $this->config['valeurs']);
     }

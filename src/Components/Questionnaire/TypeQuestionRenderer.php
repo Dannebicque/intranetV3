@@ -36,11 +36,11 @@ class TypeQuestionRenderer
         $params = $question->getOptions();
         $params['block_name'] = $question->getOption('block_name');
 
-        if ($question::class=== TypeChainee::class) {
+        if (TypeChainee::class === $question::class) {
             $params['questionsEnfants'] = $question->questions;
         }
 
-        $params['name'] = 'q' . $question->id;
+        $params['name'] = 'q'.$question->id;
         $params['id'] = $question->id;
         $params['visible'] = $this->isVisible($question->parametres);
         $params['reponses'] = $question->getReponses();
@@ -72,10 +72,10 @@ class TypeQuestionRenderer
         return $this->templateWrapper;
     }
 
-    private function isVisible(array $parametres)
+    private function isVisible(array $parametres): bool
     {
         foreach ($parametres as $param) {
-            if (array_key_exists('type', $param) && $param['type'] === 'condition') {
+            if (array_key_exists('type', $param) && 'condition' === $param['type']) {
                 return false;
             }
         }

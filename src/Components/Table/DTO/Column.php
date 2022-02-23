@@ -46,12 +46,12 @@ class Column
         return $this->options;
     }
 
-    public function getOption(string $name)
+    public function getOption(string $name): mixed
     {
         return $this->options[$name];
     }
 
-    public function render($rowData): string
+    public function render(mixed $rowData): string
     {
         if (is_callable($this->options['render'])) {
             $value = (string) call_user_func($this->options['render'], $rowData, $this->options);

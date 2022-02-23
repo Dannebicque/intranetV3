@@ -31,7 +31,7 @@ class WidgetColumnType extends ColumnType
     /**
      * {}.
      */
-    public function render($rowData, array $options): string
+    public function render(mixed $rowData, array $options): string
     {
         if ($options['build']) {
             $widgetBuilder = $this->factory->createBuilder();

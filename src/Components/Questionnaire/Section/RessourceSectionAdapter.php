@@ -23,8 +23,8 @@ class RessourceSectionAdapter extends AbstractSectionAdapter
         return [
             'libelle' => '',
             'code' => '',
-            'ordre' => $ordre,
-            'id' => 0,
+            'ordre' => 1,
+            'id' => $id,
         ];
     }
 }

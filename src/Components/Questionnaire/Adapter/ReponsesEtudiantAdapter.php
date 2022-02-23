@@ -30,10 +30,10 @@ class ReponsesEtudiantAdapter
         $this->questionnaireEtudiantReponseRepository = $questionnaireEtudiantReponseRepository;
     }
 
-    public function getReponsesEtudiant(Section $section, mixed $etudiant_id, $type = 'qualite'): ReponsesEtudiant
+    public function getReponsesEtudiant(Section $section, mixed $etudiant_id, string $type = 'qualite'): ReponsesEtudiant
     {
         $this->reponsesEtudiant = new ReponsesEtudiant();
-        if ($type === 'quizz') {
+        if ('quizz' === $type) {
             $questionnaireEtudiant = $this->questionnaireEtudiantRepository->findOneBy([
                 'etudiant' => $etudiant_id,
                 'questionnaireQuizz' => $section->questionnaire_id,
@@ -54,7 +54,7 @@ class ReponsesEtudiantAdapter
         return $this->reponsesEtudiant;
     }
 
-    public function getReponseQuestion($cle_question)
+    public function getReponseQuestion(string $cle_question)
     {
         return $this->reponsesEtudiant->getReponse($cle_question);
     }

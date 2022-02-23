@@ -11,6 +11,7 @@ namespace App\Components\Questionnaire\TypeQuestion;
 
 use App\Components\Questionnaire\DTO\Reponse;
 use App\Components\Questionnaire\Form\QuestionnaireQuestionTypeEchelle;
+use App\Entity\QuestionnaireQuestion;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TypeEchelle extends TypeQcu
@@ -31,7 +32,7 @@ class TypeEchelle extends TypeQcu
             ->setDefault('pas', 1);
     }
 
-    public function getOrGenereReponses($question)
+    public function getOrGenereReponses(QuestionnaireQuestion $question): void
     {
         for ($i = $this->getOption('min'); $i <= $this->getOption('max'); $i += $this->getOption('pas')) {
             $this->addReponse(new Reponse(

@@ -11,5 +11,4 @@ namespace App\Components\Questionnaire\DTO;
 
 class Qualite extends AbstractQuestionnaire
 {
-
 }

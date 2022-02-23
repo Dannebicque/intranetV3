@@ -16,7 +16,7 @@ class BadgeColumnType extends PropertyColumnType
     /**
      * {@inheritdoc}
      */
-    public function renderProperty($value, array $options): string
+    public function renderProperty(mixed $value, array $options): string
     {
         return sprintf('<span class="badge %s">%s<span>', $options['badge_class'], $value);
     }

@@ -29,7 +29,7 @@ class Reponse
         $this->resolveOptions($options);
     }
 
-    private function resolveOptions(array $options)
+    private function resolveOptions(array $options): void
     {
         $resolver = new OptionsResolver();
 

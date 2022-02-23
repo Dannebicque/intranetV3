@@ -23,7 +23,7 @@ abstract class AbstractSection
     public ?int $arrayKey = 0;
     public ?int $id = null;
     public ?int $questionnaire_section_id = null;
-    public string $ordre = '1';
+    public int $ordre = 1;
     public ?string $titre;
     public ?string $text_explicatif;
 
@@ -41,21 +41,12 @@ abstract class AbstractSection
     public ?int $questionnaire_id = null;
     public ?int $etudiant_id = null;
 
-//    #[Required]
-//    public ReponsesEtudiantAdapter $reponsesEtudiantAdapter;
-
     public function __construct(
         QuestionnaireRegistry $questionnaireRegistry)
     {
         $this->questionnaireRegistry = $questionnaireRegistry;
         $this->questions = new Questions();
     }
-
-//    #[Required]
-//    public function setReponsesEtudiantAdater(ReponsesEtudiantAdapter $reponsesEtudiantAdapter): void
-//    {
-//        $this->reponsesEtudiantAdapter = $reponsesEtudiantAdapter;
-//    }
 
     public function setSection(\App\Components\Questionnaire\DTO\Section $section, array $options = []): void
     {

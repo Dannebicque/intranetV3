@@ -33,20 +33,23 @@ class Section extends AbstractSection
         ]);
     }
 
-    public function initConfigGlobale(?array $config = [])
+    public function initConfigGlobale(?array $config = []): void
     {
     }
 
-    public function initConfigSection(?array $config = [])
+    public function initConfigSection(?array $config = []): void
     {
     }
 
-    public function getSection()
+    public function getSection(): Section
     {
         return $this;
     }
 
-    public function prepareQuestions(array $options = [], ?ReponsesEtudiant $reponsesEtudiant = null)
+    /**
+     * @throws \App\Components\Questionnaire\Exceptions\TypeQuestionNotFoundException
+     */
+    public function prepareQuestions(array $options = [], ?ReponsesEtudiant $reponsesEtudiant = null): void
     {
         foreach ($this->section->questions as $question) {
             $questionnaireQuestionAdapter = new QuestionnaireQuestionAdapter($this->questionnaireRegistry);
@@ -61,7 +64,7 @@ class Section extends AbstractSection
         }
     }
 
-    public function addQuestion(AbstractQuestion $question)
+    public function addQuestion(AbstractQuestion $question): void
     {
         //ajouter dans la section concernée...
         $this->questions->addQuestion($question);

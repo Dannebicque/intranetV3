@@ -9,9 +9,9 @@
 
 namespace App\Components\Questionnaire\TypeQuestion;
 
-
 use App\Components\Questionnaire\Adapter\ReponseEntityAdapter;
 use App\Components\Questionnaire\Form\QuestionnaireQuestionTypeQcu;
+use App\Entity\QuestionnaireQuestion;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TypeQcu extends AbstractQuestion
@@ -28,7 +28,7 @@ class TypeQcu extends AbstractQuestion
             ->setDefault('type_question', 'radio');
     }
 
-    public function getOrGenereReponses($question)
+    public function getOrGenereReponses(QuestionnaireQuestion $question): void
     {
         $reponses = $question->getReponses();
         foreach ($reponses as $reponse) {

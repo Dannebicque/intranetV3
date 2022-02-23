@@ -20,17 +20,16 @@ class QuestionnaireCompilerPass implements CompilerPassInterface
     /**
      * You can modify the container here before it is dumped to PHP code.
      */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         $registry = $container->getDefinition(QuestionnaireRegistry::class);
         $this->addToRegistry($container, $registry, QuestionnaireRegistry::TAG_TYPE_QUESTION, 'registerTypeQuestion');
         $this->addToRegistry($container, $registry, QuestionnaireRegistry::TAG_TYPE_SECTION, 'registerTypeSection');
         $this->addToRegistry($container, $registry, QuestionnaireRegistry::TAG_TYPE_SECTION_ADAPTER,
             'registerSectionAdapter');
-
     }
 
-    private function addToRegistry(ContainerBuilder $container, Definition $registry, string $tag, string $method)
+    private function addToRegistry(ContainerBuilder $container, Definition $registry, string $tag, string $method): void
     {
         $taggedServices = $container->findTaggedServiceIds($tag);
 

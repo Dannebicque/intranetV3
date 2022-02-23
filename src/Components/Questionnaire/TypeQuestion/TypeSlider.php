@@ -9,7 +9,7 @@
 
 namespace App\Components\Questionnaire\TypeQuestion;
 
-
+use App\Entity\QuestionnaireQuestion;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TypeSlider extends TypeEchelle
@@ -26,8 +26,7 @@ class TypeSlider extends TypeEchelle
             ->setDefault('type_question', 'range');
     }
 
-    public function getOrGenereReponses($question)
+    public function getOrGenereReponses(QuestionnaireQuestion $question): void
     {
-
     }
 }
