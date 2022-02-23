@@ -49,7 +49,7 @@ security:
     - { path: '^/[a-z]{2}/rdd', roles: PUBLIC_ACCESS }
     - { path: '^/[a-z]{2}/sso/redirect/cas', roles: PUBLIC_ACCESS }
     - { path: '^/[a-z]{2}/connexion', roles: PUBLIC_ACCESS }
-    - { path: '^/[a-z]{2}/mentions-legales/', roles: PUBLIC_ACCESS }
+    - { path: '^/[a-z]{2}/mentions-legales', roles: PUBLIC_ACCESS }
     - { path: '^/[a-z]{2}/login', roles: PUBLIC_ACCESS }
     - { path: '^/[a-z]{2}/api', roles: IS_AUTHENTICATED_ANONYMOUSLY }
     - { path: '^/[a-z]{2}/administration', roles: [ROLE_PERMANENT, ROLE_SUPER_ADMIN] }
