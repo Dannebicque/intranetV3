@@ -14,13 +14,14 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for matiere in matieres %}
+                {% for matiere in matieres|filter(matiere => (matiere.suspendu == false)) %}
                     <tr>
                         <td>{{ matiere.display }}</td>
                         {% if apc == true %}
                             <td class="hide">
                                 {% for ue in matiere.tab_ues %}
-                                    <span class="badge badge-{{ ue.ue_couleur }}">{{ ue.ue_display }}</span>
+                                    <span class="badge badge-{{ ue.ue_couleur }}">{{ ue.ue_display }} ({{ ue.ue_coefficient }})</span>
+                                    </span>
                                 {% endfor %}
                             </td>
                         {% else %}
