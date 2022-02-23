@@ -418,11 +418,11 @@
                                                 <p><strong>{{ 'table.opt_update_celcat'|trans }}</strong></p>
                                                 <p>{{ 'help.opt_update_celcat'|trans }}</p>
                                             </div>
-                                            <label class="switch" for="optUpdateCelcat">
+                                            <label class="switch" for="optUpdateCelcat_{{ diplome.id }}">
                                                 <input type="checkbox" {{ diplome.optUpdateCelcat ? 'checked': '' }}
                                                        class="changeOption"
                                                        name="optUpdateCelcat"
-                                                       id="optUpdateCelcat"
+                                                       id="optUpdateCelcat_{{ diplome.id }}"
                                                        data-type="diplome"
                                                        data-id="{{ diplome.id }}">
                                                 <span class="switch-indicator"></span>
