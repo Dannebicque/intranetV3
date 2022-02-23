@@ -1,0 +1,27 @@
+{% extends "pdf/basepdf.html.twig" %}
+
+{% block content %}
+<table class="table">
+    {% for row in data %}
+        {% if loop.first %}
+        <thead>
+        <tr>
+            {% for col in row %}
+            <th>
+                {{ col }}
+            </th>
+            {% endfor %}
+        </tr>
+        </thead>
+        {% else %}
+            <tr>
+                {% for col in row %}
+                    <td>
+                        {{ col }}
+                    </td>
+                {% endfor %}
+            </tr>
+        {% endif %}
+    {% endfor %}
+</table>
+{% endblock %}
