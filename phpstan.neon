@@ -1,7 +1,11 @@
 parameters:
-    level: 4
-    symfony:
-        container_xml_path: var/cache/dev/App_KernelDevDebugContainer.xml
+    #symfony:
+    #    container_xml_path: var/cache/dev/App_KernelDevDebugContainer.xml
+
+    level: 6
+
+    checkGenericClassInNonGenericObjectType: false
+    checkMissingIterableValueType: false
+
     paths:
         - src
-        - tests

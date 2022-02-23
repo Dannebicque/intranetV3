@@ -211,9 +211,6 @@
     "justinrainbow/json-schema": {
         "version": "5.2.11"
     },
-    "khanamiryan/qrcode-detector-decoder": {
-        "version": "1.0.4"
-    },
     "knplabs/knp-snappy": {
         "version": "v1.2.1"
     },
@@ -516,6 +513,9 @@
     },
     "slevomat/coding-standard": {
         "version": "7.0.16"
+    },
+    "sonata-project/exporter": {
+        "version": "2.10.1"
     },
     "squizlabs/php_codesniffer": {
         "version": "3.0",

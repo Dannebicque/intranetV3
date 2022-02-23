@@ -1,104 +1,49 @@
 {
-  "version": "1.1",
-  "profiles": [
-    {
-      "id": "cd42c0ad-f2b2-4e3f-80a4-4030afb4386f",
-      "name": "Symfony (PHP, TWIG)",
-      "keyNamingPattern": "SNAKE_CASE_PATTERN",
-      "sink": {
-        "id": "dfd00d48-3606-4ba0-b18a-ee2fd519eaf6",
-        "type": "namespaced",
-        "translationsDirectory": "$PROJECT_DIR$/translations",
-        "fileType": "yaml",
-        "defaultLocale": "fr",
-        "namespaces": [
-          "messages",
-          "VichUploaderBundle",
-          "export",
-          "form",
-          "help",
-          "security",
-          "validators"
-        ],
-        "outputFilenameTemplate": "%namespace%.%locale%.yaml",
-        "nestingType": "DOT",
-        "placeholderFormatterName": "SYMFONY_REPLACEMENT"
-      },
-      "sources": [
-        {
-          "id": "d3d398cf-abca-47c1-a366-c24faeebff03",
-          "type": "php",
-          "scopeName": "i18n Ally: Symfony/PHP source",
-          "scopePattern": "file[intranetV3]:src//*&&!file[intranetV3]:src/DataFixtures//*",
-          "replacementTemplate": "$this->translator->trans('%key%', %map%, '%namespace%')",
-          "skipDefaultNamespace": true,
-          "sprintfMode": false
-        },
-        {
-          "id": "66118894-8329-4a86-b960-b269fda32684",
-          "type": "twig",
-          "scopeName": "i18n Ally: Symfony/Twig templates",
-          "scopePattern": "file[intranetV3]:templates//*",
-          "replacementTemplate": "trans(%map%, '%namespace%')",
-          "inlineTagNames": [
-            "a",
-            "abbr",
-            "acronym",
-            "b",
-            "bdi",
-            "bdo",
-            "big",
-            "br",
-            "cite",
-            "code",
-            "data",
-            "del",
-            "dfn",
-            "em",
-            "i",
-            "img",
-            "input",
-            "ins",
-            "kbd",
-            "label",
-            "mark",
-            "meter",
-            "output",
-            "progress",
-            "q",
-            "ruby",
-            "s",
-            "samp",
-            "slot",
-            "small",
-            "span",
-            "strong",
-            "sub",
-            "sup",
-            "time",
-            "u",
-            "tt",
-            "var",
-            "wbr"
-          ],
-          "translatableAttributeNames": [
-            "title",
-            "alt",
-            "placeholder",
-            "label",
-            "aria-label"
-          ],
-          "skipDefaultNamespace": true
-        }
-      ]
-    }
-  ],
-  "ignores": {
-    "valuesInProject": [],
-    "valuesInFile": {},
-    "filesInProject": [],
-    "unignoredFunctionNames": [],
-    "unignoredFunctionArguments": {},
-    "ignoredArrayKeys": []
+  "version" : "1.2",
+  "profiles" : [ {
+    "id" : "cd42c0ad-f2b2-4e3f-80a4-4030afb4386f",
+    "name" : "Symfony (PHP, TWIG)",
+    "keyNamingPattern" : "SNAKE_CASE_PATTERN",
+    "sink" : {
+      "id" : "dfd00d48-3606-4ba0-b18a-ee2fd519eaf6",
+      "type" : "namespaced",
+      "translationsDirectory" : "$PROJECT_DIR$/translations",
+      "fileType" : "yaml",
+      "defaultLocale" : "fr",
+      "namespaces" : [ "messages", "VichUploaderBundle", "export", "form", "help", "security", "validators" ],
+      "outputFilenameTemplate" : "%namespace%.%locale%.yaml",
+      "nestingType" : "DOT",
+      "placeholderFormatterName" : "SYMFONY_REPLACEMENT"
+    },
+    "sources" : [ {
+      "id" : "d3d398cf-abca-47c1-a366-c24faeebff03",
+      "type" : "php",
+      "scopeName" : "i18n Ally: Symfony/PHP source",
+      "scopePattern" : "file[intranetV3]:src//*&&!file[intranetV3]:src/DataFixtures//*",
+      "defaultReplacementTemplate" : "$this->translator->trans('%key%', %map%, '%namespace%')",
+      "recognizedReplacementTemplates" : [ ],
+      "skipDefaultNamespace" : true,
+      "sprintfMode" : false
+    }, {
+      "id" : "66118894-8329-4a86-b960-b269fda32684",
+      "type" : "twig",
+      "scopeName" : "i18n Ally: Symfony/Twig templates",
+      "scopePattern" : "file[intranetV3]:templates//*",
+      "defaultReplacementTemplate" : "trans(%map%, '%namespace%')",
+      "attributeReplacementTemplate" : "",
+      "inlineTagsReplacementTemplate" : "trans(%map%, '%namespace%')|raw",
+      "recognizedReplacementTemplates" : [ ],
+      "inlineTagNames" : [ "a", "abbr", "acronym", "b", "bdi", "bdo", "big", "br", "cite", "code", "data", "del", "dfn", "em", "i", "img", "input", "ins", "kbd", "label", "mark", "meter", "output", "progress", "q", "ruby", "s", "samp", "slot", "small", "span", "strong", "sub", "sup", "time", "u", "tt", "var", "wbr" ],
+      "translatableAttributeNames" : [ "title", "alt", "placeholder", "label", "aria-label" ],
+      "skipDefaultNamespace" : true
+    } ]
+  } ],
+  "ignores" : {
+    "valuesInProject" : [ ],
+    "valuesInFile" : { },
+    "filesInProject" : [ ],
+    "unignoredFunctionNames" : [ ],
+    "unignoredFunctionArguments" : { },
+    "ignoredArrayKeys" : [ ]
   }
 }
