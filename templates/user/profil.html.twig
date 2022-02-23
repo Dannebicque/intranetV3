@@ -1,5 +1,4 @@
-{% extends (is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_SCOLARITE')) ? 'base-super_admin.html.twig' : 'base
-.html.twig' %}
+{% extends (is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_SCOLARITE')) ? 'base-super_admin.html.twig' : 'base.html.twig' %}
 
 {% block header %}
     {% if monprofil %}
